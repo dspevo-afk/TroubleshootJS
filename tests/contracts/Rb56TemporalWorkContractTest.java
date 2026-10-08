@@ -7,7 +7,7 @@ import java.util.Vector;
 /** One fixed normal-admitted graph's temporal pilot; not five-hypothesis D01 or player qualification. */
 public final class Rb56TemporalWorkContractTest {
     private static int assertions;
-    private static final int UNITS = 13;
+    private static final int UNITS = 13, FAULTED_UNITS = 9;
     private static long startedNanos;
 
     public static void main(String[] args) throws Exception {
@@ -44,6 +44,13 @@ public final class Rb56TemporalWorkContractTest {
             Rb30Behavior behavior = (Rb30Behavior)owner.getFamilyState();
             check(behavior.getInputs() == 0 && behavior.getProfileWorkUnits() == UNITS,
                 "fresh RB56 sensor commands are LOW and declare eight startup plus five condition/restoration units");
+            check(GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(behavior,
+                    GeneratedTemporalBehavior.Profile.HEALTHY) == UNITS &&
+                GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(behavior,
+                    GeneratedTemporalBehavior.Profile.FAULTED) == FAULTED_UNITS &&
+                GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(behavior,
+                    GeneratedTemporalBehavior.Profile.REPAIR) == UNITS,
+                "goal counts retain healthy/repair thirteen and faulted nine real phases");
             completeProfile(sim, owner, behavior, GeneratedTemporalBehavior.Profile.HEALTHY, true);
             phase(sim, "FAULT_APPLY");
             owner.getFaultBinding().setApplied(true);
@@ -107,7 +114,7 @@ public final class Rb56TemporalWorkContractTest {
         if (failure != null) throw new AssertionError("RB56 temporal pilot failed", failure);
         phase(sim, "COMPLETE");
         System.out.println("PASS: RB56 temporal work contracts " + assertions +
-            " assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY");
+            " assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 faultedUnits=9 scope=FIXED_TEMPORAL_PILOT_ONLY");
     }
 
 
@@ -355,25 +362,40 @@ public final class Rb56TemporalWorkContractTest {
         GeneratedWork<GeneratedRepairStatus> work = behavior.beginProfile(sim, owner, profile);
         int windows = sim.windowAdvances;
         runUnits(sim, work, profile == GeneratedTemporalBehavior.Profile.FAULTED);
-        receipt(sim, "PROFILE_FINISH_BEFORE", -1, UNITS, "BEGIN");
+        receipt(sim, "PROFILE_FINISH_BEFORE", -1, work.getWorkUnits(), "BEGIN");
         check(work.finish() == (pass ? GeneratedRepairStatus.CORRECTLY_RESTORED :
             GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL), "actual " + profile + " result");
         check(sim.windowAdvances - windows == (profile == GeneratedTemporalBehavior.Profile.FAULTED ? 1 : 4),
             "functional conditions use four real ephemeral accepted windows, faulted snapshot uses one");
-        receipt(sim, "PROFILE_FINISH_AFTER", -1, UNITS, "RETURNED");
+        receipt(sim, "PROFILE_FINISH_AFTER", -1, work.getWorkUnits(), "RETURNED");
+        if (profile == GeneratedTemporalBehavior.Profile.FAULTED) {
+            // Preserve the former four no-advance assertions as unbilled probes of a completed cursor.
+            for (int probe = 0; probe < UNITS - FAULTED_UNITS; probe++) {
+                int advances = sim.advances, windowsAfterFinish = sim.windowAdvances;
+                double time = sim.t;
+                int inputs = behavior.getInputs();
+                GeneratedObservedBehavior observed = behavior.getObservedBehavior();
+                check(!work.step() && sim.advances == advances && sim.t == time &&
+                        sim.windowAdvances == windowsAfterFinish && behavior.getInputs() == inputs &&
+                        behavior.getObservedBehavior() == observed,
+                    "completed faulted accounting probe neither advances nor repeats observations " + probe);
+                check(subscriptions(sim).isEmpty() && !sim.activeMeasurementOverlay,
+                    "completed faulted accounting probe retains no subscription or stimulus " + probe);
+            }
+        }
     }
 
     private static void runUnits(TemporalSim sim, GeneratedWork<?> work, boolean faulted) throws Exception {
-        check(work.getWorkUnits() == UNITS, "thirteen bounded work units");
-        for (int unit = 0; unit < UNITS; unit++) {
+        int requiredUnits = faulted ? FAULTED_UNITS : UNITS;
+        check(work.getWorkUnits() == requiredUnits, "exact real goal work units");
+        for (int unit = 0; unit < requiredUnits; unit++) {
             int before = sim.advances; double time = sim.t;
             boolean more = stepReceipt(sim, work, unit + 1); int advances = sim.advances - before;
-            check(more == (unit < UNITS - 1) && advances <= 1, "one bounded solver advance per unit " + unit);
+            check(more == (unit < requiredUnits - 1) && advances <= 1, "one bounded solver advance per unit " + unit);
             if (unit < 8) check(advances == 1 && Math.abs(sim.t - time - .050) <= Rb30Behavior.RB56_MAX_STEP_SECONDS + 1e-12,
                 "startup unit advances its actual 50 ms, without widening the solver limit");
             else if (unit < (faulted ? 9 : 12)) check(advances == 1 && sim.lastDuration == .030,
                 "condition uses the existing 30 ms solver interval");
-            else if (faulted) check(advances == 0, "faulted accounting remainder does not repeat the observation");
             check(subscriptions(sim).isEmpty() && !sim.activeMeasurementOverlay,
                 "no subscription or stimulus survives a yielded unit");
         }
@@ -533,10 +555,10 @@ public final class Rb56TemporalWorkContractTest {
         sim.phase = value; receipt(sim, "PHASE", -1, 0, "ENTER");
     }
     private static boolean stepReceipt(TemporalSim sim, GeneratedWork<?> work, int unit) {
-        receipt(sim, "UNIT_BEFORE", unit, UNITS, "BEGIN");
+        receipt(sim, "UNIT_BEFORE", unit, work.getWorkUnits(), "BEGIN");
         boolean returned = false;
         try { boolean more = work.step(); returned = true; return more; }
-        finally { receipt(sim, "UNIT_AFTER", unit, UNITS, returned ? "RETURNED" : "THREW"); }
+        finally { receipt(sim, "UNIT_AFTER", unit, work.getWorkUnits(), returned ? "RETURNED" : "THREW"); }
     }
     private static void receipt(TemporalSim sim, String kind, int unit, int total, String outcome) {
         int count = -1;

@@ -8,6 +8,11 @@ package com.lushprojects.circuitjs1.client;
 interface GeneratedTemporalBehavior {
     enum Profile { HEALTHY, FAULTED, REPAIR }
 
+    /** Optional goal-specific count; getProfileWorkUnits remains the public maximum. */
+    interface GoalWorkUnits {
+        int requiredProfileWorkUnits(Profile profile);
+    }
+
     int getProfileWorkUnits();
     GeneratedWork<GeneratedRepairStatus> beginProfile(CirSim sim,
             GeneratedBoardInstance instance, Profile profile);

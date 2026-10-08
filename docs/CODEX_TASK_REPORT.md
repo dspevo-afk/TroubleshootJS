@@ -1,4 +1,86 @@
-# Current checkpoint: Q60 numerical contracts pass; normal55 admission still fails
+# Current checkpoint: Q60 faulted profile counts; numerical prototype rejected
+
+2026-10-08. Branch `codex/q60-faulted-profile-counts`, published parent
+`30374e0a46d6faaf94152b426620f482638a3607`. Root archive and two-file restoration
+are verified; six count files remain. Exact commit/normal-push result is recorded separately by root after verification. The selected
+final scope retains six verified profile-count source/test files and restores
+only `CirSim`/`LuFactorizationChecks` to the published numerical/storage baseline.
+U06/U07/E05/E06 remain published. Q60 stays **IN PROGRESS / UNACCEPTED**;
+normal RB56/HARD/save-load remain held. This is not Q60 or release acceptance.
+
+Source pins identify tested working-copy bytes; existing Git line-ending
+normalization can give unchanged published LuChecks text a different blob hash.
+
+RB56 FAULTED declares nine executable units: eight unchanged startup advances
+and one real HIGH observation. Trailing calls performed only bookkeeping;
+removing them changes no electrical advance, input, observation or solver guard.
+Healthy, repair and customer retest retain their existing 11/13 counts, and Q30
+counts remain unchanged. The bounded goal resolver, settlement cursor,
+diagnostic proof reservation and coordinator accounting consume the same count.
+The RB56 dependency includes `faulted-profile-work-units=9` to separate old cache
+keys. Existing final-step/finish/stale-owner/publication guards remain intact.
+Five independent generated proof flows and the original 90,000 ms / 640 work /
+5,000 ms active limits remain unchanged. The retained count correction is not
+deadline clearance or player-retest proof.
+
+| Final count-only gate | Actual status and required scope |
+| --- | --- |
+| Native147 | PASS 62.372 s; ten affected suites, 1,353 inputs unchanged, cleanup PASS; fixed RB56 temporal292 (13 maximum/9 faulted), Q30 temporal167 and A10 dependency15; full matrix/independent raw oracles NOT RUN |
+| Build29 | PASS 128.112 s; actual final-source JDK8/GWT, all five permutations, compilation 124.304 s and link PASS; 1,222 unchanged inputs and cleanup PASS |
+| Compiled107 | PASS 7.789 s; pure 306,503, runtime 83 / 23 cases, models 59 / 21 rows and scale 16; actual Task41 injected cleanup failure/recovery, application/host cleanup and port closure PASS; separate early-terminal canary retains its narrow scope |
+| Normal Q30 control108 | FAIL 95.193 s outer; ERROR after 90.0524987 s observation; last phase 4 sample 302 / 89,006 ms, active 89,007 ms; terminal time/work/cause UNEXPOSED; host/app cleanup and external pre/post PASS; strict final port assertion NOT_REACHED, raw cleanup portClosed=true; no retry |
+| Current full6 | NOT RERUN; rejected typed-prototype results remain historical; Q60 has no current completed admission pass |
+| Exact 60 visible/session | NOT RUN; held by failed qualification; no current exact 60 real player-input/session proof |
+| Actual modest machine | BLOCKED by unavailable hardware; reference desktop evidence remains separate |
+
+The final control's requested replay is tsj-alpha/5/MEDIUM/RB30_CONTROL/10014,
+with replayRole=PREDECESSOR_REQUEST_ON_ERROR. Accepted runtime replay and
+predecessorReplay are null. Frozen-plan 40/two-channel metadata is separate from
+unexposed runtime census. Raw cleanup takes 1.4339319 s with server stopped, port
+closed and no owned survivors; the strict driver's final port assertion was
+NOT_REACHED. This is a closed normal qualification failure, without exact
+terminal-time/work/cause or causal regression proof.
+
+The rejected binary64-storage prototype retains its complete source/build/gate
+archive and task-only r1/r2 drafts. Prototype build28 and compiled101 numerical
+contracts passed, but its current full6 compiled103-105 closed FAIL with four
+PASS and two TIMEOUT at 55/60 in HYPOTHESES. Their app times90,285/90,021 ms,
+work 570/487 and original failures remain preserved. Its 56-part PASS actually
+completed 618 work in 89,623 ms, with max unit 3,128 ms; this is historical accounting
+evidence, not a final count-only admission or current player-retest PASS.
+All six runs were private cold full-D01 generated proof flows; normal catalog,
+player-input evidence and ordinaryCustomerRetestPassed remained false.
+
+The same rejected prototype's normal Q30 control106 ended at an ERROR screen
+after 90.8013409 s observation. Its last sample was427 units at 89,142 ms in
+"Verify measurements and repairs". Exact terminal work/time/cause are unexposed;
+no causal regression or speed claim follows. Source/external-post and owned
+host/application cleanup pass within their scopes; the operation itself failed.
+Prototype raw144/145 retain all 236 original comparisons and whole raw/criteria/
+cleanup exact133/134 with zero exclusions on three fixed17/77/42 graphs only.
+These prototype PASS receipts do not certify the restored final count-only gates.
+Block-reuse census143 remains NO_GO with zero genuine-update hit coverage;
+no cache, literal solver port or numerical guard change is retained.
+
+The root-selected rollback follows archiving and changes only the two numerical
+files; it is not deletion or a protected-main merge. Original production 400 us /
+fine 200 us / Q30 5 us, numerical arithmetic and the published storage/solver
+ownership remain intact. Eight original untracked files are byte-exact after final-source gates. The
+corrected explicit-array reader passes: six source/test edits, index empty and
+git diff --check PASS at the code-only preservation check. Root records final
+staged review and publication separately. Historical Q30 risks stay
+explicit: unknown91.616 s failure, six missing scratch inventories and late
+BLOCKED audit. No email, server/Core/Android work or unrelated edit.
+
+Next: record the verified count correction with the final normal control FAIL
+and separately verified publication, then investigate the unexposed normal ERROR
+cause and Q60's unresolved 55/60 wall performance, exact 60 visible/session and
+actual modest-machine proof. No unchanged full6 retry. REL-B/Q100 stay unstarted.
+
+[Count checkpoint evidence](task-evidence/Q60/faulted-profile-count-checkpoint-r1/faulted-profile-count-evidence-r1.json).
+
+---
+# Historical checkpoint: Q60 numerical contracts pass; normal55 admission still fails
 
 2026-10-08. Branch `codex/q30-multirail-qualification`; parent checkpoint
 `a2fc74b23d177e0a971974a9d958bf0d559a06c5` plus intended working changes.

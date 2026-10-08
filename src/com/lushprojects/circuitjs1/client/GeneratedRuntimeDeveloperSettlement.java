@@ -12,6 +12,19 @@ final class GeneratedRuntimeDeveloperSettlement {
     private GeneratedRuntimeDeveloperSettlement() {
     }
 
+    /** Exact executable goal count, with unchanged maximum fallback for existing families. */
+    static int requiredProfileWorkUnits(GeneratedTemporalBehavior behavior,
+            GeneratedTemporalBehavior.Profile profile) {
+        if (behavior == null || profile == null)
+            throw new IllegalArgumentException("Missing temporal work goal");
+        int maximum = behavior.getProfileWorkUnits();
+        int required = behavior instanceof GeneratedTemporalBehavior.GoalWorkUnits ?
+            ((GeneratedTemporalBehavior.GoalWorkUnits)behavior).requiredProfileWorkUnits(profile) : maximum;
+        if (maximum < 1 || maximum > 64 || required < 1 || required > maximum)
+            throw new IllegalArgumentException("Invalid declared temporal goal work units");
+        return required;
+    }
+
     /** Advance at most one existing temporal solver-call phase of private preparation. */
     static boolean stepTemporalPreparation(CirSim sim, GeneratedBoardInstance expectedOwner,
             boolean healthyOnly, String label) {

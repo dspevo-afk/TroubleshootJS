@@ -5105,6 +5105,19 @@ the script branch copies four ascending values per loop and then the exact tail.
 Independent value/metadata/permuted-row/Crout oracles pass in native and compiled
 contexts. This preserves arithmetic and does not establish deadline clearance.
 
+The optional `GeneratedTemporalBehavior.GoalWorkUnits` contract supplies a
+validated executable count for a profile, falling back to the existing maximum.
+`Rb30Behavior` changes only RB56 FAULTED to nine units: eight existing startup
+advances and one actual HIGH observation. Healthy, repair and customer retest
+retain 11/13 units; Q30 counts remain unchanged. Settlement, diagnostic proof
+reservation and coordinator accounting use the same goal count. The RB56
+dependency includes `faulted-profile-work-units=9`, separating old cache keys.
+Trailing bookkeeping ends after the final real guarded step; existing finish,
+stale-owner and publication checks remain. All electrical advances/observations
+and five independent generated proof flows remain. Final count-only native147 passes the fixed RB56 temporal/electrical/guard pilot
+and affected Q30/dependency/ownership suites. Compiled107 also passes fresh numerical/ownership/Task41 boundaries; no
+admission or wall-time proof follows from the count correction.
+
 The owned LU path keeps bounded baseline/current eligibility with its graph.
 Distinct finite rows of size at most128 and input magnitude at most1e100 use
 the proved finite trailing path; reciprocal/scaling guards and checked alias/
@@ -5114,7 +5127,7 @@ inline. It adds no calls, numeric buffer, cache or backend and preserves each ce
 multiply/subtract/store sequence. Lower scaling skips same-reference stores before
 first underflow and preserves stable suffix compaction/null cleanup. Accumulated
 stamps retain their value locally, store before finite validation and can revoke
-eligibility; baseline restoration and Task41 preserve proof flags. Native132/
+eligibility; baseline restoration and Task41 preserve proof flags. Historical source0A native132/
 compiled87 original Crout, failure-prefix and cleanup contracts pass. Actual
 all-five emission grows974 to2373 bytes/15 to26 locals and preserves21 other
 mapped guard/owner/snapshot/oracle bodies. These local changes and historical
@@ -5203,7 +5216,7 @@ capacity and package escape corrections. The TO220/E04 component-face exits
 now clear their own courtyards; their larger placement envelopes affect layout.
 Medium placement now uses its degree-normalized objective weights when
 choosing connected targets; the historical local-refinement overload is unchanged.
-Current native132 passes11 affected suites, including fixed40/55/60 physical
+Historical source0A native132 passes11 affected suites, including fixed40/55/60 physical
 canaries, Q30 temporal work, Task41/D01 restoration and original A07 LU contracts.
 Build25 passes all5 GWT permutations; compiled87 passes306,503 pure/83 runtime
 assertions,23 runtime cases,59 model assertions/21 rows and16 scale rows, with
@@ -5212,9 +5225,9 @@ Raw native133/134 retain all236 original400/200us comparisons and whole
 raw/criteria/cleanup receipts exact129/130 and126/127 with zero exclusions.
 This proves three fixed raw graphs, not a new full24 or player admission.
 
-Unprofiled normal55 compiled88 still times out in HYPOTHESES at90398ms/520
+Historical source0A unprofiled normal55 compiled88 times out in HYPOTHESES at90398ms/520
 work units:five replay installs, four completed repair/retest/restoration flows
-and a partial fifth; cleanup passes and publication remains false. Current
+and a partial fifth; cleanup passes and publication remains false. Historical source0A
 normal Q30 seed10014 compiled89 passes85.7567492s observation/92.293s outer
 under original90s/640/5s with exact replay `tsj-alpha/5/MEDIUM/RB30_CONTROL/10014`.
 Frozen-plan40 packages/two channels and sampled443 units do not supply runtime
@@ -5226,13 +5239,28 @@ DE7/BFD, native131 panel rejection, full-six r7 FAIL2/6 and source85 visible40
 r8 PASS307.383s/three checkpoints/four inspected images retain their own sources.
 The earlier Reset correction preserves its synchronous current-owner handler
 and settled-runtime guard. Native98's100-owner/96-inventory scope stays separate.
-Current exact60/two-channel visible/session and actual modest-machine evidence
-remain outstanding. Courtyard grids are unintegrated and not selected; native135
-source-neutral healthy55 census PASS32.677s retains exact121/131 raw/criteria/
-cleanup; unit specialization is NO_GO from operation counts, with source0A
-unchanged and no speed/admission claim. Q60 remains unaccepted;
-normal RB56/HARD/save-load remain held. This feature-branch checkpoint is not
-release acceptance.
+Source0A left exact60/two-channel visible/session and actual modest-machine
+evidence outstanding. Courtyard grids remained unintegrated and not selected;
+native135 source-neutral healthy55 census PASS32.677s retained exact121/131
+raw/criteria/cleanup. Unit specialization was NO_GO from operation counts,
+with source0A unchanged and no speed/admission claim.
+
+The selected count-only checkpoint restores CirSim/LuChecks to published 30374
+numerical/storage ownership after archiving the rejected binary64-row prototype.
+Only six profile-count source/test files are retained; no cache, literal solver
+port or numerical guard change is selected. Root archive and numerical-baseline
+restoration are verified. Native147 PASS 62.372 s/ten suites/1,353 unchanged inputs/
+cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
+normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
+89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
+Typed build28/compiled101 numerical PASS, full6 FAIL with four PASS and two TIMEOUT at 55/60 packages,
+historical56-part618-unit accounting PASS and raw144/145 exact 236 keep their
+rejected prototype source/build scopes. Prototype Q30 control106 ends ERROR at
+90.8013409 s observation with last sample 427 at 89,142 ms; terminal cause/cost are
+unexposed and no causal regression/speed claim follows. Whole cleanup/source
+receipts remain preserved. Exact 60 real UI/session is NOT RUN/held; actual modest
+hardware is BLOCKED/unavailable. Q60 stays unaccepted and normal RB56/HARD/save-load
+stay held. Original90 s / 640 work / 5 s and production 400 us/fine 200 us/Q30 5 us remain.
 
 `PcbWorkbenchController` tracks the last detachment-readiness value used to
 build its controls. The existing same-owner, settled `CirSim` update checks it

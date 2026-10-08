@@ -1,0 +1,577 @@
+{
+  "schema": 1,
+  "protocol": "Q60_FAULTED_PROFILE_COUNT_FINAL_CLOSE_DRAFT_R4",
+  "packetStatus": "COUNT_CORRECTNESS_VERIFIED_NORMAL_CONTROL_FAIL_Q60_UNACCEPTED",
+  "overallQ60Status": "UNACCEPTED_IN_PROGRESS",
+  "preparedUtc": "2026-10-08T23:52:12.460682+00:00",
+  "proposedRepositoryDestination": "docs/task-evidence/Q60/faulted-profile-count-checkpoint-r1",
+  "paths": "Repository-relative source paths and logical task/retained-temp authorities; no personal absolute paths, credentials, PIDs or raw logs.",
+  "source": {
+    "publishedParent": "30374e0a46d6faaf94152b426620f482638a3607",
+    "numericalRestorationReceipt": {
+      "path": "task/q60/rejected-storage-count-only-transition-r1.json",
+      "sha256": "e0bd2c1efe2e3da95b3fa794eaede91422f0499514bc869b6fd62940685d3733"
+    },
+    "finalCountFilePins": {
+      "src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java": "db1933c729379684423a1252dc2440b76829f8c3da542f0bc82c02f0d592e574",
+      "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java": "164456d4ded0953a083e079fa3c91b9624ddcde85aa752ab6eb85efd140d3489",
+      "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "fe1f531e9a6c6741be8a43e65787eeb85f61f960703782f4bc3886943291fc31",
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java": "13c2d9adba71498fbf407e109d3c5fc6b42d1d4ab1ccad6e0c7c3b308a8063f1",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "0c716051b00d6a65666047679a5d54400876d37aeb9e82dea7c5ec8a1c623aed",
+      "tests/contracts/Rb56TemporalWorkContractTest.java": "4a622aadd3911c085194f6152242285c0f049830d865d1715c478dc7bfd7e198"
+    },
+    "requiredPublishedNumericalBaselinePins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3"
+    },
+    "scope": "Count-only: six source/test files retained; two numerical/storage files restored by root after archiving rejected prototype.",
+    "integration": {
+      "path": "task/q60/rb56-faulted-tail-removal-root-integration-r1.json",
+      "sha256": "f01390fe8d47c2679416520688ea20d4f66cacc6fd0d088da8fba474a3b21431"
+    },
+    "branch": "codex/q60-faulted-profile-counts",
+    "branchVerification": "ROOT_CONFIRMED_AND_READ_ONLY_GIT_STATE",
+    "currentPins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3",
+      "src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java": "db1933c729379684423a1252dc2440b76829f8c3da542f0bc82c02f0d592e574",
+      "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java": "164456d4ded0953a083e079fa3c91b9624ddcde85aa752ab6eb85efd140d3489",
+      "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "fe1f531e9a6c6741be8a43e65787eeb85f61f960703782f4bc3886943291fc31",
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java": "13c2d9adba71498fbf407e109d3c5fc6b42d1d4ab1ccad6e0c7c3b308a8063f1",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "0c716051b00d6a65666047679a5d54400876d37aeb9e82dea7c5ec8a1c623aed",
+      "tests/contracts/Rb56TemporalWorkContractTest.java": "4a622aadd3911c085194f6152242285c0f049830d865d1715c478dc7bfd7e198"
+    },
+    "hashAuthority": "SHA-256 pins identify tested working-copy bytes. Existing Git line-ending normalization can produce different blob bytes for unchanged published text; LuChecks raw4794 is the working-copy authority. No verbatim all-blob-byte claim."
+  },
+  "rootSelectedRollback": {
+    "status": "VERIFIED_PUBLISHED_BASELINE_SOLVER_RESTORED_COUNT_FILES_RETAINED",
+    "archiveReceipt": {
+      "path": "retained-temp/rejected-storage-build28-after106-r1/manifest.json",
+      "sha256": "666b856fe91c8b70d04addb51830ad5b158e4e9d6d6350f3c9e133bd8291430a"
+    },
+    "changedSourcePaths": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java"
+    ],
+    "historyOrArtifactDeletion": false,
+    "protectedMainMerge": false,
+    "priorTaskDraftsPreserved": {
+      "path": "task/q60/checkpoint-docs-r1/closed-full6-r2/manifest.json",
+      "sha256": "bb79cb1cc7c8baee9292c5327a8f4515758b8f765134bd68884027b764c98472"
+    },
+    "transitionReceipt": {
+      "path": "task/q60/rejected-storage-count-only-transition-r1.json",
+      "sha256": "e0bd2c1efe2e3da95b3fa794eaede91422f0499514bc869b6fd62940685d3733"
+    },
+    "verifiedWrites": {
+      "sourcePaths": 2,
+      "index": 0,
+      "deletions": 0
+    },
+    "originalUntrackedByteExactAtTransition": 8
+  },
+  "invariants": {
+    "wallLimitMs": 90000,
+    "workLimit": 640,
+    "activeLimitMs": 5000,
+    "productionStepUs": 400,
+    "fineStepUs": 200,
+    "q30StepUs": 5,
+    "independentGeneratedProofFlows": 5,
+    "realElectricalStepChanges": 0,
+    "solverArithmeticGuardChanges": 0,
+    "normalRb56Enabled": false,
+    "hardEnabled": false,
+    "normalRb56SaveLoadEnabled": false
+  },
+  "profileCounts": {
+    "rb56Faulted": 9,
+    "oneChannelHealthyRepairRetest": 11,
+    "twoChannelHealthyRepairRetest": 13,
+    "q30Counts": "UNCHANGED",
+    "change": "Bookkeeping tail only; coherent goal resolver/cursor/proof/coordinator count and RB56 dependency field.",
+    "speedOrAdmissionProof": false
+  },
+  "finalGates": [
+    {
+      "phase": "native-r147",
+      "status": "PASS",
+      "scope": "Fresh count/electrical/guard/ownership contracts on restored final source",
+      "operationElapsedMs": 62372,
+      "exitCode": 0,
+      "sourceFiles": 1353,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "result": {
+        "path": "retained-temp/native-r147-result.json",
+        "sha256": "77f1d41554bd81de4495103f164bf83cd185bc83a8b6aa3cde3f5aba94ac09b7"
+      },
+      "actualLog": {
+        "path": "retained-temp/native-r147-full-output.log",
+        "sha256": "48dca2d250af0111e299b7147c4795aec24dec09dec43b7024ed7282cc2febb4"
+      },
+      "maintainedSuites": 10,
+      "actualPassMarkers": [
+        "PASS: PlayerSessionFingerprintContractTest assertions=119",
+        "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false",
+        "PASS: RB56 temporal work contracts 292 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 faultedUnits=9 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: Q30 temporal work contracts 167 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+        "PASS: q30 generation request contracts 306 assertions",
+        "PASS: A07 execution contracts assertions=306504",
+        "PASS: Q30 owned LU zero-row contracts assertions=292",
+        "PASS: D01 diagnostic contracts assertions=168",
+        "PASS: A10 generation contracts assertions=190",
+        "PASS: A10 dependency contracts assertions=15",
+        "PASS: focused current contracts; 10 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "rb56Scope": "Fixed seed77/packages55/RELAY_B_COIL_OPEN temporal pilot; maximum13/faulted9; not full admission corpus",
+      "sessionBackingScope": "Developer model/digest/restart only; normalSessionLoad=false",
+      "fullNativeMatrix": "NOT_RUN",
+      "independentRawOracles": "NOT_RUN"
+    },
+    {
+      "phase": "build-r29",
+      "status": "PASS",
+      "scope": "Actual final-source JDK8/GWT all five permutations",
+      "operationElapsedMs": 128112,
+      "exitCode": 0,
+      "compileElapsedSeconds": 124.304,
+      "permutations": 5,
+      "link": "PASS",
+      "sourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "result": {
+        "path": "retained-temp/build-r29-result.json",
+        "sha256": "97bf26649c7e9cea8cb121864801a56896c88ad2cc5995b09955a25a3a1bba18"
+      },
+      "actualLog": {
+        "path": "retained-temp/owned-build-r29/stdout.log",
+        "sha256": "b47024039ac5154b9fc5fcf2adc74faad9617adb311bdb4f73c58465301751e3"
+      }
+    },
+    {
+      "phase": "compiled-r107",
+      "status": "PASS",
+      "scope": "Fresh final-source numerical/runtime/model/scale/Task41 checks; small model matrix is not full energy or player-flow admission proof",
+      "operationElapsedMs": 7789,
+      "exitCode": 0,
+      "sourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "portClosed": true,
+      "positiveReport": {
+        "status": "PASS",
+        "pureAssertions": 306503,
+        "runtimeAssertions": 83,
+        "runtimeCases": 23,
+        "modelAssertions": 59,
+        "modelRows": 21,
+        "scaleRows": 16,
+        "cleanup": "PASS",
+        "injectedTask41CleanupFailureAndRecovery": true
+      },
+      "earlyForcedTerminal": {
+        "status": "PASS",
+        "state": "FAIL:a07:a07-explicit-failure-canary",
+        "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+        "applicationFailureReportClaimed": false,
+        "task41FailureClaimed": false
+      },
+      "result": {
+        "path": "retained-temp/compiled-r107-result.json",
+        "sha256": "63e7122e586a33ac4a1e0afe081299a07bac5bf85dd70d459a89e97813b9207d"
+      },
+      "strictResult": {
+        "path": "retained-temp/a07-q30-wire-array-compiled-r107/strict-result.json",
+        "sha256": "d5139dc6e2a9e261dfea224d478a70672acdbddaf4785d0538dd3beaae5e69c8"
+      }
+    },
+    {
+      "phase": "compiled-r108",
+      "status": "FAIL",
+      "scope": "One current normal Q30 seed10014 control under original limits; no unchanged corpus",
+      "applicationOutcome": "ERROR",
+      "operationElapsedMs": 95193,
+      "exitCode": 1,
+      "observationSeconds": 90.05249869998079,
+      "lastProgress": {
+        "phase": 4,
+        "label": "Verify measurements and repairs",
+        "units": 302,
+        "elapsedMs": 89006,
+        "activeElapsedMs": 89007
+      },
+      "terminalApplicationTimeWorkCause": "UNEXPOSED",
+      "requestedReplay": "tsj-alpha/5/MEDIUM/RB30_CONTROL/10014",
+      "acceptedRuntimeReplay": null,
+      "predecessorReplay": null,
+      "replayRole": "PREDECESSOR_REQUEST_ON_ERROR",
+      "frozenPlan": {
+        "packages": 40,
+        "channels": 2
+      },
+      "runtimePackageCensus": "UNEXPOSED",
+      "sourceFiles": 1222,
+      "sourceInputsUnchanged": true,
+      "ownedHostCleanup": "PASS",
+      "applicationCleanup": {
+        "seconds": 1.4339318999846,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "strictFinalPortAssertion": "NOT_REACHED",
+      "rawCleanupPortClosed": true,
+      "rawErrors": [],
+      "externalPreAndPost": "PASS",
+      "externalAuditLogs": [
+        {
+          "path": "retained-temp/q30-r108-external-before.log",
+          "sha256": "8bc0328451f0cb7cb48c7c45d6f1bec702e8c1302340db10dddf14bda4ef5d03"
+        },
+        {
+          "path": "retained-temp/q30-r108-external-after.log",
+          "sha256": "8bc0328451f0cb7cb48c7c45d6f1bec702e8c1302340db10dddf14bda4ef5d03"
+        }
+      ],
+      "result": {
+        "path": "retained-temp/compiled-r108-result.json",
+        "sha256": "f632cd0f6a5ab253a94f89beef90e0ca9e6bf76370f435cd7b3b49bef3a6b998"
+      },
+      "rawResult": {
+        "path": "retained-temp/q30-q60-compiled-r108/host/result.json",
+        "sha256": "3b48054130acfdca91c4ca386b7c8d5c2bd4411faddb19efec6e09b0398eed63"
+      },
+      "strictResult": {
+        "path": "retained-temp/q30-q60-compiled-r108/strict-result.json",
+        "sha256": "a0835f25127fd0c395f50348e0dd9b0bafbf5a3891cdb19acd74fb1119102676"
+      },
+      "frozenReview": {
+        "path": "task/q60-browser/compiled-r108-input-review.json",
+        "sha256": "dd4f4d424116df7b7c71698240d54d348fafd4ec641ed27b2e16d9ebda38e718"
+      },
+      "strictFailure": "Maintained one-case predicate failed; final port assertion not reached",
+      "noRetry": true,
+      "causalRegressionOrSpeedClaimed": false
+    }
+  ],
+  "historicalRejectedPrototype": {
+    "typedSourcePins": {
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "d770a5bf747be578716c3761ab02a87fc4c8996469a47db7c6449c4d5f98ed24",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "0c70e79b422a33a8ed4a93be041fb3a6c9cc2b1e10a305d86fc6d043a5e97580"
+    },
+    "compactEvidence": {
+      "path": "task/q60/checkpoint-docs-r1/closed-full6-r2/evidence/binary64-faulted-count-evidence-r1.json",
+      "sha256": "e8f4176aed009154fe44fffdc898677bd9af43be21ba636979a538fd9fd8ca42"
+    },
+    "build28": "PASS_NUMERICAL_PROTOTYPE_ONLY",
+    "compiled101": "PASS_NUMERICAL_PROTOTYPE_ONLY",
+    "full6": {
+      "status": "FAIL_4_PASS_2_TIMEOUT",
+      "complete": true,
+      "passed": 4,
+      "failed": 2,
+      "aggregate": {
+        "path": "retained-temp/q60-full6-noop-r1.json",
+        "sha256": "3ae2b996f9afc53e0666be39c1bd22939fd5ce182835cec3488f484169c3ffbc"
+      },
+      "cases": [
+        {
+          "seed": "-1017",
+          "phase": "compiled-r103",
+          "declaredPackages": 40,
+          "packageCountScope": "Actual PASS report",
+          "qualification": "PASS",
+          "jobOutcome": "PASS",
+          "jobStage": "PUBLISHED_AND_RESTORED",
+          "applicationElapsedMs": 35738,
+          "workUnits": 516,
+          "maxManualUnitMs": 2202,
+          "rawApplicationFields": {
+            "generationMillis": 35738,
+            "generationWork": 516,
+            "maxManualUnitMillis": 2202
+          },
+          "observationSeconds": 36.899494999990566,
+          "qualifiedPublication": true,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r103/cases/001-rb56-seed-1017-positive.report.json",
+            "sha256": "66864f8142d03aa3edc6e0fc1728c99c31a4292b7843aabb6fca8e547eef6bb9"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r103/result.json",
+            "sha256": "911b3aab953a18f4cbfbd185299c7449970228037f8798f43fe136318a1e977c"
+          }
+        },
+        {
+          "seed": "-1067",
+          "phase": "compiled-r103",
+          "declaredPackages": 55,
+          "packageCountScope": "Actual PASS report; frozen declaration for failed reports that omit packages",
+          "qualification": "FAIL",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "applicationElapsedMs": 90285,
+          "workUnits": 570,
+          "maxManualUnitMs": 2827,
+          "rawApplicationFields": {
+            "jobMillis": 90285,
+            "jobWork": 570,
+            "manualUnitMaxMillis": 2827
+          },
+          "observationSeconds": 91.72083570001996,
+          "qualifiedPublication": false,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r103/cases/002-rb56-seed-1067-positive.report.json",
+            "sha256": "0d0a296d9285419698c45392bcc6abb4d72ee710a99fae35f1924878258b921f"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r103/result.json",
+            "sha256": "911b3aab953a18f4cbfbd185299c7449970228037f8798f43fe136318a1e977c"
+          }
+        },
+        {
+          "seed": "-1022",
+          "phase": "compiled-r104",
+          "declaredPackages": 60,
+          "packageCountScope": "Actual PASS report; frozen declaration for failed reports that omit packages",
+          "qualification": "FAIL",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "applicationElapsedMs": 90021,
+          "workUnits": 487,
+          "maxManualUnitMs": 2581,
+          "rawApplicationFields": {
+            "jobMillis": 90021,
+            "jobWork": 487,
+            "manualUnitMaxMillis": 2581
+          },
+          "observationSeconds": 90.99965490002069,
+          "qualifiedPublication": false,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r104/cases/001-rb56-seed-1022-positive.report.json",
+            "sha256": "1c0332f34dff65d038328d8a7cd092a3e981f2fb2db64f24c1a95a1bae8230cd"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r104/result.json",
+            "sha256": "5ba5cbc95756e671b90b0ac473cce0990ffc7e1f732b87e4734eb9465463233e"
+          }
+        },
+        {
+          "seed": "9007199254741579",
+          "phase": "compiled-r104",
+          "declaredPackages": 50,
+          "packageCountScope": "Actual PASS report",
+          "qualification": "PASS",
+          "jobOutcome": "PASS",
+          "jobStage": "PUBLISHED_AND_RESTORED",
+          "applicationElapsedMs": 74163,
+          "workUnits": 584,
+          "maxManualUnitMs": 1999,
+          "rawApplicationFields": {
+            "generationMillis": 74163,
+            "generationWork": 584,
+            "maxManualUnitMillis": 1999
+          },
+          "observationSeconds": 75.28824550000718,
+          "qualifiedPublication": true,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r104/cases/002-rb56-seed9007199254741579-positive.report.json",
+            "sha256": "4e2954795e5bdd294e5a4f8c263e9560caa055d60793d0e57b5906ebe20bb967"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r104/result.json",
+            "sha256": "5ba5cbc95756e671b90b0ac473cce0990ffc7e1f732b87e4734eb9465463233e"
+          }
+        },
+        {
+          "seed": "-1004",
+          "phase": "compiled-r105",
+          "declaredPackages": 44,
+          "packageCountScope": "Actual PASS report",
+          "qualification": "PASS",
+          "jobOutcome": "PASS",
+          "jobStage": "PUBLISHED_AND_RESTORED",
+          "applicationElapsedMs": 35255,
+          "workUnits": 517,
+          "maxManualUnitMs": 1918,
+          "rawApplicationFields": {
+            "generationMillis": 35255,
+            "generationWork": 517,
+            "maxManualUnitMillis": 1918
+          },
+          "observationSeconds": 36.44783649998135,
+          "qualifiedPublication": true,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r105/cases/001-rb56-seed-1004-positive.report.json",
+            "sha256": "53449d7cebbe8741aafce91e69ae41ebba2fc08d1d30fa8e1c21aaf0ffa10e12"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r105/result.json",
+            "sha256": "c4fc436a3b1a3dde93276f3d4afd1c6fd24ac56fdf81c6744febd83ac4544ac6"
+          }
+        },
+        {
+          "seed": "-1028",
+          "phase": "compiled-r105",
+          "declaredPackages": 56,
+          "packageCountScope": "Actual PASS report",
+          "qualification": "PASS",
+          "jobOutcome": "PASS",
+          "jobStage": "PUBLISHED_AND_RESTORED",
+          "applicationElapsedMs": 89623,
+          "workUnits": 618,
+          "maxManualUnitMs": 3128,
+          "rawApplicationFields": {
+            "generationMillis": 89623,
+            "generationWork": 618,
+            "maxManualUnitMillis": 3128
+          },
+          "observationSeconds": 90.95760649998556,
+          "qualifiedPublication": true,
+          "normalCatalogEnabled": false,
+          "ordinaryCustomerRetestPassed": false,
+          "playerInputEvidence": false,
+          "actualApplicationCleanupFlagsPassed": true,
+          "rawReport": {
+            "path": "retained-temp/q60-compiled-r105/cases/002-rb56-seed-1028-positive.report.json",
+            "sha256": "402584e0b61b8dfaed4f3d0ab2cbe07499f370b1cb59c843f0bdaa27091a19cc"
+          },
+          "runnerResult": {
+            "path": "retained-temp/q60-compiled-r105/result.json",
+            "sha256": "c4fc436a3b1a3dde93276f3d4afd1c6fd24ac56fdf81c6744febd83ac4544ac6"
+          }
+        }
+      ],
+      "scope": "Historical rejected typed-storage private cold full-D01; no current count-only/player-input/retest PASS",
+      "collectionAndCleanup": "PASS"
+    },
+    "actual56CountEvidence": {
+      "status": "HISTORICAL_ACCOUNTING_PASS_ONLY",
+      "applicationElapsedMs": 89623,
+      "workUnits": 618,
+      "maxManualUnitMs": 3128,
+      "currentFinalAdmissionClaimed": false
+    },
+    "normalQ30Control106": {
+      "status": "ERROR",
+      "scope": "Rejected typed prototype normal Q30 one-seed control only",
+      "observationSeconds": 90.80134090001229,
+      "lastProgress": {
+        "units": 427,
+        "elapsedMs": 89142,
+        "label": "Verify measurements and repairs"
+      },
+      "terminalCause": "UNEXPOSED",
+      "exactTerminalApplicationCost": "UNEXPOSED",
+      "sourceInputsUnchanged": true,
+      "externalPostAudit": "PASS_ROOT_REPORTED",
+      "ownedHostCleanup": "PASS",
+      "applicationServerPortCleanup": "PASS",
+      "ownedHostOperationStatus": "FAIL",
+      "ownedHostOperationMs": 95686,
+      "rawResult": {
+        "path": "retained-temp/q30-q60-compiled-r106/host/result.json",
+        "sha256": "d7680e7a19713df56fb7f450907ddbc31f769931f80a2cd3ad083ee13f0285ac"
+      },
+      "strictResult": {
+        "path": "retained-temp/q30-q60-compiled-r106/strict-result.json",
+        "sha256": "c710bb43525ec8973d9cbc0c4d774e349ed3e1911c7f5d13ab6a1eb73f200de2"
+      },
+      "closedHostResult": {
+        "path": "retained-temp/compiled-r106-result.json",
+        "sha256": "280dfe02bd065d71dbebbaf65a9df1f776d7c04947e6eeeeffb2edbb30657cb2"
+      },
+      "causalRegressionOrSpeedClaimed": false
+    },
+    "raw144145": {
+      "status": "PASS_HISTORICAL_PROTOTYPE_SCOPE_ONLY",
+      "comparisons": 236,
+      "exactClosure": {
+        "path": "task/q60/raw144-145-exact-baseline-closure-r1.json",
+        "sha256": "08fbb5c6e85bad6253949ff62d486b6cf9fb3ef7f55d8667a1c15f1b8938b7fc"
+      },
+      "scope": "Three fixed17/77/42 graphs; whole raw/criteria/cleanup exact133/134, zero exclusions; not new full24 or final admission"
+    },
+    "previousStorageOnlyFull6": {
+      "phase": "compiled-r96/r97/r98",
+      "status": "FAIL_3_OF_6",
+      "complete": true,
+      "aggregate": {
+        "path": "retained-temp/q60-full6-binary64-r1.json",
+        "sha256": "31fbb7ac45837ce8f23814e78a92f253fac574426d8ca75fe80577742e94de1d"
+      }
+    },
+    "blockReuseCensus143": "NO_GO_ZERO_GENUINE_UPDATE_COVERAGE_NO_CACHE_RETAINED"
+  },
+  "limits": {
+    "currentFull6": "NOT_RERUN",
+    "currentCompletedAdmissionPass": "NOT_ESTABLISHED",
+    "exact60VisibleSession": "NOT_RUN_HELD_BY_FAILED_QUALIFICATION",
+    "actualModestMachine": "BLOCKED_UNAVAILABLE_HARDWARE",
+    "referenceDesktop": "Ryzen7700",
+    "normalAdmission": "HELD",
+    "reliableDeadlineClearance": "NOT_ESTABLISHED",
+    "pairedSpeedOrCausalRegressionProof": "NOT_ESTABLISHED",
+    "fullNativeMatrix": "NOT_RUN"
+  },
+  "preservation": {
+    "originalUntrackedFiles": 8,
+    "latestRootConfirmedByteExact": true,
+    "historicalQ30Risks": [
+      "Unknown91.616s failure",
+      "Six missing scratch inventories",
+      "LateBLOCKED release audit"
+    ],
+    "emailCoreAndroidServerUnrelatedEditsMainMerge": false,
+    "postGateOriginalFilesByteCheck": "PASS_ALL8_ROOT_CORRECTED_EXPLICIT_ARRAY_READER",
+    "trackedSourceTestEdits": 6,
+    "sourceDiff": {
+      "insertions": 79,
+      "deletions": 18,
+      "CirSimAndLuChecksDiff": "NONE"
+    },
+    "indexAtCodeOnlyPreservationCheck": "EMPTY",
+    "gitDiffCheck": "PASS",
+    "readerCorrection": "Failed collection-count probe still had all8 exact hashes; explicit-array count reader corrected and PASS. Source was unchanged.",
+    "finalStagedReview": "RECORDED_SEPARATELY_BY_ROOT"
+  },
+  "publication": {
+    "status": "EXACT_COMMIT_NORMAL_PUSH_REMOTE_RESULT_RECORDED_SEPARATELY_BY_ROOT",
+    "scope": "Packet asserts tested working-copy scope; no publication result is inferred."
+  },
+  "next": "Record verified count correction with final normal control FAIL and separately verified publication. Investigate unexposed normal ERROR cause and unresolved Q60 wall performance/exact60 UI/modest hardware. No unchanged full6 or Q30 corpus retry.",
+  "independentInterimReview": {
+    "path": "task/q60/count-only-transition-final147-29-107-independent-review-r1.json",
+    "sha256": "558770f6749cab374892208d02d4ef5f3f7732eb340cd123a7ac6aecceae835c",
+    "scope": "PASS1761 current pins plus20 rejected archive files exact; native147/build29/compiled107 congruence only"
+  },
+  "independentFinalReview": {
+    "path": "task/q60/count-only-final147-29-107-108-independent-closed-review-r1.json",
+    "sha256": "a94ed1b009114dbdd4494c4ac2277370d0e7c07d429369e3ef1958ec8cc20e5f",
+    "status": "CORRECTNESS_SCOPED_REVIEW_PASS_NORMAL_Q30_FAIL_Q60_UNACCEPTED",
+    "unionPins": 1772,
+    "scope": "Final147/29/107/108: frozen1081412 plus separate review witness; driver12/transport1562/outer1222 unchanged; original8/index/controller preserved; strict108 listener assertion NOT_REACHED remains separate from rawcleanupPASS portClosed=true; one seed10014/no reroll."
+  }
+}

@@ -7,21 +7,26 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **E06 published; Q60 IN PROGRESS**
-U06/U07/E05/E06 are published. Current source0A native132/build25/compiled87
-and all236 original400/200us raw comparisons pass. Unprofiled normal55
-compiled88 still fails the unchanged90s wall limit:520 work, four complete
-flows and a partial fifth; cleanup passes. Current normal Q30 seed10014
-compiled89 passes85.757s observation/92.293s outer; sampled443 is not terminal
-work. Profile90 is closed CAPTURED/qualificationFAIL; its root audit and original
-offline attribution are diagnostic, without paired speed proof. Historical
-DE7/BFD, full-six r7 FAIL2/6 and source85 visible40 UI keep their source scopes.
-Current exact60/two-channel visible/session and actual modest-machine proof
-remain outstanding. Q60 remains unaccepted; normal RB56/HARD/save-load stay held.
-This feature-branch checkpoint is not release acceptance. Native135 healthy55 census passes; unit specialization is NO_GO from
-operation counts, with source unchanged and no speed/admission claim.
-Original limits, eight files and historical Q30 risks remain preserved.
-[Q60 evidence](task-evidence/Q60/README.md), [current checkpoint](CODEX_TASK_REPORT.md).
+**Current task:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
+U06/U07/E05/E06 remain published. Root selects a count-only Q60 checkpoint on
+`codex/q60-faulted-profile-counts`: six RB56 FAULTED goal-count files remain;
+CirSim/LuChecks are restored exactly to published 30374 numerical/storage baseline
+after verified prototype archiving. Native147 PASS 62.372 s / ten suites / 1,353 inputs
+unchanged / cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
+normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
+89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
+RB56 FAULTED becomes nine real executable units; healthy/repair/customer retest,
+Q30 counts, electrical steps, numerical guards and original 90 s / 640 work / 5 s remain
+unchanged. Typed-prototype full6 is historical FAIL with four PASS and two TIMEOUT at 55/60 packages;
+its 56-part 618-unit PASS is historical accounting evidence. Prototype Q30 control106
+ends ERROR after 90.8013409 s observation; exact terminal cause remains unexposed.
+No reliable deadline or causal speed/regression claim follows. Exact 60 real UI/
+session is NOT RUN/held; actual modest hardware is BLOCKED/unavailable.
+Normal RB56/HARD/save-load remain held. Eight original files, historical failures
+and Q30 risks remain preserved. No unchanged full6 retry or Q30 corpus rerun.
+This feature-branch checkpoint is not Q60 or release acceptance.
+[Count checkpoint evidence](task-evidence/Q60/faulted-profile-count-checkpoint-r1/README.md),
+[current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
 **Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
@@ -2996,7 +3001,26 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS, 2026-10-08; unaccepted feature-branch checkpoint. This is not release acceptance. Published E06 base is `7aa0e1932f3c853e7265bf186e98989ada641a51`. Current source0A native132/build25/compiled87 and all236 original400/200us raw comparisons pass; whole raw/criteria/cleanup receipts are exact129/130 and126/127 with zero exclusions. Normal55 compiled88 FAILS the original90s wall limit:97.105s outer/91.4795234s case,90398ms application/520 work/max1958ms; five replay installs, four completed flows and a partial fifth, cleanup PASS and publication false. Current normal Q30 seed10014 compiled89 PASS85.7567492s observation/92.293s outer under original90s/640/5s; sampled443 is not exact terminal cost and runtime package census is not exposed. Profile90 is closed CAPTURED/qualificationFAIL97.273s outer,90029ms/448 work/max2316ms; original offline readers and root closure/pin audit pass, without independent profile90 review or paired speed proof. Historical DE7/BFD, full-six r7 FAIL2/6 and source85 visible40 r8 PASS307.383s/three checkpoints/four screenshots retain their original source scopes. Later full-six drafts are unrun. Current exact60/two-channel visible/session and actual modest-machine evidence remain outstanding; Ryzen7700 is the reference desktop. Normal RB56/HARD/normal saves remain held for Q60 and fresh U05/REL-B. Courtyard grids remain unintegrated and not selected; native135 source-neutral healthy55 census PASS32.677s retains exact121/131 raw/criteria/cleanup; unit specialization is NO_GO from counted dispatch cost, without a speed/admission claim. Original limits, failed cases, eight original files and historical Q30 risks remain preserved. [Evidence](task-evidence/Q60/README.md).
+**Status:** IN PROGRESS / UNACCEPTED, 2026-10-08. Selected count-only scope on
+`codex/q60-faulted-profile-counts`, published parent
+`30374e0a46d6faaf94152b426620f482638a3607`. Six verified RB56 FAULTED goal-count
+files remain; root archive and restoration of only CirSim/LuChecks to exact
+published numerical/storage baseline are verified. Native147 PASS 62.372 s/ten
+suites/1,353 unchanged inputs/cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
+normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
+89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
+FAULTED has nine real units without eliding electrical steps; healthy/repair/
+customer retest, Q30 counts, five independent generated proof flows, original
+90 s / 640 work / 5 s and electrical cadence remain unchanged. Rejected typed-prototype
+full6 compiled103-105 is historical FAIL with four PASS and two TIMEOUT at 55/60 packages; the56-part
+618-unit PASS is historical accounting evidence only. Prototype Q30 control106
+ends ERROR after 90.8013409 s observation; terminal cause/cost are unexposed,
+cleanup passes and no causal speed/regression claim is made. No unchanged full6
+retry. Exact 60 real UI/session is NOT RUN/held; actual modest hardware is
+BLOCKED/unavailable. Normal RB56/HARD/save-load remain held for Q60 and fresh
+U05/REL-B. Eight original files and historical Q30 risks/failures remain preserved.
+Exact commit/normal-push result is recorded separately by root after verification. This is not Q60 or release acceptance.
+[Evidence](task-evidence/Q60/faulted-profile-count-checkpoint-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

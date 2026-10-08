@@ -5,7 +5,7 @@ import java.util.Vector;
 
 /** Finite Q30/RB56 input recipes; one guarded profile owner and current CircuitJS graph. */
 final class Rb30Behavior implements GeneratedBoardFamilyState,
-        GeneratedChallengeBehaviorContract, GeneratedTemporalBehavior,
+        GeneratedChallengeBehaviorContract, GeneratedTemporalBehavior, GeneratedTemporalBehavior.GoalWorkUnits,
         GeneratedLiveTemporalSimulation {
     static final String SENSORS_LOW = "SENSORS_LOW";
     static final String SENSORS_A_ONLY = "SENSORS_A_ONLY";
@@ -351,6 +351,13 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         return power.areAllDisconnected() ? LIVE_ISOLATED_SECONDS : LIVE_POWERED_SECONDS;
     }
     public int getProfileWorkUnits() { return profileWorkUnits; }
+    public int requiredProfileWorkUnits(Profile profile) {
+        if (profile == null) throw new IllegalArgumentException("Missing temporal profile goal");
+        // RB56 FAULTED has eight unchanged startup advances and one real HIGH observation.
+        // Its old remaining condition/restoration slots performed only owner checks.
+        return recipe == Recipe.RB56 && profile == Profile.FAULTED ?
+            startupUnits() + 1 : profileWorkUnits;
+    }
 
     public GeneratedTemporalDependency getDependency(GeneratedBoardInstance owner) {
         requireOwnedBy(owner);
@@ -378,6 +385,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         if (recipe == Recipe.RB56) {
             values.put("fresh-input", "LOW");
             values.put("startup-units", Integer.toString(RB56_STARTUP_UNITS));
+            values.put("faulted-profile-work-units",
+                Integer.toString(requiredProfileWorkUnits(Profile.FAULTED)));
             values.put("startup-unit-seconds", Double.toString(RB56_STARTUP_UNIT_SECONDS));
             values.put("startup-total-seconds", "0.4");
             values.put("startup-profiles", "HEALTHY,FAULTED,REPAIR");
@@ -491,6 +500,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         private final CirSim ownerSim;
         private final GeneratedBoardInstance owner;
         private final Profile profile;
+        private final int workUnits;
         private final Object graph;
         private final Vector<CircuitElm> graphElements;
         private final GeneratedChallengeController challenge;
@@ -541,6 +551,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             ownerSim = sim;
             owner = instance;
             this.profile = profile;
+            workUnits = requiredProfileWorkUnits(profile);
             graph = sim.elmList;
             graphElements = new Vector<CircuitElm>(sim.elmList);
             challenge = sim.getGeneratedChallengeController();
@@ -617,7 +628,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
 
         boolean step() {
             if (cancelled) throw new IllegalStateException("Q30 profile cancelled");
-            if (complete || phase >= profileWorkUnits) return false;
+            if (complete || phase >= workUnits) return false;
             requireCurrent("unit " + phase + " before");
             if (!blocked) {
                 int conditionPhase = phase - startupUnits();
@@ -649,7 +660,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             }
             phase++;
             requireCurrent("unit " + (phase - 1) + " after");
-            return phase < profileWorkUnits;
+            return phase < workUnits;
         }
 
         private void observeCondition(int condition) {
@@ -910,7 +921,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         }
 
         GeneratedRepairStatus finish() {
-            if (cancelled || phase < profileWorkUnits)
+            if (cancelled || phase < workUnits)
                 throw new IllegalStateException("Q30 profile is incomplete");
             requireCurrent("finish");
             if (profile == Profile.HEALTHY) {
@@ -947,7 +958,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 throw new IllegalStateException("Q30 prior-input cleanup failed", cleanupFailure);
         }
 
-        int getWorkUnits() { return profileWorkUnits; }
+        int getWorkUnits() { return workUnits; }
 
         private void requireCurrent(String stage) {
             if (!isCurrentOwnerIdentity() || powerController.getState() != powerState ||

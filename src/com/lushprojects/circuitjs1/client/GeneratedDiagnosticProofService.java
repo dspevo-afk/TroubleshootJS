@@ -204,14 +204,21 @@ final class GeneratedDiagnosticProofService {
         }
         if (owner.getTemporalBehavior() != null) {
             int profileUnits = owner.getTemporalBehavior().getProfileWorkUnits();
+            int healthyUnits = GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
+                owner.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.HEALTHY);
+            int faultedUnits = GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
+                owner.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.FAULTED);
+            int repairUnits = GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
+                owner.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.REPAIR);
             GeneratedBoardOperation retest = owner.getOperationCatalog().find(
                 GeneratedBoardOperationIds.CUSTOMER_RETEST);
             if (profileUnits < 1 || profileUnits > 64 || retest == null ||
                     retest.getWorkUnits(owner) < 1 || retest.getWorkUnits(owner) > 64)
                 throw new IllegalArgumentException("Invalid declared temporal work units");
             // Healthy, faulted and repaired profiles, then the real customer operation.
-            perHypothesis += 3 * (profileUnits - 1) + retest.getWorkUnits(owner) - 1;
-            if (!explicitCompletion) perHypothesis += profileUnits - 1;
+            perHypothesis += (healthyUnits - 1) + (faultedUnits - 1) +
+                (repairUnits - 1) + retest.getWorkUnits(owner) - 1;
+            if (!explicitCompletion) perHypothesis += repairUnits - 1;
         }
         int count = hypothesesFor(owner).size();
         if (perHypothesis <= 0 || count > Integer.MAX_VALUE / perHypothesis)

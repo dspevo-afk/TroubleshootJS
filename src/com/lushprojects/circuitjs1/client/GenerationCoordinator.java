@@ -514,7 +514,10 @@ final class GenerationCoordinator {
                     request.requiresExplicitCompletion());
                 expectedProofUnits = proofUnits;
                 int otherUnits = candidate.getTemporalBehavior() == null ? 5 :
-                    4 + 2 * candidate.getTemporalBehavior().getProfileWorkUnits();
+                    4 + GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
+                        candidate.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.HEALTHY) +
+                    GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
+                        candidate.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.FAULTED);
                 if (proofUnits > MAX_JOB_STEPS - otherUnits)
                     throw new GenerationJob.Failure(GenerationJob.Outcome.WORK_EXHAUSTED,
                         "Diagnostic program exceeds the current generation work budget");
