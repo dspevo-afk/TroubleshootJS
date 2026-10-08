@@ -1,0 +1,638 @@
+{
+  "protocol": "Q60-FINAL-READINESS-UI-VISIBLE-SUPPLEMENT-1",
+  "status": "FOCUSED_VISIBLE_REPAIR_PASS_Q60_ACCEPTANCE_BLOCKED",
+  "priorEvidence": {
+    "artifact": "q60/build-native-browser-current-evidence-r1.json",
+    "sha256": "2de992cca09576a823fa795a8e0d161cb22ddab5ccecaf1dabf4694ff150dd8e"
+  },
+  "uiChange": {
+    "scope": "Refresh existing remove/lift controls on actual detachment-readiness transitions; no solver or threshold changes.",
+    "sourceChanges": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+        "beforeSha256": "d14fcce0608a41ddbde35c77e1ed3ce63a07284e72c1612ea43d6fd4d15b4be0",
+        "afterSha256": "24acbc39259173fbc79eaf8a037239edd08908c940f2d56f11c74103932f9c6b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "beforeSha256": "878bcefca24dd5296dfafd1b8e452e2308ff156dbf7efa9bb312ea45306dc707",
+        "afterSha256": "68b9c516634ec27bf8830d62c28b30ce1654cafaf7d69223725c8ec318332c52"
+      }
+    ],
+    "record": {
+      "artifact": "q60/refresh-discharge-controls-r1.json",
+      "sha256": "94aa955b1e6aa8bb90187b269027223b932854f75fec64c46932350ee59e3666"
+    },
+    "actualBoundary": "Current actionable physical owner; sources actually OFF; ordinary detachment readiness changes. Refresh existing remove/lift controls and retire stale component popup callbacks. No readiness threshold or solver law is replaced."
+  },
+  "build8": {
+    "phase": "build-r8",
+    "wholeStatus": "PASS",
+    "outerElapsedMs": 94606,
+    "exitCode": 0,
+    "inputCount": 1222,
+    "inputsUnchanged": true,
+    "sourceInventoryCanonicalSha256": "cc6ab5cd1fa0f00ef7e56369d1eb4ba2fe59b4e2ec259323dee41904694f051b",
+    "javaSourceInventoryCanonicalSha256": "cc2c61ddbdeff82a9d720de426b04f465bd1442da28aa608224b1ea99a4abcd3",
+    "hostCleanupVerified": true,
+    "jobActiveProcesses": 0,
+    "handlesClosed": true,
+    "evidence": {
+      "launch": {
+        "artifact": "build-r8-launch.json",
+        "sha256": "6fea67d22f1b45cbc6196c6137cf5ad7c3ed301e913a6596b743beee5173517c"
+      },
+      "hostResult": {
+        "artifact": "build-r8-result.json",
+        "sha256": "a869e1192f35dccd449f9ed92cb65e81ae7469bb30d877c12cb7079587e7831e"
+      },
+      "stdout": {
+        "artifact": "owned-build-r8/stdout.log",
+        "sha256": "e011935efd7642f1af8d0ce2997ed1bc0ba7e6abbe4dba599ada5a7dca9ed097"
+      },
+      "stderr": {
+        "artifact": "owned-build-r8/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "productionBuild": {
+      "permutations": 5,
+      "compiled": true,
+      "linked": true,
+      "style": "OBF"
+    }
+  },
+  "visual3": {
+    "phaseReceipt": {
+      "phase": "visual-r3",
+      "wholeStatus": "FAIL",
+      "outerElapsedMs": 97948,
+      "exitCode": 1,
+      "inputCount": 1222,
+      "inputsUnchanged": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "evidence": {
+        "launch": {
+          "artifact": "visual-r3-launch.json",
+          "sha256": "f79d52487c7bd627059bb8f6320118f18b30fddad650402c019b66c07740574a"
+        },
+        "hostResult": {
+          "artifact": "visual-r3-result.json",
+          "sha256": "38d90f6cbd3ea13c5d2d2d0abd648d6d7581ffd7b41bedd32896c1878074fced"
+        },
+        "stdout": {
+          "artifact": "owned-visual-r3/stdout.log",
+          "sha256": "5dc905a102b7a8ded5402dbb44d672ce8a92c19e584bce50e23a449f0c7f7436"
+        },
+        "stderr": {
+          "artifact": "owned-visual-r3/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "scope": "Q60_40PART_SINGLE_CHANNEL_PUBLIC_MEASUREMENT_REPAIR_PILOT_NOT_60PART_ACCEPTANCE",
+    "status": "FAIL",
+    "seed": "-1017",
+    "actualPackages": 40,
+    "operationSeconds": 96.27494129998377,
+    "cleanupSeconds": 1.2621201000001747,
+    "heldObservedSeconds": 60.8732817999844,
+    "inputMode": {
+      "headed": true,
+      "gameFunctionsCalled": false,
+      "pageEvaluateUsed": false,
+      "syntheticDispatchUsed": false
+    },
+    "actionSummary": {
+      "count": 59,
+      "phaseCounts": {
+        "production-preview-start": 2,
+        "actual-cold-rb56-generation": 10,
+        "domain-local-visible-diagnosis": 38,
+        "power-off-readiness-and-public-catalog-repair": 9
+      },
+      "failedCount": 1,
+      "selectedReceipts": [
+        {
+          "sequence": 10,
+          "phase": "actual-cold-rb56-generation",
+          "name": "wait for visible text Customer retest did not pass. Continue troubleshooting.",
+          "status": "PASS",
+          "elapsedSeconds": 0.031
+        },
+        {
+          "sequence": 56,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "wait for enabled UI control Remove component",
+          "status": "FAIL",
+          "elapsedSeconds": 30.231
+        },
+        {
+          "sequence": 58,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "click End qualification view",
+          "status": "PASS",
+          "elapsedSeconds": 0.133
+        },
+        {
+          "sequence": 59,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "actual verifier restores and retires held owner",
+          "status": "PASS",
+          "elapsedSeconds": 0.002
+        }
+      ]
+    },
+    "publicMeasurements": [
+      {
+        "display": "887.964 mV",
+        "volts": 0.8879640000000001,
+        "name": "regulated-stage input",
+        "red": "U1 terminal INPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "3.057 mV",
+        "volts": 0.003057,
+        "name": "control rail",
+        "red": "U1 terminal OUTPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "9.999 V",
+        "volts": 9.999,
+        "name": "primary bias against primary return",
+        "red": "UAC terminal BIAS",
+        "black": "UAC terminal IN-"
+      },
+      {
+        "display": "9.082 mV",
+        "volts": 0.009082000000000002,
+        "name": "converter enable against primary return",
+        "red": "UAC terminal EN",
+        "black": "UAC terminal IN-"
+      }
+    ],
+    "publicDiagnosis": {
+      "component": "RENAC",
+      "reason": "Primary bias present, converter enable absent, both downstream rails absent.",
+      "basis": "Displayed domain-local voltages and ordinary HIGH input; no seed/fault-key decision.",
+      "publicOriginalMarkings": "RENAC\n\n\nType: resistor\n\n\nMarking: 10000 Ohm +/-5% / 0.25 W\n\n\nState: Installed\n\n\nLead 1: RENAC.1\n\n\nLead 2: RENAC.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component"
+    },
+    "actualReadinessEvidence": null,
+    "publicRepair": null,
+    "unrepairedCustomerRetest": "FAIL_EXPECTED",
+    "repairedCustomerRetest": null,
+    "applicationFinal": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1017",
+      "status": "FAIL",
+      "phase": "RESTORED",
+      "packages": 40,
+      "hypotheses": 5,
+      "solverSamples": 55,
+      "generationStages": 6,
+      "generationWork": 532,
+      "generationMillis": 46032,
+      "maxManualUnitMillis": 1371,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": false,
+      "cleanupPending": false,
+      "normalCatalogEnabled": false,
+      "wallMillis": 81676,
+      "failurePhase": "HOLD",
+      "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+    },
+    "failure": "TimeoutError('Visible UI control stayed disabled: Remove component')",
+    "cleanup": {
+      "status": "PASS",
+      "contextClosed": true,
+      "playwrightStopped": true,
+      "taskPortClosed": true,
+      "ownedBrowserInstancesAbsent": true,
+      "recordedBrowserInstances": 11,
+      "previewStop": "PASS_EXACT_INSTANCE_ABSENT"
+    },
+    "servedInputAudit": {
+      "beforeSha256": "268eb79f30c6d8b3284ea23f54b625c9623e42e18d0ec8bdbf031435059c0ddc",
+      "afterSha256": "268eb79f30c6d8b3284ea23f54b625c9623e42e18d0ec8bdbf031435059c0ddc",
+      "fileCount": 1564,
+      "filesUnchanged": true,
+      "scopeFileCounts": {
+        "scripts/VerifierIsolation.psm1": 1,
+        "scripts/preview.ps1": 1,
+        "src": 1170,
+        "war": 392
+      },
+      "derivedSourceRowsCanonicalSha256": "9f5b7fa63fafea1d80e14cab90c1958bf25262128afe8f3738a10a88a3ec48f8",
+      "derivedWarRowsCanonicalSha256": "9ae8e6699c7ddb94710edcb1425540e323280d5418de9cd391226f97602f311c",
+      "derivedDigestDefinition": "SHA256 of sorted-key compact JSON of original inventory rows in their original order; separate from the original whole inventory digest."
+    },
+    "screenshots": [
+      {
+        "artifact": "q60-visible-r3/screenshots/000-menu.png",
+        "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+      },
+      {
+        "artifact": "q60-visible-r3/screenshots/001-unrepaired-customer-retest.png",
+        "sha256": "f470b1f50345e45d50adc155cedba03297070e7138f2bede768521984b5e901c"
+      },
+      {
+        "artifact": "q60-visible-r3/screenshots/002-diagnosis-and-original-marking.png",
+        "sha256": "09f83644f9a4901b1a873b077bc88429fe9215ff2622690b2f77496ab8b39aea"
+      },
+      {
+        "artifact": "q60-visible-r3/screenshots/failure.png",
+        "sha256": "370a1c23de8e68c639db51261b051762b245be83a02e71bdf269259e08558a0b"
+      }
+    ],
+    "screenshotReview": "CAPTURED; ROOT VISUAL INSPECTION RECORDED SEPARATELY",
+    "evidence": {
+      "applicationResult": {
+        "artifact": "q60-visible-r3/result.json",
+        "sha256": "47ba28958f6f9739602d70061c82fbff83cfc77974fc68a820005b4d6ed9fad5"
+      },
+      "before": {
+        "artifact": "q60-visible-r3/input-before.json",
+        "sha256": "a78b888028ea2ca71f7f2851c6cf425ecb3087a76e221731b3ee152f34f48cea"
+      },
+      "after": {
+        "artifact": "q60-visible-r3/input-after.json",
+        "sha256": "a78b888028ea2ca71f7f2851c6cf425ecb3087a76e221731b3ee152f34f48cea"
+      },
+      "frozenWorkload": {
+        "artifact": "q60-visible-r3/frozen-workload.json",
+        "sha256": "fb7198dae50dac4cf16aa2771a944c281cb45622a0ccf099c18aff29c90d2f7b"
+      }
+    }
+  },
+  "visual4": {
+    "phaseReceipt": {
+      "phase": "visual-r4",
+      "wholeStatus": "PASS",
+      "outerElapsedMs": 77646,
+      "exitCode": 0,
+      "inputCount": 1222,
+      "inputsUnchanged": true,
+      "sourceInventoryCanonicalSha256": "cc6ab5cd1fa0f00ef7e56369d1eb4ba2fe59b4e2ec259323dee41904694f051b",
+      "javaSourceInventoryCanonicalSha256": "cc2c61ddbdeff82a9d720de426b04f465bd1442da28aa608224b1ea99a4abcd3",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "evidence": {
+        "launch": {
+          "artifact": "visual-r4-launch.json",
+          "sha256": "f746f8d814e68d1454565c1aace5f69350074b68b79e4ae8d31ec6653b9ca1f9"
+        },
+        "hostResult": {
+          "artifact": "visual-r4-result.json",
+          "sha256": "7cc67ccc0286d79cf4a977d9e61b48a00db8ae16081cb25eda30e42adc4b904a"
+        },
+        "stdout": {
+          "artifact": "owned-visual-r4/stdout.log",
+          "sha256": "4092bc8b47bd24b4b4d978aa7da363d77a8232c7501c5b41ef2faa49f2320005"
+        },
+        "stderr": {
+          "artifact": "owned-visual-r4/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "scope": "Q60_40PART_SINGLE_CHANNEL_PUBLIC_MEASUREMENT_REPAIR_PILOT_NOT_60PART_ACCEPTANCE",
+    "status": "PASS",
+    "seed": "-1017",
+    "actualPackages": 40,
+    "operationSeconds": 76.04466919999686,
+    "cleanupSeconds": 1.244794099999126,
+    "heldObservedSeconds": 62.43756739998935,
+    "inputMode": {
+      "headed": true,
+      "gameFunctionsCalled": false,
+      "pageEvaluateUsed": false,
+      "syntheticDispatchUsed": false
+    },
+    "actionSummary": {
+      "count": 85,
+      "phaseCounts": {
+        "production-preview-start": 2,
+        "actual-cold-rb56-generation": 10,
+        "domain-local-visible-diagnosis": 38,
+        "power-off-readiness-and-public-catalog-repair": 22,
+        "powered-repaired-ordinary-customer-retest": 13
+      },
+      "failedCount": 0,
+      "selectedReceipts": [
+        {
+          "sequence": 10,
+          "phase": "actual-cold-rb56-generation",
+          "name": "wait for visible text Customer retest did not pass. Continue troubleshooting.",
+          "status": "PASS",
+          "elapsedSeconds": 0.06
+        },
+        {
+          "sequence": 56,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "wait for enabled UI control Remove component",
+          "status": "PASS",
+          "elapsedSeconds": 4.829
+        },
+        {
+          "sequence": 58,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "one catalog replacement is justified by the original public marking",
+          "status": "PASS",
+          "elapsedSeconds": 0.0
+        },
+        {
+          "sequence": 59,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "read retained loose-part labels",
+          "status": "PASS",
+          "elapsedSeconds": 0.054
+        },
+        {
+          "sequence": 60,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "click Remove component",
+          "status": "PASS",
+          "elapsedSeconds": 0.315
+        },
+        {
+          "sequence": 61,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "read retained loose-part labels",
+          "status": "PASS",
+          "elapsedSeconds": 0.038
+        },
+        {
+          "sequence": 63,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "select marked replacement in ordinary slot catalog",
+          "status": "PASS",
+          "elapsedSeconds": 0.064
+        },
+        {
+          "sequence": 65,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "install selected marked replacement through ordinary catalog",
+          "status": "PASS",
+          "elapsedSeconds": 0.305
+        },
+        {
+          "sequence": 66,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "read retained loose-part labels",
+          "status": "PASS",
+          "elapsedSeconds": 0.047
+        },
+        {
+          "sequence": 67,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "catalog installation preserves the retained original",
+          "status": "PASS",
+          "elapsedSeconds": 0.0
+        },
+        {
+          "sequence": 70,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "replacement is physically installed with chosen public marking",
+          "status": "PASS",
+          "elapsedSeconds": 0.0
+        },
+        {
+          "sequence": 72,
+          "phase": "power-off-readiness-and-public-catalog-repair",
+          "name": "headed screenshot 003-replacement-and-retained-original.png",
+          "status": "PASS",
+          "elapsedSeconds": 0.171
+        },
+        {
+          "sequence": 78,
+          "phase": "powered-repaired-ordinary-customer-retest",
+          "name": "wait for visible text Customer retest passed. The reported behavior is resolved.",
+          "status": "PASS",
+          "elapsedSeconds": 0.086
+        },
+        {
+          "sequence": 79,
+          "phase": "powered-repaired-ordinary-customer-retest",
+          "name": "read retained loose-part labels",
+          "status": "PASS",
+          "elapsedSeconds": 0.025
+        },
+        {
+          "sequence": 80,
+          "phase": "powered-repaired-ordinary-customer-retest",
+          "name": "failed original still retained after powered customer retest",
+          "status": "PASS",
+          "elapsedSeconds": 0.0
+        },
+        {
+          "sequence": 83,
+          "phase": "powered-repaired-ordinary-customer-retest",
+          "name": "click End qualification view",
+          "status": "PASS",
+          "elapsedSeconds": 0.088
+        },
+        {
+          "sequence": 84,
+          "phase": "powered-repaired-ordinary-customer-retest",
+          "name": "actual verifier restores and retires held owner",
+          "status": "PASS",
+          "elapsedSeconds": 0.002
+        }
+      ]
+    },
+    "publicMeasurements": [
+      {
+        "display": "884.863 mV",
+        "volts": 0.8848630000000001,
+        "name": "regulated-stage input",
+        "red": "U1 terminal INPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "2.822 mV",
+        "volts": 0.0028220000000000003,
+        "name": "control rail",
+        "red": "U1 terminal OUTPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "9.999 V",
+        "volts": 9.999,
+        "name": "primary bias against primary return",
+        "red": "UAC terminal BIAS",
+        "black": "UAC terminal IN-"
+      },
+      {
+        "display": "9.082 mV",
+        "volts": 0.009082000000000002,
+        "name": "converter enable against primary return",
+        "red": "UAC terminal EN",
+        "black": "UAC terminal IN-"
+      }
+    ],
+    "publicDiagnosis": {
+      "component": "RENAC",
+      "reason": "Primary bias present, converter enable absent, both downstream rails absent.",
+      "basis": "Displayed domain-local voltages and ordinary HIGH input; no seed/fault-key decision.",
+      "publicOriginalMarkings": "RENAC\n\n\nType: resistor\n\n\nMarking: 10000 Ohm +/-5% / 0.25 W\n\n\nState: Installed\n\n\nLead 1: RENAC.1\n\n\nLead 2: RENAC.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component"
+    },
+    "actualReadinessEvidence": {
+      "boardPower": "OFF",
+      "evidence": "Actual guarded Remove component button enabled",
+      "observationBoundSeconds": 30
+    },
+    "publicRepair": {
+      "component": "RENAC",
+      "publicCatalogLabel": "10000 Ohm +/-5%",
+      "originalLooseLabel": "Part 10 - 10000 Ohm +/-5% / 0.25 W",
+      "before": [],
+      "retainedLooseParts": [
+        "Part 10 - 10000 Ohm +/-5% / 0.25 W"
+      ],
+      "installedMarkings": "RENAC\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nState: Installed\n\n\nLead 1: RENAC.1\n\n\nLead 2: RENAC.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component"
+    },
+    "unrepairedCustomerRetest": "FAIL_EXPECTED",
+    "repairedCustomerRetest": "PASS",
+    "applicationFinal": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1017",
+      "status": "PASS",
+      "phase": "RESTORED",
+      "packages": 40,
+      "hypotheses": 5,
+      "solverSamples": 55,
+      "generationStages": 6,
+      "generationWork": 532,
+      "generationMillis": 46092,
+      "maxManualUnitMillis": 1351,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": true,
+      "cleanupPending": false,
+      "normalCatalogEnabled": false,
+      "wallMillis": 59932
+    },
+    "failure": null,
+    "cleanup": {
+      "status": "PASS",
+      "contextClosed": true,
+      "playwrightStopped": true,
+      "taskPortClosed": true,
+      "ownedBrowserInstancesAbsent": true,
+      "recordedBrowserInstances": 11,
+      "previewStop": "PASS_EXACT_INSTANCE_ABSENT"
+    },
+    "servedInputAudit": {
+      "beforeSha256": "dc5a9efafc027c749e4e0cdf7ccf7176675af717f5da8c519ba7ef61454e03f2",
+      "afterSha256": "dc5a9efafc027c749e4e0cdf7ccf7176675af717f5da8c519ba7ef61454e03f2",
+      "fileCount": 1564,
+      "filesUnchanged": true,
+      "scopeFileCounts": {
+        "scripts/VerifierIsolation.psm1": 1,
+        "scripts/preview.ps1": 1,
+        "src": 1170,
+        "war": 392
+      },
+      "derivedSourceRowsCanonicalSha256": "b5e4513e30a883dd47a68533d14760bb069ff24d3f86c285a851428d0e7484c5",
+      "derivedWarRowsCanonicalSha256": "5d6965ad2cb3116d5ad8bfdfe9523f6e54bbb9a1e594fcb938a6bc215b31b847",
+      "derivedDigestDefinition": "SHA256 of sorted-key compact JSON of original inventory rows in their original order; separate from the original whole inventory digest."
+    },
+    "screenshots": [
+      {
+        "artifact": "q60-visible-r4/screenshots/000-menu.png",
+        "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+      },
+      {
+        "artifact": "q60-visible-r4/screenshots/001-unrepaired-customer-retest.png",
+        "sha256": "f470b1f50345e45d50adc155cedba03297070e7138f2bede768521984b5e901c"
+      },
+      {
+        "artifact": "q60-visible-r4/screenshots/002-diagnosis-and-original-marking.png",
+        "sha256": "09f83644f9a4901b1a873b077bc88429fe9215ff2622690b2f77496ab8b39aea"
+      },
+      {
+        "artifact": "q60-visible-r4/screenshots/003-replacement-and-retained-original.png",
+        "sha256": "648efce7ce105b52bd7e3cbe913249601da2093738ca3ba9b47595a69757a6d8"
+      },
+      {
+        "artifact": "q60-visible-r4/screenshots/004-repaired-customer-retest-pass.png",
+        "sha256": "55b6fdfe99334e8faa951b028c8755eee6e7238348a9444f15b13e4577222b33"
+      }
+    ],
+    "screenshotReview": "CAPTURED; ROOT VISUAL INSPECTION RECORDED SEPARATELY",
+    "evidence": {
+      "applicationResult": {
+        "artifact": "q60-visible-r4/result.json",
+        "sha256": "ff51293b195d1714a6c833d59b2e249afc67c2e192919abfcaa1d91758c9c512"
+      },
+      "before": {
+        "artifact": "q60-visible-r4/input-before.json",
+        "sha256": "ee8f47bb1d80fbe94e23b214c91fef6b59301141d0e34fd73b11f33788bd56b2"
+      },
+      "after": {
+        "artifact": "q60-visible-r4/input-after.json",
+        "sha256": "ee8f47bb1d80fbe94e23b214c91fef6b59301141d0e34fd73b11f33788bd56b2"
+      },
+      "frozenWorkload": {
+        "artifact": "q60-visible-r4/frozen-workload.json",
+        "sha256": "43051e033d2ebbbb24d158544a91810033345187b20231064a9e068f5c4e1d29"
+      }
+    }
+  },
+  "reuseAudit": {
+    "build7ToBuild8ChangedJavaPaths": [
+      "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java"
+    ],
+    "allOtherJavaSourceHashesUnchanged": true,
+    "oldIndexedNativeAndCohortSource": "BUILD7_SNAPSHOT",
+    "currentVisibleSource": "BUILD8_SNAPSHOT",
+    "freshFull6Cohort": "NOT_RUN",
+    "freshQ3010014": "NOT_RUN",
+    "priorFull6Status": "FAIL",
+    "priorCohortStrictPasses": 2,
+    "priorCohortDeadlineFailures": 4,
+    "priorQ3010014Status": "FAIL",
+    "priorOrdinaryQ3010387Status": "PASS",
+    "claimBoundary": "Prior source-bound findings and electrical/physical contracts remain recorded with their original sources. This supplement establishes the UI refresh and one actual 40-package public repair flow; it does not declare the prior cohort rerun or qualify its four deadline cases."
+  },
+  "remainingBlockers": [
+    "Four frozen Q60 cohort cases exceeded the unchanged generation deadline.",
+    "Current ordinary Q30 seed10014 regression remains unresolved.",
+    "Normal RB56 catalog admission/public HARD and normal RB56 save/load remain unqualified.",
+    "No full 55/60-package player repair or new complete cohort acceptance claim."
+  ],
+  "sanitization": "Selected public action/measurement/repair/final/cleanup fields only, relative artifacts and exact SHA256. No personal absolute paths, process identities, browser profiles, transport endpoints or raw private proof payloads."
+}

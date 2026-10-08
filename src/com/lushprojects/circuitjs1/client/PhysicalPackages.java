@@ -26,6 +26,47 @@ final class PhysicalPackages {
     static final PhysicalPackage AXIAL_DIODE = packageWithCatalog("AXIAL_DIODE",
         new String[] { "A", "K" }, false, axialDiodeVariants(), "SPAN_230",
         PhysicalPackage.GeometryVariantSelection.SEEDED_CATALOG);
+    static final PhysicalPackage RADIAL_INDUCTOR_2 = fixedPackage("RADIAL_INDUCTOR_2",
+        new String[] { "1", "2" }, false, radialInductor());
+    /** Standard optocoupler: A/K are secondary, C/E are primary in the Q60 recipe. */
+    static final PhysicalPackage OPTOCOUPLER_4 = optocouplerPackage();
+
+    private static PhysicalPackage optocouplerPackage() {
+        PhysicalPackageGeometry geometry = optocoupler();
+        Vector<PhysicalPackage.GeometryVariant> variants = new Vector<PhysicalPackage.GeometryVariant>();
+        variants.add(new PhysicalPackage.GeometryVariant("DEFAULT", "IDENTITY", geometry));
+        Vector<PcbRotation> rotations = new Vector<PcbRotation>();
+        rotations.add(PcbRotation.DEG_0); rotations.add(PcbRotation.DEG_180);
+        Vector<PcbBoardSide> sides = new Vector<PcbBoardSide>(); sides.add(PcbBoardSide.TOP);
+        return new PhysicalPackage("OPTOCOUPLER_4", toVector(new String[] {"A", "K", "C", "E"}),
+            new Vector<String>(), false, geometry, variants, "DEFAULT",
+            PhysicalPackage.GeometryVariantSelection.FIXED_DEFAULT, rotations, sides);
+    }
+
+    private static PhysicalPackageGeometry radialInductor() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(terminal("1", 30, 120, 50, 80, 50, 96, 0, 1, 40));
+        terminals.add(terminal("2", 110, 120, 90, 80, 90, 96, 0, 1, 40));
+        return geometry(150, 170, terminals, new Rectangle(30, 20, 80, 70),
+            new Rectangle(20, 10, 100, 85), new Rectangle(10, 5, 130, 150));
+    }
+
+    private static PhysicalPackageGeometry optocoupler() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(terminal("A", 30, 50, 90, 50, 70, 50, -1, 0, 40));
+        terminals.add(terminal("K", 30, 130, 90, 130, 70, 130, -1, 0, 40));
+        terminals.add(terminal("C", 310, 50, 250, 50, 270, 50, 1, 0, 40));
+        terminals.add(terminal("E", 310, 130, 250, 130, 270, 130, 1, 0, 40));
+        return geometry(340, 200, terminals, new Rectangle(90, 25, 160, 140),
+            new Rectangle(85, 20, 170, 150), new Rectangle(10, 10, 320, 180))
+            .withIsolationBody(new PhysicalPackageGeometry.IsolationBody(
+                toVector(new String[] { "A", "K" }), toVector(new String[] { "C", "E" }),
+                new Rectangle(10, 10, 105, 180), new Rectangle(225, 10, 105, 180),
+                new Rectangle(90, 25, 160, 140)));
+    }
+
     static final PhysicalPackage THROUGH_HOLE_LED = fixedPackage("THROUGH_HOLE_LED",
         new String[] { "A", "K" }, false, led());
     static final PhysicalPackage TO92_NPN = fixedPackage("TO92_NPN",
@@ -50,6 +91,29 @@ final class PhysicalPackages {
                 toVector(new String[] { "P1", "P2" }), toVector(new String[] { "S1", "S2" }),
                 new Rectangle(10, 10, 105, 200), new Rectangle(305, 10, 105, 200),
                 new Rectangle(90, 25, 240, 165)));
+    }
+
+    /** Opaque E06 module; only its inert body may span the declared isolation corridor. */
+    static final PhysicalPackage ISOLATED_CONVERTER_7 = fixedPackage(
+        "ISOLATED_CONVERTER_7", new String[] {"IN+", "IN-", "PRE_L+", "OUT-", "EN", "FB", "BIAS"},
+        false, isolatedConverter());
+
+    private static PhysicalPackageGeometry isolatedConverter() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals = new Vector<PhysicalPackageGeometry.Terminal>();
+        terminals.add(terminal("IN+", 30, 50, 90, 50, 70, 50, -1, 0, 40));
+        terminals.add(terminal("IN-", 30, 100, 90, 100, 70, 100, -1, 0, 40));
+        terminals.add(terminal("PRE_L+", 390, 110, 330, 110, 350, 110, 1, 0, 40));
+        terminals.add(terminal("OUT-", 390, 210, 330, 210, 350, 210, 1, 0, 40));
+        terminals.add(terminal("EN", 30, 150, 90, 150, 70, 150, -1, 0, 40));
+        terminals.add(terminal("FB", 30, 200, 90, 200, 70, 200, -1, 0, 40));
+        terminals.add(terminal("BIAS", 30, 250, 90, 250, 70, 250, -1, 0, 40));
+        return geometry(420, 330, terminals, new Rectangle(90, 25, 240, 270),
+            new Rectangle(85, 20, 250, 280), new Rectangle(10, 10, 400, 310))
+            .withIsolationBody(new PhysicalPackageGeometry.IsolationBody(
+                toVector(new String[] {"IN+", "IN-", "EN", "FB", "BIAS"}),
+                toVector(new String[] {"PRE_L+", "OUT-"}),
+                new Rectangle(10, 10, 105, 310), new Rectangle(305, 10, 105, 310),
+                new Rectangle(90, 25, 240, 270)));
     }
 
     /** Four-lead through-hole regulator package; the exposed pins remain separate. */
@@ -265,10 +329,12 @@ final class PhysicalPackages {
         // The shared procedural router is a 10-unit grid, so the canonical
         // through-hole lands (not merely the package origin) must lie on it.
         // Terminal identity/order remains the electrical authority.
-        terminals.add(terminal("INPUT", 50, 150, 50, 95, 50, 117, 0, 1, 50));
-        terminals.add(terminal("OUTPUT", 90, 150, 90, 95, 90, 117, 0, 1, 50));
-        terminals.add(terminal("RETURN", 130, 150, 130, 95, 130, 117, 0, 1, 50));
-        terminals.add(terminal("ENABLE", 170, 150, 170, 95, 170, 117, 0, 1, 50));
+        // From pad y=150, escape through the courtyard at y=205 and the
+        // full trace margin to the first free routing-grid point at y=210.
+        terminals.add(terminal("INPUT", 50, 150, 50, 95, 50, 117, 0, 1, 60));
+        terminals.add(terminal("OUTPUT", 90, 150, 90, 95, 90, 117, 0, 1, 60));
+        terminals.add(terminal("RETURN", 130, 150, 130, 95, 130, 117, 0, 1, 60));
+        terminals.add(terminal("ENABLE", 170, 150, 170, 95, 170, 117, 0, 1, 60));
         return geometry(220, 210, terminals, new Rectangle(25, 25, 170, 75),
             new Rectangle(18, 18, 184, 90), new Rectangle(5, 5, 210, 200));
     }
@@ -281,11 +347,11 @@ final class PhysicalPackages {
         // as the production multi-pin through-hole families.  Keeping the
         // escape channels on one side gives the shared router room to expose
         // every decision net without turning the control package decorative.
-        terminals.add(terminal("SENSOR", 30, 150, 30, 95, 30, 117, 0, 1, 50));
-        terminals.add(terminal("REFERENCE", 80, 150, 80, 95, 80, 117, 0, 1, 50));
-        terminals.add(terminal("RAIL", 130, 150, 130, 95, 130, 117, 0, 1, 50));
-        terminals.add(terminal("OUTPUT", 180, 150, 180, 95, 180, 117, 0, 1, 50));
-        terminals.add(terminal("RETURN", 230, 150, 230, 95, 230, 117, 0, 1, 50));
+        terminals.add(terminal("SENSOR", 30, 150, 30, 95, 30, 117, 0, 1, 60));
+        terminals.add(terminal("REFERENCE", 80, 150, 80, 95, 80, 117, 0, 1, 60));
+        terminals.add(terminal("RAIL", 130, 150, 130, 95, 130, 117, 0, 1, 60));
+        terminals.add(terminal("OUTPUT", 180, 150, 180, 95, 180, 117, 0, 1, 60));
+        terminals.add(terminal("RETURN", 230, 150, 230, 95, 230, 117, 0, 1, 60));
         return geometry(260, 210, terminals, new Rectangle(25, 25, 210, 75),
             new Rectangle(18, 18, 224, 90), new Rectangle(5, 5, 250, 200));
     }

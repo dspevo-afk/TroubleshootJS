@@ -8,14 +8,23 @@ class ResistorCatalogEntry extends AbstractPhysicalCatalogEntry<ResistorNameplat
 
     ResistorCatalogEntry(String id, double resistanceOhms, double ratedWattage) {
         super(id, new ResistorNameplate(id, resistanceOhms, 5, ratedWattage),
-            createPlayerNameplate(id, resistanceOhms), PhysicalPartOrientation.NON_POLARIZED);
+            createPlayerNameplate(id, resistanceOhms, ratedWattage), PhysicalPartOrientation.NON_POLARIZED);
     }
 
     ResistorNameplate getNameplate() { return getSpecification(); }
 
-    private static PhysicalNameplate createPlayerNameplate(String id, double resistanceOhms) {
+    String getCatalogDisplayValue() {
+        return getNameplate().getDisplayValue() + powerSuffix(getNameplate().getRatedWattage());
+    }
+
+    private static PhysicalNameplate createPlayerNameplate(String id, double resistanceOhms,
+            double ratedWattage) {
         return new PhysicalNameplate(id, "Physical resistor", "Value",
-            format(resistanceOhms) + " Ohm +/-5%");
+            format(resistanceOhms) + " Ohm +/-5%" + powerSuffix(ratedWattage));
+    }
+
+    private static String powerSuffix(double watts) {
+        return watts > ResistorNameplate.DEFAULT_RATED_WATTAGE ? " / " + format(watts) + " W" : "";
     }
 
     private static String format(double value) {

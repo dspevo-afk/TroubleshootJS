@@ -119,11 +119,23 @@ final class E06PwmControllerElm extends CircuitElm {
     /** Shared finite linear bias supply. Signed reverse output is absorbed, never backfed. */
     static final class BiasElm extends CircuitElm {
         static final int INPUT = 0, RETURN = 1, BIAS = 2;
+        // Independent current-only codec for the fixed powered bias law.
+        static final int DUMP_TYPE = 459;
+        static final String DUMP_VERSION = "1", DUMP_KIND = "e06-bias";
+        static final String CONVERGENCE_POLICY =
+            "norton-current-residual-1nA;input-nonnegative-1nA;passivity-1nW;retain-solved-tangent-v1";
         private final Point[] posts = new Point[3];
         private boolean tangentReady;
         private double appliedTargetGain, appliedTargetOffset, appliedInputGain, appliedOutputGain, appliedInputOffset;
         private double acceptedInput, acceptedOutput;
         BiasElm(int x, int y) { super(x, y); x2 = x + 128; y2 = y + 64; setPoints(); }
+        BiasElm(int x, int y, int x2, int y2, int flags, StringTokenizer tokens) {
+            super(x, y, x2, y2, flags);
+            E06AveragedConverterElm.requireCurrentDump(tokens, DUMP_VERSION, DUMP_KIND);
+            setPoints();
+        }
+        int getDumpType() { return DUMP_TYPE; }
+        String dump() { return super.dump() + " " + DUMP_VERSION + " " + DUMP_KIND; }
         int getPostCount() { return 3; }
         Point getPost(int n) { return posts[n]; }
         void setPoints() {
@@ -135,6 +147,7 @@ final class E06PwmControllerElm extends CircuitElm {
         void stamp() { tangentReady = false; for (int n = 0; n < 3; n++) sim.stampNonLinear(nodes[n]); }
         void doStep() {
             double input = volts[INPUT] - volts[RETURN], output = volts[BIAS] - volts[RETURN];
+            E06ConverterContract.requireFinite(input); E06ConverterContract.requireFinite(output);
             double target = E06ConverterContract.clamp(input, 0, E06ConverterContract.BIAS_VOLTS);
             double slope = input > 0 && input < E06ConverterContract.BIAS_VOLTS ? 1 : 0;
             double g = 1 / E06ConverterContract.BIAS_RESISTANCE_OHMS;
@@ -142,19 +155,29 @@ final class E06PwmControllerElm extends CircuitElm {
             double targetGain = g * slope, targetOffset = g * (target - slope * input);
             double inputGain = delivered > 0 ? g * slope : 0, outputGain = delivered > 0 ? -g : 0;
             double inputOffset = Math.max(0, delivered) - inputGain * input - outputGain * output;
-            if (!tangentReady || changed(appliedTargetGain, targetGain) || changed(appliedTargetOffset, targetOffset) ||
-                    changed(appliedInputGain, inputGain) || changed(appliedOutputGain, outputGain) ||
-                    changed(appliedInputOffset, inputOffset)) sim.converged = false;
-            appliedTargetGain = targetGain; appliedTargetOffset = targetOffset;
-            appliedInputGain = inputGain; appliedOutputGain = outputGain; appliedInputOffset = inputOffset;
-            tangentReady = true;
+            double previousOutput = appliedTargetGain * input + appliedTargetOffset - output * g;
+            double previousInput = appliedInputGain * input + appliedOutputGain * output + appliedInputOffset;
+            double previousLoss = input * previousInput - output * previousOutput;
+            boolean previousConsistent = tangentReady && E06ConverterContract.finite(previousOutput) &&
+                E06ConverterContract.finite(previousInput) && E06ConverterContract.finite(previousLoss) &&
+                previousInput >= -1e-9 && Math.abs(previousOutput - delivered) <= 1e-9 &&
+                Math.abs(previousInput - Math.max(0, delivered)) <= 1e-9 && previousLoss >= -1e-9;
+            // At zero delivered current, coefficient flips do not imply a branch residual.
+            // CirSim can accept before solving this trial: retain the last solved tangent
+            // and its current receipt when the unchanged exact-law/passivity checks agree.
+            if (!previousConsistent) {
+                sim.converged = false;
+                appliedTargetGain = targetGain; appliedTargetOffset = targetOffset;
+                appliedInputGain = inputGain; appliedOutputGain = outputGain; appliedInputOffset = inputOffset;
+                tangentReady = true;
+            }
             sim.stampConductance(nodes[BIAS], nodes[RETURN], g);
-            sim.stampVCCurrentSource(nodes[BIAS], nodes[RETURN], nodes[INPUT], nodes[RETURN], -targetGain);
-            sim.stampCurrentSource(nodes[BIAS], nodes[RETURN], -targetOffset);
+            sim.stampVCCurrentSource(nodes[BIAS], nodes[RETURN], nodes[INPUT], nodes[RETURN], -appliedTargetGain);
+            sim.stampCurrentSource(nodes[BIAS], nodes[RETURN], -appliedTargetOffset);
             // Linear regulator accounting: actual positive delivered current is drawn from INPUT.
-            sim.stampConductance(nodes[INPUT], nodes[RETURN], inputGain);
-            sim.stampVCCurrentSource(nodes[INPUT], nodes[RETURN], nodes[BIAS], nodes[RETURN], outputGain);
-            sim.stampCurrentSource(nodes[INPUT], nodes[RETURN], inputOffset);
+            sim.stampConductance(nodes[INPUT], nodes[RETURN], appliedInputGain);
+            sim.stampVCCurrentSource(nodes[INPUT], nodes[RETURN], nodes[BIAS], nodes[RETURN], appliedOutputGain);
+            sim.stampCurrentSource(nodes[INPUT], nodes[RETURN], appliedInputOffset);
         }
         void stepFinished() {
             double input = volts[INPUT] - volts[RETURN], output = volts[BIAS] - volts[RETURN];

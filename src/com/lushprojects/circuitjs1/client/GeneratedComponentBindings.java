@@ -97,26 +97,44 @@ class GeneratedComponentBindings {
     }
 
     void bindAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        Vector<CircuitElm> elements = new Vector<CircuitElm>(); elements.add(element);
+        bindAuxiliaryComponentElements(componentId, elements);
+    }
+
+    void bindAuxiliaryComponentElements(String componentId, Vector<CircuitElm> elements) {
         if (constructionAborted)
             throw new IllegalStateException("Construction bindings were revoked");
-        if (board.getComponent(componentId) == null || element == null)
+        if (board.getComponent(componentId) == null)
             throw new IllegalArgumentException("Invalid auxiliary component binding: " + componentId);
-        Vector<CircuitElm> elements = new Vector<CircuitElm>();
-        elements.add(element);
-        auxiliaryComponentElements.put(componentId, elements);
+        Vector<CircuitElm> copy = requireAuxiliaryElements(componentId, elements);
+        auxiliaryComponentElements.put(componentId, copy);
         if (!canonicalAuxiliaryComponentElements.containsKey(componentId))
-            canonicalAuxiliaryComponentElements.put(componentId,
-                new Vector<CircuitElm>(elements));
+            canonicalAuxiliaryComponentElements.put(componentId, new Vector<CircuitElm>(copy));
     }
 
     void replaceAuxiliaryComponentElement(String componentId, CircuitElm element) {
+        Vector<CircuitElm> elements = new Vector<CircuitElm>(); elements.add(element);
+        replaceAuxiliaryComponentElements(componentId, elements);
+    }
+
+    void replaceAuxiliaryComponentElements(String componentId, Vector<CircuitElm> elements) {
         if (constructionAborted)
             throw new IllegalStateException("Construction bindings were revoked");
-        if (!componentElements.containsKey(componentId) || element == null)
+        if (!componentElements.containsKey(componentId))
             throw new IllegalArgumentException("Invalid auxiliary component replacement: " + componentId);
-        Vector<CircuitElm> elements = new Vector<CircuitElm>();
-        elements.add(element);
-        auxiliaryComponentElements.put(componentId, elements);
+        auxiliaryComponentElements.put(componentId, requireAuxiliaryElements(componentId, elements));
+    }
+
+    private static Vector<CircuitElm> requireAuxiliaryElements(String componentId, Vector<CircuitElm> elements) {
+        if (elements == null || elements.isEmpty())
+            throw new IllegalArgumentException("Missing auxiliary component elements: " + componentId);
+        Vector<CircuitElm> copy = new Vector<CircuitElm>();
+        for (CircuitElm element : elements) {
+            if (element == null || copy.contains(element))
+                throw new IllegalArgumentException("Invalid duplicate auxiliary component element: " + componentId);
+            copy.add(element);
+        }
+        return copy;
     }
 
     /** A valid physical part may have no auxiliary damage/open-path element. */

@@ -9,6 +9,9 @@ final class GenerationExecutionPolicy {
     static final GenerationExecutionPolicy NORMAL_MEDIUM = new GenerationExecutionPolicy(
         "NORMAL_MEDIUM_EXECUTION@2", MediumBoardNormalAdmission.IDENTITY, GenerationCoordinator.MAX_JOB_MILLIS);
 
+    static final GenerationExecutionPolicy RB56 = new GenerationExecutionPolicy(
+        "RB56_EXECUTION@1", MediumBoardNormalAdmission.RB56_IDENTITY, GenerationCoordinator.MAX_JOB_MILLIS);
+
     private final String identity;
     private final String physicalIdentity;
     final long maximumJobMillis;
@@ -30,7 +33,7 @@ final class GenerationExecutionPolicy {
 
     /** Validate immutable request provenance before canceling another job. */
     void requireRequest(GenerationRequest request) {
-        if ((this != SMALL_BOARD && this != NORMAL_MEDIUM) || request == null ||
+        if ((this != SMALL_BOARD && this != NORMAL_MEDIUM && this != RB56) || request == null ||
                 request.isPrivateDiagnosticQualification() || request.getExecutionPolicy() != this ||
                 !physicalIdentity.equals(request.getRequiredPhysicalAdmissionIdentity()))
             throw new IllegalArgumentException("Generation execution contract does not match the normal request");

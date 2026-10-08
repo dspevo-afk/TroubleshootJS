@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Real service ownership for the current connector and fuse packages. */
+/** Catalog and service ownership for declared finite service packages. */
 final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCapability,
         PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
     private final ServiceComponentSlot slot;
@@ -19,8 +19,20 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
     public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
     PhysicalPartInventory<PhysicalServicePart> inventory() { return inventory; }
     PhysicalServicePart original() { return original; }
-    String catalogId() { return original.getPackage().getId() + "_STANDARD"; }
+    String catalogId() {
+        return (original.hasTypedPowerRecipe() || original.getSpecification() instanceof FuseSpecification ?
+            original.getSpecification().getSpecificationId() :
+            original.getPackage().getId()) + "_STANDARD";
+    }
     String catalogLabel() {
+        if (original.getSpecification() instanceof InductorSpecification)
+            return ((InductorSpecification)original.getSpecification()).catalogLabel();
+        if (original.getSpecification() instanceof ZenerSpecification)
+            return ((ZenerSpecification)original.getSpecification()).catalogLabel();
+        if (original.getSpecification() instanceof OptocouplerSpecification)
+            return ((OptocouplerSpecification)original.getSpecification()).catalogLabel();
+        if (original.getSpecification() instanceof FuseSpecification)
+            return ((FuseSpecification)original.getSpecification()).catalogLabel();
         if (original.isFactoryLink()) return "Raised insulated factory link (50 mOhm)";
         if (!original.isConnector()) return "250 mA fuse";
         return original.getPackage().isEquivalentTo(PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2) ?
@@ -31,7 +43,13 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
         return new ServiceSlotController(sim, instance, modifications, this);
     }
     public String getCatalogTitle() { return "Replacement Catalog"; }
-    public String getInstallNewLabel() { return "Install new " + (original.isFactoryLink() ? "factory link" : original.isConnector() ? "connector" : "fuse"); }
+    public String getInstallNewLabel() {
+        String kind = original.getSpecification() instanceof InductorSpecification ? "inductor" :
+            original.getSpecification() instanceof ZenerSpecification ? "zener diode" :
+            original.getSpecification() instanceof OptocouplerSpecification ? "optocoupler" :
+            original.isFactoryLink() ? "factory link" : original.isConnector() ? "connector" : "fuse";
+        return "Install new " + kind;
+    }
     public boolean showOccupiedMessageWhenPowered() { return false; }
     public Vector<WorkbenchCatalogEntry> getCatalogEntries() {
         Vector<WorkbenchCatalogEntry> result = new Vector<WorkbenchCatalogEntry>();

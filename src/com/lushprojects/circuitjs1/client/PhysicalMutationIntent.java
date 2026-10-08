@@ -20,6 +20,7 @@ final class PhysicalMutationIntent {
     private final String catalogEntryId;
     private final PhysicalPart<?> installedPart;
     private final PhysicalPart<?> requestedPart;
+    private final boolean detachesGraph;
 
     private PhysicalMutationIntent(PhysicalBoardRuntime runtime,
             GeneratedBoardInstance instance, BoardModificationController modifications,
@@ -36,6 +37,7 @@ final class PhysicalMutationIntent {
         this.catalogEntryId = catalogEntryId;
         this.installedPart = slot.getInstalledPart();
         this.requestedPart = requestedPart;
+        this.detachesGraph = detachesGraph(modifications, slot, operation, padId);
     }
 
     static PhysicalMutationIntent prepare(PhysicalBoardRuntime runtime,
@@ -87,8 +89,16 @@ final class PhysicalMutationIntent {
                 throw new IllegalArgumentException("Physical mutation candidate is not eligible for this slot");
             validateGeometry(physicalSlot, requestedPart, "install".equals(operation));
         }
+        if (detachesGraph(modifications, slot, operation, padId)) modifications.requireDetachmentReady();
         return new PhysicalMutationIntent(runtime, instance, modifications, slot, operation,
             padId, catalogEntryId, requestedPart);
+    }
+
+    private static boolean detachesGraph(BoardModificationController modifications,
+            PhysicalMutationSlot slot, String operation, String padId) {
+        return "remove".equals(operation) || "graph-remove".equals(operation) ||
+            ("lead".equals(operation) && padId != null &&
+                modifications.isLeadConnected(slot.getComponentId(), padId));
     }
 
     private static void requireDeclaredProvider(PhysicalBoardRuntime runtime, PhysicalMutationSlot slot) {
@@ -127,6 +137,7 @@ final class PhysicalMutationIntent {
                 throw new IllegalStateException("Physical mutation candidate changed ownership");
             validateGeometry(physicalSlot, requestedPart, "install".equals(operation));
         }
+        if (detachesGraph) modifications.requireDetachmentReady();
     }
 
     /**
@@ -183,4 +194,5 @@ final class PhysicalMutationIntent {
     String getCatalogEntryId() { return catalogEntryId; }
     PhysicalPart<?> getInstalledPart() { return installedPart; }
     PhysicalPart<?> getRequestedPart() { return requestedPart; }
+    boolean authorizesDetachment() { return detachesGraph; }
 }

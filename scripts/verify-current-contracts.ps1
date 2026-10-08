@@ -285,6 +285,7 @@ final class PhysicalSpecificationDeveloperVerifier {
 }
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or
+        $Suite -contains 'InductorAcceptedStateContractTest' -or
         $Suite -contains 'Q30ServiceFlowContractTest' -or
         $Suite -contains 'Q30PowerReadinessContractTest' -or
         $Suite -contains 'Q30TemporalWorkContractTest' -or
@@ -294,10 +295,34 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E02RegulatorContractTest' -or
         $Suite -contains 'E04SensorControlContractTest' -or
         $Suite -contains 'E06ConverterPilotContractTest' -or
+        $Suite -contains 'Rb56PowerStageContractTest' -or
+        $Suite -contains 'Rb56ModelIdentityContractTest' -or
+        $Suite -contains 'ConverterPhysicalPartContractTest' -or
+        $Suite -contains 'CapacitorStoragePartContractTest' -or
+        $Suite -contains 'PowerServicePartContractTest' -or
+        $Suite -contains 'Rb56ControlTailContractTest' -or
+        $Suite -contains 'Rb56AssemblyContractTest' -or
+        $Suite -contains 'Rb56SessionBackingContractTest' -or
+        $Suite -contains 'Rb56FaultPopulationContractTest' -or
+        $Suite -contains 'Rb56TemporalWorkContractTest' -or
+        $Suite -contains 'Rb56DependencyCaptureContractTest' -or
+        $Suite -contains 'Rb56InstrumentAdmissionContractTest' -or
+        $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
-    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'E06ConverterPilotContractTest'
+    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'E06ConverterPilotContractTest' -or
+        $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
+        $Suite -contains 'ConverterPhysicalPartContractTest' -or
+        $Suite -contains 'PowerServicePartContractTest' -or
+        $Suite -contains 'Rb56ControlTailContractTest' -or
+        $Suite -contains 'Rb56AssemblyContractTest' -or
+        $Suite -contains 'Rb56SessionBackingContractTest' -or
+        $Suite -contains 'Rb56FaultPopulationContractTest' -or
+        $Suite -contains 'Rb56TemporalWorkContractTest' -or
+        $Suite -contains 'Rb56DependencyCaptureContractTest' -or
+        $Suite -contains 'Rb56InstrumentAdmissionContractTest' -or
+        $Suite -contains 'Rb56PhysicalOwnerContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
@@ -380,7 +405,23 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'E02RegulatorContractTest'; Marker = 'E02 regulator contracts ' },
         @{ Name = 'E04SensorControlContractTest'; Marker = 'E04 sensor-control contracts ' },
+        @{ Name = 'InductorAcceptedStateContractTest'; Marker = 'native inductor accepted-state contracts ' },
         @{ Name = 'E06ConverterPilotContractTest'; Marker = 'E06 nominal pilot mechanics ' },
+        @{ Name = 'Rb56PowerStageContractTest'; Marker = 'RB56 power-stage contracts ' },
+        @{ Name = 'Rb56ModelIdentityContractTest'; Marker = 'RB56 model-identity contracts ' },
+        @{ Name = 'PowerResistorCatalogContractTest'; Marker = 'power resistor catalog contracts ' },
+        @{ Name = 'ConverterPhysicalPartContractTest'; Marker = 'converter physical-part contracts ' },
+        @{ Name = 'CapacitorStoragePartContractTest'; Marker = 'capacitor storage-part contracts ' },
+        @{ Name = 'PowerServicePartContractTest'; Marker = 'power service-part contracts ' },
+        @{ Name = 'Rb56ControlTailContractTest'; Marker = 'RB56 control-tail contracts ' },
+        @{ Name = 'Rb56AssemblyContractTest'; Marker = 'RB56 assembly contracts ' },
+        @{ Name = 'Rb56PhysicalOwnerContractTest'; Marker = 'RB56 physical-owner contracts ' },
+        @{ Name = 'Rb56SessionBackingContractTest'; Marker = 'RB56 session backing contracts ' },
+        @{ Name = 'Rb56FaultPopulationContractTest'; Marker = 'RB56 fault-population contracts ' },
+        @{ Name = 'Rb56TemporalWorkContractTest'; Marker = 'RB56 temporal work contracts ' },
+        @{ Name = 'Rb56DependencyCaptureContractTest'; Marker = 'RB56 dependency capture contracts ' },
+        @{ Name = 'Rb56InstrumentAdmissionContractTest'; Marker = 'RB56 instrument admission contracts ' },
+        @{ Name = 'Rb56GeometryContractTest'; Marker = 'RB56 geometry contracts ' },
         @{ Name = 'E05PowerContractTest'; Marker = 'E05 power contracts ' },
         @{ Name = 'E05IsolationGeometryContractTest'; Marker = 'E05 isolation geometry contracts ' },
         @{ Name = 'E05NameplateContractTest'; Marker = 'E05 nameplate contracts ' },

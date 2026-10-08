@@ -229,7 +229,7 @@ class RelayElm extends CircuitElm {
 	    sim.stampNonLinear(nodes[nSwitch0+i]);
     }
     void startIteration() {
-	ind.startIteration(volts[nCoil1]-volts[nCoil3]);
+	coilCurrent = ind.startIteration(volts[nCoil1]-volts[nCoil3]);
 
 	// magic value to balance operate speed with reset speed semi-realistically
 	double magic = 1.3;
@@ -249,6 +249,8 @@ class RelayElm extends CircuitElm {
 	//System.out.println("ind " + this + " " + current + " " + voltdiff);
     }
     	
+    void stepFinished() { ind.stepFinished(); }
+
     // we need this to be able to change the matrix for each step
     boolean nonLinear() { return true; }
 

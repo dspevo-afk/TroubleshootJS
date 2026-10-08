@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.Vector;
 
 /** Relay-specific five-terminal adapter over the A08 mutation transaction. */
-final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability, PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider {
+final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability, PhysicalBoardInstallationProvider.Scoped, WorkbenchPartsProvider, PhysicalPartDetachmentReadiness {
     interface DischargeGuard {
         boolean isDischarged(GeneratedBoardInstance owner, String componentId);
     }
@@ -12,17 +12,33 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
     private final RelaySlot slot;
     private final PhysicalPartInventory<PhysicalRelayPart> inventory;
     private final DischargeGuard dischargeGuard;
+    private final String capabilityId;
     ReplaceableRelayCapability(PhysicalBoardSlot physical,PhysicalRelayPart original,WireElm[] attachments) {
         this(physical, original, attachments, null);
     }
     ReplaceableRelayCapability(PhysicalBoardSlot physical,PhysicalRelayPart original,
             WireElm[] attachments, DischargeGuard dischargeGuard) {
+        this(ID, physical, original, attachments, dischargeGuard);
+    }
+    ReplaceableRelayCapability(String capabilityId, PhysicalBoardSlot physical, PhysicalRelayPart original,
+            WireElm[] attachments, DischargeGuard dischargeGuard) {
+        if (capabilityId == null || capabilityId.length() == 0)
+            throw new IllegalArgumentException("Missing relay capability identity");
+        this.capabilityId = capabilityId;
         slot=new RelaySlot(physical,original,attachments);
         inventory=new PhysicalPartInventory<PhysicalRelayPart>(physical.getRuntime(),physical.getComponentId()+"_RELAYS",PhysicalRelayPart.class);
         inventory.add(original);
         this.dischargeGuard = dischargeGuard;
     }
-    public String getCapabilityId() { return ID; }
+    /** Only explicitly guarded families contribute board-wide stored-energy readiness. */
+    public boolean isDetachmentReady(CirSim sim, GeneratedBoardInstance owner) {
+        if (dischargeGuard == null) return true;
+        return sim != null && CircuitElm.sim == sim && owner != null &&
+            sim.getGeneratedBoardInstance() == owner && owner.getPhysicalBoardRuntime() == slot.physical.getRuntime() &&
+            owner.getPhysicalBoardRuntime().getCapability(capabilityId) == this &&
+            dischargeGuard.isDischarged(owner, getComponentId());
+    }
+    public String getCapabilityId() { return capabilityId; }
     public String getComponentId() { return slot.getComponentId(); }
     public PhysicalMutationSlot getMutationSlot() { return slot; }
     public PhysicalPartInventory<?> getMutationInventory() { return inventory; }
@@ -59,7 +75,7 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
         public String getComponentId(){return slot.getComponentId();}
         public PhysicalMutationSlot getMutationSlot(){return slot;}
         public boolean ownsPart(String id){return inventory.contains(id);}
-        public WorkbenchCapabilityMetadata getMetadata(){return new WorkbenchCapabilityMetadata(ID,"Relay workbench","SLOT_OPERATIONS");}
+        public WorkbenchCapabilityMetadata getMetadata(){return new WorkbenchCapabilityMetadata(capabilityId,"Relay workbench","SLOT_OPERATIONS");}
         public String getOperationLabel(WorkbenchOperation op){return WorkbenchOperation.REMOVE.equals(op.getId())?"Remove component":
             WorkbenchOperation.INSTALL.equals(op.getId())?"Install as "+getComponentId():"Install new relay";}
         public boolean supports(WorkbenchOperation op){return op!=null && getComponentId().equals(op.getComponentId()) &&
@@ -149,7 +165,9 @@ final class ReplaceableRelayCapability implements PhysicalBoardRuntimeCapability
             }catch(Throwable failure){scope.abort(failure);PhysicalMutationScope.rethrow(failure);return false;}
             scope.closeAfterCommit();
             try{
-                sim.getGeneratedChallengeController().invalidateCustomerRetest();sim.needAnalyze();
+                if(sim.getGeneratedChallengeController()!=null)
+                    sim.getGeneratedChallengeController().invalidateCustomerRetest();
+                sim.needAnalyze();
                 sim.requestGeneratedBoardVerification();sim.refreshBoardModificationControls();
             }catch(Throwable failure){sim.markGeneratedRuntimeFailure(owner,failure);PhysicalMutationScope.rethrow(failure);}
             return true;

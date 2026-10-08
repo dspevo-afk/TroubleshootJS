@@ -247,6 +247,61 @@ final class RelayOutputGenerator {
                 for(int i=0;i<terminals.length;i++) board.addPad(new BoardPad(id+"."+terminals[i],id,terminals[i],netIds[i]));
             }
         }
+        /** Registers an already-owned power-stage package without allocating a second graph. */
+        void registerExistingPart(String id, String type, PhysicalPackage pkg,
+                String[] terminals, String[] netIds, CircuitElm primary,
+                Vector<CircuitElm> auxiliary, CircuitPostMeasurementEndpoint[] boardEnds,
+                CircuitPostMeasurementEndpoint[] componentEnds, WireElm[] leads) {
+            if (pkg == null || terminals == null || netIds == null || primary == null ||
+                    auxiliary == null || boardEnds == null || componentEnds == null || leads == null ||
+                    terminals.length != pkg.getTerminalCount() || netIds.length != terminals.length ||
+                    boardEnds.length != terminals.length || componentEnds.length != terminals.length ||
+                    leads.length != terminals.length)
+                throw new IllegalArgumentException("Incomplete existing package declaration: " + id);
+            Vector<CircuitElm> owned = new Vector<CircuitElm>();
+            owned.add(primary);
+            for (CircuitElm element : auxiliary) {
+                if (element == null || owned.contains(element))
+                    throw new IllegalArgumentException("Duplicate existing package backing: " + id);
+                owned.add(element);
+            }
+            for (CircuitElm element : owned) {
+                if (!elements.contains(element))
+                    throw new IllegalArgumentException("Existing package backing is outside its graph: " + id);
+                for (String component : board.getComponentIds())
+                    if (components.isElementBoundToComponent(component, element))
+                        throw new IllegalArgumentException("Existing backing already has a physical owner: " + id);
+            }
+            Vector<WireElm> checkedLeads = new Vector<WireElm>();
+            for (int i = 0; i < terminals.length; i++) {
+                if (!pkg.getTerminalIds().get(i).equals(terminals[i]) || !nets.containsKey(netIds[i]) ||
+                        boardEnds[i] == null || componentEnds[i] == null || leads[i] == null ||
+                        checkedLeads.contains(leads[i]) || !elements.contains(leads[i]) ||
+                        !elements.contains(boardEnds[i].getElement()) ||
+                        owned.contains(boardEnds[i].getElement()) ||
+                        !owned.contains(componentEnds[i].getElement()))
+                    throw new IllegalArgumentException("Invalid existing package endpoint: " + id);
+                for (WireElm lead : leads)
+                    if (boardEnds[i].getElement() == lead || owned.contains(lead))
+                        throw new IllegalArgumentException("A package lead cannot own its board anchor: " + id);
+                Point copper = boardEnds[i].getElement().getPost(boardEnds[i].getPostIndex());
+                Point part = componentEnds[i].getElement().getPost(componentEnds[i].getPostIndex());
+                Point first = leads[i].getPost(0), second = leads[i].getPost(1);
+                if (copper == null || part == null || first == null || second == null || copper.equals(part) ||
+                        !(first.equals(copper) && second.equals(part) || first.equals(part) && second.equals(copper)))
+                    throw new IllegalArgumentException("Existing package lead has a foreign endpoint: " + id);
+                checkedLeads.add(leads[i]);
+            }
+            declare(id, type, pkg, terminals, netIds);
+            components.bindComponent(id, primary);
+            if (!auxiliary.isEmpty()) components.bindAuxiliaryComponentElements(id, auxiliary);
+            for (int i = 0; i < terminals.length; i++) {
+                String pad = id + "." + terminals[i];
+                board.getSimulationBindings().bindPad(pad, boardEnds[i]);
+                connections.bind(id, pad, boardEnds[i], componentEnds[i], leads[i]);
+            }
+        }
+
         void requireCompleteManifest() {
             if(constructed.size()!=board.getComponentIds().size() || nets.size()!=board.getNetIds().size())
                 throw new IllegalArgumentException("Incomplete construction manifest");

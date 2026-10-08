@@ -99,6 +99,18 @@ final class PcbTwoLayerRules {
      */
     static void requireNormalMediumGeometry(TroubleshootBoard board,
             PcbBoardLayout layout, int maximumVias) {
+        requireNormalGeometry(board, layout, maximumVias, MediumBoardNormalAdmission.Contract.MEDIUM);
+    }
+
+    static void requireNormalRb56Geometry(TroubleshootBoard board,
+            PcbBoardLayout layout, int maximumVias) {
+        requireNormalGeometry(board, layout, maximumVias, MediumBoardNormalAdmission.Contract.RB56);
+    }
+
+    /** One exact geometry owner with a finite, explicitly selected population contract. */
+    static void requireNormalGeometry(TroubleshootBoard board, PcbBoardLayout layout,
+            int maximumVias, MediumBoardNormalAdmission.Contract contract) {
+        if (contract == null) throw new IllegalArgumentException("Missing normal physical contract");
         if (board == null || layout == null || maximumVias < 0)
             throw new IllegalArgumentException("Normal medium physical admission requires a board and layout");
         PcbPlacementConstraints demands = board.getPlacementConstraints();
@@ -108,13 +120,22 @@ final class PcbTwoLayerRules {
         demands.validate(board);
         int parts = board.getComponentIds().size();
         int pads = board.getPadIds().size();
-        if (parts < 20 || parts > 40 || layout.getComponents().size() != parts ||
-                pads < parts * 2 || pads > parts * 5 || layout.getPads().size() != pads ||
-                board.getNetIds().isEmpty() || board.getNetIds().size() > pads)
-            throw new IllegalArgumentException("Normal medium physical population is outside 20..40 supported footprints");
+        if (contract == MediumBoardNormalAdmission.Contract.MEDIUM) {
+            if (parts < 20 || parts > 40 || layout.getComponents().size() != parts ||
+                    pads < parts * 2 || pads > parts * 5 || layout.getPads().size() != pads ||
+                    board.getNetIds().isEmpty() || board.getNetIds().size() > pads)
+                throw new IllegalArgumentException("Normal medium physical population is outside 20..40 supported footprints");
+        } else {
+            if (parts < contract.minimumParts || parts > contract.maximumParts ||
+                    layout.getComponents().size() != parts || pads < parts * 2 ||
+                    pads > parts * contract.maximumTerminals || layout.getPads().size() != pads ||
+                    board.getNetIds().isEmpty() || board.getNetIds().size() > pads)
+                throw new IllegalArgumentException("Normal RB56 physical population is outside 40..60 supported footprints");
+            requireRb56Declarations(board, layout, demands);
+        }
         for (PcbComponentPlacement placement : layout.getComponents()) {
             PhysicalPackage physical = placement.getPhysicalPackage();
-            if (!isSupportedProductionPackage(physical) || physical.isDeveloperGeneric() ||
+            if (!isSupportedProductionPackage(physical, contract) || physical.isDeveloperGeneric() ||
                     placement.getPhysicalGeometry().getRaisedCrossover() != null)
                 throw new IllegalArgumentException("Normal medium physical admission rejected an unsupported footprint or factory link");
         }
@@ -158,6 +179,90 @@ final class PcbTwoLayerRules {
         }
 
         new PcbTwoLayerRules(board, layout).validate(layout);
+    }
+
+    /** RB56 is additive; the old single-argument allowlist remains unchanged. */
+    private static boolean isSupportedProductionPackage(PhysicalPackage physical,
+            MediumBoardNormalAdmission.Contract contract) {
+        return isSupportedProductionPackage(physical) ||
+            contract == MediumBoardNormalAdmission.Contract.RB56 &&
+                (physical == PhysicalPackages.ISOLATED_CONVERTER_7 ||
+                 physical == PhysicalPackages.OPTOCOUPLER_4 ||
+                 physical == PhysicalPackages.RADIAL_INDUCTOR_2);
+    }
+
+    /** Drawing-space recipe only; its corridor conveys no manufacturing safety rating. */
+    private static void requireRb56Declarations(TroubleshootBoard board, PcbBoardLayout layout,
+            PcbPlacementConstraints demands) {
+        if (!"RB56_CONTROL_BOARD".equals(board.getId()) || demands.routingLayer != PcbCopperLayer.BOTTOM)
+            throw new IllegalArgumentException("Normal RB56 requires its exact declared board and routing face");
+        Vector<PcbPlacementConstraints.Barrier> barriers = demands.getBarriers();
+        if (barriers.size() != 1 || !"PRIMARY".equals(barriers.get(0).firstDomain) ||
+                !"SECONDARY".equals(barriers.get(0).secondDomain) || barriers.get(0).clearance != 80)
+            throw new IllegalArgumentException("Normal RB56 requires the declared PRIMARY/SECONDARY 80-unit corridor");
+        int declaredPads = 0;
+        for (String id : board.getComponentIds()) {
+            BoardComponent component = board.getComponent(id);
+            PhysicalPackage physical = component.getPhysicalPackage();
+            PcbPlacementConstraints.Part demand = demands.get(id);
+            Vector<String> terminals = physical.getTerminalIds();
+            if (terminals.size() < 2 || terminals.size() > 7 ||
+                    component.getPadIds().size() != terminals.size())
+                throw new IllegalArgumentException("Normal RB56 package has an unsupported terminal census: " + id);
+            declaredPads += terminals.size();
+            boolean mixed = "UAC".equals(id) || "UFB".equals(id);
+            if (mixed) {
+                PhysicalPackage expected = "UAC".equals(id) ? PhysicalPackages.ISOLATED_CONVERTER_7 : PhysicalPackages.OPTOCOUPLER_4;
+                if (physical != expected || !"PRIMARY".equals(demand.domainId) ||
+                        demand.anchor != PcbPlacementConstraints.Anchor.NONE ||
+                        demand.getTerminalDomains().size() != terminals.size())
+                    throw new IllegalArgumentException("Normal RB56 mixed package lost its exact declaration: " + id);
+            } else {
+                if ((!"PRIMARY".equals(demand.domainId) && !"SECONDARY".equals(demand.domainId)) ||
+                        !demand.getTerminalDomains().isEmpty() || physical.getGeometry().getIsolationBody() != null)
+                    throw new IllegalArgumentException("Normal RB56 ordinary package has a foreign domain: " + id);
+                PcbPlacementConstraints.Anchor expected = !physical.isConnector() ? PcbPlacementConstraints.Anchor.NONE :
+                    "PRIMARY".equals(demand.domainId) ? PcbPlacementConstraints.Anchor.LEFT : PcbPlacementConstraints.Anchor.RIGHT;
+                if (demand.anchor != expected)
+                    throw new IllegalArgumentException("Normal RB56 connector or package has a foreign anchor: " + id);
+            }
+            for (String terminal : terminals) {
+                BoardPad pad = board.getPad(id + "." + terminal);
+                if (pad == null || !id.equals(pad.getComponentId()) ||
+                        !terminal.equals(pad.getTerminalId()) || !component.getPadIds().contains(pad.getId()))
+                    throw new IllegalArgumentException("Normal RB56 package lost a declared terminal pad: " + id + "." + terminal);
+                String netDomain = Rb56Placement.domain(pad.getNetId());
+                if (!netDomain.equals(demand.terminalDomain(terminal)))
+                    throw new IllegalArgumentException("Normal RB56 terminal domain disagrees with its declared net: " + pad.getId());
+            }
+        }
+        if (declaredPads != board.getPadIds().size())
+            throw new IllegalArgumentException("Normal RB56 pad census differs from declared package terminals");
+        requireRb56MixedPose(board, layout, demands, "UAC", PhysicalPackages.ISOLATED_CONVERTER_7,
+            PcbRotation.DEG_0, new String[] {"IN+", "IN-", "EN", "FB", "BIAS"}, new String[] {"PRE_L+", "OUT-"});
+        requireRb56MixedPose(board, layout, demands, "UFB", PhysicalPackages.OPTOCOUPLER_4,
+            PcbRotation.DEG_180, new String[] {"C", "E"}, new String[] {"A", "K"});
+        ExternalBoardPowerInput mains = board.getPowerInput("MAINAC");
+        PcbPlacementConstraints.Part entry = demands.get("JAC");
+        if (mains == null || !"JAC.1".equals(mains.getPositivePadId()) || !"JAC.2".equals(mains.getReturnPadId()) ||
+                entry == null || !"PRIMARY".equals(entry.domainId) || entry.anchor != PcbPlacementConstraints.Anchor.LEFT)
+            throw new IllegalArgumentException("Normal RB56 mains connector lost its primary entry declaration");
+    }
+
+    private static void requireRb56MixedPose(TroubleshootBoard board, PcbBoardLayout layout,
+            PcbPlacementConstraints demands, String id, PhysicalPackage physical, PcbRotation rotation,
+            String[] primary, String[] secondary) {
+        BoardComponent component = board.getComponent(id);
+        PcbComponentPlacement placement = layout.getComponent(id);
+        PcbPlacementConstraints.Part demand = demands.get(id);
+        if (component == null || component.getPhysicalPackage() != physical || placement == null ||
+                placement.getPhysicalPackage() != physical || placement.getMountingSide() != PcbBoardSide.TOP ||
+                placement.getRotation() != rotation || demand == null)
+            throw new IllegalArgumentException("Normal RB56 mixed package lost its exact physical pose: " + id);
+        for (String terminal : primary) if (!"PRIMARY".equals(demand.terminalDomain(terminal)))
+            throw new IllegalArgumentException("Normal RB56 mixed package lost a primary terminal: " + id + "." + terminal);
+        for (String terminal : secondary) if (!"SECONDARY".equals(demand.terminalDomain(terminal)))
+            throw new IllegalArgumentException("Normal RB56 mixed package lost a secondary terminal: " + id + "." + terminal);
     }
 
     private static boolean isSupportedProductionPackage(PhysicalPackage physical) {

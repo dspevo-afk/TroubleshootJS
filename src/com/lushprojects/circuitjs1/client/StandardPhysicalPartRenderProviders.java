@@ -23,6 +23,10 @@ final class StandardPhysicalPartRenderProviders {
         registry.register(PhysicalPackages.RAISED_FACTORY_LINK, new FixedProvider(new FactoryLinkRenderer()));
         registry.register(PhysicalPackages.AXIAL_DIODE,
             new FixedProvider(new DiodeRenderer()));
+        registry.register(PhysicalPackages.RADIAL_INDUCTOR_2,
+            new FixedProvider(new InductorRenderer()));
+        registry.register(PhysicalPackages.OPTOCOUPLER_4,
+            new FixedProvider(new OptocouplerRenderer()));
         registry.register(PhysicalPackages.THROUGH_HOLE_LED,
             new FixedProvider(new LedRenderer()));
         registry.register(PhysicalPackages.TO92_NPN,
@@ -31,6 +35,8 @@ final class StandardPhysicalPartRenderProviders {
             new FixedProvider(new NmosRenderer()));
         registry.register(PhysicalPackages.E05_ISOLATION_TRANSFORMER_4,
             new FixedProvider(new TransformerRenderer()));
+        registry.register(PhysicalPackages.ISOLATED_CONVERTER_7,
+            new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new FixedProvider(new MultiTerminalRenderer()));
         registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
@@ -226,12 +232,18 @@ final class StandardPhysicalPartRenderProviders {
     }
 
     private static final class DiodeMetadataAdapter {
-        DiodeNameplate require(PhysicalPart<?> part) {
+        void require(PhysicalPart<?> part) {
             PhysicalPartRenderMetadata metadata = requireMetadata(part, "diode");
-            if (!(metadata.getVisualSpecification() instanceof DiodeNameplate))
-                throw new IllegalStateException("Diode package has non-diode metadata: " +
-                    part.getId());
-            return (DiodeNameplate) metadata.getVisualSpecification();
+            if (metadata.getVisualSpecification() instanceof DiodeNameplate)
+                return;
+            // The fixed zener keeps its technical recipe and immutable player markings.
+            // Its normal A/K projection uses the same axial body and cathode band.
+            if (metadata.getVisualSpecification() == ZenerSpecification.STANDARD &&
+                    part.getSpecification() == ZenerSpecification.STANDARD &&
+                    part.getPackage() == PhysicalPackages.AXIAL_DIODE)
+                return;
+            throw new IllegalStateException("Diode package has non-diode metadata: " +
+                part.getId());
         }
 
         boolean isReversed(PhysicalPart<?> part) {
@@ -352,6 +364,7 @@ final class StandardPhysicalPartRenderProviders {
 
     private static final class DiodeRenderer extends BaseRenderer {
         public PhysicalPartRenderGeometry getInstalledGeometry(PhysicalPartRenderContext context) {
+            if (context.getPart() != null) DIODE_METADATA.require(context.getPart());
             return installedGeometry(context, installedTerminals(context));
         }
 
@@ -386,7 +399,9 @@ final class StandardPhysicalPartRenderProviders {
             Rectangle body = geometry.getBodyBounds();
             drawBody(graphics, context, body, geometry.getTerminal(0).getPoint(),
                 geometry.getTerminal(1).getPoint());
-            drawPartLabel(graphics, context, selected ? "SELECTED" : "DIODE",
+            String label = context.getPart().getSpecification() == ZenerSpecification.STANDARD ?
+                context.getPart().getPlayerVisibleNameplate().getDisplayName() : "DIODE";
+            drawPartLabel(graphics, context, selected ? "SELECTED" : label,
                 body.x, body.y - context.scale(8));
             context.markBodyDrawn();
         }
@@ -811,6 +826,20 @@ final class StandardPhysicalPartRenderProviders {
         protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
             WorkbenchVisualTheme.body(graphics, bounds, WorkbenchVisualTheme.BODY,
                 WorkbenchVisualTheme.BODY_LIGHT, false);
+        }
+    }
+
+    private static final class InductorRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics, bounds, "#51412c", "#a88753", true);
+            WorkbenchVisualTheme.marking(graphics, "20 mH", bounds, Math.max(8, context.scale(10)), "#f4e9ce");
+        }
+    }
+
+    private static final class OptocouplerRenderer extends MultiTerminalRenderer {
+        protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {
+            WorkbenchVisualTheme.body(graphics, bounds, "#242b2e", "#455058", false);
+            WorkbenchVisualTheme.marking(graphics, "OPTO", bounds, Math.max(8, context.scale(10)), "#edf0e8");
         }
     }
 

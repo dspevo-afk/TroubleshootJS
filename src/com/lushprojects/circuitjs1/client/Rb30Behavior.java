@@ -3,7 +3,7 @@ package com.lushprojects.circuitjs1.client;
 import java.util.TreeMap;
 import java.util.Vector;
 
-/** Q30 input recipe and functional observations on the current CircuitJS graph. */
+/** Finite Q30/RB56 input recipes; one guarded profile owner and current CircuitJS graph. */
 final class Rb30Behavior implements GeneratedBoardFamilyState,
         GeneratedChallengeBehaviorContract, GeneratedTemporalBehavior,
         GeneratedLiveTemporalSimulation {
@@ -13,9 +13,18 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     static final String SENSORS_HIGH = "SENSORS_HIGH";
     static final double SAMPLE_SECONDS = .030;
     static final double SOLVER_MAX_STEP_SECONDS = 5e-6;
+    static final double RB56_MAX_STEP_SECONDS = E06ConverterContract.MAX_AVERAGED_STEP_SECONDS;
     static final double SOLVER_MIN_STEP_SECONDS = 50e-12;
     static final double LIVE_POWERED_SECONDS = .0001;
     static final double LIVE_ISOLATED_SECONDS = .005;
+    private double maximumStepSeconds() {
+        return recipe == Recipe.RB56 ? RB56_MAX_STEP_SECONDS : SOLVER_MAX_STEP_SECONDS;
+    }
+    private enum Recipe { RB30, RB56 }
+    private static final int RB56_STARTUP_UNITS = 8;
+    private static final double RB56_STARTUP_UNIT_SECONDS = .050;
+    private final Recipe recipe;
+    private final int initialInput;
     private final TroubleshootBoard board;
     private final GeneratedExternalPowerBindings power;
     private final String[] channels;
@@ -28,13 +37,32 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     private GeneratedObservedBehavior observed;
 
     Rb30Behavior(Rb30Generator.Candidate candidate) {
-        board = candidate.board();
-        power = candidate.assembly.power;
-        channels = candidate.plan.channels();
+        this(candidate.board(), candidate.assembly.power, candidate.plan.channels(), Recipe.RB30);
+    }
+
+    static Rb30Behavior forRb56(TroubleshootBoard board,
+            GeneratedExternalPowerBindings power, String[] channels) {
+        return new Rb30Behavior(board, power, channels, Recipe.RB56);
+    }
+
+    private Rb30Behavior(TroubleshootBoard board, GeneratedExternalPowerBindings power,
+            String[] channels, Recipe recipe) {
+        if (board == null || power == null || channels == null ||
+                channels.length < 1 || channels.length > 2 || !"A".equals(channels[0]) ||
+                channels.length == 2 && !"B".equals(channels[1]) ||
+                power.getBoardForRuntimeValidation() != board ||
+                recipe == Recipe.RB56 && !(Rb56Plan.FAMILY_ID + "_BOARD").equals(board.getId()))
+            throw new IllegalArgumentException("Missing or foreign channel behavior construction");
+        this.recipe = recipe;
+        this.board = board;
+        this.power = power;
+        this.channels = new String[channels.length];
+        System.arraycopy(channels, 0, this.channels, 0, channels.length);
         allInputMask = (1 << channels.length) - 1;
-        profileWorkUnits = (1 << channels.length) + 1;
+        profileWorkUnits = (1 << channels.length) + 1 + startupUnits();
         retestWorkUnits = profileWorkUnits;
-        input = allInputMask;
+        initialInput = recipe == Recipe.RB56 ? 0 : allInputMask;
+        input = initialInput;
         if (channels.length == 1) {
             addInput(SENSORS_LOW, "Set sensor A LOW", 0);
             addInput(SENSORS_HIGH, "Set sensor A HIGH", 1);
@@ -44,22 +72,31 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             addInput(SENSORS_B_ONLY, "Set sensor A LOW, B HIGH", 2);
             addInput(SENSORS_HIGH, "Set both sensors HIGH", 3);
         }
-        retest = new GeneratedCustomerRetestProfile("RB30_CUSTOMER_RETEST",
+        retest = new GeneratedCustomerRetestProfile(recipe == Recipe.RB56 ?
+            "RB56_CUSTOMER_RETEST" : "RB30_CUSTOMER_RETEST",
             channels.length == 1 ?
                 "Check that the external load follows sensor A at LOW and HIGH." :
                 "Check that each external load follows its own sensor, including both loads together.",
-            channels.length == 1 ?
-                "Connect the 12 V main and isolated load supplies and sensor A." :
-                "Connect the 12 V main and isolated load supplies and both sensor inputs.",
+            recipe == Recipe.RB56 ?
+                (channels.length == 1 ?
+                    "Connect the AC input, isolated load supply and sensor A." :
+                    "Connect the AC input, isolated load supply and both sensor inputs.") :
+                (channels.length == 1 ?
+                    "Connect the 12 V main and isolated load supplies and sensor A." :
+                    "Connect the 12 V main and isolated load supplies and both sensor inputs."),
             channels.length == 1 ? "LOW, HIGH; restore the previous input." :
                 "Both LOW, A only, B only, both HIGH; restore the previous inputs.",
             channels.length == 1 ?
                 "Observe output A across its two-terminal load connector." :
                 "Observe each output across its own two-terminal load connector.",
-            "Allow 30 ms of CircuitJS time after each input change.",
-            channels.length == 1 ?
-                "Low-voltage DC, one 180 ohm external load; all serviced leads reconnected." :
-                "Low-voltage DC, two 180 ohm external loads; all serviced leads reconnected.",
+            recipe == Recipe.RB56 ?
+                "Allow 400 ms for the power rails, then 30 ms after each input change." :
+                "Allow 30 ms of CircuitJS time after each input change.",
+            recipe == Recipe.RB56 ?
+                "Simulated AC input and isolated low-voltage load supply; all serviced leads reconnected." :
+                (channels.length == 1 ?
+                    "Low-voltage DC, one 180 ohm external load; all serviced leads reconnected." :
+                    "Low-voltage DC, two 180 ohm external loads; all serviced leads reconnected."),
             new GeneratedCustomerRetestProfile.Executor() {
                 public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
                     return GeneratedWork.complete(beginCustomerRetest(sim, owner));
@@ -75,6 +112,9 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             }));
     }
 
+    private int startupUnits() { return recipe == Recipe.RB56 ? RB56_STARTUP_UNITS : 0; }
+    private String controlReturnPad() { return recipe == Recipe.RB56 ? "U1.RETURN" : "J1.2"; }
+
     private void addInput(String id, String label, final int value) {
         operations.add(new GeneratedBoardOperation(id, label, new GeneratedBoardOperation.Executor() {
             public GeneratedCustomerRetestResult execute(CirSim sim, GeneratedBoardInstance owner) {
@@ -88,6 +128,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         if (owner == null || owner.getBoard() != board || owner.getExternalPowerBindings() != power ||
                 owner.getFamilyState() != this || owner.getTemporalBehavior() != this)
             throw new IllegalArgumentException("Foreign Q30 behavior owner");
+        if (recipe == Recipe.RB56 && !Rb56Plan.FAMILY_ID.equals(owner.getCircuitFamilyId()))
+            throw new IllegalArgumentException("Foreign RB56 behavior family");
         for (String channel : channels)
             for (CircuitElm element : power.getBinding("SENSOR_" + channel).getBackingElements())
                 if (!owner.getSimulationElements().contains(element))
@@ -137,6 +179,10 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
 
     boolean healthy(GeneratedBoardInstance owner, int condition) {
         requireOwnedBy(owner);
+        if (recipe == Recipe.RB56) {
+            try { return healthyRb56(owner, condition); }
+            catch (RuntimeException unavailable) { return false; }
+        }
         double rail = voltage(owner, "U1.OUTPUT", "U1.RETURN");
         if (rail < 4.75 || rail > 5.25) return false;
         for (int index = 0; index < channels.length; index++) {
@@ -149,6 +195,131 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         return true;
     }
 
+    /** Live status is provisional; explicit functional profiles additionally require accepted windows. */
+    private boolean healthyRb56(GeneratedBoardInstance owner, int condition) {
+        if (!currentRb56PartsSupported(owner)) return false;
+        double rail12 = voltage(owner, "COUT.+", "COUT.-");
+        double rail5 = voltage(owner, "U1.OUTPUT", "U1.RETURN");
+        if (rail12 < 10.64 || rail12 > 11.76 || rail5 < 4.75 || rail5 > 5.25) return false;
+        for (int index = 0; index < channels.length; index++)
+            if (!outputMatches(harnessVoltage(owner, "JO" + channels[index]),
+                    (condition & (1 << index)) != 0)) return false;
+        return true;
+    }
+
+    private boolean currentRb56PartsSupported(GeneratedBoardInstance owner) {
+        PhysicalPart<?> converter = currentInstalled(owner, "UAC");
+        PhysicalPart<?> regulator = currentInstalled(owner, "U1");
+        if (!(converter instanceof PhysicalConverterPart) || !(regulator instanceof PhysicalRegulatorPart) ||
+                !(((PhysicalRegulatorPart)regulator).getElement() instanceof LinearRegulatorElm)) return false;
+        PhysicalConverterPart module = (PhysicalConverterPart)converter;
+        module.getSpecification().requireModel(module.getModule());
+        for (int index = 0; index < channels.length; index++) {
+            String channel = channels[index];
+            PhysicalPart<?> decision = currentInstalled(owner, "U2" + channel);
+            PhysicalPart<?> relay = currentInstalled(owner, "K" + channel);
+            PhysicalPart<?> driver = currentInstalled(owner, "Q" + channel);
+            PhysicalPart<?> connector = currentInstalled(owner, "JO" + channel);
+            if (!(decision instanceof E04DecisionControlPart) || !(relay instanceof PhysicalRelayPart) ||
+                    !(driver instanceof PhysicalNpnPart) && !(driver instanceof PhysicalNmosPart) ||
+                    !(connector instanceof PhysicalServicePart) || !((PhysicalServicePart)connector).isConnector())
+                return false;
+            currentHarness(owner, "JO" + channel);
+        }
+        return true;
+    }
+
+    /** Resolve every sample from the present slot/backing/terminal bindings, never original model maps. */
+    private static PhysicalPart<?> currentInstalled(GeneratedBoardInstance owner, String id) {
+        CirSim sim = CircuitElm.sim;
+        if (sim == null || sim.getGeneratedBoardInstance() != owner || sim.elmList == null) return null;
+        Vector<CircuitElm> live = sim.elmList;
+        PhysicalBoardRuntime runtime = owner.getPhysicalBoardRuntime();
+        PhysicalPart<?> part = runtime.getInstalledPart(id);
+        PhysicalBoardSlot slot = runtime.getSlot(id);
+        if (part == null || slot == null || slot.getInstalledPart() != part || part.getBoardSlot() != slot ||
+                !part.isInstalled() || runtime.getPart(part.getId()) != part ||
+                !runtime.isPartOwnedByRegisteredProvider(part)) return null;
+        Vector<CircuitElm> backing = part.getElectricalBacking().getCircuitElements();
+        Vector<CircuitElm> bound = owner.getComponentBindings().getElements(id);
+        bound.addAll(owner.getComponentBindings().getAuxiliaryElements(id));
+        if (backing.isEmpty() || !bound.equals(backing)) return null;
+        for (CircuitElm element : backing)
+            if (!owner.ownsRuntimeSimulationElement(element) || !live.contains(element)) return null;
+        if (owner.getConnectionBindings().getForComponent(id).size() != part.getTerminalCount()) return null;
+        for (PhysicalPartTerminal terminal : part.getTerminals()) {
+            GeneratedComponentConnectionBinding binding = owner.getConnectionBindings().get(id,
+                id + "." + terminal.getTerminalName());
+            if (!GeneratedComponentConnectionBindings.sameEndpoint(binding.getComponentEndpoint(), terminal.getEndpoint()) ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(binding.getBoardEndpoint(),
+                        owner.getSimulationBindings().getEndpoint(binding.getPadId())) ||
+                    !live.contains(binding.getConnectionElement())) return null;
+        }
+        return part;
+    }
+
+    /** The customer load remains outside the replaceable header; its cable endpoints are the output. */
+    private static CircuitPostMeasurementEndpoint[] currentHarness(GeneratedBoardInstance owner, String id) {
+        CirSim sim = CircuitElm.sim;
+        CircuitPostMeasurementEndpoint[] ends = owner.getConnectionBindings().getConnectorHarness(id);
+        if (sim == null || sim.getGeneratedBoardInstance() != owner || sim.elmList == null || ends == null || ends.length != 2 || ends[0].getElement() != ends[1].getElement() ||
+                !(ends[0].getElement() instanceof BoundedExternalLoadElm) ||
+                ends[0].getPostIndex() != 0 || ends[1].getPostIndex() != 1 ||
+                !owner.ownsRuntimeSimulationElement(ends[0].getElement()) ||
+                !sim.elmList.contains(ends[0].getElement()))
+            throw new IllegalStateException("Missing current external load harness: " + id);
+        return ends;
+    }
+
+    private static double harnessVoltage(GeneratedBoardInstance owner, String id) {
+        CircuitPostMeasurementEndpoint[] ends = currentHarness(owner, id);
+        double value = ends[0].getElement().getPostVoltage(0) - ends[1].getElement().getPostVoltage(1);
+        if (!PowerDomainContract.finite(value)) throw new IllegalStateException("Non-finite external load voltage");
+        return value;
+    }
+
+    /** Statistics of accepted values over the last 10 ms, weighted by actual step duration. */
+    private static final class Rb56ObservedWindow {
+        private static final double SECONDS = .010, HALF_SECONDS = .005, TIME_EPSILON = 1e-12;
+        private double duration, firstDuration, secondDuration, sum, firstSum, secondSum;
+        private double min = Double.POSITIVE_INFINITY, max = Double.NEGATIVE_INFINITY;
+
+        static Rb56ObservedWindow read(SolverTimeSample[] samples, double end) {
+            double start = end - SECONDS, middle = end - HALF_SECONDS;
+            if (samples == null || samples.length < 3 || !PowerDomainContract.finite(end) ||
+                    samples[0].getTime() > start + TIME_EPSILON ||
+                    Math.abs(samples[samples.length - 1].getTime() - end) > TIME_EPSILON)
+                throw new IllegalStateException("RB56 accepted observation window has insufficient duration");
+            Rb56ObservedWindow result = new Rb56ObservedWindow();
+            for (int index = 1; index < samples.length; index++) {
+                double previous = samples[index - 1].getTime(), current = samples[index].getTime();
+                if (current <= start || previous >= end) continue;
+                double gap = current - previous;
+                if (!PowerDomainContract.finite(gap) || gap <= 0 || gap > RB56_MAX_STEP_SECONDS + TIME_EPSILON)
+                    throw new IllegalStateException("RB56 accepted observation window exceeds its step gap");
+                double from = Math.max(start, previous), to = Math.min(end, current);
+                double value = samples[index].getValue();
+                double weight = to - from;
+                // Right-endpoint duration weighting equals the frozen equal-step sample mean.
+                result.duration += weight; result.sum += value * weight;
+                result.min = Math.min(result.min, value); result.max = Math.max(result.max, value);
+                double firstWeight = Math.max(0, Math.min(to, middle) - from);
+                double secondWeight = weight - firstWeight;
+                result.firstDuration += firstWeight; result.firstSum += value * firstWeight;
+                result.secondDuration += secondWeight; result.secondSum += value * secondWeight;
+            }
+            if (Math.abs(result.duration - SECONDS) > TIME_EPSILON ||
+                    Math.abs(result.firstDuration - HALF_SECONDS) > TIME_EPSILON ||
+                    Math.abs(result.secondDuration - HALF_SECONDS) > TIME_EPSILON ||
+                    !PowerDomainContract.finite(result.min) || !PowerDomainContract.finite(result.max))
+                throw new IllegalStateException("RB56 accepted observation window is incomplete");
+            return result;
+        }
+        double mean() { return sum / duration; }
+        double ripple() { return (max - min) / Math.abs(mean()); }
+        double drift() { return Math.abs(firstSum / firstDuration - secondSum / secondDuration) / Math.abs(mean()); }
+    }
+
     private static boolean outputMatches(double volts, boolean on) {
         return on ? volts >= 10.8 && volts <= 12.6 : Math.abs(volts) <= .05;
     }
@@ -157,7 +328,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(owner, id);
     }
     public String getSessionInputSignature() {
-        StringBuilder out = new StringBuilder("RB30_INPUTS@1:");
+        StringBuilder out = new StringBuilder(recipe == Recipe.RB56 ? "RB56_INPUTS@1:" : "RB30_INPUTS@1:");
         for (int index = 0; index < channels.length; index++) {
             double expected = (input & (1 << index)) != 0 ? 5 : 0;
             LimitedDcSupplyElm source = power.getBinding("SENSOR_" + channels[index]).getLimitedSupply();
@@ -186,20 +357,42 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         TreeMap<String, String> values = new TreeMap<String, String>();
         values.put("recipe", channels.length == 1 ?
             "LOW-HIGH-restore-inputs" : "LOW-A_ONLY-B_ONLY-HIGH-restore-inputs");
-        values.put("fault-preparation", channels.length == 1 ?
-            "healthy-two-conditions-then-LOW-apply-fault-then-HIGH" :
-            "healthy-four-conditions-then-LOW-apply-fault-then-HIGH");
+        values.put("fault-preparation", recipe == Recipe.RB56 ?
+            (channels.length == 1 ?
+                "healthy-two-conditions-then-LOW-apply-fault-settle-0.4s-then-HIGH" :
+                "healthy-four-conditions-then-LOW-apply-fault-settle-0.4s-then-HIGH") :
+            (channels.length == 1 ?
+                "healthy-two-conditions-then-LOW-apply-fault-then-HIGH" :
+                "healthy-four-conditions-then-LOW-apply-fault-then-HIGH"));
         values.put("sample-seconds", Double.toString(SAMPLE_SECONDS));
         values.put("live-powered-seconds", Double.toString(LIVE_POWERED_SECONDS));
         values.put("live-isolated-seconds", Double.toString(LIVE_ISOLATED_SECONDS));
         values.put("qualification-solver", "CircuitJS-adaptive");
-        values.put("qualification-maximum-step-seconds", Double.toString(SOLVER_MAX_STEP_SECONDS));
+        values.put("qualification-maximum-step-seconds", Double.toString(maximumStepSeconds()));
         values.put("qualification-minimum-step-seconds", Double.toString(SOLVER_MIN_STEP_SECONDS));
         values.put("profile-work-units", Integer.toString(profileWorkUnits));
         values.put("customer-retest-work-units", Integer.toString(retestWorkUnits));
         values.put("active-channels", joinChannels());
         values.put("condition-count", Integer.toString(1 << channels.length));
         values.put("rail-range-volts", "4.75..5.25");
+        if (recipe == Recipe.RB56) {
+            values.put("fresh-input", "LOW");
+            values.put("startup-units", Integer.toString(RB56_STARTUP_UNITS));
+            values.put("startup-unit-seconds", Double.toString(RB56_STARTUP_UNIT_SECONDS));
+            values.put("startup-total-seconds", "0.4");
+            values.put("startup-profiles", "HEALTHY,FAULTED,REPAIR");
+            values.put("rail12-target", "COUT.+-COUT.-");
+            values.put("rail12-range-volts", "10.64..11.76");
+            values.put("rail5-target", "U1.OUTPUT-U1.RETURN");
+            values.put("functional-observation-window-seconds", "0.01");
+            values.put("functional-observation-window", "completed-accepted-steps;right-endpoint-time-weighted;5ms-halves");
+            values.put("functional-observation-capacity", Integer.toString(SolverTimeObservationService.MAX_CAPACITY));
+            values.put("rail12-ripple-maximum", "0.05");
+            values.put("rail12-half-drift-maximum", "0.02");
+            values.put("rail5-and-loads", "accepted-window-minimum-maximum");
+            values.put("outputs-owner", "current-connector-external-load-harness");
+            values.put("required-current-parts", "UAC,U1,U2-channel,K-channel,Q-channel,JO-channel");
+        }
         values.put("on-range-volts", "10.8..12.6");
         values.put("off-maximum-volts", "0.05");
         StringBuilder outputs = new StringBuilder();
@@ -212,7 +405,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         values.put("topology", owner.getTopologyVariantId());
         values.put("physical-policy", MediumBoardPhysicalPolicy.identity());
         values.put("seed", Long.toString(owner.getSeed()));
-        return new GeneratedTemporalDependency("RB30_CHANNEL_FUNCTION", 3,
+        return new GeneratedTemporalDependency(recipe == Recipe.RB56 ? "RB56_CHANNEL_FUNCTION" : "RB30_CHANNEL_FUNCTION",
+            recipe == Recipe.RB56 ? 1 : 3,
             GeneratedTemporalDependency.FRESH_GENERATED_OWNER_COLD_V1,
             "JOA.1", "JOA.2", values);
     }
@@ -292,7 +486,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         };
     }
 
-    /** One guarded unit performs at most one CircuitJS advance of SAMPLE_SECONDS. */
+    /** One guarded unit performs one bounded family startup or 30 ms sensor advance at most. */
     private final class ProfileWork extends GeneratedWork<GeneratedRepairStatus> {
         private final CirSim ownerSim;
         private final GeneratedBoardInstance owner;
@@ -340,8 +534,10 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         ProfileWork(CirSim sim, GeneratedBoardInstance instance, Profile profile) {
             if (profile == null) throw new IllegalArgumentException("Missing Q30 profile");
             Rb30Behavior.this.requireCurrent(sim, instance);
-            if (profile == Profile.HEALTHY && input != allInputMask)
-                throw new IllegalStateException("Healthy Q30 proof requires the fresh HIGH input state");
+            if (profile == Profile.HEALTHY && input != initialInput)
+                throw new IllegalStateException(recipe == Recipe.RB56 ?
+                    "Healthy RB56 proof requires the fresh LOW input state" :
+                    "Healthy Q30 proof requires the fresh HIGH input state");
             ownerSim = sim;
             owner = instance;
             this.profile = profile;
@@ -407,7 +603,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             }
             if (profile == Profile.HEALTHY) {
                 // Apply the same declared CircuitJS recipe before the first healthy sample.
-                sim.timeStep = sim.maxTimeStep = SOLVER_MAX_STEP_SECONDS;
+                sim.timeStep = sim.maxTimeStep = maximumStepSeconds();
                 sim.minTimeStep = SOLVER_MIN_STEP_SECONDS;
                 sim.adjustTimeStep = true;
             }
@@ -424,17 +620,29 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             if (complete || phase >= profileWorkUnits) return false;
             requireCurrent("unit " + phase + " before");
             if (!blocked) {
-                if (profile == Profile.HEALTHY) {
-                    if (phase < allInputMask + 1) observeCondition(phase);
+                int conditionPhase = phase - startupUnits();
+                if (conditionPhase < 0) {
+                    // One answer-blind settling recipe covers cold startup, post-fault
+                    // storage decay and repaired cold rails without inspecting the fault.
+                    ownerSim.advanceGeneratedTemporalProfile(RB56_STARTUP_UNIT_SECONDS);
+                    requireCurrent("startup " + phase + " after");
+                } else if (profile == Profile.HEALTHY) {
+                    if (conditionPhase < allInputMask + 1) observeCondition(conditionPhase);
                     else if (passed) applyInput(0);
                 } else if (profile == Profile.FAULTED) {
-                    if (phase == 0) {
-                        applyInput(allInputMask);
-                        localObserved = healthy(owner, allInputMask) ? null :
-                            GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+                    if (conditionPhase == 0) {
+                        if (recipe == Recipe.RB56) {
+                            Boolean matched = observeRb56Input(allInputMask);
+                            localObserved = matched == null || matched.booleanValue() ? null :
+                                GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+                        } else {
+                            applyInput(allInputMask);
+                            localObserved = healthy(owner, allInputMask) ? null :
+                                GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING;
+                        }
                     }
-                } else if (phase < allInputMask + 1) {
-                    observeCondition(phase);
+                } else if (conditionPhase < allInputMask + 1) {
+                    observeCondition(conditionPhase);
                 } else if (input != priorInput) {
                     applyInput(priorInput);
                 }
@@ -445,10 +653,74 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
         }
 
         private void observeCondition(int condition) {
+            if (recipe == Recipe.RB56) {
+                Boolean observed = observeRb56Input(condition);
+                boolean matched = Boolean.TRUE.equals(observed);
+                passed = passed && matched;
+                if (!matched && profile == Profile.HEALTHY) appendFailureSnapshot(condition);
+                return;
+            }
             applyInput(condition);
             boolean matched = healthy(owner, condition);
             passed &= matched;
             if (!matched && profile == Profile.HEALTHY) appendFailureSnapshot(condition);
+        }
+
+        /** One existing 30 ms advance; no retained subscriptions or extra solver work. */
+        private Boolean observeRb56Input(int condition) {
+            requireCurrent("RB56 observation before");
+            if (!rb56PartsAvailable()) return null;
+            SolverTimeObservationService.Subscription[] samples =
+                new SolverTimeObservationService.Subscription[2 + channels.length];
+            try {
+                samples[0] = observeEndpoints(observationEndpoint("COUT.+"), observationEndpoint("COUT.-"));
+                samples[1] = observeEndpoints(observationEndpoint("U1.OUTPUT"), observationEndpoint("U1.RETURN"));
+                for (int index = 0; index < channels.length; index++) {
+                    CircuitPostMeasurementEndpoint[] ends = currentHarness(owner, "JO" + channels[index]);
+                    samples[2 + index] = observeEndpoints(ends[0], ends[1]);
+                }
+                applyInput(condition);
+                requireCurrent("RB56 observation after");
+                if (!rb56PartsAvailable()) return null;
+                double end = ownerSim.t;
+                Rb56ObservedWindow rail12 = Rb56ObservedWindow.read(samples[0].snapshot(), end);
+                Rb56ObservedWindow rail5 = Rb56ObservedWindow.read(samples[1].snapshot(), end);
+                boolean matched = rail12.mean() >= 10.64 && rail12.mean() <= 11.76 &&
+                    rail12.ripple() <= .05 && rail12.drift() <= .02 &&
+                    rail5.min >= 4.75 && rail5.max <= 5.25;
+                for (int index = 0; index < channels.length; index++) {
+                    Rb56ObservedWindow load = Rb56ObservedWindow.read(samples[2 + index].snapshot(), end);
+                    boolean on = (condition & (1 << index)) != 0;
+                    matched = matched && (on ? load.min >= 10.8 && load.max <= 12.6 :
+                        Math.max(Math.abs(load.min), Math.abs(load.max)) <= .05);
+                }
+                return Boolean.valueOf(matched);
+            } finally {
+                // Failed analysis/advance/coverage has no waveform to publish as a symptom.
+                for (SolverTimeObservationService.Subscription subscription : samples)
+                    ownerSim.solverTimeObservations.unsubscribe(subscription);
+            }
+        }
+
+        private boolean rb56PartsAvailable() {
+            try { return currentRb56PartsSupported(owner); }
+            catch (RuntimeException unsupportedOwnerOrModel) { return false; }
+        }
+
+        private CircuitPostMeasurementEndpoint observationEndpoint(String padId) {
+            CircuitMeasurementEndpoint endpoint = owner.getSimulationBindings().getEndpoint(padId);
+            if (!(endpoint instanceof CircuitPostMeasurementEndpoint))
+                throw new IllegalStateException("Missing RB56 observation endpoint: " + padId);
+            CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint)endpoint;
+            if (!owner.ownsRuntimeSimulationElement(post.getElement()) || !ownerSim.elmList.contains(post.getElement()))
+                throw new IllegalStateException("Stale RB56 observation endpoint: " + padId);
+            return post;
+        }
+
+        private SolverTimeObservationService.Subscription observeEndpoints(CircuitPostMeasurementEndpoint red,
+                CircuitPostMeasurementEndpoint black) {
+            return ownerSim.solverTimeObservations.subscribe(red, black,
+                SolverTimeObservationService.MAX_CAPACITY, false);
         }
 
         private void appendFailureSnapshot(int condition) {
@@ -456,11 +728,17 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 .append(inputName(condition));
             appendVoltage(" rail_U1_OUTPUT_to_U1_RETURN_V", owner,
                 "U1.OUTPUT", "U1.RETURN");
-            appendVoltage(" regulatorInput_U1_INPUT_to_J1_2_V", owner,
-                "U1.INPUT", "J1.2");
-            appendVoltage(" regulatorReturn_U1_RETURN_to_J1_2_V", owner,
-                "U1.RETURN", "J1.2");
-            appendVoltage(" main12V_J1_1_to_J1_2_V", owner, "J1.1", "J1.2");
+            if (recipe == Recipe.RB56) {
+                appendVoltage(" regulatorInput_U1_INPUT_to_U1_RETURN_V", owner, "U1.INPUT", "U1.RETURN");
+                appendVoltage(" converted12V_COUT_positive_to_negative_V", owner, "COUT.+", "COUT.-");
+                appendVoltage(" primaryBulk_CBULK_positive_to_negative_V", owner, "CBULK.+", "CBULK.-");
+            } else {
+                appendVoltage(" regulatorInput_U1_INPUT_to_J1_2_V", owner,
+                    "U1.INPUT", "J1.2");
+                appendVoltage(" regulatorReturn_U1_RETURN_to_J1_2_V", owner,
+                    "U1.RETURN", "J1.2");
+                appendVoltage(" main12V_J1_1_to_J1_2_V", owner, "J1.1", "J1.2");
+            }
             for (String channel : channels)
                 appendChannelFailureSnapshot(channel);
         }
@@ -517,7 +795,7 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
             failures.append(" driverCurrentA=").append(installedPartCurrent(owner, componentId));
             for (String terminal : terminals)
                 appendVoltage(" driver" + terminal + "V", owner,
-                    componentId + "." + terminal, "J1.2");
+                    componentId + "." + terminal, controlReturnPad());
         }
 
         private String inputName(int value) {
@@ -809,7 +1087,8 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
     GeneratedScenarioCatalog<GeneratedObservedBehavior> scenarios() {
         Vector<GeneratedScenario<GeneratedObservedBehavior>> result =
             new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
-        result.add(new GeneratedScenario<GeneratedObservedBehavior>("RB30_OUTPUT_NOT_TRACKING",
+        result.add(new GeneratedScenario<GeneratedObservedBehavior>(recipe == Recipe.RB56 ?
+            "RB56_OUTPUT_NOT_TRACKING" : "RB30_OUTPUT_NOT_TRACKING",
             "OUTPUT_NOT_TRACKING", "One or both loads fail to follow their sensor inputs. Check each channel separately and together.",
             GeneratedObservedBehavior.RELAY_LOAD_NOT_SWITCHING,
             new GeneratedScenarioCompatibility<GeneratedObservedBehavior>() {

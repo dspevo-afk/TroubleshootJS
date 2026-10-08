@@ -7,15 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **E06 solver fidelity decision accepted; Q60 next**
-U06/U07 and E05 are published. E06 qualifies the fixed detailed-versus-averaged
-converter envelope and selects one opaque averaged module for guarded Q60
-integration. Native 24 cases / 1.32 million steps, production GWT 5, compiled
-positive/forced cleanup and exact resource audit pass. Numerical damping,
-current-accounting limits, retained post-isolation energy and all failures remain
-explicit. Q60 physical/generation/diagnostic/player admission is unstarted.
-No email or unchanged Q30 rerun. [E06 evidence](task-evidence/E06/README.md),
-[current checkpoint](CODEX_TASK_REPORT.md).
+**Current task:** **E06 published; Q60 checkpoint IN PROGRESS**
+U06/U07/E05/E06 are published. Q60 native geometry, 40/55/60 context capture,
+bounded service and final GWT checks pass. The real 40-part visible repair/retest
+passes after fixing stale discharge controls. The complete frozen browser cohort
+fails four of six deadlines, and ordinary Q30 seed10014 regresses against its
+published pass. This local checkpoint remains unaccepted and unpushed; normal
+RB56 admission, HARD and normal RB56 save/load stay held. No unchanged corpus rerun.
+[Q60 evidence](task-evidence/Q60/README.md), [current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
 **Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
@@ -1033,7 +1032,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 is now accepted within its documented host/corpus scope.
-**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is accepted for its bounded solver fidelity decision. Q60 is the next unstarted milestone. Pending visual/FPS/tray work remains preserved.
+**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is accepted for its bounded solver fidelity decision. Q60 is in progress, unaccepted and unpublished. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -2248,7 +2247,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### E06 · Causal offline-converter model and fidelity decision gate
 
-**Status:** COMPLETE - BOUNDED FIDELITY DECISION, 2026-10-08. The opaque averaged module is selected as one hidden-stage package for guarded Q60 integration. All 24 native cases / 1,320,000 steps, five production GWT permutations, strict compiled positive/forced cleanup and final resource audit pass. Maximum paired output/input-energy differences are 0.653%/10.192%, within frozen 5%/15% bands. Numerical damping, 10.558 mA terminal-current accounting limit, retained primary energy and all failures are explicit. Physical generation, diagnostics, save/load and normal player qualification remain Q60 work. [Evidence and limits](task-evidence/E06/README.md).
+**Status:** COMPLETE - BOUNDED FIDELITY DECISION, 2026-10-08. The opaque averaged module is selected as one hidden-stage package for guarded Q60 integration. All 24 native cases / 1,320,000 steps, five production GWT permutations, strict compiled positive/forced cleanup and final resource audit pass. Maximum paired output/input-energy differences are 0.653%/10.192%, within frozen 5%/15% bands. Numerical damping, 10.558 mA terminal-current accounting limit, retained primary energy and all failures are explicit. Physical generation, diagnostics and bounded device/workbench qualification remain Q60 work. Fresh Q60-based HARD calibration and advertised advanced normal-player save/load and release qualification follow through U05/REL-B. [Evidence and limits](task-evidence/E06/README.md).
 
 **Hard prerequisites:** [E05](#m-e05), [E02](#m-e02), [A07](#m-a07), [U03](#m-u03), [A08](#m-a08)
 
@@ -2990,7 +2989,7 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** UNSTARTED.
+**Status:** IN PROGRESS, 2026-10-08; local implementation checkpoint, not accepted or published. E06 base is `7aa0e1932f3c853e7265bf186e98989ada641a51`. Shared 40-60-package graph and complete five-fault provider are implemented. Context capacity, package escapes and medium-placement weighting have measured corrections; all frozen 40/55/60 native captures and geometry pass. Final build-r8 passes all five GWT permutations. Visible-r4 passes the frozen 40-part public-control diagnosis/removal/replacement/retest with the failed original retained, after fixing stale readiness controls. The complete six-case compiled cohort remains FAIL (two pass, four unchanged 90-second deadlines). Current ordinary Q30 seed10014 fails despite its historical 75.535-second pass; control10387 does not clear that regression. Missing 60-part player-flow, modest-host and long-session evidence remain pending. All failures and historical Q30 limits are preserved. Normal RB56 admission, public HARD and normal RB56 save/load remain held for Q60 and fresh U05/REL-B qualification. [Evidence](task-evidence/Q60/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

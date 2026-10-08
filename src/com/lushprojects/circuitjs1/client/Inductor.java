@@ -27,6 +27,7 @@ class Inductor {
     
     double inductance;
     double compResistance, current;
+    private double acceptedCurrent;
     double curSourceValue;
     Inductor(CirSim s) {
 	sim = s;
@@ -34,7 +35,7 @@ class Inductor {
     }
     void setup(double ic, double cr, int f) {
 	inductance = ic;
-	current = cr;
+	current = acceptedCurrent = cr;
 	flags = f;
     }
     boolean isTrapezoidal() { return (flags & FLAG_BACK_EULER) == 0; }
@@ -42,7 +43,7 @@ class Inductor {
 	// need to set curSourceValue here in case one of inductor nodes is node 0.  In that case
 	// calculateCurrent() may get called (from setNodeVoltage()) when analyzing circuit, before
 	// startIteration() gets called
-	current = curSourceValue = 0;
+	current = acceptedCurrent = curSourceValue = 0;
     }
     void stamp(int n0, int n1) {
 	// inductor companion model using trapezoidal or backward euler
@@ -62,12 +63,16 @@ class Inductor {
     }
     boolean nonLinear() { return false; }
 
-    void startIteration(double voltdiff) {
+    double startIteration(double voltdiff) {
+	// Only stepFinished commits history; rejected Newton attempts may change current.
+	current = acceptedCurrent;
 	if (isTrapezoidal())
 	    curSourceValue = voltdiff/compResistance+current;
 	else // backward euler
 	    curSourceValue = current;
+	return current;
     }
+    void stepFinished() { acceptedCurrent = current; }
     
     double calculateCurrent(double voltdiff) {
 	// we check compResistance because this might get called

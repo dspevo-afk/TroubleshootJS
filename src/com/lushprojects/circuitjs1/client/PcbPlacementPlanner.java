@@ -527,8 +527,9 @@ final class PcbPlacementPlanner {
         if(anchor)preferredX=side==PcbPlacementConstraints.Anchor.RIGHT?
             outline.x+outline.width-MEDIUM_BORDER-item.footprint.getPlacement().getWidth():
             outline.x+MEDIUM_BORDER;
+        // Center the search with the same shared-rail weights used to score it.
         Point connected=weightedConnectedTarget(item.footprint,placed,
-            topology.getLinksFor(item.demand.componentId),preferredX,preferredY);
+            topology.getLinksFor(item.demand.componentId),preferredX,preferredY,board);
         int direction=hint==null||hint.xFraction<.45?1:hint.xFraction>.55?-1:0;
         if(anchor)direction=0;
         int baseX=anchor?preferredX:(connected.x*3+preferredX)/4+direction*MEDIUM_CHAIN_GAP;
@@ -750,7 +751,41 @@ final class PcbPlacementPlanner {
                             if(Math.max(dx,dy)<barrier.clearance) return false;
                         }
         }
+        return hasGlobalCorridors(constraints,f,placed,self,false);
+    }
+    /** A barrier needs one common corridor, not a different axis for each pair. */
+    private static boolean hasGlobalCorridors(PcbPlacementConstraints constraints,
+            PcbFootprint trial,Vector<PcbFootprint> placed,int self,boolean complete) {
+        Vector<PcbPlacementConstraints.Barrier> barriers=constraints.getBarriers();
+        if(barriers.isEmpty())return true;
+        TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
+        if(trial!=null)addDomainCourtyards(constraints,trial,domains);
+        for(int index=0;index<placed.size();index++)
+            if(index!=self)addDomainCourtyards(constraints,placed.get(index),domains);
+        for(PcbPlacementConstraints.Barrier barrier:barriers) {
+            Rectangle first=domains.get(barrier.firstDomain),second=domains.get(barrier.secondDomain);
+            if(first==null || second==null) {
+                if(complete)return false;
+                continue;
+            }
+            int gap=barrier.clearance;
+            if((long)first.x+first.width+gap<=second.x ||
+                    (long)second.x+second.width+gap<=first.x ||
+                    (long)first.y+first.height+gap<=second.y ||
+                    (long)second.y+second.height+gap<=first.y)continue;
+            return false;
+        }
         return true;
+    }
+    private static void addDomainCourtyards(PcbPlacementConstraints constraints,
+            PcbFootprint footprint,TreeMap<String,Rectangle> domains) {
+        // Mixed packages contribute their declared conductive courtyards;
+        // their inert insulating body may span the corridor.
+        for(java.util.Map.Entry<String,Rectangle> entry:
+                constraints.domainCourtyards(footprint.getPlacement()).entrySet()) {
+            Rectangle old=domains.get(entry.getKey());
+            domains.put(entry.getKey(),old==null?new Rectangle(entry.getValue()):union(old,entry.getValue()));
+        }
     }
     static void validate(TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,Vector<PcbFootprint> placed) {
         if(placed.size()!=board.getComponentIds().size()) throw new Rejected("MISSING_COMPONENT");
@@ -765,6 +800,7 @@ final class PcbPlacementPlanner {
                     throw new Rejected("STRANDED_ESCAPE");
             }
         }
+        if(!hasGlobalCorridors(constraints,null,placed,-1,true))throw new Rejected("DOMAIN_CORRIDOR");
         PcbAccessPlanner.validate(outline,placed);
     }
     /**
@@ -781,6 +817,12 @@ final class PcbPlacementPlanner {
     static Point weightedConnectedTarget(PcbFootprint prototype,
             Vector<PcbFootprint> placed, Vector<TopologyPlacementGraph.PadLink> links,
             int fallbackX, int fallbackY) {
+        return weightedConnectedTarget(prototype,placed,links,fallbackX,fallbackY,null);
+    }
+
+    private static Point weightedConnectedTarget(PcbFootprint prototype,
+            Vector<PcbFootprint> placed, Vector<TopologyPlacementGraph.PadLink> links,
+            int fallbackX, int fallbackY, TroubleshootBoard mediumBoard) {
         if (prototype == null || placed == null || links == null)
             throw new IllegalArgumentException("Missing PCB placement target inputs");
         double weightedX = 0;
@@ -790,7 +832,8 @@ final class PcbPlacementPlanner {
         for (TopologyPlacementGraph.PadLink link : links) {
             if (link == null)
                 throw new IllegalArgumentException("Missing PCB topology placement link");
-            double weight = link.getWeight();
+            double weight = mediumBoard == null ? link.getWeight() :
+                mediumLinkWeight(mediumBoard,link);
             if (Double.isNaN(weight) || Double.isInfinite(weight) || weight < 0)
                 throw new IllegalArgumentException("Invalid PCB topology placement weight: " +
                     weight);

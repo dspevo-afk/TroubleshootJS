@@ -30,6 +30,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final Label feedback = new Label();
     private PopupPanel componentMenu;
     private Object componentMenuLease;
+    private Boolean lastDetachmentReady;
     private PhysicalPart<?> draggedPart;
     private String draggedFromComponent;
     private int dragStartX, dragStartY, dragX, dragY;
@@ -636,6 +637,22 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         rebuildPartsPanel();
         renderHost.scene();
         if (benchPowerPanel != null) benchPowerPanel.refreshReadings();
+        lastDetachmentReady = Boolean.valueOf(modifications.isDetachmentReady());
+    }
+
+    void refreshStoredEnergyControls() {
+        if (!isCurrentPhysicalActionable() ||
+                !sim.getBoardPowerController().isElectricallyUnpowered())
+            return;
+        boolean ready = modifications.isDetachmentReady();
+        if (lastDetachmentReady == null) {
+            lastDetachmentReady = Boolean.valueOf(ready);
+        } else if (lastDetachmentReady.booleanValue() != ready) {
+            // Live discharge can change remove/lift availability after the
+            // power-off panel was built. Retire stale popup callbacks too.
+            closeComponentMenu();
+            refresh();
+        }
     }
 
     void hide() { panel.setVisible(false); }
@@ -665,14 +682,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     private boolean isOperationAvailable(PhysicalPart part, WorkbenchOperation operation) {
-        if (!isCurrentPhysicalActionable())
+        if (!isCurrentPhysicalActionable() || !modifications.isDetachmentReadyFor(operation))
             return false;
         WorkbenchCapabilityStrategy capability = getCapability(part, operation);
         return capability != null && capability.isAvailable(operation, this);
     }
 
     private boolean dispatchOperation(PhysicalPart part, WorkbenchOperation operation) {
-        if (!isCurrentPhysicalActionable())
+        if (!isCurrentPhysicalActionable() || !modifications.isDetachmentReadyFor(operation))
             return false;
         WorkbenchCapabilityStrategy capability = getCapability(part, operation);
         return capability != null && capability.invoke(operation, this);
@@ -1227,7 +1244,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     public boolean isAvailable(WorkbenchOperation operation) {
-        if (!isCurrentPhysicalActionable())
+        if (!isCurrentPhysicalActionable() || !modifications.isDetachmentReadyFor(operation))
             return false;
         WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
             operation.getPart(), operation);
@@ -1235,7 +1252,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     }
 
     public boolean dispatch(WorkbenchOperation operation) {
-        if (!isCurrentPhysicalActionable())
+        if (!isCurrentPhysicalActionable() || !modifications.isDetachmentReadyFor(operation))
             return false;
         WorkbenchCapabilityStrategy capability = getCapability(operation == null ? null :
             operation.getPart(), operation);

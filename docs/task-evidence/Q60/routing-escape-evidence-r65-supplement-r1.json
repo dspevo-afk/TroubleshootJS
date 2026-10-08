@@ -1,0 +1,235 @@
+{
+  "protocol": "Q60_SANITIZED_ROUTING_ESCAPE_R65_SUPPLEMENT_R1",
+  "status": "EVIDENCE_INDEX_ONLY_NOT_ACCEPTANCE",
+  "scope": "R65 completed focused physical/admission subsets followed by genuine existing JLOAD locality failure; earlier R63 incidental candidate-rank failure remains retained.",
+  "priorIndexUnmodified": {
+    "artifact": "q60/routing-escape-evidence-r1.json",
+    "sha256": "17e96df31a846aa08a19ee1926f68227260ca214a93b16322634d8a42c3c35f8"
+  },
+  "phase": {
+    "name": "native-r65",
+    "wholePhaseStatus": "FAIL",
+    "elapsedMs": 56701,
+    "exitCode": 2,
+    "sourceInputCount": 1352,
+    "inputsUnchangedDuringPhase": true,
+    "sourceInventoryCanonicalSha256": "1d46094f70d2b910c448544f50cab794edd2028ecdc0fd0af030d7830103104c",
+    "hostCleanupVerified": true,
+    "jobActiveProcesses": 0,
+    "handlesClosed": true,
+    "stdoutOverflow": false,
+    "evidence": {
+      "stdout": {
+        "artifact": "owned-native-r65/stdout.log",
+        "sha256": "ccf59b635c47a32de2b4f9d67471e3a455f0e6622b3f6723d6cd581042b5d9fd"
+      },
+      "stderr": {
+        "artifact": "owned-native-r65/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "hostResult": {
+        "artifact": "native-r65-result.json",
+        "sha256": "07ae100531e753246d6e116aa151a1f01fa437b5fd477fe4f952c1e1ec5162b5"
+      },
+      "launch": {
+        "artifact": "native-r65-launch.json",
+        "sha256": "1421951254a0d75cee682b18f6cd2301192d2ed3905f43fb9e8a418161c62dff"
+      }
+    },
+    "completedSubsets": [
+      {
+        "suite": "MediumBoardPhysicalPolicyContractTest",
+        "assertions": 59,
+        "status": "PASS"
+      },
+      {
+        "suite": "MediumBoardNormalAdmissionContractTest",
+        "assertions": 9,
+        "status": "PASS"
+      }
+    ],
+    "failedSuite": "MediumBoardFloorplanningContractTest"
+  },
+  "localityFailure": {
+    "fixture": "regression-FILTERED_37-seed=56",
+    "seed": 56,
+    "packages": 37,
+    "connector": "JLOAD",
+    "candidateCount": 6,
+    "nearestOutputRegionTotal": 13770,
+    "nearestOtherRegionTotal": 11370,
+    "differenceOutputMinusOther": 2400,
+    "unchangedRequiredRelation": "sum(nearestOutputRegion) < sum(nearestNonOutputRegion)",
+    "actualRelation": "13770 > 11370",
+    "status": "FAIL_GENUINE_PLACEMENT_LOCALITY_ORACLE",
+    "measurementDefinition": "For each of six original placement candidates, minimum Manhattan pad distance from JLOAD to each output/non-output cohort, summed across candidates.",
+    "printedCandidateTelemetry": [
+      {
+        "candidate": 0,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 33050,
+        "printedNearestJload": 2600
+      },
+      {
+        "candidate": 1,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 33420,
+        "printedNearestJload": 2910
+      },
+      {
+        "candidate": 2,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 34460,
+        "printedNearestJload": 1430
+      },
+      {
+        "candidate": 3,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 39860,
+        "printedNearestJload": 2950
+      },
+      {
+        "candidate": 4,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 36710,
+        "printedNearestJload": 2150
+      },
+      {
+        "candidate": 5,
+        "placementSeed": "-5211896398607998619",
+        "components": 37,
+        "electricalMst": 38560,
+        "printedNearestJload": 2280
+      }
+    ],
+    "telemetryLimit": "printedNearestJload is the separate emitted nearest-neighbor statistic; it is not substituted for either cohort-specific sum in the failure oracle.",
+    "floorplanningWholeSuiteCompleted": false
+  },
+  "sourceChangeSinceR64": {
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "r64Sha256": "257645a3064018ed6e78766b75d96bd52e8baff076e2d3211da9e8014b2fd108",
+      "r65Sha256": "997da57af57d86ab19f61fb1657522db282ee4b2a0903a437499c80b798f1ddb"
+    }
+  },
+  "seed83OracleCorrection": {
+    "rootRecord": {
+      "artifact": "q60/root-seed83-route-oracle-r65.json",
+      "sha256": "b94fa4e8744d6b690e8581df4ee14a4fd38ccd62e55f79a102b233f5a33cb1a7"
+    },
+    "scope": "SAME_FROZEN_BOARD_REQUIRES_ACTUAL_P07_SUCCESS_AND_VALIDATED_GEOMETRY",
+    "oldR63WholeStatusStill": "FAIL",
+    "causeOfOldFailure": "Accepted seed83 P07 route changed incidental success candidate indices after the shared package-escape correction.",
+    "requirementsStillEnforced": [
+      "33 packages/82 pads",
+      "original83 board without later pull-down packages",
+      "accepted route",
+      "at least one actual P07 fuller route",
+      "routing geometry and two-layer rules",
+      "no disconnected escape result"
+    ],
+    "unchanged": [
+      "production routing bounds/algorithm",
+      "board seed/inventory",
+      "other fixed seeds or oracles"
+    ],
+    "currentFocusedPhysicalPolicyResult": "R65 PASS59",
+    "noPriorReceiptRewritten": true
+  },
+  "sourceAudit": {
+    "onlyOneTestOwnerChangedR64ToR65": true,
+    "allProductionSourcePinsIdenticalToR64": true,
+    "exactSelectedR65Hashes": {
+      "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "0ae3076915a455f79397a41c031e227ced2daeec43ec7001468238da112f006c",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "ab9f8d141a740ecbd3fce98fdc3b0e76b2e35324790e9611533d8831c8581f56",
+      "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556",
+      "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "60af53ee5f957c27a627c983e2725f0703fa822494306417d96cd909688d2997",
+      "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "997da57af57d86ab19f61fb1657522db282ee4b2a0903a437499c80b798f1ddb",
+      "tests/contracts/MediumBoardFloorplanningContractTest.java": "d69acfdcf55b7749ae6bcab34746233837ce79bfc8046e53991d480381e9f3e1",
+      "tests/contracts/MediumBoardNormalAdmissionContractTest.java": "0d9000433173953127efea8e4f02c1e4ea3d7b9ebdd22291aca068144a9acfa6",
+      "scripts/verify-current-contracts.ps1": "fdb6b9f91cf92198f6053cd296692b79dfbf5fbf0fa7626f6495de2d3f19ad56"
+    }
+  },
+  "originalEightReadOnlyCheck": {
+    "allEightMatchOriginalRecordedHashes": true,
+    "files": [
+      {
+        "repositoryPath": "docs/task-evidence/Q30/qualification-workflow/cold77-launch-used-c2af161d006cf812bb4b22ca6efc912de2015dddd21036a7429e8a4dd191472a.json",
+        "expectedSha256": "daa36e2ceb90d01825f99c877702ab65dc8d14c23af143bd3e05152732a6c233",
+        "actualSha256": "daa36e2ceb90d01825f99c877702ab65dc8d14c23af143bd3e05152732a6c233",
+        "matches": true
+      },
+      {
+        "repositoryPath": "docs/task-evidence/Q30/scale-plan-4/__pycache__/check_d01.cpython-313.pyc",
+        "expectedSha256": "3eea5d3a388e0497720dcf2f6cad96d0c4bea696760dc96dbe8dba9fa7e9d873",
+        "actualSha256": "3eea5d3a388e0497720dcf2f6cad96d0c4bea696760dc96dbe8dba9fa7e9d873",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc",
+        "expectedSha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387",
+        "actualSha256": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/contracts/__pycache__/task46_seed_reference.cpython-313.pyc",
+        "expectedSha256": "3ae962d487e6353390e34207142c1b39a2cef86940e659f3f6dd25bce78cd715",
+        "actualSha256": "3ae962d487e6353390e34207142c1b39a2cef86940e659f3f6dd25bce78cd715",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/qualification/q30-normal-screen/__pycache__/q30_screen_reader.cpython-313.pyc",
+        "expectedSha256": "84e0ee1327cf7104f6dae66e8a4ba3d2542ad0a7ba6f4b4806f8bdfc25476bd0",
+        "actualSha256": "84e0ee1327cf7104f6dae66e8a4ba3d2542ad0a7ba6f4b4806f8bdfc25476bd0",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/qualification/q30-scale-acceptance/__pycache__/freeze_plan.cpython-313.pyc",
+        "expectedSha256": "2aaa06e8fb17de95ec9e72de9382f8bc76a16d52286a615a1edbb7c2352e07e6",
+        "actualSha256": "2aaa06e8fb17de95ec9e72de9382f8bc76a16d52286a615a1edbb7c2352e07e6",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/qualification/q30-scale-acceptance/__pycache__/q30_scale_reader.cpython-313.pyc",
+        "expectedSha256": "e41b8404cec0b024fb983d5d678c278ea360f60798879d6c2e2ca22cbed8b76f",
+        "actualSha256": "e41b8404cec0b024fb983d5d678c278ea360f60798879d6c2e2ca22cbed8b76f",
+        "matches": true
+      },
+      {
+        "repositoryPath": "tests/qualification/q30-scale-acceptance/__pycache__/test_q30_scale_reader.cpython-313.pyc",
+        "expectedSha256": "beb6ffd21422cff5156bf6c92e0cdfdf0e58a3c2aabcd657e7daebc175cb31d7",
+        "actualSha256": "beb6ffd21422cff5156bf6c92e0cdfdf0e58a3c2aabcd657e7daebc175cb31d7",
+        "matches": true
+      }
+    ]
+  },
+  "notQualified": [
+    "whole R65 gate",
+    "medium floorplanning locality",
+    "current55 route",
+    "whole current three-case capture suite",
+    "full RB56 D01/player proof",
+    "fresh GWT",
+    "Q60 acceptance",
+    "normal RB56 save/load",
+    "complete Q30 corpus compatibility"
+  ],
+  "limitsUnchanged": [
+    "routing/placement/search/work/clearance budgets",
+    "locality oracle",
+    "native per-class60s",
+    "normal90s/640work/5s",
+    "electrical/solver criteria"
+  ],
+  "leafActions": {
+    "repoWrites": false,
+    "gatesLaunched": false,
+    "rawLogsCopied": false,
+    "originalEightCheckReadOnly": true
+  }
+}

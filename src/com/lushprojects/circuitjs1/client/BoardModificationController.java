@@ -25,6 +25,31 @@ class BoardModificationController {
 
     GeneratedBoardInstance getInstanceForRuntimeValidation() { return instance; }
 
+    /** A disconnect can cut another part's current path, so inspect all installed energy owners. */
+    boolean isDetachmentReady() {
+        if (sim.getGeneratedBoardInstance() != instance || sim.getBoardModificationController() != this)
+            return false;
+        for (PhysicalPart<?> part : instance.getPhysicalBoardRuntime().getPhysicalParts())
+            if (part.isInstalled() && part instanceof PhysicalPartDetachmentReadiness &&
+                    !((PhysicalPartDetachmentReadiness)part).isDetachmentReady(sim, instance)) return false;
+        for (PhysicalBoardRuntimeCapability capability : instance.getPhysicalBoardRuntime().getCapabilities())
+            if (capability instanceof PhysicalPartDetachmentReadiness &&
+                    !((PhysicalPartDetachmentReadiness)capability).isDetachmentReady(sim, instance)) return false;
+        return true;
+    }
+
+    boolean isDetachmentReadyFor(WorkbenchOperation operation) {
+        if (operation == null) return false;
+        String id = operation.getId();
+        return !(WorkbenchOperation.REMOVE.equals(id) || WorkbenchOperation.LIFT_LEAD.equals(id)) ||
+            isDetachmentReady();
+    }
+
+    void requireDetachmentReady() {
+        if (!isDetachmentReady())
+            throw new BoardModificationRejectedException("Wait for stored energy to discharge");
+    }
+
     boolean isOperationInProgress() {
         return instance.getPhysicalBoardRuntime().isMutationInProgress();
     }
@@ -42,6 +67,8 @@ class BoardModificationController {
         PhysicalMutationSlot mutationSlot = getScopedMutationSlot(componentId);
         if (mutationSlot != null)
             return removeScopedComponent(componentId, refreshControls, mutationSlot);
+        // One fresh condition authorizes this synchronous unscoped disconnect loop.
+        if (getComponentState(componentId) != ComponentPhysicalState.REMOVED) requireDetachmentReady();
         boolean changed = false;
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(componentId)) {
             changed |= setConnection(binding, false);
@@ -187,6 +214,7 @@ class BoardModificationController {
 
     private boolean setLeadConnectionWithoutScope(
             GeneratedComponentConnectionBinding binding, boolean shouldConnect) {
+        if (!shouldConnect) requireDetachmentReady();
         boolean changed = setConnection(binding, shouldConnect);
         if (changed) instance.getPhysicalBoardRuntime().getSessionHistory().record(sim,
             "LEAD", binding.getComponentId(), binding.getPadId(), shouldConnect ? "CONNECTED" : "DISCONNECTED");
@@ -212,6 +240,7 @@ class BoardModificationController {
                 !scope.getIntent().getComponentId().equals(binding.getComponentId()) ||
                 instance.getConnectionBindings().get(binding.getComponentId(), binding.getPadId()) != binding)
             throw new IllegalStateException("Invalid physical mutation connection scope");
+        if (!shouldConnect && isConnectionState(binding)) scope.requireAuthorizedDetachment();
         boolean changed = setConnection(binding, shouldConnect);
         if (changed)
             scope.afterGraphWrite(shouldConnect);
@@ -237,7 +266,11 @@ class BoardModificationController {
         for (CircuitElm wire : ((PhysicalMutationSlot.Docking)slot).getDockingAttachments()) {
             if (!instance.ownsRuntimeSimulationElement(wire))
                 throw new IllegalStateException("Foreign cable attachment");
-            if (attached) insertInCanonicalOrder(wire); else removeAllOccurrences(wire);
+            if (attached) insertInCanonicalOrder(wire);
+            else {
+                if (sim.elmList.contains(wire)) scope.requireAuthorizedDetachment();
+                removeAllOccurrences(wire);
+            }
             scope.afterGraphWrite(attached);
         }
     }

@@ -394,6 +394,9 @@ final class PlayerSessionState {
             for (PhysicalPartTerminal terminal : part.getTerminals()) {
                 field(out, terminal.getId()); field(out, terminal.getTerminalName());
             }
+            // RB56 was never admitted under the old digest. Preserve every other family's bytes.
+            if (hasTypedPowerSessionBinding(owner.getCircuitFamilyId(), part))
+                field(out, typedPowerBackingDefinition(part));
         }
         Vector<String> inventories = runtime.getInventoryIds();
         Collections.sort(inventories);
@@ -442,6 +445,62 @@ final class PlayerSessionState {
         }
         // Private canonical topology and failure ownership never enter the exported artifact.
         return PlayerSessionFingerprint.of(out.toString());
+    }
+
+    static boolean hasTypedPowerSessionBinding(String familyId, PhysicalPart<?> part) {
+        if (!Rb56Plan.FAMILY_ID.equals(familyId) || part == null) return false;
+        PhysicalSpecification spec = part.getSpecification();
+        return spec instanceof InductorSpecification || spec instanceof ZenerSpecification ||
+            spec instanceof OptocouplerSpecification || spec instanceof FuseSpecification ||
+            spec instanceof ConverterSpecification || spec instanceof CapacitorSpecification &&
+                ((CapacitorSpecification)spec).hasExplicitModelRecipe();
+    }
+
+    /** Complete ordered package model and local post topology, without arbitrary circuit-island coordinates. */
+    static String typedPowerBackingDefinition(PhysicalPart<?> part) {
+        if (part == null || !hasTypedPowerSessionBinding(Rb56Plan.FAMILY_ID, part))
+            throw invalid("No supported typed power session definition");
+        StringBuilder out = new StringBuilder("typed-power-backing@1;");
+        PhysicalSpecification spec = part.getSpecification();
+        field(out, spec.getSpecificationId()); field(out, part.getPackage().getId());
+        if (spec instanceof CapacitorSpecification) {
+            CapacitorSpecification capacitor = (CapacitorSpecification)spec;
+            field(out, Long.toHexString(Double.doubleToLongBits(capacitor.getCapacitanceFarads())));
+            field(out, Long.toHexString(Double.doubleToLongBits(capacitor.getTolerancePercent())));
+            field(out, Long.toHexString(Double.doubleToLongBits(capacitor.getRatedVoltage())));
+            field(out, Long.toHexString(Double.doubleToLongBits(capacitor.getEsrOhms())));
+            field(out, Integer.toString(capacitor.getIntegrationFlags()));
+            field(out, Long.toHexString(Double.doubleToLongBits(capacitor.getInitialVoltage())));
+        }
+        Vector<CircuitElm> elements = part.getElectricalBacking().getCircuitElements();
+        if (elements.isEmpty()) throw invalid("Typed power part has no actual backing");
+        field(out, Integer.toString(elements.size()));
+        Vector<Point> localPosts = new Vector<Point>();
+        for (CircuitElm element : elements) {
+            field(out, GenerationDependencyContext.restartModelDefinition(element));
+            field(out, Integer.toString(element.getPostCount()));
+            for (int p = 0; p < element.getPostCount(); p++) {
+                Point post = element.getPost(p);
+                if (post == null) throw invalid("Typed power backing has a missing post");
+                int localNode = -1;
+                for (int n = 0; n < localPosts.size(); n++)
+                    if (post.equals(localPosts.get(n))) { localNode = n; break; }
+                if (localNode < 0) { localNode = localPosts.size(); localPosts.add(post); }
+                field(out, Integer.toString(localNode));
+            }
+        }
+        field(out, Integer.toString(part.getTerminalCount()));
+        for (PhysicalPartTerminal terminal : part.getTerminals()) {
+            if (!(terminal.getEndpoint() instanceof CircuitPostMeasurementEndpoint))
+                throw invalid("Typed power terminal has no real backing post");
+            CircuitPostMeasurementEndpoint endpoint = (CircuitPostMeasurementEndpoint)terminal.getEndpoint();
+            int index = elements.indexOf(endpoint.getElement()), post = endpoint.getPostIndex();
+            if (index < 0 || post < 0 || post >= elements.get(index).getPostCount())
+                throw invalid("Typed power terminal is outside its actual package backing");
+            field(out, terminal.getTerminalName()); field(out, Integer.toString(index));
+            field(out, Integer.toString(post));
+        }
+        return out.toString();
     }
 
     private static void geometry(StringBuilder out, PhysicalGeometryRealization geometry) {

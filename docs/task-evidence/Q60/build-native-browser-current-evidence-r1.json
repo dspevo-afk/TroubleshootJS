@@ -1,0 +1,1808 @@
+{
+  "protocol": "Q60-CURRENT-BUILD-NATIVE-BROWSER-EVIDENCE-1",
+  "status": "EVIDENCE_PACKET_ONLY_NOT_ACCEPTANCE",
+  "currentJavaSourceSameAcrossIndexedPhases": true,
+  "currentJavaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+  "selectedCurrentSourceSha256": {
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+    "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java": "8491c7e3ebeee36a27ede42ea1099caf51da8c76e54c5d682d9ddff3758a502f",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": "0302225ae7b6ccf078c0626b26414c1a0ba6e67fb150135fb56b02c7d6f8c63b",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "194070b2b2db075b247922418d175f9b5806defe0c8a09ba2b8827c5610f2f58",
+    "src/com/lushprojects/circuitjs1/client/Rb56Generator.java": "f830e3564fcab3a3d8f9eb430ead516d02744c4766f320f1d8b6aae001cf6231",
+    "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "0cbd029bee55a90cb3113706cb29d2495f22186fa4b449c955670dbdd62c1fec",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+    "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java": "820c79b35141402fbf8f377946e8e8114b0b40c0205f152ad77c9bc30784174b",
+    "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java": "f103030b087b70b903799817e5dee1774be3f89c352e8dbf2292f3c61a3f6666",
+    "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java": "909ab726bd46ce73cbc28603400305802036b56294878d0dda95b9b7ceab2d9f",
+    "src/com/lushprojects/circuitjs1/client/Inductor.java": "6b736c732d26680eb9a8f381c864e48137ae87f7801be664252aecb98fa8f588"
+  },
+  "phaseReceipts": {
+    "build-r7": {
+      "wholePhaseStatus": "PASS",
+      "outerElapsedMs": 96423,
+      "exitCode": 0,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "build-r7-launch.json",
+          "sha256": "0a7571f8bbba673a54ec20046275565e570e9c8f01431adf4b4125f2babb980e"
+        },
+        "hostResult": {
+          "artifact": "build-r7-result.json",
+          "sha256": "49fbf56247873b89e1e7e5f9137cee190e92f3c5f3a49d008ae574c5d2ab4a6e"
+        },
+        "stdout": {
+          "artifact": "owned-build-r7/stdout.log",
+          "sha256": "ede84654bcece3db7fef4e3130a6548dc068ee0ba1e72383fe8d91fe539158d9"
+        },
+        "stderr": {
+          "artifact": "owned-build-r7/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "productionBuild": {
+        "permutations": 5,
+        "compilationSucceeded": true,
+        "linkSucceeded": true,
+        "outputStyle": "OBF"
+      }
+    },
+    "native-r68": {
+      "wholePhaseStatus": "PASS",
+      "outerElapsedMs": 54647,
+      "exitCode": 0,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "7f0dd28e2231f051b5a1cb7e9ca2556cb9a11bc8b1f5f5937cdd62c59304f6ad",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "native-r68-launch.json",
+          "sha256": "93a89ab140545f8b77c7c21b4f119e73e7690f959cc6a1adf2a3b6fb85645829"
+        },
+        "hostResult": {
+          "artifact": "native-r68-result.json",
+          "sha256": "9dc2187a32340517d17acbe787803b9c6cb106f16933ef51cae8bcf475c0411c"
+        },
+        "stdout": {
+          "artifact": "owned-native-r68/stdout.log",
+          "sha256": "012d68a2118474de7c1f49a64b4bb0d6112dbc266ccdfe9a05fee39825d7555d"
+        },
+        "stderr": {
+          "artifact": "owned-native-r68/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "completedSuites": [
+        {
+          "suite": "Rb56SessionBackingContractTest",
+          "assertions": 202,
+          "status": "PASS"
+        },
+        {
+          "suite": "Rb56TemporalWorkContractTest",
+          "assertions": 295,
+          "status": "PASS"
+        },
+        {
+          "suite": "Q30TemporalWorkContractTest",
+          "assertions": 161,
+          "status": "PASS"
+        },
+        {
+          "suite": "D01DiagnosticContractTest",
+          "assertions": 168,
+          "status": "PASS"
+        }
+      ],
+      "rb56TemporalCleanup": {
+        "elementsAttempted": 350,
+        "elementsDeleted": 350,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBeforeCleanup": 0,
+        "subscriptionsAfterCleanup": 0,
+        "emptySubscriptions": true,
+        "globalsRestored": true,
+        "clean": true
+      },
+      "scope": "FOCUSED_SESSION_DIGEST_TEMPORAL_AND_D01_CONTRACTS_ONLY",
+      "normalRb56SessionLoadQualified": false
+    },
+    "compiled-r16": {
+      "wholePhaseStatus": "PASS",
+      "outerElapsedMs": 16966,
+      "exitCode": 0,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r16-launch.json",
+          "sha256": "f1b4987a182980c40986c028b239d9e0ff660a37016712f8f3fe69c5951c30e0"
+        },
+        "hostResult": {
+          "artifact": "compiled-r16-result.json",
+          "sha256": "7c0d403950bf1c3b2b8d4b188edce4ad10f170e7e304abb4170aec4d8d3f170a"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r16/stdout.log",
+          "sha256": "6bc3732ee89a762fa87cfc960708cf800809d4c2a42097adbf413a6d8585437c"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r16/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "compiled-r17": {
+      "wholePhaseStatus": "FAIL",
+      "outerElapsedMs": 99115,
+      "exitCode": 1,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r17-launch.json",
+          "sha256": "a1ab134e4e24003e7130824251b3ed7bb820393bb4f9cacd4f8d0469a3e08046"
+        },
+        "hostResult": {
+          "artifact": "compiled-r17-result.json",
+          "sha256": "2899926bba50cc52302d269d9c1883f229bc7dcb20ba13951ace4ce7084e448c"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r17/stdout.log",
+          "sha256": "45818b20bd3a7c2d94a40a50c76b3b50a70434599fe3dc98cef34e63e056edcf"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r17/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "compiled-r18": {
+      "wholePhaseStatus": "FAIL",
+      "outerElapsedMs": 150563,
+      "exitCode": 1,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r18-launch.json",
+          "sha256": "a9372556644d7c647bef12b79dfb694a997b25c3736eb4c96ab0ab4640b552f1"
+        },
+        "hostResult": {
+          "artifact": "compiled-r18-result.json",
+          "sha256": "8809c87e31028274e88c95ba5bcc06b2b13a3d7f97f81eea387dc1162c093537"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r18/stdout.log",
+          "sha256": "64bc4f928e411dce6b053283d4d36898d1ab6004deb3722d575099de3e790acf"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r18/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "compiled-r19": {
+      "wholePhaseStatus": "FAIL",
+      "outerElapsedMs": 187995,
+      "exitCode": 1,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r19-launch.json",
+          "sha256": "fcbcdc3be6402eb530c5a06b90ddf14e49b3bae4082aed2c4c75f610673e58ce"
+        },
+        "hostResult": {
+          "artifact": "compiled-r19-result.json",
+          "sha256": "05bdfea0529776ae5a6a095f1093a1ad8398f36a177b1c49fa08167a8094c9c3"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r19/stdout.log",
+          "sha256": "a5155d3394114435405a145598ba7cb7a076e802befbf60dd4c127b57b6ca0b7"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r19/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "compiled-r20": {
+      "wholePhaseStatus": "FAIL",
+      "outerElapsedMs": 161384,
+      "exitCode": 1,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r20-launch.json",
+          "sha256": "75ffcbac3eb9086c10a8eed520a28ed49b916b128773b2f20d675fefa696173c"
+        },
+        "hostResult": {
+          "artifact": "compiled-r20-result.json",
+          "sha256": "d119599726906de0795947956cd5791ea4e097b16ff59f320754614ebbaa20e5"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r20/stdout.log",
+          "sha256": "c04bd1aaf28f24618cab9b1984fae9afe827c87cc4ed8a91e0f731b441dba8b2"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r20/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "compiled-r21": {
+      "wholePhaseStatus": "PASS",
+      "outerElapsedMs": 29438,
+      "exitCode": 0,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "compiled-r21-launch.json",
+          "sha256": "efe68e97a1298d288dd8d7e3f2bd1b8d4a9c06a944946f1326f8fe21949276cb"
+        },
+        "hostResult": {
+          "artifact": "compiled-r21-result.json",
+          "sha256": "dc709a79c43b3488b36dee22e86af52f04582a35dca9b5e11971a7097f81412e"
+        },
+        "stdout": {
+          "artifact": "owned-compiled-r21/stdout.log",
+          "sha256": "1e329677337f494611fbab11cc5496a03a4df3523b6c8fdec77f3669198bd2ed"
+        },
+        "stderr": {
+          "artifact": "owned-compiled-r21/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "visual-r3": {
+      "wholePhaseStatus": "FAIL",
+      "outerElapsedMs": 97948,
+      "exitCode": 1,
+      "sourceInputCount": 1222,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cec724a861ba9526d57f0f61811842eef237a2c677c258474870254c485d02b1",
+      "javaSourceInventoryCanonicalSha256": "1aacbfe30a9bc8cd0f9763107366846653c5fa4ed0bd6c1c9379e0a1883f26bf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "stderrBytes": 0,
+      "evidence": {
+        "launch": {
+          "artifact": "visual-r3-launch.json",
+          "sha256": "f79d52487c7bd627059bb8f6320118f18b30fddad650402c019b66c07740574a"
+        },
+        "hostResult": {
+          "artifact": "visual-r3-result.json",
+          "sha256": "38d90f6cbd3ea13c5d2d2d0abd648d6d7581ffd7b41bedd32896c1878074fced"
+        },
+        "stdout": {
+          "artifact": "owned-visual-r3/stdout.log",
+          "sha256": "5dc905a102b7a8ded5402dbb44d672ce8a92c19e584bce50e23a449f0c7f7436"
+        },
+        "stderr": {
+          "artifact": "owned-visual-r3/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "nativeScopeLimits": [
+    "Normal RB56 save/load is not qualified.",
+    "Native temporal pilot is not full production D01 or player repair evidence."
+  ],
+  "rb56Cohort": {
+    "wholeStatus": "FAIL",
+    "complete": true,
+    "strictPositiveCases": 2,
+    "deadlineFailureCases": 4,
+    "playerInputEvidence": false,
+    "normalCatalogEnabled": false,
+    "sourceEpoch": "tsj-generation-dependencies-v16",
+    "planVersion": 1,
+    "budget": {
+      "jobMillis": 90000,
+      "sharedWorkUnits": 640,
+      "activeUnitMillis": 5000
+    },
+    "censusEvidence": {
+      "artifact": "q60/holdout-recommendation/holdout-neutral-census-r2.json",
+      "sha256": "80a3f6190cc43b55aea8339ae6f4d4c435f3104836917d28810bd1ce10e5882a"
+    },
+    "strictReader": {
+      "artifact": "q60-browser/report_contract_r1.py",
+      "sha256": "4364f82cc2658cac76a4b09e866db552e8aeb1355ea3156872c77314f48959ea"
+    },
+    "aggregate": {
+      "artifact": "q60-full6-cohort-r3.json",
+      "sha256": "64a2c0d78a0332a4a8a9ea01365d8aa35bde0bb16f7403808cf9c7eea009a77e"
+    },
+    "pairAudits": [
+      {
+        "phase": "compiled-r18",
+        "wholePairStatus": "FAIL",
+        "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+        "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+        "inputFilesUnchanged": true,
+        "browserCleanup": {
+          "status": "PASS",
+          "seconds": 0.8995565999939572,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "evidence": {
+          "strictReceipt": {
+            "artifact": "q60-compiled-r18/strict-result.json",
+            "sha256": "92cd4787b67ec52d367500cc07e864d8f885e24dec0bd4f5180881d0ceab97ca"
+          },
+          "rawResult": {
+            "artifact": "q60-compiled-r18/result.json",
+            "sha256": "4f12cf2fb5fc44e166b6925904e5c3116d782635b092bbdc422b9a27bc1166eb"
+          },
+          "before": {
+            "artifact": "q60-compiled-r18/input-manifest-before.json",
+            "sha256": "5cb8f5d53677b51d574edacdf7661443caea161bb6461dfa0231bcbd68d54b10"
+          },
+          "after": {
+            "artifact": "q60-compiled-r18/input-manifest-after.json",
+            "sha256": "5c1f4e13a76ddeca193d2ef628bf66ee27115a33c49b057470aa7f0ccdb58207"
+          }
+        }
+      },
+      {
+        "phase": "compiled-r19",
+        "wholePairStatus": "FAIL",
+        "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+        "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+        "inputFilesUnchanged": true,
+        "browserCleanup": {
+          "status": "PASS",
+          "seconds": 0.9202036999922711,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "evidence": {
+          "strictReceipt": {
+            "artifact": "q60-compiled-r19/strict-result.json",
+            "sha256": "9d9a0db3604d33ef85eeb7aa8af156ca842a80e86791d38d2c126b31d11d1fa7"
+          },
+          "rawResult": {
+            "artifact": "q60-compiled-r19/result.json",
+            "sha256": "59b090d5b9afc71b879fde84096c7022978ec52fb9a8367882571680e64723d8"
+          },
+          "before": {
+            "artifact": "q60-compiled-r19/input-manifest-before.json",
+            "sha256": "791a1830911de69e5114b93ff7d38d700c688de2d40f263fee9308659e2ebf6e"
+          },
+          "after": {
+            "artifact": "q60-compiled-r19/input-manifest-after.json",
+            "sha256": "b3b29fd20808d8aa04e7e14b16bf0d0cc186c0209a6e24dc8712f94fdb2d3975"
+          }
+        }
+      },
+      {
+        "phase": "compiled-r20",
+        "wholePairStatus": "FAIL",
+        "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+        "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+        "inputFilesUnchanged": true,
+        "browserCleanup": {
+          "status": "PASS",
+          "seconds": 0.8029587000200991,
+          "serverStopped": true,
+          "ownedSurvivors": [],
+          "errors": []
+        },
+        "evidence": {
+          "strictReceipt": {
+            "artifact": "q60-compiled-r20/strict-result.json",
+            "sha256": "98d70a4013c54e0977b56291d1724a6ed0069b623e8e6c7ddc7927d13534091e"
+          },
+          "rawResult": {
+            "artifact": "q60-compiled-r20/result.json",
+            "sha256": "a3ecc097408b462a602aa6e9fc496383e2aafee4056f80b442ad518c6d45b3da"
+          },
+          "before": {
+            "artifact": "q60-compiled-r20/input-manifest-before.json",
+            "sha256": "29c4b3fbf3aa52b2b397c92ecaec89270836d669a47bdf9369067e3652cf039e"
+          },
+          "after": {
+            "artifact": "q60-compiled-r20/input-manifest-after.json",
+            "sha256": "94f5534c8e41f82f3ebefc4fafa263b4c8fff6286c9f5404c134bc5408af0d5f"
+          }
+        }
+      }
+    ],
+    "cases": [
+      {
+        "phase": "compiled-r18",
+        "seed": "-1017",
+        "strictPositiveAccepted": true,
+        "strictRejection": null,
+        "strictSemanticSummary": {
+          "status": "PASS",
+          "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+          "seed": "-1017",
+          "packages": 40,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 532,
+          "generationMillis": 54789,
+          "maxManualUnitMillis": 1638,
+          "forcedAfterPublish": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "normalCatalogEnabled": false,
+          "playerInputEvidence": false,
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda"
+        },
+        "census": {
+          "plannedPackages": 40,
+          "channels": 1,
+          "expectedDiagnosticSamples": 55,
+          "actualPackages": 40,
+          "actualCountAvailable": true
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1017",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 40,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 532,
+          "generationMillis": 54789,
+          "maxManualUnitMillis": 1638,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "54f0ca0b60edf88e16b29f2e9fd9c69bab7b21318c7338fab8ab802d08746b35",
+          "diagnosticContextDigest": "a24702353e286ae4985201534ef90de6625526d77da5b7dd441cad940b46cdd0",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 55019
+        },
+        "stageTimingAvailability": "NOT_EXPOSED_IN_POSITIVE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 55.95802809999441,
+          "outcome": "PASS",
+          "terminalReached": true,
+          "stateMatch": true,
+          "observedState": "PASS:rb56",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 1127,
+          "reportSha256": "5702e93d6f888fd7da863c07cf602b9d25b38fe491d6a9e7ba6aadb5773b7661"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r18/cases/001-rb56-seed-1017-positive.report.json",
+          "sha256": "5702e93d6f888fd7da863c07cf602b9d25b38fe491d6a9e7ba6aadb5773b7661"
+        }
+      },
+      {
+        "phase": "compiled-r18",
+        "seed": "-1067",
+        "strictPositiveAccepted": false,
+        "strictRejection": "Qualification did not reach exact restoration",
+        "strictSemanticSummary": null,
+        "census": {
+          "plannedPackages": 55,
+          "channels": 2,
+          "expectedDiagnosticSamples": 60,
+          "actualPackages": null,
+          "actualCountAvailable": false
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1067",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 374,
+          "jobMillis": 90679,
+          "manualUnitMaxMillis": 2225,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 2,
+            "HEALTHY": 29659,
+            "PHYSICAL": 152,
+            "HYPOTHESES": 59031,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 76,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 296,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 3,
+              "millis": 661,
+              "maxMillis": 241
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 39,
+              "millis": 12857,
+              "maxMillis": 722
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 39,
+              "millis": 7209,
+              "maxMillis": 713
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 3,
+              "millis": 510,
+              "maxMillis": 178
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 3,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 36,
+              "millis": 488,
+              "maxMillis": 16
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 3,
+              "millis": 147,
+              "maxMillis": 53
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 3,
+              "millis": 268,
+              "maxMillis": 94
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 90,
+              "millis": 11922,
+              "maxMillis": 404
+            },
+            "REMOVE_SETTLE": {
+              "units": 3,
+              "millis": 368,
+              "maxMillis": 124
+            },
+            "REPLACE_SETTLE": {
+              "units": 3,
+              "millis": 390,
+              "maxMillis": 149
+            },
+            "POWER_ON_SETTLE": {
+              "units": 3,
+              "millis": 290,
+              "maxMillis": 111
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 38,
+              "millis": 15259,
+              "maxMillis": 1150
+            },
+            "CUSTOMER_RETEST": {
+              "units": 26,
+              "millis": 8560,
+              "maxMillis": 824
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 2,
+              "millis": 27,
+              "maxMillis": 14
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 2,
+              "millis": 83,
+              "maxMillis": 43
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90721,
+          "failure": "Deadline: Generation wall budget exhausted"
+        },
+        "stageTimingAvailability": "COMPLETE_FAILURE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 91.62620889997925,
+          "outcome": "FAIL",
+          "terminalReached": true,
+          "stateMatch": false,
+          "observedState": "FAIL:rb56:Generation wall budget exhausted",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 2122,
+          "reportSha256": "11243c4602097ff024748580c56915f6bb1149f42d32a404b1c5d8e5f45bb3e1"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r18/cases/002-rb56-seed-1067-positive.report.json",
+          "sha256": "11243c4602097ff024748580c56915f6bb1149f42d32a404b1c5d8e5f45bb3e1"
+        }
+      },
+      {
+        "phase": "compiled-r19",
+        "seed": "-1022",
+        "strictPositiveAccepted": false,
+        "strictRejection": "Qualification did not reach exact restoration",
+        "strictSemanticSummary": null,
+        "census": {
+          "plannedPackages": 60,
+          "channels": 2,
+          "expectedDiagnosticSamples": 60,
+          "actualPackages": null,
+          "actualCountAvailable": false
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 321,
+          "jobMillis": 91108,
+          "manualUnitMaxMillis": 1968,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 42170,
+            "PHYSICAL": 177,
+            "HYPOTHESES": 47163,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 115,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 204,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 2,
+              "millis": 496,
+              "maxMillis": 260
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 26,
+              "millis": 9358,
+              "maxMillis": 1498
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 26,
+              "millis": 6209,
+              "maxMillis": 1516
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 2,
+              "millis": 394,
+              "maxMillis": 199
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 2,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 24,
+              "millis": 393,
+              "maxMillis": 25
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 2,
+              "millis": 111,
+              "maxMillis": 57
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 2,
+              "millis": 217,
+              "maxMillis": 109
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 60,
+              "millis": 9171,
+              "maxMillis": 505
+            },
+            "REMOVE_SETTLE": {
+              "units": 2,
+              "millis": 291,
+              "maxMillis": 150
+            },
+            "REPLACE_SETTLE": {
+              "units": 2,
+              "millis": 288,
+              "maxMillis": 152
+            },
+            "POWER_ON_SETTLE": {
+              "units": 2,
+              "millis": 232,
+              "maxMillis": 120
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 26,
+              "millis": 11098,
+              "maxMillis": 1518
+            },
+            "CUSTOMER_RETEST": {
+              "units": 24,
+              "millis": 9048,
+              "maxMillis": 1727
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 1,
+              "millis": 15,
+              "maxMillis": 15
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 1,
+              "millis": 45,
+              "maxMillis": 45
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 91347,
+          "failure": "Deadline: Generation wall budget exhausted"
+        },
+        "stageTimingAvailability": "COMPLETE_FAILURE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 92.173835900001,
+          "outcome": "FAIL",
+          "terminalReached": true,
+          "stateMatch": false,
+          "observedState": "FAIL:rb56:Generation wall budget exhausted",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 2125,
+          "reportSha256": "c8f23dedb6ee78b4377bebe0742ab72e936edbda8248b113f39b38297cb944f1"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r19/cases/001-rb56-seed-1022-positive.report.json",
+          "sha256": "c8f23dedb6ee78b4377bebe0742ab72e936edbda8248b113f39b38297cb944f1"
+        }
+      },
+      {
+        "phase": "compiled-r19",
+        "seed": "9007199254741579",
+        "strictPositiveAccepted": false,
+        "strictRejection": "Qualification did not reach exact restoration",
+        "strictSemanticSummary": null,
+        "census": {
+          "plannedPackages": 50,
+          "channels": 2,
+          "expectedDiagnosticSamples": 60,
+          "actualPackages": null,
+          "actualCountAvailable": false
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "9007199254741579",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 438,
+          "jobMillis": 90469,
+          "manualUnitMaxMillis": 1808,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 31991,
+            "PHYSICAL": 134,
+            "HYPOTHESES": 56182,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 101,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 335,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 4,
+              "millis": 864,
+              "maxMillis": 232
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 52,
+              "millis": 13877,
+              "maxMillis": 1204
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 48,
+              "millis": 7552,
+              "maxMillis": 1125
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 3,
+              "millis": 386,
+              "maxMillis": 145
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 3,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 36,
+              "millis": 452,
+              "maxMillis": 20
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 3,
+              "millis": 149,
+              "maxMillis": 66
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 3,
+              "millis": 282,
+              "maxMillis": 137
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 90,
+              "millis": 9237,
+              "maxMillis": 314
+            },
+            "REMOVE_SETTLE": {
+              "units": 3,
+              "millis": 316,
+              "maxMillis": 111
+            },
+            "REPLACE_SETTLE": {
+              "units": 3,
+              "millis": 313,
+              "maxMillis": 110
+            },
+            "POWER_ON_SETTLE": {
+              "units": 3,
+              "millis": 192,
+              "maxMillis": 67
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 39,
+              "millis": 11471,
+              "maxMillis": 1196
+            },
+            "CUSTOMER_RETEST": {
+              "units": 39,
+              "millis": 10939,
+              "maxMillis": 1165
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 3,
+              "millis": 32,
+              "maxMillis": 11
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 3,
+              "millis": 98,
+              "maxMillis": 34
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90604,
+          "failure": "Deadline: Generation wall budget exhausted"
+        },
+        "stageTimingAvailability": "COMPLETE_FAILURE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 91.33573099999921,
+          "outcome": "FAIL",
+          "terminalReached": true,
+          "stateMatch": false,
+          "observedState": "FAIL:rb56:Generation wall budget exhausted",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 2137,
+          "reportSha256": "bab6514956763f4cb99842cf2aa5a12c2f84140701ee4a42e8937f82224cec53"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r19/cases/002-rb56-seed9007199254741579-positive.report.json",
+          "sha256": "bab6514956763f4cb99842cf2aa5a12c2f84140701ee4a42e8937f82224cec53"
+        }
+      },
+      {
+        "phase": "compiled-r20",
+        "seed": "-1004",
+        "strictPositiveAccepted": true,
+        "strictRejection": null,
+        "strictSemanticSummary": {
+          "status": "PASS",
+          "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+          "seed": "-1004",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 537,
+          "generationMillis": 65392,
+          "maxManualUnitMillis": 1656,
+          "forcedAfterPublish": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "normalCatalogEnabled": false,
+          "playerInputEvidence": false,
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda"
+        },
+        "census": {
+          "plannedPackages": 44,
+          "channels": 1,
+          "expectedDiagnosticSamples": 55,
+          "actualPackages": 44,
+          "actualCountAvailable": true
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 537,
+          "generationMillis": 65392,
+          "maxManualUnitMillis": 1656,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "639527321d0742ad2bfb35091300b892f9937ac6e131cd86399cb7ccf0d673cd",
+          "diagnosticContextDigest": "39738065e9f714d60d18466f7fdceb7e767f006756975824f792dd96358a31f0",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 65648
+        },
+        "stageTimingAvailability": "NOT_EXPOSED_IN_POSITIVE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 66.52746979999938,
+          "outcome": "PASS",
+          "terminalReached": true,
+          "stateMatch": true,
+          "observedState": "PASS:rb56",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 1127,
+          "reportSha256": "1bb83044846ca3e0f606b84368a5964acd49cc70e400ef89c732fe3cfa219ff5"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r20/cases/001-rb56-seed-1004-positive.report.json",
+          "sha256": "1bb83044846ca3e0f606b84368a5964acd49cc70e400ef89c732fe3cfa219ff5"
+        }
+      },
+      {
+        "phase": "compiled-r20",
+        "seed": "-1028",
+        "strictPositiveAccepted": false,
+        "strictRejection": "Qualification did not reach exact restoration",
+        "strictSemanticSummary": null,
+        "census": {
+          "plannedPackages": 56,
+          "channels": 2,
+          "expectedDiagnosticSamples": 60,
+          "actualPackages": null,
+          "actualCountAvailable": false
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1028",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 429,
+          "jobMillis": 90090,
+          "manualUnitMaxMillis": 2337,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 35456,
+            "PHYSICAL": 156,
+            "HYPOTHESES": 52369,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 101,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 326,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 4,
+              "millis": 836,
+              "maxMillis": 222
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 52,
+              "millis": 11637,
+              "maxMillis": 314
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 39,
+              "millis": 7645,
+              "maxMillis": 442
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 3,
+              "millis": 573,
+              "maxMillis": 198
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 3,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 36,
+              "millis": 519,
+              "maxMillis": 21
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 3,
+              "millis": 149,
+              "maxMillis": 54
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 3,
+              "millis": 302,
+              "maxMillis": 113
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 90,
+              "millis": 12959,
+              "maxMillis": 481
+            },
+            "REMOVE_SETTLE": {
+              "units": 3,
+              "millis": 377,
+              "maxMillis": 132
+            },
+            "REPLACE_SETTLE": {
+              "units": 3,
+              "millis": 377,
+              "maxMillis": 132
+            },
+            "POWER_ON_SETTLE": {
+              "units": 3,
+              "millis": 236,
+              "maxMillis": 81
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 39,
+              "millis": 8417,
+              "maxMillis": 309
+            },
+            "CUSTOMER_RETEST": {
+              "units": 39,
+              "millis": 8201,
+              "maxMillis": 283
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 3,
+              "millis": 41,
+              "maxMillis": 15
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 3,
+              "millis": 116,
+              "maxMillis": 42
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 90137,
+          "failure": "Deadline: Generation wall budget exhausted"
+        },
+        "stageTimingAvailability": "COMPLETE_FAILURE_RECEIPT",
+        "passiveObservation": {
+          "operationSeconds": 90.90588449998177,
+          "outcome": "FAIL",
+          "terminalReached": true,
+          "stateMatch": false,
+          "observedState": "FAIL:rb56:Generation wall budget exhausted",
+          "timedOut": false,
+          "reportObserved": true,
+          "reportJsonValid": true,
+          "reportMatch": true,
+          "reportLength": 2122,
+          "reportSha256": "aaef93536008db0a667a343d142dc2846b821e98af5aece501a2e89ae5364b0d"
+        },
+        "artifact": {
+          "artifact": "q60-compiled-r20/cases/002-rb56-seed-1028-positive.report.json",
+          "sha256": "aaef93536008db0a667a343d142dc2846b821e98af5aece501a2e89ae5364b0d"
+        }
+      }
+    ]
+  },
+  "ordinaryQ30CurrentControls": [
+    {
+      "phase": "compiled-r17",
+      "status": "FAIL",
+      "seed": "10014",
+      "scope": "ONE_CURRENT_PRODUCTION_Q30_NORMAL_UI_GENERATION",
+      "normalReplay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/10014",
+      "noReroll": true,
+      "runtimePackageCensus": "NOT_EXPOSED_BY_PUBLIC_HOST",
+      "plannedPackages": 40,
+      "exactTerminalCostEvidence": false,
+      "sampledMaximumWorkUnits": 435,
+      "sampledLastProgress": {
+        "hostElapsedSeconds": 89.84722120000515,
+        "label": "Verify measurements and repairs",
+        "paused": false,
+        "activeElapsedMs": 89851,
+        "percent": 66,
+        "candidate": 1,
+        "candidates": 1,
+        "phase": 4,
+        "phases": 6,
+        "units": 435,
+        "elapsedMs": 89850,
+        "lastUpdateAgeMs": 1
+      },
+      "hostObservationSeconds": 92.21025709999958,
+      "screen": "ERROR",
+      "ready": false,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "publicHostCleanup": {
+        "seconds": 1.5316248000017367,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+      "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+      "metricLimitation": "Sampled progress is not the exact terminal work or active-unit cost. The passing 10387 control does not clear the failed 10014 run.",
+      "evidence": {
+        "strictReceipt": {
+          "artifact": "q30-q60-compiled-r17/strict-result.json",
+          "sha256": "3451666e53d10d3b5a82608b4ec4caf5be57a98b02463e6beb57eb388469906f"
+        },
+        "rawHostResult": {
+          "artifact": "q30-q60-compiled-r17/host/result.json",
+          "sha256": "e25d6ace4d3856f1dff600f31ab522e0e2113b7bf83425a499b015b96ae46a96"
+        }
+      }
+    },
+    {
+      "phase": "compiled-r21",
+      "status": "PASS",
+      "seed": "10387",
+      "scope": "ONE_CURRENT_PRODUCTION_Q30_NORMAL_UI_GENERATION",
+      "normalReplay": "tsj-alpha/4/MEDIUM/RB30_CONTROL/10387",
+      "noReroll": true,
+      "runtimePackageCensus": "NOT_EXPOSED_BY_PUBLIC_HOST",
+      "plannedPackages": 20,
+      "exactTerminalCostEvidence": false,
+      "sampledMaximumWorkUnits": 257,
+      "sampledLastProgress": {
+        "hostElapsedSeconds": 24.12111310000182,
+        "label": "Verify measurements and repairs",
+        "paused": false,
+        "activeElapsedMs": 24124,
+        "percent": 66,
+        "candidate": 1,
+        "candidates": 1,
+        "phase": 4,
+        "phases": 6,
+        "units": 257,
+        "elapsedMs": 24123,
+        "lastUpdateAgeMs": 0
+      },
+      "hostObservationSeconds": 24.27976380000473,
+      "screen": "TICKET",
+      "ready": true,
+      "observedCandidates": [
+        0,
+        1
+      ],
+      "publicHostCleanup": {
+        "seconds": 1.2205865000141785,
+        "serverStopped": true,
+        "portClosed": true,
+        "ownedSurvivors": []
+      },
+      "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+      "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+      "metricLimitation": "Sampled progress is not the exact terminal work or active-unit cost. The passing 10387 control does not clear the failed 10014 run.",
+      "evidence": {
+        "strictReceipt": {
+          "artifact": "q30-q60-compiled-r21/strict-result.json",
+          "sha256": "6930ded7cc73a0ade2ffb83fe5106483e109edfb0ca34df12b68f4aad96e4b05"
+        },
+        "rawHostResult": {
+          "artifact": "q30-q60-compiled-r21/host/result.json",
+          "sha256": "bd5b93e318c9c504b463426b9a353bba72acba2ff7d5c938d9facecbe4cb04ef"
+        }
+      }
+    }
+  ],
+  "historicalAcceptedQ3010014": {
+    "status": "HISTORICAL_ACCEPTED_SOURCE_ONLY",
+    "seed": "10014",
+    "sourceIdentity": "a43f8165921f08c309636d2bf1a971905fdbc9382885c0708788d79744e1fb51",
+    "baseHead": "d37c3b3b8581abdeaa9b88b7bfb2349cff958d31",
+    "application": {
+      "elapsedMs": 75535,
+      "maxActiveOperationMs": 1427,
+      "maxCoordinatorAdvanceMs": 1427,
+      "status": "PASS",
+      "workUnits": 440
+    },
+    "host": {
+      "deadlineMs": 150000,
+      "exitCode": 0,
+      "observationElapsedMs": 76062,
+      "status": "PASS",
+      "terminal": true
+    },
+    "cleanup": {
+      "elapsedLimitations": null,
+      "elapsedMs": 1311,
+      "ownedSurvivors": [],
+      "serverStopped": true,
+      "status": "PASS"
+    },
+    "limits": {
+      "activeOperationMillis": 5000,
+      "jobMillis": 90000,
+      "sharedWork": 640
+    },
+    "publishedPackages": 40,
+    "originalApplicationReportSha256": "8d0e9b53cffa41cb368f9998659e1af987eb8af357a45c24fdc069ef5d4dc977",
+    "sourceBindingCanonicalSha256": "cf11ac24caa0bad8f89f2eb56e08c8609acc21ef7432704b5797b1e0ff313b7f",
+    "evidence": {
+      "sequenceSummary": {
+        "artifact": "docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/sequence-summary.json",
+        "sha256": "46d08efc559813282b69451c37ba22bf1c2889a6e3853a9b0eaef41ab6324f86"
+      },
+      "receiptArchive": {
+        "artifact": "docs/task-evidence/Q30/qualification-workflow/cold77-actual-window-1/sanitized-case-receipts.tar.gz",
+        "sha256": "3a6c63630df12fd6df8c36021f15b0a068a051a9000cab982e1c602025aab58f"
+      },
+      "member": "003-seed-10014/normalized-receipt.json",
+      "memberSha256": "5d6292dcb9bb6c98497e1ede069de7778f3ad805ee7e07051fc7b9b58f4c23cb"
+    },
+    "limitation": "Historical accepted cold77 source. This does not replace or clear current compiled-r17 failure."
+  },
+  "e06CompiledMechanics": {
+    "phase": "compiled-r16",
+    "wholePhaseStatus": "PASS",
+    "scope": "E06_COMPILED_PRIVATE_MECHANICS_AND_FORCED_CLEANUP_CANARY",
+    "fidelity": "NOT_QUALIFIED",
+    "playerInputEvidence": false,
+    "sourceSha256": "e17b3dede9ac35fba8ab82724b1a194835761b378e2cd7a485d52e9e5bdf8596",
+    "webSha256": "c604aaef39539b57c5bba0cd440f8e3e0ccde2106dbf8a9e215b11cf3329ffad",
+    "reports": [
+      {
+        "applicationStatus": "PASS",
+        "expectedForcedFailure": false,
+        "strictMechanicsAccepted": true,
+        "semanticSummary": {
+          "status": "PASS",
+          "scope": "COMPILED_MECHANICS_ONLY",
+          "fidelity": "NOT_QUALIFIED",
+          "forcedFailure": false,
+          "cases": [
+            {
+              "model": "DETAILED",
+              "acceptedSteps": 40000,
+              "elapsedSeconds": 0.20000000000012963,
+              "timestepSeconds": 5e-06,
+              "trials": 124366,
+              "finiteTerminalSamples": 42076,
+              "playerOwnerRestored": true,
+              "candidateDisposed": true,
+              "forcedAfterAcceptedSolve": false
+            },
+            {
+              "model": "AVERAGED",
+              "acceptedSteps": 1000,
+              "elapsedSeconds": 0.20000000000000367,
+              "timestepSeconds": 0.0002,
+              "trials": 3986,
+              "finiteTerminalSamples": 832,
+              "playerOwnerRestored": true,
+              "candidateDisposed": true,
+              "forcedAfterAcceptedSolve": false
+            }
+          ],
+          "playerOwnerRestored": true,
+          "candidateDisposed": true
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "schema": "e06-compiled-mechanics-v1",
+          "status": "PASS",
+          "fidelity": "NOT_QUALIFIED",
+          "execution": "UNMODIFIED_GWT_FACTORY_PRIVATE_PLAYER_PROOF",
+          "forcedFailure": false,
+          "factoryExecuted": true,
+          "assertions": 43693,
+          "wallMs": 5687,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "cleanup": "PASS",
+          "failure": null,
+          "cases": [
+            {
+              "model": "DETAILED",
+              "status": "PASS",
+              "parameters": "e06-native-candidate-v3;ports=IN+,IN-,PRE_L+,OUT-,EN,FB;control-reference=IN-;uvlo=95/90;enable=3/2;hz=2000;control=PI-input-feedforward;FFcommand=12;FBref=6;Kp=.00025;Ki=.025;integral-bound=plus-minus.45;integral-zero-disabled-or-softstart;conditional-antiwindup;softstart=.020;nominal-output-not-prescribed;accepted-cycle-latch;bias=10V/100ohm-linear-powered;gate=10V/10ohm;Iq=.00015*clamp(Vin/10);Lp=.2;n=.25;k=.999;Lout=.020;Rw=.5;Cout=.000470;ESR=.1;load=48;bleed=10000;detailed-transformer-integration=backward-euler;output-L-integration=trapezoidal;BE-damping=numerical-not-physical;detailed-channel=finite-Ron-Roff,differential-Vgs-threshold3;Ron=2/7-ohm-derived-beta.5-drive10-threshold3;Roff=1e8-ohm;actual-body-junctions;body-current=existing-raw-Shockley-estimate;body-stamp=existing-limited-tangent-plus-gmin;sense=680;zener=10.7;opto=default-junction,default-BJT,beta700,existing-empirical-transfer;pullup=10000;Cfb=.000001;averaged-emf=d*n*Vin;Rout=.5;Imax=1;eta=.85-positive-terminal-power;I2R-once;negative-power-absorbed;candidate-no-nominal-qualification;averaged-omits-junction-drop-average-and-switching-waveforms;detailed-omits-MOSFET-transfer,saturation,avalanche,gate-charge,switching-loss,EMI,thermal;2kHz-solver-only-player-limit250Hz;actual-source-peak=169.7056274847714;actual-source-hz=60;actual-source-R=22;actual-bulk-C=0.000047;actual-bulk-bleed-R=100000;actual-transformer=0.2/0.25/0.999;actual-transformer-flags=2;actual-Q-flags=32/32;actual-Q-channel=BoundedPowerSwitchElm;actual-Q-Ron=0.2857142857142857;actual-Q-Roff=100000000;actual-L-flags=0;actual-C-flags=2/2;actual-opto-model=default;actual-opto-BJT-model=default;actual-zener-model=fwdrop=0.805904783 zvoltage=10.7",
+              "timestepSeconds": 5e-06,
+              "installed": true,
+              "analyzed": true,
+              "completed200ms": true,
+              "acceptedSteps": 40000,
+              "elapsedSeconds": 0.20000000000012963,
+              "trials": 124366,
+              "batches": 314,
+              "sampledAcceptedSteps": 314,
+              "finiteTerminalSamples": 42076,
+              "sampledMaxSubIterations": 5,
+              "enableAtSeconds": 0.05,
+              "enableChanged": true,
+              "disabledActiveSamples": 0,
+              "enabledActiveSamples": 235,
+              "disabledPulseSamples": 0,
+              "enabledPulseSamples": 61,
+              "enabledDeliverySamples": 0,
+              "disabledGateMaxVolts": 5.684341886080802e-14,
+              "highGateMaxVolts": 10.000000000000114,
+              "lowGateMaxVolts": 10.000000000000057,
+              "sampledOutputMinVolts": 1.8836088061074648e-11,
+              "sampledOutputMaxVolts": 12.159980678934605,
+              "sampledOutputMeanVolts": 7.771178815153476,
+              "sampledLoadMeanAmps": 0.1618995586490308,
+              "finalBulkVolts": 163.5317426138464,
+              "finalFeedbackVolts": 6.171494555581674,
+              "stopMessage": null,
+              "forcedAfterAcceptedSolve": false,
+              "privateCloseReturned": true,
+              "candidateDisposed": true,
+              "playerOwnerRestored": true,
+              "wallMs": 5529,
+              "cleanupMs": 2,
+              "failure": null,
+              "cleanupFailure": null
+            },
+            {
+              "model": "AVERAGED",
+              "status": "PASS",
+              "parameters": "e06-native-candidate-v3;ports=IN+,IN-,PRE_L+,OUT-,EN,FB;control-reference=IN-;uvlo=95/90;enable=3/2;hz=2000;control=PI-input-feedforward;FFcommand=12;FBref=6;Kp=.00025;Ki=.025;integral-bound=plus-minus.45;integral-zero-disabled-or-softstart;conditional-antiwindup;softstart=.020;nominal-output-not-prescribed;accepted-cycle-latch;bias=10V/100ohm-linear-powered;gate=10V/10ohm;Iq=.00015*clamp(Vin/10);Lp=.2;n=.25;k=.999;Lout=.020;Rw=.5;Cout=.000470;ESR=.1;load=48;bleed=10000;detailed-transformer-integration=backward-euler;output-L-integration=trapezoidal;BE-damping=numerical-not-physical;detailed-channel=finite-Ron-Roff,differential-Vgs-threshold3;Ron=2/7-ohm-derived-beta.5-drive10-threshold3;Roff=1e8-ohm;actual-body-junctions;body-current=existing-raw-Shockley-estimate;body-stamp=existing-limited-tangent-plus-gmin;sense=680;zener=10.7;opto=default-junction,default-BJT,beta700,existing-empirical-transfer;pullup=10000;Cfb=.000001;averaged-emf=d*n*Vin;Rout=.5;Imax=1;eta=.85-positive-terminal-power;I2R-once;negative-power-absorbed;candidate-no-nominal-qualification;averaged-omits-junction-drop-average-and-switching-waveforms;detailed-omits-MOSFET-transfer,saturation,avalanche,gate-charge,switching-loss,EMI,thermal;2kHz-solver-only-player-limit250Hz;actual-source-peak=169.7056274847714;actual-source-hz=60;actual-source-R=22;actual-bulk-C=0.000047;actual-bulk-bleed-R=100000;actual-stage=E06AveragedConverterElm;switch-waveforms=unsupported;actual-L-flags=0;actual-C-flags=2/2;actual-opto-model=default;actual-opto-BJT-model=default;actual-zener-model=fwdrop=0.805904783 zvoltage=10.7",
+              "timestepSeconds": 0.0002,
+              "installed": true,
+              "analyzed": true,
+              "completed200ms": true,
+              "acceptedSteps": 1000,
+              "elapsedSeconds": 0.20000000000000367,
+              "trials": 3986,
+              "batches": 8,
+              "sampledAcceptedSteps": 8,
+              "finiteTerminalSamples": 832,
+              "sampledMaxSubIterations": 3,
+              "enableAtSeconds": 0.05,
+              "enableChanged": true,
+              "disabledActiveSamples": 0,
+              "enabledActiveSamples": 6,
+              "disabledPulseSamples": null,
+              "enabledPulseSamples": null,
+              "enabledDeliverySamples": 6,
+              "disabledGateMaxVolts": null,
+              "highGateMaxVolts": null,
+              "lowGateMaxVolts": null,
+              "sampledOutputMinVolts": 0,
+              "sampledOutputMaxVolts": 12.624678737693264,
+              "sampledOutputMeanVolts": 8.656914252381359,
+              "sampledLoadMeanAmps": 0.18035238025794492,
+              "finalBulkVolts": 163.08245063045388,
+              "finalFeedbackVolts": 5.148421014219423,
+              "stopMessage": null,
+              "forcedAfterAcceptedSolve": false,
+              "privateCloseReturned": true,
+              "candidateDisposed": true,
+              "playerOwnerRestored": true,
+              "wallMs": 158,
+              "cleanupMs": 2,
+              "failure": null,
+              "cleanupFailure": null
+            }
+          ],
+          "limits": [
+            "mechanics proof only; native energy/fidelity evidence remains separate",
+            "terminal metrics sample each deferred batch endpoint; solver validates all accepted node voltages",
+            "128-step deferred batches retain existing 500 ms operation and step-attempt guards",
+            "detailed switching is developer-only; averaged switching waveforms unsupported"
+          ]
+        },
+        "artifact": {
+          "artifact": "e06-q60-compiled-r16-200us/cases/001-e06-positive.report.json",
+          "sha256": "99d062a307fa26e1eb3c4680be0898326143b132d475572cae55f3d3d5df5343"
+        }
+      },
+      {
+        "applicationStatus": "FAIL",
+        "expectedForcedFailure": true,
+        "strictMechanicsAccepted": true,
+        "semanticSummary": {
+          "status": "PASS",
+          "scope": "COMPILED_MECHANICS_ONLY",
+          "fidelity": "NOT_QUALIFIED",
+          "forcedFailure": true,
+          "cases": [
+            {
+              "model": "DETAILED",
+              "acceptedSteps": 40000,
+              "elapsedSeconds": 0.20000000000012963,
+              "timestepSeconds": 5e-06,
+              "trials": 124366,
+              "finiteTerminalSamples": 42076,
+              "playerOwnerRestored": true,
+              "candidateDisposed": true,
+              "forcedAfterAcceptedSolve": false
+            },
+            {
+              "model": "AVERAGED",
+              "acceptedSteps": 1000,
+              "elapsedSeconds": 0.20000000000000367,
+              "timestepSeconds": 0.0002,
+              "trials": 3986,
+              "finiteTerminalSamples": 832,
+              "playerOwnerRestored": true,
+              "candidateDisposed": true,
+              "forcedAfterAcceptedSolve": true
+            }
+          ],
+          "playerOwnerRestored": true,
+          "candidateDisposed": true
+        },
+        "fullSanitizedNeutralApplicationReport": {
+          "schema": "e06-compiled-mechanics-v1",
+          "status": "FAIL",
+          "fidelity": "NOT_QUALIFIED",
+          "execution": "UNMODIFIED_GWT_FACTORY_PRIVATE_PLAYER_PROOF",
+          "forcedFailure": true,
+          "factoryExecuted": true,
+          "assertions": 43693,
+          "wallMs": 5950,
+          "playerOwnerRestored": true,
+          "candidateDisposed": true,
+          "cleanup": "PASS",
+          "failure": "e06-explicit-failure-after-install-and-accepted-solve",
+          "cases": [
+            {
+              "model": "DETAILED",
+              "status": "PASS",
+              "parameters": "e06-native-candidate-v3;ports=IN+,IN-,PRE_L+,OUT-,EN,FB;control-reference=IN-;uvlo=95/90;enable=3/2;hz=2000;control=PI-input-feedforward;FFcommand=12;FBref=6;Kp=.00025;Ki=.025;integral-bound=plus-minus.45;integral-zero-disabled-or-softstart;conditional-antiwindup;softstart=.020;nominal-output-not-prescribed;accepted-cycle-latch;bias=10V/100ohm-linear-powered;gate=10V/10ohm;Iq=.00015*clamp(Vin/10);Lp=.2;n=.25;k=.999;Lout=.020;Rw=.5;Cout=.000470;ESR=.1;load=48;bleed=10000;detailed-transformer-integration=backward-euler;output-L-integration=trapezoidal;BE-damping=numerical-not-physical;detailed-channel=finite-Ron-Roff,differential-Vgs-threshold3;Ron=2/7-ohm-derived-beta.5-drive10-threshold3;Roff=1e8-ohm;actual-body-junctions;body-current=existing-raw-Shockley-estimate;body-stamp=existing-limited-tangent-plus-gmin;sense=680;zener=10.7;opto=default-junction,default-BJT,beta700,existing-empirical-transfer;pullup=10000;Cfb=.000001;averaged-emf=d*n*Vin;Rout=.5;Imax=1;eta=.85-positive-terminal-power;I2R-once;negative-power-absorbed;candidate-no-nominal-qualification;averaged-omits-junction-drop-average-and-switching-waveforms;detailed-omits-MOSFET-transfer,saturation,avalanche,gate-charge,switching-loss,EMI,thermal;2kHz-solver-only-player-limit250Hz;actual-source-peak=169.7056274847714;actual-source-hz=60;actual-source-R=22;actual-bulk-C=0.000047;actual-bulk-bleed-R=100000;actual-transformer=0.2/0.25/0.999;actual-transformer-flags=2;actual-Q-flags=32/32;actual-Q-channel=BoundedPowerSwitchElm;actual-Q-Ron=0.2857142857142857;actual-Q-Roff=100000000;actual-L-flags=0;actual-C-flags=2/2;actual-opto-model=default;actual-opto-BJT-model=default;actual-zener-model=fwdrop=0.805904783 zvoltage=10.7",
+              "timestepSeconds": 5e-06,
+              "installed": true,
+              "analyzed": true,
+              "completed200ms": true,
+              "acceptedSteps": 40000,
+              "elapsedSeconds": 0.20000000000012963,
+              "trials": 124366,
+              "batches": 314,
+              "sampledAcceptedSteps": 314,
+              "finiteTerminalSamples": 42076,
+              "sampledMaxSubIterations": 5,
+              "enableAtSeconds": 0.05,
+              "enableChanged": true,
+              "disabledActiveSamples": 0,
+              "enabledActiveSamples": 235,
+              "disabledPulseSamples": 0,
+              "enabledPulseSamples": 61,
+              "enabledDeliverySamples": 0,
+              "disabledGateMaxVolts": 5.684341886080802e-14,
+              "highGateMaxVolts": 10.000000000000114,
+              "lowGateMaxVolts": 10.000000000000057,
+              "sampledOutputMinVolts": 1.8836088061074648e-11,
+              "sampledOutputMaxVolts": 12.159980678934605,
+              "sampledOutputMeanVolts": 7.771178815153476,
+              "sampledLoadMeanAmps": 0.1618995586490308,
+              "finalBulkVolts": 163.5317426138464,
+              "finalFeedbackVolts": 6.171494555581674,
+              "stopMessage": null,
+              "forcedAfterAcceptedSolve": false,
+              "privateCloseReturned": true,
+              "candidateDisposed": true,
+              "playerOwnerRestored": true,
+              "wallMs": 5794,
+              "cleanupMs": 2,
+              "failure": null,
+              "cleanupFailure": null
+            },
+            {
+              "model": "AVERAGED",
+              "status": "FAIL",
+              "parameters": "e06-native-candidate-v3;ports=IN+,IN-,PRE_L+,OUT-,EN,FB;control-reference=IN-;uvlo=95/90;enable=3/2;hz=2000;control=PI-input-feedforward;FFcommand=12;FBref=6;Kp=.00025;Ki=.025;integral-bound=plus-minus.45;integral-zero-disabled-or-softstart;conditional-antiwindup;softstart=.020;nominal-output-not-prescribed;accepted-cycle-latch;bias=10V/100ohm-linear-powered;gate=10V/10ohm;Iq=.00015*clamp(Vin/10);Lp=.2;n=.25;k=.999;Lout=.020;Rw=.5;Cout=.000470;ESR=.1;load=48;bleed=10000;detailed-transformer-integration=backward-euler;output-L-integration=trapezoidal;BE-damping=numerical-not-physical;detailed-channel=finite-Ron-Roff,differential-Vgs-threshold3;Ron=2/7-ohm-derived-beta.5-drive10-threshold3;Roff=1e8-ohm;actual-body-junctions;body-current=existing-raw-Shockley-estimate;body-stamp=existing-limited-tangent-plus-gmin;sense=680;zener=10.7;opto=default-junction,default-BJT,beta700,existing-empirical-transfer;pullup=10000;Cfb=.000001;averaged-emf=d*n*Vin;Rout=.5;Imax=1;eta=.85-positive-terminal-power;I2R-once;negative-power-absorbed;candidate-no-nominal-qualification;averaged-omits-junction-drop-average-and-switching-waveforms;detailed-omits-MOSFET-transfer,saturation,avalanche,gate-charge,switching-loss,EMI,thermal;2kHz-solver-only-player-limit250Hz;actual-source-peak=169.7056274847714;actual-source-hz=60;actual-source-R=22;actual-bulk-C=0.000047;actual-bulk-bleed-R=100000;actual-stage=E06AveragedConverterElm;switch-waveforms=unsupported;actual-L-flags=0;actual-C-flags=2/2;actual-opto-model=default;actual-opto-BJT-model=default;actual-zener-model=fwdrop=0.805904783 zvoltage=10.7",
+              "timestepSeconds": 0.0002,
+              "installed": true,
+              "analyzed": true,
+              "completed200ms": true,
+              "acceptedSteps": 1000,
+              "elapsedSeconds": 0.20000000000000367,
+              "trials": 3986,
+              "batches": 8,
+              "sampledAcceptedSteps": 8,
+              "finiteTerminalSamples": 832,
+              "sampledMaxSubIterations": 3,
+              "enableAtSeconds": 0.05,
+              "enableChanged": true,
+              "disabledActiveSamples": 0,
+              "enabledActiveSamples": 6,
+              "disabledPulseSamples": null,
+              "enabledPulseSamples": null,
+              "enabledDeliverySamples": 6,
+              "disabledGateMaxVolts": null,
+              "highGateMaxVolts": null,
+              "lowGateMaxVolts": null,
+              "sampledOutputMinVolts": 0,
+              "sampledOutputMaxVolts": 12.624678737693264,
+              "sampledOutputMeanVolts": 8.656914252381359,
+              "sampledLoadMeanAmps": 0.18035238025794492,
+              "finalBulkVolts": 163.08245063045388,
+              "finalFeedbackVolts": 5.148421014219423,
+              "stopMessage": null,
+              "forcedAfterAcceptedSolve": true,
+              "privateCloseReturned": true,
+              "candidateDisposed": true,
+              "playerOwnerRestored": true,
+              "wallMs": 156,
+              "cleanupMs": 2,
+              "failure": "e06-explicit-failure-after-install-and-accepted-solve",
+              "cleanupFailure": null
+            }
+          ],
+          "limits": [
+            "mechanics proof only; native energy/fidelity evidence remains separate",
+            "terminal metrics sample each deferred batch endpoint; solver validates all accepted node voltages",
+            "128-step deferred batches retain existing 500 ms operation and step-attempt guards",
+            "detailed switching is developer-only; averaged switching waveforms unsupported"
+          ]
+        },
+        "artifact": {
+          "artifact": "e06-q60-compiled-r16-200us/cases/002-e06-forced-failure.report.json",
+          "sha256": "addc17028542635d837a738e4a4d17052c0c65e08f881a2bbf8aba5faff6dc0a"
+        }
+      }
+    ],
+    "strictReceipt": {
+      "artifact": "e06-q60-compiled-r16-200us/strict-result.json",
+      "sha256": "e98276d287459e64eba7f4be6680a95164f34f653832115e1413e3e41812efc4"
+    }
+  },
+  "e06StrictReader": {
+    "artifact": "q60-browser/report_contract_r2_averaged200.py",
+    "sha256": "38e5b9083ad6550bc56cc0d2c099c26537cd612fa3a520c11ab8124e9b61c732"
+  },
+  "publicVisualAttempt": {
+    "phase": "visual-r3",
+    "wholePhaseStatus": "FAIL",
+    "scope": "PUBLIC_REPAIR_FLOW_INCOMPLETE",
+    "rootReportedOutcome": "40-package held board qualified; public diagnosis and expected unrepaired retest completed. Source OFF removal control remained disabled for 30 seconds; no repair was completed.",
+    "independentApplicationReportReview": "NOT_PERFORMED_IN_THIS_PACKET",
+    "playerRepairQualified": false
+  },
+  "priorTaskEvidence": [
+    {
+      "artifact": "q60/context-capacity-evidence-r1.json",
+      "sha256": "250a3365dacea492455ceec62da82535b008a8d7dd6046d41f7de22dce96f298"
+    },
+    {
+      "artifact": "q60/routing-escape-evidence-r1.json",
+      "sha256": "17e96df31a846aa08a19ee1926f68227260ca214a93b16322634d8a42c3c35f8"
+    },
+    {
+      "artifact": "q60/routing-escape-evidence-r65-supplement-r1.json",
+      "sha256": "edfaad212d471e49ee2304192183c9dedb70a4ad70a9cf047a40be1fef419b49"
+    },
+    {
+      "artifact": "q60/routing-evidence-r66-r67-supplement-r1.json",
+      "sha256": "a67046a67ebffb67dc7d04f1fcee04c407983ac8c497c4e1742ee1c97434059c"
+    }
+  ],
+  "remainingBlockers": [
+    "Four preselected Q60 cohort cases reached the fixed generation deadline.",
+    "Current ordinary Q30 seed10014 failed; separate control10387 does not clear it.",
+    "The 40-package public repair flow did not complete component removal or repair.",
+    "Full player repair, normal RB56 catalog enablement and normal RB56 save/load remain unqualified."
+  ],
+  "sanitization": "Application reports are copied completely as neutral JSON. Private local paths, browser identity/profile/process data, proof payloads and raw logs are excluded. Raw artifacts remain bound by relative identifiers and SHA256."
+}

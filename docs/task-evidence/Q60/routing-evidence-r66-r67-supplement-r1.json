@@ -1,0 +1,414 @@
+{
+  "protocol": "Q60_SANITIZED_ROUTING_R66_R67_SUPPLEMENT_R1",
+  "status": "EVIDENCE_INDEX_ONLY_NOT_ACCEPTANCE",
+  "scope": "Current source-bound bounded floorplanning/geometry, three frozen whole-context cold captures and focused shared physical regressions. No electrical advancement or player proof claimed.",
+  "priorEvidenceUnmodified": [
+    {
+      "artifact": "q60/routing-escape-evidence-r1.json",
+      "sha256": "17e96df31a846aa08a19ee1926f68227260ca214a93b16322634d8a42c3c35f8"
+    },
+    {
+      "artifact": "q60/routing-escape-evidence-r65-supplement-r1.json",
+      "sha256": "edfaad212d471e49ee2304192183c9dedb70a4ad70a9cf047a40be1fef419b49"
+    }
+  ],
+  "phases": {
+    "native-r66": {
+      "wholePhaseStatus": "PASS",
+      "outerPhaseElapsedMs": 27535,
+      "exitCode": 0,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "7f0dd28e2231f051b5a1cb7e9ca2556cb9a11bc8b1f5f5937cdd62c59304f6ad",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "completedSuites": [
+        {
+          "suite": "MediumBoardFloorplanningContractTest",
+          "assertions": 90483,
+          "status": "PASS"
+        },
+        {
+          "suite": "A02GeometryContractTest",
+          "assertions": 32,
+          "status": "PASS"
+        }
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r66/stdout.log",
+          "sha256": "3f23567a0bc114c986e1d88f9e4b6f52ff8a560d627cc512b79304068104c783"
+        },
+        "stderr": {
+          "artifact": "owned-native-r66/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r66-result.json",
+          "sha256": "c418a35ac6d631a2c94e23b26f2a8a12f040f90b6b873f9fe57b188a8f031ea3"
+        },
+        "launch": {
+          "artifact": "native-r66-launch.json",
+          "sha256": "dbf5ad73e59b2212448593b9e7e483cf1186374e20db0c599e2234833513c960"
+        },
+        "receipt": {
+          "artifact": "native-r66-receipt.json",
+          "sha256": "3768ae034448d5381f70238f318b505c49289bcdbe75e0ba7bfbefb884225ca9"
+        }
+      }
+    },
+    "native-r67": {
+      "wholePhaseStatus": "PASS",
+      "outerPhaseElapsedMs": 96049,
+      "exitCode": 0,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "7f0dd28e2231f051b5a1cb7e9ca2556cb9a11bc8b1f5f5937cdd62c59304f6ad",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "completedSuites": [
+        {
+          "suite": "Rb56DependencyCaptureContractTest",
+          "assertions": 1166,
+          "status": "PASS"
+        },
+        {
+          "suite": "Rb56GeometryContractTest",
+          "assertions": 1601,
+          "status": "PASS"
+        },
+        {
+          "suite": "MediumBoardPhysicalPolicyContractTest",
+          "assertions": 59,
+          "status": "PASS"
+        },
+        {
+          "suite": "MediumBoardNormalAdmissionContractTest",
+          "assertions": 9,
+          "status": "PASS"
+        },
+        {
+          "suite": "P07TwoLayerContractTest",
+          "assertions": 11776,
+          "status": "PASS"
+        }
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r67/stdout.log",
+          "sha256": "474b12374b1f4a7db60cb010a3f01e76416c9722d8c2db90f2714fbb82947bb0"
+        },
+        "stderr": {
+          "artifact": "owned-native-r67/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r67-result.json",
+          "sha256": "08b5f72360aefb95c2885b19ec9a83463fc71317c55a7705186bf8a08c4dfa6a"
+        },
+        "launch": {
+          "artifact": "native-r67-launch.json",
+          "sha256": "5b0490c176c3838b5721ce477a20405c8d1bb01d8e9520eaa7c88122073f0c90"
+        },
+        "receipt": {
+          "artifact": "native-r67-receipt.json",
+          "sha256": "bba79f574ac614f11d89d3d7fab479abc8be0fddd66cca41f50a83f9125f4398"
+        }
+      }
+    }
+  },
+  "placementCorrection": {
+    "rootRecord": {
+      "artifact": "q60/root-medium-target-r66.json",
+      "sha256": "e38805a88f69279eb7504c43689eea1e62f100cfd9a49118974d75052e9c6268"
+    },
+    "sourceChangeR65ToR66": {
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": {
+        "r65Sha256": "0ae3076915a455f79397a41c031e227ced2daeec43ec7001468238da112f006c",
+        "r66R67Sha256": "0cbd029bee55a90cb3113706cb29d2495f22186fa4b449c955670dbdd62c1fec"
+      }
+    },
+    "behavior": "The bounded medium candidate's connected centroid now uses the same mediumLinkWeight values as its existing scoring; legacy target callers retain raw link weights.",
+    "unchanged": [
+      "all test assertions and seeds",
+      "candidate count/dimensions/search limits",
+      "placement evaluation budget",
+      "routing budgets",
+      "electrical laws/solver recipes"
+    ],
+    "R65HistoricalWholeStatus": "FAIL",
+    "R65HistoricalLocalityTotals": {
+      "output": 13770,
+      "other": 11370
+    },
+    "R66CurrentFloorplanningStatus": "PASS90483",
+    "oldFailureNotRewritten": true
+  },
+  "currentColdCaptureSuite": {
+    "phase": "native-r67",
+    "suiteStatus": "PASS",
+    "assertions": 1166,
+    "caseSelection": "Exact Rb56Plan.resolve seeds77,-1067,-1022; actual accepted bounded P07 layout and constructed installed owner.",
+    "cases": [
+      {
+        "status": "COMPLETE",
+        "seed": "77",
+        "packages": 40,
+        "elements": 244,
+        "contextCharacters": 869905,
+        "keyCharacters": 869935,
+        "pristineConductorCharacters": 88245,
+        "currentConductorCharacters": 88263,
+        "digest": "34d69e0c0c02ca698313f34fae2f7614030e8c653f76c3f739a4050d51f18ccf",
+        "tailMutationChangesIdentity": true,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 4573.7506
+      },
+      {
+        "status": "COMPLETE",
+        "seed": "-1067",
+        "packages": 55,
+        "elements": 350,
+        "contextCharacters": 1203653,
+        "keyCharacters": 1203683,
+        "pristineConductorCharacters": 128422,
+        "currentConductorCharacters": 128441,
+        "digest": "a5e2e531455a4bf68445fbad9bd7f28f19dc11a7e0aafbcaa104beba1f2050e2",
+        "tailMutationChangesIdentity": true,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 6700.2732
+      },
+      {
+        "status": "COMPLETE",
+        "seed": "-1022",
+        "packages": 60,
+        "elements": 377,
+        "contextCharacters": 1298955,
+        "keyCharacters": 1298985,
+        "pristineConductorCharacters": 141566,
+        "currentConductorCharacters": 141585,
+        "digest": "8e5fe5352c6477e9d2e4db2ecf2f6999d13690ecfa101247525f79e59808cac4",
+        "tailMutationChangesIdentity": true,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 10126.8376
+      }
+    ],
+    "applicationCleanups": [
+      {
+        "seed": "77",
+        "elementsAttempted": 244,
+        "elementsDeleted": 244,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      },
+      {
+        "seed": "-1067",
+        "elementsAttempted": 350,
+        "elementsDeleted": 350,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      },
+      {
+        "seed": "-1022",
+        "elementsAttempted": 377,
+        "elementsDeleted": 377,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      }
+    ],
+    "elementsDeletedTotal": 971,
+    "solverAndAnalysisCounts": 0,
+    "fullContextCapacityCharacters": 2097152,
+    "ordinarySessionHashCapacityCharactersUnchanged": 1048576,
+    "independentOracles": "Actual logical/physical census and graph membership, complete pristine/current copper and final owner field, full typed-key SHA versus independent JVM UTF8 SHA256, untrusted final-value mutation changes full equality/digest.",
+    "tailMutationLimit": "Untrusted canonical identity sensitivity only; no admitted physical copper action, healthy/faulted lifecycle or full D01 hypotheses executed.",
+    "normalSessionLoad": false
+  },
+  "separateGeometryCanaries": {
+    "phase": "native-r67",
+    "suiteStatus": "PASS",
+    "assertions": 1601,
+    "criteria": {
+      "cases": 3,
+      "rootSeeds": [
+        "17",
+        "77",
+        "42"
+      ],
+      "packages": [
+        40,
+        55,
+        60
+      ],
+      "pads": [
+        96,
+        133,
+        143
+      ],
+      "routingPolicy": "MEDIUM_BOARD@1",
+      "admission": "RB56_BOARD_NORMAL@1",
+      "corridorDrawingUnits": 80,
+      "routeCallsPerCase": 1,
+      "seedSearch": false,
+      "scope": "FIXED_SEEDED_PHYSICAL_CANARIES_ONLY"
+    },
+    "cases": [
+      {
+        "rootSeed": "17",
+        "placementSeed": "5184606405683509778",
+        "routingSeed": "-5462107092257565683",
+        "packages": 40,
+        "pads": 96,
+        "topology": "RB56_CH1_SHARED_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false",
+        "status": "PASS",
+        "admission": "RB56_BOARD_NORMAL@1",
+        "selectedPolicy": "P07_FULLER_TWO_LAYER",
+        "selectedAttempt": 3,
+        "routingWorkFirstCounter": 18,
+        "routingWorkTotal": 3603761,
+        "P07Attempts": 3,
+        "P07Successes": 3,
+        "routeOutcomes": [
+          "P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P07_FULLER_TWO_LAYER@1=SUCCESS",
+          "P07_FULLER_TWO_LAYER@3=SUCCESS",
+          "P07_FULLER_TWO_LAYER@0=SUCCESS"
+        ]
+      },
+      {
+        "rootSeed": "77",
+        "placementSeed": "8340372057885795380",
+        "routingSeed": "-4672375462570993469",
+        "packages": 55,
+        "pads": 133,
+        "topology": "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O0_B5_false",
+        "status": "PASS",
+        "admission": "RB56_BOARD_NORMAL@1",
+        "selectedPolicy": "P07_FULLER_TWO_LAYER",
+        "selectedAttempt": 5,
+        "routingWorkFirstCounter": 15,
+        "routingWorkTotal": 5174205,
+        "P07Attempts": 3,
+        "P07Successes": 2,
+        "routeOutcomes": [
+          "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P07_FULLER_TWO_LAYER@5=SUCCESS",
+          "P07_FULLER_TWO_LAYER@0=SUCCESS",
+          "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:BRANCH_SEARCH_LIMIT"
+        ]
+      },
+      {
+        "rootSeed": "42",
+        "placementSeed": "5526715536693200536",
+        "routingSeed": "4493419427463069983",
+        "packages": 60,
+        "pads": 143,
+        "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F3_O3_B5_true",
+        "status": "PASS",
+        "admission": "RB56_BOARD_NORMAL@1",
+        "selectedPolicy": "P07_FULLER_TWO_LAYER",
+        "selectedAttempt": 5,
+        "routingWorkFirstCounter": 13,
+        "routingWorkTotal": 5031112,
+        "P07Attempts": 3,
+        "P07Successes": 2,
+        "routeOutcomes": [
+          "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+          "P07_FULLER_TWO_LAYER@5=SUCCESS",
+          "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:TOTAL_SEARCH_LIMIT",
+          "P07_FULLER_TWO_LAYER@0=SUCCESS"
+        ]
+      }
+    ],
+    "acceptedRoutes": 3,
+    "admittedRoutes": 3,
+    "selectionLimit": "Explicit configured/reference recipes17/77/42; these are distinct from the resolve77/-1067/-1022 capture recipes, despite overlapping numerical seeds.",
+    "scopeLimit": "Drawing-space geometry and construction-admission guards only; no player lifecycle/electrical or manufacturing claim. No optional legacy canonical comparison was selected."
+  },
+  "focusedSharedRegressions": {
+    "R66FloorplanningAssertions": 90483,
+    "R66A02GeometryAssertions": 32,
+    "R67MediumPhysicalPolicyAssertions": 59,
+    "R67MediumNormalAdmissionAssertions": 9,
+    "R67P07Assertions": 11776,
+    "completeQ30CorpusRerun": false
+  },
+  "sourceBindings": {
+    "R66AndR67Same1352InputInventory": true,
+    "onlyProductionSourceChangeFromR65": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "exactSelectedR67Hashes": {
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "0cbd029bee55a90cb3113706cb29d2495f22186fa4b449c955670dbdd62c1fec",
+      "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+      "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "60af53ee5f957c27a627c983e2725f0703fa822494306417d96cd909688d2997",
+      "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556",
+      "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java": "2f005cf35b4e9e6ca97e7546173470cf35c2e51c8253bfb7e1826722e9806d55",
+      "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "194070b2b2db075b247922418d175f9b5806defe0c8a09ba2b8827c5610f2f58",
+      "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "3463fdedf485c4af7ca9a152e1b378a8ec34102b40ddf4d8f1d0bace939a6cbb",
+      "src/com/lushprojects/circuitjs1/client/Rb56Generator.java": "f830e3564fcab3a3d8f9eb430ead516d02744c4766f320f1d8b6aae001cf6231",
+      "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java": "8491c7e3ebeee36a27ede42ea1099caf51da8c76e54c5d682d9ddff3758a502f",
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+      "tests/contracts/Rb56TemporalWorkContractTest.java": "459debbd041ce9a1f02cd34d5117c716ce3e10663cc5c68e02c147be063b51e3",
+      "tests/contracts/Rb56DependencyCaptureContractTest.java": "e5401c66f239f504ae9ee6549bfa609acaffcbb3c510de6f4fbaf16033ceb1cb",
+      "tests/contracts/Rb56GeometryContractTest.java": "a8608eae32bb5d3c6e98c8f0ad24b39f93e67d0dc5a88971e5619567e831ff88",
+      "tests/contracts/MediumBoardFloorplanningContractTest.java": "d69acfdcf55b7749ae6bcab34746233837ce79bfc8046e53991d480381e9f3e1",
+      "tests/contracts/A02GeometryContractTest.java": "2cca314dbc7a7de4abe217ff2a91fc2adac4dcc76dadac49d4f39604b8e6ed04",
+      "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "997da57af57d86ab19f61fb1657522db282ee4b2a0903a437499c80b798f1ddb",
+      "tests/contracts/MediumBoardNormalAdmissionContractTest.java": "0d9000433173953127efea8e4f02c1e4ea3d7b9ebdd22291aca068144a9acfa6",
+      "tests/contracts/P07TwoLayerContractTest.java": "34fb380ef33ab0fb2e972b3a575b3d85a1507d076bb811b197264376ec5cc9bc",
+      "scripts/verify-current-contracts.ps1": "fdb6b9f91cf92198f6053cd296692b79dfbf5fbf0fa7626f6495de2d3f19ad56"
+    }
+  },
+  "timingLimit": "R67 outer96.049s covers compilation and five separately bounded native suites; it is not a normal player90s generation measurement or a widened per-class60s budget.",
+  "notQualified": [
+    "current GWT build result",
+    "full RB56 D01/player generation/publication",
+    "normal90s/640work/5s latency",
+    "visible diagnosis/repair/retest",
+    "Q60 acceptance",
+    "normal RB56 save/load",
+    "arbitrary-seed or complete Q30 corpus compatibility"
+  ],
+  "leafActions": {
+    "repoWrites": false,
+    "gatesLaunched": false,
+    "rawLogsCopied": false
+  }
+}

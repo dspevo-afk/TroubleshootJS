@@ -134,6 +134,7 @@ final class CapacitorSlotController implements PhysicalSlotMutationProvider,
         PhysicalMutationScope scope = newScope("install", part);
         try {
             scope.replacePrimaryBinding(part.getElement());
+            retargetModelAuxiliaryBinding(part, scope);
             retargetComponentLeadBindings(part, scope);
             scope.installPart(part);
             scope.restoreComponentGraph();
@@ -165,8 +166,9 @@ final class CapacitorSlotController implements PhysicalSlotMutationProvider,
         if (entry.getOrientation() == PhysicalPartOrientation.REVERSED)
             throw new IllegalArgumentException("Reversed capacitor installation is not supported");
         final CapacitorSpecification specification = entry.getSpecification();
-        final CapacitorElm element = DynamicCapacitorBackingAllocator.create(
-            instance.getSimulationElements(), specification);
+        final DynamicCapacitorBackingAllocator.Backing allocated =
+            DynamicCapacitorBackingAllocator.createBacking(instance.getSimulationElements(), specification);
+        final CapacitorElm element = allocated.getCapacitor();
         final String componentId = slot.getComponentId();
         PhysicalMutationScope scope = newScope(install ? "catalog" : "acquire", null,
             null, catalogEntryId);
@@ -177,16 +179,19 @@ final class CapacitorSlotController implements PhysicalSlotMutationProvider,
                     public PhysicalCapacitorPart create(String partId) {
                         PhysicalCapacitorPart created = new PhysicalCapacitorPart(partId,
                             specification, entry.getPlayerVisibleNameplate().forPhysicalPartId(partId),
-                            element, null, CapacitorPartLocation.LOOSE, new PhysicalPartProvenance(
+                            element, allocated.getEsrElement(), null, CapacitorPartLocation.LOOSE, new PhysicalPartProvenance(
                                 PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
                         slot.getPhysicalSlot().bindGeometryForAcquisition(created);
                         return created;
                     }
                 });
-            scope.registerCanonicalElement(element);
-            scope.appendActiveElement(element);
+            for (CircuitElm owned : allocated.getElements()) {
+                scope.registerCanonicalElement(owned);
+                scope.appendActiveElement(owned);
+            }
             if (install) {
                 scope.replacePrimaryBinding(element);
+                retargetModelAuxiliaryBinding(part, scope);
                 retargetComponentLeadBindings(part, scope);
                 scope.installPart(part);
                 scope.restoreComponentGraph();
@@ -239,6 +244,15 @@ final class CapacitorSlotController implements PhysicalSlotMutationProvider,
             instance.getPhysicalBoardRuntime(), instance, modifications,
             capability.getSlot(), operation, padId, catalogEntryId, requestedPart);
         return new PhysicalMutationScope(sim, instance, modifications, intent);
+    }
+
+    private void retargetModelAuxiliaryBinding(PhysicalCapacitorPart part,
+            PhysicalMutationScope scope) {
+        if (!part.getSpecification().hasExplicitModelRecipe() &&
+                !capability.getSlot().getIntendedSpecification().hasExplicitModelRecipe())
+            return;
+        if (part.getEsrElement() == null) scope.clearAuxiliaryBinding();
+        else scope.replaceAuxiliaryBinding(part.getEsrElement());
     }
 
     private void retargetComponentLeadBindings(PhysicalCapacitorPart part,

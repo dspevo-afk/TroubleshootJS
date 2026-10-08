@@ -19,6 +19,20 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
         MediumBoardPhysicalPolicy.ROUTING_CANDIDATES * 2 *
             PcbRoutingWork.Limits.MAX_EXPANSIONS;
 
+    static final String RB56_IDENTITY = "RB56_BOARD_NORMAL@1";
+    /** Finite eligibility contracts; both use the same bounded structural router. */
+    enum Contract {
+        MEDIUM(IDENTITY, MIN_PARTS, MAX_PARTS, 5),
+        RB56(RB56_IDENTITY, 40, 60, 7);
+        final String identity;
+        final int minimumParts, maximumParts, maximumTerminals;
+        Contract(String identity, int minimumParts, int maximumParts, int maximumTerminals) {
+            this.identity = identity; this.minimumParts = minimumParts;
+            this.maximumParts = maximumParts; this.maximumTerminals = maximumTerminals;
+        }
+    }
+
+    private final Contract contract;
     private final long placementSeed;
     private final long routingSeed;
     private final String routeIdentity;
@@ -27,28 +41,33 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
     private final String layoutGeometry;
     private final String canonical;
 
-    private MediumBoardNormalAdmission(long placementSeed, long routingSeed,
+    private MediumBoardNormalAdmission(Contract contract, long placementSeed, long routingSeed,
             String routeIdentity, String routeReceipt, String boardDeclaration,
             String layoutGeometry) {
+        this.contract = contract;
         this.placementSeed = placementSeed;
         this.routingSeed = routingSeed;
         this.routeIdentity = routeIdentity;
         this.routeReceipt = routeReceipt;
         this.boardDeclaration = boardDeclaration;
         this.layoutGeometry = layoutGeometry;
-        StringBuilder value = new StringBuilder(IDENTITY);
+        StringBuilder value = new StringBuilder(contract.identity);
         field(value, "route", routeIdentity);
         field(value, "route-receipt", routeReceipt);
         field(value, "placement-seed", Long.toString(placementSeed));
         field(value, "routing-seed", Long.toString(routingSeed));
         field(value, "board-declaration", boardDeclaration);
         field(value, "layout-geometry", layoutGeometry);
-        field(value, "bounds", "parts=" + MIN_PARTS + ".." + MAX_PARTS +
+        field(value, "bounds", "parts=" + contract.minimumParts + ".." + contract.maximumParts +
             ";vias=1.." + MAX_VIAS + ";factory-links=0;both-faces=EXPOSED" +
             ";pad-floor=" + SupportedEnvelope.MIN_PAD +
             ";probe-floor=" + SupportedEnvelope.MIN_PROBE +
             ";route-expansions=" + MAX_ROUTING_EXPANSIONS +
             ";medium-routing-policy=" + MediumBoardPhysicalPolicy.canonical());
+        if (contract == Contract.RB56)
+            field(value, "rb56-physical-contract", "board=RB56_CONTROL_BOARD;parts=40..60;terminals=2..7;" +
+                "additional-packages=ISOLATED_CONVERTER_7,OPTOCOUPLER_4,RADIAL_INDUCTOR_2;" +
+                "barrier=PRIMARY|SECONDARY|80-drawing-units;UAC=TOP/0;UFB=TOP/180;manufacturing-rating=NONE");
         canonical = value.toString();
     }
 
@@ -57,6 +76,17 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
      * The returned token retains no board, layout, or policy-result objects.
      */
     static GeneratedPhysicalAdmission fromAcceptedRoute(TroubleshootBoard board,
+            MediumBoardPhysicalPolicy.Result result, long placementSeed, long routingSeed) {
+        return fromAcceptedRoute(Contract.MEDIUM, board, result, placementSeed, routingSeed);
+    }
+
+    /** Separate RB56 eligibility; sharing a structural router never aliases the medium token. */
+    static GeneratedPhysicalAdmission fromAcceptedRb56Route(TroubleshootBoard board,
+            MediumBoardPhysicalPolicy.Result result, long placementSeed, long routingSeed) {
+        return fromAcceptedRoute(Contract.RB56, board, result, placementSeed, routingSeed);
+    }
+
+    private static GeneratedPhysicalAdmission fromAcceptedRoute(Contract contract, TroubleshootBoard board,
             MediumBoardPhysicalPolicy.Result result, long placementSeed, long routingSeed) {
         if (board == null || result == null || !result.accepted() ||
                 result.getFailure() != null || result.getLayout() == null)
@@ -69,8 +99,8 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
         PcbBoardLayout layout = result.getLayout();
         if (!layout.matchesGenerationSeeds(placementSeed, routingSeed))
             throw new IllegalArgumentException("Normal medium route seeds do not match the routed layout");
-        PcbTwoLayerRules.requireNormalMediumGeometry(board, layout, MAX_VIAS);
-        return new MediumBoardNormalAdmission(placementSeed, routingSeed,
+        PcbTwoLayerRules.requireNormalGeometry(board, layout, MAX_VIAS, contract);
+        return new MediumBoardNormalAdmission(contract, placementSeed, routingSeed,
             constraints.getPhysicalPolicyIdentity(), statistics.toCanonical(),
             boardDeclarationFingerprint(board), layout.geometryFingerprint());
     }
@@ -123,7 +153,7 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
             throw new IllegalArgumentException("Selected P07 route is absent from its accepted receipt");
     }
 
-    public String identity() { return IDENTITY; }
+    public String identity() { return contract.identity; }
     public String canonical() { return canonical; }
 
     public void requireConstruction(TroubleshootBoard board, PcbBoardLayout layout) {
@@ -151,7 +181,7 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
                 !boardDeclaration.equals(boardDeclarationFingerprint(board)) ||
                 !layoutGeometry.equals(layout.geometryFingerprint()))
             throw new IllegalArgumentException("Normal medium physical admission does not match its board realization");
-        PcbTwoLayerRules.requireNormalMediumGeometry(board, layout, MAX_VIAS);
+        PcbTwoLayerRules.requireNormalGeometry(board, layout, MAX_VIAS, contract);
     }
 
     private static String boardDeclarationFingerprint(TroubleshootBoard board) {

@@ -9,6 +9,7 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
     private final CapacitorSpecification specification;
     private final PhysicalNameplate playerNameplate;
     private final CapacitorElm element;
+    private final ResistorElm esrElement;
     private final GeneratedFaultBinding faultBinding;
     private final PhysicalPartTerminal[] terminals;
     private final CircuitPhysicalPartElectricalBacking backing;
@@ -23,6 +24,15 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
             PhysicalNameplate playerNameplate, CapacitorElm element,
             GeneratedFaultBinding faultBinding, CapacitorPartLocation location,
             PhysicalPartProvenance provenance) {
+        this(id, specification, playerNameplate, element, null, faultBinding,
+            location, provenance);
+    }
+
+    /** The ESR is an actual private series element owned by this one package. */
+    PhysicalCapacitorPart(String id, CapacitorSpecification specification,
+            PhysicalNameplate playerNameplate, CapacitorElm element, ResistorElm esrElement,
+            GeneratedFaultBinding faultBinding, CapacitorPartLocation location,
+            PhysicalPartProvenance provenance) {
         if (id == null || id.length() == 0 || specification == null ||
                 playerNameplate == null || element == null || location == null ||
                 provenance == null)
@@ -32,10 +42,13 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
         this.id = id;
         this.specification = specification;
         this.playerNameplate = playerNameplate;
+        validateEsrBacking(specification, element, esrElement, faultBinding);
         this.element = element;
+        this.esrElement = esrElement;
         this.faultBinding = faultBinding;
         this.provenance = provenance;
-        CircuitMeasurementEndpoint first = faultBinding == null ?
+        CircuitMeasurementEndpoint first = esrElement != null ?
+            new CircuitPostMeasurementEndpoint(esrElement, 0) : faultBinding == null ?
             new CircuitPostMeasurementEndpoint(element, 0) :
             faultBinding.getPublicTerminal(element, 0);
         CircuitMeasurementEndpoint second = faultBinding == null ?
@@ -53,6 +66,7 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
         endpoints.add(second);
         Vector<CircuitElm> elements = new Vector<CircuitElm>();
         elements.add(element);
+        if (esrElement != null) elements.add(esrElement);
         if (faultBinding != null)
             elements.addAll(faultBinding.getPrivateSimulationElements());
         backing = new CircuitPhysicalPartElectricalBacking(endpoints, elements);
@@ -111,6 +125,7 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
 
     CapacitorNameplate getNameplate() { return specification.getNameplate(); }
     CapacitorElm getElement() { return element; }
+    ResistorElm getEsrElement() { return esrElement; }
     GeneratedFaultBinding getFaultBinding() { return faultBinding; }
     /**
      * Stored charge is player-relevant only when both physical terminals still
@@ -119,7 +134,12 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
      * at the loose or installed board terminals.
      */
     boolean hasAccessibleStoredEnergyTerminals() {
-        return terminalConnectsToBacking(0) && terminalConnectsToBacking(1);
+        if (esrElement == null)
+            return terminalConnectsToBacking(0) && terminalConnectsToBacking(1);
+        if (!isEndpoint(getPublicTerminal(0), esrElement, 0) ||
+                !terminalConnectsToBacking(1) || !seriesNodesMatch(element, esrElement))
+            throw new IllegalStateException("Capacitor ESR terminal path changed");
+        return true;
     }
     CircuitMeasurementEndpoint getPublicTerminal(int terminal) { return getTerminal(terminal).getEndpoint(); }
     CircuitMeasurementEndpoint getTerminalForBoardPad(String padId) {
@@ -132,9 +152,49 @@ final class PhysicalCapacitorPart implements PhysicalPart<CapacitorSpecification
     }
 
     private boolean terminalConnectsToBacking(int terminal) {
-        CircuitMeasurementEndpoint endpoint = getPublicTerminal(terminal);
+        return isEndpoint(getPublicTerminal(terminal), element, terminal);
+    }
+
+    private static boolean isEndpoint(CircuitMeasurementEndpoint endpoint,
+            CircuitElm expected, int post) {
         return endpoint instanceof CircuitPostMeasurementEndpoint &&
-            ((CircuitPostMeasurementEndpoint) endpoint).getElement() == element &&
-            ((CircuitPostMeasurementEndpoint) endpoint).getPostIndex() == terminal;
+            ((CircuitPostMeasurementEndpoint) endpoint).getElement() == expected &&
+            ((CircuitPostMeasurementEndpoint) endpoint).getPostIndex() == post;
+    }
+
+    private static void validateEsrBacking(CapacitorSpecification specification,
+            CapacitorElm capacitor, ResistorElm esr, GeneratedFaultBinding fault) {
+        if (specification.hasExplicitModelRecipe() &&
+                (fault != null || capacitor.getClass() != CapacitorElm.class ||
+                 capacitor.capacitance != specification.getCapacitanceFarads() ||
+                 (capacitor.flags & CapacitorElm.FLAG_BACK_EULER) != specification.getIntegrationFlags() ||
+                 capacitor.initialVoltage != specification.getInitialVoltage()))
+            throw new IllegalArgumentException("Capacitor backing differs from its explicit recipe");
+        if (esr == null) {
+            if (specification.getEsrOhms() > 0)
+                throw new IllegalArgumentException("Capacitor recipe requires its owned ESR");
+            return;
+        }
+        // Existing generated lead-open/short paths retain their historical owner.
+        // Combining those paths with ESR requires its own explicit qualification.
+        if (!specification.hasExplicitModelRecipe() || specification.getEsrOhms() <= 0 ||
+                fault != null || capacitor.getClass() != CapacitorElm.class ||
+                esr.getClass() != ResistorElm.class ||
+                esr.resistance != specification.getEsrOhms() ||
+                capacitor.capacitance != specification.getCapacitanceFarads() ||
+                (capacitor.flags & CapacitorElm.FLAG_BACK_EULER) != specification.getIntegrationFlags() ||
+                capacitor.initialVoltage != specification.getInitialVoltage() ||
+                !seriesNodesMatch(capacitor, esr))
+            throw new IllegalArgumentException("Invalid owned capacitor ESR backing");
+    }
+
+    private static boolean seriesNodesMatch(CapacitorElm capacitor, ResistorElm esr) {
+        Point internal = capacitor.getPost(0), negative = capacitor.getPost(1);
+        Point positive = esr.getPost(0), esrInternal = esr.getPost(1);
+        return internal != null && negative != null && positive != null && esrInternal != null &&
+            internal.x == esrInternal.x && internal.y == esrInternal.y &&
+            !(positive.x == internal.x && positive.y == internal.y) &&
+            !(negative.x == internal.x && negative.y == internal.y) &&
+            !(positive.x == negative.x && positive.y == negative.y);
     }
 }

@@ -11,7 +11,8 @@ package com.lushprojects.circuitjs1.client;
  */
 final class GeneratedDiagnosticContextKey {
     static final int VERSION = 3;
-    private static final int MAX_CANONICAL_LENGTH = 1024 * 1024 + 128;
+    private static final String PREFIX = "tsj-d01-diagnostic-context-v" + VERSION + ";";
+    static final int MAX_CANONICAL_LENGTH = GenerationDependencyContext.MAX_CANONICAL_LENGTH + PREFIX.length();
 
     private final String canonical;
     private final int hash;
@@ -28,9 +29,9 @@ final class GeneratedDiagnosticContextKey {
 
     private GeneratedDiagnosticContextKey(String completeCanonical, boolean trustedCapture) {
         if (completeCanonical == null || completeCanonical.length() == 0 ||
-                completeCanonical.length() > MAX_CANONICAL_LENGTH)
+                completeCanonical.length() > GenerationDependencyContext.MAX_CANONICAL_LENGTH)
             throw new IllegalArgumentException("Missing or oversized diagnostic context key");
-        canonical = "tsj-d01-diagnostic-context-v" + VERSION + ";" + completeCanonical;
+        canonical = PREFIX + completeCanonical;
         hash = canonical.hashCode();
         this.trustedCapture = trustedCapture;
     }

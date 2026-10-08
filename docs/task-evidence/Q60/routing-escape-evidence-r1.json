@@ -1,0 +1,1294 @@
+{
+  "protocol": "Q60_SANITIZED_ROUTING_ESCAPE_EVIDENCE_INDEX_R1",
+  "status": "EVIDENCE_INDEX_ONLY_NOT_ACCEPTANCE",
+  "scope": "Completed R58-R64 routing diagnostics, continuous package escape falsifier/correction, focused regressions and40/60 cold-capture subsets; remaining55 and shared83 routing failures retained.",
+  "artifactPolicy": "Relative retained artifact identifiers and exact hashes; no raw log bodies, personal absolute paths or process identities.",
+  "sourceInventoryHashEncoding": "SHA256 of UTF8 JSON object sorted by key with comma/colon separators; complete inventories remain in retained launches.",
+  "phases": {
+    "native-r58": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "BOUNDED_PRE_FIX_SINGLE60_ROUTING_DIAGNOSTIC_FAIL",
+      "elapsedMs": 34210,
+      "exitCode": 2,
+      "sourceInputCount": 1357,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "4998fde9a6e5e9414f116810a3415d29f2f78096ffd6f0c3b690cbbdb8b7b216",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r58/stdout.log",
+          "sha256": "523a0013b503093fa68c98a06f64d048af529b8a962fdf9f4defb158d1d3de56"
+        },
+        "stderr": {
+          "artifact": "owned-native-r58/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r58-result.json",
+          "sha256": "60ad0a3796058b37f54ed4dc0ca6219be3941219e281eba0a820e782d57c7209"
+        },
+        "launch": {
+          "artifact": "native-r58-launch.json",
+          "sha256": "45a6284ad0168aa207ae722c63d57ece4310dcc968a13c036b33fb2e94bf78d3"
+        }
+      }
+    },
+    "native-r59": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "ESCAPE_TEST_FIXTURE_MISSING_REFERENCE_LABEL_FAIL",
+      "elapsedMs": 24869,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "0db53338c47b89421266285c1bb4f1067c66771424f8dea5414661b204c49095",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r59/stdout.log",
+          "sha256": "de42884d55b4289dd4f13d137b7deb225079ab263726bc730ab3aa656f7b35f9"
+        },
+        "stderr": {
+          "artifact": "owned-native-r59/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r59-result.json",
+          "sha256": "4c30a5177e254097fcd761305f344ab979b0589c5544183bb14a7767a82fa2e6"
+        },
+        "launch": {
+          "artifact": "native-r59-launch.json",
+          "sha256": "61273f7d168a7983eff3693d5efaf46be0a4a5d31903264f1bfea9b00d78e864"
+        }
+      }
+    },
+    "native-r60": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "ACTUAL_CONTINUOUS_TOP_ESCAPE_PRE_FIX_FALSIFIER_FAIL",
+      "elapsedMs": 24768,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "e30430cc3466ebdf25a505bd0abb519e4e46caefa9ee9049d9c2c60df64464a7",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r60/stdout.log",
+          "sha256": "a6c6dae1bfe8824c717365edb863704d0e0fe384552ac5e55917463901080293"
+        },
+        "stderr": {
+          "artifact": "owned-native-r60/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r60-result.json",
+          "sha256": "0faf328bb0a146503292fc209e9801f439856a06e75fdbebbe1971ec079a96a5"
+        },
+        "launch": {
+          "artifact": "native-r60-launch.json",
+          "sha256": "a6f6c19a744f8915a3925514a4b3344cf1f2da5930e31e555abccd7aeb4e6826"
+        }
+      }
+    },
+    "native-r61": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "POST_FIX_CAPTURE_STOPPED_ON55_ROUTING_FAIL",
+      "elapsedMs": 41551,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "2467f02f1df0f3892e9aed93783fbd671d4cfaf1809ae07b8912144157e126c2",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r61/stdout.log",
+          "sha256": "2aa605599273ef7ed56b90321aac3411686bb493164e87053d5c99b8d8b30afa"
+        },
+        "stderr": {
+          "artifact": "owned-native-r61/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r61-result.json",
+          "sha256": "b238d6ccda34bd88b68d4306de808bddc476dd172298ea010995e90eb544809d"
+        },
+        "launch": {
+          "artifact": "native-r61-launch.json",
+          "sha256": "42ebc0e2a75b2674cb820817a7dcbf8427ea62561d3c18eba4b878164d19a929"
+        }
+      }
+    },
+    "native-r62": {
+      "wholePhaseStatus": "PASS",
+      "classification": "FOCUSED_Q30_PLAN_AND_P07_REGRESSIONS_PASS",
+      "elapsedMs": 24400,
+      "exitCode": 0,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "1f59a7a0ce0d631f2b404fc90065a97710b0a019c782d2ae580a0bb6b38c95ce",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [
+        "PASS: Q30 plan contracts 4381 assertions, topologies=11, oneChannelSeeds=7, twoChannelSeeds=10, structuralPackageBand=20..40",
+        "PASS: P07 two-layer contracts assertions=11776",
+        "PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r62/stdout.log",
+          "sha256": "61c0b576ae4c74dc2bee0b3031faf1edd675f2c3d397c964530891fa3bc0e356"
+        },
+        "stderr": {
+          "artifact": "owned-native-r62/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r62-result.json",
+          "sha256": "b6b630297f2762861af129c37e0f295906a38670027fe1b9bb37acf457458d6c"
+        },
+        "launch": {
+          "artifact": "native-r62-launch.json",
+          "sha256": "584279666a038059c84d61c38f5aa170f2a4b64b1134797080174d31e5e811c1"
+        }
+      }
+    },
+    "native-r63": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "SHARED_POLICY_SEED83_ROUTING_REGRESSION_FAIL",
+      "elapsedMs": 52732,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "1f59a7a0ce0d631f2b404fc90065a97710b0a019c782d2ae580a0bb6b38c95ce",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r63/stdout.log",
+          "sha256": "2139ab555c3bf91e22e37ea5701c1608afaa1c610f8d8fc2ee6e7edd42db4fe3"
+        },
+        "stderr": {
+          "artifact": "owned-native-r63/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r63-result.json",
+          "sha256": "44702523cf70b5542e2ef52fada9ef87265cb9653bee641f6a14d784972c9d17"
+        },
+        "launch": {
+          "artifact": "native-r63-launch.json",
+          "sha256": "5ca588bf440fea68e5bde8fc68aad90e683ee639539002df9eab85dce4ef664c"
+        }
+      }
+    },
+    "native-r64": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "ALL_THREE_CAPTURE_OUTCOMES_RETAINED_WHOLE_FAIL_ON55_ROUTE",
+      "elapsedMs": 53142,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "1f59a7a0ce0d631f2b404fc90065a97710b0a019c782d2ae580a0bb6b38c95ce",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r64/stdout.log",
+          "sha256": "6ab69d44b92e1cf232c039afa5171ca6a4b2e6bac50a0d22d1a53afad3765c7c"
+        },
+        "stderr": {
+          "artifact": "owned-native-r64/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r64-result.json",
+          "sha256": "75749dc4cf82cf43ced737d863b7c372e49d170de7afc0a3be8f142ca9ad9681"
+        },
+        "launch": {
+          "artifact": "native-r64-launch.json",
+          "sha256": "1c875f6438c1b5aed64467e8b4eeca967935cddcb76dae8afac3dc60c13edd40"
+        }
+      }
+    }
+  },
+  "preFixDiagnostic": {
+    "phase": "native-r58",
+    "scope": "BOUNDED_SINGLE60_FAILED_ROUTING_OBSERVATION_ONLY",
+    "seed": "-1022",
+    "packages": 60,
+    "rows": [
+      {
+        "row": 1,
+        "pass": 0,
+        "reason": "A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+        "net": "A_COIL_LOW",
+        "start": "KA.A2",
+        "startX": 5280,
+        "startY": 1690,
+        "root": "DA.A",
+        "rootX": 4270,
+        "rootY": 2420,
+        "branchExpansions": 100000,
+        "totalExpansions": 286273,
+        "gridCells": 213568,
+        "vias": 31,
+        "remainingVias": 17,
+        "startLowerBound": 1550,
+        "startEndpoint": {
+          "escapeDirection": [
+            1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "111",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "KA",
+              "face": "TOP",
+              "bounds": [
+                5020,
+                1580,
+                280,
+                180
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            -1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "DA",
+              "face": "TOP",
+              "bounds": [
+                4252,
+                2395,
+                206,
+                60
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 2,
+        "pass": 1,
+        "reason": "A_SENSE:NO_PATH",
+        "net": "A_SENSE",
+        "start": "U2A.SENSOR",
+        "startX": 4360,
+        "startY": 1870,
+        "root": "CFLT_A.1",
+        "rootX": 4400,
+        "rootY": 1360,
+        "branchExpansions": 18,
+        "totalExpansions": 386631,
+        "gridCells": 213568,
+        "vias": 14,
+        "remainingVias": 34,
+        "startLowerBound": 550,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "U2A",
+              "face": "TOP",
+              "bounds": [
+                4335,
+                1725,
+                250,
+                200
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            0,
+            -1
+          ],
+          "declaredDistance": 35,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "CFLT_A",
+              "face": "TOP",
+              "bounds": [
+                4385,
+                1330,
+                80,
+                90
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 3,
+        "pass": 2,
+        "reason": "RAIL5:BRANCH_SEARCH_LIMIT",
+        "net": "RAIL5",
+        "start": "DA.K",
+        "startX": 4440,
+        "startY": 2420,
+        "root": "C5.1",
+        "rootX": 4260,
+        "rootY": 1360,
+        "branchExpansions": 100000,
+        "totalExpansions": 620558,
+        "gridCells": 213568,
+        "vias": 13,
+        "remainingVias": 35,
+        "startLowerBound": 1240,
+        "startEndpoint": {
+          "escapeDirection": [
+            1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "111",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "DA",
+              "face": "TOP",
+              "bounds": [
+                4252,
+                2395,
+                206,
+                60
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            0,
+            -1
+          ],
+          "declaredDistance": 35,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "C5",
+              "face": "TOP",
+              "bounds": [
+                4245,
+                1330,
+                80,
+                90
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 4,
+        "pass": 0,
+        "reason": "A_CMD:NO_PATH",
+        "net": "A_CMD",
+        "start": "U2A.OUTPUT",
+        "startX": 5130,
+        "startY": 2050,
+        "root": "RDA.1",
+        "rootX": 4760,
+        "rootY": 2700,
+        "branchExpansions": 20,
+        "totalExpansions": 235325,
+        "gridCells": 211200,
+        "vias": 36,
+        "remainingVias": 12,
+        "startLowerBound": 1020,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "U2A",
+              "face": "TOP",
+              "bounds": [
+                4955,
+                1905,
+                250,
+                200
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            -1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "RDA",
+              "face": "TOP",
+              "bounds": [
+                4742,
+                2675,
+                196,
+                60
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 5,
+        "pass": 1,
+        "reason": "REF_SHARED:NO_PATH",
+        "net": "REF_SHARED",
+        "start": "U2A.REFERENCE",
+        "startX": 5030,
+        "startY": 2050,
+        "root": "RREF_H.2",
+        "rootX": 5510,
+        "rootY": 1940,
+        "branchExpansions": 20,
+        "totalExpansions": 313103,
+        "gridCells": 211200,
+        "vias": 25,
+        "remainingVias": 23,
+        "startLowerBound": 590,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "U2A",
+              "face": "TOP",
+              "bounds": [
+                4955,
+                1905,
+                250,
+                200
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "RREF_H",
+              "face": "TOP",
+              "bounds": [
+                5312,
+                1915,
+                216,
+                60
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 6,
+        "pass": 2,
+        "reason": "A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+        "net": "A_COIL_LOW",
+        "start": "KA.A2",
+        "startX": 5920,
+        "startY": 1900,
+        "root": "DA.A",
+        "rootX": 4780,
+        "rootY": 2560,
+        "branchExpansions": 100000,
+        "totalExpansions": 555906,
+        "gridCells": 211200,
+        "vias": 10,
+        "remainingVias": 38,
+        "startLowerBound": 1800,
+        "startEndpoint": {
+          "escapeDirection": [
+            1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "111",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "KA",
+              "face": "TOP",
+              "bounds": [
+                5660,
+                1790,
+                280,
+                180
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            -1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "DA",
+              "face": "TOP",
+              "bounds": [
+                4762,
+                2535,
+                226,
+                60
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 7,
+        "pass": 0,
+        "reason": "RAIL5:NO_PATH",
+        "net": "RAIL5",
+        "start": "U1.OUTPUT",
+        "startX": 3590,
+        "startY": 1780,
+        "root": "C5.1",
+        "rootX": 3370,
+        "rootY": 1620,
+        "branchExpansions": 16,
+        "totalExpansions": 226340,
+        "gridCells": 211400,
+        "vias": 28,
+        "remainingVias": 20,
+        "startLowerBound": 380,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "010",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "U1",
+              "face": "TOP",
+              "bounds": [
+                3505,
+                1635,
+                210,
+                200
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            0,
+            -1
+          ],
+          "declaredDistance": 35,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "010"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "C5",
+              "face": "TOP",
+              "bounds": [
+                3355,
+                1590,
+                80,
+                90
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 8,
+        "pass": 1,
+        "reason": "A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+        "net": "A_COIL_LOW",
+        "start": "QA.C",
+        "startX": 4170,
+        "startY": 2080,
+        "root": "DA.A",
+        "rootX": 4790,
+        "rootY": 950,
+        "branchExpansions": 100000,
+        "totalExpansions": 600164,
+        "gridCells": 211400,
+        "vias": 34,
+        "remainingVias": 14,
+        "startLowerBound": 1180,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 36,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "QA",
+              "face": "TOP",
+              "bounds": [
+                4115,
+                1994,
+                120,
+                118
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            -1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "DA",
+              "face": "TOP",
+              "bounds": [
+                4772,
+                925,
+                206,
+                60
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "row": 9,
+        "pass": 2,
+        "reason": "B_CMD:NO_PATH",
+        "net": "B_CMD",
+        "start": "U2B.OUTPUT",
+        "startX": 4160,
+        "startY": 1120,
+        "root": "RDB.1",
+        "rootX": 4800,
+        "rootY": 1170,
+        "branchExpansions": 46,
+        "totalExpansions": 620085,
+        "gridCells": 211400,
+        "vias": 0,
+        "remainingVias": 48,
+        "startLowerBound": 530,
+        "startEndpoint": {
+          "escapeDirection": [
+            0,
+            1
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "111",
+              "011"
+            ],
+            "BOTTOM": [
+              "010",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "U2B",
+              "face": "TOP",
+              "bounds": [
+                3985,
+                975,
+                250,
+                200
+              ]
+            }
+          ]
+        },
+        "rootEndpoint": {
+          "escapeDirection": [
+            -1,
+            0
+          ],
+          "declaredDistance": 50,
+          "fourMoveAdmissionBits": {
+            "TOP": [
+              "011",
+              "011",
+              "011",
+              "011"
+            ],
+            "BOTTOM": [
+              "111",
+              "111",
+              "111",
+              "111"
+            ]
+          },
+          "nearbyCourtyards": [
+            {
+              "owner": "RDB",
+              "face": "TOP",
+              "bounds": [
+                4782,
+                1145,
+                196,
+                60
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "detailTruncatedRows": 0,
+    "moveBitsMeaning": "Three bits in order face admission/domain allowed/free cell; TOP and BOTTOM arrays retain direction indices0..3 from the actual router.",
+    "causalLimit": "Immediate moves expose allowed first TOP steps and occupied BOTTOM channels; they do not alone prove continuous package-face escape. R60 provides that direct falsifier.",
+    "actualConsumedOverrides": [
+      {
+        "repositoryPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "baselineSha256": "60af53ee5f957c27a627c983e2725f0703fa822494306417d96cd909688d2997",
+        "consumedOverride": {
+          "artifact": "q60/route60-diagnostic-draft-r1/prepared/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "sha256": "b4ab6cc388bc4dc10263afa5dbf6784f801f45c59ceb8706ca1b70325c570644"
+        }
+      },
+      {
+        "repositoryPath": "tests/contracts/Rb56TemporalWorkContractTest.java",
+        "baselineSha256": "f08569b8936c8074affd8cd51b9ed3b1ed548144da06808bd37ee8e671c02eba",
+        "consumedOverride": {
+          "artifact": "q60/route60-diagnostic-draft-r1/prepared/tests/contracts/Rb56TemporalWorkContractTest.java",
+          "sha256": "34e41358847ca500b284835b3bf3a43a8817791501ddcc1c9619ebd2f716bf3d"
+        }
+      }
+    ],
+    "manifest": {
+      "artifact": "q60/route60-diagnostic-draft-r1/manifest.json",
+      "sha256": "92de9a3da45683c2f341d9c447deb3d6cf11b3461e9f4745f60cffd57bc01eba"
+    },
+    "captureOutcome": {
+      "status": "FAIL",
+      "seed": "-1022",
+      "packages": -1,
+      "elements": -1,
+      "contextCharacters": -1,
+      "keyCharacters": -1,
+      "pristineConductorCharacters": -1,
+      "currentConductorCharacters": -1,
+      "digest": null,
+      "tailMutationChangesIdentity": false,
+      "simTime": 0.0,
+      "acceptedSteps": 0,
+      "newtonTrials": 0,
+      "analyses": 0,
+      "solves": 0,
+      "elapsedMillis": 9459.0755
+    },
+    "applicationCleanup": {
+      "seed": "-1022",
+      "elementsAttempted": 0,
+      "elementsDeleted": 0,
+      "powerDetached": true,
+      "rawGraphRestored": true,
+      "executorRetired": true,
+      "subscriptionsBefore": 0,
+      "subscriptionsAfter": 0,
+      "globalsRestored": true,
+      "clean": true
+    }
+  },
+  "continuousEscapeCorrection": {
+    "packageIds": [
+      "TO220_REGULATOR_4",
+      "E04_DECISION_CONTROL_5"
+    ],
+    "terminalCount": 9,
+    "padLocalY": 150,
+    "courtyardEndsY": 205,
+    "traceCollisionMarginEndsY": 209,
+    "oldDeclaredDistance": 50,
+    "oldDeclaredEndpointY": 200,
+    "firstFreeGridY": 210,
+    "correctedDeclaredDistance": 60,
+    "directFalsifier": {
+      "phase": "native-r60",
+      "package": "TO220_REGULATOR_4",
+      "pad": "U.INPUT",
+      "failedStepFromDeclaredDistance": 50,
+      "wholePhaseStatus": "FAIL"
+    },
+    "referenceLabelFixtureFailure": {
+      "phase": "native-r59",
+      "wholePhaseStatus": "FAIL",
+      "failedBeforeEscapeOracle": true,
+      "correction": {
+        "artifact": "q60/root-package-escape-fixture-r60.json",
+        "sha256": "619bd1506d3eea688f01cad0805a13912d57996935499af5a2836b87d7d25214"
+      }
+    },
+    "rootPatch": {
+      "artifact": "q60/root-package-escape-fix-r61.json",
+      "sha256": "b8fb90197bf104802bf4451520d1f954f6ed761695ece8a5fb2cee39c15aae33"
+    },
+    "testAddition": {
+      "artifact": "q60/root-package-escape-test-r59.json",
+      "sha256": "88f37e7b3034feea3f41d40008aa79104d35609ea416e654bf25b81500f68dcb"
+    },
+    "productionSourceChangeR60ToR61": {
+      "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": {
+        "beforeSha256": "b3ef3dc902a287345ab1761b2380b957373c33b8e53106490739182de87438b0",
+        "afterSha256": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd"
+      }
+    },
+    "unchanged": [
+      "routing search/order/work budgets",
+      "courtyard and all clearance rules",
+      "pad positions and electrical identities",
+      "plan seeds and package inventory"
+    ],
+    "noElectricalLawOrBudgetChanges": true
+  },
+  "focusedRegression": {
+    "phase": "native-r62",
+    "wholePhaseStatus": "PASS",
+    "Q30PlanAssertions": 4381,
+    "P07Assertions": 11776,
+    "scope": "Existing Q30 structural plan plus actual continuous package-face/sideways-blocking and P07 contracts; no unchanged Q30 cold/warm corpus.",
+    "sharedPolicyFailure": {
+      "phase": "native-r63",
+      "wholePhaseStatus": "FAIL",
+      "seed": 83,
+      "failure": "seed83 fuller route keeps a previously valid escape channel",
+      "completedSuiteMarkers": [],
+      "uncompletedSuites": [
+        "MediumBoardFloorplanningContractTest",
+        "MediumBoardNormalAdmissionContractTest"
+      ],
+      "noWholeSharedPhysicalPolicyQualification": true
+    }
+  },
+  "currentThreeCaseCapture": {
+    "phase": "native-r64",
+    "wholePhaseStatus": "FAIL",
+    "cases": [
+      {
+        "status": "COMPLETE",
+        "seed": "77",
+        "packages": 40,
+        "elements": 244,
+        "contextCharacters": 867737,
+        "keyCharacters": 867767,
+        "pristineConductorCharacters": 86929,
+        "currentConductorCharacters": 86947,
+        "digest": "5f466127b40930c1369b267e45f86bb86061c4c35160f2ece4a707e60c70e0ea",
+        "tailMutationChangesIdentity": true,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 5016.2566
+      },
+      {
+        "status": "FAIL",
+        "seed": "-1067",
+        "packages": -1,
+        "elements": -1,
+        "contextCharacters": -1,
+        "keyCharacters": -1,
+        "pristineConductorCharacters": -1,
+        "currentConductorCharacters": -1,
+        "digest": null,
+        "tailMutationChangesIdentity": false,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 12202.7275
+      },
+      {
+        "status": "COMPLETE",
+        "seed": "-1022",
+        "packages": 60,
+        "elements": 377,
+        "contextCharacters": 1282012,
+        "keyCharacters": 1282042,
+        "pristineConductorCharacters": 133384,
+        "currentConductorCharacters": 133403,
+        "digest": "fff24049178b555f5021dbf3ac850ec7013e6dd88cd83930db46c9762ac38189",
+        "tailMutationChangesIdentity": true,
+        "simTime": 0.0,
+        "acceptedSteps": 0,
+        "newtonTrials": 0,
+        "analyses": 0,
+        "solves": 0,
+        "elapsedMillis": 11797.7275
+      }
+    ],
+    "applicationCleanups": [
+      {
+        "seed": "77",
+        "elementsAttempted": 244,
+        "elementsDeleted": 244,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      },
+      {
+        "seed": "-1067",
+        "elementsAttempted": 0,
+        "elementsDeleted": 0,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      },
+      {
+        "seed": "-1022",
+        "elementsAttempted": 377,
+        "elementsDeleted": 377,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      }
+    ],
+    "allOriginalCasesAttempted": true,
+    "everyCaseStillRequiredToPass": true,
+    "testChange": {
+      "artifact": "q60/root-capture-all-outcomes-r64.json",
+      "sha256": "1f9758e57b1359e994dd540e8d1b8280c4a22330a02287d2f2aa9e91455ab310"
+    },
+    "captureBodyAndCleanupUnchanged": true,
+    "testSourceChangeR61ToR64": {
+      "tests/contracts/Rb56TemporalWorkContractTest.java": {
+        "beforeSha256": "f08569b8936c8074affd8cd51b9ed3b1ed548144da06808bd37ee8e671c02eba",
+        "afterSha256": "459debbd041ce9a1f02cd34d5117c716ce3e10663cc5c68e02c147be063b51e3"
+      }
+    },
+    "completedSubsetScope": "40/60 actual normal P07 route, installed census, complete pristine/current copper and final field, typed full-key digest versus JVM UTF8 SHA256 and untrusted tail sensitivity; zero analysis/accepted/trial/solve work.",
+    "tailMutationLimit": "Untrusted canonical identity sensitivity only; no admitted copper operation or healthy/faulted/player lifecycle proof.",
+    "fiftyFiveBlocker": {
+      "seed": "-1067",
+      "resolvedPackages": 55,
+      "constructionAndCaptureAttempted": false,
+      "globalRoutingWork": 6000000,
+      "workReceiptFirstCounter": 19,
+      "routeOutcomes": [
+        "P05_ONE_FACE@1=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:B_RAW:TOTAL_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:TOTAL_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:B_RAW:TOTAL_SEARCH_LIMIT"
+      ],
+      "finalFailure": "PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:B_RAW:TOTAL_SEARCH_LIMIT"
+    }
+  },
+  "currentExactSourceHashesAtR64": {
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "60af53ee5f957c27a627c983e2725f0703fa822494306417d96cd909688d2997",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "3459730ae25f328a4849982b92e0b586831eb9c566ef0eb3060d19170e63962c",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "194070b2b2db075b247922418d175f9b5806defe0c8a09ba2b8827c5610f2f58",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "3463fdedf485c4af7ca9a152e1b378a8ec34102b40ddf4d8f1d0bace939a6cbb",
+    "tests/contracts/P07TwoLayerContractTest.java": "34fb380ef33ab0fb2e972b3a575b3d85a1507d076bb811b197264376ec5cc9bc",
+    "tests/contracts/Q30PlanContractTest.java": "b3d9fab5e9eff4bef73ad1dfb9e099b45e134b4cc4385545d88f4d69968ce344",
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "257645a3064018ed6e78766b75d96bd52e8baff076e2d3211da9e8014b2fd108",
+    "tests/contracts/MediumBoardFloorplanningContractTest.java": "d69acfdcf55b7749ae6bcab34746233837ce79bfc8046e53991d480381e9f3e1",
+    "tests/contracts/MediumBoardNormalAdmissionContractTest.java": "0d9000433173953127efea8e4f02c1e4ea3d7b9ebdd22291aca068144a9acfa6",
+    "tests/contracts/Rb56TemporalWorkContractTest.java": "459debbd041ce9a1f02cd34d5117c716ce3e10663cc5c68e02c147be063b51e3",
+    "tests/contracts/Rb56DependencyCaptureContractTest.java": "e5401c66f239f504ae9ee6549bfa609acaffcbb3c510de6f4fbaf16033ceb1cb",
+    "scripts/verify-current-contracts.ps1": "fdb6b9f91cf92198f6053cd296692b79dfbf5fbf0fa7626f6495de2d3f19ad56"
+  },
+  "sourceBindingAudit": {
+    "R62R63R64Same1352InputInventory": true,
+    "historicalPrePatchContextIndex": {
+      "artifact": "q60/context-capacity-evidence-r1.json",
+      "sha256": "250a3365dacea492455ceec62da82535b008a8d7dd6046d41f7de22dce96f298"
+    },
+    "prior55CaptureLimit": "R55/R56 complete55 context is retained historical old-escape geometry evidence; it does not establish the current corrected55 route."
+  },
+  "notQualified": [
+    "whole three-case current capture suite",
+    "current55 routing",
+    "shared seed83 physical-policy regression",
+    "full RB56 D01 hypotheses",
+    "current GWT/player generation/publication",
+    "visible diagnosis/repair/retest",
+    "Q60 acceptance",
+    "normal RB56 save/load",
+    "arbitrary-seed or complete Q30 corpus compatibility"
+  ],
+  "limitsUnchanged": [
+    "routing candidates/orders/search/work/via/clearance limits",
+    "all electrical/solver criteria",
+    "native per-class60s",
+    "normal90s/640work/5s",
+    "fixed seeds77,-1067,-1022"
+  ],
+  "leafActions": {
+    "repoWrites": false,
+    "gatesLaunched": false,
+    "rawLogsCopied": false
+  }
+}

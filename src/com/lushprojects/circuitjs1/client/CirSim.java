@@ -452,6 +452,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootE05Verification, troubleshootE05VerificationComplete, troubleshootE05ForcedFailure;
     boolean troubleshootE05VisualHold;
     boolean troubleshootE06Verification, troubleshootE06VerificationComplete, troubleshootE06ForcedFailure;
+    boolean troubleshootRb56Verification, troubleshootRb56Complete, troubleshootRb56ForcedFailure, troubleshootRb56Bench;
+    String troubleshootRb56Seed;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootE02Verification, troubleshootE02VerificationComplete, troubleshootE02ForcedFailure;
 	boolean troubleshootA06Verification;
@@ -658,6 +660,10 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootE05VisualHold = troubleshootE05Verification && qp.getBooleanValue("tsjE05VisualHold", false);
             troubleshootE06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE06", false);
             troubleshootE06ForcedFailure = troubleshootE06Verification && qp.getBooleanValue("tsjE06Fail", false);
+            troubleshootRb56Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyRb56", false);
+            troubleshootRb56ForcedFailure = troubleshootRb56Verification && qp.getBooleanValue("tsjRb56Fail", false);
+            troubleshootRb56Bench = troubleshootRb56Verification && qp.getBooleanValue("tsjRb56Bench", false);
+            troubleshootRb56Seed = troubleshootRb56Verification ? qp.getValue("tsjRb56Seed") : null;
             troubleshootU06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU06", false);
             troubleshootU06Family = qp.getValue("tsjU06Family");
             troubleshootU06Seed = qp.getValue("tsjU06Seed");
@@ -793,7 +799,7 @@ MouseOutHandler, MouseWheelHandler {
 	    VERTICALPANELWIDTH = 128;
 	// Retained developer benches expose the real service controls and markings.
 	// Keep their hit targets and labels inside the debug sidebar.
-	if (troubleshootQ30Bench || troubleshootE05VisualHold)
+	if (troubleshootQ30Bench || troubleshootE05VisualHold || troubleshootRb56Bench)
 	    VERTICALPANELWIDTH = Math.min(360, width / 2);
 	// Normal workbench controls occupy the top dock; its canvas keeps the full width.
 	if (!troubleshootDebug)
@@ -1111,7 +1117,7 @@ MouseOutHandler, MouseWheelHandler {
 		    readSetupFile(startCircuit, startLabel);
 		}
 		else if (!troubleshootDebug || troubleshootFixture != null || troubleshootChallenge != null ||
-			troubleshootQuickPlay || troubleshootU06Verification || troubleshootE05Verification || troubleshootE06Verification)
+			troubleshootQuickPlay || troubleshootU06Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootRb56Verification)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -1890,6 +1896,7 @@ MouseOutHandler, MouseWheelHandler {
             runP06FactoryLinkVerificationIfReady();
             runP07TwoLayerVerificationIfReady();
             runQ30DeveloperWorkbenchIfReady();
+            runRb56QualificationIfReady();
             runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
             runU06SessionVerificationIfReady();
@@ -2136,9 +2143,13 @@ MouseOutHandler, MouseWheelHandler {
 	// A semantic command can queue ordinary analysis without a new challenge
 	// verification. Refresh the controls when that same owner's real update
 	// makes it actionable again; cached disabled widgets must not outlive it.
-	if (updateOwner != null && generatedBoardInstance == updateOwner &&
-		!wasGeneratedSettled && isGeneratedRuntimeSettled())
+	if (updateOwner == null || generatedBoardInstance != updateOwner ||
+		!isGeneratedRuntimeSettled())
+	    return;
+	if (!wasGeneratedSettled)
 	    refreshChallengeInteractionState();
+	if (pcbWorkbenchController != null)
+	    pcbWorkbenchController.refreshStoredEnergyControls();
     }
 
     Color getBackgroundColor() {
@@ -4938,7 +4949,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootRb56Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5166,6 +5177,23 @@ MouseOutHandler, MouseWheelHandler {
                 publishBrowserVerificationResult("FAIL:" + failure.getMessage());
                 PhysicalMutationScope.rethrow(failure);
             } finally { developerVerifierRunning = false; }
+        }
+    }
+
+    private void runRb56QualificationIfReady() {
+        if (!troubleshootDebug || !troubleshootRb56Verification || troubleshootRb56Complete ||
+                developerVerifierRunning || GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
+                generatedChallengeController == null || !generatedChallengeController.isReady() ||
+                !isGeneratedRuntimeSettled())
+            return;
+        troubleshootRb56Complete = true;
+        // Runner captures the predecessor before acquiring the interaction lock.
+        try {
+            Rb56QualificationVerifier.start(this, troubleshootRb56Seed,
+                troubleshootRb56ForcedFailure, troubleshootRb56Bench);
+        } catch (Throwable failure) {
+            publishBrowserVerificationResult("FAIL:rb56:" + failure.getMessage());
+            PhysicalMutationScope.rethrow(failure);
         }
     }
 
@@ -5890,7 +5918,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootRb56Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -6679,8 +6707,15 @@ MouseOutHandler, MouseWheelHandler {
 	if (generatedBoardInstance == null)
 	    return boardPowerController.isElectricallyUnpowered() ?
 		ActiveMeasurementReadiness.READY : ActiveMeasurementReadiness.POWER_OFF;
-	return generatedBoardInstance.getPhysicalBoardRuntime().getActiveMeasurementReadiness(red,
-	    black, boardPowerController.getState(), boardPowerController.isElectricallyUnpowered());
+        PhysicalBoardRuntime runtime = generatedBoardInstance.getPhysicalBoardRuntime();
+        ActiveMeasurementReadiness result = runtime.getActiveMeasurementReadiness(red, black,
+            boardPowerController.getState(), boardPowerController.isElectricallyUnpowered());
+        // Instrument admission is deliberately not folded into the runtime service-energy API.
+        for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities())
+            if (capability instanceof ActiveInstrumentAdmissionCapability)
+                result = ActiveMeasurementReadiness.combine(result,
+                    ((ActiveInstrumentAdmissionCapability)capability).getActiveInstrumentAdmission(red, black));
+        return result;
     }
 
     private double runTemporaryActiveMeasurement(ActiveMeasurementStimulus stimulus,
@@ -8412,6 +8447,8 @@ MouseOutHandler, MouseWheelHandler {
 	case 455: return new AveragedSwitchingRegulatorElm(x1, y1, x2, y2, f, st);
 	case 456: return new E02FiniteSourceElm(x1, y1, x2, y2, f, st);
 	case 457: return new E04SensorControlModel.DecisionElement(x1, y1, x2, y2, f, st);
+	case 458: return new E06AveragedConverterElm(x1, y1, x2, y2, f, st);
+	case 459: return new E06PwmControllerElm.BiasElm(x1, y1, x2, y2, f, st);
     	case 'w': return new WireElm(x1, y1, x2, y2, f, st);
     	case 'x': return new TextElm(x1, y1, x2, y2, f, st);
     	case 'z': return new ZenerElm(x1, y1, x2, y2, f, st);

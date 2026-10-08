@@ -309,14 +309,53 @@ public final class E02RegulatorContractTest {
             "forward-trial-input-ceiling", "INPUT", "OUTPUT", "RETURN", "ENABLE",
             5, 5.8, 12, .8, .2, .1, .8, 2, averaged ? .003 : .001,
             averaged ? .90 : 1.0, averaged, false, .90, .25);
-        harness = new Harness(averaged, lowerInputCeiling);
-        try {
-            harness.fixture.input.setVoltage(18);
-            harness.analyzeAndSettle();
-        } catch (IllegalArgumentException expected) {
-            overvoltageRejected = expected.getMessage().contains("Rail input exceeds declared envelope");
-        } finally { harness.close(); }
-        check(overvoltageRejected, "real input overvoltage remains rejected without a trial exemption");
+        for (int initialTangent = 0; initialTangent < 2; initialTangent++) {
+            harness = new Harness(averaged, lowerInputCeiling);
+            final int[] acceptedEvents = { 0 };
+            try {
+                harness.sim.a01MeasurementRunning = true;
+                if (initialTangent == 1) {
+                    // Rehydrate the exact accepted point after reset clears volts.
+                    // The real 1k load has a nonzero drop; fresh Newton history
+                    // starts its evaluation drop at zero without changing physics.
+                    double[] acceptedVolts = harness.fixture.regulator.volts.clone();
+                    double realDrop = lowerInputCeiling.getNominalOutputVolts() -
+                        harness.fixture.regulator.getOutputVoltage();
+                    check(realDrop > .0001 && realDrop < .001,
+                        "real loaded output requires a bounded initial tangent");
+                    harness.fixture.regulator.reset();
+                    for (int post = 0; post < acceptedVolts.length; post++)
+                        harness.fixture.regulator.setNodeVoltage(post, acceptedVolts[post]);
+                    harness.sim.converged = true;
+                    harness.fixture.regulator.doStep();
+                    check(!harness.sim.converged,
+                        "bounded initial tangent cannot claim convergence");
+                    harness.fixture.regulator.reset();
+                    for (int post = 0; post < acceptedVolts.length; post++)
+                        harness.fixture.regulator.setNodeVoltage(post, acceptedVolts[post]);
+                }
+                harness.fixture.input.setVoltage(18);
+                harness.sim.analyzeCircuit();
+                final double beforeTime = harness.sim.t;
+                final long beforeAccepted = harness.sim.a01AcceptedStepCount;
+                harness.sim.solverExecutor.events(null).schedule(Math.nextUp(beforeTime),
+                    new SolverEventQueue.Action() {
+                        public void fire(double due, double acceptedTime) { acceptedEvents[0]++; }
+                    });
+                overvoltageRejected = false;
+                try {
+                    harness.sim.solverExecutor.advanceSteps(8);
+                } catch (IllegalArgumentException expected) {
+                    overvoltageRejected = expected.getMessage().contains(
+                        "Rail input exceeds declared envelope");
+                }
+                check(overvoltageRejected,
+                    "real input overvoltage remains rejected with either initial tangent");
+                check(harness.sim.t == beforeTime &&
+                        harness.sim.a01AcceptedStepCount == beforeAccepted && acceptedEvents[0] == 0,
+                    "unsupported real input advances no accepted time, count, or callback");
+            } finally { harness.close(); }
+        }
     }
 
     private static E02FiniteSourceElm connectOutputSource(Harness harness,

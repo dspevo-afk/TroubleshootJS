@@ -37,6 +37,33 @@ final class CapacitorReplacementCatalog implements PhysicalPartCatalog<Capacitor
         add(WRONG_HIGH, 220e-6, "220 uF 16 V");
     }
 
+    /** Explicit recipes opt in; every historical package catalog remains unchanged. */
+    static CapacitorReplacementCatalog forSpecification(CapacitorSpecification specification) {
+        if (specification == null)
+            throw new IllegalArgumentException("Missing capacitor catalog specification");
+        if (!specification.hasExplicitModelRecipe())
+            return new CapacitorReplacementCatalog(specification.getPhysicalPackage());
+        Vector<CapacitorCatalogEntry> rows = new Vector<CapacitorCatalogEntry>();
+        rows.add(new CapacitorCatalogEntry(specification.getSpecificationId(), specification));
+        return new CapacitorReplacementCatalog(rows);
+    }
+
+    CapacitorReplacementCatalog(Vector<CapacitorCatalogEntry> rows) {
+        if (rows == null || rows.isEmpty() || rows.get(0) == null)
+            throw new IllegalArgumentException("Missing typed capacitor catalog rows");
+        physicalPackage = rows.get(0).getSpecification().getPhysicalPackage();
+        if (!physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR) &&
+                !physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR))
+            throw new IllegalArgumentException("Unsupported capacitor service package");
+        for (CapacitorCatalogEntry entry : rows) {
+            if (entry == null || !entry.getSpecification().hasExplicitModelRecipe() ||
+                    !physicalPackage.isEquivalentTo(entry.getSpecification().getPhysicalPackage()) ||
+                    byId.containsKey(entry.getId()))
+                throw new IllegalArgumentException("Invalid typed capacitor catalog row");
+            entries.add(entry); byId.put(entry.getId(), entry);
+        }
+    }
+
     private void add(String id, double capacitanceFarads, String marking) {
         CapacitorSpecification specification = new CapacitorSpecification(id, capacitanceFarads,
             20, physicalPackage.isEquivalentTo(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR) ? 25 : 16, physicalPackage,

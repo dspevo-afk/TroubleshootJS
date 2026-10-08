@@ -119,9 +119,19 @@ public final class Q30NormalExecutionPolicyContractTest {
             }
             require(unsupportedRejected && coordinator.getJob() == sentinel && sentinel.isRunning() && service.aborts == 0,
                 "unsupported leaf identity rejects before cancelling an active coordinator job");
+            // Q30 is now published. Capture its valid request, then explicitly
+            // hold that exact registration to exercise the pre-mutation gate.
+            GenerationRequest blockedRequest = medium(13);
+            Field currentCatalog = PlayerFamilyCatalog.class.getDeclaredField("CURRENT");
+            currentCatalog.setAccessible(true);
+            PlayerFamilyCatalog.RegistrationBoundary registration =
+                (PlayerFamilyCatalog.RegistrationBoundary) currentCatalog.get(null);
+            boolean previouslyEnabled = registration.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID);
             boolean blocked = false;
-            try { coordinator.start(medium(13), null, false); }
+            registration.setNormalPlayerEnabled(Rb30Plan.FAMILY_ID, false);
+            try { coordinator.start(blockedRequest, null, false); }
             catch (IllegalArgumentException expected) { blocked = true; }
+            finally { registration.setNormalPlayerEnabled(Rb30Plan.FAMILY_ID, previouslyEnabled); }
             require(blocked && coordinator.getJob() == sentinel && sentinel.isRunning() && service.aborts == 0,
                 "registered but unqualified content cannot cancel a predecessor or begin normal publication");
             require(coordinator.getDiagnosticProofCacheSize() == 0 &&

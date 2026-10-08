@@ -1,0 +1,501 @@
+{
+  "protocol": "Q60_SANITIZED_NATIVE_EVIDENCE_PACKET_R1",
+  "status": "PACKET_PREP_ONLY_NOT_ACCEPTANCE",
+  "scope": "Completed source-bound native subsets, current raw3 cadence pair and focused regressions; no installed/compiled/player-generation acceptance",
+  "artifactPolicy": "Artifact names are relative identifiers for root-owned retained captures. No log bodies, personal absolute paths or process identifiers are embedded.",
+  "sourceInventoryHashEncoding": "SHA256 of UTF8 JSON object sorted by key with separators comma/colon; complete inventory itself remains in retained launch capture",
+  "phases": {
+    "native-r40": {
+      "status": "FAIL",
+      "elapsedMs": 24470,
+      "exitCode": 2,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "b5d99eb0a1c881f009ae8982fd3addcee9b248a262d0d1b39f5ad2f221e4b9cf",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 1891,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r40/stdout.log",
+          "sha256": "df7ceac1edb4d38e7fd8511c705f3928caaf1f5e46a8fede8a610c514eb79224"
+        },
+        "hostResult": {
+          "artifact": "native-r40-result.json",
+          "sha256": "e7c2a90542b545716df58361b620dd7c9cc7c4a38fec8fc3c3b1a9d0a86ee095"
+        },
+        "launch": {
+          "artifact": "native-r40-launch.json",
+          "sha256": "e33d5fa82a509c2db744a0195bdd843869ee1c0c93577d650053776de41ef6a3"
+        }
+      },
+      "completedMarkers": []
+    },
+    "native-r41": {
+      "status": "FAIL",
+      "elapsedMs": 79404,
+      "exitCode": 57857,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "f74d1fffc4e77eeaf9435be53c466cf14e2dead90f0e2dc79d46c20b790a2131",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": true,
+      "capturedStdoutBytes": 1048576,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r41/stdout.log",
+          "sha256": "d555214d06c5023ef9d711627bacb135df44f471319fbf59fa911588b40a5b2c"
+        },
+        "hostResult": {
+          "artifact": "native-r41-result.json",
+          "sha256": "aea4ece9ccf08be572df7eef4525c9cc3629f566424974a3d8f489c6e10134e9"
+        },
+        "launch": {
+          "artifact": "native-r41-launch.json",
+          "sha256": "12802f6cc292d680d8f5f9ccdf9aa2b23fd59cbf07989f56c4d90386a8348962"
+        }
+      },
+      "completedMarkers": [
+        "PASS: U06 session save contracts assertions=34927",
+        "PASS: native inductor accepted-state contracts assertions=274 cases=3 scope=RL_REJECTED_STEP_HISTORY_AND_RELAY_ALIAS",
+        "PASS: E06 nominal pilot mechanics assertions=324172762 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1",
+        "PASS: RB56 assembly contracts assertions=1465538 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+        "PASS: RB56 session backing contracts assertions=202 scope=DEVELOPER_MODEL_DIGEST_AND_RESTART_ONLY normalSessionLoad=false"
+      ]
+    },
+    "native-r42": {
+      "status": "PASS",
+      "elapsedMs": 61690,
+      "exitCode": 0,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "f74d1fffc4e77eeaf9435be53c466cf14e2dead90f0e2dc79d46c20b790a2131",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 510659,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r42/stdout.log",
+          "sha256": "e1df7ca99a6357cb8da733a9dd8df255649acfe9aed2ebc8f8ee3f9765163088"
+        },
+        "hostResult": {
+          "artifact": "native-r42-result.json",
+          "sha256": "a6b745968b5a32cd6e44e08a59941d113a57fd74ffcbc10db316662198db5c03"
+        },
+        "launch": {
+          "artifact": "native-r42-launch.json",
+          "sha256": "075683e6e0d2ad13ef18ffd9c043f275234100fb74e49027b32a089e352fddd1"
+        }
+      },
+      "completedMarkers": [
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: Q30 relay service contracts 110 assertions",
+        "PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+        "PASS: focused current contracts; 3 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    },
+    "native-r45": {
+      "status": "FAIL",
+      "elapsedMs": 53286,
+      "exitCode": 2,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "b430794e12dd16b0afda17d1d7b53c2f0ddc8d3b3ebf411f0ef7052fc81d64e0",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 838596,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r45/stdout.log",
+          "sha256": "8ddcde4d8e0c69079d317cc876de7b2bc8ce4e19f7e7d55b779199639576bacc"
+        },
+        "hostResult": {
+          "artifact": "native-r45-result.json",
+          "sha256": "8c4fb3f9e39875f1698d41a16be44ce4b8508cf7b77214afa67cf9c4e2b7f534"
+        },
+        "launch": {
+          "artifact": "native-r45-launch.json",
+          "sha256": "f8999a4557c754ff55bd07e6ece833813767dc0e37f635c5b18ddb8af61eace4"
+        }
+      },
+      "completedMarkers": [
+        "PASS: E06 nominal pilot mechanics assertions=306733762 fidelity=NOMINAL_FIDELITY_NOT_QUALIFIED cases=24 scope=FOCUSED_ELECTRICAL_MATRIX criteria=e06-fidelity-criteria-v1"
+      ]
+    },
+    "native-r46": {
+      "status": "PASS",
+      "elapsedMs": 25558,
+      "exitCode": 0,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "a69a997387b9ab6dc08aebfdbf7785c148dc86d08d00967d111d956c60010793",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 809,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r46/stdout.log",
+          "sha256": "171e4fcbf6fbc4d0a49855df8ee425b5682bd20e4953f36c9b192d764b989c47"
+        },
+        "hostResult": {
+          "artifact": "native-r46-result.json",
+          "sha256": "a212a0f3b27747f59fceea9fbdfd785b3415d6adf4a1868b492339de1b2ea848"
+        },
+        "launch": {
+          "artifact": "native-r46-launch.json",
+          "sha256": "752c2362700653d4893f18382fbc39125025eab4cad2226d1671fd1efc1317e6"
+        }
+      },
+      "completedMarkers": [
+        "PASS: U06 session save contracts assertions=34927",
+        "PASS: PlayerSessionFingerprintContractTest assertions=104",
+        "PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    },
+    "native-r47": {
+      "status": "PASS",
+      "elapsedMs": 29223,
+      "exitCode": 0,
+      "sourceInputCount": 1351,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "a01829f085244b21be5b55d71bb7e252e7bed6a7147250c310b0f80dc72604e5",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 147821,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r47/stdout.log",
+          "sha256": "b70cc6ca6e41f57a2e5cbe641c7ee716e708a37a18858d6f0940d985728c600d"
+        },
+        "hostResult": {
+          "artifact": "native-r47-result.json",
+          "sha256": "9cb57faa1053027bd76243a7b49f046426d3663dde84835c97d47644dc242cdb"
+        },
+        "launch": {
+          "artifact": "native-r47-launch.json",
+          "sha256": "5a1736e40138afbee86bbe1578efd7311371529e12c0245c1b18e5c144d87da3"
+        }
+      },
+      "completedMarkers": [
+        "PASS: E02 regulator contracts 1451 assertions",
+        "PASS: RB56 assembly contracts assertions=387028 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+        "PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    },
+    "native-r48": {
+      "status": "PASS",
+      "elapsedMs": 59628,
+      "exitCode": 0,
+      "sourceInputCount": 1359,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "f11896a8c9bac3b7c917e5cb9dc36e251cb5b3d18197987f8d4c0b7211161687",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "stdoutOverflow": false,
+      "capturedStdoutBytes": 718369,
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r48/stdout.log",
+          "sha256": "260a03c2192794e497933394ea4b84cfd2a1d64cb568982b14f4d4953769e5fc"
+        },
+        "hostResult": {
+          "artifact": "native-r48-result.json",
+          "sha256": "96e8156e59e2467f0873cbb164f440d53aa1253c05196c8f0f2ba1b12f1fbd08"
+        },
+        "launch": {
+          "artifact": "native-r48-launch.json",
+          "sha256": "bec81de4550cfc2b2695cb9226500b5f52116a9332431e8f673db90346645974"
+        }
+      },
+      "completedMarkers": [
+        "PASS: RB56 assembly contracts assertions=750166 cases=3 BJT=3 NMOS=2 scope=ACTUAL_ASSEMBLED_GRAPH_ONLY",
+        "PASS: RB56 temporal work contracts 295 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 scope=FIXED_TEMPORAL_PILOT_ONLY",
+        "PASS: Q30 relay service contracts 110 assertions",
+        "PASS: Q30 temporal work contracts 161 assertions oneChannelHealthyFaultedRetestUnits=3/3/3 twoChannelHealthyFaultedRetestUnits=5/5/5",
+        "PASS: focused current contracts; 4 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    }
+  },
+  "inductorAcceptedHistory": {
+    "preFix": {
+      "phase": "native-r40",
+      "status": "FAIL_FALSIFIER_CONFIRMED",
+      "failure": "RL_TRAP restored caller alias before control logic",
+      "applicationCleanupsCaptured": 2,
+      "preFixInductorSha256": "6841f8968607f252d50783780163ec3e4f0aac007ee31d916dd84ed2fa83b992",
+      "sameRegressionTestSha256": "ae289ee68c43bb071cd8633512afa6e63b048bb556a6ab7d61a5ede6bbcfe127"
+    },
+    "postFix": {
+      "phase": "native-r41",
+      "capturedSubsetStatus": "PASS",
+      "assertions": 274,
+      "pairs": 3,
+      "pairIds": [
+        "RL_TRAP",
+        "RL_BE",
+        "RELAY_BE_ALIAS"
+      ],
+      "rejectedTrialsPerPair": 100,
+      "acceptedRetryStepsPerPair": 1,
+      "applicationCleanups": 6
+    },
+    "scopeLimit": "RL trapezoidal/backward-Euler rejected-step history and relay companion alias only; no complete generic solver rollback, motor-angle or transformer-history transaction claim."
+  },
+  "r41LimitedCapture": {
+    "outerStatus": "FAIL",
+    "reason": "1MiB stdout cap",
+    "completedMarkersOnly": true,
+    "U06Assertions": 34927,
+    "sessionBackingAssertions": 202,
+    "normalRb56SessionLoad": false,
+    "E06": {
+      "cases": 24,
+      "assertions": 324172762,
+      "acceptedSteps": 1320000,
+      "comparisons": 24,
+      "cleanups": 24
+    },
+    "rawAssembly": {
+      "cases": 3,
+      "assertions": 1465538,
+      "maximumStepSeconds": 5e-05,
+      "finalResidualVolts": [
+        5.279013888566625e-05,
+        4.732109451896796e-05,
+        4.7144242439643666e-05
+      ]
+    },
+    "notQualifiedFromCapture": [
+      {
+        "suite": "Rb56TemporalWorkContractTest",
+        "status": "NOT_QUALIFIED"
+      },
+      {
+        "suite": "Q30TemporalWorkContractTest",
+        "status": "NOT_QUALIFIED"
+      },
+      {
+        "suite": "Q30RelayServiceContractTest",
+        "status": "NOT_QUALIFIED"
+      }
+    ],
+    "subsetAuditArtifact": "native-r41-completed-subset.json",
+    "subsetAuditSha256": "18fbe693df30a2925a942a9af198b0eed0538736a847826154cdb1f91952aff9"
+  },
+  "r42IndependentCompletion": {
+    "same1351SourceInputsAsR41": true,
+    "rb56TemporalAssertions": 295,
+    "q30RelayAssertions": 110,
+    "q30TemporalAssertions": 161,
+    "scope": "Focused existing temporal and relay contracts; no unchanged Q30 corpus rerun."
+  },
+  "r45RetainedFailureAndReuse": {
+    "outerStatus": "FAIL",
+    "raw40": "COMPLETE",
+    "raw55": "FAIL_MAINAC_ONLY_OFF",
+    "raw60": "NOT_RUN",
+    "unacceptedFailure": {
+      "acceptedTimeSeconds": 0.7572000000000129,
+      "attemptDtSeconds": 0.0001,
+      "newtonSubIteration": 7,
+      "railInputTrialVolts": 38.78046826209968,
+      "unchangedEnvelopeMaximumVolts": 24,
+      "boundedTrial": true
+    },
+    "reusedE06Subset": {
+      "cases": 24,
+      "assertions": 306733762,
+      "acceptedEqualsSampledSteps": 1230000,
+      "comparisons": 24,
+      "cleanups": 24,
+      "fullSignedEnergyClosureAllCases": true,
+      "elevatedAcceptedOptoGminSamples": 0
+    },
+    "reuseAuditArtifact": "rail-trial-envelope-draft-r2/r45-unaffected-e06-reuse.json",
+    "reuseAuditSha256": "cb288fd280e0de6b0b527107c9fc669c95fa97a2bf99da7f536531cf6fa1187a",
+    "changedR45ToCurrentSources": {
+      "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java": {
+        "r45Sha256": "d43a5a8a21d63c6ca153107426cc6558d18057063783f749515c1464ae4682f8",
+        "currentSha256": "909ab726bd46ce73cbc28603400305802036b56294878d0dda95b9b7ceab2d9f"
+      },
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": {
+        "r45Sha256": "599bbb9610abf650859d2a2017acce83a99e8da027973013a1846a093a6b3e3a",
+        "currentSha256": "1b5763ea3617e1455dee4d2d121bbb9bc651fd633578a3f1a94c3aee036fcc18"
+      },
+      "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": {
+        "r45Sha256": "6b4302a50718049145ef897b6d76d26516c7307c57788fad2b46cd014880ca34",
+        "currentSha256": "fa11cecd6b2e9d922b9886cb72ad99920f40e014e2a752d890d84a3040bf1e13"
+      },
+      "tests/contracts/E02RegulatorContractTest.java": {
+        "r45Sha256": "e3f43bb65c841c3b61c4b2c69dea01f8f52b13633a8a855032fd3b6ca4db429e",
+        "currentSha256": "5c2c2dac9d79befb3a23e55b2de7369c4ab4717a0265386307ca7623e9d39802"
+      },
+      "tests/contracts/PlayerSessionFingerprintContractTest.java": {
+        "r45Sha256": "7a11811d6096d359e3b2d6a694f67dd6cb502120bdd584d7b75927a43d30b3a8",
+        "currentSha256": "32a01ab5a2a8900cfba057d03e86aaf2379e56eed4781a8afae08f9637ecabc7"
+      }
+    },
+    "reuseReason": "Only rail-regulator, receipt fingerprint/verifier and their focused tests changed. E06 directly constructs its raw fixtures, whose observed element census contains none of those changed owners. E02FiniteSourceElm is consumed and byte-identical. All remaining R45 inputs are byte-identical; no whole-R45 PASS is inferred."
+  },
+  "r46FingerprintAndU06": {
+    "fingerprintAssertions": 104,
+    "U06Assertions": 34927,
+    "ordinarySessionInputBoundUnchanged": true,
+    "scope": "Receipt-specific field-bounded hashing and existing save regression; not normal RB56 save qualification."
+  },
+  "r47CurrentGuardAndRaw200": {
+    "E02Assertions": 1451,
+    "rawAssertions": 387028,
+    "guard": "A once-bound boundedTrial vetoes convergence; input-max validation is deferred only for that unaccepted tangent. Persistent real overvoltage keeps the same envelope.",
+    "regression": "Actual finite18V source against max12V, linear/averaged and ordinary/bounded initial tangents; no accepted time, count or callback advancement."
+  },
+  "r48Fine100AndFocusedRegression": {
+    "rawAssertions": 750166,
+    "rb56TemporalAssertions": 295,
+    "q30RelayAssertions": 110,
+    "q30TemporalAssertions": 161,
+    "onlySourceOverride": "Raw Assembly test DT/declaration100us within common model200us; temporal and Q30 tests are current sources.",
+    "Q30MaximumStepSeconds": 5e-06
+  },
+  "current200Fine100Sensitivity": {
+    "status": "PASS",
+    "comparisons": 236,
+    "modelMaximumStepSeconds": 0.0002,
+    "coarseMaximumStepSeconds": 0.0002,
+    "fineMaximumStepSeconds": 0.0001,
+    "adaptive": true,
+    "minimumStepSeconds": 5e-11,
+    "healthyRelativeLimit": 0.02,
+    "OFFAndInputAbsoluteLimitVolts": 0.001,
+    "largestRelativeError": {
+      "name": "PAIR.60.SENSOR_MASK_3.rail12.mean",
+      "candidate": 11.071040364167105,
+      "reference": 11.063347449878044,
+      "error": 0.0006953514136578743,
+      "limit": 0.02,
+      "comparison": "RELATIVE_REFERENCE_DENOMINATOR",
+      "pass": true
+    },
+    "largestRelativeErrorPercent": 0.06953514136578744,
+    "largestAbsoluteErrorMicrovolts": 10.654952587191985,
+    "largestAbsoluteError": {
+      "name": "PAIR.40.MAINAC_ONLY_OFF.rail12.mean",
+      "candidate": 0.024870411853674085,
+      "reference": 0.024859756901086893,
+      "error": 1.0654952587191985e-05,
+      "limit": 0.001,
+      "comparison": "ABSOLUTE_VOLTS",
+      "pass": true
+    },
+    "rawTotals": {
+      "coarse200": {
+        "acceptedSteps": 95663,
+        "attemptedNewtonTrials": 289119,
+        "discardedTimestepAttemptTrials": 4200,
+        "terminalFailedUnacceptedAttemptTrials": 0,
+        "maximumAcceptedIterations": 42,
+        "maximumOptoGmin": 1e-12,
+        "minimumBiasLossW": 0.0,
+        "maximumFinalResidualV": 5.287624341253703e-05,
+        "rawCleanups": 3
+      },
+      "fine100": {
+        "acceptedSteps": 186260,
+        "attemptedNewtonTrials": 533811,
+        "discardedTimestepAttemptTrials": 2400,
+        "terminalFailedUnacceptedAttemptTrials": 0,
+        "maximumAcceptedIterations": 84,
+        "maximumOptoGmin": 1e-12,
+        "minimumBiasLossW": 0.0,
+        "maximumFinalResidualV": 5.280942703309762e-05,
+        "rawCleanups": 3
+      }
+    },
+    "rawFinalResidualVolts": {
+      "coarse200": [
+        5.287624341253703e-05,
+        4.735876613394128e-05,
+        4.720955962270757e-05
+      ],
+      "fine100": [
+        5.280942703309762e-05,
+        4.7315030422551146e-05,
+        4.716198825752568e-05
+      ]
+    },
+    "cleanupCount": 6,
+    "terminalFailedUnacceptedAttemptTrials": 0,
+    "maximumOptoGmin": 1e-12,
+    "same1351UnderlyingSourceInputs": true,
+    "fineTotalInputs": 1359,
+    "referenceRuns": [],
+    "retainedReferences": [],
+    "referenceEvidenceClaimed": false,
+    "pairArtifact": "current200-fine100-sensitivity-r1.json",
+    "pairSha256": "f94e9329245936ae27fd9a3b28ff8e1612462cee213d1a99d8a24ee815d4d980",
+    "compactSummaryArtifact": "current200-100-sensitivity-reader-r1/result-summary-r47-r48.json",
+    "compactSummarySha256": "b9c38dc6ee88c02f8bbceb9d8ed733225be7be736a15edff4d0abf2553904b67",
+    "readerSha256": "12359e0faafc9524736e9fd3acd71c5c3c96d5bc445a0615d7f3ce25b6843fa4",
+    "literalDeclarationsSha256": "42fca7c59226d24e609dad924d37f02a5818ae10d0082722e9644eed65578a5d",
+    "criteriaSha256": "b838f1b168032e3e819f4408d63ec39a84caf067d44608ed0d90bc23e1128d11",
+    "originalNumericCriteriaSha256": "d10acebba2277be922f18ec576f14e4522422e696dbb70e9230777070674df15"
+  },
+  "currentExactSourceHashes": {
+    "scripts/verify-current-contracts.ps1": "eb0128a680929be6a78ed7a857c43bdc0c52da89311bf47634edbe796244096a",
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "878bcefca24dd5296dfafd1b8e452e2308ff156dbf7efa9bb312ea45306dc707",
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "e3f2219de7f4c796994dc2b2913fc4a2615b882c02c196d41faf7b5bd3941fa4",
+    "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "3bf60880cdc45740986ffeb378d019126f255c72a15145acf1310104ea969462",
+    "src/com/lushprojects/circuitjs1/client/Inductor.java": "6b736c732d26680eb9a8f381c864e48137ae87f7801be664252aecb98fa8f588",
+    "src/com/lushprojects/circuitjs1/client/InductorElm.java": "feb7305a3282243f555e89154d1951ac9327ef03d7dc733d6de525a44489091e",
+    "src/com/lushprojects/circuitjs1/client/RelayElm.java": "c88b922b718a3ed9eb261139920cf5d36b9b66e42d22d46972405da25740b55d",
+    "src/com/lushprojects/circuitjs1/client/DCMotorElm.java": "1256154e9f3404009cd46dbeffb5a741afbcfe95a4b97cc61bae70db02907641",
+    "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java": "f103030b087b70b903799817e5dee1774be3f89c352e8dbf2292f3c61a3f6666",
+    "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java": "820c79b35141402fbf8f377946e8e8114b0b40c0205f152ad77c9bc30784174b",
+    "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java": "2ffa43c6de05a8f3355ffb9c63d3b7dba12805d80557e5d5787310fc652689c7",
+    "src/com/lushprojects/circuitjs1/client/E06PwmControllerElm.java": "9854b8099954836d51a35c4d8bc88475f383aaceb5cf6cad39c5733a4ccdb13c",
+    "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java": "909ab726bd46ce73cbc28603400305802036b56294878d0dda95b9b7ceab2d9f",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "1b5763ea3617e1455dee4d2d121bbb9bc651fd633578a3f1a94c3aee036fcc18",
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": "fa11cecd6b2e9d922b9886cb72ad99920f40e014e2a752d890d84a3040bf1e13",
+    "tests/contracts/E02RegulatorContractTest.java": "5c2c2dac9d79befb3a23e55b2de7369c4ab4717a0265386307ca7623e9d39802",
+    "tests/contracts/E06ConverterPilotContractTest.java": "4b1b97fa653df2a9eec8b0633afc778643d1f96e9dd3581ea8b584d97b05aacd",
+    "tests/contracts/Rb56AssemblyContractTest.java": "74531280d951a3d948c8ab9aeb001f8288feb8b7cdcc5fecc4f7c2a1001dbd42",
+    "tests/contracts/Rb56TemporalWorkContractTest.java": "2cb37a3d0d396b7585bf59303a0792fae6ef2d2f6b99353672eeb69d280f71a2",
+    "tests/contracts/Q30TemporalWorkContractTest.java": "2577ee99308311ee0cef5b7e901cf269271e9ad34df0b736bd5f7c3feffa42d4",
+    "tests/contracts/Q30RelayServiceContractTest.java": "53f2f045f41f2fd4d408a2c8c5ac1e357ee94971b762ca513a2601e67aad8849",
+    "tests/contracts/PlayerSessionFingerprintContractTest.java": "32a01ab5a2a8900cfba057d03e86aaf2379e56eed4781a8afae08f9637ecabc7"
+  },
+  "limitsUnchanged": [
+    "healthy voltage/ripple/drift/contact and sensor conditions",
+    "signed energy and opto gmin/passivity",
+    ".25V stored-energy readiness",
+    "MAINAC OFF2.5s and all-input OFF3s",
+    "native60s and normal90s/640units/5s active operation limits",
+    "Q30 max5us"
+  ],
+  "unsupportedOrUnqualified": [
+    "normal RB56 save/load",
+    "complete generic solver rollback",
+    "motor-angle rollback",
+    "transformer-history rollback transactions",
+    "averaged switching pulses/frequency/winding observations",
+    "installed/player-generation acceptance from native raw fixtures"
+  ],
+  "leafActions": {
+    "repoWrites": false,
+    "gatesLaunched": false,
+    "rawLogsCopiedIntoPacket": false
+  }
+}

@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Fault-blind connector/fuse operations through the existing mutation transaction. */
+/** Fault-blind whole-package operations through the existing mutation transaction. */
 final class ServiceSlotController implements PhysicalSlotMutationProvider,
         PhysicalSlotMutationProvider.Scoped, CatalogAcquisitionProvider {
     private final CirSim sim;
@@ -40,7 +40,7 @@ final class ServiceSlotController implements PhysicalSlotMutationProvider,
             WorkbenchOperation.RECONNECT_LEAD.equals(id) || WorkbenchOperation.RESTORE.equals(id);
     }
     public boolean isAvailable(WorkbenchOperation op, WorkbenchCapabilityContext context) {
-        if (!supports(op) || !safe()) return false;
+        if (!supports(op) || !safe() || !modifications.isDetachmentReadyFor(op)) return false;
         String id = op.getId();
         if (WorkbenchOperation.INSTALL.equals(id))
             return instance.getPhysicalBoardRuntime().isPartInstallableAt(op.getPart(), getComponentId());
@@ -86,7 +86,9 @@ final class ServiceSlotController implements PhysicalSlotMutationProvider,
     }
     private void install(PhysicalServicePart part, PhysicalMutationScope scope) {
         scope.replacePrimaryBinding(part.primary());
-        if (part.secondary() != null) scope.replaceAuxiliaryBinding(part.secondary());
+        Vector<CircuitElm> auxiliary = part.auxiliaryElements();
+        if (auxiliary.isEmpty()) scope.clearAuxiliaryBinding();
+        else scope.replaceAuxiliaryBindings(auxiliary);
         for (GeneratedComponentConnectionBinding binding : instance.getConnectionBindings().getForComponent(getComponentId()))
             scope.retargetEndpoint(binding, slot.getExpectedEndpoint(part, instance.getBoard().getPad(binding.getPadId())));
         scope.installPart(part); scope.restoreComponentGraph();
@@ -98,16 +100,19 @@ final class ServiceSlotController implements PhysicalSlotMutationProvider,
         if (!capability.catalogId().equals(id)) throw new IllegalArgumentException("Unknown service catalog entry");
         if (install && !slot.isEmpty()) return null;
         final PhysicalServicePart original = capability.original();
-        final Vector<CircuitElm> backing = ServiceableBoardConstruction.newServiceBacking(
-            original.getPackage(), original.primary(), instance.getSimulationElements());
+        final Vector<CircuitElm> backing = new Vector<CircuitElm>();
         PhysicalMutationScope scope = scope(install ? "catalog" : "acquire", null, id);
         PhysicalServicePart part;
         try {
+            backing.addAll(original.hasTypedPowerRecipe() ? original.createCatalogBacking(instance.getSimulationElements()) :
+                ServiceableBoardConstruction.newServiceBacking(original.getPackage(), original.primary(), instance.getSimulationElements()));
             part = scope.acquire(capability.inventory(), getComponentId() + "_CATALOG_PART",
                 new PhysicalPartIdentityFactory<PhysicalServicePart>() {
                     public PhysicalServicePart create(String partId) {
                         PhysicalServicePart part = new PhysicalServicePart(partId, original.getSpecification(),
-                            new PhysicalNameplate(partId, capability.catalogLabel()), original.getPackage(), backing,
+                            original.getSpecification() instanceof FuseSpecification ?
+                                ((FuseSpecification)original.getSpecification()).nameplate(partId) :
+                                new PhysicalNameplate(partId, capability.catalogLabel()), original.getPackage(), backing,
                             new PhysicalPartProvenance(PhysicalPartProvenance.CATALOG_ACQUIRED, partId));
                         slot.getPhysicalSlot().bindGeometryForAcquisition(part); return part;
                     }
@@ -115,8 +120,22 @@ final class ServiceSlotController implements PhysicalSlotMutationProvider,
             for (CircuitElm element : backing) { scope.registerCanonicalElement(element); scope.appendActiveElement(element); }
             if (install) install(part, scope);
             scope.commit();
-        } catch (Throwable failure) { scope.abort(failure); PhysicalMutationScope.rethrow(failure); return null; }
+        } catch (Throwable failure) {
+            scope.abort(failure);
+            if (original.hasTypedPowerRecipe() || original.getSpecification() instanceof FuseSpecification)
+                disposeUnretainedBacking(backing, failure);
+            PhysicalMutationScope.rethrow(failure); return null;
+        }
         scope.closeAfterCommit(); finish(); return part;
+    }
+    private void disposeUnretainedBacking(Vector<CircuitElm> backing, Throwable failure) {
+        for (CircuitElm element : backing) {
+            boolean retained = instance.ownsRuntimeSimulationElement(element) || sim.elmList.contains(element);
+            for (PhysicalServicePart part : capability.inventory().getAll())
+                if (part.elements().contains(element)) retained = true;
+            if (!retained) try { element.delete(); }
+            catch (Throwable cleanup) { failure.addSuppressed(cleanup); }
+        }
     }
     private boolean safe() {
         return sim.getGeneratedBoardInstance() == instance && sim.getBoardModificationController() == modifications &&

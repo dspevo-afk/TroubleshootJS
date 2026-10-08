@@ -1,0 +1,644 @@
+{
+  "protocol": "Q60_SANITIZED_CONTEXT_CAPACITY_EVIDENCE_INDEX_R1",
+  "status": "EVIDENCE_INDEX_ONLY_NOT_ACCEPTANCE",
+  "scope": "R49-R57 actual native launcher/fixture failures, old aggregate-bound falsifier, completed40/55 cold-capture subsets and independent focused fingerprint/D01 contracts.",
+  "artifactPolicy": "Relative retained artifact identifiers and exact SHA256 only; no raw log bodies, personal absolute paths or process identities.",
+  "sourceInventoryHashEncoding": "SHA256 of UTF8 JSON object sorted by key with comma/colon separators; complete source inventory stays in its retained launch.",
+  "phases": {
+    "native-r49": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "PRECOMPILATION_LAUNCHER_MODULE_PATH_FAILURE",
+      "elapsedMs": 363,
+      "exitCode": 2,
+      "sourceInputCount": 1358,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "cb4b12f1ab659fd0f25998e160bc4125d804d66398a60753af3e12967d2a55bd",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r49/stdout.log",
+          "sha256": "f7679176f3b9ab63d232d372099386c53bf0f5991dfcef0d431f397dc85d0078"
+        },
+        "stderr": {
+          "artifact": "owned-native-r49/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r49-result.json",
+          "sha256": "8c68acc61837b452ec03f62a979ed217e2b7dd39a7e2a0a782c0714cfbbabea0"
+        },
+        "launch": {
+          "artifact": "native-r49-launch.json",
+          "sha256": "d4ef786a92ce9004ad35f56c47f9a7a089fb040e855749b50464f7532cf50164"
+        }
+      }
+    },
+    "native-r50": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "PRECOMPILATION_LAUNCHER_UNINITIALIZED_ROOT_FAILURE",
+      "elapsedMs": 371,
+      "exitCode": 2,
+      "sourceInputCount": 1360,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "ad1603a9200d0203fc46779e2d2983b959ae4885ffd5792f35b2c6a787e8644b",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r50/stdout.log",
+          "sha256": "84b984444395e59f5f760ad1ab7116c0123abc37d03c339cb8b74cd0c218ae26"
+        },
+        "stderr": {
+          "artifact": "owned-native-r50/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r50-result.json",
+          "sha256": "131aea3b42906b7154d2108f4916923e0a167180598cd9062cfc52bb686bcbe7"
+        },
+        "launch": {
+          "artifact": "native-r50-launch.json",
+          "sha256": "37ec5f1290dd9c32efd9d2155c356dc0bd37a08ab611836762cbec50a30c66f6"
+        }
+      }
+    },
+    "native-r51": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "MEASURED_OLD_COMPLETE_CONTEXT_CAPACITY_FAILURE",
+      "elapsedMs": 36758,
+      "exitCode": 2,
+      "sourceInputCount": 1361,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "5a7cf5af06ffb554e973ef577690d8233ffa46e933e8015b1d64d53c702a7246",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r51/stdout.log",
+          "sha256": "1ce94281cd3f9c4e6ae81c4ff71e33fd35f3f0eaa5cf9742c70c9148a3825395"
+        },
+        "stderr": {
+          "artifact": "owned-native-r51/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r51-result.json",
+          "sha256": "0568e389cfdfbd2610381f901cb8d1e26a64f99d8af20b909f35dad6d82f7831"
+        },
+        "launch": {
+          "artifact": "native-r51-launch.json",
+          "sha256": "5e64c133f2eec483165f57464797791d36ad6ae5d5f433ac4adb8ca3d9357767"
+        }
+      }
+    },
+    "native-r52": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "CAPTURE_FIXTURE_COMPILATION_FAILURE_MISSING_BOARD_API",
+      "elapsedMs": 21001,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "18b10db15b3242002b3bbaf95b893ef3d08c3ffcc690921e42ba9bdb6c4e9e65",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r52/stdout.log",
+          "sha256": "c6b60f135a2999daac6dd51b6263d7eeeb2d90fa11322515a06a97e91a29166a"
+        },
+        "stderr": {
+          "artifact": "owned-native-r52/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r52-result.json",
+          "sha256": "39ce48ad864f612cc333947b419a33f70916357daac881aae4025fc438ab8cac"
+        },
+        "launch": {
+          "artifact": "native-r52-launch.json",
+          "sha256": "dc4c080b44470dd50a4c24ea7b33e0a535fa2de78a03df1a8895aae40ff1ec27"
+        }
+      }
+    },
+    "native-r53": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "HOST_LAUNCH_FAILURE_MISSING_LAUNCHER",
+      "elapsedMs": 116,
+      "exitCode": 64,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "18b10db15b3242002b3bbaf95b893ef3d08c3ffcc690921e42ba9bdb6c4e9e65",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r53/stdout.log",
+          "sha256": "c3078343d63a9af2baed93eaa028c4aa5b3cb22b0b43442f2eaab82320b415b3"
+        },
+        "stderr": {
+          "artifact": "owned-native-r53/stderr.log",
+          "sha256": "df5fb103345742b63f123d6b47ab58daf956747b1af8148d3d025cc07f2d065a"
+        },
+        "hostResult": {
+          "artifact": "native-r53-result.json",
+          "sha256": "5778452c8f240a57d1699b94d44b830828d5d4e4d7cbaccb7fb1cbc23a6d6e94"
+        },
+        "launch": {
+          "artifact": "native-r53-launch.json",
+          "sha256": "17f7b4bcfac25f4c5e1772555fb758b832ae3c12b4928453de09cbaa2808eddb"
+        }
+      }
+    },
+    "native-r54": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "CAPTURE_FIXTURE_DEFENSIVE_VECTOR_IDENTITY_FAILURE",
+      "elapsedMs": 31177,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "0a0e637e0d34c6ae658cb5dd9345602a592d566b2bbbdd3d6debb1f28580116e",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [
+        "PASS: PlayerSessionFingerprintContractTest assertions=119"
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r54/stdout.log",
+          "sha256": "42450f3b7adce06e4ab80fdf0702d04c72a2aa9bc5d0859a3e5efb1a1f2f3696"
+        },
+        "stderr": {
+          "artifact": "owned-native-r54/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r54-result.json",
+          "sha256": "138a5aab87587992211c66d8fc7c075dcb7174c44f6711ac3f2e128eec6b188b"
+        },
+        "launch": {
+          "artifact": "native-r54-launch.json",
+          "sha256": "6d8555557fac41635913af280caf04d7116daa83db35b11bf5dbfeea26d9afd7"
+        }
+      }
+    },
+    "native-r55": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "COMPLETED_40_55_SUBSETS_THEN_60_ROUTE_REJECTION",
+      "elapsedMs": 49948,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "5166fdbad258eec8c22fbfad69cefade78d452baaef8c3c524fd755bc7eceb97",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [
+        "PASS: PlayerSessionFingerprintContractTest assertions=119"
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r55/stdout.log",
+          "sha256": "d70d5b31e8b0102d609c42c1c32dc3242d826b8ed7b890baf9ea127a0cfe2648"
+        },
+        "stderr": {
+          "artifact": "owned-native-r55/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r55-result.json",
+          "sha256": "1a0a0363a6e027e23c4894eb84557722538ffab9412b92c8f526e73f9c188414"
+        },
+        "launch": {
+          "artifact": "native-r55-launch.json",
+          "sha256": "8ce8e2462b6af8c6635ea62f2ac69a7f4b6411cd3a03155aef5f24f543d14b34"
+        }
+      }
+    },
+    "native-r56": {
+      "wholePhaseStatus": "FAIL",
+      "classification": "COMPLETED_40_55_SUBSETS_THEN_EXPLICIT_60_ROUTE_REJECTION",
+      "elapsedMs": 49619,
+      "exitCode": 2,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "692c0795a78a8f9b41c76cc4fb10eef1690395e396e32d94bb0d542275fe9256",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r56/stdout.log",
+          "sha256": "450b35c98ef300a30c755eab6487c826fa5839f4d559cc964ce1b65c39c68c2a"
+        },
+        "stderr": {
+          "artifact": "owned-native-r56/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r56-result.json",
+          "sha256": "c714bc8af16f2979de4545a8c25480fd5f081762ce6bc7c7db62b82e11e37b76"
+        },
+        "launch": {
+          "artifact": "native-r56-launch.json",
+          "sha256": "9c4dd4173722241f73b847130f81f4e9612ee857f767635f8d49e9c702d244cd"
+        }
+      }
+    },
+    "native-r57": {
+      "wholePhaseStatus": "PASS",
+      "classification": "FOCUSED_D01_CONTRACT_PASS_ONLY",
+      "elapsedMs": 26412,
+      "exitCode": 0,
+      "sourceInputCount": 1352,
+      "inputsUnchangedDuringPhase": true,
+      "sourceInventoryCanonicalSha256": "692c0795a78a8f9b41c76cc4fb10eef1690395e396e32d94bb0d542275fe9256",
+      "hostCleanupVerified": true,
+      "jobActiveProcesses": 0,
+      "handlesClosed": true,
+      "completedMarkers": [
+        "PASS: D01 diagnostic contracts assertions=168",
+        "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN."
+      ],
+      "evidence": {
+        "stdout": {
+          "artifact": "owned-native-r57/stdout.log",
+          "sha256": "74922d1a4b3ba05905aa61c863e524d817c5e68b5bf1e0b100efd8aef9411d3b"
+        },
+        "stderr": {
+          "artifact": "owned-native-r57/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "hostResult": {
+          "artifact": "native-r57-result.json",
+          "sha256": "c9eeab647eec7d92a080464fc288e66c230b188ca683a01c0b64ca4348b0f264"
+        },
+        "launch": {
+          "artifact": "native-r57-launch.json",
+          "sha256": "6c5e2a5c028f2dd5f6463e440f9d9ac2bb3ff7ab63b455411c7f0c2c8da76cbf"
+        }
+      }
+    }
+  },
+  "capacityChange": {
+    "oldCompleteContextCharacters": 1048576,
+    "currentCompleteContextCharacters": 2097152,
+    "typedKeyPrefixCharacters": 30,
+    "typedKeyMaximumCharacters": 2097182,
+    "requestMaximumCharactersUnchanged": 65536,
+    "individualFieldMaximumCharactersUnchanged": 262144,
+    "ordinarySessionFingerprintMaximumCharactersUnchanged": 1048576,
+    "canonicalFramingEpochsPrefixesAndFullFieldsRetained": true,
+    "manifest": {
+      "artifact": "q60/dependency-capacity-r1/manifest.json",
+      "sha256": "739f9b937851a5f719bcf034fd40a46f275e565291bb5a404b618c7ff7aa8bd7"
+    },
+    "rootIntegration": {
+      "artifact": "q60/root-integration-context-r52.json",
+      "sha256": "616655d161cdf4b5d17b93004c767c5e4e85b4804e604ab2af7bb2c88603a556"
+    },
+    "sixExactSourceHashes": {
+      "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticContextKey.java": "8491c7e3ebeee36a27ede42ea1099caf51da8c76e54c5d682d9ddff3758a502f",
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+      "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": "0302225ae7b6ccf078c0626b26414c1a0ba6e67fb150135fb56b02c7d6f8c63b",
+      "tests/contracts/PlayerSessionFingerprintContractTest.java": "5f2d717da0364090e2c0149853ce6ef39eb0682069a80893f7d71ca0438ff82f",
+      "tests/contracts/D01DiagnosticContractTest.java": "2436321c67f6782e122d8fb9727a8b307aab84f7a413b9b163aeef85ae39af2a"
+    },
+    "sixFilesUnchangedAcrossR52ThroughR57AndCurrentReadback": true
+  },
+  "oldBoundFalsifier": {
+    "phase": "native-r51",
+    "seed": "-1067",
+    "packages": 55,
+    "scope": "COLD_METADATA_CAPTURE_ONLY",
+    "failingField": "conductor.pristine",
+    "fieldCharacters": 128660,
+    "beforeCharacters": 948841,
+    "afterCharacters": 1077534,
+    "individualFieldBelowUnchangedCap": true,
+    "solverAndAnalysisCounts": 0,
+    "ownedElementsAttempted": 350,
+    "ownedElementsDeleted": 350,
+    "applicationCleanupClean": true,
+    "actualConsumedDiagnosticOverrides": [
+      {
+        "artifact": "q60/dependency-capture-diagnostic-r49/Rb56TemporalWorkContractTest.java",
+        "sha256": "7ff6ae0758678a91601b9185e6f1d02d12d945f94c7181bdbd205eaf767f8bee"
+      },
+      {
+        "artifact": "q60/dependency-capture-diagnostic-r49/GenerationDependencyContext.java",
+        "sha256": "4ad1ac2a80d1184940f1a81fee2290d21603634d3f06b9ae107ba953185b1c40"
+      },
+      {
+        "artifact": "q60/dependency-capture-diagnostic-r49/verify-capture-current-contracts-r51.ps1",
+        "sha256": "479d85deead686bca03b485da9febe5bd19f25d1fc70ec157277f58ed49997e7"
+      }
+    ],
+    "diagnosticDeclaration": {
+      "artifact": "q60/dependency-capture-diagnostic-r49/root-prepared-r51.json",
+      "sha256": "e7b828a134719318d31f16fdd93e463e084ac7bc3d685cc9bca48ed9eaec1f8c"
+    }
+  },
+  "fixtureFailuresPreserved": [
+    {
+      "phase": "native-r52",
+      "cause": "Test used nonexistent TroubleshootBoard.getComponents; Java compilation failed before tests.",
+      "correction": {
+        "artifact": "q60/root-capture-api-r53.json",
+        "sha256": "076e9aff2c7423c90cf4c80969ce384063c94230c7541ea9d315ecae7d8829f4"
+      }
+    },
+    {
+      "phase": "native-r53",
+      "cause": "Missing native-r53 launcher after preparation assertion; host exit64, no tests executed."
+    },
+    {
+      "phase": "native-r54",
+      "cause": "Fixture incorrectly required identity of defensive graph Vector copies; first40 failed before capture.",
+      "applicationCleanup": {
+        "seed": "77",
+        "elementsAttempted": 244,
+        "elementsDeleted": 244,
+        "powerDetached": true,
+        "rawGraphRestored": true,
+        "executorRetired": true,
+        "subscriptionsBefore": 0,
+        "subscriptionsAfter": 0,
+        "globalsRestored": true,
+        "clean": true
+      },
+      "correction": {
+        "artifact": "q60/root-capture-identity-r55.json",
+        "sha256": "bc243a8bf00de4020ddd6e3d1ad362f8374db908eaa14dcf3f2ee1403365f829"
+      }
+    }
+  ],
+  "completedColdCaptureSubsets": {
+    "native-r55": {
+      "cases": [
+        {
+          "status": "COMPLETE",
+          "seed": "77",
+          "packages": 40,
+          "elements": 244,
+          "contextCharacters": 871588,
+          "keyCharacters": 871618,
+          "pristineConductorCharacters": 88631,
+          "currentConductorCharacters": 88649,
+          "digest": "f96b39cd567a9195202a5af0846e163e0ee4dffb3a3f959792bb36834103a5fe",
+          "tailMutationChangesIdentity": true,
+          "simTime": 0.0,
+          "acceptedSteps": 0,
+          "newtonTrials": 0,
+          "analyses": 0,
+          "solves": 0,
+          "elapsedMillis": 6861.7431
+        },
+        {
+          "status": "COMPLETE",
+          "seed": "-1067",
+          "packages": 55,
+          "elements": 350,
+          "contextCharacters": 1206292,
+          "keyCharacters": 1206322,
+          "pristineConductorCharacters": 128660,
+          "currentConductorCharacters": 128679,
+          "digest": "ae776fd5441e1f01fab91bddab41a4f79260aafdf0a4ca4427b9ddb0f430621e",
+          "tailMutationChangesIdentity": true,
+          "simTime": 0.0,
+          "acceptedSteps": 0,
+          "newtonTrials": 0,
+          "analyses": 0,
+          "solves": 0,
+          "elapsedMillis": 10403.4351
+        }
+      ],
+      "applicationCleanups": [
+        {
+          "seed": "77",
+          "elementsAttempted": 244,
+          "elementsDeleted": 244,
+          "powerDetached": true,
+          "rawGraphRestored": true,
+          "executorRetired": true,
+          "subscriptionsBefore": 0,
+          "subscriptionsAfter": 0,
+          "globalsRestored": true,
+          "clean": true
+        },
+        {
+          "seed": "-1067",
+          "elementsAttempted": 350,
+          "elementsDeleted": 350,
+          "powerDetached": true,
+          "rawGraphRestored": true,
+          "executorRetired": true,
+          "subscriptionsBefore": 0,
+          "subscriptionsAfter": 0,
+          "globalsRestored": true,
+          "clean": true
+        }
+      ]
+    },
+    "native-r56": {
+      "cases": [
+        {
+          "status": "COMPLETE",
+          "seed": "77",
+          "packages": 40,
+          "elements": 244,
+          "contextCharacters": 871588,
+          "keyCharacters": 871618,
+          "pristineConductorCharacters": 88631,
+          "currentConductorCharacters": 88649,
+          "digest": "f96b39cd567a9195202a5af0846e163e0ee4dffb3a3f959792bb36834103a5fe",
+          "tailMutationChangesIdentity": true,
+          "simTime": 0.0,
+          "acceptedSteps": 0,
+          "newtonTrials": 0,
+          "analyses": 0,
+          "solves": 0,
+          "elapsedMillis": 6663.9536
+        },
+        {
+          "status": "COMPLETE",
+          "seed": "-1067",
+          "packages": 55,
+          "elements": 350,
+          "contextCharacters": 1206292,
+          "keyCharacters": 1206322,
+          "pristineConductorCharacters": 128660,
+          "currentConductorCharacters": 128679,
+          "digest": "ae776fd5441e1f01fab91bddab41a4f79260aafdf0a4ca4427b9ddb0f430621e",
+          "tailMutationChangesIdentity": true,
+          "simTime": 0.0,
+          "acceptedSteps": 0,
+          "newtonTrials": 0,
+          "analyses": 0,
+          "solves": 0,
+          "elapsedMillis": 10243.6704
+        }
+      ],
+      "applicationCleanups": [
+        {
+          "seed": "77",
+          "elementsAttempted": 244,
+          "elementsDeleted": 244,
+          "powerDetached": true,
+          "rawGraphRestored": true,
+          "executorRetired": true,
+          "subscriptionsBefore": 0,
+          "subscriptionsAfter": 0,
+          "globalsRestored": true,
+          "clean": true
+        },
+        {
+          "seed": "-1067",
+          "elementsAttempted": 350,
+          "elementsDeleted": 350,
+          "powerDetached": true,
+          "rawGraphRestored": true,
+          "executorRetired": true,
+          "subscriptionsBefore": 0,
+          "subscriptionsAfter": 0,
+          "globalsRestored": true,
+          "clean": true
+        }
+      ]
+    },
+    "repeatCompleteValuesAndDigestsIdenticalAcrossRuns": true,
+    "independentOracles": "Actual board/physical-owner census, complete pristine/current copper and final owner field, typed full-key hash versus JVM UTF8 SHA256, untrusted last-value mutation changes equality/digest; all analysis/accepted/trial/solve counters remain zero.",
+    "tailMutationLimit": "Identity sensitivity of untrusted complete canonical text only; no admitted gameplay copper mutation or lifecycle proof.",
+    "sourceChangeR55ToR56": {
+      "tests/contracts/Rb56TemporalWorkContractTest.java": {
+        "r55Sha256": "0c7fbeb74e648701130eb24c987de256fd6a16ce29d44af9d31852aa951d74ab",
+        "r56Sha256": "f08569b8936c8074affd8cd51b9ed3b1ed548144da06808bd37ee8e671c02eba"
+      }
+    },
+    "testRootCorrections": [
+      {
+        "artifact": "q60/root-capture-api-r53.json",
+        "sha256": "076e9aff2c7423c90cf4c80969ce384063c94230c7541ea9d315ecae7d8829f4"
+      },
+      {
+        "artifact": "q60/root-capture-identity-r55.json",
+        "sha256": "bc243a8bf00de4020ddd6e3d1ad362f8374db908eaa14dcf3f2ee1403365f829"
+      },
+      {
+        "artifact": "q60/root-route-observation-r56.json",
+        "sha256": "b0707f60c8267fab69a5cf737e61de561eb2abac0c477aa95abc62af27154378"
+      }
+    ]
+  },
+  "sixtyPackageBlocker": {
+    "seed": "-1022",
+    "resolvedPackages": 60,
+    "phase": "native-r56",
+    "status": "ROUTE_REJECTED_BEFORE_CONSTRUCTION_AND_CAPTURE",
+    "constructionAttempted": false,
+    "contextCaptured": false,
+    "ownedElementsAttempted": 0,
+    "failedCaptureRecord": {
+      "status": "FAIL",
+      "seed": "-1022",
+      "packages": -1,
+      "elements": -1,
+      "contextCharacters": -1,
+      "keyCharacters": -1,
+      "pristineConductorCharacters": -1,
+      "currentConductorCharacters": -1,
+      "digest": null,
+      "tailMutationChangesIdentity": false,
+      "simTime": 0.0,
+      "acceptedSteps": 0,
+      "newtonTrials": 0,
+      "analyses": 0,
+      "solves": 0,
+      "elapsedMillis": 8479.3586
+    },
+    "applicationCleanup": {
+      "seed": "-1022",
+      "elementsAttempted": 0,
+      "elementsDeleted": 0,
+      "powerDetached": true,
+      "rawGraphRestored": true,
+      "executorRetired": true,
+      "subscriptionsBefore": 0,
+      "subscriptionsAfter": 0,
+      "globalsRestored": true,
+      "clean": true
+    },
+    "placements": 6,
+    "routes": 6,
+    "routeOutcomes": [
+      "P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+      "P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+      "P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+      "P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:RAIL5:BRANCH_SEARCH_LIMIT",
+      "P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT",
+      "P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:B_CMD:NO_PATH"
+    ],
+    "finalFailure": "PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:B_CMD:NO_PATH",
+    "originalSeedAndRoutingLimitsPreserved": true,
+    "wholeR55AndR56Remain": "FAIL"
+  },
+  "focusedIdentityContracts": {
+    "fingerprint": {
+      "completedPhases": [
+        "native-r54",
+        "native-r55"
+      ],
+      "assertions": 119,
+      "wholePhasesRemain": "FAIL",
+      "scope": "Ordinary cap retained; typed full-context/receipt maximum, independent SHA/full-tail and negative boundary contracts."
+    },
+    "D01": {
+      "phase": "native-r57",
+      "assertions": 168,
+      "wholePhaseStatus": "PASS",
+      "same1352InputsAsR56": true,
+      "scope": "Focused D01 identity/collision/equality/trust/issuer and capacity contracts; no full RB56 hypotheses or player generation executed."
+    }
+  },
+  "currentCaptureFixtureHashes": {
+    "tests/contracts/Rb56TemporalWorkContractTest.java": "f08569b8936c8074affd8cd51b9ed3b1ed548144da06808bd37ee8e671c02eba",
+    "tests/contracts/Rb56DependencyCaptureContractTest.java": "e5401c66f239f504ae9ee6549bfa609acaffcbb3c510de6f4fbaf16033ceb1cb",
+    "scripts/verify-current-contracts.ps1": "fdb6b9f91cf92198f6053cd296692b79dfbf5fbf0fa7626f6495de2d3f19ad56"
+  },
+  "notQualified": [
+    "60-part complete context capacity",
+    "whole three-size capture suite",
+    "full RB56 D01 hypotheses",
+    "current GWT bundle",
+    "current player generation/publication and90s/640/5s latency",
+    "visible diagnosis/repair/retest",
+    "normal RB56 save/load",
+    "universal context size coverage or arbitrary seeds"
+  ],
+  "limitsUnchanged": [
+    "native per-class60s and compile60s",
+    "normal90s/640work/5s",
+    "electrical laws and solver recipes",
+    "routing candidate/work/search budgets",
+    "request64Ki and field256Ki",
+    "ordinary session SHA1Mi"
+  ],
+  "leafActions": {
+    "repoWrites": false,
+    "gatesLaunched": false,
+    "rawLogsCopied": false
+  }
+}

@@ -66,8 +66,9 @@ package com.lushprojects.circuitjs1.client;
 	}
 	void stamp() { ind.stamp(nodes[0], nodes[1]); }
 	void startIteration() {
-	    ind.startIteration(volts[0]-volts[1]);
+	    current = ind.startIteration(volts[0]-volts[1]);
 	}
+	void stepFinished() { ind.stepFinished(); }
 	boolean nonLinear() { return ind.nonLinear(); }
 	void calculateCurrent() {
 	    double voltdiff = volts[0]-volts[1];

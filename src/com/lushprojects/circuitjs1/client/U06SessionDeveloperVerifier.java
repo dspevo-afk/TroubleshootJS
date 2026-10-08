@@ -6,6 +6,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -25,7 +26,7 @@ final class U06SessionDeveloperVerifier {
     private String phase = "entry";
     private long actionsMillis;
     private boolean finished;
-    private int inputCount, fuseFixtureCount;
+    private int inputCount, fuseFixtureCount, typedPowerFixtureCount;
     private boolean u07;
     private int u07Restores;
     private final JSONArray u07Inventories = new JSONArray();
@@ -295,6 +296,13 @@ final class U06SessionDeveloperVerifier {
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
         settle("initial source isolation");
         check(beforeOwner.getExternalPowerBindings().areAllDisconnected(), "mutation sources isolated");
+        if (Rb56Plan.FAMILY_ID.equals(beforeOwner.getCircuitFamilyId())) {
+            // This fixture exercises the advertised restart mode. Use the real journalled reset
+            // after isolation so typed service never bypasses the actual residual-energy guard.
+            sim.resetAction(); settle("typed power fixture initial transient restart");
+            check(beforeOwner.getExternalPowerBindings().areAllDisconnected(),
+                "typed power reset keeps every actual source isolated");
+        }
         ReplaceableResistorBoardCapability resistor = null;
         for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities())
             if (capability instanceof ReplaceableResistorBoardCapability) {
@@ -315,6 +323,30 @@ final class U06SessionDeveloperVerifier {
             check(blownFuse != null && partialFuse != null, "catalog fuses have real electrical backing");
             fuseFixtureCount = 2;
             break;
+        }
+        if (Rb56Plan.FAMILY_ID.equals(beforeOwner.getCircuitFamilyId())) {
+            HashSet<String> recipes = new HashSet<String>(), kinds = new HashSet<String>();
+            for (String id : runtime.getSlotOrder()) {
+                PhysicalPart<?> part = runtime.getInstalledPart(id);
+                if (!PlayerSessionState.hasTypedPowerSessionBinding(beforeOwner.getCircuitFamilyId(), part) ||
+                        part.getSpecification() instanceof FuseSpecification ||
+                        !recipes.add(part.getSpecification().getSpecificationId())) continue;
+                check(runtime.getPhysicalParts().size() + 2 <= PlayerSessionSave.MAX_PARTS,
+                    "typed power session fixtures remain within the real inventory bound");
+                exerciseSlot(id, false);
+                typedPowerFixtureCount++;
+                PhysicalSpecification spec = part.getSpecification();
+                if (spec instanceof CapacitorSpecification)
+                    kinds.add(((PhysicalCapacitorPart)part).getEsrElement() == null ? "C" : "C_ESR");
+                else if (spec instanceof InductorSpecification) kinds.add("L");
+                else if (spec instanceof ZenerSpecification) kinds.add("Z");
+                else if (spec instanceof OptocouplerSpecification) kinds.add("OPTO");
+                else if (spec instanceof ConverterSpecification) kinds.add("MODULE");
+
+            }
+            check(kinds.contains("C") && kinds.contains("C_ESR") && kinds.contains("L") &&
+                kinds.contains("Z") && kinds.contains("OPTO") && kinds.contains("MODULE") && fuseFixtureCount == 2,
+                "RB56 session exercises real C/ESR L Z optocoupler module and fuse providers");
         }
         Snapshot preReset = new Snapshot(sim);
         int resetCount = runtime.getSessionHistory().operations().size();
@@ -450,6 +482,13 @@ final class U06SessionDeveloperVerifier {
             "private reconstruction scope cleared");
         before.compare(new Snapshot(sim), this);
         check(saved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)), "restored semantic signature exact");
+        if (Rb56Plan.FAMILY_ID.equals(owner.getCircuitFamilyId()))
+            for (PhysicalPart<?> part : owner.getPhysicalBoardRuntime().getPhysicalParts())
+                if (PlayerSessionState.hasTypedPowerSessionBinding(owner.getCircuitFamilyId(), part))
+                    for (CircuitElm element : part.getElectricalBacking().getCircuitElements())
+                        check(owner.ownsRuntimeSimulationElement(element) && !before.graph.contains(element),
+                            "restored typed package has complete fresh backing ownership");
+
         check(!sim.getGeneratedChallengeController().isCompleted() &&
             sim.getGeneratedChallengeController().getCustomerRetestResult() == null,
             "restore imports neither completion nor customer retest");
@@ -529,6 +568,7 @@ final class U06SessionDeveloperVerifier {
         report.put("inputCommands", new JSONNumber(inputCount));
         report.put("resistorDamageFixtures", new JSONNumber(2));
         report.put("fuseDamageFixtures", new JSONNumber(fuseFixtureCount));
+        report.put("typedPowerFixtures", new JSONNumber(typedPowerFixtureCount));
         report.put("fuseScope", new JSONString(fuseFixtureCount == 0 ? "NOT APPLICABLE: no replaceable fuse" : "partial and blown"));
         if ("LED_INDICATOR".equals(request.familyId)) generate(rollbackSaved, "cancel-session-restore");
         else finished = true;
@@ -703,6 +743,8 @@ final class U06SessionDeveloperVerifier {
                 put("inventory:" + id, runtime.getInventoryIdForPart(id));
                 for (PhysicalPartTerminal terminal : part.getTerminals())
                     put("terminal:" + terminal.getId(), terminal.getTerminalName());
+                if (PlayerSessionState.hasTypedPowerSessionBinding(owner.getCircuitFamilyId(), part))
+                    put("typedBacking:" + id, PlayerSessionState.typedPowerBackingDefinition(part));
                 ProtectionFuseElm fuse = fuse(part);
                 if (fuse != null) put("fuse:" + id, bits(fuse.heat) + "/" + fuse.blown + "/" + bits(fuse.i2t));
             }

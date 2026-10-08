@@ -7,7 +7,10 @@ package com.lushprojects.circuitjs1.client;
  * that approximation. External storage, freewheel and feedback remain real.
  */
 final class E06AveragedConverterElm extends CircuitElm {
-    private static final double MAX_STEP_SECONDS = .00005;
+    // Current-only codec. Increment when this fixed model's interpretation changes.
+    static final int DUMP_TYPE = 458;
+    static final String DUMP_VERSION = "1", DUMP_KIND = "e06-averaged";
+    private static final double MAX_STEP_SECONDS = .0002;
     private static final double MAX_NEWTON_DROP_STEP_VOLTS = .5;
     private static final double RESTART_TARGET_STEP_VOLTS = .25;
     private static final double CURRENT_TOLERANCE_AMPS = 1e-8;
@@ -43,6 +46,20 @@ final class E06AveragedConverterElm extends CircuitElm {
         setPoints();
     }
 
+    E06AveragedConverterElm(int x, int y, int x2, int y2, int flags, StringTokenizer tokens) {
+        super(x, y, x2, y2, flags);
+        requireCurrentDump(tokens, DUMP_VERSION, DUMP_KIND);
+        contract = new E06ConverterContract();
+        setPoints();
+    }
+
+    static void requireCurrentDump(StringTokenizer tokens, String version, String kind) {
+        if (tokens == null || !tokens.hasMoreTokens() || !version.equals(tokens.nextToken()) ||
+                !tokens.hasMoreTokens() || !kind.equals(tokens.nextToken()) || tokens.hasMoreTokens())
+            throw new IllegalArgumentException("Unsupported or malformed E06 model dump");
+    }
+
+    int getDumpType() { return DUMP_TYPE; }
     E06ConverterContract getContract() { return contract; }
     int getPostCount() { return 6; }
     Point getPost(int n) {
@@ -58,9 +75,8 @@ final class E06AveragedConverterElm extends CircuitElm {
         posts[E06ConverterContract.ENABLE] = new Point(x + 48, y - 48);
         posts[E06ConverterContract.FEEDBACK] = new Point(x + 96, y - 48);
     }
-    String dump() {
-        throw new UnsupportedOperationException("E06 private pilot has no save/load declaration");
-    }
+    // U06 reload restarts control; no accepted/trial solver state is serialized.
+    String dump() { return super.dump() + " " + DUMP_VERSION + " " + DUMP_KIND; }
     boolean nonLinear() { return true; }
     boolean hasGroundConnection(int n) { return false; }
     boolean getConnection(int first, int second) {
@@ -257,7 +273,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
     private void requireStep() {
         if (!E06ConverterContract.finite(sim.timeStep) || sim.timeStep <= 0 || sim.timeStep > MAX_STEP_SECONDS)
-            throw new IllegalArgumentException("E06 averaged pilot requires an accepted timestep in (0, 50 us]");
+            throw new IllegalArgumentException("E06 averaged pilot requires an accepted timestep in (0, 200 us]");
     }
     private void requireAcceptedEnvelope() {
         if (!E06ConverterContract.finite(acceptedInputVolts) || !E06ConverterContract.finite(acceptedOutputVolts) ||

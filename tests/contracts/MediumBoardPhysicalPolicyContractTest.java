@@ -146,9 +146,13 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "seed 83 historical route fixture has no later pull-down packages");
         check(edgeTrim.accepted(),
             "seed 83 retains the routed candidate after compacting");
-        check(edgeTrimReceipt.indexOf("P07_FULLER_TWO_LAYER@1=SUCCESS") >= 0 ||
-            edgeTrimReceipt.indexOf("P07_FULLER_TWO_LAYER@2=SUCCESS") >= 0,
-            "seed 83 fuller route keeps a previously valid escape channel");
+        System.out.println("Q30_SEED83_ROUTING " + edgeTrimReceipt);
+        // Corrected package escapes can change candidate ranking. Preserve the
+        // same board and require a real fuller route, independent of its index.
+        check(edgeTrim.getStatistics().twoLayerSuccesses > 0,
+            "seed 83 fuller route keeps a valid escape channel: " + edgeTrimReceipt);
+        edgeTrim.getLayout().validateRoutingGeometry(edgeTrimBoard);
+        new PcbTwoLayerRules(edgeTrimBoard, edgeTrim.getLayout()).validate(edgeTrim.getLayout());
         check(edgeTrimReceipt.indexOf("DISCONNECTED_ESCAPE_CHANNEL") < 0,
             "seed 83 compacting does not reintroduce a disconnected escape channel");
         System.out.println("PASS: medium physical policy contracts assertions=" + assertions +

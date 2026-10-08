@@ -217,10 +217,17 @@ final class PhysicalMutationScope {
     }
 
     void replaceAuxiliaryBinding(CircuitElm element) {
+        Vector<CircuitElm> elements = new Vector<CircuitElm>(); elements.add(element);
+        replaceAuxiliaryBindings(elements);
+    }
+
+    void replaceAuxiliaryBindings(Vector<CircuitElm> elements) {
         requireOpen();
-        requireOwnedPartElement(element);
-        instance.getComponentBindings().replaceAuxiliaryComponentElement(
-            intent.getComponentId(), element);
+        if (elements == null || elements.isEmpty())
+            throw new IllegalArgumentException("Missing physical auxiliary backing");
+        for (CircuitElm element : elements) requireOwnedPartElement(element);
+        instance.getComponentBindings().replaceAuxiliaryComponentElements(
+            intent.getComponentId(), elements);
         checkpoint(FailureStage.AFTER_AUXILIARY_BINDING);
     }
 
@@ -261,6 +268,7 @@ final class PhysicalMutationScope {
         requireOpen();
         if (slot.getInstalledPart() != installedPartBefore)
             throw new IllegalStateException("Physical mutation slot owner changed before clear");
+        requireAuthorizedDetachment();
         PhysicalPart<?> removed = slot.clearForMutation(this);
         modifications.setDockingAttachmentsForMutation(this, slot, false);
         slot.restoreEmptySlotAttachmentState(this);
@@ -645,6 +653,13 @@ final class PhysicalMutationScope {
         if (runtime.ownsMutation(this))
             runtime.endMutation(this);
         closed = true;
+    }
+
+    /** Reuse the exact pre-mutation condition; edited graph state is not a fresh solver sample. */
+    void requireAuthorizedDetachment() {
+        requireOpen();
+        if (!intent.authorizesDetachment())
+            throw new IllegalStateException("Physical mutation has no authorized graph detach");
     }
 
     private void requireOpen() {

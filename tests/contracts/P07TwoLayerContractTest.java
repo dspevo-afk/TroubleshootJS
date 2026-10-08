@@ -4,6 +4,7 @@ public final class P07TwoLayerContractTest {
     private static int checks;
     static void require(boolean ok,String why) { checks++; if(!ok) throw new AssertionError(why); }
     public static void main(String[] args) {
+        componentFaceEscapesReachFreeCopper();
         holeSnapshotsPreserveOwnerAndOrder();
         closedCopperEdgesMatchLongOracle();
         typedQueueMatchesPriorityQueue();
@@ -28,6 +29,43 @@ public final class P07TwoLayerContractTest {
         }
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
+    }
+    /** A declared pad escape must reach open copper through every intervening step. */
+    private static void componentFaceEscapesReachFreeCopper() {
+        for(PhysicalPackage pkg:new PhysicalPackage[]{PhysicalPackages.TO220_REGULATOR_4,
+                PhysicalPackages.E04_DECISION_CONTROL_5}) {
+            TroubleshootBoard board=new TroubleshootBoard("P07_COMPONENT_ESCAPE_"+pkg.getId());
+            BoardComponent component=new BoardComponent("U","CONTROL",pkg);
+            board.addComponent(component);
+            for(String terminal:pkg.getTerminalIds()) {
+                board.addNet(new BoardNet(terminal));
+                board.addPad(new BoardPad("U."+terminal,"U",terminal,terminal));
+            }
+            board.validate();
+            PcbBoardLayout layout=new PcbBoardLayout(1400,700,new Rectangle(20,20,1000,500),
+                new Rectangle(1120,120,200,300));
+            PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,200,100);
+            layout.addComponent(footprint.getPlacement());
+            for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
+            layout.addSilkscreenLabel(new PcbSilkscreenLabel("component:U","U",
+                new Rectangle(50,50,30,20),14,false,null));
+            layout.validateGeometry(board);
+            PcbNetRouter.Router router=new PcbNetRouter.Router(layout,board,layout.getBoardOutline(),
+                0,P06FactoryLinkFixtures.OBSERVER,PcbCopperLayer.TOP);
+            for(PcbPadPlacement pad:footprint.getPads()) {
+                String net=board.getPad(pad.getPadId()).getNetId();
+                require(!router.permitsLayerStep(pad.getX(),pad.getY(),pad.getX()+10,pad.getY(),
+                    net,pad,null),"component courtyard still blocks a sideways pad exit");
+                // These packages place pads at local y=150 and their courtyard ends at205.
+                // Walk past that actual boundary, including the old blocked 200-to210 step.
+                for(int distance=0;distance<80;distance+=10)
+                    require(router.permitsLayerStep(pad.getX(),pad.getY()+distance,
+                        pad.getX(),pad.getY()+distance+10,net,pad,null),
+                        pkg.getId()+" "+pad.getPadId()+" must escape its own courtyard at distance "+distance);
+                require(router.permitsLayerStep(pad.getX(),pad.getY()+80,pad.getX()+10,pad.getY()+80,
+                    net,pad,null),"pad exit reaches a usable free channel beyond its courtyard");
+            }
+        }
     }
     /** Electrical membership is fixed; spatial proximity and canonical ties choose branches. */
     private static void nearestBranchesFollowSpatialTree() {

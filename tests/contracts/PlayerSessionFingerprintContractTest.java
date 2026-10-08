@@ -35,6 +35,8 @@ public final class PlayerSessionFingerprintContractTest {
         reject("\ud800x", "high surrogate followed by ordinary character");
         reject("\ud800\ud800", "adjacent high surrogates");
         reject(repeat('a', PlayerSessionFingerprint.MAX_CHARACTERS + 1), "input above bound");
+        generationReceiptDigest();
+        diagnosticContextDigest();
         System.out.println("PASS: PlayerSessionFingerprintContractTest assertions=" + assertions);
     }
 
@@ -44,6 +46,10 @@ public final class PlayerSessionFingerprintContractTest {
     }
 
     private static void compare(String text, String label) throws Exception {
+        compare(text, PlayerSessionFingerprint.of(text), label);
+    }
+
+    private static void compare(String text, String actual, String label) throws Exception {
         byte[] expected = MessageDigest.getInstance("SHA-256").digest(text.getBytes(StandardCharsets.UTF_8));
         StringBuilder hex = new StringBuilder(64);
         for (byte value : expected) {
@@ -51,9 +57,79 @@ public final class PlayerSessionFingerprintContractTest {
             if (token.length() == 1) hex.append('0');
             hex.append(token);
         }
-        String actual = PlayerSessionFingerprint.of(text);
         check(actual.length() == 64 && actual.matches("[0-9a-f]{64}"), label + " encoding");
         check(hex.toString().equals(actual), label + " digest");
+    }
+
+    private static void generationReceiptDigest() throws Exception {
+        // The actual GenerationReceipt owner repeats a legitimate bounded dependency
+        // in its hypotheses stage; non-ASCII text exercises the shared UTF-8 engine.
+        String dependencies = repeat('x', PlayerSessionFingerprint.MAX_CHARACTERS + 37) + "caf\u00e9/\ud83d\udd27";
+        String[] stages = { "resolved", "healthy", "physical",
+            "workUnits=554;complete=true;dependencies=" + dependencies,
+            "selected-fault-validated;complete-hypotheses=5;scenario-compatible;answer-private",
+            "complete=true;atomic=true" };
+        GenerationReceipt receipt = receipt(dependencies, stages);
+        String canonical = receipt.canonical();
+        check(canonical.length() > PlayerSessionFingerprint.MAX_CHARACTERS,
+            "real receipt aggregate exceeds ordinary session bound");
+        reject(canonical, "aggregate receipt remains invalid ordinary session input");
+        String actual = PlayerSessionFingerprint.ofGenerationReceipt(receipt);
+        compare(canonical, actual, "full oversized receipt UTF-8 versus independent JDK SHA-256");
+        stages[5] += ";tail=changed";
+        GenerationReceipt changed = receipt(dependencies, stages);
+        String changedDigest = PlayerSessionFingerprint.ofGenerationReceipt(changed);
+        check(!actual.equals(changedDigest), "last stage beyond the ordinary bound remains bound by digest");
+        compare(changed.canonical(), changedDigest, "changed receipt tail versus independent JDK SHA-256");
+        boolean rejected = false;
+        try { PlayerSessionFingerprint.ofGenerationReceipt(receipt(
+            repeat('x', GenerationDependencyContext.MAX_CANONICAL_LENGTH + 1), stages)); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "receipt entrypoint rejects oversized dependency field");
+        stages[0] = repeat('x', GenerationDependencyContext.MAX_CANONICAL_LENGTH + 129);
+        rejected = false;
+        try { PlayerSessionFingerprint.ofGenerationReceipt(receipt(dependencies, stages)); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "receipt entrypoint rejects oversized stage field");
+    }
+
+    private static void diagnosticContextDigest() throws Exception {
+        String complete = repeat('x', PlayerSessionFingerprint.MAX_CHARACTERS + 17) + "caf\u00e9/\ud83d\udd27";
+        GeneratedDiagnosticContextKey key = new GeneratedDiagnosticContextKey(complete);
+        check(key.canonical().length() > PlayerSessionFingerprint.MAX_CHARACTERS,
+            "typed full context exceeds ordinary session input bound");
+        reject(key.canonical(), "large context remains invalid ordinary session input");
+        String actual = PlayerSessionFingerprint.ofDiagnosticContext(key);
+        compare(key.canonical(), actual, "full large context UTF-8 versus independent JDK SHA-256");
+        check(!key.isTrustedCapture(), "hashing a fixture key does not grant proof-capture authority");
+        GeneratedDiagnosticContextKey changed = new GeneratedDiagnosticContextKey(complete + ";tail=changed");
+        check(!key.equals(changed), "context equality includes the tail beyond the former cap");
+        String changedDigest = PlayerSessionFingerprint.ofDiagnosticContext(changed);
+        check(!actual.equals(changedDigest), "context digest includes the tail beyond the former cap");
+        compare(changed.canonical(), changedDigest, "changed context tail versus independent JDK SHA-256");
+        GeneratedDiagnosticContextKey maximum = new GeneratedDiagnosticContextKey(
+            repeat('\u4e2d', GenerationDependencyContext.MAX_CANONICAL_LENGTH));
+        check(maximum.canonical().length() == GeneratedDiagnosticContextKey.MAX_CANONICAL_LENGTH,
+            "maximum context retains its complete version prefix");
+        compare(maximum.canonical(), PlayerSessionFingerprint.ofDiagnosticContext(maximum),
+            "maximum typed context UTF-8 versus independent JDK SHA-256");
+        boolean rejected = false;
+        try { PlayerSessionFingerprint.ofDiagnosticContext(null); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "typed context entrypoint rejects null");
+        rejected = false;
+        try { PlayerSessionFingerprint.ofDiagnosticContext(new GeneratedDiagnosticContextKey("\ud800")); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "typed context entrypoint preserves malformed Unicode rejection");
+        rejected = false;
+        try { new GeneratedDiagnosticContextKey(repeat('x', GenerationDependencyContext.MAX_CANONICAL_LENGTH + 1)); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "context constructor rejects one character above the typed input cap");
+    }
+
+    private static GenerationReceipt receipt(String dependencies, String[] stages) {
+        return GenerationReceipt.issue(new Object(), "rb56-qualification-seed77", dependencies,
+            stages, 554, 89392, new long[6], new int[6], 90000, 5000, 640);
     }
 
     private static String repeat(char value, int count) {

@@ -45,7 +45,8 @@ final class GenerationRequest {
             PlayerFamilyCatalog.ExecutionDeclaration requestedExecutionDeclaration) {
         if (descriptor == null) throw new IllegalArgumentException("Missing generation descriptor");
         if (normalExecutionPolicy != GenerationExecutionPolicy.SMALL_BOARD &&
-                normalExecutionPolicy != GenerationExecutionPolicy.NORMAL_MEDIUM)
+                normalExecutionPolicy != GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                normalExecutionPolicy != GenerationExecutionPolicy.RB56)
             throw new IllegalArgumentException("Missing or unknown generation execution policy");
         String familyId = composition ? ControlledIndicatorBlockContributions.FAMILY_ID :
             descriptor.getDeviceIntent().getId();
@@ -59,7 +60,7 @@ final class GenerationRequest {
         if (!qualification) {
             if (declaration == null) declaration = PlayerFamilyCatalog.executionDeclaration(familyId);
             if (declaration.policy != normalExecutionPolicy ||
-                    (normalExecutionPolicy == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                    ((normalExecutionPolicy == GenerationExecutionPolicy.NORMAL_MEDIUM || normalExecutionPolicy == GenerationExecutionPolicy.RB56) &&
                         (composition || difficulty != declaration.candidateProfile)))
                 throw new IllegalArgumentException("Generation request differs from its catalog execution declaration");
         }
@@ -105,7 +106,7 @@ final class GenerationRequest {
         if (request == null) throw new IllegalArgumentException("Missing player launch");
         if (registration == null) throw new IllegalArgumentException("Missing family registration boundary");
         PlayerFamilyCatalog.ExecutionDeclaration declaration = registration.executionDeclaration(request.familyId);
-        if (declaration.policy == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+        if ((declaration.policy == GenerationExecutionPolicy.NORMAL_MEDIUM || declaration.policy == GenerationExecutionPolicy.RB56) &&
                 request.profile != declaration.candidateProfile)
             throw new IllegalArgumentException("Player profile differs from its catalog execution declaration");
         boolean composed = ControlledIndicatorBlockContributions.FAMILY_ID.equals(request.familyId);
@@ -153,7 +154,7 @@ final class GenerationRequest {
         PlayerFamilyCatalog.ExecutionDeclaration declaration = executionDeclaration != null ?
             executionDeclaration : PlayerFamilyCatalog.executionDeclaration(getFamilyId());
         if (declaration.policy != normalExecutionPolicy ||
-                (normalExecutionPolicy == GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                ((normalExecutionPolicy == GenerationExecutionPolicy.NORMAL_MEDIUM || normalExecutionPolicy == GenerationExecutionPolicy.RB56) &&
                     difficulty != null && declaration.candidateProfile != difficulty))
             throw new IllegalArgumentException("Generation request differs from its catalog execution declaration");
         return declaration;

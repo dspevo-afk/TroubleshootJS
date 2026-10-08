@@ -6,6 +6,11 @@ package com.lushprojects.circuitjs1.client;
  */
 final class PlayerSessionFingerprint {
     static final int MAX_CHARACTERS = 1024 * 1024;
+    // Keep the existing manifest cap. Dependencies and six stages may each carry
+    // the complete typed generation context; prefixes and framing remain bounded.
+    private static final int MAX_GENERATION_STAGE_CHARACTERS = GenerationDependencyContext.MAX_CANONICAL_LENGTH + 128;
+    private static final int MAX_GENERATION_RECEIPT_CHARACTERS =
+        MAX_CHARACTERS + 7 * GenerationDependencyContext.MAX_CANONICAL_LENGTH + 2048;
     private static final String HEX = "0123456789abcdef";
     private static final int[] ROUND = {
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -29,6 +34,36 @@ final class PlayerSessionFingerprint {
     static String of(String text) {
         if (text == null || text.length() > MAX_CHARACTERS)
             throw new IllegalArgumentException("Session fingerprint input exceeds its canonical bound");
+        return hashCanonical(text);
+    }
+
+    /** Full original receipt canonical UTF-8; ordinary session input remains capped at 1 MiB. */
+    static String ofGenerationReceipt(GenerationReceipt receipt) {
+        if (receipt == null || receipt.getStageCount() != 6 ||
+                receipt.getManifest().length() > MAX_CHARACTERS ||
+                receipt.getDependencies().length() > GenerationDependencyContext.MAX_CANONICAL_LENGTH)
+            throw oversizedGenerationReceipt();
+        for (int stage = 0; stage < 6; stage++)
+            if (receipt.getStageReceiptInternal(stage).length() > MAX_GENERATION_STAGE_CHARACTERS)
+                throw oversizedGenerationReceipt();
+        String text = receipt.canonical();
+        if (text.length() > MAX_GENERATION_RECEIPT_CHARACTERS)
+            throw oversizedGenerationReceipt();
+        return hashCanonical(text);
+    }
+
+    /** Hash the entire typed context envelope without widening ordinary session input. */
+    static String ofDiagnosticContext(GeneratedDiagnosticContextKey context) {
+        if (context == null || context.canonical().length() > GeneratedDiagnosticContextKey.MAX_CANONICAL_LENGTH)
+            throw new IllegalArgumentException("Diagnostic context fingerprint exceeds its canonical bound");
+        return hashCanonical(context.canonical());
+    }
+
+    private static IllegalArgumentException oversizedGenerationReceipt() {
+        return new IllegalArgumentException("Generation receipt fingerprint exceeds its bounded fields");
+    }
+
+    private static String hashCanonical(String text) {
         PlayerSessionFingerprint digest = new PlayerSessionFingerprint();
         for (int i = 0; i < text.length(); i++) {
             int code = text.charAt(i);
@@ -67,7 +102,7 @@ final class PlayerSessionFingerprint {
     }
 
     private String finish() {
-        // The UTF-16 bound permits at most 3 MiB of UTF-8, so the high length word is zero.
+        // Even the bounded receipt permits less than 46 MiB of UTF-8; its high bit-length word is zero.
         int bits = byteCount << 3;
         put(0x80);
         while (blockBytes != 56) put(0);

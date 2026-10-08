@@ -30,7 +30,20 @@ final class ServiceableBoardConstruction {
                 completeRegulator(board, elements, components, connections, runtime, original, id);
                 continue;
             }
-            if (spec instanceof BasicPhysicalSpecification || spec instanceof FactoryLinkSpecification) {
+            if (spec instanceof ConverterSpecification) {
+                completeConverter(board, components, connections, runtime, original, id);
+                continue;
+            }
+            if (spec instanceof CapacitorSpecification && ((CapacitorSpecification)spec).hasExplicitModelRecipe()) {
+                completeRecipeCapacitor(board, elements, components, connections, runtime, original, id);
+                continue;
+            }
+            if (spec instanceof InductorSpecification || spec instanceof ZenerSpecification || spec instanceof OptocouplerSpecification) {
+                completeTypedService(board, elements, components, connections, runtime, original, id);
+                continue;
+            }
+            if (spec instanceof BasicPhysicalSpecification || spec instanceof FactoryLinkSpecification ||
+                    spec instanceof FuseSpecification) {
                 completeBasic(board, elements, components, connections, runtime, original, id);
                 continue;
             }
@@ -143,6 +156,128 @@ final class ServiceableBoardConstruction {
             new RegulatorComponentSlot(id, regulator.getContract(), part,
                 leads[0], leads[1], leads[2], leads[3], slot), inventory,
             new RegulatorReplacementCatalog(regulator.getContract())));
+    }
+
+    private static void completeConverter(TroubleshootBoard board,
+            GeneratedComponentBindings components, GeneratedComponentConnectionBindings connections,
+            PhysicalBoardRuntime runtime, PhysicalPart<?> original, String id) {
+        if (!(original instanceof PhysicalConverterPart)) throw mismatch(id);
+        PhysicalConverterPart part = (PhysicalConverterPart)original;
+        part.getSpecification().requireModel(part.getModule());
+        if (components.getSingleElement(id) != part.getModule().converter ||
+                !components.getAuxiliaryElements(id).equals(part.auxiliaryElements()) ||
+                connections.getForComponentOrEmpty(id).size() != 7)
+            throw new IllegalStateException("Converter requires its complete backing and seven declared board leads: " + id);
+        WireElm[] leads = new WireElm[7];
+        for (int i = 0; i < leads.length; i++) {
+            String padId = pad(board, id, ConverterSpecification.terminalId(i));
+            GeneratedComponentConnectionBinding binding = connections.get(id, padId);
+            if (!(binding.getConnectionElement() instanceof WireElm) ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(binding.getBoardEndpoint(),
+                        board.getSimulationBindings().getEndpoint(padId)) ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(binding.getComponentEndpoint(), part.terminal(ConverterSpecification.terminalId(i))))
+                throw mismatch(id);
+            Point b = point(binding.getBoardEndpoint()), p = point(binding.getComponentEndpoint());
+            WireElm lead = (WireElm)binding.getConnectionElement();
+            if (b.equals(p) || !lead.getPost(0).equals(b) || !lead.getPost(1).equals(p))
+                throw new IllegalStateException("Converter board copper must remain independent of its detachable lead: " + padId);
+            leads[i] = lead;
+        }
+        runtime.registerCapability(new ReplaceableConverterCapability(original.getBoardSlot(), part, leads));
+    }
+
+    private static void completeRecipeCapacitor(TroubleshootBoard board, Vector<CircuitElm> elements,
+            GeneratedComponentBindings components, GeneratedComponentConnectionBindings connections,
+            PhysicalBoardRuntime runtime, PhysicalPart<?> original, String id) {
+        if (!(original instanceof PhysicalCapacitorPart)) throw mismatch(id);
+        PhysicalCapacitorPart part = (PhysicalCapacitorPart)original;
+        CapacitorSpecification spec = part.getSpecification();
+        CapacitorElm capacitor = part.getElement();
+        ResistorElm esr = part.getEsrElement();
+        if (capacitor.getClass() != CapacitorElm.class || part.getFaultBinding() != null ||
+                capacitor.capacitance != spec.getCapacitanceFarads() ||
+                (capacitor.flags & CapacitorElm.FLAG_BACK_EULER) != spec.getIntegrationFlags() ||
+                capacitor.initialVoltage != spec.getInitialVoltage() ||
+                (esr == null ? spec.getEsrOhms() != 0 : esr.getClass() != ResistorElm.class ||
+                    spec.getEsrOhms() <= 0 || esr.resistance != spec.getEsrOhms()) ||
+                !part.hasAccessibleStoredEnergyTerminals()) throw mismatch(id);
+        requireDeclaredBacking(part, capacitor, components, elements, id);
+        // The whole C(+ESR) bundle already occupies its service island; its private junction cannot move alone.
+        WireElm[] leads = requireDeclaredLeads(board, elements, components, connections, part, id, true);
+        PhysicalBoardSlot slot = part.getBoardSlot();
+        runtime.prepareServicePart(original, part);
+        register(runtime, slot, part, leads);
+    }
+
+    private static void completeTypedService(TroubleshootBoard board, Vector<CircuitElm> elements,
+            GeneratedComponentBindings components, GeneratedComponentConnectionBindings connections,
+            PhysicalBoardRuntime runtime, PhysicalPart<?> original, String id) {
+        if (!(original instanceof PhysicalServicePart)) throw mismatch(id);
+        PhysicalServicePart part = (PhysicalServicePart)original;
+        PhysicalServicePart.requireBacking(part.getSpecification(), part.getPackage(), part.elements());
+        requireDeclaredBacking(part, part.primary(), components, elements, id);
+        WireElm[] leads = requireDeclaredLeads(board, elements, components, connections, part, id, false);
+        PhysicalBoardSlot slot = part.getBoardSlot();
+        runtime.prepareServicePart(original, part);
+        register(runtime, slot, part, leads);
+    }
+
+    private static void requireDeclaredBacking(PhysicalPart<?> part, CircuitElm primary,
+            GeneratedComponentBindings components, Vector<CircuitElm> elements, String id) {
+        Vector<CircuitElm> backing = part.getElectricalBacking().getCircuitElements();
+        if (backing.isEmpty() || backing.get(0) != primary || components.getSingleElement(id) != primary)
+            throw mismatch(id);
+        Vector<CircuitElm> auxiliary = new Vector<CircuitElm>(backing); auxiliary.remove(0);
+        if (!components.getAuxiliaryElements(id).equals(auxiliary))
+            throw new IllegalStateException("Physical service requires its complete declared auxiliary backing: " + id);
+        for (CircuitElm element : backing) if (!elements.contains(element)) throw mismatch(id);
+    }
+
+    /** New explicit bundles retain predeclared copper and lead coordinates; no primitive relocation fallback. */
+    private static WireElm[] requireDeclaredLeads(TroubleshootBoard board, Vector<CircuitElm> elements,
+            GeneratedComponentBindings components, GeneratedComponentConnectionBindings connections,
+            PhysicalPart<?> part, String id, boolean reverseSecondLead) {
+        if (connections.getForComponentOrEmpty(id).size() != part.getTerminalCount())
+            throw new IllegalStateException("Physical service requires every declared board lead: " + id);
+        WireElm[] leads = new WireElm[part.getTerminalCount()];
+        for (int i = 0; i < leads.length; i++) {
+            String padId = pad(board, id, part.getPackage().getTerminalIds().get(i));
+            GeneratedComponentConnectionBinding binding = connections.get(id, padId);
+            CircuitMeasurementEndpoint b = board.getSimulationBindings().getEndpoint(padId);
+            CircuitMeasurementEndpoint p = part.getTerminal(i).getEndpoint();
+            if (!(binding.getConnectionElement() instanceof WireElm) ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(binding.getBoardEndpoint(), b) ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(binding.getComponentEndpoint(), p) ||
+                    !(b instanceof CircuitPostMeasurementEndpoint) || !(p instanceof CircuitPostMeasurementEndpoint)) throw mismatch(id);
+            CircuitElm copper = ((CircuitPostMeasurementEndpoint)b).getElement();
+            WireElm lead = (WireElm)binding.getConnectionElement();
+            Point bp = point(b), pp = point(p);
+            boolean reverse = reverseSecondLead && i == 1;
+            if (bp == null || pp == null || bp.equals(pp) || !elements.contains(copper) || !elements.contains(lead) ||
+                    connections.isConnectionElement(copper) || components.isElementBoundToComponent(id, copper) ||
+                    !(reverse ? pp : bp).equals(lead.getPost(0)) || !(reverse ? bp : pp).equals(lead.getPost(1)))
+                throw new IllegalStateException("Physical service requires stationary independent copper and detachable leads: " + padId);
+            for (int prior = 0; prior < i; prior++) if (leads[prior] == lead) throw mismatch(id);
+            leads[i] = lead;
+        }
+        // A retained direct board contact would bypass removal even with a declared lead alongside it.
+        Vector<CircuitElm> backing = part.getElectricalBacking().getCircuitElements();
+        for (CircuitElm owned : backing) for (int post = 0; post < owned.getPostCount(); post++) {
+            Point at = owned.getPost(post);
+            if (at == null) throw mismatch(id);
+            for (CircuitElm other : elements) {
+                if (backing.contains(other)) continue;
+                for (int external = 0; external < other.getPostCount(); external++) {
+                    if (!at.equals(other.getPost(external))) continue;
+                    boolean attached = false;
+                    for (int i = 0; i < leads.length; i++)
+                        if (other == leads[i] && external == (reverseSecondLead && i == 1 ? 0 : 1) &&
+                                at.equals(point(part.getTerminal(i).getEndpoint()))) attached = true;
+                    if (!attached) throw new IllegalStateException("Physical service backing has an undeclared external contact: " + id);
+                }
+            }
+        }
+        return leads;
     }
 
     private static void completeBasic(TroubleshootBoard board, Vector<CircuitElm> elements,
@@ -333,7 +468,7 @@ final class ServiceableBoardConstruction {
                 runtime, id + "_REPLACEMENTS", PhysicalResistorPart.class); inventory.add(resistor);
             runtime.registerCapability(new ReplaceableResistorBoardCapability(key(runtime, ReplaceableResistorBoardCapability.ID, id),
                 new ReplaceableComponentSlot(id, resistor.getSpecification(), resistor, wires[0], wires[1], slot),
-                inventory, new ResistorReplacementCatalog()));
+                inventory, ResistorReplacementCatalog.forSpecification(resistor.getSpecification())));
         } else if (part instanceof PhysicalLedPart) {
             PhysicalLedPart led = (PhysicalLedPart)part;
             PhysicalPartInventory<PhysicalLedPart> inventory = new PhysicalPartInventory<PhysicalLedPart>(
@@ -368,8 +503,14 @@ final class ServiceableBoardConstruction {
                 runtime, id + "_REPLACEMENTS", PhysicalCapacitorPart.class); inventory.add(capacitor);
             runtime.registerCapability(new ReplaceableCapacitorBoardCapability(
                 new CapacitorComponentSlot(id, capacitor.getSpecification(), capacitor, wires[0], wires[1], slot), inventory,
-                new CapacitorReplacementCatalog(capacitor.getSpecification().getPhysicalPackage()),
+                CapacitorReplacementCatalog.forSpecification(capacitor.getSpecification()),
                 key(runtime, ReplaceableCapacitorBoardCapability.ID, id)));
+        } else if (part instanceof PhysicalServicePart) {
+            PhysicalServicePart service = (PhysicalServicePart)part;
+            PhysicalPartInventory<PhysicalServicePart> inventory = new PhysicalPartInventory<PhysicalServicePart>(
+                runtime, id + "_REPLACEMENTS", PhysicalServicePart.class); inventory.add(service);
+            runtime.registerCapability(new ReplaceableServiceBoardCapability(
+                new ServiceComponentSlot(slot, service, wires, new WireElm[0], null), inventory, service));
         } else throw mismatch(id);
     }
 

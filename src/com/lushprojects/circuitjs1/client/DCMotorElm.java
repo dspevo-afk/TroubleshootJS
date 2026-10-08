@@ -98,10 +98,16 @@ class DCMotorElm extends CircuitElm {
 	//System.out.println("doing stamp voltage "+voltSource);
     }
     void startIteration() {
-	ind.startIteration(volts[0]-volts[2]);
-	indInertia.startIteration(volts[4]-volts[5]);
+	coilCurrent = ind.startIteration(volts[0]-volts[2]);
+	inertiaCurrent = indInertia.startIteration(volts[4]-volts[5]);
+	speed = inertiaCurrent;
 	// update angle:
 	angle= angle + speed*sim.timeStep;
+    }
+
+    void stepFinished() {
+	ind.stepFinished();
+	indInertia.stepFinished();
     }
 
     /*  boolean hasGroundConnection(int n1) {

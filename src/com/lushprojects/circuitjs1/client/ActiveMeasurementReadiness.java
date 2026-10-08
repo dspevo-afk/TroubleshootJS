@@ -11,7 +11,9 @@ enum ActiveMeasurementReadiness {
     POWER_OFF("POWER OFF"),
     WAITING("SETTLING"),
     DISCHARGE("DISCHARGE"),
-    UNKNOWN("UNKNOWN");
+    UNKNOWN("UNKNOWN"),
+    ISOLATE_COMPONENT("ISOLATE COMPONENT"),
+    UNSUPPORTED("UNSUPPORTED");
 
     static final double RESIDUAL_VOLTAGE_THRESHOLD_VOLTS = .25;
     private final String displayText;
@@ -25,10 +27,13 @@ enum ActiveMeasurementReadiness {
     }
     private static int priority(ActiveMeasurementReadiness r) {
         switch (r) {
-        case POWER_OFF: return 4;
-        case UNKNOWN: return 3;
-        case DISCHARGE: return 2;
-        case WAITING: return 1;
+        // Present the actual energy action before the instrument's support/isolation policy.
+        case POWER_OFF: return 6;
+        case UNKNOWN: return 5;
+        case DISCHARGE: return 4;
+        case WAITING: return 3;
+        case UNSUPPORTED: return 2;
+        case ISOLATE_COMPONENT: return 1;
         default: return 0;
         }
     }

@@ -58,8 +58,9 @@ public final class D01DiagnosticContractTest {
         reject("empty context key", new Case() { public void run() {
             new GeneratedDiagnosticContextKey("");
         }});
-        final StringBuilder oversized = new StringBuilder(1024 * 1024 + 129);
-        for (int i = 0; i != 1024 * 1024 + 129; i++) oversized.append('x');
+        final int maximumContext = GenerationDependencyContext.MAX_CANONICAL_LENGTH;
+        final StringBuilder oversized = new StringBuilder(maximumContext + 1);
+        for (int i = 0; i != maximumContext + 1; i++) oversized.append('x');
         reject("oversized context key", new Case() { public void run() {
             new GeneratedDiagnosticContextKey(oversized.toString());
         }});

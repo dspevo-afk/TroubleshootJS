@@ -5060,3 +5060,120 @@ The maintained native E06 suite covers actual energy, reference, fault and
 cleanup behavior; its narrow scratch adapters avoid JVM/GWT construction gaps.
 Actual compiled checks exercise the unchanged production factory/chip paths.
 No global admission, iteration, generation, instrument or readiness limit changes.
+
+The shared Inductor helper separates committed current from Newton trial
+current. setup/reset initialize both; startIteration restores committed current
+before stamping, and stepFinished commits only an accepted step. InductorElm,
+RelayElm and DCMotorElm synchronize their live aliases before control decisions.
+This preserves current history across timestep rejection without changing the
+companion equations. The RL TRAP/BE and relay retry regression passes against
+independent fine-step controls. Capacitor, transformer and motor-angle rollback
+are outside this correction; no general solver-transaction claim is made.
+
+The E02 regulator explicitly vetoes convergence for every bounded Newton
+tangent. Its positive-input envelope check is deferred during such a trial;
+an unbounded trial above the unchanged ceiling throws before accepted time.
+No terminal law, tolerance or source envelope is widened. The real-source
+negative checks assert unchanged accepted time, step count and callbacks.
+
+RB56 verification hashes full GenerationReceipt canonical bytes through a
+typed bounded entrypoint in the existing SHA owner. The complete dependency
+context allows 2 Mi UTF-16 units; request and individual field limits remain
+64 Ki / 256 Ki. Context-key framing adds its unchanged 30-character prefix.
+Receipt manifests allow 1 Mi, dependencies 2 Mi, each of six stages 2 Mi + 128,
+and the framed aggregate 1 Mi + 7 * 2 Mi + 2048. Typed context hashing consumes
+the complete key. Ordinary session hashing retains its 1 Mi limit. Canonical
+bytes, digest format and receipt issuer/owner validation remain unchanged;
+no private canonical text is exported and the digest is not authentication.
+Actual 55-part capture requires 1,206,292 characters; its full capture and
+hash, tail mutation, new-bound rejection and current D01 checks pass natively.
+This corrects the measured old-bound failure; final compiled proof is pending.
+
+## Q60 implemented RB56 ownership and qualification boundary
+
+The Q60 implementation remains UNQUALIFIED and normal RB56 publication is
+disabled. `Rb56Plan` owns one immutable, versioned 40-60-package inventory,
+terminal/net declarations, topology and independent named seed streams.
+`Rb56Generator.Candidate` retains that exact plan, one
+`RelayOutputGenerator.Assembly`, the adopted `Rb56PowerStageAssembly` and
+`Rb56ControlTail.Result`; there is no parallel physical or diagnostic inventory.
+`Rb56PhysicalAssembly` attaches owners to this existing graph.
+`GeneratedBoardInstance` invokes the single `ServiceableBoardConstruction.complete`
+boundary; it validates complete primary/ordered auxiliary backing and the actual
+predeclared detachable leads against stationary board copper.
+
+Typed capacitor/ESR, L/winding resistance, zener, optocoupler, fuse and opaque
+converter specifications bind immutable recipes, catalog identities and actual
+posts. L1 owns the ordinary 20 mH inductor and 0.5 ohm resistor as one package;
+COUT retains its real series ESR; UAC owns all four hidden solver elements in
+one seven-terminal package. Existing slot, inventory, acquisition, transaction
+and rollback owners move or replace the complete backing. MAINAC controls both
+actual input poles; domain-local power/storage observations retain separate
+primary, secondary and external-load references. Instrument admission adds no
+invented internal converter observations. Any board disconnect scans installed
+detachment capabilities: typed L requires a current accepted owner/solver
+observation and finite element/model currents both below 1 uA. The mutation
+intent checks this before its permit; scoped atomic writes reuse that exact
+authorization, while unscoped disconnects check before their first write.
+Acquire/reconnect and existing charged-capacitor service semantics are unchanged.
+
+One fault declaration supplies four actual 1 Gohm resistor-value faults
+(RENAC, REN, RSA, RDA) and the active single/second-channel relay coil-open fault.
+Every candidate retains all five. The selected effect binds the exact original
+physical resistor or relay, stays with that removed part, and does not infect a
+healthy catalog replacement. Hypothesis replay constructs fresh graph owners
+with the same full fault population and sealed admitted layout.
+
+The existing `Rb30Behavior` owns a finite RB56 recipe: fresh LOW commands,
+eight 50 ms startup units, every two/four sensor combination, 30 ms settling,
+and prior-input restoration for healthy/faulted/repair profiles. Its temporal
+dependency records this recipe and its current candidate adaptive CircuitJS
+200 us maximum/50 ps minimum for RB56. The prior accepted E06 envelope was 50 us;
+the candidate has native full-matrix/sensitivity and seed77 compiled evidence.
+Whole-family/player qualification remains pending. Q30 retains its 5 us maximum. It binds
+current parts, external-load harnesses and the accepted final 10 ms windows.
+Window means use actual step duration and 5 ms halves; 12 V mean/ripple/drift,
+5 V extrema and actual load extrema decide function. Samples resolve current
+slot/backing/endpoints and subscriptions close in finally. Live status is
+provisional; it cannot substitute for the complete functional profile.
+
+`Rb56PlayerFamilyCapability` registers RB56 as a disabled HARD candidate with
+private qualification support. `RB56_BOARD_NORMAL@1` is a distinct immutable
+physical token binding an accepted bounded P07 route, exact plan seeds,
+declarations, geometry and the RB56 package/isolation contract; sharing the
+router does not alias MEDIUM admission. `Rb56DiagnosticProvider` is the single
+D01 provider over the complete five-member population, with domain-local DC
+probes, exact hypothesis replay and existing guarded service preparation.
+Declarations, fixed physical canaries and fault/service ownership tests do not
+constitute the full production serial D01 proof or player qualification.
+`Rb56QualificationVerifier`, behind the explicit developer route, is implemented to exercise
+the same cold staged coordinator, full five-hypothesis production D01 receipt,
+repair/retest and owner cleanup with the normal catalog held disabled. Its
+current200 us seed77 positive/forced browser attempts complete all five hypotheses
+and six stages in59.334/60.015 s within unchanged90s/640/5s limits. Full receipt
+hashing and application/host cleanup pass. Earlier50/100 us deadline and receipt
+failures remain preserved. Those compiled results predate the complete-context
+capacity and package escape corrections. The TO220/E04 component-face exits
+now clear their own courtyards; their larger placement envelopes affect layout.
+Medium placement now uses its degree-normalized objective weights when
+choosing connected targets; the historical local-refinement overload is unchanged.
+All frozen native 40/55/60 captures and shared Q30 connector-locality checks pass.
+The complete six-case compiled cohort fails four unchanged deadlines; ordinary
+Q30 seed10014 also fails its former accepted deadline. Q60 is not accepted.
+
+`PcbWorkbenchController` tracks the last detachment-readiness value used to
+build its controls. The existing same-owner, settled `CirSim` update checks it
+only while the workbench is actionable and actual supplies are disconnected.
+A truth-value transition retires popup leases and refreshes the existing panels;
+no timer, solver step, threshold or alternate readiness policy is introduced.
+The frozen 40-part visible flow passes removal without reselection, ordinary
+replacement with the original retained, powered customer retest and cleanup.
+This does not qualify ordinary RB56 catalog or session flows.
+
+Q60 must finish its bounded current-owner workbench, electrical/energy,
+diagnostic/service and performance evidence. Public HARD requires fresh
+Q60-based U05 calibration; REL-B owns advertised advanced normal-player and
+save/load release proof. Typed model/digest/restart support retains U06's existing
+transient restart semantics and separate fuse heat/blown-state provider; it does
+not promise continuous energy replay or an RB56 U06 capture/load pass. Public
+family/profile guards and the 90-second/640-unit/5-second budgets remain intact.

@@ -120,12 +120,14 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         double evaluationDrop = limitNewtonDrop(requestedDrop, target,
                 outputActive);
         double evaluationOutput = target - evaluationDrop;
+        boolean boundedTrial = changed(evaluationDrop, requestedDrop);
         // A graph rebuild can expose a stale node-voltage trial before this
         // element has stamped its first corrective tangent.  Validate the
-        // bounded Newton evaluation point, not that unaccepted trial.  A real
-        // unsupported source still advances to the boundary and is rejected.
+        // bounded Newton evaluation point, not that unaccepted trial.  Every
+        // bounded tangent requires another iteration; a persistent unsupported
+        // input cannot be accepted and remains subject to the same envelope.
         validateOperatingPoint(inputVoltage, evaluationOutput, enableVoltage,
-                changed(evaluationDrop, requestedDrop));
+                boundedTrial);
         double outputCurrent = outputCurrentForDrop(evaluationDrop,
                 outputActive);
         double outputConductance = outputConductanceForDrop(evaluationDrop,
@@ -170,7 +172,7 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         boolean inputChanged = changed(lastInputCurrent, input.current);
         boolean enableChanged = changed(lastEnableFraction, enableFraction);
         boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
-        if (targetChanged || inputChanged || enableChanged || outputChanged)
+        if (boundedTrial || targetChanged || inputChanged || enableChanged || outputChanged)
             sim.converged = false;
         lastTarget = target;
         lastInputCurrent = input.current;
@@ -486,7 +488,7 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
                 outputVoltage + " target=" + target + " ceiling=" +
                 contract.getMaximumInputVolts());
         if (inputVoltage > contract.getMaximumInputVolts() +
-                UNSUPPORTED_VOLTAGE_TOLERANCE)
+                UNSUPPORTED_VOLTAGE_TOLERANCE && !boundedTrial)
             throw new IllegalArgumentException("Rail input exceeds declared envelope:" +
                 " input=" + inputVoltage + " maximum=" + contract.getMaximumInputVolts() +
                 " rawOutput=" + getOutputVoltage() + " evaluationOutput=" + outputVoltage +

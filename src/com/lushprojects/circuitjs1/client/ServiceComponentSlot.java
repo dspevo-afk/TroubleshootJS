@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Owns separable solder leads and, for connectors, independent cable contacts. */
+/** Owns every separable solder lead and, for connectors, independent cable contacts. */
 final class ServiceComponentSlot implements PhysicalMutationSlot.Docking {
     private final PhysicalBoardSlot slot;
     private final WireElm[] leads;
@@ -14,12 +14,15 @@ final class ServiceComponentSlot implements PhysicalMutationSlot.Docking {
 
     ServiceComponentSlot(PhysicalBoardSlot slot, PhysicalServicePart part,
             WireElm[] leads, WireElm[] docking, CircuitPostMeasurementEndpoint[] harness) {
+        if (slot == null || part == null || leads == null || docking == null ||
+                leads.length != part.getTerminalCount() ||
+                docking.length != 0 && (!part.isConnector() || docking.length != part.getTerminalCount()))
+            throw new IllegalArgumentException("Missing service lead ownership");
         this.slot = slot; this.leads = copy(leads); this.docking = copy(docking);
-        original = part;
-        this.harness = harness == null ? new CircuitPostMeasurementEndpoint[0] :
-            new CircuitPostMeasurementEndpoint[] {harness[0], harness[1]};
+        original = part; connector = part.isConnector();
+        this.harness = new CircuitPostMeasurementEndpoint[harness == null ? 0 : harness.length];
+        for (int i = 0; i < this.harness.length; i++) this.harness[i] = harness[i];
         if (this.harness.length != docking.length) throw new IllegalArgumentException("Missing cable endpoint ownership");
-        connector = part.isConnector();
         attach(part); slot.install(part); empty = captureAttachmentState();
     }
     public String getComponentId() { return slot.getComponentId(); }
@@ -33,7 +36,10 @@ final class ServiceComponentSlot implements PhysicalMutationSlot.Docking {
     public boolean acceptsPart(PhysicalPart<?> part) {
         return part instanceof PhysicalServicePart &&
             ((PhysicalServicePart)part).isConnector() == connector &&
-            slot.getPhysicalPackage().isEquivalentTo(part.getPackage());
+            slot.getPhysicalPackage().isEquivalentTo(part.getPackage()) &&
+            (!(original.hasTypedPowerRecipe() || original.getSpecification() instanceof FuseSpecification ||
+                ((PhysicalServicePart)part).hasTypedPowerRecipe() || part.getSpecification() instanceof FuseSpecification) ||
+                original.getSpecification().getSpecificationId().equals(part.getSpecification().getSpecificationId()));
     }
     public CircuitMeasurementEndpoint getExpectedEndpoint(PhysicalPart<?> part, BoardPad pad) {
         if (!acceptsPart(part) || pad == null || !getComponentId().equals(pad.getComponentId()))

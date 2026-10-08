@@ -1,0 +1,642 @@
+{
+  "schema": "q60-browser-evidence-r1",
+  "date": "2026-10-08",
+  "purpose": "Sanitized index of complete owned build and compiled-browser reports; artifacts are referenced by relative IDs only.",
+  "artifactNamespace": {
+    "runArtifacts": "q60-run/<relative-to-q60-pointer-tempRoot>",
+    "taskArtifacts": "q60-task/<relative-to-task-root>",
+    "attemptLedger": {
+      "id": "q60-task/q60/attempt-ledger.json",
+      "sha256": "be6faa200fdf35fda38419705fd268f19f9d4ac0219c0ba8fdda11982c78dd5a"
+    }
+  },
+  "noRawLogsIncluded": true,
+  "seed77IsSeparateFromHoldout": true,
+  "phases": [
+    {
+      "phase": "build-r6",
+      "status": "PASS",
+      "elapsedMs": 97254,
+      "exitCode": 0,
+      "scope": "PRODUCTION_GWT_OBF_BUILD",
+      "sourceIdentity": {
+        "launchRunnerSha256": "7b404bb4c48c498bb5f2eab9effb997e735f98ddf3851bf18ee15aebcfac2498",
+        "sourceFileCount": 1222,
+        "sourceInputsUnchanged": true,
+        "strictSourceFingerprintSha256": null
+      },
+      "webIdentity": null,
+      "cleanup": {
+        "hostVerified": true,
+        "hostJobActiveProcesses": 0,
+        "hostHandlesClosed": true,
+        "hostStdoutOverflow": false,
+        "application": null
+      },
+      "application": null,
+      "cases": [],
+      "artifacts": {
+        "phaseLaunch": {
+          "id": "q60-run/build-r6-launch.json",
+          "sha256": "e76b651f2cc86213f869a5967141d8a73ffd65a0661408763cabb719e4d9d270"
+        },
+        "phaseResult": {
+          "id": "q60-run/build-r6-result.json",
+          "sha256": "b489261649343ac6aae3140dc95215918bc8ccc95e5a0fd6937faba4cb1c2110"
+        }
+      },
+      "buildDetails": {
+        "target": "GWT OBF",
+        "permutations": 5,
+        "buildStatus": "PASS"
+      }
+    },
+    {
+      "phase": "compiled-r10",
+      "status": "PASS",
+      "elapsedMs": 18454,
+      "exitCode": 0,
+      "scope": "E06_COMPILED_PRIVATE_MECHANICS_AND_FORCED_CLEANUP_CANARY",
+      "sourceIdentity": {
+        "launchRunnerSha256": "7b404bb4c48c498bb5f2eab9effb997e735f98ddf3851bf18ee15aebcfac2498",
+        "sourceFileCount": 1222,
+        "sourceInputsUnchanged": true,
+        "strictSourceFingerprintSha256": "27b66d461c0cf21ec4863499d68206b3a01c82a95969c276a24bf9b69b852367"
+      },
+      "webIdentity": {
+        "strictServedWebSha256": "83fe38926f8250fcbd644a0054eec0a55bef35124e0e2c275fc0606fcdde45f9",
+        "transport": "PASSIVE_CDP_DOM",
+        "originPattern": "http://127.0.0.1:<ephemeral-port>",
+        "strictFingerprintAvailable": true
+      },
+      "cleanup": {
+        "hostVerified": true,
+        "hostJobActiveProcesses": 0,
+        "hostHandlesClosed": true,
+        "hostStdoutOverflow": false,
+        "application": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "application": {
+        "outcome": "PASS",
+        "strictStatus": "PASS",
+        "strictScope": "E06_COMPILED_PRIVATE_MECHANICS_AND_FORCED_CLEANUP_CANARY",
+        "strictFailurePhase": null,
+        "strictErrorCount": 0,
+        "sourceFingerprintSha256": "27b66d461c0cf21ec4863499d68206b3a01c82a95969c276a24bf9b69b852367",
+        "servedWebSha256": "83fe38926f8250fcbd644a0054eec0a55bef35124e0e2c275fc0606fcdde45f9",
+        "strictRawResultSha256": null,
+        "strictReportSha256": "d97be724ad3b494e1007fcdc97b372f08177ec21c47e392193446e95f614349e",
+        "portClosed": true,
+        "cleanup": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "cases": [
+        {
+          "name": "e06-positive",
+          "seed": null,
+          "driverOutcome": "PASS",
+          "observedState": "PASS:e06",
+          "expectedFailureCanary": false,
+          "reportStatus": "PASS",
+          "phase": null,
+          "failurePhase": null,
+          "failure": null,
+          "generationMillis": null,
+          "generationWork": null,
+          "jobStage": null,
+          "jobMillis": null,
+          "jobWork": null,
+          "faultHypothesesCompleted": null,
+          "solverSamples": null,
+          "d01PhasesCompleted": null,
+          "fullProductionD01": null,
+          "driverObservationSeconds": 6.418976700020721,
+          "report": {
+            "id": "q60-run/e06-q60-compiled-r10-200us/cases/001-e06-positive.report.json",
+            "sha256": "d97be724ad3b494e1007fcdc97b372f08177ec21c47e392193446e95f614349e"
+          },
+          "observationErrorCount": 0
+        },
+        {
+          "name": "e06-forced-failure",
+          "seed": null,
+          "driverOutcome": "PASS",
+          "observedState": "FAIL:e06:e06-explicit-failure-after-install-and-accepted-solve",
+          "expectedFailureCanary": true,
+          "reportStatus": "FAIL",
+          "phase": null,
+          "failurePhase": null,
+          "failure": "e06-explicit-failure-after-install-and-accepted-solve",
+          "generationMillis": null,
+          "generationWork": null,
+          "jobStage": null,
+          "jobMillis": null,
+          "jobWork": null,
+          "faultHypothesesCompleted": null,
+          "solverSamples": null,
+          "d01PhasesCompleted": null,
+          "fullProductionD01": null,
+          "driverObservationSeconds": 6.764817200019024,
+          "report": {
+            "id": "q60-run/e06-q60-compiled-r10-200us/cases/002-e06-forced-failure.report.json",
+            "sha256": "1b7e87dac9605c881f32de0f4b88adf22723f5ba0ea822496812f4a79fe05a2d"
+          },
+          "observationErrorCount": 0
+        }
+      ],
+      "artifacts": {
+        "phaseLaunch": {
+          "id": "q60-run/compiled-r10-launch.json",
+          "sha256": "44b16d5641683a39544711f179327b5843e51f5aa14f9ebc25421719960e5720"
+        },
+        "phaseResult": {
+          "id": "q60-run/compiled-r10-result.json",
+          "sha256": "d558bfd9c94117230b63d1fe580816625903378d7b1de39789315ac9ee262b8b"
+        },
+        "applicationIdentity": {
+          "id": "q60-run/e06-q60-compiled-r10-200us/identity.json",
+          "sha256": "abcd5ae52a7ffff6ee807463fe4d769ca5ebdbc3cd8805bff016686eae08680e"
+        },
+        "caseSpec": {
+          "id": "q60-run/e06-q60-compiled-r10-200us/spec.json",
+          "sha256": "2dec598b008ee88fce9adfe3997a8007f186d8a96d6df83198644ee47ff78871"
+        },
+        "applicationResult": {
+          "id": "q60-run/e06-q60-compiled-r10-200us/result.json",
+          "sha256": "b0f9825dba142bccd8e3fed0646f7b5ad4b995f4df0f28656686693e4c3cd062"
+        },
+        "strictResult": {
+          "id": "q60-run/e06-q60-compiled-r10-200us/strict-result.json",
+          "sha256": "28f164165e0bc114dc08cb6f9cf41eddd4ab201a8cfb01a2e2b13ff6fbcf3295"
+        }
+      }
+    },
+    {
+      "phase": "compiled-r11",
+      "status": "PASS",
+      "elapsedMs": 125263,
+      "exitCode": 0,
+      "scope": "Q60_PRIVATE_COLD_COORDINATOR_AND_FULL_D01_FORCED_CLEANUP",
+      "sourceIdentity": {
+        "launchRunnerSha256": "7b404bb4c48c498bb5f2eab9effb997e735f98ddf3851bf18ee15aebcfac2498",
+        "sourceFileCount": 1222,
+        "sourceInputsUnchanged": true,
+        "strictSourceFingerprintSha256": "27b66d461c0cf21ec4863499d68206b3a01c82a95969c276a24bf9b69b852367"
+      },
+      "webIdentity": {
+        "strictServedWebSha256": "83fe38926f8250fcbd644a0054eec0a55bef35124e0e2c275fc0606fcdde45f9",
+        "transport": "PASSIVE_CDP_DOM",
+        "originPattern": "http://127.0.0.1:<ephemeral-port>",
+        "strictFingerprintAvailable": true
+      },
+      "cleanup": {
+        "hostVerified": true,
+        "hostJobActiveProcesses": 0,
+        "hostHandlesClosed": true,
+        "hostStdoutOverflow": false,
+        "application": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "application": {
+        "outcome": "PASS",
+        "strictStatus": "PASS",
+        "strictScope": "Q60_PRIVATE_COLD_COORDINATOR_AND_FULL_D01_FORCED_CLEANUP",
+        "strictFailurePhase": null,
+        "strictErrorCount": 0,
+        "sourceFingerprintSha256": "27b66d461c0cf21ec4863499d68206b3a01c82a95969c276a24bf9b69b852367",
+        "servedWebSha256": "83fe38926f8250fcbd644a0054eec0a55bef35124e0e2c275fc0606fcdde45f9",
+        "strictRawResultSha256": "ce363e19558d2bd17e481c331a3b91b6888fac77860d3cfe8027be46fde859e2",
+        "strictReportSha256": "4b3edd8535521a1c82adae081ccc370864646095ddfbd5e16da1abce0030979b",
+        "portClosed": true,
+        "cleanup": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "cases": [
+        {
+          "name": "rb56-seed77-positive",
+          "seed": "77",
+          "driverOutcome": "PASS",
+          "observedState": "PASS:rb56",
+          "expectedFailureCanary": false,
+          "reportStatus": "PASS",
+          "phase": "RESTORED",
+          "failurePhase": null,
+          "failure": null,
+          "generationMillis": 59334,
+          "generationWork": 554,
+          "jobStage": null,
+          "jobMillis": null,
+          "jobWork": null,
+          "faultHypothesesCompleted": 5,
+          "solverSamples": 55,
+          "d01PhasesCompleted": 6,
+          "fullProductionD01": true,
+          "driverObservationSeconds": 60.32624229998328,
+          "report": {
+            "id": "q60-run/q60-compiled-r11/cases/001-rb56-seed77-positive.report.json",
+            "sha256": "4b3edd8535521a1c82adae081ccc370864646095ddfbd5e16da1abce0030979b"
+          },
+          "observationErrorCount": 0
+        },
+        {
+          "name": "rb56-seed77-forced-after-publish",
+          "seed": "77",
+          "driverOutcome": "PASS",
+          "observedState": "FAIL:rb56:rb56-explicit-after-publish-canary",
+          "expectedFailureCanary": true,
+          "reportStatus": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "PUBLISHED_ADMISSION",
+          "failure": "IllegalStateException: rb56-explicit-after-publish-canary",
+          "generationMillis": 60015,
+          "generationWork": 554,
+          "jobStage": "PUBLISH",
+          "jobMillis": 60099,
+          "jobWork": 554,
+          "faultHypothesesCompleted": 5,
+          "solverSamples": 55,
+          "d01PhasesCompleted": 6,
+          "fullProductionD01": true,
+          "driverObservationSeconds": 61.0296238999872,
+          "report": {
+            "id": "q60-run/q60-compiled-r11/cases/002-rb56-seed77-forced-after-publish.report.json",
+            "sha256": "783d9d69c5c40ce0e0892109745e9df728b05287f0e62a4a850463d18e06d9d9"
+          },
+          "observationErrorCount": 0
+        }
+      ],
+      "artifacts": {
+        "phaseLaunch": {
+          "id": "q60-run/compiled-r11-launch.json",
+          "sha256": "737d78bd58e740e36a13a3c2afbe96f5b74b7c60a47d7f5fe2cc661175c35bbd"
+        },
+        "phaseResult": {
+          "id": "q60-run/compiled-r11-result.json",
+          "sha256": "73279d5b03c02a9e439503349bdf69c95329a26b916f889134da85fd75e45d21"
+        },
+        "applicationIdentity": {
+          "id": "q60-run/q60-compiled-r11/identity.json",
+          "sha256": "dd215c3e2f94a854a3391ae971867801dd854a1273d2634c495953c3be90db9c"
+        },
+        "caseSpec": {
+          "id": "q60-run/q60-compiled-r11/spec.json",
+          "sha256": "74bbdd343858ae667a0c61482c73d1b2fed497f11e1c7b17c20922e5ae807fb1"
+        },
+        "applicationResult": {
+          "id": "q60-run/q60-compiled-r11/result.json",
+          "sha256": "ce363e19558d2bd17e481c331a3b91b6888fac77860d3cfe8027be46fde859e2"
+        },
+        "strictResult": {
+          "id": "q60-run/q60-compiled-r11/strict-result.json",
+          "sha256": "f12b3af85d2ee179d902a89ef7e9ae95dec74ae0f55595da96310297c5879bdf"
+        }
+      }
+    },
+    {
+      "phase": "compiled-r5",
+      "status": "FAIL",
+      "elapsedMs": 184146,
+      "exitCode": 1,
+      "scope": "Q60_PRIVATE_COLD_COORDINATOR_AND_FULL_D01_FORCED_CLEANUP",
+      "sourceIdentity": {
+        "launchRunnerSha256": "15bfcb76bde2dea2d6f4c58e6536c7b69c5f8e831d198ab7ee22309ce2e24d6c",
+        "sourceFileCount": 1222,
+        "sourceInputsUnchanged": true,
+        "strictSourceFingerprintSha256": null
+      },
+      "webIdentity": {
+        "strictServedWebSha256": null,
+        "transport": "PASSIVE_CDP_DOM",
+        "originPattern": "http://127.0.0.1:<ephemeral-port>",
+        "strictFingerprintAvailable": false
+      },
+      "cleanup": {
+        "hostVerified": true,
+        "hostJobActiveProcesses": 0,
+        "hostHandlesClosed": true,
+        "hostStdoutOverflow": false,
+        "application": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "application": {
+        "outcome": "FAIL",
+        "strictStatus": "FAIL",
+        "strictScope": "Q60_PRIVATE_COLD_COORDINATOR_AND_FULL_D01_FORCED_CLEANUP",
+        "strictFailurePhase": "maintained-results",
+        "strictErrorCount": 1,
+        "sourceFingerprintSha256": null,
+        "servedWebSha256": null,
+        "strictRawResultSha256": "9d86ed9259e4dd24bdd25687a676c4d0df2609865fd13741a1d96855f79c1e9a",
+        "strictReportSha256": null,
+        "portClosed": null,
+        "cleanup": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "cases": [
+        {
+          "name": "rb56-seed77-positive",
+          "seed": "77",
+          "driverOutcome": "FAIL",
+          "observedState": "FAIL:rb56:Session fingerprint input exceeds its canonical bound",
+          "expectedFailureCanary": false,
+          "reportStatus": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "PUBLISHED_ADMISSION",
+          "failure": "IllegalArgumentException: Session fingerprint input exceeds its canonical bound",
+          "generationMillis": 89392,
+          "generationWork": 554,
+          "jobStage": "PUBLISH",
+          "jobMillis": 89474,
+          "jobWork": 554,
+          "faultHypothesesCompleted": 5,
+          "solverSamples": 55,
+          "d01PhasesCompleted": 6,
+          "fullProductionD01": true,
+          "driverObservationSeconds": 90.23155699999188,
+          "report": {
+            "id": "q60-run/q60-compiled-r5/cases/001-rb56-seed77-positive.report.json",
+            "sha256": "45b2ca2cddd2aeaf68bb39e58ea4de890f520898dd29401b9767c7f93d2504a9"
+          },
+          "observationErrorCount": 0
+        },
+        {
+          "name": "rb56-seed77-forced-after-publish",
+          "seed": "77",
+          "driverOutcome": "FAIL",
+          "observedState": "FAIL:rb56:Generation wall budget exhausted",
+          "expectedFailureCanary": true,
+          "reportStatus": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "failure": "Deadline: Generation wall budget exhausted",
+          "generationMillis": null,
+          "generationWork": null,
+          "jobStage": "HYPOTHESES",
+          "jobMillis": 90003,
+          "jobWork": 549,
+          "faultHypothesesCompleted": 0,
+          "solverSamples": null,
+          "d01PhasesCompleted": 0,
+          "fullProductionD01": null,
+          "driverObservationSeconds": 90.87111810001079,
+          "report": {
+            "id": "q60-run/q60-compiled-r5/cases/002-rb56-seed77-forced-after-publish.report.json",
+            "sha256": "c50f5498d3a8bddf699b8a0cd49b422f357ccdb5f73e4e5ddaf1075ea74082e3"
+          },
+          "observationErrorCount": 0
+        }
+      ],
+      "artifacts": {
+        "phaseLaunch": {
+          "id": "q60-run/compiled-r5-launch.json",
+          "sha256": "412d86dc4c5250b774a413e9c673536de85fbc191873614a3d08e5c1c164f095"
+        },
+        "phaseResult": {
+          "id": "q60-run/compiled-r5-result.json",
+          "sha256": "42c69b124a8e2fccbd05d150e93fcbe41e0aa0575a0dcceb9f5cb42fbd08dfae"
+        },
+        "applicationIdentity": {
+          "id": "q60-run/q60-compiled-r5/identity.json",
+          "sha256": "669edfbe08ff726a6eb86bba81e80d10b2630129d4ea7016075ee94d4988d14b"
+        },
+        "caseSpec": {
+          "id": "q60-run/q60-compiled-r5/spec.json",
+          "sha256": "74bbdd343858ae667a0c61482c73d1b2fed497f11e1c7b17c20922e5ae807fb1"
+        },
+        "applicationResult": {
+          "id": "q60-run/q60-compiled-r5/result.json",
+          "sha256": "9d86ed9259e4dd24bdd25687a676c4d0df2609865fd13741a1d96855f79c1e9a"
+        },
+        "strictResult": {
+          "id": "q60-run/q60-compiled-r5/strict-result.json",
+          "sha256": "5bb47f3af2083c15c52af9fc135df4b3be517ad608419524f78f830a278ac654"
+        }
+      }
+    },
+    {
+      "phase": "compiled-r7",
+      "status": "FAIL",
+      "elapsedMs": 104401,
+      "exitCode": 1,
+      "scope": "Q60_FROZEN_FULL6_TWO_POSITIVE_BATCH",
+      "sourceIdentity": {
+        "launchRunnerSha256": "7b404bb4c48c498bb5f2eab9effb997e735f98ddf3851bf18ee15aebcfac2498",
+        "sourceFileCount": 1222,
+        "sourceInputsUnchanged": true,
+        "strictSourceFingerprintSha256": null
+      },
+      "webIdentity": {
+        "strictServedWebSha256": null,
+        "transport": "PASSIVE_CDP_DOM",
+        "originPattern": "http://127.0.0.1:<ephemeral-port>",
+        "strictFingerprintAvailable": false
+      },
+      "cleanup": {
+        "hostVerified": true,
+        "hostJobActiveProcesses": 0,
+        "hostHandlesClosed": true,
+        "hostStdoutOverflow": false,
+        "application": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "application": {
+        "outcome": "FAIL",
+        "strictStatus": "FAIL",
+        "strictScope": "Q60_FROZEN_FULL6_TWO_POSITIVE_BATCH",
+        "strictFailurePhase": "maintained-results",
+        "strictErrorCount": 1,
+        "sourceFingerprintSha256": null,
+        "servedWebSha256": null,
+        "strictRawResultSha256": "5512c4cf4ab1f272ea5641ba5a6dfed3ee5853a47ffb256b9981af1fa4b00bfe",
+        "strictReportSha256": null,
+        "portClosed": null,
+        "cleanup": {
+          "status": "PASS",
+          "serverStopped": true,
+          "ownedSurvivorCount": 0,
+          "errorCount": 0
+        }
+      },
+      "cases": [
+        {
+          "name": "rb56-seed-1017-positive",
+          "seed": "-1017",
+          "driverOutcome": "PASS",
+          "observedState": "PASS:rb56",
+          "expectedFailureCanary": false,
+          "reportStatus": "PASS",
+          "phase": "RESTORED",
+          "failurePhase": null,
+          "failure": null,
+          "generationMillis": 56240,
+          "generationWork": 541,
+          "jobStage": null,
+          "jobMillis": null,
+          "jobWork": null,
+          "faultHypothesesCompleted": 5,
+          "solverSamples": 55,
+          "d01PhasesCompleted": 6,
+          "fullProductionD01": true,
+          "driverObservationSeconds": 57.24201159999939,
+          "report": {
+            "id": "q60-run/q60-compiled-r7/cases/001-rb56-seed-1017-positive.report.json",
+            "sha256": "d0178cdfc136882e0672df1093c762c1180c56989e1d7fc7055305884e49bdbe"
+          },
+          "observationErrorCount": 0
+        },
+        {
+          "name": "rb56-seed-1067-positive",
+          "seed": "-1067",
+          "driverOutcome": "FAIL",
+          "observedState": "FAIL:rb56:Generated board failed dependency-context capture",
+          "expectedFailureCanary": false,
+          "reportStatus": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "failure": "IllegalStateException: Generated board failed dependency-context capture",
+          "generationMillis": null,
+          "generationWork": null,
+          "jobStage": "PHYSICAL",
+          "jobMillis": 43718,
+          "jobWork": 129,
+          "faultHypothesesCompleted": 0,
+          "solverSamples": null,
+          "d01PhasesCompleted": 0,
+          "fullProductionD01": null,
+          "driverObservationSeconds": 44.52212469998631,
+          "report": {
+            "id": "q60-run/q60-compiled-r7/cases/002-rb56-seed-1067-positive.report.json",
+            "sha256": "c441457ee6149bb00d354cf0314403b30e3f3a3d36edc0b0d6e7d012a4737c1d"
+          },
+          "observationErrorCount": 0
+        }
+      ],
+      "artifacts": {
+        "phaseLaunch": {
+          "id": "q60-run/compiled-r7-launch.json",
+          "sha256": "1e18ad46bda1d86ac6dedba4a9d141c654d2e7c960b39c32be894464d6e6ce7d"
+        },
+        "phaseResult": {
+          "id": "q60-run/compiled-r7-result.json",
+          "sha256": "3eccf71ed28d017dac738420353651feffe19efb11d20692c622580496bc510a"
+        },
+        "applicationIdentity": {
+          "id": "q60-run/q60-compiled-r7/identity.json",
+          "sha256": "67f7710d0efc505c73c6ca158cc31d1b4ae97a25a9a12164d3da41d7efeb280d"
+        },
+        "caseSpec": {
+          "id": "q60-run/q60-compiled-r7/spec.json",
+          "sha256": "a9ccbd923ff37418f86200546e3c11fea52d890bd34d23cb307d2d61c0be556b"
+        },
+        "applicationResult": {
+          "id": "q60-run/q60-compiled-r7/result.json",
+          "sha256": "5512c4cf4ab1f272ea5641ba5a6dfed3ee5853a47ffb256b9981af1fa4b00bfe"
+        },
+        "strictResult": {
+          "id": "q60-run/q60-compiled-r7/strict-result.json",
+          "sha256": "23653455fe347b652d632669f3060af3a038ac815383c3c67beeda9ff4937577"
+        }
+      }
+    }
+  ],
+  "holdoutStatus": {
+    "overall": "INCOMPLETE",
+    "sixSeeds": [
+      {
+        "seed": "-1017",
+        "status": "PER_SEED_PASS_ALL_SIX_D01_IN_R7"
+      },
+      {
+        "seed": "-1067",
+        "status": "FAIL_PHYSICAL_DEPENDENCY_CONTEXT_CAPTURE_IN_R7"
+      },
+      {
+        "seed": "-1022",
+        "status": "PENDING_NOT_RUN"
+      },
+      {
+        "seed": "9007199254741579",
+        "status": "PENDING_NOT_RUN"
+      },
+      {
+        "seed": "-1004",
+        "status": "PENDING_NOT_RUN"
+      },
+      {
+        "seed": "-1028",
+        "status": "PENDING_NOT_RUN"
+      }
+    ],
+    "laterBatches": [
+      {
+        "phase": "compiled-r8",
+        "status": "STOPPED_BY_ROOT_NO_TERMINAL_RESULT"
+      },
+      {
+        "phase": "compiled-r9",
+        "status": "STOPPED_BY_ROOT_NO_TERMINAL_RESULT"
+      }
+    ],
+    "eachSeedRequiresFaultHypotheses": 5
+  },
+  "stoppedWork": [
+    {
+      "id": "visible-browser-current200",
+      "status": "STOPPED_BY_ROOT_NOT_RUN"
+    },
+    {
+      "id": "focused-native-cause-falsifier",
+      "status": "DRAFT_IN_PROGRESS_NOT_RUN"
+    }
+  ],
+  "interpretation": [
+    "compiled-r11 is the private seed-77 full Q60 run; its passing result does not close the separate six-seed holdout set.",
+    "compiled-r10 is E06 mechanics and forced-cleanup coverage only.",
+    "R5 positive generation completed all six D01 phases but failed at publication/session fingerprint; its forced case hit the unchanged generation deadline.",
+    "R7 seed -1067 failed during PHYSICAL dependency-context capture before any D01 phase; keep this failure visible.",
+    "All included host phases verified cleanup, had zero active job processes, closed handles, no stdout overflow, and 1,222 source inputs unchanged."
+  ],
+  "browserContext": {
+    "observerTransport": "PASSIVE_CDP_DOM",
+    "serverOriginPattern": "http://127.0.0.1:<ephemeral-port>",
+    "q60RouteTemplate": "/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed={q60-seed}&running=true",
+    "forcedCanaryAddsQuery": "tsjRb56Fail=true",
+    "strictSourceAndServedWebFingerprintsAvailable": [
+      "compiled-r10",
+      "compiled-r11"
+    ],
+    "fingerprintsNotEmitted": [
+      "compiled-r5",
+      "compiled-r7"
+    ]
+  }
+}

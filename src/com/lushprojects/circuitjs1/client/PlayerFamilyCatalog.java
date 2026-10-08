@@ -18,6 +18,7 @@ final class PlayerFamilyCatalog {
     private static RegistrationBoundary currentRegistration() {
         RegistrationBoundary result = new RegistrationBoundary();
         result.registerStagedFamily(new Rb30PlayerFamilyCapability(), true);
+        result.registerStagedFamily(new Rb56PlayerFamilyCapability(), false);
         return result;
     }
 

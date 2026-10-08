@@ -1,51 +1,304 @@
-# Current checkpoint: E06 accepted; Q60 next
+# Current checkpoint: Q60 implementation retained; acceptance blocked
 
-2026-10-08. Branch `codex/q30-multirail-qualification`; E06 candidate is based on
-verified published `6730de219f25306b65da3d336b20f1cd90a82896`. U06 is published at
-`12641608a7f10372d39c2a8fa98e6e349049e09f`, U07 at
-`2921c786351bc8c852ce98c277c059208e646bfb`; E05 implementation is
-`8fb48ac67796db62e28c3baecafcf6c9b64c5f2e`. Root is closing E06 normal commit/push
-and exact remote verification; no email. Dave authorized continuing the applicable
-roadmap. Subsequent workers use the requested Sol 6.1 Ultra model.
+2026-10-08. Branch `codex/q30-multirail-qualification`. The accepted/published
+base, upstream and freshly verified remote are E06
+`7aa0e1932f3c853e7265bf186e98989ada641a51`; U06/U07/E05 are also published.
+This is a local, incomplete Q60 checkpoint for the parent to resume. It is not a
+Q60 acceptance or release. No Q60 push. Normal RB56 admission, public HARD and
+normal RB56 save/load remain disabled/unqualified. No active gate remains.
 
-E06's bounded solver fidelity decision is ACCEPTED. One opaque averaged module
-is selected for guarded Q60 integration; hidden conversion counts as one package.
-Actual external source/storage/filter/load/opto feedback remain causal. The
-fixed detailed reference uses bounded finite switches with actual body diodes;
-global physics and all existing limits are unchanged. Raw developer reports
-retain candidate/NOT_QUALIFIED fences because normal product admission is Q60.
+Implemented: shared 40-60-package isolated converter/storage/control graph,
+typed service/backing owners, five complete D01 hypotheses, bounded 200 us
+averaged converter, accepted inductor retry history and bounded E02 tangents.
+Full-context hashing supports the measured 2 Mi context; ordinary session
+hashing retains 1 Mi and request/field limits are unchanged. Package escapes
+now clear their courtyards; medium placement targets use the same degree-normalized
+weights as their objective. No electrical thresholds or generation limits changed.
 
-Final native-r9 PASS: 24 cases, 1,320,000 accepted steps, 324,172,762 assertions,
-47.128 s host. Maximum output coarse/fine difference 0.01569%; paired output
-0.65281%, paired input energy 10.19132%, within frozen bounds. Healthy-window
-ripple/drift, energy closure, actual feedback/fuse/source mutations and numerical
-reference/bond checks pass; max iterations 20 with no elevated opto gmin.
-Actual final-source JDK8/GWT build-r2 PASS five permutations / 96.728 s.
-Strict compiled-r2 positive/forced-after-solve cleanup PASS / 20.002 s.
-Final consumed source pins match: native 1,314; build/compiled 1,200 each.
-Root integrated review and independent scoped read-only reviews found no blocker.
+- R66/R67: floorplanning 90,483; all frozen 40/55/60 complete captures 1,166;
+  geometry 1,601; medium physical 59; normal admission 9; P07 11,776 assertions PASS.
+- R68: typed session backing 202, RB56 temporal/service 295, focused Q30 temporal
+  161 and D01 168 PASS. Earlier electrical/energy sensitivity passes remain
+  explicitly limited to their unchanged consumed behavior.
+- Final build-r8: all five JDK8/GWT permutations PASS, 94.606 s, 1,222 unchanged
+  phase inputs, clean. The only change after build-r7 is the existing UI refresh
+  on actual detachment-readiness transitions in CirSim/PcbWorkbenchController.
+- Visible-r3 FAIL is retained: Remove stayed disabled after power-off. Final
+  visible-r4 PASS: same frozen seed -1017/40 parts, displayed diagnosis of RENAC,
+  expected unrepaired retest failure, Remove enabled after 4.829 s without
+  reselection, ordinary 10 kOhm replacement, original retained, powered customer
+  retest PASS. Operation 76.045 s; cleanup 1.245 s; outer 77.646 s. Three useful
+  screenshots inspected. This is a private qualification bench with normal labels
+  and real visible controls, not normal RB56 menu/save/load qualification.
+- Complete frozen compiled cohort remains FAIL: 40/44 parts PASS; planned
+  55/60/50/56 parts hit HYPOTHESES deadlines at 90.679/91.108/90.469/90.090 s.
+  All six run/cleanup receipts are retained; no failure was relabeled as PASS.
+- Ordinary Q30 seed10014 currently fails the 90 s deadline (sampled maximum
+  435 work units). Its actual published cold77 receipt passed at 75.535 s and
+  440 exact units on the historical source. This regression is unresolved.
+  Control10387 PASS and E06 compiled mechanics PASS do not clear it.
 
-Limits: backward-Euler numerical damping is separate from physical loss;
-terminal-current accounting residual reaches 10.558 mA. Primary storage remains
-78.89-79.17 V at 1.2 s after the sequence, requiring actual Q60 discharge/readiness
-work. Short/overload, arbitrary operating points, physical/session/generation/
-diagnostic/player qualification remain unproved. No visible player flow changed;
-headed input gate is NOT APPLICABLE. No unrelated full matrix or unchanged Q30
-cold/warm rerun. [Complete E06 evidence and decision](task-evidence/E06/README.md).
+Exact resume: inspect this checkpoint and the Q60 evidence index, then investigate
+the measured HYPOTHESES cost and ordinary Q30 seed10014 regression through the
+existing implementation. Require a concrete relevant change before repeating
+expensive qualification. Preserve all five hypotheses, frozen seeds and
+90 s / 640 work-unit / 5 s limits. Do not rerun unchanged Q30 cold/warm corpora.
+After the performance blocker is fixed, rerun the affected frozen cases and
+complete missing 60-part player-flow, modest-host and long-session/inventory proof.
+Do not enable HARD, claim Q60 complete or begin REL-B/Q100 at this checkpoint.
 
-All 13 attempts remain explicit, including native nonconvergence, oscillatory r5,
-compiled-r1 numeric boolean failure and native-r8 1 MiB output overflow. Final
-resource audit PASS: 47 recorded instances absent, two ports closed, 62 evidence
-files. Failed r8 compiler scratch is preserved/inventoried: 2,649 files,
-12,449,484 bytes. All eight original untracked hashes match; unfinished/unrelated
-work is preserved. Historical Q30 unknown 91.616 s failure, six missing scratch
-inventories and late BLOCKED release audit remain unchanged.
+[Current evidence, receipts and screenshots](task-evidence/Q60/README.md).
+Root reviewed the integrated changes; independent service/proof/UI reviews found
+no actionable defect in their stated scopes. They do not override failed gates.
+All eight original untracked files are preserved byte-for-byte and left untracked.
+No email, deletions or unrelated repository changes. R41's output-cap failure and
+its retained 2,811-file / 13,394,855-byte scratch inventory remain documented.
+Historical Q30 risks remain: unknown 91.616 s failure, six missing scratch
+inventories and late BLOCKED release audit. Task-local raw evidence and drivers
+remain available through the existing pointer; no test is abandoned for handoff.
 
-Next: normal publish/verify, then Q60's concrete physical converter/control board
-and user flow. The approximately 56-part reference must allocate honest purposeful
-functions; opaque conversion cannot count as twelve decorative packages. No E08
-prerequisite unless the chosen family advertises trace/jumper repairs. Q60,
-fresh HARD calibration and subsequent applicable roadmap gates remain required.
+---
+
+# Historical checkpoint: Q60 through R47, before current compiled holdout
+
+2026-10-08. Branch `codex/q30-multirail-qualification`; published E06/base
+HEAD, upstream and verified remote remain
+`7aa0e1932f3c853e7265bf186e98989ada641a51`. No Q60 commit or push.
+Dave authorized the applicable roadmap; subsequent workers use Sol 6.1 Ultra.
+U06/U07 and E05 are published. Existing unrelated work and all eight original
+untracked files are preserved; no email or unrelated project/process changes.
+
+E06's bounded fidelity decision is ACCEPTED: one opaque averaged conversion
+package with causal external source, storage, filter, load and opto feedback.
+Its final native 24 cases / 1,320,000 steps / 324,172,762 assertions, production
+GWT five permutations and strict compiled positive/forced cleanup PASS.
+Paired output/input-energy errors are 0.65281%/10.19132%; output step sensitivity
+0.01569%, within frozen bounds. Numerical damping, 10.558 mA terminal-current
+accounting limit, retained primary energy and all 13 E06 attempts remain explicit.
+[Complete published evidence](task-evidence/E06/README.md). Short/overload and
+arbitrary operating points are outside that acceptance.
+
+Implemented Q60 owners share one versioned plan inventory and actual stage/tail
+graph. The seven-terminal module, primary-powered bias/enable, rated bleed,
+external filter and typed C/ESR/L/winding-R/zener/opto/fuse recipes retain complete
+backing, physical terminals and service ownership. Selected original-part faults
+survive removal; catalog replacement is healthy. RB56 is registered for private
+qualification and held disabled as a public HARD candidate.
+
+Current physical/service evidence: r23 all three fixed 40/55/60 P07 route and
+RB56_BOARD_NORMAL@1 admission canaries PASS / 1,601 assertions. R15 physical owners
+81,908 and instrument boundary 210 PASS, including real loose resistor injection
+and the typed 0.1 ohm / 0.1 A2s fuse. R21 U06 regression 34,927 / model identity 123 /
+typed backing 202 PASS; typed scope is model/digest/restart only, normalSessionLoad=false.
+R25 fault value/service ownership PASS / 92,109 assertions, 15 selected cases /
+90 accepted steps, with actual original fault retention, replacement, reset and
+cleanup. This is not complete functional or D01 evidence. Q30 regressions PASS:
+temporal 161 / generation request 316 (r23) and execution policy 294 (r25).
+
+R28 full raw-assembly experiment with a 50 us adaptive maximum PASS: all three declared
+40/55/60 cases complete startup, every sensor mask, MAINAC-only OFF and complete
+all-input discharge; 1,465,537 assertions / 38.463 s host. R29 with a 25 us
+adaptive maximum also PASS / 2,914,029 assertions / 50.751 s host. Both consume 926 unchanged
+frozen r9 input pins with clean actual observer/graph/candidate/singleton and
+owned host cleanup. Maximum accepted iterations are 32/34, opto gmin 1e-12.
+These are raw-graph cadence experiments, not current production workflow gates.
+
+The frozen pair reader PASSes 650 checks: maximum paired relative difference
+0.0268544%, maximum difference against retained finer references 0.0555302%,
+both below 2%; maximum OFF absolute difference 11.855 uV below 1 mV. The first
+reader's zero-mean optional-ratio format FAIL is retained; its correction permits
+null ratios only for an exactly zero measured mean and changes no physical oracle.
+Task evidence: `q60/adaptive50-25-qualification/comparison-summary.json` and
+`root-adoption-approved.json`. Root adopts a 50 us adaptive maximum for RB56 only, within
+E06's existing averaged-model cap; Q30 retains 5 us, and the minimum remains 50 ps. The finite
+behavior dependency and accepted-window gap guard follow that exact recipe.
+Physical, energy, instrument, routing and wall/work bounds remain unchanged.
+
+Retained Q60 failures are not relabeled: r1-r9 fixture/model setup, command and
+50-us fixed-step transition failures; r9 reaches 1,278 iterations/gmin 0.1.
+R10/r11 diagnose the actual NMOS Newton tangent; r12/r13/r21 routing failures
+precede the fixed r23 geometry PASS. R17's inventory-order capture FAIL precedes
+r19's diagnostic 18-candidate capture (zero routes/admissions). R18 fixed 5 us
+passes 40 packages then fails 55 MAINAC-off convergence; r20 is only a short adaptive
+brownout PASS. R22 Java7 capture compile FAIL and r23 policy-fixture FAIL remain.
+R24 full adaptive with a 5 us maximum and r26 production temporal pilot TIMEOUT at the unchanged
+60-second Java bound. R27 full adaptive with a 5 us maximum also TIMEOUT: 40 completes, 55 progresses
+to 2.29004875 s, 60 is not started. Unfinished 55-case Java-finally receipts remain absent;
+verified host cleanup does not substitute for them. All raw attempts and input
+hash/cleanup records remain in the retained task packet. Historical Q30 unknown
+91.616s failure, six missing scratch inventories and late BLOCKED release audit
+remain unchanged. No unchanged Q30 corpus rerun or widened 90s/640/5s budget.
+
+R30 FAIL is retained: actual healthy/faulted profiles and discharge/removal passed,
+but native fixture publication observed before clearing its deferred analysis flag,
+leaving the capacitor readiness sample stale at catalog installation. Root moved
+flag consumption after the completed real solve and before observation; no extra
+advance or weakened readiness guard. Review also found that non-relay detachment
+did not consult the RB56 coil/capacitor guard. The existing optional readiness
+interface now admits guarded relay capabilities into the global pre-mutation check;
+legacy null-guard/Q30 behavior is unchanged.
+
+R31 current-source PASS / 77.934 s host / 1,350 unchanged inputs: full actual
+40/55/60 assembly 1,465,538 assertions; reference55 temporal/service/customer
+retest 295; Q30 relay 110 and temporal 161. Charged-OFF KA current is 39.441 mA;
+actual driver removal and diode lead lift both reject without graph/history change.
+L1 is also not ready in that canary, so isolated coil-only causality is not claimed.
+The genuine discharged catalog replacement and repaired customer retest pass.
+All 350 owned elements delete, graph/globals restore, and no subscriptions remain.
+R30 and R31 host cleanup pass; the earlier failed attempt is not relabeled.
+
+The private verifier runs the actual cold staged coordinator and all five D01
+hypotheses under unchanged 90s/640/5s limits, with public catalog enablement held
+false. Build-r2 FAIL exposed four unsupported GWT array.clone calls; equivalent
+typed allocation/System.arraycopy fixes preserve defensive copies. Build-r3 PASS
+all five permutations / 93.541 s; build-r4 with neutral failure-cost counters PASS
+all five / 109.656 s. R32 focused registration/model/control-tail PASS / 22,548
+assertions. Each build/native gate retains unchanged source pins and clean host release.
+
+Compiled-r1 FAIL: actual seed77 resolves to 40 packages/one channel and reaches
+the application's 90-second generation deadline in both positive and forced-case
+attempts. The browser observer did not time out; neither attempt published a
+qualified owner. Both restore the predecessor, dispose the candidate, clear meter
+and coordinator state, and restore debug state; host cleanup/source pins PASS.
+The second attempt never reaches its intended after-publication canary. Compiled-r3 captures that same application FAIL at 90.248 s / 318 work units:
+HEALTHY 24.614 s / 75 units (includes routing/construction and initial profiles),
+PHYSICAL admission 96 ms, HYPOTHESES 63.987 s / 241 units. Only two of five fault
+proofs finish. Its third hypothesis is in actual discharge when the deadline fires.
+Per-phase costs include healthy/faulted profiles 12.549/11.260 s, discharge21.573 s,
+repair-status8.184 s and customer-retest7.939 s. Final routing/proof counters are
+zero on this incomplete job and do not establish zero partial cost. This capture
+is diagnostic only; application/host cleanup and unchanged input audits pass.
+Compiled-r4's actual CPU capture and app/host cleanup pass; the first aggregation
+FAIL is retained because GWT uses a generated sourceURL. A separate offline reader
+matches all1,398 named function positions uniquely to the current compiled module,
+with no browser rerun. The91.295 s sampled profile attributes31.45% self time to LU
+factorization,6.49% to triangular solve,4.81% to runCircuitOwned,4.17% to GWT casts,
+and3.20% to finite-stamp checks; GC1.31% and wire-current updates0.79% are small.
+These are sampled costs including bootstrap/cleanup, not exact CPU accounting.
+The unchanged full-proof generation still fails. R33 scratch-only feasibility PASS
+completes the first40/seed17 history with477,742 original assertions and clean
+app/host release,36.977 s host/2,676 unchanged pins. Only1 of199,626 comparable
+finite nonlinear matrices is bitwise equal, so factor reuse is not justified.
+No solver optimization was adopted. R34 standalone averaged100/50 us pair PASS:
+maximum output difference0.005101% versus the original2% bound. R35 full24 E06
+extension matrix PASS /312,546,762 assertions /50.814 s, retaining all original
+detailed5/2.5 us and physical/energy criteria. Neither adopts a production change.
+R36 assembled100 us FAIL /27.311 s:40 completes;55 fails convergence during
+MAINAC-only OFF at0.7572 s, just after bulk crosses the90 V converter UVLO.
+The60 case is NOT RUN. R37 same-model50 us control PASS /38.995 s, all40/55/60
+full histories. Both preserve2,680 input pins and actual app/host cleanup.
+The strict pair reader correctly rejects the failed pair. Production remains50 us;
+R38 bounded read-only Newton capture reproduces the same FAIL /27.946 s,
+2,684 unchanged pins and app/host cleanup PASS. At unchanged0.7572 s, actual
+LOUT accepted current0.587451 uA becomes-50.544488 mA after the first failed-step
+node restoration and-101.089468 mA by the final retry. This confirms current-history
+corruption in the retry path. The first/final Newton attempts also record actual
+UAC/QB/junction rejections; no one element is blamed solely from first-reject counts.
+R39's task-only restoration of LOUT at that rejected transition lets the entire
+55-part history pass. Its whole run still FAILs at a newly reached 60-part
+power-down transition. R40 then proves the independent RL-TRAP regression fails
+before the fix at the restored caller-current assertion; its failed evidence stays.
+The four-file correction now stores accepted inductor current separately from
+trial current, restores it before each trial, and commits only in stepFinished.
+InductorElm, RelayElm and DCMotorElm synchronize their live aliases before control.
+No equations, capacitor/transformer histories or motor-angle behavior change.
+
+R41 as a whole FAILs at the existing 1 MiB output cap, 79.404 s; all 1,351 source
+pins remain unchanged and owned host cleanup passes. Its completed subsets PASS:
+the new three-pair inductor regression / 274 assertions / six cleanup receipts;
+full E06 24 cases / 324,172,762 assertions; full raw RB56 40/55/60 histories /
+1,465,538 assertions; U06 saves / 34,927 and typed restart/digest / 202.
+The truncated temporal result is not accepted. R42 separately completes the
+remaining RB56 temporal/service/retest 295, Q30 relay service 110 and Q30 temporal
+161 assertions: PASS / 61.690 s / 1,351 unchanged pins / clean host release.
+Root integrated the reviewed 100 us averaged-model candidate, retaining the
+detailed 5 us recipe and RB56 50 ps minimum. R43 PASS / 59.959 s / 1,351 unchanged
+inputs: full E06 24 cases / 312,546,762 assertions and raw 40/55/60 assembly /
+750,166 assertions. R44 PASS / 59.773 s / 1,358 unchanged inputs: independent
+50 us raw control / 1,465,538 assertions and actual 100 us temporal/service/retest
+/ 295. Both app/host cleanup paths pass. The unchanged strict physical comparison
+criteria pass all 236 checks on the source-bound 100/50 pair. Its frozen raw
+comparison criteria contain no additional retained-reference runs. Earlier failures remain separate evidence. Fresh production GWT
+build-r5 is in progress; full browser D01, holdout and player qualification remain
+pending. The candidate is not accepted or published. No physical, timestep-floor
+or job limit is loosened. R41's 13,394,855-byte scratch tree is fully inventoried
+and retained as evidence; its owned job has zero active processes.
+
+Build-r5 actual production GWT PASS, all five permutations / 95.026 s / 1,222
+unchanged source pins / clean owned release. Compiled-r6 current 100 us E06
+positive and forced accepted-solve cleanup PASS / 19.294 s, with the new strict
+2,000-step averaged / 40,000-step detailed declaration and clean app/host release.
+Compiled-r5 whole FAIL / 184.146 s / 1,222 unchanged pins / clean host release.
+Its first actual seed77 case completes all five D01 hypotheses, 55 solver samples
+and six stages / 554 work units in 89.392 s. It then FAILs in PUBLISHED_ADMISSION:
+the verifier tries to hash a full generation receipt with the session fingerprint
+helper's 1 MiB bound. This is not a missing D01 proof, but qualifiedPublication
+remains false. The second independent document reaches the application's actual
+90.003 s deadline in HYPOTHESES at 549 units; its forced after-publication branch
+is NOT REACHED. Both actual candidates dispose and restore their predecessor,
+temporary meter, debug and coordinator. Neither browser case is PASS.
+
+The 100 us candidate lacks reliable performance margin and remains unaccepted.
+Next work is a minimal full-binding receipt digest correction plus a separately
+declared 200 us averaged-model candidate against a 100 us control. It must pass
+the same electrical/energy/ripple/drift and paired sensitivity criteria before
+fresh compiled qualification. No 90s/640/5s budget, sample/fault population,
+physical oracle, detailed-model step, or timestep floor is widened.
+
+The reviewed 200 us candidate is now applied but UNQUALIFIED. R45 whole FAIL /
+53.286 s / 1,351 unchanged pins / clean host release. Its full 24-case E06
+matrix PASSes 306,733,762 assertions. Raw 40 completes; 55 fails during MAINAC-only
+OFF at accepted time0.7572 s, trial dt100 us/subiteration7: the 5 V regulator
+sees input38.7805 V above its24 V contract, with boundedTrial=true. The60 case
+is NOT RUN. Both reached graph owners dispose and restore; no failed whole gate
+or transient voltage is declared accepted. The next action is to determine whether
+the regulator rejects an unconverged Newton tangent prematurely, retaining the
+actual24 V envelope and an independent real-overvoltage rejection test. The
+receipt-digest correction is separately being prepared; no further browser run
+or larger timestep trial is justified before resolving these measured failures.
+
+Root integrated the bounded full-receipt SHA entrypoint: the existing canonical
+UTF-8 bytes and SHA algorithm stay intact, with explicit receipt-field limits;
+ordinary session hashing retains its1Mi-character bound. R46 PASS /25.558 s /
+1,351 unchanged pins / clean host release: independent JDK SHA and field-rejection
+checks104, U06 saves34,927. No truncation or receipt binding is omitted.
+
+R45's actual last accepted rails were10.02796 V and4.99194 V;38.7805 V was an
+unaccepted Newton trial. The two-file regulator correction now explicitly marks
+bounded tangents unconverged and defers positive-input envelope rejection only
+for those trials. An unbounded input above the same ceiling still throws before
+acceptance. R47 PASS /29.223 s /1,351 unchanged pins / clean app/host release:
+E02 electrical contracts1,451 and all40/55/60 raw200 us histories387,028.
+The real18 V source against a12 V contract rejects for both rail models and both
+initial tangents without advancing accepted time, counts or callbacks. Root
+caught a reset-fixture issue in an unrun draft; corrected r2 restores exact
+accepted terminal voltages, and both drafts remain preserved.
+
+R45's E06-only native PASS is retained after a precise reuse audit: of1,351 input
+files, only the five receipt/regulator owners and their tests changed; none is
+consumed by the E06 graph factory, device census or executed test path. Its
+24 cases /1,230,000 accepted steps /24 comparisons /24 cleanups remain valid
+for that scope. Whole R45 remains FAIL. Current100-us raw control plus200-us
+service/retest and focused Q30 temporal/relay regressions are running inR48.
+Fresh compiled qualification of all changes remains pending.
+
+Six frozen holdout seeds remain -1017, -1067, -1022, 9007199254741579, -1004,
+-1028 (expected sizes40/55/60/50/44/56). Only metadata is proved; actual cold
+generation and visible repair/retest remain pending the generation diagnosis.
+The visible-input driver is prepared but NOT RUN. Earlier build-r4 E06 compiled
+positive and forced cleanup PASS (compiled-r2,18.538 s host); actual detailed40,000
+and averaged4,000 accepted steps retain their declared0.2 s windows and cleanup. The current Ryzen7 7700/32GB/RTX3070 desktop
+is documented; the user has been asked to identify the modest reference host
+required by roadmap6.7. Long-session/modest-host evidence remains pending.
+Q60 remains IN PROGRESS, NOT ACCEPTED, uncommitted and unpublished.
+
+Acceptance sequence: bounded private Q60 device/workbench qualification, fresh
+Q60-based HARD calibration through U05, then REL-B's advertised normal-player/
+session release matrix. Q60 directly requires accepted U07. U06 keeps its current
+transient restart semantics; native typed backing/digest proof does not qualify
+RB56 capture/load. Normal RB56 save/load and public HARD remain NOT RUN until
+U05/REL-B. Every advertised operation still needs actual qualification; neither
+private fixtures nor catalog registration waive the normal guards or budgets.
 
 ---
 

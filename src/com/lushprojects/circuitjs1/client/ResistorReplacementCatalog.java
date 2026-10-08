@@ -9,22 +9,33 @@ class ResistorReplacementCatalog implements PhysicalPartCatalog<ResistorCatalogE
         new HashMap<String, ResistorCatalogEntry>();
     private final Vector<String> order = new Vector<String>();
 
-    ResistorReplacementCatalog() {
+    ResistorReplacementCatalog() { this(ResistorNameplate.DEFAULT_RATED_WATTAGE); }
+
+    /** A power-resistor position advertises its actual replacement rating. */
+    static ResistorReplacementCatalog forSpecification(ResistorNameplate specification) {
+        if (specification == null) throw new IllegalArgumentException("Missing resistor specification");
+        return new ResistorReplacementCatalog(Math.max(ResistorNameplate.DEFAULT_RATED_WATTAGE,
+            specification.getRatedWattage()));
+    }
+
+    private ResistorReplacementCatalog(double ratedWattage) {
+        if (Double.isNaN(ratedWattage) || Double.isInfinite(ratedWattage) || ratedWattage <= 0)
+            throw new IllegalArgumentException("Invalid catalog power rating");
         for (int decade = 0; decade <= 6; decade++) {
             for (int mantissa : E12_MANTISSAS) {
                 double value = mantissa * Math.pow(10, decade);
                 if (value > 10000000)
                     continue;
-                add(value);
+                add(value, ratedWattage);
             }
         }
     }
 
-    private void add(double resistanceOhms) {
-        double ratedWattage = ResistorNameplate.DEFAULT_RATED_WATTAGE;
-        if (resistanceOhms == 330)
-            ratedWattage = .22;
-        String id = "R_CATALOG_" + (long) resistanceOhms;
+    private void add(double resistanceOhms, double ratedWattage) {
+        boolean standard = ratedWattage == ResistorNameplate.DEFAULT_RATED_WATTAGE;
+        if (standard && resistanceOhms == 330) ratedWattage = .22;
+        String id = "R_CATALOG_" + (long) resistanceOhms +
+            (standard ? "" : "_W" + Double.toString(ratedWattage).replace('.', '_'));
         if (entries.containsKey(id))
             throw new IllegalArgumentException("Duplicate catalog value: " + resistanceOhms);
         entries.put(id, new ResistorCatalogEntry(id, resistanceOhms, ratedWattage));

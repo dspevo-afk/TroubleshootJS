@@ -35,7 +35,9 @@ final class GenerationDependencyContext {
     private static final String POWER_LEAF_CONTRACT_POLICY =
         "none:BoardPowerController-and-GeneratedExternalPowerBindings-only";
 
-    private static final int MAX_CANONICAL_LENGTH = 1024 * 1024;
+    // Complete 40..60-package graph, physical and conductor identities share this
+    // typed capacity. Individual fields and request/realization limits stay unchanged.
+    static final int MAX_CANONICAL_LENGTH = 2 * 1024 * 1024;
     private static final int MAX_MANIFEST_LENGTH = 64 * 1024;
     private static final int MAX_FIELD_LENGTH = 256 * 1024;
 
@@ -1022,22 +1024,66 @@ final class GenerationDependencyContext {
      * transient fields have not been audited.
      */
     private static String stableElementDump(CircuitElm element) {
+        return stableElementDump(element, true);
+    }
+
+    /** Same audited model policy for U06 restart state; placement and fuse wear have separate owners. */
+    static String restartModelDefinition(CircuitElm element) {
+        return stableElementDump(element, false);
+    }
+
+    private static String stableElementDump(CircuitElm element, boolean connectionGeometry) {
         require(element != null, "Missing CircuitJS binding element");
         String dump = element.dump();
         require(dump != null, "CircuitJS binding element has no dump");
         Vector<String> tokens = dumpTokens(dump);
         int type = element.getDumpType();
         switch (type) {
+        case 'l': {
+            require(element.getClass() == InductorElm.class && tokens.size() == 8,
+                "Unaudited inductor dump shape");
+            InductorElm inductor = (InductorElm) element;
+            require(inductor.ind != null, "Missing real inductor model");
+            // Current and companion-source/tangent values are restart state. Both
+            // stored L/integration declarations and actual setup inputs are retained.
+            return modelDumpTokens(tokens, connectionGeometry, 7) + frameValue(doubleBits(inductor.ind.inductance)) +
+                frameValue(Integer.toString(inductor.ind.flags));
+        }
+        case 'z':
+            require(element.getClass() == ZenerElm.class && tokens.size() == 7,
+                "Unaudited Zener dump shape");
+            return modelDumpTokens(tokens, connectionGeometry) + diodeDefinition((DiodeElm) element);
+        case 407:
+            require(element.getClass() == OptocouplerElm.class && tokens.size() == 6,
+                "Unaudited optocoupler dump shape");
+            return optocouplerDefinition((OptocouplerElm) element, modelDumpTokens(tokens, connectionGeometry), connectionGeometry);
+        case 458:
+            require(element.getClass() == E06AveragedConverterElm.class && tokens.size() == 8,
+                "Unaudited averaged converter dump shape");
+            return modelDumpTokens(tokens, connectionGeometry) +
+                frameValue(((E06AveragedConverterElm) element).getContract().canonical());
+        case 459:
+            require(element.getClass() == E06PwmControllerElm.BiasElm.class && tokens.size() == 8,
+                "Unaudited powered bias dump shape");
+            return modelDumpTokens(tokens, connectionGeometry) + frameValue(doubleBits(E06ConverterContract.BIAS_VOLTS)) +
+                frameValue(doubleBits(E06ConverterContract.BIAS_RESISTANCE_OHMS)) +
+                frameValue(E06PwmControllerElm.BiasElm.CONVERGENCE_POLICY);
         case 'c':
             // CapacitorElm: capacitance, live voltdiff, initialVoltage.
-            return joinDumpTokens(tokens, 7);
+            return modelDumpTokens(tokens, connectionGeometry, 7);
         case 452:
             // Relay: inherited coil-current state at token 8; retain all model/fault inputs.
-            return joinDumpTokens(tokens, 8);
+            return modelDumpTokens(tokens, connectionGeometry, 8);
         case 't':
             // TransistorElm: pnp, live VBE, live VCE, beta, model name.
-            return joinDumpTokens(tokens, 7, 8);
-        case 451: // Fuse resistance, I-squared-t, persistent heat and blown state.
+            return modelDumpTokens(tokens, connectionGeometry, 7, 8);
+        case 451:
+            // Preserve the historical generation policy, including irreversible wear.
+            if (connectionGeometry) return joinDumpTokens(tokens);
+            require(element.getClass() == ProtectionFuseElm.class && tokens.size() == 10,
+                "Unaudited physical fuse dump shape");
+            // U06 carries wear separately in per-physical-part FUSES records.
+            return modelDumpTokens(tokens, false, 8, 9);
         case 453: // External load resistance and persistent stress state.
         case 450: // DC compliance settings; no transient state.
         case 454: // Linear E02 regulator: bounded static rail-contract payload only.
@@ -1058,11 +1104,119 @@ final class GenerationDependencyContext {
             // an intentional mutable input captured here). E04's variable
             // source mirrors its requested value into VoltageElm's maxVoltage
             // field before this policy sees the dump.
-            return joinDumpTokens(tokens);
+            return modelDumpTokens(tokens, connectionGeometry);
         default:
             throw new IllegalStateException("No audited stable CircuitJS dump policy for type: " +
                 type);
         }
+    }
+
+    /** Full actual junction definition, including built-ins whose dumpModel is null. */
+    private static String diodeDefinition(DiodeElm element) {
+        require(element.model != null && element.diode != null, "Missing actual diode definition");
+        boolean dumped = element.model.dumped;
+        String model;
+        try { model = element.model.dump(); }
+        finally { element.model.dumped = dumped; }
+        Diode junction = element.diode;
+        StringBuilder out = new StringBuilder();
+        appendField(out, "diode.model", model);
+        appendField(out, "diode.series-node", Integer.toString(element.diodeEndNode));
+        appendField(out, "diode.has-resistance", Boolean.toString(element.hasResistance));
+        // These are fixed setup parameters, unlike lastvoltdiff and accepted currents.
+        appendField(out, "diode.setup", doubleBits(junction.leakage) + ":" +
+            doubleBits(junction.zvoltage) + ":" + doubleBits(junction.vscale) + ":" +
+            doubleBits(junction.vdcoef) + ":" + doubleBits(junction.zoffset) + ":" +
+            doubleBits(junction.vcrit) + ":" + doubleBits(junction.vzcrit));
+        return out.toString();
+    }
+
+    /** 407's save dump omits its internals, so accepting it alone is unsafe. */
+    private static String optocouplerDefinition(OptocouplerElm opto, String dump, boolean connectionGeometry) {
+        require(opto.compElmList != null && opto.compElmList.size() == 3 &&
+            opto.compElmList.get(0) != null && opto.compElmList.get(0).getClass() == DiodeElm.class &&
+            opto.compElmList.get(1) != null && opto.compElmList.get(1).getClass() == CCCSElm.class &&
+            opto.compElmList.get(2) != null && opto.compElmList.get(2).getClass() == NTransistorElm.class &&
+            opto.diode == opto.compElmList.get(0) && opto.transistor == opto.compElmList.get(2),
+            "Unaudited optocoupler internals");
+        DiodeElm diode = opto.diode;
+        TransistorElm transistor = opto.transistor;
+        CCCSElm transfer = (CCCSElm) opto.compElmList.get(1);
+        require(transistor.model != null && transfer.inputCount == 2 && transfer.inputPairCount == 1 &&
+            !transfer.isSpiceStyle() && transfer.exprString != null && transfer.expr != null,
+            "Unaudited optocoupler transfer model");
+        boolean dumped = transistor.model.dumped;
+        String model;
+        try { model = transistor.model.dump(); }
+        finally { transistor.model.dumped = dumped; }
+        StringBuilder out = new StringBuilder();
+        appendField(out, "opto.dump", dump);
+        appendField(out, "opto.flags", Integer.toString(opto.flags));
+        appendField(out, "opto.diode", stableElementDump(diode, connectionGeometry) + diodeDefinition(diode));
+        appendField(out, "opto.transistor", stableElementDump(transistor, connectionGeometry));
+        appendField(out, "opto.transistor-model", model);
+        appendField(out, "opto.transistor-vcrit", doubleBits(transistor.vcrit));
+        appendField(out, "opto.transfer-flags", Integer.toString(transfer.flags));
+        appendField(out, "opto.transfer-expression", transfer.exprString);
+        appendField(out, "opto.transfer-tree", expressionDefinition(transfer.expr, 0));
+        appendField(out, "opto.connections", optocouplerConnections(opto));
+        return out.toString();
+    }
+
+    private static String expressionDefinition(Expr expression, int depth) {
+        require(expression != null && depth < 64, "Invalid or unbounded optocoupler expression");
+        StringBuilder out = new StringBuilder();
+        appendLocal(out, Integer.toString(expression.type));
+        appendLocal(out, doubleBits(expression.value));
+        int count = expression.children == null ? 0 : expression.children.size();
+        require(count <= 64, "Unbounded optocoupler expression children");
+        appendLocal(out, Integer.toString(count));
+        for (int i = 0; i < count; i++)
+            appendLocal(out, expressionDefinition(expression.children.get(i), depth + 1));
+        checkBound(out);
+        return out.toString();
+    }
+
+    private static String optocouplerConnections(OptocouplerElm opto) {
+        require(opto.numPosts == 4 && opto.compNodeList != null &&
+            opto.numNodes == opto.compNodeList.size() && opto.numNodes >= opto.numPosts,
+            "Unaudited optocoupler local nodes");
+        Vector<String> internal = new Vector<String>(), seen = new Vector<String>();
+        StringBuilder out = new StringBuilder();
+        for (int n = 0; n < opto.numNodes; n++) {
+            CircuitNode node = opto.compNodeList.get(n);
+            require(node != null && node.links != null && !node.links.isEmpty(),
+                "Missing optocoupler local connection");
+            Vector<String> links = new Vector<String>();
+            for (CircuitNodeLink link : node.links) {
+                require(link != null && link.elm != null, "Missing optocoupler local link");
+                int index = opto.compElmList.indexOf(link.elm);
+                require(index >= 0 && link.num >= 0 &&
+                    link.num < link.elm.getPostCount() + link.elm.getInternalNodeCount(),
+                    "Foreign optocoupler local link");
+                String value = index + ":" + link.num;
+                require(!seen.contains(value), "Duplicate optocoupler local link");
+                seen.add(value); links.add(value);
+            }
+            Collections.sort(links);
+            StringBuilder record = new StringBuilder();
+            for (String value : links) appendLocal(record, value);
+            if (n < opto.numPosts) appendField(out, "external." + n, record.toString());
+            else internal.add(record.toString());
+        }
+        for (int e = 0; e < opto.compElmList.size(); e++) {
+            CircuitElm element = opto.compElmList.get(e);
+            for (int n = 0; n < element.getPostCount() + element.getInternalNodeCount(); n++)
+                require(seen.contains(e + ":" + n), "Omitted optocoupler local link");
+        }
+        appendStringList(out, "internal", internal, true);
+        require(opto.voltageSources != null && opto.voltageSources.size() == 1 &&
+            opto.voltageSources.get(0).elm == opto.compElmList.get(1) &&
+            opto.voltageSources.get(0).vsNumForElement == 0,
+            "Unaudited optocoupler internal source mapping");
+        // Global node/source numbers, Newton history, currents and broken-path
+        // analysis results are transient. The declared local graph is retained.
+        return out.toString();
     }
 
     private static Vector<String> dumpTokens(String dump) {
@@ -1073,6 +1227,15 @@ final class GenerationDependencyContext {
             tokens.add(tokenizer.nextToken());
         require(!tokens.isEmpty(), "CircuitJS element dump is empty");
         return tokens;
+    }
+
+    private static String modelDumpTokens(Vector<String> tokens, boolean connectionGeometry, int... omitted) {
+        if (connectionGeometry) return joinDumpTokens(tokens, omitted);
+        require(tokens.size() >= 6, "CircuitJS model lacks its audited placement header");
+        int[] excluded = new int[omitted.length + 4];
+        for (int i = 0; i < 4; i++) excluded[i] = i + 1;
+        for (int i = 0; i < omitted.length; i++) excluded[i + 4] = omitted[i];
+        return joinDumpTokens(tokens, excluded);
     }
 
     private static String joinDumpTokens(Vector<String> tokens, int... omitted) {

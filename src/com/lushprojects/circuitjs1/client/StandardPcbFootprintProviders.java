@@ -20,11 +20,15 @@ final class StandardPcbFootprintProviders {
         registry.register(PhysicalPackages.AXIAL_RESISTOR, new AxialProvider(0));
         registry.register(PhysicalPackages.AXIAL_FUSE, new AxialProvider(0));
         registry.register(PhysicalPackages.AXIAL_DIODE, new AxialProvider(1));
+        registry.register(PhysicalPackages.RADIAL_INDUCTOR_2, new RadialInductorProvider());
+        registry.register(PhysicalPackages.OPTOCOUPLER_4, new OptocouplerProvider());
         registry.register(PhysicalPackages.THROUGH_HOLE_LED, new LedProvider());
         registry.register(PhysicalPackages.TO92_NPN, new NpnProvider());
         registry.register(PhysicalPackages.TO92_NMOS, new NmosProvider());
         registry.register(PhysicalPackages.E05_ISOLATION_TRANSFORMER_4,
             new MultiTerminalProvider(4, 4));
+        registry.register(PhysicalPackages.ISOLATED_CONVERTER_7,
+            new MultiTerminalProvider(7, 7));
         registry.register(PhysicalPackages.TO220_REGULATOR_4,
             new MultiTerminalProvider(4, 4));
         registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
@@ -115,6 +119,28 @@ final class StandardPcbFootprintProviders {
             if (component.getPadIds().size() != 3)
                 throw new IllegalStateException("NMOS provider requires G/D/S pads for " +
                     component.getId());
+            return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
+        }
+    }
+
+    /** Aligns the declared primary pins with the converter's primary side. */
+    private static final class OptocouplerProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y,
+                Random random, Rectangle outline) {
+            if (component == null || component.getPhysicalPackage() == null ||
+                    !PhysicalPackages.OPTOCOUPLER_4.isEquivalentTo(component.getPhysicalPackage()) ||
+                    component.getPadIds().size() != 4)
+                throw new IllegalArgumentException("Optocoupler provider requires its four-terminal package");
+            return PcbFootprint.fromPhysicalPackage(component,
+                new PcbPackagePose(x, y, PcbRotation.DEG_180, PcbBoardSide.TOP),
+                PhysicalPackages.OPTOCOUPLER_4.getGeometry());
+        }
+    }
+
+    private static class RadialInductorProvider implements PcbFootprintProvider {
+        public PcbFootprint create(BoardComponent component, int x, int y, Random random,
+                Rectangle outline) {
+            requireTwoPads(component);
             return PcbFootprint.fromPhysicalPackage(component, x, y, random, outline);
         }
     }

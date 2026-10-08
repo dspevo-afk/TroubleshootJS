@@ -93,7 +93,7 @@ final class ReplaceableResistorBoardCapability implements PhysicalBoardRuntimeCa
         Vector<WorkbenchCatalogEntry> result = new Vector<WorkbenchCatalogEntry>();
         for (ResistorCatalogEntry entry : catalog.getEntries())
             result.add(new WorkbenchCatalogEntry(entry.getId(),
-                entry.getNameplate().getDisplayValue()));
+                entry.getCatalogDisplayValue()));
         return result;
     }
 
