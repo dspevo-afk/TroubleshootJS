@@ -451,6 +451,7 @@ MouseOutHandler, MouseWheelHandler {
     int troubleshootAlphaCase = -1;
     boolean troubleshootE05Verification, troubleshootE05VerificationComplete, troubleshootE05ForcedFailure;
     boolean troubleshootE05VisualHold;
+    boolean troubleshootE06Verification, troubleshootE06VerificationComplete, troubleshootE06ForcedFailure;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootE02Verification, troubleshootE02VerificationComplete, troubleshootE02ForcedFailure;
 	boolean troubleshootA06Verification;
@@ -655,6 +656,8 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootE05Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE05", false);
             troubleshootE05ForcedFailure = troubleshootE05Verification && qp.getBooleanValue("tsjE05Fail", false);
             troubleshootE05VisualHold = troubleshootE05Verification && qp.getBooleanValue("tsjE05VisualHold", false);
+            troubleshootE06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyE06", false);
+            troubleshootE06ForcedFailure = troubleshootE06Verification && qp.getBooleanValue("tsjE06Fail", false);
             troubleshootU06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU06", false);
             troubleshootU06Family = qp.getValue("tsjU06Family");
             troubleshootU06Seed = qp.getValue("tsjU06Seed");
@@ -1108,7 +1111,7 @@ MouseOutHandler, MouseWheelHandler {
 		    readSetupFile(startCircuit, startLabel);
 		}
 		else if (!troubleshootDebug || troubleshootFixture != null || troubleshootChallenge != null ||
-			troubleshootQuickPlay || troubleshootU06Verification || troubleshootE05Verification)
+			troubleshootQuickPlay || troubleshootU06Verification || troubleshootE05Verification || troubleshootE06Verification)
 		    getSetupList(false);
 		else
 		    getSetupList(true);
@@ -4935,7 +4938,7 @@ MouseOutHandler, MouseWheelHandler {
 	pcbWorkbenchController = (!troubleshootDebug || FreshGeneratedRuntimeInstallation.isInProgress(this) ||
 	    troubleshootTask41Verification || troubleshootTask43PVerification || troubleshootTask46Verification ||
 	    troubleshootTask47Verification || troubleshootTask48Verification ||
-	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
+	    troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootE02Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootQ30Verification || troubleshootU01Verification || troubleshootA10Verification ||
 	    troubleshootA01Measurement ||
 	    ControlledIndicatorBlockContributions.FAMILY_ID.equals(instance.getCircuitFamilyId()) ||
 	    troubleshootCompositionGateVerification || troubleshootCompositionGateControls) &&
@@ -5549,6 +5552,14 @@ MouseOutHandler, MouseWheelHandler {
                 publishBrowserVerificationResult("RUNNING:a08");
                 A08MutationDeveloperVerifier.start(this, troubleshootA08ForcedFailure);
             }
+            if (!developerVerifierRunning && troubleshootE06Verification && !troubleshootE06VerificationComplete &&
+                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                    generatedChallengeController != null && generatedChallengeController.isReady() &&
+                    isGeneratedRuntimeSettled()) {
+                developerVerifierRunning = true; troubleshootE06VerificationComplete = true;
+                publishBrowserVerificationResult("RUNNING:e06");
+                E06ConverterDeveloperVerifier.start(this, troubleshootE06ForcedFailure);
+            }
             if (!developerVerifierRunning && troubleshootE05Verification && !troubleshootE05VerificationComplete &&
                     !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                     generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5879,7 +5890,7 @@ MouseOutHandler, MouseWheelHandler {
 		    troubleshootTask40Verification || troubleshootTask41Verification ||
 		    troubleshootA01Measurement ||
 		    troubleshootTask46Verification || troubleshootTask47Verification ||
-		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
+		    troubleshootTask48Verification || troubleshootTask49Verification || troubleshootA02Verification || troubleshootA03Verification || troubleshootA04Verification || troubleshootQ15Verification || troubleshootQuickPlayGateVerification || troubleshootE03Verification || troubleshootE01Verification || troubleshootA06Verification || troubleshootA07Verification || troubleshootE05Verification || troubleshootE06Verification || troubleshootA08Verification || troubleshootP01Verification || troubleshootP02Verification || troubleshootP06Verification || troubleshootP07Verification || troubleshootU01Verification || troubleshootA10Verification ||
 		    troubleshootTask43Verification || troubleshootTask43PVerification)) {
 		String failureMessage = e.getMessage();
 		if (troubleshootTask43PForcedFailure && failureMessage != null &&
@@ -5966,6 +5977,19 @@ MouseOutHandler, MouseWheelHandler {
     }
     private static native void publishA08Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-a08-report", evidence);
+    }-*/;
+
+    void finishE06Verification(String evidence, Throwable failure) {
+        developerVerifierRunning = false;
+        if (evidence != null) publishE06Evidence(evidence);
+        if (failure == null) publishBrowserVerificationResult("PASS:e06");
+        else {
+            publishBrowserVerificationResult("FAIL:e06:" + failure.getMessage());
+            console("E06 failure: " + failure);
+        }
+    }
+    private static native void publishE06Evidence(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-e06-report", evidence);
     }-*/;
 
     void finishE05Verification(String evidence, Throwable failure) {

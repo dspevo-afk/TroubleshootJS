@@ -1,0 +1,2575 @@
+[
+  {
+    "acSourceJ": 0.9792132890586315,
+    "acceptedSteps": 11526,
+    "acceptedTimeSeconds": 0.057629999999994005,
+    "allElementSignedTerminalJ": 2.041158913720191e-06,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.0007323993228339022,
+    "cycleIndex": 115,
+    "enableInternalEmfJ": 1.905594405593226e-07,
+    "enableInternalSeriesLossJ": 1.9036907148771853e-10,
+    "enableTerminalJ": 1.9036907148783547e-07,
+    "endpointChannels": {
+      "activeSeconds": 0.0076249999999997735,
+      "biasInputI": 0.000988715274264959,
+      "biasOutputI": 0.000988715274264973,
+      "bulkV": 167.2340815859144,
+      "collectorI": 0.0005834364978981509,
+      "duty": 0.0001810915554811778,
+      "enableV": 4.995004995005061,
+      "feedbackV": 0.013975729924197822,
+      "forwardI": 0.0033896271135447314,
+      "freewheelI": 0.005672933686246649,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 8.650773926693068e-07,
+      "highDrainI": 1.0365126745973956e-06,
+      "highVgs": -7.105427357601002e-15,
+      "ledI": 9.863345946971858e-08,
+      "loadI": 0.0014142034586349928,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 8.650773926274161e-07,
+      "lowDrainI": 1.036512674555505e-06,
+      "lowVgs": 1.4210854715202004e-14,
+      "outputCapV": 0.06711761896137025,
+      "outputInductorI": 0.009062560799789725,
+      "outputV": 0.06788176601447965,
+      "phaseSeconds": 0.0001249999999940049,
+      "preLV": -0.5383562482983307,
+      "primaryI": 8.650773921647925e-07,
+      "primaryV": -5.7813969437578905,
+      "pwmInputI": 0.00031723408158591435,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": -0.0033896271135460954,
+      "secondaryV": -0.02663919706784819,
+      "sourceI": 1.5110404275363194e-12,
+      "sourceV": 44.78074152106395
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "maxElementExternalCurrentSumA": 4.84164302616899e-09,
+    "maxExternalPostNodeKclA": 0.0019998070300627654,
+    "maxSubIterations": 3991,
+    "nominal150to200ms": {
+      "channels": {},
+      "sampledSteps": 0
+    },
+    "nonlinearTrials": 1393615,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "otherTerminalAbsorptionJ": 0.32125083738780497,
+    "phase": "native-r2",
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "FAILED",
+    "sampledSteps": 11526,
+    "solves": 1382089,
+    "sourceTerminalJ": 0.9792134794277042,
+    "storageEndJ": 0.6572320457145273,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": 2.381614530805608e-07,
+    "unqualifiedEnergyResidualJ": -2.0411589151143954e-06
+  },
+  {
+    "acSourceJ": 0.9792132890586315,
+    "acceptedSteps": 11526,
+    "acceptedTimeSeconds": 0.057629999999994005,
+    "allElementSignedTerminalJ": 2.041158913720191e-06,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.0007323993228339022,
+    "cycleIndex": 115,
+    "enableInternalEmfJ": 1.905594405593226e-07,
+    "enableInternalSeriesLossJ": 1.9036907148771853e-10,
+    "enableTerminalJ": 1.9036907148783547e-07,
+    "endpointChannels": {
+      "activeSeconds": 0.0076249999999997735,
+      "biasInputI": 0.000988715274264959,
+      "biasOutputI": 0.000988715274264973,
+      "bulkV": 167.2340815859144,
+      "collectorI": 0.0005834364978981509,
+      "duty": 0.0001810915554811778,
+      "enableV": 4.995004995005061,
+      "feedbackV": 0.013975729924197822,
+      "forwardI": 0.0033896271135447314,
+      "freewheelI": 0.005672933686246649,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 8.650773926693068e-07,
+      "highDrainI": 1.0365126745973956e-06,
+      "highVgs": -7.105427357601002e-15,
+      "ledI": 9.863345946971858e-08,
+      "loadI": 0.0014142034586349928,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 8.650773926274161e-07,
+      "lowDrainI": 1.036512674555505e-06,
+      "lowVgs": 1.4210854715202004e-14,
+      "outputCapV": 0.06711761896137025,
+      "outputInductorI": 0.009062560799789725,
+      "outputV": 0.06788176601447965,
+      "phaseSeconds": 0.0001249999999940049,
+      "preLV": -0.5383562482983307,
+      "primaryI": 8.650773921647925e-07,
+      "primaryV": -5.7813969437578905,
+      "pwmInputI": 0.00031723408158591435,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": -0.0033896271135460954,
+      "secondaryV": -0.02663919706784819,
+      "sourceI": 1.5110404275363194e-12,
+      "sourceV": 44.78074152106395
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "failureBranchState": {
+      "highSwitch": {
+        "bodyDiode1LastVoltdiff": 0.0,
+        "bodyDiode2LastVoltdiff": -139.58009400024437,
+        "bodyTerminal": 1,
+        "diodeCurrent1": 0.0,
+        "diodeCurrent2": -1.7143528192808883e-07,
+        "gm": 0.0,
+        "ids": 1.3958009400024438e-06,
+        "lastv0": -5.490067597481864,
+        "lastv1": -5.490067597481862,
+        "lastv2": 134.0900264027625,
+        "mode": 0,
+        "voltsGSD": [
+          -5.479153698121801,
+          -5.479153698121793,
+          134.09002640276915
+        ]
+      },
+      "lowSwitch": {
+        "bodyDiode1LastVoltdiff": 0.0,
+        "bodyDiode2LastVoltdiff": -139.64002530607246,
+        "bodyTerminal": 1,
+        "diodeCurrent1": 0.0,
+        "diodeCurrent2": -1.7143528192808883e-07,
+        "gm": 0.0,
+        "ids": 1.3964002530607247e-06,
+        "lastv0": -33.14373810825645,
+        "lastv1": -33.14373810825644,
+        "lastv2": 106.496287197816,
+        "mode": 0,
+        "voltsGSD": [
+          -33.14373810826142,
+          -33.1437381082614,
+          106.48537329546109
+        ]
+      },
+      "optoCCCS": {
+        "broken": false,
+        "expression": "max(0,min(.0001, select(i-.003, (-80000000000*(i)^5+800000000*(i)^4-3000000*(i)^3+5177.2*(i)^2+.2453*(i)-.00005)*1.04/700, (9000000*(i)^5-998113*(i)^4+42174*(i)^3-861.32*(i)^2+9.0836*(i)-.0078)*.945/700)))",
+        "expressionStateTime": 0.057629999999994005,
+        "expressionStateValues": [
+          9.870475117279733e-08,
+          0.0,
+          0.0,
+          0.0,
+          2.718281828459045,
+          0.0,
+          0.0,
+          0.0,
+          9.870475117279733e-08
+        ],
+        "inputCount": 2,
+        "inputPairCount": 1,
+        "lastInputCurrents": [
+          9.870475117279733e-08
+        ],
+        "pinCurrentsInputThenOutput": [
+          -9.870475159506641e-08,
+          9.870475159506641e-08,
+          0.0,
+          -0.0
+        ],
+        "storedExpressionCurrentA": 0.0,
+        "volts": [
+          29.35199256207714,
+          29.351992562077147,
+          -33.1311488074111,
+          -33.1311308226956
+        ]
+      },
+      "optoTransistor": {
+        "gmin": 0.1,
+        "ib": 2.464198838064051e-16,
+        "ic": 0.0012625270281940266,
+        "ie": -0.001262527028194273,
+        "lastvbc": -1.7984715498187143e-05,
+        "lastvbe": 0.01258930085031551,
+        "voltsBCE": [
+          -33.1311488074111,
+          -33.1311308226956,
+          -33.1437381082614
+        ]
+      },
+      "transformer": {
+        "primaryCompanionSourceA": -0.035485294954339275,
+        "secondaryCompanionSourceA": 0.13840774053383917,
+        "volts": [
+          -5.479153698121793,
+          1.8486849795346998e-05,
+          106.48537329546109,
+          29.351992562077147
+        ],
+        "windingCurrents": [
+          -0.002181384180043655,
+          -0.0005450817352911363
+        ]
+      }
+    },
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 4999,
+    "maxElementExternalCurrentSumA": 4.84164302616899e-09,
+    "maxExternalPostNodeKclA": 0.0019998070300627654,
+    "maxSubIterations": 3991,
+    "nominal150to200ms": {
+      "channels": {},
+      "sampledSteps": 0
+    },
+    "nonlinearTrials": 1393615,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "originalStopMessage": "Convergence failed!",
+    "otherTerminalAbsorptionJ": 0.32125083738780497,
+    "phase": "native-r3",
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "FAILED",
+    "sampledSteps": 11526,
+    "solves": 1382089,
+    "sourceTerminalJ": 0.9792134794277042,
+    "storageEndJ": 0.6572320457145273,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": 2.381614530805608e-07,
+    "unqualifiedEnergyResidualJ": -2.0411589151143954e-06
+  },
+  {
+    "acSourceJ": 0.9792248214934309,
+    "acceptedOptoGminEscalatedSamples": 977,
+    "acceptedSteps": 12400,
+    "acceptedTimeSeconds": 0.06199999999999231,
+    "allElementSignedTerminalJ": 2.1091418286693595e-07,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.0008365724290085576,
+    "cycleIndex": 123,
+    "enableInternalEmfJ": 2.997002997046861e-07,
+    "enableInternalSeriesLossJ": 2.994008988102631e-10,
+    "enableTerminalJ": 2.994008988058741e-07,
+    "endpointChannels": {
+      "activeSeconds": 0.011994999999999596,
+      "biasInputI": 0.0009891210869122369,
+      "biasOutputI": 0.0009891210869122369,
+      "bulkV": 166.94085240197222,
+      "collectorI": 0.0009891112098880843,
+      "duty": 0.0002555679492989022,
+      "enableV": 4.995004995007889,
+      "feedbackV": 0.009877022195126983,
+      "forwardI": 0.003458671673240714,
+      "freewheelI": 0.0027713425852322463,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 1.1108556032937388e-06,
+      "highDrainI": 1.2822908852218276e-06,
+      "highVgs": 8.526512829121202e-14,
+      "ledI": 1.671945630935215e-07,
+      "loadI": 0.0047229194912749165,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 5.580949677464003e-07,
+      "lowDrainI": 7.295302496744892e-07,
+      "lowVgs": 0.0,
+      "outputCapV": 0.22655170982528844,
+      "outputInductorI": 0.006230014258472309,
+      "outputV": 0.226700135581196,
+      "phaseSeconds": 0.0004949999999923141,
+      "preLV": -0.5012998321692771,
+      "primaryI": 8.344752889245495e-07,
+      "primaryV": 0.045795297958306946,
+      "pwmInputI": 0.0003169408524019722,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": -0.0034586716732398926,
+      "secondaryV": 0.011460286070237696,
+      "sourceI": -9.307758114029486e-09,
+      "sourceV": -166.6394371902461
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "failureBranchState": {
+      "highSwitch": {
+        "bodyDiode1LastVoltdiff": 0.0,
+        "bodyDiode2LastVoltdiff": -242.87506232951867,
+        "bodyTerminal": 1,
+        "diodeCurrent1": 0.0,
+        "diodeCurrent2": -1.7143528192808883e-07,
+        "gm": 0.0,
+        "ids": 1.6899589280682385e-06,
+        "lastv0": -231.3367041833325,
+        "lastv1": -167.47600627853083,
+        "lastv2": 1.5198865282929985,
+        "mode": 0,
+        "voltsGSD": [
+          -157.47600472940093,
+          -167.47600472940084,
+          1.5198876537924904
+        ]
+      },
+      "lowSwitch": {
+        "bodyDiode1LastVoltdiff": 0.0,
+        "bodyDiode2LastVoltdiff": -0.005404997490018104,
+        "bodyTerminal": 1,
+        "diodeCurrent1": 0.0,
+        "diodeCurrent2": -1.7008349685408775e-08,
+        "gm": 0.002702498745009052,
+        "ids": 0.01891018771559651,
+        "lastv0": -156.2819753078023,
+        "lastv1": -166.28197530780227,
+        "lastv2": -166.27657031031225,
+        "mode": 1,
+        "voltsGSD": [
+          -156.21094136591793,
+          -166.21094136591788,
+          -166.1564813162815
+        ]
+      },
+      "optoCCCS": {
+        "broken": false,
+        "expression": "max(0,min(.0001, select(i-.003, (-80000000000*(i)^5+800000000*(i)^4-3000000*(i)^3+5177.2*(i)^2+.2453*(i)-.00005)*1.04/700, (9000000*(i)^5-998113*(i)^4+42174*(i)^3-861.32*(i)^2+9.0836*(i)-.0078)*.945/700)))",
+        "expressionStateTime": 0.06199999999999231,
+        "expressionStateValues": [
+          -1.7214697349238665e-07,
+          0.0,
+          0.0,
+          0.0,
+          2.718281828459045,
+          0.0,
+          0.0,
+          0.0,
+          -1.7214697349238665e-07
+        ],
+        "inputCount": 2,
+        "inputPairCount": 1,
+        "lastInputCurrents": [
+          -1.7214697349238665e-07
+        ],
+        "pinCurrentsInputThenOutput": [
+          5.59656784709691e-09,
+          -5.59656784709691e-09,
+          0.0,
+          -0.0
+        ],
+        "storedExpressionCurrentA": 0.0,
+        "volts": [
+          4.516928883939206,
+          4.516928883939206,
+          -166.20107843362763,
+          -166.20106434372278
+        ]
+      },
+      "optoTransistor": {
+        "gmin": 0.1,
+        "ib": -9.820951035510771e-14,
+        "ic": 0.0009891112099847182,
+        "ie": -0.0009891112098865088,
+        "lastvbc": -1.4089904254888097e-05,
+        "lastvbe": 0.009862932290872095,
+        "voltsBCE": [
+          -166.20107843362763,
+          -166.20106434372278,
+          -166.21094136591788
+        ]
+      },
+      "transformer": {
+        "primaryCompanionSourceA": 8.344752889245495e-07,
+        "secondaryCompanionSourceA": -0.0034586716732398926,
+        "volts": [
+          -167.47600472940084,
+          5.207937981377804e-06,
+          -166.1564813162815,
+          4.516928883939206
+        ],
+        "windingCurrents": [
+          0.20923174488275204,
+          -0.8413521591318628
+        ]
+      }
+    },
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 4999,
+    "maxAcceptedOptoTransistorGmin": 0.1,
+    "maxElementExternalCurrentSumA": 0.00018007633661576428,
+    "maxExternalPostNodeKclA": 0.0015634485527042039,
+    "maxSubIterations": 1403,
+    "nominal150to200ms": {
+      "channels": {},
+      "sampledSteps": 0
+    },
+    "nonlinearTrials": 1326000,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": "Convergence failed!",
+    "otherTerminalAbsorptionJ": 0.32344891363208195,
+    "phase": "native-r4",
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "FAILED",
+    "sampledSteps": 12400,
+    "solves": 1313600,
+    "sourceTerminalJ": 0.9792251208943316,
+    "storageEndJ": 0.6549398570510495,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": -1.1303621622318536e-08,
+    "unqualifiedEnergyResidualJ": -2.1091418683658484e-07
+  },
+  {
+    "acSourceJ": 1.4274076981117456,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 40000,
+    "acceptedTimeSeconds": 0.20000000000012963,
+    "allElementSignedTerminalJ": 2.77355413225983e-06,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.01916929330723127,
+    "cycleIndex": 399,
+    "enableInternalEmfJ": 3.7462537462548377e-06,
+    "enableInternalSeriesLossJ": 3.742511235020332e-09,
+    "enableTerminalJ": 3.742511235019855e-06,
+    "endpointChannels": {
+      "activeSeconds": 0.14999500000007962,
+      "biasInputI": 0.0008134476014794306,
+      "biasOutputI": 0.0008134476014794306,
+      "bulkV": 164.54609288525506,
+      "collectorI": 1.1529117300360148e-09,
+      "duty": 0.06156614721945069,
+      "enableV": 4.99500499500499,
+      "feedbackV": 1.784179225059333,
+      "forwardI": -1.7143528192808883e-07,
+      "freewheelI": -1.7143528192808883e-07,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 8.22730464689434e-07,
+      "highDrainI": 9.941657466175228e-07,
+      "highVgs": -2.7755575615628914e-17,
+      "ledI": 1.776715192623123e-07,
+      "loadI": 0.21636014782856008,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 8.227304646841566e-07,
+      "lowDrainI": 9.941657466122454e-07,
+      "lowVgs": 0.0,
+      "outputCapV": 10.407027015478933,
+      "outputInductorI": -3.4287082645409646e-07,
+      "outputV": 10.385287095770884,
+      "phaseSeconds": 0.000495000000129614,
+      "preLV": 11.68137330449647,
+      "primaryI": 8.227305406929216e-07,
+      "primaryV": -5.210397990840221e-08,
+      "pwmInputI": 0.00031454609288525506,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": 1.7143542753075051e-07,
+      "secondaryV": -1.3012541585601616e-08,
+      "sourceI": 2.7456026818783185e-14,
+      "sourceV": -0.3198873738255425
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 2,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxElementExternalCurrentSumA": 8.915756889715798e-08,
+    "maxExternalPostNodeKclA": 0.013098600016729245,
+    "maxSubIterations": 10,
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14999500000007962,
+          "mean": 0.12499750000005615,
+          "min": 0.10000000000002962,
+          "rms": 0.12582809041511384
+        },
+        "biasInputI": {
+          "max": 0.0009786100751253413,
+          "mean": 0.0006010002181426255,
+          "min": 0.0002540165101513059,
+          "rms": 0.0006563127074842932
+        },
+        "biasOutputI": {
+          "max": 0.0009786100751253551,
+          "mean": 0.0006010002181426305,
+          "min": 0.0002540165101513059,
+          "rms": 0.0006563127074842988
+        },
+        "bulkV": {
+          "max": 166.01285596776717,
+          "mean": 163.74821430378822,
+          "min": 160.07252603300813,
+          "rms": 163.7552943127119
+        },
+        "collectorI": {
+          "max": 0.008602094200240969,
+          "mean": 0.0006691963101496845,
+          "min": 4.250524653112093e-10,
+          "rms": 0.0017799063287156937
+        },
+        "duty": {
+          "max": 0.3337074244971068,
+          "mean": 0.1776139922005712,
+          "min": 0.005235692438284474,
+          "rms": 0.21423318396558588
+        },
+        "enableV": {
+          "max": 4.9950049950056155,
+          "mean": 4.995004995005587,
+          "min": 4.995004995002546,
+          "rms": 4.995004995004724
+        },
+        "feedbackV": {
+          "max": 7.434433247471247,
+          "mean": 3.929897796759819,
+          "min": 0.11603824123758955,
+          "rms": 4.747461757554174
+        },
+        "forwardI": {
+          "max": 0.840937891243859,
+          "mean": 0.0658621056698125,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.1872198087167733
+        },
+        "freewheelI": {
+          "max": 0.8427620118794201,
+          "mean": 0.16603935332554637,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.29167009084912265
+        },
+        "highBodyToDrainI": {
+          "max": -4.355734075467197e-09,
+          "mean": -1.556719883732306e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.600741429295183e-07
+        },
+        "highChannelI": {
+          "max": 0.34279303551890195,
+          "mean": 0.026248804734237262,
+          "min": 6.999107925976054e-07,
+          "rms": 0.07174751095809445
+        },
+        "highDrainI": {
+          "max": 0.3427931811407004,
+          "mean": 0.026248960406225753,
+          "min": 8.713460745256942e-07,
+          "rms": 0.07174755044747362
+        },
+        "highVgs": {
+          "max": 10.000000000000142,
+          "mean": 1.8249999999999975,
+          "min": -2.4513724383723456e-12,
+          "rms": 4.272001872658765
+        },
+        "ledI": {
+          "max": 0.002255768155581521,
+          "mean": 0.0003995353582972563,
+          "min": 1.7143225425552582e-07,
+          "rms": 0.0007955836445871867
+        },
+        "loadI": {
+          "max": 0.2646663850022453,
+          "mean": 0.21334894949238178,
+          "min": 0.1759681207357957,
+          "rms": 0.21527506619807282
+        },
+        "lowBodyToDrainI": {
+          "max": -4.355734075558994e-09,
+          "mean": -1.556719883732314e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.6007414292951878e-07
+        },
+        "lowChannelI": {
+          "max": 0.3427930355189517,
+          "mean": 0.026248804734239066,
+          "min": 6.999108053143781e-07,
+          "rms": 0.07174751095809812
+        },
+        "lowDrainI": {
+          "max": 0.34279318114075014,
+          "mean": 0.026248960406227463,
+          "min": 8.713460872424669e-07,
+          "rms": 0.07174755044747733
+        },
+        "lowVgs": {
+          "max": 10.000000000000085,
+          "mean": 1.825,
+          "min": -1.1368683772161603e-13,
+          "rms": 4.272001872658765
+        },
+        "outputCapV": {
+          "max": 12.702225204245137,
+          "mean": 10.239038964722813,
+          "min": 8.450598601317836,
+          "rms": 10.331595273168308
+        },
+        "outputInductorI": {
+          "max": 0.8427617250661604,
+          "mean": 0.2318786689237249,
+          "min": -3.4290073468537e-07,
+          "rms": 0.3472062163437105
+        },
+        "outputV": {
+          "max": 12.703986480107776,
+          "mean": 10.240749575634318,
+          "min": 8.446469795318194,
+          "rms": 10.333203177507512
+        },
+        "phaseSeconds": {
+          "max": 0.000495000000129614,
+          "mean": 0.00024750000010463353,
+          "min": 7.963074644123935e-14,
+          "rms": 0.0002865091622476137
+        },
+        "preLV": {
+          "max": 40.76392373955454,
+          "mean": 10.350738406668064,
+          "min": -0.7970552988036701,
+          "rms": 18.45327615342144
+        },
+        "primaryI": {
+          "max": 0.34279300970551535,
+          "mean": 0.035429511861124474,
+          "min": 6.999153079124184e-07,
+          "rms": 0.07641733345756306
+        },
+        "primaryV": {
+          "max": 166.00207947454462,
+          "mean": 0.0037403322175640547,
+          "min": -167.168812771537,
+          "rms": 98.81404833585519
+        },
+        "pwmInputI": {
+          "max": 0.00031601285596776716,
+          "mean": 0.0003137482143037852,
+          "min": 0.0003100725260330081,
+          "rms": 0.0003137519094867455
+        },
+        "resetLowerI": {
+          "max": 0.13373057362565557,
+          "mean": 0.009181324925597237,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.026304077016802555
+        },
+        "resetUpperI": {
+          "max": 0.133730573625729,
+          "mean": 0.009181324925597156,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.02630407701680206
+        },
+        "secondaryI": {
+          "max": 1.714525882379192e-07,
+          "mean": -0.06584776451948168,
+          "min": -0.8409378907691881,
+          "rms": 0.18719063791918714
+        },
+        "secondaryV": {
+          "max": 41.41731989228373,
+          "mean": 0.0009360190820177163,
+          "min": -41.75041098969456,
+          "rms": 24.629883034115956
+        },
+        "sourceI": {
+          "max": 0.18037287947002223,
+          "mean": -0.005358610202021662,
+          "min": -0.24577448236592905,
+          "rms": 0.05550845620682769
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": -6.785990103175266e-14,
+          "min": -169.7056274847714,
+          "rms": 119.99999999993969
+        }
+      },
+      "sampledSteps": 10000
+    },
+    "nonlinearTrials": 127001,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 0.7465190772356515,
+    "phase": "native-r5",
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "COMPLETE",
+    "sampledSteps": 40000,
+    "solves": 87001,
+    "sourceTerminalJ": 1.427411440623442,
+    "storageEndJ": 0.6617258433729134,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": 2.61364009686272e-10,
+    "unqualifiedEnergyResidualJ": -2.7735537182140847e-06
+  },
+  {
+    "acSourceJ": 1.47365908338964,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 40000,
+    "acceptedTimeSeconds": 0.20000000000012963,
+    "allElementSignedTerminalJ": 3.397301150133586e-06,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.02883116980303973,
+    "cycleIndex": 399,
+    "enableInternalEmfJ": 3.7462537462530136e-06,
+    "enableInternalSeriesLossJ": 3.742511235016905e-09,
+    "enableTerminalJ": 3.7425112350180113e-06,
+    "endpointChannels": {
+      "activeSeconds": 0.14999500000007962,
+      "biasInputI": 0.0003790599449919746,
+      "biasOutputI": 0.0003790599449919885,
+      "bulkV": 163.53174261384657,
+      "collectorI": 0.0003332242308204532,
+      "controlIntegral": -0.0031456092273940864,
+      "duty": 0.29003477099558633,
+      "enableV": 4.995004995004933,
+      "feedbackV": 6.17149455558318,
+      "forwardI": 0.0037847566018409844,
+      "freewheelI": 0.11457225921755167,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 8.211833498236216e-07,
+      "highDrainI": 9.926186317517104e-07,
+      "highVgs": 8.004708007547379e-14,
+      "ledI": 0.0002622411657999274,
+      "loadI": 0.23294625138354583,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 8.211833651490318e-07,
+      "lowDrainI": 9.926186470771207e-07,
+      "lowVgs": -2.842170943040401e-14,
+      "outputCapV": 11.193017028964265,
+      "outputInductorI": 0.11835700901532825,
+      "outputV": 11.1814200664102,
+      "phaseSeconds": 0.000495000000129614,
+      "preLV": -0.6938292422707333,
+      "primaryI": 8.211833077663433e-07,
+      "primaryV": -0.7049288834187426,
+      "pwmInputI": 0.00031353174261384653,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": -0.003784756541158202,
+      "secondaryV": -0.1764086285257274,
+      "sourceI": 1.5342770808641366e-13,
+      "sourceV": -0.3198873738255425
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 2,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxElementExternalCurrentSumA": 2.1063406634874195e-08,
+    "maxExternalPostNodeKclA": 0.005822608242781968,
+    "maxSubIterations": 12,
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14999500000007962,
+          "mean": 0.12499750000005615,
+          "min": 0.10000000000002962,
+          "rms": 0.12582809041511384
+        },
+        "biasInputI": {
+          "max": 0.00039799231147781555,
+          "mean": 0.0003327370684623993,
+          "min": 0.0002615752915080677,
+          "rms": 0.0003345301575663167
+        },
+        "biasOutputI": {
+          "max": 0.00039799231147782943,
+          "mean": 0.00033273706846240555,
+          "min": 0.0002615752915080677,
+          "rms": 0.00033453015756632233
+        },
+        "bulkV": {
+          "max": 165.16523812438604,
+          "mean": 163.48533512442327,
+          "min": 161.65707144581924,
+          "rms": 163.48801336012008
+        },
+        "collectorI": {
+          "max": 0.0006182176567341892,
+          "mean": 0.00034362861550727596,
+          "min": 6.18094137396822e-05,
+          "rms": 0.0003678624060382627
+        },
+        "controlIntegral": {
+          "max": -0.0031456092273940864,
+          "mean": -0.0035341123249393713,
+          "min": -0.003944782301237332,
+          "rms": 0.003542942417838636
+        },
+        "duty": {
+          "max": 0.2932155490751363,
+          "mean": 0.2900598704450218,
+          "min": 0.287071476937778,
+          "rms": 0.2900647069485632
+        },
+        "enableV": {
+          "max": 4.99500499500752,
+          "mean": 4.995004995005584,
+          "min": 4.995004995000443,
+          "rms": 4.995004995004719
+        },
+        "feedbackV": {
+          "max": 7.358089555769297,
+          "mean": 6.639355608530229,
+          "min": 5.980277654074996,
+          "rms": 6.648540799276269
+        },
+        "forwardI": {
+          "max": 0.35804656288587783,
+          "mean": 0.06999440626662608,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.1316193189834883
+        },
+        "freewheelI": {
+          "max": 0.3615099946798504,
+          "mean": 0.16388461999784693,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.20235814899684867
+        },
+        "highBodyToDrainI": {
+          "max": -2.4764713250885483e-08,
+          "mean": -1.4433280435980073e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781352e-07
+        },
+        "highChannelI": {
+          "max": 0.21058401933674986,
+          "mean": 0.03535203614795971,
+          "min": 8.13267932241571e-07,
+          "rms": 0.07055571387975552
+        },
+        "highDrainI": {
+          "max": 0.210584137195473,
+          "mean": 0.03535218048076402,
+          "min": 9.847032141696597e-07,
+          "rms": 0.07055575900154575
+        },
+        "highVgs": {
+          "max": 10.00000000000017,
+          "mean": 2.9500000000000006,
+          "min": -2.1600499167107046e-12,
+          "rms": 5.431390245600108
+        },
+        "ledI": {
+          "max": 0.00036382922325600556,
+          "mean": 0.0002625794110704175,
+          "min": 0.00012744027056245415,
+          "rms": 0.0002680357264805209
+        },
+        "loadI": {
+          "max": 0.2349146122801907,
+          "mean": 0.23291568908399168,
+          "min": 0.22987040491686392,
+          "rms": 0.23291837306290242
+        },
+        "lowBodyToDrainI": {
+          "max": -2.4764713251006364e-08,
+          "mean": -1.4433280435980173e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781383e-07
+        },
+        "lowChannelI": {
+          "max": 0.2105840193368136,
+          "mean": 0.03535203614795999,
+          "min": 8.132679421095552e-07,
+          "rms": 0.07055571387975539
+        },
+        "lowDrainI": {
+          "max": 0.21058413719553673,
+          "mean": 0.03535218048076449,
+          "min": 9.84703224037644e-07,
+          "rms": 0.07055575900154558
+        },
+        "lowVgs": {
+          "max": 10.000000000000114,
+          "mean": 2.95,
+          "min": -1.1368683772161603e-13,
+          "rms": 5.431390245600108
+        },
+        "outputCapV": {
+          "max": 11.274326876824382,
+          "mean": 11.179997093975427,
+          "min": 11.037495205827977,
+          "rms": 11.180124158363666
+        },
+        "outputInductorI": {
+          "max": 0.3600208643190775,
+          "mean": 0.23385608426676205,
+          "min": 0.09852949235147979,
+          "rms": 0.2420049370605046
+        },
+        "outputV": {
+          "max": 11.275901389449153,
+          "mean": 11.179953076031563,
+          "min": 11.033779436009468,
+          "rms": 11.18008190701934
+        },
+        "phaseSeconds": {
+          "max": 0.000495000000129614,
+          "mean": 0.00024750000010463353,
+          "min": 7.963074644123935e-14,
+          "rms": 0.0002865091622476137
+        },
+        "preLV": {
+          "max": 40.49783536813618,
+          "mean": 11.29232993827357,
+          "min": -0.7532713036941558,
+          "rms": 21.745294472471173
+        },
+        "primaryI": {
+          "max": 0.2105839657937173,
+          "mean": 0.05210816491228448,
+          "min": 8.132529376488062e-07,
+          "rms": 0.07931198975606009
+        },
+        "primaryV": {
+          "max": 165.14031784550235,
+          "mean": 0.0002147589832659775,
+          "min": -166.29318547539103,
+          "rms": 125.22697689317445
+        },
+        "pwmInputI": {
+          "max": 0.00031516523812438605,
+          "mean": 0.00031348533512442475,
+          "min": 0.0003116570714458192,
+          "rms": 0.0003134867318560161
+        },
+        "resetLowerI": {
+          "max": 0.11756474106093055,
+          "mean": 0.016757097974995985,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843627003
+        },
+        "resetUpperI": {
+          "max": 0.11756474106090758,
+          "mean": 0.016757097974995014,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843626766
+        },
+        "secondaryI": {
+          "max": 1.7144479808051116e-07,
+          "mean": -0.06998803364536382,
+          "min": -0.3579751601301111,
+          "rms": 0.13161025665077727
+        },
+        "secondaryV": {
+          "max": 41.20580782493425,
+          "mean": 5.374348856051615e-05,
+          "min": -41.53172307247591,
+          "rms": 31.232131283875137
+        },
+        "sourceI": {
+          "max": 0.21736957224664424,
+          "mean": 0.0001322762363423546,
+          "min": -0.21694867682468538,
+          "rms": 0.05868618663730385
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": -6.785990103175266e-14,
+          "min": -169.7056274847714,
+          "rms": 119.99999999993969
+        }
+      },
+      "sampledSteps": 10000
+    },
+    "nonlinearTrials": 124365,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 0.7867858676975346,
+    "phase": "native-r6",
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "COMPLETE",
+    "sampledSteps": 40000,
+    "solves": 84365,
+    "sourceTerminalJ": 1.4736628259012508,
+    "storageEndJ": 0.6580526947546299,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": -3.509053174566131e-06,
+    "unqualifiedEnergyResidualJ": -3.39730077887778e-06
+  },
+  {
+    "acSourceJ": 1.47365908338964,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 40000,
+    "acceptedTimeSeconds": 0.20000000000012963,
+    "allElementSignedTerminalJ": 3.397301150133586e-06,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.02883116980303973,
+    "cycleIndex": 399,
+    "enableInternalEmfJ": 3.7462537462530136e-06,
+    "enableInternalSeriesLossJ": 3.742511235016905e-09,
+    "enableTerminalJ": 3.7425112350180113e-06,
+    "enabledStageDeliverySamples": 8263,
+    "endpointChannels": {
+      "activeSeconds": 0.14999500000007962,
+      "averagedInputI": null,
+      "biasInputI": 0.0003790599449919746,
+      "biasOutputI": 0.0003790599449919885,
+      "bulkV": 163.53174261384657,
+      "collectorI": 0.0003332242308204532,
+      "controlIntegral": -0.0031456092273940864,
+      "duty": 0.29003477099558633,
+      "enableV": 4.995004995004933,
+      "feedbackV": 6.17149455558318,
+      "forwardI": 0.0037847566018409844,
+      "freewheelI": 0.11457225921755167,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 8.211833498236216e-07,
+      "highDrainI": 9.926186317517104e-07,
+      "highVgs": 8.004708007547379e-14,
+      "ledI": 0.0002622411657999274,
+      "loadI": 0.23294625138354583,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 8.211833651490318e-07,
+      "lowDrainI": 9.926186470771207e-07,
+      "lowVgs": -2.842170943040401e-14,
+      "outputCapV": 11.193017028964265,
+      "outputInductorI": 0.11835700901532825,
+      "outputV": 11.1814200664102,
+      "phaseSeconds": 0.000495000000129614,
+      "preLV": -0.6938292422707333,
+      "primaryI": 8.211833077663433e-07,
+      "primaryV": -0.7049288834187426,
+      "pwmInputI": 0.00031353174261384653,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": -0.003784756541158202,
+      "secondaryV": -0.1764086285257274,
+      "sourceI": 1.5342770808641366e-13,
+      "sourceV": -0.3198873738255425,
+      "stageInputI": 0.0006937557415195009,
+      "stageInputPower": 0.11345108535904529,
+      "stageOutputI": 0.0037847566018409844,
+      "stageOutputPower": -0.0026259748052344855
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 2,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxElementExternalCurrentSumA": 2.1063406634874195e-08,
+    "maxExternalPostNodeKclA": 0.005822608242781968,
+    "maxSubIterations": 12,
+    "model": "DETAILED",
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14999500000007962,
+          "mean": 0.12499750000005615,
+          "min": 0.10000000000002962,
+          "rms": 0.12582809041511384
+        },
+        "averagedInputI": null,
+        "biasInputI": {
+          "max": 0.00039799231147781555,
+          "mean": 0.0003327370684623993,
+          "min": 0.0002615752915080677,
+          "rms": 0.0003345301575663167
+        },
+        "biasOutputI": {
+          "max": 0.00039799231147782943,
+          "mean": 0.00033273706846240555,
+          "min": 0.0002615752915080677,
+          "rms": 0.00033453015756632233
+        },
+        "bulkV": {
+          "max": 165.16523812438604,
+          "mean": 163.48533512442327,
+          "min": 161.65707144581924,
+          "rms": 163.48801336012008
+        },
+        "collectorI": {
+          "max": 0.0006182176567341892,
+          "mean": 0.00034362861550727596,
+          "min": 6.18094137396822e-05,
+          "rms": 0.0003678624060382627
+        },
+        "controlIntegral": {
+          "max": -0.0031456092273940864,
+          "mean": -0.0035341123249393713,
+          "min": -0.003944782301237332,
+          "rms": 0.003542942417838636
+        },
+        "duty": {
+          "max": 0.2932155490751363,
+          "mean": 0.2900598704450218,
+          "min": 0.287071476937778,
+          "rms": 0.2900647069485632
+        },
+        "enableV": {
+          "max": 4.99500499500752,
+          "mean": 4.995004995005584,
+          "min": 4.995004995000443,
+          "rms": 4.995004995004719
+        },
+        "feedbackV": {
+          "max": 7.358089555769297,
+          "mean": 6.639355608530229,
+          "min": 5.980277654074996,
+          "rms": 6.648540799276269
+        },
+        "forwardI": {
+          "max": 0.35804656288587783,
+          "mean": 0.06999440626662608,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.1316193189834883
+        },
+        "freewheelI": {
+          "max": 0.3615099946798504,
+          "mean": 0.16388461999784693,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.20235814899684867
+        },
+        "highBodyToDrainI": {
+          "max": -2.4764713250885483e-08,
+          "mean": -1.4433280435980073e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781352e-07
+        },
+        "highChannelI": {
+          "max": 0.21058401933674986,
+          "mean": 0.03535203614795971,
+          "min": 8.13267932241571e-07,
+          "rms": 0.07055571387975552
+        },
+        "highDrainI": {
+          "max": 0.210584137195473,
+          "mean": 0.03535218048076402,
+          "min": 9.847032141696597e-07,
+          "rms": 0.07055575900154575
+        },
+        "highVgs": {
+          "max": 10.00000000000017,
+          "mean": 2.9500000000000006,
+          "min": -2.1600499167107046e-12,
+          "rms": 5.431390245600108
+        },
+        "ledI": {
+          "max": 0.00036382922325600556,
+          "mean": 0.0002625794110704175,
+          "min": 0.00012744027056245415,
+          "rms": 0.0002680357264805209
+        },
+        "loadI": {
+          "max": 0.2349146122801907,
+          "mean": 0.23291568908399168,
+          "min": 0.22987040491686392,
+          "rms": 0.23291837306290242
+        },
+        "lowBodyToDrainI": {
+          "max": -2.4764713251006364e-08,
+          "mean": -1.4433280435980173e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781383e-07
+        },
+        "lowChannelI": {
+          "max": 0.2105840193368136,
+          "mean": 0.03535203614795999,
+          "min": 8.132679421095552e-07,
+          "rms": 0.07055571387975539
+        },
+        "lowDrainI": {
+          "max": 0.21058413719553673,
+          "mean": 0.03535218048076449,
+          "min": 9.84703224037644e-07,
+          "rms": 0.07055575900154558
+        },
+        "lowVgs": {
+          "max": 10.000000000000114,
+          "mean": 2.95,
+          "min": -1.1368683772161603e-13,
+          "rms": 5.431390245600108
+        },
+        "outputCapV": {
+          "max": 11.274326876824382,
+          "mean": 11.179997093975427,
+          "min": 11.037495205827977,
+          "rms": 11.180124158363666
+        },
+        "outputInductorI": {
+          "max": 0.3600208643190775,
+          "mean": 0.23385608426676205,
+          "min": 0.09852949235147979,
+          "rms": 0.2420049370605046
+        },
+        "outputV": {
+          "max": 11.275901389449153,
+          "mean": 11.179953076031563,
+          "min": 11.033779436009468,
+          "rms": 11.18008190701934
+        },
+        "phaseSeconds": {
+          "max": 0.000495000000129614,
+          "mean": 0.00024750000010463353,
+          "min": 7.963074644123935e-14,
+          "rms": 0.0002865091622476137
+        },
+        "preLV": {
+          "max": 40.49783536813618,
+          "mean": 11.29232993827357,
+          "min": -0.7532713036941558,
+          "rms": 21.745294472471173
+        },
+        "primaryI": {
+          "max": 0.2105839657937173,
+          "mean": 0.05210816491228448,
+          "min": 8.132529376488062e-07,
+          "rms": 0.07931198975606009
+        },
+        "primaryV": {
+          "max": 165.14031784550235,
+          "mean": 0.0002147589832659775,
+          "min": -166.29318547539103,
+          "rms": 125.22697689317445
+        },
+        "pwmInputI": {
+          "max": 0.00031516523812438605,
+          "mean": 0.00031348533512442475,
+          "min": 0.0003116570714458192,
+          "rms": 0.0003134867318560161
+        },
+        "resetLowerI": {
+          "max": 0.11756474106093055,
+          "mean": 0.016757097974995985,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843627003
+        },
+        "resetUpperI": {
+          "max": 0.11756474106090758,
+          "mean": 0.016757097974995014,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843626766
+        },
+        "secondaryI": {
+          "max": 1.7144479808051116e-07,
+          "mean": -0.06998803364536382,
+          "min": -0.3579751601301111,
+          "rms": 0.13161025665077727
+        },
+        "secondaryV": {
+          "max": 41.20580782493425,
+          "mean": 5.374348856051615e-05,
+          "min": -41.53172307247591,
+          "rms": 31.232131283875137
+        },
+        "sourceI": {
+          "max": 0.21736957224664424,
+          "mean": 0.0001322762363423546,
+          "min": -0.21694867682468538,
+          "rms": 0.05868618663730385
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": -6.785990103175266e-14,
+          "min": -169.7056274847714,
+          "rms": 119.99999999993969
+        },
+        "stageInputI": {
+          "max": 0.2111683357931594,
+          "mean": 0.019241304909356674,
+          "min": -0.11690444051017934,
+          "rms": 0.07946530522076388
+        },
+        "stageInputPower": {
+          "max": 34.424721676868906,
+          "mean": 3.1450794291397113,
+          "min": -19.14018302046421,
+          "rms": 12.98211837329022
+        },
+        "stageOutputI": {
+          "max": 0.35804656288587783,
+          "mean": 0.06999440626662608,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.1316193189834883
+        },
+        "stageOutputPower": {
+          "max": 14.370434843338924,
+          "mean": 2.7639529088396246,
+          "min": -0.0028688171529561964,
+          "rms": 5.2661516231632275
+        }
+      },
+      "sampledSteps": 10000,
+      "stageInputJ": 0.15725397145698566,
+      "stageOutputJ": 0.1381976454419807
+    },
+    "nonlinearTrials": 124365,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 0.7867858676975346,
+    "phase": "native-r7",
+    "phaseIsControlMetadata": true,
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "COMPLETE",
+    "sampledSteps": 40000,
+    "solves": 84365,
+    "sourceTerminalJ": 1.4736628259012508,
+    "stageInputIncludesBias": true,
+    "stageInputJ": 0.47559539707658105,
+    "stageOutputJ": 0.41436839653263197,
+    "storageEndJ": 0.6580526947546299,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": -3.509053174566131e-06,
+    "unqualifiedEnergyResidualJ": -3.39730077887778e-06
+  },
+  {
+    "acSourceJ": 1.5177455623452372,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 4000,
+    "acceptedTimeSeconds": 0.19999999999998613,
+    "allElementSignedTerminalJ": 3.9545599064868905e-07,
+    "analyses": 2,
+    "beNumericalDampingJ": 0.0072179742118952585,
+    "cycleIndex": 399,
+    "enableInternalEmfJ": 3.7462537462533215e-06,
+    "enableInternalSeriesLossJ": 3.742511235017914e-09,
+    "enableTerminalJ": 3.7425112350184085e-06,
+    "enabledStageDeliverySamples": 2990,
+    "endpointChannels": {
+      "activeSeconds": 0.14994999999999165,
+      "averagedInputI": 0.019593752888242326,
+      "biasInputI": 0.00048323622282168965,
+      "biasOutputI": 0.00048323622282168965,
+      "bulkV": 163.23340565154376,
+      "collectorI": 0.0004483317895800719,
+      "controlIntegral": -0.013069627204612579,
+      "duty": 0.28035831784417614,
+      "enableV": 4.995004995005019,
+      "feedbackV": 5.119314149499502,
+      "forwardI": null,
+      "freewheelI": -1.7143528192808883e-07,
+      "highBodyToDrainI": null,
+      "highChannelI": null,
+      "highDrainI": null,
+      "highVgs": null,
+      "ledI": 0.00030592267288023263,
+      "loadI": 0.23381408276547452,
+      "lowBodyToDrainI": null,
+      "lowChannelI": null,
+      "lowDrainI": null,
+      "lowVgs": null,
+      "outputCapV": 11.223183266255294,
+      "outputInductorI": 0.2341693779104732,
+      "outputV": 11.223075972742777,
+      "phaseSeconds": 0.00044999999998612816,
+      "preLV": 11.323870319502683,
+      "primaryI": null,
+      "primaryV": null,
+      "pwmInputI": null,
+      "resetLowerI": null,
+      "resetUpperI": null,
+      "secondaryI": null,
+      "secondaryV": null,
+      "sourceI": -9.70407627088685e-15,
+      "sourceV": -3.198686289899262,
+      "stageInputI": 0.020076989111064016,
+      "stageInputPower": 3.2772353078279393,
+      "stageOutputI": 0.23416954934573492,
+      "stageOutputPower": 2.6517056095674865
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 3,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxElementExternalCurrentSumA": 4.3199418364552045e-08,
+    "maxExternalPostNodeKclA": 0.0009635993249118146,
+    "maxSubIterations": 8,
+    "model": "AVERAGED",
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14994999999999165,
+          "mean": 0.12497499999999438,
+          "min": 0.09999999999999715,
+          "rms": 0.1258057381441663
+        },
+        "averagedInputI": {
+          "max": 0.020148383358896547,
+          "mean": 0.019739290268995145,
+          "min": 0.01949189457440126,
+          "rms": 0.019739813236662736
+        },
+        "biasInputI": {
+          "max": 0.0007911975239380808,
+          "mean": 0.0006092029380184607,
+          "min": 0.00048323622282168965,
+          "rms": 0.0006171049025122004
+        },
+        "biasOutputI": {
+          "max": 0.0007911975239380808,
+          "mean": 0.0006092029380184665,
+          "min": 0.00048323622282168965,
+          "rms": 0.0006171049025122063
+        },
+        "bulkV": {
+          "max": 164.89997800825,
+          "mean": 163.2369342264542,
+          "min": 161.47249159591874,
+          "rms": 163.2399787832944
+        },
+        "collectorI": {
+          "max": 0.000770177441089297,
+          "mean": 0.0005431235103997667,
+          "min": 0.0004471307744625661,
+          "rms": 0.0005505284472108091
+        },
+        "controlIntegral": {
+          "max": -0.010379540969442973,
+          "mean": -0.012073456710060318,
+          "min": -0.013069627204612579,
+          "rms": 0.012097476211423685
+        },
+        "duty": {
+          "max": 0.2855357825172838,
+          "mean": 0.28145949219842564,
+          "min": 0.27793591239459736,
+          "rms": 0.281466128549424
+        },
+        "enableV": {
+          "max": 4.995004995005132,
+          "mean": 4.995004995004906,
+          "min": 4.995004995004933,
+          "rms": 4.99500499500497
+        },
+        "feedbackV": {
+          "max": 5.119314149499502,
+          "mean": 3.847050326013818,
+          "min": 2.008905008227643,
+          "rms": 3.973449093262519
+        },
+        "forwardI": null,
+        "freewheelI": {
+          "max": -1.7143528192808883e-07,
+          "mean": -1.7143528192808713e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.7143528192808808e-07
+        },
+        "highBodyToDrainI": null,
+        "highChannelI": null,
+        "highDrainI": null,
+        "highVgs": null,
+        "ledI": {
+          "max": 0.0004111666852349377,
+          "mean": 0.0003382124064790439,
+          "min": 0.00030548877743386135,
+          "rms": 0.0003395042034377509
+        },
+        "loadI": {
+          "max": 0.2357829255218539,
+          "mean": 0.23442785514818196,
+          "min": 0.23380564191529016,
+          "rms": 0.23442851133250656
+        },
+        "lowBodyToDrainI": null,
+        "lowChannelI": null,
+        "lowDrainI": null,
+        "lowVgs": null,
+        "outputCapV": {
+          "max": 11.317571615445878,
+          "mean": 11.252624223247565,
+          "min": 11.222700611810561,
+          "rms": 11.252655847509478
+        },
+        "outputInductorI": {
+          "max": 0.23875044425115483,
+          "mean": 0.23501955991106738,
+          "min": 0.23148221411120046,
+          "rms": 0.2350262384025391
+        },
+        "outputV": {
+          "max": 11.317580425048988,
+          "mean": 11.252537047112734,
+          "min": 11.222670811933927,
+          "rms": 11.252568543960313
+        },
+        "phaseSeconds": {
+          "max": 0.000449999999991596,
+          "mean": 0.0002249999999899952,
+          "min": 0.0,
+          "rms": 0.00026692695629140626
+        },
+        "preLV": {
+          "max": 11.523157385720792,
+          "mean": 11.368195935892977,
+          "min": 11.320407536822216,
+          "rms": 11.368246887271694
+        },
+        "primaryI": null,
+        "primaryV": null,
+        "pwmInputI": null,
+        "resetLowerI": null,
+        "resetUpperI": null,
+        "secondaryI": null,
+        "secondaryV": null,
+        "sourceI": {
+          "max": 0.21525769228941638,
+          "mean": 9.407972487198835e-05,
+          "min": -0.21282532014426292,
+          "rms": 0.06111724790942447
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": 2.0843904380285494e-13,
+          "min": -169.7056274847714,
+          "rms": 120.00000000000664
+        },
+        "stageInputI": {
+          "max": 0.020939580882834628,
+          "mean": 0.02034849320701363,
+          "min": 0.020067164501271568,
+          "rms": 0.020349408750742766
+        },
+        "stageInputPower": {
+          "max": 3.4150236176941258,
+          "mean": 3.3215745978301543,
+          "min": 3.2661108106476844,
+          "rms": 3.321734531444441
+        },
+        "stageOutputI": {
+          "max": 0.2387506156864561,
+          "mean": 0.23501973134634815,
+          "min": 0.23148238554651301,
+          "rms": 0.23502640983294812
+        },
+        "stageOutputPower": {
+          "max": 2.7335869454902415,
+          "mean": 2.671750685547652,
+          "min": 2.633149389945318,
+          "rms": 2.671839012632167
+        }
+      },
+      "sampledSteps": 1000,
+      "stageInputJ": 0.16607872989150763,
+      "stageOutputJ": 0.13358753427738268
+    },
+    "nonlinearTrials": 15100,
+    "numericalAnchors": 1,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 0.8542089008480276,
+    "phase": "native-r7",
+    "phaseIsControlMetadata": true,
+    "playerOwnerRestored": null,
+    "referenceComparison": "NOT_RUN",
+    "result": "COMPLETE",
+    "sampledSteps": 4000,
+    "solves": 11100,
+    "sourceTerminalJ": 1.5177493048564776,
+    "stageInputIncludesBias": true,
+    "stageInputJ": 0.5164362110602803,
+    "stageOutputJ": 0.4101417506996599,
+    "storageEndJ": 0.6563229206158933,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-05,
+    "trapRightEndpointDefectJ": -9.536333595745304e-08,
+    "unqualifiedEnergyResidualJ": -3.9545600251170586e-07
+  },
+  {
+    "acSourceJ": 3.7048922665336956,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 240000,
+    "acceptedTimeSeconds": 1.2000000000036277,
+    "actualEndLoadOhms": 24.0,
+    "actualEndSourceRmsV": 90.0,
+    "actualFuseBlown": false,
+    "actualInputConnected": false,
+    "actualSensePresent": true,
+    "allElementSignedTerminalJ": 1.8848786526127942e-05,
+    "analyses": 7,
+    "beNumericalDampingJ": 0.10206959165277957,
+    "case": "DETAILED_SEQUENCE_COARSE_REF0",
+    "criteria": "e06-fidelity-criteria-v1",
+    "cycleIndex": 2399,
+    "disableTransitionDuty": 0.41256947108673525,
+    "disableTransitionStagePowerW": 10.406839337458472,
+    "domainsConnectedByActualGraph": false,
+    "enableInternalEmfJ": 2.622377622383292e-05,
+    "enableInternalSeriesLossJ": 2.6197578645071796e-08,
+    "enableTerminalJ": 2.6197578645038118e-05,
+    "enabledStageDeliverySamples": 38989,
+    "endpointChannels": {
+      "activeSeconds": 0.0,
+      "averagedInputI": null,
+      "biasInputI": 9.906759650901709e-06,
+      "biasOutputI": 9.906759650901709e-06,
+      "bulkV": 79.16377142639202,
+      "collectorI": 6.817923329284692e-09,
+      "controlIntegral": 0.0,
+      "duty": 0.0,
+      "enableV": 4.9950049950049955,
+      "feedbackV": 9.899941727525663,
+      "forwardI": -1.8168073967921933e-14,
+      "freewheelI": 5.142754353145662e-19,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 3.958188564315123e-07,
+      "highDrainI": 5.672541383596011e-07,
+      "highVgs": 1.4210854715202004e-14,
+      "ledI": -7.217937577140746e-19,
+      "loadI": -1.8170191210448374e-14,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 3.958188580519197e-07,
+      "lowDrainI": 5.672541399800086e-07,
+      "lowVgs": 0.0,
+      "outputCapV": -4.360888957914357e-13,
+      "outputInductorI": -1.817918022623924e-14,
+      "outputV": -4.36084589050761e-13,
+      "phaseSeconds": 0.0004950000036276769,
+      "preLV": -1.5517797302716313e-13,
+      "primaryI": 3.958188580343201e-07,
+      "primaryV": -2.1951187534341443e-08,
+      "pwmInputI": 0.000229163771426392,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": 1.862234263052344e-14,
+      "secondaryV": -5.482308594712754e-09,
+      "sourceI": -0.0,
+      "sourceV": -0.23991536251964915,
+      "stageInputI": 0.0002398092204975814,
+      "stageInputPower": 0.01898420231741178,
+      "stageOutputI": -1.8168073967921933e-14,
+      "stageOutputPower": 2.8192848921496944e-27
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "fullEnergyClosureAllowanceJ": 0.058935990544335716,
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 1,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxBondCurrentA": 0.0,
+    "maxElementExternalCurrentSumA": 2.1522795276123765e-08,
+    "maxExternalPostNodeKclA": 0.00989353263489856,
+    "maxNominalBondCurrentA": 0.0,
+    "maxSubIterations": 15,
+    "maxTwoBondFormulaErrorA": 0.0,
+    "model": "DETAILED",
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14999500000007962,
+          "mean": 0.12499750000005615,
+          "min": 0.10000000000002962,
+          "rms": 0.12582809041511384
+        },
+        "averagedInputI": null,
+        "biasInputI": {
+          "max": 0.0003979923114715844,
+          "mean": 0.00033273706845325613,
+          "min": 0.00026157529149703485,
+          "rms": 0.0003345301575574037
+        },
+        "biasOutputI": {
+          "max": 0.0003979923114715983,
+          "mean": 0.0003327370684532621,
+          "min": 0.00026157529149703485,
+          "rms": 0.00033453015755740894
+        },
+        "bulkV": {
+          "max": 165.16523812436785,
+          "mean": 163.48533512439664,
+          "min": 161.65707144577954,
+          "rms": 163.48801336009373
+        },
+        "collectorI": {
+          "max": 0.000618217656721264,
+          "mean": 0.00034362861549822147,
+          "min": 6.180941373757269e-05,
+          "rms": 0.00036786240603119824
+        },
+        "controlIntegral": {
+          "max": -0.0031456092272138876,
+          "mean": -0.0035341123248212683,
+          "min": -0.003944782301171931,
+          "rms": 0.003542942417723293
+        },
+        "duty": {
+          "max": 0.2932155490754012,
+          "mean": 0.2900598704452008,
+          "min": 0.28707147693793506,
+          "rms": 0.29006470694874764
+        },
+        "enableV": {
+          "max": 4.9950049950049955,
+          "mean": 4.995004995005589,
+          "min": 4.9950049950049955,
+          "rms": 4.995004995004724
+        },
+        "feedbackV": {
+          "max": 7.358089555879933,
+          "mean": 6.639355608621998,
+          "min": 5.980277654136649,
+          "rms": 6.648540799368879
+        },
+        "forwardI": {
+          "max": 0.35804656288543135,
+          "mean": 0.06999440626825323,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.13161931898771065
+        },
+        "freewheelI": {
+          "max": 0.36150999467945294,
+          "mean": 0.16388461999810727,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.20235814899700397
+        },
+        "highBodyToDrainI": {
+          "max": -2.4764713251086948e-08,
+          "mean": -1.443328043597955e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781153e-07
+        },
+        "highChannelI": {
+          "max": 0.21058401933645143,
+          "mean": 0.03535203614794926,
+          "min": 8.132679543475506e-07,
+          "rms": 0.07055571387973934
+        },
+        "highDrainI": {
+          "max": 0.21058413719517458,
+          "mean": 0.035352180480753725,
+          "min": 9.847032362756393e-07,
+          "rms": 0.07055575900152956
+        },
+        "highVgs": {
+          "max": 10.000000000000142,
+          "mean": 2.9500000000000024,
+          "min": -1.9184653865522705e-12,
+          "rms": 5.431390245600108
+        },
+        "ledI": {
+          "max": 0.00036382922325195563,
+          "mean": 0.00026257941106812803,
+          "min": 0.00012744027056089412,
+          "rms": 0.00026803572647825566
+        },
+        "loadI": {
+          "max": 0.23491461228011268,
+          "mean": 0.23291568908394428,
+          "min": 0.22987040491682106,
+          "rms": 0.23291837306285593
+        },
+        "lowBodyToDrainI": {
+          "max": -2.4764713251162188e-08,
+          "mean": -1.4433280435980123e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.5091590138781397e-07
+        },
+        "lowChannelI": {
+          "max": 0.21058401933664248,
+          "mean": 0.03535203614796074,
+          "min": 8.132679200031548e-07,
+          "rms": 0.07055571387975618
+        },
+        "lowDrainI": {
+          "max": 0.21058413719536562,
+          "mean": 0.03535218048076529,
+          "min": 9.847032019312436e-07,
+          "rms": 0.07055575900154644
+        },
+        "lowVgs": {
+          "max": 10.0,
+          "mean": 2.95,
+          "min": 0.0,
+          "rms": 5.431390245600108
+        },
+        "outputCapV": {
+          "max": 11.27432687682065,
+          "mean": 11.179997093973114,
+          "min": 11.037495205825937,
+          "rms": 11.180124158361414
+        },
+        "outputInductorI": {
+          "max": 0.3600208643186269,
+          "mean": 0.23385608426668028,
+          "min": 0.09852949235165546,
+          "rms": 0.2420049370604186
+        },
+        "outputV": {
+          "max": 11.275901389445409,
+          "mean": 11.179953076029287,
+          "min": 11.03377943600741,
+          "rms": 11.180081907017083
+        },
+        "phaseSeconds": {
+          "max": 0.000495000000129614,
+          "mean": 0.00024750000010463353,
+          "min": 7.963074644123935e-14,
+          "rms": 0.0002865091622476137
+        },
+        "preLV": {
+          "max": 40.4978353681257,
+          "mean": 11.29232993827133,
+          "min": -0.753271303694099,
+          "rms": 21.745294472467197
+        },
+        "primaryI": {
+          "max": 0.21058396579358807,
+          "mean": 0.05210816491227157,
+          "min": 8.132529314090059e-07,
+          "rms": 0.07931198975604231
+        },
+        "primaryV": {
+          "max": 165.14031784548425,
+          "mean": 0.00021475898323164132,
+          "min": -166.29318547537338,
+          "rms": 125.2269768931551
+        },
+        "pwmInputI": {
+          "max": 0.00031516523812436783,
+          "mean": 0.0003134853351243978,
+          "min": 0.00031165707144577954,
+          "rms": 0.0003134867318559904
+        },
+        "resetLowerI": {
+          "max": 0.11756474106132651,
+          "mean": 0.016757097974992013,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843626258
+        },
+        "resetUpperI": {
+          "max": 0.11756474106125363,
+          "mean": 0.01675709797499064,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03622539843625866
+        },
+        "secondaryI": {
+          "max": 1.7144512054478867e-07,
+          "mean": -0.06998803364535242,
+          "min": -0.35797516012971153,
+          "rms": 0.131610256650742
+        },
+        "secondaryV": {
+          "max": 41.205807824923724,
+          "mean": 5.374348855223923e-05,
+          "min": -41.53172307247519,
+          "rms": 31.2321312838703
+        },
+        "sourceI": {
+          "max": 0.2173695722477272,
+          "mean": 0.0001322762362665784,
+          "min": -0.21694867682585592,
+          "rms": 0.05868618663770111
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": -6.785825235056109e-14,
+          "min": -169.7056274847714,
+          "rms": 119.99999999993969
+        },
+        "stageInputI": {
+          "max": 0.21116833579285244,
+          "mean": 0.01924130490934163,
+          "min": -0.11690444051053368,
+          "rms": 0.07946530522074315
+        },
+        "stageInputPower": {
+          "max": 34.42472167681371,
+          "mean": 3.145079429136741,
+          "min": -19.140183020519302,
+          "rms": 12.982118373284749
+        },
+        "stageOutputI": {
+          "max": 0.35804656288543135,
+          "mean": 0.06999440626825323,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.13161931898771065
+        },
+        "stageOutputPower": {
+          "max": 14.37043484331954,
+          "mean": 2.7639529089027994,
+          "min": -0.0028688171528774187,
+          "rms": 5.26615162332754
+        }
+      },
+      "sampledSteps": 10000,
+      "stageInputJ": 0.15725397145683734,
+      "stageOutputJ": 0.13819764544514015
+    },
+    "nonlinearTrials": 650788,
+    "numericalAnchors": 2,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 3.455546503221755,
+    "phase": "native-r8",
+    "phaseIsControlMetadata": true,
+    "playerOwnerRestored": null,
+    "referenceName": "IN_MINUS",
+    "referenceVariant": 0,
+    "result": "COMPLETE",
+    "retiredSenseSignedAbsorbedJ": 0.0,
+    "sampledSteps": 240000,
+    "scenario": "SEQUENCE",
+    "singleBondNoReturnBoundA": 1e-09,
+    "solves": 410788,
+    "sourceTerminalJ": 3.704918464122927,
+    "stageInputIncludesBias": true,
+    "stageInputJ": 2.9462995272167856,
+    "stageOutputJ": 2.6966449025141044,
+    "startup10p8Seconds": 0.06929500000000001,
+    "storageAtFaultJ": 0.0,
+    "storageAtInputIsolationJ": 0.3552083731666485,
+    "storageEndJ": 0.14732121802469583,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-06,
+    "trapRightEndpointDefectJ": 1.930554867394537e-18,
+    "twoBondMeanCurrentA": null,
+    "twoBondMeanExpectedCurrentA": null,
+    "unqualifiedEnergyResidualJ": -1.8848776303428116e-05,
+    "wallSeconds": 6.6470306
+  },
+  {
+    "acSourceJ": 3.6464578814743507,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 480000,
+    "acceptedTimeSeconds": 1.1999999999968627,
+    "actualEndLoadOhms": 24.0,
+    "actualEndSourceRmsV": 90.0,
+    "actualFuseBlown": false,
+    "actualInputConnected": false,
+    "actualSensePresent": true,
+    "allElementSignedTerminalJ": 7.333255788635718e-06,
+    "analyses": 7,
+    "beNumericalDampingJ": 0.05385111652738087,
+    "case": "DETAILED_SEQUENCE_FINE_REF0",
+    "criteria": "e06-fidelity-criteria-v1",
+    "cycleIndex": 2399,
+    "disableTransitionDuty": 0.4151020840371173,
+    "disableTransitionStagePowerW": 9.39850468872206,
+    "domainsConnectedByActualGraph": false,
+    "enableInternalEmfJ": 2.622377622383901e-05,
+    "enableInternalSeriesLossJ": 2.6197578645366392e-08,
+    "enableTerminalJ": 2.6197578645013812e-05,
+    "enabledStageDeliverySamples": 77859,
+    "endpointChannels": {
+      "activeSeconds": 0.0,
+      "averagedInputI": null,
+      "biasInputI": 9.906759651415187e-06,
+      "biasOutputI": 9.906759651415187e-06,
+      "bulkV": 79.17333322852679,
+      "collectorI": 6.817923329281941e-09,
+      "controlIntegral": 0.0,
+      "duty": 0.0,
+      "enableV": 4.9950049950049955,
+      "feedbackV": 9.899941727520618,
+      "forwardI": -1.819388819659912e-14,
+      "freewheelI": -3.2582831891747074e-19,
+      "highBodyToDrainI": -1.7143528192808883e-07,
+      "highChannelI": 3.9586666556754033e-07,
+      "highDrainI": 5.673019474956292e-07,
+      "highVgs": 0.0,
+      "ledI": -7.218889234126894e-19,
+      "loadI": -1.817300283962282e-14,
+      "lowBodyToDrainI": -1.7143528192808883e-07,
+      "lowChannelI": 3.958666669375411e-07,
+      "lowDrainI": 5.673019488656299e-07,
+      "lowVgs": 0.0,
+      "outputCapV": -4.361558259977289e-13,
+      "outputInductorI": -1.8165593530455403e-14,
+      "outputV": -4.3615206815094766e-13,
+      "phaseSeconds": 0.0004974999968627714,
+      "preLV": 9.831538201730846e-14,
+      "primaryI": 3.958666668513782e-07,
+      "primaryV": -2.1981357178901817e-08,
+      "pwmInputI": 0.00022917333322852677,
+      "resetLowerI": -1.7143528192808883e-07,
+      "resetUpperI": -1.7143528192808883e-07,
+      "secondaryI": 1.8339090297072446e-14,
+      "secondaryV": -5.489844453396787e-09,
+      "sourceI": -0.0,
+      "sourceV": -0.11995797210223684,
+      "stageInputI": 0.00023981883010936567,
+      "stageInputPower": 0.01898725615072426,
+      "stageOutputI": -1.819388819659912e-14,
+      "stageOutputPower": -1.7887390684288417e-27
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "fullEnergyClosureAllowanceJ": 0.05785106939796024,
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 1,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxBondCurrentA": 0.0,
+    "maxElementExternalCurrentSumA": 6.749738749490413e-09,
+    "maxExternalPostNodeKclA": 0.010558057627555684,
+    "maxNominalBondCurrentA": 0.0,
+    "maxSubIterations": 14,
+    "maxTwoBondFormulaErrorA": 0.0,
+    "model": "DETAILED",
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14999749999997605,
+          "mean": 0.12499875000005543,
+          "min": 0.10000000000006481,
+          "rms": 0.12582933217015832
+        },
+        "averagedInputI": null,
+        "biasInputI": {
+          "max": 0.0003705884986201502,
+          "mean": 0.00032545402141060406,
+          "min": 0.0002545729535476937,
+          "rms": 0.00032735453504154847
+        },
+        "biasOutputI": {
+          "max": 0.0003705884986201641,
+          "mean": 0.0003254540214106085,
+          "min": 0.0002545729535476937,
+          "rms": 0.0003273545350415543
+        },
+        "bulkV": {
+          "max": 165.22338322580538,
+          "mean": 163.58549555953363,
+          "min": 161.77804633896753,
+          "rms": 163.5881234103159
+        },
+        "collectorI": {
+          "max": 0.0005293517540252718,
+          "mean": 0.00033621418418039,
+          "min": 0.00013849146369462607,
+          "rms": 0.00034906385726242174
+        },
+        "controlIntegral": {
+          "max": -0.0006176774434694625,
+          "mean": -0.0009707723631252904,
+          "min": -0.001508786882633053,
+          "rms": 0.0010050685780839243
+        },
+        "duty": {
+          "max": 0.29536068674391963,
+          "mean": 0.29246269034983824,
+          "min": 0.28956025868841845,
+          "rms": 0.2924673505268703
+        },
+        "enableV": {
+          "max": 4.9950049950049955,
+          "mean": 4.995004995003156,
+          "min": 4.9950049950049955,
+          "rms": 4.9950049950044315
+        },
+        "feedbackV": {
+          "max": 7.428813169168116,
+          "mean": 6.712914383752729,
+          "min": 6.257056163936271,
+          "rms": 6.722334447900016
+        },
+        "forwardI": {
+          "max": 0.35211330774637617,
+          "mean": 0.07008168511345597,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.13170981339932217
+        },
+        "freewheelI": {
+          "max": 0.35480440941709573,
+          "mean": 0.16422427434869807,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.20258514629668686
+        },
+        "highBodyToDrainI": {
+          "max": -2.566883640186419e-08,
+          "mean": -1.4420510887668303e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.508571115477544e-07
+        },
+        "highChannelI": {
+          "max": 0.20776819107297229,
+          "mean": 0.03506916018165837,
+          "min": 8.141114070376622e-07,
+          "rms": 0.07007885598904014
+        },
+        "highDrainI": {
+          "max": 0.20776830809194163,
+          "mean": 0.03506930438676715,
+          "min": 9.85546688965751e-07,
+          "rms": 0.07007890088469884
+        },
+        "highVgs": {
+          "max": 10.000000000000199,
+          "mean": 2.9490000000000025,
+          "min": -3.765876499528531e-12,
+          "rms": 5.430469592954186
+        },
+        "ledI": {
+          "max": 0.00033433380250045246,
+          "mean": 0.0002615013817948481,
+          "min": 0.0001732320729968482,
+          "rms": 0.00026429048285395087
+        },
+        "loadI": {
+          "max": 0.23436011108078011,
+          "mean": 0.23291288521306874,
+          "min": 0.23101519059565864,
+          "rms": 0.232914221766204
+        },
+        "lowBodyToDrainI": {
+          "max": -2.5668836401916475e-08,
+          "mean": -1.4420510887668678e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.508571115477561e-07
+        },
+        "lowChannelI": {
+          "max": 0.2077681910730142,
+          "mean": 0.035069160181666385,
+          "min": 8.141114676871344e-07,
+          "rms": 0.07007885598905171
+        },
+        "lowDrainI": {
+          "max": 0.20776830809198354,
+          "mean": 0.03506930438677507,
+          "min": 9.85546749615223e-07,
+          "rms": 0.07007890088471042
+        },
+        "lowVgs": {
+          "max": 10.0,
+          "mean": 2.949,
+          "min": 0.0,
+          "rms": 5.430469592954186
+        },
+        "outputCapV": {
+          "max": 11.247787260516082,
+          "mean": 11.179818228662052,
+          "min": 11.092295877050095,
+          "rms": 11.179880603564667
+        },
+        "outputInductorI": {
+          "max": 0.35314695125888873,
+          "mean": 0.2342949840537951,
+          "min": 0.11226488637383894,
+          "rms": 0.24225858163847233
+        },
+        "outputV": {
+          "max": 11.249285331877445,
+          "mean": 11.179818490227182,
+          "min": 11.088729148591614,
+          "rms": 11.179882644777749
+        },
+        "phaseSeconds": {
+          "max": 0.0004974999999737828,
+          "mean": 0.00024874999986296324,
+          "min": 0.0,
+          "rms": 0.0002875923763441737
+        },
+        "preLV": {
+          "max": 40.519829622848555,
+          "mean": 11.296378147620542,
+          "min": -0.7523027628109631,
+          "rms": 21.75686243805366
+        },
+        "primaryI": {
+          "max": 0.20776813665670152,
+          "mean": 0.052115128716594676,
+          "min": 8.141036548945865e-07,
+          "rms": 0.079107977255339
+        },
+        "primaryV": {
+          "max": 165.20261407174925,
+          "mean": 5.662158852555166e-06,
+          "min": -166.37636700893145,
+          "rms": 125.51916081073321
+        },
+        "pwmInputI": {
+          "max": 0.00031522338322580537,
+          "mean": 0.000313585495559535,
+          "min": 0.0003117780463389675,
+          "rms": 0.00031358686641625897
+        },
+        "resetLowerI": {
+          "max": 0.11860622429637153,
+          "mean": 0.017047008798146444,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03670203021217317
+        },
+        "resetUpperI": {
+          "max": 0.11860622429642148,
+          "mean": 0.017047008798147165,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.03670203021217419
+        },
+        "secondaryI": {
+          "max": 1.7144711750294306e-07,
+          "mean": -0.07007992813519276,
+          "min": -0.35211330726132073,
+          "rms": 0.13170726115927878
+        },
+        "secondaryV": {
+          "max": 41.22268983238666,
+          "mean": 1.4169567907898778e-06,
+          "min": -41.55249766050404,
+          "rms": 31.30541102234907
+        },
+        "sourceI": {
+          "max": 0.21284247140781568,
+          "mean": 0.00015490301342606808,
+          "min": -0.21120522307783965,
+          "rms": 0.05711899309513429
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": 3.857465458168008e-13,
+          "min": -169.7056274847714,
+          "rms": 120.0000000002729
+        },
+        "stageInputI": {
+          "max": 0.20833926328267288,
+          "mean": 0.018661335105592924,
+          "min": -0.11794946836868107,
+          "rms": 0.07925557424356625
+        },
+        "stageInputPower": {
+          "max": 34.146117856075236,
+          "mean": 3.052486164063589,
+          "min": -19.4502579276092,
+          "rms": 12.957818674190662
+        },
+        "stageOutputI": {
+          "max": 0.35211330774637617,
+          "mean": 0.07008168511345597,
+          "min": -1.7143528192808883e-07,
+          "rms": 0.13170981339932217
+        },
+        "stageOutputPower": {
+          "max": 14.10173949516345,
+          "mean": 2.769410384087073,
+          "min": -0.002811341309447856,
+          "rms": 5.273487969367374
+        }
+      },
+      "sampledSteps": 20000,
+      "stageInputJ": 0.15262430820317835,
+      "stageOutputJ": 0.13847051920435396
+    },
+    "nonlinearTrials": 1268231,
+    "numericalAnchors": 2,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 3.4452834990376013,
+    "phase": "native-r8",
+    "phaseIsControlMetadata": true,
+    "playerOwnerRestored": null,
+    "referenceName": "IN_MINUS",
+    "referenceVariant": 0,
+    "result": "COMPLETE",
+    "retiredSenseSignedAbsorbedJ": 0.0,
+    "sampledSteps": 480000,
+    "scenario": "SEQUENCE",
+    "singleBondNoReturnBoundA": 1e-09,
+    "solves": 788231,
+    "sourceTerminalJ": 3.646484078997967,
+    "stageInputIncludesBias": true,
+    "stageInputJ": 2.892053469898012,
+    "stageOutputJ": 2.691919108866693,
+    "startup10p8Seconds": 0.06951750000000001,
+    "storageAtFaultJ": 0.0,
+    "storageAtInputIsolationJ": 0.35572862553418344,
+    "storageEndJ": 0.1473567967442304,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 2.5e-06,
+    "trapRightEndpointDefectJ": 7.789869535388111e-19,
+    "twoBondMeanCurrentA": null,
+    "twoBondMeanExpectedCurrentA": null,
+    "unqualifiedEnergyResidualJ": -7.3333112457296145e-06,
+    "wallSeconds": 9.1040246
+  },
+  {
+    "acSourceJ": 3.999846339563472,
+    "acceptedOptoGminEscalatedSamples": 0,
+    "acceptedSteps": 24000,
+    "acceptedTimeSeconds": 1.2000000000003201,
+    "actualEndLoadOhms": 24.0,
+    "actualEndSourceRmsV": 90.0,
+    "actualFuseBlown": false,
+    "actualInputConnected": false,
+    "actualSensePresent": true,
+    "allElementSignedTerminalJ": 5.06202593409957e-07,
+    "analyses": 7,
+    "beNumericalDampingJ": 0.009611433242340048,
+    "case": "AVERAGED_SEQUENCE_COARSE_REF0",
+    "criteria": "e06-fidelity-criteria-v1",
+    "cycleIndex": 2399,
+    "disableTransitionDuty": 0.4005432631696734,
+    "disableTransitionStagePowerW": 5.342854100245849,
+    "domainsConnectedByActualGraph": false,
+    "enableInternalEmfJ": 2.622377622377394e-05,
+    "enableInternalSeriesLossJ": 2.61975786451303e-08,
+    "enableTerminalJ": 2.61975786451315e-05,
+    "enabledStageDeliverySamples": 11425,
+    "endpointChannels": {
+      "activeSeconds": 0.0,
+      "averagedInputI": 0.00022889443836543615,
+      "biasInputI": 9.90675965088783e-06,
+      "biasOutputI": 9.90675965088783e-06,
+      "bulkV": 78.89443836543616,
+      "collectorI": 6.817923329252038e-09,
+      "controlIntegral": 0.0,
+      "duty": 0.0,
+      "enableV": 4.9950049950049955,
+      "feedbackV": 9.899941727526047,
+      "forwardI": null,
+      "freewheelI": -1.903313972296692e-23,
+      "highBodyToDrainI": null,
+      "highChannelI": null,
+      "highDrainI": null,
+      "highVgs": null,
+      "ledI": -0.0,
+      "loadI": 1.953873589257114e-19,
+      "lowBodyToDrainI": null,
+      "lowChannelI": null,
+      "lowDrainI": null,
+      "lowVgs": null,
+      "outputCapV": 4.708884607876372e-18,
+      "outputInductorI": -2.3682409655650273e-23,
+      "outputV": 4.689296614217074e-18,
+      "phaseSeconds": 0.00045000000032002774,
+      "preLV": 4.69304459363305e-18,
+      "primaryI": null,
+      "primaryV": null,
+      "pwmInputI": null,
+      "resetLowerI": null,
+      "resetUpperI": null,
+      "secondaryI": null,
+      "secondaryV": null,
+      "sourceI": -0.0,
+      "sourceV": -2.399014701401861,
+      "stageInputI": 0.00023880119801632398,
+      "stageInputPower": 0.018840086398491187,
+      "stageOutputI": -4.6930445936330505e-24,
+      "stageOutputPower": -2.2024667557828402e-41
+    },
+    "execution": "NATIVE_RAW_GRAPH",
+    "fidelity": "NOMINAL_FIDELITY_NOT_QUALIFIED",
+    "fullEnergyClosureAllowanceJ": 0.06433976745425676,
+    "integration": "SIGNED_RIGHT_ENDPOINT_V_I",
+    "lastSolverSubIteration": 1,
+    "maxAcceptedOptoTransistorGmin": 1e-12,
+    "maxBondCurrentA": 0.0,
+    "maxElementExternalCurrentSumA": 1.1968266316582724e-07,
+    "maxExternalPostNodeKclA": 0.000963599301153139,
+    "maxNominalBondCurrentA": 0.0,
+    "maxSubIterations": 12,
+    "maxTwoBondFormulaErrorA": 0.0,
+    "model": "AVERAGED",
+    "nominal150to200ms": {
+      "channels": {
+        "activeSeconds": {
+          "max": 0.14994999999999165,
+          "mean": 0.12497499999999438,
+          "min": 0.09999999999999715,
+          "rms": 0.1258057381441663
+        },
+        "averagedInputI": {
+          "max": 0.020148383358897275,
+          "mean": 0.019739290268995364,
+          "min": 0.019491894574396547,
+          "rms": 0.01973981323666295
+        },
+        "biasInputI": {
+          "max": 0.0007911975239374425,
+          "mean": 0.000609202938018407,
+          "min": 0.00048323622282131495,
+          "rms": 0.0006171049025121481
+        },
+        "biasOutputI": {
+          "max": 0.0007911975239374425,
+          "mean": 0.0006092029380184133,
+          "min": 0.00048323622282131495,
+          "rms": 0.0006171049025121535
+        },
+        "bulkV": {
+          "max": 164.89997800825026,
+          "mean": 163.23693422645363,
+          "min": 161.47249159590353,
+          "rms": 163.23997878329382
+        },
+        "collectorI": {
+          "max": 0.0007701774410876521,
+          "mean": 0.0005431235103997271,
+          "min": 0.00044713077445360553,
+          "rms": 0.0005505284472108081
+        },
+        "controlIntegral": {
+          "max": -0.010379540969442618,
+          "mean": -0.012073456710059908,
+          "min": -0.013069627204612022,
+          "rms": 0.0120974762114233
+        },
+        "duty": {
+          "max": 0.2855357825173116,
+          "mean": 0.2814594921984276,
+          "min": 0.2779359123945989,
+          "rms": 0.2814661285494251
+        },
+        "enableV": {
+          "max": 4.9950049950049955,
+          "mean": 4.995004995004908,
+          "min": 4.9950049950049955,
+          "rms": 4.995004995004964
+        },
+        "feedbackV": {
+          "max": 5.119314149504737,
+          "mean": 3.8470503260139886,
+          "min": 2.0089050082318303,
+          "rms": 3.9734490932626496
+        },
+        "forwardI": null,
+        "freewheelI": {
+          "max": -1.7143528192808883e-07,
+          "mean": -1.7143528192808713e-07,
+          "min": -1.7143528192808883e-07,
+          "rms": 1.7143528192808808e-07
+        },
+        "highBodyToDrainI": null,
+        "highChannelI": null,
+        "highDrainI": null,
+        "highVgs": null,
+        "ledI": {
+          "max": 0.0004111666852349516,
+          "mean": 0.0003382124064790714,
+          "min": 0.00030548877743392434,
+          "rms": 0.00033950420343778015
+        },
+        "loadI": {
+          "max": 0.23578292552185443,
+          "mean": 0.23442785514818246,
+          "min": 0.23380564191529107,
+          "rms": 0.2344285113325071
+        },
+        "lowBodyToDrainI": null,
+        "lowChannelI": null,
+        "lowDrainI": null,
+        "lowVgs": null,
+        "outputCapV": {
+          "max": 11.317571615445901,
+          "mean": 11.252624223247585,
+          "min": 11.222700611810607,
+          "rms": 11.252655847509505
+        },
+        "outputInductorI": {
+          "max": 0.23875044425116337,
+          "mean": 0.23501955991106796,
+          "min": 0.2314822141111923,
+          "rms": 0.23502623840253925
+        },
+        "outputV": {
+          "max": 11.317580425049012,
+          "mean": 11.252537047112748,
+          "min": 11.222670811933972,
+          "rms": 11.252568543960333
+        },
+        "phaseSeconds": {
+          "max": 0.000449999999991596,
+          "mean": 0.0002249999999899952,
+          "min": 0.0,
+          "rms": 0.00026692695629140626
+        },
+        "preLV": {
+          "max": 11.523157385721065,
+          "mean": 11.368195935893002,
+          "min": 11.320407536822302,
+          "rms": 11.368246887271711
+        },
+        "primaryI": null,
+        "primaryV": null,
+        "pwmInputI": null,
+        "resetLowerI": null,
+        "resetUpperI": null,
+        "secondaryI": null,
+        "secondaryV": null,
+        "sourceI": {
+          "max": 0.21525769228980107,
+          "mean": 9.407972487996233e-05,
+          "min": -0.2128253201443175,
+          "rms": 0.06111724790944808
+        },
+        "sourceV": {
+          "max": 169.7056274847714,
+          "mean": 2.0115464849368435e-13,
+          "min": -169.7056274847714,
+          "rms": 120.00000000000664
+        },
+        "stageInputI": {
+          "max": 0.020939580882834718,
+          "mean": 0.020348493207013776,
+          "min": 0.020067164501271786,
+          "rms": 0.020349408750742932
+        },
+        "stageInputPower": {
+          "max": 3.4150236176941355,
+          "mean": 3.3215745978301663,
+          "min": 3.266110810648086,
+          "rms": 3.3217345314444557
+        },
+        "stageOutputI": {
+          "max": 0.23875061568646322,
+          "mean": 0.23501973134634976,
+          "min": 0.2314823855464917,
+          "rms": 0.23502640983294953
+        },
+        "stageOutputPower": {
+          "max": 2.733586945490525,
+          "mean": 2.671750685547673,
+          "min": 2.6331493899450873,
+          "rms": 2.6718390126321894
+        }
+      },
+      "sampledSteps": 1000,
+      "stageInputJ": 0.16607872989150835,
+      "stageOutputJ": 0.13358753427738349
+    },
+    "nonlinearTrials": 80403,
+    "numericalAnchors": 2,
+    "numericalDampingIsPhysicalLoss": false,
+    "optoGminBaselineThreshold": 1.0001e-12,
+    "originalStopMessage": null,
+    "otherTerminalAbsorptionJ": 3.8439407941619557,
+    "phase": "native-r8",
+    "phaseIsControlMetadata": true,
+    "playerOwnerRestored": null,
+    "referenceName": "IN_MINUS",
+    "referenceVariant": 0,
+    "result": "COMPLETE",
+    "retiredSenseSignedAbsorbedJ": 0.0,
+    "sampledSteps": 24000,
+    "scenario": "SEQUENCE",
+    "singleBondNoReturnBoundA": 1e-09,
+    "solves": 56403,
+    "sourceTerminalJ": 3.9998725371440025,
+    "stageInputIncludesBias": true,
+    "stageInputJ": 3.2164883727128384,
+    "stageOutputJ": 2.6194234277408968,
+    "startup10p8Seconds": 0.0689,
+    "storageAtFaultJ": 0.0,
+    "storageAtInputIsolationJ": 0.3511948643360184,
+    "storageEndJ": 0.1463208159405479,
+    "storageStartJ": 0.0,
+    "timeStepSeconds": 5e-05,
+    "trapRightEndpointDefectJ": 4.0300456359032225e-20,
+    "twoBondMeanCurrentA": null,
+    "twoBondMeanExpectedCurrentA": null,
+    "unqualifiedEnergyResidualJ": -5.062008411414452e-07,
+    "wallSeconds": 0.6620018
+  },
+  {
+    "phase": "native-r8",
+    "reportTruncated": true
+  }
+]

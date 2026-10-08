@@ -1,0 +1,194 @@
+{
+  "attempts": [
+    {
+      "cleanupVerified": true,
+      "disposition": "PASS5GWT permutations; superseded only by verifier report boolean fix.",
+      "operation": {
+        "elapsedMs": 95568,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r1",
+      "rawStdoutSha256": "171672d06867070c64fba83e8b000a93542bc9c220b08cd11b3956cb6682546c",
+      "resultSha256": "8a02b134adc63f355b6064cb4744405f46f535ff7c2f46e9567cfbff09400525",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "PASS5finalGWT permutations.",
+      "operation": {
+        "elapsedMs": 96728,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "build-r2",
+      "rawStdoutSha256": "a27b741be6c3cb28d1d562892584aab96efed772eebfb942a59dbb98b05519fd",
+      "resultSha256": "d15737ff9f497a2345b09f2903396a0173a7f17a67c3c5eae0aba3cb0057557d",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL strictJSON report: actual rows and owner cleanup succeeded, but GWT bitwiseboolean aggregates emitted numeric1 instead oftrue. Raw transportPASS is not whole-gatePASS.",
+      "operation": {
+        "elapsedMs": 17370,
+        "exitCode": 1,
+        "reason": null
+      },
+      "phase": "compiled-r1",
+      "rawStdoutSha256": "62f21c7d1b7a5cbda0c94f77ddbed264c418eea1b827231fb990609f080e3d0d",
+      "resultSha256": "b4d97bad21f09fb2e765c549fc18e02920213869521a99499a65130c995cbeff",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "PASS actualGWT positive and forced-after-solve cleanup; strictJSON contract unchanged.",
+      "operation": {
+        "elapsedMs": 20002,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "compiled-r2",
+      "rawStdoutSha256": "8ab6258efda90c23d3c155ab08cab40da3e06a2da47cd8616f1e493ef98744d6",
+      "resultSha256": "c2e2913af6adaba4bd041e730e46a2b98a6c1a56bbdd038eb54495b10a61a7f0",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL before electrical solving: UIless ChipElm drawing-menu construction; fixed exact scratch adapter.",
+      "operation": {
+        "elapsedMs": 21740,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r1",
+      "rawStdoutSha256": "38d88be75c1ee5fc5b8d2c1247be30f2be29f7cfaefce5154fa1e20698b78e0a",
+      "resultSha256": "c26b5c52378410ee30b4bd5ef88d3a6d3d56df924921186f26b597b1e7c29bd9",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL at57.63ms/11526steps; original numerical stop masked by test localization.",
+      "operation": {
+        "elapsedMs": 34377,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r2",
+      "rawStdoutSha256": "1d3b3670dfdb7bc0e9939d6b181b3f0be1b73c095717ed1766029f03c99f6952",
+      "resultSha256": "83e2b4bbe434f713795f6cea9f9c44f40eadc2d2619b2b8174ae6c9a665a397c",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL reproduces57.63ms; preserves original NONCONVERGENCE and branch diagnostics.",
+      "operation": {
+        "elapsedMs": 36542,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r3",
+      "rawStdoutSha256": "15e3e4a30b3b4da44c9d7d9d4cc851ac419d0b1236615b10ab804b926dbce315",
+      "resultSha256": "5bdb3cc2f160a9d228ba1ec587325135d2afc5e0ba5886585073b6e97cb3a2ee",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL with transformerBE only at62ms/12400steps; actual high-sideVgs10V versus internally limitedVgs-63.86V; accepted opto numericalgmin up to0.1S.",
+      "operation": {
+        "elapsedMs": 32513,
+        "exitCode": 2,
+        "reason": null
+      },
+      "phase": "native-r4",
+      "rawStdoutSha256": "d59df1678cff32aaf63155c54194647252345c59b8514a42c3b2ef83747bf4e0",
+      "resultSha256": "284a8d03eea93b795fe22f58b9eed5bd430d55d1492eb9706a65cc08af619a16",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "MechanicsPASS only; oldP controller persistent8.446..12.704V oscillation rejected for fidelity.",
+      "operation": {
+        "elapsedMs": 22918,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r5",
+      "rawStdoutSha256": "9b1c8ffbe2cf6a7f74002a705733f461d45568722baf9c224d309749a3865c94",
+      "resultSha256": "c2273846ae2bc4dc495123225758378509e410cfc91d70a9857ae01358f5f0da",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "PI detailed nominal mechanicsPASS; paired/fault/reference stillpending.",
+      "operation": {
+        "elapsedMs": 22389,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r6",
+      "rawStdoutSha256": "22e4d12fa16faf993978307d5830c738f47a6738d7f54fa56251af8cd60daa81",
+      "resultSha256": "bcc41417819db552e5021b9d6a8b3bc5dc8e114ca32bebece2320428c41d340c",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "Paired nominal mechanicsPASS; outputmean +0.649%, inputenergy +5.612%; broader qualification pending.",
+      "operation": {
+        "elapsedMs": 24997,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r7",
+      "rawStdoutSha256": "e60a352a08aaef0e6037cd38d1ddc4856c7e465c96aad3a72330ab1230603193",
+      "resultSha256": "4d7bd03885e0ecad864a28c6df3b7376b9147052372b6b30011209eddf0a8803",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "FAIL unchanged1MiB output cap, after3complete sequence reports and truncated4th. Owned processes closed; native compiler scratch retained/inventoried.",
+      "operation": {
+        "elapsedMs": 39314,
+        "exitCode": 57857,
+        "reason": "stdout/stderr exceeded 1 MiB"
+      },
+      "phase": "native-r8",
+      "rawStdoutSha256": "81f89e11c6842176a5bcae83190ae832f6bc299a1dc1b2c300b42b4f6c2b20d5",
+      "resultSha256": "32cd9c6bf2361e7ba2b7cc8541a1db594f7ea86a6964068edabfc600d88316d7",
+      "sourceInputsUnchanged": true,
+      "status": "FAIL"
+    },
+    {
+      "cleanupVerified": true,
+      "disposition": "PASS all24frozen electrical cases; compact window records and exact routine-log counts; all error/warning lines retained.",
+      "operation": {
+        "elapsedMs": 47128,
+        "exitCode": 0,
+        "reason": null
+      },
+      "phase": "native-r9",
+      "rawStdoutSha256": "43fe44506c7c6e7a41d7992990cf676c7804549327620bccc9fc8ffe686ffb37",
+      "resultSha256": "111ee16d47357ed0254b0849feee57e04d9c5c912df95bb8967268327b17d0ad",
+      "sourceInputsUnchanged": true,
+      "status": "PASS"
+    }
+  ],
+  "historicalQ30Risks": [
+    "Unknown91.616-secondfailure",
+    "Sixmissinghistoricalscratchinventories",
+    "Historical late-releaseauditBLOCKED remains"
+  ],
+  "limitsUnchanged": true,
+  "originalUntrackedPreserved": 8,
+  "rawEvidenceRetained": true
+}

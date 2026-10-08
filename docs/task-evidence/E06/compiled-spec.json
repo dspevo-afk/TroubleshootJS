@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "expectedState": "PASS:e06",
+      "name": "e06-positive",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE06=true&running=true",
+      "reportAttribute": "data-tsj-e06-report",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120
+    },
+    {
+      "expectedState": "FAIL:e06:e06-explicit-failure-after-install-and-accepted-solve",
+      "name": "e06-forced-failure",
+      "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyE06=true&tsjE06Fail=true&running=true",
+      "reportAttribute": "data-tsj-e06-report",
+      "stateAttribute": "data-tsj-verification",
+      "timeoutSeconds": 120
+    }
+  ]
+}

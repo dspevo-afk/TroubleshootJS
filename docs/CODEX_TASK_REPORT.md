@@ -1,47 +1,51 @@
-# Current checkpoint: E05 accepted locally; publication pending
+# Current checkpoint: E06 accepted; Q60 next
 
-2026-10-07. Branch `codex/q30-multirail-qualification`; HEAD and verified remote
-are `2921c786351bc8c852ce98c277c059208e646bfb` (U07). U06 is published at
-`12641608a7f10372d39c2a8fa98e6e349049e09f`. E05 is accepted locally; staged review,
-commit, normal push and remote SHA verification are the next operation. No email.
-Dave's resumed roadmap instruction supersedes the historical October 6 stop;
-subsequent workers use the requested Sol 6.1 Ultra model.
+2026-10-08. Branch `codex/q30-multirail-qualification`; E06 candidate is based on
+verified published `6730de219f25306b65da3d336b20f1cd90a82896`. U06 is published at
+`12641608a7f10372d39c2a8fa98e6e349049e09f`, U07 at
+`2921c786351bc8c852ce98c277c059208e646bfb`; E05 implementation is
+`8fb48ac67796db62e28c3baecafcf6c9b64c5f2e`. Root is closing E06 normal commit/push
+and exact remote verification; no email. Dave authorized continuing the applicable
+roadmap. Subsequent workers use the requested Sol 6.1 Ultra model.
 
-E05 delivers bounded simulated 120 V RMS/60 Hz input, actual two-pole isolation,
-fuse/bridge/storage/linear-transformer graphs and per-terminal physical barriers.
-Its eleven-package developer bench has ordinary AC/DC probing, source inspection,
-OFF discharge and resistance readiness. Normal family/admission limits remain
-unchanged. Architecture and [full evidence](task-evidence/E05/README.md) describe
-ownership, source bindings and limits.
+E06's bounded solver fidelity decision is ACCEPTED. One opaque averaged module
+is selected for guarded Q60 integration; hidden conversion counts as one package.
+Actual external source/storage/filter/load/opto feedback remain causal. The
+fixed detailed reference uses bounded finite switches with actual body diodes;
+global physics and all existing limits are unchanged. Raw developer reports
+retain candidate/NOT_QUALIFIED fences because normal product admission is Q60.
 
-Native 14 + 1 + 1: fourteen unaffected native-final suites retain scoped proof; r12
-refreshes Power 76 / reference 12 rows and 36,108 assertions / electrical 18 rows and 323,919 assertions in 27.668 s; r15 refreshes
-installed construction (284 assertions) in 23.718 s. GWT build-r7 passes five
-permutations in 93.037 s. Compiled-r6 passes positive and forced-failure cleanup
-in 32.402 s, including 194 installed checks and actual four-rail READY.
+Final native-r9 PASS: 24 cases, 1,320,000 accepted steps, 324,172,762 assertions,
+47.128 s host. Maximum output coarse/fine difference 0.01569%; paired output
+0.65281%, paired input energy 10.19132%, within frozen bounds. Healthy-window
+ripple/drift, energy closure, actual feedback/fuse/source mutations and numerical
+reference/bond checks pass; max iterations 20 with no elevated opto gmin.
+Actual final-source JDK8/GWT build-r2 PASS five permutations / 96.728 s.
+Strict compiled-r2 positive/forced-after-solve cleanup PASS / 20.002 s.
+Final consumed source pins match: native 1,314; build/compiled 1,200 each.
+Root integrated review and independent scoped read-only reviews found no blocker.
 
-Visible-r3 completes foundation actions 1-93 and exact original-owner restoration
-with PASS:e05. It retains whole-run FAIL because a borrowed helper insisted on
-seed 0 while the actual public replay correctly showed seed 3. Supplemental r4
-passes only the remaining debug-off menu/ticket/accept/privacy flow in 17.569 s.
-Root inspected five useful screenshots. Actual foundation readings include
-119.967 V RMS primary, 11.981 V RMS secondary, 15.34 V bottom-side DC, OFF
-DISCHARGE, then 331.725 ohms after decay. All source/served bindings remain current.
+Limits: backward-Euler numerical damping is separate from physical loss;
+terminal-current accounting residual reaches 10.558 mA. Primary storage remains
+78.89-79.17 V at 1.2 s after the sequence, requiring actual Q60 discharge/readiness
+work. Short/overload, arbitrary operating points, physical/session/generation/
+diagnostic/player qualification remain unproved. No visible player flow changed;
+headed input gate is NOT APPLICABLE. No unrelated full matrix or unchanged Q30
+cold/warm rerun. [Complete E06 evidence and decision](task-evidence/E06/README.md).
 
-Measured trapezoidal open-primary numerical ringing led to fixture-only backward
-Euler; reference-only transformer energy cases retain trapezoidal integration.
-The measured Euler damping and 4.1670856 mA maximum analytically bounded published
-diode-current KCL residual are disclosed. No global solver or readiness threshold
-changed. All 33 attempted gates remain in the ledger; failures were not relabeled.
+All 13 attempts remain explicit, including native nonconvergence, oscillatory r5,
+compiled-r1 numeric boolean failure and native-r8 1 MiB output overflow. Final
+resource audit PASS: 47 recorded instances absent, two ports closed, 62 evidence
+files. Failed r8 compiler scratch is preserved/inventoried: 2,649 files,
+12,449,484 bytes. All eight original untracked hashes match; unfinished/unrelated
+work is preserved. Historical Q30 unknown 91.616 s failure, six missing scratch
+inventories and late BLOCKED release audit remain unchanged.
 
-Resource audit PASS: all 169 recorded task instances absent (one reused PID has a
-different birth), ten ports closed. Task scratch/raw evidence and accepted U07
-compiled backup remain intact. Eight original untracked files retain their bytes.
-Q30's unknown 91.616-second failure, six missing scratch inventories and historical
-late-release audit remain unchanged. No other project, Core/Android or unrelated
-process work occurred. Next after verified E05 publication: E06, then applicable
-Q60 and subsequent roadmap dependencies. E06/Q60 remain unstarted.
-
+Next: normal publish/verify, then Q60's concrete physical converter/control board
+and user flow. The approximately 56-part reference must allocate honest purposeful
+functions; opaque conversion cannot count as twelve decorative packages. No E08
+prerequisite unless the chosen family advertises trace/jumper repairs. Q60,
+fresh HARD calibration and subsequent applicable roadmap gates remain required.
 
 ---
 

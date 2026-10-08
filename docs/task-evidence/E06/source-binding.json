@@ -1,0 +1,43 @@
+{
+  "build-r2": {
+    "currentInputDifferences": [],
+    "inputRoots": [
+      "src",
+      "scripts",
+      "war",
+      "tests/browser"
+    ],
+    "launchSha256": "e3b3658d18ae1e007d5c87de325d774f4ee3a7fd4dcdeacf382151cb6ac23cde",
+    "rawStdoutSha256": "a27b741be6c3cb28d1d562892584aab96efed772eebfb942a59dbb98b05519fd",
+    "resultSha256": "d15737ff9f497a2345b09f2903396a0173a7f17a67c3c5eae0aba3cb0057557d",
+    "sourceFiles": 1200
+  },
+  "compiled-r2": {
+    "currentInputDifferences": [],
+    "inputRoots": [
+      "src",
+      "scripts",
+      "war",
+      "tests/browser"
+    ],
+    "launchSha256": "fad8ba77a5dc953e528d4a4bdac71af37eeb86479f169b937fbdf1e094c21e1d",
+    "rawStdoutSha256": "8ab6258efda90c23d3c155ab08cab40da3e06a2da47cd8616f1e493ef98744d6",
+    "resultSha256": "c2e2913af6adaba4bd041e730e46a2b98a6c1a56bbdd038eb54495b10a61a7f0",
+    "sourceFiles": 1200
+  },
+  "native-r9": {
+    "currentInputDifferences": [],
+    "inputRoots": [
+      "src",
+      "scripts",
+      "war",
+      "tests/browser",
+      "tests/contracts",
+      "tests/benchmarks"
+    ],
+    "launchSha256": "83f96873596c4cbdb0e70b02cde988236ddc763e94cadaa4dc4b0b4d4ae8b10d",
+    "rawStdoutSha256": "43fe44506c7c6e7a41d7992990cf676c7804549327620bccc9fc8ffe686ffb37",
+    "resultSha256": "111ee16d47357ed0254b0849feee57e04d9c5c912df95bb8967268327b17d0ad",
+    "sourceFiles": 1314
+  }
+}

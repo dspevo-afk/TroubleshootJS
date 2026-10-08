@@ -7,14 +7,15 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **E05 locally accepted; publication then E06 converter fidelity gate**
-U07 is published at `2921c786351bc8c852ce98c277c059208e646bfb`. E05 qualifies a
-bounded 120 V RMS/60 Hz source, real isolation/rectification/storage and a fixed
-eleven-package developer bench. Native 14 + 1 + 1, production GWT 5, compiled positive
-and forced cleanup, and scoped real visible interaction pass. Numerical damping,
-KCL approximation and every failed attempt remain explicit. Normal admission and
-all generation/readiness limits are unchanged. No email or unchanged Q30 rerun.
-[E05 evidence](task-evidence/E05/README.md), [current checkpoint](CODEX_TASK_REPORT.md).
+**Current task:** **E06 solver fidelity decision accepted; Q60 next**
+U06/U07 and E05 are published. E06 qualifies the fixed detailed-versus-averaged
+converter envelope and selects one opaque averaged module for guarded Q60
+integration. Native 24 cases / 1.32 million steps, production GWT 5, compiled
+positive/forced cleanup and exact resource audit pass. Numerical damping,
+current-accounting limits, retained post-isolation energy and all failures remain
+explicit. Q60 physical/generation/diagnostic/player admission is unstarted.
+No email or unchanged Q30 rerun. [E06 evidence](task-evidence/E06/README.md),
+[current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
 **Current continuation (2026-10-05):** C621/1,355 production inputs unchanged.
@@ -1013,7 +1014,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 is accepted for its frozen inventory and 100-cycle owner/repair scope; E05 is accepted for its bounded AC/isolation foundation; E06 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 is accepted for its frozen inventory and 100-cycle owner/repair scope; E05 is accepted for its bounded AC/isolation foundation; E06 is accepted for its bounded solver fidelity decision; Q60 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -1032,7 +1033,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 is now accepted within its documented host/corpus scope.
-**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is the next unstarted milestone; Q60 and later milestones remain unstarted. Pending visual/FPS/tray work remains preserved.
+**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is accepted for its bounded solver fidelity decision. Q60 is the next unstarted milestone. Pending visual/FPS/tray work remains preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -2247,7 +2248,7 @@ The shared current-only policy and validation rules apply to every card. There i
 
 ### E06 · Causal offline-converter model and fidelity decision gate
 
-**Status:** UNSTARTED.
+**Status:** COMPLETE - BOUNDED FIDELITY DECISION, 2026-10-08. The opaque averaged module is selected as one hidden-stage package for guarded Q60 integration. All 24 native cases / 1,320,000 steps, five production GWT permutations, strict compiled positive/forced cleanup and final resource audit pass. Maximum paired output/input-energy differences are 0.653%/10.192%, within frozen 5%/15% bands. Numerical damping, 10.558 mA terminal-current accounting limit, retained primary energy and all failures are explicit. Physical generation, diagnostics, save/load and normal player qualification remain Q60 work. [Evidence and limits](task-evidence/E06/README.md).
 
 **Hard prerequisites:** [E05](#m-e05), [E02](#m-e02), [A07](#m-a07), [U03](#m-u03), [A08](#m-a08)
 

@@ -5031,3 +5031,32 @@ the larger controlled-indicator fixture, and the E04 direct/hysteretic fixtures;
   the independent report reader checks complete population, work, receipt and
 cache provenance rather than comparing noisy wall-clock speedups.
 [Qualification](task-evidence/D01/README.md).
+
+## E06 converter fidelity ownership
+
+`E06ConverterContract` defines the immutable, bounded isolated-converter pilot.
+`E06ConverterFixtures` constructs matched actual detailed and averaged solver
+graphs with shared external source, storage, filtering, load and opto feedback.
+`E06PwmControllerElm` owns accepted-step startup/enable/PI state, finite gate
+ports and actual primary-powered bias. The fixture's bounded switch channels are private
+to the reference fixture; the global MOSFET implementation is unchanged.
+`E06AveragedConverterElm` owns separate primary/secondary connectivity, coupled
+nonlinear port currents, actual input-power accounting and the shared control
+semantics. No implicit ground or ideal output source bridges the domains.
+
+The accepted E06 decision selects one opaque averaged hidden-stage package for
+Q60 integration. External components remain causal. The pilot is not yet a
+canonical physical provider or save/load format and is unavailable to normal
+family admission. It supplies no synthetic gate/switch/winding observations.
+Detailed 2 kHz switching remains solver-only; the player bandwidth is unchanged.
+Numerical damping, terminal-current accounting limits, retained charge, failed
+attempts and unsupported physics are explicit in the
+[E06 evidence](task-evidence/E06/README.md).
+
+`E06ConverterDeveloperVerifier` is available only behind the existing developer
+query boundary. It executes fresh graphs in bounded deferred batches and uses
+`PrivateSolverContext`/Task41 restoration before disposing detached elements.
+The maintained native E06 suite covers actual energy, reference, fault and
+cleanup behavior; its narrow scratch adapters avoid JVM/GWT construction gaps.
+Actual compiled checks exercise the unchanged production factory/chip paths.
+No global admission, iteration, generation, instrument or readiness limit changes.

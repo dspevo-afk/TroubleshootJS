@@ -1,0 +1,56 @@
+{
+  "basis": "r7 paired nominal measurement; r1-r6 failures/refinements preserved; no model parameter changes for matrix",
+  "criteria": {
+    "detailedAveragedOutputMeanRelative": 0.05,
+    "detailedAveragedStageInputEnergyRelative": 0.15,
+    "elevatedOptocouplerGminSamples": 0,
+    "energyClosureAbsoluteJ": 1e-05,
+    "energyClosureTransferredRelative": 0.02,
+    "referenceOutputMeanAbsoluteV": 0.001,
+    "referencePowerAbsoluteW": 1e-06,
+    "referencePowerRelative": 0.001,
+    "sameModelCoarseFineOutputMeanRelative": 0.02,
+    "settledHalfWindowMeanDriftRelativeMaximum": 0.02,
+    "settledOutputMeanMaximumV": 11.76,
+    "settledOutputMeanMinimumV": 10.64,
+    "settledOutputPeakToPeakOverMeanMaximum": 0.05,
+    "singleBondNominalMaximumCurrentA": 1e-09,
+    "startup10p8VCrossingDifferenceSeconds": 0.01,
+    "supportedGminMaximumS": 1.0001e-12
+  },
+  "denominators": "fine model value for timestep; detailed value for paired; unshifted matching model for reference; max(abs(stageInputJ),abs(stageOutputJ)) for energy closure",
+  "freezeNote": "Stability bounds added before any expanded qualification run; informed only by already disclosed r6/r7 nominal measurements and fixed feedback model.",
+  "frozenUtc": "2026-10-08T00:49:26.227947+00:00",
+  "limits": [
+    "band agreement is observable-specific, not equivalence of all external feedback currents or instant waveforms",
+    "no no-load or short/overload capability until explicitly tested",
+    "no physical module/package/save-load/player qualification or Q60 acceptance",
+    "2kHz detailed solver-only; original250Hz player bandwidth unchanged",
+    "storage remaining afterOFF is reported; source isolation alone does not prove discharge",
+    "BE damping is numerical energy, not physical loss",
+    "global solver iteration/runtime/readiness/admission limits unchanged"
+  ],
+  "requiredCausality": [
+    "actual enable low prevents activation; disabled delivery after next accepted step",
+    "sense resistor removed changes LED/collector and output/control response",
+    "open input poles or fuse cannot replenish from AC; retained storage bounds later load/loss energy",
+    "automatic/primary/secondary numerical references, insertion order, single-domain DC offset preserve differential behavior",
+    "one actual domain bond has no return; two bonds produce actual closed-loop current",
+    "no synthetic switch pulses, winding values, gate voltage or switch faults from averaged module"
+  ],
+  "schema": "e06-fidelity-criteria-v1",
+  "scope": "fixed two-switch-forward reference versus opaque averaged module; filtered output and stage energy, not switching waveform equivalence",
+  "singleBondBasis": "Established E05ReferenceIsolationPilot one-bond no-return bound, applied over150..200ms; actual numerical anchors/current retained.",
+  "stabilityScope": "Three healthy50ms observation windows only: nominal150..200, loaded300..350, reducedLine450..500. Bounds are +/-5%around the independent~11.2V feedback operating point, ripple5%of mean, half-window mean drift2%. Startup, disable and post-isolation are transient and not labeled regulated steady state.",
+  "timeWindows": "nominal150..200ms, loaded300..350ms, reducedLine450..500ms; physical-time windows with fixed enable/source actions",
+  "timestepSeconds": {
+    "averaged": [
+      5e-05,
+      2.5e-05
+    ],
+    "detailed": [
+      5e-06,
+      2.5e-06
+    ]
+  }
+}

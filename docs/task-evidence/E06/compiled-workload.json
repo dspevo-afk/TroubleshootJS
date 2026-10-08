@@ -1,0 +1,97 @@
+{
+  "bindings": {
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\audit_release.py": "7a76a9ca504eada3a7658dd74ac8851cbcbc10c6d7d45598894fe448aa696324",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\private_menu.py": "9d42f39649fc13e5b5820815e75c33731ebb2dc29a48f69763d2cea4a592acab",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\receipts.py": "ae22c139fc9834c767aed8d6b2ae3dcdb9e8db010c3721deba3ae34bd1119dd1",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\serial_runner.py": "08ce044c8c014ae7bc3b194c07827c8383990b4f950be82137b94dc504f1ebe2",
+    "<REPO>\\docs\\task-evidence\\Q30\\qualification-workflow\\windows_process_identity.py": "88b18fa7ff41fc006fe9e17dac2aba73cb15c9342bad8b163bedb60bce161017",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\CirSim.java": "3ba18a5ef3939b77d6c9c4652fac2b8d9b9fab24301a13e539bbbaffb073cbb7",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\E06AveragedConverterElm.java": "9ae63c52b2e67218f0481ffbd3355a2b2abcfbded3a313c4dd1de5e82a02f3ab",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\E06ConverterContract.java": "2eeabc5a5d4631139baf17f82202a392bb4d46d95d3d855266586d96a4fc3b8e",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\E06ConverterDeveloperVerifier.java": "8d5c9f76fd80b5535c6f1c3bdc385d6c5c241dc2cbf4b4d34a7815e9cd1beeeb",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\E06ConverterFixtures.java": "2ffa43c6de05a8f3355ffb9c63d3b7dba12805d80557e5d5787310fc652689c7",
+    "<REPO>\\src\\com\\lushprojects\\circuitjs1\\client\\E06PwmControllerElm.java": "a9169c0f561b1360e51f36827213f920f695698bbc90d9d6e35752092ffc88c2",
+    "<REPO>\\tests\\browser\\compiled_attribute_acceptance.py": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "<TASK>\\e06-browser\\compiled-r2-spec.json": "2dec598b008ee88fce9adfe3997a8007f186d8a96d6df83198644ee47ff78871",
+    "<TASK>\\e06-browser\\compiled-r2.py": "137c888f2cd816e4e4a7c409071aebb26c1bb309956be14448412680e2e714b8",
+    "<TASK>\\e06-browser\\report_contract_r1.py": "82e85798413faec25a2b8070febf0312f8c66576590156113baf9e1c834095b3",
+    "<TASK>\\e06\\pointer.json": "0bd7e5ed2650fd862eb22245e7f99dae8c9ec143ba593019af4bb018a4443106",
+    "<U06_TASK>\\compiled-r1.py": "c52805860d8f5533fab2af44f5efb6499020ee8f33c89176e94a7c435edbeb51"
+  },
+  "errors": [],
+  "forcedCleanupReport": {
+    "candidateDisposed": true,
+    "cases": [
+      {
+        "acceptedSteps": 40000,
+        "candidateDisposed": true,
+        "elapsedSeconds": 0.20000000000012963,
+        "finiteTerminalSamples": 42076,
+        "forcedAfterAcceptedSolve": false,
+        "model": "DETAILED",
+        "playerOwnerRestored": true,
+        "timestepSeconds": 5e-06,
+        "trials": 124366
+      },
+      {
+        "acceptedSteps": 4000,
+        "candidateDisposed": true,
+        "elapsedSeconds": 0.19999999999998613,
+        "finiteTerminalSamples": 3328,
+        "forcedAfterAcceptedSolve": true,
+        "model": "AVERAGED",
+        "playerOwnerRestored": true,
+        "timestepSeconds": 5e-05,
+        "trials": 15100
+      }
+    ],
+    "fidelity": "NOT_QUALIFIED",
+    "forcedFailure": true,
+    "playerOwnerRestored": true,
+    "scope": "COMPILED_MECHANICS_ONLY",
+    "status": "PASS"
+  },
+  "forcedFailureState": "FAIL:e06:e06-explicit-failure-after-install-and-accepted-solve",
+  "playerInputEvidence": false,
+  "portClosed": true,
+  "reportFile": "cases/001-e06-positive.report.json",
+  "reportSha256": "2c703537daca169d4efd7f186b184d24abfd6156b0ba34ca59b76739fd6ed6ee",
+  "runnerExitCode": 0,
+  "scope": "E06_COMPILED_PRIVATE_MECHANICS_AND_FORCED_CLEANUP_CANARY",
+  "semanticReport": {
+    "candidateDisposed": true,
+    "cases": [
+      {
+        "acceptedSteps": 40000,
+        "candidateDisposed": true,
+        "elapsedSeconds": 0.20000000000012963,
+        "finiteTerminalSamples": 42076,
+        "forcedAfterAcceptedSolve": false,
+        "model": "DETAILED",
+        "playerOwnerRestored": true,
+        "timestepSeconds": 5e-06,
+        "trials": 124366
+      },
+      {
+        "acceptedSteps": 4000,
+        "candidateDisposed": true,
+        "elapsedSeconds": 0.19999999999998613,
+        "finiteTerminalSamples": 3328,
+        "forcedAfterAcceptedSolve": false,
+        "model": "AVERAGED",
+        "playerOwnerRestored": true,
+        "timestepSeconds": 5e-05,
+        "trials": 15100
+      }
+    ],
+    "fidelity": "NOT_QUALIFIED",
+    "forcedFailure": false,
+    "playerOwnerRestored": true,
+    "scope": "COMPILED_MECHANICS_ONLY",
+    "status": "PASS"
+  },
+  "semanticReportReview": "PASS",
+  "sourceSha256": "0e36cb20a8b470613e96d63cf92350c450da649b12ffa599856855a1f55f69b2",
+  "status": "PASS",
+  "webSha256": "ea2b2e992055bce815a9a6fbd81039d212257836336312c948aea85bc1081e62"
+}

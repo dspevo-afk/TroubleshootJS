@@ -17,8 +17,8 @@ param(
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
 # Compiles the real client source once; the Q30/E02/E04/E05/full-suite JVM paths use an
-# exact scratch replacement for CirSim's JSNI console logger. The actual GWT
-# solver/player gates remain separate.
+# exact scratch JSNI logger adapter; E06 also restores GWT string dispatch and supplies
+# the declared full-grid drawing preference without browser UI. Actual GWT gates remain separate.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
@@ -273,7 +273,7 @@ try {
     # comparison accepted by GWT but rejected by javac8. Exclude only that
     # unrelated verifier, with a fail-closed replacement: invoking it fails.
     # All current production source comes from the checkout, except for the
-    # exact single-method CirSim.console scratch shim selected below.
+    # exact CirSim.console and E06 string/grid-UI scratch adapters selected below.
     $stub = Join-Path $taskRoot 'PhysicalSpecificationDeveloperVerifier.java'
     [IO.File]::WriteAllText($stub, @'
 package com.lushprojects.circuitjs1.client;
@@ -293,14 +293,16 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Q30SolverStepSensitivityContractTest' -or
         $Suite -contains 'E02RegulatorContractTest' -or
         $Suite -contains 'E04SensorControlContractTest' -or
+        $Suite -contains 'E06ConverterPilotContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
+    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'E06ConverterPilotContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
         # Keep those diagnostics visible on the JVM and preserve every solver
-        # method/model by changing only the exact logger declaration in a
+        # method/model while adapting the declared JVM-only seams in a
         # task-owned source copy. Never edit the checked-in production source.
         $cirSimSource = Join-Path $repositoryRoot 'src/com/lushprojects/circuitjs1/client/CirSim.java'
         $cirSimText = [IO.File]::ReadAllText($cirSimSource)
@@ -317,17 +319,47 @@ final class PhysicalSpecificationDeveloperVerifier {
         if ($loggerShimText -eq $cirSimText) {
             throw 'CirSim JSNI logger replacement did not change the scratch source.'
         }
+        if ($needsE06NativeBridge) {
+            # GWT compares Java strings by value. JVM reference equality in this
+            # existing factory otherwise rejects CompositeElm's parsed type tokens.
+            # Intern only its argument in the scratch source; models/stamps stay exact.
+            $factoryEntry = 'public static CircuitElm constructElement(String n, int x1, int y1){'
+            if ($loggerShimText.Split(@($factoryEntry), [StringSplitOptions]::None).Count -ne 2) {
+                throw 'Expected exactly one CircuitJS named-element factory entry.'
+            }
+            $loggerShimText = $loggerShimText.Replace($factoryEntry,
+                $factoryEntry + ' n = (n == null ? null : n.intern());')
+            Write-Host 'NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.'
+        }
         [IO.File]::WriteAllText($nativeLoggerShim, $loggerShimText,
             (New-Object Text.UTF8Encoding($false)))
         Write-Host 'NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.'
     }
     $clientSource = Join-Path $repositoryRoot 'src/com/lushprojects/circuitjs1/client'
+    $nativeChipShim = ''
+    if ($needsE06NativeBridge) {
+        # Chip construction only reads this menu to choose drawing-grid size.
+        # The E06 native fixture declares gridSize=16 / smallGrid=false; loading
+        # CheckboxMenuItem would initialize browser DOM/GWT.create on the JVM.
+        # Supply that exact preference in scratch, leaving pins/models unchanged.
+        $chipText = [IO.File]::ReadAllText((Join-Path $clientSource 'ChipElm.java'))
+        $gridRead = 'setSize(sim.smallGridCheckItem.getState() ? 1 : 2);'
+        if ($chipText.Split(@($gridRead), [StringSplitOptions]::None).Count -ne 2) {
+            throw 'Expected exactly one ChipElm constructor drawing-grid menu read.'
+        }
+        $nativeChipShim = Join-Path $taskRoot 'ChipElm.java'
+        [IO.File]::WriteAllText($nativeChipShim, $chipText.Replace($gridRead, 'setSize(2);'),
+            (New-Object Text.UTF8Encoding($false)))
+        Write-Host 'NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.'
+    }
     $sourcePaths = @(Get-ChildItem -LiteralPath $clientSource -Filter '*.java' |
         Where-Object { $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' -and
-            (-not $needsQ30NativeLoggerBridge -or $_.Name -ne 'CirSim.java') } |
+            (-not $needsQ30NativeLoggerBridge -or $_.Name -ne 'CirSim.java') -and
+            (-not $needsE06NativeBridge -or $_.Name -ne 'ChipElm.java') } |
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
+    if ($needsE06NativeBridge) { $sourcePaths += $nativeChipShim }
     $testDefinitions = @(
         @{ Name = 'StagedFamilyRegistrationContractTest'; Marker = 'staged family registration contracts ' },
         @{ Name = 'GeneratedExternalPowerBindingsControlObservationContractTest'; Marker = 'generated power control observation contracts assertions=' },
@@ -348,6 +380,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'E02RegulatorContractTest'; Marker = 'E02 regulator contracts ' },
         @{ Name = 'E04SensorControlContractTest'; Marker = 'E04 sensor-control contracts ' },
+        @{ Name = 'E06ConverterPilotContractTest'; Marker = 'E06 nominal pilot mechanics ' },
         @{ Name = 'E05PowerContractTest'; Marker = 'E05 power contracts ' },
         @{ Name = 'E05IsolationGeometryContractTest'; Marker = 'E05 isolation geometry contracts ' },
         @{ Name = 'E05NameplateContractTest'; Marker = 'E05 nameplate contracts ' },

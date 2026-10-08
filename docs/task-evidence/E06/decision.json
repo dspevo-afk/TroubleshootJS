@@ -1,0 +1,49 @@
+{
+  "acceptedSteps": 1320000,
+  "assertions": 324172762,
+  "baseCommit": "6730de219f25306b65da3d336b20f1cd90a82896",
+  "cases": 24,
+  "elevatedOptoGminSamples": 0,
+  "maxSubIterations": 20,
+  "maximumAbsoluteEnergyResidualJ": 1.8848776303428116e-05,
+  "maximumOutputMeanCoarseFineRelative": 0.00015683175934002108,
+  "maximumOutputMeanDetailedAveragedRelative": 0.006528023080779803,
+  "maximumPublishedTerminalKclResidualA": 0.010558057627555684,
+  "maximumReferenceOutputDeltaV": 1.0084733048643102e-10,
+  "maximumStageInputEnergyDetailedAveragedRelative": 0.10191310793348399,
+  "nativeElectricalWallSeconds": 25.9252557,
+  "notQualified": [
+    "Q60physical generation/routing/diagnostics/save-load or visible player flow",
+    "arbitrary input/load/frequency; shorts or overload faults",
+    "averaged switch/gate/winding pulses or individual hidden-stage repairs",
+    "saturation,avalanche,gatecharge,switchingloss,EMI,thermal,commercialhardware",
+    "discharged merelybecause inputisolated; bulkstill78.89..79.17V at1.2s"
+  ],
+  "publication": "PENDING normalcommit/push verification",
+  "remainingScratch": "r8failedcompiler scratch2,649files12,449,484bytes preserved/inventoried, no deletion",
+  "reportLabelBoundary": "Raw developer reports retain candidate/NOT_QUALIFIED fences. This decision accepts only the explicit solver envelope for guarded integration; product admission remains Q60.",
+  "resources": {
+    "evidenceFiles": 62,
+    "portStates": {
+      "CLOSED": 2
+    },
+    "processStates": {
+      "ABSENT": 47
+    },
+    "recordedInstances": 47,
+    "recordedPorts": 2
+  },
+  "reviewedUtc": "2026-10-08T01:14:22.962275+00:00",
+  "rootReview": "PASS integratedmodel/test/privatehook/sourcebinding review; independent readonly reviews cover averagedpower/PI, private lifecycle and matrix energy/reference oracles",
+  "scope": [
+    "120and90Vrms60Hz input; actual22ohm source and fuse/bridge47uF storage",
+    "48and24ohm load; actual enable/startup/feedback and retained storage",
+    "detailed5/2.5us; averaged50/25us",
+    "feedback resistor removal; finite1Gohm blown fuse; both input polesOFF",
+    "automatic/primary/secondary references, reverse insertion, two+10V offsets and1/2realbonds",
+    "GWT factory/chip execution and exact private-player-owner cleanup"
+  ],
+  "selectedQ60Integration": "opaque averaged converter module; one package for the hidden stage, actual external energy/feedback parts remain causal",
+  "status": "ACCEPTED_SOLVER_FIDELITY_DECISION",
+  "visibleInputGate": "NOT_APPLICABLE: no visible player-flow change; compiled gate is not player-input evidence"
+}
