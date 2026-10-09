@@ -1,0 +1,1349 @@
+{
+  "schema": "Q60_NORMAL_BASELINE_DIAGNOSIS_R1",
+  "capturedUtc": "2026-10-09T01:31:15.908850+00:00",
+  "status": "PAIRED_DIAGNOSTIC_INCOMPLETE_Q60_UNACCEPTED",
+  "sourcePublication": {
+    "commit": "9efe177e3508b3db67434759c0a8a7673bd92c2e",
+    "branch": "codex/q60-faulted-profile-counts",
+    "remoteVerified": true,
+    "receipt": {
+      "artifact": "task-archive/q60/count-only-publication-result-r1.json",
+      "sha256": "3039469fb76210e862ece4056ae717c8a9ba07bb5f84ddd3fc80816b6e482627"
+    }
+  },
+  "scope": {
+    "productionWrites": 0,
+    "builds": 0,
+    "controllerWrites": 0,
+    "pairedOrder": [
+      121,
+      122,
+      123,
+      124
+    ],
+    "separateFollowup": 126,
+    "followupReplaces124": false,
+    "qualificationClaim": false
+  },
+  "originalLimits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000,
+    "normalHostObservationSeconds": 115,
+    "nativeOuterSeconds": 300
+  },
+  "sourceBoundary": {
+    "archivedA": "build25 / compiled89",
+    "currentB": "build29 / source9efe177e / compiled108",
+    "sourceInputs": 1222,
+    "changedProductionPaths": [
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java"
+    ],
+    "currentProductionHashes": {
+      "src/com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java": "13c2d9adba71498fbf407e109d3c5fc6b42d1d4ab1ccad6e0c7c3b308a8063f1",
+      "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java": "164456d4ded0953a083e079fa3c91b9624ddcde85aa752ab6eb85efd140d3489",
+      "src/com/lushprojects/circuitjs1/client/GeneratedTemporalBehavior.java": "db1933c729379684423a1252dc2440b76829f8c3da542f0bc82c02f0d592e574",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "0c716051b00d6a65666047679a5d54400876d37aeb9e82dea7c5ec8a1c623aed",
+      "src/com/lushprojects/circuitjs1/client/Rb30Behavior.java": "fe1f531e9a6c6741be8a43e65787eeb85f61f960703782f4bc3886943291fc31",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3"
+    },
+    "solverBytesIdentical": true,
+    "servedFilesPerArm": 392,
+    "commonByteIdenticalFiles": 380,
+    "generatedAssetsPerArm": 12,
+    "certificate": {
+      "artifact": "task-archive/q60/source-baseline-ab-overlay-r1/current-source-and-overlay-certificate-r1.json",
+      "sha256": "1e761fbf2596eb61bd19c72a9fd9c9e58c6607cef1b91a853f903d2a9133417d"
+    },
+    "overlay": {
+      "artifact": "task-archive/q60/source-baseline-ab-overlay-r1/virtual_overlay.py",
+      "sha256": "d0689caa6c255937863cc99fbe7b79c131f730abfadfa9c453fcdf443500e5f3"
+    },
+    "armManifests": [
+      {
+        "artifact": "task-archive/q60/source-baseline-ab-overlay-r1/served-A-392.json",
+        "sha256": "b3a902a819e7c7e4a49d4686b3fda6da43bd4b679f83ac9dd3fb1bec8af971ca"
+      },
+      {
+        "artifact": "task-archive/q60/source-baseline-ab-overlay-r1/served-B-392.json",
+        "sha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a"
+      }
+    ]
+  },
+  "historical": {
+    "control89": "PASS:85.7567492s public observation; sampled maximum443 is not terminal work.",
+    "control108": "FAIL:ERROR after90.0524987s public observation; last302/89006ms; exact cause/time/work UNEXPOSED.",
+    "control106": "FAIL:ERROR after90.8013409s public observation; exact cause/time/work UNEXPOSED.",
+    "cause108": "UNKNOWN_NOT_RECOVERABLE_OR_BACKFILLED",
+    "cause124": "UNKNOWN_NOT_RECOVERABLE_OR_BACKFILLED",
+    "ownedGateOverlapAudit": {
+      "retainedClosedPhaseHostIntervalsScanned": 255,
+      "missingClockReceipts": [],
+      "range": "native<=147/build<=29/compiled<=108 top-level closed receipts",
+      "overlapsWithNormal89_106_108": [],
+      "independentNamed30PhaseReviewSha256": "6155868017e0781dab9841a46e5d2f89e9eaf4ea1ae62e217dd5f00dd73a21de",
+      "previousNativeBuildGaps": [
+        {
+          "compiledPhase": "compiled-r89",
+          "previousPhase": "native-r134",
+          "previousFinishedUtc": "2026-10-08T20:09:08.943834Z",
+          "secondsUntilCompiledHostStart": 355.044346
+        },
+        {
+          "compiledPhase": "compiled-r89",
+          "previousPhase": "build-r25",
+          "previousFinishedUtc": "2026-10-08T20:02:34.520974Z",
+          "secondsUntilCompiledHostStart": 749.467206
+        },
+        {
+          "compiledPhase": "compiled-r106",
+          "previousPhase": "native-r145",
+          "previousFinishedUtc": "2026-10-08T23:26:51.631822Z",
+          "secondsUntilCompiledHostStart": 110.256002
+        },
+        {
+          "compiledPhase": "compiled-r106",
+          "previousPhase": "build-r28",
+          "previousFinishedUtc": "2026-10-08T23:01:52.315001Z",
+          "secondsUntilCompiledHostStart": 1609.572823
+        },
+        {
+          "compiledPhase": "compiled-r108",
+          "previousPhase": "native-r147",
+          "previousFinishedUtc": "2026-10-08T23:40:35.904286Z",
+          "secondsUntilCompiledHostStart": 220.435724
+        },
+        {
+          "compiledPhase": "compiled-r108",
+          "previousPhase": "build-r29",
+          "previousFinishedUtc": "2026-10-08T23:42:56.766441Z",
+          "secondsUntilCompiledHostStart": 79.573569
+        }
+      ],
+      "limits": "These boundaries exclude observed overlapping owned gates in retained evidence; they do not establish an idle machine, equal thermal/cache/JIT state or unrelated-process load parity."
+    },
+    "review": {
+      "artifact": "task-archive/q60/normal-q30-r89-r106-r108-timing-load-review-r1.json",
+      "sha256": "945e6d9353b6d7a680709fc67b4695ded6c4a9703640b10aa81bc72e906d8eb3"
+    }
+  },
+  "observer": {
+    "runtimeOnly": true,
+    "debuggerPaused": false,
+    "ongoingPrivateJobReads": false,
+    "applicationMutations": 0,
+    "currentReader": {
+      "artifact": "task-archive/q60/normal-q30-terminal-observer-r5/observer.py",
+      "sha256": "0fae833b1347bca771888f3bc584635327b28dfe8b0ebe2f1e3ed3d2d9bbc621"
+    },
+    "failureDefaultProof": {
+      "artifact": "task-archive/q60/normal-q30-terminal-observer-r5/throwable-default-proof-r1.json",
+      "sha256": "288927de5d376c232403cfa06f05272d8abb7db9f3c55a6aa1f76b5f774c84ec"
+    },
+    "actualCancelledOmissionProof": 125,
+    "deadlineOmissionProof": "STATIC_ONLY",
+    "partialErrorRetention": "STATIC_ONLY_NOT_RUNTIME_INJECTED",
+    "failedJobFailureMandatoryNonNull": true,
+    "unknownAbsentCauseFatal": true,
+    "orphanRule": "Positive observed nonHTTP frame-loader/request-ID correlation only, labeled inference across distinct opaque types. Unknown/HTTP-associated events remain fatal.",
+    "error124": "Reader expected a descriptor for GWT message-only Throwable.cause, whose Java default null may be omitted. Reader raised before final frame classification; the recorded final orphan-audit error also remains FAIL."
+  },
+  "records": [
+    {
+      "phase": 120,
+      "arm": "B",
+      "leg": "LED_CANARY",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "PASS",
+      "expectedCancellationReader": null,
+      "publicScreen": "TICKET",
+      "hostObservationSeconds": 0.5493436999968253,
+      "maxSampledWork": 52,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "TERMINAL",
+        "strongName": "68986289687AEE984C36E1E48166210D",
+        "publicScreen": "TICKET",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "failure": {
+          "chain": [],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 419,
+        "stepCount": 59,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 1,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 54,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 1,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 54,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 0,
+          "HEALTHY": 56,
+          "PHYSICAL": 14,
+          "HYPOTHESES": 254,
+          "SYMPTOM": 0,
+          "PUBLISH": 5
+        },
+        "maxAdvanceMillis": 99,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 36,
+        "observerElapsedSeconds": 0.046203100006096065
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 429.39999997615814,
+      "selectedCache": {
+        "route": "/circuitjs1/68986289687AEE984C36E1E48166210D.cache.js",
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 6713,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 1.0166826999920886,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r120-input-review.json",
+          "sha256": "16247dc19ec93b9850c04aa13e14dbbd0cdbd55ba0cf6cb69cc6a3737e865bef"
+        },
+        "inputCount": 1818
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r120/strict-result.json",
+          "sha256": "5bc860a227750a87320ef9d309d14ab68be2bc0c07337673af068b894c1678bc"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r120/normal-terminal-readback.json",
+          "sha256": "6ec47175d595e2b3d4d00f84cad60c76235bbc65da5f08708f2d9f31d055d25c"
+        },
+        {
+          "artifact": "private-archive/compiled-r120-result.json",
+          "sha256": "fd27e31ab955a90107bfe28a06f75ec5fbcd09ce3774b84d5055e4b57855605d"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r120-windows-cpu-samples.json",
+          "sha256": "20d2563b542921443a0e18826039afc236c28311e58dc283684c240cbbb7d1e4"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 5.4081376,
+        "wholeRecordingAggregateBusyPercent": 24.80130057803468,
+        "qemuHeadlessObservedPartialCpuSeconds": 1.65625,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.15625,
+        "unavailableProcessObservationsPerSample": [
+          127,
+          127
+        ],
+        "memoryLoadPercentRange": [
+          65,
+          66
+        ],
+        "interiorRegularIntervals": {
+          "count": 0,
+          "queryBoundSpanSeconds": 0,
+          "aggregateBusyPercent": null,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 4,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 629,
+          "processHandlesClosed": 629,
+          "workerCpuSeconds": 0.015625,
+          "recordedWallSeconds": 5.4101719,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 121,
+      "arm": "B",
+      "leg": "B1",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "PASS",
+      "expectedCancellationReader": null,
+      "publicScreen": "TICKET",
+      "hostObservationSeconds": 87.8752827999997,
+      "maxSampledWork": 443,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "TERMINAL",
+        "strongName": "68986289687AEE984C36E1E48166210D",
+        "publicScreen": "TICKET",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "failure": {
+          "chain": [],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 87840,
+        "stepCount": 448,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 12422,
+          "PHYSICAL": 116,
+          "HYPOTHESES": 73425,
+          "SYMPTOM": 1,
+          "PUBLISH": 95
+        },
+        "maxAdvanceMillis": 1473,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 36,
+        "observerElapsedSeconds": 0.6687550999922678
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 87854.59999999404,
+      "selectedCache": {
+        "route": "/circuitjs1/68986289687AEE984C36E1E48166210D.cache.js",
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 95426,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 1.3719849000044633,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r121-input-review.json",
+          "sha256": "27fdea1ff78e759aef1185874fb5f4fb30715d660f3d2f77d85eaa4ef491a9e8"
+        },
+        "inputCount": 1821
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r121/strict-result.json",
+          "sha256": "ed33a4e9646547559c53f4c18dde30472337a872fcf150ce7d61517303f6caa0"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r121/normal-terminal-readback.json",
+          "sha256": "89d0b7b0fc64b8dd272528104b05deb1d3d24b5f73627eadfcb09849bd9abe2f"
+        },
+        {
+          "artifact": "private-archive/compiled-r121-result.json",
+          "sha256": "7bef8330ca80901cbc172a0d33ce3e3a02b5a7958d00b1c35cf14cc4d6959c46"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r121-windows-cpu-samples.json",
+          "sha256": "6ec97566559d297237d1c523f948e665e7167e9a5cde94262975ffde8d47e0a9"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 94.0867518,
+        "wholeRecordingAggregateBusyPercent": 16.258719481813653,
+        "qemuHeadlessObservedPartialCpuSeconds": 27.65625,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.8125,
+        "unavailableProcessObservationsPerSample": [
+          126,
+          128
+        ],
+        "memoryLoadPercentRange": [
+          66,
+          69
+        ],
+        "interiorRegularIntervals": {
+          "count": 43,
+          "queryBoundSpanSeconds": 86.4490977,
+          "aggregateBusyPercent": 15.904058206796819,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 48,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 7944,
+          "processHandlesClosed": 7944,
+          "workerCpuSeconds": 0.234375,
+          "recordedWallSeconds": 94.0890966,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 122,
+      "arm": "A",
+      "leg": "A1",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "PASS",
+      "expectedCancellationReader": null,
+      "publicScreen": "TICKET",
+      "hostObservationSeconds": 89.07961260000593,
+      "maxSampledWork": 443,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "TERMINAL",
+        "strongName": "63D4F3F1A52C43B58C52801FB19B1465",
+        "publicScreen": "TICKET",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "failure": {
+          "chain": [],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 89053,
+        "stepCount": 448,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 12557,
+          "PHYSICAL": 108,
+          "HYPOTHESES": 74541,
+          "SYMPTOM": 1,
+          "PUBLISH": 87
+        },
+        "maxAdvanceMillis": 1550,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 36,
+        "observerElapsedSeconds": 0.5930807999975514
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 89062.39999997616,
+      "selectedCache": {
+        "route": "/circuitjs1/63D4F3F1A52C43B58C52801FB19B1465.cache.js",
+        "bodySha256": "10d4e974c7cac30e45ff574dfac38f6bd3a8141a1ed66196aa13a6edf3420964",
+        "bodyBytes": 3336993,
+        "symbolMapSha256": "eb02c30ca37b506ec9c9c74ad530557d0c54c0d9c6d40bca0e79c2cadc39ef83",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "A",
+        "manifestSha256": "b3a902a819e7c7e4a49d4686b3fda6da43bd4b679f83ac9dd3fb1bec8af971ca",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "1e3e362c24b562f2aa2cf96479078b2b76594870932855f1ef152f677a99be66"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 96472,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 0.9421154000156093,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r122-input-review.json",
+          "sha256": "8946b7b546e7cfe1e376819ba6e4eee567d7aa44fb7affe88d515fc429a6712a"
+        },
+        "inputCount": 1821
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r122/strict-result.json",
+          "sha256": "47a2a1e156069fc04b43727759f16f53410696894fe28cac519a4e75156e497e"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r122/normal-terminal-readback.json",
+          "sha256": "a43ad14447f6ca8d448e8b124e3f5414a514771625652863d06833510cfa3f5f"
+        },
+        {
+          "artifact": "private-archive/compiled-r122-result.json",
+          "sha256": "399754a5a16f07986f205c5ee69cc79506ded3cd575423c693f98a3ab07a61cf"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r122-windows-cpu-samples.json",
+          "sha256": "1a05abc6eaebe6df4e5b1b978c067a26a381adb928f1759f85d27d5e40054512"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 95.0717677,
+        "wholeRecordingAggregateBusyPercent": 16.873150887573964,
+        "qemuHeadlessObservedPartialCpuSeconds": 30.953125,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.53125,
+        "unavailableProcessObservationsPerSample": [
+          129,
+          129
+        ],
+        "memoryLoadPercentRange": [
+          61,
+          69
+        ],
+        "interiorRegularIntervals": {
+          "count": 44,
+          "queryBoundSpanSeconds": 88.4395431,
+          "aggregateBusyPercent": 15.758613074204947,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 49,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 8479,
+          "processHandlesClosed": 8479,
+          "workerCpuSeconds": 0.21875,
+          "recordedWallSeconds": 95.0740698,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 123,
+      "arm": "A",
+      "leg": "A2",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "PASS",
+      "expectedCancellationReader": null,
+      "publicScreen": "TICKET",
+      "hostObservationSeconds": 79.42584569999599,
+      "maxSampledWork": 443,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "TERMINAL",
+        "strongName": "63D4F3F1A52C43B58C52801FB19B1465",
+        "publicScreen": "TICKET",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "failure": {
+          "chain": [],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 79390,
+        "stepCount": 448,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 0,
+          "HEALTHY": 10775,
+          "PHYSICAL": 82,
+          "HYPOTHESES": 66902,
+          "SYMPTOM": 0,
+          "PUBLISH": 76
+        },
+        "maxAdvanceMillis": 1404,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 36,
+        "observerElapsedSeconds": 0.23883509999723174
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 79397.79999998212,
+      "selectedCache": {
+        "route": "/circuitjs1/63D4F3F1A52C43B58C52801FB19B1465.cache.js",
+        "bodySha256": "10d4e974c7cac30e45ff574dfac38f6bd3a8141a1ed66196aa13a6edf3420964",
+        "bodyBytes": 3336993,
+        "symbolMapSha256": "eb02c30ca37b506ec9c9c74ad530557d0c54c0d9c6d40bca0e79c2cadc39ef83",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "A",
+        "manifestSha256": "b3a902a819e7c7e4a49d4686b3fda6da43bd4b679f83ac9dd3fb1bec8af971ca",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "1e3e362c24b562f2aa2cf96479078b2b76594870932855f1ef152f677a99be66"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 85973,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 1.089662899990799,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r123-input-review.json",
+          "sha256": "1585bef89f39c9858db14cbad7d7cf2de5746c692e08d0ad3244b4919c304d1e"
+        },
+        "inputCount": 1821
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r123/strict-result.json",
+          "sha256": "f8e807b5df009b05bed4a2bb9f16c12de2c62bf1fd7dbe1b0fb61a6a1326e48c"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r123/normal-terminal-readback.json",
+          "sha256": "d2966294e37b84bcef75f5ed7ca80b1237722938c41f7a0c16a2e4e8ba2390ea"
+        },
+        {
+          "artifact": "private-archive/compiled-r123-result.json",
+          "sha256": "5ecfc42d253913c35a07ae2f0945dec641c6cef7f45b6834501c9e709ea8c0e6"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r123-windows-cpu-samples.json",
+          "sha256": "5583f1ec610a9e4c2ed843eef6c8af45914d8e26aa0ec695c3b297e4b9dd6fac"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 84.6152273,
+        "wholeRecordingAggregateBusyPercent": 16.46796773113899,
+        "qemuHeadlessObservedPartialCpuSeconds": 24.171875,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.421875,
+        "unavailableProcessObservationsPerSample": [
+          128,
+          130
+        ],
+        "memoryLoadPercentRange": [
+          61,
+          63
+        ],
+        "interiorRegularIntervals": {
+          "count": 39,
+          "queryBoundSpanSeconds": 78.3273122,
+          "aggregateBusyPercent": 16.014612008777178,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 44,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 6984,
+          "processHandlesClosed": 6984,
+          "workerCpuSeconds": 0.140625,
+          "recordedWallSeconds": 84.6170735,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 124,
+      "arm": "B",
+      "leg": "B2",
+      "measurementStatus": "FAIL",
+      "workflowStatus": "FAIL",
+      "normalApplicationQualification": null,
+      "expectedCancellationReader": null,
+      "publicScreen": "ERROR",
+      "hostObservationSeconds": 91.02809010000783,
+      "maxSampledWork": 433,
+      "exactTerminal": null,
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 91034.90000000596,
+      "selectedCache": {
+        "route": "/circuitjs1/68986289687AEE984C36E1E48166210D.cache.js",
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": null,
+        "postDetachErrorAudit": null
+      },
+      "caseErrors": [
+        "PLAIN_FIELD_REQUIRED:java.lang.Throwable::cause",
+        "Final browser/network/orphan audit failed after CDP detach"
+      ],
+      "wrapperErrors": [
+        "Exact terminal/source observer measurement required"
+      ],
+      "owner": {
+        "operationStatus": "FAIL",
+        "operationElapsedMillis": 97430,
+        "exitCode": 1,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 1.1653598000120837,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r124-input-review.json",
+          "sha256": "d17d962c2e88097a6db23d6a97a29055ac1905de0219c077e4abd80fe49fb9df"
+        },
+        "inputCount": 1821
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r124/strict-result.json",
+          "sha256": "eb0871e366ac82b9ca471dbf9b93f2905fb682fe0d56a1fef74e05e2cce2d5ce"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r124/normal-terminal-readback.json",
+          "sha256": "fcf6b5bb3290a2ec2599a64d5d3c797df10df55ca59f4994254e1ea4fb048caa"
+        },
+        {
+          "artifact": "private-archive/compiled-r124-result.json",
+          "sha256": "7e2e5989811429009fc19af73c0cd8518e27d1856b654262a222a7afc95dbf0c"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r124-windows-cpu-samples.json",
+          "sha256": "ce97feae07a8f9a461fadbed66a6237a2f0e7220d87f805dde28ffea0c02130c"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 96.0763118,
+        "wholeRecordingAggregateBusyPercent": 19.20535859489348,
+        "qemuHeadlessObservedPartialCpuSeconds": 28.234375,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 30.96875,
+        "studioObservedPartialCpuSeconds": 6.796875,
+        "unavailableProcessObservationsPerSample": [
+          129,
+          129
+        ],
+        "memoryLoadPercentRange": [
+          61,
+          65
+        ],
+        "interiorRegularIntervals": {
+          "count": 45,
+          "queryBoundSpanSeconds": 90.424857,
+          "aggregateBusyPercent": 19.29540349058234,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 49,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 7837,
+          "processHandlesClosed": 7837,
+          "workerCpuSeconds": 0.109375,
+          "recordedWallSeconds": 96.0784146,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 125,
+      "arm": "B",
+      "leg": "CANCEL_CANARY",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "NOT_APPLICABLE",
+      "expectedCancellationReader": "PASS",
+      "publicScreen": "MENU",
+      "hostObservationSeconds": 0.004226399993058294,
+      "maxSampledWork": 0,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "CANCELLED_MENU",
+        "strongName": "68986289687AEE984C36E1E48166210D",
+        "publicScreen": "MENU",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "CANCELLED",
+        "stage": "HEALTHY",
+        "failure": {
+          "chain": [
+            {
+              "class": "com.lushprojects.circuitjs1.client.GenerationJob$Cancelled",
+              "detail": "Generation cancelled",
+              "detailTruncated": false,
+              "causeFieldState": "ABSENT_UNINITIALIZED_FIELD",
+              "defaultNullInference": "Source-bound Java default-null inference for exact com.lushprojects.circuitjs1.client.GenerationJob$Cancelled; CDP returned no cause descriptor."
+            }
+          ],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 1710,
+        "stepCount": 8,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 7,
+          "PHYSICAL": 0,
+          "HYPOTHESES": 0,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 7,
+          "PHYSICAL": 0,
+          "HYPOTHESES": 0,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 0,
+          "HEALTHY": 1679,
+          "PHYSICAL": 0,
+          "HYPOTHESES": 0,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "maxAdvanceMillis": 774,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 39,
+        "observerElapsedSeconds": 0.040208499995060265
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": null,
+      "selectedCache": {
+        "route": "/circuitjs1/68986289687AEE984C36E1E48166210D.cache.js",
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 7808,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 0.9224748999986332,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r125-input-review.json",
+          "sha256": "f808ff3c2c8a5721d0f582af8ef81458ba8ad08d3e9037db88de712542eaca48"
+        },
+        "inputCount": 1852
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r125/strict-result.json",
+          "sha256": "a736e3f02d2dc66164af976a3cbfce2dee28ee985a89c74ef1d5f44a5656a59e"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r125/normal-terminal-readback.json",
+          "sha256": "aa1461569f17c2df7270a4810df7fbb9ae4b2cd82f1aed771e5c1ed8ac128f9f"
+        },
+        {
+          "artifact": "private-archive/compiled-r125-result.json",
+          "sha256": "9ffd8240ef99760fea74081dc61779a3cc2f02ef04455ac69102dac04d76052e"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r125-windows-cpu-samples.json",
+          "sha256": "25b45a6fa5c5a4b9b3eba49114ed181a9a601fb8273cc6b14029b489796809f2"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 6.5130515,
+        "wholeRecordingAggregateBusyPercent": 22.961630695443645,
+        "qemuHeadlessObservedPartialCpuSeconds": 2.171875,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.015625,
+        "unavailableProcessObservationsPerSample": [
+          127,
+          128
+        ],
+        "memoryLoadPercentRange": [
+          61,
+          63
+        ],
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 5,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 789,
+          "processHandlesClosed": 789,
+          "workerCpuSeconds": 0.015625,
+          "recordedWallSeconds": 6.5151907,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    },
+    {
+      "phase": 126,
+      "arm": "B",
+      "leg": "CAUSE_FOLLOWUP",
+      "measurementStatus": "PASS",
+      "workflowStatus": "PASS",
+      "normalApplicationQualification": "PASS",
+      "expectedCancellationReader": null,
+      "publicScreen": "TICKET",
+      "hostObservationSeconds": 88.884429800004,
+      "maxSampledWork": 443,
+      "exactTerminal": {
+        "observerStatus": "CAPTURED",
+        "mode": "TERMINAL",
+        "strongName": "68986289687AEE984C36E1E48166210D",
+        "publicScreen": "TICKET",
+        "publicToken": 3,
+        "exactOwnerClassesAndBacklinks": true,
+        "normalPlayerMode": true,
+        "jobStatus": "TERMINAL",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "failure": {
+          "chain": [],
+          "truncated": false,
+          "fieldState": "PRESENT_DATA_FIELD",
+          "defaultNullInference": null
+        },
+        "completedElapsedMillis": 88857,
+        "stepCount": 448,
+        "stageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "candidateStageWorkCounts": {
+          "RESOLVE": 1,
+          "HEALTHY": 54,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 390,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageElapsedMillis": {
+          "RESOLVE": 0,
+          "HEALTHY": 12345,
+          "PHYSICAL": 111,
+          "HYPOTHESES": 74564,
+          "SYMPTOM": 1,
+          "PUBLISH": 84
+        },
+        "maxAdvanceMillis": 1504,
+        "actualLimits": {
+          "jobMillis": 90000,
+          "sharedWork": 640,
+          "activeOperationMillis": 5000
+        },
+        "stageElapsedMillisScope": "Per-active-unit sampled wall telemetry; excludes between-unit services.pause and yields; not CPU or whole-stage wall time.",
+        "maxAdvanceMillisScope": "Whole coordinator advance including scope/pause/UI and job abort; excludes completed() after finally; not exact maximum active-unit-clock time.",
+        "observerCommands": 36,
+        "observerElapsedSeconds": 0.596867399988696
+      },
+      "partialTerminal": null,
+      "rendererActionIntervalMillis": 88866.10000002384,
+      "selectedCache": {
+        "route": "/circuitjs1/68986289687AEE984C36E1E48166210D.cache.js",
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari",
+        "bodyReadScope": "After MENU and before generation; same passive method in every leg."
+      },
+      "providerAudit": {
+        "schema": "Q60_ACTUAL_SERVED_WEB_AUDIT_1",
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "finalErrorAudits": {
+        "postAdmissionErrorAudit": "PASS",
+        "postDetachErrorAudit": "PASS"
+      },
+      "caseErrors": [],
+      "wrapperErrors": [],
+      "owner": {
+        "operationStatus": "PASS",
+        "operationElapsedMillis": 96280,
+        "exitCode": 0,
+        "sourceFiles": 1222,
+        "sourceInputsUnchanged": true,
+        "nativeCleanup": "PASS",
+        "activeOwnedProcesses": 0,
+        "handlesClosed": true
+      },
+      "applicationCleanup": {
+        "status": "PASS",
+        "seconds": 0.9289981999900192,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "portClosed": true
+      },
+      "frozenControl": {
+        "evidence": {
+          "artifact": "task-archive/q60-browser/compiled-r126-input-review.json",
+          "sha256": "9bad22c600e74fb61b2cc09de0af2bbc9a865cf1c01db6cbe004786793741cf7"
+        },
+        "inputCount": 1855
+      },
+      "evidence": [
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r126/strict-result.json",
+          "sha256": "1baf8cd1b1c01288440790d6667fc41c46c3f4d88f4339ea059c12ced1932c6f"
+        },
+        {
+          "artifact": "private-archive/normal-q30-terminal-compiled-r126/normal-terminal-readback.json",
+          "sha256": "c4ca5a20d15662c976ed6159d139453ddbd37a88ecdce16f458f2a39d66713c6"
+        },
+        {
+          "artifact": "private-archive/compiled-r126-result.json",
+          "sha256": "cedbb0c7e52d7b92338b2938e872ab97810e7a75800244117de346990cddc50d"
+        }
+      ],
+      "cpu": {
+        "evidence": {
+          "artifact": "private-archive/compiled-r126-windows-cpu-samples.json",
+          "sha256": "c6c09e557b892945b24a3056e59b1f990e8093975914434308b2231da152a225"
+        },
+        "logicalProcessors": 16,
+        "recordingCounterSpanSeconds": 94.8897817,
+        "wholeRecordingAggregateBusyPercent": 11.513049563642351,
+        "qemuHeadlessObservedPartialCpuSeconds": 25.453125,
+        "emulatorWrapperObservedPartialCpuSeconds": 0.0,
+        "javaBasenameObservedPartialCpuSeconds": 0,
+        "studioObservedPartialCpuSeconds": 0.328125,
+        "unavailableProcessObservationsPerSample": [
+          127,
+          129
+        ],
+        "memoryLoadPercentRange": [
+          60,
+          62
+        ],
+        "interiorRegularIntervals": {
+          "count": 44,
+          "queryBoundSpanSeconds": 88.4527583,
+          "aggregateBusyPercent": 11.12104751810634,
+          "scope": "Complete regular query-bound intervals wholly after public PREPARING and before terminal observation; excludes boundary fragments and is not exact internal job timing."
+        },
+        "recorderCleanup": {
+          "status": "PASS",
+          "sampleCount": 49,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 7775,
+          "processHandlesClosed": 7775,
+          "workerCpuSeconds": 0.140625,
+          "recordedWallSeconds": 94.891739,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        }
+      }
+    }
+  ],
+  "conclusions": {
+    "pairedStatus": "INCOMPLETE",
+    "exactPassingWork": 448,
+    "archivedSameBuildSpreadMillis": 9663,
+    "limiter": "HYPOTHESES:390 of448 terminal work;66902..74564ms sampled active-unit wall in exact PASS controls. These are not CPU or whole-stage wall measurements.",
+    "speedupClaim": false,
+    "regressionClaim": false,
+    "deadlineReliabilityClaim": false,
+    "loadCausalityClaim": false,
+    "decision": "Keep published count correction and restored numerical baseline. Select no production optimization; incomplete negative paired measurement and timing/load variation do not justify one.",
+    "nextQ60": "A correctness-preserving candidate must demonstrate lower hypothesis proof cost against a complete baseline comparison before required admission/player gates. Do not repeat unchanged corpora or rejected storage experiments."
+  },
+  "rejectedStorage": {
+    "reusedWithoutRetest": true,
+    "transition": {
+      "artifact": "task-archive/q60/rejected-storage-count-only-transition-r1.json",
+      "sha256": "e0bd2c1efe2e3da95b3fa794eaede91422f0499514bc869b6fd62940685d3733"
+    },
+    "full6": "Historical typed-prototype FAIL:fourPASS,twoTIMEOUT55/60. Restored-source currentfull6 NOT_RERUN.",
+    "cache": "NO_GO:zero genuine-update reuse coverage."
+  },
+  "remainingGates": {
+    "q60": "IN_PROGRESS_UNACCEPTED",
+    "normalRB56": "HELD",
+    "hard": "HELD",
+    "rb56SaveLoad": "HELD",
+    "exact60VisibleSession": "NOT_RUN_HELD",
+    "actualModestHardware": "BLOCKED_UNAVAILABLE",
+    "relB": "UNSTARTED",
+    "q100": "UNSTARTED"
+  },
+  "preservation": {
+    "originalUntrackedFiles": 8,
+    "originalUntrackedShaMapSha256": "2c376f18c47d2315d106cdb0e71754da65e64e188450d7f34595499c04b9a19f",
+    "originalQ30Failure91_616": "Cause/seedUNKNOWN",
+    "missingScratchInventories": 6,
+    "lateAudit": "BLOCKED_PRESERVED",
+    "noEmail": true,
+    "coreAndroidServer": "OUT_OF_SCOPE"
+  },
+  "limits": [
+    "Four paired legs have fresh profiles; this does not imply matched OS cold state, JIT/GC, frequency, thermals or scheduler conditions.",
+    "CPU system percentages cover16 logical processors. Process deltas have their own query windows and incomplete new/retired/unavailable census; no causal attribution.",
+    "Two newly observed Java identities in124 contribute30.96875 observed CPU seconds over partial~12-second windows. Their build ownership and failure causality are unknown; none were terminated.",
+    "Browser full command line unavailable through actual CDP capability; maintained explicit launch options and pinned browser providers were attested separately.",
+    "Expected40 packages/two channels comes from frozen plan; runtime package census remains unexposed by the public host.",
+    "maxAdvanceMillis is whole coordinator advance; it does not expose exact maximum5000ms active-operation-clock time.",
+    "No new production performance implementation, full6 gate, visible exact60 endurance/session or modest-machine qualification."
+  ],
+  "independentReviewReports": {
+    "artifact": "task-archive/q60/normal-baseline-checkpoint-docs-r2/recorded-independent-reports-r1.json",
+    "sha256": "c28b747a8e4526a267c9cc79ba21f00457af74ddc25418344bf5103c229c3664",
+    "provenance": "Root records final collaboration reports; these are not new reviewer executions or signed reviewer-produced receipts."
+  }
+}

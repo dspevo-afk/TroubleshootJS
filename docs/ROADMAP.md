@@ -8,24 +8,23 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
-U06/U07/E05/E06 remain published. Root selects a count-only Q60 checkpoint on
-`codex/q60-faulted-profile-counts`: six RB56 FAULTED goal-count files remain;
-CirSim/LuChecks are restored exactly to published 30374 numerical/storage baseline
-after verified prototype archiving. Native147 PASS 62.372 s / ten suites / 1,353 inputs
-unchanged / cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
-normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
-89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
-RB56 FAULTED becomes nine real executable units; healthy/repair/customer retest,
-Q30 counts, electrical steps, numerical guards and original 90 s / 640 work / 5 s remain
-unchanged. Typed-prototype full6 is historical FAIL with four PASS and two TIMEOUT at 55/60 packages;
-its 56-part 618-unit PASS is historical accounting evidence. Prototype Q30 control106
-ends ERROR after 90.8013409 s observation; exact terminal cause remains unexposed.
-No reliable deadline or causal speed/regression claim follows. Exact 60 real UI/
-session is NOT RUN/held; actual modest hardware is BLOCKED/unavailable.
-Normal RB56/HARD/save-load remain held. Eight original files, historical failures
-and Q30 risks remain preserved. No unchanged full6 retry or Q30 corpus rerun.
-This feature-branch checkpoint is not Q60 or release acceptance.
-[Count checkpoint evidence](task-evidence/Q60/faulted-profile-count-checkpoint-r1/README.md),
+U06/U07/E05/E06 remain published. Count-only source
+`9efe177e3508b3db67434759c0a8a7673bd92c2e` is verified on
+`origin/codex/q60-faulted-profile-counts`; CirSim/LuChecks retain the published
+numerical baseline. Native 147/build 29/compiled 107 PASS evidence is reused after
+exact unchanged-input audit. No new production edit, build or deadline change.
+Source-neutral normal Q30 BAAB 121–124 is INCOMPLETE: B1/A1/A2 PASS at
+87.840/89.053/79.390 s with 448 terminal work; B2 public ERROR and reader FAIL leave
+its exact cause/counters UNEXPOSED. Corrected real Prepare/Cancel 125 PASS;
+separate 126 PASS 88.857 s / 448 does not replace 124. Historical 108 cause remains
+UNKNOWN. Hypothesis work dominates measured active-unit wall; same-build
+variation and observed unrelated load do not establish speedup/regression or
+causality. Select no production optimization from this comparison.
+Original 90 s / 640 work / 5 s, all failures/eight original files and Q30 risks are preserved.
+Rejected storage is archived, not retested; current full6 NOT RERUN. Normal
+RB56/HARD/save-load remain held. Exact 60 visible/session is NOT RUN/held;
+actual modest hardware BLOCKED/unavailable. Q60 and release acceptance remain
+unproved. [Diagnosis](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md),
 [current checkpoint](CODEX_TASK_REPORT.md).
 
 **Historical menu checkpoint:** **Q30 private menu PASS; acceptance pending; normal play disabled**
@@ -3001,26 +3000,25 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS / UNACCEPTED, 2026-10-08. Selected count-only scope on
-`codex/q60-faulted-profile-counts`, published parent
-`30374e0a46d6faaf94152b426620f482638a3607`. Six verified RB56 FAULTED goal-count
-files remain; root archive and restoration of only CirSim/LuChecks to exact
-published numerical/storage baseline are verified. Native147 PASS 62.372 s/ten
-suites/1,353 unchanged inputs/cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
-normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
-89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
-FAULTED has nine real units without eliding electrical steps; healthy/repair/
-customer retest, Q30 counts, five independent generated proof flows, original
-90 s / 640 work / 5 s and electrical cadence remain unchanged. Rejected typed-prototype
-full6 compiled103-105 is historical FAIL with four PASS and two TIMEOUT at 55/60 packages; the56-part
-618-unit PASS is historical accounting evidence only. Prototype Q30 control106
-ends ERROR after 90.8013409 s observation; terminal cause/cost are unexposed,
-cleanup passes and no causal speed/regression claim is made. No unchanged full6
-retry. Exact 60 real UI/session is NOT RUN/held; actual modest hardware is
-BLOCKED/unavailable. Normal RB56/HARD/save-load remain held for Q60 and fresh
-U05/REL-B. Eight original files and historical Q30 risks/failures remain preserved.
-Exact commit/normal-push result is recorded separately by root after verification. This is not Q60 or release acceptance.
-[Evidence](task-evidence/Q60/faulted-profile-count-checkpoint-r1/README.md).
+**Status:** IN PROGRESS / UNACCEPTED, 2026-10-09. Published count-only source
+`9efe177e3508b3db67434759c0a8a7673bd92c2e` on
+`codex/q60-faulted-profile-counts`; native 147/build 29/compiled 107 PASS reused
+after exact input audit. Numerical/storage baseline, nine RB56 FAULTED units,
+healthy/repair/retest/Q30 counts and original 90 s / 640 work / 5 s remain unchanged.
+Source-neutral BAAB 121–124 is INCOMPLETE: three PASS controls with exactly 448 work units;
+124 public ERROR plus failed Throwable reader, exact cause/counters UNEXPOSED.
+125 real cancellation-reader PASS; 126 separate PASS 88.857 s / 448 leaves 1.143 s
+margin and does not replace 124. Hypothesis work is the measured limiter; no
+speedup/regression, historical cause, load causality or reliability claim follows.
+No production optimization selected; reuse rejected-storage/cache evidence,
+with no unchanged full6 or Q30 corpus retry. Current full6 NOT RERUN; historical
+typed-prototype 55/60 timeouts remain FAIL. Normal RB56/HARD/save-load held;
+exact 60 visible/session NOT RUN/held; actual modest hardware BLOCKED/unavailable.
+Next: justify a correctness-preserving candidate that reduces hypothesis proof cost against complete
+baseline evidence before required real admission/player gates. Eight original
+files, original 91.616 s unknown failure, six missing inventories and late BLOCKED
+audit remain preserved. This is not Q60 or release acceptance.
+[Diagnosis](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

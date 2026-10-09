@@ -1,4 +1,59 @@
-# Current checkpoint: Q60 faulted profile counts; numerical prototype rejected
+# Current checkpoint: Q60 normal Q30 diagnosis; paired measurement incomplete
+
+2026-10-09. Tested source `9efe177e3508b3db67434759c0a8a7673bd92c2e` is verified
+published on `origin/codex/q60-faulted-profile-counts`. This continuation changes
+documentation only. U06/U07/E05/E06 remain published; Q60 is **IN PROGRESS /
+UNACCEPTED**. Numerical baseline, count correction and original 90 s / 640 work / 5 s remain.
+Native 147/build 29/compiled 107 passing gates are reused after exact input audit;
+no rebuild or unchanged full6/cold/warm corpus retry.
+
+| New diagnostic gate | Actual scope/result |
+| --- | --- |
+| LED 120 | Full shared transport, real ticket/workbench/menu PASS419ms/59; raw orphan correlates with observed GWT about:blank history frame, explicitly inference |
+| Normal 121 B1 | Exact terminal PASS; 87,840 ms/448; maxAdvance 1473ms; all admission/measurement/source/cleanup PASS |
+| Normal 122 A1 | Archived baseline PASS; 89,053 ms/448; maxAdvance 1550ms; all admission/measurement/source/cleanup PASS |
+| Normal 123 A2 | Same archived baseline PASS; 79,390 ms/448; maxAdvance 1404ms; all admission/measurement/source/cleanup PASS |
+| Normal 124 B2 | Public ERROR after 91.0280901 s; sampled maximum433; measurement FAIL on omitted Throwable.cause and retained final orphan audit; exact cause/counters UNEXPOSED; outer97.430 s/exit1; source/application/native/CPU cleanup PASS separately |
+| Cancel 125 | Genuine Prepare/Cancel returns MENU; real Cancelled exception 1710ms/8, omitted-cause branch and reader PASS; admission NOT APPLICABLE; cleanup PASS |
+| Separate 126 | Corrected reader and real normal flow PASS; 88,857 ms/448; maxAdvance 1504ms;1.143 s margin; does not replace 124; all measurement/admission/source/cleanup PASS |
+
+The original BAAB pair remains INCOMPLETE; no further reroll. Actual A/build 25
+and B/build 29 providers are frozen392-file maps; actual loaded cache body hashes
+match. Five production count files differ; CirSim/LuChecks bytes are identical.
+All 1,855 distinct frozen hashes across 121–126 and native/browser/CPU cleanup
+were independently checked. Runtime reader never inspects an ongoing private
+job or pauses Debugger; failed jobs require non-null real exceptions. 125 proves
+the Cancelled omission; Deadline omission/partial-error retention remain static.
+
+**Limiter/decision:**390 of 448 terminal work is HYPOTHESES, with 66.902–74.564 s
+sampled active-unit wall telemetry. It is not CPU or whole-stage wall.
+maxAdvanceMillis is whole coordinator advance, not the exact5s operation clock.
+Archived A varies 9.663 s with identical work; narrow PASS margins and incomplete
+negative measurement do not justify a production optimization, speed/regression
+claim or reliable deadline claim. Keep the published count correction and exact
+numerical baseline; do not repeat rejected storage/cache experiments.
+
+Whole-recording CPU busy121–124 is 16.2587/16.8732/16.4680/19.2054% over 16 logical
+processors; 126 is 11.5131%.124 includes unowned Java activity during partial
+12-second windows; no executable chain/build ownership or causal link proved.
+No overlapping task-owned expensive gates, kills or global settings changes.
+Historical 108/106 and original 91.616 s causes cannot be recovered or backfilled;
+thermal/frequency, per-core scheduling and JIT/GC parity are unavailable.
+
+**Remaining/next:** Q60 requires a justified correctness-preserving hypothesis
+cost candidate with a complete comparison before its actual admission/player
+gates. Current restored-source full6 NOT RERUN; historical typed 55/60 TIMEOUT
+failures remain. Normal RB56/HARD/save-load held; exact 60 visible/session NOT
+RUN; actual modest hardware BLOCKED/unavailable. REL-B/Q100 unstarted. Eight
+original untracked bytes, six missing inventories and late BLOCKED audit stay
+preserved. All new owned resources are closed; unrelated resources untouched.
+No Core/Android/server work or email. This is not Q60 or release acceptance.
+
+[Diagnosis and sanitized receipts](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md).
+
+---
+
+# Historical checkpoint: Q60 faulted profile counts; numerical prototype rejected
 
 2026-10-08. Branch `codex/q60-faulted-profile-counts`, published parent
 `30374e0a46d6faaf94152b426620f482638a3607`. Root archive and two-file restoration
