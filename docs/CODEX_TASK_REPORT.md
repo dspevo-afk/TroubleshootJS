@@ -1,4 +1,68 @@
-# Current checkpoint: exact 60-package public repair/retest PASS; Q60 unaccepted
+# Current checkpoint: private Q60 PlayerSession and same-board endurance PASS; Q60 unaccepted
+
+2026-10-11. Final seven-file integration over parent
+`aebb06d0734d8dd76eaef534497f85f7c90d3fff` on
+`codex/q60-faulted-profile-counts` adopts the genuinely qualified RB56 owner into
+private PlayerSession. Integration r4 is bound by
+`176997c0c79f44374f6c0a56408e49cf85efae91d3e5130e3e7e37b78c39b26e`.
+Public normal Q60 admission stays disabled; physics and 90 s / 640 work / 5 s remain.
+
+| Final gate | Actual result |
+| --- | --- |
+| Native162 | PASS, 30.183 s; 3,971 U04 assertions; 1,353 pins unchanged |
+| Actual JDK8/GWT build40 | PASS, 88.657 s; all five permutations; 1,222 pins unchanged |
+| Normal167 | PASS, 5.778 s; real ticket/Shop/session-menu presentation; separate non-player wrong/stale bridge guards |
+| Modern26 | PASS, 139.383 s native / 136.5991998 s operation; 225 PASS action records |
+| Classic22 | PASS, 414.631 s native / 411.7901999 s operation; 310 PASS action records |
+
+Modern26 uses seed `-1022`, 60 packages and two channels. Cold proof completes
+five hypotheses, 60 samples and six stages in 77,738 ms / 603 work, max manual
+unit 1,697 ms. Ticket Accept leads to WORKBENCH; unrepaired customer Retest fails.
+Six public readings isolate RSA; BROWN, BLACK, ORANGE, GOLD decodes ordinarily
+to 10000 Ohm +/-5%. Three exact stock acquisitions precede guarded removal and
+installation; original Part 28 and unused Parts 62/63 remain. Powered repaired
+Retest reaches RESULTS. Close revokes the exact session/bridge/UI lease before
+verifier restoration; all RESTORED/native-generation guards pass. All ten owned
+Edge instances, preview, port, native job and drains close.
+
+Modern26 deliberately changes the failed25 catalog oracle to the accepted
+unformed-catalog lead policy: each of three acquired parts has one enabled
+public RSA target; select the first. Other guards and budgets remain unchanged.
+Preserved visible failures are 16 (duplicate driver argument), 19 (real clipping,
+fixed by private startup top dock), 21 (Shop substring count; application
+restoration UNPROVED), 23 (slash parser; application restoration PASS), and
+25 (invalid unique-fit expectation; application restoration PASS). A corrected
+oracle does not rewrite those failures. Normal167 proves presentation and
+frontend lease guards only, not fresh durable restart or repair.
+
+Classic22 remains on one board/page for 317.8623669 s after HOLD and records
+three healthy checkpoints, original fault FAIL/restoration PASS, and actual
+Reset/power/source changes. It retains 60 installed parts, 61 total and the
+original loose part. Cold proof uses 77,894 ms / 603 work, max manual unit
+1,732 ms. All eleven owned Edge instances, preview, port and native cleanup
+close. Heap delta -295,500 bytes is a proxy; DOM 17,455 to 17,499 and listeners
+423 to 429 are observations, with no leak/FPS/p95 threshold claim.
+
+Final seven-source static review passes. Invoked-input reuse audit3 matches
+1,164 physics/generation/D01 inputs; reversing the audited combined CirSim
+changes reproduces build35 bytes exactly. The six strict jobs remain historical
+and were not rerun. Whole source/WAR differs; no current 100-owner/96-inventory
+qualification or paired performance causality follows. Earlier published solver,
+public band-marking and failed-flow packets retain their original epochs.
+
+Q60 is IN_PROGRESS / UNACCEPTED. Private PlayerSession and this mixed/endurance
+case pass; normal Q60 catalog/HARD and advanced durable save/load remain held.
+Next: complete admission/final qualification and actual modest-host evidence.
+Modest hardware is BLOCKED/unavailable; Ryzen 7700 is reference only. REL-B/Q100
+remain unstarted. Original Q30 91.616 s unknown failure, six missing inventories
+and late BLOCKED audit remain. Eight original files are preserved. No Core,
+Android, server access or email is included.
+
+[Current compact packet and screenshots](task-evidence/Q60/private-session-mixed60-r1/README.md).
+
+---
+
+# Historical checkpoint: exact 60-package public repair/retest PASS; Q60 unaccepted
 
 2026-10-11. Sixteen controller lines expose four resistor color band names from
 existing canvas marking metadata. The original RSA panel gains no numeric-value

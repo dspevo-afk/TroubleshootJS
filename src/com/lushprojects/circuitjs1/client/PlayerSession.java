@@ -10,6 +10,7 @@ final class PlayerSession {
     private PlayerLaunchRequest pending;
     private Screen savedScreen;
     private String message = "";
+    private boolean qualification;
 
     int token() { return token; }
     Screen screen() { return screen; }
@@ -17,9 +18,10 @@ final class PlayerSession {
     PlayerLaunchRequest request() { return request; }
     String message() { return message; }
     boolean accepts(int expected) { return token == expected; }
+    boolean isQualification() { return qualification; }
 
     int begin(PlayerLaunchRequest next) {
-        if (next == null || screen == Screen.PREPARING || screen == Screen.RETEST)
+        if (qualification || next == null || screen == Screen.PREPARING || screen == Screen.RETEST)
             throw new IllegalStateException("Session is busy");
         savedScreen = owner == null ? Screen.MENU : Screen.WORKBENCH;
         pending = next;
@@ -65,6 +67,24 @@ final class PlayerSession {
 
     void adopt(Object currentOwner, PlayerLaunchRequest launch) {
         if (currentOwner == null || launch == null) throw new IllegalArgumentException("Missing public session owner");
+        if (qualification) throw new IllegalStateException("Qualification owns this session");
         owner = currentOwner; request = launch; screen = Screen.WORKBENCH; message = ""; token++;
+    }
+
+    /** An already qualified board has no normal replay or available difficulty. */
+    void adoptQualification(Object currentOwner) {
+        if (currentOwner == null) throw new IllegalArgumentException("Missing qualified session owner");
+        if (qualification || owner != null || screen == Screen.PREPARING || screen == Screen.RETEST)
+            throw new IllegalStateException("Session already belongs to an owner");
+        owner = currentOwner; request = null; pending = null; qualification = true;
+        screen = Screen.TICKET; message = ""; token++;
+    }
+
+    /** Release only the captured owner and invalidate every retained callback. */
+    void revoke(Object expectedOwner) {
+        if (owner == null || owner != expectedOwner)
+            throw new IllegalStateException("Session release belongs to a different owner");
+        owner = null; request = null; pending = null; savedScreen = null; qualification = false;
+        screen = Screen.MENU; message = ""; token++;
     }
 }

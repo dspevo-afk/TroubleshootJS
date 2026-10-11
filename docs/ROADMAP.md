@@ -8,14 +8,14 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
-Exact 60-package visible r15 now passes public color-band diagnosis, guarded
-repair and ordinary customer Retest on the current UI/build36. The six strict
-private jobs remain bound to the published solver checkpoint's earlier source;
-they were not rerun for this one-file UI change. Normal catalog/HARD/modern
-PlayerSession/save-load remain held. Next: real Q60 PlayerSession integration,
-then mixed holdout/endurance; actual modest hardware remains BLOCKED.
+Private qualified PlayerSession integration now passes the exact 60-package
+visible repair/retest/Close flow. A separate same-board mixed/endurance flow
+passes 317.862 s after HOLD with three healthy checkpoints. Final native162,
+build40 and normal167 presentation canary pass; normal Q60 catalog/HARD and
+advanced durable save/load remain held. Next: finish Q60 admission and final
+qualification, including actual modest hardware, which remains BLOCKED.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
-[visible r15 evidence](task-evidence/Q60/public-band-visible60-r15/README.md).
+[private session and endurance evidence](task-evidence/Q60/private-session-mixed60-r1/README.md).
 
 **Historical count-only/Q30 task checkpoint:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
 U06/U07/E05/E06 remain published. Count-only source
@@ -3010,24 +3010,32 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Exact 60-package private
-visible r15 passes six public measurements, RSA four-band interpretation,
-power-off guarded replacement and ordinary powered customer Retest. The original
-panel shows BROWN, BLACK, ORANGE, GOLD without an original numeric-value row;
-the ordinary catalog supplies 10000 Ohm +/-5%, retaining Part 28 - RESISTOR RSA.
-Native158/build36 pass; visible15 passes in 132.453 s native with 117 PASS action
-records. Its cold proof uses 78,595 ms / 603 work / 1,649 ms maximum manual unit,
-within unchanged 90 s / 640 work / 5 s limits. Inputs and all cleanup pass.
+**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Final seven-file private
+PlayerSession integration passes native162 (3,971 U04 assertions), actual JDK8/
+GWT build40 (all five permutations), and normal167 ticket/Shop/session-menu
+presentation plus separate injected wrong/stale bridge guards. Modern26 passes
+225 recorded actions: ticket Accept, six readings, ordinary four-band interpretation,
+three stock acquisitions, guarded RSA replacement, repaired RESULTS and exact
+Close restoration. Its cold full D01 proof completes five hypotheses, 60 samples
+and six stages in 77,738 ms / 603 work / 1,697 ms maximum manual unit, within
+unchanged 90 s / 640 work / 5 s limits.
 
-Only the public marking controller changed; 1,169 other source files retain
-their bytes. The six strict private jobs belong to the earlier published
-source/build35 and were not rerun. Failed visible13/14 remain immutable.
-Normal catalog/HARD/modern PlayerSession/save-load remain held. Next: real Q60
-PlayerSession integration, then mixed holdout/endurance. The private held-view test (120-second cap) is not endurance or player/session acceptance. Actual modest
-hardware is BLOCKED/unavailable; Ryzen 7700 is reference only. Historical Q30
-91.616 s unknown failure, six missing inventories and late BLOCKED audit remain.
-REL-B/Q100 are unstarted. [Current evidence](task-evidence/Q60/public-band-visible60-r15/README.md)
-and [published solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
+Classic22 passes 310 actions and 317.862 s on the same board/page after HOLD,
+with three healthy checkpoints, unrepaired FAIL/restored PASS and real Reset,
+power and source changes. Modern26 deliberately corrects the catalog oracle to
+the accepted unformed-lead policy: all three acquired parts each expose one
+enabled public RSA target; select the first. This is a changed oracle, with the
+other guards and budgets preserved. Earlier failures remain recorded.
+
+Private integration and this endurance case pass; normal Q60 catalog/HARD and
+advanced durable save/load remain held. Next: Q60 admission/final qualification
+and actual modest-host evidence. Modest hardware remains BLOCKED/unavailable;
+Ryzen 7700 is reference only. The six strict build35 jobs remain historical,
+not rerun; reuse covers 1,164 consumed physics/generation/D01 inputs, not the
+whole changed source/WAR or current 100-owner/96-inventory qualification.
+Historical Q30 91.616 s unknown failure, six missing inventories and late BLOCKED
+audit remain. REL-B/Q100 are unstarted. [Current evidence](task-evidence/Q60/private-session-mixed60-r1/README.md)
+and [retained solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

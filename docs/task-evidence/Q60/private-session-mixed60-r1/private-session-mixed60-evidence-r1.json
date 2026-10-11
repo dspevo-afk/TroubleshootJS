@@ -1,0 +1,1595 @@
+{
+  "schema": "TSJ-Q60-PRIVATE-PLAYERSESSION-MIXED60-COMPACT-1",
+  "recordedUtc": "2026-10-11T20:57:26.209955+00:00",
+  "status": "PARTIAL_SOFTWARE_GATES_PASS_Q60_UNACCEPTED",
+  "branch": "codex/q60-faulted-profile-counts",
+  "parentCommit": "aebb06d0734d8dd76eaef534497f85f7c90d3fff",
+  "finalIntegrationRawReceipt": {
+    "sha256": "176997c0c79f44374f6c0a56408e49cf85efae91d3e5130e3e7e37b78c39b26e",
+    "bytes": 2553
+  },
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSession.java": {
+      "rawSha256": "d1ddff8aaebbda4cd5a8046408ae2223bb087c77d62c96f96469b354d52fd522",
+      "normalizedLfSha256": "e695c2e60bbaf77c71e9337bf34b287d0ae15fa53a05b5a5fa7302c0ac46b5ea"
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": {
+      "rawSha256": "77d100fa89a3eef3c3cc1f2760ddd9373d97c64c525705aa37618c10f18d2c2e",
+      "normalizedLfSha256": "47d4131071f956fc9b90e08506371a4ccd41d8a8bd57e4c719a584f9dc282094"
+    },
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": {
+      "rawSha256": "673d5b17459dc428f8e31b0960d3f37a1d8ca01f20d76e65d34c91ce4809bbd8",
+      "normalizedLfSha256": "490aca0e440bbdfd13cdd21a728b54589d79b1574ac6506c5b76d53f3f3ff789"
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionHistory.java": {
+      "rawSha256": "5eeee11b5c51eee9c761a2b25bd81747d79fad7d80427fc4d81fc9644bada7f0",
+      "normalizedLfSha256": "bfe5f1350aa381c2df1debabf7e7cd37639e4ca6d506fc710aa7b983584a8333"
+    },
+    "war/tsj-workbench-ui.js": {
+      "rawSha256": "872ae1958be43caf737b544769b87f0983afaaa2d3552475fc2c4c6085bd3feb",
+      "normalizedLfSha256": "3d636cedf2e102a486ccd43342b3e131738e82b387ed0ddc13e4a9e7ab99c68e"
+    },
+    "tests/contracts/U04SessionContractTest.java": {
+      "rawSha256": "4371597bf7d3f9310e01a1b5cfc2b3cb2e396b868398ffcc31b6230f39cab454",
+      "normalizedLfSha256": "4371597bf7d3f9310e01a1b5cfc2b3cb2e396b868398ffcc31b6230f39cab454"
+    },
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": {
+      "rawSha256": "85f22ad5470f3ad4353bb01f09d7e4d89a7b95b8e21643fb572664544a99ee1a",
+      "normalizedLfSha256": "85f22ad5470f3ad4353bb01f09d7e4d89a7b95b8e21643fb572664544a99ee1a"
+    }
+  },
+  "originalUntrackedVerified": 8,
+  "originalUntrackedSha256": {
+    "docs/task-evidence/Q30/qualification-workflow/cold77-launch-used-c2af161d006cf812bb4b22ca6efc912de2015dddd21036a7429e8a4dd191472a.json": "daa36e2ceb90d01825f99c877702ab65dc8d14c23af143bd3e05152732a6c233",
+    "docs/task-evidence/Q30/scale-plan-4/__pycache__/check_d01.cpython-313.pyc": "3eea5d3a388e0497720dcf2f6cad96d0c4bea696760dc96dbe8dba9fa7e9d873",
+    "tests/contracts/__pycache__/alpha_evidence_contract.cpython-313.pyc": "d4c5fd3635bd524bd0f1160869995c02c064f91ace9eb5ec49121adb2ea94387",
+    "tests/contracts/__pycache__/task46_seed_reference.cpython-313.pyc": "3ae962d487e6353390e34207142c1b39a2cef86940e659f3f6dd25bce78cd715",
+    "tests/qualification/q30-normal-screen/__pycache__/q30_screen_reader.cpython-313.pyc": "84e0ee1327cf7104f6dae66e8a4ba3d2542ad0a7ba6f4b4806f8bdfc25476bd0",
+    "tests/qualification/q30-scale-acceptance/__pycache__/freeze_plan.cpython-313.pyc": "2aaa06e8fb17de95ec9e72de9382f8bc76a16d52286a615a1edbb7c2352e07e6",
+    "tests/qualification/q30-scale-acceptance/__pycache__/q30_scale_reader.cpython-313.pyc": "e41b8404cec0b024fb983d5d678c278ea360f60798879d6c2e2ca22cbed8b76f",
+    "tests/qualification/q30-scale-acceptance/__pycache__/test_q30_scale_reader.cpython-313.pyc": "beb6ffd21422cff5156bf6c92e0cdfdf0e58a3c2aabcd657e7daebc175cb31d7"
+  },
+  "native162": {
+    "rawReceipt": {
+      "sha256": "47bd20bf2afa875bd1e9af4c4ee7ce3b999f272a56ee22b154dcfaba0c0a4cdc",
+      "bytes": 1853
+    },
+    "status": "PASS",
+    "operation": {
+      "elapsedMs": 30183,
+      "exitCode": 0,
+      "reason": null
+    },
+    "cleanup": {
+      "pid": 28512,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "handlesClosed": true,
+    "sourceInputsUnchanged": true,
+    "sourceFiles": 1353,
+    "command": "native-r162.ps1: actual JDK8 compilation and U04SessionContractTest",
+    "assertions": 3971,
+    "suites": 1,
+    "assertionReceipt": {
+      "sha256": "6bbb56f7a4433365b1608d4c1686b3e00046cc29e1a00520f7992672d44f87ef",
+      "bytes": 45
+    }
+  },
+  "build40": {
+    "rawReceipt": {
+      "sha256": "41fa20aefdb3c56c79d449ddef1f4ae4817f73e8049bf030d04e6f42743664e5",
+      "bytes": 2055
+    },
+    "status": "PASS",
+    "operation": {
+      "elapsedMs": 88657,
+      "exitCode": 0,
+      "reason": null
+    },
+    "cleanup": {
+      "pid": 44912,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "handlesClosed": true,
+    "sourceInputsUnchanged": true,
+    "sourceFiles": 1222,
+    "command": "scripts/build.ps1 -CompileOBF: actual JDK8u502/GWT2.7.0",
+    "permutations": 5
+  },
+  "normal167": {
+    "rawCanary": {
+      "sha256": "9f99240bf068198fa629804bade6484ae6e9333131d88c66b27b591ac11ce5a2",
+      "bytes": 3700
+    },
+    "rawStrict": {
+      "sha256": "2afc4ca410d7c3702570e866d0e9f9f66d30e123d1cb9f463040ce5947450f16",
+      "bytes": 388273
+    },
+    "rawResult": {
+      "sha256": "0daf3ea624bd795d6783510f31be694800ef0f13383761fa5885322f575ae753",
+      "bytes": 7434
+    },
+    "frozenReview": {
+      "sha256": "b158b5ad08d01dfdab7d395681b4553e24bba9cbdb891d3b2a051e80f22a1ec9",
+      "bytes": 646766
+    },
+    "presentationAndNonPlayerCanary": {
+      "outcome": "PASS",
+      "scope": "NORMAL_LED_VISIBLE_UI_AND_NON_PLAYER_EXACT_BRIDGE_GUARD",
+      "case": {
+        "index": 0,
+        "name": "normal-led-ticket-shop-session-and-stale-bridge",
+        "path": "circuitjs.html",
+        "timeoutSeconds": 60
+      },
+      "qualificationClaim": false,
+      "errors": [],
+      "cdpSessionsCreated": 0,
+      "debuggerEnabled": false,
+      "injectedChecksScope": "NON_PLAYER_FRONTEND_SEAM_ONLY",
+      "snapshotReadScope": "NON_PLAYER_PUBLIC_IDENTITY_AND_PRIVACY_READBACK",
+      "privateProofCalls": 0,
+      "sourceOverrides": 0,
+      "screens": [
+        {
+          "file": "001-normal-ticket.png",
+          "sha256": "160b405d1ff9d964c09cbb79c28375196d05bf1cb18c720daeedd8ada9711a74"
+        },
+        {
+          "file": "002-normal-shop.png",
+          "sha256": "b413e98ee0fe7dc664a3a6258a526317b77ab6fb1a510eda344c0d0ac978a6a2"
+        },
+        {
+          "file": "003-normal-session-menu.png",
+          "sha256": "16f5379897aee07a6f469eadf09663357f078e1206b6537af666c818619293ea"
+        }
+      ],
+      "publicBuild": "5DF3734F3B2288E65A2AAA3113311DB3",
+      "nonPlayerBridgeGuard": {
+        "scope": "NON_PLAYER_SYNCHRONOUS_FRONTEND_GUARD_ONLY",
+        "wrongExpectedRefused": true,
+        "wrongExpectedPreserved": true,
+        "successorWrongExpectedRefused": true,
+        "successorPreserved": true,
+        "forwardedCalls": 0,
+        "sameToken": true,
+        "originalBridgeRestored": true,
+        "stableOriginalState": true,
+        "connectedEnabledControlLabels": [
+          "New board",
+          "Resources",
+          "Settings"
+        ],
+        "temporarySuccessorDuration": "ONE_SYNCHRONOUS_JS_TURN",
+        "productionActionInvokedBySeam": false,
+        "fakeBoardOrElectricalProof": false
+      },
+      "synchronousBridgeRestored": true,
+      "normalProfileOptions": [
+        {
+          "tagName": "OPTION",
+          "value": "EASY",
+          "label": "EASY",
+          "disabledProperty": false,
+          "disabledAttribute": null,
+          "hasDisabledAttribute": false
+        },
+        {
+          "tagName": "OPTION",
+          "value": "MEDIUM",
+          "label": "MEDIUM",
+          "disabledProperty": false,
+          "disabledAttribute": null,
+          "hasDisabledAttribute": false
+        },
+        {
+          "tagName": "OPTION",
+          "value": "HARD",
+          "label": "HARD â€” unavailable",
+          "disabledProperty": true,
+          "disabledAttribute": "",
+          "hasDisabledAttribute": true
+        },
+        {
+          "tagName": "OPTION",
+          "value": "PSYCHOTIC",
+          "label": "PSYCHOTIC â€” unavailable",
+          "disabledProperty": true,
+          "disabledAttribute": "",
+          "hasDisabledAttribute": true
+        }
+      ],
+      "normalProfileOptionReadbackScope": "NON_PLAYER_NATIVE_DOM_ATTRIBUTE_AND_PROPERTY_READBACK",
+      "ticket": {
+        "screen": "TICKET",
+        "replay": "tsj-alpha/5/EASY/LED_INDICATOR/0",
+        "profile": "EASY",
+        "build": "5DF3734F3B2288E65A2AAA3113311DB3",
+        "token": 3,
+        "clickToTicketSeconds": 0.48581470001954585
+      },
+      "shop": {
+        "publicCatalogCards": 76,
+        "searchVisible": true,
+        "acquisitions": 0
+      },
+      "sessionPresentation": {
+        "saveVisible": true,
+        "saveEnabled": true,
+        "saveAvailable": true,
+        "loadVisible": true,
+        "historyCount": 0,
+        "visibleHistory": [],
+        "historyEmptyPresentation": true,
+        "saveInvoked": false,
+        "loadInvoked": false
+      },
+      "privacy": "PASS",
+      "generationJobsLaunched": 1,
+      "productionControls": "NORMAL_VISIBLE_EXACT_LED_EASY_0",
+      "normalPlayerSessionEvidence": "TICKET_ACCEPT_WORKBENCH_SHOP_AND_SESSION_PRESENTATION_ONLY",
+      "repairedRetestClaim": false,
+      "privateReleaseClaim": false,
+      "callbackListenersRemoved": true,
+      "operationSeconds": 1.522361200011801,
+      "pageErrors": [],
+      "httpErrors": []
+    },
+    "qualificationClaim": false,
+    "limitation": "Ticket, Shop and save/load/history presentation; no fresh durable restart or repaired retest qualification.",
+    "host": {
+      "rawReceipt": {
+        "sha256": "e0d7d200fd6818ff878d5c91f301de8d568e36654f17f5162aa68898fa0029f8",
+        "bytes": 1811
+      },
+      "status": "PASS",
+      "operation": {
+        "elapsedMs": 5778,
+        "exitCode": 0,
+        "reason": null
+      },
+      "cleanup": {
+        "pid": 37472,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "sourceFiles": 1222
+    }
+  },
+  "modern26": {
+    "host": {
+      "rawReceipt": {
+        "sha256": "a92cdae1ea084ac4fc75f1dcfc9c0df7b0d7a68e0c816531dcbe63cdb9077944",
+        "bytes": 1808
+      },
+      "status": "PASS",
+      "operation": {
+        "elapsedMs": 139383,
+        "exitCode": 0,
+        "reason": null
+      },
+      "cleanup": {
+        "pid": 10684,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "sourceFiles": 1222
+    },
+    "rawResult": {
+      "sha256": "29dba0f561f960ddbbeb5256847ecc7a9bc78054eab48f6f4916b642fb6a9ad6",
+      "bytes": 178573
+    },
+    "rawBinding": {
+      "sha256": "6648625111c2df95c2a13649cfb4fcb341137e1ba300a97cc422900d1dbd7b11",
+      "bytes": 1299
+    },
+    "frozenReview": {
+      "sha256": "a1bbcfaf06bbe11bb3f3c6b77b64322ac8ee159fb95a7a12a281430f0b4e9fc4",
+      "bytes": 1583075
+    },
+    "frozenInputCount": 2143,
+    "actionCount": 225,
+    "actionFailures": 0,
+    "status": "PASS",
+    "observed": {
+      "scope": "Q60_60PART_PRIVATE_PLAYER_SESSION_PUBLIC_SHOP_REPAIR_CANARY",
+      "limits": {
+        "operationSeconds": 240,
+        "requiredNativeOuterSeconds": 300,
+        "reservedCleanupSeconds": 60,
+        "fixtureHoldSeconds": 120,
+        "generationObservationSeconds": 95,
+        "meterObservationSeconds": 3,
+        "readinessObservationSeconds": 30,
+        "maxMeasurements": 19,
+        "maxScreenshots": 5,
+        "generationJobMs": 90000,
+        "generationWorkUnits": 640,
+        "generationActiveOperationMs": 5000
+      },
+      "operationSeconds": 136.5991997999954,
+      "heldVerifier": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 77738,
+        "maxManualUnitMillis": 1697,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "holdMillis": 120000,
+        "normalLabels": true,
+        "normalCatalogEnabled": false,
+        "playerSessionInstalled": true
+      },
+      "finalVerifier": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 77738,
+        "maxManualUnitMillis": 1697,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "holdMillis": 120000,
+        "normalLabels": true,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": true,
+        "cleanupPending": false,
+        "normalCatalogEnabled": false,
+        "wallMillis": 122846,
+        "playerSessionInstalled": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true
+      },
+      "servedInputInventory": {
+        "beforeSha256": "69ee94096573c5db495b977fbc41f04f548b4f709d6eee292b03ad20f998fde3",
+        "afterSha256": "69ee94096573c5db495b977fbc41f04f548b4f709d6eee292b03ad20f998fde3",
+        "fileCount": 1564
+      },
+      "measurements": [
+        {
+          "display": "11.193 V",
+          "volts": 11.193,
+          "name": "regulated-stage input",
+          "red": "U1 terminal INPUT",
+          "black": "U1 terminal RETURN"
+        },
+        {
+          "display": "4.996 V",
+          "volts": 4.996,
+          "name": "control rail",
+          "red": "U1 terminal OUTPUT",
+          "black": "U1 terminal RETURN"
+        },
+        {
+          "display": "5 V",
+          "volts": 5.0,
+          "name": "A: sensor connector signal",
+          "red": "JSA terminal 1",
+          "black": "JSA terminal 2"
+        },
+        {
+          "display": "343.419 μV",
+          "volts": 0.00034341899999999997,
+          "name": "A: conditioned sensor",
+          "red": "U2A terminal SENSOR",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "2.499 V",
+          "volts": 2.499,
+          "name": "A: sensor reference",
+          "red": "U2A terminal REFERENCE",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "0 V",
+          "volts": 0.0,
+          "name": "A: decision output",
+          "red": "U2A terminal OUTPUT",
+          "black": "U2A terminal RETURN"
+        }
+      ],
+      "diagnosis": {
+        "component": "RSA",
+        "reason": "Channel A: HIGH reaches the connector but conditioned sensor remains below its measured reference.",
+        "basis": "Displayed domain-local voltages and ordinary HIGH input; no seed/fault-key decision.",
+        "publicOriginalMarkings": "RSA\n\n\nType: resistor\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component"
+      },
+      "publicBandInterpretation": {
+        "component": "RSA",
+        "publicColorBands": "Color bands: BROWN, BLACK, ORANGE, GOLD",
+        "colors": [
+          "BROWN",
+          "BLACK",
+          "ORANGE",
+          "GOLD"
+        ],
+        "decodedCatalogLabel": "10000 Ohm +/-5%",
+        "basis": "Visible physical bands only; fit subsequently determined by ordinary public compatible-target controls."
+      },
+      "readiness": {
+        "boardPower": "OFF",
+        "evidence": "Actual guarded Remove component enabled",
+        "observationBoundSeconds": 30
+      },
+      "repair": {
+        "component": "RSA",
+        "publicCatalogLabel": "10000 Ohm +/-5%",
+        "shopChoices": [
+          {
+            "title": "10000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing"
+          }
+        ],
+        "acquiredLooseParts": [
+          "Part 61 - 10000 Ohm +/-5%",
+          "Part 62 - 10000 Ohm +/-5%",
+          "Part 63 - 10000 Ohm +/-5%"
+        ],
+        "selectedCompatiblePart": {
+          "loose": "Part 61 - 10000 Ohm +/-5%",
+          "target": "Install as Channel A / RSA"
+        },
+        "originalLooseLabel": "Part 28 - RESISTOR RSA",
+        "before": [],
+        "retainedLooseParts": [
+          "Part 28 - RESISTOR RSA",
+          "Part 62 - 10000 Ohm +/-5%",
+          "Part 63 - 10000 Ohm +/-5%"
+        ],
+        "installedMarkings": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component"
+      },
+      "unrepairedCustomerRetest": "FAIL_EXPECTED",
+      "repairedCustomerRetest": "PASS",
+      "apiLifecycleCanary": {
+        "schema": 1,
+        "scope": "EXPLICIT_PRIVATE_API_LIFECYCLE_CANARY",
+        "status": "PASS",
+        "playerInput": false,
+        "firstActualInstall": true,
+        "checks": [
+          {
+            "name": "actual-private-adopted-ticket",
+            "pass": true
+          },
+          {
+            "name": "exact-before-first-mount-teardown",
+            "pass": true
+          },
+          {
+            "name": "wrong-expected-teardown-no-mutation",
+            "pass": true,
+            "domMutations": 0
+          },
+          {
+            "name": "launch-denied-before-mutation",
+            "pass": true,
+            "exactPrivateDenial": true
+          },
+          {
+            "name": "random-denied-before-mutation",
+            "pass": true,
+            "exactPrivateDenial": true
+          },
+          {
+            "name": "replay-denied-before-mutation",
+            "pass": true,
+            "exactPrivateDenial": true
+          },
+          {
+            "name": "load-session-denied-before-mutation",
+            "pass": true,
+            "exactPrivateDenial": true
+          },
+          {
+            "name": "save-session-denied-without-payload",
+            "pass": true
+          }
+        ],
+        "accessorRemoved": true,
+        "viewLease": 0,
+        "openViewCalled": false,
+        "tokenBefore": 2,
+        "privateQualification": true,
+        "profileAbsent": true,
+        "replayAbsent": true,
+        "sessionSaveAvailable": false,
+        "sameBridgeAvailable": true,
+        "snapshotUnchanged": true,
+        "tokenAfter": 2
+      },
+      "privatePresentation": {
+        "publicNoticeObserved": true,
+        "unavailableAffordances": {
+          "Save session": true,
+          "Load session": true,
+          "New board": true,
+          "Prepare exact seed": true,
+          "Prepare replay": true,
+          "Replay this challenge": true,
+          "Difficulty": true,
+          "Exact seed (signed decimal integer)": true,
+          "Open current replay": true,
+          "Pristine challenge replay": true
+        },
+        "snapshotRead": false,
+        "privateQualificationInferredFromPublicNotice": true
+      },
+      "nativeGenerationGuards": [
+        {
+          "stage": "private-adopted-WORKBENCH",
+          "expectedEnabled": false,
+          "buttons": [
+            {
+              "label": "New control board",
+              "count": 1,
+              "visible": true,
+              "enabled": false,
+              "disabledAttribute": ""
+            },
+            {
+              "label": "Open controlled indicator",
+              "count": 1,
+              "visible": true,
+              "enabled": false,
+              "disabledAttribute": ""
+            }
+          ],
+          "clicked": false
+        },
+        {
+          "stage": "exact-Close-session-RESTORED-classic",
+          "expectedEnabled": true,
+          "buttons": [
+            {
+              "label": "New control board",
+              "count": 1,
+              "visible": true,
+              "enabled": true,
+              "disabledAttribute": null
+            },
+            {
+              "label": "Open controlled indicator",
+              "count": 1,
+              "visible": true,
+              "enabled": true,
+              "disabledAttribute": null
+            }
+          ],
+          "clicked": false
+        }
+      ],
+      "modernTeardown": {
+        "shellAbsent": true,
+        "overlayAbsent": true,
+        "playerScreenAbsent": true,
+        "workbenchClassAbsent": true
+      },
+      "publicShopSelection": {
+        "decodedCatalogLabel": "10000 Ohm +/-5%",
+        "observedRows": [
+          {
+            "title": "10000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "100000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "1000000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "10000000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "100000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "1000000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "10000000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing"
+          },
+          {
+            "title": "100000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Medium lead spacing"
+          },
+          {
+            "title": "1000000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Medium lead spacing"
+          },
+          {
+            "title": "10000000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Medium lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% / 10 W",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% / 10 W"
+          },
+          {
+            "title": "100000 Ohm +/-5% / 10 W",
+            "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% / 10 W"
+          },
+          {
+            "title": "1000000 Ohm +/-5% / 10 W",
+            "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% / 10 W"
+          },
+          {
+            "title": "10000000 Ohm +/-5% / 10 W",
+            "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% / 10 W"
+          }
+        ],
+        "selectedRows": [
+          {
+            "title": "10000 Ohm +/-5% - Wide lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Narrow lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing"
+          },
+          {
+            "title": "10000 Ohm +/-5% - Medium lead spacing",
+            "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing"
+          }
+        ],
+        "expectedPublicTitles": [
+          "10000 Ohm +/-5% - Medium lead spacing",
+          "10000 Ohm +/-5% - Narrow lead spacing",
+          "10000 Ohm +/-5% - Wide lead spacing"
+        ],
+        "basis": "Exact displayed value/tolerance and standard lead-spacing title equality; no substring or power variants."
+      },
+      "publicInstallTargetObservations": [
+        {
+          "publicLoosePart": "Part 61 - 10000 Ohm +/-5%",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ],
+          "exactComponentTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "publicLoosePart": "Part 62 - 10000 Ohm +/-5%",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ],
+          "exactComponentTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "publicLoosePart": "Part 63 - 10000 Ohm +/-5%",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ],
+          "exactComponentTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "scopeLimitations": [
+        "One exact 60-part two-channel private RB56 public-measurement/repair cycle; normal catalog/HARD remain disabled.",
+        "A 120-second bounded held-view lifecycle canary; not a 100-cycle or modest-host qualification.",
+        "Source-guided public component/terminal roles; diagnosis is computed from displayed measurements, never from seed or fault metadata.",
+        "A missing numeric public replacement marking stops repair; no nominal-value source or seed fallback.",
+        "One private qualified PlayerSession ticket/Shop/repair/retest flow; normal catalog/HARD, replay and durable save/load remain unavailable.",
+        "A separately identified synchronous first-install API/lifecycle canary precedes all visible player inputs; it is not player-input evidence.",
+        "Browser heap/DOM counts are bounded read-only proxies; active solver element and retained application graph counts are not observable here.",
+        "Root must inspect the retained screenshots; label/attribute checks alone do not prove all rendered-canvas privacy."
+      ],
+      "cleanup": {
+        "contextClose": "PASS",
+        "playwrightStop": "PASS",
+        "edgeAbsence": {
+          "status": "PASS",
+          "survivors": {},
+          "recordedInstances": 10
+        },
+        "previewBeforeClose": {
+          "classification": {
+            "status": "MATCH",
+            "queryStatus": "PRESENT",
+            "reason": "birth-and-image-match"
+          },
+          "poll": null
+        },
+        "previewAfterClose": {
+          "classification": {
+            "status": "ABSENT",
+            "queryStatus": "ABSENT",
+            "reason": "pid-query-confirmed-absent"
+          },
+          "exitCode": 1
+        },
+        "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+        "listenerProof": {
+          "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+          "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+          "evidence": "listener-proof/listener-query.json",
+          "queryTimeoutMs": 20000,
+          "queryOwner": "serial_runner.run_command native process job"
+        },
+        "taskPortClosed": true,
+        "elapsedSeconds": 1.3797901999787427,
+        "status": "PASS"
+      },
+      "browserMetrics": [
+        {
+          "label": "held-faulty-owner",
+          "seconds": 93.66138870001305,
+          "heapUsedBytes": 94019560,
+          "heapTotalBytes": 183578624,
+          "dom": {
+            "documents": 4,
+            "nodes": 101873,
+            "jsEventListeners": 760
+          },
+          "forcedGarbageCollection": false
+        },
+        {
+          "label": "repaired-power-off",
+          "seconds": 132.02334910002537,
+          "heapUsedBytes": 76511984,
+          "heapTotalBytes": 135729152,
+          "dom": {
+            "documents": 4,
+            "nodes": 10933,
+            "jsEventListeners": 816
+          },
+          "forcedGarbageCollection": false
+        },
+        {
+          "label": "restored-predecessor",
+          "seconds": 136.59713840001496,
+          "heapUsedBytes": 73231000,
+          "heapTotalBytes": 141234176,
+          "dom": {
+            "documents": 4,
+            "nodes": 12824,
+            "jsEventListeners": 914
+          },
+          "forcedGarbageCollection": false
+        }
+      ]
+    }
+  },
+  "classic22": {
+    "host": {
+      "rawReceipt": {
+        "sha256": "2932021e3a5545301f3d33a0798d19cd94131056c578f877c1ffd28030f6431f",
+        "bytes": 1810
+      },
+      "status": "PASS",
+      "operation": {
+        "elapsedMs": 414631,
+        "exitCode": 0,
+        "reason": null
+      },
+      "cleanup": {
+        "pid": 138512,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "sourceFiles": 1222
+    },
+    "rawResult": {
+      "sha256": "3658fdf5975810970b9ee55c269389ee68bb1b90b2aaf079a1b83cbe9fbb36bb",
+      "bytes": 958323
+    },
+    "rawBinding": {
+      "sha256": "ea35879987c6d4b3fdfc85c2d5498b901e847168b7382d6458dd1b1c52042b5d",
+      "bytes": 1293
+    },
+    "frozenReview": {
+      "sha256": "d0b66b70476c91787acae378757b0e57ae4b269679bae5c2e0d63d718747a11a",
+      "bytes": 2215017
+    },
+    "frozenInputCount": 2161,
+    "actionCount": 310,
+    "actionFailures": 0,
+    "status": "PASS",
+    "observed": {
+      "scope": "Q60_60PART_CLASSIC_THREE_CHECKPOINT_ELAPSED_SERVICE",
+      "limits": {
+        "operationSeconds": 480,
+        "requiredNativeOuterSeconds": 540,
+        "reservedCleanupSeconds": 60,
+        "fixtureHoldSeconds": 360,
+        "generationObservationSeconds": 95,
+        "meterObservationSeconds": 3,
+        "readinessObservationSeconds": 30,
+        "maxDiagnosisMeasurements": 19,
+        "scheduledSessionMeasurements": 4,
+        "maxMeasurements": 23,
+        "maxScreenshots": 5,
+        "generationJobMs": 90000,
+        "generationWorkUnits": 640,
+        "generationActiveOperationMs": 5000
+      },
+      "operationSeconds": 411.7901998999878,
+      "heldVerifier": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 77894,
+        "maxManualUnitMillis": 1732,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "normalCatalogEnabled": false
+      },
+      "finalVerifier": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 77894,
+        "maxManualUnitMillis": 1732,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": true,
+        "cleanupPending": false,
+        "normalCatalogEnabled": false,
+        "wallMillis": 397825
+      },
+      "servedInputInventory": {
+        "beforeSha256": "69ee94096573c5db495b977fbc41f04f548b4f709d6eee292b03ad20f998fde3",
+        "afterSha256": "69ee94096573c5db495b977fbc41f04f548b4f709d6eee292b03ad20f998fde3",
+        "fileCount": 1564
+      },
+      "measurements": [
+        {
+          "display": "11.178 V",
+          "volts": 11.178,
+          "name": "regulated-stage input",
+          "red": "U1 terminal INPUT",
+          "black": "U1 terminal RETURN"
+        },
+        {
+          "display": "4.996 V",
+          "volts": 4.996,
+          "name": "control rail",
+          "red": "U1 terminal OUTPUT",
+          "black": "U1 terminal RETURN"
+        },
+        {
+          "display": "5 V",
+          "volts": 5.0,
+          "name": "A: sensor connector signal",
+          "red": "JSA terminal 1",
+          "black": "JSA terminal 2"
+        },
+        {
+          "display": "343.422 μV",
+          "volts": 0.000343422,
+          "name": "A: conditioned sensor",
+          "red": "U2A terminal SENSOR",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "2.499 V",
+          "volts": 2.499,
+          "name": "A: sensor reference",
+          "red": "U2A terminal REFERENCE",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "0 V",
+          "volts": 0.0,
+          "name": "A: decision output",
+          "red": "U2A terminal OUTPUT",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "0 V",
+          "volts": 0.0,
+          "name": "elapsed LOW command A",
+          "red": "U2A terminal OUTPUT",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "4.846 V",
+          "volts": 4.846,
+          "name": "elapsed HIGH command A",
+          "red": "U2A terminal OUTPUT",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "0 V",
+          "volts": 0.0,
+          "name": "elapsed B-only command A",
+          "red": "U2A terminal OUTPUT",
+          "black": "U2A terminal RETURN"
+        },
+        {
+          "display": "4.846 V",
+          "volts": 4.846,
+          "name": "elapsed B-only command B",
+          "red": "U2B terminal OUTPUT",
+          "black": "U2B terminal RETURN"
+        }
+      ],
+      "diagnosis": {
+        "component": "RSA",
+        "reason": "Channel A: HIGH reaches the connector but conditioned sensor remains below its measured reference.",
+        "basis": "Displayed domain-local voltages and ordinary HIGH input; no seed/fault-key decision.",
+        "publicOriginalMarkings": "RSA\n\n\nType: resistor\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component"
+      },
+      "publicBandInterpretation": {
+        "component": "RSA",
+        "publicColorBands": "Color bands: BROWN, BLACK, ORANGE, GOLD",
+        "colors": [
+          "BROWN",
+          "BLACK",
+          "ORANGE",
+          "GOLD"
+        ],
+        "decodedCatalogLabel": "10000 Ohm +/-5%",
+        "basis": "Ordinary four-band color-code interpretation of displayed physical markings only."
+      },
+      "readiness": {
+        "boardPower": "OFF",
+        "evidence": "Actual guarded Remove component button enabled",
+        "observationBoundSeconds": 30
+      },
+      "repair": {
+        "component": "RSA",
+        "publicCatalogLabel": "10000 Ohm +/-5%",
+        "originalLooseLabel": "Part 28 - RESISTOR RSA",
+        "before": [],
+        "retainedLooseParts": [
+          "Part 28 - RESISTOR RSA"
+        ],
+        "installedMarkings": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component"
+      },
+      "unrepairedCustomerRetest": "FAIL_EXPECTED",
+      "repairedCustomerRetest": "PASS",
+      "elapsedSessionSummary": {
+        "checkpointCount": 3,
+        "secondsAfterHold": 317.8623668999644,
+        "generationCount": 1,
+        "browserOwnerCount": 1,
+        "extraFaultRestorationCycles": 1,
+        "resetPowerSourceRestorations": 1,
+        "catalogAcquisitions": 1,
+        "finalInstalledPackages": 60,
+        "finalRetainedParts": 61,
+        "finalLooseOriginals": 1,
+        "sameBrowserPageContext": true,
+        "postGcHeapDeltaBytes": -295500,
+        "observedPostGcHeapSlopeBytesPerSecond": -1045.9002732071829,
+        "browserHeapReachabilityProof": false,
+        "eventTimingOrFpsProof": false,
+        "performanceThresholdQualification": false,
+        "normalSessionSaveLoad": false,
+        "modestHostQualification": false
+      },
+      "elapsedSessionCheckpoints": [
+        {
+          "label": "start-repaired",
+          "secondsAfterHold": 35.3306498999591,
+          "firstAction": 116,
+          "lastAction": 130,
+          "blockWallSeconds": 5.027625199989416,
+          "publicCustomerRetest": "PASS",
+          "originalLooseLabel": "Part 28 - RESISTOR RSA",
+          "retainedLooseParts": [
+            "Part 28 - RESISTOR RSA"
+          ],
+          "healthyInstalledMarking": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+          "inputActionWallProxy": {
+            "count": 4,
+            "p50Seconds": 0.332,
+            "p95Seconds": 2.625,
+            "worstSeconds": 2.625
+          },
+          "resourceObservation": {
+            "label": "matched-start-repaired",
+            "seconds": 127.65065099997446,
+            "heapUsedBytes": 42253208,
+            "heapTotalBytes": 49729536,
+            "dom": {
+              "documents": 4,
+              "nodes": 17455,
+              "jsEventListeners": 423
+            },
+            "forcedGarbageCollection": true
+          }
+        },
+        {
+          "label": "middle-fault-restoration",
+          "secondsAfterHold": 194.93119589996058,
+          "firstAction": 225,
+          "lastAction": 239,
+          "blockWallSeconds": 4.672143800009508,
+          "publicCustomerRetest": "PASS",
+          "originalLooseLabel": "Part 28 - RESISTOR RSA",
+          "retainedLooseParts": [
+            "Part 28 - RESISTOR RSA"
+          ],
+          "healthyInstalledMarking": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+          "inputActionWallProxy": {
+            "count": 4,
+            "p50Seconds": 0.33,
+            "p95Seconds": 2.343,
+            "worstSeconds": 2.343
+          },
+          "resourceObservation": {
+            "label": "matched-middle-fault-restoration",
+            "seconds": 287.2154118999606,
+            "heapUsedBytes": 43048456,
+            "heapTotalBytes": 47894528,
+            "dom": {
+              "documents": 4,
+              "nodes": 17485,
+              "jsEventListeners": 427
+            },
+            "forcedGarbageCollection": true
+          }
+        },
+        {
+          "label": "end-reset-power-source",
+          "secondsAfterHold": 317.8623668999644,
+          "firstAction": 282,
+          "lastAction": 296,
+          "blockWallSeconds": 5.163710299995728,
+          "publicCustomerRetest": "PASS",
+          "originalLooseLabel": "Part 28 - RESISTOR RSA",
+          "retainedLooseParts": [
+            "Part 28 - RESISTOR RSA"
+          ],
+          "healthyInstalledMarking": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+          "inputActionWallProxy": {
+            "count": 4,
+            "p50Seconds": 0.457,
+            "p95Seconds": 2.606,
+            "worstSeconds": 2.606
+          },
+          "resourceObservation": {
+            "label": "matched-end-reset-power-source",
+            "seconds": 410.16110979998484,
+            "heapUsedBytes": 41957708,
+            "heapTotalBytes": 48156672,
+            "dom": {
+              "documents": 4,
+              "nodes": 17499,
+              "jsEventListeners": 429
+            },
+            "forcedGarbageCollection": true
+          }
+        }
+      ],
+      "sameOwnerRestorationCanary": {
+        "status": "PASS",
+        "ownerCount": 1,
+        "extraServiceRestorationCycles": 1,
+        "noAdditionalCatalogAcquisition": true,
+        "originalLooseLabel": "Part 28 - RESISTOR RSA",
+        "healthyReplacementLabel": "Part 61 - 10000 Ohm +/-5%",
+        "restoredLooseParts": [
+          "Part 28 - RESISTOR RSA"
+        ],
+        "faultyReinsertedCustomerRetest": "FAIL_EXPECTED",
+        "restoredHealthyCustomerRetest": "PASS",
+        "firstAction": 168,
+        "lastAction": 224,
+        "wallSeconds": 30.187472499965224,
+        "inputActionWallProxy": {
+          "count": 16,
+          "p50Seconds": 0.529,
+          "p95Seconds": 2.39,
+          "worstSeconds": 2.39
+        },
+        "fixedHoldSeconds": 360,
+        "longSessionQualification": false,
+        "ownerReplacementQualification": false,
+        "normalSessionSaveLoadQualification": false,
+        "modestHostQualification": false
+      },
+      "scopeLimitations": [
+        "One exact 60-part two-channel private RB56 public-measurement/repair cycle; normal catalog/HARD remain disabled.",
+        "One classic owner over at least300 seconds with three semantic checkpoints; no100browser-owner or modest-host claim.",
+        "Source-guided public component/terminal roles; diagnosis is computed from displayed measurements, never from seed or fault metadata.",
+        "A missing or ambiguous public marking/color-band row stops repair; no nominal-value source or seed fallback.",
+        "Classic sidebar public catalog installation, not normal PlayerSession Shop/durable save/load coverage.",
+        "Matched post-GC heap/DOM and input-action walls are proxies; no reachability/FPS/EventTiming/performance threshold claim.",
+        "Root must inspect the retained screenshots; label/attribute checks alone do not prove all rendered-canvas privacy."
+      ],
+      "cleanup": {
+        "contextClose": "PASS",
+        "playwrightStop": "PASS",
+        "edgeAbsence": {
+          "status": "PASS",
+          "survivors": {},
+          "recordedInstances": 11
+        },
+        "previewBeforeClose": {
+          "classification": {
+            "status": "MATCH",
+            "queryStatus": "PRESENT",
+            "reason": "birth-and-image-match"
+          },
+          "poll": null
+        },
+        "previewAfterClose": {
+          "classification": {
+            "status": "ABSENT",
+            "queryStatus": "ABSENT",
+            "reason": "pid-query-confirmed-absent"
+          },
+          "exitCode": 1
+        },
+        "previewStop": "PASS_EXACT_INSTANCE_ABSENT",
+        "listenerProof": {
+          "owner": "private_menu.port_is_closed / audit_release._run_cim_and_ports",
+          "functionSourceSha256": "f45447757c13ec38da457863353b8efdd5661f4b1a3cb6049fcc0d5ec592f6da",
+          "evidence": "listener-proof/listener-query.json",
+          "queryTimeoutMs": 20000,
+          "queryOwner": "serial_runner.run_command native process job"
+        },
+        "taskPortClosed": true,
+        "elapsedSeconds": 1.3518273000372574,
+        "status": "PASS"
+      },
+      "browserMetrics": [
+        {
+          "label": "held-faulty-owner",
+          "seconds": 92.96783709997544,
+          "heapUsedBytes": 56048316,
+          "heapTotalBytes": 139075584,
+          "dom": {
+            "documents": 4,
+            "nodes": 17828,
+            "jsEventListeners": 403
+          },
+          "forcedGarbageCollection": false
+        },
+        {
+          "label": "repaired-power-off",
+          "seconds": 121.31706739997026,
+          "heapUsedBytes": 83644172,
+          "heapTotalBytes": 150409216,
+          "dom": {
+            "documents": 4,
+            "nodes": 184148,
+            "jsEventListeners": 2205
+          },
+          "forcedGarbageCollection": false
+        },
+        {
+          "label": "matched-start-repaired",
+          "seconds": 127.65065099997446,
+          "heapUsedBytes": 42253208,
+          "heapTotalBytes": 49729536,
+          "dom": {
+            "documents": 4,
+            "nodes": 17455,
+            "jsEventListeners": 423
+          },
+          "forcedGarbageCollection": true
+        },
+        {
+          "label": "matched-middle-fault-restoration",
+          "seconds": 287.2154118999606,
+          "heapUsedBytes": 43048456,
+          "heapTotalBytes": 47894528,
+          "dom": {
+            "documents": 4,
+            "nodes": 17485,
+            "jsEventListeners": 427
+          },
+          "forcedGarbageCollection": true
+        },
+        {
+          "label": "matched-end-reset-power-source",
+          "seconds": 410.16110979998484,
+          "heapUsedBytes": 41957708,
+          "heapTotalBytes": 48156672,
+          "dom": {
+            "documents": 4,
+            "nodes": 17499,
+            "jsEventListeners": 429
+          },
+          "forcedGarbageCollection": true
+        },
+        {
+          "label": "restored-predecessor",
+          "seconds": 411.75299309997354,
+          "heapUsedBytes": 40438804,
+          "heapTotalBytes": 44224512,
+          "dom": {
+            "documents": 4,
+            "nodes": 4345,
+            "jsEventListeners": 285
+          },
+          "forcedGarbageCollection": true
+        }
+      ]
+    }
+  },
+  "historicalReuse": {
+    "rawAudit": {
+      "sha256": "4ee109d58d39a797ba277497ae9ea6474f9a1f9afb6a56e97c71cfe4372baeef",
+      "bytes": 620183
+    },
+    "unchangedInvokedInputs": 1164,
+    "scope": "Physics/generation/D01 Java source superset; startup dock and native-entry guard excluded then exactly inverted to build35 CirSim.",
+    "sixStrictCasesRetainedNotRerun": true,
+    "wholeSourceAndWarEquality": false,
+    "currentNumerical100Owner96InventoryClaim": false
+  },
+  "explicitModern26OracleCorrection": {
+    "rawReceipt": {
+      "sha256": "7c5c6cdad9042ab6d7551dcc410dca5f9967873dd0ab00f153563496292bc731",
+      "bytes": 8055
+    },
+    "oldExpectation": "Exactly one of three acquired standard resistor stock variants may offer an enabled exact RSA target.",
+    "newExpectation": "Exactly three purchased standard exact-value parts; each must expose exactly one visible exact RSA target and that target must be enabled. Select the first acquired part in the observed public tray order.",
+    "reason": "Accepted production semantics keep newly acquired axial resistors unformed; all equal-specification stock can form to RSA during owned installation. Source-provider Shop spacing labels do not restrict new loose stock.",
+    "sameOracleAs25": false,
+    "sourceEvidence": [
+      {
+        "relativePath": "docs/ARCHITECTURE.md",
+        "sha256": "2b194312a85e749083f30ba4ce91a3899006a034ef0c44e805df1b1a177c9b00",
+        "lines": "148-151",
+        "basis": "Accepted unformed axial stock and pure compatibility; owned install forms geometry, abort compensates; originals/formed parts remain exact.",
+        "matchesExecuted25FrozenSource": false
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/PhysicalResistorPart.java",
+        "sha256": "6e7dcf6c6dec328710abf0de8fd5305a54ccebbd53ff32803202514660c1e308",
+        "lines": "103-131",
+        "basis": "Only loose unmounted catalog axial stock without a fault binding has unformed leads; owned install forms exact target geometry.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java",
+        "sha256": "1e356c185a7e198eca9f001f4787fa681c98d9970b54dc5947ce92195e58e977",
+        "lines": "515-579",
+        "basis": "Compatibility deliberately accepts unformed axial catalog resistors while retaining ownership, package, empty slot and strict formed-part checks.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/ResistorSlotController.java",
+        "sha256": "96ddc3bd991c6a31ba4683bc5764d1b85fd2699ad04ed0e15b870f5d9ed1a9c9",
+        "lines": "54-64,122-186",
+        "basis": "Availability/install both call isPartInstallableAt; loose acquisition leaves geometry unformed, direct installation binds geometry.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/PhysicalMutationScope.java",
+        "sha256": "fcbf512fd002c91017692905ea1a7d425539941b82613bebe0dddd15a30bef93",
+        "lines": "252-264,343-348",
+        "basis": "Actual install forms then validates geometry within its owned mutation; loose acquisition is intentionally unformed.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+        "sha256": "9c788c03f84565a06f1b58cdf39b287b984669c439555c8a1d8a10b48fb84e9b",
+        "lines": "952-967",
+        "basis": "Public compatible target list and enabled button call exact physical compatibility plus capability availability.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/PlayerShopCatalog.java",
+        "sha256": "405694c8cab398c3f0317a5e8406cf5487fbedd24fd0d33adcfa523330b3123a",
+        "lines": "39-69,118-123",
+        "basis": "Three Shop spacing labels describe source-provider geometries for equal specification keys; acquisition does not pre-form those catalog leads.",
+        "matchesExecuted25FrozenSource": true
+      },
+      {
+        "relativePath": "src/com/lushprojects/circuitjs1/client/A08MutationDeveloperVerifier.java",
+        "sha256": "aa5c155c9cb073116d5df31d58cb459dbe80b0badb4814f09f95d05a67e4012c",
+        "lines": "84-122",
+        "basis": "Maintained verifier specifies pure repeated availability, actual formation, compensation, formed-part retention and electrical repair; not rerun by this preparation.",
+        "matchesExecuted25FrozenSource": true
+      }
+    ]
+  },
+  "preservedFailedAttempts": [
+    {
+      "attempt": 16,
+      "rawResult": {
+        "sha256": "50e3ff9b30e16327a73b3a9ff6d9ffbad0479e3cab12065fc7c8803cc8065122",
+        "bytes": 38239
+      },
+      "outcome": "FAIL",
+      "reason": "Driver duplicate observe argument",
+      "applicationRestoration": "PASS_FROM_ACTUAL_NEUTRAL_RECEIPT",
+      "osCleanup": "PASS",
+      "neutralRestorationWitnesses": {
+        "phase": "RESTORED",
+        "cleanupPending": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true
+      }
+    },
+    {
+      "attempt": 19,
+      "rawResult": {
+        "sha256": "4ef3c63b14a54cfb42e63b942b9ae9c3295b303c11b8541593eb0351e19b655a",
+        "bytes": 46216
+      },
+      "outcome": "FAIL",
+      "reason": "Actual east dock clipped feedback; fixed in final source",
+      "applicationRestoration": "PASS_FROM_ACTUAL_NEUTRAL_RECEIPT",
+      "osCleanup": "PASS",
+      "neutralRestorationWitnesses": {
+        "phase": "RESTORED",
+        "cleanupPending": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true
+      }
+    },
+    {
+      "attempt": 21,
+      "rawResult": {
+        "sha256": "b1a3963282ec95e39af1b1d3f5361c597564995cd6f3517255fe55071ae7ac38",
+        "bytes": 121897
+      },
+      "outcome": "FAIL",
+      "reason": "Shop substring rows violated driver count; application restoration UNPROVED",
+      "applicationRestoration": "UNPROVED",
+      "osCleanup": "PASS"
+    },
+    {
+      "attempt": 23,
+      "rawResult": {
+        "sha256": "1d5c588195c58acb806ac0055cbdbcab6cd8b823994d5d1809c9a47f0076a189",
+        "bytes": 160351
+      },
+      "outcome": "FAIL",
+      "reason": "Slash in browser regex selector was not escaped",
+      "applicationRestoration": "PASS",
+      "osCleanup": "PASS"
+    },
+    {
+      "attempt": 25,
+      "rawResult": {
+        "sha256": "523c58d469b4c1f7a61e5571540e0f6ca27b7caf109e48fa0027eeefcc97966c",
+        "bytes": 159960
+      },
+      "outcome": "FAIL",
+      "reason": "Invalid unique-fit expectation for unformed catalog axial stock",
+      "applicationRestoration": "PASS",
+      "osCleanup": "PASS"
+    }
+  ],
+  "review": {
+    "root": "Integrated diff and actual receipts reviewed; normal2/modern4/classic3 useful screenshots inspected.",
+    "independentStatic": "PASS on all seven final-source raw SHA256 identities and ownership/privacy/teardown/successor/dock/native-entry scope.",
+    "independentEvidence": "PASS: saved modern26/classic22 receipts and targeted final seven source hashes, exact2143/2161 freezes, native162/build40 bindings, 1164 scoped reuse inputs, explicit26 oracle and actual application/OS cleanup. No rerun or full live sweep."
+  },
+  "limitations": [
+    "Q60 remains IN_PROGRESS / UNACCEPTED.",
+    "Normal Q60 catalog, HARD, replay and advanced durable session save/load remain held.",
+    "Modern26 is one completed private PlayerSession cycle; classic22 is a separate >=300-second mixed classic owner, not modern endurance.",
+    "Browser wall/heap/DOM observations are proxies; no reachability, leak, FPS or event-timing/performance-threshold qualification.",
+    "Actual modest hardware BLOCKED/unavailable; Ryzen7700 is reference only.",
+    "Historical Q30 91.616s unknown failure, six missing scratch inventories and late BLOCKED audit retain their recorded scope.",
+    "No unchanged Q30 corpus, six strict Q60 cohort or 100-owner/96-inventory rerun; REL-B/Q100 unstarted."
+  ],
+  "screenshots": [
+    {
+      "path": "screenshots/normal167/001-normal-ticket.png",
+      "sha256": "160b405d1ff9d964c09cbb79c28375196d05bf1cb18c720daeedd8ada9711a74",
+      "bytes": 227682
+    },
+    {
+      "path": "screenshots/normal167/003-normal-session-menu.png",
+      "sha256": "16f5379897aee07a6f469eadf09663357f078e1206b6537af666c818619293ea",
+      "bytes": 209302
+    },
+    {
+      "path": "screenshots/modern26/001-unrepaired-customer-retest.png",
+      "sha256": "6e74da683823f12528f62842095c61805bc8310976fec5d49c653350e9be8e47",
+      "bytes": 340119
+    },
+    {
+      "path": "screenshots/modern26/002-diagnosis-and-original-marking.png",
+      "sha256": "ed57067d8a93da45cd4a6ee31f6d9ab80b3de9ace5eb4fe0c8d873e25fdc9523",
+      "bytes": 346063
+    },
+    {
+      "path": "screenshots/modern26/003-replacement-and-retained-original.png",
+      "sha256": "2bdf0bb99c55f1777604e62fa57ff36f9b47e30edeac17c3d5ef1dcfda7267e6",
+      "bytes": 346603
+    },
+    {
+      "path": "screenshots/modern26/004-repaired-customer-retest-pass.png",
+      "sha256": "de0b554dcbabe1ce723d2fa683b5dd00bd1cc0b91bc4de1f1ef7bbe733039ee4",
+      "bytes": 242709
+    },
+    {
+      "path": "screenshots/classic22/001-unrepaired-customer-retest.png",
+      "sha256": "b5b3ba7a6b1646b7bba6a03299b12c27c6323fc4402ca23392a87223f102827b",
+      "bytes": 573738
+    },
+    {
+      "path": "screenshots/classic22/002-diagnosis-and-original-marking.png",
+      "sha256": "a4838089e69e563b9af6022973afe4b8c6a69d9c902cb52819918a9c13edb510",
+      "bytes": 562624
+    },
+    {
+      "path": "screenshots/classic22/004-repaired-customer-retest-pass.png",
+      "sha256": "31442cf3c8301ae05214f1301766177342228713d7bde9f4b435f5017b4d444f",
+      "bytes": 567355
+    }
+  ],
+  "screenshotsScope": "Normal presentation and initial unrepaired/diagnosed/repaired player states. Classic images precede the timed mixed checkpoints; checkpoint observations are recorded separately."
+}

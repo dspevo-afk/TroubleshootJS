@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
 
-/** Value-only committed player operations. Private qualification never enters this history. */
+/** Value-only committed player operations. Internal diagnostic proof never enters this history. */
 final class PlayerSessionHistory {
     static final int PAGE_SIZE = 50;
 

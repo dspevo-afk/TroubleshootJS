@@ -794,6 +794,10 @@ MouseOutHandler, MouseWheelHandler {
 	fileMenuBar.addItem(aboutItem);
 	aboutItem.setScheduledCommand(new MyCommand("file","about"));
 
+	// The explicit private modern route owns the same top dock from startup.
+	// Its saved pre-qualification layout therefore needs no late redocking.
+	boolean topWorkbenchDock = !troubleshootDebug ||
+	    (troubleshootRb56Bench && "true".equals(qp.getValue("tsjRb56PlayerSession")));
 	int width=(int)RootLayoutPanel.get().getOffsetWidth();
 	VERTICALPANELWIDTH = width/5;
 	if (VERTICALPANELWIDTH > 166)
@@ -804,8 +808,8 @@ MouseOutHandler, MouseWheelHandler {
 	// Keep their hit targets and labels inside the debug sidebar.
 	if (troubleshootQ30Bench || troubleshootE05VisualHold || troubleshootRb56Bench)
 	    VERTICALPANELWIDTH = Math.min(360, width / 2);
-	// Normal workbench controls occupy the top dock; its canvas keeps the full width.
-	if (!troubleshootDebug)
+	// Top-docked workbench controls leave the canvas its full width.
+	if (topWorkbenchDock)
 	    VERTICALPANELWIDTH = 0;
 
 	menuBar = new MenuBar();
@@ -930,14 +934,14 @@ MouseOutHandler, MouseWheelHandler {
 	    layoutPanel.addNorth(menuBar, MENUBARHEIGHT);
 
 	horizontalDockHeight = (hideMenu ? 0 : MENUBARHEIGHT) +
-            (!troubleshootDebug && !hideSidebar ? WORKBENCH_TOP_HEIGHT : 0);
+            (topWorkbenchDock && !hideSidebar ? WORKBENCH_TOP_HEIGHT : 0);
 	if (hideSidebar)
 	    VERTICALPANELWIDTH = 0;
 	else {
 	    verticalPanel.setWidth("100%");
 	    ScrollPanel sidebarScroll = new ScrollPanel(verticalPanel);
 	    sidebarScroll.setSize("100%", "100%");
-            if (!troubleshootDebug) {
+            if (topWorkbenchDock) {
                 sidebarScroll.setStyleName("tsj-workbench-top-dock");
                 layoutPanel.addNorth(sidebarScroll, WORKBENCH_TOP_HEIGHT);
             } else {
@@ -5040,7 +5044,8 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private boolean canOpenControlledIndicatorChallenge() {
-	return !FreshGeneratedRuntimeInstallation.isInProgress(this) &&
+	return playerSessionController == null &&
+	    !FreshGeneratedRuntimeInstallation.isInProgress(this) &&
 	    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
 	    isGeneratedRuntimeSettled() && !activeMeasurementOverlay &&
 	    (generatedBoardInstance == null ||

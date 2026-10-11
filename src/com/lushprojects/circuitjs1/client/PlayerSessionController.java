@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
@@ -14,7 +15,8 @@ final class PlayerSessionController {
     final PlayerSession session = new PlayerSession();
     private final QuickPlayIdentityAllocator newBoardIdentities = new QuickPlayIdentityAllocator();
     private String notice = "";
-    private boolean bridgeReady;
+    private boolean bridgeReady, released;
+    private JavaScriptObject bridge;
     private int viewToken;
     private PendingRetest pendingRetest;
 
@@ -38,7 +40,7 @@ final class PlayerSessionController {
     PlayerSessionController(CirSim sim) { this.sim = sim; }
 
     void openInitial(QueryParameters query) {
-        installBridge(); bridgeReady = true;
+        bridge = installBridge(); bridgeReady = true;
         try {
             String replay = query.getValue("replay");
             String route = query.getValue("tsjChallenge");
@@ -58,10 +60,60 @@ final class PlayerSessionController {
         refresh();
     }
 
+    /** The caller has completed the existing held-family publication/D01 admission. */
+    void openQualifiedBoard(GeneratedBoardInstance owner) {
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        if (released || sim.playerSessionController != this || owner == null ||
+                sim.getGeneratedBoardInstance() != owner || challenge == null || !challenge.isReady() ||
+                owner.isDeveloperOnlyFaultRoute() || sim.generationCoordinator.isRunning() ||
+                PlayerFamilyCatalog.isNormalPlayerEnabled(owner.getCircuitFamilyId()) || !bridgeIsEmpty())
+            throw new IllegalStateException("Qualified session requires its admitted held-family owner");
+        GeneratedDiagnosticProofReceipt proof = challenge.getDiagnosticProofReceipt();
+        if (proof == null || proof.isWarmReuseForDeveloperVerification() || proof.getContextKey() == null ||
+                !proof.getContextKey().isTrustedCapture())
+            throw new IllegalStateException("Qualified session requires its cold production proof");
+        proof.requireAssessmentOwner(owner);
+        session.adoptQualification(owner);
+        owner.getPhysicalBoardRuntime().getSessionHistory().start();
+        notice = "This qualification board cannot be saved, shared or replaced.";
+        bridge = installBridge(); bridgeReady = true;
+        refresh();
+    }
+
+    boolean isBridgeAvailable() {
+        return !released && sim.playerSessionController == this &&
+            (!session.isQualification() || sim.getGeneratedBoardInstance() == session.owner());
+    }
+
+    /** Keep the lease reachable for retry if exact UI/bridge teardown fails. */
+    void releaseQualification(Object expectedOwner) {
+        if (expectedOwner == null || sim.playerSessionController != this ||
+                sim.getGeneratedBoardInstance() != expectedOwner)
+            throw new IllegalStateException("Refusing session release across a successor owner");
+        // A failed precheck has installed no session or bridge. Do not touch an existing bridge.
+        if (session.owner() == null && !session.isQualification() && bridge == null) {
+            released = true; bridgeReady = false; viewToken++; clearRetest();
+            sim.playerSessionController = null;
+            return;
+        }
+        if (!session.isQualification() || session.owner() != expectedOwner)
+            throw new IllegalStateException("Qualification lease belongs to another session");
+        released = true; bridgeReady = false; viewToken++; clearRetest();
+        if (bridge != null && !removeBridge(bridge))
+            throw new IllegalStateException("Qualified session UI or bridge is still retained");
+        bridge = null;
+        session.revoke(expectedOwner);
+        sim.playerSessionController = null;
+    }
+
+    boolean isQualificationReleased() {
+        return released && bridge == null && session.owner() == null && sim.playerSessionController != this;
+    }
+
     private void launch(PlayerLaunchRequest selected) { launch(selected, null); }
 
     private void launch(PlayerLaunchRequest selected, final PlayerSessionSave saved) {
-        if (!sim.isGeneratedRuntimeSettled() || sim.generationCoordinator.isRunning())
+        if (released || session.isQualification() || !sim.isGeneratedRuntimeSettled() || sim.generationCoordinator.isRunning())
             throw new IllegalStateException("The current board is busy");
         final PlayerLaunchRequest request = newBoardIdentities.allocate(selected);
         final int token = session.begin(request);
@@ -96,11 +148,17 @@ final class PlayerSessionController {
     }
 
     /** Captured modal leases invalidate a retained Shop callback on close/reopen. */
-    int openView() { return ++viewToken; }
-    void closeView(int token) { if (token == viewToken) viewToken++; }
+    int openView() {
+        if (!isBridgeAvailable()) throw new IllegalStateException("This session has closed");
+        return ++viewToken;
+    }
+    void closeView(int token) { if (!released && token == viewToken) viewToken++; }
 
     String action(int expected, int view, String action, String first, String second, String third) {
-        if (!session.accepts(expected)) return "This control belongs to an earlier session.";
+        if (!isBridgeAvailable() || !session.accepts(expected)) return "This control belongs to an earlier session.";
+        if (session.isQualification() && ("launch".equals(action) || "random".equals(action) ||
+                "replay".equals(action) || "load-session".equals(action)))
+            return "This qualification board cannot be saved, shared or replaced.";
         try {
             if ("launch".equals(action)) launch(new PlayerLaunchRequest(first, second, third));
             else if ("random".equals(action)) launch(PlayerLaunchRequest.random(first, second, third));
@@ -116,6 +174,12 @@ final class PlayerSessionController {
             else if ("menu".equals(action)) session.enter(expected, PlayerSession.Screen.MENU);
             else if ("resume".equals(action)) session.enter(expected, PlayerSession.Screen.WORKBENCH);
             else if ("retest".equals(action)) retest(expected);
+            else if ("end-qualification".equals(action) && session.isQualification()) {
+                if (session.screen() != PlayerSession.Screen.RESULTS || !ownsCurrentBoard() ||
+                        !sim.getGeneratedChallengeController().isCompleted())
+                    return "Finish the customer retest before closing this session.";
+                if (!Rb56QualificationVerifier.finishRetainedBench(sim)) return "This qualification view has closed.";
+            }
             else if ("meter".equals(action)) {
                 if (!ownsCurrentBoard() || session.screen() != PlayerSession.Screen.WORKBENCH)
                     return "The meter belongs to the current workbench.";
@@ -132,7 +196,7 @@ final class PlayerSessionController {
     }
 
     private boolean canSaveSession() {
-        return ownsCurrentBoard() && sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
+        return !session.isQualification() && ownsCurrentBoard() && sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
             session.screen() != PlayerSession.Screen.PREPARING && session.screen() != PlayerSession.Screen.RETEST;
     }
 
@@ -154,7 +218,7 @@ final class PlayerSessionController {
     }
 
     PlayerSessionHistory.Page historyPage(int expected, int view, int offset) {
-        if (!session.accepts(expected) || view <= 0 || view != viewToken ||
+        if (!isBridgeAvailable() || !session.accepts(expected) || view <= 0 || view != viewToken ||
                 session.screen() != PlayerSession.Screen.MENU || !ownsCurrentBoard())
             throw new IllegalStateException("This history view has closed.");
         return sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().page(offset);
@@ -198,7 +262,7 @@ final class PlayerSessionController {
     boolean isWorkbenchScreen() { return session.screen() == PlayerSession.Screen.WORKBENCH && ownsCurrentBoard(); }
 
     private boolean ownsCurrentBoard() {
-        return session.owner() != null && sim.getGeneratedBoardInstance() == session.owner() &&
+        return isBridgeAvailable() && session.owner() != null && sim.getGeneratedBoardInstance() == session.owner() &&
             sim.getGeneratedChallengeController() != null && !sim.generationCoordinator.isRunning();
     }
     private String acquire(String categoryId, String catalogId) {
@@ -277,14 +341,15 @@ final class PlayerSessionController {
         session.retested(pending.token, pending.owner, completed, message);
     }
 
-    void refresh() { finishRetest(false); if (bridgeReady) notifyView(); }
+    void refresh() { if (released) return; finishRetest(false); if (bridgeReady) notifyView(bridge); }
 
     String snapshot(boolean includeCatalog) {
         JSONObject out = new JSONObject();
         out.put("token", new JSONNumber(session.token()));
         put(out, "screen", session.screen().name()); put(out, "message", session.message()); put(out, "notice", notice);
         put(out, "epoch", PlayerLaunchRequest.EPOCH); put(out, "build", GWT.getPermutationStrongName());
-        out.put("hasBoard", JSONBoolean.getInstance(session.owner() != null));
+        out.put("hasBoard", JSONBoolean.getInstance(!released && session.owner() != null));
+        out.put("privateQualification", JSONBoolean.getInstance(session.isQualification()));
         out.put("sessionSaveAvailable", JSONBoolean.getInstance(canSaveSession()));
         out.put("sessionHistoryCount", new JSONNumber(ownsCurrentBoard() ? sim.getGeneratedBoardInstance()
             .getPhysicalBoardRuntime().getSessionHistory().size() : 0));
@@ -342,9 +407,13 @@ final class PlayerSessionController {
 
     private static void put(JSONObject object, String key, String value) { object.put(key, new JSONString(value == null ? "" : value)); }
 
-    private native void installBridge() /*-{
+    private static native boolean bridgeIsEmpty() /*-{
+        return !$wnd.tsjProduct && typeof $wnd.tsjProductTeardown === 'function';
+    }-*/;
+    private native JavaScriptObject installBridge() /*-{
         var owner = this;
-        $wnd.tsjProduct = {
+        var bridge = {
+            available: $entry(function() { return owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::isBridgeAvailable()(); }),
             snapshot: $entry(function(includeCatalog) { return JSON.parse(owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::snapshot(Z)(includeCatalog !== false)); }),
             historyPage: $entry(function(token, view, offset) {
                 if (typeof offset !== 'number' || offset % 1 !== 0 || offset < -1 || offset > 2147483647)
@@ -360,8 +429,17 @@ final class PlayerSessionController {
             openView: $entry(function() { return owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::openView()(); }),
             closeView: $entry(function(token) { owner.@com.lushprojects.circuitjs1.client.PlayerSessionController::closeView(I)(token); })
         };
+        $wnd.tsjProduct = bridge;
+        return bridge;
     }-*/;
-    private static native void notifyView() /*-{
-        if ($wnd.tsjProductRefresh) $wnd.tsjProductRefresh();
+    private static native boolean removeBridge(JavaScriptObject bridge) /*-{
+        if ($wnd.tsjProduct !== bridge) return false;
+        if (typeof $wnd.tsjProductTeardown !== 'function' || !$wnd.tsjProductTeardown(bridge)) return false;
+        if ($wnd.tsjProduct !== bridge) return false;
+        delete $wnd.tsjProduct;
+        return typeof $wnd.tsjProduct === 'undefined';
+    }-*/;
+    private static native void notifyView(JavaScriptObject bridge) /*-{
+        if ($wnd.tsjProduct === bridge && $wnd.tsjProductRefresh) $wnd.tsjProductRefresh();
     }-*/;
 }

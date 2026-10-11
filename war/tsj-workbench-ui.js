@@ -10,9 +10,38 @@
   var toolbarHost = null, toolbarObserver = null, toolbarQueued = false, nativeTools = [];
   var sessionRead = null, sessionDownload = null, sessionSaving = false, sessionHistoryView = null;
   var sessionFileLimit = 2 * 1024 * 1024;
+  var listeners = [], toolbarClasses = [], renderTimer = null, toolbarTimer = null;
+  var queuedOwner = null, bodyClassWasPresent = false, savedScreenAttribute = null;
   var settingsKey = 'tsj.presentation.v1';
   var settings = { version: 1, highContrast: false, largeText: false, reducedMotion: false };
 
+  function ownsBridge(owner) {
+    return !!owner && bridge === owner && window.tsjProduct === owner &&
+      typeof owner.available === 'function' && owner.available() === true;
+  }
+  function privateSession() { return snapshot && snapshot.privateQualification === true; }
+  function listen(node, name, callback, capture) {
+    var owner = bridge;
+    var guarded = function (event) {
+      if (ownsBridge(owner) && (node === window || node === document || node.isConnected)) callback(event);
+    };
+    node.addEventListener(name, guarded, !!capture);
+    // Removed UI controls collect normally; only listeners on surviving owners
+    // need explicit registration/removal. Retained detached controls stay inert.
+    if (node === window || node === document || name === 'beforetoggle')
+      listeners.push({ node: node, name: name, callback: guarded, capture: !!capture });
+  }
+  function removeListeners(node) {
+    listeners = listeners.filter(function (item) {
+      if (node && item.node !== node) return true;
+      item.node.removeEventListener(item.name, item.callback, item.capture); return false;
+    });
+  }
+  function toolbarClass(node, name, present) {
+    if (!toolbarClasses.some(function (item) { return item.node === node && item.name === name; }))
+      toolbarClasses.push({ node: node, name: name, present: node.classList.contains(name) });
+    node.classList.toggle(name, present);
+  }
   function element(tag, text, className) {
     var node = document.createElement(tag);
     if (text !== undefined) node.textContent = text;
@@ -24,7 +53,7 @@
   }
   function button(parent, text, callback, className) {
     var node = append(parent, 'button', text, className || 'tsj-product-button');
-    node.type = 'button'; node.addEventListener('click', callback); return node;
+    node.type = 'button'; listen(node, 'click', callback); return node;
   }
   function icon(parent, name) {
     // Local, decorative interface glyphs never introduce additional controls.
@@ -74,8 +103,14 @@
     setText(shellStatus, localMessage || (snapshot && (snapshot.notice || snapshot.message)));
   }
   function invoke(token, view, name, a, b, c) {
-    // Each changing control captures its owner and modal lease at creation time.
-    var message = bridge.action(token, view || 0, name, a || '', b || '', c || '');
+    // Java rechecks the exact controller, session owner, token and modal lease.
+    if (!ownsBridge(bridge) || !snapshot) return;
+    if (privateSession() && ['launch', 'random', 'replay', 'load-session'].indexOf(name) >= 0) {
+      status('New boards, replay and persistence are unavailable in this private qualification session.'); return;
+    }
+    var owner = bridge;
+    var message = owner.action(token, view || 0, name, a || '', b || '', c || '');
+    if (!ownsBridge(owner)) return; // End may synchronously tear this UI down.
     status(message); schedule();
   }
   function actionButton(parent, text, name, a, b, c) {
@@ -106,6 +141,10 @@
     return (negative ? '-' : '') + decimal;
   }
   function identity(parent) {
+    if (privateSession()) {
+      append(parent, 'p', 'Private qualification session. Normal catalog, HARD, replay and session files remain unavailable.', 'tsj-product-hint');
+      readOnly(parent, 'Interpretation / build', snapshot.epoch + ' / ' + snapshot.build); return;
+    }
     var details = append(parent, 'details', undefined, 'tsj-product-identity');
     append(details, 'summary', 'Share pristine challenge');
     append(details, 'p', 'Share this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.');
@@ -116,6 +155,9 @@
   function support(parent) {
     var note = append(parent, 'section', undefined, 'tsj-product-support');
     append(note, 'h3', 'About this desktop alpha');
+    if (privateSession()) {
+      append(note, 'p', 'This retained private board uses the ordinary ticket, workbench, Shop and customer retest. Normal catalog admission, HARD, new generation, replay and session files remain unavailable.'); return;
+    }
     append(note, 'p', 'Selected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
     append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Use Main menu to save or load a session file. Loading restarts dynamic state; retest the board afterward.');
   }
@@ -138,12 +180,13 @@
     releaseSessionDownload();
   }
   function ownsSessionControl(token, view, node) {
-    return snapshot && snapshot.token === token && lease === view && node.isConnected &&
+    return ownsBridge(bridge) && snapshot && snapshot.token === token && lease === view && node.isConnected &&
       snapshot.screen !== 'PREPARING' && snapshot.screen !== 'RETEST';
   }
   function updateSessionControls() {
     var panel = controls.sessionPanel;
     if (!panel || !panel.isConnected) return;
+    if (privateSession()) { updateSessionHistory(); return; }
     var busy = sessionSaving || sessionRead !== null || snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST';
     panel.setAttribute('aria-busy', busy ? 'true' : 'false');
     controls.sessionSave.disabled = busy || snapshot.sessionSaveAvailable !== true;
@@ -186,7 +229,7 @@
     showSessionHistory(history, history.page && history.page.nextOffset >= 0 ? history.page.offset : -1);
   }
   function saveSession(token, view, node) {
-    if (!ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
+    if (privateSession() || !ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
     sessionSaving = true; updateSessionControls(); status('Preparing session download...');
     var link = null;
     try {
@@ -218,12 +261,13 @@
     }
   }
   function finishSessionRead(read) {
-    var current = sessionRead === read && ownsSessionControl(read.token, read.view, read.picker);
+    if (sessionRead !== read || !ownsBridge(read.owner)) { detachSessionReader(read); return false; }
+    var current = ownsSessionControl(read.token, read.view, read.picker);
     if (sessionRead === read) sessionRead = null;
     detachSessionReader(read); updateSessionControls(); return current;
   }
   function loadSessionFile(token, view, picker) {
-    if (!ownsSessionControl(token, view, picker) || sessionRead || sessionSaving) return;
+    if (privateSession() || !ownsSessionControl(token, view, picker) || sessionRead || sessionSaving) return;
     var file = picker.files && picker.files[0]; picker.value = '';
     if (!file) return;
     if (!/\.tsjsave$/i.test(file.name)) { status('Choose a .tsjsave session file.'); return; }
@@ -232,7 +276,7 @@
     }
     var read;
     try {
-      read = { reader: new window.FileReader(), token: token, view: view, picker: picker };
+      read = { reader: new window.FileReader(), owner: bridge, token: token, view: view, picker: picker };
       sessionRead = read; updateSessionControls(); status('Reading session file...');
       read.reader.onload = function () {
         var contents = read.reader.result;
@@ -259,25 +303,27 @@
     var panel = append(parent, 'section', undefined, 'tsj-product-form tsj-product-session');
     controls.sessionPanel = panel;
     append(panel, 'h3', 'Your session');
-    append(panel, 'p', 'Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).', 'tsj-product-hint');
-    var disclosure = append(panel, 'p', 'Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.');
-    disclosure.id = 'tsj-session-disclosure-' + (++serial);
     var token = snapshot.token, view = lease;
-    var actions = append(panel, 'div', undefined, 'tsj-product-actions');
-    var save = controls.sessionSave = button(actions, 'Save session', function () { saveSession(token, view, save); });
-    save.hidden = !snapshot.hasBoard; save.disabled = snapshot.sessionSaveAvailable !== true;
-    save.setAttribute('aria-describedby', disclosure.id);
-    var picker = controls.sessionPicker = append(panel, 'input');
-    picker.type = 'file'; picker.accept = '.tsjsave'; picker.hidden = true;
-    picker.setAttribute('aria-label', 'Load session file');
-    picker.addEventListener('change', function () { loadSessionFile(token, view, picker); });
-    var load = controls.sessionLoad = button(actions, 'Load session', function () {
-      if (!ownsSessionControl(token, view, load)) return;
-      try { picker.value = ''; picker.click(); }
-      catch (error) { status('The file picker could not open. Try loading the session in a browser with local file support.'); }
-    });
-    load.setAttribute('aria-describedby', disclosure.id);
-    controls.sessionSaveHint = append(panel, 'p', 'Save session becomes available when the current board is ready.', 'tsj-product-hint');
+    if (!privateSession()) {
+      append(panel, 'p', 'Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).', 'tsj-product-hint');
+      var disclosure = append(panel, 'p', 'Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.');
+      disclosure.id = 'tsj-session-disclosure-' + (++serial);
+      var actions = append(panel, 'div', undefined, 'tsj-product-actions');
+      var save = controls.sessionSave = button(actions, 'Save session', function () { saveSession(token, view, save); });
+      save.hidden = !snapshot.hasBoard; save.disabled = snapshot.sessionSaveAvailable !== true;
+      save.setAttribute('aria-describedby', disclosure.id);
+      var picker = controls.sessionPicker = append(panel, 'input');
+      picker.type = 'file'; picker.accept = '.tsjsave'; picker.hidden = true;
+      picker.setAttribute('aria-label', 'Load session file');
+      listen(picker, 'change', function () { loadSessionFile(token, view, picker); });
+      var load = controls.sessionLoad = button(actions, 'Load session', function () {
+        if (!ownsSessionControl(token, view, load)) return;
+        try { picker.value = ''; picker.click(); }
+        catch (error) { status('The file picker could not open. Try loading the session in a browser with local file support.'); }
+      });
+      load.setAttribute('aria-describedby', disclosure.id);
+      controls.sessionSaveHint = append(panel, 'p', 'Save session becomes available when the current board is ready.', 'tsj-product-hint');
+    } else append(panel, 'p', 'Save and load are unavailable for this private qualification session.', 'tsj-product-hint');
     var details = append(panel, 'details'); details.hidden = !snapshot.hasBoard;
     append(details, 'summary', 'Session history');
     var history = sessionHistoryView = { token: token, view: view, details: details, page: null };
@@ -297,7 +343,7 @@
     history.older.setAttribute('aria-controls', history.list.id);
     history.newer.setAttribute('aria-controls', history.list.id);
     history.older.disabled = history.newer.disabled = true;
-    details.addEventListener('toggle', function () {
+    listen(details, 'toggle', function () {
       if (history === sessionHistoryView) updateSessionHistory();
     });
     return panel;
@@ -343,7 +389,10 @@
     // Focus before aria-hiding the previous focused subtree.
     dialog.focus(); inertBackground();
     if (window.MutationObserver) {
-      if (!backgroundObserver) backgroundObserver = new window.MutationObserver(inertBackground);
+      if (!backgroundObserver) {
+        var owner = bridge;
+        backgroundObserver = new window.MutationObserver(function () { if (ownsBridge(owner)) inertBackground(); });
+      }
       backgroundObserver.observe(document.body, { childList: true });
     }
   }
@@ -384,51 +433,53 @@
     var process = append(intro, 'ol', undefined, 'tsj-product-process');
     ['Examine', 'Measure', 'Isolate', 'Repair', 'Retest'].forEach(function (step) { append(process, 'li', step); });
     sessionControls(parent);
-    var setup = append(parent, 'div', undefined, 'tsj-product-setup');
-    var form = append(setup, 'form', undefined, 'tsj-product-form tsj-product-new-board');
-    append(form, 'h3', 'Start a service job');
-    var choices = append(form, 'div', undefined, 'tsj-product-choices');
-    var profile = field(choices, 'Difficulty', 'select');
-    ['EASY', 'MEDIUM', 'HARD', 'PSYCHOTIC'].forEach(function (name) {
-      var option = append(profile, 'option', name + (name === 'HARD' || name === 'PSYCHOTIC' ? ' — unavailable' : ''));
-      option.value = name; option.disabled = name === 'HARD' || name === 'PSYCHOTIC';
-    });
-    var family = field(choices, 'Board family', 'select');
-    function updateFamilies() {
-      var selected = family.value;
-      family.replaceChildren();
-      snapshot.families.forEach(function (item) {
-        if (item.profile !== profile.value) return;
-        var option = append(family, 'option', item.name); option.value = item.id;
-        if (item.id === selected) option.selected = true;
+    if (!privateSession()) {
+      var setup = append(parent, 'div', undefined, 'tsj-product-setup');
+      var form = append(setup, 'form', undefined, 'tsj-product-form tsj-product-new-board');
+      append(form, 'h3', 'Start a service job');
+      var choices = append(form, 'div', undefined, 'tsj-product-choices');
+      var profile = field(choices, 'Difficulty', 'select');
+      ['EASY', 'MEDIUM', 'HARD', 'PSYCHOTIC'].forEach(function (name) {
+        var option = append(profile, 'option', name + (name === 'HARD' || name === 'PSYCHOTIC' ? ' — unavailable' : ''));
+        option.value = name; option.disabled = name === 'HARD' || name === 'PSYCHOTIC';
       });
+      var family = field(choices, 'Board family', 'select');
+      function updateFamilies() {
+        var selected = family.value;
+        family.replaceChildren();
+        snapshot.families.forEach(function (item) {
+          if (item.profile !== profile.value) return;
+          var option = append(family, 'option', item.name); option.value = item.id;
+          if (item.id === selected) option.selected = true;
+        });
+      }
+      listen(profile, 'change', updateFamilies); updateFamilies();
+      var token = snapshot.token, view = lease;
+      button(form, 'New board', function () {
+        // Entropy is not a board seed. The Java launch owner selects and publishes
+        // the actual seed through its qualified envelope for this family/profile.
+        invoke(token, view, 'random', family.value, randomSeed(), profile.value);
+      }, 'tsj-product-button tsj-product-primary');
+      append(form, 'p', 'Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.', 'tsj-product-hint');
+      var exact = append(form, 'details', undefined, 'tsj-product-exact');
+      append(exact, 'summary', 'Enter an exact seed');
+      var seed = field(exact, 'Exact seed (signed decimal integer)');
+      seed.type = 'text'; seed.value = '0'; seed.required = true;
+      seed.maxLength = 20; seed.autocomplete = 'off'; seed.spellcheck = false;
+      append(exact, 'p', 'An exact seed can fail preparation. It is never replaced with another seed.', 'tsj-product-hint');
+      var launch = append(exact, 'button', 'Prepare exact seed', 'tsj-product-button'); launch.type = 'submit';
+      listen(form, 'submit', function (event) {
+        event.preventDefault(); invoke(token, view, 'launch', family.value, seed.value, profile.value);
+      });
+      var replayDetails = append(parent, 'details', undefined, 'tsj-product-replay-disclosure');
+      append(replayDetails, 'summary', 'Open a saved replay code');
+      var replayForm = append(replayDetails, 'form', undefined, 'tsj-product-form tsj-product-replay');
+      append(replayForm, 'h3', 'Return to a challenge');
+      append(replayForm, 'p', 'Paste a current replay to reconstruct its initial board. Repairs and tray contents are not saved.', 'tsj-product-hint');
+      var replay = field(replayForm, 'Open current replay', 'textarea'); replay.rows = 2; replay.required = true; replay.spellcheck = false;
+      var open = append(replayForm, 'button', 'Prepare replay', 'tsj-product-button'); open.type = 'submit';
+      listen(replayForm, 'submit', function (event) { event.preventDefault(); invoke(token, view, 'replay', replay.value); });
     }
-    profile.addEventListener('change', updateFamilies); updateFamilies();
-    var token = snapshot.token, view = lease;
-    button(form, 'New board', function () {
-      // Entropy is not a board seed. The Java launch owner selects and publishes
-      // the actual seed through its qualified envelope for this family/profile.
-      invoke(token, view, 'random', family.value, randomSeed(), profile.value);
-    }, 'tsj-product-button tsj-product-primary');
-    append(form, 'p', 'Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.', 'tsj-product-hint');
-    var exact = append(form, 'details', undefined, 'tsj-product-exact');
-    append(exact, 'summary', 'Enter an exact seed');
-    var seed = field(exact, 'Exact seed (signed decimal integer)');
-    seed.type = 'text'; seed.value = '0'; seed.required = true;
-    seed.maxLength = 20; seed.autocomplete = 'off'; seed.spellcheck = false;
-    append(exact, 'p', 'An exact seed can fail preparation. It is never replaced with another seed.', 'tsj-product-hint');
-    var launch = append(exact, 'button', 'Prepare exact seed', 'tsj-product-button'); launch.type = 'submit';
-    form.addEventListener('submit', function (event) {
-      event.preventDefault(); invoke(token, view, 'launch', family.value, seed.value, profile.value);
-    });
-    var replayDetails = append(parent, 'details', undefined, 'tsj-product-replay-disclosure');
-    append(replayDetails, 'summary', 'Open a saved replay code');
-    var replayForm = append(replayDetails, 'form', undefined, 'tsj-product-form tsj-product-replay');
-    append(replayForm, 'h3', 'Return to a challenge');
-    append(replayForm, 'p', 'Paste a current replay to reconstruct its initial board. Repairs and tray contents are not saved.', 'tsj-product-hint');
-    var replay = field(replayForm, 'Open current replay', 'textarea'); replay.rows = 2; replay.required = true; replay.spellcheck = false;
-    var open = append(replayForm, 'button', 'Prepare replay', 'tsj-product-button'); open.type = 'submit';
-    replayForm.addEventListener('submit', function (event) { event.preventDefault(); invoke(token, view, 'replay', replay.value); });
     if (snapshot.hasBoard) actionButton(parent, 'Resume current board', 'resume');
     var links = append(parent, 'div', undefined, 'tsj-product-actions');
     button(links, 'Resources', function () { openAuxiliary('Resources'); });
@@ -458,8 +509,11 @@
     append(result, 'p', 'You can keep using this board. Later changes do not alter the recorded retest result.');
     append(result, 'p', snapshot.message);
     var actions = append(parent, 'div', undefined, 'tsj-product-actions');
-    actionButton(actions, 'New board / Main menu', 'menu').classList.add('tsj-product-primary');
-    actionButton(actions, 'Replay this challenge', 'replay', snapshot.replay);
+    if (privateSession()) actionButton(actions, 'Close session', 'end-qualification').classList.add('tsj-product-primary');
+    else {
+      actionButton(actions, 'New board / Main menu', 'menu').classList.add('tsj-product-primary');
+      actionButton(actions, 'Replay this challenge', 'replay', snapshot.replay);
+    }
     actionButton(actions, 'Return to board', 'resume'); identity(parent);
   }
   function shop(parent) {
@@ -482,7 +536,7 @@
     controls.shopSearch = field(searchRow, 'Search components');
     controls.shopSearch.type = 'search'; controls.shopSearch.placeholder = 'Type or specification, e.g. 330';
     controls.shopSearch.autocomplete = 'off';
-    controls.shopSearch.addEventListener('input', filterShop);
+    listen(controls.shopSearch, 'input', filterShop);
     button(searchRow, 'Clear search', function () {
       controls.shopSearch.value = ''; filterShop(); controls.shopSearch.focus();
     });
@@ -638,7 +692,7 @@
       var title = append(description, 'strong', item[1]); title.id = 'tsj-preference-title-' + (++serial);
       var hint = append(description, 'small', item[2]); hint.id = 'tsj-preference-hint-' + serial;
       input.setAttribute('aria-labelledby', title.id); input.setAttribute('aria-describedby', hint.id);
-      input.addEventListener('change', function () {
+      listen(input, 'change', function () {
         settings[item[0]] = input.checked; applySettings();
         try {
           window.localStorage.setItem(settingsKey, JSON.stringify(settings));
@@ -655,9 +709,10 @@
       var audioText = append(audioLabel, 'span');
       append(audioText, 'strong', 'Relay contact sounds');
       append(audioText, 'small', 'Mechanical clicks follow actual relay pickup and release.');
-      audioInput.addEventListener('change', function () { window.tsjBenchAudio.setMuted(!audioInput.checked); });
+      listen(audioInput, 'change', function () { window.tsjBenchAudio.setMuted(!audioInput.checked); });
     }
-    append(parent, 'p', 'Use Main menu to save or load a session file and review Session history. Loading restarts dynamic state; retest the board afterward.');
+    append(parent, 'p', privateSession() ? 'Session history remains available. Save, load and replay are unavailable in this private qualification session.' :
+      'Use Main menu to save or load a session file and review Session history. Loading restarts dynamic state; retest the board afterward.');
   }
 
   function progressView(parent) {
@@ -706,6 +761,24 @@
       if (tool.panel.isConnected && typeof tool.panel.hidePopover === 'function' && tool.panel.matches(':popover-open')) tool.panel.hidePopover();
     });
   }
+  function releaseNativeTool(tool) {
+      if (tool.panel.isConnected && typeof tool.panel.hidePopover === 'function' && tool.panel.matches(':popover-open')) tool.panel.hidePopover();
+      removeListeners(tool.trigger); removeListeners(tool.panel); tool.trigger.remove();
+      ['id', 'role', 'popover'].forEach(function (name) {
+        if (tool.attributes[name] === null) tool.panel.removeAttribute(name);
+        else tool.panel.setAttribute(name, tool.attributes[name]);
+      });
+      tool.panel.classList.toggle('tsj-native-popover', tool.nativePopover);
+      ['--tsj-tool-left', '--tsj-tool-top'].forEach(function (name) {
+        var value = tool.styles[name];
+        if (!value.value) tool.panel.style.removeProperty(name);
+        else tool.panel.style.setProperty(name, value.value, value.priority);
+      });
+  }
+  function releaseNativeTools() {
+    nativeTools.forEach(releaseNativeTool);
+    nativeTools = [];
+  }
   function positionNativeTool(tool) {
     var bounds = tool.trigger.getBoundingClientRect();
     // This positions a DOM tool panel only. It never touches the board viewport.
@@ -715,7 +788,10 @@
   }
   function updateNativeTools() {
     if (!toolbarHost) return;
-    nativeTools = nativeTools.filter(function (tool) { return toolbarHost.contains(tool.panel); });
+    nativeTools = nativeTools.filter(function (tool) {
+      if (toolbarHost.contains(tool.panel)) return true;
+      releaseNativeTool(tool); return false;
+    });
     var labels = {
       'Bench power': ['Supplies', 'power'], 'Board view': ['View', 'view'],
       'Service ticket': ['Ticket', 'ticket'], 'Component': ['Component', 'component'],
@@ -728,6 +804,12 @@
       if (!tool) {
         // Keep each native table in its original GWT cell. The browser top layer
         // displays the same widget; no cloned controls or alternate owner exists.
+        var attributes = {}, styles = {};
+        ['id', 'role', 'popover'].forEach(function (name) { attributes[name] = panel.getAttribute(name); });
+        ['--tsj-tool-left', '--tsj-tool-top'].forEach(function (name) {
+          styles[name] = { value: panel.style.getPropertyValue(name), priority: panel.style.getPropertyPriority(name) };
+        });
+        var nativePopover = panel.classList.contains('tsj-native-popover');
         if (!panel.id) panel.id = 'tsj-native-tool-' + (++serial);
         panel.setAttribute('popover', 'auto'); panel.setAttribute('role', 'dialog');
         panel.classList.add('tsj-native-popover');
@@ -735,9 +817,9 @@
         trigger.type = 'button'; trigger.title = label; trigger.setAttribute('aria-label', label);
         trigger.setAttribute('popovertarget', panel.id); trigger.setAttribute('aria-haspopup', 'dialog');
         icon(trigger, presentation[1]); panel.parentNode.insertBefore(trigger, panel);
-        tool = { panel: panel, trigger: trigger }; nativeTools.push(tool);
-        trigger.addEventListener('click', function () { positionNativeTool(tool); });
-        panel.addEventListener('beforetoggle', function (event) {
+        tool = { panel: panel, trigger: trigger, attributes: attributes, styles: styles, nativePopover: nativePopover }; nativeTools.push(tool);
+        listen(trigger, 'click', function () { positionNativeTool(tool); });
+        listen(panel, 'beforetoggle', function (event) {
           if (event.newState === 'open') {
             if (window.tsjWorkbenchOverlayOpen || panel.style.display === 'none') event.preventDefault();
             else positionNativeTool(tool);
@@ -754,27 +836,33 @@
       var visible = Array.prototype.some.call(row.cells[0].children, function (node) {
         return !node.hidden && node.style.display !== 'none';
       });
-      row.classList.toggle('tsj-toolbar-empty', !visible);
+      toolbarClass(row, 'tsj-toolbar-empty', !visible);
     });
   }
   function scheduleNativeTools() {
     if (toolbarQueued) return;
     toolbarQueued = true;
-    window.setTimeout(function () { toolbarQueued = false; updateNativeTools(); }, 0);
+    var owner = bridge;
+    toolbarTimer = window.setTimeout(function () {
+      toolbarQueued = false; toolbarTimer = null;
+      if (ownsBridge(owner)) updateNativeTools();
+    }, 0);
   }
   function mountShell() {
     var anchor = document.querySelector('.tsj-meter-panel');
     if (anchor && anchor.parentNode && shell.parentNode !== anchor.parentNode) {
       anchor.parentNode.insertBefore(shell, anchor);
-      anchor.parentNode.classList.add('tsj-workbench-toolbar-cell');
+      toolbarClass(anchor.parentNode, 'tsj-workbench-toolbar-cell', true);
       var table = anchor.parentNode.closest('table');
       if (table) {
-        table.classList.add('tsj-workbench-toolbar-host');
+        toolbarClass(table, 'tsj-workbench-toolbar-host', true);
         if (table !== toolbarHost) {
           if (toolbarObserver) toolbarObserver.disconnect();
-          closeNativeTools(); nativeTools = []; toolbarHost = table;
+          releaseNativeTools(); toolbarHost = table;
           if (window.MutationObserver) {
+            var owner = bridge;
             toolbarObserver = new window.MutationObserver(function (changes) {
+              if (!ownsBridge(owner)) return;
               if (changes.some(function (change) {
                 return change.type === 'attributes' || Array.prototype.some.call(change.addedNodes, function (node) { return node.nodeType === 1; }) ||
                   Array.prototype.some.call(change.removedNodes, function (node) { return node.nodeType === 1; });
@@ -789,9 +877,14 @@
     shell.classList.toggle('tsj-product-floating', shell.parentNode === document.body);
   }
   function initialize() {
-    bridge = window.tsjProduct;
-    if (!bridge || !document.body) return false;
+    var nextBridge = window.tsjProduct;
+    if (!nextBridge || !document.body || typeof nextBridge.available !== 'function' || nextBridge.available() !== true) return false;
+    // A successor cannot reuse callbacks or modal state belonging to this owner.
+    if (bridge && bridge !== nextBridge) return false;
+    bridge = nextBridge;
     if (shell) return true;
+    bodyClassWasPresent = document.body.classList.contains('tsj-workbench-ui');
+    savedScreenAttribute = document.body.getAttribute('data-player-screen');
     document.body.classList.add('tsj-workbench-ui');
     loadSettings();
     shell = element('div', undefined, 'tsj-workbench-shell');
@@ -819,9 +912,9 @@
     closeButton = button(header, 'Close', closeAuxiliary, 'tsj-product-button tsj-ui-close');
     modalStatus = append(dialog, 'p', undefined, 'tsj-product-notice'); modalStatus.setAttribute('role', 'status'); modalStatus.setAttribute('aria-live', 'polite');
     content = append(dialog, 'div', undefined, 'tsj-product-content');
-    document.body.appendChild(overlay); mountShell();
+    document.body.appendChild(overlay); mountShell(); installLifecycleListeners();
     ['click', 'dblclick', 'contextmenu', 'pointerdown', 'pointerup', 'mousedown', 'mouseup', 'wheel'].forEach(function (name) {
-      overlay.addEventListener(name, function (event) { event.stopPropagation(); });
+      listen(overlay, name, function (event) { event.stopPropagation(); });
     });
     return true;
   }
@@ -838,7 +931,10 @@
     if (window.tsjTrayDrawer) window.tsjTrayDrawer.sync(snapshot);
     if (window.tsjBenchInstruments) window.tsjBenchInstruments.mount(snapshot);
     if ((snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST') && progressTimer === null)
-      progressTimer = window.setInterval(schedule, 300);
+      {
+        var owner = bridge;
+        progressTimer = window.setInterval(function () { if (ownsBridge(owner)) schedule(); }, 300);
+      }
     else if (snapshot.screen !== 'PREPARING' && snapshot.screen !== 'RETEST' && progressTimer !== null) {
       window.clearInterval(progressTimer); progressTimer = null;
     }
@@ -848,7 +944,7 @@
     setText(shellStatus, localMessage || snapshot.notice || snapshot.message);
     var page = auxiliary || (snapshot.screen === 'WORKBENCH' ? '' : snapshot.screen);
     dialog.classList.toggle('tsj-store-dialog', page === 'Shop');
-    var key = page + ':' + snapshot.token;
+    var key = page + ':' + snapshot.token + ':' + (privateSession() ? 'private' : 'normal');
     if (!page) {
       if (window.tsjWorkbenchOverlayOpen) hideOverlay();
       renderedKey = key; return;
@@ -878,7 +974,8 @@
         actionButton(content, 'Cancel preparation', 'cancel');
       } else if (page === 'RETEST') append(content, 'p', 'Checking the live board against the customer’s required behavior.');
       else {
-        append(content, 'p', 'The previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.');
+        append(content, 'p', privateSession() ? 'This private board is retained. Return to the board or close the qualification session through its owner.' :
+          'The previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.');
         actionButton(content, 'Main menu', 'menu');
         if (snapshot.hasBoard) actionButton(content, 'Resume previous board', 'resume');
         identity(content);
@@ -892,15 +989,49 @@
     setText(modalStatus, page === 'Shop' ? localMessage : localMessage || snapshot.notice || snapshot.message);
   }
   function schedule() {
-    if (queued) return;
-    queued = true;
-    window.setTimeout(function () {
-      queued = false; render();
+    var owner = window.tsjProduct;
+    if (queued && queuedOwner === owner) return;
+    if (renderTimer !== null) window.clearTimeout(renderTimer);
+    queued = true; queuedOwner = owner;
+    renderTimer = window.setTimeout(function () {
+      queued = false; renderTimer = null;
+      if (window.tsjProduct !== owner) return;
+      render();
       if (shell && discovery) { discovery.disconnect(); discovery = null; }
     }, 0);
   }
+  function teardown(expected) {
+    // Availability is already revoked by Java. Cleanup therefore checks identity.
+    if (!expected || window.tsjProduct !== expected || (bridge && bridge !== expected)) return false;
+    if (renderTimer !== null) window.clearTimeout(renderTimer);
+    if (toolbarTimer !== null) window.clearTimeout(toolbarTimer);
+    if (progressTimer !== null) window.clearInterval(progressTimer);
+    renderTimer = toolbarTimer = progressTimer = null;
+    queued = toolbarQueued = false; queuedOwner = null;
+    if (discovery) discovery.disconnect(); discovery = null;
+    document.removeEventListener('DOMContentLoaded', start);
+    if (!bridge) return !document.querySelector('.tsj-workbench-shell, .tsj-ui-overlay');
+    invalidateView(); restoreBackground(); releaseNativeTools(); removeListeners();
+    if (window.tsjTrayDrawer) window.tsjTrayDrawer.sync(null);
+    if (toolbarObserver) toolbarObserver.disconnect(); toolbarObserver = null;
+    backgroundObserver = null; toolbarHost = null;
+    toolbarClasses.forEach(function (item) { item.node.classList.toggle(item.name, item.present); });
+    toolbarClasses = [];
+    if (overlay) overlay.remove(); if (shell) shell.remove();
+    window.tsjWorkbenchOverlayOpen = false;
+    document.body.classList.toggle('tsj-workbench-ui', bodyClassWasPresent);
+    if (savedScreenAttribute === null) document.body.removeAttribute('data-player-screen');
+    else document.body.setAttribute('data-player-screen', savedScreenAttribute);
+    shell = overlay = dialog = content = heading = closeButton = modalStatus = shellStatus = null;
+    snapshot = bridge = null; controls = {}; shopRows = []; shopCategories = [];
+    shopSignature = shopCategory = auxiliary = renderedKey = localMessage = '';
+    savedContent = savedStart = returnFocus = auxiliaryFocus = null; sessionSaving = false;
+    return true;
+  }
+  window.tsjProductTeardown = teardown;
   window.tsjProductRefresh = schedule;
   function start() {
+    document.removeEventListener('DOMContentLoaded', start);
     if (!document.body) return;
     schedule();
     if (!window.tsjProduct && window.MutationObserver) {
@@ -908,37 +1039,39 @@
       discovery.observe(document.body, { childList: true, subtree: true });
     }
   }
-  document.addEventListener('keydown', function (event) {
-    if (!window.tsjWorkbenchOverlayOpen) return;
-    if (event.key === 'Escape') {
-      event.preventDefault(); closeAuxiliary(); // Blocking session screens require an explicit action.
-    } else if ((event.key === 'Enter' || event.key === ' ') &&
-        document.activeElement.tagName === 'BUTTON' && dialog.contains(document.activeElement)) {
-      // GWT also handles document keys. Activate once here and suppress its
-      // native duplicate, including repeated keydown while Space is held.
-      event.preventDefault();
-      if (!event.repeat && !document.activeElement.disabled) document.activeElement.click();
-    } else if (event.key === 'Tab') {
-      var nodes = focusable(), index = nodes.indexOf(document.activeElement);
-      if (!nodes.length) { event.preventDefault(); dialog.focus(); }
-      else if (event.shiftKey && index <= 0) { event.preventDefault(); nodes[nodes.length - 1].focus(); }
-      else if (!event.shiftKey && (index < 0 || index === nodes.length - 1)) { event.preventDefault(); nodes[0].focus(); }
-    }
-    event.stopImmediatePropagation();
-  }, true);
-  ['keypress', 'keyup'].forEach(function (name) {
-    document.addEventListener(name, function (event) { if (window.tsjWorkbenchOverlayOpen) event.stopImmediatePropagation(); }, true);
-  });
-  document.addEventListener('focusin', function (event) {
-    if (window.tsjWorkbenchOverlayOpen && dialog && !dialog.contains(event.target)) focusDialog();
-  }, true);
-  window.addEventListener('blur', function () {
-    // Closing Shop revokes retained acquisition callbacks across lost window focus.
-    if (auxiliary === 'Shop') closeAuxiliary();
-    closeNativeTools();
-  });
-  window.addEventListener('resize', closeNativeTools);
-  window.addEventListener('pagehide', cancelSessionTransport);
+  function installLifecycleListeners() {
+    listen(document, 'keydown', function (event) {
+      if (!window.tsjWorkbenchOverlayOpen) return;
+      if (event.key === 'Escape') {
+        event.preventDefault(); closeAuxiliary(); // Blocking session screens require an explicit action.
+      } else if ((event.key === 'Enter' || event.key === ' ') &&
+          document.activeElement.tagName === 'BUTTON' && dialog.contains(document.activeElement)) {
+        // GWT also handles document keys. Activate once here and suppress its
+        // native duplicate, including repeated keydown while Space is held.
+        event.preventDefault();
+        if (!event.repeat && !document.activeElement.disabled) document.activeElement.click();
+      } else if (event.key === 'Tab') {
+        var nodes = focusable(), index = nodes.indexOf(document.activeElement);
+        if (!nodes.length) { event.preventDefault(); dialog.focus(); }
+        else if (event.shiftKey && index <= 0) { event.preventDefault(); nodes[nodes.length - 1].focus(); }
+        else if (!event.shiftKey && (index < 0 || index === nodes.length - 1)) { event.preventDefault(); nodes[0].focus(); }
+      }
+      event.stopImmediatePropagation();
+    }, true);
+    ['keypress', 'keyup'].forEach(function (name) {
+      listen(document, name, function (event) { if (window.tsjWorkbenchOverlayOpen) event.stopImmediatePropagation(); }, true);
+    });
+    listen(document, 'focusin', function (event) {
+      if (window.tsjWorkbenchOverlayOpen && dialog && !dialog.contains(event.target)) focusDialog();
+    }, true);
+    listen(window, 'blur', function () {
+      // Closing Shop revokes retained acquisition callbacks across lost window focus.
+      if (auxiliary === 'Shop') closeAuxiliary();
+      closeNativeTools();
+    });
+    listen(window, 'resize', closeNativeTools);
+    listen(window, 'pagehide', cancelSessionTransport);
+  }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 }(window, document));

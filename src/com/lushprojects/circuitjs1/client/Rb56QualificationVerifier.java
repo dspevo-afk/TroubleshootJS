@@ -14,7 +14,7 @@ import java.util.Vector;
 /**
  * One cold, private RB56 request through the actual staged coordinator/D01.
  * Catalog enablement, public PlayerSession and save admission stay unchanged.
- * The optional view uses the shared classic workbench with normal labels.
+ * The optional view uses the shared workbench; qualified private PlayerSession adoption is explicit.
  */
 final class Rb56QualificationVerifier {
     static final int BENCH_HOLD_MILLIS = 120000;
@@ -83,7 +83,7 @@ final class Rb56QualificationVerifier {
         final GeneratedBoardInstance predecessor;
         final GeneratedChallengeController predecessorController;
         final Vector<CircuitElm> predecessorGraph;
-        final boolean originalDebug, originalVerifierRunning, forced, keepBench;
+        final boolean originalDebug, originalVerifierRunning, forced, keepBench, modernBench;
         final int benchHoldMillis;
         final JSONObject report = new JSONObject();
         final Timer advanceTimer = new Timer() { public void run() { advance(); } };
@@ -93,6 +93,8 @@ final class Rb56QualificationVerifier {
         GeneratedChallengeController publishedController;
         Vector<CircuitElm> publishedGraph, retirementElements;
         Button endView;
+        PlayerSessionController retainedSession;
+        boolean sessionReleased;
         int proofHitsBefore, proofMissesBefore, planHitsBefore, planMissesBefore, retirementCursor;
         long maxManualUnitMillis, startedAt;
         boolean admitted, retained, finished, cleanupPending, restored, disposed, snapshotAttempted;
@@ -103,6 +105,7 @@ final class Rb56QualificationVerifier {
         Runner(CirSim sim, long seed, Task41SimulationSnapshot snapshot, boolean forced, boolean keepBench) {
             this.sim = sim; this.seed = seed; this.snapshot = snapshot;
             this.forced = forced; this.keepBench = keepBench;
+            modernBench = keepBench && "true".equals(Window.Location.getParameter("tsjRb56PlayerSession"));
             // The explicit debug-only route may retain this same owner for a bounded session.
             benchHoldMillis = keepBench && "true".equals(
                 Window.Location.getParameter("tsjRb56Session")) ? SESSION_BENCH_HOLD_MILLIS : BENCH_HOLD_MILLIS;
@@ -120,7 +123,7 @@ final class Rb56QualificationVerifier {
             sim.developerVerifierRunning = true;
             startedAt = System.currentTimeMillis();
             put(report, "protocol", "TSJ-RB56-QUALIFICATION-1");
-            put(report, "scope", "PRIVATE_SHARED_WORKBENCH");
+            put(report, "scope", modernBench ? "PRIVATE_PLAYER_SESSION" : "PRIVATE_SHARED_WORKBENCH");
             put(report, "family", Rb56Plan.FAMILY_ID);
             put(report, "seed", Long.toString(seed));
             put(report, "sourceEpoch", GenerationDependencyContext.INTERPRETATION_EPOCH);
@@ -270,10 +273,15 @@ final class Rb56QualificationVerifier {
         void retainBench() {
             phase = "HOLD";
             PcbWorkbenchController workbench = sim.pcbWorkbenchController;
-            require(workbench != null && sim.playerSessionController == null, "Actual classic workbench is missing");
-            // Initial debug bootstrap retains the existing sidebar. No new public session/adoption.
+            require(workbench != null && sim.playerSessionController == null, "Actual shared workbench is missing");
             sim.troubleshootDebug = false;
+            if (modernBench) {
+                retainedSession = new PlayerSessionController(sim);
+                sim.playerSessionController = retainedSession;
+                retainedSession.openQualifiedBoard(published);
+            }
             workbench.attachToSidebar(sim.verticalPanel);
+            if (modernBench) workbench.getRenderer().enableTrayDrawer();
             workbench.refresh();
             sim.refreshGeneratedUiForDeveloperVerification();
             workbench.getRenderer().setViewingFace(PcbBoardSide.TOP);
@@ -290,6 +298,7 @@ final class Rb56QualificationVerifier {
             sim.refreshChallengeInteractionState();
             sim.updateCircuit();
             put(report, "holdMillis", benchHoldMillis); put(report, "normalLabels", !sim.troubleshootDebug);
+            put(report, "playerSessionInstalled", retainedSession != null);
             publish("HOLD", "HOLD:rb56");
             holdTimer.schedule(benchHoldMillis);
         }
@@ -304,6 +313,11 @@ final class Rb56QualificationVerifier {
                 GeneratedCustomerRetestResult result = publishedController.getCustomerRetestResult();
                 customerRetestPassed = result != null && result.isPassed();
                 require(customerRetestPassed, "Ordinary customer retest did not pass before view cleanup");
+                if (modernBench)
+                    require(sim.playerSessionController == retainedSession && retainedSession != null &&
+                        retainedSession.session.owner() == published &&
+                        retainedSession.session.screen() == PlayerSession.Screen.RESULTS && publishedController.isCompleted(),
+                        "Qualified player session did not complete its own customer flow");
                 GeneratedRuntimeInvariant.verify(sim, published, sim.getBoardModificationController(), sim.elmList);
             } catch (Throwable problem) { recordFailure(problem); }
             finish();
@@ -360,6 +374,10 @@ final class Rb56QualificationVerifier {
                     require(current || (snapshotAttempted && predecessorCurrent()),
                         "Refusing RB56 cleanup across a successor owner");
                     if (current) {
+                        if (retainedSession != null && !sessionReleased) {
+                            retainedSession.releaseQualification(published);
+                            sessionReleased = true;
+                        }
                         sim.developerVerifierRunning = true;
                         sim.instrumentController.clearTargets();
                         require(!sim.activeMeasurementOverlay && !publishedController.isOperationInProgress(),
@@ -381,6 +399,8 @@ final class Rb56QualificationVerifier {
                         "RB56 published owner retirement is incomplete");
                 } else require(predecessorCurrent(), "Failed RB56 generation did not restore predecessor");
                 if (endView != null) { endView.removeFromParent(); endView = null; }
+                require(retainedSession == null || (sessionReleased && sim.playerSessionController == null),
+                    "Qualified player session still owns the restored presentation");
                 // Task41 does not capture this presentation flag. Restore BEFORE restoring old UI.
                 sim.troubleshootDebug = originalDebug;
                 snapshotAttempted = true;
@@ -408,6 +428,9 @@ final class Rb56QualificationVerifier {
             put(report, "coordinatorReleased", !coordinator.retainsSavedOwnersForDeveloperVerification());
             put(report, "ordinaryCustomerRetestPassed", customerRetestPassed);
             put(report, "cleanupPending", cleanupPending);
+            put(report, "playerSessionReleased", retainedSession == null || sessionReleased);
+            put(report, "playerBridgeReleased", retainedSession == null ||
+                (sessionReleased && retainedSession.isQualificationReleased()));
             put(report, "normalCatalogEnabled", PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID));
             put(report, "wallMillis", System.currentTimeMillis() - startedAt);
             if (failure != null) put(report, "failure", failure.getClass().getSimpleName() + ": " + failure.getMessage());

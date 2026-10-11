@@ -5252,28 +5252,47 @@ native135 source-neutral healthy55 census PASS32.677s retained exact121/131
 raw/criteria/cleanup. Unit specialization was NO_GO from operation counts,
 with source0A unchanged and no speed/admission claim.
 
-The accepted-step E06 initialization and all six strict private full D01 jobs
-remain bound to the published solver checkpoint's source/build35. Its native
-24-case physical-runtime reuse audit, compiled electrical checks and original
-model/fidelity limits retain their recorded scope; those jobs and all 24 physical
-cases were not rerun for the current UI change.
+The accepted-step E06 initialization and six strict private full D01 jobs remain
+bound to the published solver source/build35. Invoked-input reuse audit3 matches
+1,164 consumed physics/generation/D01 inputs, and reversing the audited combined
+CirSim integration changes reproduces build35 bytes exactly. Whole source/WAR
+inventories differ; the six jobs were not rerun, and current 100-owner/96-inventory
+qualification is not claimed. Native physical-runtime reuse, compiled electrical
+checks and model/fidelity limits retain their recorded scope.
 
-`PcbWorkbenchController` now projects four resistor color band names from the
-existing canvas render metadata into the public panel. It adds no original
-numeric-value row, electrical-model change or plan/fault lookup. Only this
-controller changes; 1,169 other source files and the legacy
-ResistanceMeasurementDeveloperVerifier retain their prior bytes. Current native158/build36 pass. Exact
-60-package visible15 uses six public readings to isolate RSA, interprets BROWN,
-BLACK, ORANGE, GOLD as ordinary 10000 Ohm +/-5%, powers off for guarded catalog
-replacement, retains the original loose part and passes ordinary powered customer
-Retest. Its 603-work cold proof and neutral/input/browser/native closure pass.
-Failed visible13/14 remain preserved with the earlier checkpoint.
+`PcbWorkbenchController` exposes four resistor band names from existing canvas
+render metadata without an original numeric-value row or plan/fault lookup.
+`PlayerSession.adoptQualification` now starts a private TICKET from the actual
+qualified retained owner, without inventing a normal launch request, profile or
+replay. `privateQualification` hides and rejects new generation, replay and
+save/load. Ordinary Shop/tray/physical repair and semantic session history retain
+their existing owners. The explicit private modern route starts in the normal
+north dock; native generation handlers refuse replacement while its modern
+controller exists. Normal modern launch still uses the coordinator directly.
 
-Q60 remains unaccepted. Normal catalog/HARD/modern PlayerSession/save-load stay
-held. Next: real Q60 PlayerSession integration, then mixed holdout/endurance.
-The private held-view test (120-second cap) does not establish those qualifications;
-actual modest hardware remains BLOCKED/unavailable. Historical Q30 risks retain
-their recorded scope. No paired speedup or causal performance claim follows.
+The bridge's availability checks the exact current controller, unreleased lease
+and private session/generated-owner identity. End requires completed RESULTS.
+The controller first revokes callbacks, increments its view token and cancels
+the retest watchdog; JavaScript teardown accepts only the exact expected bridge,
+releases its shell/modal/listener/observer/timer/native-panel owners, and leaves
+a successor untouched. Java deletes only that exact global bridge and verifies
+namespace absence. Only successful teardown permits session-token revocation and
+owner release, before verifier graph/UI restoration; failed teardown retains the
+owner for retry. Unmounted teardown also prevents late discovery initialization.
+
+Current native162/build40 and normal167 presentation/lease canary pass. Modern26
+passes ticket Accept, public diagnosis, ordinary four-band stock matching,
+guarded replacement, repaired RESULTS and exact Close restoration. Its catalog
+oracle intentionally follows the accepted unformed-lead policy: each of three
+acquired parts exposes one enabled public RSA target; the first is selected.
+Other guards and budgets remain. Classic22 passes one 317.862 s same-board
+mixed/endurance window with three healthy checkpoints and real Reset/power/source
+changes. Earlier failures and public visible15 retain their original epochs.
+These scoped passes do not enable normal Q60 catalog/HARD or advanced durable
+save/load. Q60 stays unaccepted pending admission/final qualification and actual
+modest hardware, which is BLOCKED; historical Q30 risks remain. Neither resource
+proxies nor these runs establish leak/FPS/p95 thresholds or causal speedup.
+See [current private session evidence](task-evidence/Q60/private-session-mixed60-r1/README.md).
 
 `PcbWorkbenchController` tracks the last detachment-readiness value used to
 build its controls. The existing same-owner, settled `CirSim` update checks it
