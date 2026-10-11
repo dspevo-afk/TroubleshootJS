@@ -1,4 +1,50 @@
-# Current checkpoint: Q60 routing change validated; original60 deadline remains
+# Current checkpoint: Q60 idle settlement validated; original60 deadline remains
+
+2026-10-11. Scoped source changes over published
+`16527de548874582bf412fb90c09fe2b038e7ab3` on
+`codex/q60-faulted-profile-counts` avoid an extra update at an already satisfied
+exact-owner READY boundary, only with instrument NONE and no queued acquisition.
+Original fallback/work-scope checks, both independent 13-unit REPAIR programs,
+9-unit FAULTED, numerical/model cadence and 90 s / 640 work / 5 s remain unchanged.
+U06/U07/E05/E06 remain published. **Q60 IN PROGRESS / UNACCEPTED.**
+
+| Final-source gate | Actual result |
+| --- | --- |
+| Native152 | PASS D01 168 / A10 190; 24.810 s |
+| Actual JDK8/GWT build32 | PASS five permutations/linking; 86.928 s |
+| Current Edge155 compiled146 | PASS pure 306,503; runtime 103/26; models 59/21; scale 16; Task41 failure/recovery |
+| Original60/-1022 compiled147 | FAIL TIMEOUT/HYPOTHESES: 90,015 ms / 519 work; native 96.927 s |
+| Original40/-1017 compiled148 | PASS full D01: 5 hypotheses/55 samples/516 work/27,245 ms; native 33.960 s |
+
+Three added real LED fixtures independently check repeated idle entry, pending
+analysis, queued DC acquisition/duplicate drain and exact protected-state restore.
+Original 23 cases remain. All final frozen/actual input hashes and application,
+browser/listener/observer/native closure PASS; no host timeout. Original60 final
+phase RESTORED; HYPOTHESES 61,735 ms/418 work/max1,618 ms. Actual 1,170 source / 392 web
+inventories remain unchanged; frozen146/147/148 have 1,829/1,837/1,847 inputs.
+Native151/build31 PASS precede the fixture-only frame witness correction;
+original40 preparation's missing metadata-reader binding failed before launch,
+then identical recorded bytes were explicitly frozen without a reroll.
+Eight original untracked files remain byte-identical. Root actual-result/diff
+review and independent static guard/fixture review found no remaining blocker
+for this bounded work deletion. No end-to-end speedup is established.
+
+**Next:** continue Q60 proof-cost diagnosis at a materially larger measured
+boundary. Geometry-validation coalescing is NO_GO on current evidence: fresh
+hypotheses already copy sealed layout, its measured category is subsecond and a
+one-line deletion changes typed rejection ordering. No edit/test/rerun followed.
+Normal RB56/HARD/save-load held; exact60 visible/session NOT RUN; actual modest
+hardware BLOCKED/unavailable; REL-B/Q100 unstarted. Complete changed-source six-case
+acceptance is unproved. Prior Q30 BAAB PASS, original 121-124 INCOMPLETE, separate 126,
+original 91.616 s unknown failure, six missing inventories and late BLOCKED audit
+remain. No unchanged Q30 cold/warm, unrelated process action, Core/Android change,
+C4130/server access, main merge or email.
+
+[Actual settlement results and limitations](task-evidence/Q60/settlement-fastpath-r1/README.md).
+
+---
+
+# Historical checkpoint: Q60 routing change validated; original60 deadline remains
 
 2026-10-11. Two scoped routing edits over published HEAD
 `776f55cc9b5f66ba86d3247e60de5cc638162cc1` on

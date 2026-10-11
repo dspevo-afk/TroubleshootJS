@@ -1,0 +1,653 @@
+{
+  "schema": 1,
+  "status": "SETTLEMENT_BEHAVIOR_VALIDATED_Q60_UNACCEPTED",
+  "date": "2026-10-11",
+  "baseCommit": "16527de548874582bf412fb90c09fe2b038e7ab3",
+  "branch": "codex/q60-faulted-profile-counts",
+  "change": "Return from satisfied exact-owner READY settlement after work-scope check only when authoritative runtime is settled and instrument NONE owes no deferred acquisition; original fallback unchanged.",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java": {
+      "afterRawSha256": "3366bc541a492bb13a90e512f3d340e19881c31181c52822792c6dca16182eb1",
+      "beforeGitBlobSha256": "7e6963a9224b2847bdcc5060b6adc35870be7e7f6c7e1bfa85164143af5f8df8"
+    },
+    "src/com/lushprojects/circuitjs1/client/InstrumentController.java": {
+      "afterRawSha256": "e4b851b918ef263777badd47121ea7d2bd32dd221d1ba7e8290eb474bd705475",
+      "beforeGitBlobSha256": "3772915a543526f37821e969e2f7ee80348cf0c8dfa760d40750952c225696d5"
+    },
+    "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java": {
+      "afterRawSha256": "618aa38946c91fe76d05a3252c7101014f0eba4fe70c50edc11964ecf577d106",
+      "beforeGitBlobSha256": "425954eb128fe25b182276af89217425ccc98048b047fe27abad0df715cbe2c9"
+    }
+  },
+  "gates": {
+    "native-r151": {
+      "status": "PASS",
+      "elapsedMs": 27258,
+      "sourceInputCount": 1353,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS",
+      "assertions": {
+        "D01": 168,
+        "A10": 190
+      }
+    },
+    "build-r31": {
+      "status": "PASS",
+      "elapsedMs": 89012,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS"
+    },
+    "native-r152": {
+      "status": "PASS",
+      "elapsedMs": 24810,
+      "sourceInputCount": 1353,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS",
+      "assertions": {
+        "D01": 168,
+        "A10": 190
+      }
+    },
+    "build-r32": {
+      "status": "PASS",
+      "elapsedMs": 86928,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS"
+    },
+    "compiled-r146": {
+      "status": "PASS",
+      "elapsedMs": 8469,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS",
+      "frozenInputCount": 1829,
+      "actualRecordedInputCount": 1830,
+      "actualBindingsRehashed": "PASS",
+      "bindingManifestSha256": "45e131a1d87f4085a8cf6df6903cb8d91e81251a72141a6fbd3ed323718d8525",
+      "pageConsoleTransportErrors": "NONE",
+      "positiveReport": {
+        "status": "PASS",
+        "pureAssertions": 306503,
+        "runtimeAssertions": 103,
+        "runtimeCases": 26,
+        "modelAssertions": 59,
+        "modelRows": 21,
+        "scaleRows": 16,
+        "cleanup": "PASS",
+        "injectedTask41CleanupFailureAndRecovery": true
+      },
+      "earlyForcedTerminal": {
+        "status": "PASS",
+        "state": "FAIL:a07:a07-explicit-failure-canary",
+        "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+        "applicationFailureReportClaimed": false,
+        "task41FailureClaimed": false
+      },
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      }
+    },
+    "compiled-r147": {
+      "status": "FAIL",
+      "elapsedMs": 96927,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS",
+      "frozenInputCount": 1837,
+      "actualRecordedInputCount": 1839,
+      "actualBindingsRehashed": "PASS",
+      "bindingManifestSha256": "d8b5579cf1eb886f640e92c5a87711cf07f4313d9377960f5e45760a902d9db6",
+      "pageConsoleTransportErrors": "NONE",
+      "qualificationStatus": "FAIL",
+      "applicationReport": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "failurePhase": "COLD_GENERATION",
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "jobWork": 519,
+        "jobMillis": 90015,
+        "manualUnitMaxMillis": 1618,
+        "routingMillis": 0,
+        "proofMillis": 0,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 25602,
+          "PHYSICAL": 126,
+          "HYPOTHESES": 61735,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 99,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 418,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 899,
+            "maxMillis": 189
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 65,
+            "millis": 15014,
+            "maxMillis": 1430
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 40,
+            "millis": 8126,
+            "maxMillis": 1399
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 4,
+            "millis": 367,
+            "maxMillis": 97
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 4,
+            "millis": 0,
+            "maxMillis": 0
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 48,
+            "millis": 617,
+            "maxMillis": 20
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 4,
+            "millis": 206,
+            "maxMillis": 59
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 4,
+            "millis": 314,
+            "maxMillis": 80
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 120,
+            "millis": 7806,
+            "maxMillis": 208
+          },
+          "REMOVE_SETTLE": {
+            "units": 4,
+            "millis": 483,
+            "maxMillis": 123
+          },
+          "REPLACE_SETTLE": {
+            "units": 4,
+            "millis": 476,
+            "maxMillis": 122
+          },
+          "POWER_ON_SETTLE": {
+            "units": 4,
+            "millis": 297,
+            "maxMillis": 77
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 52,
+            "millis": 15602,
+            "maxMillis": 1387
+          },
+          "CUSTOMER_RETEST": {
+            "units": 52,
+            "millis": 11284,
+            "maxMillis": 1418
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 4,
+            "millis": 55,
+            "maxMillis": 15
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 4,
+            "millis": 162,
+            "maxMillis": 48
+          }
+        },
+        "qualifiedPublication": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "wallMillis": 90055,
+        "failure": "Deadline: Generation wall budget exhausted"
+      },
+      "caseOperationSeconds": 90.93008959997678,
+      "inputInventory": {
+        "fileCount": 1562,
+        "sourceFileCount": 1170,
+        "webFileCount": 392,
+        "sha256": "e693114a224badd6de51c9a657b5c412e0133e6b0768525893f7ccefe182e301",
+        "sourceSha256": "143ed5565805beaab885b45a7935e4161f018c2aca7d48b1ed87db15c1b255cb",
+        "webSha256": "2db5257d52cfd56187ed2982f02823f8e2d3d4f4d9a45e7424aca249b9e998bc"
+      },
+      "hostCleanupStatus": "PASS",
+      "applicationCleanupStatus": "PASS",
+      "completedBoundaryStatus": "PASS",
+      "playerInputEvidence": false,
+      "profilingEnabled": false,
+      "limits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000,
+        "hostObservationSeconds": 120,
+        "nativeOuterSeconds": 300
+      },
+      "errors": [
+        {
+          "message": "Original positive qualification FAIL remains FAIL"
+        }
+      ],
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      },
+      "cpuObserver": {
+        "status": "PASS",
+        "sampleCount": 49,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 7197,
+        "processHandlesClosed": 7197,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      }
+    },
+    "compiled-r148": {
+      "status": "PASS",
+      "elapsedMs": 33960,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "nativeOwnedClosure": "PASS",
+      "logStreamsClosed": "PASS",
+      "frozenInputCount": 1847,
+      "actualRecordedInputCount": 1848,
+      "actualBindingsRehashed": "PASS",
+      "bindingManifestSha256": "ea0a3ba096f9ccbed7cf95e304c72d00b625ef760c70ec7e83a651fb706158ea",
+      "pageConsoleTransportErrors": "NONE",
+      "qualificationStatus": "PASS",
+      "applicationReport": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1017",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27245,
+        "maxManualUnitMillis": 1161,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "2178cf2d4139014b00b0a0d7be69efbb626d7c2d11e845ec151d12bfe35d1d4a",
+        "diagnosticContextDigest": "fb5fabce325a1a1c1c6f68831eacce7b2a5f6e0acd8549acf946965ab0d7293f",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "wallMillis": 27432
+      },
+      "caseOperationSeconds": 28.24249440000858,
+      "inputInventory": {
+        "fileCount": 1562,
+        "sourceFileCount": 1170,
+        "webFileCount": 392,
+        "sha256": "e693114a224badd6de51c9a657b5c412e0133e6b0768525893f7ccefe182e301",
+        "sourceSha256": "143ed5565805beaab885b45a7935e4161f018c2aca7d48b1ed87db15c1b255cb",
+        "webSha256": "2db5257d52cfd56187ed2982f02823f8e2d3d4f4d9a45e7424aca249b9e998bc"
+      },
+      "hostCleanupStatus": "PASS",
+      "applicationCleanupStatus": "PASS",
+      "completedBoundaryStatus": "PASS",
+      "playerInputEvidence": false,
+      "profilingEnabled": false,
+      "limits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000,
+        "hostObservationSeconds": 120,
+        "nativeOuterSeconds": 300
+      },
+      "errors": [],
+      "semanticReport": {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "-1017",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27245,
+        "maxManualUnitMillis": 1161,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda"
+      },
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      },
+      "cpuObserver": {
+        "status": "PASS",
+        "sampleCount": 18,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 2599,
+        "processHandlesClosed": 2599,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      }
+    }
+  },
+  "artifactDigests": {
+    "native-r151-result.json": {
+      "sha256": "c3ea1dcdd4728e6be30d2eba712041fa06921d737c308b5165be4090ef24bf56",
+      "bytes": 1855
+    },
+    "native-r151-launch.json": {
+      "sha256": "173bc0e5e136ab7066c533533fe5e7342dad7fa5afcf6e42f251ff28b92ad62e",
+      "bytes": 187836
+    },
+    "owned-native-r151/host-result.json": {
+      "sha256": "4e2aa9561075ee14761eb7114578cdfb662b86d8f1ea07ad8121e5647def5ad1",
+      "bytes": 1241
+    },
+    "owned-native-r151/stdout.log": {
+      "sha256": "cc20716348eac329dc307d880692df38141cfb83a9c8ac092217de98fc19450d",
+      "bytes": 290
+    },
+    "owned-native-r151/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build-r31-result.json": {
+      "sha256": "4db8f356060416bc9d15b4d898447018f1ae4027932dee40f5c8f19fafb9d8f5",
+      "bytes": 2055
+    },
+    "build-r31-launch.json": {
+      "sha256": "56532c89b14994d67ede5c63b9fdc846ee390428317865f3ca954cb779033c25",
+      "bytes": 171614
+    },
+    "owned-build-r31/host-result.json": {
+      "sha256": "f1948b9dfa545417c03f15ec9c728aea4bd9a4e42c56a5cc7a3e5bf181ef3b0c",
+      "bytes": 1395
+    },
+    "owned-build-r31/stdout.log": {
+      "sha256": "3692f4c9e2cb362c0cd7e5e4da3b6562cdf009ce5ed6160341d1567ac4ae2836",
+      "bytes": 1259
+    },
+    "owned-build-r31/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "native-r152-result.json": {
+      "sha256": "79f6d0b0599f14717e9fbaa164c7aa44b4acbf6eb844b3f28ad6ce26c587530b",
+      "bytes": 1855
+    },
+    "native-r152-launch.json": {
+      "sha256": "480f193dbb3ddcb5e8850fcf3b41305f7e207ec73b977aba3dd2a1f2a02063d3",
+      "bytes": 187838
+    },
+    "owned-native-r152/host-result.json": {
+      "sha256": "e2e6638f15e9cd0072a9bf18ebfd4601343ea61ff320c93504c4895de757564f",
+      "bytes": 1241
+    },
+    "owned-native-r152/stdout.log": {
+      "sha256": "cc20716348eac329dc307d880692df38141cfb83a9c8ac092217de98fc19450d",
+      "bytes": 290
+    },
+    "owned-native-r152/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build-r32-result.json": {
+      "sha256": "d8e5675b5b686cd5e3d14d7d494fbe50b9243e7bc70b4af59214eccc62f748ce",
+      "bytes": 2055
+    },
+    "build-r32-launch.json": {
+      "sha256": "24bba8dd273146398902b73ac400511cde525f7b5da5b4a50c29551649c0b75e",
+      "bytes": 171622
+    },
+    "owned-build-r32/host-result.json": {
+      "sha256": "ddaa017dc1b838e6e31a3ac0b6555f2f2f9e4a512433371f0e965466ed0150ac",
+      "bytes": 1395
+    },
+    "owned-build-r32/stdout.log": {
+      "sha256": "3065e690070fd019c5d54b67e354b84da3199e1436414240645ad5a6c783b311",
+      "bytes": 1259
+    },
+    "owned-build-r32/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "compiled-r146-result.json": {
+      "sha256": "18240b0a1f718a6725a1dc11d9485d4b9adfc5076f97261c46d59dea94c1b250",
+      "bytes": 1816
+    },
+    "compiled-r146-launch.json": {
+      "sha256": "fa0fedddc47ac5a502c214f5e1ca93e2d7693c3192d8b1a0fa9b2b8aca0147c7",
+      "bytes": 171391
+    },
+    "owned-compiled-r146/host-result.json": {
+      "sha256": "81da62b9c8e96645c24d8b312b64a7540c633d3772c23c8bff824c7d21b8e34b",
+      "bytes": 1224
+    },
+    "owned-compiled-r146/stdout.log": {
+      "sha256": "67dbe79f451a4ef725044fc1d2e23bdbfc432263b31f250db394263c48af7633",
+      "bytes": 388916
+    },
+    "owned-compiled-r146/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "compiled-r147-result.json": {
+      "sha256": "63ea21fe5e67149e77c87f8ed3cc0edfe38c783067b11d99c1a79a11be10b0f2",
+      "bytes": 1812
+    },
+    "compiled-r147-launch.json": {
+      "sha256": "ed90650a5d769481548b00fc6ae78ec4db8ea144463e7292f47c53b8f85015c6",
+      "bytes": 171391
+    },
+    "owned-compiled-r147/host-result.json": {
+      "sha256": "e504a78d11ce829ce1361c44f1b92551ddd49f0e19ed853f252208729f8bc68e",
+      "bytes": 1220
+    },
+    "owned-compiled-r147/stdout.log": {
+      "sha256": "d7eb3807bd25a7aed2ef4dabdd907f0f951b48ce8c4be588db262e613a480486",
+      "bytes": 260
+    },
+    "owned-compiled-r147/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "compiled-r148-result.json": {
+      "sha256": "043ca10a65bc5884fe85df4fa62324704887266357906a765cbbb31395d69ad2",
+      "bytes": 1814
+    },
+    "compiled-r148-launch.json": {
+      "sha256": "a88c02229ba9de70343ab9025f17fb6d846853deb9e9401c4d54e0fc59fae465",
+      "bytes": 171393
+    },
+    "owned-compiled-r148/host-result.json": {
+      "sha256": "1302d18a498385667d216cd1a8e6d8255863fb4f245d8f78e02be7321f6880f6",
+      "bytes": 1222
+    },
+    "owned-compiled-r148/stdout.log": {
+      "sha256": "875688ab848e1e202e67cf543cffb7dd2795ed7e0570d18c155ec5fe7dfc5ab6",
+      "bytes": 261
+    },
+    "owned-compiled-r148/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "native-r151-full-output.log": {
+      "sha256": "cb95027f118fb3e2385232ec508abde3bcc52bf42bd7e248e881912eb04c757b",
+      "bytes": 784
+    },
+    "native-r151-receipt.json": {
+      "sha256": "b83cab938ab5b31abfcbb2c7a60d1b944a2b86058bf38f208b950aec7f1886a7",
+      "bytes": 96
+    },
+    "native-r152-full-output.log": {
+      "sha256": "cb95027f118fb3e2385232ec508abde3bcc52bf42bd7e248e881912eb04c757b",
+      "bytes": 784
+    },
+    "native-r152-receipt.json": {
+      "sha256": "b83cab938ab5b31abfcbb2c7a60d1b944a2b86058bf38f208b950aec7f1886a7",
+      "bytes": 96
+    },
+    "settlement-fastpath-current-contracts-r146/strict-result.json": {
+      "sha256": "aed14064dc6b226a2366d4ce3e298639cd3ea16bde9f4482ea812898ace37734",
+      "bytes": 398102
+    },
+    "settlement-fastpath-current-contracts-r146/result.json": {
+      "sha256": "d5a7dfd5ae7bbe6465e39fe7eacd4244aa6aa0f28e78b7a5e525319fcd739cb9",
+      "bytes": 8519
+    },
+    "settlement-fastpath-current-contracts-r146/cases/001-q30-wire-array-a07-positive.report.json": {
+      "sha256": "19e45d95d18df918a8b99d0e5cb064178d3e6e07fae08952682436a42602d0ad",
+      "bytes": 81100
+    },
+    "settlement-fastpath-current-contracts-r146/current-browser-readback.json": {
+      "sha256": "c048e97b4faae873de3d5b753ad8759aafbd70907b19e7b4236fd6f2262a5ae2",
+      "bytes": 381
+    },
+    "rb56-60-settlement-fastpath-normal-r147/strict-result.json": {
+      "sha256": "5fa163ea59444dec8bec8552c2f0ecf133b6536bcd09e4f21caffae66aa048b3",
+      "bytes": 403701
+    },
+    "rb56-60-settlement-fastpath-normal-r147/host/result.json": {
+      "sha256": "c3dab26858a04f97d3e1f9c4ab629200f26ea77a9338e2c135b7017d5b225007",
+      "bytes": 6097
+    },
+    "rb56-60-settlement-fastpath-normal-r147/current-browser-and-cpu.json": {
+      "sha256": "a01f310bcd925c149d9e475908fa9c184b17726a786831ae934dbce4f3b714eb",
+      "bytes": 1191
+    },
+    "rb56-40-settlement-fastpath-normal-r148/strict-result.json": {
+      "sha256": "36994a8c6617790a2c0d41b65137c96d0fe31d9b89efe5d2053b228b1c9578cd",
+      "bytes": 404052
+    },
+    "rb56-40-settlement-fastpath-normal-r148/host/result.json": {
+      "sha256": "1f9536b6ed99a311fc76642c57abbe3fdc3e5905fbdcb76f6b7754f9fa1b1803",
+      "bytes": 6024
+    },
+    "rb56-40-settlement-fastpath-normal-r148/current-browser-and-cpu.json": {
+      "sha256": "7debd66c78c6510ae86cfd2887fbcc5d25c0eb1c912c94087c2067bf40f2060c",
+      "bytes": 1186
+    }
+  },
+  "preparationFailure148": {
+    "status": "FAIL_BEFORE_LAUNCH",
+    "phase": "compiled-r148",
+    "reason": "Previous147 actual bindings differ",
+    "actualMissingFrozenBinding": "holdout-recommendation/derive_metadata.py",
+    "recordedAndCurrentSha256": "fe175fe9b2db38588fbbf404c2742218a471c83d14dafdab78de1b269794d87d",
+    "originalPreparedControlPreservedSha256": "37caf30e5533513dc62bc84a5713f68fca85b905b2e35e8e250b7945997921eb",
+    "fix": "Explicitly freeze identical completed147 runtime metadata reader; prior frozen controls remain immutable",
+    "gateLaunches": 0
+  },
+  "limits": {
+    "jobMillis": 90000,
+    "sharedWork": 640,
+    "activeOperationMillis": 5000
+  },
+  "preserved": [
+    "Eight original untracked files byte-exact",
+    "Both independent REPAIR13 programs and FAULTED9",
+    "Numerical baseline/model cadence/seeds/oracles",
+    "All prior failures and Q30 unknown failure/missing inventories/late audit"
+  ],
+  "interpretation": "Real compiled fixtures establish redundant idle work removal. Original60 remains deadline FAIL; original40 fullD01 PASS. No end-to-end speedup, complete changed-source six-case acceptance, reliability, player-flow or modest-machine claim.",
+  "review": {
+    "root": "Actual integrated diff, native/build logs and receipts, every final compiled frozen and actual binding digest, strict oracles/resources and original8.",
+    "independent": "Static guard/API/fixture/restoration review; no timed rerun.",
+    "frameWitness": "Negative frame sentinel proves no normally completed update or accepted step despite counter rollover. Actual page/console error arrays were empty; no dedicated invocation counter was added."
+  },
+  "remaining": {
+    "Q60": "IN_PROGRESS_UNACCEPTED",
+    "normalRB56_HARD_save_load": "HELD",
+    "exact60_visible_session": "NOT_RUN",
+    "actualModestHardware": "BLOCKED_UNAVAILABLE",
+    "REL_B_Q100": "UNSTARTED"
+  },
+  "next": "Continue Q60 repeated-work cost diagnosis with fresh electrical owners and both independent repair proofs preserved.",
+  "rejectedNextHypothesis": {
+    "status": "NO_GO_IMPLEMENTATION_CURRENT_EVIDENCE",
+    "scope": "Static repeat-geometry validation coalescing review using retained143 mapped profile; no source edit/test/rerun",
+    "alreadyImplemented": "Fresh electrical candidate plus layout.copySealed; hypotheses do not reroute",
+    "profile143WholeCaseMillis": {
+      "validateGeometryInclusive": 639.354,
+      "assembleInclusive": 666.838,
+      "geometryValidationUnion": 769.458
+    },
+    "limitation": "Whole-case inclusive values overlap, not HYPOTHESES-only. One-line early validation deletion changes malformed-geometry rejection ordering/type before fingerprint admission; added trusted receipt/overload unjustified by measured subsecond category."
+  }
+}

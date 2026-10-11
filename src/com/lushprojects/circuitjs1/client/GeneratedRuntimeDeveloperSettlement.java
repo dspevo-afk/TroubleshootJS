@@ -114,6 +114,16 @@ final class GeneratedRuntimeDeveloperSettlement {
     static void settle(CirSim sim, GeneratedBoardInstance expectedOwner, String label) {
         if (sim == null)
             throw new IllegalArgumentException("Cannot settle a null simulator: " + label);
+        GenerationWorkScope.check();
+        GeneratedChallengeController current = sim.getGeneratedChallengeController();
+        // A satisfied boundary needs no extra UI frame or incidental live solver advance.
+        // Active or queued meter work must retain the ordinary callback/drain path.
+        if (expectedOwner != null && sim.getGeneratedBoardInstance() == expectedOwner &&
+                current != null && current.getInstanceForRuntimeValidation() == expectedOwner &&
+                current.isReady() && sim.isGeneratedRuntimeSettled() &&
+                sim.instrumentController != null &&
+                sim.instrumentController.isIdleForGeneratedSettlement())
+            return;
         boolean wasRunning = sim.simIsRunning();
         if (!wasRunning)
             sim.setSimRunning(true);

@@ -30,6 +30,7 @@ final class A07SolverDeveloperVerifier {
         pureAssertions = A07ExecutionContractVectors.run();
         pureAssertions += LuFactorizationChecks.run();
         observations();
+        settlementBoundaries();
         reentryAndIsolation();
         failure("nonfinite", Outcome.NUMERICAL_FAILURE);
         failure("matrix-nonfinite", Outcome.NUMERICAL_FAILURE, false);
@@ -76,6 +77,155 @@ final class A07SolverDeveloperVerifier {
         require(sim.solverExecutor.observation(owner) != null, "source change needs a real subsequent solve");
         record("accepted-state-source-and-time-identity");
     }
+    private void settlementBoundaries() {
+        final GeneratedBoardInstance original = sim.getGeneratedBoardInstance();
+        final GeneratedChallengeController originalChallenge = sim.getGeneratedChallengeController();
+        require(original != null && originalChallenge != null && originalChallenge.isReady() &&
+                sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
+                !sim.a01MeasurementRunning,
+            "settlement fixture starts from the real ready A07 owner outside A01 measurement");
+        final Task41SimulationSnapshot snapshot = Task41SimulationSnapshot.capture(sim);
+        final String protectedDump = sim.dumpCircuit();
+        final Vector<CircuitElm> protectedGraph = sim.elmList;
+        final boolean originalQuickPlayActive = sim.quickPlayActive;
+        final QuickPlaySession originalQuickPlaySession = sim.quickPlaySession;
+        final int originalAnalysisCount = sim.analysisCountForDeveloperVerification;
+        final int originalVerificationCount = sim.generatedVerificationCountForDeveloperVerification;
+        final GeneratedBoardInstance owner = QuickPlayFamilyRegistry.generate(
+            QuickPlayFamilyRegistry.LED_INDICATOR, 3);
+        FreshGeneratedRuntimeInstallation.requireDisjoint(original, owner);
+        final Vector<CircuitElm> privateGraph = new Vector<CircuitElm>();
+        try {
+            snapshot.beginProof(sim);
+            sim.setSimRunning(false);
+            sim.generatedRuntimeInstallationInProgress = true;
+            original.getExternalPowerBindings().setConnected(false);
+            sim.elmList = privateGraph;
+            sim.adjustables = new Vector<Adjustable>();
+            sim.undoStack = new Vector<String>();
+            sim.redoStack = new Vector<String>();
+            sim.scopes = new Scope[20]; sim.scopeColCount = new int[20]; sim.scopeCount = 0;
+            sim.dragElm = null; sim.menuElm = null; sim.heldSwitchElm = null;
+            sim.installGeneratedChallengeForDeveloperVerification(owner);
+            sim.generatedRuntimeInstallationInProgress = false;
+            GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a07-settlement-fixture-install");
+            final GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+            final InstrumentController meter = sim.instrumentController;
+            meter.exitInstrumentModeForDeveloperVerification();
+            // Establish an actual accepted observation independently of the fast-path predicate.
+            sim.solverExecutor.advanceSteps(1);
+            require(sim.getGeneratedBoardInstance() == owner && sim.elmList == privateGraph &&
+                    challenge != null && challenge.getInstanceForRuntimeValidation() == owner &&
+                    challenge.isReady() && sim.isGeneratedRuntimeSettled() &&
+                    meter.isIdleForGeneratedSettlement() &&
+                    original.getExternalPowerBindings().areAllDisconnected(),
+                "isolated real LED fixture has completed ordinary installation");
+
+            // A real update increments frames even when the wall-clock solver throttle
+            // performs no accepted solve. This makes the no-update assertion meaningful.
+            for (int mode = 0; mode < 2; mode++) {
+                boolean running = mode == 1;
+                sim.setSimRunning(running);
+                // A negative fixture sentinel cannot match a completed frame after rollover.
+                sim.frames = -1;
+                Observation before = sim.solverExecutor.observation(owner);
+                require(before != null, "idle settlement has a real accepted LED observation");
+                long timeBits = Double.doubleToLongBits(sim.t);
+                int frames = sim.frames;
+                String modelDump = sim.dumpCircuit();
+                GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a07-settlement-idle-first");
+                GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a07-settlement-idle-repeat");
+                Observation after = sim.solverExecutor.observation(owner);
+                require(Double.doubleToLongBits(sim.t) == timeBits && after == before &&
+                        after.acceptedStep == before.acceptedStep && sim.frames == frames,
+                    "repeated idle settlement performs no UI update or accepted solver step");
+                require(modelDump.equals(sim.dumpCircuit()),
+                    "repeated idle settlement preserves the real model dump");
+                require(sim.simIsRunning() == running && sim.getGeneratedBoardInstance() == owner &&
+                        sim.getGeneratedChallengeController() == challenge && challenge.isReady() &&
+                        sim.isGeneratedRuntimeSettled() && meter.isIdleForGeneratedSettlement(),
+                    "idle settlement preserves running state and exact ready owner");
+            }
+            record("real-settlement-idle-repeat-no-work");
+
+            sim.setSimRunning(false);
+            int analyses = sim.getAnalysisCountForDeveloperVerification();
+            sim.needAnalyze();
+            require(sim.analyzeFlag && !sim.isGeneratedRuntimeSettled(),
+                "real pending analysis excludes the idle settlement entry");
+            GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a07-settlement-analysis-fallback");
+            require(sim.getAnalysisCountForDeveloperVerification() > analyses &&
+                    !sim.analyzeFlag && !sim.dcAnalysisFlag &&
+                    sim.isGeneratedRuntimeSettled(),
+                "pending analysis runs the ordinary update and completes actual analysis");
+            require(!sim.simIsRunning() && sim.getGeneratedBoardInstance() == owner &&
+                    sim.getGeneratedChallengeController() == challenge && challenge.isReady(),
+                "analysis fallback restores pause and retains the real owner");
+            record("real-settlement-pending-analysis-fallback");
+
+            // Same real LED resistor probe API used by Task43PRuntimeCallbackDeveloperVerifier.
+            CircuitElm resistor = owner.getComponentBindings().getSingleElement("R1");
+            CircuitPostProbeTarget red = new CircuitPostProbeTarget(sim, resistor, 0);
+            CircuitPostProbeTarget black = new CircuitPostProbeTarget(sim, resistor, 1);
+            require(red.isValid() && black.isValid(), "real LED resistor probes belong to the installed graph");
+            meter.setDcVoltageProbesForDeveloperVerification(red, black);
+            double initialVoltage = meter.getLatestDcVoltageForDeveloperVerification();
+            require(meter.getDcVoltageMeasurementCountForDeveloperVerification() > 0 &&
+                    !Double.isNaN(initialVoltage) && !Double.isInfinite(initialVoltage) &&
+                    !sim.activeMeasurementOverlay && sim.isGeneratedRuntimeSettled(),
+                "real DC measurement finishes its finite-load transaction");
+            int measuredBefore = meter.getDcVoltageMeasurementCountForDeveloperVerification();
+            meter.refreshActiveMeasurement();
+            // Production callback queues the real active strategy, without measuring inline.
+            meter.onSimulationStepComplete(false);
+            require(meter.getActiveModeForDeveloperVerification() == 1 &&
+                    !meter.isIdleForGeneratedSettlement() && sim.isGeneratedRuntimeSettled() &&
+                    meter.getDcVoltageMeasurementCountForDeveloperVerification() == measuredBefore,
+                "active DC refresh remains queued outside the solver callback");
+            GeneratedRuntimeDeveloperSettlement.settle(sim, owner, "a07-settlement-meter-fallback");
+            int measuredAfter = meter.getDcVoltageMeasurementCountForDeveloperVerification();
+            double voltage = meter.getLatestDcVoltageForDeveloperVerification();
+            require(measuredAfter > measuredBefore &&
+                    !Double.isNaN(voltage) && !Double.isInfinite(voltage),
+                "active queued DC measurement is drained by the ordinary update");
+            meter.completeDeferredMeasurementUpdateAfterSolverStep();
+            require(meter.getDcVoltageMeasurementCountForDeveloperVerification() == measuredAfter,
+                "a second synchronous drain does not repeat the completed DC acquisition");
+            require(!sim.simIsRunning() && !sim.activeMeasurementOverlay &&
+                    sim.pendingBoardPowerState == null && sim.isGeneratedRuntimeSettled() &&
+                    sim.getGeneratedBoardInstance() == owner &&
+                    sim.getGeneratedChallengeController() == challenge && challenge.isReady(),
+                "meter fallback releases measurement ownership and restores pause");
+            record("real-settlement-active-queued-dc-fallback");
+        } finally {
+            try {
+                // Invalidate any scheduled meter callback before restoring the protected graph.
+                sim.instrumentController.exitInstrumentModeForDeveloperVerification();
+                sim.invalidateGeneratedOwnerWork();
+                owner.getExternalPowerBindings().setConnected(false);
+            } finally {
+                sim.quickPlayActive = originalQuickPlayActive;
+                sim.quickPlaySession = originalQuickPlaySession;
+                try {
+                    snapshot.restore(sim);
+                    snapshot.assertRestored(sim);
+                    for (CircuitElm element : owner.getSimulationElements()) {
+                        if (sim.elmList.contains(element) || original.getSimulationElements().contains(element))
+                            throw new IllegalStateException("Settlement fixture cannot delete a protected element");
+                        element.delete();
+                    }
+                    require(sim.getGeneratedBoardInstance() == original &&
+                            sim.getGeneratedChallengeController() == originalChallenge &&
+                            sim.elmList == protectedGraph && protectedDump.equals(sim.dumpCircuit()),
+                        "settlement fixture restores the exact protected owner and model dump");
+                } finally {
+                    sim.analysisCountForDeveloperVerification = originalAnalysisCount;
+                    sim.generatedVerificationCountForDeveloperVerification = originalVerificationCount;
+                }
+            }
+        }
+    }
+
     private void reentryAndIsolation() {
         Task41SimulationSnapshot before = Task41SimulationSnapshot.capture(sim);
         String protectedDump = sim.dumpCircuit();

@@ -412,6 +412,12 @@ class InstrumentController {
         return dcVoltageDisplayChangeCount;
     }
 
+    /** Settlement may omit an idle frame only when no meter callback is owed. */
+    boolean isIdleForGeneratedSettlement() {
+        return activeStrategy != null && "NONE".equals(activeStrategy.getId()) &&
+            !deferredMeasurementUpdateQueued;
+    }
+
     boolean isResistanceRefreshPendingForDeveloperVerification() {
         return getModeState("RESISTANCE").isRefreshPending();
     }
