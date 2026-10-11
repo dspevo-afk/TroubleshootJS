@@ -91,7 +91,10 @@ human qualification follows. Modest-host remains deferred by owner.
 REL-B must then qualify normal population/retry/determinism/diversity and every
 advertised advanced source/repair/instrument/catalog/save/replay state. Typed
 restart foundations exist, but actual RB56 capture/load is not yet qualified.
-REL-B/Q100 remain UNSTARTED; no public beta is released by this admission.
+REL-B independent preparation is now IN PROGRESS with a build/support manifest
+and verified human launch; advanced durable round-trip and normal population
+remain pending. Q100 is UNSTARTED; no public beta is released by this admission.
+[Independent preparation and next slice](../../REL-B/preparation-r1/README.md).
 
 ## Preservation
 

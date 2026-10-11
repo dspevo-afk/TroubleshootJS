@@ -4,7 +4,11 @@
 captures](q60-calibration-features-r1/README.md) pass final native/GWT/compiled
 gates. All six cases have two certified-set readings and 19/20-action executed
 witnesses. No HARD rule/profile has been frozen; actual human strategies and
-outcomes remain required before REL-B. Initial EASY/MEDIUM evidence below keeps
+outcomes remain required before freezing HARD and REL-B release. Independent
+REL-B preparation can proceed. [Ready local human-play workflow and note](q60-human-play-r1/README.md)
+use the exact regression44 build/seed with a configured six-minute private view;
+launch/ordinary controls and owned cleanup pass, human trial NOT RUN.
+Initial EASY/MEDIUM evidence below keeps
 its original scope and limitations.
 
 ---

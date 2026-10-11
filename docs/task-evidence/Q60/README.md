@@ -12,7 +12,9 @@ the underlying results, failures and screenshots; earlier HOLD reviews below
 remain historical and immutable.
 
 Next: U05 real human HARD calibration strategies/outcomes using the completed
-curated feature captures, then REL-B. Public Q60/HARD/advanced durable save/replay stays held
+curated feature captures. [REL-B independent preparation](../REL-B/preparation-r1/README.md)
+and a ready local human workflow now pass their declared launch scope.
+Public Q60/HARD/advanced durable save/replay stays held
 for those later U05/REL-B gates. Dave's 15:41 UTC all-clear superseded the old
 forwarded hold; current readiness and U05 native/build/compiled feature gates
 now pass. [Fresh facts](../U05/q60-calibration-features-r1/README.md) assign no

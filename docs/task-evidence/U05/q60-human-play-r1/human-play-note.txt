@@ -1,0 +1,32 @@
+RB56 HUMAN PLAY NOTE — manual observation only
+
+Candidate: Regression seed -1004; 44 parts
+Source build: b9e38afd44571c34afbad05557a39039233d9d81
+Observed compiled build: 38E6D616B65DBEE9830BA356610A184F
+App replay epoch: tsj-alpha/5
+Generation dependency epoch: tsj-generation-dependencies-v16
+
+Date/time (UTC, approximate):
+
+Approximate time from ticket publication to stopping point:
+
+Human outcome / stopping point (for example: retest passed, retest did not pass,
+stopped before repair, or stopped because I was unsure):
+
+Strategy in your own words:
+
+Measurements and observations, in order (include instrument/readings where useful):
+
+Actions in order (including isolation, Shop, repair, and retest if attempted):
+
+Retries, errors, or places where you were stuck:
+
+Assistance or hints used (none, or describe briefly):
+
+What was clear or confusing:
+
+Other notes:
+
+Do not include private verifier reports, netlists, private state digests, raw exports or selected-fault metadata.
+
+Verifier/timeout status, if seen (separate from your own outcome):

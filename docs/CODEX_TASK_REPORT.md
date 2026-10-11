@@ -1,4 +1,43 @@
-# Current checkpoint: private Q60 difficulty features and fresh curated captures PASS
+# Current checkpoint: REL-B preparation and a ready local human-play handoff
+
+2026-10-11. Production `b9e38afd44571c34afbad05557a39039233d9d81` remains unchanged;
+documentation parent `3598aa290ef417dcaba03968f71295ab9cfc0c35` on the existing
+`codex/q60-faulted-profile-counts` branch. REL-B is IN PROGRESS for independent
+source/build/support-envelope preparation only; beta remains unqualified.
+
+Fresh compiled174 PASS 39.656 s: normal HARD/PSYCHOTIC disabled, RB56 absent;
+exact 44-part regression seed -1004 / 360000 ms private PlayerSession opens ordinary
+ticket/workbench and accepts real browser clicks. Explicit negative API canaries
+refuse save/launch/random/replay/load. No diagnosis, measurements or repair;
+human trial NOT RUN. Unfinished End view intentionally reports verifier FAIL,
+then exact owner/candidate/meter/session/bridge/coordinator cleanup PASS.
+Browser/listener/native handles/drains close. Two screenshots inspected.
+Source/served 1562 digest matches qualified compiled171; build41 reused unchanged.
+Task-driver172 wrong indexing and173 nonexistent terminal attribute failures
+are retained; no application budget/assertion/source changed to resolve them.
+
+[Build/support manifest and independent next work](task-evidence/REL-B/preparation-r1/README.md).
+[Ready human route and plain-text note](task-evidence/U05/q60-human-play-r1/README.md)
+provide exact build/seed and configured six-minute attempt. U05 requires real
+strategies/outcomes before HARD freeze, with no prescribed minimum duration;
+stopped/failed attempts count as qualitative evidence. No automated substitute.
+
+Further software progress does not depend on Dave: advanced real-candidate
+private capture/parse/fresh-owner restore with repair/source state remains
+unqualified. Existing typed restart/model contracts are not that round trip.
+A scoped internal identity/reconstruction seam must preserve the private UI and
+normal catalog/profile guards; no MEDIUM alias or HARD unlock to test it.
+Normal RB56 population/retry/diversity and all advertised release states also
+remain. Q100 UNSTARTED; modest-host owner-deferred only; no new PC permission.
+
+All eight original files/source bytes/historical failures preserved. No unchanged
+Q30 corpus, email, C4130/server access, Core/Android, protected-main, new persistent access,
+third-party sharing or unrelated process action. No preview/browser is left
+running; Dave starts/stops the existing foreground localhost preview himself.
+
+---
+
+# Historical checkpoint: private Q60 difficulty features and fresh curated captures PASS
 
 2026-10-11. Qualified feature slice `b9e38afd44571c34afbad05557a39039233d9d81`
 is normally pushed and remote-verified on `codex/q60-faulted-profile-counts`.

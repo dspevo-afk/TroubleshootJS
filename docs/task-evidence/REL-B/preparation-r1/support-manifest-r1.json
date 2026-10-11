@@ -1,0 +1,185 @@
+{
+  "schema": "TSJ-REL-B-CURRENT-SUPPORT-MANIFEST-1",
+  "recordedUtc": "2026-10-11T22:57:19.619026+00:00",
+  "status": "IN_PROGRESS_PREPARATION_ONLY_NOT_RELEASE_QUALIFIED",
+  "productionCommit": "b9e38afd44571c34afbad05557a39039233d9d81",
+  "documentationParent": "3598aa290ef417dcaba03968f71295ab9cfc0c35",
+  "branch": "codex/q60-faulted-profile-counts",
+  "versions": {
+    "replayEpoch": "tsj-alpha/5",
+    "generationDependencyEpoch": "tsj-generation-dependencies-v16",
+    "layoutVersion": 16,
+    "sessionSchema": "tsj-session/1",
+    "sessionModel": "tsj-session-model/1",
+    "dynamicMode": "restart"
+  },
+  "observedBuildStrongName": "38E6D616B65DBEE9830BA356610A184F",
+  "sourceAndServedManifest": {
+    "sha256": "4c299ea43a416cb97fd4fc31c20bdfe22670279b39dd99af243593632802d50a",
+    "sourceSha256": "2d4057faf7c9cbec595e40056a455d39d5b85e095131aaf834f34e990c450380",
+    "webSha256": "3c40b7f6c84265fc02a79d87ae576376aa1831a149def6d3cfab689a62584bf6",
+    "fileCount": 1562
+  },
+  "compiledAssets": {
+    "war/circuitjs1/101247A6437105579F7A399B08882661.cache.js": "ea4a15cedc566c9ac85edff9b2a3028fef234b2065925366963ed3213623a5d3",
+    "war/circuitjs1/303F9576A85122F27BBE1D65BE43E65E.cache.js": "300a606f1956a782cac9cbbe57621cb8127ed1131be64dad7b3ee3b516780e7e",
+    "war/circuitjs1/38E6D616B65DBEE9830BA356610A184F.cache.js": "bb90dd1773d2938813310a677f720b2149d5133b9f290726d38da1def79f4a89",
+    "war/circuitjs1/6C9C3EA5BD5A625ECDCB7021CD04576A.cache.js": "7b97340a6de79f046825510e6374b8d8a0eee4f7203e2fdd65fd07963f3987e3",
+    "war/circuitjs1/FD2B79F0F2ACB22BC447529C8A742FCC.cache.js": "34a6347aa7187b60ce72c8a0adde64310a9fe4ac9a2c345c8b757dd826d5e76c",
+    "war/circuitjs1/circuitjs1.nocache.js": "57abe5a2166096ec323bbccd1d5bf9f8c2332b5ce89df4793c10c4bff999aacf",
+    "war/circuitjs.html": "bae6cb4ec27675f5f1eb8ff2f3e36924cf9a015331228b79bddbc6c0f50ea46b",
+    "war/tsj-workbench-ui.js": "872ae1958be43caf737b544769b87f0983afaaa2d3552475fc2c4c6085bd3feb"
+  },
+  "supportEnvelope": {
+    "normalProfiles": [
+      "EASY",
+      "MEDIUM"
+    ],
+    "unavailableProfiles": [
+      "HARD",
+      "PSYCHOTIC"
+    ],
+    "rb56NormalCatalogEnabled": false,
+    "rb56PrivatePersistenceAvailable": false,
+    "q60": "Accepted finite reference-PC/model/corpus/session only",
+    "modestHost": "DEFERRED BY OWNER / NOT RUN",
+    "sessionPolicy": "Restart transients; no continuation of capacitor charge/relay/hysteresis/time/events",
+    "normalCurrentFormatCaps": {
+      "retainedParts": 96,
+      "operations": 8192,
+      "characters": 2097152
+    },
+    "advancedDurableCaptureLoad": "NOT QUALIFIED; typed backing restart/model contracts do not establish integrated round trip",
+    "populationRetryDiversity": "NOT QUALIFIED for normal RB56; curated six cases are not a random population",
+    "unsupportedClaims": [
+      "portability",
+      "EventTiming/FPS",
+      "GC reachability/leak proof",
+      "current Q60 100-owner/96-inventory qualification"
+    ]
+  },
+  "focusedLaunchCanary": {
+    "status": "PASS",
+    "nativeOperationMillis": 39656,
+    "inputPinsUnchanged": 1222,
+    "observations": [
+      {
+        "name": "relb-normal-held-release-boundary",
+        "build": "38E6D616B65DBEE9830BA356610A184F",
+        "normalCatalogHeld": true,
+        "hardAndPsychoticDisabled": true,
+        "pageErrors": []
+      },
+      {
+        "name": "u05-regression44-human-session-launch",
+        "build": "38E6D616B65DBEE9830BA356610A184F",
+        "seed": "-1004",
+        "packages": 44,
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "ticketAndWorkbench": true,
+        "privatePersistenceRefused": true,
+        "unfinishedTrialCleanup": "PASS",
+        "apiCalls": "EXPLICIT_NEGATIVE_CANARY_NOT_PLAYER_INPUT",
+        "pageErrors": []
+      }
+    ],
+    "route": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+    "coldGeneration": {
+      "generationMillis": 33879,
+      "generationWork": 517,
+      "maxManualUnitMillis": 1224,
+      "hypotheses": 5,
+      "solverSamples": 55
+    },
+    "caps": {
+      "jobMillis": 90000,
+      "work": 640,
+      "unitMillis": 5000
+    },
+    "headlessVisibleControls": "Ticket Accept, Main menu and Resume; no diagnosis/measurement/repair",
+    "apiCanary": "Explicit private save/launch/random/replay/load refusals; not player input",
+    "unfinishedEnd": "Expected verifier FAIL because customer retest was not attempted; exact owner/candidate/meter/session/bridge/coordinator cleanup PASS",
+    "browserAndLocalhostCleanup": {
+      "status": "PASS",
+      "seconds": 1.2103986000292934,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "portObservedClosed": true,
+    "nativeCleanup": {
+      "pid": 68172,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 0,
+      "jobAccountingDrainMs": 0,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    },
+    "handlesClosed": true,
+    "screenshots": "Ticket and workbench inspected; ordinary controls and no visible selected-fault answers",
+    "browserVersion": "Not re-read by this canary; current feature gates bound Edge155.0.4283.45",
+    "humanTrial": "NOT RUN"
+  },
+  "rawAuthorities": {
+    "compiled-r174-result.json": "9b8d6e4d1b269399342f89067e87748184375fd97c07c5749ceb96d3607d03fd",
+    "launch-boundary-evidence.json": "abdcb2fcca2ac749320c118320301c232adf1b9b46965d83bda275f0e0c2c112",
+    "browser-result.json": "761367eb965cd1d4d5bc598fef9fae1e30a9eb6e15d7a56957a72cb1c2cf4bdb",
+    "held-case-report.json": "bfd9a915676f97d2c8c51705c57655f94f3da28f6b71098f37ad4ceb12f834b9",
+    "task-driver.py": "a12d4af9927edb09e752b38afbed132b7cd95c3630309719aa1dc8e52a612eaf",
+    "task-spec.json": "d2b77f27d28d3275b40acd3fb12b102e18b1ba55ff4ebdd36ddcd2faec886c6a"
+  },
+  "retainedDriverFailures": [
+    {
+      "phase": "compiled-r172",
+      "nativeOperationMillis": 32763,
+      "cause": "Task driver used zero-based case index; maintained runner indexes from one",
+      "productionChanged": false,
+      "ownedCleanup": "PASS"
+    },
+    {
+      "phase": "compiled-r173",
+      "nativeOperationMillis": 54086,
+      "cause": "Task driver watched nonexistent data-tsj-rb56-state instead of actual data-tsj-verification terminal",
+      "productionChanged": false,
+      "ownedCleanup": "PASS"
+    }
+  ],
+  "sourceAuthorities": {
+    "src/com/lushprojects/circuitjs1/client/DifficultyProfile.java": "a1e222a1f7f45426716dc167db012c7c7129ef72be0f6d18cb98fedd5c1eafbe",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "6a433d914c84889492df58daa9be4022954afa182c6865c90eed487ff063f519",
+    "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java": "b104e12c5ab0931a927ea6004cca7378213c3d4143f171ebe1c86a33ebcd6a29",
+    "src/com/lushprojects/circuitjs1/client/PlayerSession.java": "d1ddff8aaebbda4cd5a8046408ae2223bb087c77d62c96f96469b354d52fd522",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": "77d100fa89a3eef3c3cc1f2760ddd9373d97c64c525705aa37618c10f18d2c2e",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java": "9301fe902dc90c6e1505c416fe0bb8925ceb34fa926250c0dabb615c52e46425",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java": "2bcf4e26f09dbb9bf9d4de36eb2661c4b82a3dad53bb6ae049dc79656ae24d46",
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "0c716051b00d6a65666047679a5d54400876d37aeb9e82dea7c5ec8a1c623aed",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "4b834f621a3483b6abd0cffcd1546b59c8bcdd463b5e4504d00fd72525ad6ed8",
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": "20f2117a950590684e7933904581d354c804e5257cc407b9d470cea3dff9a6cd",
+    "src/com/lushprojects/circuitjs1/client/Rb56InstrumentAdmissionCapability.java": "c18e9fc3a619d4cb0818aea8913b76883b9ca8e2dc126c3257009ca18df0f1dc",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "f7862dbe8edaffdeff6bfdea95bcd5b69060ae99e0e375817b691a2cc92f4f6c",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "339d4d46ff2fac6253444155171fa72fb7241d128712f01be3d8272f20566ca0",
+    "scripts/preview.ps1": "52c170f0212753e63154cfad13254b4fe9494978eb05b56948a408ce549f5e0f",
+    "scripts/VerifierIsolation.psm1": "aafe38893e5fc185a5b543b8c76a383ce7494fe76783fbf4e0330fded4dd298f",
+    "war/tsj-workbench-ui.js": "872ae1958be43caf737b544769b87f0983afaaa2d3552475fc2c4c6085bd3feb",
+    "tests/contracts/Rb56SessionBackingContractTest.java": "1660aaaac3fa093880ea252381889f574269caf869170189a03f716a672f8309",
+    "tests/contracts/Rb56InstrumentAdmissionContractTest.java": "aa2f8cf1a98b8324824d2bd6c99d5be7da61584ff454c4d6bceac71bf9a63ee4"
+  },
+  "humanRequirement": "U05 requires actual human strategies/outcomes before freezing HARD; this launch canary is not such a trial",
+  "nextIndependentSlice": "Private real-candidate capture/parse/fresh-owner restore with repair and source state; validate identity/model/fingerprint/corrupt artifact fail-closed; public gates unchanged",
+  "independentSliceConstraint": "Current private session has request=null and denies persistence. Save codec/state depend on the public replay parser. A scoped internal identity/reconstruction seam is needed; do not label an uncalibrated board MEDIUM or unlock HARD to test it.",
+  "releaseStillRequires": [
+    "human Q60 HARD calibration",
+    "normal RB56 population/retry/diversity",
+    "advertised advanced source/repair/instrument/catalog/save/replay qualification"
+  ],
+  "originalEightPreserved": true,
+  "emailServerCoreAndroidProtectedMain": "No action"
+}

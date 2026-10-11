@@ -18,6 +18,8 @@ answer misread as a current PC hold. No newer direct hold or availability
 permission is pending; the bounded U05 continuation may proceed under existing
 authorization. The modest-host deferral remains the only deferred item.
 Public Q60/HARD/advanced durable release stays held for fresh U05/REL-B proof.
+REL-B independent preparation and the exact private human launch now pass;
+actual human findings and advanced round-trip/population qualification remain.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
 [admission decision](task-evidence/Q60/reference-pc-admission-r1/README.md).
 
@@ -3066,7 +3068,7 @@ inputs and the audited CirSim inverse, not whole-source/WAR equality or current
 100-owner/96-inventory qualification. No new mandatory historical-reader,
 all-browser, unchanged Gate B or fixed100-cycle gate is added. Historical Q30
 91.616s unknown failure, six missing inventories and late BLOCKED audit remain.
-REL-B/Q100 are unstarted. [Admission](task-evidence/Q60/reference-pc-admission-r1/README.md),
+REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission](task-evidence/Q60/reference-pc-admission-r1/README.md),
 [historical final review](task-evidence/Q60/final-admission-review-r1/README.md),
 [session evidence](task-evidence/Q60/private-session-mixed60-r1/README.md) and
 [retained solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
@@ -3101,7 +3103,7 @@ REL-B/Q100 are unstarted. [Admission](task-evidence/Q60/reference-pc-admission-r
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** UNSTARTED.
+**Status:** IN PROGRESS — independent source/build/support-envelope preparation and exact human-launch boundary pass. Beta remains unqualified; HARD requires actual human calibration. Integrated RB56 durable capture/load and normal population/release matrix remain pending. [Current evidence and independent next slice](task-evidence/REL-B/preparation-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 
