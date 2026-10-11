@@ -84,7 +84,10 @@ a separate regression/trial cohort, one-probe/unavailable-tool/assistance-leak
 falsifiers and human strategies/outcomes before freezing HARD. Component count,
 family name or an alias to MEDIUM is not a calibration. Existing Q60 electrical
 proofs can be reused within their audited boundary; new feature capture needs
-its own actual native/GWT/compiled validation after the PC all-clear.
+its own actual native/GWT/compiled validation. Those gates and the fresh
+curated feature captures now [pass for extraction only](../../U05/q60-calibration-features-r1/README.md).
+Dave's 15:41 UTC all-clear superseded the old forwarded hold; no HARD profile or
+human qualification follows. Modest-host remains deferred by owner.
 
 REL-B must then qualify normal population/retry/determinism/diversity and every
 advertised advanced source/repair/instrument/catalog/save/replay state. Typed
@@ -96,6 +99,9 @@ REL-B/Q100 remain UNSTARTED; no public beta is released by this admission.
 Static binding review passes; production inputs and the eight original files
 are unchanged for this admission. No runtime test, build, unchanged corpus,
 resource sweep, email, server or Core/Android work ran for this decision.
-The latest PC hold persists until Dave's next all-clear. Historical Q30's
+The earlier PC hold recorded for this admission was superseded by Dave's direct
+2026-10-11 15:41 UTC all-clear for bounded U05 readiness/gate work under existing
+authorization. No later direct hold or new availability permission is pending;
+the modest-host deferral remains. Historical Q30's
 91.616 s unknown failure, six missing inventories and late BLOCKED audit, all
 recorded modern failures and the explicit26 oracle correction remain intact.

@@ -284,7 +284,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     }
 }
 '@, (New-Object Text.UTF8Encoding($false)))
-    $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
+    $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
         $Suite -contains 'InductorAcceptedStateContractTest' -or
         $Suite -contains 'Q30ServiceFlowContractTest' -or
         $Suite -contains 'Q30PowerReadinessContractTest' -or
@@ -311,7 +311,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
-    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or
+    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
         $Suite -contains 'ConverterPhysicalPartContractTest' -or
         $Suite -contains 'PowerServicePartContractTest' -or

@@ -633,10 +633,25 @@ and the qualified corpus bound the calibration; mathematical counters cannot
 establish subjective difficulty by themselves. The current report records
 acceptance status, evidence and limits.
 
+The qualified U05 Q60 continuation adds a separate uncalibrated feature path
+through the same receipt extractor. An exact nondeveloper RB56 40–60-package
+physical owner and trusted cold receipt are required; profile remains null and
+cannot satisfy any requested band. The distinct calibration/version1 canonical
+contains aggregate counts/ranges only. Explicit `tsjRb56Difficulty=true` on the
+existing private verifier collects it after actual current cold admission and
+cleanup checks, before any retained player mutation. Factory owner/program
+checks do not prove freshness after same-owner mutation; the immediate call
+site supplies that scope. Extraction time is separate from generation time.
+Native168, actual GWT build41 and compiled168–171 qualify this value-only path
+and fresh curated facts. HARD remains uncalibrated pending human findings; normal
+version2 classification/output and public HARD/catalog/save gates remain.
+The old hold was superseded by Dave's 15:41 UTC all-clear; only modest-host
+testing is DEFERRED BY OWNER / NOT RUN.
+
 ## U06 semantic history, session saves and private reconstruction
 
 `PlayerLaunchRequest` remains the pristine sharing contract: the current
-`tsj-alpha/4/PROFILE/FAMILY/SEED` identity recreates a newly admitted challenge.
+`tsj-alpha/5/PROFILE/FAMILY/SEED` identity recreates a newly admitted challenge.
 Mutable progress uses the separate `PlayerSessionSave` contract,
 `tsj-session/1` with `tsj-session-model/1` and explicit `restart` dynamics.
 `PlayerSessionController` owns save/load requests under current session and
@@ -5310,3 +5325,18 @@ save/load release proof. Typed model/digest/restart support retains U06's existi
 transient restart semantics and separate fuse heat/blown-state provider; it does
 not promise continuous energy replay or an RB56 U06 capture/load pass. Public
 family/profile guards and the 90-second/640-unit/5-second budgets remain intact.
+
+## Current U05/Q60 qualification chronology (2026-10-11)
+
+The earlier implementation checkpoints describe Q60 as unqualified or
+unaccepted. The finite admission recorded in [the current decision](task-evidence/Q60/reference-pc-admission-r1/README.md) supersedes those
+statuses. Q60 is accepted within the finite reference-PC/model/corpus/session
+scope; the modest-host requirement remains DEFERRED BY OWNER / NOT RUN. This
+does not claim portability.
+
+The private U05 feature path and six curated captures now pass native168,
+actual GWT build41 and compiled168–171. Human findings remain NOT RUN and
+HARD is not frozen. Dave's direct 2026-10-11 15:41 UTC all-clear superseded
+the forwarded asynchronous answer misread as a new PC hold; no later direct
+hold or new availability permission is pending. Current readiness and gates
+ran under that authorization. Modest-host remains the only deferred requirement.

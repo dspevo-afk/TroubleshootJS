@@ -1,4 +1,44 @@
-# Current checkpoint: Q60 accepted on reference PC; modest-host evidence deferred by Dave
+# Current checkpoint: private Q60 difficulty features and fresh curated captures PASS
+
+2026-10-11. Qualified feature slice over published `d7a997b3629c10b457a454aa9df49a7515fc9bb9`
+on `codex/q60-faulted-profile-counts`. Shared exact-owner/cold receipt extraction
+emits thirteen count/range fields as UNCALIBRATED with profile=null. Normal
+classification/output, public HARD/catalog/save gates and physics stay unchanged.
+Native actual-owner mathematical fixtures retain all independent falsifiers;
+existing native adapters are selected for U05 without new adapter code.
+
+Final-source PASS: native168 47.428 s (U05 52/U04 3,971/fingerprint 119/A09 322/D01 168);
+actual JDK8/GWT build41 95.926 s / all five permutations; compiled168 cold/forced/privacy
+62.638 s; remaining feature captures169/170/171 144.009/89.082/72.254 s. Each of the
+six preassigned 40/55/60 development and 50/44/56 regression cases completes all five hypotheses /
+six stages inside 90 s / 640 work / 5 s. Positive totals 30 hypotheses / 350 samples; all have
+two readings, five repair classes/owners, 19/20 legal witnesses; extraction 18–31 ms.
+Forced same-seed aggregate repeats exactly; debug=false new flag / invalid seed is
+inert, no private report leaks, HARD disabled. All exact source/served/native
+and owned browser/CDP/listener/CPU/handle/drainer cleanup bindings pass.
+
+Chronology correction: "After other work finishes; I’ll tell you when" was
+recorded by October 9 at 01:55 UTC, then superseded by Dave's October 11 at 15:41 UTC:
+"Yea tjs can keep going the PC should be quiet right now". The old forwarded
+async answer was mistakenly reapplied as a later hold. No newer direct hold
+was found. Current readiness was observed and authorized gates completed;
+no new availability permission is pending. Dave's 21:35 deferral applies only
+to modest-host evidence, which remains NOT RUN; no other gate is waived.
+
+Next: real human strategies/outcomes before a HARD rule/profile is frozen,
+then REL-B normal population/advertised advanced session/save/replay qualification.
+Current features do not make a HARD formula or human-success distribution.
+REL-B/Q100 remain UNSTARTED; all public advanced release gates remain held.
+[Measured slice/protocol](task-evidence/U05/q60-calibration-features-r1/README.md).
+
+Q60 finite reference-PC acceptance, all eight original files and historical
+failures remain. No unchanged Q30 corpora, email, C4130/server, Core/Android,
+protected main or unrelated process action. All newly owned runtime resources
+are closed within actual receipts; no current global host sweep is claimed.
+
+---
+
+# Historical checkpoint: Q60 accepted on reference PC; modest-host evidence deferred by Dave
 
 2026-10-11. Dave explicitly deferred the unavailable modest-host test at 21:35 UTC:
 "no i dont. but let's just skip that requirement for now". That specific
@@ -26,6 +66,12 @@ catalog-flag-only enable. REL-B owns normal population and every advertised
 advanced state/replay/save flow; REL-B/Q100 remain UNSTARTED.
 
 The latest timed-PC restriction persists until Dave gives another all-clear.
+
+**Superseding chronology (2026-10-11 15:41 UTC):** The forwarded asynchronous
+answer noted in this historical checkpoint predates and is not the later direct
+all-clear. Dave's direct all-clear permits bounded U05 readiness/gate work under
+existing authorization; no later direct hold or new availability permission is
+pending. The modest-host deferral remains.
 All recorded failures, modern26's explicit oracle correction and historical
 Q30 risks remain. C4130/server hold, Core/Android exclusion, no protected-main,
 unrelated process or email action are preserved.

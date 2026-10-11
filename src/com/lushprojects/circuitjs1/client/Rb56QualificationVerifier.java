@@ -83,7 +83,7 @@ final class Rb56QualificationVerifier {
         final GeneratedBoardInstance predecessor;
         final GeneratedChallengeController predecessorController;
         final Vector<CircuitElm> predecessorGraph;
-        final boolean originalDebug, originalVerifierRunning, forced, keepBench, modernBench;
+        final boolean originalDebug, originalVerifierRunning, forced, keepBench, modernBench, collectDifficulty;
         final int benchHoldMillis;
         final JSONObject report = new JSONObject();
         final Timer advanceTimer = new Timer() { public void run() { advance(); } };
@@ -106,6 +106,7 @@ final class Rb56QualificationVerifier {
             this.sim = sim; this.seed = seed; this.snapshot = snapshot;
             this.forced = forced; this.keepBench = keepBench;
             modernBench = keepBench && "true".equals(Window.Location.getParameter("tsjRb56PlayerSession"));
+            collectDifficulty = "true".equals(Window.Location.getParameter("tsjRb56Difficulty"));
             // The explicit debug-only route may retain this same owner for a bounded session.
             benchHoldMillis = keepBench && "true".equals(
                 Window.Location.getParameter("tsjRb56Session")) ? SESSION_BENCH_HOLD_MILLIS : BENCH_HOLD_MILLIS;
@@ -268,6 +269,17 @@ final class Rb56QualificationVerifier {
             put(report, "diagnosticContextDigest", PlayerSessionFingerprint.ofDiagnosticContext(proof.getContextKey()));
             put(report, "diagnosticProgramDigest", PlayerSessionFingerprint.of(proof.getProgramIdentity()));
             requireHeldCatalog();
+            // Opt-in only, after the full current cold-owner/population/cleanup checks.
+            // This reads immutable proof facts and adds no solver work or admission label.
+            if (collectDifficulty) {
+                long featureStart = System.currentTimeMillis();
+                DifficultyAssessment features = DifficultyAssessment.calibrationFeatures(published, proof);
+                require(features.profile == null, "Private calibration cannot assign a release profile");
+                put(report, "difficultyFeatures", features.canonical());
+                put(report, "difficultyFeatureStatus", "UNCALIBRATED");
+                put(report, "difficultyFeatureVersion", DifficultyAssessment.CALIBRATION_FEATURE_VERSION);
+                put(report, "difficultyFeatureExtractionMillis", System.currentTimeMillis() - featureStart);
+            }
         }
 
         void retainBench() {

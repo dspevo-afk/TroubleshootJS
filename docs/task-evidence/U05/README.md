@@ -1,3 +1,14 @@
+# Current Q60 continuation: private features captured, HARD not frozen
+
+2026-10-11. [Private feature extraction and fresh curated three development / three regression
+captures](q60-calibration-features-r1/README.md) pass final native/GWT/compiled
+gates. All six cases have two certified-set readings and 19/20-action executed
+witnesses. No HARD rule/profile has been frozen; actual human strategies and
+outcomes remain required before REL-B. Initial EASY/MEDIUM evidence below keeps
+its original scope and limitations.
+
+---
+
 # U05 initial computed difficulty and calibration protocol
 
 Status: COMPLETE for initial EASY/MEDIUM; final combined qualification PASS. [Current 38-case corpus](corpus-summary.json) identifies execution

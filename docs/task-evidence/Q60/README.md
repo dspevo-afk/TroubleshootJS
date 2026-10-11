@@ -13,7 +13,10 @@ remain historical and immutable.
 
 Next: U05 private aggregate feature capture and fresh HARD development/regression/
 human-trial calibration. Public Q60/HARD/advanced durable save/replay stays held
-for those later U05/REL-B gates. Timed PC tests await the owner's next all-clear.
+for those later U05/REL-B gates. Dave's 15:41 UTC all-clear superseded the old
+forwarded hold; current readiness and U05 native/build/compiled feature gates
+now pass. [Fresh facts](../U05/q60-calibration-features-r1/README.md) assign no
+HARD profile. The modest-host test remains DEFERRED BY OWNER / NOT RUN.
 Original eight files, historical Q30 risks and C4130/server hold remain.
 
 ---

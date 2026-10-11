@@ -13,6 +13,10 @@ DEFERRED BY OWNER / NOT RUN, with no weaker-hardware proof. Existing U07
 5 s input-action/200 MiB heap/32 MiB matched-growth budgets pass against the sealed
 Q60 observations. No other gate or threshold is waived. Native/build/private
 repair/retest/session/model evidence retain their recorded scopes.
+Dave's direct 2026-10-11 15:41 UTC all-clear supersedes the earlier forwarded
+answer misread as a current PC hold. No newer direct hold or availability
+permission is pending; the bounded U05 continuation may proceed under existing
+authorization. The modest-host deferral remains the only deferred item.
 Public Q60/HARD/advanced durable release stays held for fresh U05/REL-B proof.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
 [admission decision](task-evidence/Q60/reference-pc-admission-r1/README.md).
@@ -1885,6 +1889,16 @@ The shared current-only policy and validation rules apply to every card. There i
 ### U05 · Computed difficulty and staged profile calibration
 
 **Status:** COMPLETE for initial EASY/MEDIUM — version1 measured diagnostic features, requested-profile admission,38-case separation/repair corpus and qualitative user findings recorded. Reported mechanical/UI defects are fixed and qualified; the failed human attempt and missing EASY outcome/timings remain explicit. HARD/PSYCHOTIC stay unavailable. [Evidence and later calibration protocol](task-evidence/U05/README.md).
+
+**Q60 HARD continuation (2026-10-11):** IN PROGRESS. Private uncalibrated
+feature extraction and fresh preassigned three development / three regression captures pass
+native168, actual GWT build41 and compiled168–171 on the final source. All six
+have two certified-set readings and 19/20-action executed witnesses; no HARD policy
+is inferred from these counts. Human strategies/outcomes remain required before
+profile freeze; HARD/PSYCHOTIC and advanced durable release stay held. The old
+PC hold predates Dave's 15:41 UTC all-clear and was mistakenly reapplied; current
+readiness/gates ran under that authorization. Modest-host alone is deferred.
+[Measured features and next protocol](task-evidence/U05/q60-calibration-features-r1/README.md).
 
 **Hard prerequisites:** [A09](#m-a09), [A10](#m-a10), [U04](#m-u04), [Q15](#m-q15)
 

@@ -6,6 +6,7 @@ import java.util.Vector;
  * No selected fault or owner determines the profile. Physics/tolerances are inputs only. */
 final class DifficultyAssessment {
     static final int VERSION = 2;
+    static final int CALIBRATION_FEATURE_VERSION = 1;
     final int components, hypotheses, repairClasses, physicalOwners, readings, bestSingleRemaining;
     final int minExecutedEvidenceDepth, maxExecutedEvidenceDepth, minWitnessActions, maxWitnessActions;
     final int meterModes, inputTransitions, declaredRailTargets, temporalSamples;
@@ -13,7 +14,8 @@ final class DifficultyAssessment {
     final DifficultyProfile profile;
     final String programIdentity;
 
-    private DifficultyAssessment(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt) {
+    private DifficultyAssessment(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt,
+            boolean assignCalibratedProfile) {
         board.requireNormalPhysicalAdmission();
         receipt.requireAssessmentOwner(board);
         Vector<GeneratedDiagnosticSolvabilityEvidence> evidence = receipt.getEvidence();
@@ -82,14 +84,27 @@ final class DifficultyAssessment {
         // band of an otherwise EASY board.
         readings = reduction.readings;
         bestSingleRemaining = reduction.bestSingleRemaining;
-        profile = classifyAdmittedEvidence(components, physicalOwners, repairClasses, readings, minExecutedEvidenceDepth,
-            meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths);
+        profile = assignCalibratedProfile ? classifyAdmittedEvidence(components, physicalOwners, repairClasses, readings,
+            minExecutedEvidenceDepth, meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths) : null;
     }
 
     static DifficultyAssessment assess(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt) {
         if (board == null || receipt == null || board.isDeveloperOnlyFaultRoute())
             throw new IllegalArgumentException("Difficulty requires a current normal proof");
-        return new DifficultyAssessment(board, receipt);
+        return new DifficultyAssessment(board, receipt, true);
+    }
+    /** Private calibration facts, not an available profile or a normal admission grant.
+     * The caller must consume the still-current cold proof before any player mutation. */
+    static DifficultyAssessment calibrationFeatures(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt) {
+        if (board == null || receipt == null || board.isDeveloperOnlyFaultRoute() ||
+                !Rb56Plan.FAMILY_ID.equals(board.getCircuitFamilyId()) || board.getPhysicalAdmission() == null ||
+                !MediumBoardNormalAdmission.RB56_IDENTITY.equals(board.getPhysicalAdmission().identity()) ||
+                board.getBoard().getComponentIds().size() < Rb56Plan.MIN_PACKAGES ||
+                board.getBoard().getComponentIds().size() > Rb56Plan.MAX_PACKAGES ||
+                receipt.getContextKey() == null || !receipt.getContextKey().isTrustedCapture() ||
+                receipt.isWarmReuseForDeveloperVerification())
+            throw new IllegalArgumentException("Calibration requires a current cold RB56 proof");
+        return new DifficultyAssessment(board, receipt, false);
     }
     static DifficultyProfile classify(int parts, int owners, int repairs, int readings, int depth,
             int modes, int inputs, int railTargets, int temporal, boolean parallel) {
@@ -115,7 +130,12 @@ final class DifficultyAssessment {
             throw new IllegalArgumentException("The proved board does not match the requested difficulty");
     }
     String canonical() {
-        return "difficulty/" + VERSION + ";profile=" + profile + ";parts=" + components + ";hypotheses=" + hypotheses +
+        return (profile == null ? "tsj-difficulty-calibration/" + CALIBRATION_FEATURE_VERSION + ";status=UNCALIBRATED" :
+            "difficulty/" + VERSION + ";profile=" + profile) + aggregateCanonical();
+    }
+    /** Counts only: no sample values, program text, hypothesis keys or selected owner. */
+    private String aggregateCanonical() {
+        return ";parts=" + components + ";hypotheses=" + hypotheses +
             ";repairs=" + repairClasses + ";owners=" + physicalOwners + ";readings=" + readings +
             ";singleRemaining=" + bestSingleRemaining + ";executedEvidenceDepth=" + minExecutedEvidenceDepth + "-" + maxExecutedEvidenceDepth +
             ";legalWitnessActions=" + minWitnessActions + "-" + maxWitnessActions +

@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 /** Synthetic information fixtures are mathematical falsifiers, never solver or human trial evidence. */
 public final class U05DifficultyContractTest {
     private static int assertions;
@@ -79,7 +81,353 @@ public final class U05DifficultyContractTest {
                 candidate.getDifficulty() == DifficultyProfile.MEDIUM,
                 "Q30 difficulty assessment input follows each exact bounded candidate");
         }
+        calibrationFeatureContracts();
         System.out.println("PASS: U05 difficulty contracts assertions=" + assertions);
+    }
+    /**
+     * One actual normally admitted RB56 reference owner and its fixed route.
+     * Receipt samples are explicitly mathematical falsifiers, never solver or
+     * human-trial evidence; this fixture does not advance or solve a circuit.
+     */
+    private static void calibrationFeatureContracts() {
+        CirSim priorSim = CircuitElm.sim, priorSingleton = CirSim.theSim;
+        String priorDiode = DiodeElm.lastModelName;
+        String priorZener = ZenerElm.lastZenerModelName;
+        String priorTransistor = TransistorElm.lastModelName;
+        int priorFlags = MosfetElm.globalFlags;
+        double priorBeta = MosfetElm.lastBeta;
+        CirSim sim = new CirSim();
+        sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
+        Vector<CircuitElm> originalGraph = sim.elmList;
+        Rb56Generator.Candidate candidate = null, foreignCandidate = null, developerCandidate = null;
+        GeneratedBoardInstance owner = null, foreignOwner = null, developerOwner = null, smallOwner = null;
+        CircuitElm.sim = sim; CirSim.theSim = sim;
+        try {
+            Rb56Plan plan = Rb56Plan.reference(77L);
+            MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator()
+                .generateWithPolicyResult(plan.board(), plan.layoutSeed, plan.routingSeed);
+            check(route != null && route.accepted() && route.getLayout() != null &&
+                    MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+                        route.getStatistics().selectedRoutePolicy),
+                "calibration fixture uses one fixed accepted RB56 P07 route");
+
+            candidate = Rb56Generator.construct(plan, Rb56Generator.selectedFaultId(plan));
+            GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRb56Route(
+                candidate.board(), route, plan.layoutSeed, plan.routingSeed);
+            owner = Rb56Generator.assemble(candidate, route.getLayout(), admission);
+            owner.requireNormalPhysicalAdmission();
+
+            // Same deterministic plan and route, but a distinct opaque owner token.
+            foreignCandidate = Rb56Generator.construct(plan, Rb56Generator.selectedFaultId(plan));
+            GeneratedPhysicalAdmission foreignAdmission =
+                MediumBoardNormalAdmission.fromAcceptedRb56Route(foreignCandidate.board(), route,
+                    plan.layoutSeed, plan.routingSeed);
+            foreignOwner = Rb56Generator.assemble(foreignCandidate,
+                route.getLayout().copySealed(), foreignAdmission);
+            developerCandidate = Rb56Generator.construct(plan, Rb56Generator.selectedFaultId(plan));
+            developerOwner = asDeveloperOnlyRb56Fixture(developerCandidate);
+            smallOwner = new LedIndicatorGenerator().generate(0);
+
+            GeneratedChallengeController controller = installCaptureOwner(sim, owner);
+            GeneratedDiagnosticProgram program = owner.getDiagnosticProvider().getObservationProgram();
+            GeneratedDiagnosticContextKey trusted = captureTrustedKey(sim, owner, plan);
+            check(trusted.isTrustedCapture() && !owner.isDeveloperOnlyFaultRoute() &&
+                    MediumBoardNormalAdmission.RB56_IDENTITY.equals(owner.getPhysicalAdmission().identity()) &&
+                    owner.getBoard().getComponentIds().size() >= Rb56Plan.MIN_PACKAGES &&
+                    owner.getBoard().getComponentIds().size() <= Rb56Plan.MAX_PACKAGES,
+                "fixture is a cold trusted normal RB56 owner inside the component admission envelope");
+
+            // These distinct sample values are mathematical falsifiers only. No solver or
+            // human trial ran, and this contract does not advance a circuit.
+            Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
+                mathematicalEvidence(owner, program, true);
+            GeneratedDiagnosticProofReceipt receipt = proofReceipt(owner, controller, program,
+                evidence, trusted, false);
+            DifficultyAssessment features = DifficultyAssessment.calibrationFeatures(owner, receipt);
+            String canonical = features.canonical();
+            check(features.profile == null && canonical.startsWith(
+                    "tsj-difficulty-calibration/" + DifficultyAssessment.CALIBRATION_FEATURE_VERSION +
+                        ";status=UNCALIBRATED;parts=") &&
+                    canonical.contains(";hypotheses=") && canonical.contains(";temporal="),
+                "cold RB56 extractor emits a versioned uncalibrated aggregate");
+            check(features.components == owner.getBoard().getComponentIds().size() &&
+                    features.hypotheses == evidence.size() &&
+                    features.physicalOwners == GeneratedDiagnosticSolvabilityAdmission
+                        .getPhysicalOwnerCount(owner.getFaultCandidates()) &&
+                    features.readings == 1 && features.bestSingleRemaining == 1 &&
+                    features.minWitnessActions == features.maxWitnessActions,
+                "aggregate values come from the complete exact-owner synthetic receipt");
+            boolean privateDetailsOmitted = !canonical.contains(program.canonical()) &&
+                !canonical.contains("1000000");
+            for (GeneratedFaultCandidate hypothesis : owner.getFaultCandidates())
+                privateDetailsOmitted &= !canonical.contains(hypothesis.getHypothesisKey());
+            check(privateDetailsOmitted,
+                "canonical aggregate omits program text, hypothesis keys and sample values");
+
+            Vector<GeneratedDiagnosticSolvabilityEvidence> exposed = receipt.getEvidence();
+            exposed.clear();
+            receipt.getEvidence().firstElement().getSolverSamples().clear();
+            check(receipt.getEvidence().size() == evidence.size() &&
+                    !receipt.getEvidence().firstElement().getSolverSamples().isEmpty() &&
+                    canonical.equals(features.canonical()) &&
+                    canonical.equals(DifficultyAssessment.calibrationFeatures(owner, receipt).canonical()),
+                "receipt collections and repeated feature reads are immutable");
+
+            reject("null calibration owner", featureAttempt(null, receipt));
+            reject("null calibration receipt", featureAttempt(owner, null));
+            reject("foreign exact RB56 owner", featureAttempt(foreignOwner, receipt));
+            reject("developer-only RB56 owner", featureAttempt(developerOwner, receipt));
+            reject("ordinary foreign-family owner", featureAttempt(smallOwner, receipt));
+            reject("missing context capture", featureAttempt(owner,
+                proofReceipt(owner, controller, program, evidence, null, false)));
+            reject("untrusted raw context", featureAttempt(owner, proofReceipt(owner, controller,
+                program, evidence, new GeneratedDiagnosticContextKey("u05-untrusted-context"), false)));
+            reject("warm proof reuse", featureAttempt(owner,
+                proofReceipt(owner, controller, program, evidence, trusted, true)));
+
+            GeneratedDiagnosticProgram changedProgram = withExtraSettle(
+                owner.getDiagnosticProvider().getDiagnosticPlan(), program);
+            reject("foreign program identity", featureAttempt(owner, proofReceipt(owner, controller,
+                changedProgram, mathematicalEvidence(owner, changedProgram, true), trusted, false)));
+            reject("incomplete executed-action witness", featureAttempt(owner, proofReceipt(owner,
+                controller, program, mathematicalEvidence(owner, program, false), trusted, false)));
+
+            for (DifficultyProfile profile : DifficultyProfile.values())
+                rejectUnavailable(features, profile);
+            rejectUnavailable(features, null);
+
+            installCaptureOwner(sim, smallOwner);
+            GeneratedDiagnosticProgram smallProgram =
+                smallOwner.getDiagnosticProvider().getObservationProgram();
+            GeneratedDiagnosticProofReceipt smallReceipt = proofReceipt(smallOwner,
+                sim.generatedChallengeController, smallProgram,
+                mathematicalEvidence(smallOwner, smallProgram, true), null, false);
+            DifficultyAssessment ordinary = DifficultyAssessment.assess(smallOwner, smallReceipt);
+            check(ordinary.profile == DifficultyProfile.EASY &&
+                    ordinary.canonical().startsWith("difficulty/" + DifficultyAssessment.VERSION +
+                        ";profile=EASY;parts="),
+                "ordinary assessment retains its existing versioned output shape");
+        } finally {
+            try {
+                retireFixtureOwner(sim, smallOwner);
+                retireFixtureOwner(sim, developerOwner);
+                retireFixtureOwner(sim, foreignOwner);
+                retireFixtureOwner(sim, owner);
+                disposeUnownedCandidate(candidate, owner);
+                disposeUnownedCandidate(foreignCandidate, foreignOwner);
+                disposeUnownedCandidate(developerCandidate, developerOwner);
+                sim.boardPowerController.detach();
+                sim.generatedBoardInstance = null;
+                sim.generatedChallengeController = null;
+                sim.boardModificationController = null;
+                sim.elmList = originalGraph;
+            } finally {
+                CircuitElm.sim = priorSim; CirSim.theSim = priorSingleton;
+                DiodeElm.lastModelName = priorDiode;
+                ZenerElm.lastZenerModelName = priorZener;
+                TransistorElm.lastModelName = priorTransistor;
+                MosfetElm.globalFlags = priorFlags; MosfetElm.lastBeta = priorBeta;
+            }
+        }
+    }
+
+    private interface Attempt { void run(); }
+
+    private static Attempt featureAttempt(final GeneratedBoardInstance owner,
+            final GeneratedDiagnosticProofReceipt receipt) {
+        return new Attempt() {
+            public void run() { DifficultyAssessment.calibrationFeatures(owner, receipt); }
+        };
+    }
+
+    private static void rejectUnavailable(final DifficultyAssessment assessment,
+            final DifficultyProfile profile) {
+        reject("uncalibrated features cannot grant " + profile, new Attempt() {
+            public void run() { assessment.require(profile); }
+        });
+    }
+
+    private static void reject(String message, Attempt attempt) {
+        boolean rejected = false;
+        try { attempt.run(); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, message);
+    }
+
+    private static GeneratedDiagnosticProofReceipt proofReceipt(GeneratedBoardInstance owner,
+            GeneratedChallengeController controller, GeneratedDiagnosticProgram program,
+            Vector<GeneratedDiagnosticSolvabilityEvidence> evidence,
+            GeneratedDiagnosticContextKey context, boolean warm) {
+        return new GeneratedDiagnosticProofReceipt(owner, controller, new Object(),
+            program, evidence, 1, null, context, warm);
+    }
+
+    private static GeneratedDiagnosticContextKey captureTrustedKey(CirSim sim,
+            GeneratedBoardInstance owner, Rb56Plan plan) {
+        GenerationRequest request = GenerationRequest.forFamilyQualification(
+            Rb56Plan.FAMILY_ID, plan.seed);
+        return GeneratedDiagnosticContextKey.capture(sim, owner,
+            request.candidateManifest(0), plan.canonical());
+    }
+
+    private static GeneratedChallengeController installCaptureOwner(final CirSim sim,
+            final GeneratedBoardInstance owner) {
+        if (sim.generatedBoardInstance != null) sim.boardPowerController.detach();
+        sim.elmList = new Vector<CircuitElm>(owner.getSimulationElements());
+        sim.adjustables = new Vector<Adjustable>();
+        sim.undoStack = new Vector<String>();
+        sim.redoStack = new Vector<String>();
+        sim.boardModificationController = new BoardModificationController(sim, owner);
+        owner.getPhysicalBoardRuntime().installRegisteredCapabilities(sim, owner,
+            sim.boardModificationController, 0);
+        sim.boardPowerController.attach(owner.getExternalPowerBindings());
+        final GeneratedScenario<GeneratedObservedBehavior> selected = owner.getChallengeDefinition()
+            .getScenarioCatalog().getCandidates().firstElement();
+        GeneratedChallengeController controller = new GeneratedChallengeController(sim, owner) {
+            @Override GeneratedScenario<GeneratedObservedBehavior> getScenario() {
+                return selected;
+            }
+        };
+        sim.generatedBoardInstance = owner;
+        sim.generatedChallengeController = controller;
+        return controller;
+    }
+
+    private static Vector<GeneratedDiagnosticSolvabilityEvidence> mathematicalEvidence(
+            GeneratedBoardInstance owner, GeneratedDiagnosticProgram program,
+            boolean completeActionWitness) {
+        Vector<GeneratedFaultCandidate> candidates = owner.getFaultCandidates();
+        int count = GeneratedFaultServiceabilityAdmission.getAdmittedCandidateCount(candidates);
+        int physicalOwners = GeneratedDiagnosticSolvabilityAdmission.getPhysicalOwnerCount(candidates);
+        Vector<GeneratedDiagnosticSolvabilityEvidence> evidence =
+            new Vector<GeneratedDiagnosticSolvabilityEvidence>();
+        int hypothesis = 0;
+        for (GeneratedFaultCandidate candidate : candidates) {
+            if (!candidate.isAdmitted()) continue;
+            GeneratedDiagnosticExecutionTrace.Builder trace =
+                GeneratedDiagnosticExecutionTrace.builder();
+            trace.recordIsolationAction(WorkbenchOperation.REMOVE);
+            trace.recordAction(WorkbenchOperation.REMOVE);
+            trace.recordRepairAction(WorkbenchOperation.CATALOG_INSTALL);
+            trace.recordAction(Rb30Behavior.SENSORS_HIGH);
+            trace.recordAction(GeneratedBoardOperationIds.CUSTOMER_RETEST);
+            if (completeActionWitness) trace.recordCompletedSemanticAction();
+            for (GeneratedDiagnosticProgram.Step step : program.getSteps()) {
+                if (step.kind == GeneratedDiagnosticProgram.Kind.SETTLE) continue;
+                switch (step.kind) {
+                case INPUT:
+                case POWER:
+                case PROFILE_POWER: trace.recordInputPowerTransition(step.id); break;
+                case WAIT: trace.recordTemporalWaitSample(step.id, step.seconds); break;
+                case DC_VOLTAGE:
+                case RESISTANCE:
+                case CONTINUITY:
+                case DIODE: trace.recordMeterMode(step.kind.name()); break;
+                default: break;
+                }
+                trace.recordCompletedSemanticAction();
+            }
+            evidence.add(new GeneratedDiagnosticSolvabilityEvidence(
+                "U05-MATHEMATICAL-FALSIFIER", owner.getCircuitFamilyId(), owner.getSeed(),
+                candidate.getHypothesisKey(), count, physicalOwners,
+                owner.getDiagnosticProvider().getDiagnosticPlan(),
+                mathematicalSamples(program, hypothesis++), trace.freeze(
+                    GeneratedDiagnosticRepairSemantics.forServiceability(
+                        candidate.getServiceability())),
+                true, "NONE", "PASS", "NONE", true, true, true));
+        }
+        return evidence;
+    }
+
+    private static Vector<GeneratedDiagnosticSample> mathematicalSamples(
+            GeneratedDiagnosticProgram program, int hypothesis) {
+        Vector<GeneratedDiagnosticSample> samples = new Vector<GeneratedDiagnosticSample>();
+        int sampleIndex = 0;
+        for (GeneratedDiagnosticProgram.Step step : program.getSteps()) {
+            double value = 1000000 + hypothesis * 100 + sampleIndex;
+            switch (step.kind) {
+            case DC_VOLTAGE:
+            case RESISTANCE:
+            case CONTINUITY:
+                samples.add(new GeneratedDiagnosticSample(step.id, value, .01));
+                sampleIndex++;
+                break;
+            case DIODE:
+                samples.add(new GeneratedDiagnosticSample(step.id + "_VOLTAGE", value, .01));
+                samples.add(new GeneratedDiagnosticSample(step.id + "_CURRENT", value + .5, .01));
+                sampleIndex += 2;
+                break;
+            default: break;
+            }
+        }
+        return samples;
+    }
+
+    private static GeneratedDiagnosticProgram withExtraSettle(GeneratedDiagnosticPlan plan,
+            GeneratedDiagnosticProgram source) {
+        GeneratedDiagnosticProgram.Builder copy = GeneratedDiagnosticProgram.builder(plan);
+        copy.settle();
+        for (GeneratedDiagnosticProgram.Step step : source.getSteps()) {
+            switch (step.kind) {
+            case INPUT: copy.input(step.id); break;
+            case POWER: copy.power(step.id, step.power); break;
+            case PROFILE_POWER: copy.profilePower(step.id, step.power); break;
+            case WAIT: copy.waitSample(step.id, step.seconds); break;
+            case SETTLE: copy.settle(); break;
+            default: copy.measure(step.kind, step.id, step.red, step.black); break;
+            }
+        }
+        return copy.build();
+    }
+
+    private static GeneratedBoardInstance asDeveloperOnlyRb56Fixture(
+            Rb56Generator.Candidate candidate) {
+        RelayOutputGenerator.Assembly assembly = candidate.assembly;
+        return new GeneratedBoardInstance(assembly.board, assembly.elements,
+            candidate.plan.seed, Rb56Plan.FAMILY_ID, candidate.plan.topology(),
+            "U05 developer-only RB56 guard fixture", assembly.components, assembly.power,
+            assembly.connections, new UnqualifiedBehavior(), null, assembly.specifications,
+            candidate.selectedFault, new GeneratedComponentOperationalStates(), null, null,
+            candidate.runtime, null, true, candidate.faultCandidates,
+            GeneratedDiagnosticSolvabilityContract.forDeveloperFixture(Rb56Plan.FAMILY_ID,
+                candidate.plan.topology(), candidate.plan.seed, candidate.faultCandidates));
+    }
+
+    private static void retireFixtureOwner(CirSim sim, GeneratedBoardInstance owner) {
+        if (owner == null) return;
+        sim.boardPowerController.detach();
+        sim.generatedBoardInstance = null;
+        sim.generatedChallengeController = null;
+        sim.boardModificationController = null;
+        sim.elmList = new Vector<CircuitElm>(owner.getSimulationElements());
+        for (CircuitElm element : owner.getSimulationElements()) element.delete();
+    }
+
+    private static void disposeUnownedCandidate(Rb56Generator.Candidate candidate,
+            GeneratedBoardInstance owner) {
+        if (candidate == null || owner != null) return;
+        RuntimeException cleanupCause = new RuntimeException("U05 fixture cleanup");
+        Rb56Generator.disposeUnpublished(candidate.assembly, cleanupCause);
+        if (cleanupCause.getSuppressed().length != 0)
+            throw new AssertionError("U05 failed to retire an unowned candidate", cleanupCause);
+    }
+
+    private static final class UnqualifiedBehavior implements GeneratedChallengeBehaviorContract {
+        public void verifyHealthy(GeneratedBoardInstance owner, BoardPowerState state) {
+            throw new UnsupportedOperationException("U05 fixture has no electrical qualification");
+        }
+        public void verifyFaulted(GeneratedBoardInstance owner,
+                BoardModificationController modifications, BoardPowerState state) {
+            throw new UnsupportedOperationException("U05 fixture has no electrical qualification");
+        }
+        public GeneratedRepairStatus getRepairStatus(GeneratedBoardInstance owner,
+                BoardModificationController modifications, BoardPowerState state, boolean overlay) {
+            return GeneratedRepairStatus.STILL_FAULTED_OR_NONFUNCTIONAL;
+        }
+        public boolean isFunctionallyRepaired(GeneratedBoardInstance owner,
+                BoardModificationController modifications, BoardPowerState state, boolean overlay) {
+            return false;
+        }
     }
     private static boolean[][][] observations(int[][] values) {
         boolean[][][] result = new boolean[values.length][values[0].length][values[0].length];

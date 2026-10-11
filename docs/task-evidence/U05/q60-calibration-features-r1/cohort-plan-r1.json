@@ -1,0 +1,40 @@
+{
+  "schema": "tsj-u05-q60-feature-cohort/1",
+  "status": "FROZEN_COLLECTION_PARTITION_FEATURE_CAPTURE_NOT_RUN",
+  "baseCommit": "d7a997b3629c10b457a454aa9df49a7515fc9bb9",
+  "features": "tsj-difficulty-calibration/1;status=UNCALIBRATED",
+  "development": [
+    {
+      "seed": "-1017",
+      "previousQ60Packages": 40
+    },
+    {
+      "seed": "-1067",
+      "previousQ60Packages": 55
+    },
+    {
+      "seed": "-1022",
+      "previousQ60Packages": 60
+    }
+  ],
+  "regressionTrial": [
+    {
+      "seed": "9007199254741579",
+      "previousQ60Packages": 50
+    },
+    {
+      "seed": "-1004",
+      "previousQ60Packages": 44
+    },
+    {
+      "seed": "-1028",
+      "previousQ60Packages": 56
+    }
+  ],
+  "selectionLimit": "Curated existing Q60 electrical cases; prior metadata was observed. Fresh feature captures NOT RUN; not an independent random holdout.",
+  "profileThresholds": null,
+  "hardAvailable": false,
+  "humanTrial": "NOT RUN; actual ordinary-control strategy/outcome required before profile freeze",
+  "failurePolicy": "Retain failures, assistance and original cohort assignment; no silent substitution or threshold fitting on regression.",
+  "timedExecution": "NOT RUN; prior PC hold superseded by Dave direct all-clear at 2026-10-11 15:41 UTC; bounded U05 gates may proceed under existing authorization; modest-host test remains DEFERRED BY OWNER / NOT RUN"
+}

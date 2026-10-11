@@ -1,0 +1,882 @@
+{
+  "schema": "tsj-u05-q60-feature-evidence/1",
+  "status": "PASS_FOR_PRIVATE_FEATURE_EXTRACTION_AND_CURATED_CAPTURE",
+  "sealedUtc": "2026-10-11T22:30:07.382822+00:00",
+  "baseCommit": "d7a997b3629c10b457a454aa9df49a7515fc9bb9",
+  "sourceFiles": {
+    "scripts/verify-current-contracts.ps1": {
+      "rawSha256": "b119f18048eb7d3dcd6b8e35f0935186ea791df6305bf8578c44883e896ad0ae",
+      "committedLfSha256": "e6a8766393c6ce41af98347e23373ae09e46bb534f47727391cab5f9b37b82c1"
+    },
+    "src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java": {
+      "rawSha256": "d950284bad7ed22d011b1c8ca3586cce7c41a03479d1a45e9f78a1ca923a8720",
+      "committedLfSha256": "b24fd8e346117d522840e867d53e3160b2e20ae54878b37502d60ddae8159224"
+    },
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": {
+      "rawSha256": "20f2117a950590684e7933904581d354c804e5257cc407b9d470cea3dff9a6cd",
+      "committedLfSha256": "85266ee6d79bd967cb157df0d58132a2b4857a57a04936ddabb742730ee31292"
+    },
+    "tests/contracts/U05DifficultyContractTest.java": {
+      "rawSha256": "f30ff2bac2ff8df02e1ac458dbda36066336b8b5cde56a814c44c71387f5e8fa",
+      "committedLfSha256": "b3f6ae1689cda5cad4582e92662e3544aa3bb2ad14abb9e0a88cd10ab6c8e6cc"
+    }
+  },
+  "namespace": "tsj-difficulty-calibration/1;status=UNCALIBRATED",
+  "profileFrozen": false,
+  "hardAvailable": false,
+  "humanTrials": "NOT RUN",
+  "sourceReview": "Normal classifier/require/canonical aggregate and all original U05 falsifiers unchanged; verifier delta is opt-in count capture only.",
+  "gates": {
+    "native-r168": {
+      "status": "PASS",
+      "operationMillis": 47428,
+      "sourceInputCount": 1353,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "952a4646d77e29659a44ee35a41f5da7715d15a212762bfd11c774d8ad6da769",
+      "launchSha256": "d7b74e4386912e616618c8ebe6602278d0b61af6881be0ad81f66c117f87295a"
+    },
+    "build-r41": {
+      "status": "PASS",
+      "operationMillis": 95926,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "d623d37f103d125d4f6ceb0c598d77a5f1bd1f6b3df47602ce17530254531e52",
+      "launchSha256": "509c6006306ad51fd9ea8f718b0f86ada4088976e49e345ffefba839ba09decc"
+    },
+    "compiled-r168": {
+      "status": "PASS",
+      "operationMillis": 62638,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "1513c80562b447bceefa90b785ab6734836fd912df8ed9344404749ba3c19eaf",
+      "launchSha256": "f176b73c579d5119350e21167a534f270b0586a22742646694dd022af040d4da"
+    },
+    "compiled-r169": {
+      "status": "PASS",
+      "operationMillis": 144009,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "65c737f6f8b93fef194808c9be84e29b5b23076412325d7c42bef583b63d7eba",
+      "launchSha256": "3131b0c8cf6386c87e04d21c28ca93b6dfae847f2512e610741f675f835c9be5"
+    },
+    "compiled-r170": {
+      "status": "PASS",
+      "operationMillis": 89082,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "df7cbd7150acdb7b85d6b7ddc9f02c2cdc1fc13693c08acf635c9b4c1b7cc1c6",
+      "launchSha256": "64afcf6562d6e746619c73467e91c5ddd68e035ddc86e7b8e6f1c568785ceeed"
+    },
+    "compiled-r171": {
+      "status": "PASS",
+      "operationMillis": 72254,
+      "sourceInputCount": 1222,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "handlesClosed": true,
+      "resultSha256": "d843258cae1589d1954fcb23c9997e8ba66e8b42a34aad704041070a257552c1",
+      "launchSha256": "31ff2f3349aaa1b3b7c1632c7af143a663e65a83beb3963f54ccb78dbc69c27c"
+    }
+  },
+  "nativeAssertions": {
+    "U04": 3971,
+    "fingerprint": 119,
+    "U05": 52,
+    "A09": 322,
+    "D01": 168
+  },
+  "gwtPermutations": 5,
+  "cohort": [
+    {
+      "seed": "-1017",
+      "cohort": "development",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=40;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=19-19;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 40,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 2,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          19,
+          19
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 18,
+      "profile": null,
+      "reportSha256": "0cf2230fc185f34c080ff4734e2eea53e79d0bcac3561c96ac96331096b211f9",
+      "operationSeconds": 28.056036400026642,
+      "generationMillis": 27108,
+      "generationWork": 516,
+      "maxManualUnitMillis": 1185,
+      "solverSamples": 55
+    },
+    {
+      "seed": "-1067",
+      "cohort": "development",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=55;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=3;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 55,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 3,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          20,
+          20
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 30,
+      "profile": null,
+      "reportSha256": "7d7e70e192667f83be03093a005ecbcd2186cc9168bf4e0d0cc9ac40ea5e0c00",
+      "operationSeconds": 64.67705840000417,
+      "generationMillis": 63620,
+      "generationWork": 589,
+      "maxManualUnitMillis": 1587,
+      "solverSamples": 60
+    },
+    {
+      "seed": "-1022",
+      "cohort": "development",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=60;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 60,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 2,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          20,
+          20
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 31,
+      "profile": null,
+      "reportSha256": "1d716374abc6e9b603d00761c9684f8d13fd57a57afd9da00fce25deb95c830d",
+      "operationSeconds": 74.09460290003335,
+      "generationMillis": 73009,
+      "generationWork": 603,
+      "maxManualUnitMillis": 1672,
+      "solverSamples": 60
+    },
+    {
+      "seed": "9007199254741579",
+      "cohort": "regressionTrial",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=50;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 50,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 2,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          20,
+          20
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 28,
+      "profile": null,
+      "reportSha256": "7af595454c0bc6eda57e34dd7a52f5d3e51659d120edda3c1e773f50d8e3cf77",
+      "operationSeconds": 48.96720590000041,
+      "generationMillis": 47767,
+      "generationWork": 584,
+      "maxManualUnitMillis": 1342,
+      "solverSamples": 60
+    },
+    {
+      "seed": "-1004",
+      "cohort": "regressionTrial",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=44;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=19-19;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 44,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 2,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          19,
+          19
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 21,
+      "profile": null,
+      "reportSha256": "efc9a8f7fe0898835ecc85026c337b66617a03db0cdb36aec76fde8af9963b6b",
+      "operationSeconds": 34.97061080002459,
+      "generationMillis": 34016,
+      "generationWork": 517,
+      "maxManualUnitMillis": 1189,
+      "solverSamples": 55
+    },
+    {
+      "seed": "-1028",
+      "cohort": "regressionTrial",
+      "canonical": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=56;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+      "counts": {
+        "parts": 56,
+        "hypotheses": 5,
+        "repairs": 5,
+        "owners": 5,
+        "readings": 2,
+        "singleRemaining": 2,
+        "executedEvidenceDepth": [
+          5,
+          5
+        ],
+        "legalWitnessActions": [
+          20,
+          20
+        ],
+        "modes": 1,
+        "inputs": 3,
+        "railTargets": 7,
+        "temporal": 1,
+        "parallel": false
+      },
+      "extractionMillis": 28,
+      "profile": null,
+      "reportSha256": "6500c355955c21183301a9b1a374f4a984d324618a7618cf2585053827b304f1",
+      "operationSeconds": 67.25603869999759,
+      "generationMillis": 66125,
+      "generationWork": 618,
+      "maxManualUnitMillis": 1654,
+      "solverSamples": 60
+    }
+  ],
+  "rawApplicationReports": [
+    {
+      "phase": "compiled-r168",
+      "reportSha256": "0cf2230fc185f34c080ff4734e2eea53e79d0bcac3561c96ac96331096b211f9",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1017",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27108,
+        "maxManualUnitMillis": 1185,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "5bb909e25c141bc024ef5ea6a70dc10e747b93daf3a6d828b4ac0e80d3b1529d",
+        "diagnosticContextDigest": "a23440d9ecad5ab56d2efd73cca0cb6aad22366bb70b2d1a303a0b6afd39e42f",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=40;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=19-19;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 18,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 27315
+      }
+    },
+    {
+      "phase": "compiled-r168",
+      "reportSha256": "590bfcab1ebadc3d9a182abea87c7eb33f15ae7c705d3a978bf078ca9f4895c1",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1017",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": true,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27446,
+        "maxManualUnitMillis": 1211,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "5bb909e25c141bc024ef5ea6a70dc10e747b93daf3a6d828b4ac0e80d3b1529d",
+        "diagnosticContextDigest": "a23440d9ecad5ab56d2efd73cca0cb6aad22366bb70b2d1a303a0b6afd39e42f",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=40;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=19-19;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 17,
+        "failurePhase": "PUBLISHED_ADMISSION",
+        "jobOutcome": "PASS",
+        "jobStage": "PUBLISH",
+        "jobWork": 516,
+        "jobMillis": 27512,
+        "manualUnitMaxMillis": 1211,
+        "routingMillis": 5384,
+        "proofMillis": 18529,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 8544,
+          "PHYSICAL": 74,
+          "HYPOTHESES": 16256,
+          "SYMPTOM": 7,
+          "PUBLISH": 66
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 47,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 465,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 537,
+            "maxMillis": 139
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 55,
+            "millis": 2640,
+            "maxMillis": 113
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 45,
+            "millis": 2143,
+            "maxMillis": 70
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 5,
+            "millis": 149,
+            "maxMillis": 33
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 5,
+            "millis": 1,
+            "maxMillis": 1
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 55,
+            "millis": 356,
+            "maxMillis": 12
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 5,
+            "millis": 138,
+            "maxMillis": 29
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 5,
+            "millis": 196,
+            "maxMillis": 44
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 150,
+            "millis": 4348,
+            "maxMillis": 144
+          },
+          "REMOVE_SETTLE": {
+            "units": 5,
+            "millis": 306,
+            "maxMillis": 74
+          },
+          "REPLACE_SETTLE": {
+            "units": 5,
+            "millis": 305,
+            "maxMillis": 72
+          },
+          "POWER_ON_SETTLE": {
+            "units": 5,
+            "millis": 230,
+            "maxMillis": 73
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 55,
+            "millis": 2343,
+            "maxMillis": 95
+          },
+          "CUSTOMER_RETEST": {
+            "units": 55,
+            "millis": 2391,
+            "maxMillis": 87
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 5,
+            "millis": 38,
+            "maxMillis": 9
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 5,
+            "millis": 102,
+            "maxMillis": 28
+          }
+        },
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 27654,
+        "failure": "IllegalStateException: rb56-explicit-after-publish-canary"
+      }
+    },
+    {
+      "phase": "compiled-r169",
+      "reportSha256": "7d7e70e192667f83be03093a005ecbcd2186cc9168bf4e0d0cc9ac40ea5e0c00",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1067",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 55,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 589,
+        "generationMillis": 63620,
+        "maxManualUnitMillis": 1587,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "c47d5365dbeaf171747beac441d5ae9c6b5606822914f3fd6cc8e3adad8c33e4",
+        "diagnosticContextDigest": "4bc07492a0c8b93cfa5b2d0c31e36cdd192ba2404d0b05d6545bdafe21a255a8",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=55;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=3;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 30,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 63933
+      }
+    },
+    {
+      "phase": "compiled-r169",
+      "reportSha256": "1d716374abc6e9b603d00761c9684f8d13fd57a57afd9da00fce25deb95c830d",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 73009,
+        "maxManualUnitMillis": 1672,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "c74f5d0e95b36ff708a4ab5f977b86b9875982d1f25fb4a5cd7ec9862fc03e15",
+        "diagnosticContextDigest": "d04122c4f8b2a81321a7aea50ed6cd9786c371f428c5a4e2bc9b7d5d59af471e",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=60;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 31,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 73345
+      }
+    },
+    {
+      "phase": "compiled-r170",
+      "reportSha256": "7af595454c0bc6eda57e34dd7a52f5d3e51659d120edda3c1e773f50d8e3cf77",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "9007199254741579",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 50,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 584,
+        "generationMillis": 47767,
+        "maxManualUnitMillis": 1342,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "6cc03bba49d6ac0abe27ff7208ba80310e4c8f9e3493befc9d57428d9f583b51",
+        "diagnosticContextDigest": "ad2bc164afe5153f28518f2b18daed481609db3749e7527291ff0bd031cf920c",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=50;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 28,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 48056
+      }
+    },
+    {
+      "phase": "compiled-r170",
+      "reportSha256": "efc9a8f7fe0898835ecc85026c337b66617a03db0cdb36aec76fde8af9963b6b",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1004",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 44,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 517,
+        "generationMillis": 34016,
+        "maxManualUnitMillis": 1189,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "a690dee1f85811fd1c42d4cae789ee6f6e884c0ef6943aaa401268c3122d982f",
+        "diagnosticContextDigest": "4d9940384c0f14fec2f64b293f4f237c3497bed1bc2436826b685008b74a0259",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=44;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=19-19;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 21,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 34251
+      }
+    },
+    {
+      "phase": "compiled-r171",
+      "reportSha256": "6500c355955c21183301a9b1a374f4a984d324618a7618cf2585053827b304f1",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_SHARED_WORKBENCH",
+        "family": "RB56_CONTROL",
+        "seed": "-1028",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "PASS",
+        "phase": "RESTORED",
+        "packages": 56,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 618,
+        "generationMillis": 66125,
+        "maxManualUnitMillis": 1654,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "9153a02feb0e0d1c3e0e4311bbbc1ec106747f95b960ec101055e187630960e9",
+        "diagnosticContextDigest": "89276e1410577938243007f7dbe615d73a7b590e97352739b3464239876a5192",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=56;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=5-5;legalWitnessActions=20-20;modes=1;inputs=3;railTargets=7;temporal=1;parallel=false",
+        "difficultyFeatureStatus": "UNCALIBRATED",
+        "difficultyFeatureVersion": 1,
+        "difficultyFeatureExtractionMillis": 28,
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 66435
+      }
+    }
+  ],
+  "forcedRestoration": {
+    "status": "PASS",
+    "expectedApplicationStatus": "FAIL",
+    "reportSha256": "590bfcab1ebadc3d9a182abea87c7eb33f15ae7c705d3a978bf078ca9f4895c1",
+    "aggregateDeterminism": true,
+    "extractionMillis": 17
+  },
+  "normalPrivacy": {
+    "status": "PASS",
+    "errors": [],
+    "scope": "DEBUG_FALSE_NEW_FEATURE_FLAG_INERT",
+    "playerInputEvidence": false,
+    "observed": {
+      "screen": "MENU",
+      "build": "38E6D616B65DBEE9830BA356610A184F",
+      "hasBoard": false,
+      "privateQualification": false,
+      "privateAttributes": {
+        "data-tsj-verification": null,
+        "data-tsj-rb56-report": null,
+        "data-tsj-rb56-state": null
+      },
+      "hardDisabled": true
+    },
+    "pageErrors": [],
+    "callbackListenerRemoved": true,
+    "operationSeconds": 0.4498994000023231
+  },
+  "pilot": {
+    "resultSha256": "15910a063354375711dbd9e5536e5ebf81417f777966cce8890cdc8b71110b14",
+    "strictResultSha256": "71146e9f8630defaf07eb347092f1d00b83e5955a458d0cf53596405d24c36ff",
+    "browser": {
+      "browserVersion": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "versionSessionDetached": true
+    },
+    "cpuRecorderStatus": "PASS",
+    "cpuSamples": 33,
+    "cpuHandlesOpened": 5652,
+    "cpuHandlesClosed": 5652
+  },
+  "collections": {
+    "compiled-r169": {
+      "resultSha256": "50faac6ae35154720dada65e72631dddd3771ae4d6e14eadcd4890f921f4fe8e",
+      "elapsedSeconds": 143.5969351999811,
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      },
+      "cpuRecorderStatus": "PASS",
+      "cpuSamples": 73,
+      "cpuHandlesOpened": 12948,
+      "cpuHandlesClosed": 12948,
+      "portClosed": true,
+      "ownedCleanup": "PASS"
+    },
+    "compiled-r170": {
+      "resultSha256": "4db9a4802a6f78ec29ef3d6d19de365ea51c1de11e10a8170e1ff35bc2830ed2",
+      "elapsedSeconds": 88.74222730001202,
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      },
+      "cpuRecorderStatus": "PASS",
+      "cpuSamples": 46,
+      "cpuHandlesOpened": 8128,
+      "cpuHandlesClosed": 8128,
+      "portClosed": true,
+      "ownedCleanup": "PASS"
+    },
+    "compiled-r171": {
+      "resultSha256": "0a8fdfc39e15511a8439f011b6b056272823f3353bb40cce9eb946ee8ffdae23",
+      "elapsedSeconds": 71.99448150000535,
+      "browser": {
+        "browserVersion": {
+          "protocolVersion": "1.3",
+          "product": "Edg/155.0.4283.45",
+          "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+          "jsVersion": "15.5.9.4"
+        },
+        "versionSessionDetached": true
+      },
+      "cpuRecorderStatus": "PASS",
+      "cpuSamples": 37,
+      "cpuHandlesOpened": 6532,
+      "cpuHandlesClosed": 6532,
+      "portClosed": true,
+      "ownedCleanup": "PASS"
+    }
+  },
+  "chronology": {
+    "oldHoldQuote": "After other work finishes; I\u2019ll tell you when",
+    "oldHoldRecordedByUtc": "2026-10-09T01:55:10.940154+00:00",
+    "controllingMessageUtc": "2026-10-11T15:41:00Z",
+    "controllingQuote": "Yea tjs can keep going the PC should be quiet right now",
+    "newerDirectHoldFound": false,
+    "oldForwardedAnswerWasMistakenlyReapplied": true,
+    "modestHost21_35Disposition": "DEFERRED BY OWNER / NOT RUN only; not quiet-window authorization"
+  },
+  "limits": [
+    "Curated prior Q60 electrical cases, freshly measured features; not independent random holdout or population reliability.",
+    "No HARD/PSYCHOTIC policy, public catalog, advanced durable/replay, human strategy/outcome, modest-host or portability qualification.",
+    "Reading optimum is over certified measurement set; witness is existence/upper bound, not minimum human clicks.",
+    "Trusted same-owner freshness established at immediate cold-verifier call site, not after arbitrary mutations.",
+    "Observed extraction timing is separate from generation timing; no new product threshold or speed claim.",
+    "No current 100-owner/96-inventory, global host resource sweep or new modern/classic endurance claim."
+  ],
+  "preservation": {
+    "originalFiles": 8,
+    "serverAccesses": 0,
+    "emailSent": false,
+    "Q30UnchangedCorpusReruns": 0,
+    "historicalFailuresRetained": true
+  }
+}
