@@ -1,4 +1,40 @@
-# Current checkpoint: final Q60 acceptance review complete; modest-host qualification held
+# Current checkpoint: Q60 accepted on reference PC; modest-host evidence deferred by Dave
+
+2026-10-11. Dave explicitly deferred the unavailable modest-host test at 21:35 UTC:
+"no i dont. but let's just skip that requirement for now". That specific
+requirement is DEFERRED BY OWNER / NOT RUN, with no weaker-hardware/portability
+PASS. No other correctness, performance, HARD or save/load gate is deferred.
+
+Q60 is ACCEPTED within the finite reference-PC/model/corpus/session scope at
+production `b74f04325d02369f6a6296db8db5f178ec6895c1`; `56d221bd` changed docs only.
+The remaining interactive mapping uses the existing accepted U07 policy:
+5 s SDK input-action proxy, 200 MiB observed heap, 32 MiB matched-state growth.
+Modern26's 90 inputs all PASS, worst 2.222 s; classic22's 109 all PASS, worst 2.625 s.
+Observed heaps max 94,019,560/83,644,172 bytes; classic matched growth 795,248 bytes.
+No new threshold or collection-timeout relabel; no EventTiming/FPS/leak claim.
+
+Native162/build40/normal167/modern26/classic22 retain their actual PASS scopes.
+Six exact cases/full D01/model-energy evidence retain scoped unchanged-input
+reuse; source-bound reference/driver alternatives are explicitly mapped.
+Production inputs and eight original files remain unchanged. No new runtime
+gate, build, browser, unchanged corpus or host resource sweep for admission.
+
+Next: U05's private uncalibrated RB56 aggregate feature capture, then fresh
+development and separate regression/trial findings before a HARD rule is frozen.
+Public HARD/Q60/advanced durable release remains held; no MEDIUM alias or
+catalog-flag-only enable. REL-B owns normal population and every advertised
+advanced state/replay/save flow; REL-B/Q100 remain UNSTARTED.
+
+The latest timed-PC restriction persists until Dave gives another all-clear.
+All recorded failures, modern26's explicit oracle correction and historical
+Q30 risks remain. C4130/server hold, Core/Android exclusion, no protected-main,
+unrelated process or email action are preserved.
+
+[Admission and remaining release gates](task-evidence/Q60/reference-pc-admission-r1/README.md).
+
+---
+
+# Historical checkpoint: final Q60 acceptance review complete; modest-host qualification held
 
 2026-10-11. Reviewed published production commit
 `b74f04325d02369f6a6296db8db5f178ec6895c1` on

@@ -1,4 +1,24 @@
-# Current Q60: final review complete; required modest-host evidence held
+# Current Q60: accepted reference-PC envelope; modest-host evidence deferred
+
+[Admission decision](reference-pc-admission-r1/README.md) records Dave's explicit
+2026-10-11 modest-host deferral as DEFERRED BY OWNER / NOT RUN. No weaker-hardware
+proof is claimed. Q60 is ACCEPTED within the finite reference-PC/model/corpus/
+session scope; all other gates retain their actual evidence and limits.
+
+The existing accepted U07 input-action/heap/matched-growth budget now maps to
+the sealed modern26/classic22 measurements. No threshold change or new run was
+needed. [Private session evidence](private-session-mixed60-r1/README.md) retains
+the underlying results, failures and screenshots; earlier HOLD reviews below
+remain historical and immutable.
+
+Next: U05 private aggregate feature capture and fresh HARD development/regression/
+human-trial calibration. Public Q60/HARD/advanced durable save/replay stays held
+for those later U05/REL-B gates. Timed PC tests await the owner's next all-clear.
+Original eight files, historical Q30 risks and C4130/server hold remain.
+
+---
+
+# Historical Q60: final review complete; required modest-host evidence held
 
 Reviewed published production `b74f04325d02369f6a6296db8db5f178ec6895c1`.
 [Final acceptance review](final-admission-review-r1/README.md) maps the written

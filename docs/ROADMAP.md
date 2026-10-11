@@ -7,16 +7,15 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
-Final acceptance review of published production `b74f043` maps the six retained
-PASS cases to real reference/driver alternatives and verifies unchanged evidence.
-Private PlayerSession repair/retest/Close and classic same-board session pass.
-Actual modest-machine qualification remains BLOCKED; its host/environment and
-pilot budget decisions must be declared. Existing action-wall/heap/DOM proxies
-do not qualify input-latency/FPS targets. No new gate or scope waiver is adopted.
-Normal Q60/HARD/advanced durable release stays held for later U05/REL-B proof.
+**Current task:** **Q60 ACCEPTED in finite reference-PC scope; U05 HARD calibration next**
+Dave explicitly deferred the unavailable modest-host test on 2026-10-11; it is
+DEFERRED BY OWNER / NOT RUN, with no weaker-hardware proof. Existing U07
+5 s input-action/200 MiB heap/32 MiB matched-growth budgets pass against the sealed
+Q60 observations. No other gate or threshold is waived. Native/build/private
+repair/retest/session/model evidence retain their recorded scopes.
+Public Q60/HARD/advanced durable release stays held for fresh U05/REL-B proof.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
-[final review](task-evidence/Q60/final-admission-review-r1/README.md).
+[admission decision](task-evidence/Q60/reference-pc-admission-r1/README.md).
 
 **Historical count-only/Q30 task checkpoint:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
 U06/U07/E05/E06 remain published. Count-only source
@@ -3011,7 +3010,7 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Final seven-file private
+**Status:** ACCEPTED within the finite reference-PC scope, 2026-10-11; modest-host evidence DEFERRED BY OWNER / NOT RUN. Final seven-file private
 PlayerSession integration passes native162 (3,971 U04 assertions), actual JDK8/
 GWT build40 (all five permutations), and normal167 ticket/Shop/session-menu
 presentation plus separate injected wrong/stale bridge guards. Modern26 passes
@@ -3035,13 +3034,16 @@ source-bound inference, not a topology census or broad procedural population.
 Original admission caps and frozen visible collection controls pass on this PC.
 Input-action wall/heap/DOM proxies do not qualify input-latency/FPS/leak targets.
 
-Q60 remains unaccepted: required actual modest-machine performance evidence is
-BLOCKED/unavailable. Next: explicitly identify/authorize that host and declare
-its environment, cold/warm protocol and measured-pilot budget decisions. No
-modest CPU/RAM/GPU model or new numeric threshold is specified by this roadmap.
-A01's desktop exception excludes Q60; Ryzen7700 is reference only. After Q60,
-U05 owns fresh HARD calibration and REL-B owns normal advanced admission and
-advertised save/replay proof; enabling the flag alone is insufficient.
+Q60 is accepted for this documented finite reference-PC envelope. Dave explicitly
+deferred the unavailable modest-host test on 2026-10-11; this is DEFERRED BY OWNER /
+NOT RUN, not a portability PASS or an extension of A01's exception. Section 6.7's
+modest-host requirement remains for later evidence; no specific hardware is named.
+Existing U07 budgets close the interactive mapping: 90/109 actual SDK inputs all
+PASS, worst 2.222/2.625 s against 5 s; observed heaps 94,019,560/83,644,172 bytes against 200 MiB;
+classic matched growth 795,248 bytes against 32 MiB. No EventTiming/FPS/leak claim follows.
+Next: U05 private aggregate feature capture and fresh HARD calibration cohorts;
+REL-B still owns normal advanced admission and advertised save/replay proof.
+Enabling the flag alone is insufficient; no other release gate is deferred.
 
 Private integration and the classic elapsed-session case retain PASS. The six
 strict build35 jobs remain historical, not rerun; reuse covers 1,164 consumed
@@ -3049,7 +3051,8 @@ inputs and the audited CirSim inverse, not whole-source/WAR equality or current
 100-owner/96-inventory qualification. No new mandatory historical-reader,
 all-browser, unchanged Gate B or fixed100-cycle gate is added. Historical Q30
 91.616s unknown failure, six missing inventories and late BLOCKED audit remain.
-REL-B/Q100 are unstarted. [Final review](task-evidence/Q60/final-admission-review-r1/README.md),
+REL-B/Q100 are unstarted. [Admission](task-evidence/Q60/reference-pc-admission-r1/README.md),
+[historical final review](task-evidence/Q60/final-admission-review-r1/README.md),
 [session evidence](task-evidence/Q60/private-session-mixed60-r1/README.md) and
 [retained solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
 

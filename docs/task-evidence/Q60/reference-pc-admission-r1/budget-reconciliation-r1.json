@@ -1,0 +1,114 @@
+{
+  "schema": "Q60-U07-EXISTING-BUDGET-RECONCILIATION-3",
+  "status": "PASS_SCOPED_REFERENCE_PC_COMPARISON",
+  "recordedUtc": "2026-10-11T21:43:30.285539+00:00",
+  "productionCheckpoint": "b74f04325d02369f6a6296db8db5f178ec6895c1",
+  "existingPolicy": {
+    "path": "docs/task-evidence/U07/endurance-workload.json",
+    "rawBinding": {
+      "sha256": "aa524ddebd4b7246e848e508356a1635648d56323bdaeece491eddbea143f4fb",
+      "bytes": 114621
+    },
+    "inputActionProxySeconds": 5,
+    "observedHeapUsedBytes": 209715200,
+    "matchedStateGrowthBytes": 33554432,
+    "policyPredatesQ60Measurements": true,
+    "newThresholdChosen": false
+  },
+  "measurementBoundary": {
+    "method": "Recorded successful SDK input-action wall time and browser CDP heap observations, matching accepted U07 proxy types.",
+    "includedInputOperations": [
+      "keyboard.press",
+      "locator.click",
+      "locator.fill",
+      "locator.press",
+      "locator.select_option"
+    ],
+    "excluded": [
+      "generation/settlement polling",
+      "metrics and GC",
+      "screenshots",
+      "file I/O",
+      "assertions",
+      "read-only observations",
+      "private API canary"
+    ],
+    "eventTimingFpsOr100msQualification": false,
+    "populationReliabilityOrLeakProof": false,
+    "legacyCollectionControlsRelabeledAsProductBudgets": false,
+    "originalQ60PacketPerformanceThresholdFlagChanged": false
+  },
+  "cases": {
+    "modern26": {
+      "rawResult": {
+        "sha256": "29dba0f561f960ddbbeb5256847ecc7a9bc78054eab48f6f4916b642fb6a9ad6",
+        "bytes": 178573
+      },
+      "inputActionCount": 90,
+      "inputActionOperations": [
+        "keyboard.press",
+        "locator.click",
+        "locator.fill",
+        "locator.press",
+        "locator.select_option"
+      ],
+      "inputActionWallSeconds": {
+        "p50": 0.244,
+        "p95": 0.495,
+        "worst": 2.222
+      },
+      "inputActionProxyLimitPass": true,
+      "heapObservationCount": 3,
+      "maximumObservedHeapUsedBytes": 94019560,
+      "observedHeapLimitPass": true,
+      "unsampledPeakHeapQualification": false
+    },
+    "classic22": {
+      "rawResult": {
+        "sha256": "3658fdf5975810970b9ee55c269389ee68bb1b90b2aaf079a1b83cbe9fbb36bb",
+        "bytes": 958323
+      },
+      "inputActionCount": 109,
+      "inputActionOperations": [
+        "locator.click",
+        "locator.select_option"
+      ],
+      "inputActionWallSeconds": {
+        "p50": 0.315,
+        "p95": 0.767,
+        "worst": 2.625
+      },
+      "inputActionProxyLimitPass": true,
+      "heapObservationCount": 6,
+      "maximumObservedHeapUsedBytes": 83644172,
+      "observedHeapLimitPass": true,
+      "unsampledPeakHeapQualification": false,
+      "matchedStateHeap": {
+        "observationsBytes": [
+          42253208,
+          43048456,
+          41957708
+        ],
+        "maximumObservedGrowthBytes": 795248,
+        "finalDeltaBytes": -295500,
+        "sameStateGrowthLimitPass": true,
+        "sameBoardPageAndRepairedInventory": true,
+        "ownerReplacementWorkloadClaim": false,
+        "reachabilityOrLeakProof": false
+      }
+    }
+  },
+  "modestHost": {
+    "status": "DEFERRED_BY_DAVE",
+    "actualRun": false,
+    "weakerHardwareProof": false,
+    "authorizationUtc": "2026-10-11T21:35:00Z",
+    "instruction": "no i dont. but let's just skip that requirement for now"
+  },
+  "revision": "Correct exact U07 input category from page.keyboard.press to keyboard.press; r1 omitted11 actual keyboard actions and is preserved. The r2 static writer refused to overwrite r1; r3 fixes only its output path. No threshold or runtime change.",
+  "priorStaticComparison": {
+    "sha256": "ad3f90b568ba0e7c9299fb518a9f403ef5063d1497ed5c8efa91cdddadefaa6d",
+    "bytes": 3469
+  },
+  "newRuntimeGatesRun": 0
+}
