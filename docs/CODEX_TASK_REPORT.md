@@ -1,4 +1,50 @@
-# Current checkpoint: private Q60 PlayerSession and same-board endurance PASS; Q60 unaccepted
+# Current checkpoint: final Q60 acceptance review complete; modest-host qualification held
+
+2026-10-11. Reviewed published production commit
+`b74f04325d02369f6a6296db8db5f178ec6895c1` on
+`codex/q60-faulted-profile-counts`; local/upstream/actual origin matched before
+this documentation-only review. Private modern26 repair/retest/Close and
+classic22 same-board elapsed-session gates retain PASS. No production edit,
+build, browser, unchanged corpus rerun or expanded release claim.
+
+The exact six retained PASS seeds map through unchanged deterministic source
+to separate-direct, shared-direct and shared-hysteretic networks with real
+BJT/NMOS drivers. This is source-bound inference, not an explicit runtime
+topology-label census. Original admission limits pass; frozen visible waits
+are collection controls. SDK action-wall, heap and DOM proxies do not qualify
+the approximately 100 ms p95 / 30 fps UX targets or a leak threshold.
+
+Static recheck PASS: seven raw/committed-LF source bindings, 1,164 invoked proof
+inputs, four strict authority files, seven final gate/binding receipts, nine
+screenshots and all eight original files match. Retained numerical/model evidence
+keeps its recorded source/contract scope; whole-source/WAR equality is not claimed.
+
+**Decision:** Q60 remains IN PROGRESS / UNACCEPTED. Roadmap section6.7 and Q60's
+performance clause require actual modest-machine evidence. No particular modest
+CPU/RAM/GPU or numeric host threshold is defined. Next: identify and authorize
+that real host, declare hardware/environment/cold-warm protocol and pilot budget
+decisions, then collect the applicable frozen workload evidence. The A01 desktop
+exception excludes Q60; the Ryzen7700 PC does not automatically qualify.
+Timed testing on this PC waits for the owner's next all-clear.
+
+Normal Q60/HARD and advanced durable save/load remain held. Enabling the catalog
+alone cannot work through the current EASY/MEDIUM-only normal admission path.
+After Q60 acceptance, U05 owns fresh HARD calibration/production admission;
+REL-B owns normal population and advertised advanced session/release proof.
+Restart foundations exist but an RB56 capture/load flow is not qualified.
+No historical-reader, all-browser, unchanged Gate B or fixed100-cycle gate was
+added. REL-B/Q100 are UNSTARTED.
+
+Modern16/19/21/23/25 failures, the explicit26 oracle correction, Q30's 91.616s
+unknown failure, six missing inventories and late BLOCKED audit remain. Original
+eight files are preserved. No current full-host resource sweep, server access,
+unrelated process action, Core/Android, protected main or email is included.
+
+[Final review and exact remaining requirement](task-evidence/Q60/final-admission-review-r1/README.md).
+
+---
+
+# Historical checkpoint: private Q60 PlayerSession and same-board endurance PASS; Q60 unaccepted
 
 2026-10-11. Final seven-file integration over parent
 `aebb06d0734d8dd76eaef534497f85f7c90d3fff` on

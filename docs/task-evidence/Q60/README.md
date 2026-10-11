@@ -1,4 +1,28 @@
-## Current Q60: exact 60-package public repair/retest PASS; unaccepted
+# Current Q60: final review complete; required modest-host evidence held
+
+Reviewed published production `b74f04325d02369f6a6296db8db5f178ec6895c1`.
+[Final acceptance review](final-admission-review-r1/README.md) maps the written
+requirements, actual frozen budgets, source-bound architecture coverage and
+exact remaining modest-host qualification requirement. **Q60 is IN PROGRESS / UNACCEPTED;
+normal Q60/HARD/advanced durable release remains held.**
+
+[Private PlayerSession and mixed classic session](private-session-mixed60-r1/README.md)
+bind native162/build40/normal167, modern26's actual repair/retest/Close and
+classic22's same-board 317.862s/three-checkpoint session. They supersede the old
+current index's "modern integration next" status. The six strict jobs are reused
+only within their audited unchanged-input boundary. No production input changed
+and no corpus was rerun for the final review.
+
+Next: explicitly identify/authorize actual modest hardware, document its full
+environment/cold-warm protocol and pilot budget decisions, then collect the
+applicable frozen workload evidence. The roadmap names no specific modest model;
+the A01 fast-desktop exception excludes Q60. Later U05/REL-B own HARD calibration,
+normal population and advertised advanced save/load proof. Original failures,
+eight files and historical Q30 risks remain preserved in the packets below.
+
+---
+
+## Historical Q60: exact 60-package public repair/retest PASS; unaccepted
 
 [Visible r15 evidence](public-band-visible60-r15/README.md) binds the current
 one-file public color-band controller change, native158/build36 and actual headed

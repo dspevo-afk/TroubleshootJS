@@ -8,14 +8,15 @@
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
 **Current task:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
-Private qualified PlayerSession integration now passes the exact 60-package
-visible repair/retest/Close flow. A separate same-board mixed/endurance flow
-passes 317.862 s after HOLD with three healthy checkpoints. Final native162,
-build40 and normal167 presentation canary pass; normal Q60 catalog/HARD and
-advanced durable save/load remain held. Next: finish Q60 admission and final
-qualification, including actual modest hardware, which remains BLOCKED.
+Final acceptance review of published production `b74f043` maps the six retained
+PASS cases to real reference/driver alternatives and verifies unchanged evidence.
+Private PlayerSession repair/retest/Close and classic same-board session pass.
+Actual modest-machine qualification remains BLOCKED; its host/environment and
+pilot budget decisions must be declared. Existing action-wall/heap/DOM proxies
+do not qualify input-latency/FPS targets. No new gate or scope waiver is adopted.
+Normal Q60/HARD/advanced durable release stays held for later U05/REL-B proof.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
-[private session and endurance evidence](task-evidence/Q60/private-session-mixed60-r1/README.md).
+[final review](task-evidence/Q60/final-admission-review-r1/README.md).
 
 **Historical count-only/Q30 task checkpoint:** **E06 published; Q60 IN PROGRESS / UNACCEPTED**
 U06/U07/E05/E06 remain published. Count-only source
@@ -3027,15 +3028,30 @@ the accepted unformed-lead policy: all three acquired parts each expose one
 enabled public RSA target; select the first. This is a changed oracle, with the
 other guards and budgets preserved. Earlier failures remain recorded.
 
-Private integration and this endurance case pass; normal Q60 catalog/HARD and
-advanced durable save/load remain held. Next: Q60 admission/final qualification
-and actual modest-host evidence. Modest hardware remains BLOCKED/unavailable;
-Ryzen 7700 is reference only. The six strict build35 jobs remain historical,
-not rerun; reuse covers 1,164 consumed physics/generation/D01 inputs, not the
-whole changed source/WAR or current 100-owner/96-inventory qualification.
-Historical Q30 91.616 s unknown failure, six missing inventories and late BLOCKED
-audit remain. REL-B/Q100 are unstarted. [Current evidence](task-evidence/Q60/private-session-mixed60-r1/README.md)
-and [retained solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
+Final acceptance review maps the six exact retained PASS seeds to separate-direct,
+shared-direct and shared-hysteretic references with BJT/NMOS drivers through
+unchanged deterministic source. Reports omit runtime topology labels; this is
+source-bound inference, not a topology census or broad procedural population.
+Original admission caps and frozen visible collection controls pass on this PC.
+Input-action wall/heap/DOM proxies do not qualify input-latency/FPS/leak targets.
+
+Q60 remains unaccepted: required actual modest-machine performance evidence is
+BLOCKED/unavailable. Next: explicitly identify/authorize that host and declare
+its environment, cold/warm protocol and measured-pilot budget decisions. No
+modest CPU/RAM/GPU model or new numeric threshold is specified by this roadmap.
+A01's desktop exception excludes Q60; Ryzen7700 is reference only. After Q60,
+U05 owns fresh HARD calibration and REL-B owns normal advanced admission and
+advertised save/replay proof; enabling the flag alone is insufficient.
+
+Private integration and the classic elapsed-session case retain PASS. The six
+strict build35 jobs remain historical, not rerun; reuse covers 1,164 consumed
+inputs and the audited CirSim inverse, not whole-source/WAR equality or current
+100-owner/96-inventory qualification. No new mandatory historical-reader,
+all-browser, unchanged Gate B or fixed100-cycle gate is added. Historical Q30
+91.616s unknown failure, six missing inventories and late BLOCKED audit remain.
+REL-B/Q100 are unstarted. [Final review](task-evidence/Q60/final-admission-review-r1/README.md),
+[session evidence](task-evidence/Q60/private-session-mixed60-r1/README.md) and
+[retained solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

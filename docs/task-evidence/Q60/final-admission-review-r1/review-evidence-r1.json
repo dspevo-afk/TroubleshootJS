@@ -1,0 +1,214 @@
+{
+  "schema": "Q60-FINAL-ADMISSION-REVIEW-1",
+  "reviewedProductionCommit": "b74f04325d02369f6a6296db8db5f178ec6895c1",
+  "branch": "codex/q60-faulted-profile-counts",
+  "decision": {
+    "boundedPublishedPrivateCheckpoint": "PASS_WITH_RECORDED_SCOPE",
+    "baseQ60Acceptance": "HOLD_UNACCEPTED",
+    "normalPublicQ60HardAdvancedDurableRelease": "HOLD",
+    "missingBaseQualification": "Actual modest-host performance evidence and declared host/pilot budget decisions required by roadmap section6.7 and Q60 performance clause.",
+    "laterReleaseRequirements": [
+      "Fresh Q60-based U05 HARD calibration and production admission behavior",
+      "Fresh signed-long normal population/retry/determinism/diversity evidence",
+      "REL-B qualification of every advertised advanced source/repair/save/replay state"
+    ],
+    "scopeExceptionAdopted": false,
+    "newMandatoryGateInvented": false
+  },
+  "staticRecheck": {
+    "schema": "Q60-FINAL-ADMISSION-STATIC-AUDIT-1",
+    "status": "PASS",
+    "recordedUtc": "2026-10-11T21:11:30.201167+00:00",
+    "reviewedProductionCommit": "b74f04325d02369f6a6296db8db5f178ec6895c1",
+    "productionInputsUnchanged": true,
+    "publishedSessionPacketSha256": "ddc57ad9f6ea613e204a60c48881a6bda3ae25c64020c71aae83d80febdd8855",
+    "historicalReuseAuditSha256": "4ee109d58d39a797ba277497ae9ea6474f9a1f9afb6a56e97c71cfe4372baeef",
+    "rawAndCommittedSourceBindingsVerified": 7,
+    "unchangedInvokedProofInputsVerified": 1164,
+    "retainedStrictAuthorityFilesVerified": 4,
+    "finalGateAndBindingReceiptsVerified": 7,
+    "publishedScreenshotsVerified": 9,
+    "originalUntrackedFilesVerified": 8,
+    "newRuntimeGatesRun": 0,
+    "scope": "Static binding review only; no electrical/browser rerun, live resource sweep, modest-host proof or expanded release claim."
+  },
+  "staticRecheckRawReceipt": {
+    "sha256": "0416f76537c1305af390f624441ba18e46ab8606781e49ebb0cdc233571b2b95",
+    "bytes": 878
+  },
+  "architectureMapping": {
+    "basis": "Source-bound inference from exact seeds and unchanged deterministic consumed source, joined to actual six PASS jobs; metadata initially declaration-only.",
+    "cases": [
+      {
+        "seed": "-1017",
+        "packages": 40,
+        "reference": "SEPARATE_DIRECT",
+        "drivers": [
+          "BJT"
+        ],
+        "receipt": "compiled159"
+      },
+      {
+        "seed": "-1067",
+        "packages": 55,
+        "reference": "SEPARATE_DIRECT",
+        "drivers": [
+          "NMOS",
+          "NMOS"
+        ],
+        "receipt": "compiled159"
+      },
+      {
+        "seed": "-1022",
+        "packages": 60,
+        "reference": "SHARED_HYSTERETIC",
+        "drivers": [
+          "BJT",
+          "NMOS"
+        ],
+        "receipt": "compiled158"
+      },
+      {
+        "seed": "9007199254741579",
+        "packages": 50,
+        "reference": "SHARED_DIRECT",
+        "drivers": [
+          "NMOS",
+          "BJT"
+        ],
+        "receipt": "compiled160"
+      },
+      {
+        "seed": "-1004",
+        "packages": 44,
+        "reference": "SHARED_HYSTERETIC",
+        "drivers": [
+          "BJT"
+        ],
+        "receipt": "compiled160"
+      },
+      {
+        "seed": "-1028",
+        "packages": 56,
+        "reference": "SHARED_DIRECT",
+        "drivers": [
+          "BJT",
+          "BJT"
+        ],
+        "receipt": "compiled161"
+      }
+    ],
+    "retainedRawAuthorities": {
+      "declarationOnlyMetadata": {
+        "sha256": "d5c8e36175f9c14bad0d74b1aa80865aeef28a42e3b3034c407d91eed3bb3659",
+        "bytes": 4558
+      },
+      "postSensorCensusAudit": {
+        "sha256": "54966358eeac7499052fb654a9b9eb9717db75d41e7c90ec3d038dc00addde54",
+        "bytes": 6136
+      },
+      "actualSixCaseAudit": {
+        "sha256": "946eeef2c862dd27e46088eca32bc1185d45cb3f2257048a3b2b4ca04708f32a",
+        "bytes": 458834
+      }
+    },
+    "explicitRuntimeTopologyLabelCensus": "UNKNOWN_NOT_REPORTED",
+    "alternateConverterCoverageClaim": false,
+    "broadProceduralPopulationCoverageClaim": false,
+    "sourceReferences": [
+      "src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+      "src/com/lushprojects/circuitjs1/client/RelayDriverProvider.java",
+      "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java",
+      "src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+      "src/com/lushprojects/circuitjs1/client/Rb56Generator.java"
+    ]
+  },
+  "budgetMapping": {
+    "generationLimits": {
+      "jobMs": 90000,
+      "workUnits": 640,
+      "maximumManualUnitMs": 5000
+    },
+    "modern26": {
+      "generationMs": 77738,
+      "workUnits": 603,
+      "maximumManualUnitMs": 1697,
+      "operationSeconds": 136.5991998,
+      "nativeSeconds": 139.383,
+      "operationLimitSeconds": 240,
+      "nativeLimitSeconds": 300,
+      "measurements": 6,
+      "actionRecordsPass": 225
+    },
+    "classic22": {
+      "generationMs": 77894,
+      "workUnits": 603,
+      "maximumManualUnitMs": 1732,
+      "operationSeconds": 411.7901999,
+      "nativeSeconds": 414.631,
+      "operationLimitSeconds": 480,
+      "nativeLimitSeconds": 540,
+      "measurements": 10,
+      "actionRecordsPass": 310,
+      "sameOwnerSecondsAfterHold": 317.8623669,
+      "minimumCheckpointSecondsAfterHold": 300
+    },
+    "collectionBounds": {
+      "stableMeterPollAfterProbePlacementSeconds": 3,
+      "readinessObservationSeconds": 30,
+      "enabledRetestControlWaitSeconds": 5,
+      "subsequentResultObservationWaitSeconds": 5
+    },
+    "collectionBoundsAreProductLatencyBudgets": false,
+    "eventTimingFpsOrInputLatencyTargetQualification": false,
+    "populationColdWarmPercentileQualification": false,
+    "heapReachabilityOrLeakThresholdQualification": false
+  },
+  "modestHost": {
+    "status": "BLOCKED_NOT_RUN",
+    "exactHardwareSpecifiedByRoadmap": false,
+    "requiredDeclaration": [
+      "CPU",
+      "installed RAM",
+      "graphics",
+      "OS/browser/version",
+      "resolution/device-pixel ratio",
+      "power/background conditions",
+      "exact source/build",
+      "cold/warm protocol",
+      "pilot workload and performance decisions before qualification"
+    ],
+    "fastDesktopAutomaticallyQualifies": false,
+    "a01DesktopExceptionCoversQ60": false,
+    "serverAccessAuthorized": false
+  },
+  "durableStateReview": {
+    "genericRestartAdapterGapIdentified": false,
+    "actualRb56CaptureLoadQualified": false,
+    "privateSaveLoadReplayDisabled": true,
+    "restartExclusions": [
+      "continuous capacitor charge",
+      "relay motion",
+      "hysteresis",
+      "simulation time",
+      "pending solver events",
+      "copper cuts"
+    ]
+  },
+  "compatibilityBoundary": {
+    "newAllBrowserMatrixRequired": false,
+    "historicalReaderMigrationRequired": false,
+    "unchangedGateBRecertificationRequired": false,
+    "fixed100BrowserCycleGateRequired": false,
+    "existingAdvertisedSupportAndChangedConsumedBoundariesStillApply": true
+  },
+  "preserved": [
+    "Original eight untracked files",
+    "All recorded prior failures including modern21 application restoration UNPROVED",
+    "Explicit modern26 unformed-stock oracle correction",
+    "Q30 91.616s unknown failure, six missing scratch inventories and late BLOCKED audit",
+    "Server hold; no Core/Android, protected main or email scope"
+  ],
+  "newProductionChanges": 0,
+  "newRuntimeGatesRun": 0
+}
