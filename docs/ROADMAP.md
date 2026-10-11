@@ -3055,8 +3055,9 @@ modest-host requirement remains for later evidence; no specific hardware is name
 Existing U07 budgets close the interactive mapping: 90/109 actual SDK inputs all
 PASS, worst 2.222/2.625 s against 5 s; observed heaps 94,019,560/83,644,172 bytes against 200 MiB;
 classic matched growth 795,248 bytes against 32 MiB. No EventTiming/FPS/leak claim follows.
-Next: U05 private aggregate feature capture and fresh HARD calibration cohorts;
-REL-B still owns normal advanced admission and advertised save/replay proof.
+U05 private aggregate extraction and six fresh curated captures now pass their
+native/GWT/compiled gates. Next: real human HARD calibration strategies/outcomes;
+REL-B then owns normal advanced admission and advertised save/replay proof.
 Enabling the flag alone is insufficient; no other release gate is deferred.
 
 Private integration and the classic elapsed-session case retain PASS. The six
