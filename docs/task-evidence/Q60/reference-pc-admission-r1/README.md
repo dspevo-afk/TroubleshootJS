@@ -72,20 +72,19 @@ No unrelated correctness or performance requirement is deferred.
 
 ## Next: U05 HARD calibration, then REL-B
 
-The next minimal slice collects uncalibrated aggregate difficulty features from
+The published U05 slice collects uncalibrated aggregate difficulty features from
 the actual current cold RB56 proof: hypothesis reduction, repair classes,
 physical owners, readings and completed legal-action witness ranges. It uses
 the existing private verifier, before player input, and supplies no public
-profile or answer metadata. Public HARD/profile parsing/catalog enablement stay
-held until measured calibration supports them.
+profile or answer metadata. Native/GWT/compiled gates and six fresh curated
+development/regression captures [pass for extraction only](../../U05/q60-calibration-features-r1/README.md).
 
-[U05's protocol](../../U05/README.md) still requires a fresh development cohort,
-a separate regression/trial cohort, one-probe/unavailable-tool/assistance-leak
-falsifiers and human strategies/outcomes before freezing HARD. Component count,
-family name or an alias to MEDIUM is not a calibration. Existing Q60 electrical
-proofs can be reused within their audited boundary; new feature capture needs
-its own actual native/GWT/compiled validation. Those gates and the fresh
-curated feature captures now [pass for extraction only](../../U05/q60-calibration-features-r1/README.md).
+[U05's protocol](../../U05/README.md) still requires real human strategies and
+outcomes before freezing HARD. The completed captures use separate preassigned
+development and regression/trial cohorts; existing one-probe/unavailable-tool/
+assistance-leak falsifiers remain. Component count, family name or an alias to
+MEDIUM is not a calibration. Public HARD/profile parsing/catalog enablement
+stay held until measured calibration supports them.
 Dave's 15:41 UTC all-clear superseded the old forwarded hold; no HARD profile or
 human qualification follows. Modest-host remains deferred by owner.
 

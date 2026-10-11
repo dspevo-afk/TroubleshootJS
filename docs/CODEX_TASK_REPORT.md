@@ -1,7 +1,10 @@
 # Current checkpoint: private Q60 difficulty features and fresh curated captures PASS
 
-2026-10-11. Qualified feature slice over published `d7a997b3629c10b457a454aa9df49a7515fc9bb9`
-on `codex/q60-faulted-profile-counts`. Shared exact-owner/cold receipt extraction
+2026-10-11. Qualified feature slice `b9e38afd44571c34afbad05557a39039233d9d81`
+is normally pushed and remote-verified on `codex/q60-faulted-profile-counts`.
+Its parent is the published Q60 admission `d7a997b3629c10b457a454aa9df49a7515fc9bb9`.
+This status follow-up changes documentation only; completed source gates are
+retained without rerunning unchanged code. Shared exact-owner/cold receipt extraction
 emits thirteen count/range fields as UNCALIBRATED with profile=null. Normal
 classification/output, public HARD/catalog/save gates and physics stay unchanged.
 Native actual-owner mathematical fixtures retain all independent falsifiers;
