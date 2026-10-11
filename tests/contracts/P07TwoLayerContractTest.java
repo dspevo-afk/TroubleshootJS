@@ -4,6 +4,7 @@ public final class P07TwoLayerContractTest {
     private static int checks;
     static void require(boolean ok,String why) { checks++; if(!ok) throw new AssertionError(why); }
     public static void main(String[] args) {
+        gridOwnershipBoundaries();
         componentFaceEscapesReachFreeCopper();
         terminalViaOutletsRemainReserved();
         holeSnapshotsPreserveOwnerAndOrder();
@@ -31,6 +32,77 @@ public final class P07TwoLayerContractTest {
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
     }
+    private static void gridOwnershipBoundaries() {
+        // Non-square outline, translated off the global 10-unit grid.
+        // Both near-limit translations remain inside the +/-100,000,000 domain.
+        for (int[] origin : new int[][] {
+                {23, -17}, {99999003, -99998997}, {-99998997, 99999003}}) {
+            int ox = origin[0], oy = origin[1];
+            TroubleshootBoard board = new TroubleshootBoard("P07_GRID_OWNERSHIP");
+            BoardComponent component = new BoardComponent("R", "RESISTOR",
+                PhysicalPackages.AXIAL_RESISTOR);
+            board.addComponent(component);
+            board.addNet(new BoardNet("A"));
+            board.addNet(new BoardNet("B"));
+            board.addPad(new BoardPad("R.1", "R", "1", "A"));
+            board.addPad(new BoardPad("R.2", "R", "2", "B"));
+            board.validate();
+            PcbBoardLayout layout = new PcbBoardLayout(1000, 800,
+                new Rectangle(ox, oy, 600, 400), new Rectangle(700, 500, 200, 200));
+            PcbFootprint footprint = PcbFootprint.fromPhysicalPackage(component,
+                ox + 100, oy + 100);
+            layout.addComponent(footprint.getPlacement());
+            for (PcbPadPlacement pad : footprint.getPads()) layout.addPad(pad);
+            String original = layout.geometryFingerprint();
+            require(
+                footprint.getPlacement().getMountingSide() == PcbBoardSide.TOP,
+                "ownership fixture has its obstructing component on top");
+
+            for (PcbCopperLayer face : new PcbCopperLayer[] {
+                    PcbCopperLayer.TOP, PcbCopperLayer.BOTTOM}) {
+                PcbNetRouter.Router router = new PcbNetRouter.Router(layout, board,
+                    layout.getBoardOutline(), 0, P06FactoryLinkFixtures.OBSERVER, face);
+                // Seed isolated occupied points using the maintained physical-coordinate API.
+                // The (210,130) point deliberately seeds same-net copper inside R's
+                // courtyard: this is a join-predicate fixture, not routing admission.
+                java.util.Vector<Point> owned = new java.util.Vector<Point>();
+                for (int[] offset : new int[][] {{10,10}, {590,10}, {10,390},
+                        {590,390}, {30,40}, {210,130}})
+                    owned.add(new Point(ox + offset[0], oy + offset[1]));
+                router.occupyLayerPath(owned, "A");
+                java.util.Vector<Point> foreign = new java.util.Vector<Point>();
+                foreign.add(new Point(ox + 510, oy + 310));
+                router.occupyLayerPath(foreign, "B");
+
+                // Literal expected grid indices: 59 columns and 39 rows.
+                for (int[] corner : new int[][] {{0,0}, {58,0}, {0,38}, {58,38}})
+                    require(
+                        router.ownsLayerGridCell(corner[0], corner[1], "A"),
+                        "occupied boundary cell is owned on " + face);
+                require(router.ownsLayerGridCell(2, 3, new String("A")),
+                    "ownership compares net values at the translated asymmetric cell");
+                require(!router.ownsLayerGridCell(50, 30, "A") &&
+                    router.ownsLayerGridCell(50, 30, "B"), "foreign copper keeps its owner");
+                require(!router.ownsLayerGridCell(7, 5, "A"),
+                    "empty cell is not owned");
+                require(!router.ownsLayerGridCell(3, 3, "A"),
+                    "same-net clearance reservation is not occupied copper");
+                require(!router.ownsLayerGridCell(3, 2, "A"),
+                    "asymmetric grid axes are not transposed");
+                require(
+                    router.ownsLayerGridCell(20, 12, "A") == (face == PcbCopperLayer.BOTTOM),
+                    "same-net copper under top component cannot join on top, but can on bottom");
+                for (int[] outside : new int[][] {{-1,0}, {0,-1}, {59,0}, {0,39},
+                        {Integer.MIN_VALUE,0}, {0,Integer.MAX_VALUE}})
+                    require(
+                        !router.ownsLayerGridCell(outside[0], outside[1], "A"),
+                        "out-of-grid ownership is false without array access");
+                require(original.equals(layout.geometryFingerprint()),
+                    "private ownership fixture leaves layout geometry unchanged");
+            }
+        }
+    }
+
     /** A declared pad escape must reach open copper through every intervening step. */
     private static void componentFaceEscapesReachFreeCopper() {
         for(PhysicalPackage pkg:new PhysicalPackage[]{PhysicalPackages.TO220_REGULATOR_4,

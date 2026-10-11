@@ -804,8 +804,8 @@ final class PcbNetRouter {
                 end==null?-1:gridX(end.getX()),end==null?-1:gridY(end.getY()),start,end) &&
                 canTraverse(x,y,nx,ny,start,end,net) && canOccupy(nx,ny,net,start,end);
         }
-        boolean ownsLayerCell(int px,int py,String net) {
-            int x=gridX(px),y=gridY(py);
+        // The layered router shares this exact outline, origin and grid size.
+        boolean ownsLayerGridCell(int x,int y,String net) {
             return x>=0 && y>=0 && x<gridWidth && y<gridHeight &&
                 net.equals(occupiedNet[x][y]) && canJoinTree(x,y);
         }

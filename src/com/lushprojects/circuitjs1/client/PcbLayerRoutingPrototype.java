@@ -319,7 +319,7 @@ final class PcbLayerRoutingPrototype {
                 result[layer*cells+cell(root)]=true;
                 for(int c=0;c<cells;c++) {
                     if((c&4095)==0) observer.check(pass);
-                    if(faces[layer].ownsLayerCell(x(c),y(c),net)) result[layer*cells+c]=true;
+                    if(faces[layer].ownsLayerGridCell(c%width,c/width,net)) result[layer*cells+c]=true;
                 }
             }
             if(policy==Policy.RESTRICTED_TWO_LAYER)

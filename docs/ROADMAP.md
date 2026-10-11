@@ -3000,25 +3000,36 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Published count-only source
-`9efe177e3508b3db67434759c0a8a7673bd92c2e` on
-`codex/q60-faulted-profile-counts`; native 147/build 29 reused after exact input audit.
-Numerical baseline, nine RB56 FAULTED units and original 90 s / 640 work / 5 s remain.
-Current Edge 155 LED 131 and complete normal Q30 BAAB 132-135 PASS, with exact 448 work
-and 67.351/67.972/67.581/67.370 s. Current-browser compiled 136 PASS: pure 306,503,
-runtime 83/23, models 59/21, scale 16 and actual Task41 cleanup failure/recovery.
-Failure NOT REPRODUCED; no causal browser/source speedup, historical cause, load
-attribution, reliability or modest-machine claim. Original 121-124 remains
-INCOMPLETE and 126 separate; historical typed-prototype 55/60 timeouts stay FAIL.
-Next: first original-six holdout on retained numerical baseline/count of 9 source and current
-Edge 155. Controls are statically reviewed, unfrozen and NOT RUN pending Dave's
-quiet-window signal and fresh exact input audit. It is private full D01 proof,
-separate from normal customer/player/session gates. Normal RB56/HARD/save-load
-held; exact 60 visible/session NOT RUN; actual modest hardware BLOCKED/unavailable.
-REL-B/Q100 unstarted. Eight original files, original 91.616 s unknown failure,
-six missing inventories and late BLOCKED audit remain preserved. No unchanged
-Q30 cold/warm corpus retry. This is not Q60 or release acceptance.
-[Current-browser checkpoint](task-evidence/Q60/updated-browser-baseline-r1/README.md).
+**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Two scoped routing edits over
+published `776f55cc9b5f66ba86d3247e60de5cc638162cc1` on
+`codex/q60-faulted-profile-counts` remove redundant physical/grid conversion in
+the layered goal scan. Before/after all seven full geometry/admission/policy/work
+rows match exactly, including original60 and Q30. Native149's geometry PASS and
+overall fixture-setup FAIL are retained; fixture-only correction150 PASS
+(P07 11,937 including 105 new assertions; resumption 2,203). Actual final JDK8/GWT
+build30 all five permutations PASS; current Edge155 compiled144 PASS
+(pure 306,503, runtime 83/23, models 59/21, scale 16, actual Task41 failure/recovery).
+The unused inherited 144 prerequisite label is stale metadata; actual final
+native150/build30 PASS and 145 enforces those plus compiled144.
+
+Pre-change original-six full D01 completed five PASS / one FAIL: original60/-1022
+hit the generation deadline at 90,236 ms / 513 work. Focused143 CPU capture remains
+diagnostic qualification FAIL. The final changed-source original60 proof145,
+profiling off, still FAILS COLD_GENERATION/TIMEOUT/HYPOTHESES at 90,020 ms / 520 work.
+Its terminal/report and all application/browser/listener/CPU/native closure PASS;
+no host timeout. Numerical baseline, nine RB56 FAULTED units and original
+90 s / 640 work / 5 s limits remain unchanged. No speedup or deadline clearance is
+claimed, and this one-case result is not complete changed-source six-case acceptance.
+Next: Q60 proof-cost diagnosis with a justified correctness-preserving candidate
+before normal player/session acceptance. Normal RB56/HARD/save-load held;
+exact60 visible/session NOT RUN; actual modest hardware BLOCKED/unavailable.
+REL-B/Q100 unstarted. Prior Q30 current-browser BAAB PASS, original 121–124
+INCOMPLETE and separate 126 remain; original 91.616 s unknown failure, six missing
+inventories and late BLOCKED audit are preserved. Eight original untracked files
+remain exact. No unchanged Q30 cold/warm or deadline retry. This is not Q60 or
+release acceptance.
+[Current results and routing evidence](task-evidence/Q60/current-six-profile-r1/README.md).
+[Prior current-browser baseline](task-evidence/Q60/updated-browser-baseline-r1/README.md).
 [Historical diagnosis](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)

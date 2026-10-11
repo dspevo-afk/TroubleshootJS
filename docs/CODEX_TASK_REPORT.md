@@ -1,4 +1,55 @@
-# Current checkpoint: Q60 current-browser baseline PASS; six-case run held
+# Current checkpoint: Q60 routing change validated; original60 deadline remains
+
+2026-10-11. Two scoped routing edits over published HEAD
+`776f55cc9b5f66ba86d3247e60de5cc638162cc1` on
+`codex/q60-faulted-profile-counts` remove a physical/grid round trip from the
+single layered goal scan. The ownership contract adds 105 independent assertions.
+U06/U07/E05/E06 remain published. Q60 is **IN PROGRESS / UNACCEPTED**.
+Numerics, nine RB56 FAULTED units and original 90 s / 640 work / 5 s are unchanged.
+
+The original six private full-D01 cases on pre-change source
+`9efe177e3508b3db67434759c0a8a7673bd92c2e` and Edge155 completed: five PASS, original
+60/-1022 FAIL at 90,236 ms / 513 work in HYPOTHESES. All terminal reports and
+cleanup completed; the 55 PASS has only 1.261 s margin. Preparation137's missing
+census binding failed before launch and remains recorded; corrected 140–142
+preserve exact cases/order/limits. The focused 143 original60 profile also remains
+qualification FAIL. Its mapped whole-case costs identify LU trailing updates
+(30,537.314 ms self), solver (56,347.482 ms inclusive) and routing (22,815.452 ms
+inclusive). Inclusive costs overlap; there is no exclusive-stage or causal speed claim.
+
+| Final routing-source gate | Actual result |
+| --- | --- |
+| Full seven-case route identity, before148 / after149 | PASS: all geometry/admission/policy/work rows identical, zero differences; includes original60 and Q30 |
+| Native149 partial / overall | Geometry PASS 3,176; overall FAIL before ownership assertions on unregistered fixture geometry |
+| Corrected native150 | PASS P07 11,937 and resumption 2,203; fixture-only correction, unchanged geometry reused |
+| Build30, actual JDK8/GWT | PASS all five permutations and linking; 84.559 s |
+| Current Edge155 compiled144 | PASS pure 306,503; runtime 83/23; models 59/21; scale 16; actual Task41 cleanup failure/recovery; 6.207 s |
+| Original60 compiled145, profiling off | FAIL COLD_GENERATION/TIMEOUT/HYPOTHESES, 90,020 ms / 520 work; native 96.919 s |
+
+145 observed the terminal/report in 90.893 s, without a host timeout. HYPOTHESES
+recorded 61,966 ms / 419 work, max active unit 1,630 ms; final phase RESTORED.
+All application/browser/listener/observer/CPU/native cleanup passed. Exact final
+source/web inventories and native inputs stayed unchanged. Frozen144/145 contain
+1,799/1,808 inputs, with all 144 pins retained. 144's unused inherited prerequisite
+label is stale metadata; actual final prerequisites native150/build30 PASS,
+and 145 enforces those plus compiled144. Executed artifacts remain intact.
+Eight original untracked files remain byte-identical. Independent reviews found
+no code-boundary or saved-result discrepancy within their stated scopes.
+
+**Next:** continue Q60 proof-cost diagnosis with a justified correctness-preserving
+candidate before normal player/session acceptance. No speedup, deadline clearance
+or complete changed-source six-case PASS is claimed. Normal RB56/HARD/save-load
+remain held; exact60 visible/session NOT RUN; actual modest hardware
+BLOCKED/unavailable; REL-B/Q100 unstarted. Prior Q30 BAAB PASS, original 121–124
+INCOMPLETE, separate 126, original 91.616 s unknown failure, six missing inventories
+and late BLOCKED audit are preserved. No unchanged Q30 cold/warm or deadline retry,
+unrelated process action, Core/Android change, C4130/server access, main merge or email.
+
+[Actual results, source hashes and limitations](task-evidence/Q60/current-six-profile-r1/README.md).
+
+---
+
+# Historical checkpoint: Q60 current-browser baseline PASS; six-case run held
 
 2026-10-11. Retained production source
 `9efe177e3508b3db67434759c0a8a7673bd92c2e` is published on
