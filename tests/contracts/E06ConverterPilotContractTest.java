@@ -41,6 +41,7 @@ public final class E06ConverterPilotContractTest {
         RoutineConvergenceStream routine = new RoutineConvergenceStream(originalError);
         try {
             System.setErr(routine);
+            verifyAcceptedPredictorBoundaries();
             runMatrix();
         } finally {
             System.setErr(originalError); // Restore before any uncaught failure prints its stack trace.
@@ -929,6 +930,161 @@ public final class E06ConverterPilotContractTest {
     }
     private static void check(boolean passed, String label) {
         assertions++; if (!passed) throw new AssertionError("E06 pilot mechanics: " + label);
+    }
+
+    /** Native actual-model oracles; call before the unchanged runMatrix(). */
+    public static void verifyAcceptedPredictorBoundaries() {
+        for (int scenario = 0; scenario < 3; scenario++) predictorBoundaryCase(scenario);
+    }
+
+    private static void predictorBoundaryCase(final int scenario) {
+        final double dt = .000025;
+        CirSim previous = CircuitElm.sim, singleton = CirSim.theSim;
+        String diode = DiodeElm.lastModelName, zener = ZenerElm.lastZenerModelName;
+        String transistor = TransistorElm.lastModelName;
+        int mosfetFlags = MosfetElm.globalFlags; double beta = MosfetElm.lastBeta;
+        final TestCirSim sim = new TestCirSim(dt);
+        Vector<CircuitElm> original = sim.elmList;
+        E06ConverterFixtures.Fixture fixture = null;
+        Throwable failure = null;
+        CircuitElm.sim = sim; CirSim.theSim = sim;
+        try {
+            fixture = E06ConverterFixtures.averaged();
+            final E06AveragedConverterElm converter = fixture.averaged;
+            check(!converter.canUseAcceptedNewtonPredictor(), "fresh model has no accepted predictor");
+            PredictorRetryVeto veto = new PredictorRetryVeto(converter, fixture.outputPlus.x, fixture.outputPlus.y);
+            veto.setPosition(fixture.outputPlus.x, fixture.outputPlus.y, fixture.outMinus.x, fixture.outMinus.y);
+            veto.setResistance(1e9); fixture.elements.add(veto);
+            fixture.enable.setVoltage(5);
+            sim.elmList = fixture.elements;
+            sim.solverExecutor.analyze();
+            check(!converter.canUseAcceptedNewtonPredictor(), "analyzed unstepped graph has no accepted predictor");
+            int prime = 0;
+            while (prime++ < 8000 && !(sim.t >= .030 && converter.getOutputVoltage() > .1 &&
+                    converter.canUseAcceptedNewtonPredictor() &&
+                    E06ConverterContract.cycleIndex(sim.t + dt) == E06ConverterContract.cycleIndex(sim.t)))
+                sim.solverExecutor.advanceSteps(1);
+            check(prime <= 8000 && converter.canUseAcceptedNewtonPredictor(),
+                "actual powered compatible globally accepted predictor is exercised");
+            final double beforeTime = sim.t;
+            final int[] callback = {0};
+            final RuntimeException marker = new IllegalStateException("e06-predictor-before-global-acceptance");
+            if (scenario < 2) {
+                sim.solverExecutor.events(null).schedule(beforeTime + dt / 2, new SolverEventQueue.Action() {
+                    public void fire(double scheduled, double candidateTime) {
+                        callback[0]++;
+                        // This real event runs after model.stepFinished(), before boundary.accepted().
+                        check(predictorBoolean(converter, "predictorReady") && predictorBoolean(converter, "receiptReady"),
+                            "model has produced a fresh provisional electrical predictor");
+                        check(predictorDouble(converter, "predictorTime") == candidateTime &&
+                            predictorDouble(converter, "predictorTimeStep") == dt &&
+                            predictorBoolean(converter, "active") && converter.isActive() &&
+                            predictorDouble(converter, "duty") == converter.getDuty(),
+                            "provisional predictor otherwise has compatible time and committed control");
+                        check(converter.getInputVoltage() == predictorDouble(converter, "acceptedInputVolts") &&
+                            converter.getOutputVoltage() == predictorDouble(converter, "acceptedOutputVolts") &&
+                            converter.getEnableVoltage() == predictorDouble(converter, "acceptedEnableVolts") &&
+                            converter.getFeedbackVoltage() == predictorDouble(converter, "acceptedFeedbackVolts"),
+                            "provisional predictor otherwise has the actual accepted model ports");
+                        SolverExecutionBoundary.Operation operation = predictorOperation(sim);
+                        check(operation.acceptedSteps == 0 && operation.trialInProgress &&
+                            operation.lastAcceptedTime == beforeTime, "global acceptance has not committed this model step");
+                        check(!converter.canUseAcceptedNewtonPredictor(), "model completion alone is insufficient for reuse");
+                        if (scenario == 1) throw marker;
+                    }
+                });
+            } else {
+                veto.arm(beforeTime, dt, converter.getDuty(), converter.getIntegral());
+                sim.minTimeStep = dt / 4; sim.adjustTimeStep = true;
+            }
+            RuntimeException observed = null;
+            try { sim.solverExecutor.advanceSteps(1); }
+            catch (RuntimeException error) { observed = error; }
+            SolverExecutionBoundary.Operation operation = predictorOperation(sim);
+            if (scenario == 1) {
+                check(observed == marker && callback[0] == 1, "actual pre-acceptance event failure propagates unchanged");
+                check(operation.acceptedSteps == 0 && operation.lastAcceptedTime == beforeTime &&
+                    operation.outcome == SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE,
+                    "failed global commit has no accepted step despite provisional model completion");
+                check(!converter.canUseAcceptedNewtonPredictor() && predictorBoundary(sim).observation() == null,
+                    "failed operation cannot expose a predictor or public observation");
+                // CirSim already advanced t and model state before dispatch. Do not assert rollback.
+            } else {
+                if (observed != null) throw observed;
+                check(operation.acceptedSteps == 1 && !operation.trialInProgress &&
+                    operation.outcome == SolverExecutionBoundary.Outcome.COMPLETE && operation.lastAcceptedTime == sim.t,
+                    "actual completed operation commits exactly one global acceptance");
+                check(converter.canUseAcceptedNewtonPredictor(), "global acceptance enables the compatible next predictor");
+                if (scenario == 0) check(callback[0] == 1, "successful pending-boundary callback fired once");
+                else check(veto.wideTrials == 100 && veto.fineTrials > 0 && sim.timeStep == dt / 2 &&
+                    Math.abs(sim.t - (beforeTime + dt / 2)) < 1e-12,
+                    "actual hundred-trial rejection restamps and accepts only the half-step retry: wide=" + veto.wideTrials +
+                    " fine=" + veto.fineTrials + " dt=" + sim.timeStep + " elapsed=" + (sim.t - beforeTime));
+            }
+            System.out.println("E06_PREDICTOR_BOUNDARY scenario=" + scenario + " status=PASS");
+        } catch (Throwable error) { failure = error;
+        } finally {
+            sim.elmList = original;
+            try { sim.solverExecutor.retire(); sim.solverExecutor.invalidate(); }
+            catch (Throwable cleanup) { if (failure == null) failure = cleanup; else failure.addSuppressed(cleanup); }
+            sim.circuitMatrix = null;
+            if (fixture != null) for (CircuitElm element : fixture.elements) try { element.delete(); }
+            catch (Throwable cleanup) { if (failure == null) failure = cleanup; else failure.addSuppressed(cleanup); }
+            DiodeElm.lastModelName = diode; ZenerElm.lastZenerModelName = zener;
+            TransistorElm.lastModelName = transistor; MosfetElm.globalFlags = mosfetFlags; MosfetElm.lastBeta = beta;
+            CircuitElm.sim = previous; CirSim.theSim = singleton;
+        }
+        if (failure instanceof Error) throw (Error)failure;
+        if (failure instanceof RuntimeException) throw (RuntimeException)failure;
+        if (failure != null) throw new IllegalStateException(failure);
+        check(sim.elmList == original && original.isEmpty() && !sim.solverExecutor.isUnavailable() &&
+            CircuitElm.sim == previous && CirSim.theSim == singleton, "predictor native fixture restores its owners");
+    }
+
+    private static java.lang.reflect.Field predictorField(Class<?> type, String name) {
+        try { java.lang.reflect.Field field = type.getDeclaredField(name); field.setAccessible(true); return field; }
+        catch (Exception error) { throw new AssertionError("Missing predictor oracle field " + name, error); }
+    }
+    private static double predictorDouble(E06AveragedConverterElm model, String name) {
+        try { return predictorField(E06AveragedConverterElm.class, name).getDouble(model); }
+        catch (Exception error) { throw new AssertionError(error); }
+    }
+    private static boolean predictorBoolean(E06AveragedConverterElm model, String name) {
+        try { return predictorField(E06AveragedConverterElm.class, name).getBoolean(model); }
+        catch (Exception error) { throw new AssertionError(error); }
+    }
+    private static SolverExecutionBoundary.Operation predictorOperation(TestCirSim sim) {
+        try { return (SolverExecutionBoundary.Operation)predictorField(CircuitSolverExecutor.class, "stepOperation")
+            .get(sim.solverExecutor); }
+        catch (Exception error) { throw new AssertionError(error); }
+    }
+    private static SolverExecutionBoundary predictorBoundary(TestCirSim sim) {
+        try { return (SolverExecutionBoundary)predictorField(CircuitSolverExecutor.class, "boundary")
+            .get(sim.solverExecutor); }
+        catch (Exception error) { throw new AssertionError(error); }
+    }
+
+    /** Ordinary passive 1 Gohm load; only the requested trial veto is artificial. */
+    private static final class PredictorRetryVeto extends ResistorElm {
+        final E06AveragedConverterElm converter;
+        boolean armed; int wideTrials, fineTrials;
+        double beforeTime, wideStep, duty, integral;
+        PredictorRetryVeto(E06AveragedConverterElm converter, int x, int y) { super(x, y); this.converter = converter; }
+        void arm(double time, double step, double acceptedDuty, double acceptedIntegral) {
+            beforeTime = time; wideStep = step; duty = acceptedDuty; integral = acceptedIntegral; armed = true;
+        }
+        boolean nonLinear() { return true; }
+        void stamp() { super.stamp(); sim.stampNonLinear(nodes[0]); sim.stampNonLinear(nodes[1]); }
+        void doStep() {
+            if (!armed) return;
+            check(!converter.canUseAcceptedNewtonPredictor(), "in-progress Newton trial is never an accepted predictor");
+            if (sim.timeStep == wideStep) { wideTrials++; sim.converged = false; }
+            else if (fineTrials++ == 0) {
+                check(sim.t == beforeTime && converter.getDuty() == duty && converter.getIntegral() == integral,
+                    "rejected attempt commits neither solver time nor accepted converter control");
+                check(!predictorBoolean(converter, "predictorReady"), "adaptive restamp discards rejected predictor state");
+            }
+        }
     }
 
     /** UI-free adapter; all numerical analysis, stepping and state are production owners. */

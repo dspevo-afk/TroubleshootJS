@@ -38,6 +38,12 @@ final class E06AveragedConverterElm extends CircuitElm {
     private double acceptedInputVolts, acceptedOutputVolts, acceptedEnableVolts, acceptedFeedbackVolts;
     private boolean tangentReady, receiptReady;
 
+    // The model prepares a predictor; the executor must confirm global acceptance.
+    // Trial caches remain scratch; a rejected trial never becomes the next seed.
+    private double predictorTarget, predictorDrop, predictorInput;
+    private double predictorTime, predictorTimeStep;
+    private boolean predictorReady;
+
     E06AveragedConverterElm(int x, int y, E06ConverterContract contract) {
         super(x, y);
         if (contract == null) throw new IllegalArgumentException("Missing E06 converter contract");
@@ -86,6 +92,8 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
 
     void stamp() {
+        // Analysis, graph changes and adaptive restamps all start conservatively.
+        predictorReady = false;
         for (int node : nodes) sim.stampNonLinear(node);
         sim.stampResistor(nodes[0], nodes[1], E06ConverterContract.INPUT_LEAK_OHMS);
         sim.stampResistor(nodes[4], nodes[1], E06ConverterContract.CONTROL_LEAK_OHMS);
@@ -101,7 +109,23 @@ final class E06AveragedConverterElm extends CircuitElm {
         stepIntegral = integral;
         stepActiveSeconds = activeSeconds;
         stepCycleIndex = cycleIndex;
-        lastTarget = lastDrop = lastInput = Double.NaN;
+        if (canUseAcceptedNewtonPredictor()) {
+            lastTarget = predictorTarget;
+            lastDrop = predictorDrop;
+            lastInput = predictorInput;
+        } else {
+            lastTarget = lastDrop = lastInput = Double.NaN;
+        }
+    }
+
+    boolean canUseAcceptedNewtonPredictor() {
+        return predictorReady && receiptReady && sim.solverExecutor.hasAcceptedStepAt(predictorTime) &&
+            active && active == acceptedActive &&
+            duty == acceptedDuty && sim.t == predictorTime && sim.timeStep == predictorTimeStep &&
+            getInputVoltage() == acceptedInputVolts && getOutputVoltage() == acceptedOutputVolts &&
+            getEnableVoltage() == acceptedEnableVolts && getFeedbackVoltage() == acceptedFeedbackVolts &&
+            E06ConverterContract.finite(predictorTarget) && E06ConverterContract.finite(predictorDrop) &&
+            E06ConverterContract.finite(predictorInput);
     }
 
     void doStep() {
@@ -169,6 +193,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
 
     void stepFinished() {
+        predictorReady = false;
         // Snapshot the realized stamped branches before latching future control.
         acceptedInputVolts = getInputVoltage();
         acceptedOutputVolts = getOutputVoltage();
@@ -196,6 +221,12 @@ final class E06AveragedConverterElm extends CircuitElm {
         else if (nextCycle != cycleIndex) duty = E06ConverterContract.dutyFor(
             acceptedInputVolts, acceptedFeedbackVolts, activeSeconds, integral);
         cycleIndex = nextCycle;
+        predictorTarget = lastTarget;
+        predictorDrop = lastDrop;
+        predictorInput = lastInput;
+        predictorTime = sim.t;
+        predictorTimeStep = sim.timeStep;
+        predictorReady = true;
     }
 
     double getDuty() { return acceptedDuty; }
@@ -250,6 +281,9 @@ final class E06AveragedConverterElm extends CircuitElm {
         acceptedInputVolts = acceptedOutputVolts = acceptedEnableVolts = acceptedFeedbackVolts = 0;
         lastTarget = lastDrop = lastInput = Double.NaN;
         tangentReady = receiptReady = false;
+        predictorReady = false;
+        predictorTarget = predictorDrop = predictorInput = Double.NaN;
+        predictorTime = predictorTimeStep = Double.NaN;
     }
     private double trialDriveCurrent() {
         return tangentReady ? driveAtEvaluation + driveInputGain * (getInputVoltage() - evaluationInput) +

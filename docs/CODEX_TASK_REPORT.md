@@ -1,46 +1,75 @@
-# Current checkpoint: Q60 idle settlement validated; original60 deadline remains
+# Current checkpoint: all six private full D01 jobs pass; visible 60-package blocker remains
 
-2026-10-11. Scoped source changes over published
-`16527de548874582bf412fb90c09fe2b038e7ab3` on
-`codex/q60-faulted-profile-counts` avoid an extra update at an already satisfied
-exact-owner READY boundary, only with instrument NONE and no queued acquisition.
-Original fallback/work-scope checks, both independent 13-unit REPAIR programs,
-9-unit FAULTED, numerical/model cadence and 90 s / 640 work / 5 s remain unchanged.
-U06/U07/E05/E06 remain published. **Q60 IN PROGRESS / UNACCEPTED.**
+2026-10-11. Q60 remains IN PROGRESS / UNACCEPTED. Current E06 Newton initialization
+requires the owning executor's global accepted-step boundary and exact state,
+time, timestep and four port-voltage matches. Reset/restamp invalidate it.
+Electrical equations, residuals/current limiters, adaptive rules, independent
+proof programs and 90 s / 640 work / 5 s limits remain unchanged. Initialization
+may change numerical trajectory; fixed-step agreement is scoped evidence.
 
-| Final-source gate | Actual result |
+| Current gate | Result and scope |
 | --- | --- |
-| Native152 | PASS D01 168 / A10 190; 24.810 s |
-| Actual JDK8/GWT build32 | PASS five permutations/linking; 86.928 s |
-| Current Edge155 compiled146 | PASS pure 306,503; runtime 103/26; models 59/21; scale 16; Task41 failure/recovery |
-| Original60/-1022 compiled147 | FAIL TIMEOUT/HYPOTHESES: 90,015 ms / 519 work; native 96.927 s |
-| Original40/-1017 compiled148 | PASS full D01: 5 hypotheses/55 samples/516 work/27,245 ms; native 33.960 s |
+| Native155 physical runtime reuse | All 24 cases / 303,827,399 assertions and three boundary fixtures PASS. All 1,353 bound inputs compared; only developer report differs. All 24 cases were not rerun after that report fix. |
+| Fixed-step comparison | 12 averaged cases / 78 existing REF comparisons PASS; max output delta 0.337 uV; startup delta 0. |
+| Final native157 / build35 | Native A07 PASS 22.845 s; final Java compilation and all five JDK8/GWT permutations PASS 89.438 s cover the changed developer class. |
+| Compiled154 | PASS 6.379 s: 306,530 pure / 103 runtime assertions in 26 cases / 59 model assertions in 21 rows / 16 scale rows; Task41 failure/recovery and early terminal. |
+| Corrected compiled157 | Electrical and forced-cleanup PASS 17.122 s; raw B_ONLY uses 193 steps / 1,180 trials / 987 factors, ending at 200 us. |
 
-Three added real LED fixtures independently check repeated idle entry, pending
-analysis, queued DC acquisition/duplicate drain and exact protected-state restore.
-Original 23 cases remain. All final frozen/actual input hashes and application,
-browser/listener/observer/native closure PASS; no host timeout. Original60 final
-phase RESTORED; HYPOTHESES 61,735 ms/418 work/max1,618 ms. Actual 1,170 source / 392 web
-inventories remain unchanged; frozen146/147/148 have 1,829/1,837/1,847 inputs.
-Native151/build31 PASS precede the fixture-only frame witness correction;
-original40 preparation's missing metadata-reader binding failed before launch,
-then identical recorded bytes were explicitly frozen without a reroll.
-Eight original untracked files remain byte-identical. Root actual-result/diff
-review and independent static guard/fixture review found no remaining blocker
-for this bounded work deletion. No end-to-end speedup is established.
+| Private full D01 case | Generation ms | Work | Max manual ms | Samples |
+| --- | ---: | ---: | ---: | ---: |
+| 40 / -1017 (159) | 27,455 | 516 | 1,196 | 55 |
+| 55 / -1067 (159) | 65,545 | 589 | 1,635 | 60 |
+| 50 / 9007199254741579 (160) | 48,747 | 584 | 1,344 | 60 |
+| 44 / -1004 (160) | 34,597 | 517 | 1,204 | 55 |
+| 60 / -1022 (158) | 77,768 | 603 | 1,684 | 60 |
+| 56 / -1028 (161) | 67,054 | 618 | 1,689 | 60 |
 
-**Next:** continue Q60 proof-cost diagnosis at a materially larger measured
-boundary. Geometry-validation coalescing is NO_GO on current evidence: fresh
-hypotheses already copy sealed layout, its measured category is subsecond and a
-one-line deletion changes typed rejection ordering. No edit/test/rerun followed.
-Normal RB56/HARD/save-load held; exact60 visible/session NOT RUN; actual modest
-hardware BLOCKED/unavailable; REL-B/Q100 unstarted. Complete changed-source six-case
-acceptance is unproved. Prior Q30 BAAB PASS, original 121-124 INCOMPLETE, separate 126,
-original 91.616 s unknown failure, six missing inventories and late BLOCKED audit
-remain. No unchanged Q30 cold/warm, unrelated process action, Core/Android change,
-C4130/server access, main merge or email.
+Each case completes five hypotheses/all six stages; 350 diagnostic samples and
+30 hypotheses total. 1,170 source files / 392 WAR files digests match across the six jobs; root
+audit verifies 2,057 distinct pins, every native outer input set and original eight
+files. All application/browser/CPU/native closure passes. The 60-part job leaves
+12.232 s of its 90-second limit on this reference PC. Private qualified publication
+is true; catalog is false and ordinaryCustomerRetestPassed is false. This is no
+ordinary player/session acceptance or paired/causal speedup proof.
 
-[Actual settlement results and limitations](task-evidence/Q60/settlement-fastpath-r1/README.md).
+Exact 60-package headed flow 13 passed the cold proof (78,826 ms / 603 work, max manual
+1,741 ms) and the expected unrepaired customer-retest failure. It then failed when
+the public U2A RETURN probe was refused as outside the view or covered, before
+diagnosis or repair. Native 108.916 s, unchanged inputs and all cleanup PASS. Three
+actual screenshots were captured; two are retained publicly.
+
+Flow 14 uses the existing visible Fit bench control once before each measurement
+pair, with no covered/offscreen refusal, and
+isolates RSA from six public readings: 11.207 V stage input, 4.996 V control rail,
+5 V sensor connector, 343.419 uV conditioned sensor, 2.499 V reference and 0 V
+decision output. Guarded power-off Remove becomes enabled after 9.607 s, but the
+RSA panel has no original numeric resistor marking. The replacement-choice oracle
+stops before catalog selection or removal. Native 123.955 s; cold proof 79,369 ms /
+603 work / max manual 1,698 ms. All inputs and cleanup PASS; 2,094 inputs frozen.
+Both visible flows remain FAIL. Two inspected images per attempt are retained; no
+visible 60-package repair/retest or playable acceptance is claimed.
+
+Published parent `4f38f6d` retains visible 40-package r12 ordinary RENAC replacement/customer
+Retest PASS and temporary ledger 150: application TIMEOUT at 90,037 ms / 514 work,
+complete capture of 317 advances / 60.535 s / 63,527 accepted steps / 260,452 trials.
+Seventeen 30 ms windows used 1,162 steps each and cost 23.511 s; this wall cost is
+not CPU allocation or removable work. 1,170 source files / 392 WAR files / original eight files restoration PASS.
+Native154 fixture FAIL, compiled152 numeric-Boolean report FAIL and original 155
+weighted-mean strict FAIL remain. Separate posthoc155/fresh157 validator checks
+pass the binary64 gamma(2*N+4) bound; all 23 negative mutations are rejected and
+physical criteria remain. Compiled 156 is preserved NOT RUN.
+
+Next: expose the four RSA color band names from the existing canvas marking
+metadata, match the ordinary catalog through public color-code interpretation and
+complete repair/retest. Preserve numeric-value privacy and use no plan/fault lookup.
+Real PlayerSession integration and mixed holdout/endurance follow. Normal RB56/HARD/PlayerSession/save-load remain held. Actual
+modest hardware is BLOCKED/unavailable; Ryzen7700 is reference only. U06/U07/E05/E06
+remain published; REL-B/Q100 unstarted. Original Q30 91.616 s unknown failure, six
+missing inventories and late BLOCKED audit remain. This feature-branch checkpoint
+does not establish Q60 or release acceptance.
+[Current evidence](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md),
+[visible40](task-evidence/Q60/visible40-current-r12/README.md),
+[prior settlement](task-evidence/Q60/settlement-fastpath-r1/README.md).
 
 ---
 

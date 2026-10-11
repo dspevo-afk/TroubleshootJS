@@ -1,0 +1,351 @@
+{
+  "protocol": "Q60_CURRENT40_SHORT_VISIBLE_R12_EVIDENCE_1",
+  "publicationStatus": "ROOT_REVIEWED_PUBLIC_EVIDENCE",
+  "status": "PASS",
+  "overallQ60Status": "IN_PROGRESS_UNACCEPTED",
+  "scope": "CURRENT40_SHORT_VISIBLE_REPAIR_ONLY",
+  "phase": "visual-r12",
+  "startedUtc": "2026-10-11T17:25:37.159044+00:00",
+  "finishedUtc": "2026-10-11T17:26:32.271242+00:00",
+  "prerequisites": {
+    "native152": "PASS",
+    "build32": "PASS",
+    "compiled146": "PASS",
+    "compiled148Original40": "PASS",
+    "currentSourceHashes": {
+      "A07SolverDeveloperVerifier.java": "618aa38946c91fe76d05a3252c7101014f0eba4fe70c50edc11964ecf577d106",
+      "GeneratedRuntimeDeveloperSettlement.java": "3366bc541a492bb13a90e512f3d340e19881c31181c52822792c6dca16182eb1",
+      "InstrumentController.java": "e4b851b918ef263777badd47121ea7d2bd32dd221d1ba7e8290eb474bd705475"
+    }
+  },
+  "actual": {
+    "family": "RB56_CONTROL",
+    "seed": "-1017",
+    "packages": 40,
+    "channels": 1,
+    "hypotheses": 5,
+    "solverSamples": 55,
+    "generationStages": 6,
+    "generationWork": 516,
+    "generationMillis": 27699,
+    "maxManualUnitMillis": 1271,
+    "fullProductionD01": true,
+    "coldProof": true,
+    "normalLabels": true,
+    "normalCatalogEnabled": false,
+    "nativeElapsedMs": 56248,
+    "visibleOperationSeconds": 53.52976609999314,
+    "visibleElapsedSeconds": 55.112,
+    "firstHeldObservationSeconds": 41.72386859997641,
+    "finalApplicationWallMillis": 39728,
+    "actionRecords": 85,
+    "actionRecordStatusCounts": {
+      "PASS": 85
+    },
+    "measurementCount": 4,
+    "screenshotCount": 5,
+    "browserProduct": "Edg/155.0.4283.45",
+    "headed": true
+  },
+  "measurements": [
+    {
+      "display": "831.527 mV",
+      "volts": 0.831527,
+      "name": "regulated-stage input",
+      "red": "U1 terminal INPUT",
+      "black": "U1 terminal RETURN"
+    },
+    {
+      "display": "340.661 μV",
+      "volts": 0.00034066099999999997,
+      "name": "control rail",
+      "red": "U1 terminal OUTPUT",
+      "black": "U1 terminal RETURN"
+    },
+    {
+      "display": "9.999 V",
+      "volts": 9.999,
+      "name": "primary bias against primary return",
+      "red": "UAC terminal BIAS",
+      "black": "UAC terminal IN-"
+    },
+    {
+      "display": "9.082 mV",
+      "volts": 0.009082000000000002,
+      "name": "converter enable against primary return",
+      "red": "UAC terminal EN",
+      "black": "UAC terminal IN-"
+    }
+  ],
+  "playerOracles": {
+    "unrepairedCustomerRetest": "FAIL_EXPECTED",
+    "diagnosisComponent": "RENAC",
+    "diagnosisBasis": "Displayed local input/control rails below1V, primary bias above3V, converter enable below1V; no seed/fault-key lookup.",
+    "originalPublicMarking": "10000 Ohm +/-5% / 0.25 W",
+    "replacementPublicCatalogLabel": "10000 Ohm +/-5%",
+    "serviceReadiness": "Power OFF and actual Remove component enabled",
+    "retainedOriginal": "Part 10 - 10000 Ohm +/-5% / 0.25 W",
+    "retainedLooseCount": 1,
+    "replacementState": "Installed",
+    "repairedCustomerRetest": "PASS",
+    "selectedActionSequences": {
+      "10": "wait for visible text Customer retest did not pass. Continue troubleshooting.",
+      "46": "converter enable path isolated by live local measurements",
+      "56": "wait for enabled UI control Remove component",
+      "60": "click Remove component",
+      "65": "install selected marked replacement through ordinary catalog",
+      "78": "wait for visible text Customer retest passed. The reported behavior is resolved.",
+      "83": "click End qualification view"
+    },
+    "privacyChecks": 3,
+    "gameFunctionsCalled": false,
+    "pageEvaluateUsed": false,
+    "syntheticDispatchUsed": false
+  },
+  "limits": {
+    "operationSeconds": 240,
+    "requiredNativeOuterSeconds": 300,
+    "reservedCleanupSeconds": 60,
+    "fixtureHoldSeconds": 120,
+    "generationObservationSeconds": 95,
+    "meterObservationSeconds": 3,
+    "readinessObservationSeconds": 30,
+    "maxMeasurements": 19,
+    "maxScreenshots": 5,
+    "generationJobMs": 90000,
+    "generationWorkUnits": 640,
+    "generationActiveOperationMs": 5000
+  },
+  "closure": {
+    "applicationStatus": "PASS",
+    "applicationPhase": "RESTORED",
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "ordinaryCustomerRetestPassed": true,
+    "cleanupPending": false,
+    "browserContext": "PASS",
+    "playwright": "PASS",
+    "recordedEdgeInstances": 9,
+    "recordedEdgeSurvivors": 0,
+    "previewExactInstanceAbsent": true,
+    "listenerClosed": true,
+    "listenerQueryNativeClosure": "PASS",
+    "browserVersionSessionDetached": true,
+    "metricsSessionDetached": true,
+    "nativeExitCode": 0,
+    "nativeReason": null,
+    "nativeHandlesClosed": true,
+    "nativeJobActiveProcesses": 0,
+    "nativeDrainsComplete": true,
+    "nativeLiveDrainers": 0,
+    "nativeDrainerErrors": [],
+    "visibleErrors": [],
+    "adapterErrors": []
+  },
+  "inputBinding": {
+    "frozenInputs": 1866,
+    "frozenEqualsPrepared": true,
+    "exactFreezeKeyset": true,
+    "nativeSourceInputs": 1222,
+    "nativeSourceInputsUnchanged": true,
+    "sourceFiles": 1170,
+    "webFiles": 392,
+    "previewSupportFiles": 2,
+    "servedInventoryFileCount": 1564,
+    "beforeAfterInventorySha256": "ca1812252237f8c8db2b7ab236f626c14f03eaca1afaed09ef6cd634eae60971",
+    "savedInventoriesIdentical": true,
+    "allSavedInventoryAndLaunchHashesMatchFrozenMap": true,
+    "liveFullHashSweepByLeaf": false
+  },
+  "rootVisualInspection": {
+    "status": "REPORTED_PASS_BY_ROOT",
+    "basis": "Root task message reports direct inspection of screenshots001-004. Leaf reviewed saved actions/oracles/closure and did not reopen images.",
+    "screenshots": [
+      "001-unrepaired-customer-retest.png",
+      "002-diagnosis-and-original-marking.png",
+      "003-replacement-and-retained-original.png",
+      "004-repaired-customer-retest-pass.png"
+    ],
+    "reportedFindings": [
+      "Unrepaired customerFAIL",
+      "Displayed9.082mV converter enable",
+      "Retained original and installed10000Ohm replacement",
+      "Repaired customerPASS"
+    ]
+  },
+  "limitsAndPreservedEvidence": [
+    "Developer route creates and qualifies a fresh owner before ordinary classic workbench input; normal RB56 menu/HARD/PlayerSession/save-load remain held.",
+    "One40-part single-channel board and one repair cycle. No extra retained-fault roundtrip, reset/storage/fuse session proof, 300-second endurance or100-cycle/inventory qualification.",
+    "Original60 compiled147 deadline FAIL remains; no full changed-source six-case acceptance or exact60 visible/session evidence.",
+    "Current desktop only; actual modest hardware unavailable. No speedup, latency, FPS, reliability or Q60 acceptance claim.",
+    "Prior historical visible40 session and all failed/incomplete controls remain separate. visual11 was not reused or launched.",
+    "Five screenshots were captured; root reports inspection of four.85 action records include observations/assertions/screenshots, not85 independent human inputs."
+  ],
+  "reviewScope": "Saved result/action sequence, independent voltage/marking/repair checks, metadata inventory-map joins, closure and targeted artifact digests only; no gate, build, process query, source write or full live hash sweep.",
+  "sanitization": {
+    "absolutePersonalPathsIncluded": false,
+    "rawActionLogIncluded": false,
+    "processIdentifiersOrCommandLinesIncluded": false,
+    "artifactAliases": "phase-temp/, task/ and repo/ identify retained originals without publishing personal roots"
+  },
+  "artifacts": [
+    {
+      "artifact": "phase-temp/visual-r12-launch.json",
+      "bytes": 171387,
+      "sha256": "1b29e7ad60393e4eb8726834e3a6217e8d6c03a3c6397931887d8e9b2b41c487",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/visual-r12-result.json",
+      "bytes": 1807,
+      "sha256": "50cc006427a1dc919ac5cb00aeb94ff9ce9e812ac6b1d5d1204418baaf6bd17c",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/result.json",
+      "bytes": 195119,
+      "sha256": "f2a7dc29d2018c4f64a6bb0c7ada138becb5fe7db9981da0b3c8075b25554b3a",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/current-browser-and-input-binding.json",
+      "bytes": 1191,
+      "sha256": "d055cc170ccfc7a6d8066a3fc71591029755084fb0ba0d41f3b9f7d59008cbed",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/input-before.json",
+      "bytes": 344269,
+      "sha256": "0e6ecd2a87688917fe2f2c2d8fdadb97b28aa5b62084ef59af919a9ee4d86469",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/input-after.json",
+      "bytes": 344269,
+      "sha256": "0e6ecd2a87688917fe2f2c2d8fdadb97b28aa5b62084ef59af919a9ee4d86469",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/frozen-workload.json",
+      "bytes": 8415,
+      "sha256": "bca262aaf431b91601110b0e8360a57558a7fdf50c2ebc0e65dd04c6100478d0",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/listener-proof/listener-query.json",
+      "bytes": 2202,
+      "sha256": "96e756d9697856fa235babb68159df433214007fa22ad8e57519df707d9bdf93",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "task/q60-browser/visual-r12-input-review.json",
+      "bytes": 1088648,
+      "sha256": "4603ced44a6c705e0dbea8640a5b66fa57312a8c2a4832c94f0a92c178065cae",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "task/q60-browser/visual-r12.py",
+      "bytes": 7108,
+      "sha256": "cd4671c3538412fa2b7f403e202079098eae9b42a6c29b773dc8b4b8c4acf9ce",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "task/q60/visible40-current-r12/prepare-r12.py",
+      "bytes": 9525,
+      "sha256": "1a766cd7d2c7b9eab00fdeca6c04ffed5db246fa8bdafe3e6c9c5827123192b5",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "task/q60-browser/visual-r4.py",
+      "bytes": 27890,
+      "sha256": "3a860dcad57593c410ead3bc63105b136375732567d9cd7384945a7c796a9792",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "task/q60-browser/frozen-criteria-r4.json",
+      "bytes": 4327,
+      "sha256": "0e9c1069c46f4202418f731c52d1c070abeee443d92db3101cd9b46b14b9653f",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/native-r152-result.json",
+      "bytes": 1855,
+      "sha256": "79f6d0b0599f14717e9fbaa164c7aa44b4acbf6eb844b3f28ad6ce26c587530b",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/build-r32-result.json",
+      "bytes": 2055,
+      "sha256": "d8e5675b5b686cd5e3d14d7d494fbe50b9243e7bc70b4af59214eccc62f748ce",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/compiled-r146-result.json",
+      "bytes": 1816,
+      "sha256": "18240b0a1f718a6725a1dc11d9485d4b9adfc5076f97261c46d59dea94c1b250",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/compiled-r148-result.json",
+      "bytes": 1814,
+      "sha256": "043ca10a65bc5884fe85df4fa62324704887266357906a765cbbb31395d69ad2",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/screenshots/000-menu.png",
+      "bytes": 183105,
+      "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/screenshots/001-unrepaired-customer-retest.png",
+      "bytes": 430622,
+      "sha256": "9973db1e0e114846e097ee803ce0f586aa3571b638783438094fc31676dcadd3",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/screenshots/002-diagnosis-and-original-marking.png",
+      "bytes": 424944,
+      "sha256": "6a9023a9063fb6e22895a8b41e57d26a01df6c0168bd3552d7378c52fd68b29c",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/screenshots/003-replacement-and-retained-original.png",
+      "bytes": 433895,
+      "sha256": "e2b614d5b9f7d848776a9e6e6bd214019eec7454b9c0150d02a674043621c608",
+      "retainedOriginal": true
+    },
+    {
+      "artifact": "phase-temp/q60-visible-r12-current40/screenshots/004-repaired-customer-retest-pass.png",
+      "bytes": 425540,
+      "sha256": "6bc21da97f9a248e929dd88780ecbec1e5fdf35e2f5682e1519aac8ea0f4b95a",
+      "retainedOriginal": true
+    }
+  ],
+  "sourceCheckpointVerifiedByRoot": "4f38f6d48f05835df0b541867543290958f3b7fa",
+  "publishedScreenshots": [
+    {
+      "path": "screenshots/001-unrepaired-customer-retest.png",
+      "sha256": "9973db1e0e114846e097ee803ce0f586aa3571b638783438094fc31676dcadd3",
+      "rootDirectlyInspected": true
+    },
+    {
+      "path": "screenshots/002-diagnosis-and-original-marking.png",
+      "sha256": "6a9023a9063fb6e22895a8b41e57d26a01df6c0168bd3552d7378c52fd68b29c",
+      "rootDirectlyInspected": true
+    },
+    {
+      "path": "screenshots/003-replacement-and-retained-original.png",
+      "sha256": "e2b614d5b9f7d848776a9e6e6bd214019eec7454b9c0150d02a674043621c608",
+      "rootDirectlyInspected": true
+    },
+    {
+      "path": "screenshots/004-repaired-customer-retest-pass.png",
+      "sha256": "6bc21da97f9a248e929dd88780ecbec1e5fdf35e2f5682e1519aac8ea0f4b95a",
+      "rootDirectlyInspected": true
+    }
+  ]
+}

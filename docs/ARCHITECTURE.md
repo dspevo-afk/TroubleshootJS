@@ -5119,19 +5119,26 @@ and affected Q30/dependency/ownership suites. Compiled107 also passes fresh nume
 admission or wall-time proof follows from the count correction.
 
 The owned LU path keeps bounded baseline/current eligibility with its graph.
-Distinct finite rows of size at most128 and input magnitude at most1e100 use
+Distinct finite rows of size at most 128 and input magnitude at most 1e100 use
 the proved finite trailing path; reciprocal/scaling guards and checked alias/
-unsafe fallback remain. The current helper gathers up to8 immutable ascending
-upper entries into scalars, unrolls4 rows and handles exact4/1-3 remainders
-inline. It adds no calls, numeric buffer, cache or backend and preserves each cell's
+unsafe fallback remain. The helper gathers up to 8 immutable ascending upper
+entries into scalars, unrolls 4 rows and handles exact 4/1–3 remainders inline.
+It adds no calls, numeric buffer, cache or backend and preserves each cell's
 multiply/subtract/store sequence. Lower scaling skips same-reference stores before
 first underflow and preserves stable suffix compaction/null cleanup. Accumulated
-stamps retain their value locally, store before finite validation and can revoke
-eligibility; baseline restoration and Task41 preserve proof flags. Historical source0A native132/
-compiled87 original Crout, failure-prefix and cleanup contracts pass. Actual
-all-five emission grows974 to2373 bytes/15 to26 locals and preserves21 other
-mapped guard/owner/snapshot/oracle bodies. These local changes and historical
-healthy-only work economics do not establish CPU speedup or admission clearance.
+stamps store before finite validation and can revoke eligibility; baseline
+restoration and Task41 preserve proof flags. Historical source0A native132/
+compiled87 Crout/failure-prefix/cleanup contracts and mapped emission checks keep
+their original scope. These changes alone do not establish CPU speedup/admission.
+
+E06 may reuse its finite Newton initialization only after the owning executor
+confirms the global accepted step at the exact time, with active state, duty,
+timestep and all four port voltages unchanged. A model-local stepFinished
+preparation cannot authorize reuse if a later model rejects the global step.
+Accepted-boundary state follows existing solver context save/restore; reset and
+restamp retire it. Electrical equations, residuals/current limiters and adaptive
+rules retain their owners. Initialization can alter the numerical trajectory;
+fixed-step electrical agreement alone does not imply adaptive-browser equivalence.
 
 P07 reserves the first grid via landing clear of the owning courtyard, including
 the existing margin, before other nets route across that outlet. Ordinary routing
@@ -5245,22 +5252,29 @@ native135 source-neutral healthy55 census PASS32.677s retained exact121/131
 raw/criteria/cleanup. Unit specialization was NO_GO from operation counts,
 with source0A unchanged and no speed/admission claim.
 
-The selected count-only checkpoint restores CirSim/LuChecks to published 30374
-numerical/storage ownership after archiving the rejected binary64-row prototype.
-Only six profile-count source/test files are retained; no cache, literal solver
-port or numerical guard change is selected. Root archive and numerical-baseline
-restoration are verified. Native147 PASS 62.372 s/ten suites/1,353 unchanged inputs/
-cleanup PASS; build29 PASS 128.112 s / all five permutations; compiled107 PASS 7.789 s;
-normal Q30 control108 FAIL / ERROR after 90.0524987 s observation; last 302 at
-89,006 ms, exact terminal cause/cost unexposed; cleanup passes. No retry.
-Typed build28/compiled101 numerical PASS, full6 FAIL with four PASS and two TIMEOUT at 55/60 packages,
-historical56-part618-unit accounting PASS and raw144/145 exact 236 keep their
-rejected prototype source/build scopes. Prototype Q30 control106 ends ERROR at
-90.8013409 s observation with last sample 427 at 89,142 ms; terminal cause/cost are
-unexposed and no causal regression/speed claim follows. Whole cleanup/source
-receipts remain preserved. Exact 60 real UI/session is NOT RUN/held; actual modest
-hardware is BLOCKED/unavailable. Q60 stays unaccepted and normal RB56/HARD/save-load
-stay held. Original90 s / 640 work / 5 s and production 400 us/fine 200 us/Q30 5 us remain.
+The current accepted-step initialization passes native all 24 cases/boundary evidence,
+reused after a 1,353-input audit; only the developer report changed. Final Java/GWT
+compilation and compiled154 cover that class, including Task41 and existing model/
+scale contracts. Corrected157 adds one raw 11-unit original60 transition to the
+two existing compiled E06 mechanics cases. Physical baseline, electrical criteria
+and fidelity limitations retain their original scopes. All six private full D01
+jobs 158–161 pass on the same source/WAR with original 90 s / 640 work / 5 s limits,
+30 hypotheses/350 samples and owner/CPU/browser/native cleanup. Ordinary customer
+retest is false in those private receipts; catalog remains disabled.
+
+Exact 60-package short visible flow 13 passes cold proof but fails at public U2A RETURN
+probe refusal before diagnosis or repair; inputs and cleanup pass. Flow 14 is
+FAIL after six public readings isolate RSA: original numeric resistor marking is
+absent from its public panel, so catalog selection/removal is not attempted.
+Inputs and cleanup PASS. Published-parent visible 40-package r12 repair/retest and temporary ledger 150
+TIMEOUT/capture remain separate. Native154 and original compiled152/155 failures,
+historical numerical/count/prototype checkpoints and Q30 risks remain preserved.
+Q60 is unaccepted; normal RB56/HARD/PlayerSession/save-load remain held. Expose
+four public RSA color band names from the existing canvas marking metadata, then
+match the ordinary catalog through visible color codes and complete repair/retest.
+Numeric-value privacy stays intact; no plan/fault lookup. Player/session
+integration and mixed holdout/endurance follow; actual modest hardware remains BLOCKED/unavailable. Private
+full D01 success on the reference PC is no causal speedup or playable acceptance.
 
 `PcbWorkbenchController` tracks the last detachment-readiness value used to
 build its controls. The existing same-owner, settled `CirSim` update checks it

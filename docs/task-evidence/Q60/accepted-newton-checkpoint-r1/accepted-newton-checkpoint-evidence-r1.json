@@ -1,0 +1,1622 @@
+{
+  "schema": "TSJ-Q60-ACCEPTED-NEWTON-CHECKPOINT-1",
+  "publicationStatus": "ROOT_REVIEWED_PUBLIC_EVIDENCE_FULL_SIX_PASS_VISIBLE13_14_FAIL",
+  "overallQ60": "IN_PROGRESS_UNACCEPTED",
+  "publishedParentCheckpoint": "4f38f6d48f05835df0b541867543290958f3b7fa",
+  "scope": "Temporal-ledger diagnosis, source-bound Newton initialization and scoped checks; no release acceptance",
+  "publishedParentEvidence": {
+    "visible40": {
+      "phase": "visual-r12",
+      "status": "PASS",
+      "publicEvidence": "../visible40-current-r12/visible40-current-r12-evidence-r1.json",
+      "sha256": "7613583bbee7ff2eea908fa2fd76b7f18f0f673edef153e1d69c3917a31a52db",
+      "scope": "Short developer-selected 40-package visible repair; ordinary customer Retest PASS; 85 action records and four root-inspected screenshots; not a normal RB56 session or endurance gate"
+    },
+    "temporaryLedger": {
+      "phase": "compiled-r150",
+      "application": {
+        "status": "FAIL",
+        "failure": "Deadline: Generation wall budget exhausted",
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "jobWork": 514,
+        "jobMillis": 90037,
+        "manualUnitMaxMillis": 1612,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 25894,
+          "PHYSICAL": 120,
+          "HYPOTHESES": 61490,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 99,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 413,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "normalCatalogEnabled": false,
+        "qualifiedPublication": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "cleanupPending": false
+      },
+      "capture": {
+        "schema": "TSJ-TEMPORARY-TEMPORAL-LEDGER-1",
+        "coverage": "STARTED_ADVANCE_FOR_OPERATIONS_DURING_THIS_QUALIFICATION_JOB",
+        "started": 317,
+        "recorded": 317,
+        "dropped": 0,
+        "observerErrors": 0,
+        "luFactorizationCountStatus": "NOT_CAPTURED_OR_DERIVED",
+        "captureStatus": "COMPLETE_CAPTURE"
+      },
+      "advanceTotals": {
+        "rows": 317,
+        "elapsedMillis": 60535,
+        "acceptedSteps": 63527,
+        "nonlinearTrials": 260452,
+        "matrixBeforeValues": [
+          110,
+          111,
+          113,
+          114,
+          116,
+          117,
+          120
+        ],
+        "matrixAfterValues": [
+          110,
+          111,
+          113,
+          114,
+          116,
+          117,
+          120
+        ]
+      },
+      "repeatedThirtyMillisecondWindows": {
+        "rows": 17,
+        "elapsedMillis": 23511,
+        "acceptedSteps": 19754,
+        "nonlinearTrials": 86683,
+        "timestepBeforeValues": [
+          0.0004
+        ],
+        "timestepAfterValues": [
+          2.5e-05
+        ]
+      },
+      "stepsPerRepeatedWindow": 1162,
+      "closure": {
+        "portClosed": true,
+        "hostCleanupStatus": "PASS",
+        "applicationCleanupStatus": "PASS",
+        "completedBoundaryStatus": "PASS",
+        "runnerExitCode": 1
+      },
+      "restoration": {
+        "status": "RESTORED_BYTE_EXACT_SOURCE1170_WAR392_ORIGINAL8",
+        "head": "4f38f6d48f05835df0b541867543290958f3b7fa",
+        "sourceCount": 1170,
+        "warCount": 392,
+        "originalUntrackedCount": 8,
+        "newWarFilesPreserved": 10
+      },
+      "limitations": [
+        "Wall-time observations include instrumentation; no CPU attribution or comparative speed claim.",
+        "317 completed advances cover started calls only; five independent proof flows were not all completed.",
+        "Endpoint timestep observations do not reveal rejected-trial or timestep-growth chronology.",
+        "LU factorization count was not captured; the repeated-window cost is not a removable-cost bound."
+      ]
+    }
+  },
+  "acceptedNewtonSource": {
+    "status": "IMPLEMENTED_SCOPE_UNQUALIFIED",
+    "sourceHashes": {
+      "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java": "964388fad07561c262fe3cc1d971351f43a7a1b8388e13d1497171d61b630f62",
+      "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "1b417b2af824d302d6b7790b812fb49c36317984f3a283568a7f11d310f7dfbf",
+      "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java": "52d5644218464dcc715956321fce6d8678dd559a1bddad5e1acbfe6682d3ee79",
+      "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java": "1dfab24ee107bb4c096b89192850df6db0af1cdb5f715e74eb09e498dedade91",
+      "src/com/lushprojects/circuitjs1/client/E06ConverterDeveloperVerifier.java": "64d6491daec2ea0b3892993613c29d0ad62676da66788b7acae47531c1a51878",
+      "src/com/lushprojects/circuitjs1/client/CirSim.java": "0a281ca50b170ec53fa95e4a898a333f6445f38a2fe6dceed6f8286e77df1f1c",
+      "src/com/lushprojects/circuitjs1/client/LuFactorizationChecks.java": "4794e1e77033c901df72f43c8753533d72b943a87e083d6cc38da7e740b945e3"
+    },
+    "sourceAggregateSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+    "webAggregateSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e",
+    "sourceFiles": 1170,
+    "webFiles": 392,
+    "a07FrozenInputs": 1883,
+    "behavior": "Reuse a finite E06 Newton initialization only at the owning executor global accepted-step boundary with exact time, timestep, active state, duty and all four port-voltage matches; invalidate on reset or restamp.",
+    "unchangedPolicies": [
+      "Electrical equations, residuals and current limiters",
+      "Adaptive timestep bounds and convergence/retry rules",
+      "Independent healthy/fault/repair/customer-retest proof flows",
+      "90000 ms / 640 work / 5000 ms generation budgets",
+      "Normal RB56/HARD/save-load admission"
+    ],
+    "numericalScope": "Newton initialization can change the numerical trajectory. Fixed-step checks do not establish adaptive-browser equivalence or deadline clearance."
+  },
+  "electricalComparison": {
+    "status": "PASS",
+    "coldPhase": "native-r153",
+    "warmPhase": "native-r155",
+    "averagedFixedStepCases": 12,
+    "existingReferenceComparisons": 78,
+    "maximumOutputAbsoluteDeltaVolts": 3.3748930405863575e-07,
+    "maximumStartupCrossingDeltaSeconds": 0,
+    "criteria": "Existing e06-fidelity-criteria-v1: REF_V=.001; REF_POWER_REL=.001; REF_POWER_W=.000001; STARTUP_DELTA=.010",
+    "coldLogSha256": "6fa5bbc73126b0b51c0944e9f0ef1bee65f5fe2c9bcd23055df912f21c5cc624",
+    "warmLogSha256": "0c8e838642df47c53c12f7f6a12461730dd501e168313da4721a83c633b57206",
+    "scope": "Twelve averaged fixed-step cases with unchanged electrical assertions; no bit-identical, adaptive-browser, speedup, fidelity or admission claim"
+  },
+  "closedGates": [
+    {
+      "phase": "native-r153",
+      "status": "PASS",
+      "operationMillis": 45209,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/native-r153-result.json",
+      "sha256": "d02e9148662a36ca1cf3050fa5b7af0daa7baec5e0916468aa5a4885d8111212"
+    },
+    {
+      "phase": "native-r154",
+      "status": "FAIL",
+      "operationMillis": 23522,
+      "exitCode": 1,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/native-r154-result.json",
+      "sha256": "fbc24b1b15cb9917bf088dbcc725629848eb692b7f175e502ac54160f3299daf"
+    },
+    {
+      "phase": "native-r155",
+      "status": "PASS",
+      "operationMillis": 46479,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/native-r155-result.json",
+      "sha256": "c1bceaec64298cff2d069aaabf1adc54f0dc5c54181d4cabab33477851693bc0"
+    },
+    {
+      "phase": "native-r156",
+      "status": "PASS",
+      "operationMillis": 23483,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/native-r156-result.json",
+      "sha256": "64f6d9bac5fcf210b06ca056ce6e16b02a3cc7ff74c1cdaf3a5bae0f7641abc5"
+    },
+    {
+      "phase": "native-r157",
+      "status": "PASS",
+      "operationMillis": 22845,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/native-r157-result.json",
+      "sha256": "6366f938e2cca6dc0cd27558b5a8a3748cd3d4c175276c9e96d8651c8f207b75"
+    },
+    {
+      "phase": "build-r34",
+      "status": "PASS",
+      "operationMillis": 94859,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/build-r34-result.json",
+      "sha256": "eef1832af0d85dc5dcf9703af26958e395a84b14752ec7a2d4e71c2b35e2364a"
+    },
+    {
+      "phase": "build-r35",
+      "status": "PASS",
+      "operationMillis": 89438,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/build-r35-result.json",
+      "sha256": "518179e5e0f6bf4200ddb1d1c877ae838ae73c4cccb36bca8ddaa25162177e72"
+    },
+    {
+      "phase": "compiled-r151",
+      "status": "PASS",
+      "operationMillis": 6635,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r151-result.json",
+      "sha256": "3f3788c2ed66c156fdadc7f1cfb31567c7387b60c974d06ec05127bc395337f8"
+    },
+    {
+      "phase": "compiled-r152",
+      "status": "FAIL",
+      "operationMillis": 15604,
+      "exitCode": 1,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r152-result.json",
+      "sha256": "b2f17a67c815ceeefce55c551f90c960e10304069703955e83ebd9ed55f8c223"
+    },
+    {
+      "phase": "compiled-r154",
+      "status": "PASS",
+      "operationMillis": 6379,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r154-result.json",
+      "sha256": "21f96d6d4c3ab6cba4f493934c31ab9f76a304e8aacfc8360c79383d48e7b020"
+    },
+    {
+      "phase": "compiled-r155",
+      "status": "FAIL",
+      "operationMillis": 15989,
+      "exitCode": 1,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r155-result.json",
+      "sha256": "df4bff9cd27179b237f2df0e5af8f5efa4bd6ce2b037c7332e760e866eed0034"
+    },
+    {
+      "phase": "compiled-r157",
+      "status": "PASS",
+      "operationMillis": 17122,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r157-result.json",
+      "sha256": "69bfffebbddfde56907798aa29ed33fb2337265d7c57bee48e6fd1428b9fb198"
+    },
+    {
+      "phase": "compiled-r158",
+      "status": "PASS",
+      "operationMillis": 85554,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r158-result.json",
+      "sha256": "5090b2f71ef32a5d849715f9533abd276b5604d31df064288a68f250bcbcaa7f"
+    },
+    {
+      "phase": "compiled-r159",
+      "status": "PASS",
+      "operationMillis": 101272,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r159-result.json",
+      "sha256": "004349e24a41dbc10c2733bb7fbb97fd5fd8fd7c3f62291979e1c45c07292efb"
+    },
+    {
+      "phase": "compiled-r160",
+      "status": "PASS",
+      "operationMillis": 94432,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r160-result.json",
+      "sha256": "e77f663c06c6693566dea177a09f666b68830c996941a19647c6e8d5c5642994"
+    },
+    {
+      "phase": "compiled-r161",
+      "status": "PASS",
+      "operationMillis": 77057,
+      "exitCode": 0,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/compiled-r161-result.json",
+      "sha256": "32efceecd137899041dc7e5727c258d5f804f2dfa814adc784436ae27a2770ca"
+    },
+    {
+      "phase": "visual-r13",
+      "status": "FAIL",
+      "operationMillis": 108916,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/visual-r13-result.json",
+      "sha256": "1c3075720977bfd779eafc8659a001561dedfed9d1bb38f93cc7c235056eca32"
+    },
+    {
+      "phase": "visual-r14",
+      "status": "FAIL",
+      "operationMillis": 123955,
+      "sourceInputsUnchanged": true,
+      "hostCleanup": "PASS",
+      "artifactAlias": "retained-host/visual-r14-result.json",
+      "sha256": "39f9ad6da7597ba10f115543b4f14914f36225db38f5f1af6d52e69bc7dc82e2"
+    }
+  ],
+  "currentA07": {
+    "phase": "compiled-r154",
+    "status": "PASS",
+    "pureAssertions": 306530,
+    "runtimeAssertions": 103,
+    "runtimeCases": 26,
+    "modelAssertions": 59,
+    "modelRows": 21,
+    "scaleRows": 16,
+    "cleanup": "PASS",
+    "injectedTask41CleanupFailureAndRecovery": true,
+    "earlyForcedTerminal": {
+      "status": "PASS",
+      "state": "FAIL:a07:a07-explicit-failure-canary",
+      "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+      "applicationFailureReportClaimed": false,
+      "task41FailureClaimed": false
+    },
+    "portClosed": true
+  },
+  "preservedFailures": [
+    {
+      "phase": "native-r154",
+      "status": "FAIL",
+      "reason": "Boundary fixture assumed the wrong minimum timestep; corrected native155 full24 plus three boundary fixtures subsequently PASS."
+    },
+    {
+      "phase": "compiled-r152",
+      "status": "FAIL",
+      "rawElectricalCases": "PASS",
+      "rawCleanup": "PASS",
+      "strictFailure": "Developer report serialized a cleanup Boolean as numeric 1 after Boolean &=; corrected report source is bound to native157/build35/compiled154."
+    },
+    {
+      "phase": "compiled-r155",
+      "status": "FAIL",
+      "rawElectricalCases": "PASS",
+      "rawCleanup": "PASS",
+      "strictFailure": "Duration-weighted means lie one to three ulps outside constant extrema; separate validator-only posthoc155 r2 and fresh157 PASS do not replace original strict155 FAIL."
+    }
+  ],
+  "pendingFinalBrowserGates": [],
+  "unrunPreserved": [
+    {
+      "phase": "compiled-r156",
+      "status": "NOT_RUN",
+      "reason": "Strict compiled155 prerequisite failed."
+    }
+  ],
+  "remainingAcceptance": [
+    "Expose accessible four color band names from the existing canvas marking metadata, match the ordinary catalog through public color-code interpretation, then complete visible60 repair/retest; preserve numeric-value privacy and use no plan/fault lookup",
+    "Real PlayerSession integration and save/load guards remain held",
+    "Current-source endurance and mixed holdout pending",
+    "Actual modest hardware BLOCKED/unavailable; Ryzen7700 remains reference desktop",
+    "Q60 remains IN_PROGRESS_UNACCEPTED"
+  ],
+  "historicalQ30RisksRetained": [
+    "Original 91.616-second failure has unknown seed/cause",
+    "Six missing scratch inventories",
+    "Late BLOCKED release audit"
+  ],
+  "retainedEvidence": [
+    {
+      "artifactAlias": "task-analysis/ledger-analysis-r1.json",
+      "sha256": "e314b4feb4be8a4f515f2b6b4ebe139a6a102d44d18cdb4c56d5f136ca246783"
+    },
+    {
+      "artifactAlias": "task-analysis/electrical-equivalence-r1.json",
+      "sha256": "59ea0bb8d9ddaa41961c6ccf1c3bd4991984b8981a572c3041576bc20df3a6bc"
+    },
+    {
+      "artifactAlias": "published-visible40/visible40-current-r12-evidence-r1.json",
+      "sha256": "7613583bbee7ff2eea908fa2fd76b7f18f0f673edef153e1d69c3917a31a52db"
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r154-input-review.json",
+      "sha256": "4993220fec2cc0285194309c92409d566a328dc44e1b50afc7a82ca36f334311"
+    },
+    {
+      "artifactAlias": "retained-browser/accepted-newton-current-contracts-r154/strict-result.json",
+      "sha256": "baae34d401936d1c1e026fdf5075e49e35038195e5ad98f6cb415acb7142c976"
+    },
+    {
+      "artifactAlias": "retained-ledger/rb56-60-temporal-ledger-r150/strict-result.json",
+      "sha256": "54e0167481e909bd52b00e3aa77e2cba3db60810aa853e8d3a90050fc40b53bf"
+    },
+    {
+      "artifactAlias": "retained-ledger/rb56-60-temporal-ledger-r150/current-browser-and-temporal-ledger.json",
+      "sha256": "c8cd70f5f1d5572d05ab6dacfa19347b824be3660fda4e8c1c4bf0a0883f402f"
+    },
+    {
+      "artifactAlias": "retained-ledger/tsj-q60-temporal-ledger-rmf265_b/restored.json",
+      "sha256": "418974a0f409a5b02a75aadc14900bdae57c3c4543455e314295388d78583804"
+    },
+    {
+      "artifactAlias": "retained-browser/e06-original60-transition-compiled-r152/strict-result.json",
+      "sha256": "8cf883869bd3c28324589e07a72df86c2ab9d082b9c17558d02b73472d098514"
+    },
+    {
+      "artifactAlias": "retained-browser/e06-original60-transition-compiled-r155/strict-result.json",
+      "sha256": "45ccbc21e1987ae2ecef391a49cc6b91ee0e5ca188754166983ea830a1fdc0b4"
+    },
+    {
+      "artifactAlias": "retained-browser/e06-original60-transition-compiled-r157/strict-result.json",
+      "sha256": "8012c691e10cae862e6e6d00ec6ad46bc09755eadf8ee26971de1dd311ff4512"
+    },
+    {
+      "artifactAlias": "retained-browser/rb56-60-accepted-newton-normal-r158/strict-result.json",
+      "sha256": "03d9373361b2fd2b49b502f31301bd4f30792c0b25eea2d9a3b3484b8119c808"
+    },
+    {
+      "artifactAlias": "retained-browser/rb56-60-accepted-newton-normal-r158/current-browser-and-cpu.json",
+      "sha256": "c93d6a5b49a3fdb8119405cacc50b2d75f70f6f18b2c8284047e0a011aeff16d"
+    },
+    {
+      "artifactAlias": "task-audit/native155-reuse-audit-r1.json",
+      "sha256": "d3ce9c95205ad8b01b542bb2638a4e1d246ab2b3a7f978582ed352efebce898a"
+    },
+    {
+      "artifactAlias": "task-audit/posthoc-155-review-r2.json",
+      "sha256": "3fad1a467e4b8c8e8a793cde72d67ae691fc4ea26b2b3935a0f56df05817eec9"
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r157-input-review.json",
+      "sha256": "ce83563dc7b0c5893aad73b9a1f93185f19be786534e4cb320be47d742941f1e",
+      "frozenInputs": 1938
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r158-input-review.json",
+      "sha256": "2bd9c0f61e2fa3e726537c4f1d0a8f8c6320f3dd5ca7e22b2a671ecf76cb3fd5",
+      "frozenInputs": 1980
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r159/cases/001-rb56-seed-1017-positive.report.json",
+      "sha256": "9f8271c5dc681c6ecffd72059362294bb5ae34bc07a9191764ee05cc7d06caa9"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r159/cases/002-rb56-seed-1067-positive.report.json",
+      "sha256": "a3e49feef3eb8dece7f802ebef3fa6782e63e2cef85a9895c46885e51c18b1e9"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r159/strict-result.json",
+      "sha256": "121daa78582736fa339e8f19f7f98b1d5471249713bcaa42022c046dc3d537eb"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r159/current-browser-and-cpu.json",
+      "sha256": "84683cdadf9cd1b203f3f483c15086c670124e365cacb4fe86bbe171bd027435"
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r159-input-review.json",
+      "sha256": "2211ec1a21e22d18b4c0cf6d22daf9fb2fe030518f5b1bb878bfc32aba4bffab"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r160/cases/001-rb56-seed9007199254741579-positive.report.json",
+      "sha256": "35be3214b6539636833e71968c7cc22a37e8da3070c1bc689c682e80313bc1ab"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r160/cases/002-rb56-seed-1004-positive.report.json",
+      "sha256": "00532a58ccde5a98f1b54611e8cb42bd95db7838f5be71fe77c7e1a5834f3a80"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r160/strict-result.json",
+      "sha256": "9e00c3ca3b3247d06ce045afa24b3e1353011d8ec03c7e6ea0a65f98acd80e5b"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r160/current-browser-and-cpu.json",
+      "sha256": "95632e5108c893958db5135a30bb51722e348cda3c861a2f272d9b43ae436cad"
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r160-input-review.json",
+      "sha256": "ec3c7c485a20d84fa86c2afc917a7f8dce6b30f9b6d0f927be6ae3878b896143"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r161/cases/001-rb56-seed-1028-positive.report.json",
+      "sha256": "5d5ca5d561dddb16a63aca24d6bdf7ac703dfc480f13b90db5ef8f9f4290dab6"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r161/strict-result.json",
+      "sha256": "f4b5d32062aeb8f831d8f7eb6d03502c0766c19cc014296e867bd644202bd542"
+    },
+    {
+      "artifactAlias": "retained-browser/q60-compiled-r161/current-browser-and-cpu.json",
+      "sha256": "c6f517cdd28746d184bd9b3df37a07b8bc9bb16401f2ef942552c385f361c36d"
+    },
+    {
+      "artifactAlias": "retained-controls/compiled-r161-input-review.json",
+      "sha256": "50c3afbca41f0050d2d5fa6e871c05e6af0940072fef2338004f818d88c66fa2"
+    },
+    {
+      "artifactAlias": "task-audit/current-six-review-r1.json",
+      "sha256": "946eeef2c862dd27e46088eca32bc1185d45cb3f2257048a3b2b4ca04708f32a"
+    },
+    {
+      "artifactAlias": "retained-visible/q60-visible-r13-current60/result.json",
+      "sha256": "a9f5344833b0ba37d26e7cfd1d6f94fc3ad75cba7211ba8e9f9f04be52d54dab"
+    },
+    {
+      "artifactAlias": "retained-visible/q60-visible-r13-current60/current-browser-and-input-binding.json",
+      "sha256": "f9cca70ffb586095871c1667a11b9dcda02d6d5f7f99f750e98078dfdb992aa1"
+    },
+    {
+      "artifactAlias": "retained-controls/visual-r13-input-review.json",
+      "sha256": "e52c6a918f4d4687e77639fdac6bc611ffa28f45f5df04087a3617c9432537b2"
+    },
+    {
+      "artifactAlias": "retained-visible/q60-visible-r14-current60/result.json",
+      "sha256": "4ea2df541b1fe52fdf992051856d1b1b495fb122f4198ce466428cef39cc2f4d"
+    },
+    {
+      "artifactAlias": "retained-visible/q60-visible-r14-current60/current-browser-and-input-binding.json",
+      "sha256": "4e1f3022985cbdef5ac20edb37f8fc6f9438388269afa1fa834345fecc01310f"
+    },
+    {
+      "artifactAlias": "retained-controls/visual-r14-input-review.json",
+      "sha256": "bbf872aac29e4c240056f10ce4395a3ca248989b588a55b4740d6c06d247504f"
+    }
+  ],
+  "sanitization": {
+    "absolutePersonalPaths": false,
+    "rawUncontrolledLogsPublished": false,
+    "processIdsOrCommandLinesPublished": false,
+    "fullRawInventoriesPublished": false,
+    "artifactAliasesAreRetainedProvenance": true,
+    "gateHashesAreOriginalBytes": true
+  },
+  "leafActions": {
+    "repositoryWrites": 0,
+    "sourceWrites": 0,
+    "controllerWrites": 0,
+    "gatesLaunched": 0
+  },
+  "nativePhysicalReuse": {
+    "status": "PASS",
+    "nativePhase": "native-r155",
+    "currentCompilationPhase": "native-r157",
+    "currentGwtPhase": "build-r35",
+    "sourceInputCount": 1353,
+    "unchangedInputCount": 1352,
+    "changedInputs": [
+      "src/com/lushprojects/circuitjs1/client/E06ConverterDeveloperVerifier.java"
+    ],
+    "scope": "Reused full24 electrical and three actual accepted-predictor boundary checks. Only the additive developer report fixture changed; physical model, executor, boundary, native test, electrical criteria and maintained runner remain byte-identical. Final Java compilation and GWT/compiled gates cover changed developer class.",
+    "launchSha256": "3c415149cda6047f04e7730aeb2c4eb45c149ecd0ead5f6e3f8db67a2baf6e62",
+    "resultSha256": "c1bceaec64298cff2d069aaabf1adc54f0dc5c54181d4cabab33477851693bc0",
+    "outputSha256": "0c8e838642df47c53c12f7f6a12461730dd501e168313da4721a83c633b57206",
+    "full24Assertions": 303827399,
+    "full24RerunAfterDeveloperReportFix": false
+  },
+  "validatorCorrection": {
+    "status": "PASS",
+    "scope": "Validator-only duration-weighted-statistics rounding bound; no production change",
+    "formula": "gamma(2*N+4), gamma(k)=k*u/(1-k*u), u=2^-53, retained N<=8192",
+    "largestObservedExcursionVolts": 1.7763568394002505e-15,
+    "largestObservedApplicableBoundVolts": 2.0488020637166628e-13,
+    "negativeMutationsRejected": 23,
+    "posthoc155Review": "PASS_SEPARATE_FROM_ORIGINAL_STRICT155_FAIL",
+    "originalStrict155Status": "FAIL_UNCHANGED",
+    "physicalCriteria": "Existing rail/ripple/drift/customer-load/passivity/accepted-timestep and Boolean cleanup checks retained"
+  },
+  "currentCompiledElectrical": {
+    "phase": "compiled-r157",
+    "status": "PASS",
+    "operationMillis": 17122,
+    "scope": "E06_COMPILED_PRIVATE_MECHANICS_AND_FORCED_CLEANUP_CANARY",
+    "playerInputEvidence": false,
+    "models": [
+      "DETAILED",
+      "AVERAGED",
+      "ORIGINAL60_TRANSITION"
+    ],
+    "rawTransitionUnits": 11,
+    "rawTransitionStatus": "PASS",
+    "B_ONLY": {
+      "label": "B_ONLY",
+      "requestedSeconds": 0.03,
+      "dtBefore": 0.0004,
+      "dtAfter": 0.0002,
+      "acceptedSteps": 193,
+      "nonlinearTrials": 1180,
+      "factorizations": 987,
+      "solves": 987,
+      "wallMs": 115,
+      "status": "PASS"
+    },
+    "forcedCleanupStatus": "PASS",
+    "portClosed": true,
+    "normalCatalog": false,
+    "fullProductionD01": false,
+    "fidelity": "NOT_QUALIFIED"
+  },
+  "currentOriginal60": {
+    "phase": "compiled-r158",
+    "status": "PASS",
+    "qualificationStatus": "PASS_FOR_ONE_PRIVATE_JOB_ONLY",
+    "observedApplicationReport": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "sourceEpoch": "tsj-generation-dependencies-v16",
+      "planVersion": 1,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "forcedAfterPublish": false,
+      "normalCatalogEnabled": false,
+      "status": "PASS",
+      "phase": "RESTORED",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 77768,
+      "maxManualUnitMillis": 1684,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "generationReceiptDigest": "c74f5d0e95b36ff708a4ab5f977b86b9875982d1f25fb4a5cd7ec9862fc03e15",
+      "diagnosticContextDigest": "d04122c4f8b2a81321a7aea50ed6cd9786c371f428c5a4e2bc9b7d5d59af471e",
+      "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": false,
+      "cleanupPending": false,
+      "wallMillis": 78088
+    },
+    "limits": {
+      "jobMillis": 90000,
+      "sharedWork": 640,
+      "activeOperationMillis": 5000,
+      "hostObservationSeconds": 120,
+      "nativeOuterSeconds": 300
+    },
+    "caseOperationSeconds": 78.9328155000112,
+    "nativeOperationMillis": 85554,
+    "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+    "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e",
+    "inputInventoryBefore": {
+      "fileCount": 1562,
+      "sourceFileCount": 1170,
+      "webFileCount": 392,
+      "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+      "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+      "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+    },
+    "inputInventoryAfter": {
+      "fileCount": 1562,
+      "sourceFileCount": 1170,
+      "webFileCount": 392,
+      "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+      "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+      "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+    },
+    "browser": {
+      "browserVersion": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "versionSessionDetached": true
+    },
+    "cpuRecorder": {
+      "status": "PASS",
+      "sampleCount": 44,
+      "errors": [],
+      "threadJoined": true,
+      "processHandlesOpened": 7654,
+      "processHandlesClosed": 7654,
+      "workerCpuSeconds": 0.078125,
+      "recordedWallSeconds": 84.8740328,
+      "finalStopSnapshot": true,
+      "processMutations": 0
+    },
+    "hostCleanupStatus": "PASS",
+    "applicationCleanupStatus": "PASS",
+    "completedBoundaryStatus": "PASS",
+    "portClosed": true,
+    "noReroll": true,
+    "playerInputEvidence": false,
+    "scope": "One original60/-1022 private fullD01 job; ordinary customer retest and session remain separate"
+  },
+  "rootCombinedSixAudit": {
+    "schema": "TSJ-CURRENT-ORIGINAL6-ROOT-REVIEW-1",
+    "status": "PASS",
+    "scope": "Original frozen six private full-D01 representatives on one final source/build; no ordinary player/session, holdout distribution, speedup, fidelity, endurance or modest-hardware claim",
+    "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+    "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e",
+    "hypotheses": 30,
+    "solverSamples": 350,
+    "serialOrder": [
+      "compiled-r158",
+      "compiled-r159",
+      "compiled-r160",
+      "compiled-r161"
+    ],
+    "allFrozenInputsStillMatch": true,
+    "distinctInputPins": 2057,
+    "originalEightUntrackedUnchanged": true,
+    "limits": {
+      "applicationMillis": 90000,
+      "work": 640,
+      "unitMillis": 5000,
+      "observationSeconds": 120,
+      "nativeSeconds": 300
+    },
+    "artifactAlias": "task-audit/current-six-review-r1.json",
+    "sha256": "946eeef2c862dd27e46088eca32bc1185d45cb3f2257048a3b2b4ca04708f32a",
+    "authority": "ROOT_OFFLINE_AUDIT_NOT_INDEPENDENT_REVIEW"
+  },
+  "changedCodeAndFixtureSourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java": "964388fad07561c262fe3cc1d971351f43a7a1b8388e13d1497171d61b630f62",
+    "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java": "1b417b2af824d302d6b7790b812fb49c36317984f3a283568a7f11d310f7dfbf",
+    "src/com/lushprojects/circuitjs1/client/SolverExecutionBoundary.java": "52d5644218464dcc715956321fce6d8678dd559a1bddad5e1acbfe6682d3ee79",
+    "src/com/lushprojects/circuitjs1/client/A07ExecutionContractVectors.java": "1dfab24ee107bb4c096b89192850df6db0af1cdb5f715e74eb09e498dedade91",
+    "src/com/lushprojects/circuitjs1/client/E06ConverterDeveloperVerifier.java": "64d6491daec2ea0b3892993613c29d0ad62676da66788b7acae47531c1a51878",
+    "tests/contracts/E06ConverterPilotContractTest.java": "9084ba3d7e8a3578a47441e4fdc8f1756f11b266b79c2638115a67af357349e3"
+  },
+  "currentFullSix": {
+    "status": "PASS",
+    "caseCount": 6,
+    "cases": [
+      {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "-1017",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27455,
+        "maxManualUnitMillis": 1196,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "reportSha256": "9f8271c5dc681c6ecffd72059362294bb5ae34bc07a9191764ee05cc7d06caa9",
+        "phase": "compiled-r159",
+        "reportArtifactAlias": "retained-browser/q60-compiled-r159/cases/001-rb56-seed-1017-positive.report.json",
+        "deadlineMarginMillisOnReferencePc": 62545,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1017",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 40,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 516,
+          "generationMillis": 27455,
+          "maxManualUnitMillis": 1196,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "5bb909e25c141bc024ef5ea6a70dc10e747b93daf3a6d828b4ac0e80d3b1529d",
+          "diagnosticContextDigest": "a23440d9ecad5ab56d2efd73cca0cb6aad22366bb70b2d1a303a0b6afd39e42f",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 27650
+        }
+      },
+      {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "-1067",
+        "packages": 55,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 589,
+        "generationMillis": 65545,
+        "maxManualUnitMillis": 1635,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "reportSha256": "a3e49feef3eb8dece7f802ebef3fa6782e63e2cef85a9895c46885e51c18b1e9",
+        "phase": "compiled-r159",
+        "reportArtifactAlias": "retained-browser/q60-compiled-r159/cases/002-rb56-seed-1067-positive.report.json",
+        "deadlineMarginMillisOnReferencePc": 24455,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1067",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 55,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 589,
+          "generationMillis": 65545,
+          "maxManualUnitMillis": 1635,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "c47d5365dbeaf171747beac441d5ae9c6b5606822914f3fd6cc8e3adad8c33e4",
+          "diagnosticContextDigest": "4bc07492a0c8b93cfa5b2d0c31e36cdd192ba2404d0b05d6545bdafe21a255a8",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 65844
+        }
+      },
+      {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "9007199254741579",
+        "packages": 50,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 584,
+        "generationMillis": 48747,
+        "maxManualUnitMillis": 1344,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "reportSha256": "35be3214b6539636833e71968c7cc22a37e8da3070c1bc689c682e80313bc1ab",
+        "phase": "compiled-r160",
+        "reportArtifactAlias": "retained-browser/q60-compiled-r160/cases/001-rb56-seed9007199254741579-positive.report.json",
+        "deadlineMarginMillisOnReferencePc": 41253,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "9007199254741579",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 50,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 584,
+          "generationMillis": 48747,
+          "maxManualUnitMillis": 1344,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "6cc03bba49d6ac0abe27ff7208ba80310e4c8f9e3493befc9d57428d9f583b51",
+          "diagnosticContextDigest": "ad2bc164afe5153f28518f2b18daed481609db3749e7527291ff0bd031cf920c",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 49013
+        }
+      },
+      {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "-1004",
+        "packages": 44,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 517,
+        "generationMillis": 34597,
+        "maxManualUnitMillis": 1204,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "reportSha256": "00532a58ccde5a98f1b54611e8cb42bd95db7838f5be71fe77c7e1a5834f3a80",
+        "phase": "compiled-r160",
+        "reportArtifactAlias": "retained-browser/q60-compiled-r160/cases/002-rb56-seed-1004-positive.report.json",
+        "deadlineMarginMillisOnReferencePc": 55403,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 517,
+          "generationMillis": 34597,
+          "maxManualUnitMillis": 1204,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "a690dee1f85811fd1c42d4cae789ee6f6e884c0ef6943aaa401268c3122d982f",
+          "diagnosticContextDigest": "4d9940384c0f14fec2f64b293f4f237c3497bed1bc2436826b685008b74a0259",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 34812
+        }
+      },
+      {
+        "status": "PASS",
+        "seed": "-1022",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 603,
+        "generationMillis": 77768,
+        "maxManualUnitMillis": 1684,
+        "normalCatalogEnabled": false,
+        "qualifiedPublication": true,
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "ordinaryCustomerRetestPassed": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "coordinatorReleased": true,
+        "phase": "compiled-r158",
+        "playerInputEvidence": false,
+        "deadlineMarginMillisOnReferencePc": 12232,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 60,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 603,
+          "generationMillis": 77768,
+          "maxManualUnitMillis": 1684,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "c74f5d0e95b36ff708a4ab5f977b86b9875982d1f25fb4a5cd7ec9862fc03e15",
+          "diagnosticContextDigest": "d04122c4f8b2a81321a7aea50ed6cd9786c371f428c5a4e2bc9b7d5d59af471e",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 78088
+        }
+      },
+      {
+        "status": "PASS",
+        "scope": "PRIVATE_COORDINATOR_PHYSICAL_AND_FULL_D01",
+        "seed": "-1028",
+        "packages": 56,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 618,
+        "generationMillis": 67054,
+        "maxManualUnitMillis": 1689,
+        "forcedAfterPublish": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "normalCatalogEnabled": false,
+        "playerInputEvidence": false,
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "reportSha256": "5d5ca5d561dddb16a63aca24d6bdf7ac703dfc480f13b90db5ef8f9f4290dab6",
+        "phase": "compiled-r161",
+        "reportArtifactAlias": "retained-browser/q60-compiled-r161/cases/001-rb56-seed-1028-positive.report.json",
+        "deadlineMarginMillisOnReferencePc": 22946,
+        "applicationReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_SHARED_WORKBENCH",
+          "family": "RB56_CONTROL",
+          "seed": "-1028",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 56,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 618,
+          "generationMillis": 67054,
+          "maxManualUnitMillis": 1689,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "9153a02feb0e0d1c3e0e4311bbbc1ec106747f95b960ec101055e187630960e9",
+          "diagnosticContextDigest": "89276e1410577938243007f7dbe615d73a7b590e97352739b3464239876a5192",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "wallMillis": 67345
+        }
+      }
+    ],
+    "remainingFivePhaseClosure": [
+      {
+        "phase": "compiled-r159",
+        "status": "PASS",
+        "nativeOperationMillis": 101272,
+        "frozenInputs": 2042,
+        "reviewSha256": "2211ec1a21e22d18b4c0cf6d22daf9fb2fe030518f5b1bb878bfc32aba4bffab",
+        "inputInventoryBefore": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "inputInventoryAfter": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "browser": {
+          "browserVersion": {
+            "protocolVersion": "1.3",
+            "product": "Edg/155.0.4283.45",
+            "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+            "jsVersion": "15.5.9.4"
+          },
+          "versionSessionDetached": true
+        },
+        "cpuRecorder": {
+          "status": "PASS",
+          "sampleCount": 51,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 8051,
+          "processHandlesClosed": 8051,
+          "workerCpuSeconds": 0.140625,
+          "recordedWallSeconds": 100.4650645,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        },
+        "applicationCleanup": "PASS",
+        "browserAndPortCleanup": "PASS",
+        "nativeCleanup": "PASS"
+      },
+      {
+        "phase": "compiled-r160",
+        "status": "PASS",
+        "nativeOperationMillis": 94432,
+        "frozenInputs": 2042,
+        "reviewSha256": "ec3c7c485a20d84fa86c2afc917a7f8dce6b30f9b6d0f927be6ae3878b896143",
+        "inputInventoryBefore": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "inputInventoryAfter": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "browser": {
+          "browserVersion": {
+            "protocolVersion": "1.3",
+            "product": "Edg/155.0.4283.45",
+            "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+            "jsVersion": "15.5.9.4"
+          },
+          "versionSessionDetached": true
+        },
+        "cpuRecorder": {
+          "status": "PASS",
+          "sampleCount": 48,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 7642,
+          "processHandlesClosed": 7642,
+          "workerCpuSeconds": 0.125,
+          "recordedWallSeconds": 93.6745116,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        },
+        "applicationCleanup": "PASS",
+        "browserAndPortCleanup": "PASS",
+        "nativeCleanup": "PASS"
+      },
+      {
+        "phase": "compiled-r161",
+        "status": "PASS",
+        "nativeOperationMillis": 77057,
+        "frozenInputs": 2042,
+        "reviewSha256": "50c3afbca41f0050d2d5fa6e871c05e6af0940072fef2338004f818d88c66fa2",
+        "inputInventoryBefore": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "inputInventoryAfter": {
+          "fileCount": 1562,
+          "sourceFileCount": 1170,
+          "webFileCount": 392,
+          "sha256": "6b7530780935a2e05e3aec67216ac6e684db864012030a07341bc1f2ebc84bb9",
+          "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+          "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e"
+        },
+        "browser": {
+          "browserVersion": {
+            "protocolVersion": "1.3",
+            "product": "Edg/155.0.4283.45",
+            "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+            "jsVersion": "15.5.9.4"
+          },
+          "versionSessionDetached": true
+        },
+        "cpuRecorder": {
+          "status": "PASS",
+          "sampleCount": 40,
+          "errors": [],
+          "threadJoined": true,
+          "processHandlesOpened": 6337,
+          "processHandlesClosed": 6337,
+          "workerCpuSeconds": 0.125,
+          "recordedWallSeconds": 76.4275415,
+          "finalStopSnapshot": true,
+          "processMutations": 0
+        },
+        "applicationCleanup": "PASS",
+        "browserAndPortCleanup": "PASS",
+        "nativeCleanup": "PASS"
+      }
+    ],
+    "scope": "Original six private coordinator/physical/fullD01 jobs, one actual attempt per case on current reference PC",
+    "runOrder": [
+      "compiled-r158",
+      "compiled-r159",
+      "compiled-r160",
+      "compiled-r161"
+    ],
+    "limits": {
+      "generationMillis": 90000,
+      "workUnits": 640,
+      "activeUnitMillis": 5000,
+      "caseObservationSeconds": 120,
+      "nativeOuterSeconds": 300
+    },
+    "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+    "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e",
+    "ordinaryPlayerQualification": false,
+    "normalCatalogEnabled": false,
+    "noReroll": true,
+    "comparativeSpeedupClaim": false,
+    "worstObservedGenerationMillis": 77768,
+    "minimumObservedDeadlineMarginMillis": 12232
+  },
+  "preservedVisible13Failure": {
+    "phase": "visual-r13",
+    "status": "FAIL",
+    "scope": "Exact60/two-channel short private classic visible flow",
+    "nativeOperationMillis": 108916,
+    "visibleOperationSeconds": 106.23429489997216,
+    "actionRecords": 69,
+    "completedMeasurements": 5,
+    "heldVerifier": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "status": "HOLD",
+      "phase": "HOLD",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 78826,
+      "maxManualUnitMillis": 1741,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "holdMillis": 120000,
+      "normalLabels": true,
+      "normalCatalogEnabled": false
+    },
+    "finalVerifier": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "status": "FAIL",
+      "phase": "RESTORED",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 78826,
+      "maxManualUnitMillis": 1741,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "holdMillis": 120000,
+      "normalLabels": true,
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": false,
+      "cleanupPending": false,
+      "normalCatalogEnabled": false,
+      "wallMillis": 92436,
+      "failurePhase": "HOLD",
+      "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+    },
+    "unrepairedCustomerRetest": "FAIL_EXPECTED",
+    "flowFailure": "Public U2A RETURN probe placement refused as outside the view or covered, before diagnosis and repair",
+    "actualPublicFeedback": "That terminal is outside this view or covered. Pan or zoom to it.",
+    "diagnosisCompleted": false,
+    "repairCompleted": false,
+    "ordinaryCustomerRetestPassed": false,
+    "normalCatalogEnabled": false,
+    "normalPlayerSessionEvidence": false,
+    "limits": {
+      "operationSeconds": 240,
+      "requiredNativeOuterSeconds": 300,
+      "reservedCleanupSeconds": 60,
+      "fixtureHoldSeconds": 120,
+      "generationObservationSeconds": 95,
+      "meterObservationSeconds": 3,
+      "readinessObservationSeconds": 30,
+      "maxMeasurements": 19,
+      "maxScreenshots": 5,
+      "generationJobMs": 90000,
+      "generationWorkUnits": 640,
+      "generationActiveOperationMs": 5000
+    },
+    "servedInputInventory": {
+      "beforeSha256": "a990fc8534f4c51e1d713fa1eae152f3d5b76c5bdae2abfec768a1f8c3fe2fad",
+      "afterSha256": "a990fc8534f4c51e1d713fa1eae152f3d5b76c5bdae2abfec768a1f8c3fe2fad",
+      "fileCount": 1564
+    },
+    "frozenInputCount": 2081,
+    "reviewSha256": "e52c6a918f4d4687e77639fdac6bc611ffa28f45f5df04087a3617c9432537b2",
+    "browserVersion": {
+      "protocolVersion": "1.3",
+      "product": "Edg/155.0.4283.45",
+      "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+      "jsVersion": "15.5.9.4"
+    },
+    "hostCleanup": "PASS",
+    "browserAndPreviewCleanup": "PASS",
+    "applicationOwnershipCleanup": "PASS",
+    "portClosed": true,
+    "screenshots": [
+      {
+        "file": "screenshots/visual13-001-unrepaired-customer-retest.png",
+        "sha256": "b5b3ba7a6b1646b7bba6a03299b12c27c6323fc4402ca23392a87223f102827b",
+        "bytes": 573738,
+        "inspection": "Leaf inspected actual image for personal-path sanitation; root inspected both retained images",
+        "scope": "Original visible13 FAIL; no repair or successful retest implied"
+      },
+      {
+        "file": "screenshots/visual13-failure.png",
+        "sha256": "6521279a8e3ef954e74b88c3dfccf9065583cd3fc0e26ef853d639154fd152e7",
+        "bytes": 122447,
+        "inspection": "Leaf inspected actual image for personal-path sanitation; root inspected both retained images",
+        "scope": "Original visible13 FAIL; no repair or successful retest implied"
+      }
+    ],
+    "privacyBoundary": {
+      "gameFunctionsCalled": false,
+      "pageEvaluateUsed": false,
+      "syntheticDispatchUsed": false
+    }
+  },
+  "preservedVisible14Failure": {
+    "phase": "visual-r14",
+    "status": "FAIL",
+    "scope": "Exact60/two-channel short private classic visible flow",
+    "nativeOperationMillis": 123955,
+    "visibleOperationSeconds": 121.24407279997831,
+    "actionRecords": 90,
+    "measurements": [
+      {
+        "display": "11.207 V",
+        "volts": 11.207,
+        "name": "regulated-stage input",
+        "red": "U1 terminal INPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "4.996 V",
+        "volts": 4.996,
+        "name": "control rail",
+        "red": "U1 terminal OUTPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "display": "5 V",
+        "volts": 5.0,
+        "name": "A: sensor connector signal",
+        "red": "JSA terminal 1",
+        "black": "JSA terminal 2"
+      },
+      {
+        "display": "343.419 μV",
+        "volts": 0.00034341899999999997,
+        "name": "A: conditioned sensor",
+        "red": "U2A terminal SENSOR",
+        "black": "U2A terminal RETURN"
+      },
+      {
+        "display": "2.499 V",
+        "volts": 2.499,
+        "name": "A: sensor reference",
+        "red": "U2A terminal REFERENCE",
+        "black": "U2A terminal RETURN"
+      },
+      {
+        "display": "0 V",
+        "volts": 0.0,
+        "name": "A: decision output",
+        "red": "U2A terminal OUTPUT",
+        "black": "U2A terminal RETURN"
+      }
+    ],
+    "diagnosis": {
+      "component": "RSA",
+      "reason": "Channel A: HIGH reaches the connector but conditioned sensor remains below its measured reference.",
+      "basis": "Displayed domain-local voltages and ordinary HIGH input; no seed/fault-key decision.",
+      "publicOriginalMarkings": "RSA\n\n\nType: resistor\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component"
+    },
+    "guardedPowerOffReadiness": {
+      "boardPower": "OFF",
+      "evidence": "Actual guarded Remove component button enabled",
+      "observationBoundSeconds": 30
+    },
+    "heldVerifier": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "status": "HOLD",
+      "phase": "HOLD",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 79369,
+      "maxManualUnitMillis": 1698,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "holdMillis": 120000,
+      "normalLabels": true,
+      "normalCatalogEnabled": false
+    },
+    "finalVerifier": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "status": "FAIL",
+      "phase": "RESTORED",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 79369,
+      "maxManualUnitMillis": 1698,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "holdMillis": 120000,
+      "normalLabels": true,
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": false,
+      "cleanupPending": false,
+      "normalCatalogEnabled": false,
+      "wallMillis": 107439,
+      "failurePhase": "HOLD",
+      "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+    },
+    "flowFailure": "RSA panel contains no original numeric resistor marking; replacement-choice oracle stops before catalog selection or removal",
+    "viewAdjustment": "Existing visible Fit bench control once before each measurement pair; no covered/offscreen refusal in14; no production change",
+    "diagnosisCompleted": true,
+    "catalogSelectionCompleted": false,
+    "componentRemoved": false,
+    "repairCompleted": false,
+    "ordinaryCustomerRetestPassed": false,
+    "normalCatalogEnabled": false,
+    "normalPlayerSessionEvidence": false,
+    "limits": {
+      "operationSeconds": 240,
+      "requiredNativeOuterSeconds": 300,
+      "reservedCleanupSeconds": 60,
+      "fixtureHoldSeconds": 120,
+      "generationObservationSeconds": 95,
+      "meterObservationSeconds": 3,
+      "readinessObservationSeconds": 30,
+      "maxMeasurements": 19,
+      "maxScreenshots": 5,
+      "generationJobMs": 90000,
+      "generationWorkUnits": 640,
+      "generationActiveOperationMs": 5000
+    },
+    "servedInputInventory": {
+      "beforeSha256": "a990fc8534f4c51e1d713fa1eae152f3d5b76c5bdae2abfec768a1f8c3fe2fad",
+      "afterSha256": "a990fc8534f4c51e1d713fa1eae152f3d5b76c5bdae2abfec768a1f8c3fe2fad",
+      "fileCount": 1564
+    },
+    "frozenInputCount": 2094,
+    "reviewSha256": "bbf872aac29e4c240056f10ce4395a3ca248989b588a55b4740d6c06d247504f",
+    "browserVersion": {
+      "protocolVersion": "1.3",
+      "product": "Edg/155.0.4283.45",
+      "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+      "jsVersion": "15.5.9.4"
+    },
+    "hostCleanup": "PASS",
+    "browserAndPreviewCleanup": "PASS",
+    "applicationOwnershipCleanup": "PASS",
+    "portClosed": true,
+    "screenshots": [
+      {
+        "file": "screenshots/visual14-002-diagnosis-and-original-marking.png",
+        "sha256": "b6019ed246cf3cdd41e724c7e87f38bdcdf8739b6ee71cfa0fba3ef42650a11f",
+        "bytes": 559540,
+        "inspection": "Root inspected actual diagnosis/failure images",
+        "scope": "Original visible14 FAIL; diagnosis completed but no component removal/replacement or successful retest"
+      },
+      {
+        "file": "screenshots/visual14-failure.png",
+        "sha256": "b7efb997dfff6789aefcca0458aed62708ee34cec139dc1ef2a7ad65a054fde8",
+        "bytes": 564245,
+        "inspection": "Root inspected actual diagnosis/failure images",
+        "scope": "Original visible14 FAIL; diagnosis completed but no component removal/replacement or successful retest"
+      }
+    ],
+    "privacyBoundary": {
+      "gameFunctionsCalled": false,
+      "pageEvaluateUsed": false,
+      "syntheticDispatchUsed": false
+    }
+  },
+  "packagingReviewScope": "Root reviewed actual source/evidence/images and six ranges; independent reviews cover actual source, r3 packaging and13/14 provenance. This revision changes packaging wording only."
+}

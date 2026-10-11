@@ -139,6 +139,18 @@ final class SolverExecutionBoundary {
         return result;
     }
     Observation observation() { return active == null ? latest : null; }
+    // Reuse within an operation, or across a successful next begin, without
+    // publishing an intermediate observation or manufacturing a new receipt.
+    boolean isAcceptedState(Operation operation, Object expectedOwner, Object expectedGraph, double time) {
+        if (operation == null || operation.acceptedSteps == 0 || operation.trialInProgress ||
+                operation.owner != owner || owner != expectedOwner || operation.graph != graph || graph != expectedGraph ||
+                operation.generation != generation || operation.revision != revision ||
+                !finite(time) || operation.lastAcceptedTime != time) return false;
+        return (operation == active && operation.outcome == Outcome.RUNNING) ||
+            (operation.outcome == Outcome.COMPLETE && (active == null || active.outcome == Outcome.RUNNING) &&
+                latest != null && latest == operation.candidate &&
+                latest.operation == operation.id);
+    }
     boolean isCurrent(Observation observation, Object expectedOwner, Object expectedGraph, double time) {
         return active == null && observation != null && observation == latest &&
             observation.owner == owner && observation.owner == expectedOwner &&

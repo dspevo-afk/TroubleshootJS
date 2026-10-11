@@ -1,56 +1,34 @@
-## Current source0A: numerical contracts pass; normal55 remains unqualified
+## Current Q60: all six private full D01 jobs pass; visible 60-package public marking blocker remains
 
-Native132 PASS54.546s/11 affected suites/1,353 pins, build25 PASS88.949s/all5
-JDK8/GWT permutations/1,222 pins and compiled87 PASS7.923s:306,503 pure,
-83/23 runtime,59/21 models,16 scale and actual Task41 failure/recovery plus
-scoped early-terminal canary. Raw native133/134 PASS28.757/28.154s/all236
-original400/200us comparisons; whole metrics, raw/criteria/cleanup receipts exact
-129/130 and126/127 with zero exclusions. This is three fixed raw graphs, not
-a new full24 or admission/session proof. All current pins and cleanup pass.
+Q60 remains IN PROGRESS / UNACCEPTED; normal RB56/HARD/PlayerSession/save-load stay
+held. [Current compact evidence](accepted-newton-checkpoint-r1/README.md) binds the
+accepted-step E06 initialization, native physical-runtime reuse audit, final
+native157/build35/compiled154, corrected electrical157 and all six private jobs
+158–161. They retain 90 s / 640 work / 5 s limits, complete 30 hypotheses/350 samples
+and pass owner/CPU/browser/native cleanup. Minimum observed deadline margin is
+12.232 s on the reference PC only; no paired speedup or broader fidelity claim.
 
-Unprofiled normal55 compiled88 FAILS the unchanged90s wall limit:97.105s outer/
-91.4795234s case,90398ms application/520 work/max1958ms; five replay installs,
-four complete flows and partial fifth, publication false. Current normal Q30
-seed10014 compiled89 PASS85.7567492s observation/92.293s outer, exact normal
-replay `tsj-alpha/5/MEDIUM/RB30_CONTROL/10014`, original90s/640/5s. Frozen-plan40
-packages/two channels and sampled443 are not runtime census or terminal work.
-Its independent closed review passes within that one normal-run scope.
+Exact 60-package visible flow 13 passes cold proof but fails at a genuine public U2A RETURN
+probe refusal before diagnosis/repair; all cleanup/input checks pass. Three actual
+screenshots were captured. Flow 14 diagnoses RSA from six public readings, then
+fails before catalog selection/removal because the original numeric marking is
+missing. Two inspected screenshots per attempt are retained. This is no successful visible 60-package repair
+or ordinary player/session proof. Native154 fixture FAIL, original compiled152
+report FAIL and original 155 strict FAIL remain alongside separate posthoc/fresh157
+validator PASS; compiled 156 is preserved NOT RUN.
 
-Profile90 is CLOSED CAPTURED/qualificationFAIL97.273s outer/job90029ms/448
-work/max2316ms; four replay installs, three complete flows plus partial fourth.
-Original offline readers report26.575s helper self,35.634s factor union,21.072s
-routing/layout union,4.674s solve union and2.519s row-copy union, with overlap.
-40,697 samples have90,951.588ms signed/90,951.601ms positive weight; one-13us
-delta(index436/node1372) is preserved raw and excluded from positive attribution.
-The root closure/pin audit passes1,446 plus self/1,222 outer/1,562 transport;
-it is not an independent profile90 review or paired speed proof.
-[Current compact evidence](wide-gather-checkpoint-r1/wide-gather-checkpoint-evidence-r1.json).
+Published parent `4f38f6d` binds [visible 40-package r12 repair/retest](visible40-current-r12/README.md)
+and complete temporary ledger 150 with application TIMEOUT. Ledger wall costs are
+not CPU/removable-work or paired speedup evidence. [Prior settlement](settlement-fastpath-r1/README.md),
+[six/profile/routing](current-six-profile-r1/README.md) and historical source0A/DE7
+packets keep their epochs; source85 visible40 endurance remains separate.
 
-Historical DE7 native131 source-neutral healthy55 census PASS25.116s retains
-all seven raw windows/criteria/cleanup exact121 with zero exclusions and both
-zero-pivot counts0. Its row-outer panel was rejected before implementation:
-charged accesses618.770M to980.339M, tests/branches195.334M to1,563.373M.
-[Historical DE7 panel census and rejection](sparse-panel-census-r1/sparse-panel-cost-evidence-r1.json),
-[historical DE7/BFD checkpoint](loop-economy-checkpoint-r1/loop-economy-checkpoint-evidence-r1.json).
-
-Closed native135 PASS32.677s is a source-neutral healthy55 diagnostic:all7
-raw windows/criteria/cleanup exact121/131; +1 occurs0 times, -1 weighted share
-0.4542084%(961,339/211,651,517). Unit specialization is NO_GO:full8 adds20.305M
-minus checks to avoid0.349M multiplies; all chunks add38.473M to avoid0.961M.
-Source0A and cleanup remain exact; no speed/admission claim.
-
-Full-six r7 remains historical FAIL2/6; later full-six drafts are unrun.
-Historical source85 visible40 r8 PASS307.383s/three checkpoints/four inspected
-screenshots includes repairs, Reset/restoration/customer retest and cleanup.
-Current exact60/two-channel visible/session and actual modest hardware remain
-outstanding; Ryzen7700 is the reference desktop. Approved browser endurance
-is one owner for at least300s/three checkpoints; native98's100 owners/96-part
-inventory remain separate native-only evidence. Courtyard grids remain
-unintegrated and not selected; the closed135 no-go adds no production variant.
-Original cadence/five hypotheses/seeds/90s/640/5s remain fixed. Q60 remains unaccepted;
-normal RB56/HARD/save-load remain held. This feature-branch checkpoint is not
-release acceptance. Original eight
-files/index, historical failures and Q30 risks are preserved; REL-B/Q100 unstarted.
+Next: expose the four RSA color band names from the existing canvas marking
+metadata, match the ordinary catalog through public color-code interpretation and
+complete repair/retest. Preserve numeric-value privacy and use no plan/fault lookup.
+Real PlayerSession integration and mixed holdout/endurance follow. Actual modest hardware is BLOCKED/unavailable; Ryzen7700 is
+reference only. Original Q30 91.616 s unknown failure, six missing inventories and
+late BLOCKED audit remain. REL-B/Q100 are unstarted. No Q60/release acceptance.
 
 ---
 

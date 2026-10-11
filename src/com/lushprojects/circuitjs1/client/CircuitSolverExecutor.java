@@ -205,6 +205,12 @@ final class CircuitSolverExecutor {
         boundary.accepted(operation, sim.t, wallTimeMillis());
         sim.solverTimeObservations.accepted(operation);
     }
+    // A model callback precedes global acceptance. Only this owner can confirm it.
+    boolean hasAcceptedStepAt(double time) {
+        return CircuitElm.sim == sim && !requiresAnalysis && controlsCurrent() &&
+            (privateOwner == null || (sim.elmList == privateGraph && sim.generatedBoardInstance == null)) &&
+            boundary.isAcceptedState(stepOperation, currentOwner(), sim.elmList, time);
+    }
     void requireFinite(double[] values) {
         if (values == null) return;
         for (double value : values)
