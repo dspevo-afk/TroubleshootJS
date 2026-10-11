@@ -1,34 +1,26 @@
-## Current Q60: all six private full D01 jobs pass; visible 60-package public marking blocker remains
+## Current Q60: exact 60-package public repair/retest PASS; unaccepted
 
-Q60 remains IN PROGRESS / UNACCEPTED; normal RB56/HARD/PlayerSession/save-load stay
-held. [Current compact evidence](accepted-newton-checkpoint-r1/README.md) binds the
-accepted-step E06 initialization, native physical-runtime reuse audit, final
-native157/build35/compiled154, corrected electrical157 and all six private jobs
-158–161. They retain 90 s / 640 work / 5 s limits, complete 30 hypotheses/350 samples
-and pass owner/CPU/browser/native cleanup. Minimum observed deadline margin is
-12.232 s on the reference PC only; no paired speedup or broader fidelity claim.
+[Visible r15 evidence](public-band-visible60-r15/README.md) binds the current
+one-file public color-band controller change, native158/build36 and actual headed
+visible15. Six public readings isolate RSA; ordinary BROWN, BLACK, ORANGE, GOLD
+interpretation selects 10000 Ohm +/-5% for power-off guarded replacement. The
+original part is retained and powered ordinary customer Retest passes. Cold proof
+uses 78,595 ms / 603 work / 1,649 ms maximum manual unit with original limits;
+all 117 action records, frozen/served inputs and neutral/runtime cleanup pass.
 
-Exact 60-package visible flow 13 passes cold proof but fails at a genuine public U2A RETURN
-probe refusal before diagnosis/repair; all cleanup/input checks pass. Three actual
-screenshots were captured. Flow 14 diagnoses RSA from six public readings, then
-fails before catalog selection/removal because the original numeric marking is
-missing. Two inspected screenshots per attempt are retained. This is no successful visible 60-package repair
-or ordinary player/session proof. Native154 fixture FAIL, original compiled152
-report FAIL and original 155 strict FAIL remain alongside separate posthoc/fresh157
-validator PASS; compiled 156 is preserved NOT RUN.
+The immutable [published solver checkpoint](accepted-newton-checkpoint-r1/README.md)
+retains the six strict jobs on earlier source/build35 and failed visible13/14.
+Their raw inventories do not certify current UI/build36. Only the controller
+differs; 1,169 other source files remain unchanged. Neither the six jobs nor all
+24 native physical cases were rerun here.
 
-Published parent `4f38f6d` binds [visible 40-package r12 repair/retest](visible40-current-r12/README.md)
-and complete temporary ledger 150 with application TIMEOUT. Ledger wall costs are
-not CPU/removable-work or paired speedup evidence. [Prior settlement](settlement-fastpath-r1/README.md),
-[six/profile/routing](current-six-profile-r1/README.md) and historical source0A/DE7
-packets keep their epochs; source85 visible40 endurance remains separate.
-
-Next: expose the four RSA color band names from the existing canvas marking
-metadata, match the ordinary catalog through public color-code interpretation and
-complete repair/retest. Preserve numeric-value privacy and use no plan/fault lookup.
-Real PlayerSession integration and mixed holdout/endurance follow. Actual modest hardware is BLOCKED/unavailable; Ryzen7700 is
-reference only. Original Q30 91.616 s unknown failure, six missing inventories and
-late BLOCKED audit remain. REL-B/Q100 are unstarted. No Q60/release acceptance.
+Q60 remains IN_PROGRESS / UNACCEPTED. Normal catalog/HARD/modern PlayerSession/
+save-load stay held. Next: real Q60 PlayerSession integration, then mixed
+holdout/endurance. The private held-view test (120-second cap) is not endurance or
+modern player/session acceptance. Actual modest hardware is BLOCKED/unavailable;
+Ryzen 7700 is reference only. Historical Q30 91.616 s unknown failure, six missing
+inventories and late BLOCKED audit remain. REL-B/Q100 are unstarted; no release
+acceptance or causal performance claim.
 
 ---
 

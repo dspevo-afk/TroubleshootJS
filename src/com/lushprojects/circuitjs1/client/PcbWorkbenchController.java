@@ -759,6 +759,22 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (nameplate != null && nameplate.hasWorkbenchDetail())
             panel.add(new Label(nameplate.getWorkbenchDetailLabel() + ": " +
                 nameplate.getWorkbenchDetailValue()));
+        // Describe only the same physical color bands drawn for this installed part.
+        PhysicalPartRenderMetadata renderMetadata = installedPart == null ? null :
+            installedPart.getRenderMetadata();
+        PhysicalSpecification visualMarkings = renderMetadata == null ? null :
+            renderMetadata.getVisualSpecification();
+        if (visualMarkings instanceof ResistorNameplate) {
+            ResistorColorBand[] bands;
+            try {
+                bands = ResistorColorCode.getFourBandCode((ResistorNameplate)visualMarkings);
+            } catch (IllegalArgumentException unsupportedMarkings) {
+                bands = null;
+            }
+            if (bands != null)
+                panel.add(new Label("Color bands: " + bands[0].name() + ", " + bands[1].name() +
+                    ", " + bands[2].name() + ", " + bands[3].name()));
+        }
         Vector<GeneratedComponentConnectionBinding> bindings =
             instance.getConnectionBindings().getForComponentOrEmpty(componentId);
         if (isManagedSlotEmpty(componentId))

@@ -1,75 +1,42 @@
-# Current checkpoint: all six private full D01 jobs pass; visible 60-package blocker remains
+# Current checkpoint: exact 60-package public repair/retest PASS; Q60 unaccepted
 
-2026-10-11. Q60 remains IN PROGRESS / UNACCEPTED. Current E06 Newton initialization
-requires the owning executor's global accepted-step boundary and exact state,
-time, timestep and four port-voltage matches. Reset/restamp invalidate it.
-Electrical equations, residuals/current limiters, adaptive rules, independent
-proof programs and 90 s / 640 work / 5 s limits remain unchanged. Initialization
-may change numerical trajectory; fixed-step agreement is scoped evidence.
+2026-10-11. Sixteen controller lines expose four resistor color band names from
+existing canvas marking metadata. The original RSA panel gains no numeric-value
+row or plan/fault lookup; electrical models and 90 s / 640 work / 5 s limits remain.
 
-| Current gate | Result and scope |
+| Current gate | Actual result |
 | --- | --- |
-| Native155 physical runtime reuse | All 24 cases / 303,827,399 assertions and three boundary fixtures PASS. All 1,353 bound inputs compared; only developer report differs. All 24 cases were not rerun after that report fix. |
-| Fixed-step comparison | 12 averaged cases / 78 existing REF comparisons PASS; max output delta 0.337 uV; startup delta 0. |
-| Final native157 / build35 | Native A07 PASS 22.845 s; final Java compilation and all five JDK8/GWT permutations PASS 89.438 s cover the changed developer class. |
-| Compiled154 | PASS 6.379 s: 306,530 pure / 103 runtime assertions in 26 cases / 59 model assertions in 21 rows / 16 scale rows; Task41 failure/recovery and early terminal. |
-| Corrected compiled157 | Electrical and forced-cleanup PASS 17.122 s; raw B_ONLY uses 193 steps / 1,180 trials / 987 factors, ending at 200 us. |
+| Native158 | PASS, 38.194 s; PowerResistorCatalog 156 / RB56PhysicalOwner 81,908 assertions; 1,353 pins unchanged |
+| Build36 | PASS, 88.395 s; all five GWT permutations; 1,222 inputs unchanged |
+| Headed visible15 | PASS, 132.453 s native / 129.577219 s operation; 117 PASS action records |
 
-| Private full D01 case | Generation ms | Work | Max manual ms | Samples |
-| --- | ---: | ---: | ---: | ---: |
-| 40 / -1017 (159) | 27,455 | 516 | 1,196 | 55 |
-| 55 / -1067 (159) | 65,545 | 589 | 1,635 | 60 |
-| 50 / 9007199254741579 (160) | 48,747 | 584 | 1,344 | 60 |
-| 44 / -1004 (160) | 34,597 | 517 | 1,204 | 55 |
-| 60 / -1022 (158) | 77,768 | 603 | 1,684 | 60 |
-| 56 / -1028 (161) | 67,054 | 618 | 1,689 | 60 |
+Seed `-1022` uses 60 packages and two channels. Its cold full D01 proof completes
+five hypotheses, 60 samples and six stages in 78,595 ms / 603 work, with a 1,649 ms
+maximum manual unit. Six public meter readings isolate RSA. BROWN, BLACK, ORANGE,
+GOLD decodes ordinarily to `10000 Ohm +/-5%`; the player powers off, uses guarded
+remove/install, retains `Part 28 - RESISTOR RSA`, and passes powered ordinary
+customer Retest. Final RESTORED neutral guards pass and catalog remains disabled.
+All 2,114 frozen inputs and identical 1,564 before/after served inputs are bound;
+all ten owned Edge instances, preview, port and native job/drains close.
+Root inspected screenshots 001 through 004.
 
-Each case completes five hypotheses/all six stages; 350 diagnostic samples and
-30 hypotheses total. 1,170 source files / 392 WAR files digests match across the six jobs; root
-audit verifies 2,057 distinct pins, every native outer input set and original eight
-files. All application/browser/CPU/native closure passes. The 60-part job leaves
-12.232 s of its 90-second limit on this reference PC. Private qualified publication
-is true; catalog is false and ordinaryCustomerRetestPassed is false. This is no
-ordinary player/session acceptance or paired/causal speedup proof.
+Parent `174cd28` retains the [solver checkpoint](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md)
+and actual failed visible13/14. Its six strict private jobs use the earlier
+source/build35; their raw inventories do not match this current UI/build36.
+Only the controller differs, with 1,169 other source files unchanged. ResistanceMeasurementDeveloperVerifier
+remains unchanged; compiled162 was not launched.
+The six jobs and all 24 native physical cases were not rerun here. Earlier native
+physical-runtime reuse and numerical/fidelity limits keep their recorded scope.
 
-Exact 60-package headed flow 13 passed the cold proof (78,826 ms / 603 work, max manual
-1,741 ms) and the expected unrepaired customer-retest failure. It then failed when
-the public U2A RETURN probe was refused as outside the view or covered, before
-diagnosis or repair. Native 108.916 s, unchanged inputs and all cleanup PASS. Three
-actual screenshots were captured; two are retained publicly.
+Q60 remains IN_PROGRESS / UNACCEPTED. Normal catalog/HARD/modern PlayerSession/
+save-load remain held. Next: real Q60 PlayerSession integration, then mixed
+holdout/endurance. The private held-view test (120-second cap) does not establish
+endurance or modern session/save-load acceptance. Actual modest hardware remains
+BLOCKED/unavailable; Ryzen 7700 is reference only. Historical Q30 91.616 s unknown
+failure, six missing inventories and late BLOCKED audit remain. No paired
+speedup or causal performance claim follows.
 
-Flow 14 uses the existing visible Fit bench control once before each measurement
-pair, with no covered/offscreen refusal, and
-isolates RSA from six public readings: 11.207 V stage input, 4.996 V control rail,
-5 V sensor connector, 343.419 uV conditioned sensor, 2.499 V reference and 0 V
-decision output. Guarded power-off Remove becomes enabled after 9.607 s, but the
-RSA panel has no original numeric resistor marking. The replacement-choice oracle
-stops before catalog selection or removal. Native 123.955 s; cold proof 79,369 ms /
-603 work / max manual 1,698 ms. All inputs and cleanup PASS; 2,094 inputs frozen.
-Both visible flows remain FAIL. Two inspected images per attempt are retained; no
-visible 60-package repair/retest or playable acceptance is claimed.
-
-Published parent `4f38f6d` retains visible 40-package r12 ordinary RENAC replacement/customer
-Retest PASS and temporary ledger 150: application TIMEOUT at 90,037 ms / 514 work,
-complete capture of 317 advances / 60.535 s / 63,527 accepted steps / 260,452 trials.
-Seventeen 30 ms windows used 1,162 steps each and cost 23.511 s; this wall cost is
-not CPU allocation or removable work. 1,170 source files / 392 WAR files / original eight files restoration PASS.
-Native154 fixture FAIL, compiled152 numeric-Boolean report FAIL and original 155
-weighted-mean strict FAIL remain. Separate posthoc155/fresh157 validator checks
-pass the binary64 gamma(2*N+4) bound; all 23 negative mutations are rejected and
-physical criteria remain. Compiled 156 is preserved NOT RUN.
-
-Next: expose the four RSA color band names from the existing canvas marking
-metadata, match the ordinary catalog through public color-code interpretation and
-complete repair/retest. Preserve numeric-value privacy and use no plan/fault lookup.
-Real PlayerSession integration and mixed holdout/endurance follow. Normal RB56/HARD/PlayerSession/save-load remain held. Actual
-modest hardware is BLOCKED/unavailable; Ryzen7700 is reference only. U06/U07/E05/E06
-remain published; REL-B/Q100 unstarted. Original Q30 91.616 s unknown failure, six
-missing inventories and late BLOCKED audit remain. This feature-branch checkpoint
-does not establish Q60 or release acceptance.
-[Current evidence](task-evidence/Q60/accepted-newton-checkpoint-r1/README.md),
-[visible40](task-evidence/Q60/visible40-current-r12/README.md),
-[prior settlement](task-evidence/Q60/settlement-fastpath-r1/README.md).
+[Current compact packet and screenshots](task-evidence/Q60/public-band-visible60-r15/README.md).
 
 ---
 

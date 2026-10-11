@@ -1,0 +1,248 @@
+{
+  "schema": "TSJ-Q60-PUBLIC-BAND-VISIBLE60-R15-1",
+  "publicationStatus": "ROOT_REVIEWED_PUBLIC_EVIDENCE_VISIBLE60_R15_PASS",
+  "scope": "One exact 60-package, two-channel private classic-workbench public diagnosis/repair/retest; Q60 remains IN_PROGRESS / UNACCEPTED.",
+  "parentCheckpoint": "174cd28b2178f1b2540a0cbf8e67c7ac80d0e337",
+  "sourceEpoch": {
+    "currentSourceFiles": 1170,
+    "currentWarFiles": 392,
+    "currentSourceSha256": "0058374597d74577455f4bed63034f5683b89171266642bff27111a26c769506",
+    "currentWebSha256": "a1f20c050ec413dcedbc00ba5787002ab3f8543b7969a30b53e3ebc4d4e67cd8",
+    "currentDigestFormat": "SHA256 of canonical JSON relative-path to raw-file-SHA256 mapping; separate from historical strict inventory digest",
+    "changedSource": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+    "controllerSha256": "9c788c03f84565a06f1b58cdf39b287b984669c439555c8a1d8a10b48fb84e9b",
+    "parentControllerSha256": "24acbc39259173fbc79eaf8a037239edd08908c940f2d56f11c74103932f9c6b",
+    "sameOtherSourceFiles": 1169,
+    "productionChange": "Sixteen added controller lines expose four color band names from existing canvas render metadata. No original numeric-value row, plan/fault lookup or electrical-model change.",
+    "legacyResistanceVerifier": "Verifier unchanged from parent; no compiled162 launched."
+  },
+  "historicalSolverEpoch": {
+    "checkpoint": "174cd28b2178f1b2540a0cbf8e67c7ac80d0e337",
+    "sourceSha256": "17fab7e132c47db353885ae0cf2b71d7ced062e5ac469adde24054ff651976fd",
+    "webSha256": "233182ec4d96889ec5dbabd7b0982a67e9e23eabd11a6a7de1fa6afd9cc6d03e",
+    "digestScope": "Retained strict inventory encoding, separate from current canonical relative-path digests.",
+    "build": "build35",
+    "strictOriginalSix": "PASS in compiled158 through compiled161; not rerun for the current UI/build36.",
+    "oldRawInventoriesMatchCurrentUi": false,
+    "retainedPacket": {
+      "path": "../accepted-newton-checkpoint-r1/accepted-newton-checkpoint-evidence-r1.json",
+      "sha256": "140f91a2bca003742cb7fa50f72bf7a5df7511ea4863aa0d04d0e335e396c261"
+    },
+    "native24CaseScope": "Native155 physical runtime reused after its recorded audit; native157 compilation did not rerun all 24 physical cases.",
+    "failedVisible13And14": "Preserved unchanged in the published parent packet and screenshots."
+  },
+  "currentGates": [
+    {
+      "phase": "native-r158",
+      "status": "PASS",
+      "elapsedMillis": 38194,
+      "boundInputCount": 1353,
+      "inputsUnchanged": true,
+      "nativeCleanup": "PASS",
+      "receiptAlias": "native-r158-result.json",
+      "receiptSha256": "9ffacf12607fcfcfda95bc34d091f7179c41729b8b75014217bc715a07fecf66"
+    },
+    {
+      "phase": "build-r36",
+      "status": "PASS",
+      "elapsedMillis": 88395,
+      "boundInputCount": 1222,
+      "inputsUnchanged": true,
+      "nativeCleanup": "PASS",
+      "receiptAlias": "build-r36-result.json",
+      "receiptSha256": "bf2219fb5b0b26ca953f03e9789777e78c012a88a4c7a0c2aaadf0a44cb12da1"
+    },
+    {
+      "phase": "visual-r15",
+      "status": "PASS",
+      "elapsedMillis": 132453,
+      "boundInputCount": 1222,
+      "inputsUnchanged": true,
+      "nativeCleanup": "PASS",
+      "receiptAlias": "visual-r15-result.json",
+      "receiptSha256": "8470f297d77463c5bc37413c1486b74253655a9810cc101424eaa0b80756c4ba"
+    }
+  ],
+  "nativeScope": {
+    "PowerResistorCatalogAssertions": 156,
+    "Rb56PhysicalOwnerAssertions": 81908,
+    "allFiveGwtPermutations": "PASS in build36"
+  },
+  "visibleFlow": {
+    "phase": "visual-r15",
+    "status": "PASS",
+    "seed": "-1022",
+    "packages": 60,
+    "channels": 2,
+    "headed": true,
+    "browserProduct": "Edg/155.0.4283.45",
+    "operationSeconds": 129.57721900002798,
+    "actionRecords": 117,
+    "allActionRecords": "PASS",
+    "maxHeldViewMillis": 120000,
+    "generation": {
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 603,
+      "generationMillis": 78595,
+      "maxManualUnitMillis": 1649,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "qualifiedPublication": true,
+      "normalPhysicalAdmission": true
+    },
+    "initialOrdinaryRetest": "FAIL_EXPECTED",
+    "publicMeasurements": [
+      {
+        "name": "regulated-stage input",
+        "volts": 11.204,
+        "red": "U1 terminal INPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "name": "control rail",
+        "volts": 4.996,
+        "red": "U1 terminal OUTPUT",
+        "black": "U1 terminal RETURN"
+      },
+      {
+        "name": "sensor connector signal",
+        "volts": 5.0,
+        "red": "JSA terminal 1",
+        "black": "JSA terminal 2"
+      },
+      {
+        "name": "conditioned sensor",
+        "volts": 0.000343422,
+        "red": "U2A terminal SENSOR",
+        "black": "U2A terminal RETURN"
+      },
+      {
+        "name": "sensor reference",
+        "volts": 2.499,
+        "red": "U2A terminal REFERENCE",
+        "black": "U2A terminal RETURN"
+      },
+      {
+        "name": "decision output",
+        "volts": 0.0,
+        "red": "U2A terminal OUTPUT",
+        "black": "U2A terminal RETURN"
+      }
+    ],
+    "diagnosis": "RSA, inferred from six displayed measurements and ordinary HIGH input labels; no seed/fault metadata decision.",
+    "originalPanel": {
+      "colorBandNames": [
+        "BROWN",
+        "BLACK",
+        "ORANGE",
+        "GOLD"
+      ],
+      "numericValueRowPresent": false,
+      "publicInterpretation": "10000 Ohm +/-5% through ordinary four-band color-code interpretation."
+    },
+    "readiness": {
+      "boardPower": "OFF",
+      "guardedRemoveEnabled": true,
+      "observationBoundSeconds": 30,
+      "exactReadinessElapsedSeconds": null
+    },
+    "repair": {
+      "component": "RSA",
+      "publicCatalogLabel": "10000 Ohm +/-5%",
+      "guardedRemoveAndInstall": "PASS",
+      "retainedOriginalLoosePart": "Part 28 - RESISTOR RSA",
+      "ordinaryPoweredCustomerRetest": "PASS"
+    },
+    "finalNeutral": {
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": true,
+      "status": "PASS",
+      "phase": "RESTORED",
+      "cleanupPending": false,
+      "normalCatalogEnabled": false
+    },
+    "inputBoundaries": "Ordinary visible controls, public DOM measurements/markings/catalog labels and allowlisted neutral report; no evaluate, injected events or private answer lookup."
+  },
+  "binding": {
+    "frozenInputs": 2114,
+    "freezeReviewAlias": "q60-browser/visual-r15-input-review.json",
+    "freezeReviewSha256": "0cfdb8de8974a5ebf2749f36884018e0d773fc3ed5985540894c468067c5a537",
+    "servedInputs": 1564,
+    "servedComposition": {
+      "source": 1170,
+      "war": 392,
+      "support": 2
+    },
+    "beforeAfterEqual": true,
+    "servedInventorySha256": "ed4ecf682509bd22bc57d61458ed8c73aefb753be5ef322b650746e8a4af5ea2",
+    "beforeAfterArtifactSha256": "2da14dc684c76b4093412f7b4457aa206c8114ac62001ea87e9b2aab4b3af0a3",
+    "actualResultAlias": "q60-visible-r15-current60/result.json",
+    "actualResultSha256": "0c3e4b53d9b61176a22e1f52f0b46ac4ecdf10fe63d0d8bab55108b4dc601a28",
+    "browserBindingAlias": "q60-visible-r15-current60/current-browser-and-input-binding.json",
+    "browserBindingSha256": "2cefc1896587bbdf77520a83b2d717de9f646fe3d7003d397d17a3ac50fb452f",
+    "originalOwnerSha256": "3a860dcad57593c410ead3bc63105b136375732567d9cd7384945a7c796a9792",
+    "derivedOwnerSha256": "027ef4afcb55d825c6a795e39111e1acf3b34bec4ffa63b689ccd3502f3001b8"
+  },
+  "cleanup": {
+    "status": "PASS",
+    "allTenOwnedEdgeInstancesAbsent": true,
+    "previewInstanceAbsent": true,
+    "taskPortClosed": true,
+    "nativeJobActiveProcesses": 0,
+    "nativeDrainsComplete": true,
+    "nativeLiveDrainers": 0,
+    "neutralRestoration": true
+  },
+  "screenshots": [
+    {
+      "path": "screenshots/001-unrepaired-customer-retest.png",
+      "sha256": "b5b3ba7a6b1646b7bba6a03299b12c27c6323fc4402ca23392a87223f102827b",
+      "bytes": 573738,
+      "byteExactToActualCapture": true,
+      "rootVisualInspection": "PASS"
+    },
+    {
+      "path": "screenshots/002-diagnosis-and-original-marking.png",
+      "sha256": "a4838089e69e563b9af6022973afe4b8c6a69d9c902cb52819918a9c13edb510",
+      "bytes": 562624,
+      "byteExactToActualCapture": true,
+      "rootVisualInspection": "PASS"
+    },
+    {
+      "path": "screenshots/003-replacement-and-retained-original.png",
+      "sha256": "d8e7782a3222de6ae2d9e3dcd5d5f1063e2329a1ff34228a916c797ad889e930",
+      "bytes": 569569,
+      "byteExactToActualCapture": true,
+      "rootVisualInspection": "PASS"
+    },
+    {
+      "path": "screenshots/004-repaired-customer-retest-pass.png",
+      "sha256": "b745ad01a5fd373667713cb18dab280065c967f3bc27264e43bf1a75d46d1b07",
+      "bytes": 567086,
+      "byteExactToActualCapture": true,
+      "rootVisualInspection": "PASS"
+    }
+  ],
+  "limitsAndNextAction": {
+    "q60": "IN_PROGRESS / UNACCEPTED",
+    "normalCatalog": "HELD",
+    "hard": "HELD",
+    "modernPlayerSession": "HELD",
+    "saveLoad": "HELD",
+    "actualModestHardware": "BLOCKED / unavailable",
+    "referenceHardware": "Ryzen 7700 only",
+    "next": "Integrate Q60 with the real PlayerSession, then mixed holdout and endurance.",
+    "qualificationLimits": "A private held-view repair test (120-second cap) does not establish endurance, a 100-cycle run, modest-hardware qualification or modern PlayerSession/save-load acceptance.",
+    "performanceScope": "No paired speedup or causal performance claim.",
+    "q30HistoricalRisk": "91.616-second unknown failure, six missing inventories and late BLOCKED audit remain."
+  }
+}

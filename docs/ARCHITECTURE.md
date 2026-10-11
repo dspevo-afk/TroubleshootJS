@@ -5252,29 +5252,28 @@ native135 source-neutral healthy55 census PASS32.677s retained exact121/131
 raw/criteria/cleanup. Unit specialization was NO_GO from operation counts,
 with source0A unchanged and no speed/admission claim.
 
-The current accepted-step initialization passes native all 24 cases/boundary evidence,
-reused after a 1,353-input audit; only the developer report changed. Final Java/GWT
-compilation and compiled154 cover that class, including Task41 and existing model/
-scale contracts. Corrected157 adds one raw 11-unit original60 transition to the
-two existing compiled E06 mechanics cases. Physical baseline, electrical criteria
-and fidelity limitations retain their original scopes. All six private full D01
-jobs 158–161 pass on the same source/WAR with original 90 s / 640 work / 5 s limits,
-30 hypotheses/350 samples and owner/CPU/browser/native cleanup. Ordinary customer
-retest is false in those private receipts; catalog remains disabled.
+The accepted-step E06 initialization and all six strict private full D01 jobs
+remain bound to the published solver checkpoint's source/build35. Its native
+24-case physical-runtime reuse audit, compiled electrical checks and original
+model/fidelity limits retain their recorded scope; those jobs and all 24 physical
+cases were not rerun for the current UI change.
 
-Exact 60-package short visible flow 13 passes cold proof but fails at public U2A RETURN
-probe refusal before diagnosis or repair; inputs and cleanup pass. Flow 14 is
-FAIL after six public readings isolate RSA: original numeric resistor marking is
-absent from its public panel, so catalog selection/removal is not attempted.
-Inputs and cleanup PASS. Published-parent visible 40-package r12 repair/retest and temporary ledger 150
-TIMEOUT/capture remain separate. Native154 and original compiled152/155 failures,
-historical numerical/count/prototype checkpoints and Q30 risks remain preserved.
-Q60 is unaccepted; normal RB56/HARD/PlayerSession/save-load remain held. Expose
-four public RSA color band names from the existing canvas marking metadata, then
-match the ordinary catalog through visible color codes and complete repair/retest.
-Numeric-value privacy stays intact; no plan/fault lookup. Player/session
-integration and mixed holdout/endurance follow; actual modest hardware remains BLOCKED/unavailable. Private
-full D01 success on the reference PC is no causal speedup or playable acceptance.
+`PcbWorkbenchController` now projects four resistor color band names from the
+existing canvas render metadata into the public panel. It adds no original
+numeric-value row, electrical-model change or plan/fault lookup. Only this
+controller changes; 1,169 other source files and the legacy
+ResistanceMeasurementDeveloperVerifier retain their prior bytes. Current native158/build36 pass. Exact
+60-package visible15 uses six public readings to isolate RSA, interprets BROWN,
+BLACK, ORANGE, GOLD as ordinary 10000 Ohm +/-5%, powers off for guarded catalog
+replacement, retains the original loose part and passes ordinary powered customer
+Retest. Its 603-work cold proof and neutral/input/browser/native closure pass.
+Failed visible13/14 remain preserved with the earlier checkpoint.
+
+Q60 remains unaccepted. Normal catalog/HARD/modern PlayerSession/save-load stay
+held. Next: real Q60 PlayerSession integration, then mixed holdout/endurance.
+The private held-view test (120-second cap) does not establish those qualifications;
+actual modest hardware remains BLOCKED/unavailable. Historical Q30 risks retain
+their recorded scope. No paired speedup or causal performance claim follows.
 
 `PcbWorkbenchController` tracks the last detachment-readiness value used to
 build its controls. The existing same-owner, settled `CirSim` update checks it
