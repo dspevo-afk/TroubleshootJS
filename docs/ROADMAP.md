@@ -3000,25 +3000,26 @@ evidence; they do not replace the original acceptance target or full-cohort gate
 
 ### Q60 · Advanced 40-60-part appliance/control-board qualification
 
-**Status:** IN PROGRESS / UNACCEPTED, 2026-10-09. Published count-only source
+**Status:** IN PROGRESS / UNACCEPTED, 2026-10-11. Published count-only source
 `9efe177e3508b3db67434759c0a8a7673bd92c2e` on
-`codex/q60-faulted-profile-counts`; native 147/build 29/compiled 107 PASS reused
-after exact input audit. Numerical/storage baseline, nine RB56 FAULTED units,
-healthy/repair/retest/Q30 counts and original 90 s / 640 work / 5 s remain unchanged.
-Source-neutral BAAB 121–124 is INCOMPLETE: three PASS controls with exactly 448 work units;
-124 public ERROR plus failed Throwable reader, exact cause/counters UNEXPOSED.
-125 real cancellation-reader PASS; 126 separate PASS 88.857 s / 448 leaves 1.143 s
-margin and does not replace 124. Hypothesis work is the measured limiter; no
-speedup/regression, historical cause, load causality or reliability claim follows.
-No production optimization selected; reuse rejected-storage/cache evidence,
-with no unchanged full6 or Q30 corpus retry. Current full6 NOT RERUN; historical
-typed-prototype 55/60 timeouts remain FAIL. Normal RB56/HARD/save-load held;
-exact 60 visible/session NOT RUN/held; actual modest hardware BLOCKED/unavailable.
-Next: justify a correctness-preserving candidate that reduces hypothesis proof cost against complete
-baseline evidence before required real admission/player gates. Eight original
-files, original 91.616 s unknown failure, six missing inventories and late BLOCKED
-audit remain preserved. This is not Q60 or release acceptance.
-[Diagnosis](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md).
+`codex/q60-faulted-profile-counts`; native 147/build 29 reused after exact input audit.
+Numerical baseline, nine RB56 FAULTED units and original 90 s / 640 work / 5 s remain.
+Current Edge 155 LED 131 and complete normal Q30 BAAB 132-135 PASS, with exact 448 work
+and 67.351/67.972/67.581/67.370 s. Current-browser compiled 136 PASS: pure 306,503,
+runtime 83/23, models 59/21, scale 16 and actual Task41 cleanup failure/recovery.
+Failure NOT REPRODUCED; no causal browser/source speedup, historical cause, load
+attribution, reliability or modest-machine claim. Original 121-124 remains
+INCOMPLETE and 126 separate; historical typed-prototype 55/60 timeouts stay FAIL.
+Next: first original-six holdout on retained numerical baseline/count of 9 source and current
+Edge 155. Controls are statically reviewed, unfrozen and NOT RUN pending Dave's
+quiet-window signal and fresh exact input audit. It is private full D01 proof,
+separate from normal customer/player/session gates. Normal RB56/HARD/save-load
+held; exact 60 visible/session NOT RUN; actual modest hardware BLOCKED/unavailable.
+REL-B/Q100 unstarted. Eight original files, original 91.616 s unknown failure,
+six missing inventories and late BLOCKED audit remain preserved. No unchanged
+Q30 cold/warm corpus retry. This is not Q60 or release acceptance.
+[Current-browser checkpoint](task-evidence/Q60/updated-browser-baseline-r1/README.md).
+[Historical diagnosis](task-evidence/Q60/normal-q30-baseline-diagnosis-r1/README.md).
 
 **Hard prerequisites:** [Q30](#m-q30), [E05](#m-e05), [E06](#m-e06), [U03](#m-u03), [U07](#m-u07), [P09](#m-p09), [D01](#m-d01)
 

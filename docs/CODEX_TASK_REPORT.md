@@ -1,4 +1,53 @@
-# Current checkpoint: Q60 normal Q30 diagnosis; paired measurement incomplete
+# Current checkpoint: Q60 current-browser baseline PASS; six-case run held
+
+2026-10-11. Retained production source
+`9efe177e3508b3db67434759c0a8a7673bd92c2e` is published on
+`origin/codex/q60-faulted-profile-counts`. U06/U07/E05/E06 remain published.
+This checkpoint changes documentation only. Q60 is **IN PROGRESS / UNACCEPTED**;
+count of 9, numerical baseline and original 90 s / 640 work / 5 s remain unchanged.
+
+Edge changed to 155.0.4283.45. Old prepared 127-130 were not launched. A fresh
+LED 131 canary and frozen 132-135 BAAB block use unchanged normal Prepare flows,
+archived A/build 25 and current B/build 29, attested 392-file providers and actual
+loaded cache bodies. All measurement, admission, source and cleanup checks PASS.
+
+| Completed gate | Actual result |
+| --- | --- |
+| 131 LED | PASS 385 ms/59; ticket/workbench/menu; native 7.743 s |
+| 132 B1 | PASS 67,351 ms/448; native 73.742 s |
+| 133 A1 | PASS 67,972 ms/448; native 73.842 s |
+| 134 A2 | PASS 67,581 ms/448; native 73.627 s |
+| 135 B2 | PASS 67,370 ms/448; native 73.693 s |
+| 136 current-browser contracts | PASS pure 306,503; runtime 83/23; models 59/21; scale 16; actual Task41 failure/recovery; native 6.166 s |
+
+Native 147/build 29 are reused after exact consumed-input audits; 136 refreshes the
+unchanged 107 contracts on actual Edge 155. All task browser/application/native/CPU
+resources and ports closed. Root post-comparison audit covers 1,918 distinct pins.
+Independent saved-receipt review PASS has its stated scope; it did not rehash
+every pin or attribute CPU. Eight original untracked files remain byte-identical.
+
+**Interpretation:** failure NOT REPRODUCED in the complete block. Original 121-124
+is still INCOMPLETE; 126 remains separate. No causal browser/source speedup,
+historical failure cause, load attribution, reliability or modest-machine claim.
+HYPOTHESES remains 390/448 work and 55.971-56.598 s sampled active-unit wall, not CPU
+or whole-stage wall. Background QEMU is recorded and left alone.
+
+**Next:** the original six-case holdout on retained source/current Edge is NOT RUN,
+awaiting Dave's quiet-window signal. Static review preserves exact seeds/order
+and limits; an incomplete-map launch guard was corrected before freeze. All
+three pairs remain unfrozen/unlaunched and require a fresh input audit before
+launch. Historical typed-prototype 103-105 cannot certify the restored candidate.
+Normal RB56/HARD/save-load remain held; exact 60 visible/session NOT RUN;
+actual modest hardware BLOCKED/unavailable. REL-B/Q100 unstarted. Original 91.616 s
+unknown failure, six missing inventories and late BLOCKED audit are preserved.
+No production edit, Q30 cold/warm retry, unrelated process action, Core/Android
+work, C4130/remote-server access or email. This is not Q60 or release acceptance.
+
+[Current-browser receipts and limits](task-evidence/Q60/updated-browser-baseline-r1/README.md).
+
+---
+
+# Historical checkpoint: Q60 normal Q30 diagnosis; paired measurement incomplete
 
 2026-10-09. Tested source `9efe177e3508b3db67434759c0a8a7673bd92c2e` is verified
 published on `origin/codex/q60-faulted-profile-counts`. This continuation changes

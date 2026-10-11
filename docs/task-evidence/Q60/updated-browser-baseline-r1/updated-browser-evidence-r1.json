@@ -1,0 +1,933 @@
+{
+  "schema": "Q60_UPDATED_BROWSER_FIXED_BASELINE_CHECKPOINT_R1",
+  "createdUtc": "2026-10-11T05:06:38.544240+00:00",
+  "status": "COMPLETED_CONTROLS_PASS_Q60_UNACCEPTED",
+  "branch": "codex/q60-faulted-profile-counts",
+  "headBeforeDocumentation": "29830b8533315d7bef1a827b5e50c981689694ed",
+  "testedProductionSource": "9efe177e3508b3db67434759c0a8a7673bd92c2e",
+  "browser": {
+    "product": "Edg/155.0.4283.45",
+    "engineFiles": [
+      {
+        "name": "msedge.exe",
+        "sha256": "4bb4545b4ab80a3cf463a588ce570ca42de38fe6db16e3baeb0798ac75b4648b",
+        "size": 5438280
+      },
+      {
+        "name": "msedge.dll",
+        "sha256": "ec287d2f9a668be3025f9913b1fe5b930c192ec48495b5fe31323ef487e4bfdb",
+        "size": 353144136
+      },
+      {
+        "name": "v8_context_snapshot.bin",
+        "sha256": "2ffdcf801c524380babdfede95bba856f22acf63e24e84422375b72914dd8eda",
+        "size": 771176
+      }
+    ],
+    "changedBoundary": "Only the three live engine file bindings replaced retired Edge154 pins. The prior prepared127-130 controls remain unlaunched."
+  },
+  "sourceReuse": {
+    "native147": "PASS;1353 exact consumed inputs audited in prior retained evidence",
+    "build29": "PASS; actual JDK8/GWT all5 permutations;1222 inputs unchanged",
+    "compiled107": "Prior PASS; refreshed compiled136 independently verifies current engine",
+    "r7FrozenPinsEach": 1901,
+    "retainedNonbrowserPins": 1877,
+    "postComparisonDistinctPinsAudited": 1918,
+    "rootActualReviewSha256": "2b91de38d072e56b1bf92a90903349c722163ec71742770fa018cf4863656894",
+    "auditTiming": "The full pin audit was performed after the completed BAAB block. This publication step rereads saved artifacts; it does not run another sweep or qualify a new batch."
+  },
+  "controls": [
+    {
+      "phase": 131,
+      "arm": "B",
+      "leg": "LED_CANARY",
+      "application": "PASS",
+      "measurement": "PASS",
+      "terminalElapsedMs": 385,
+      "work": 59,
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 1,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 54,
+        "SYMPTOM": 1,
+        "PUBLISH": 1
+      },
+      "stageSampledActiveWallMs": {
+        "RESOLVE": 0,
+        "HEALTHY": 51,
+        "PHYSICAL": 12,
+        "HYPOTHESES": 230,
+        "SYMPTOM": 0,
+        "PUBLISH": 6
+      },
+      "maxCoordinatorAdvanceMs": 96,
+      "playerAdmission": "PASS",
+      "browser": "Edg/155.0.4283.45",
+      "outerMs": 7743,
+      "hostStartedUtc": "2026-10-11T04:48:50.591028Z",
+      "hostFinishedUtc": "2026-10-11T04:48:58.353332Z",
+      "cleanupSeconds": 1.089156300004106,
+      "cpuBusyPercent": 18.535175072277546,
+      "observedBackground": [
+        {
+          "basename": "rg.exe",
+          "cpuSeconds": 0.125,
+          "spanSeconds": 6.0770007,
+          "averageCores": 0.02056935751216879,
+          "samples": 5
+        },
+        {
+          "basename": "qemu-system-x86_64-headless.exe",
+          "cpuSeconds": 4.953125,
+          "spanSeconds": 6.0762198,
+          "averageCores": 0.8151655409173975,
+          "samples": 5
+        }
+      ],
+      "artifacts": {
+        "strict": {
+          "id": "normal-q30-terminal-compiled-r131/strict-result.json",
+          "sha256": "18ae4e74615ff19a3d5637b7faf3e45ddd97770bb58e631536b0e92bc261ce8c"
+        },
+        "readback": {
+          "id": "normal-q30-terminal-compiled-r131/normal-terminal-readback.json",
+          "sha256": "f7c44874560e2c31266d67e2cb9e12e8f5c9fdea635d78ec44a98816025f5061"
+        },
+        "outer": {
+          "id": "compiled-r131-result.json",
+          "sha256": "5b03b711d7a874d76971cc18a027b9f203c3fbe99a18d32e4efde6c1891985f0"
+        },
+        "review": {
+          "id": "q60-browser/compiled-r131-input-review.json",
+          "sha256": "f2af72df428b79b9edb764b7433908717ee8a9287b7e96a4a0c776bfb9392ba8"
+        },
+        "cpu": {
+          "id": "compiled-r131-windows-cpu-samples.json",
+          "sha256": "7ffd51e9f423ea1867ec0eaa687e75451a0c9f1426abf6546988963f274f9f17"
+        }
+      },
+      "cpuRecorder": {
+        "status": "PASS",
+        "sampleCount": 5,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 711,
+        "processHandlesClosed": 711,
+        "workerCpuSeconds": 0.0,
+        "recordedWallSeconds": 6.0794424,
+        "systemCounterWindowStartNs": 434873928956300,
+        "systemCounterWindowFinishNs": 434880006488700,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      },
+      "native": {
+        "status": "PASS",
+        "startedUtc": "2026-10-11T04:48:50.591028Z",
+        "finishedUtc": "2026-10-11T04:48:58.353332Z",
+        "deadlineMs": 300000,
+        "operation": {
+          "elapsedMs": 7743,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanup": {
+          "cleanupVerified": true,
+          "processSignaled": true,
+          "jobActiveProcesses": 0,
+          "drainsComplete": true,
+          "liveDrainers": 0,
+          "drainerErrors": []
+        },
+        "handlesClosed": true
+      },
+      "provider": {
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "actualCache": {
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari"
+      },
+      "runtime": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "actualLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      },
+      "observer": {
+        "debuggerEnabled": false,
+        "debuggerPauses": 0,
+        "runtimeObserverApplicationMutations": 0,
+        "observerSessionDetached": true,
+        "preDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ],
+        "postDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "phase": 132,
+      "arm": "B",
+      "leg": "B1",
+      "application": "PASS",
+      "measurement": "PASS",
+      "terminalElapsedMs": 67351,
+      "work": 448,
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 54,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 390,
+        "SYMPTOM": 1,
+        "PUBLISH": 1
+      },
+      "stageSampledActiveWallMs": {
+        "RESOLVE": 1,
+        "HEALTHY": 9858,
+        "PHYSICAL": 74,
+        "HYPOTHESES": 55971,
+        "SYMPTOM": 1,
+        "PUBLISH": 78
+      },
+      "maxCoordinatorAdvanceMs": 1169,
+      "playerAdmission": "PASS",
+      "browser": "Edg/155.0.4283.45",
+      "outerMs": 73742,
+      "hostStartedUtc": "2026-10-11T04:49:30.774855Z",
+      "hostFinishedUtc": "2026-10-11T04:50:44.526325Z",
+      "cleanupSeconds": 1.2387073999852873,
+      "cpuBusyPercent": 12.95459755390445,
+      "observedBackground": [
+        {
+          "basename": "rg.exe",
+          "cpuSeconds": 3.53125,
+          "spanSeconds": 72.4121311,
+          "averageCores": 0.04876600020407355,
+          "samples": 38
+        },
+        {
+          "basename": "qemu-system-x86_64-headless.exe",
+          "cpuSeconds": 47.46875,
+          "spanSeconds": 72.4112849,
+          "averageCores": 0.6555435394573422,
+          "samples": 38
+        }
+      ],
+      "artifacts": {
+        "strict": {
+          "id": "normal-q30-terminal-compiled-r132/strict-result.json",
+          "sha256": "68eb693d6101d5fa85da104da662fa2b63533d4e38fb7fb672ee065b4de23a6d"
+        },
+        "readback": {
+          "id": "normal-q30-terminal-compiled-r132/normal-terminal-readback.json",
+          "sha256": "1dad4dc841da40191ccdd3371b5d7005a2742ed86b4d0210e084da1e2ea8ea90"
+        },
+        "outer": {
+          "id": "compiled-r132-result.json",
+          "sha256": "e791792fcf8998ea283cd2e2621e2e42a72df799d4f490d8c5be20dfa2e95ef2"
+        },
+        "review": {
+          "id": "q60-browser/compiled-r132-input-review.json",
+          "sha256": "98559f247ab33607f002672e78f7be3f745d1b139d8d897cdf97d4f6bb182edc"
+        },
+        "cpu": {
+          "id": "compiled-r132-windows-cpu-samples.json",
+          "sha256": "848d446f420f5d0031e73b4ccfe7270c24674fc77bd605daf49a204e4ea74c56"
+        }
+      },
+      "cpuRecorder": {
+        "status": "PASS",
+        "sampleCount": 38,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 5587,
+        "processHandlesClosed": 5587,
+        "workerCpuSeconds": 0.109375,
+        "recordedWallSeconds": 72.4147731,
+        "systemCounterWindowStartNs": 434913703152300,
+        "systemCounterWindowFinishNs": 434986116101800,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      },
+      "native": {
+        "status": "PASS",
+        "startedUtc": "2026-10-11T04:49:30.774855Z",
+        "finishedUtc": "2026-10-11T04:50:44.526325Z",
+        "deadlineMs": 300000,
+        "operation": {
+          "elapsedMs": 73742,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanup": {
+          "cleanupVerified": true,
+          "processSignaled": true,
+          "jobActiveProcesses": 0,
+          "drainsComplete": true,
+          "liveDrainers": 0,
+          "drainerErrors": []
+        },
+        "handlesClosed": true
+      },
+      "provider": {
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "actualCache": {
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari"
+      },
+      "runtime": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "actualLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      },
+      "observer": {
+        "debuggerEnabled": false,
+        "debuggerPauses": 0,
+        "runtimeObserverApplicationMutations": 0,
+        "observerSessionDetached": true,
+        "preDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ],
+        "postDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "phase": 133,
+      "arm": "A",
+      "leg": "A1",
+      "application": "PASS",
+      "measurement": "PASS",
+      "terminalElapsedMs": 67972,
+      "work": 448,
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 54,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 390,
+        "SYMPTOM": 1,
+        "PUBLISH": 1
+      },
+      "stageSampledActiveWallMs": {
+        "RESOLVE": 1,
+        "HEALTHY": 9865,
+        "PHYSICAL": 78,
+        "HYPOTHESES": 56598,
+        "SYMPTOM": 1,
+        "PUBLISH": 71
+      },
+      "maxCoordinatorAdvanceMs": 1190,
+      "playerAdmission": "PASS",
+      "browser": "Edg/155.0.4283.45",
+      "outerMs": 73842,
+      "hostStartedUtc": "2026-10-11T04:51:12.425233Z",
+      "hostFinishedUtc": "2026-10-11T04:52:26.276442Z",
+      "cleanupSeconds": 0.8028696000110358,
+      "cpuBusyPercent": 12.856700378415503,
+      "observedBackground": [
+        {
+          "basename": "rg.exe",
+          "cpuSeconds": 3.984375,
+          "spanSeconds": 72.5080601,
+          "averageCores": 0.05495078746424772,
+          "samples": 38
+        },
+        {
+          "basename": "qemu-system-x86_64-headless.exe",
+          "cpuSeconds": 42.984375,
+          "spanSeconds": 72.507252,
+          "averageCores": 0.5928286318174077,
+          "samples": 38
+        }
+      ],
+      "artifacts": {
+        "strict": {
+          "id": "normal-q30-terminal-compiled-r133/strict-result.json",
+          "sha256": "2980946394748e8f8e4cca65c06ec41526edc81daf6113c961f816741418a58c"
+        },
+        "readback": {
+          "id": "normal-q30-terminal-compiled-r133/normal-terminal-readback.json",
+          "sha256": "98bd1d12c76bd65affc24bf23d1342d5e5d311886f6df370757f2ae8ff31b256"
+        },
+        "outer": {
+          "id": "compiled-r133-result.json",
+          "sha256": "a4186de534b2cb823cb0d851baa3f926e3fe045e9f971e65a9a159d0092be485"
+        },
+        "review": {
+          "id": "q60-browser/compiled-r133-input-review.json",
+          "sha256": "7a4ba9cf80d492138ba0c82fab5d1738fc10ca722efa49e3dd73b268c4d7398b"
+        },
+        "cpu": {
+          "id": "compiled-r133-windows-cpu-samples.json",
+          "sha256": "a4b8d7b4dac53f3f7864ac223bb9485e2b467c85a2864f23fed31ff7328a75bb"
+        }
+      },
+      "cpuRecorder": {
+        "status": "PASS",
+        "sampleCount": 38,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 5600,
+        "processHandlesClosed": 5600,
+        "workerCpuSeconds": 0.171875,
+        "recordedWallSeconds": 72.5105358,
+        "systemCounterWindowStartNs": 435015354160900,
+        "systemCounterWindowFinishNs": 435087862887300,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      },
+      "native": {
+        "status": "PASS",
+        "startedUtc": "2026-10-11T04:51:12.425233Z",
+        "finishedUtc": "2026-10-11T04:52:26.276442Z",
+        "deadlineMs": 300000,
+        "operation": {
+          "elapsedMs": 73842,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanup": {
+          "cleanupVerified": true,
+          "processSignaled": true,
+          "jobActiveProcesses": 0,
+          "drainsComplete": true,
+          "liveDrainers": 0,
+          "drainerErrors": []
+        },
+        "handlesClosed": true
+      },
+      "provider": {
+        "status": "PASS",
+        "arm": "A",
+        "manifestSha256": "b3a902a819e7c7e4a49d4686b3fda6da43bd4b679f83ac9dd3fb1bec8af971ca",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "1e3e362c24b562f2aa2cf96479078b2b76594870932855f1ef152f677a99be66"
+      },
+      "actualCache": {
+        "bodySha256": "10d4e974c7cac30e45ff574dfac38f6bd3a8141a1ed66196aa13a6edf3420964",
+        "bodyBytes": 3336993,
+        "symbolMapSha256": "eb02c30ca37b506ec9c9c74ad530557d0c54c0d9c6d40bca0e79c2cadc39ef83",
+        "userAgentProperty": "safari"
+      },
+      "runtime": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "actualLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      },
+      "observer": {
+        "debuggerEnabled": false,
+        "debuggerPauses": 0,
+        "runtimeObserverApplicationMutations": 0,
+        "observerSessionDetached": true,
+        "preDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ],
+        "postDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "phase": 134,
+      "arm": "A",
+      "leg": "A2",
+      "application": "PASS",
+      "measurement": "PASS",
+      "terminalElapsedMs": 67581,
+      "work": 448,
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 54,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 390,
+        "SYMPTOM": 1,
+        "PUBLISH": 1
+      },
+      "stageSampledActiveWallMs": {
+        "RESOLVE": 0,
+        "HEALTHY": 9780,
+        "PHYSICAL": 77,
+        "HYPOTHESES": 56293,
+        "SYMPTOM": 1,
+        "PUBLISH": 70
+      },
+      "maxCoordinatorAdvanceMs": 1172,
+      "playerAdmission": "PASS",
+      "browser": "Edg/155.0.4283.45",
+      "outerMs": 73627,
+      "hostStartedUtc": "2026-10-11T04:52:44.636904Z",
+      "hostFinishedUtc": "2026-10-11T04:53:58.273466Z",
+      "cleanupSeconds": 0.999764000007417,
+      "cpuBusyPercent": 12.2457798784605,
+      "observedBackground": [
+        {
+          "basename": "rg.exe",
+          "cpuSeconds": 3.078125,
+          "spanSeconds": 72.3101951,
+          "averageCores": 0.04256834040819785,
+          "samples": 37
+        },
+        {
+          "basename": "qemu-system-x86_64-headless.exe",
+          "cpuSeconds": 42.296875,
+          "spanSeconds": 72.3093557,
+          "averageCores": 0.5849433256670548,
+          "samples": 37
+        }
+      ],
+      "artifacts": {
+        "strict": {
+          "id": "normal-q30-terminal-compiled-r134/strict-result.json",
+          "sha256": "bd264deadd081c3f16b159e979809e7236b1c609d4a8bc3f14fa3ebbca408139"
+        },
+        "readback": {
+          "id": "normal-q30-terminal-compiled-r134/normal-terminal-readback.json",
+          "sha256": "676a0346676224e0c2a8b47b5119640e5fb8c8785bbc41fb1c4e3a913bdc44d5"
+        },
+        "outer": {
+          "id": "compiled-r134-result.json",
+          "sha256": "ed55fd4505dab9165fae0d4889146f728471ac779fb2c446b0240220a64d09d0"
+        },
+        "review": {
+          "id": "q60-browser/compiled-r134-input-review.json",
+          "sha256": "111e6034081bc89bdd8c7f7634c1b3fecef9687edf1e84e5cd0bca41aee5451e"
+        },
+        "cpu": {
+          "id": "compiled-r134-windows-cpu-samples.json",
+          "sha256": "c6a19c1d92f3c9d216790a5443b2d7247537d9fd7d3c20cb5247c09e289d178a"
+        }
+      },
+      "cpuRecorder": {
+        "status": "PASS",
+        "sampleCount": 37,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 5491,
+        "processHandlesClosed": 5491,
+        "workerCpuSeconds": 0.09375,
+        "recordedWallSeconds": 72.3126608,
+        "systemCounterWindowStartNs": 435107561932500,
+        "systemCounterWindowFinishNs": 435179872862900,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      },
+      "native": {
+        "status": "PASS",
+        "startedUtc": "2026-10-11T04:52:44.636904Z",
+        "finishedUtc": "2026-10-11T04:53:58.273466Z",
+        "deadlineMs": 300000,
+        "operation": {
+          "elapsedMs": 73627,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanup": {
+          "cleanupVerified": true,
+          "processSignaled": true,
+          "jobActiveProcesses": 0,
+          "drainsComplete": true,
+          "liveDrainers": 0,
+          "drainerErrors": []
+        },
+        "handlesClosed": true
+      },
+      "provider": {
+        "status": "PASS",
+        "arm": "A",
+        "manifestSha256": "b3a902a819e7c7e4a49d4686b3fda6da43bd4b679f83ac9dd3fb1bec8af971ca",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "1e3e362c24b562f2aa2cf96479078b2b76594870932855f1ef152f677a99be66"
+      },
+      "actualCache": {
+        "bodySha256": "10d4e974c7cac30e45ff574dfac38f6bd3a8141a1ed66196aa13a6edf3420964",
+        "bodyBytes": 3336993,
+        "symbolMapSha256": "eb02c30ca37b506ec9c9c74ad530557d0c54c0d9c6d40bca0e79c2cadc39ef83",
+        "userAgentProperty": "safari"
+      },
+      "runtime": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "actualLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      },
+      "observer": {
+        "debuggerEnabled": false,
+        "debuggerPauses": 0,
+        "runtimeObserverApplicationMutations": 0,
+        "observerSessionDetached": true,
+        "preDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ],
+        "postDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "phase": 135,
+      "arm": "B",
+      "leg": "B2",
+      "application": "PASS",
+      "measurement": "PASS",
+      "terminalElapsedMs": 67370,
+      "work": 448,
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 54,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 390,
+        "SYMPTOM": 1,
+        "PUBLISH": 1
+      },
+      "stageSampledActiveWallMs": {
+        "RESOLVE": 0,
+        "HEALTHY": 9788,
+        "PHYSICAL": 76,
+        "HYPOTHESES": 56066,
+        "SYMPTOM": 1,
+        "PUBLISH": 76
+      },
+      "maxCoordinatorAdvanceMs": 1164,
+      "playerAdmission": "PASS",
+      "browser": "Edg/155.0.4283.45",
+      "outerMs": 73693,
+      "hostStartedUtc": "2026-10-11T04:54:21.135865Z",
+      "hostFinishedUtc": "2026-10-11T04:55:34.839330Z",
+      "cleanupSeconds": 1.1188602999900468,
+      "cpuBusyPercent": 12.449907573570089,
+      "observedBackground": [
+        {
+          "basename": "rg.exe",
+          "cpuSeconds": 2.96875,
+          "spanSeconds": 72.370893,
+          "averageCores": 0.04102132607372967,
+          "samples": 38
+        },
+        {
+          "basename": "qemu-system-x86_64-headless.exe",
+          "cpuSeconds": 43.1875,
+          "spanSeconds": 72.3698302,
+          "averageCores": 0.596761107227249,
+          "samples": 38
+        }
+      ],
+      "artifacts": {
+        "strict": {
+          "id": "normal-q30-terminal-compiled-r135/strict-result.json",
+          "sha256": "23bba8b56de18bdaf5df1e29cc62f5aa84a7347523bcd0e0a4bddde3b7f1a21c"
+        },
+        "readback": {
+          "id": "normal-q30-terminal-compiled-r135/normal-terminal-readback.json",
+          "sha256": "5d7f0ece023a3fcaafa5531188727ee913d6ab3df0ab60e89d38aa0f9c074517"
+        },
+        "outer": {
+          "id": "compiled-r135-result.json",
+          "sha256": "0ccdf073869b495545997072b55456e4fd9208b127137a407b57d99b0add75e1"
+        },
+        "review": {
+          "id": "q60-browser/compiled-r135-input-review.json",
+          "sha256": "9b83d2f4ad23c3cc7f56829b7837a458794a06e1ff1662fc2d1150bd08dd5fdb"
+        },
+        "cpu": {
+          "id": "compiled-r135-windows-cpu-samples.json",
+          "sha256": "7817a1afb2c72dd56f93153c84138ddda0c5a510e9134132e68559f073573c19"
+        }
+      },
+      "cpuRecorder": {
+        "status": "PASS",
+        "sampleCount": 38,
+        "errors": [],
+        "threadJoined": true,
+        "processHandlesOpened": 5635,
+        "processHandlesClosed": 5635,
+        "workerCpuSeconds": 0.15625,
+        "recordedWallSeconds": 72.3735327,
+        "systemCounterWindowStartNs": 435204062271700,
+        "systemCounterWindowFinishNs": 435276434173400,
+        "finalStopSnapshot": true,
+        "processMutations": 0
+      },
+      "native": {
+        "status": "PASS",
+        "startedUtc": "2026-10-11T04:54:21.135865Z",
+        "finishedUtc": "2026-10-11T04:55:34.839330Z",
+        "deadlineMs": 300000,
+        "operation": {
+          "elapsedMs": 73693,
+          "exitCode": 0,
+          "reason": null
+        },
+        "cleanup": {
+          "cleanupVerified": true,
+          "processSignaled": true,
+          "jobActiveProcesses": 0,
+          "drainsComplete": true,
+          "liveDrainers": 0,
+          "drainerErrors": []
+        },
+        "handlesClosed": true
+      },
+      "provider": {
+        "status": "PASS",
+        "arm": "B",
+        "manifestSha256": "f651e303e2c5a1bd8ccb8ff8ef216f3f475b15dc9a1cfd7bbae03574dca1311a",
+        "webFileCount": 392,
+        "commonFileCount": 380,
+        "overrideFileCount": 12,
+        "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6"
+      },
+      "actualCache": {
+        "bodySha256": "27ea8cde3be31045a594d74105fa58efbd46d256c4dec85cd54e1553269857aa",
+        "bodyBytes": 3337504,
+        "symbolMapSha256": "d537912a7ef2fe5f72acbd4093657a2e272f257c60f055ede710d159eac7cd96",
+        "userAgentProperty": "safari"
+      },
+      "runtime": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "actualLimits": {
+        "jobMillis": 90000,
+        "sharedWork": 640,
+        "activeOperationMillis": 5000
+      },
+      "observer": {
+        "debuggerEnabled": false,
+        "debuggerPauses": 0,
+        "runtimeObserverApplicationMutations": 0,
+        "observerSessionDetached": true,
+        "preDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ],
+        "postDetachEventCensus": [
+          17,
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "regression": {
+    "phase": 136,
+    "status": "PASS",
+    "contracts": {
+      "status": "PASS",
+      "pureAssertions": 306503,
+      "runtimeAssertions": 83,
+      "runtimeCases": 23,
+      "modelAssertions": 59,
+      "modelRows": 21,
+      "scaleRows": 16,
+      "cleanup": "PASS",
+      "injectedTask41CleanupFailureAndRecovery": true
+    },
+    "earlyForcedTerminal": {
+      "status": "PASS",
+      "state": "FAIL:a07:a07-explicit-failure-canary",
+      "scope": "EARLY_TERMINAL_AND_HOST_CLEANUP_ONLY",
+      "applicationFailureReportClaimed": false,
+      "task41FailureClaimed": false
+    },
+    "runtime": {
+      "browserVersion": {
+        "protocolVersion": "1.3",
+        "product": "Edg/155.0.4283.45",
+        "revision": "@50f24ef2aa5369a074b8888b7db82d9c0652d642",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+        "jsVersion": "15.5.9.4"
+      },
+      "versionSessionDetached": true
+    },
+    "native": {
+      "status": "PASS",
+      "startedUtc": "2026-10-11T04:57:41.142485Z",
+      "finishedUtc": "2026-10-11T04:57:47.315910Z",
+      "deadlineMs": 300000,
+      "operation": {
+        "elapsedMs": 6166,
+        "exitCode": 0,
+        "reason": null
+      },
+      "cleanup": {
+        "cleanupVerified": true,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerErrors": []
+      },
+      "handlesClosed": true
+    },
+    "portClosed": true,
+    "sourceSha256": "7031780a878aaea885210e7b37a6e3c6ce43fd5a7815ee011127d13aa60ae769",
+    "webSha256": "6ddb320009ad34a2ba85435d53135275d073d0f9fe93a6056ce949baa9e56eb6",
+    "artifacts": [
+      {
+        "id": "a07-current-browser-compiled-r136/strict-result.json",
+        "sha256": "6b5d4017f147f80843345c75d6ae59e3e8af139254c7d52b5f15404d438aebe8"
+      },
+      {
+        "id": "a07-current-browser-compiled-r136/result.json",
+        "sha256": "7ceaa121a203cbbb57c119cdd6413dcb4fb54356810e0fd2013d4fa4d9f4f664"
+      },
+      {
+        "id": "a07-current-browser-compiled-r136/current-browser-readback.json",
+        "sha256": "c048e97b4faae873de3d5b753ad8759aafbd70907b19e7b4236fd6f2262a5ae2"
+      },
+      {
+        "id": "a07-current-browser-compiled-r136/cases/001-q30-wire-array-a07-positive.report.json",
+        "sha256": "e63dd36d55ee7ec512d51c3b2be1aca216d4e83929c1fc881b2d1413c9708861"
+      },
+      {
+        "id": "compiled-r136-result.json",
+        "sha256": "feb0b0eed14b855ee9eee429abc234496684dcf748fc51a343ad5827702c68d1"
+      }
+    ]
+  },
+  "comparison": {
+    "complete": true,
+    "order": [
+      "B1",
+      "A1",
+      "A2",
+      "B2"
+    ],
+    "allFourNormalPassed": true,
+    "failure": "NOT_REPRODUCED",
+    "oldComparison121124": "INCOMPLETE preserved;126 remains separate",
+    "causalPerformanceClaim": false,
+    "reliabilityClaim": false,
+    "modestHardwareClaim": false,
+    "interpretation": "Descriptive current Edge155 reference-desktop timings. No attribution to browser update, source, load, JIT or historical failure cause. Stage telemetry is sampled active-unit wall, not CPU or whole-stage wall; maxAdvance is whole coordinator advance, not the exact5s unit clock."
+  },
+  "independentReview": {
+    "agent": "browser_rebind_review",
+    "scope": "Reviewed saved case/strict/native/CPU summaries, runtime pins and source/provider/identity/serial closure consistency. Did not independently rehash every pin or attribute CPU.",
+    "result": "PASS within stated scope"
+  },
+  "nextRun": {
+    "status": "NOT_RUN_AWAITING_DAVE_QUIET_WINDOW",
+    "phases": [
+      137,
+      138,
+      139
+    ],
+    "seeds": [
+      "-1017",
+      "-1067",
+      "-1022",
+      "9007199254741579",
+      "-1004",
+      "-1028"
+    ],
+    "reason": "First unchanged-six holdout qualification on restored numerical/count9 source and current Edge155. Historical103-105 consumed the rejected numerical prototype.",
+    "preparedPins": 1424,
+    "rootStaticReviewSha256": "ac5c6ae4d9d9d95aa44a177f405c43bd0f2c0149fc2176b5993fbc48a66b0a40",
+    "staticGuard": "Complete nonempty prepared maps, exact keysets and mandatory execution bindings are now required. Prior draft preserved; no batch frozen or launched.",
+    "remaining": [
+      "Dave quiet-window signal",
+      "Fresh exact consumed-input audit and root freeze of all3 maps"
+    ],
+    "scope": "Private fullD01 six-case proof; does not certify normal customer/player/session flow."
+  },
+  "remaining": {
+    "Q60": "IN_PROGRESS_UNACCEPTED",
+    "normalRB56": "HELD",
+    "HARD": "HELD",
+    "saveLoad": "HELD",
+    "exact60VisibleSession": "NOT_RUN",
+    "actualModestHardware": "BLOCKED_UNAVAILABLE",
+    "REL_B": "UNSTARTED",
+    "Q100": "UNSTARTED",
+    "historical": "Original91.616s causeUNKNOWN; six missing scratch inventories and lateBLOCKED audit preserved."
+  },
+  "resources": {
+    "allNewOwnedResourcesClosed": true,
+    "originalEightPreserved": true,
+    "productionChanges": 0,
+    "unrelatedProcessActions": 0,
+    "C4130OrRemoteServerAccesses": 0,
+    "emails": 0
+  }
+}
