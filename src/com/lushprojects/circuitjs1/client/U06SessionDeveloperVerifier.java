@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
@@ -17,6 +18,7 @@ final class U06SessionDeveloperVerifier {
     private final JSONObject report = new JSONObject();
     private final JSONArray checks = new JSONArray(), generations = new JSONArray(), errors = new JSONArray();
     private PlayerLaunchRequest request;
+    private GenerationRequest qualificationRequest;
     private PlayerSessionSave saved;
     private PlayerSessionSave rollbackSaved;
     private String resistorComponent, resistorCatalogEntry;
@@ -43,11 +45,27 @@ final class U06SessionDeveloperVerifier {
         try {
             verifier.check(sim != null && sim.troubleshootDebug && sim.developerVerifierRunning,
                 "private developer route required");
-            PlayerFamilyCatalog.requireNormalPlayerEnabled(family);
-            verifier.request = new PlayerLaunchRequest(family, seed,
-                PlayerFamilyCatalog.candidateProfile(family).name());
+            boolean qualification = new QueryParameters().getBooleanValue("tsjRb56Restore", false);
+            if (qualification) {
+                verifier.check(Rb56Plan.FAMILY_ID.equals(family) &&
+                    !PlayerFamilyCatalog.isNormalPlayerEnabled(family) && !DifficultyProfile.HARD.isAvailable(),
+                    "private RB56 restore keeps normal family and HARD unavailable");
+                long exactSeed = Long.parseLong(seed);
+                verifier.check(Long.toString(exactSeed).equals(seed), "private restore requires canonical exact seed");
+                verifier.qualificationRequest = GenerationRequest.forFamilyQualification(family, exactSeed);
+            } else {
+                PlayerFamilyCatalog.requireNormalPlayerEnabled(family);
+                verifier.request = new PlayerLaunchRequest(family, seed,
+                    PlayerFamilyCatalog.candidateProfile(family).name());
+            }
             verifier.report.put("family", new JSONString(family));
-            verifier.report.put("replay", new JSONString(verifier.request.replay()));
+            if (qualification) {
+                verifier.report.put("seed", new JSONString(seed));
+                verifier.report.put("privateQualification", JSONBoolean.getInstance(true));
+                verifier.report.put("normalSessionLoad", JSONBoolean.getInstance(false));
+            }
+            verifier.report.put("replay", new JSONString(qualification ?
+                PlayerSessionReplay.forQualification(verifier.qualificationRequest).canonical() : verifier.request.replay()));
             verifier.report.put("playerInputEvidence", JSONBoolean.getInstance(false));
             verifier.report.put("damageFixtures", new JSONString("controlled state injection"));
             verifier.u07 = new QueryParameters().getBooleanValue("tsjU07", false);
@@ -79,6 +97,11 @@ final class U06SessionDeveloperVerifier {
                 result.put("stage", new JSONString(job.getStage().name()));
                 result.put("elapsedMillis", new JSONNumber(job.getElapsedMillis()));
                 result.put("workUnits", new JSONNumber(job.getStepCount()));
+                if (qualificationRequest != null) {
+                    result.put("maxJobMillis", new JSONNumber(GenerationCoordinator.MAX_JOB_MILLIS));
+                    result.put("maxJobSteps", new JSONNumber(GenerationCoordinator.MAX_JOB_STEPS));
+                    result.put("maxUnitMillis", new JSONNumber(GenerationCoordinator.MAX_STEP_MILLIS));
+                }
                 generations.set(generations.size(), result);
                 // Leave the coordinator's completion stack before starting another request.
                 new Timer() { public void run() {
@@ -87,6 +110,8 @@ final class U06SessionDeveloperVerifier {
                     try {
                         if ("u07-inventory-overflow".equals(label)) {
                             u07Rejected(job, published);
+                        } else if ("invalid-realization-restore".equals(label)) {
+                            rejectedRealization(job, published);
                         } else if ("invalid-signature-restore".equals(label)) {
                             rejected(job, published);
                         } else if ("cancel-session-restore".equals(label)) {
@@ -97,6 +122,16 @@ final class U06SessionDeveloperVerifier {
                             check(sim.getGeneratedBoardInstance() == published &&
                                 sim.getGeneratedChallengeController().isReady() && sim.isGeneratedRuntimeSettled(),
                                 label + " actionable owner");
+                            if (qualificationRequest != null) {
+                                GeneratedDiagnosticProofReceipt proof = sim.getGeneratedChallengeController().getDiagnosticProofReceipt();
+                                check(proof != null && !proof.isWarmReuseForDeveloperVerification() &&
+                                    proof.getContextKey().isTrustedCapture() && proof.getEvidence().size() == 5,
+                                    "private restored candidate carries full cold five-hypothesis proof");
+                                proof.requireAssessmentOwner(published);
+                                check(job.getReceipt() != null && job.getReceipt().getStageCount() == 6 &&
+                                    job.getElapsedMillis() <= 90000L && job.getStepCount() <= 640,
+                                    "private candidate retains complete original generation caps");
+                            }
                             if (u07) {
                                 if (value == null) u07Prepare(); else u07Restored(published);
                             } else if (value == null) prepare(); else restored(published);
@@ -107,9 +142,42 @@ final class U06SessionDeveloperVerifier {
                 } }.schedule(1);
             }
         };
-        if (value == null) sim.generationCoordinator.start(request.generation(), completion, true);
+        if (qualificationRequest != null) {
+            if (value == null) {
+                sim.generationCoordinator.clearDiagnosticMeasurementProofCacheForDeveloperVerification();
+                sim.generationCoordinator.startForDiagnosticCacheVerification(qualificationRequest, 90000L);
+            } else sim.generationCoordinator.startSessionRestoreForQualification(qualificationRequest, value);
+            advanceQualification(completion);
+        } else if (value == null) sim.generationCoordinator.start(request.generation(), completion, true);
         else sim.generationCoordinator.startSessionRestore(request.generation(), value, completion);
         if ("cancel-session-restore".equals(label)) awaitPrivateCancellation();
+    }
+
+    private void advanceQualification(final GenerationCoordinator.Completion completion) {
+        final GenerationJob ownedJob = sim.generationCoordinator.getJob();
+        new Timer() { public void run() {
+            if (finished) return;
+            try {
+                if (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                        sim.generationCoordinator.getJob() != ownedJob)
+                    throw new IllegalStateException("Private restore lost its exact job or scope");
+                sim.generationCoordinator.advanceForDeveloperVerification();
+                if (ownedJob.isRunning()) { schedule(1); return; }
+                completion.complete(ownedJob, ownedJob.getOutcome() == GenerationJob.Outcome.PASS ?
+                    sim.getGeneratedBoardInstance() : null);
+            } catch (Throwable failure) { fail(failure); }
+        } }.schedule(1);
+    }
+
+    private PlayerSessionSave captureCurrent() {
+        if (qualificationRequest == null) return PlayerSessionState.capture(sim, request,
+            sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().operations(), "u06-compiled");
+        boolean priorScope = sim.developerVerifierRunning;
+        sim.developerVerifierRunning = true;
+        try {
+            return PlayerSessionState.captureForQualification(sim, qualificationRequest,
+                sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().operations(), GWT.getPermutationStrongName());
+        } finally { sim.developerVerifierRunning = priorScope; }
     }
 
     private void u07Prepare() {
@@ -391,7 +459,7 @@ final class U06SessionDeveloperVerifier {
         check(originalFaults.equals(originalFaults(runtime)), "private original faults survive physical actions");
         check(!sim.getGeneratedChallengeController().isCompleted(), "fixture has no completion grant");
         before = new Snapshot(sim);
-        saved = PlayerSessionState.capture(sim, request, runtime.getSessionHistory().operations(), "u06-compiled");
+        saved = captureCurrent();
         check(saved.getHistory().size() > 0 && saved.getStress().size() >= 3, "capture includes repairs and damage");
         String wire = saved.encode();
         check(isDigest(saved.realization) && isDigest(saved.stateSignature),
@@ -403,6 +471,7 @@ final class U06SessionDeveloperVerifier {
         check(saved.encode().equals(parsed.encode()), "captured wire roundtrip canonical");
         check(saved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)), "capture matches independent live signature");
         sim.developerVerifierRunning = true;
+        if (qualificationRequest != null) privateArtifactBoundaries(parsed);
         generate(parsed, "valid-session-restore");
     }
 
@@ -511,7 +580,7 @@ final class U06SessionDeveloperVerifier {
         sim.developerVerifierRunning = true;
         beforeOwner = owner;
         before = new Snapshot(sim);
-        PlayerSessionSave current = PlayerSessionState.capture(sim, request, newHistory.operations(), "u06-compiled");
+        PlayerSessionSave current = captureCurrent();
         rollbackSaved = current;
         String corruptDigest = (current.stateSignature.charAt(0) == '0' ? "1" : "0") +
             current.stateSignature.substring(1);
@@ -521,6 +590,57 @@ final class U06SessionDeveloperVerifier {
         invalid = PlayerSessionSave.parse(invalid.encode());
         check(!invalid.stateSignature.equals(current.stateSignature), "invalid final signature is parser accepted");
         generate(invalid, "invalid-signature-restore");
+    }
+
+    private void privateArtifactBoundaries(PlayerSessionSave value) {
+        GenerationJob job = sim.generationCoordinator.getJob();
+        boolean rejected = false;
+        try { PlayerLaunchRequest.parse(value.replay); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "public replay rejects the private saved identity");
+        rejected = false;
+        try { PlayerSessionSave.parse(value.encode().replace(PlayerSessionSave.MODEL, "unknown-model")); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "unknown session model rejects before mutation");
+        sim.developerVerifierRunning = false;
+        rejected = false;
+        try { sim.generationCoordinator.startSessionRestoreForQualification(qualificationRequest, value); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        catch (IllegalStateException expected) { rejected = true; }
+        finally { sim.developerVerifierRunning = true; }
+        check(rejected, "private restore refuses absent developer scope before cancelling job");
+        rejected = false;
+        try { sim.generationCoordinator.startSessionRestoreForQualification(
+            GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, qualificationRequest.getDescriptor().getRootSeed() + 1), value); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected, "private restore refuses mismatched exact request before cancelling job");
+        check(sim.generationCoordinator.getJob() == job && !sim.generationCoordinator.isRunning() &&
+            sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == before.graph &&
+            value.stateSignature.equals(PlayerSessionState.semanticSignature(sim)),
+            "private artifact refusals preserve exact prior owner graph state and idle job");
+    }
+
+    private void rejectedRealization(GenerationJob job, GeneratedBoardInstance published) {
+        boolean expected = false;
+        for (Throwable error = job.getFailure(); error != null; error = error.getCause())
+            expected |= "Session physical realization does not match its replay".equals(error.getMessage());
+        check(published == null && job.getOutcome() == GenerationJob.Outcome.PROGRAMMING_FAILURE &&
+            job.getStage() == GenerationJob.Stage.PUBLISH && expected,
+            "private reconstruction rejects mismatched physical realization before replay");
+        check(sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == before.graph &&
+            sim.getGeneratedChallengeController() == before.challenge &&
+            beforeOwner.getPhysicalBoardRuntime() == before.runtime &&
+            beforeOwner.getPhysicalBoardRuntime().getSessionHistory() == before.history &&
+            sim.isGeneratedRuntimeSettled() && !PlayerSessionState.isRestoring(sim) &&
+            !FreshGeneratedRuntimeInstallation.isInProgress(sim) &&
+            !sim.generationCoordinator.retainsSavedOwnersForDeveloperVerification(),
+            "failed physical realization restore preserves exact previous owners history and cleanup");
+        before.compare(new Snapshot(sim), this);
+        check(rollbackSaved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)),
+            "both failed restores preserve full protected semantic signature");
+        check(!PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
+            !DifficultyProfile.HARD.isAvailable(), "private round trip grants no public admission");
+        finished = true;
     }
 
     private void continueAcquisition(GeneratedBoardInstance owner) {
@@ -570,7 +690,13 @@ final class U06SessionDeveloperVerifier {
         report.put("fuseDamageFixtures", new JSONNumber(fuseFixtureCount));
         report.put("typedPowerFixtures", new JSONNumber(typedPowerFixtureCount));
         report.put("fuseScope", new JSONString(fuseFixtureCount == 0 ? "NOT APPLICABLE: no replaceable fuse" : "partial and blown"));
-        if ("LED_INDICATOR".equals(request.familyId)) generate(rollbackSaved, "cancel-session-restore");
+        if (qualificationRequest != null) {
+            String corrupt = (rollbackSaved.realization.charAt(0) == '0' ? "1" : "0") + rollbackSaved.realization.substring(1);
+            PlayerSessionSave invalid = new PlayerSessionSave(rollbackSaved.replay, rollbackSaved.build, corrupt,
+                rollbackSaved.stateSignature, rollbackSaved.getHistory(), rollbackSaved.getSources(),
+                rollbackSaved.getStress(), rollbackSaved.getFuses());
+            generate(PlayerSessionSave.parse(invalid.encode()), "invalid-realization-restore");
+        } else if ("LED_INDICATOR".equals(request.familyId)) generate(rollbackSaved, "cancel-session-restore");
         else finished = true;
     }
 
@@ -620,36 +746,40 @@ final class U06SessionDeveloperVerifier {
 
     private void controllerBoundaries() {
         PlayerSessionController controller = new PlayerSessionController(sim);
-        int preparing = controller.session.begin(request);
-        check(controller.session.prepared(preparing, request, beforeOwner),
-            "controller boundary fixture adopts the actual current owner");
-        GenerationJob terminalJob = sim.generationCoordinator.getJob();
-        int token = controller.session.token();
-        int closedView = controller.openView();
-        controller.closeView(closedView);
-        check("This file selection belongs to a closed view.".equals(controller.action(token, closedView,
-            "load-session", rollbackSaved.encode(), "", "")), "production controller rejects a closed file-selection view");
-        controllerUnchanged(terminalJob);
-        int currentView = controller.openView();
-        check("This control belongs to an earlier session.".equals(controller.action(preparing, currentView,
-            "load-session", rollbackSaved.encode(), "", "")), "production controller rejects an earlier session token");
-        controllerUnchanged(terminalJob);
-        for (String invalidLimit : new String[] { "1000", "0.0001" }) {
-            // Build intentionally invalid wire directly; using the DTO constructor here
-            // would reject before the production controller/parser boundary is exercised.
-            String wire = PlayerSessionSave.SCHEMA + "\n" + PlayerSessionSave.MODEL + "\nrestart\n" +
-                wireField(rollbackSaved.replay) + wireField(rollbackSaved.build) +
-                wireField(rollbackSaved.realization) + wireField(rollbackSaved.stateSignature) +
-                "HISTORY\n1\n" + wireField("SOURCE") +
-                wireField(beforeOwner.getBoard().getPowerInputIds().firstElement()) +
-                wireField("CONNECTED") + wireField(invalidLimit) +
-                "SOURCES\n0\nSTRESS\n0\nFUSES\n0\nEND\n";
-            check("This session file is incomplete, incompatible or unsupported. The current board is unchanged.".equals(
-                controller.action(token, currentView, "load-session", wire, "", "")),
-                "production controller rejects out-of-envelope source history before launch");
+        PlayerSessionController priorController = sim.playerSessionController;
+        sim.playerSessionController = controller;
+        try {
+            int preparing = controller.session.begin(request);
+            check(controller.session.prepared(preparing, request, beforeOwner),
+                "controller boundary fixture adopts the actual current owner");
+            GenerationJob terminalJob = sim.generationCoordinator.getJob();
+            int token = controller.session.token();
+            int closedView = controller.openView();
+            controller.closeView(closedView);
+            check("This file selection belongs to a closed view.".equals(controller.action(token, closedView,
+                "load-session", rollbackSaved.encode(), "", "")), "production controller rejects a closed file-selection view");
             controllerUnchanged(terminalJob);
-        }
-        report.put("controllerBoundaryEvidence", new JSONString("direct production controller calls; no FileReader or player-input evidence"));
+            int currentView = controller.openView();
+            check("This control belongs to an earlier session.".equals(controller.action(preparing, currentView,
+                "load-session", rollbackSaved.encode(), "", "")), "production controller rejects an earlier session token");
+            controllerUnchanged(terminalJob);
+            for (String invalidLimit : new String[] { "1000", "0.0001" }) {
+                // Build intentionally invalid wire directly; using the DTO constructor here
+                // would reject before the production controller/parser boundary is exercised.
+                String wire = PlayerSessionSave.SCHEMA + "\n" + PlayerSessionSave.MODEL + "\nrestart\n" +
+                    wireField(rollbackSaved.replay) + wireField(rollbackSaved.build) +
+                    wireField(rollbackSaved.realization) + wireField(rollbackSaved.stateSignature) +
+                    "HISTORY\n1\n" + wireField("SOURCE") +
+                    wireField(beforeOwner.getBoard().getPowerInputIds().firstElement()) +
+                    wireField("CONNECTED") + wireField(invalidLimit) +
+                    "SOURCES\n0\nSTRESS\n0\nFUSES\n0\nEND\n";
+                check("This session file is incomplete, incompatible or unsupported. The current board is unchanged.".equals(
+                    controller.action(token, currentView, "load-session", wire, "", "")),
+                    "production controller rejects out-of-envelope source history before launch");
+                controllerUnchanged(terminalJob);
+            }
+            report.put("controllerBoundaryEvidence", new JSONString("direct production controller calls; no FileReader or player-input evidence"));
+        } finally { sim.playerSessionController = priorController; }
     }
 
     private void controllerUnchanged(GenerationJob terminalJob) {

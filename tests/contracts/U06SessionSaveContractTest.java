@@ -349,33 +349,37 @@ public final class U06SessionSaveContractTest {
         GeneratedBoardInstance owner = request.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
         installHistoryOwner(sim, owner);
         final PlayerSessionController controller = new PlayerSessionController(sim);
-        controller.session.adopt(owner, request);
-        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
-        final int token = controller.session.token();
-        final int view = controller.openView();
-        PlayerSessionHistory history = owner.getPhysicalBoardRuntime().getSessionHistory();
-        history.start(); history.record(sim, "RESET", "", "", "");
-        check(controller.historyPage(token, view, -1).operations.size() == 1, "live menu lease reads current history");
-        controller.closeView(view);
-        rejectClosedHistory(controller, token, view, "closed-view callback rejects");
-        int reopened = controller.openView();
-        rejectClosedHistory(controller, token, view, "reopening cannot revive the old callback");
-        check(controller.historyPage(token, reopened, 0).total == 1, "new view reads full retained history");
-        controller.session.enter(token, PlayerSession.Screen.WORKBENCH);
-        rejectClosedHistory(controller, token, reopened, "old session token rejects after leaving menu");
-        rejectClosedHistory(controller, controller.session.token(), reopened, "history is unavailable outside menu");
-        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
-        int current = controller.session.token();
-        sim.generatedBoardInstance = null;
-        rejectClosedHistory(controller, current, reopened, "displaced board owner rejects");
-        sim.generatedBoardInstance = owner;
-        GeneratedBoardInstance successor = request.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
-        installHistoryOwner(sim, successor);
-        controller.session.adopt(successor, request);
-        controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
-        rejectClosedHistory(controller, current, reopened, "old callback cannot read successor history");
-        check(history.size() == 1 && controller.historyPage(controller.session.token(), controller.openView(), -1).total == 0,
-            "successor history is independent and predecessor journal remains intact");
+        PlayerSessionController priorController = sim.playerSessionController;
+        sim.playerSessionController = controller;
+        try {
+            controller.session.adopt(owner, request);
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+            final int token = controller.session.token();
+            final int view = controller.openView();
+            PlayerSessionHistory history = owner.getPhysicalBoardRuntime().getSessionHistory();
+            history.start(); history.record(sim, "RESET", "", "", "");
+            check(controller.historyPage(token, view, -1).operations.size() == 1, "live menu lease reads current history");
+            controller.closeView(view);
+            rejectClosedHistory(controller, token, view, "closed-view callback rejects");
+            int reopened = controller.openView();
+            rejectClosedHistory(controller, token, view, "reopening cannot revive the old callback");
+            check(controller.historyPage(token, reopened, 0).total == 1, "new view reads full retained history");
+            controller.session.enter(token, PlayerSession.Screen.WORKBENCH);
+            rejectClosedHistory(controller, token, reopened, "old session token rejects after leaving menu");
+            rejectClosedHistory(controller, controller.session.token(), reopened, "history is unavailable outside menu");
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+            int current = controller.session.token();
+            sim.generatedBoardInstance = null;
+            rejectClosedHistory(controller, current, reopened, "displaced board owner rejects");
+            sim.generatedBoardInstance = owner;
+            GeneratedBoardInstance successor = request.generation().resolve(new GenerationRequest.PlanCache()).construct().instance;
+            installHistoryOwner(sim, successor);
+            controller.session.adopt(successor, request);
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+            rejectClosedHistory(controller, current, reopened, "old callback cannot read successor history");
+            check(history.size() == 1 && controller.historyPage(controller.session.token(), controller.openView(), -1).total == 0,
+                "successor history is independent and predecessor journal remains intact");
+        } finally { sim.playerSessionController = priorController; }
     }
 
     /** Native fixture uses the real capability installation before challenge validation. */

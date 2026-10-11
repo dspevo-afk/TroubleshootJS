@@ -183,6 +183,28 @@ final class GenerationCoordinator {
         start(request, completion, true, false, normalMaximumJobMillis(request), false, null, saved);
     }
 
+    /**
+     * Private held-family restart reconstruction. Identity and scope failures
+     * are rejected before the shared start path can cancel current work.
+     */
+    void startSessionRestoreForQualification(GenerationRequest request, PlayerSessionSave saved) {
+        if (request == null || saved == null)
+            throw new IllegalArgumentException("Missing private session restore identity");
+        if (!sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw new IllegalStateException(
+                "Private session restore requires debug and developer-verifier scope");
+        if (!request.isPrivateDiagnosticQualification() || request.isCandidateSearch() ||
+                !Rb56Plan.FAMILY_ID.equals(request.getFamilyId()))
+            throw new IllegalArgumentException(
+                "Private session restore requires the held exact qualification request");
+        PlayerSessionReplay identity = PlayerSessionReplay.parse(saved.replay);
+        if (!identity.isPrivateQualification() || !identity.matches(request))
+            throw new IllegalArgumentException(
+                "Saved private session differs from the exact qualification request");
+        start(request, null, true, false, MAX_JOB_MILLIS, true, null, saved);
+        if (watchdog != null) { watchdog.cancel(); watchdog = null; }
+        if (continuation != null) { continuation.cancel(); continuation = null; }
+    }
     private static long normalMaximumJobMillis(GenerationRequest request) {
         if (request == null) throw new IllegalArgumentException("Missing generation request");
         GenerationExecutionPolicy policy = request.getExecutionPolicy();

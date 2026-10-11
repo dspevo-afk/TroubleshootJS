@@ -42,7 +42,7 @@ final class PlayerSessionSave {
     PlayerSessionSave(String replay, String build, String realization,
             String stateSignature, Vector<Operation> history,
             Vector<Source> sources, Vector<Stress> stress, Vector<Fuse> fuses) {
-        if (replay == null || !PlayerLaunchRequest.parse(replay).replay().equals(replay))
+        if (replay == null || !PlayerSessionReplay.parse(replay).canonical().equals(replay))
             throw invalid("Unsupported pristine replay");
         requireText(build, MAX_BUILD, "build");
         requireText(realization, MAX_CANONICAL_TEXT, "realization");
@@ -178,7 +178,7 @@ final class PlayerSessionSave {
         String replay = in.field(180), build = in.field(MAX_BUILD);
         String realization = in.field(MAX_CANONICAL_TEXT), signature = in.field(MAX_CANONICAL_TEXT);
         // Validate the replay before accepting any potentially large history.
-        PlayerLaunchRequest.parse(replay);
+        PlayerSessionReplay.parse(replay);
         in.expect("HISTORY");
         Vector<Operation> operations = new Vector<Operation>();
         int count = in.count(MAX_OPERATIONS);

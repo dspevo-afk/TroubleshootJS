@@ -5340,3 +5340,28 @@ HARD is not frozen. Dave's direct 2026-10-11 15:41 UTC all-clear superseded
 the forwarded asynchronous answer misread as a new PC hold; no later direct
 hold or new availability permission is pending. Current readiness and gates
 ran under that authorization. Modest-host remains the only deferred requirement.
+
+## Current REL-B private session identity and reconstruction
+
+`PlayerSessionReplay` owns a separate epoch-bound held-RB56 private session
+identity without a difficulty label. Normal identities remain validated by
+`PlayerLaunchRequest`; public controller load/replay still rejects the private
+namespace before generation. `PlayerSessionSave` accepts that internal identity
+through its existing bounded codec while retaining public bytes/schema/model.
+`PlayerSessionState.captureForQualification` requires exact current owner,
+physical admission/controller, trusted historical cold receipt and explicit
+debug/verifier scope. It supplies no fresh profile authority after mutation.
+
+The explicit private coordinator restore checks scope and exact identity/request
+before shared cancellation; existing staged publication replays/restores fields,
+then compares the complete state signature. Abort restores the protected exact
+owner/graph/history and power on failure. The original U06 verifier, with its
+new guarded opt-in, proves one 44-part candidate's fresh reconstruction and corrupt
+signature/physical realization rollback through real typed providers. Old lease
+fixtures now assign and finally restore their exact current-controller field,
+preserving the existing ownership guard and all former assertions.
+
+Native170/GWT42/compiled175 pass within the [declared private-format scope](task-evidence/REL-B/private-session-roundtrip-r1/README.md).
+Normal advanced durable load/menu/FileReader/population and human HARD remain
+unqualified; no public catalog/profile/persistence enablement or transient
+continuation follows. Existing 90s/640/5s caps and source/instrument owners remain.

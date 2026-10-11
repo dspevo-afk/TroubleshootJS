@@ -2,7 +2,7 @@
 
 Please make one unassisted play attempt on the private 44-part regression candidate. This is a qualitative human observation for the existing U05 protocol. It does not freeze HARD, establish a success rate, or claim REL-B release readiness. Human strategy and outcome are needed before a HARD rule is frozen; independent REL-B session work can continue separately.
 
-**Source identity:** production source build `b9e38afd44571c34afbad05557a39039233d9d81`; documentation parent `3598aa29`; observed compiled build `38E6D616B65DBEE9830BA356610A184F`; app replay epoch `tsj-alpha/5`; generation dependency epoch `tsj-generation-dependencies-v16`.
+**Current build:** `3FE2392CE3B1A8AE6315EF99E24975B3`; qualified private-format candidate over `fe93f7fc0e5c6dbea2263149bb8d677d459475a3`, identified by the [current source/evidence packet](../../REL-B/private-session-roundtrip-r1/README.md). App replay epoch `tsj-alpha/5`; generation dependency epoch `tsj-generation-dependencies-v16`. The earlier174 launch/screenshots retain their old build; the invoked ordinary-player/qualification route is unchanged and its reuse is scoped in the current packet.
 
 Start the existing foreground preview from the repository:
 

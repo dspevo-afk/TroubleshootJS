@@ -1,4 +1,39 @@
-# Current checkpoint: REL-B preparation and a ready local human-play handoff
+# Current checkpoint: private advanced save/restore round trip and safe rollback PASS
+
+2026-10-11. Final candidate over `fe93f7fc0e5c6dbea2263149bb8d677d459475a3`
+on existing `codex/q60-faulted-profile-counts`. Distinct internal private identity
+has no difficulty; public replay/catalog/HARD/private-UI persistence remain held.
+Normal saved bytes/codec/restart policy and current physical/source owners remain.
+
+Native170 PASS 46.630 s (eight suites including 34,927 U06 assertions); actual
+JDK8/GWT42 PASS 87.219 s/all five permutations; compiled175 PASS 157.777 s.
+Normal LED wire/restore regression and debug-false private-flag privacy pass.
+Actual44 seed -1004 private capture/parse/fresh restore passes 4,568 checks,
+nine typed power recipes and declared resistor/fuse damage/source/history state.
+Cold/good/bad-signature/bad-realization jobs are 34.358/38.596/38.471/33.975 s,
+517 work each, original 90s/640/5s caps. Both expected PUBLISH failures preserve
+exact previous owner/graph/controller/runtime/history/connected source/full
+Snapshot and semantic signature; owned browser/CDP/listener/native cleanup pass.
+Native169 failed an outdated current-controller fixture; retained 31.782 s failure,
+fixed fixture setup/finally restore with all assertions and production guard intact.
+
+[Sealed private-format evidence and scope](task-evidence/REL-B/private-session-roundtrip-r1/README.md).
+No normal advanced durable/menu/FileReader load or broad population/retry/diversity
+qualification; further independent matrix work remains possible. REL-B IN PROGRESS,
+Q100 UNSTARTED. HARD freeze still requires actual U05 human strategies/outcomes,
+human trial NOT RUN. Modest-host alone owner-deferred; no new PC permission.
+
+[Exact existing human route/manual note](task-evidence/U05/q60-human-play-r1/README.md)
+uses build 3FE2392CE3B1A8AE6315EF99E24975B3 and unchanged six-minute private view.
+Earlier174 screenshots/launch retain their old build and audited invoked-input
+reuse; no new visible input or human outcome is claimed. No preview left running.
+All eight originals/historical failures preserved; no unchanged Q30 corpus,
+email, C4130 access, persistent access/third-party sharing, Core/Android, protected
+main or unrelated process action. Raw owned receipts retain their actual scope.
+
+---
+
+# Historical checkpoint: REL-B preparation and a ready local human-play handoff
 
 2026-10-11. Production `b9e38afd44571c34afbad05557a39039233d9d81` remains unchanged;
 documentation parent `3598aa290ef417dcaba03968f71295ab9cfc0c35` on the existing

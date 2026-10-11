@@ -30,15 +30,52 @@ final class PlayerSessionState {
             signature(sim, owner, sources, stress, fuses), history, sources, stress, fuses);
     }
 
+    /** Capture an exact admitted held-family owner for private restart qualification. */
+    static PlayerSessionSave captureForQualification(CirSim sim, GenerationRequest request,
+            Vector<PlayerSessionSave.Operation> history, String build) {
+        if (sim == null || !sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw invalid("Private session capture requires debug and developer-verifier scope");
+        PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
+        GeneratedBoardInstance owner = requireCurrent(sim);
+        if (!identity.matches(request) || identity.seed() != owner.getSeed() ||
+                !identity.familyId().equals(owner.getCircuitFamilyId()))
+            throw invalid("Private session replay does not identify the current admitted board");
+        GeneratedPhysicalAdmission admission = owner.getPhysicalAdmission();
+        StagedFamilyCapability family = PlayerFamilyCatalog.stagedCapability(Rb56Plan.FAMILY_ID);
+        if (admission == null || family == null || !family.supportsPrivateQualification() ||
+                !family.physicalAdmissionIdentity().equals(admission.identity()))
+            throw invalid("Private session capture requires current RB56 physical admission");
+        owner.requireNormalPhysicalAdmission();
+        GeneratedChallengeController controller = sim.getGeneratedChallengeController();
+        if (controller == null || controller.getInstanceForRuntimeValidation() != owner)
+            throw invalid("Private session capture requires the current admitted controller");
+        GeneratedDiagnosticProofReceipt proof = controller.getDiagnosticProofReceipt();
+        GeneratedDiagnosticContextKey proofContext = proof == null ? null : proof.getContextKey();
+        if (proof == null || proof.isWarmReuseForDeveloperVerification() ||
+                proofContext == null || !proofContext.isTrustedCapture())
+            throw invalid("Private session capture requires a trusted cold proof receipt");
+        proof.requireAssessmentOwner(owner);
+        requirePristineCopper(owner);
+        GeneratedRuntimeInvariant.verify(sim, owner, sim.getBoardModificationController(), sim.elmList);
+        Vector<PlayerSessionSave.Source> sources = sources(owner);
+        Vector<PlayerSessionSave.Stress> stress = stress(owner);
+        Vector<PlayerSessionSave.Fuse> fuses = fuses(owner);
+        return new PlayerSessionSave(identity.canonical(), build,
+            PlayerSessionFingerprint.of(PhysicalBoardFingerprint.of(owner)),
+            signature(sim, owner, sources, stress, fuses), history, sources, stress, fuses);
+    }
     /** Caller owns Staged.abort on failure and attaches the workbench only after success. */
     static void restore(CirSim sim, GeneratedBoardInstance candidate, PlayerSessionSave save) {
         if (sim == null || save == null || candidate == null || restoringOwner != null ||
                 !FreshGeneratedRuntimeInstallation.isInProgress(sim) ||
                 !sim.developerVerifierRunning || requireCurrent(sim) != candidate)
             throw invalid("Session reconstruction requires its private fresh owner");
-        PlayerLaunchRequest request = PlayerLaunchRequest.parse(save.replay);
-        if (request.seed != candidate.getSeed() ||
-                !request.familyId.equals(candidate.getCircuitFamilyId()) ||
+        PlayerSessionReplay identity = PlayerSessionReplay.parse(save.replay);
+        if ((identity.isPrivateQualification()
+                ? (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                    !identity.matches(candidate))
+                : (identity.playerRequest().seed != candidate.getSeed() ||
+                    !identity.playerRequest().familyId.equals(candidate.getCircuitFamilyId()))) ||
                 !save.realization.equals(PlayerSessionFingerprint.of(PhysicalBoardFingerprint.of(candidate))))
             throw invalid("Session physical realization does not match its replay");
         requirePristineCopper(candidate);

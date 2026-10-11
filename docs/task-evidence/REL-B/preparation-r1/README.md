@@ -1,4 +1,6 @@
-# REL-B independent preparation: current build/support envelope and human launch
+# Earlier REL-B preparation: current build/support envelope and human launch
+
+The next private current-format seam now [passes for one actual44 fixture](../private-session-roundtrip-r1/README.md). The frozen build/support manifest below records its earlier checkpoint; normal advanced persistence/population and human HARD qualification remain held.
 
 Status: **IN PROGRESS; beta NOT QUALIFIED**. This checkpoint seals the current source/build/support manifest and verifies the exact private human trial launch. No production or public admission code changed. HARD/PSYCHOTIC and normal RB56 remain unavailable; no human play result was fabricated.
 

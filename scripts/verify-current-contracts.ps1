@@ -400,6 +400,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PhysicalServiceabilityContractTest'; Marker = 'physical serviceability contracts ' },
         @{ Name = 'U04SessionContractTest'; Marker = 'U04 session contracts ' },
         @{ Name = 'U06SessionSaveContractTest'; Marker = 'U06 session save contracts ' },
+        @{ Name = 'RelBSessionIdentityContractTest'; Marker = 'REL-B session identity contracts ' },
         @{ Name = 'PlayerSessionFingerprintContractTest'; Marker = 'PlayerSessionFingerprintContractTest assertions=' },
         @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },

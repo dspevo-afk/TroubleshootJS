@@ -90,10 +90,10 @@ human qualification follows. Modest-host remains deferred by owner.
 
 REL-B must then qualify normal population/retry/determinism/diversity and every
 advertised advanced source/repair/instrument/catalog/save/replay state. Typed
-restart foundations exist, but actual RB56 capture/load is not yet qualified.
+restart foundations now include a [private 44-part capture/fresh restore and two-failure rollback PASS](../../REL-B/private-session-roundtrip-r1/README.md). Normal advanced durable/menu/FileReader load remains unqualified.
 REL-B independent preparation is now IN PROGRESS with a build/support manifest
-and verified human launch; advanced durable round-trip and normal population
-remain pending. Q100 is UNSTARTED; no public beta is released by this admission.
+and verified human launch. The private 44-part format now passes; normal advanced
+durable/menu/FileReader load and population remain pending. Q100 is UNSTARTED; no public beta is released by this admission.
 [Independent preparation and next slice](../../REL-B/preparation-r1/README.md).
 
 ## Preservation

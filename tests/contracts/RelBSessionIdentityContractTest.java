@@ -1,0 +1,119 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Vector;
+
+/** Mathematical private replay identity laws; no generated owner or solver fixture. */
+public final class RelBSessionIdentityContractTest {
+    private static int assertions;
+    private interface Attempt { void run(); }
+
+    public static void main(String[] args) {
+        verifyExistingPublicWire();
+        verifyPrivateIdentity();
+        verifyPreCancelGuards();
+        System.out.println("PASS: REL-B session identity contracts assertions=" + assertions +
+            " scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false");
+    }
+
+    private static void verifyExistingPublicWire() {
+        String frozen = U06SessionSaveContractTest.crossEnvironmentFixture();
+        check(frozen.equals(PlayerSessionSave.parse(frozen).encode()),
+            "existing public session wire bytes remain exact");
+        PlayerLaunchRequest request = new PlayerLaunchRequest(
+            "LED_INDICATOR", "9007199254740993", "EASY");
+        check("tsj-alpha/5/EASY/LED_INDICATOR/9007199254740993".equals(request.replay()),
+            "normal replay identity remains unchanged");
+        check(request.replay().equals(PlayerSessionReplay.parse(request.replay()).canonical()) &&
+            !PlayerSessionReplay.parse(request.replay()).isPrivateQualification(),
+            "available public replay still uses PlayerLaunchRequest");
+        reject(new Attempt() { public void run() {
+            PlayerLaunchRequest.parse("tsj-private-session/1/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1");
+        } }, "public parser refuses the private replay namespace");
+        reject(new Attempt() { public void run() {
+            PlayerLaunchRequest.parse("tsj-alpha/5/HARD/LED_INDICATOR/1");
+        } }, "public parser continues refusing unavailable HARD");
+    }
+
+    private static void verifyPrivateIdentity() {
+        for (String seed : new String[] {
+                "9007199254741579", "-9007199254741579",
+                "-9223372036854775808", "9223372036854775807" }) {
+            long value = Long.parseLong(seed);
+            GenerationRequest request =
+                GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
+            PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
+            String expected = "tsj-private-session/1/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/" + seed;
+            check(expected.equals(identity.canonical()) && identity.matches(request),
+                "exact signed-long held-family identity: " + seed);
+            PlayerSessionSave original = emptySave(identity.canonical());
+            PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
+            check(original.encode().equals(parsed.encode()) &&
+                PlayerSessionReplay.parse(parsed.replay).matches(request),
+                "private identity survives the existing bounded session codec: " + seed);
+        }
+        for (final String invalid : new String[] {
+                "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
+                "tsj-private-session/1/tsj-generation-dependencies-v15/RB56_CONTROL/1",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/LED_INDICATOR/1",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56_control/1",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/+1",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/01",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/-0",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/9223372036854775808",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/-9223372036854775809",
+                "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1/extra" }) {
+            reject(new Attempt() { public void run() { PlayerSessionReplay.parse(invalid); } },
+                "unknown epoch, family, version or noncanonical seed rejects");
+        }
+        final GenerationRequest normal = GenerationRequest.player(
+            new PlayerLaunchRequest("LED_INDICATOR", "1", "EASY"));
+        reject(new Attempt() { public void run() {
+            PlayerSessionReplay.forQualification(normal);
+        } }, "normal request cannot mint a private qualification identity");
+    }
+
+    private static void verifyPreCancelGuards() {
+        final CirSim sim = new CirSim();
+        sim.troubleshootDebug = true;
+        sim.developerVerifierRunning = true;
+        final GenerationCoordinator coordinator = new GenerationCoordinator(sim);
+        sim.generationCoordinator = coordinator;
+        final GenerationRequest savedRequest =
+            GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 41);
+        final PlayerSessionSave saved = emptySave(
+            PlayerSessionReplay.forQualification(savedRequest).canonical());
+        final GenerationRequest wrongSeed =
+            GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 42);
+        reject(new Attempt() { public void run() {
+            coordinator.startSessionRestoreForQualification(wrongSeed, saved);
+        } }, "seed mismatch rejects before cancellation");
+        check(coordinator.getJob() == null,
+            "identity mismatch leaves idle coordinator without a job");
+
+        sim.troubleshootDebug = false;
+        reject(new Attempt() { public void run() {
+            coordinator.startSessionRestoreForQualification(savedRequest, saved);
+        } }, "missing debug scope rejects before cancellation");
+        check(coordinator.getJob() == null,
+            "scope mismatch leaves idle coordinator without a job");
+    }
+
+    private static PlayerSessionSave emptySave(String replay) {
+        return new PlayerSessionSave(replay, "contract", "realization", "state",
+            new Vector<PlayerSessionSave.Operation>(), new Vector<PlayerSessionSave.Source>(),
+            new Vector<PlayerSessionSave.Stress>(), new Vector<PlayerSessionSave.Fuse>());
+    }
+
+    private static void reject(Attempt attempt, String message) {
+        boolean rejected = false;
+        try { attempt.run(); } catch (RuntimeException expected) { rejected = true; }
+        check(rejected, message);
+    }
+
+    private static void check(boolean result, String message) {
+        assertions++;
+        if (!result) throw new AssertionError(message);
+    }
+}
