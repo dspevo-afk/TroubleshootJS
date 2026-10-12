@@ -49,6 +49,7 @@ final class Rb56Plan {
     }
 
     final long seed, layoutSeed, routingSeed;
+    final int placementInterpretationVersion;
     final int channelCount, sensorInputFilterMask, outputIndicatorMask;
     final ReferenceArrangement referenceArrangement;
     final boolean driverABjt, driverBBjt, hasFiveVoltIndicator, hasTwelveVoltIndicator, hasFiveVoltBleeder;
@@ -56,6 +57,15 @@ final class Rb56Plan {
 
     private Rb56Plan(long seed, int channels, ReferenceArrangement reference, boolean five,
             boolean twelve, int filters, int outputs, boolean bleeder) {
+        this(seed, channels, reference, five, twelve, filters, outputs, bleeder,
+            Rb56Placement.LEGACY_VERSION);
+    }
+    private Rb56Plan(long seed, int channels, ReferenceArrangement reference, boolean five,
+            boolean twelve, int filters, int outputs, boolean bleeder, int placementVersion) {
+        if (placementVersion != Rb56Placement.LEGACY_VERSION &&
+                placementVersion != Rb56Placement.CURRENT_VERSION)
+            throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+        placementInterpretationVersion = placementVersion;
         if (channels < 1 || channels > 2 || reference == null || filters < 0 || outputs < 0 ||
                 ((filters | outputs) & ~(channels == 1 ? 1 : 3)) != 0)
             throw new IllegalArgumentException("Unsupported RB56 channel/support declaration");
@@ -92,6 +102,17 @@ final class Rb56Plan {
             if (feature(streams, "output-status-B")) outputs |= 2;
         }
         return configured(seed, channels, reference, five, twelve, filters, outputs, bleeder);
+    }
+
+    /** Physical placement interpretation does not alter seeded inventory or electrical choices. */
+    static Rb56Plan resolve(long seed, int placementVersion) {
+        return resolve(seed).withPlacementVersion(placementVersion);
+    }
+    Rb56Plan withPlacementVersion(int placementVersion) {
+        if (placementVersion == placementInterpretationVersion) return this;
+        return new Rb56Plan(seed, channelCount, referenceArrangement, hasFiveVoltIndicator,
+            hasTwelveVoltIndicator, sensorInputFilterMask, outputIndicatorMask,
+            hasFiveVoltBleeder, placementVersion);
     }
 
     /** Explicit representative, not a normal-player admission or seeded-remapping rule. */
@@ -144,6 +165,8 @@ final class Rb56Plan {
             ";power=E05-AC/E06-averaged;regulator=E02-linear5V;control=E04;relay=E03-5V;tail-capacitors=Q60-BE0@1;" +
             "sensor-commands=Q60-EXTERNAL-LOW:" + Double.toString(SENSOR_LOW_VOLTS) + ",HIGH:" + Double.toString(SENSOR_HIGH_VOLTS) + ";" +
             "single-channel-minimum=sensor-filter,5V-status;scope=UNQUALIFIED_DEVICE_INTENT;");
+        if (placementInterpretationVersion != Rb56Placement.LEGACY_VERSION)
+            out.append("placement-interpretation=").append(placementInterpretationVersion).append(';');
         for (Part part : inventory) out.append('[').append(part.canonical()).append(']');
         return out.toString();
     }

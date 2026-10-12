@@ -9,6 +9,7 @@ public final class U06SessionSaveContractTest {
 
     public static void main(String[] args) {
         verifyFixture();
+        verifyPrivatePlacementReplayWire();
         verifyOperationsAndCopies();
         verifyInvalidFiles();
         verifyInvalidRecords();
@@ -71,6 +72,27 @@ public final class U06SessionSaveContractTest {
             PlayerSessionSave restored = PlayerSessionSave.parse(exact.encode());
             check(restored.replay.endsWith("/" + seed) && exact.encode().equals(restored.encode()),
                 "exact signed-long seed and framed multiline fields survive");
+        }
+    }
+
+    private static void verifyPrivatePlacementReplayWire() {
+        GenerationRequest compactRequest =
+            GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 77L);
+        GenerationRequest legacyRequest = compactRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+        for (final GenerationRequest request : new GenerationRequest[] {legacyRequest, compactRequest}) {
+            PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
+            PlayerSessionSave save = new PlayerSessionSave(identity.canonical(), "build",
+                "realization", "signature", new Vector<PlayerSessionSave.Operation>(),
+                new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>(),
+                new Vector<PlayerSessionSave.Fuse>());
+            String encoded = save.encode();
+            check(encoded.startsWith("tsj-session/1\ntsj-session-model/1\nrestart\n"),
+                "private placement version does not change the accepted session schema/model");
+            PlayerSessionSave parsed = PlayerSessionSave.parse(encoded);
+            check(encoded.equals(parsed.encode()) && identity.canonical().equals(parsed.replay) &&
+                PlayerSessionReplay.parse(parsed.replay).matches(request),
+                "versioned private replay survives existing model-1 file framing");
         }
     }
 

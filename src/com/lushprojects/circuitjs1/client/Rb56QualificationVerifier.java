@@ -85,9 +85,13 @@ final class Rb56QualificationVerifier {
         require(ownsPersistenceLease(sim, controller) && !active.restoringSession,
             "Private session file belongs to a closed or busy qualification view");
         PlayerSessionReplay identity = PlayerSessionReplay.parse(saved.replay);
-        if (!identity.isPrivateQualification() || !identity.matches(active.request))
+        if (!identity.isPrivateQualification())
             throw new IllegalArgumentException("Choose a current private file for this exact qualification board. The current board is unchanged.");
-        active.beginSessionRestore(saved);
+        GenerationRequest restoreRequest = active.request.withRb56PlacementInterpretationVersion(
+            identity.rb56PlacementInterpretationVersion());
+        if (!identity.matches(restoreRequest))
+            throw new IllegalArgumentException("Choose a current private file for this exact qualification board. The current board is unchanged.");
+        active.beginSessionRestore(saved, restoreRequest);
     }
 
     static boolean retryPendingCleanup(CirSim sim) {
@@ -109,7 +113,8 @@ final class Rb56QualificationVerifier {
         final long seed;
         final Task41SimulationSnapshot snapshot;
         final GenerationCoordinator coordinator;
-        final GenerationRequest request;
+        GenerationRequest request;
+        GenerationRequest pendingRestoreRequest;
         final GenerationJob previousJob;
         final GeneratedBoardInstance predecessor;
         final GeneratedChallengeController predecessorController;
@@ -352,16 +357,20 @@ final class Rb56QualificationVerifier {
             holdTimer.schedule(benchHoldMillis);
         }
 
-        void beginSessionRestore(PlayerSessionSave saved) {
+        void beginSessionRestore(PlayerSessionSave saved, GenerationRequest restoreRequest) {
             require(sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
                 !coordinator.isRunning() && !coordinator.isAdvancing(), "The current board is busy");
+            if (restoreRequest == null || !restoreRequest.isPrivateDiagnosticQualification() ||
+                    !PlayerSessionReplay.parse(saved.replay).matches(restoreRequest))
+                throw new IllegalArgumentException("Private restore request differs from the saved placement identity");
             restoreToken = retainedSession.beginQualificationRestore(published);
+            pendingRestoreRequest = restoreRequest;
             restoringSession = true;
             boolean debug = sim.troubleshootDebug, verifier = sim.developerVerifierRunning;
             RuntimeException startupFailure = null;
             try {
                 sim.troubleshootDebug = true; sim.developerVerifierRunning = true;
-                coordinator.startSessionRestoreForQualification(request, saved);
+                coordinator.startSessionRestoreForQualification(pendingRestoreRequest, saved);
                 job = coordinator.getJob();
                 require(job != null && job.isRunning(), "Private file restore did not start");
                 advanceTimer.schedule(1);
@@ -374,9 +383,11 @@ final class Rb56QualificationVerifier {
                 if (coordinator.isRunning()) coordinator.cancel();
                 if (coordinator.retainsSavedOwnersForDeveloperVerification() ||
                         sim.getGeneratedBoardInstance() != published || sim.elmList != publishedGraph) {
+                    pendingRestoreRequest = null;
                     recordFailure(startupFailure); finish(); throw startupFailure;
                 }
                 restoringSession = false;
+                pendingRestoreRequest = null;
                 retainedSession.finishQualificationRestore(restoreToken, published, null,
                     GenerationJob.Outcome.PROGRAMMING_FAILURE);
                 throw startupFailure;
@@ -392,7 +403,7 @@ final class Rb56QualificationVerifier {
                 coordinator.advanceForDeveloperVerification();
             } catch (Throwable failure) { problem = failure; }
             finally { sim.troubleshootDebug = debug; sim.developerVerifierRunning = verifier; }
-            if (problem != null) { recordFailure(problem); finish(); return; }
+            if (problem != null) { pendingRestoreRequest = null; recordFailure(problem); finish(); return; }
             if (job.isRunning()) { advanceTimer.schedule(1); return; }
             try {
                 require(!coordinator.retainsSavedOwnersForDeveloperVerification() &&
@@ -406,7 +417,8 @@ final class Rb56QualificationVerifier {
                 GeneratedBoardInstance previous = published;
                 if (job.getOutcome() == GenerationJob.Outcome.PASS) {
                     GeneratedBoardInstance next = sim.getGeneratedBoardInstance();
-                    require(next != previous && next != predecessor && request.getFamilyId().equals(next.getCircuitFamilyId()) &&
+                    require(pendingRestoreRequest != null && next != previous && next != predecessor &&
+                        pendingRestoreRequest.getFamilyId().equals(next.getCircuitFamilyId()) &&
                         next.getSeed() == seed && !next.isDeveloperOnlyFaultRoute(), "Private file restore did not publish its exact fresh owner");
                     // Capture the actual publication before checking or retiring anything.
                     superseded = previous; supersededCursor = 0;
@@ -417,17 +429,21 @@ final class Rb56QualificationVerifier {
                     next.requireNormalPhysicalAdmission();
                     GeneratedRuntimeInvariant.verify(sim, next, sim.getBoardModificationController(), sim.elmList);
                     retireSuperseded();
+                    // Future saves describe the actual published geometry, but only after its restore passed.
+                    request = pendingRestoreRequest;
+                    pendingRestoreRequest = null;
                     put(result, "freshOwner", true); put(result, "priorOwnerRetired", true);
                 } else {
                     require(sim.getGeneratedBoardInstance() == published && sim.getGeneratedChallengeController() == publishedController &&
                         sim.elmList == publishedGraph, "Failed private file restore did not preserve its exact owner");
                     restoringSession = false;
+                    pendingRestoreRequest = null;
                     retainedSession.finishQualificationRestore(restoreToken, published, null, job.getOutcome());
                     put(result, "priorOwnerRetained", true);
                 }
                 sessionRestores.set(sessionRestores.size(), result); report.put("sessionRestores", sessionRestores);
                 phase = "HOLD"; publish("HOLD", "HOLD:rb56");
-            } catch (Throwable failure) { recordFailure(failure); finish(); }
+            } catch (Throwable failure) { pendingRestoreRequest = null; recordFailure(failure); finish(); }
         }
 
         void retireSuperseded() {
@@ -449,6 +465,7 @@ final class Rb56QualificationVerifier {
             try {
                 if (restoringSession) {
                     advanceTimer.cancel(); coordinator.cancel(); restoringSession = false;
+                    pendingRestoreRequest = null;
                     retainedSession.finishQualificationRestore(restoreToken, published, null, job.getOutcome());
                 }
                 require(sim.getGeneratedBoardInstance() == published &&
@@ -501,6 +518,7 @@ final class Rb56QualificationVerifier {
 
         void finish() {
             advanceTimer.cancel(); holdTimer.cancel();
+            pendingRestoreRequest = null;
             try {
                 phase = "CLEANUP";
                 require(coordinator.getJob() == (job == null ? previousJob : job),

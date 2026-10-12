@@ -5,6 +5,8 @@ import java.util.Map;
 
 /** Immutable current native request. Mutable circuits are always constructed afresh. */
 final class GenerationRequest {
+    static final int RB56_PLACEMENT_INTERPRETATION_LEGACY = 1;
+    static final int RB56_PLACEMENT_INTERPRETATION_COMPACT = 2;
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;
@@ -14,6 +16,7 @@ final class GenerationRequest {
     private final GenerationExecutionPolicy normalExecutionPolicy;
     private final StagedFamilyCapability stagedFamily;
     private final PlayerFamilyCatalog.ExecutionDeclaration executionDeclaration;
+    private final int rb56PlacementInterpretationVersion;
 
     private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay) {
         this(descriptor, composition, quickPlay, null, false, false,
@@ -43,6 +46,15 @@ final class GenerationRequest {
             DifficultyProfile difficulty, boolean search, boolean qualification,
             GenerationExecutionPolicy normalExecutionPolicy, StagedFamilyCapability stagedFamily,
             PlayerFamilyCatalog.ExecutionDeclaration requestedExecutionDeclaration) {
+        this(descriptor, composition, quickPlay, difficulty, search, qualification,
+            normalExecutionPolicy, stagedFamily, requestedExecutionDeclaration,
+            defaultRb56PlacementInterpretation(descriptor, composition, qualification));
+    }
+    private GenerationRequest(ChallengeDescriptor descriptor, boolean composition, boolean quickPlay,
+            DifficultyProfile difficulty, boolean search, boolean qualification,
+            GenerationExecutionPolicy normalExecutionPolicy, StagedFamilyCapability stagedFamily,
+            PlayerFamilyCatalog.ExecutionDeclaration requestedExecutionDeclaration,
+            int requestedRb56PlacementInterpretationVersion) {
         if (descriptor == null) throw new IllegalArgumentException("Missing generation descriptor");
         if (normalExecutionPolicy != GenerationExecutionPolicy.SMALL_BOARD &&
                 normalExecutionPolicy != GenerationExecutionPolicy.NORMAL_MEDIUM &&
@@ -50,6 +62,13 @@ final class GenerationRequest {
             throw new IllegalArgumentException("Missing or unknown generation execution policy");
         String familyId = composition ? ControlledIndicatorBlockContributions.FAMILY_ID :
             descriptor.getDeviceIntent().getId();
+        if (qualification && Rb56Plan.FAMILY_ID.equals(familyId)) {
+            if (requestedRb56PlacementInterpretationVersion != RB56_PLACEMENT_INTERPRETATION_LEGACY &&
+                    requestedRb56PlacementInterpretationVersion != RB56_PLACEMENT_INTERPRETATION_COMPACT)
+                throw new IllegalArgumentException("Unknown private RB56 placement interpretation");
+        } else if (requestedRb56PlacementInterpretationVersion != 0) {
+            throw new IllegalArgumentException("RB56 placement interpretation is private-family-only");
+        }
         if (qualification && (composition || quickPlay || difficulty != null || search ||
                 normalExecutionPolicy != GenerationExecutionPolicy.SMALL_BOARD || stagedFamily == null ||
                 !stagedFamily.supportsPrivateQualification() || !stagedFamily.familyId().equals(familyId)))
@@ -73,6 +92,14 @@ final class GenerationRequest {
         this.normalExecutionPolicy = normalExecutionPolicy;
         this.stagedFamily = stagedFamily;
         this.executionDeclaration = declaration;
+        this.rb56PlacementInterpretationVersion = requestedRb56PlacementInterpretationVersion;
+    }
+
+    private static int defaultRb56PlacementInterpretation(ChallengeDescriptor descriptor,
+            boolean composition, boolean qualification) {
+        return qualification && !composition && descriptor != null &&
+            Rb56Plan.FAMILY_ID.equals(descriptor.getDeviceIntent().getId()) ?
+            RB56_PLACEMENT_INTERPRETATION_COMPACT : 0;
     }
 
     static GenerationRequest leaf(String familyId, long seed, boolean quickPlay) {
@@ -180,16 +207,8 @@ final class GenerationRequest {
     SupportedEnvelope getSupportedEnvelope() { return SupportedEnvelope.current(); }
     String canonical() {
         if (stagedFamily != null) {
-            PlayerFamilyCatalog.ExecutionDeclaration declaration = privateQualification ? null :
-                declaredExecution();
-            StagedFamilyCapability.RequestIdentity identity = new StagedFamilyCapability.RequestIdentity(
-                getFamilyId(), descriptor.getRootSeed(), descriptor.toCanonical(), privateQualification,
-                quickPlay, candidateSearch, difficulty, getExecutionPolicy().canonical(),
-                getRequiredPhysicalAdmissionIdentity(), declaration == null ? "" : declaration.canonical(),
-                Integer.toString(SeededPcbLayoutGenerator.CURRENT_VERSION), PlayerLaunchRequest.EPOCH,
-                Integer.toString(QuickPlayAdmission.VERSION), Integer.toString(DifficultyProfile.VERSION),
-                Integer.toString(DifficultyAssessment.VERSION));
-            return stagedFamily.canonicalRequest(stagedFamily.resolve(descriptor.getRootSeed()), identity);
+            StagedFamilyCapability.RequestIdentity identity = stagedRequestIdentity();
+            return stagedFamily.canonicalRequest(resolveStagedPlan(identity), identity);
         }
         PlayerFamilyCatalog.ExecutionDeclaration declaration = declaredExecution();
         return "tsj-generation-request/6;native;" + descriptor.toCanonical() +
@@ -213,16 +232,50 @@ final class GenerationRequest {
     }
     boolean isComposition() { return composition; }
 
+    int getRb56PlacementInterpretationVersion() { return rb56PlacementInterpretationVersion; }
+
+    /** Select a saved private RB56 interpretation before canonicalization or cache lookup. */
+    GenerationRequest withRb56PlacementInterpretationVersion(int version) {
+        if (!isPrivateDiagnosticQualification() || !Rb56Plan.FAMILY_ID.equals(getFamilyId()) ||
+                (version != RB56_PLACEMENT_INTERPRETATION_LEGACY &&
+                    version != RB56_PLACEMENT_INTERPRETATION_COMPACT))
+            throw new IllegalArgumentException("Placement version applies only to an exact private RB56 request");
+        return new GenerationRequest(descriptor, composition, quickPlay, difficulty,
+            candidateSearch, privateQualification, normalExecutionPolicy, stagedFamily,
+            executionDeclaration, version);
+    }
+
+    private StagedFamilyCapability.RequestIdentity stagedRequestIdentity() {
+        PlayerFamilyCatalog.ExecutionDeclaration declaration = privateQualification ? null :
+            declaredExecution();
+        return new StagedFamilyCapability.RequestIdentity(
+            getFamilyId(), descriptor.getRootSeed(), descriptor.toCanonical(), privateQualification,
+            quickPlay, candidateSearch, difficulty, getExecutionPolicy().canonical(),
+            getRequiredPhysicalAdmissionIdentity(), declaration == null ? "" : declaration.canonical(),
+            rb56PlacementInterpretationVersion,
+            Integer.toString(SeededPcbLayoutGenerator.CURRENT_VERSION), PlayerLaunchRequest.EPOCH,
+            Integer.toString(QuickPlayAdmission.VERSION), Integer.toString(DifficultyProfile.VERSION),
+            Integer.toString(DifficultyAssessment.VERSION));
+    }
+
+    private StagedFamilyCapability.Plan resolveStagedPlan(
+            StagedFamilyCapability.RequestIdentity identity) {
+        if (stagedFamily instanceof VersionedPlacementStagedFamilyCapability)
+            return ((VersionedPlacementStagedFamilyCapability) stagedFamily)
+                .resolve(descriptor.getRootSeed(), identity);
+        return stagedFamily.resolve(descriptor.getRootSeed());
+    }
+
     Prepared resolve(PlanCache cache) {
         if (candidateSearch) throw new IllegalStateException("Resolve an exact candidate through the admission coordinator");
         if (cache == null) throw new IllegalArgumentException("Missing generation plan cache");
-        String key = canonical();
+        StagedFamilyCapability.RequestIdentity identity = stagedFamily == null ? null : stagedRequestIdentity();
+        StagedFamilyCapability.Plan stagedPlan = stagedFamily == null ? null : resolveStagedPlan(identity);
+        String key = stagedFamily == null ? canonical() : stagedFamily.canonicalRequest(stagedPlan, identity);
         Prepared cached = cache.get(key);
         if (cached != null) return cached;
         BoundedAssemblyPlan plan = null;
         Rb15Plan rb15 = null;
-        StagedFamilyCapability.Plan stagedPlan = stagedFamily == null ? null :
-            stagedFamily.resolve(descriptor.getRootSeed());
         if (stagedFamily == null) {
             if (composition) {
                 plan = BoundedAssemblyPlan.resolve(BoundedAssemblyRequest.forControlledIndicator(descriptor));

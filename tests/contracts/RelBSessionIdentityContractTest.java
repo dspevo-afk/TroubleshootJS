@@ -31,6 +31,10 @@ public final class RelBSessionIdentityContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1");
         } }, "public parser refuses the private replay namespace");
         reject(new Attempt() { public void run() {
+            PlayerLaunchRequest.parse("tsj-private-session/2/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/1");
+        } }, "public parser refuses the versioned private replay namespace");
+        reject(new Attempt() { public void run() {
             PlayerLaunchRequest.parse("tsj-alpha/5/HARD/LED_INDICATOR/1");
         } }, "public parser continues refusing unavailable HARD");
     }
@@ -43,18 +47,31 @@ public final class RelBSessionIdentityContractTest {
             GenerationRequest request =
                 GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
-            String expected = "tsj-private-session/1/" +
-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/" + seed;
+            String expected = "tsj-private-session/2/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/" + seed;
             check(expected.equals(identity.canonical()) && identity.matches(request),
-                "exact signed-long held-family identity: " + seed);
+                "exact signed-long compact held-family identity: " + seed);
             PlayerSessionSave original = emptySave(identity.canonical());
             PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
             check(original.encode().equals(parsed.encode()) &&
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
-                "private identity survives the existing bounded session codec: " + seed);
+                "compact private identity survives the unchanged bounded session codec: " + seed);
+
+            GenerationRequest legacyRequest = request.withRb56PlacementInterpretationVersion(
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+            PlayerSessionReplay legacy = PlayerSessionReplay.forQualification(legacyRequest);
+            String legacyExpected = "tsj-private-session/1/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/" + seed;
+            check(legacyExpected.equals(legacy.canonical()) && legacy.matches(legacyRequest) &&
+                !legacy.matches(request), "exact historical private identity selects only legacy placement: " + seed);
+            check(!request.canonical().equals(legacyRequest.canonical()),
+                "placement version is part of the plan-cache/request identity: " + seed);
         }
         for (final String invalid : new String[] {
                 "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
+                "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-1/RB56_CONTROL/1",
+                "tsj-private-session/2/tsj-generation-dependencies-v15/rb56-placement-2/RB56_CONTROL/1",
+                "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/1/extra",
                 "tsj-private-session/1/tsj-generation-dependencies-v15/RB56_CONTROL/1",
                 "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/LED_INDICATOR/1",
                 "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56_control/1",
@@ -91,6 +108,20 @@ public final class RelBSessionIdentityContractTest {
         } }, "seed mismatch rejects before cancellation");
         check(coordinator.getJob() == null,
             "identity mismatch leaves idle coordinator without a job");
+
+        final GenerationRequest legacySavedRequest = savedRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+        final PlayerSessionSave legacySaved = emptySave(
+            PlayerSessionReplay.forQualification(legacySavedRequest).canonical());
+        final GenerationRequest wrongLegacySeed =
+            GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 42)
+                .withRb56PlacementInterpretationVersion(
+                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+        reject(new Attempt() { public void run() {
+            coordinator.startSessionRestoreForQualification(wrongLegacySeed, legacySaved);
+        } }, "legacy placement identity still rejects a foreign seed before cancellation");
+        check(coordinator.getJob() == null,
+            "legacy identity mismatch leaves idle coordinator without a job");
 
         sim.troubleshootDebug = false;
         reject(new Attempt() { public void run() {

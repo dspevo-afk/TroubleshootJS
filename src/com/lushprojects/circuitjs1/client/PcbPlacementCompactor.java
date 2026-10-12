@@ -52,6 +52,12 @@ final class PcbPlacementCompactor {
                 int[] points=xAxis?trace.getXPoints():trace.getYPoints();
                 for(int point:points)occupied.add(new int[]{point-guard,point+guard});
             }
+            for(PcbBoardHole hole:result.layout.getHoles()) {
+                Rectangle bounds=hole.getBounds();
+                int start=xAxis?bounds.x:bounds.y;
+                int end=start+(xAxis?bounds.width:bounds.height);
+                occupied.add(new int[]{start-guard,end+guard});
+            }
             Collections.sort(occupied,new Comparator<int[]>() {public int compare(int[] a,int[] b){return a[0]-b[0];}});
             Vector<int[]> cuts=new Vector<int[]>();
             int end=occupied.get(0)[1],removed=0;
@@ -79,11 +85,15 @@ final class PcbPlacementCompactor {
                 for(int i=0;i<xs.length;i++) {if(xAxis)xs[i]-=shift(cuts,xs[i]);else ys[i]-=shift(cuts,ys[i]);}
                 candidate.addTrace(trace.withPath(xs,ys));
             }
+            for(PcbBoardHole hole:result.layout.getHoles()) {
+                int holeShift=shift(cuts,xAxis?hole.x:hole.y);
+                candidate.addHole(hole.translatedBy(xAxis?-holeShift:0,xAxis?0:-holeShift));
+            }
             candidate.setRoutingStatistics(result.layout.getRoutingExpansions(),result.layout.getRawRoutingSegments(),result.layout.getRoutingCongestionRejections());
             try {
                 PcbPlacementPlanner.validate(board,constraints,outline,moved);
-                // Full routing geometry is validated by the caller after both
-                // bounded transforms; retain the per-axis detour rejection here.
+                candidate.validateRoutingGeometry(board);
+                // Retain the per-axis detour rejection here.
                 // A rigid monotone compaction can shorten endpoint separation
                 // faster than the copper path, exceeding the unchanged detour
                 // bound. Retain the original legal route in that case.

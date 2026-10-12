@@ -6,6 +6,8 @@ package com.lushprojects.circuitjs1.client;
  */
 final class PlayerSessionReplay {
     private static final String PRIVATE_PREFIX = "tsj-private-session/1/";
+    private static final String PRIVATE_COMPACT_PREFIX = "tsj-private-session/2/";
+    private static final String COMPACT_PLACEMENT_TOKEN = "rb56-placement-2";
     private static final int MAX_LENGTH = 180;
 
     private final String replay;
@@ -13,6 +15,7 @@ final class PlayerSessionReplay {
     private final String familyId;
     private final long seed;
     private final boolean privateQualification;
+    private final int rb56PlacementInterpretationVersion;
 
     private PlayerSessionReplay(PlayerLaunchRequest request) {
         if (request == null || request.candidateSearch)
@@ -22,14 +25,17 @@ final class PlayerSessionReplay {
         familyId = request.familyId;
         seed = request.seed;
         privateQualification = false;
+        rb56PlacementInterpretationVersion = 0;
     }
 
-    private PlayerSessionReplay(String replay, String familyId, long seed) {
+    private PlayerSessionReplay(String replay, String familyId, long seed,
+            int rb56PlacementInterpretationVersion) {
         this.replay = replay;
         this.playerRequest = null;
         this.familyId = familyId;
         this.seed = seed;
         privateQualification = true;
+        this.rb56PlacementInterpretationVersion = rb56PlacementInterpretationVersion;
     }
 
     /** Private exact RB56 restart identity; it deliberately assigns no profile. */
@@ -37,9 +43,19 @@ final class PlayerSessionReplay {
         if (request == null || !request.isPrivateDiagnosticQualification() ||
                 request.isCandidateSearch() || !isHeldQualificationFamily(request.getFamilyId()))
             throw invalid("Private session identity requires the held exact qualification request");
-        String identity = PRIVATE_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
-            "/" + request.getFamilyId() + "/" +
-            Long.toString(request.getDescriptor().getRootSeed());
+        int placementVersion = request.getRb56PlacementInterpretationVersion();
+        String identity;
+        if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY) {
+            identity = PRIVATE_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + request.getFamilyId() + "/" +
+                Long.toString(request.getDescriptor().getRootSeed());
+        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT) {
+            identity = PRIVATE_COMPACT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + COMPACT_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
+                Long.toString(request.getDescriptor().getRootSeed());
+        } else {
+            throw invalid("Private RB56 session has no supported placement interpretation");
+        }
         return parse(identity);
     }
 
@@ -56,16 +72,36 @@ final class PlayerSessionReplay {
     private static PlayerSessionReplay parsePrivate(String text) {
         if (text.length() > MAX_LENGTH) throw invalid("Unsupported replay identity");
         String[] fields = text.split("/", -1);
-        if (fields.length != 5 || !"tsj-private-session".equals(fields[0]) ||
-                !"1".equals(fields[1]) ||
-                !GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) ||
-                !isHeldQualificationFamily(fields[3]))
-            throw invalid("Unsupported private replay identity or epoch");
-        long seed = parseSeed(fields[4]);
-        String canonical = PRIVATE_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
-            "/" + fields[3] + "/" + Long.toString(seed);
+        int placementVersion;
+        String familyId;
+        String seedText;
+        String canonical;
+        if (fields.length == 5 && "tsj-private-session".equals(fields[0]) &&
+                "1".equals(fields[1]) &&
+                GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
+                isHeldQualificationFamily(fields[3])) {
+            placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY;
+            familyId = fields[3];
+            seedText = fields[4];
+        } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
+                "2".equals(fields[1]) &&
+                GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
+                COMPACT_PLACEMENT_TOKEN.equals(fields[3]) &&
+                isHeldQualificationFamily(fields[4])) {
+            placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT;
+            familyId = fields[4];
+            seedText = fields[5];
+        } else {
+            throw invalid("Unsupported private replay identity, placement interpretation, or epoch");
+        }
+        long seed = parseSeed(seedText);
+        canonical = placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY ?
+            PRIVATE_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + familyId + "/" + Long.toString(seed) :
+            PRIVATE_COMPACT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + COMPACT_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
         if (!canonical.equals(text)) throw invalid("Use canonical private replay identity");
-        return new PlayerSessionReplay(canonical, fields[3], seed);
+        return new PlayerSessionReplay(canonical, familyId, seed, placementVersion);
     }
 
     private static long parseSeed(String text) {
@@ -93,6 +129,7 @@ final class PlayerSessionReplay {
     String familyId() { return familyId; }
     long seed() { return seed; }
     boolean isPrivateQualification() { return privateQualification; }
+    int rb56PlacementInterpretationVersion() { return rb56PlacementInterpretationVersion; }
 
     PlayerLaunchRequest playerRequest() {
         if (privateQualification) throw invalid("Private identity has no public player request");
@@ -103,12 +140,16 @@ final class PlayerSessionReplay {
         return privateQualification && request != null &&
             request.isPrivateDiagnosticQualification() && !request.isCandidateSearch() &&
             familyId.equals(request.getFamilyId()) &&
-            seed == request.getDescriptor().getRootSeed();
+            seed == request.getDescriptor().getRootSeed() &&
+            rb56PlacementInterpretationVersion == request.getRb56PlacementInterpretationVersion();
     }
 
     boolean matches(GeneratedBoardInstance candidate) {
-        return privateQualification && candidate != null &&
-            familyId.equals(candidate.getCircuitFamilyId()) && seed == candidate.getSeed();
+        TroubleshootBoard board = candidate == null ? null : candidate.getBoard();
+        PcbPlacementConstraints constraints = board == null ? null : board.getPlacementConstraints();
+        return privateQualification && candidate != null && board != null && constraints != null &&
+            familyId.equals(candidate.getCircuitFamilyId()) && seed == candidate.getSeed() &&
+            constraints.placementDensityVersion == rb56PlacementInterpretationVersion;
     }
 
     private static IllegalArgumentException invalid(String message) {

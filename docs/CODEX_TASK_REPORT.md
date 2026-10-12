@@ -1,4 +1,50 @@
-# Current checkpoint: independent REL-B recovery PASS; normal release held
+# Current checkpoint: compact private PCB and complete labels PASS
+
+2026-10-12. Candidate over `7d733a10bb203a1cda7b8f55409cb9b1b6e11cd2` on
+`codex/q60-faulted-profile-counts`; GWT build `82ED33BBD8DE32C145D1C3B4A3CEB5F3`.
+Fixed40/44/60 area reductions14.58%/16.51%/11.59%, exact part/pad counts and legacy
+geometry SHA3. New placement uses compact demand/Manhattan scoring, a reserved
+established-algorithm fallback, via-preserving validated P07 strip compaction and
+smallest legal-area selection. Common renderer places full measured annotations
+around actual current body/lead/pad bounds; ownership/targets/electrical state stay.
+
+Native184 PASS79.726s/11 suites; actual JDK8/GWT46 PASS102.564s/all5;
+headed195 PASS150.110s/three real cold boards/fit/wheel full-text and cleanup;
+headed198 PASS149.606s host/146.735s actual Blob/FileReader private2→1→2,
+source/history/geometry preserved, no imported completion, independent old/new
+powered repair retests and exact owner/session/bridge/meter/coordinator release.
+[Sealed evidence/metrics/inspected before-after images](task-evidence/PCB/compactness-r1/README.md).
+Evidence SHA `cc601c24b58df818d55e83e20173eada9979cc12574799f05cb285ba60012a8a`.
+
+All final source/served/native/browser/localhost cleanup audits PASS. Root inspected
+five after renders, historical before pair and two actual file-flow captures.
+Static identity/restore/render/compactor/selector review found no remaining blocker.
+Some gaps increase; fixed outlines are11–17% smaller, not an optimal/uniform packing
+or whole population claim. The reserved fallback and original routing/clearance
+caps remain. Legacy private1 preserves geometry, fresh private2 binds version in
+request/cache/dependency/capture/restore. Public alpha5/session1/model1 stay.
+
+All native/compiler/route/marker/fixture and before-view adapter failures retained;
+196/197 task-driver assumptions failed and198 fixed them with actual source flags
+and the supported public tray toggle. No whole failure is relabeled. No repeated
+native/build needed for unchanged driver-only fixes; final native184 freshly
+qualifies all11 integrated suites after the production selector change.
+
+Human NOT RUN and HARD/normal RB56/public release HELD. Next is existing U05
+qualitative human observations/calibration, then finite REL-B normal population/
+diversity/retry/release proof; Q100 remains outside this continuation. No new gate
+waiver/endurance/weak-hardware promise. Oct11 direct all-clear persists; old Oct9
+forwarding is superseded. Modest-host alone owner-deferred.
+
+No task-owned runtime/preview remains. Original8 hashes MATCH and all original
+untracked files preserved. Q30 unknown91.616s/six missing inventories/lateBLOCKED
+audit and C4130 hold intact. No email/Core/Android/protected-main merge, unrelated
+process action or unchanged Q30 corpus rerun. Normal publication uses this existing branch; the final handoff records the exact
+accepted commit and actual remote SHA. Sealed inputs identify this delivered source.
+
+---
+
+# Historical checkpoint: independent REL-B recovery PASS; normal release held
 
 2026-10-12. Candidate over `ab22c02f1af6a522c655fc34dd02c3c9cf804c61` on `codex/q60-faulted-profile-counts`.
 HTML UTF-8 declaration and truthful Shop/relay discharge feedback fix two actual

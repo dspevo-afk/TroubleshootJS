@@ -35,6 +35,7 @@ interface StagedFamilyCapability {
         final String executionPolicyCanonical;
         final String physicalAdmissionIdentity;
         final String familyExecutionCanonical;
+        final int rb56PlacementInterpretationVersion;
         final String layoutVersion;
         final String replayEpoch;
         final String admissionVersion;
@@ -45,7 +46,8 @@ interface StagedFamilyCapability {
                 boolean privateQualification, boolean quickPlay, boolean candidateSearch,
                 DifficultyProfile difficulty, String executionPolicyCanonical,
                 String physicalAdmissionIdentity, String familyExecutionCanonical,
-                String layoutVersion, String replayEpoch, String admissionVersion,
+                int rb56PlacementInterpretationVersion, String layoutVersion,
+                String replayEpoch, String admissionVersion,
                 String difficultyVersion, String assessmentVersion) {
             if (familyId == null || familyId.length() == 0 || descriptorCanonical == null ||
                     executionPolicyCanonical == null || physicalAdmissionIdentity == null ||
@@ -62,6 +64,9 @@ interface StagedFamilyCapability {
             this.executionPolicyCanonical = executionPolicyCanonical;
             this.physicalAdmissionIdentity = physicalAdmissionIdentity;
             this.familyExecutionCanonical = familyExecutionCanonical;
+            if (rb56PlacementInterpretationVersion < 0 || rb56PlacementInterpretationVersion > 2)
+                throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+            this.rb56PlacementInterpretationVersion = rb56PlacementInterpretationVersion;
             this.layoutVersion = layoutVersion;
             this.replayEpoch = replayEpoch;
             this.admissionVersion = admissionVersion;
@@ -69,4 +74,9 @@ interface StagedFamilyCapability {
             this.assessmentVersion = assessmentVersion;
         }
     }
+}
+
+/** Optional immutable request-versioned placement resolution for a staged family. */
+interface VersionedPlacementStagedFamilyCapability extends StagedFamilyCapability {
+    Plan resolve(long seed, RequestIdentity request);
 }

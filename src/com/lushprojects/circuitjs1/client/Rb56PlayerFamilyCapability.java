@@ -1,7 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Registered family owner for the bounded isolated AC/control board. */
-final class Rb56PlayerFamilyCapability implements StagedFamilyCapability {
+final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamilyCapability {
     public String familyId() { return Rb56Plan.FAMILY_ID; }
     public String displayName() { return "Isolated AC control board"; }
     public String routeId() { return "isolated-ac-control"; }
@@ -11,7 +11,25 @@ final class Rb56PlayerFamilyCapability implements StagedFamilyCapability {
     public boolean supportsPrivateQualification() { return true; }
 
     public Plan resolve(long seed) {
+        // Historical direct fixtures retain the original RB56 placement interpretation.
         return new ResolvedPlan(Rb56Plan.resolve(seed));
+    }
+
+    public Plan resolve(long seed, RequestIdentity request) {
+        if (request == null || !familyId().equals(request.familyId))
+            throw new IllegalArgumentException("Versioned RB56 placement requires its exact family request");
+        if (!request.privateQualification) {
+            if (request.rb56PlacementInterpretationVersion != 0)
+                throw new IllegalArgumentException("Private RB56 placement version leaked into a normal request");
+            return new ResolvedPlan(Rb56Plan.resolve(seed));
+        }
+        if (request.rb56PlacementInterpretationVersion !=
+                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY &&
+                request.rb56PlacementInterpretationVersion !=
+                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT)
+            throw new IllegalArgumentException("Versioned RB56 placement requires a supported private interpretation");
+        return new ResolvedPlan(Rb56Plan.resolve(seed,
+            request.rb56PlacementInterpretationVersion));
     }
 
     public String canonicalIdentity(Plan plan) {
@@ -21,6 +39,9 @@ final class Rb56PlayerFamilyCapability implements StagedFamilyCapability {
     public String canonicalRequest(Plan plan, RequestIdentity request) {
         Rb56Plan resolved = resolved(plan).plan;
         if (request.privateQualification) {
+            if (resolved.placementInterpretationVersion !=
+                    request.rb56PlacementInterpretationVersion)
+                throw new IllegalArgumentException("RB56 plan differs from its requested placement interpretation");
             return "tsj-generation-request/4;native;qualification-only;" +
                 request.descriptorCanonical + ";quickPlay=false;layout=" +
                 request.layoutVersion + ";qualification=true;explicitCompletion=true;planEpoch=" +

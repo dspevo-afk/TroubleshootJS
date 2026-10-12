@@ -393,6 +393,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         # Schedule the largest short-budget construction cohort first; cases and budgets are unchanged.
         @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
+        @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
+        @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
         @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },

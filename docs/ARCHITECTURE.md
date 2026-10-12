@@ -5405,3 +5405,39 @@ PREPARING. Expiry cancels pending restoration before exact owner/bridge/session/
 meter/coordinator retirement; it does not append a separate restore-cancel row.
 [Evidence and finite release matrix](task-evidence/REL-B/release-matrix-r1/README.md).
 Normal RB56 population and human HARD remain blocked/pending; no public enablement.
+
+
+## Current compact private placement and screen annotations
+
+Fresh held-RB56 requests carry immutable placement interpretation2. Legacy private
+session1 replay selects1; private session2 replay names `rb56-placement-2`. Public
+alpha5 and session/model1 framing remain. `GenerationRequest` binds version in
+staged identity/plan cache; `Rb56Plan` and `Rb56Placement` carry it into constraints
+and `GenerationDependencyContext`. Legacy canonical/dependency bytes omit the new
+field. The optional versioned capability leaves other family API owners unchanged.
+Private capture checks the actual owner's version. Restore derives the saved
+request before coordinator/cache resolution and commits it only after successful
+fresh publication and predecessor retirement; failure retains the active request.
+
+V2 uses four compact attempts plus two established algorithm0/1 alternatives inside
+the same six-placement/three-routing budget. The generator reserves one fallback
+in the routed prefix, compacts accepted P07 strips, validates each changed axis and
+selects the smallest legal outline with deterministic quality tie-breaks. The
+compactor protects/copies via holes along the same monotone map as copper and
+rigid package envelopes. V1 selection and P07 geometry remain byte exact. Route
+quality, clearance, access, isolation, owner/electrical correspondence and90s/640/5s
+limits are unchanged; this is bounded candidate selection, not optimal packing.
+
+`PcbWorkbenchRenderer` collects exterior provider text through a scoped Graphics
+collector restored in finally. It reserves the exact geometry returned by the
+same installed-part drawing context, including lifted leads and face/occupancy,
+plus pad bounds. `Graphics.MeasuredText` captures real Canvas metrics/style/CTM;
+`PcbScreenLabelLayout` makes bounded view-space full-text placements with owner
+leaders. One cache is keyed by projection/face/view/obstacles/text/metrics/style.
+Reference/net/title/provider labels retain readable minima; no-slot labels retain
+their full original text and an actionable zoom hint, while offscreen owners use
+natural clipping. This changes display annotations, not static physical realization,
+electrical graph, conductor targets or saved geometry. Affine text/leader coordinates
+are handled explicitly. [Finite current proof](task-evidence/PCB/compactness-r1/README.md)
+contains the exact before/after dimensions, legacy3 SHA match, actual via witness,
+fit/wheel full-text checks and real private1/private2 file reconstruction/retests.

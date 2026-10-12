@@ -386,8 +386,10 @@ final class StandardPhysicalPartRenderProviders {
             Point cathode = reversed ? first : second;
             drawBody(graphics, context, geometry.getBodyBounds(), reversed ? second : first, cathode);
             graphics.setColor(WorkbenchVisualTheme.SILK);
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(9, context.scale(11))));
-            graphics.drawString("K", cathode.x - context.scale(4), cathode.y + context.scale(26));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(10, context.scale(11))));
+            int cathodeIndex=reversed?0:1;
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/"+cathodeIndex,
+                "K",cathode.x,cathode.y,cathode.x-context.scale(4),cathode.y+context.scale(26));
             context.markBodyDrawn();
         }
 
@@ -443,8 +445,10 @@ final class StandardPhysicalPartRenderProviders {
             drawLens(graphics, context, nameplate, geometry.getBodyBounds(),
                 reversed ? second : first, cathode, context.isIlluminated());
             graphics.setColor(WorkbenchVisualTheme.SILK);
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(9, context.scale(11))));
-            graphics.drawString("K", cathode.x - context.scale(4), cathode.y + context.scale(26));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(10, context.scale(11))));
+            int cathodeIndex=reversed?0:1;
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/"+cathodeIndex,
+                "K",cathode.x,cathode.y,cathode.x-context.scale(4),cathode.y+context.scale(26));
             context.markBodyDrawn();
         }
 
@@ -520,12 +524,15 @@ final class StandardPhysicalPartRenderProviders {
             drawInstalledLead(graphics, context, geometry, 2);
             drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
             graphics.setColor(WorkbenchVisualTheme.SILK);
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(9, context.scale(11))));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(10, context.scale(11))));
             WorkbenchVisualTheme.marking(graphics, "NPN", body, Math.max(9, context.scale(11)),
                 WorkbenchVisualTheme.SILK);
-            graphics.drawString("B", base.x - context.scale(5), base.y + context.scale(22));
-            graphics.drawString("C", collector.x - context.scale(5), collector.y + context.scale(22));
-            graphics.drawString("E", emitter.x - context.scale(5), emitter.y + context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/0","B",base.x,base.y,
+                base.x-context.scale(5),base.y+context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/1","C",collector.x,collector.y,
+                collector.x-context.scale(5),collector.y+context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/2","E",emitter.x,emitter.y,
+                emitter.x-context.scale(5),emitter.y+context.scale(22));
             context.markBodyDrawn();
         }
 
@@ -572,12 +579,15 @@ final class StandardPhysicalPartRenderProviders {
             drawInstalledLead(graphics, context, geometry, 2);
             drawTransistorBody(graphics, body, geometry.getTerminal(1).getLeadBodyPoint());
             graphics.setColor(WorkbenchVisualTheme.SILK);
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(9, context.scale(11))));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, Math.max(10, context.scale(11))));
             WorkbenchVisualTheme.marking(graphics, "NMOS", body, Math.max(9, context.scale(11)),
                 WorkbenchVisualTheme.SILK);
-            graphics.drawString("G", gate.x - context.scale(5), gate.y + context.scale(22));
-            graphics.drawString("D", drain.x - context.scale(5), drain.y + context.scale(22));
-            graphics.drawString("S", source.x - context.scale(5), source.y + context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/0","G",gate.x,gate.y,
+                gate.x-context.scale(5),gate.y+context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/1","D",drain.x,drain.y,
+                drain.x-context.scale(5),drain.y+context.scale(22));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/2","S",source.x,source.y,
+                source.x-context.scale(5),source.y+context.scale(22));
             context.markBodyDrawn();
         }
 
@@ -622,8 +632,11 @@ final class StandardPhysicalPartRenderProviders {
             drawInstalledLead(graphics, context, geometry, 1, leadWidth);
             drawElectrolyticBody(graphics, context, specification, body, plus, minus);
             graphics.setColor("#f7f5e8");
-            graphics.drawString("+", plus.x - context.scale(5), plus.y - context.scale(10));
-            graphics.drawString("-", minus.x - context.scale(4), minus.y - context.scale(10));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT,0,Math.max(10,context.scale(10))));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/0","+",plus.x,plus.y,
+                plus.x-context.scale(5),plus.y-context.scale(10));
+            graphics.drawProviderLabel(context.getComponentId()+"/provider/1","-",minus.x,minus.y,
+                minus.x-context.scale(4),minus.y-context.scale(10));
             context.markBodyDrawn();
         }
 
@@ -795,13 +808,14 @@ final class StandardPhysicalPartRenderProviders {
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
                 drawInstalledLead(graphics, context, geometry, terminal.getTerminalIndex());
             drawPackageBody(graphics, context, geometry.getBodyBounds());
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(8, context.scale(10))));
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(10, context.scale(10))));
             graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
                 Point point = terminal.getBoardPadPoint();
                 if (point != null)
-                    graphics.drawString(terminal.getTerminalId(), point.x + context.scale(9),
-                        point.y - context.scale(9));
+                    graphics.drawProviderLabel(context.getComponentId()+"/provider/"+
+                        terminal.getTerminalIndex(),terminal.getTerminalId(),point.x,point.y,
+                        point.x+context.scale(9),point.y-context.scale(9));
             }
             context.markBodyDrawn();
         }

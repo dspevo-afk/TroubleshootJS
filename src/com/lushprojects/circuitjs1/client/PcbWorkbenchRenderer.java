@@ -21,6 +21,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     private Rectangle trayArea = new Rectangle(0, 0, 1, 1);
     private boolean workbenchViewInitialized;
     private boolean ambiguousTarget;
+    private String screenLabelCacheKey;
+    private PcbScreenLabelLayout.Result screenLabelCacheResult;
 
     PcbBoardSide getViewingFace() { return viewingFace; }
     void setViewingFace(PcbBoardSide face) {
@@ -157,9 +159,25 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         for (PcbPadPlacement pad : layout.getPads())
             drawPad(graphics, pad);
         for (PcbBoardHole hole : layout.getHoles()) drawHole(graphics,hole);
-        for (PcbComponentPlacement component : layout.getComponents())
-            drawComponent(graphics, component);
-        drawSilkscreenLabels(graphics);
+        final Vector<Graphics.MeasuredText> deferredProviderText =
+            new Vector<Graphics.MeasuredText>();
+        Graphics.ProviderTextCollector previousCollector = graphics.swapProviderTextCollector(
+            new Graphics.ProviderTextCollector() {
+                public void capture(Graphics.MeasuredText text) { deferredProviderText.add(text); }
+            });
+        Vector<Rectangle> labelObstacles = new Vector<Rectangle>();
+        try {
+            for (PcbComponentPlacement component : layout.getComponents()) {
+                PhysicalPartRenderGeometry geometry = drawComponent(graphics, component);
+                if (geometry != null && component.getMountingSide() == viewingFace) {
+                    labelObstacles.add(geometry.getBodyBounds());
+                    labelObstacles.addAll(geometry.getLeadBounds());
+                }
+            }
+        } finally {
+            graphics.swapProviderTextCollector(previousCollector);
+        }
+        drawRequiredLabels(graphics, deferredProviderText, labelObstacles);
     }
 
     private void drawHole(Graphics graphics, PcbBoardHole hole) {
@@ -196,15 +214,15 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         }
     }
 
-    private void drawComponent(Graphics graphics, PcbComponentPlacement placement) {
+    private PhysicalPartRenderGeometry drawComponent(Graphics graphics, PcbComponentPlacement placement) {
         BoardComponent component = instance.getBoard().getComponent(placement.getComponentId());
         if (component == null)
-            return;
+            return null;
         PhysicalPart<?> part = instance.getPhysicalBoardRuntime().getInstalledPart(
             placement.getComponentId());
         PhysicalPartRenderContext context = new PhysicalPartRenderContext(this, placement, part,
             component.getPhysicalPackage(), 0, false);
-        drawComponent(graphics, placement, component, part, context,
+        return drawComponent(graphics, placement, component, part, context,
             placement.getComponentId().equals(selectedComponentId));
     }
 
@@ -246,17 +264,104 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         } finally { graphics.context.restore(); }
     }
 
-    private void drawSilkscreenLabels(Graphics graphics) {
-        if (viewingFace != PcbBoardSide.TOP) return; // Current labels declare the top face only.
-        for (PcbSilkscreenLabel label : layout.getSilkscreenLabels()) {
-            graphics.setFont(new Font(WorkbenchVisualTheme.FONT, label.isBold() ? Font.BOLD : 0,
-                Math.max(10, scaleInt(label.getFontSize()))));
-            graphics.setColor(label.getId().startsWith("net:") ?
-                WorkbenchVisualTheme.SILK : WorkbenchVisualTheme.SILK_SECONDARY);
-            String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
-            Rectangle bounds = screenRectForProvider(label.getBounds());
-            graphics.drawString(text, bounds.x, screenY(label.getBaselineY()));
+    private void drawRequiredLabels(Graphics graphics,
+            Vector<Graphics.MeasuredText> deferredProviderText,
+            Vector<Rectangle> renderedObstacles) {
+        Vector<PcbScreenLabelLayout.Label> labels =
+            new Vector<PcbScreenLabelLayout.Label>();
+        for (Graphics.MeasuredText text : deferredProviderText)
+            labels.add(new PcbScreenLabelLayout.Label(text,
+                PcbScreenLabelLayout.Kind.PROVIDER));
+        if (viewingFace == PcbBoardSide.TOP) {
+            for (PcbSilkscreenLabel label : layout.getSilkscreenLabels()) {
+                graphics.setFont(new Font(WorkbenchVisualTheme.FONT,
+                    label.isBold() ? Font.BOLD : 0,
+                    Math.max(10, scaleInt(label.getFontSize()))));
+                graphics.setColor(label.getId().startsWith("net:") ?
+                    WorkbenchVisualTheme.SILK : WorkbenchVisualTheme.SILK_SECONDARY);
+                String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
+                int x=screenX(label.getBaselineX()), y=screenY(label.getBaselineY());
+                Point owner=label.getTargetPadId()==null ? null : getPadPoint(label.getTargetPadId());
+                if(owner==null&&label.getId().startsWith("component:")) {
+                    PcbComponentPlacement ownerComponent=layout.getComponent(
+                        label.getId().substring("component:".length()));
+                    if(ownerComponent!=null) {
+                        Rectangle body=screenRectForProvider(ownerComponent.getPhysicalGeometry()
+                            .placedAt(ownerComponent.getPose()).getBodyBounds());
+                        owner=new Point(body.x+body.width/2,body.y+body.height/2);
+                    }
+                }
+                if(owner==null) owner=new Point(x,y);
+                Graphics.MeasuredText measured=graphics.measureText(label.getId(),text,
+                    owner.x,owner.y,x,y);
+                PcbScreenLabelLayout.Kind kind=label.getId().startsWith("net:") ?
+                    PcbScreenLabelLayout.Kind.NET :
+                    (label.getId().equals("board-title") || label.getId().startsWith("title:") ?
+                        PcbScreenLabelLayout.Kind.TITLE : PcbScreenLabelLayout.Kind.REFERENCE);
+                labels.add(new PcbScreenLabelLayout.Label(measured,kind));
+            }
         }
+        if(labels.size()==0)return;
+        Vector<Rectangle> obstacles=new Vector<Rectangle>(renderedObstacles);
+        for(PcbPadPlacement pad:layout.getPads())
+            obstacles.add(screenRectForProvider(pad.getPadBounds()));
+        Graphics.MeasuredText frame=labels.elementAt(0).text;
+        for(int i=0;i<obstacles.size();i++)
+            obstacles.set(i,frame.transformRect(obstacles.elementAt(i)));
+        Rectangle board=frame.transformRect(screenRectForProvider(layout.getBoardOutline()));
+        Rectangle view=frame.transformRect(viewport.getArea());
+        String key=screenLabelKey(labels,obstacles,board,view);
+        if(!key.equals(screenLabelCacheKey)) {
+            screenLabelCacheResult=PcbScreenLabelLayout.place(labels,obstacles,board,view);
+            screenLabelCacheKey=key;
+        }
+        PcbScreenLabelLayout.Result result=screenLabelCacheResult;
+        if(result==null)return;
+        graphics.setLineWidth(1);
+        graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
+        for(PcbScreenLabelLayout.Placement p:result.placements) {
+            if(p.leaderFrom==null||p.leaderTo==null)continue;
+            Point from=p.label.userPoint(p.leaderFrom.x,p.leaderFrom.y);
+            Point to=p.label.userPoint(p.leaderTo.x,p.leaderTo.y);
+            if(from!=null&&to!=null)graphics.drawLine(from.x,from.y,to.x,to.y);
+        }
+        for(PcbScreenLabelLayout.Placement p:result.placements)
+            graphics.drawMeasuredText(p.label.text,p.userX,p.userY);
+        if(!result.allPlaced()) {
+            graphics.setColor("#c02020");
+            graphics.setFont(new Font(WorkbenchVisualTheme.FONT,Font.BOLD,10));
+            Rectangle hintArea=viewport.getArea();
+            graphics.drawString("Some labels overlap in this view. Zoom in to separate them.",
+                hintArea.x+4,hintArea.y+14);
+        }
+    }
+
+    private String screenLabelKey(Vector<PcbScreenLabelLayout.Label> labels,
+            Vector<Rectangle> obstacles,Rectangle board,Rectangle view) {
+        StringBuilder key=new StringBuilder();
+        key.append(projection.scale).append('|').append(projection.x).append('|')
+            .append(projection.y).append('|').append(projection.flipped).append('|')
+            .append(viewingFace).append('|');
+        appendRectKey(key,board);appendRectKey(key,view);
+        for(Rectangle r:obstacles)appendRectKey(key,r);
+        for(PcbScreenLabelLayout.Label l:labels) {
+            Graphics.MeasuredText t=l.text;
+            key.append(l.kind).append('|').append(t.id).append('|').append(t.text)
+                .append('|').append(t.font).append('|').append(t.fillStyle).append('|')
+                .append(t.fontSize).append('|').append(t.ownerX).append(',').append(t.ownerY)
+                .append('|').append(t.originalX).append(',').append(t.originalY)
+                .append('|').append(t.width).append(',').append(t.left).append(',')
+                .append(t.right).append(',').append(t.ascent).append(',').append(t.descent)
+                .append('|').append(t.metricKind).append('|').append(t.textAlign).append('|')
+                .append(t.textBaseline).append('|').append(t.alpha)
+                .append('|').append(t.a).append(',').append(t.b).append(',').append(t.c)
+                .append(',').append(t.d).append(',').append(t.e).append(',').append(t.f).append(';');
+        }
+        return key.toString();
+    }
+    private static void appendRectKey(StringBuilder key,Rectangle r) {
+        key.append(r.x).append(',').append(r.y).append(',').append(r.width).append(',')
+            .append(r.height).append(';');
     }
 
     void enableTrayDrawer() {

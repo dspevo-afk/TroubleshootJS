@@ -4,13 +4,21 @@ import java.util.Vector;
 
 /** RB56 drawing-space placement intent; no manufacturing or equipment safety rating. */
 final class Rb56Placement {
+    static final int LEGACY_VERSION = 1, CURRENT_VERSION = 2;
     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
     static final int BARRIER_DRAWING_UNITS = 80;
     private Rb56Placement() { }
 
     /** One demand per declared package; the plan remains the only package inventory. */
     static PcbPlacementConstraints create(Rb56Plan plan) {
+        return create(plan, plan == null ? LEGACY_VERSION : plan.placementInterpretationVersion);
+    }
+    static PcbPlacementConstraints create(Rb56Plan plan, int placementVersion) {
+        if (placementVersion != LEGACY_VERSION && placementVersion != CURRENT_VERSION)
+            throw new IllegalArgumentException("Unknown RB56 placement interpretation");
         if (plan == null) throw new IllegalArgumentException("Missing RB56 placement plan");
+        if (plan.placementInterpretationVersion != placementVersion)
+            throw new IllegalArgumentException("RB56 placement differs from its plan interpretation");
         Vector<PcbPlacementConstraints.Part> demands = new Vector<PcbPlacementConstraints.Part>();
         for (Rb56Plan.Part part : plan.parts()) {
             String[] terminals = part.terminalIds(), nets = part.netIds();
@@ -43,7 +51,7 @@ final class Rb56Placement {
         barriers.add(new PcbPlacementConstraints.Barrier(PRIMARY, SECONDARY, BARRIER_DRAWING_UNITS));
         // This is the existing structural routing algorithm, not Q30 normal eligibility.
         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
-            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION);
+            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, placementVersion);
     }
 
     static String domain(String net) {

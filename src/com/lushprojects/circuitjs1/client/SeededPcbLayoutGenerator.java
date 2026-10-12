@@ -262,6 +262,8 @@ class SeededPcbLayoutGenerator {
             session.mediumRankedAttempts.add(Integer.valueOf(candidate.attempt));
             session.mediumPlacementScores.add(candidate.toCanonical());
         }
+        if (session.board.getPlacementConstraints().placementDensityVersion == 2)
+            session.mediumPlacements = prioritizeLegacyPlacementRouteCandidate(session.mediumPlacements);
         if (session.mediumPlacements.isEmpty())
             return finishMediumFailure(session);
         session.mediumRouteStage = 1;
@@ -391,6 +393,39 @@ class SeededPcbLayoutGenerator {
         return 0;
     }
 
+    /** Keep one best-ranked legacy-algorithm fallback inside the existing private v2 route budget. */
+    private static Vector<MediumBoardPhysicalPolicy.PlacementCandidate> prioritizeLegacyPlacementRouteCandidate(
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked) {
+        int routeLimit = Math.min(MediumBoardPhysicalPolicy.ROUTING_CANDIDATES, ranked.size());
+        int roomyAttempt = PcbPlacementPlanner.OUTLINE_CANDIDATES - 2;
+        MediumBoardPhysicalPolicy.PlacementCandidate bestRoomy = null;
+        for (MediumBoardPhysicalPolicy.PlacementCandidate candidate : ranked)
+            if (candidate.attempt >= roomyAttempt) { bestRoomy = candidate; break; }
+        if (routeLimit < 2 || bestRoomy == null) return ranked;
+
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> selected =
+            new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>();
+        for (MediumBoardPhysicalPolicy.PlacementCandidate candidate : ranked) {
+            if (candidate.attempt < roomyAttempt && selected.size() < routeLimit - 1)
+                selected.add(candidate);
+        }
+        if (selected.isEmpty()) return ranked;
+        selected.add(bestRoomy);
+
+        // Preserve the sorted tail and full metrics; only the bounded route prefix changes.
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result =
+            new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(ranked.size());
+        for (MediumBoardPhysicalPolicy.PlacementCandidate candidate : selected)
+            result.add(candidate);
+        for (MediumBoardPhysicalPolicy.PlacementCandidate candidate : ranked) {
+            boolean alreadySelected = false;
+            for (MediumBoardPhysicalPolicy.PlacementCandidate chosen : selected)
+                if (chosen.attempt == candidate.attempt) { alreadySelected = true; break; }
+            if (!alreadySelected) result.add(candidate);
+        }
+        return result;
+    }
+
     private static String routeFailure(boolean twoLayer,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate, String detail) {
         return (twoLayer ? MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER :
@@ -412,11 +447,12 @@ class SeededPcbLayoutGenerator {
         double score = layout.getRouteQualityScore(session.board);
         Rectangle bounds = layout.getBoardOutline();
         long area = (long) bounds.width * bounds.height;
+        boolean preferCompact = session.board.getPlacementConstraints().placementDensityVersion == 2;
         if (twoLayer) {
             if (mediumRouteCandidateBetter(score, area, candidate,
                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,
                     session.mediumTwoLayerArea, session.mediumTwoLayerPlacementAttempt,
-                    session.mediumTwoLayerPlacementScore)) {
+                    session.mediumTwoLayerPlacementScore, preferCompact)) {
                 session.mediumTwoLayerLayout = layout;
                 session.mediumTwoLayerQuality = score;
                 session.mediumTwoLayerArea = area;
@@ -426,7 +462,7 @@ class SeededPcbLayoutGenerator {
         } else if (mediumRouteCandidateBetter(score, area, candidate,
                 session.mediumOneFaceLayout, session.mediumOneFaceQuality,
                 session.mediumOneFaceArea, session.mediumOneFacePlacementAttempt,
-                session.mediumOneFacePlacementScore)) {
+                session.mediumOneFacePlacementScore, preferCompact)) {
             session.mediumOneFaceLayout = layout;
             session.mediumOneFaceQuality = score;
             session.mediumOneFaceArea = area;
@@ -438,8 +474,11 @@ class SeededPcbLayoutGenerator {
     private static boolean mediumRouteCandidateBetter(double quality, long area,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate,
             PcbBoardLayout current, double currentQuality, long currentArea,
-            int currentAttempt, long currentPlacementScore) {
+            int currentAttempt, long currentPlacementScore, boolean preferCompact) {
         if (current == null) return true;
+        // Every candidate already passed the physical and route-quality guards.
+        // New compact boards prioritize occupied outline area among those legal choices.
+        if (preferCompact && area != currentArea) return area < currentArea;
         if (quality < currentQuality) return true;
         if (quality > currentQuality) return false;
         if (area < currentArea) return true;
@@ -464,6 +503,10 @@ class SeededPcbLayoutGenerator {
             (session.mediumTwoLayerLayout != null &&
                 MediumBoardPhysicalPolicy.materiallyBetterTwoLayer(
                     session.mediumTwoLayerQuality, session.mediumOneFaceQuality));
+        if (session.board.getPlacementConstraints().placementDensityVersion == 2 &&
+                session.mediumOneFaceLayout != null && session.mediumTwoLayerLayout != null &&
+                session.mediumOneFaceArea != session.mediumTwoLayerArea)
+            chooseTwoLayer = session.mediumTwoLayerArea < session.mediumOneFaceArea;
         if (chooseTwoLayer) {
             session.bestLayout = session.mediumTwoLayerLayout;
             session.bestArea = session.mediumTwoLayerArea;
@@ -532,7 +575,8 @@ class SeededPcbLayoutGenerator {
             throw new CandidateRejected(PcbRoutingRejectedException.Kind.ROUTING,
                 "P07_FULLER_TWO_LAYER:" + result.outcome);
         return finishRoutedPlan(board, (int) ((seed % 4 + 4) % 4), candidate.plan,
-            result.layout, null, false);
+            result.layout, null,
+            board.getPlacementConstraints().placementDensityVersion == 2);
     }
 
     private PcbBoardLayout generateAttempt(TroubleshootBoard board, long seed,

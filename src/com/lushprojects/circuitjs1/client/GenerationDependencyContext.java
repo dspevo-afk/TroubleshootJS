@@ -260,6 +260,8 @@ final class GenerationDependencyContext {
         PcbPlacementConstraints placementConstraints = board.getPlacementConstraints();
         frame(out,"single-copper-layer"); frame(out,placementConstraints.routingLayer.name());
         appendField(out, "physical.policy", placementConstraints.getPhysicalPolicyIdentity());
+        if (placementConstraints.placementDensityVersion != 1)
+            appendField(out, "placement.density", Integer.toString(placementConstraints.placementDensityVersion));
         if (MediumBoardPhysicalPolicy.selected(placementConstraints))
             appendField(out, "physical.policy.contract", MediumBoardPhysicalPolicy.canonical());
         for(PcbPlacementConstraints.Part demand:placementConstraints.getParts()) {

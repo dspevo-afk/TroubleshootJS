@@ -37,7 +37,8 @@ final class PlayerSessionState {
             throw invalid("Private session capture requires debug and developer-verifier scope");
         PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
         GeneratedBoardInstance owner = requireCurrent(sim);
-        if (!identity.matches(request) || identity.seed() != owner.getSeed() ||
+        if (!identity.matches(request) || !identity.matches(owner) ||
+                identity.seed() != owner.getSeed() ||
                 !identity.familyId().equals(owner.getCircuitFamilyId()))
             throw invalid("Private session replay does not identify the current admitted board");
         GeneratedPhysicalAdmission admission = owner.getPhysicalAdmission();

@@ -17,6 +17,14 @@ public final class Rb56SessionBackingContractTest {
             CirSim sim = new CirSim(); sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
             CircuitElm.sim = sim; CirSim.theSim = sim;
             fixture = Rb56PhysicalOwnerConstruction.build(Rb56Plan.reference(77), new UnqualifiedBehavior());
+            PlayerSessionReplay legacyReplay = PlayerSessionReplay.parse("tsj-private-session/1/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/77");
+            PlayerSessionReplay compactReplay = PlayerSessionReplay.parse("tsj-private-session/2/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/77");
+            check(legacyReplay.matches(fixture.owner),
+                "legacy replay identity accepts its actual placement-1 owner");
+            check(!compactReplay.matches(fixture.owner),
+                "compact replay identity rejects a same-family, same-seed placement-1 owner");
             check(fixture.owner.isDeveloperOnlyFaultRoute(), "fixture remains explicitly developer owned");
             for (String id : new String[] {"CBULK", "COUT", "CBIAS", "CFB", "CIN", "C5", "L1", "DZ1", "UFB", "F1", "UAC"}) {
                 PhysicalPart<?> part = fixture.runtime.getInstalledPart(id);

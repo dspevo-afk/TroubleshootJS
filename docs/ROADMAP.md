@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Q60 ACCEPTED in finite reference-PC scope; U05 HARD calibration next**
+**Current task:** **Compact private PCB layouts/labels qualified; human U05 observations next**
+Dave's 2026-10-12 pre-play priority is implemented and qualified over published
+`7d733a10bb203a1cda7b8f55409cb9b1b6e11cd2`. Fixed40/44/60 board area falls14.58%/16.51%/11.59%;
+full labels pass actual fit/wheel checks. Native184(11 suites), actual GWT46(all5),
+headed195(three cold boards) and198(real private1/2 files/repair/retest) pass.
+Existing saved physical layouts retain legacy1; fresh private requests use2.
+This finite scope preserves parts, access, copper/routing rules and all budgets;
+some gaps remain/increase. Human findings NOT RUN/public HARD+RB56 release HELD.
+Next is the existing qualitative trial and U05 calibration, then the finite REL-B
+normal population/release campaign. No unchanged Q30 corpus rerun or Q100 work.
+See [compact-board evidence](task-evidence/PCB/compactness-r1/README.md) and
+[current checkpoint](CODEX_TASK_REPORT.md). Oct11 direct all-clear persists;
+the forwarded Oct9 reply was already superseded. Modest-host alone owner-deferred.
+
+**Previous task:** **Q60 ACCEPTED in finite reference-PC scope; U05 HARD calibration next**
 Dave explicitly deferred the unavailable modest-host test on 2026-10-11; it is
 DEFERRED BY OWNER / NOT RUN, with no weaker-hardware proof. Existing U07
 5 s input-action/200 MiB heap/32 MiB matched-growth budgets pass against the sealed
