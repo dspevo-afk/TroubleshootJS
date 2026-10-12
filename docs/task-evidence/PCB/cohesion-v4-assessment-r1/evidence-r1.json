@@ -1,0 +1,911 @@
+{
+  "schema": 1,
+  "status": "REJECTED_AREA_FIRST_V4_VISUAL_ACCEPTANCE",
+  "createdUtc": "2026-10-12T21:48:18.340777+00:00",
+  "productionBase": "3c77758a89f204317c8c53d7fcddff2a8b90775c",
+  "candidateBuild": "11522DDFA25E5E8CE1E0025F3D6C9DF2",
+  "candidateFreezeSha256": "2d1d669a5a92dd4f92f4c193d9683fca93a6e5c538304281dec1421f48591092",
+  "candidateSourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "f915cf02f81abb8506c6828417d64b71155ac06a2f5c0c083aa3df1b0f5bf67f",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "f3eb71ca857ef556718309d25546022665df434e6ba3071de4515f85d3979c8f",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "56513e9e54ed19db10e3b5bfc8233675d6fcc25685304a3518c3a821e20d8ef2",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "ed81c0b19eed6bdf6d22d8f15a4582f068a7fa808f6117988d6b68e35a603bf5",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "576ef6c55ab39a2bb10fd47bab73b08c8d0186fd746f9f6490ac675fb14c7999",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "36dcc517adf76fcc0a13116825a59982317819c52687483c801b2d6ba06c1a1c",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "f608ab07665becbe54fad8633291c821ea163e7b620a75fd08a24374a1c7f5db",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "d90ffa1b21bde3e2e1de5cbcc11c4bf4617fac43947d3f279ea988da0b96f620",
+    "tests/contracts/U06SessionSaveContractTest.java": "51b4b1c267c570a5a95ea20675f3698cd2daaa1bfda02b972d74d881ac5e5300",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "667080e7124d12a97899aaa287330f01033bfe02606f7c4b59175222ee7cba58"
+  },
+  "gates": [
+    {
+      "phase": "native-r196",
+      "status": "PASS",
+      "operationSeconds": 134.774,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "9669871646bec667d91b37c8311364f7f280ab0672f770ca8715de917e5b80dc"
+    },
+    {
+      "phase": "build-r52",
+      "status": "PASS",
+      "operationSeconds": 108.9,
+      "hostDeadlineMs": 1100000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "bfec409cfe4fe2ca008ccd019c432fb13218d538fcdd99242682922bad4e5a1c"
+    },
+    {
+      "phase": "compiled-r211",
+      "status": "PASS",
+      "operationSeconds": 181.361,
+      "hostDeadlineMs": 360000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "98a94ea72371cbe01b2c7b70c719ff7374e1e5e5997255b38f09bb2f6a668b5a"
+    },
+    {
+      "phase": "compiled-r212",
+      "status": "FAIL",
+      "operationSeconds": 156.541,
+      "hostDeadlineMs": 300000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "596860d0fc3bc1e165fa1fafd833656c7576eb121a92b0bf19c51f4cde4bc434"
+    }
+  ],
+  "views": {
+    "outcome": "PASS",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after60",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1022&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after60"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 87.10567109996919,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 2,
+          "name": "after40",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1017&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "002-after40"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 39.48029249999672,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 3,
+          "name": "after44",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "003-after44"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 49.76132170006167,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "errors": [],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "c545c5fca61322a02b990097433b32fce9f95c7301e81acc34c3be9b00d4bc81",
+      "afterSha256": "c545c5fca61322a02b990097433b32fce9f95c7301e81acc34c3be9b00d4bc81",
+      "sourceSha256Before": "96fd0f10fe255c0b41f869fcf483853c098205f070b1a1c471a86f55d2d8c82f",
+      "sourceSha256After": "96fd0f10fe255c0b41f869fcf483853c098205f070b1a1c471a86f55d2d8c82f",
+      "webSha256Before": "de91a2caf5e9840f8a97e4ec29f988cfc8f67297ac8417fa5531048daff6305a",
+      "webSha256After": "de91a2caf5e9840f8a97e4ec29f988cfc8f67297ac8417fa5531048daff6305a",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.47018539998680353
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.2332138998899609,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "coldReports": [
+      {
+        "path": "001-after60.report.json",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "HOLD",
+          "phase": "HOLD",
+          "packages": 60,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 624,
+          "generationMillis": 81937,
+          "maxManualUnitMillis": 1299,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "d39499d9c71878add44627460984cea5759df6183d3901c8b38c1158580a0e9c",
+          "diagnosticContextDigest": "a225f9b574c5cf1bee397d3cbf05cc487305e9efa95ee186a0299f6a6b2011c4",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": false
+        },
+        "sha256": "f176d7bb12718ec466e32b126afd6331e15b7bf48c8546b44d1b61fb4547c60e"
+      },
+      {
+        "path": "002-after40.report.json",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1017",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "HOLD",
+          "phase": "HOLD",
+          "packages": 40,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 514,
+          "generationMillis": 35525,
+          "maxManualUnitMillis": 1401,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "1e85b58fe6ba9034fa2b2c78382cb78f5b7a7552c8bb4fbdf3c8c4c346bb0d7b",
+          "diagnosticContextDigest": "fec4c3faae55c48d3380e1405882fb2d6db65463d861f2e159776741fcc7e5be",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": false
+        },
+        "sha256": "4b7af0f586562c0c8e79d3b851e65d3b040326ff5dc17a47c9e70393c84a4f78"
+      },
+      {
+        "path": "003-after44.report.json",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "HOLD",
+          "phase": "HOLD",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 521,
+          "generationMillis": 45922,
+          "maxManualUnitMillis": 1573,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "fb59d1da96c978e27f8dae50da4a0c6acc0561f4748dc9b5f7024b00c05a0986",
+          "diagnosticContextDigest": "4104b6119c238c42d83eca3ced439a934fc41c2dc639aadc47c6823b1da62dc7",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": false
+        },
+        "sha256": "f14caf533f19619942a719d07886446705b3a18d92497103b104f7ef9d5068f2"
+      }
+    ],
+    "receiptSha256": "161cabf2ddf41c25a2ee01c2b4cba8d8ddff4f0ac8fc0685e1309bd5a83bdad0"
+  },
+  "secondaryViews": {
+    "outcome": "FAIL",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after53",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=17&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after53"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 62.42531309998594,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "errors": [
+      {
+        "phase": "operation",
+        "message": "Actual cold board must qualify before view capture"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "c545c5fca61322a02b990097433b32fce9f95c7301e81acc34c3be9b00d4bc81",
+      "afterSha256": "c545c5fca61322a02b990097433b32fce9f95c7301e81acc34c3be9b00d4bc81",
+      "sourceSha256Before": "96fd0f10fe255c0b41f869fcf483853c098205f070b1a1c471a86f55d2d8c82f",
+      "sourceSha256After": "96fd0f10fe255c0b41f869fcf483853c098205f070b1a1c471a86f55d2d8c82f",
+      "webSha256Before": "de91a2caf5e9840f8a97e4ec29f988cfc8f67297ac8417fa5531048daff6305a",
+      "webSha256After": "de91a2caf5e9840f8a97e4ec29f988cfc8f67297ac8417fa5531048daff6305a",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.46013400005176663
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.0768674000864848,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "coldReports": [
+      {
+        "path": "001-after53.report.json",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "17",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "HOLD",
+          "phase": "HOLD",
+          "packages": 53,
+          "hypotheses": 5,
+          "solverSamples": 60,
+          "generationStages": 6,
+          "generationWork": 598,
+          "generationMillis": 58032,
+          "maxManualUnitMillis": 1425,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "2710d1533af754cca3a5d189984eb69f12a384227d7e9be20242fd89cac5f950",
+          "diagnosticContextDigest": "e2e1ec6185b5eb2af3d64f70c2bef82bfb876dc0fc486d90514efde408213ec7",
+          "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": false
+        },
+        "sha256": "67a1ad61173b0cfff2264a6941efcb6001d7adbbed37828ffd0b4dfb20d3f882"
+      },
+      {
+        "path": "002-after54.report.json",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "42",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 616,
+          "jobMillis": 90131,
+          "manualUnitMaxMillis": 1787,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 30052,
+            "PHYSICAL": 145,
+            "HYPOTHESES": 56871,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 119,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 495,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 5,
+              "millis": 1064,
+              "maxMillis": 228
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 65,
+              "millis": 11269,
+              "maxMillis": 313
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 45,
+              "millis": 8021,
+              "maxMillis": 1466
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 5,
+              "millis": 451,
+              "maxMillis": 109
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 5,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 60,
+              "millis": 781,
+              "maxMillis": 15
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 5,
+              "millis": 276,
+              "maxMillis": 63
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 5,
+              "millis": 445,
+              "maxMillis": 104
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 150,
+              "millis": 10708,
+              "maxMillis": 214
+            },
+            "REMOVE_SETTLE": {
+              "units": 5,
+              "millis": 891,
+              "maxMillis": 187
+            },
+            "REPLACE_SETTLE": {
+              "units": 5,
+              "millis": 904,
+              "maxMillis": 185
+            },
+            "POWER_ON_SETTLE": {
+              "units": 5,
+              "millis": 428,
+              "maxMillis": 89
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 65,
+              "millis": 11580,
+              "maxMillis": 453
+            },
+            "CUSTOMER_RETEST": {
+              "units": 62,
+              "millis": 9942,
+              "maxMillis": 429
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 4,
+              "millis": 57,
+              "maxMillis": 16
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 4,
+              "millis": 161,
+              "maxMillis": 44
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 90269,
+          "failure": "Deadline: Generation wall budget exhausted"
+        },
+        "sha256": "1e4e9d9e1fa2887d04ed9325b43d1870fdc7309db65a313f306b36607b6553af"
+      }
+    ],
+    "receiptSha256": "a9628fb77c943236682bf2348180d332e7a3f034e69da172f6358ce31452c3dd"
+  },
+  "comparison": [
+    {
+      "seed": "-1017",
+      "parts": 40,
+      "before": {
+        "seed": "-1017",
+        "version": 3,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 3702,
+        "height": 1414,
+        "area": 5234628,
+        "courtyardArea": 749848,
+        "regionBoundingAreaSum": 4739211,
+        "sameRegionCenterManhattanMean": 707.6984126984127,
+        "twoPadNetSpanSum": 3060,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 27120,
+        "traceSegments": 167,
+        "vias": 29,
+        "selectedAttempt": 2,
+        "routingExpansions": 2959072,
+        "geometrySha256": "3cf61944fa5f2002304a32b9061b71691c3e20f1942d7cb1e65a698f221938ef"
+      },
+      "after": {
+        "seed": "-1017",
+        "version": 4,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 4262,
+        "height": 1189,
+        "area": 5067518,
+        "courtyardArea": 759448,
+        "regionBoundingAreaSum": 3531163,
+        "sameRegionCenterManhattanMean": 691.468253968254,
+        "twoPadNetSpanSum": 3410,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 25340,
+        "traceSegments": 175,
+        "vias": 33,
+        "selectedAttempt": 3,
+        "routingExpansions": 2905079,
+        "geometrySha256": "c922355e1f7687e970d25f3a9c58a893e9ab757cdfcbdba4cc33592efb1c0a0c"
+      },
+      "changePercent": {
+        "area": -3.19239,
+        "regionBoundingAreaSum": -25.49049,
+        "sameRegionCenterManhattanMean": -2.29337,
+        "twoPadNetSpanSum": 11.43791,
+        "copperManhattanLength": -6.56342,
+        "routingExpansions": -1.82466
+      }
+    },
+    {
+      "seed": "-1004",
+      "parts": 44,
+      "before": {
+        "seed": "-1004",
+        "version": 3,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3791,
+        "height": 1719,
+        "area": 6516729,
+        "courtyardArea": 803104,
+        "regionBoundingAreaSum": 4385251,
+        "sameRegionCenterManhattanMean": 674.8991935483871,
+        "twoPadNetSpanSum": 3510,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30820,
+        "traceSegments": 196,
+        "vias": 38,
+        "selectedAttempt": 1,
+        "routingExpansions": 3445480,
+        "geometrySha256": "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1"
+      },
+      "after": {
+        "seed": "-1004",
+        "version": 4,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3791,
+        "height": 1719,
+        "area": 6516729,
+        "courtyardArea": 803104,
+        "regionBoundingAreaSum": 4385251,
+        "sameRegionCenterManhattanMean": 674.8991935483871,
+        "twoPadNetSpanSum": 3510,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30820,
+        "traceSegments": 196,
+        "vias": 38,
+        "selectedAttempt": 1,
+        "routingExpansions": 3550296,
+        "geometrySha256": "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1"
+      },
+      "changePercent": {
+        "area": 0.0,
+        "regionBoundingAreaSum": 0.0,
+        "sameRegionCenterManhattanMean": 0.0,
+        "twoPadNetSpanSum": 0.0,
+        "copperManhattanLength": 0.0,
+        "routingExpansions": 3.04213
+      }
+    },
+    {
+      "seed": "-1022",
+      "parts": 60,
+      "before": {
+        "seed": "-1022",
+        "version": 3,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 5341,
+        "height": 1869,
+        "area": 9982329,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 8803692,
+        "sameRegionCenterManhattanMean": 950.0,
+        "twoPadNetSpanSum": 3510,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42910,
+        "traceSegments": 274,
+        "vias": 46,
+        "selectedAttempt": 4,
+        "routingExpansions": 5386938,
+        "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+      },
+      "after": {
+        "seed": "-1022",
+        "version": 4,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 5341,
+        "height": 1869,
+        "area": 9982329,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 8803692,
+        "sameRegionCenterManhattanMean": 950.0,
+        "twoPadNetSpanSum": 3510,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42910,
+        "traceSegments": 274,
+        "vias": 46,
+        "selectedAttempt": 4,
+        "routingExpansions": 5351891,
+        "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+      },
+      "changePercent": {
+        "area": 0.0,
+        "regionBoundingAreaSum": 0.0,
+        "sameRegionCenterManhattanMean": 0.0,
+        "twoPadNetSpanSum": 0.0,
+        "copperManhattanLength": 0.0,
+        "routingExpansions": -0.65059
+      }
+    },
+    {
+      "seed": "0",
+      "parts": 42,
+      "before": {
+        "seed": "0",
+        "version": 3,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 4341,
+        "height": 1445,
+        "area": 6272745,
+        "courtyardArea": 772384,
+        "regionBoundingAreaSum": 3614684,
+        "sameRegionCenterManhattanMean": 720.5038759689922,
+        "twoPadNetSpanSum": 2430,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28120,
+        "traceSegments": 173,
+        "vias": 31,
+        "selectedAttempt": 0,
+        "routingExpansions": 2616538,
+        "geometrySha256": "cc397a2f30ca51618bf1dd966bd074ebc34f9025b662d08cd7264b53b13f1bf5"
+      },
+      "after": {
+        "seed": "0",
+        "version": 4,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 4341,
+        "height": 1445,
+        "area": 6272745,
+        "courtyardArea": 772384,
+        "regionBoundingAreaSum": 3614684,
+        "sameRegionCenterManhattanMean": 720.5038759689922,
+        "twoPadNetSpanSum": 2430,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28120,
+        "traceSegments": 173,
+        "vias": 31,
+        "selectedAttempt": 0,
+        "routingExpansions": 3515207,
+        "geometrySha256": "cc397a2f30ca51618bf1dd966bd074ebc34f9025b662d08cd7264b53b13f1bf5"
+      },
+      "changePercent": {
+        "area": 0.0,
+        "regionBoundingAreaSum": 0.0,
+        "sameRegionCenterManhattanMean": 0.0,
+        "twoPadNetSpanSum": 0.0,
+        "copperManhattanLength": 0.0,
+        "routingExpansions": 34.34573
+      }
+    },
+    {
+      "seed": "17",
+      "parts": 53,
+      "before": {
+        "seed": "17",
+        "version": 3,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 3812,
+        "height": 2024,
+        "area": 7715488,
+        "courtyardArea": 993848,
+        "regionBoundingAreaSum": 9229023,
+        "sameRegionCenterManhattanMean": 906.0096153846154,
+        "twoPadNetSpanSum": 4210,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 41760,
+        "traceSegments": 259,
+        "vias": 48,
+        "selectedAttempt": 3,
+        "routingExpansions": 5047395,
+        "geometrySha256": "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8"
+      },
+      "after": {
+        "seed": "17",
+        "version": 4,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "courtyardArea": 998648,
+        "regionBoundingAreaSum": 10470110,
+        "sameRegionCenterManhattanMean": 932.3237179487179,
+        "twoPadNetSpanSum": 4930,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 44900,
+        "traceSegments": 249,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 4514758,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+      },
+      "changePercent": {
+        "area": -0.09366,
+        "regionBoundingAreaSum": 13.44765,
+        "sameRegionCenterManhattanMean": 2.9044,
+        "twoPadNetSpanSum": 17.10214,
+        "copperManhattanLength": 7.51916,
+        "routingExpansions": -10.55271
+      }
+    },
+    {
+      "seed": "42",
+      "parts": 54,
+      "before": {
+        "seed": "42",
+        "version": 3,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 4251,
+        "height": 2014,
+        "area": 8561514,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 9051790,
+        "sameRegionCenterManhattanMean": 988.6714285714286,
+        "twoPadNetSpanSum": 5020,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 44070,
+        "traceSegments": 259,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5331806,
+        "geometrySha256": "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
+      },
+      "after": {
+        "seed": "42",
+        "version": 4,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 4522,
+        "height": 2004,
+        "area": 9062088,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 10817123,
+        "sameRegionCenterManhattanMean": 954.7285714285714,
+        "twoPadNetSpanSum": 2830,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 41980,
+        "traceSegments": 251,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5348771,
+        "geometrySha256": "023da3bcb9c8f0a64c9a5c9de04d1a7bfe3f69f84551c19c9d5bc857188cb468"
+      },
+      "changePercent": {
+        "area": 5.84679,
+        "regionBoundingAreaSum": 19.50258,
+        "sameRegionCenterManhattanMean": -3.43318,
+        "twoPadNetSpanSum": -43.6255,
+        "copperManhattanLength": -4.74246,
+        "routingExpansions": 0.31818
+      }
+    }
+  ],
+  "images": [
+    {
+      "path": "candidate40-fit.png",
+      "sha256": "a10952a227f58bd636f72d5e687b976132424ff6368daba42e7c8bf3e56103ab",
+      "bytes": 459798
+    },
+    {
+      "path": "accepted53-fit.png",
+      "sha256": "558a77918a9ab08471dce326809039adcc14f0403bcdc7283341efe5be0241b6",
+      "bytes": 276162
+    },
+    {
+      "path": "candidate53-fit.png",
+      "sha256": "12b397c504e9ca2eb558586b07cdf62b50e7405feaf6347df9421f7995d8ffab",
+      "bytes": 341815
+    }
+  ],
+  "existingComparisonImages": [
+    {
+      "path": "../realism-r1/after40-fit.png",
+      "sha256": "e88d5545ff7819af8f5e59887042ef9838c98666621de1c5c5080a8deb8b0d70",
+      "parts": 40,
+      "seed": "-1017",
+      "view": "fit",
+      "version": 3
+    },
+    {
+      "path": "../cold60-comparison-r1/after60-fit.png",
+      "sha256": "f90f2f0ca49eb4d5a355b13f87d55645527dcbd0a796a2f4bc5955cc663243eb",
+      "parts": 60,
+      "seed": "-1022",
+      "view": "fit",
+      "versions": "3 and4 pixel-identical"
+    }
+  ],
+  "visualReview": {
+    "status": "REJECTED_AS_OVERALL_WINNER",
+    "root": "Actual40 tightergroups but flatteroutline/lessfit-scale;53 different clearerregions yet mixedrouting; no54render aftercoldtimeout. Improve balancedoutline choice before acceptance.",
+    "independent": "Visual40 fit/zoom ribbon3.58:1 vs3 2.62:1 harder toscan;44/60 unchanged. No confirmedcollision or blockedconnector."
+  },
+  "failuresRetained": [
+    {
+      "phase": "native-r193",
+      "status": "FAIL",
+      "operationSeconds": 82.705,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "8054c13890fbdbcf5eba6fa33e7358c55c07a78edab3c7d1a34408616f753129"
+    },
+    {
+      "phase": "native-r194",
+      "status": "FAIL",
+      "operationSeconds": 112.404,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "1b7204d2801ccb691a0ffe3e61e29957dc6e37d1f122227542de65b03aa72c5f"
+    },
+    {
+      "phase": "native-r195",
+      "status": "FAIL",
+      "operationSeconds": 113.555,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "a08c889c4d2695c93e4185b8637666dcedc8b3504b4f1f503c4f6d4696459f05"
+    }
+  ],
+  "next": "One v4-only longest-outline-side choice among existing legal routedcandidates; native197/build53/render pending. No attempt/budget or old1/2/3 rule change.",
+  "limits": {
+    "humanU05": "NOT RUN",
+    "publicHardAndNormalRb56": "HELD",
+    "candidateCodePublished": false,
+    "allMetricsImproved": false,
+    "causalColdRegressionClaim": false,
+    "first54Cold": "FAIL_HYPOTHESES_TIMEOUT90131MS616WORK495HYP_UNITS_FULL_CLEANUP",
+    "actual54Render": "NOT RUN",
+    "old3Geometry": "SIX_EXACT_NATIVE_CASES_PASS",
+    "rootImagesInspected": 5,
+    "noLibraryIds": true
+  },
+  "originalEightPreserved": true,
+  "noEmail": true
+}

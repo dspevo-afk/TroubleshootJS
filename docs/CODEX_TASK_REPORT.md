@@ -1,4 +1,60 @@
-# Current checkpoint: current60 repair PASS; PCB realism refinement next
+# Current checkpoint: v4 area-first visual REJECTED; shorter-span revision active
+
+2026-10-12. Repair3c77758a remains published/verified, accepted source525626df.
+Unpublished area-first4 native196 PASS134.774/eight suites; actual GWT52 PASS108.900/
+all5, build11522DDFA25E5E8CE1E0025F3D6C9DF2; headed211 PASS181.361 actual60/40/44
+cold/fit/wheel/body/retirement. Root+independent visual judgement REJECTS40 ribbon
+3.58:1 vsaccepted3 2.62:1 despitegroup/copper/area gains.44/60 unchanged. Actual53
+case212 PASS62.425; whole212 FAIL because54 firstcold HYPOTHESES TIMEOUT90,131ms/
+616work/495hyp, no54render; allproduct/OS cleanup PASS. No causal claim or waiver.
+[Assessment/five inspected captures](task-evidence/PCB/cohesion-v4-assessment-r1/README.md),
+SHA `8878bd6c2b63ee9192bf70746e70588b785021838aecf1da8dd20a3fedf5cd86`. Failures193/194/195/212 preserved.
+
+Active revision uses v4-only shorter longestoutline side among existing legal
+routes, then existing area/quality ties. Bothroomy fallbacks and all1/2/3 rules
+remain; no extraattempt or budget. Native197 running; GWT53/render/file acceptance
+pending. Source11/test/script files uncommitted, exactold3 geometry remains required.
+No candidate production publication or visual acceptance claimed. Current served
+build52 is the rejected trial; accepted build50 WAR is byte-backed-up in tasktemp.
+Next: complete197, actual53 build and evaluate revised actual layouts; then needed
+private3/4 FileReader proof before accepted-source publication. U05 human NOT RUN/
+HARD+normal RB56 held/modest-host owner-deferred. Original8 preserved; only owned
+native197 runtime active. No unrelated repo/email/Core/Android/C4130/GPU/main merge.
+
+# Historical checkpoint: version4 candidate native PASS; render acceptance pending
+
+2026-10-12. Published repair evidence remains `3c77758a89f204317c8c53d7fcddff2a8b90775c`
+on `codex/q60-faulted-profile-counts`; accepted production remains `525626df` /
+GWT `BB9CE498943156894544DDD2CD758215`. Current60 real-input repair PASS was
+normal-pushed/remote verified; U05 human NOT RUN and public HARD/RB56 release HELD.
+
+Dave prioritizes generation/PCB realism and periodic screenshots before other
+roadmap work. Uncommitted candidate uses private interpretation4: existing group
+score on compact fallback2/3; grouped0/1 and proven roomy4/5 stay unchanged.
+Explicit saved1/2/3 identities remain; generic epoch16/schema1/public alpha5 unchanged.
+Native196 PASS134.774s/eight suites: six fresh4 P07 admissions and six exact old3
+geometry oracles in separate six-case JVMs with the existing60s host cap.
+All original90s/640/5s, candidate counts, evaluation/routing limits remain.
+193 lost60 routing FAIL/rejected;194 geometry passed then codec fixture FAIL;
+195 enlarged12-case JVM hit60s infra cap FAIL; those receipts remain unchanged.
+196 is actual final-source PASS, not relabeled earlier failures.
+
+Tradeoffs are mixed:40 area-3.19%, group boxes-25.49%, copper-6.56% but wider
+aspect2.62->3.58 and vias29->33;44/60/42 geometry exact;53 group/copper worsen;
+54 area/group boxes grow while direct-net span/copper shorten. No visual acceptance
+or optimal-density claim. GWT52 and current4 actual renders/files are NOT RUN.
+Next: actual build, prepared real-input211 dense60/40/44 views, inspect rendered
+grouping/fit tradeoffs, then needed private3/4 FileReader proof before acceptance.
+
+Fault-neutral accepted40/44/60 fit PNGs remain in published PCB packets. Anonymous
+immutable5411c7a4 image URLs returned HTTP200 image/png and exact inspected bytes;
+Android-accessible links recorded in task handoff. Library preparation BLOCKED:
+`Library prepare_uploads is not available`; no Library file IDs or upload claimed.
+No owned runtime/browser/server/monitor active. Original8 exact, candidate11 source/
+test/script files unstaged plus this checkpoint; new saved3 test fixture untracked.
+No email/Core/Android/C4130/GPU/main merge/Q30 corpus rerun. Build50 is still served.
+
+# Historical checkpoint: current60 repair PASS; PCB realism refinement next
 
 2026-10-12. Production remains `525626df` / GWT
 `BB9CE498943156894544DDD2CD758215`, branch `codex/q60-faulted-profile-counts`.
