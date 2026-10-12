@@ -402,6 +402,10 @@ public final class U06SessionSaveContractTest {
             controller.action(controller.session.token(), 0, "resume", "", "", "");
             check(controller.session.screen() == PlayerSession.Screen.RESULTS,
                 "only current completed passed qualification resumes retained Results");
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.WORKBENCH && challenge.isCompleted() &&
+                    challenge.getCustomerRetestResult().isPassed(),
+                "Return to board leaves Results without erasing the actual completion");
             int restore = controller.session.beginQualificationRestore(owner);
             controller.session.failed(restore, true, "cancelled fixture");
             controller.action(controller.session.token(), 0, "resume", "", "", "");
@@ -412,6 +416,12 @@ public final class U06SessionSaveContractTest {
             controller.action(controller.session.token(), 0, "resume", "", "", "");
             check(controller.session.screen() == PlayerSession.Screen.RESULTS,
                 "failed file import preserves completed-owner Results recovery");
+            controller.action(controller.session.token() - 1, 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.RESULTS,
+                "stale Return to board cannot leave recovered Results");
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.WORKBENCH && challenge.isCompleted(),
+                "Return to board remains available after completed-owner recovery");
             for (GeneratedCustomerRetestResult result : new GeneratedCustomerRetestResult[] {
                     null, new GeneratedCustomerRetestResult(false, "Native failed predicate") }) {
                 setRecoveryGateInputs(challenge, GeneratedChallengeState.COMPLETED, result);

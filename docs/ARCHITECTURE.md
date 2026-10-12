@@ -5378,7 +5378,12 @@ retirement. The controller retains its lease during private PREPARING without
 exporting graph/proof/selected fault data; session tokens invalidate old controls.
 Restored history becomes active again. Failed/cancelled file import can resume
 preserved Results only from the exact live completed challenge and passed retest;
-successful import invalidates completion and requires a new retest.
+successful import invalidates completion and requires a new retest. Explicit
+Return to board from an already displayed Results screen opens WORKBENCH while
+retaining the actual passed result; it does not invoke failed-load recovery.
+Native174/GWT44/headed184 qualify one source-guided saved relay service and two
+actual powered customer retests, including completed failed/cancelled/retried
+recovery. [Current scope and finite release gates](task-evidence/REL-B/saved-repair-retest-r1/README.md).
 Native173/GWT43/headed181 pass for one44 source/Shop/file/recovery flow, as scoped
 in [the current packet](task-evidence/REL-B/durable-file-flow-r1/README.md).
 This is private software qualification, not public advanced release or human HARD.

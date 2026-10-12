@@ -1,10 +1,14 @@
 RB56 HUMAN PLAY NOTE — manual observation only
 
 Candidate: Regression seed -1004; 44 parts
-Qualified private-file-flow candidate base: 9a82c97b5a07632c58374014c25900de2eb8c0d5
-Observed compiled build: BFBD92FBE2D7CAD48AFB6D2DC0C119ED
+Qualified saved-repair candidate base: 52b48bb1e8d43578022fe812c6ea1b8873c65318
+Observed compiled build: E9A42188C4684CD29E25F97C511CCE11
 App replay epoch: tsj-alpha/5
 Generation dependency epoch: tsj-generation-dependencies-v16
+
+Automated software qualification has demonstrated a source-guided repair on this
+same candidate. Disclose any prior exposure or assistance in the human trial.
+No human results are entered below.
 
 Date/time (UTC, approximate):
 

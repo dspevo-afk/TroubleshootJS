@@ -179,7 +179,9 @@ final class PlayerSessionController {
         if (!ownsCurrentBoard()) return;
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         GeneratedCustomerRetestResult result = challenge.getCustomerRetestResult();
-        boolean completed = challenge.isCompleted() && result != null && result.isPassed();
+        // Return to board from Results is navigation, rather than failed-load recovery.
+        boolean completed = session.screen() != PlayerSession.Screen.RESULTS &&
+            challenge.isCompleted() && result != null && result.isPassed();
         session.resumeQualification(expected, sim.getGeneratedBoardInstance(), completed);
     }
 

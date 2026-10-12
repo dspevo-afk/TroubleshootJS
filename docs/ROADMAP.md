@@ -3104,7 +3104,7 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** IN PROGRESS — private typed round trip/two-failure rollback retained; one opt-in private 44-part headed durable download/reopen/menu/FileReader flow and failed/cancelled/retried restore pass native173, actual GWT43 and compiled181. Public normal advanced admission/durable release, population/release matrix and actual human HARD calibration remain pending; beta unqualified. [Current durable-flow evidence](task-evidence/REL-B/durable-file-flow-r1/README.md), [accepted private reconstruction](task-evidence/REL-B/private-session-roundtrip-r1/README.md).
+**Status:** IN PROGRESS - private typed reconstruction and unfinished durable flow retained; source-guided saved private44 relay discharge/service, powered repair/retest, repaired file fresh-owner retest and completed failed/cancelled/retried recovery PASS native174, actual GWT44 and headed184. Return to board navigation is fixed. Public normal advanced admission/durable release, population/release matrix and actual human HARD calibration remain pending. [Current saved repair and finite checklist](task-evidence/REL-B/saved-repair-retest-r1/README.md), [accepted file flow](task-evidence/REL-B/durable-file-flow-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 

@@ -1,4 +1,42 @@
-# Current checkpoint: private advanced durable file flow and recovery PASS
+# Current checkpoint: saved private relay repair/retest and completed recovery PASS
+
+2026-10-12. Candidate over `52b48bb1e8d43578022fe812c6ea1b8873c65318` on
+`codex/q60-faulted-profile-counts`. Narrow controller fix makes Results Return to
+board open WORKBENCH without losing the live passed result; exact-owner failed/
+cancelled-load Results recovery remains. Three meaningful native predicates added.
+
+Native174 PASS32.979s (U04 4010/U06 34938); actual JDK8/GWT44 all5 PASS93.221s;
+headed184 PASS154.823s. Build `E9A42188C4684CD29E25F97C511CCE11`. Real accepted disk file
+restores private44 seed-1004, unrepaired retest fails, relay guard goes disabled to
+enabled in 4.494s, marked5V stock is bought/removed/installed with original retained,
+and repaired powered retest passes. Return opens board; 2226-byte repaired Blob
+download/history23 survives fresh file restore, grants no completion and independently
+passes customer retest. Actual completed Results survive failed/cancelled imports.
+Close session reports PASS and exact owner/session/bridge/meter/coordinator cleanup.
+[Sealed evidence and finite remaining release checklist](task-evidence/REL-B/saved-repair-retest-r1/README.md).
+
+All source/served, native handles/drainers/browser/localhost cleanup PASS. Root
+inspected four images; independent source/driver/native-predicate/release-scope review
+PASS. Codec/state/identity/coordinator/typed reconstruction inputs unchanged and
+audited; full native matrix and unchanged Q30 corpora not rerun. Retained182 FAIL
+99.326s Shop-selector case;183 FAIL81.719s slash-regex after real stock/removal;
+both unchanged/owned cleanup PASS, neither relabeled PASS.
+
+Next finite requirements: fresh human+U05 falsifiers/HARD rule, one predeclared
+normal-envelope population/retry/determinism/diversity/replay campaign, advertised
+40-60 repair/source/instrument/catalog/session/replay/layer/browser/recovery/fidelity
+matrix, then gated public release. Human NOT RUN/public HARD+RB56 held. Q100 later
+required stretch, not REL-B prerequisite; optional unadvertised lanes do not expand
+beta scope. Modest-host alone owner-deferred. Known encoding and general Shop
+readiness copy retained; I/O/delayed-reader/expiry/max-capacity NOT RUN.
+
+No owned runtime/preview remains. Original8 byte hashes, historical unknown91.616s/
+six missing inventories/lateBLOCKED audit and C4130 hold intact. No email,
+Core/Android, protected-main merge or unrelated process changes.
+
+---
+
+# Historical checkpoint: private advanced durable file flow and recovery PASS
 
 2026-10-12. Candidate over `9a82c97b5a07632c58374014c25900de2eb8c0d5` on existing
 `codex/q60-faulted-profile-counts`. Six source/test inputs qualify opt-in private

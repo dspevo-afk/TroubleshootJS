@@ -1,0 +1,386 @@
+{
+  "schema": "TSJ-REL-B-SAVED-PRIVATE44-REPAIR-RETEST-1",
+  "recordedUtc": "2026-10-12T00:42:54.193907+00:00",
+  "candidateParent": "52b48bb1e8d43578022fe812c6ea1b8873c65318",
+  "branch": "codex/q60-faulted-profile-counts",
+  "status": "PASS_PRIVATE_GUIDED_FLOW_PUBLIC_RELEASE_HELD",
+  "buildStrongName": "E9A42188C4684CD29E25F97C511CCE11",
+  "gates": {
+    "native-r174": {
+      "status": "PASS",
+      "operationMillis": 32979,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1355,
+      "suites": {
+        "U04SessionContractTest": 4010,
+        "U06SessionSaveContractTest": 34938
+      },
+      "newAssertions": 3,
+      "fixtureLimit": "Completed-state reflection tests predicates only; actual electrical Results are separately headed UI evidence"
+    },
+    "build-r44": {
+      "status": "PASS",
+      "operationMillis": 93221,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1223,
+      "command": "scripts/build.ps1 -JavaHome <JDK8> -Target Compile -Style OBF",
+      "permutations": 5
+    },
+    "compiled-r184": {
+      "status": "PASS",
+      "operationMillis": 154823,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1227,
+      "caseOperationSeconds": 151.36520380002912,
+      "browserDisplay": "HEADED",
+      "browserChannel": "msedge",
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "da71e5fae82b0b377732d439715b4c452a702cde801555b32511c5aa517381b7",
+        "afterSha256": "da71e5fae82b0b377732d439715b4c452a702cde801555b32511c5aa517381b7",
+        "sourceSha256Before": "729243c3c4fbe58a2ab9b2b736e69e3b2070c89571331d54b68ff7d862794663",
+        "sourceSha256After": "729243c3c4fbe58a2ab9b2b736e69e3b2070c89571331d54b68ff7d862794663",
+        "webSha256Before": "75b502846b234e1328a596b54a3bacecf625f0992881bec41348f11a4054a81a",
+        "webSha256After": "75b502846b234e1328a596b54a3bacecf625f0992881bec41348f11a4054a81a",
+        "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "fileCountBefore": 1563,
+        "fileCountAfter": 1563,
+        "seconds": 0.7368391000200063
+      },
+      "ownedBrowserLocalhostCleanup": {
+        "status": "PASS",
+        "seconds": 1.3671342000016011,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      }
+    }
+  },
+  "ui": {
+    "status": "PASS",
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Main menu",
+      "click: Load session",
+      "actual filechooser.set_files: mutated-private44.tsjsave",
+      "accepted real disk artifact loaded; no completion grant",
+      "click: Bench power",
+      "restore actual load-supply limit: 250mA",
+      "click: Board Power: OFF",
+      "click: Run customer retest",
+      "click: Board Power: ON",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "observe actual relay discharge guard; initially enabled=False",
+      "click: Shop",
+      "click: Add to Parts Tray: Relays, 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "click: Close",
+      "click: Parts Tray",
+      "click: Component",
+      "click: Remove component (KA)",
+      "click: Parts Tray",
+      "click actual loose relay: Part 47 - 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "click: Install as Channel A / KA",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "click: Board Power: OFF",
+      "click: Run customer retest",
+      "actual saved-board relay repair customer retest PASS",
+      "click: Return to board",
+      "click: Main menu",
+      "click: Save session",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-bad-signature.tsjsave",
+      "click: Resume previous board",
+      "actual completed Results retained after failed import",
+      "click: Return to board",
+      "click: Main menu",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-private44.tsjsave",
+      "click: Cancel preparation",
+      "click: Return to board",
+      "click: Main menu",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-private44.tsjsave",
+      "click: Main menu",
+      "click: Resume current board",
+      "click: Run customer retest",
+      "click: Close session"
+    ],
+    "observations": [
+      {
+        "name": "actual relay guard permits service",
+        "status": "PASS",
+        "initiallyEnabled": false,
+        "waitSeconds": 4.493511400010902,
+        "publicMarkings": "KA\n\n\nType: relay\n\n\nMarkings: 5 V coil / SPDT / 24 V DC, 0.5 A contacts\n\n\nState: Installed\n\n\nLead A1: KA.A1\n\n\nLead A2: KA.A2\n\n\nLead COM: KA.COM\n\n\nLead NC: KA.NC\n\n\nLead NO: KA.NO\n\n\n\nLift lead A1\nLift lead A2\nLift lead COM\nLift lead NC\nLift lead NO\nRemove component"
+      },
+      {
+        "name": "saved real relay repair/retest and completed recovery",
+        "status": "PASS",
+        "beforeRepair": "FAIL_EXPECTED",
+        "afterRepair": "PASS",
+        "afterFreshRestore": "PASS",
+        "journal": [
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Added a part to the tray.",
+          "Added a part to the tray.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Added a part to the tray.",
+          "Removed a part.",
+          "Installed a part from the tray.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting."
+        ],
+        "relayStock": "Add to Parts Tray: Relays, 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 517,
+          "generationMillis": 33566,
+          "maxManualUnitMillis": 1146,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "a690dee1f85811fd1c42d4cae789ee6f6e884c0ef6943aaa401268c3122d982f",
+          "diagnosticContextDigest": "4d9940384c0f14fec2f64b293f4f237c3497bed1bc2436826b685008b74a0259",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": true,
+          "sessionRestores": [
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 32161,
+              "work": 517,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            },
+            {
+              "outcome": "PROGRAMMING_FAILURE",
+              "stage": "PUBLISH",
+              "elapsedMillis": 32155,
+              "work": 517,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "priorOwnerRetained": true
+            },
+            {
+              "outcome": "CANCELLED",
+              "stage": "HEALTHY",
+              "elapsedMillis": 3308,
+              "work": 8,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "priorOwnerRetained": true
+            },
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 32187,
+              "work": 517,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            }
+          ],
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": true,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 150682
+        }
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "saved-unrepaired-retest.png",
+        "sha256": "2e759c26a865433e65c2f5bcd73fd98e9dbfe6a09b6ba1ff15671fe0f1d73add"
+      },
+      {
+        "path": "guarded-relay-replacement-and-retained-original.png",
+        "sha256": "2e0032984145d0b856fd4e88fb3574363887db0bbbcf233d374ac7ff39465323"
+      },
+      {
+        "path": "saved-relay-repair-retest-pass.png",
+        "sha256": "28707bae0795d8012f0cf1ca085e3305105d896d6c6620c53ff49aa078e98715"
+      },
+      {
+        "path": "restored-relay-customer-retest-pass.png",
+        "sha256": "b082e061d38a67079e294ed962e555d12b9067b66ee620a68fa921b571593ba9"
+      }
+    ],
+    "files": [
+      {
+        "path": "repaired-private44.tsjsave",
+        "sha256": "e8d498dc0b0d6fbd09ca08d0a6ce79d5102aa1382e4a284037a89cc6a8849e65",
+        "bytes": 2226
+      }
+    ],
+    "scope": "SOURCE_GUIDED_SAVED_PRIVATE44_RELAY_UI_REPAIR_NOT_HUMAN",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "acceptedArtifactSourceManifest": "03dd8fc80d693af5ab1f689c123ba7efce821ae3259e072370860444c32e834f"
+  },
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSession.java": {
+      "rawSha256": "925c83ff05d577aea8c1f821ba43f6a99b0f4311ed3e6d1f74f76d2e21bea4d9",
+      "committedLfSha256": "fdfb4d66f73ab18ee45f8e57007275bf961b4d2e1017c47bee6b0ed8e4eec8e3"
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": {
+      "rawSha256": "3d53eff485f683568311a512dc8eb1ca3084c14383ca32a0ca3d2aef6295b565",
+      "committedLfSha256": "3d79ddd5f6d4cf7f14eb30429b1ae37042d5f4e80c737ac08dde4d711d26bfdc"
+    },
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": {
+      "rawSha256": "014cfa552d65071f9280bca94ac9509b3f742a3b34681d299067799e7dd9d0a4",
+      "committedLfSha256": "1d1d2d0d1aff026d7770bfeb739083261015589ba7d814ae68fcd3668c556f14"
+    },
+    "tests/contracts/U04SessionContractTest.java": {
+      "rawSha256": "75b0741635ce6e823afae0e18df748d768502888e4d23bcd90dc6695e111c763",
+      "committedLfSha256": "ad45884d5163514025d6ebbdba99f67d901bcd7dccaff225152fc9d380526e4a"
+    },
+    "war/tsj-workbench-ui.js": {
+      "rawSha256": "1ba90c1ee158526dcc5510dd8c9d133e5ba726d769105fe7c6406f19e1ff987b",
+      "committedLfSha256": "c560ea692d7de18f04e9934f4d15a0ac6634cd31ea62c92d53bf2daba7734a9f"
+    },
+    "tests/contracts/U06SessionSaveContractTest.java": {
+      "rawSha256": "37224e274964943d310be63b82115fe9542ebe5a9f04f4e6f9814c9dc573ad8b",
+      "committedLfSha256": "33dc4700051b76d07c658aa9bcbb3acf66a9254fd2b236fb2f160bdbb72fb183"
+    }
+  },
+  "unchangedAcceptedPrivateRoundTripInputs": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "1c8f264152012c9dbe46b5a8ff08935cb99cecbc6baf10d85a37e5da4b3a0fa6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java": "eee7f8b3326138b4087122cd4cc1d01722dc4690dcc434777edc2b0d69ff76c3",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java": "b551878f895a69244c14c34fa64420461f194cd4f2fdd0b713871581ae8cd546",
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "d85d6d3c3319ccf5e5c0f07dbb6cd49082406fa87ecd64e1677c44a1a5b9a0af",
+    "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java": "e9deaf59318590324b8119449526d9d0cb1d5920d7128a823eb380b6a924752b",
+    "scripts/verify-current-contracts.ps1": "5f96306647098b6e2c4cd1cdee7f0a9e3a416d5fa70f9a490e1697f34b5fef88",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "2cdf66dc9fe9668f81ab060d1b98949520444e9dbed738447ba699ceb96fc3a2"
+  },
+  "publicGateCommittedLfSha256": {
+    "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java": "2835bec4afee2e16f58480590ed928535d1480ffa9612992791d7344cdaccbf8",
+    "src/com/lushprojects/circuitjs1/client/DifficultyProfile.java": "c94089cde1e15145b52389e0d6d63ec69209ad82388015ccba083112f6a34b7a",
+    "src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java": "b24fd8e346117d522840e867d53e3160b2e20ae54878b37502d60ddae8159224",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "6a433d914c84889492df58daa9be4022954afa182c6865c90eed487ff063f519",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java": "19504896c5ab8fae64cc790c590bd369d2f67534f89ba8ae228094f4fe2867c5"
+  },
+  "retainedFailures": [
+    {
+      "status": "FAIL",
+      "operationMillis": 99326,
+      "exitCode": 1,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1226,
+      "phase": "compiled-r182",
+      "cause": "Task Shop selector expected uppercase RELAY instead of visible Relays; relay guard actually disabled then enabled after 5.596 s",
+      "overallResult": "FAIL, never relabeled PASS",
+      "browserOwnedCleanup": "PASS"
+    },
+    {
+      "status": "FAIL",
+      "operationMillis": 81719,
+      "exitCode": 1,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1227,
+      "phase": "compiled-r183",
+      "cause": "Task role-selector regex contained unescaped /; actual marked stock, removal, selected loose part and enabled Install as Channel A / KA were already visible",
+      "overallResult": "FAIL, never relabeled PASS",
+      "browserOwnedCleanup": "PASS"
+    }
+  ],
+  "rawAuthorities": {
+    "relb-repair-source-freeze-r1.json": "ce60e8dea58f239b02c1f618dc0ec4bb83e8de1412087a7c24ca46fbdcdf6f96",
+    "run_phase.py": "c678396817ad8c869bb0a395a2be67cd09a269e2e88aea659cfcb6144beaa3ca",
+    "compiled-r184.py": "6eb784620a4b0b7989d9f48181daa046e2556b12105ebaaf0b7fe7e123758425",
+    "compiled-r184-spec.json": "63b7e80ddd06912a62c8091919b14b6a9fa2c9efaf320c1ca0bdd6226225e085",
+    "repair-ui-evidence.json": "d2af3dbb466eb53d8e9eb24b99c4d299123aa869dc63f755a54bf82c7070b44e",
+    "result.json": "72e71806481c1c8cf73ebd718093eb211287556b5d181c3dfa9f4c32d8fb1e02",
+    "input-manifest-before.json": "106aaa7af6eaff4cd70590f58c3e5a847a7688c737406df9c403c04d942201b7",
+    "input-manifest-after.json": "063ffdcc3394c5a303c731ff3c2214fdcfd4e6e00138d692020e2a85a40ed53b",
+    "native-r174-result.json": "4ae553af9cd2b6df4013ae841cf867ffab74c7d7aea763d689faf7ed4979b706",
+    "build-r44-result.json": "79f57a66334191cf5ea0f72462f115aafffa6e03eed4d7a8bd7b4d47aa46ab45",
+    "compiled-r182-result.json": "35b8ae6359f026a6ceb1a1247d7988b48bd95c7ac48ecf221f47d471f710314b",
+    "compiled-r183-result.json": "d3662f720a664f86027a8ad89d6b19cea0562cfb4fd6afe25bf901a970dbeefe",
+    "compiled-r184-result.json": "7db3d1657ff2ce4f1de94a408a953f897f6be1013bdd238ce3b2aebcda253123"
+  },
+  "rootScreenshotReview": "PASS: all four actual retained images inspected separately",
+  "independentReview": "PASS static source/navigation/native predicates/real input selectors/finite release contract; no agent runtime execution",
+  "scopeLimits": [
+    "One guided private44 seed -1004; not blind diagnosis, human HARD calibration, population or public beta",
+    "Prior 181 real artifact reused by exact SHA, current unchanged codec/state/identity boundary; its whole prior build is not a fresh current-build claim",
+    "Fresh 183 and184 source/served manifest differs after controller navigation change and required build44; each run unchanged and bound separately",
+    "No altered solver, energy guard, generation budget, profile/catalog flag, format or transient-continuation promise",
+    "Full native matrix, unchanged Q30 corpora, portability, current96/100-owner endurance, delayed FileReader, native I/O failure and timed restore expiry NOT RUN"
+  ],
+  "knownDefects": [
+    "Existing character encoding defect now also visible in the Results apostrophe; ASCII actions and file framing pass",
+    "Shop general readiness is supply/semantic readiness; relay service additionally requires its actual live stored-energy/coil guard"
+  ],
+  "historicalQ30": "Unknown91.616s failure, six missing scratch inventories and late BLOCKED audit retained",
+  "originalEightPreserved": true,
+  "c4130HoldUnchanged": true,
+  "humanTrial": "NOT RUN",
+  "normalAdvancedPopulationRelease": "NOT QUALIFIED",
+  "modestHost": "DEFERRED BY OWNER / NOT RUN"
+}
