@@ -1,5 +1,7 @@
 # Functional PCB placement and readable terminal banks
 
+> Follow-up2026-10-12: final525 current60 cold/render proof now PASS at84.183s under unchanged limits; see [the matched comparison](../cold60-comparison-r1/README.md). The sealed packet below retains its historical held status and both actual timeouts.
+
 Finite layout, label and saved-board checkpoint over `933ace2643efc364db785f067fb79cc703b28aa6`, build `BB9CE498943156894544DDD2CD758215`. [Sealed evidence](evidence-r1.json) binds the final source, six predeclared routed fixtures, actual native/GWT/player/file gates, failures and cleanup. **Fresh 60-part cold qualification remains UNQUALIFIED / HELD after two timeouts.** This packet does not complete normal RB56 population, human HARD or public advanced release.
 
 Private placement3 adds soft cohesion to existing domain/region groups and keeps each semantic connector group's own edge-lane hint. Connectivity, access, isolation and routing constraints remain authoritative. Its six placement attempts contain two grouped, two established compact and two roomy alternatives; the three-candidate route prefix reserves one of each available category. The owner explicitly requires a real P07 two-layer winner. P05 success cannot replace it or suppress the original maximum three P07 attempts. Admission still verifies the receipt, both faces, vias, correspondence, continuity and clearance; no route is merely relabeled.

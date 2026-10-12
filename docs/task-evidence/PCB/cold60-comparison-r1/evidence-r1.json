@@ -1,0 +1,1245 @@
+{
+  "schema": 1,
+  "status": "PASS_CURRENT_PRIVATE60_COLD_AND_REAL_VIEW_FINITE_REFERENCE_PC_SCOPE",
+  "createdUtc": "2026-10-12T20:39:45.052237+00:00",
+  "baseCommit": "525626df4d71cbd526cfdccb2eb062faac6dc42c",
+  "productionChanges": false,
+  "sourceFiles": {
+    "scripts/verify-current-contracts.ps1": "c9e2ae672728642b7fb57a4c8c280dd2d1f4121f2f2e81cdd889b2e02bd2f07b",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "63f5aa789a8550beca488642ebd2a4883800166c3e17c255802221e481009b14",
+    "src/com/lushprojects/circuitjs1/client/Graphics.java": "ef29afcfef6404d7ad7bb5b86b1e028f25af07334a448de2e26e7b3a0b5227ab",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "e7084f2fe22604a398cda1009e8422803c45d9f1f774171186fa790e368ef118",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "d5e8c8b1770f94f5e2aca5949c728e7ace52c93c09ee58368f3bc19790846c40",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "b2119e422d0b582c36a3e4e485b14dac9206d0f2d73999f35190e938be8cd8e4",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "828f588f1b53344f61e2b5d0553fdb9f85842b94bf051f069921defb73a85725",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "ff71a7124fa9882fa94bb6380d14860c5dff8ac185dda87b0254d0f8ed6c40e0",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "d1beba9fde90b53263b75b19b96b36c23902e5d23720e729d2a597b4d413fb7d",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+    "src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java": "3d54cd35bfe2f889b6df75fc93de163a9cfac6b9f9f40ec0d401cb158580de7a",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "80e8678e51e0e755e18969722e3cee0c3a03a9cedf0c112708b4dd55e72b957f",
+    "src/com/lushprojects/circuitjs1/client/StagedFamilyCapability.java": "968326efa090eaa7e93eebec7c938b127006cada16f57401e8fd8f2a5904a04f",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "5951d3ff55b2976c08fbb39f898486f9f543bb7a8d5de3af4631af9965095986",
+    "tests/contracts/PcbCompactnessContractTest.java": "85e7781b88f94baa306b2d1be48fe22919955449648135c806ed67b7264e6f5c",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "e5c25c4553e2a1d661e44e6253399d224aa468cd2e5883df2d494f8f211e6736",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "de4665a578156c1871f596a3a4e198a90ed0d3913db74b6e6d84da1ab8fdbb36",
+    "tests/contracts/Rb56SessionBackingContractTest.java": "374de6dc68f9deadf8faf42ad38628c47b1caff79b2bd09623ac08497ec52dd7",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "c67541232f76506dcb896c62f40dd22461bc95b8bebec07d4146f7c5c1504457",
+    "tests/contracts/U06SessionSaveContractTest.java": "1849eb399ab8984406d8de90e32447f2fddb133f28ede84482e4c5e90e41bb42",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "8a1b3a1e4bdb1c6c8fa9d8374309a6e3d62c62ded8e6a68062f2548d6bfaf4db"
+  },
+  "gates": [
+    {
+      "phase": "build-r51",
+      "status": "PASS",
+      "operationSeconds": 108.343,
+      "receiptSha256": "78ed011a579794a194ebb8fbc5a4b870df83630723b2127f4990853bdd056142",
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true
+    },
+    {
+      "phase": "compiled-r207",
+      "status": "PASS",
+      "operationSeconds": 91.946,
+      "receiptSha256": "45c1513e9a4e3ffd0fbf8636b5994661b1d24a50724cef66b7c954b7e50fc697",
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true
+    },
+    {
+      "phase": "compiled-r208",
+      "status": "PASS",
+      "operationSeconds": 92.151,
+      "receiptSha256": "f94e26bf625cf0e106560e35e4e1529a781169ff1bcbbeca5ed6541bd5cdd2f0",
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true
+    }
+  ],
+  "reusedCurrentGates": [
+    {
+      "phase": "native-r192",
+      "status": "PASS",
+      "operationSeconds": 103.342,
+      "receiptSha256": "a8e54e2224fd173d324e164fba390cefaf25806cbb0cd4c3cc121935e48df41a",
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true
+    },
+    {
+      "phase": "build-r50",
+      "status": "PASS",
+      "operationSeconds": 108.269,
+      "receiptSha256": "de9bc6c3cd870ba80dc1300421df10ab0d21cdb7e285af187ba4f1bfda9b0c26",
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true
+    }
+  ],
+  "reuseAudit": {
+    "status": "PASS_EXACT_FINAL_SOURCE_AND_SERVED_INPUTS_UNCHANGED",
+    "all21FreezeFilesMatch": true,
+    "currentWatched1564InputsEqualHeaded205": true,
+    "unchangedInputManifestSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7"
+  },
+  "predeclaredPlanSha256": "29b9b76cd0521a5d34861acfdf0cd7888c8561d2081a1bcd0419b2b4d3718a99",
+  "comparison": [
+    {
+      "phase": "compiled-r207",
+      "sourceCommit": "933ace2643efc364db785f067fb79cc703b28aa6",
+      "build": "82ED33BBD8DE32C145D1C3B4A3CEB5F3",
+      "version": "prior2",
+      "coldReport": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 617,
+        "generationMillis": 82211,
+        "maxManualUnitMillis": 1206,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "db16a1610951b3512abd5b96d05d64d95dfb48af4e32d532eb71ef0446d32ad3",
+        "diagnosticContextDigest": "830fc0db8b6b8cadedb7c6b16c8af10ad8fbdeaffb86f9729eed01ad6e352c1c",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      },
+      "paint": {
+        "frames": 83,
+        "millis": 2225.299999833107,
+        "maxMillis": 128.59999990463257
+      },
+      "paintScope": "Green-board fill to visible double-buffer copy; includes observer overhead and any initial/post-publication paints before capture, not pure proof-only cost",
+      "completedJobAndRetirement": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 617,
+        "generationMillis": 82211,
+        "maxManualUnitMillis": 1206,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "db16a1610951b3512abd5b96d05d64d95dfb48af4e32d532eb71ef0446d32ad3",
+        "diagnosticContextDigest": "830fc0db8b6b8cadedb7c6b16c8af10ad8fbdeaffb86f9729eed01ad6e352c1c",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false,
+        "failurePhase": "HOLD",
+        "jobOutcome": "PASS",
+        "jobStage": "PUBLISH",
+        "jobWork": 617,
+        "jobMillis": 82397,
+        "manualUnitMaxMillis": 1206,
+        "routingMillis": 15865,
+        "proofMillis": 56736,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 24692,
+          "PHYSICAL": 125,
+          "HYPOTHESES": 54286,
+          "SYMPTOM": 16,
+          "PUBLISH": 186
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 113,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 500,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 968,
+            "maxMillis": 241
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 65,
+            "millis": 10258,
+            "maxMillis": 391
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 45,
+            "millis": 6893,
+            "maxMillis": 373
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 5,
+            "millis": 463,
+            "maxMillis": 120
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 5,
+            "millis": 0,
+            "maxMillis": 0
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 60,
+            "millis": 821,
+            "maxMillis": 18
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 5,
+            "millis": 269,
+            "maxMillis": 62
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 5,
+            "millis": 437,
+            "maxMillis": 104
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 150,
+            "millis": 10687,
+            "maxMillis": 244
+          },
+          "REMOVE_SETTLE": {
+            "units": 5,
+            "millis": 1110,
+            "maxMillis": 266
+          },
+          "REPLACE_SETTLE": {
+            "units": 5,
+            "millis": 1082,
+            "maxMillis": 250
+          },
+          "POWER_ON_SETTLE": {
+            "units": 5,
+            "millis": 416,
+            "maxMillis": 94
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 65,
+            "millis": 10988,
+            "maxMillis": 525
+          },
+          "CUSTOMER_RETEST": {
+            "units": 65,
+            "millis": 9560,
+            "maxMillis": 391
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 5,
+            "millis": 80,
+            "maxMillis": 19
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 5,
+            "millis": 198,
+            "maxMillis": 42
+          }
+        },
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 86374,
+        "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+      },
+      "views": [
+        {
+          "view": "fit",
+          "fullReferences": 60,
+          "fullSecondaryText": 100,
+          "fullTextMultiset": "MATCH",
+          "visibleSecondaryCollisions": [],
+          "referenceCollisions": [],
+          "realInteractions": null
+        },
+        {
+          "view": "wheel_zoom",
+          "fullReferences": 60,
+          "fullSecondaryText": 100,
+          "fullTextMultiset": "MATCH",
+          "visibleSecondaryCollisions": [],
+          "referenceCollisions": [],
+          "realInteractions": {
+            "mousewheelSeconds": 0.2518945001065731,
+            "physicalBodySelectionAndInspectionSeconds": 0.48442350002005696,
+            "selectedPublicTitle": "U2A"
+          }
+        }
+      ],
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "7f3107aaba56c148e812b92f3f5d8d8ca74fe2b23ec4e64b6cc32ca312d3e2a6",
+        "afterSha256": "7f3107aaba56c148e812b92f3f5d8d8ca74fe2b23ec4e64b6cc32ca312d3e2a6",
+        "sourceSha256Before": "964bce1b748da2f5e6dbb6a464c843e1ba8f8eba5af3a57b0300d58d17ab6bdd",
+        "sourceSha256After": "964bce1b748da2f5e6dbb6a464c843e1ba8f8eba5af3a57b0300d58d17ab6bdd",
+        "webSha256Before": "b75865bc8d935bf436d5dadd35d9f1dad4ba5af9a219d05bc0f06f5acfbe5558",
+        "webSha256After": "b75865bc8d935bf436d5dadd35d9f1dad4ba5af9a219d05bc0f06f5acfbe5558",
+        "runnerBeforeSha256": "03bf140c483dc26467bc47aba20771b58b2959541618127764f086a477649164",
+        "runnerAfterSha256": "03bf140c483dc26467bc47aba20771b58b2959541618127764f086a477649164",
+        "fileCountBefore": 1564,
+        "fileCountAfter": 1564,
+        "seconds": 0.5344368999358267
+      },
+      "browserCleanup": {
+        "status": "PASS",
+        "seconds": 1.0598142000380903,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "caseOperationSeconds": 87.11372000002302,
+      "coldObservationSha256": "7ba48bf4212cfd6a48a769cac5431b2141fe1452d9484c28739b3adaa6df0fbe",
+      "completedJobSha256": "de29a266d81bd05521e19953573d1054770ddc096ed817b6c20176ccb67c6d9c",
+      "browserReceiptSha256": "b24a43742b1748c1a951714d48e91302d4c4afd3926ecda3546223c5514ead60"
+    },
+    {
+      "phase": "compiled-r208",
+      "sourceCommit": "525626df4d71cbd526cfdccb2eb062faac6dc42c",
+      "build": "BB9CE498943156894544DDD2CD758215",
+      "version": "current3",
+      "coldReport": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 626,
+        "generationMillis": 84183,
+        "maxManualUnitMillis": 1307,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "46be85445c75be4fa3bd43cc8e57c8dff2569a1ee60bde2cc5e0bf2d5190f354",
+        "diagnosticContextDigest": "0ed7fed507820533b119b69bb4d8c0742d5298f9dc144eb70fe452eccc281554",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      },
+      "paint": {
+        "frames": 87,
+        "millis": 1915,
+        "maxMillis": 92.5
+      },
+      "paintScope": "Green-board fill to visible double-buffer copy; includes observer overhead and any initial/post-publication paints before capture, not pure proof-only cost",
+      "completedJobAndRetirement": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 626,
+        "generationMillis": 84183,
+        "maxManualUnitMillis": 1307,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "46be85445c75be4fa3bd43cc8e57c8dff2569a1ee60bde2cc5e0bf2d5190f354",
+        "diagnosticContextDigest": "0ed7fed507820533b119b69bb4d8c0742d5298f9dc144eb70fe452eccc281554",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false,
+        "failurePhase": "HOLD",
+        "jobOutcome": "PASS",
+        "jobStage": "PUBLISH",
+        "jobWork": 626,
+        "jobMillis": 84333,
+        "manualUnitMaxMillis": 1307,
+        "routingMillis": 17505,
+        "proofMillis": 56885,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 26482,
+          "PHYSICAL": 122,
+          "HYPOTHESES": 54449,
+          "SYMPTOM": 16,
+          "PUBLISH": 150
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 122,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 500,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 963,
+            "maxMillis": 228
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 65,
+            "millis": 10742,
+            "maxMillis": 393
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 45,
+            "millis": 6869,
+            "maxMillis": 379
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 5,
+            "millis": 457,
+            "maxMillis": 119
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 5,
+            "millis": 1,
+            "maxMillis": 1
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 60,
+            "millis": 803,
+            "maxMillis": 16
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 5,
+            "millis": 263,
+            "maxMillis": 61
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 5,
+            "millis": 430,
+            "maxMillis": 101
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 150,
+            "millis": 10654,
+            "maxMillis": 247
+          },
+          "REMOVE_SETTLE": {
+            "units": 5,
+            "millis": 995,
+            "maxMillis": 232
+          },
+          "REPLACE_SETTLE": {
+            "units": 5,
+            "millis": 985,
+            "maxMillis": 229
+          },
+          "POWER_ON_SETTLE": {
+            "units": 5,
+            "millis": 425,
+            "maxMillis": 97
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 65,
+            "millis": 10985,
+            "maxMillis": 517
+          },
+          "CUSTOMER_RETEST": {
+            "units": 65,
+            "millis": 9548,
+            "maxMillis": 435
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 5,
+            "millis": 78,
+            "maxMillis": 18
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 5,
+            "millis": 201,
+            "maxMillis": 45
+          }
+        },
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 88422,
+        "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+      },
+      "views": [
+        {
+          "view": "fit",
+          "fullReferences": 60,
+          "fullSecondaryText": 100,
+          "fullTextMultiset": "MATCH",
+          "visibleSecondaryCollisions": [],
+          "referenceCollisions": [],
+          "realInteractions": null
+        },
+        {
+          "view": "wheel_zoom",
+          "fullReferences": 60,
+          "fullSecondaryText": 100,
+          "fullTextMultiset": "MATCH",
+          "visibleSecondaryCollisions": [],
+          "referenceCollisions": [],
+          "realInteractions": {
+            "mousewheelSeconds": 0.22222510003484786,
+            "physicalBodySelectionAndInspectionSeconds": 0.6804453999502584,
+            "selectedPublicTitle": "U2A"
+          }
+        }
+      ],
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+        "afterSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+        "sourceSha256Before": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+        "sourceSha256After": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+        "webSha256Before": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+        "webSha256After": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+        "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "fileCountBefore": 1564,
+        "fileCountAfter": 1564,
+        "seconds": 0.5227785999886692
+      },
+      "browserCleanup": {
+        "status": "PASS",
+        "seconds": 1.0208067999919876,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "caseOperationSeconds": 89.12981920002494,
+      "coldObservationSha256": "a5e8a5ffd0e1facb6b5e134601a1bd1bd76b6acec6b276c86aeb7b7136747521",
+      "completedJobSha256": "e04f46fb9e9b659f607130201f99ec1f922a2bdd82e95b01b12aa2421668526b",
+      "browserReceiptSha256": "b1108f31cf4925b28d69fa474d4d513732be4f7202358a1241ac1013e443c135"
+    }
+  ],
+  "observedDelta": {
+    "generationMillis": 1972,
+    "percent": 2.3987057693009453,
+    "healthyMillis": 1790,
+    "hypothesesMillis": 163,
+    "totalWork": 9,
+    "paintMillis": -310.299999833107
+  },
+  "hostReadiness": {
+    "logicalProcessors": 16,
+    "initialTotalCpuPercent": [
+      14,
+      2,
+      7
+    ],
+    "initialFreeMemoryMiB": [
+      14363.3,
+      14275.3,
+      14267.8
+    ],
+    "loadMonitorStartedUtc": "2026-10-12T20:27:55.1367111Z",
+    "loadMonitorEndedUtc": "2026-10-12T20:32:58.1422004Z",
+    "loadMonitorReceiptSha256": "3dcdf435bf168b2bacc3f7185c5bbe9429bd19502ad698f5a920f6ec8d83f888",
+    "loadSamples": [
+      {
+        "endedUtc": "2026-10-12T20:28:05.3269809Z",
+        "intervalSeconds": 10.0353036,
+        "freeMemoryMiB": 13948.1,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 85.32,
+          "ChatGPT": 12.3,
+          "rg": 6.7
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:28:15.4419649Z",
+        "intervalSeconds": 10.014479,
+        "freeMemoryMiB": 13836.5,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 112.81,
+          "qemu-system-x86_64-headless": 84.25,
+          "python": 13.26,
+          "ChatGPT": 12.64,
+          "pwsh": 5.15
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:28:25.5722966Z",
+        "intervalSeconds": 10.0198506,
+        "freeMemoryMiB": 13769.1,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 110.72,
+          "qemu-system-x86_64-headless": 84.99,
+          "ChatGPT": 11.54,
+          "rg": 6.71,
+          "python": 5.77,
+          "pwsh": 3.9
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:28:35.6668724Z",
+        "intervalSeconds": 10.0059639,
+        "freeMemoryMiB": 13322.6,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 153.81,
+          "msedge": 108.99000000000001,
+          "ChatGPT": 23.42,
+          "node": 3.12,
+          "rg": 3.12
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:28:45.7603038Z",
+        "intervalSeconds": 10.0069221,
+        "freeMemoryMiB": 13163.4,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 135.53,
+          "msedge": 105.24,
+          "ChatGPT": 12.49,
+          "python": 8.28
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:28:55.8611577Z",
+        "intervalSeconds": 10.0162317,
+        "freeMemoryMiB": 13213.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 102.02,
+          "qemu-system-x86_64-headless": 87.05,
+          "ChatGPT": 12.64,
+          "python": 8.89
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:05.9856080Z",
+        "intervalSeconds": 10.0217623,
+        "freeMemoryMiB": 13120.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 105.09,
+          "qemu-system-x86_64-headless": 82.63,
+          "ChatGPT": 13.88,
+          "python3.13": 3.12
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:16.0833733Z",
+        "intervalSeconds": 10.0056681,
+        "freeMemoryMiB": 13074.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 105.72,
+          "qemu-system-x86_64-headless": 85.58,
+          "ChatGPT": 14.68,
+          "rg": 4.53
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:26.1843768Z",
+        "intervalSeconds": 10.0109059,
+        "freeMemoryMiB": 13050.9,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 99.89,
+          "qemu-system-x86_64-headless": 83.35,
+          "ChatGPT": 13.11,
+          "rg": 4.37
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:36.2815634Z",
+        "intervalSeconds": 10.0149263,
+        "freeMemoryMiB": 13873.8,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 79.1,
+          "ChatGPT": 11.39,
+          "rg": 3.43
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:46.3578441Z",
+        "intervalSeconds": 10.0048842,
+        "freeMemoryMiB": 13869.6,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 76.06,
+          "ChatGPT": 9.06,
+          "rg": 4.37
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:29:56.4505002Z",
+        "intervalSeconds": 10.0121822,
+        "freeMemoryMiB": 13716.6,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 78.34,
+          "ChatGPT": 11.86,
+          "brave": 21.07,
+          "rg": 5.62
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:06.5357027Z",
+        "intervalSeconds": 10.0051642,
+        "freeMemoryMiB": 13592.1,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 83.08,
+          "ChatGPT": 11.87,
+          "brave": 17.18,
+          "rg": 5.47
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:16.6307972Z",
+        "intervalSeconds": 10.0100056,
+        "freeMemoryMiB": 13651.2,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 79.3,
+          "ChatGPT": 9.52,
+          "brave": 7.65,
+          "rg": 3.43
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:26.7248251Z",
+        "intervalSeconds": 10.0156862,
+        "freeMemoryMiB": 13674.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 75.04,
+          "ChatGPT": 11.23,
+          "rg": 4.99
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:36.8218914Z",
+        "intervalSeconds": 10.0189421,
+        "freeMemoryMiB": 13648.2,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 73.45,
+          "brave": 11.54,
+          "ChatGPT": 10.29,
+          "rg": 6.08
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:46.9184382Z",
+        "intervalSeconds": 10.0160277,
+        "freeMemoryMiB": 13640.3,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 85.18,
+          "ChatGPT": 10.92,
+          "python": 4.99,
+          "rg": 3.59,
+          "brave": 6.4
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:30:57.0040834Z",
+        "intervalSeconds": 10.0074009,
+        "freeMemoryMiB": 13705.7,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 78.54,
+          "python": 33.26,
+          "ChatGPT": 8.9,
+          "rg": 6.25
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:07.0992508Z",
+        "intervalSeconds": 10.014265,
+        "freeMemoryMiB": 14117.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 79.26,
+          "ChatGPT": 13.11,
+          "python": 12.79,
+          "rg": 5.77
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:17.1907858Z",
+        "intervalSeconds": 10.015421,
+        "freeMemoryMiB": 14090.7,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 80.97,
+          "ChatGPT": 12.33,
+          "rg": 5.15
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:27.2763731Z",
+        "intervalSeconds": 10.0111431,
+        "freeMemoryMiB": 14098.6,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 74.76,
+          "ChatGPT": 9.05,
+          "rg": 5.93
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:37.3665148Z",
+        "intervalSeconds": 10.0128983,
+        "freeMemoryMiB": 14081.1,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 94.72,
+          "ChatGPT": 10.92,
+          "python": 8.27,
+          "rg": 3.75
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:47.4503104Z",
+        "intervalSeconds": 10.0069842,
+        "freeMemoryMiB": 14083.4,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 79.63,
+          "ChatGPT": 10.62,
+          "python": 10.31,
+          "rg": 4.53
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:31:57.5442189Z",
+        "intervalSeconds": 10.0185918,
+        "freeMemoryMiB": 14079.9,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 76.42,
+          "ChatGPT": 8.58
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:07.6410661Z",
+        "intervalSeconds": 10.0153831,
+        "freeMemoryMiB": 13846.5,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 75.51,
+          "ChatGPT": 62.25
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:17.7399746Z",
+        "intervalSeconds": 10.0150414,
+        "freeMemoryMiB": 13450.0,
+        "observedCpuPercentOfOneCoreByName": {
+          "qemu-system-x86_64-headless": 87.37,
+          "ChatGPT": 13.26,
+          "msedge": 8.11,
+          "brave": 6.71,
+          "rg": 3.74
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:27.8310677Z",
+        "intervalSeconds": 10.0081532,
+        "freeMemoryMiB": 13478.1,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 106.48,
+          "qemu-system-x86_64-headless": 83.37,
+          "ChatGPT": 11.24,
+          "rg": 5.78
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:37.9317248Z",
+        "intervalSeconds": 10.014208,
+        "freeMemoryMiB": 13395.3,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 116.87,
+          "qemu-system-x86_64-headless": 81.91,
+          "ChatGPT": 12.64
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:48.0306401Z",
+        "intervalSeconds": 10.0186937,
+        "freeMemoryMiB": 13385.9,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 106.99000000000001,
+          "qemu-system-x86_64-headless": 84.84,
+          "ChatGPT": 13.88,
+          "rg": 4.21
+        }
+      },
+      {
+        "endedUtc": "2026-10-12T20:32:58.1397118Z",
+        "intervalSeconds": 10.0153319,
+        "freeMemoryMiB": 13313.9,
+        "observedCpuPercentOfOneCoreByName": {
+          "msedge": 105.15,
+          "qemu-system-x86_64-headless": 86.59,
+          "ChatGPT": 11.54,
+          "rg": 5.46,
+          "python3.13": 3.12
+        }
+      }
+    ],
+    "currentPhaseTailLoad": "NOT_OBSERVED_MONITOR_ENDED_BEFORE_CURRENT_PHASE_FINISHED",
+    "thermalClocksJit": "NOT_MEASURED",
+    "unrelatedAppsTerminated": false
+  },
+  "historicalTimeouts": [
+    {
+      "phase": "pcb-realism-after-r199",
+      "rawReceiptSha256": "c0a5415398bba914bd8580f7e23a729242d38f5039fed56607b7e2ef31d50467",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "failurePhase": "COLD_GENERATION",
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "jobWork": 592,
+        "jobMillis": 90043,
+        "manualUnitMaxMillis": 1318,
+        "routingMillis": 0,
+        "proofMillis": 0,
+        "jobStageMillis": {
+          "RESOLVE": 0,
+          "HEALTHY": 27162,
+          "PHYSICAL": 156,
+          "HYPOTHESES": 59753,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 114,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 476,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 1206,
+            "maxMillis": 260
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 65,
+            "millis": 12398,
+            "maxMillis": 394
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 45,
+            "millis": 7984,
+            "maxMillis": 393
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 5,
+            "millis": 553,
+            "maxMillis": 131
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 5,
+            "millis": 0,
+            "maxMillis": 0
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 60,
+            "millis": 944,
+            "maxMillis": 19
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 5,
+            "millis": 308,
+            "maxMillis": 68
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 5,
+            "millis": 511,
+            "maxMillis": 106
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 150,
+            "millis": 12819,
+            "maxMillis": 247
+          },
+          "REMOVE_SETTLE": {
+            "units": 5,
+            "millis": 1123,
+            "maxMillis": 230
+          },
+          "REPLACE_SETTLE": {
+            "units": 5,
+            "millis": 1116,
+            "maxMillis": 235
+          },
+          "POWER_ON_SETTLE": {
+            "units": 5,
+            "millis": 473,
+            "maxMillis": 101
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 56,
+            "millis": 11308,
+            "maxMillis": 539
+          },
+          "CUSTOMER_RETEST": {
+            "units": 52,
+            "millis": 8771,
+            "maxMillis": 403
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 4,
+            "millis": 70,
+            "maxMillis": 18
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 4,
+            "millis": 184,
+            "maxMillis": 49
+          }
+        },
+        "qualifiedPublication": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 90096,
+        "failure": "Deadline: Generation wall budget exhausted"
+      }
+    },
+    {
+      "phase": "pcb-realism-after-r201",
+      "rawReceiptSha256": "82d0dec9db7dc051ea2ec3b0502085aad14fa2e9f07debb89cf295368d6f0a08",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "failurePhase": "COLD_GENERATION",
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "jobWork": 523,
+        "jobMillis": 90155,
+        "manualUnitMaxMillis": 1940,
+        "routingMillis": 0,
+        "proofMillis": 0,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 33370,
+          "PHYSICAL": 171,
+          "HYPOTHESES": 53985,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 114,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 407,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 1171,
+            "maxMillis": 254
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 58,
+            "millis": 11294,
+            "maxMillis": 425
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 36,
+            "millis": 7497,
+            "maxMillis": 387
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 4,
+            "millis": 487,
+            "maxMillis": 129
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 4,
+            "millis": 0,
+            "maxMillis": 0
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 48,
+            "millis": 789,
+            "maxMillis": 21
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 4,
+            "millis": 251,
+            "maxMillis": 67
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 4,
+            "millis": 399,
+            "maxMillis": 109
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 120,
+            "millis": 10794,
+            "maxMillis": 255
+          },
+          "REMOVE_SETTLE": {
+            "units": 4,
+            "millis": 899,
+            "maxMillis": 229
+          },
+          "REPLACE_SETTLE": {
+            "units": 4,
+            "millis": 882,
+            "maxMillis": 236
+          },
+          "POWER_ON_SETTLE": {
+            "units": 4,
+            "millis": 384,
+            "maxMillis": 98
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 52,
+            "millis": 10126,
+            "maxMillis": 527
+          },
+          "CUSTOMER_RETEST": {
+            "units": 52,
+            "millis": 8756,
+            "maxMillis": 386
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 4,
+            "millis": 77,
+            "maxMillis": 25
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 4,
+            "millis": 194,
+            "maxMillis": 50
+          }
+        },
+        "qualifiedPublication": false,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 90207,
+        "failure": "Deadline: Generation wall budget exhausted"
+      }
+    }
+  ],
+  "diagnosis": {
+    "conclusion": "No90-second deadline regression reproduced on final525 source; one pair observes current1.972s/slightly more HEALTHY work, near-identical diagnostic stage and lower sampled paint duration. No production fix justified by these observations.",
+    "historicalTimeoutCause": "UNKNOWN",
+    "placementCostBoundary": "HEALTHY includes layout materialization; PHYSICAL is validation/dependency capture",
+    "rendererBoundary": "Private proof can render through fresh private controllers, but measured paint upper bounds are about2seconds in this pair",
+    "causalityLimits": "Single fixed-order pair; sparse load samples exclude new processes until revalidated and miss current tail; no thermal/JIT census or population/causal-speed claim"
+  },
+  "ready": {
+    "currentActualColdAndFitWheelInputPartCounts": [
+      40,
+      42,
+      44,
+      53,
+      60
+    ],
+    "routingOnlyPartCounts": [
+      54
+    ],
+    "currentActualSavedRepairRetest": "44_PART_PRIVATE3",
+    "current60InteractiveRepair": "NOT_RUN_HISTORICAL_Q60_SERVICE_PROOF_SEPARATE",
+    "humanU05": "NOT_RUN_DAVE_SEPARATE",
+    "publicHardNormalRb56": "HELD",
+    "modestHost": "OWNER_DEFERRED_NOT_RUN"
+  },
+  "images": [
+    {
+      "path": "after60-fit.png",
+      "sha256": "f90f2f0ca49eb4d5a355b13f87d55645527dcbd0a796a2f4bc5955cc663243eb",
+      "rootInspected": true,
+      "scope": "CURRENT525_REAL60_VIEW"
+    },
+    {
+      "path": "after60-wheel_zoom.png",
+      "sha256": "77876384d618186baa71597c254a8e8042ad85dddae5a92f7c1538684f6ffcc3",
+      "rootInspected": true,
+      "scope": "CURRENT525_REAL60_VIEW"
+    }
+  ],
+  "originalEightPreserved": true,
+  "ownedRuntimeRemaining": false,
+  "noEmail": true
+}

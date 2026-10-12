@@ -1,4 +1,32 @@
-# Current checkpoint: finite PCB realism PASS; fresh60 cold proof HELD
+# Current checkpoint: private60 cold/render PASS; U05 human findings next
+
+2026-10-12. No production changes over verified `525626df4d71cbd526cfdccb2eb062faac6dc42c`
+on `codex/q60-faulted-profile-counts`, GWT `BB9CE498943156894544DDD2CD758215`.
+One predeclared prior933/current525 pair resolves missing final-source60 cold
+proof: current84.183s/626 of640/max unit1.307s, all5 hypotheses/60 solver samples,
+actual ticket/fit/wheel/body inspection and exact retirement PASS. Prior control
+82.211s/617/max1.206s. Diagnostic500 units match; observed +1.972s is mainly HEALTHY
+(layout/profile preparation), not increased paint. Paint upper bounds2.225/1.915s.
+Single pair/sparse load/missing current-tail/thermal/JIT data preclude causal claims.
+
+Isolated prior JDK8/GWT51 PASS108.343s/all5/exact82ED build; headed207/208
+PASS91.946/92.151s hosts. Final current21 source hashes and1564 source/served inputs
+match the published native192/GWT50/headed205 evidence; reuse audit PASS.
+[Sealed comparison and two inspected current60 captures](task-evidence/PCB/cold60-comparison-r1/README.md),
+SHA `03dc96a9bab12c18e1dc1f7aa1e4d117b447bed0082974867b315ead3a65b0e8`. Original90s/640/5s, geometry/electrical/label/save rules remain.
+Both historical90,043/90,155ms TIMEOUTs stay FAIL/unknown cause; they were intermediate
+sources and are not relabeled. No speculative code fix or unchanged long loop.
+
+Curated40/42/44/53/60 have actual current cold/render/input proof;54 native routing
+only. Current44 has actual file/service/retest proof; fresh current60 interactive
+repair is NOT RUN (historical60 repair remains separate). Human U05 NOT RUN,
+public HARD+normal RB56 release HELD; modest host owner-deferred/RPG shelved.
+Next: Dave's existing qualitative U05 trial, then finite REL-B normal population/
+retry/diversity/release qualification. Original8/accepted saves byte preserved;
+tracked production unchanged, all task runtimes/browser/localhost/monitor exited.
+No email/Core/Android/C4130/GPU/protected-main merge or unrelated repo changes.
+
+# Historical checkpoint: finite PCB realism PASS; fresh60 cold proof then HELD
 
 2026-10-12. Candidate over published `933ace2643efc364db785f067fb79cc703b28aa6`
 on `codex/q60-faulted-profile-counts`; actual GWT `BB9CE498943156894544DDD2CD758215`.

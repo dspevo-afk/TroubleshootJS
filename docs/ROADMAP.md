@@ -7,7 +7,18 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Finite PCB realism checkpoint qualified; fresh60 cold proof held**
+**Current task:** **Current private60 cold/render qualified; U05 human findings next**
+Final525626df now passes the missing60 cold proof at84.183s/626 work/max1.307s
+under original90s/640/5s, with actual fit/wheel/body input and cleanup. One exact
+prior/current pair gives82.211/84.183s; diagnostic500 units match and paint is lower
+on current. Small observed HEALTHY cost increase is not a causal regression claim;
+historical timeouts stay FAIL/unknown and no production fix was made.
+Current curated40/42/44/53/60 actual cold/render gates pass;54 native routing only.
+Dave's separate qualitative U05 trial remains NOT RUN, then finite REL-B normal
+population/retry/diversity/release proof. HARD/public advanced release remains
+HELD; modest-host owner-deferred/RPG shelved. [Comparison/limits](task-evidence/PCB/cold60-comparison-r1/README.md).
+
+**Previous PCB checkpoint:** **Finite realism qualified;60 cold proof then held**
 Private placement3 adds bounded semantic grouping/edge hints, complete readable
 terminal banks and owner-required P07 selection. Six predeclared routed fixtures
 pass actual RB56 admission; saved1/2 remain exact. Native192/GWT50/all5/headed205
@@ -15,7 +26,7 @@ pass actual RB56 admission; saved1/2 remain exact. Native192/GWT50/all5/headed20
 40/44 area falls3.88%/3.56%,42-part seed-0 spans/copper shorten, others retain geometry;
 tradeoffs are mixed. Fresh60 cold proof timed out twice in HYPOTHESES and remains
 UNQUALIFIED/HELD, with cause unknown and no third unchanged retry or budget change.
-Next meaningful software result is that missing cold proof; existing qualitative
+At that checkpoint the missing cold proof was next; existing qualitative
 U05 observations may proceed independently before finite REL-B normal population/
 release qualification. Human NOT RUN/public HARD+RB56 release HELD, modest-host
 owner-deferred/RPG shelved. [Realism evidence](task-evidence/PCB/realism-r1/README.md),

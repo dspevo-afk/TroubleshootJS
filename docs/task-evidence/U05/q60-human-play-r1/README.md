@@ -9,8 +9,9 @@ requests use placement 3; existing saves retain their original 1/2 geometry. The
 electrical 44-part regression seed and default human URL below remain. Public replay
 `tsj-alpha/5`, dependency epoch 16 and default persistence availability stay. Headed205
 checks actual views/input, and headed206 checks opt-in files/repair/retest; neither
-supplies human findings. The private 44-part flow passes; separate fresh 60-part cold proof
-is held after two timeouts. Earlier compact/build evidence remains historical.
+supplies human findings. The private 44-part file/service flow passes. Final60 cold/render proof now also
+passes within90 seconds; [its paired evidence](../../PCB/cold60-comparison-r1/README.md)
+retains the two intermediate timeouts and limits. Earlier compact/build evidence remains historical.
 
 Start the existing foreground preview from the repository:
 
