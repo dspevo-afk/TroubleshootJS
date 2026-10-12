@@ -25,13 +25,22 @@ public class Graphics {
 	  /** Immutable browser-measured text state for render-only label placement. */
 	  static final class MeasuredText {
 	      final String id, text, font, fillStyle, textAlign, textBaseline, metricKind;
+	      final String annotationBankId;
+	      final int annotationBankOrder;
 	      final int ownerX, ownerY, originalX, originalY, fontSize;
 	      final double width, left, right, ascent, descent, alpha;
 	      final double a, b, c, d, e, f;
 	      MeasuredText(String id, String text, int ownerX, int ownerY, int x, int y,
 	              int fontSize, double[] m, String[] state) {
+	          this(id,text,ownerX,ownerY,x,y,fontSize,m,state,null,-1);
+	      }
+	      MeasuredText(String id, String text, int ownerX, int ownerY, int x, int y,
+	              int fontSize, double[] m, String[] state, String annotationBankId,
+	              int annotationBankOrder) {
 	          this.id=id; this.text=text; this.ownerX=ownerX; this.ownerY=ownerY;
 	          originalX=x; originalY=y; this.fontSize=fontSize;
+	          this.annotationBankId=annotationBankId;
+	          this.annotationBankOrder=annotationBankOrder;
 	          width=m[0]; left=m[1]; right=m[2]; ascent=m[3]; descent=m[4];
 	          a=m[5]; b=m[6]; c=m[7]; d=m[8]; e=m[9]; f=m[10]; alpha=m[11];
 	          metricKind=m[12] == 1 ? "CANVAS_ACTUAL" : "WIDTH_FONT_HEIGHT_FALLBACK";
@@ -121,14 +130,26 @@ public class Graphics {
 
 	  /** Only explicit installed-provider legends call this method. */
 	  void drawProviderLabel(String id, String text, int ownerX, int ownerY, int x, int y) {
+	      drawProviderLabel(id,text,null,-1,ownerX,ownerY,x,y);
+	  }
+
+	  /** Optional source-ordered group metadata is used only for installed terminal banks. */
+	  void drawProviderLabel(String id, String text, String annotationBankId,
+	          int annotationBankOrder, int ownerX, int ownerY, int x, int y) {
 	      if (providerTextCollector == null) {
 	          context.fillText(text, x, y);
 	          return;
 	      }
-	      providerTextCollector.capture(measureText(id,text,ownerX,ownerY,x,y));
+	      providerTextCollector.capture(measureText(id,text,ownerX,ownerY,x,y,
+	          annotationBankId,annotationBankOrder));
 	  }
 
 	  MeasuredText measureText(String id, String text, int ownerX, int ownerY, int x, int y) {
+	      return measureText(id,text,ownerX,ownerY,x,y,null,-1);
+	  }
+
+	  MeasuredText measureText(String id, String text, int ownerX, int ownerY, int x, int y,
+	          String annotationBankId, int annotationBankOrder) {
 	      double[] m=new double[13];
 	      String[] state=new String[4];
 	      measureNative(context,text,m,state);
@@ -136,7 +157,8 @@ public class Graphics {
 	          m[1]=0; m[2]=m[0];
 	          m[3]=Math.max(1,currentFontSize*0.8); m[4]=Math.max(1,currentFontSize*0.2);
 	      }
-	      return new MeasuredText(id,text,ownerX,ownerY,x,y,currentFontSize,m,state);
+	      return new MeasuredText(id,text,ownerX,ownerY,x,y,currentFontSize,m,state,
+	          annotationBankId,annotationBankOrder);
 	  }
 
 	  void drawMeasuredText(MeasuredText text, int x, int y) {

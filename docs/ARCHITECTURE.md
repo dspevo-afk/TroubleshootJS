@@ -5441,3 +5441,29 @@ electrical graph, conductor targets or saved geometry. Affine text/leader coordi
 are handled explicitly. [Finite current proof](task-evidence/PCB/compactness-r1/README.md)
 contains the exact before/after dimensions, legacy3 SHA match, actual via witness,
 fit/wheel full-text checks and real private1/private2 file reconstruction/retests.
+
+
+## Current private functional grouping and terminal banks
+
+Fresh private RB56 placement3 is distinct from saved legacy1/compact2. The
+versioned request, staged plan, constraints, dependency identity and private replay
+bind it before cache lookup; capture checks the actual owner and restore commits
+the saved request only after successful publication/retirement. Public alpha5,
+session/model1 and epoch16 remain. Electrical choices/values/faults/random seeds
+continue through the existing plan; grouping reads its existing domain/region and
+connectivity declarations. Two grouped, two established compact and two roomy
+alternatives share the original six-placement/three-per-policy routing caps.
+
+`PcbPlacementConstraints.requiresTwoLayerRouting` defaults false for existing
+callers and is true only for private RB56 placement 3. Its dependency field is conditional,
+preserving saved1/2 bytes. Required owners use the original three P07 candidates
+even after a P05 success, and selection fails closed without a real accepted P07
+winner. Actual RB56 admission remains unchanged and verifies the receipt/geometry.
+
+The provider collector carries stable terminal-bank owner/order metadata.
+`PcbScreenLabelLayout` tries complete ordered columns only for collinear owners,
+using full ink metrics and existing obstacles/minimum font limits. Mixed-edge
+parts and impossible banks retain individual full-text placement/fallback. The
+view cache includes bank identity/order; projection remains presentation state,
+without changing copper, probe/service targets or saved realization.
+[Finite native/actual-input/file proof and held60 boundary](task-evidence/PCB/realism-r1/README.md).

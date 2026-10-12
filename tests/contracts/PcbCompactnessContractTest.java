@@ -103,7 +103,7 @@ public final class PcbCompactnessContractTest {
 
     private static void runCase(RootCase root, String mode) {
         Rb56Plan plan = Rb56Plan.resolve(root.seed, "baseline".equals(mode) ?
-            Rb56Placement.LEGACY_VERSION : Rb56Placement.CURRENT_VERSION);
+            Rb56Placement.LEGACY_VERSION : Rb56Placement.COMPACT_VERSION);
         require(plan.physicalPackageCount() == root.packages,
             "resolved package count is the independent fixed expectation for seed " + root.seed);
         TroubleshootBoard board = plan.board();
@@ -140,6 +140,11 @@ public final class PcbCompactnessContractTest {
             "the reported route is the actual selected P07 two-layer candidate");
 
         PcbBoardLayout layout = result.getLayout();
+        if ("report".equals(mode)) {
+            if(root.seed==-1017L) require("84eff3d9cb6e087578873a79fc9e8db72271b6fa653c309a79cfcedbee9d9a25".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1017");
+            if(root.seed==-1004L) require("a05b554248d83dd2b8c1dc9e8fb8e7e05a70081323e6e0383a6e673f5276de61".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1004");
+            if(root.seed==-1022L) require("eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1022");
+        }
         layout.validateGeometry(board);
         new PcbTwoLayerRules(board, layout).validate(layout);
         PcbTraceClearance.Statistics clearance = PcbTraceClearance.validate(layout.getTraces());

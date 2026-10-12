@@ -74,6 +74,7 @@ final class PcbPlacementConstraints {
     final String physicalPolicyId;
     final int physicalPolicyVersion;
     final int placementDensityVersion;
+    final boolean requiresTwoLayerRouting;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
         this(declarations,barriers,PcbCopperLayer.TOP);
     }
@@ -87,7 +88,13 @@ final class PcbPlacementConstraints {
     }
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
             PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion) {
-        if (densityVersion != 1 && densityVersion != 2)
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion, false);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting) {
+        this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3)
             throw new IllegalArgumentException("Unknown placement density interpretation");
         placementDensityVersion = densityVersion;
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");

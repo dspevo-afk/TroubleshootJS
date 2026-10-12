@@ -23,10 +23,7 @@ final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamily
                 throw new IllegalArgumentException("Private RB56 placement version leaked into a normal request");
             return new ResolvedPlan(Rb56Plan.resolve(seed));
         }
-        if (request.rb56PlacementInterpretationVersion !=
-                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY &&
-                request.rb56PlacementInterpretationVersion !=
-                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT)
+        if (!Rb56Placement.supportsVersion(request.rb56PlacementInterpretationVersion))
             throw new IllegalArgumentException("Versioned RB56 placement requires a supported private interpretation");
         return new ResolvedPlan(Rb56Plan.resolve(seed,
             request.rb56PlacementInterpretationVersion));

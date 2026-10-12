@@ -354,6 +354,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
                 .append(t.right).append(',').append(t.ascent).append(',').append(t.descent)
                 .append('|').append(t.metricKind).append('|').append(t.textAlign).append('|')
                 .append(t.textBaseline).append('|').append(t.alpha)
+                .append('|').append(t.annotationBankId).append('|')
+                .append(t.annotationBankOrder)
                 .append('|').append(t.a).append(',').append(t.b).append(',').append(t.c)
                 .append(',').append(t.d).append(',').append(t.e).append(',').append(t.f).append(';');
         }

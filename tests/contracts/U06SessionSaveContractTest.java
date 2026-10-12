@@ -76,12 +76,28 @@ public final class U06SessionSaveContractTest {
     }
 
     private static void verifyPrivatePlacementReplayWire() {
-        GenerationRequest compactRequest =
+        GenerationRequest currentRequest =
             GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 77L);
-        GenerationRequest legacyRequest = compactRequest.withRb56PlacementInterpretationVersion(
+        GenerationRequest compactRequest = currentRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT);
+        GenerationRequest legacyRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
-        for (final GenerationRequest request : new GenerationRequest[] {legacyRequest, compactRequest}) {
+        GenerationRequest[] requests = new GenerationRequest[] {
+            legacyRequest, compactRequest, currentRequest
+        };
+        String[] expected = new String[] {
+            "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/RB56_CONTROL/77",
+            "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-2/RB56_CONTROL/77",
+            "tsj-private-session/3/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-3/RB56_CONTROL/77"
+        };
+        for (int i = 0; i < requests.length; i++) {
+            final GenerationRequest request = requests[i];
             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
+            check(expected[i].equals(identity.canonical()),
+                "private placement " + (i + 1) + " keeps its exact replay identity");
             PlayerSessionSave save = new PlayerSessionSave(identity.canonical(), "build",
                 "realization", "signature", new Vector<PlayerSessionSave.Operation>(),
                 new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>(),
@@ -94,6 +110,9 @@ public final class U06SessionSaveContractTest {
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
                 "versioned private replay survives existing model-1 file framing");
         }
+        check(currentRequest.getRb56PlacementInterpretationVersion() ==
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
+            "new private RB56 requests default to placement 3");
     }
 
     private static void verifyOperationsAndCopies() {

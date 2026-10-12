@@ -7,6 +7,7 @@ import java.util.Map;
 final class GenerationRequest {
     static final int RB56_PLACEMENT_INTERPRETATION_LEGACY = 1;
     static final int RB56_PLACEMENT_INTERPRETATION_COMPACT = 2;
+    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 3;
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;
@@ -63,8 +64,7 @@ final class GenerationRequest {
         String familyId = composition ? ControlledIndicatorBlockContributions.FAMILY_ID :
             descriptor.getDeviceIntent().getId();
         if (qualification && Rb56Plan.FAMILY_ID.equals(familyId)) {
-            if (requestedRb56PlacementInterpretationVersion != RB56_PLACEMENT_INTERPRETATION_LEGACY &&
-                    requestedRb56PlacementInterpretationVersion != RB56_PLACEMENT_INTERPRETATION_COMPACT)
+            if (!Rb56Placement.supportsVersion(requestedRb56PlacementInterpretationVersion))
                 throw new IllegalArgumentException("Unknown private RB56 placement interpretation");
         } else if (requestedRb56PlacementInterpretationVersion != 0) {
             throw new IllegalArgumentException("RB56 placement interpretation is private-family-only");
@@ -99,7 +99,7 @@ final class GenerationRequest {
             boolean composition, boolean qualification) {
         return qualification && !composition && descriptor != null &&
             Rb56Plan.FAMILY_ID.equals(descriptor.getDeviceIntent().getId()) ?
-            RB56_PLACEMENT_INTERPRETATION_COMPACT : 0;
+            RB56_PLACEMENT_INTERPRETATION_CURRENT : 0;
     }
 
     static GenerationRequest leaf(String familyId, long seed, boolean quickPlay) {
@@ -237,8 +237,7 @@ final class GenerationRequest {
     /** Select a saved private RB56 interpretation before canonicalization or cache lookup. */
     GenerationRequest withRb56PlacementInterpretationVersion(int version) {
         if (!isPrivateDiagnosticQualification() || !Rb56Plan.FAMILY_ID.equals(getFamilyId()) ||
-                (version != RB56_PLACEMENT_INTERPRETATION_LEGACY &&
-                    version != RB56_PLACEMENT_INTERPRETATION_COMPACT))
+                !Rb56Placement.supportsVersion(version))
             throw new IllegalArgumentException("Placement version applies only to an exact private RB56 request");
         return new GenerationRequest(descriptor, composition, quickPlay, difficulty,
             candidateSearch, privateQualification, normalExecutionPolicy, stagedFamily,

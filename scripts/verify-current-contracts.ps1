@@ -394,6 +394,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'QuickPlayContractTest'; Marker = 'Quick Play current seed envelopes and construction' },
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
         @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
+        @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
         @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
         @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },

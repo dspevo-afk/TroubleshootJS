@@ -814,7 +814,9 @@ final class StandardPhysicalPartRenderProviders {
                 Point point = terminal.getBoardPadPoint();
                 if (point != null)
                     graphics.drawProviderLabel(context.getComponentId()+"/provider/"+
-                        terminal.getTerminalIndex(),terminal.getTerminalId(),point.x,point.y,
+                        terminal.getTerminalIndex(),terminal.getTerminalId(),
+                        context.getComponentId()+"/terminal-bank",
+                        terminal.getTerminalIndex(),point.x,point.y,
                         point.x+context.scale(9),point.y-context.scale(9));
             }
             context.markBodyDrawn();

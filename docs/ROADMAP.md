@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Compact private PCB layouts/labels qualified; human U05 observations next**
+**Current task:** **Finite PCB realism checkpoint qualified; fresh60 cold proof held**
+Private placement3 adds bounded semantic grouping/edge hints, complete readable
+terminal banks and owner-required P07 selection. Six predeclared routed fixtures
+pass actual RB56 admission; saved1/2 remain exact. Native192/GWT50/all5/headed205
+(actual40/44/42/53 views) and206(real3->1->2->3 files/repair/retests) pass.
+40/44 area falls3.88%/3.56%,42-part seed-0 spans/copper shorten, others retain geometry;
+tradeoffs are mixed. Fresh60 cold proof timed out twice in HYPOTHESES and remains
+UNQUALIFIED/HELD, with cause unknown and no third unchanged retry or budget change.
+Next meaningful software result is that missing cold proof; existing qualitative
+U05 observations may proceed independently before finite REL-B normal population/
+release qualification. Human NOT RUN/public HARD+RB56 release HELD, modest-host
+owner-deferred/RPG shelved. [Realism evidence](task-evidence/PCB/realism-r1/README.md),
+[current checkpoint](CODEX_TASK_REPORT.md). No unchanged Q30 corpus rerun/Q100.
+
+**Previous accepted compact checkpoint:** **Private PCB layouts/labels qualified**
 Dave's 2026-10-12 pre-play priority is implemented and qualified over published
 `7d733a10bb203a1cda7b8f55409cb9b1b6e11cd2`. Fixed40/44/60 board area falls14.58%/16.51%/11.59%;
 full labels pass actual fit/wheel checks. Native184(11 suites), actual GWT46(all5),

@@ -262,7 +262,9 @@ class SeededPcbLayoutGenerator {
             session.mediumRankedAttempts.add(Integer.valueOf(candidate.attempt));
             session.mediumPlacementScores.add(candidate.toCanonical());
         }
-        if (session.board.getPlacementConstraints().placementDensityVersion == 2)
+        if (session.board.getPlacementConstraints().placementDensityVersion == 3)
+            session.mediumPlacements = prioritizeGroupedPlacementRouteCandidates(session.mediumPlacements);
+        else if (session.board.getPlacementConstraints().placementDensityVersion == 2)
             session.mediumPlacements = prioritizeLegacyPlacementRouteCandidate(session.mediumPlacements);
         if (session.mediumPlacements.isEmpty())
             return finishMediumFailure(session);
@@ -275,11 +277,13 @@ class SeededPcbLayoutGenerator {
             boolean twoLayer) {
         int limit = Math.min(MediumBoardPhysicalPolicy.ROUTING_CANDIDATES,
             session.mediumPlacements.size());
-        if (twoLayer && session.mediumOneFaceSuccesses > 0)
+        if (twoLayer && session.mediumOneFaceSuccesses > 0 &&
+                !session.board.getPlacementConstraints().requiresTwoLayerRouting)
             limit = Math.min(1, limit);
         if (session.mediumRouteAttempt < limit) {
             int candidateIndex = session.mediumRouteAttempt;
             if (twoLayer && session.mediumOneFaceSuccesses > 0 &&
+                    !session.board.getPlacementConstraints().requiresTwoLayerRouting &&
                     session.mediumRouteAttempt == 0) {
                 candidateIndex = mediumPlacementIndex(session,
                     session.mediumOneFacePlacementAttempt);
@@ -426,6 +430,25 @@ class SeededPcbLayoutGenerator {
         return result;
     }
 
+    private static boolean compactPlacementInterpretation(PcbPlacementConstraints constraints) {
+        return constraints.placementDensityVersion == 2 || constraints.placementDensityVersion == 3;
+    }
+
+    /** One grouped, one established compact, one roomy candidate in the same route budget. */
+    private static Vector<MediumBoardPhysicalPolicy.PlacementCandidate>
+            prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked) {
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> selected=
+            new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>();
+        for(int category=0;category<3;category++)
+            for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
+                if(candidate.attempt/2==category) {selected.add(candidate);break;}
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result=
+            new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(selected);
+        for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
+            if(!selected.contains(candidate))result.add(candidate);
+        return result;
+    }
+
     private static String routeFailure(boolean twoLayer,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate, String detail) {
         return (twoLayer ? MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER :
@@ -447,7 +470,7 @@ class SeededPcbLayoutGenerator {
         double score = layout.getRouteQualityScore(session.board);
         Rectangle bounds = layout.getBoardOutline();
         long area = (long) bounds.width * bounds.height;
-        boolean preferCompact = session.board.getPlacementConstraints().placementDensityVersion == 2;
+        boolean preferCompact = compactPlacementInterpretation(session.board.getPlacementConstraints());
         if (twoLayer) {
             if (mediumRouteCandidateBetter(score, area, candidate,
                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,
@@ -503,10 +526,15 @@ class SeededPcbLayoutGenerator {
             (session.mediumTwoLayerLayout != null &&
                 MediumBoardPhysicalPolicy.materiallyBetterTwoLayer(
                     session.mediumTwoLayerQuality, session.mediumOneFaceQuality));
-        if (session.board.getPlacementConstraints().placementDensityVersion == 2 &&
+        if (compactPlacementInterpretation(session.board.getPlacementConstraints()) &&
                 session.mediumOneFaceLayout != null && session.mediumTwoLayerLayout != null &&
                 session.mediumOneFaceArea != session.mediumTwoLayerArea)
             chooseTwoLayer = session.mediumTwoLayerArea < session.mediumOneFaceArea;
+        // A declared owner requirement takes precedence over optional area/quality selection.
+        if (session.board.getPlacementConstraints().requiresTwoLayerRouting) {
+            if (session.mediumTwoLayerLayout == null) return false;
+            chooseTwoLayer = true;
+        }
         if (chooseTwoLayer) {
             session.bestLayout = session.mediumTwoLayerLayout;
             session.bestArea = session.mediumTwoLayerArea;
@@ -576,7 +604,7 @@ class SeededPcbLayoutGenerator {
                 "P07_FULLER_TWO_LAYER:" + result.outcome);
         return finishRoutedPlan(board, (int) ((seed % 4 + 4) % 4), candidate.plan,
             result.layout, null,
-            board.getPlacementConstraints().placementDensityVersion == 2);
+            compactPlacementInterpretation(board.getPlacementConstraints()));
     }
 
     private PcbBoardLayout generateAttempt(TroubleshootBoard board, long seed,

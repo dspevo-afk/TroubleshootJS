@@ -1,0 +1,1535 @@
+{
+  "schema": 1,
+  "status": "PASS_FINITE_LAYOUT_LABEL_SAVE_FLOW_SCOPE_FRESH60_COLD_HELD",
+  "baseCommit": "933ace2643efc364db785f067fb79cc703b28aa6",
+  "createdUtc": "2026-10-12T20:08:20.099263+00:00",
+  "build": "BB9CE498943156894544DDD2CD758215",
+  "sourceFiles": {
+    "scripts/verify-current-contracts.ps1": "c9e2ae672728642b7fb57a4c8c280dd2d1f4121f2f2e81cdd889b2e02bd2f07b",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "63f5aa789a8550beca488642ebd2a4883800166c3e17c255802221e481009b14",
+    "src/com/lushprojects/circuitjs1/client/Graphics.java": "ef29afcfef6404d7ad7bb5b86b1e028f25af07334a448de2e26e7b3a0b5227ab",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "e7084f2fe22604a398cda1009e8422803c45d9f1f774171186fa790e368ef118",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "d5e8c8b1770f94f5e2aca5949c728e7ace52c93c09ee58368f3bc19790846c40",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "b2119e422d0b582c36a3e4e485b14dac9206d0f2d73999f35190e938be8cd8e4",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "828f588f1b53344f61e2b5d0553fdb9f85842b94bf051f069921defb73a85725",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "ff71a7124fa9882fa94bb6380d14860c5dff8ac185dda87b0254d0f8ed6c40e0",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "d1beba9fde90b53263b75b19b96b36c23902e5d23720e729d2a597b4d413fb7d",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+    "src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java": "3d54cd35bfe2f889b6df75fc93de163a9cfac6b9f9f40ec0d401cb158580de7a",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "80e8678e51e0e755e18969722e3cee0c3a03a9cedf0c112708b4dd55e72b957f",
+    "src/com/lushprojects/circuitjs1/client/StagedFamilyCapability.java": "968326efa090eaa7e93eebec7c938b127006cada16f57401e8fd8f2a5904a04f",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "5951d3ff55b2976c08fbb39f898486f9f543bb7a8d5de3af4631af9965095986",
+    "tests/contracts/PcbCompactnessContractTest.java": "85e7781b88f94baa306b2d1be48fe22919955449648135c806ed67b7264e6f5c",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "e5c25c4553e2a1d661e44e6253399d224aa468cd2e5883df2d494f8f211e6736",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "de4665a578156c1871f596a3a4e198a90ed0d3913db74b6e6d84da1ab8fdbb36",
+    "tests/contracts/Rb56SessionBackingContractTest.java": "374de6dc68f9deadf8faf42ad38628c47b1caff79b2bd09623ac08497ec52dd7",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "c67541232f76506dcb896c62f40dd22461bc95b8bebec07d4146f7c5c1504457",
+    "tests/contracts/U06SessionSaveContractTest.java": "1849eb399ab8984406d8de90e32447f2fddb133f28ede84482e4c5e90e41bb42",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "8a1b3a1e4bdb1c6c8fa9d8374309a6e3d62c62ded8e6a68062f2548d6bfaf4db"
+  },
+  "sourceFreezeSha256": "2f758b9a4c767cc8cd6a57e3b569ce91fd7f7abd288e419a8d876d41544840d2",
+  "gates": [
+    {
+      "phase": "native-r192",
+      "status": "PASS",
+      "operationSeconds": 103.342,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "a8e54e2224fd173d324e164fba390cefaf25806cbb0cd4c3cc121935e48df41a"
+    },
+    {
+      "phase": "build-r50",
+      "status": "PASS",
+      "operationSeconds": 108.269,
+      "hostDeadlineMs": 1100000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "de9bc6c3cd870ba80dc1300421df10ab0d21cdb7e285af187ba4f1bfda9b0c26"
+    },
+    {
+      "phase": "compiled-r205",
+      "status": "PASS",
+      "operationSeconds": 242.076,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "b0d897ac6b8444d6a775c8548ac5469da393c807ffc18dc02624880549e53de1"
+    },
+    {
+      "phase": "compiled-r206",
+      "status": "PASS",
+      "operationSeconds": 187.552,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "14657aa12c735de5f8427b7aac1cb3181f33cf93c5e5caa53323f2aefccd2655"
+    }
+  ],
+  "labelHelperReuse": {
+    "status": "PASS_LABEL_HELPER_INPUTS_UNCHANGED",
+    "reusedPhase": "native-r190",
+    "assertions": 260,
+    "unchangedFiles": {
+      "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "b2119e422d0b582c36a3e4e485b14dac9206d0f2d73999f35190e938be8cd8e4",
+      "tests/contracts/PcbScreenLabelLayoutContractTest.java": "de4665a578156c1871f596a3a4e198a90ed0d3913db74b6e6d84da1ab8fdbb36",
+      "src/com/lushprojects/circuitjs1/client/Graphics.java": "ef29afcfef6404d7ad7bb5b86b1e028f25af07334a448de2e26e7b3a0b5227ab",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "828f588f1b53344f61e2b5d0553fdb9f85842b94bf051f069921defb73a85725",
+      "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "5951d3ff55b2976c08fbb39f898486f9f543bb7a8d5de3af4631af9965095986"
+    },
+    "scope": "Pure measured-label helper and independent contract fixtures unchanged. Final generator/identity/dependencies/admission freshly tested by native192; production integration freshly rebuilt by GWT50; actual input/files fresh205/206. No reuse claim for 60 cold qualification."
+  },
+  "labelHelperGate": {
+    "phase": "native-r190",
+    "status": "PASS",
+    "operationSeconds": 26.558,
+    "hostDeadlineMs": 600000,
+    "sourceInputsUnchanged": true,
+    "handlesClosed": true,
+    "ownedCleanupVerified": true,
+    "receiptSha256": "442885055e002396810d2f1eb018ccf18a9ea33be2415028f2b4db4f7c807d08"
+  },
+  "geometry": {
+    "status": "PASS_FINITE_SIX_ROOT_ROUTED_GEOMETRY_ACTUAL_ADMISSION_AND_SAVED1_2_EXACT",
+    "nativePhase": "native-r192",
+    "operationSeconds": 103.342,
+    "comparison": [
+      {
+        "seed": "-1017",
+        "parts": 40,
+        "pads": 96,
+        "before": {
+          "seed": "-1017",
+          "version": 2,
+          "accepted": true,
+          "parts": 40,
+          "pads": 96,
+          "width": 3692,
+          "height": 1475,
+          "area": 5445700,
+          "courtyardArea": 749848,
+          "regionBoundingAreaSum": 4065505,
+          "sameRegionCenterManhattanMean": 733.4920634920635,
+          "twoPadNetSpanSum": 3430,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 26430,
+          "traceSegments": 167,
+          "vias": 34,
+          "selectedAttempt": 4,
+          "routingExpansions": 3295479,
+          "geometrySha256": "84eff3d9cb6e087578873a79fc9e8db72271b6fa653c309a79cfcedbee9d9a25"
+        },
+        "after": {
+          "seed": "-1017",
+          "version": 3,
+          "accepted": true,
+          "parts": 40,
+          "pads": 96,
+          "width": 3702,
+          "height": 1414,
+          "area": 5234628,
+          "courtyardArea": 749848,
+          "regionBoundingAreaSum": 4739211,
+          "sameRegionCenterManhattanMean": 707.6984126984127,
+          "twoPadNetSpanSum": 3060,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 27120,
+          "traceSegments": 167,
+          "vias": 29,
+          "selectedAttempt": 2,
+          "routingExpansions": 2959072,
+          "geometrySha256": "3cf61944fa5f2002304a32b9061b71691c3e20f1942d7cb1e65a698f221938ef"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": -3.8759388141102136,
+        "regionBoundingAreaSumChangePercent": 16.57127466329522,
+        "sameRegionCenterManhattanMeanChangePercent": -3.5165548582557937,
+        "twoPadNetSpanSumChangePercent": -10.787172011661806,
+        "copperManhattanLengthChangePercent": 2.6106696935300766,
+        "routingExpansionsChangePercent": -10.208136662378974
+      },
+      {
+        "seed": "-1004",
+        "parts": 44,
+        "pads": 104,
+        "before": {
+          "seed": "-1004",
+          "version": 2,
+          "accepted": true,
+          "parts": 44,
+          "pads": 104,
+          "width": 4061,
+          "height": 1664,
+          "area": 6757504,
+          "courtyardArea": 798304,
+          "regionBoundingAreaSum": 6654950,
+          "sameRegionCenterManhattanMean": 752.358870967742,
+          "twoPadNetSpanSum": 3020,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 30950,
+          "traceSegments": 173,
+          "vias": 25,
+          "selectedAttempt": 0,
+          "routingExpansions": 3056694,
+          "geometrySha256": "a05b554248d83dd2b8c1dc9e8fb8e7e05a70081323e6e0383a6e673f5276de61"
+        },
+        "after": {
+          "seed": "-1004",
+          "version": 3,
+          "accepted": true,
+          "parts": 44,
+          "pads": 104,
+          "width": 3791,
+          "height": 1719,
+          "area": 6516729,
+          "courtyardArea": 803104,
+          "regionBoundingAreaSum": 4385251,
+          "sameRegionCenterManhattanMean": 674.8991935483871,
+          "twoPadNetSpanSum": 3510,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 30820,
+          "traceSegments": 196,
+          "vias": 38,
+          "selectedAttempt": 1,
+          "routingExpansions": 3445480,
+          "geometrySha256": "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": -3.5630759523042843,
+        "regionBoundingAreaSumChangePercent": -34.105425284938285,
+        "sameRegionCenterManhattanMeanChangePercent": -10.295575742958974,
+        "twoPadNetSpanSumChangePercent": 16.22516556291391,
+        "copperManhattanLengthChangePercent": -0.42003231017770926,
+        "routingExpansionsChangePercent": 12.719166524356051
+      },
+      {
+        "seed": "-1022",
+        "parts": 60,
+        "pads": 143,
+        "before": {
+          "seed": "-1022",
+          "version": 2,
+          "accepted": true,
+          "parts": 60,
+          "pads": 143,
+          "width": 5341,
+          "height": 1869,
+          "area": 9982329,
+          "courtyardArea": 1061240,
+          "regionBoundingAreaSum": 8803692,
+          "sameRegionCenterManhattanMean": 950.0,
+          "twoPadNetSpanSum": 3510,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 42910,
+          "traceSegments": 274,
+          "vias": 46,
+          "selectedAttempt": 4,
+          "routingExpansions": 5141618,
+          "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+        },
+        "after": {
+          "seed": "-1022",
+          "version": 3,
+          "accepted": true,
+          "parts": 60,
+          "pads": 143,
+          "width": 5341,
+          "height": 1869,
+          "area": 9982329,
+          "courtyardArea": 1061240,
+          "regionBoundingAreaSum": 8803692,
+          "sameRegionCenterManhattanMean": 950.0,
+          "twoPadNetSpanSum": 3510,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 42910,
+          "traceSegments": 274,
+          "vias": 46,
+          "selectedAttempt": 4,
+          "routingExpansions": 5386938,
+          "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": 0.0,
+        "regionBoundingAreaSumChangePercent": 0.0,
+        "sameRegionCenterManhattanMeanChangePercent": 0.0,
+        "twoPadNetSpanSumChangePercent": 0.0,
+        "copperManhattanLengthChangePercent": 0.0,
+        "routingExpansionsChangePercent": 4.7712607198745705
+      },
+      {
+        "seed": "0",
+        "parts": 42,
+        "pads": 100,
+        "before": {
+          "seed": "0",
+          "version": 2,
+          "accepted": true,
+          "parts": 42,
+          "pads": 100,
+          "width": 3961,
+          "height": 1585,
+          "area": 6278185,
+          "courtyardArea": 777184,
+          "regionBoundingAreaSum": 4068149,
+          "sameRegionCenterManhattanMean": 733.1782945736434,
+          "twoPadNetSpanSum": 3190,
+          "twoPadNetCount": 10,
+          "copperManhattanLength": 33950,
+          "traceSegments": 236,
+          "vias": 0,
+          "selectedAttempt": 3,
+          "routingExpansions": 2218487,
+          "geometrySha256": "03ac8f4d3008009100e640e32c063b4595fb3a69cc8d6de6d4522d705e9de174"
+        },
+        "after": {
+          "seed": "0",
+          "version": 3,
+          "accepted": true,
+          "parts": 42,
+          "pads": 100,
+          "width": 4341,
+          "height": 1445,
+          "area": 6272745,
+          "courtyardArea": 772384,
+          "regionBoundingAreaSum": 3614684,
+          "sameRegionCenterManhattanMean": 720.5038759689922,
+          "twoPadNetSpanSum": 2430,
+          "twoPadNetCount": 10,
+          "copperManhattanLength": 28120,
+          "traceSegments": 173,
+          "vias": 31,
+          "selectedAttempt": 0,
+          "routingExpansions": 2616538,
+          "geometrySha256": "cc397a2f30ca51618bf1dd966bd074ebc34f9025b662d08cd7264b53b13f1bf5"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": -0.08664924655772399,
+        "regionBoundingAreaSumChangePercent": -11.14671561931483,
+        "sameRegionCenterManhattanMeanChangePercent": -1.7286952844153047,
+        "twoPadNetSpanSumChangePercent": -23.82445141065831,
+        "copperManhattanLengthChangePercent": -17.17231222385861,
+        "routingExpansionsChangePercent": 17.942453573088322
+      },
+      {
+        "seed": "17",
+        "parts": 53,
+        "pads": 129,
+        "before": {
+          "seed": "17",
+          "version": 2,
+          "accepted": true,
+          "parts": 53,
+          "pads": 129,
+          "width": 3812,
+          "height": 2024,
+          "area": 7715488,
+          "courtyardArea": 993848,
+          "regionBoundingAreaSum": 9229023,
+          "sameRegionCenterManhattanMean": 906.0096153846154,
+          "twoPadNetSpanSum": 4210,
+          "twoPadNetCount": 12,
+          "copperManhattanLength": 41760,
+          "traceSegments": 259,
+          "vias": 48,
+          "selectedAttempt": 3,
+          "routingExpansions": 5458691,
+          "geometrySha256": "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8"
+        },
+        "after": {
+          "seed": "17",
+          "version": 3,
+          "accepted": true,
+          "parts": 53,
+          "pads": 129,
+          "width": 3812,
+          "height": 2024,
+          "area": 7715488,
+          "courtyardArea": 993848,
+          "regionBoundingAreaSum": 9229023,
+          "sameRegionCenterManhattanMean": 906.0096153846154,
+          "twoPadNetSpanSum": 4210,
+          "twoPadNetCount": 12,
+          "copperManhattanLength": 41760,
+          "traceSegments": 259,
+          "vias": 48,
+          "selectedAttempt": 3,
+          "routingExpansions": 5047395,
+          "geometrySha256": "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": 0.0,
+        "regionBoundingAreaSumChangePercent": 0.0,
+        "sameRegionCenterManhattanMeanChangePercent": 0.0,
+        "twoPadNetSpanSumChangePercent": 0.0,
+        "copperManhattanLengthChangePercent": 0.0,
+        "routingExpansionsChangePercent": -7.534700168959918
+      },
+      {
+        "seed": "42",
+        "parts": 54,
+        "pads": 131,
+        "before": {
+          "seed": "42",
+          "version": 2,
+          "accepted": true,
+          "parts": 54,
+          "pads": 131,
+          "width": 4251,
+          "height": 2014,
+          "area": 8561514,
+          "courtyardArea": 1000808,
+          "regionBoundingAreaSum": 9051790,
+          "sameRegionCenterManhattanMean": 988.6714285714286,
+          "twoPadNetSpanSum": 5020,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 44070,
+          "traceSegments": 259,
+          "vias": 48,
+          "selectedAttempt": 0,
+          "routingExpansions": 4741863,
+          "geometrySha256": "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
+        },
+        "after": {
+          "seed": "42",
+          "version": 3,
+          "accepted": true,
+          "parts": 54,
+          "pads": 131,
+          "width": 4251,
+          "height": 2014,
+          "area": 8561514,
+          "courtyardArea": 1000808,
+          "regionBoundingAreaSum": 9051790,
+          "sameRegionCenterManhattanMean": 988.6714285714286,
+          "twoPadNetSpanSum": 5020,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 44070,
+          "traceSegments": 259,
+          "vias": 48,
+          "selectedAttempt": 2,
+          "routingExpansions": 5331806,
+          "geometrySha256": "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
+        },
+        "actualRb56P07Admission": "PASS",
+        "areaChangePercent": 0.0,
+        "regionBoundingAreaSumChangePercent": 0.0,
+        "sameRegionCenterManhattanMeanChangePercent": 0.0,
+        "twoPadNetSpanSumChangePercent": 0.0,
+        "copperManhattanLengthChangePercent": 0.0,
+        "routingExpansionsChangePercent": 12.441165002025567
+      }
+    ],
+    "limits": [
+      "Six predeclared roots, no population/optimum/manufacturing claim",
+      "Group rectangle sums overlap and are not board occupancy",
+      "Baseline geometry metrology includes P05 selection on seed0; current3 passes real required P07",
+      "Trace span, routed length, via and search-work tradeoffs retained",
+      "Fresh60 cold/HYPOTHESES qualification failed twice; no third unchanged retry"
+    ]
+  },
+  "geometryBrowser": {
+    "status": "PASS",
+    "receiptSha256": "00be5ab4255b55d270e6047325e48a732589948ef0d9ba3101f62a4337e65ee1",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after40",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1017&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after40"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 30.759051500004716,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 2,
+          "name": "after44",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "002-after44"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 41.408219999982975,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 3,
+          "name": "after42",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=0&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "003-after42"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 60.56455090001691,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 4,
+          "name": "after53",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=17&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "004-after53"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 104.30215779994614,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+      "afterSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+      "sourceSha256Before": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+      "sourceSha256After": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+      "webSha256Before": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+      "webSha256After": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.41077950003091246
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.162734300014563,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "views": [
+    {
+      "parts": 40,
+      "view": "fit",
+      "fullReferenceCount": 40,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": null
+    },
+    {
+      "parts": 40,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 40,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": {
+        "mousewheelSeconds": 0.08225680002942681,
+        "physicalBodySelectionAndInspectionSeconds": 0.19036079989746213,
+        "selectedPublicTitle": "U2A"
+      }
+    },
+    {
+      "parts": 44,
+      "view": "fit",
+      "fullReferenceCount": 44,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "MATCH",
+      "fullSecondaryTextCount": 74,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": null
+    },
+    {
+      "parts": 44,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 44,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "MATCH",
+      "fullSecondaryTextCount": 74,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": {
+        "mousewheelSeconds": 0.122130399919115,
+        "physicalBodySelectionAndInspectionSeconds": 0.5120893999701366,
+        "selectedPublicTitle": "U2A"
+      }
+    },
+    {
+      "parts": 42,
+      "view": "fit",
+      "fullReferenceCount": 42,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": null
+    },
+    {
+      "parts": 42,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 42,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": {
+        "mousewheelSeconds": 2.0568562999833375,
+        "physicalBodySelectionAndInspectionSeconds": 2.0194039000198245,
+        "selectedPublicTitle": "U2A"
+      }
+    },
+    {
+      "parts": 53,
+      "view": "fit",
+      "fullReferenceCount": 53,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": null
+    },
+    {
+      "parts": 53,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 53,
+      "referenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "fullSecondaryTextMultiset": "NO_BASELINE_FULL_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "allDrawnTextMetricLimit": "Actual canvas glyph bounding boxes; body-marking clipping may remove ink, so reported provider pairs require image review",
+      "realInteractions": {
+        "mousewheelSeconds": 2.061879300046712,
+        "physicalBodySelectionAndInspectionSeconds": 2.163339599967003,
+        "selectedPublicTitle": "U2A"
+      }
+    }
+  ],
+  "rawViewObservationsSha256": "9793e896172031622b0e6613daf42eca1aaa65275f4f663975103fd07674077d",
+  "rawColdReports": [
+    {
+      "path": "001-after40.report.json",
+      "sha256": "54e32ed48420b7a2177859ae27f3f91495262db55e06c13d7557a5e4c9d66161",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1017",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 40,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 516,
+        "generationMillis": 27709,
+        "maxManualUnitMillis": 1042,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "76108e893b48beee8b9d443c8a8aa65d5db79dbfba255f54c9b3b9014897d38f",
+        "diagnosticContextDigest": "1a34f3a45d860b576a1affa923cfdda9ca29e73966cbbf12ff98a7c91f741b6a",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "002-after44.report.json",
+      "sha256": "c3f6ce0063b03f5bcaaf1e7b5fa4cb3e207d4e8ec146e12ecb14a3e2b96d42d0",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1004",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 44,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 518,
+        "generationMillis": 37515,
+        "maxManualUnitMillis": 1267,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "2ca54bb1fb3414687d2e14acd93e4504873a208e95c5edd2803cf90b98223115",
+        "diagnosticContextDigest": "594c3fa0769df55c02d6367a27a29eebb03c6644f0e2909f5cb19e21633cab1a",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "003-after42.report.json",
+      "sha256": "72cb6da1253c9b6db91990e5033dc1b48c0bb30c2915f25c888c06484d3a68cc",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "0",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 42,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 515,
+        "generationMillis": 42601,
+        "maxManualUnitMillis": 1661,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "481af86edabcce28f6e24e8d2d18882424f347f6b9ca922214bd1f3a2b908d17",
+        "diagnosticContextDigest": "5bdbf07d996a881af84b2ea93f919db527380b696c9cf4710514a545d5494a1c",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "004-after53.report.json",
+      "sha256": "1eac7239b5a75456bd8c4dc9e321ea7652207c979c919da7213feb139c9490a1",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "17",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 53,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 614,
+        "generationMillis": 84729,
+        "maxManualUnitMillis": 1925,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "81aafe4785a3b8c63b52d9c74971bb519b7f7fdf541a18f12fc617c091c14ffb",
+        "diagnosticContextDigest": "45d1794db0a078f9b02e5b5cc95379cdb9e38799c2875f232d5bd73b0f8b0807",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    }
+  ],
+  "fileBrowser": {
+    "status": "PASS",
+    "receiptSha256": "db66b05c0d586b93e3bba946598607e34e30c1be04c544c5a5adb451ed949bc4",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "private44-compact2-save-legacy1-restore-cross-version-and-cleanup",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&tsjRb56Persistence=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 420.0,
+          "slug": "001-private44-compact2-save-legacy1-restore-cross-version-and-cleanup"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 184.6254260999849,
+        "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+      "afterSha256": "edcc8d1c88b9c277d7dab9c72072c9fa3e3c19b89fe1f0f47629c7eefd9ac7e7",
+      "sourceSha256Before": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+      "sourceSha256After": "ce2d9a0c47d50d30a548d109bf7235bbd7714b9e7cc49465495fa252f224482e",
+      "webSha256Before": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+      "webSha256After": "f3ea6a4e6abf25f947b6a8be7c0adf6e41e959895cbddf63385a886017f7b1c7",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.46972110006026924
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.1071099999826401,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "fileEvidence": {
+    "status": "PASS",
+    "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "sourceFreeze": {
+      "path": "pcb-realism-source-freeze-r4.json",
+      "sha256": "2f758b9a4c767cc8cd6a57e3b569ce91fd7f7abd288e419a8d876d41544840d2",
+      "status": "READY_OWNER_REQUIRED_P07_NOT_QUALIFIED"
+    },
+    "prerequisites": [
+      {
+        "phase": "native-r192",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "build-r50",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      }
+    ],
+    "acceptedR184Outcome": "PASS",
+    "acceptedR184OperationSeconds": 151.36520380002912,
+    "acceptedR184InputManifestSha256": "da71e5fae82b0b377732d439715b4c452a702cde801555b32511c5aa517381b7",
+    "acceptedLegacyArtifact": {
+      "bytes": 2226,
+      "sha256": "e8d498dc0b0d6fbd09ca08d0a6ce79d5102aa1382e4a284037a89cc6a8849e65",
+      "replay": "tsj-private-session/1/tsj-generation-dependencies-v16/RB56_CONTROL/-1004",
+      "historyCount": 23
+    },
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Bench power",
+      "actual Bench power current-limit selection: 250 mA",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: fresh-realistic3-private44.tsjsave",
+      "click: Load session",
+      "actual FileReader picker selection: repaired-private44.tsjsave",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "click: Main menu",
+      "accepted legacy-1 repaired owner and all 23 operations restored without completion",
+      "click: Resume current board",
+      "click: Run customer retest",
+      "actual restored legacy-1 customer retest PASS",
+      "click: Return to board",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-legacy1-restore.tsjsave",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-compact2-private44.tsjsave",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-accepted-compact2.tsjsave",
+      "accepted compact2 actual geometry/source/history/request restored and resaved",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-realistic3-private44.tsjsave",
+      "click: Bench power",
+      "actual FileReader restore selected the fresh realistic-3 artifact",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-realistic3-restore.tsjsave",
+      "realistic-3 geometry fingerprint, source setting and history restored; no completion imported",
+      "click: Resume current board",
+      "click: Run customer retest",
+      "actual unrepaired-board customer retest failed",
+      "click: Board Power: ON",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "observe real relay service interlock; initially enabled=False",
+      "click: Parts Tray",
+      "click: Parts Tray",
+      "actual Parts Tray public popover toggle closes before catalog acquisition",
+      "click: Shop",
+      "actual Shop acquisition: Add to Parts Tray: Relays, 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "click: Close",
+      "click: Parts Tray",
+      "click: Component",
+      "actual Remove component: KA",
+      "click: Parts Tray",
+      "select actual loose relay: Part 45 - 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "actual install: Install as Channel A / KA",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "click: Board Power: OFF",
+      "click: Run customer retest",
+      "actual realistic-3 Shop repair customer retest PASS",
+      "click: Close session"
+    ],
+    "observations": [
+      {
+        "name": "fresh private placement-3 cold owner",
+        "status": "PASS",
+        "seed": "-1004",
+        "packages": 44,
+        "coldProof": "PASS",
+        "coldOperationSeconds": 36.177678799955174,
+        "placementEvidence": "actual version-3 Save and strict replay-owner restore"
+      },
+      {
+        "name": "actual fresh realistic-3 download",
+        "status": "PASS",
+        "replay": "tsj-private-session/3/tsj-generation-dependencies-v16/rb56-placement-3/RB56_CONTROL/-1004",
+        "historyCount": 3,
+        "sourceHistoryVisible": true
+      },
+      {
+        "name": "legacy owner request follows successful restore",
+        "status": "PASS",
+        "oldReplay": "tsj-private-session/1/tsj-generation-dependencies-v16/RB56_CONTROL/-1004",
+        "resavedReplay": "tsj-private-session/1/tsj-generation-dependencies-v16/RB56_CONTROL/-1004",
+        "historyCount": 23
+      },
+      {
+        "name": "accepted compact2 actual FileReader and resave",
+        "status": "PASS",
+        "replay": "tsj-private-session/2/tsj-generation-dependencies-v16/rb56-placement-2/RB56_CONTROL/-1004",
+        "realization": "0a263ca4f28d85effd1adc43d0a95fc2819f42eecaa1edfff651e5785a2771b3",
+        "historyCount": 3
+      },
+      {
+        "name": "real relay discharge/service guard",
+        "status": "PASS",
+        "initiallyEnabled": false,
+        "waitSeconds": 5.6351154000731185,
+        "publicMarkings": "KA\n\n\nType: relay\n\n\nMarkings: 5 V coil / SPDT / 24 V DC, 0.5 A contacts\n\n\nState: Installed\n\n\nLead A1: KA.A1\n\n\nLead A2: KA.A2\n\n\nLead COM: KA.COM\n\n\nLead NC: KA.NC\n\n\nLead NO: KA.NO\n\n\n\nLift lead A1\nLift lead A2\nLift lead COM\nLift lead NC\nLift lead NO\nRemove component"
+      },
+      {
+        "name": "final realistic-3 UI close and owned cleanup",
+        "status": "PASS",
+        "legacyRestores": [
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "finalRetest": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "coordinatorReleased": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "cleanupPending": false,
+        "finalReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 518,
+          "generationMillis": 34865,
+          "maxManualUnitMillis": 1187,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "2ca54bb1fb3414687d2e14acd93e4504873a208e95c5edd2803cf90b98223115",
+          "diagnosticContextDigest": "594c3fa0769df55c02d6367a27a29eebb03c6644f0e2909f5cb19e21633cab1a",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": true,
+          "sessionRestores": [
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 42036,
+              "work": 517,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            },
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 39213,
+              "work": 518,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            },
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 43631,
+              "work": 518,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            }
+          ],
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": true,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 183923
+        }
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "fresh-realistic3-source-state.png",
+        "sha256": "ef8f808c1fd32853433d775ddf7bd6e6d66c2f2e14ec6ff033111c2502ed9138"
+      },
+      {
+        "path": "accepted-legacy1-repaired-restore.png",
+        "sha256": "f84a5bfc4114fc2b023f4eda871281058e510aad18a0ba7cf551cb4644f7a0b6"
+      }
+    ],
+    "files": [
+      {
+        "path": "fresh-realistic3-private44.tsjsave",
+        "bytes": 1391,
+        "sha256": "a03a87ed739668ca14c05feaafcf56a1a9795696ce067b1669d5e2fa32186126",
+        "replay": "tsj-private-session/3/tsj-generation-dependencies-v16/rb56-placement-3/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-legacy1-restore.tsjsave",
+        "bytes": 2226,
+        "sha256": "7916ba1e07224050e7b82b14015731a2e785381807a357ffb65c9d81986cbd9d",
+        "replay": "tsj-private-session/1/tsj-generation-dependencies-v16/RB56_CONTROL/-1004",
+        "historyCount": 23
+      },
+      {
+        "path": "saved-after-accepted-compact2.tsjsave",
+        "bytes": 1391,
+        "sha256": "941ae1f99d365e0fd2f0660af49c047879b368f07ed0a8c794538a1ba9a3435e",
+        "replay": "tsj-private-session/2/tsj-generation-dependencies-v16/rb56-placement-2/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-realistic3-restore.tsjsave",
+        "bytes": 1391,
+        "sha256": "1d959503ce4fcee3d04d525d0232dd8aabcc62f6fa408cee33cdf33d759898d1",
+        "replay": "tsj-private-session/3/tsj-generation-dependencies-v16/rb56-placement-3/RB56_CONTROL/-1004",
+        "historyCount": 3
+      }
+    ]
+  },
+  "fileEvidenceSha256": "0ba359a45a7732592389f329d3e188b7c0420c34f870f380fa5300a68f0066cf",
+  "images": [
+    {
+      "path": "after40-fit.png",
+      "sha256": "e88d5545ff7819af8f5e59887042ef9838c98666621de1c5c5080a8deb8b0d70",
+      "rootInspected": true,
+      "scope": "ACTUAL_FINAL_SOURCE_UI"
+    },
+    {
+      "path": "after44-fit.png",
+      "sha256": "f1e88dd5cc011c2b8a0edd58bbf3beb767c097fcbb5baaea9f7c4e19ca4adbd5",
+      "rootInspected": true,
+      "scope": "ACTUAL_FINAL_SOURCE_UI"
+    },
+    {
+      "path": "after42-wheel_zoom.png",
+      "sha256": "87a733d143d34a7b0aefb27dd82ea095d18da07177f2fe404dd5f02266a3f91d",
+      "rootInspected": true,
+      "scope": "ACTUAL_FINAL_SOURCE_UI"
+    },
+    {
+      "path": "fresh-realistic3-source-state.png",
+      "sha256": "ef8f808c1fd32853433d775ddf7bd6e6d66c2f2e14ec6ff033111c2502ed9138",
+      "rootInspected": true,
+      "scope": "ACTUAL_FINAL_SOURCE_UI"
+    },
+    {
+      "path": "accepted-legacy1-repaired-restore.png",
+      "sha256": "f84a5bfc4114fc2b023f4eda871281058e510aad18a0ba7cf551cb4644f7a0b6",
+      "rootInspected": true,
+      "scope": "ACTUAL_FINAL_SOURCE_UI"
+    }
+  ],
+  "failuresRetained": [
+    {
+      "phase": "native-r185",
+      "status": "FAIL",
+      "operationSeconds": 22.46,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "e62d5533d9001006e582749d5e194c3d49a1aec1cbd04383dac488a2ad89e548",
+      "reason": "New test used nonexistent APIs; corrected before final gate."
+    },
+    {
+      "phase": "native-r187",
+      "status": "FAIL",
+      "operationSeconds": 56.523,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "e4108a256075105176e0db175fd64f047081dc5ff6c1bf7c1808829113279d35",
+      "reason": "Whole gate failed terminal-bank margin assertion after its six geometry rows; no whole PASS."
+    },
+    {
+      "phase": "compiled-r199",
+      "status": "FAIL",
+      "operationSeconds": 135.319,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "7f9c452019d4409f2c5cb7d1e400cbe8eeaa88813cd0a7ce9069bace52d859fa",
+      "reason": "Actual mixed-edge UAC leaders crossed its body; fresh60 also timed out. Final helper keeps mixed-edge labels individual."
+    },
+    {
+      "phase": "compiled-r201",
+      "status": "FAIL",
+      "operationSeconds": 258.334,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "b2f5288a341cec3549574629945e1b891cebe819c2e081f45e5247bbbb14a909",
+      "reason": "Fresh60 timed out again in HYPOTHESES; cause unknown. No third unchanged cold retry."
+    },
+    {
+      "phase": "compiled-r202",
+      "status": "FAIL",
+      "operationSeconds": 90.014,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "59a2667acba11b7114d65387d6cd72d8aab000e0c57a5a0894c1a0dbc1209afb",
+      "reason": "Task collector asserted saved2 state while restoration was PREPARING. Final adapter awaits actual PREPARING then WORKBENCH; host cleanup PASS, final product retirement unobserved."
+    },
+    {
+      "phase": "compiled-r204",
+      "status": "FAIL",
+      "operationSeconds": 83.315,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "handlesClosed": true,
+      "ownedCleanupVerified": true,
+      "receiptSha256": "6f0a3822e436c96f7444e71c2d7d430341c3fb2cea6510f1ee3b6ef7fa0a6047",
+      "reason": "Seed0/42 selected a structurally valid P05 winner that failed actual RB56 P07 admission. Final owner trait and actual native/player checks resolve it."
+    }
+  ],
+  "fresh60Cold": {
+    "status": "UNQUALIFIED_HELD",
+    "cause": "UNKNOWN",
+    "unchangedRetriesStopped": true,
+    "rawReports": [
+      {
+        "phase": "pcb-realism-after-r199",
+        "rawReceiptSha256": "c0a5415398bba914bd8580f7e23a729242d38f5039fed56607b7e2ef31d50467",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 592,
+          "jobMillis": 90043,
+          "manualUnitMaxMillis": 1318,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 0,
+            "HEALTHY": 27162,
+            "PHYSICAL": 156,
+            "HYPOTHESES": 59753,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 114,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 476,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 5,
+              "millis": 1206,
+              "maxMillis": 260
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 65,
+              "millis": 12398,
+              "maxMillis": 394
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 45,
+              "millis": 7984,
+              "maxMillis": 393
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 5,
+              "millis": 553,
+              "maxMillis": 131
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 5,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 60,
+              "millis": 944,
+              "maxMillis": 19
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 5,
+              "millis": 308,
+              "maxMillis": 68
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 5,
+              "millis": 511,
+              "maxMillis": 106
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 150,
+              "millis": 12819,
+              "maxMillis": 247
+            },
+            "REMOVE_SETTLE": {
+              "units": 5,
+              "millis": 1123,
+              "maxMillis": 230
+            },
+            "REPLACE_SETTLE": {
+              "units": 5,
+              "millis": 1116,
+              "maxMillis": 235
+            },
+            "POWER_ON_SETTLE": {
+              "units": 5,
+              "millis": 473,
+              "maxMillis": 101
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 56,
+              "millis": 11308,
+              "maxMillis": 539
+            },
+            "CUSTOMER_RETEST": {
+              "units": 52,
+              "millis": 8771,
+              "maxMillis": 403
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 4,
+              "millis": 70,
+              "maxMillis": 18
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 4,
+              "millis": 184,
+              "maxMillis": 49
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 90096,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      },
+      {
+        "phase": "pcb-realism-after-r201",
+        "rawReceiptSha256": "82d0dec9db7dc051ea2ec3b0502085aad14fa2e9f07debb89cf295368d6f0a08",
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1022",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "FAIL",
+          "phase": "RESTORED",
+          "failurePhase": "COLD_GENERATION",
+          "jobOutcome": "TIMEOUT",
+          "jobStage": "HYPOTHESES",
+          "jobWork": 523,
+          "jobMillis": 90155,
+          "manualUnitMaxMillis": 1940,
+          "routingMillis": 0,
+          "proofMillis": 0,
+          "jobStageMillis": {
+            "RESOLVE": 1,
+            "HEALTHY": 33370,
+            "PHYSICAL": 171,
+            "HYPOTHESES": 53985,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 114,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 407,
+            "SYMPTOM": 0,
+            "PUBLISH": 0
+          },
+          "diagnosticWorkTimings": {
+            "REPLAY_INSTALL": {
+              "units": 5,
+              "millis": 1171,
+              "maxMillis": 254
+            },
+            "CANDIDATE_HEALTHY_SETTLE": {
+              "units": 58,
+              "millis": 11294,
+              "maxMillis": 425
+            },
+            "CANDIDATE_SETTLE": {
+              "units": 36,
+              "millis": 7497,
+              "maxMillis": 387
+            },
+            "OBSERVATION_STEP:INPUT": {
+              "units": 4,
+              "millis": 487,
+              "maxMillis": 129
+            },
+            "OBSERVATION_STEP:WAIT": {
+              "units": 4,
+              "millis": 0,
+              "maxMillis": 0
+            },
+            "OBSERVATION_STEP:DC_VOLTAGE": {
+              "units": 48,
+              "millis": 789,
+              "maxMillis": 21
+            },
+            "OBSERVATION_STEP:POWER": {
+              "units": 4,
+              "millis": 251,
+              "maxMillis": 67
+            },
+            "OBSERVATION_STEP:SETTLE": {
+              "units": 4,
+              "millis": 399,
+              "maxMillis": 109
+            },
+            "POWER_OFF_SETTLE": {
+              "units": 120,
+              "millis": 10794,
+              "maxMillis": 255
+            },
+            "REMOVE_SETTLE": {
+              "units": 4,
+              "millis": 899,
+              "maxMillis": 229
+            },
+            "REPLACE_SETTLE": {
+              "units": 4,
+              "millis": 882,
+              "maxMillis": 236
+            },
+            "POWER_ON_SETTLE": {
+              "units": 4,
+              "millis": 384,
+              "maxMillis": 98
+            },
+            "REPAIR_STATUS_SETTLE": {
+              "units": 52,
+              "millis": 10126,
+              "maxMillis": 527
+            },
+            "CUSTOMER_RETEST": {
+              "units": 52,
+              "millis": 8756,
+              "maxMillis": 386
+            },
+            "CUSTOMER_RETEST_COMPLETION": {
+              "units": 4,
+              "millis": 77,
+              "maxMillis": 25
+            },
+            "EVIDENCE_RESTORE_PRIMARY": {
+              "units": 4,
+              "millis": 194,
+              "maxMillis": 50
+            }
+          },
+          "qualifiedPublication": false,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": false,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 90207,
+          "failure": "Deadline: Generation wall budget exhausted"
+        }
+      }
+    ]
+  },
+  "electricalBoundary": "Existing electrical plan/value/fault/random-seed paths unchanged; only private physical interpretation and display annotations changed. Real unrepaired/repaired retests cover one source-guided44 case, not the full population.",
+  "limits": {
+    "publicHardAndNormalRb56": "HELD",
+    "human": "NOT RUN",
+    "normalPopulation": "NOT RUN",
+    "manufacturingOrOptimalPackingClaim": false,
+    "allGapsReducedClaim": false,
+    "weakerHardware": "OWNER_DEFERRED_NOT_RUN",
+    "newHeapMaximumCertification": "NOT RUN",
+    "fullNativeMatrix": "NOT RUN",
+    "unchangedQ30Corpora": "NOT RERUN",
+    "originalJobMillis": 90000,
+    "originalJobWork": 640,
+    "originalUnitMillis": 5000
+  },
+  "originalEightHashesPreserved": true,
+  "noEmail": true
+}

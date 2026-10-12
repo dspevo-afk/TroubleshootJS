@@ -21,10 +21,14 @@ public final class Rb56SessionBackingContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/77");
             PlayerSessionReplay compactReplay = PlayerSessionReplay.parse("tsj-private-session/2/" +
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/77");
+            PlayerSessionReplay realismReplay = PlayerSessionReplay.parse("tsj-private-session/3/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/77");
             check(legacyReplay.matches(fixture.owner),
                 "legacy replay identity accepts its actual placement-1 owner");
             check(!compactReplay.matches(fixture.owner),
-                "compact replay identity rejects a same-family, same-seed placement-1 owner");
+                "placement-2 replay rejects a same-family, same-seed placement-1 owner");
+            check(!realismReplay.matches(fixture.owner),
+                "placement-3 replay rejects a same-family, same-seed placement-1 owner");
             check(fixture.owner.isDeveloperOnlyFaultRoute(), "fixture remains explicitly developer owned");
             for (String id : new String[] {"CBULK", "COUT", "CBIAS", "CFB", "CIN", "C5", "L1", "DZ1", "UFB", "F1", "UAC"}) {
                 PhysicalPart<?> part = fixture.runtime.getInstalledPart(id);

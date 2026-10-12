@@ -1,4 +1,33 @@
-# Current checkpoint: compact private PCB and complete labels PASS
+# Current checkpoint: finite PCB realism PASS; fresh60 cold proof HELD
+
+2026-10-12. Candidate over published `933ace2643efc364db785f067fb79cc703b28aa6`
+on `codex/q60-faulted-profile-counts`; actual GWT `BB9CE498943156894544DDD2CD758215`.
+Private3 adds bounded semantic cohesion/edge hints and complete readable terminal
+banks. Actual owner-required P07 selection preserves all admission/clearance/via
+and90s/640/5s limits; saved1/2 keep their exact identities/geometry.
+Six predeclared40/44/60/42/53/54 fixtures pass actual P07 admission and literal
+inventory.40/44 areas fall3.88%/3.56%;42-part seed-0 area falls0.09% with shorter span/copper;
+other three geometries stay exact. Group/copper/via/search tradeoffs are mixed.
+
+Native192 PASS103.342s/seven suites; label190 PASS260 assertions reused after
+unchanged-input audit; actual GWT50 PASS108.269s/all5; headed205 PASS242.076s/four
+cold boards/fit/wheel/body input; headed206 PASS187.552s/real3->1->2->3 files,
+source/history/geometry, no imported completion, unrepaired FAIL/repaired powered
+PASS and exact retirement. Final source/served/host/browser/localhost cleanup PASS.
+[Evidence and five inspected captures](task-evidence/PCB/realism-r1/README.md),
+SHA `95de8b800ceb2fb56e36554e67345076fa55ea3b7e3c6d5167cc069b21aa4057`. Independent static review PASS within its recorded scope.
+
+Fresh60 cold proof remains UNQUALIFIED/HELD: two HYPOTHESES timeouts90,043/90,155ms
+(total job work592/523, HYPOTHESES work476/407, PHYSICAL156/171ms), unknown cause, no third unchanged retry.
+Native geometry PASS does not replace it.185/187/199/201/202/204 failures remain;
+old accepted compact/Q60 packets remain intact. Human NOT RUN/public HARD+RB56
+release HELD; modest-host owner-deferred; RPG shelved. Next: resolve the missing60
+cold prerequisite without repeating unchanged runs; existing U05 qualitative
+human findings may proceed independently, before finite REL-B normal release.
+Eight original untracked files/accepted saves preserved; no owned runtime remains.
+No email/Core/Android/C4130/GPU/protected-main merge or unrelated changes.
+
+# Historical checkpoint: compact private PCB and complete labels PASS
 
 2026-10-12. Candidate over `7d733a10bb203a1cda7b8f55409cb9b1b6e11cd2` on
 `codex/q60-faulted-profile-counts`; GWT build `82ED33BBD8DE32C145D1C3B4A3CEB5F3`.

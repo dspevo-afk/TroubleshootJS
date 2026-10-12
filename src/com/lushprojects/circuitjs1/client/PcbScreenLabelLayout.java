@@ -8,7 +8,7 @@ import java.util.Vector;
 final class PcbScreenLabelLayout {
     static final int GAP=2;
     private static final int STEP=4, INNER_RADIUS=24, OWNER_RADIUS=96;
-    enum Kind { REFERENCE, NET, TITLE, PROVIDER }
+    enum Kind { TITLE, NET, PROVIDER, REFERENCE }
 
     static final class Label {
         final Graphics.MeasuredText text;
@@ -90,7 +90,28 @@ final class PcbScreenLabelLayout {
         });
         Vector<Rectangle> occupied=new Vector<Rectangle>();
         for(Rectangle r:geometry)occupied.add(copy(r));
+        Vector<String> attemptedBanks=new Vector<String>();
+        Vector<String> placedBanks=new Vector<String>();
         for(Label label:ordered) {
+            String bankId=label.text.annotationBankId;
+            if(bankId!=null) {
+                if(containsValue(placedBanks,bankId))continue;
+                if(!containsValue(attemptedBanks,bankId)) {
+                    attemptedBanks.add(bankId);
+                    Vector<Label> bank=bankMembers(labels,bankId);
+                    if(requiresTerminalBank(bank)&&allOwnersVisible(bank,view)) {
+                        Vector<Placement> bankPlacements=findTerminalBank(bank,occupied,view);
+                        if(bankPlacements!=null) {
+                            placedBanks.add(bankId);
+                            for(Placement p:bankPlacements) {
+                                result.placements.add(p);
+                                occupied.add(expand(p.ink,GAP));
+                            }
+                            continue;
+                        }
+                    }
+                }
+            }
             Point original=label.originalScreen();
             Rectangle originalInk=label.inkAtScreen(original.x,original.y);
             if(!contains(view,label.owner)) {
@@ -135,6 +156,116 @@ final class PcbScreenLabelLayout {
         }
         return result;
     }
+
+    private static Vector<Label> bankMembers(Vector<Label> labels,String bankId) {
+        Vector<Label> bank=new Vector<Label>();
+        for(Label label:labels)
+            if(bankId.equals(label.text.annotationBankId))bank.add(label);
+        Collections.sort(bank,new Comparator<Label>() {
+            public int compare(Label a,Label b) {
+                if(a.text.annotationBankOrder!=b.text.annotationBankOrder)
+                    return a.text.annotationBankOrder<b.text.annotationBankOrder?-1:1;
+                return a.text.id.compareTo(b.text.id);
+            }
+        });
+        return bank;
+    }
+
+    private static boolean requiresTerminalBank(Vector<Label> bank) {
+        if(bank.size()<3)return false;
+        Point first=null;
+        boolean sameX=true,sameY=true;
+        double widest=0;
+        for(Label label:bank) {
+            Point owner=label.owner;
+            if(owner==null)return false;
+            if(first==null)first=owner;
+            else {
+                sameX&=owner.x==first.x;
+                sameY&=owner.y==first.y;
+            }
+            widest=Math.max(widest,label.inkAtScreen(0,0).width);
+        }
+        // A common column is safe only when its owned pads share a screen edge.
+        // Mixed-edge packages keep their individual pad-adjacent names so leaders
+        // cannot be pulled across a body or isolation corridor.
+        if(!sameX&&!sameY)return false;
+        // Keep compact pin codes (B/C/E, +/-, 1/2) beside their pads.
+        return widest>=24;
+    }
+
+    private static boolean allOwnersVisible(Vector<Label> bank,Rectangle view) {
+        for(Label label:bank)if(!contains(view,label.owner))return false;
+        return true;
+    }
+
+    /** Tries one measured, source-ordered text column on each side of the owned pads. */
+    private static Vector<Placement> findTerminalBank(Vector<Label> bank,
+            Vector<Rectangle> occupied,Rectangle view) {
+        if(bank.size()<3)return null;
+        int minX=Integer.MAX_VALUE,minY=Integer.MAX_VALUE;
+        int maxX=Integer.MIN_VALUE,maxY=Integer.MIN_VALUE;
+        long sumX=0,sumY=0;
+        int bankWidth=0,totalHeight=0;
+        Vector<Rectangle> relativeInk=new Vector<Rectangle>();
+        for(Label label:bank) {
+            if(label.owner==null)return null;
+            minX=Math.min(minX,label.owner.x);maxX=Math.max(maxX,label.owner.x);
+            minY=Math.min(minY,label.owner.y);maxY=Math.max(maxY,label.owner.y);
+            sumX+=label.owner.x;sumY+=label.owner.y;
+            Rectangle bounds=label.inkAtScreen(0,0);
+            relativeInk.add(bounds);
+            bankWidth=Math.max(bankWidth,bounds.width);
+            totalHeight+=bounds.height;
+        }
+        // clear() pads the candidate and occupied ink, so rows reserve both margins.
+        totalHeight+=2*GAP*(bank.size()-1);
+        int centerX=(int)(sumX/bank.size()),centerY=(int)(sumY/bank.size());
+        int clearance=GAP+10;
+        int[] left={maxX+clearance,minX-clearance-bankWidth,
+            centerX-bankWidth/2,centerX-bankWidth/2};
+        int[] top={centerY-totalHeight/2,centerY-totalHeight/2,
+            minY-clearance-totalHeight,maxY+clearance};
+        Vector<Placement> best=null;
+        long bestScore=Long.MAX_VALUE;
+        for(int side=0;side<4;side++) {
+            Vector<Placement> candidate=new Vector<Placement>();
+            Vector<Rectangle> candidateOccupied=new Vector<Rectangle>();
+            int rowTop=top[side];
+            long score=0;
+            boolean legal=true;
+            for(int i=0;i<bank.size();i++) {
+                Label label=bank.elementAt(i);
+                Rectangle relative=relativeInk.elementAt(i);
+                int x=left[side]-relative.x;
+                int y=rowTop-relative.y;
+                Point user=label.userPoint(x,y);
+                Rectangle ink=label.inkAtScreen(x,y);
+                if(user==null||!inside(view,ink)||!clear(ink,occupied)||
+                        !clear(ink,candidateOccupied)) {
+                    legal=false;break;
+                }
+                Point leaderTo=nearestPoint(label.owner,ink);
+                long dx=(long)label.owner.x-leaderTo.x;
+                long dy=(long)label.owner.y-leaderTo.y;
+                score+=dx*dx+dy*dy;
+                Point original=label.originalScreen();
+                boolean moved=x!=original.x||y!=original.y;
+                candidate.add(new Placement(label,x,y,user.x,user.y,ink,
+                    moved?label.owner:null,moved?leaderTo:null));
+                candidateOccupied.add(expand(ink,GAP));
+                rowTop+=ink.height+2*GAP;
+            }
+            if(legal&&score<bestScore) {best=candidate;bestScore=score;}
+        }
+        return best;
+    }
+
+    private static boolean containsValue(Vector<String> values,String value) {
+        for(String existing:values)if(existing.equals(value))return true;
+        return false;
+    }
+
     private static Candidate findLocal(Label label,Vector<Rectangle> occupied,
             Rectangle view,int maxRadius,int step) {
         Vector<Candidate> candidates=new Vector<Candidate>();

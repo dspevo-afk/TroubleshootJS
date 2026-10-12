@@ -62,8 +62,7 @@ final class Rb56Plan {
     }
     private Rb56Plan(long seed, int channels, ReferenceArrangement reference, boolean five,
             boolean twelve, int filters, int outputs, boolean bleeder, int placementVersion) {
-        if (placementVersion != Rb56Placement.LEGACY_VERSION &&
-                placementVersion != Rb56Placement.CURRENT_VERSION)
+        if (!Rb56Placement.supportsVersion(placementVersion))
             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
         placementInterpretationVersion = placementVersion;
         if (channels < 1 || channels > 2 || reference == null || filters < 0 || outputs < 0 ||

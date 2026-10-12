@@ -64,7 +64,9 @@ interface StagedFamilyCapability {
             this.executionPolicyCanonical = executionPolicyCanonical;
             this.physicalAdmissionIdentity = physicalAdmissionIdentity;
             this.familyExecutionCanonical = familyExecutionCanonical;
-            if (rb56PlacementInterpretationVersion < 0 || rb56PlacementInterpretationVersion > 2)
+            if (rb56PlacementInterpretationVersion < 0 ||
+                    (rb56PlacementInterpretationVersion != 0 &&
+                        !Rb56Placement.supportsVersion(rb56PlacementInterpretationVersion)))
                 throw new IllegalArgumentException("Unknown RB56 placement interpretation");
             this.rb56PlacementInterpretationVersion = rb56PlacementInterpretationVersion;
             this.layoutVersion = layoutVersion;
