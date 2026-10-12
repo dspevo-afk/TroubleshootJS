@@ -326,7 +326,13 @@ final class PlayerSessionController {
         for (WorkbenchCatalogEntry entry : catalog.getCatalogEntries()) if (entry.getId().equals(catalogId)) found = true;
         if (!found) return "Unknown catalog entry.";
         PhysicalPart<?> original = owner.getPhysicalBoardRuntime().getInstalledPart(component);
-        PhysicalPart<?> acquired = ((CatalogAcquisitionProvider)provider).acquireFromCatalog(catalogId);
+        PhysicalPart<?> acquired;
+        try { acquired = ((CatalogAcquisitionProvider)provider).acquireFromCatalog(catalogId); }
+        catch (BoardModificationRejectedException refusal) {
+            if ("Disconnect supplies and wait for discharge before acquiring a relay".equals(refusal.getMessage()))
+                return "This part cannot be added yet. Disconnect every supply and wait for stored energy to discharge, then try again.";
+            throw refusal;
+        }
         if (acquired == null || acquired.isInstalled() || !catalog.ownsPart(acquired.getId()) ||
                 original != owner.getPhysicalBoardRuntime().getInstalledPart(component))
             throw new IllegalStateException("Catalog acquisition changed its physical slot");

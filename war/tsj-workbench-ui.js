@@ -626,8 +626,8 @@
       filterShop();
     }
     var available = snapshot.screen === 'WORKBENCH' && snapshot.ready && snapshot.isolated;
-    setText(controls.shopNote, available ? 'Supplies isolated · Ready to add parts to your tray.' :
-      'Switch off every board supply and wait for settling before adding parts to your tray.');
+    setText(controls.shopNote, available ? 'Supplies isolated. Charged parts may need more time to discharge before they can be added.' :
+      'Switch off every board supply and wait for stored energy to discharge before adding parts to your tray.');
     var looseCount = catalogs.reduce(function (total, catalog) { return total + catalog.looseCount; }, 0);
     setText(controls.shopTrayCount, 'Parts Tray · ' + looseCount + ' loose ' + (looseCount === 1 ? 'part' : 'parts'));
     shopRows.forEach(function (row) {

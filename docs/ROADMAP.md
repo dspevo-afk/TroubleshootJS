@@ -3104,7 +3104,7 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** IN PROGRESS - private typed reconstruction and unfinished durable flow retained; source-guided saved private44 relay discharge/service, powered repair/retest, repaired file fresh-owner retest and completed failed/cancelled/retried recovery PASS native174, actual GWT44 and headed184. Return to board navigation is fixed. Public normal advanced admission/durable release, population/release matrix and actual human HARD calibration remain pending. [Current saved repair and finite checklist](task-evidence/REL-B/saved-repair-retest-r1/README.md), [accepted file flow](task-evidence/REL-B/durable-file-flow-r1/README.md).
+**Status:** IN PROGRESS - independent current UTF-8/relay-discharge feedback and real native file-read error, stale callback, actual six-minute restore-expiry recovery PASS native175/GWT45/headed186. Finite advertised release matrix is recorded; accepted saved repair/state evidence retains its scoped authority. Human HARD calibration and actual normal advanced admission/population are BLOCKED/PENDING; public gates remain held. [Current matrix and independent proof](task-evidence/REL-B/release-matrix-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 

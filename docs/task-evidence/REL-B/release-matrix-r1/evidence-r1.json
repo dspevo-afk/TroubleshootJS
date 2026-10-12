@@ -1,0 +1,452 @@
+{
+  "schema": "TSJ-REL-B-FINITE-RELEASE-MATRIX-1",
+  "recordedUtc": "2026-10-12T01:16:47.340486+00:00",
+  "candidateParent": "ab22c02f1af6a522c655fc34dd02c3c9cf804c61",
+  "branch": "codex/q60-faulted-profile-counts",
+  "status": "PASS_INDEPENDENT_ITEMS_PUBLIC_RELEASE_HELD",
+  "buildStrongName": "E6CA9A4CB99EE6E4301B9F1C980D1830",
+  "gates": {
+    "native-r175": {
+      "status": "PASS",
+      "operationMillis": 36285,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1355,
+      "suites": {
+        "U04SessionContractTest": 4010,
+        "U06SessionSaveContractTest": 34938,
+        "RelBSessionIdentityContractTest": 28,
+        "PlayerSessionFingerprintContractTest": 119,
+        "E03RelayContractTest": 161,
+        "QuickPlayGateContractTest": 27074
+      },
+      "scope": "Six focused maintained suites; native identity/mathematical retry/order/seed/replay contracts do not admit an RB56 board population"
+    },
+    "build-r45": {
+      "status": "PASS",
+      "operationMillis": 101655,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1223,
+      "command": "scripts/build.ps1 -JavaHome <JDK8> -Target Compile -Style OBF",
+      "permutations": 5
+    },
+    "compiled-r186": {
+      "status": "PASS",
+      "operationMillis": 400554,
+      "exitCode": 0,
+      "nativeOwnedCleanup": "PASS",
+      "handlesClosed": true,
+      "sourceInputsUnchanged": true,
+      "inputCount": 1226,
+      "caseOperationSeconds": [
+        0.5244327999535017,
+        395.401940700016
+      ],
+      "browserDisplay": "HEADED",
+      "browserChannel": "msedge",
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "d03b5cb57efe4c1052f9d6c0f3287e126d3a8b1ee33c7fae6cf1b0dbcf7263e1",
+        "afterSha256": "d03b5cb57efe4c1052f9d6c0f3287e126d3a8b1ee33c7fae6cf1b0dbcf7263e1",
+        "sourceSha256Before": "7c0b3fa253b81ca9170ddd5c0232afa3da140666f689e0a854c674705d7b1603",
+        "sourceSha256After": "7c0b3fa253b81ca9170ddd5c0232afa3da140666f689e0a854c674705d7b1603",
+        "webSha256Before": "a1dc349c9093c840ab4e174009286efc129efc23e3a39970706ff1e4ea5aea20",
+        "webSha256After": "a1dc349c9093c840ab4e174009286efc129efc23e3a39970706ff1e4ea5aea20",
+        "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+        "fileCountBefore": 1563,
+        "fileCountAfter": 1563,
+        "seconds": 0.436666099994909
+      },
+      "ownedBrowserLocalhostCleanup": {
+        "status": "PASS",
+        "seconds": 1.0414049999671988,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      }
+    }
+  },
+  "ui": {
+    "status": "PASS_WITH_NATIVE_IO_STATUS_SEPARATE",
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Run customer retest",
+      "click: Board Power: ON",
+      "click: Shop",
+      "click: early relay acquisition while stores discharge",
+      "click: Close",
+      "click: Board view",
+      "click: Component",
+      "click: Shop",
+      "click: actual post-discharge relay acquisition",
+      "click: Close",
+      "click: Main menu",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-private44.tsjsave",
+      "click: Run customer retest",
+      "click: Return to board",
+      "click: Main menu",
+      "click: Load session",
+      "actual filechooser.set_files: native-locked.tsjsave",
+      "native file read outcome: PASS_REAL_NATIVE_FILEREADER_ERROR",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-private44.tsjsave",
+      "click: Resume current board",
+      "click: Return to board",
+      "click: Main menu",
+      "waiting for one actual restore-expiry boundary; seconds remaining=302.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=272.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=242.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=212.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=182.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=152.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=122.8",
+      "waiting for one actual restore-expiry boundary; seconds remaining=92.7",
+      "waiting for one actual restore-expiry boundary; seconds remaining=62.7",
+      "waiting for one actual restore-expiry boundary; seconds remaining=32.7",
+      "waiting for one actual restore-expiry boundary; seconds remaining=2.7",
+      "click: Load session",
+      "actual filechooser.set_files: repaired-private44.tsjsave",
+      "actual valid file restore in PREPARING at held seconds=356.752"
+    ],
+    "observations": [
+      {
+        "name": "normal-utf8-and-release-hold",
+        "status": "PASS",
+        "charset": "UTF-8",
+        "htmlContentType": "text/html",
+        "build": "E6CA9A4CB99EE6E4301B9F1C980D1830",
+        "publicHardAndRb56": "HELD"
+      },
+      {
+        "name": "native-locked-file-read",
+        "reads": 1,
+        "errors": 1,
+        "loads": 0,
+        "syncError": null,
+        "fileBytes": 2226,
+        "fileName": "native-locked.tsjsave",
+        "errorName": "NotReadableError",
+        "status": "PASS_REAL_NATIVE_FILEREADER_ERROR",
+        "pickerError": null,
+        "ownedFileHandleClosed": true
+      },
+      {
+        "name": "delayed-native-completion-after-view-close",
+        "status": "PASS_CONTROLLED_1_SECOND_CALLBACK_DELAY_NOT_OS_LATENCY",
+        "reader": {
+          "started": true,
+          "nativeDone": true,
+          "delivered": true,
+          "bytes": 2226
+        },
+        "historyPreserved": true,
+        "restoreNotStarted": true
+      },
+      {
+        "name": "actual-six-minute-hold-expiry-during-file-restore",
+        "status": "PASS",
+        "holdMillis": 360000,
+        "terminalAfterObservedHoldSeconds": 360.6892376000178,
+        "preparingSnapshot": {
+          "token": 16,
+          "screen": "PREPARING",
+          "message": "Preparing and checking the board.",
+          "notice": "",
+          "epoch": "tsj-alpha/5",
+          "build": "E6CA9A4CB99EE6E4301B9F1C980D1830",
+          "hasBoard": true,
+          "privateQualification": true,
+          "sessionPersistenceAvailable": true,
+          "sessionSaveAvailable": false,
+          "sessionHistoryCount": 0,
+          "families": [
+            {
+              "id": "LED_INDICATOR",
+              "name": "Indicator board",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "DIODE_PROTECTED_INDICATOR",
+              "name": "Protected indicator",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "PARALLEL_DUAL_INDICATOR",
+              "name": "Dual indicator",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "RC_DELAY",
+              "name": "Timing board",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "NPN_LOW_SIDE_SWITCH",
+              "name": "BJT output driver",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "NMOS_LOW_SIDE_SWITCH",
+              "name": "MOSFET output driver",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "RELAY_OUTPUT",
+              "name": "Relay output board",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "SENSOR_CONTROL",
+              "name": "Sensor control board",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "RB15_CONTROL",
+              "name": "Procedural control board",
+              "profile": "EASY",
+              "procedural": true
+            },
+            {
+              "id": "COMPOSED_CONTROLLED_INDICATOR",
+              "name": "Two-channel controller",
+              "profile": "MEDIUM",
+              "procedural": true
+            },
+            {
+              "id": "RB30_CONTROL",
+              "name": "Multi-rail control board",
+              "profile": "MEDIUM",
+              "procedural": true
+            }
+          ],
+          "progress": {
+            "label": "Build and test healthy circuit",
+            "paused": false,
+            "activeElapsedMs": 2216,
+            "percent": 16,
+            "candidate": 1,
+            "candidates": 1,
+            "phase": 2,
+            "phases": 6,
+            "units": 6,
+            "elapsedMs": 2215,
+            "lastUpdateAgeMs": 4
+          }
+        },
+        "report": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 517,
+          "generationMillis": 33817,
+          "maxManualUnitMillis": 1153,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "a690dee1f85811fd1c42d4cae789ee6f6e884c0ef6943aaa401268c3122d982f",
+          "diagnosticContextDigest": "4d9940384c0f14fec2f64b293f4f237c3497bed1bc2436826b685008b74a0259",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": true,
+          "sessionRestores": [
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 32621,
+              "work": 517,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            }
+          ],
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": true,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 394242
+        },
+        "scope": "Actual PREPARING then passed-owner expiry cleanup; inline cancellation has no separate sessionRestores row",
+        "loadChooserStartedAfterObservedHoldSeconds": 350.0067452000221,
+        "preparingObservedAfterHoldSeconds": 356.752,
+        "timingLabelCorrection": "Raw driver field restoreStartedAfterObservedHoldSeconds measures before chooser action, not PREPARING; derived sealed packet names it loadChooserStartedAfterObservedHoldSeconds and records actual PREPARING separately."
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "normal-utf8-menu.png",
+        "sha256": "1f8bb7deb448c130f9ab1c5145d667b4ddb3e195ad16b8a406069492e985b79e"
+      },
+      {
+        "path": "relay-discharge-refusal.png",
+        "sha256": "a472a4722640c8956725f386d20da448273a9b0ac230440e077b60d6e2a1aac5"
+      },
+      {
+        "path": "utf8-repaired-results.png",
+        "sha256": "eeadf979b058e94af069089c1f55b03f46f60da76c68cc0f4df511621806bf2a"
+      },
+      {
+        "path": "native-file-read-error.png",
+        "sha256": "a22d973e11d2b3ef2dc897f1b8f29babf1b63bb493aa959b86bc8912c4e5e7bc"
+      },
+      {
+        "path": "restore-before-hold-expiry.png",
+        "sha256": "68088d35b8e2fef7b0df0ede5da5d69bd605a427433af629cde9d664613b1366"
+      }
+    ],
+    "humanTrial": "NOT RUN",
+    "normalHardAndRb56": "HELD",
+    "scope": "CURRENT_UI_AND_PRIVATE_FILE_RECOVERY_NOT_NORMAL_POPULATION"
+  },
+  "sourceFiles": {
+    "war/circuitjs.html": {
+      "rawSha256": "14a14cb47fe486e3d2185a8dec3aa87a12e8746191e6f8f76edc4f2e8f73af28",
+      "committedLfSha256": "002ba005b4ca2699cb3119655f5e73da85d50427c3015bf704e2fa1882ec7a39"
+    },
+    "war/tsj-workbench-ui.js": {
+      "rawSha256": "8ddb7c76013ec3ab25b86ad18aec27445dde2d6738155dc63a37f638f3e03d3a",
+      "committedLfSha256": "d2d582f652839849191c57e72b7e8f99c0bd20217e2756c9abdba076cb71aba8"
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": {
+      "rawSha256": "262f4bd3037f04cd6ff7cc6905e303a4458bc4f1e002c562c7d08d863a4df6db",
+      "committedLfSha256": "a64f1ebf95bbf5530f9f3cfcab3dd672d7a07e2d10b709d9ea4c1fcf1fb353af"
+    }
+  },
+  "unchangedAcceptedPrivateRoundTripInputs": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "1c8f264152012c9dbe46b5a8ff08935cb99cecbc6baf10d85a37e5da4b3a0fa6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java": "eee7f8b3326138b4087122cd4cc1d01722dc4690dcc434777edc2b0d69ff76c3",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java": "b551878f895a69244c14c34fa64420461f194cd4f2fdd0b713871581ae8cd546",
+    "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "d85d6d3c3319ccf5e5c0f07dbb6cd49082406fa87ecd64e1677c44a1a5b9a0af",
+    "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java": "e9deaf59318590324b8119449526d9d0cb1d5920d7128a823eb380b6a924752b",
+    "scripts/verify-current-contracts.ps1": "5f96306647098b6e2c4cd1cdee7f0a9e3a416d5fa70f9a490e1697f34b5fef88",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "2cdf66dc9fe9668f81ab060d1b98949520444e9dbed738447ba699ceb96fc3a2"
+  },
+  "publicGateCommittedLfSha256": {
+    "src/com/lushprojects/circuitjs1/client/PlayerFamilyCatalog.java": "2835bec4afee2e16f58480590ed928535d1480ffa9612992791d7344cdaccbf8",
+    "src/com/lushprojects/circuitjs1/client/DifficultyProfile.java": "c94089cde1e15145b52389e0d6d63ec69209ad82388015ccba083112f6a34b7a",
+    "src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java": "b24fd8e346117d522840e867d53e3160b2e20ae54878b37502d60ddae8159224",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "6a433d914c84889492df58daa9be4022954afa182c6865c90eed487ff063f519",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java": "19504896c5ab8fae64cc790c590bd369d2f67534f89ba8ae228094f4fe2867c5",
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": "1d1d2d0d1aff026d7770bfeb739083261015589ba7d814ae68fcd3668c556f14"
+  },
+  "acceptedRepairedFile": {
+    "bytes": 2226,
+    "sha256": "e8d498dc0b0d6fbd09ca08d0a6ce79d5102aa1382e4a284037a89cc6a8849e65",
+    "historicalBuild": "E9A42188C4684CD29E25F97C511CCE11",
+    "currentReadAndRetest": "PASS"
+  },
+  "previousSealedSavedRepairEvidenceSha256": "17ffbf82cb3c3d552067efba3cda86a1416c91acef2c1df38af93ce4903f0b5a",
+  "rawAuthorities": {
+    "relb-independent-recovery-source-freeze-r1.json": "bc0da192205bab7d8718385fd7fcb1dbd5c612775c2d548788d28d01cba7b2d3",
+    "run_phase.py": "49bce0df337a90ca8827860c70f2dc8e6c7a08085209f062f44b1a7c2bf68a57",
+    "compiled-r186.py": "29b098f54c8b5c57aff6290f863ab350390788d6abc30b1cc891491a8f15cd45",
+    "compiled-r186-spec.json": "c637f6b6d5491f46ba5d3bd1739e3d21f3ac97731f51feaa97cf7e54948bcd7c",
+    "independent-ui-evidence.json": "3e9f177ce30aeef817cae2e7aad4a21e6d181730f74b0686b35774024ef4506f",
+    "result.json": "585e7ed9e8c23e19ff85107cad7b97e43ffbb9b3e19e04b8012dba0fda69bb35",
+    "input-manifest-before.json": "ac5d3628114d6d5189911f3f5781415c9afe21b8f77c50a3960f638d19d3051d",
+    "input-manifest-after.json": "ce4b13de509ad9c35cef68de8ac610c831ba20052c0d287ec458a99e70d569ec",
+    "native-r175-result.json": "f0251212069d55e09e93dc2cc46a316cb64053aeeb49fc9a6a145062b72ab604",
+    "build-r45-result.json": "789c90c0330d7d6bbfde0a78981fb3d4694a7dc235e059c036281b3df0315a34",
+    "compiled-r185-result.json": "2c7a2b7bb5bea46477511756fdc93ed12ee02d621dbc3492b2c68f3c7cee9ed2",
+    "compiled-r186-result.json": "0315e275daf30b48f5b8bf171d840ccc892dbe89ace3bf494ef4fc3a91a413c3"
+  },
+  "retainedFailure": {
+    "status": "FAIL",
+    "operationMillis": 3399,
+    "exitCode": 1,
+    "nativeOwnedCleanup": "PASS",
+    "handlesClosed": true,
+    "sourceInputsUnchanged": true,
+    "inputCount": 1226,
+    "phase": "compiled-r185",
+    "cause": "Task-only receipt omitted operationSeconds; captured pre-fix charset was windows-1252 on the headerless static host, followed by maintained runner KeyError",
+    "actualObservation": {
+      "charset": "windows-1252",
+      "text": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTroubleshootJS \u00c2\u00b7 Desktop alpha\n\nTHE ELECTRONICS REPAIR GAME\n\nTroubleshoot!\n\nA customer. A faulty board. A bench full of possibilities.\n\nExamine\nMeasure\nIsolate\nRepair\nRetest\nYour session\n\nDownload a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).\n\nRestoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.\n\nLoad session\nStart a service job\nDifficulty\nEASY\nMEDIUM\nHARD \u00e2\u20ac\u201d unavailable\nPSYCHOTIC \u00e2\u20ac\u201d unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output board\nSensor control board\nProcedural control board\nNEW BOARD\n\nEvery listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.\n\nEnter an exact seed\nOpen a saved replay code\nResources\nSettings\nAbout this alpha\nShare pristine challenge",
+      "build": "E9A42188C4684CD29E25F97C511CCE11",
+      "htmlContentType": "text/html",
+      "jsContentType": "text/javascript",
+      "sourceUiSha256": "1ba90c1ee158526dcc5510dd8c9d133e5ba726d769105fe7c6406f19e1ff987b",
+      "scope": "ACTUAL_MAINTAINED_HTTP_HOST_REPRO_NOT_PRODUCTION_UTF8_HEADER_FAILURE"
+    },
+    "overall": "FAIL, never relabeled PASS"
+  },
+  "rootScreenshotReview": "PASS: all five actual retained images inspected separately",
+  "independentReview": "PASS final source/driver/JSON/matrix scope; timing and accepted-six link corrected, public failure-report flow explicitly NOT RUN; read-only reviews, no agent runtime execution",
+  "normalPopulation": {
+    "status": "BLOCKED_NOT_QUALIFIED",
+    "dependencies": [
+      "Actual U05 human observations and independent falsifier/calibration work before freezing HARD",
+      "DifficultyProfile.parseAvailable refuses HARD",
+      "PlayerFamilyCatalog registers RB56 normal=false",
+      "DifficultyAssessment only admits parts<=40 and returns EASY/MEDIUM"
+    ],
+    "scope": "Private explicit one-candidate regression is not the normal four-candidate search; generic shared seed math is not population/diversity/electrical admission"
+  },
+  "limits": [
+    "Single current Windows headed Edge path, not an expanded browser/platform matrix",
+    "Controlled one-second native callback delivery fault is not measured OS latency",
+    "Native file-read error comes from share-zero lock on a task-owned copy; user files are not locked",
+    "One real six-minute hold expiry; collector deadline540s, product limits90s/640/5s and hold360000ms unchanged",
+    "Full native matrix, unchanged Q30 corpora, advanced maximum capacity/8192 actions/current96inventory100owner endurance NOT RUN",
+    "Historical electrical/fidelity/curated profile evidence keeps its original version/fixture bounds; no current whole-build or normal population claim",
+    "Public gates remain held; human observations absent; Q100 outside this continuation"
+  ],
+  "humanTrial": "NOT RUN",
+  "publicRelease": "HELD",
+  "modestHost": "DEFERRED BY OWNER / NOT RUN",
+  "historicalQ30": "Unknown91.616s failure, six missing scratch inventories and late BLOCKED audit retained",
+  "originalEightPreserved": true,
+  "c4130HoldUnchanged": true,
+  "historicalDependencyAudit": {
+    "status": "PASS_SCOPE_BOUNDARIES_ONLY",
+    "q60Accepted": "Later accepted-newton/reference-PC decision carries the accepted six; original current-six packet retains5PASS1deadlineFAIL, and route-only followup60 also timed out",
+    "u05": "Only DifficultyAssessment and U05DifficultyContractTest of4feature pins remain exact; native command/verifier differ. Curated feature capture stays historical, HARD unfrozen and human NOTRUN",
+    "e02E03E04": "E06 inventory confirms named finite-source/relay-mutation/sensor-model inputs unchanged; E03 whole1069-source manifest has540exact529different; E02/E04 local reports lack complete reusable source manifest. Whole compiled/build evidence remains historical",
+    "e06": "Averaged converter/verifier/PWM/shared controller/served inputs differ; old full1222-input build is not current. Bounded converter-fidelity result retains its own version",
+    "u02U03": "Specific instrument/test pins match E06 inventory; old U02U03 JSON lacks complete source manifest. Specific instrument contracts only, not old browser/build as current",
+    "mixed60": "Only PlayerSessionHistory and CirSim of7pins match; PlayerSession/controller/verifier/UI/U04 differ. Modern26/classic22 remain historical observed workflow facts",
+    "current": "Seven private boundary pins and six public gate LFpins verified exact; three changed production inputs separately fresh-tested native175/GWT45/headed186",
+    "reviewMode": "Read-only source and metadata audit; no agent runtime or edits"
+  },
+  "currentPublicFailureReportFlow": "NOT RUN; source-inspected Share pristine challenge is replay/build/epoch only, distinct from private qualification diagnostics"
+}

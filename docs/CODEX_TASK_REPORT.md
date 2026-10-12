@@ -1,4 +1,39 @@
-# Current checkpoint: saved private relay repair/retest and completed recovery PASS
+# Current checkpoint: independent REL-B recovery PASS; normal release held
+
+2026-10-12. Candidate over `ab22c02f1af6a522c655fc34dd02c3c9cf804c61` on `codex/q60-faulted-profile-counts`.
+HTML UTF-8 declaration and truthful Shop/relay discharge feedback fix two actual
+visible defects; electrical guards, schemas, catalog/profile flags and limits stay.
+Native175 six focused suites PASS36.285s; actual JDK8/GWT45 all5 PASS101.655s;
+headed186 PASS400.554s host. Build `E6CA9A4CB99EE6E4301B9F1C980D1830`.
+Actual native NotReadableError preserves completed owner/history23, controlled1s
+late callback starts no restore, and unchanged six-minute hold expires during
+PREPARING with passed prior-owner verdict and complete owner/session/bridge/meter/
+coordinator retirement. Real accepted2226-byte saved repair independently retests.
+[Finite advertised release matrix and sealed proof](task-evidence/REL-B/release-matrix-r1/README.md).
+
+Root inspected five images; read-only source/driver/release-boundary review PASS.
+All source/served, browser/localhost/native handles/job/drainers cleanup PASS.
+Shared retry/order/signed-long/replay native contracts pass within mathematical
+scope, not an admitted RB56 population. Seven accepted reconstruction inputs
+unchanged; historical model/workflow packets retain their own build/fixture limits.
+Headed185 FAIL3.399s task receipt KeyError after pre-fix charset observation,
+owned cleanup unchanged PASS; no failure is relabeled. Full native matrix and
+unchanged Q30 corpora not rerun. Maximum advanced capacity/endurance NOT RUN.
+
+Independent items complete. Next dependency is actual U05 human observations and
+falsifier/calibration work, then calibrated HARD/normal RB56 admission and one
+predeclared finite population/held-out diversity/replay campaign. HARD parser,
+normal catalog and <=40 EASY/MEDIUM classifier still refuse advanced admission.
+Human NOT RUN/public release HELD. Q100 remains outside this continuation.
+Modest host alone owner-deferred. No repeated blocked run or new platform promise.
+
+No owned runtime/preview remains. Original8 hashes, unknown91.616s/six missing
+inventories/lateBLOCKED Q30 audit and C4130 hold intact. No email, Core/Android,
+protected-main merge or unrelated process action.
+
+---
+
+# Historical checkpoint: saved private relay repair/retest and completed recovery PASS
 
 2026-10-12. Candidate over `52b48bb1e8d43578022fe812c6ea1b8873c65318` on
 `codex/q60-faulted-profile-counts`. Narrow controller fix makes Results Return to

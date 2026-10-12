@@ -5387,3 +5387,21 @@ recovery. [Current scope and finite release gates](task-evidence/REL-B/saved-rep
 Native173/GWT43/headed181 pass for one44 source/Shop/file/recovery flow, as scoped
 in [the current packet](task-evidence/REL-B/durable-file-flow-r1/README.md).
 This is private software qualification, not public advanced release or human HARD.
+
+
+## Current private recovery and text rendering boundary
+
+The HTML entry now declares UTF-8; the existing production preview already serves
+UTF-8 headers. Shop's generic isolation/readiness does not imply every provider's
+stored-energy guard has passed. PlayerSessionController translates only the relay
+provider's specific discharge refusal into actionable text and preserves every
+other rejection and physical/catalog identity check. Existing provider guards and
+source/replay ownership remain authoritative.
+
+Native175/GWT45/headed186 qualify current normal UTF-8/held gates, real private44
+early refusal and post-discharge acquisition, repaired-file retest, actual native
+NotReadableError, one controlled late callback, and unchanged360000ms expiry during
+PREPARING. Expiry cancels pending restoration before exact owner/bridge/session/
+meter/coordinator retirement; it does not append a separate restore-cancel row.
+[Evidence and finite release matrix](task-evidence/REL-B/release-matrix-r1/README.md).
+Normal RB56 population and human HARD remain blocked/pending; no public enablement.
