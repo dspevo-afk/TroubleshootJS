@@ -7,16 +7,22 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Current private60 cold/render qualified; U05 human findings next**
-Final525626df now passes the missing60 cold proof at84.183s/626 work/max1.307s
-under original90s/640/5s, with actual fit/wheel/body input and cleanup. One exact
-prior/current pair gives82.211/84.183s; diagnostic500 units match and paint is lower
-on current. Small observed HEALTHY cost increase is not a causal regression claim;
-historical timeouts stay FAIL/unknown and no production fix was made.
-Current curated40/42/44/53/60 actual cold/render gates pass;54 native routing only.
-Dave's separate qualitative U05 trial remains NOT RUN, then finite REL-B normal
-population/retry/diversity/release proof. HARD/public advanced release remains
-HELD; modest-host owner-deferred/RPG shelved. [Comparison/limits](task-evidence/PCB/cold60-comparison-r1/README.md).
+**Current task:** **Current60 repair qualified; generation/PCB realism refinement next**
+Fresh current placement3 60-part real-input Shop/guarded removal/tray/replacement/
+powered retest/Close PASS; cold84.462s/626/max1.323s,
+original90s/640/5s/360s hold unchanged. Collector209 FAIL retained;210 corrected
+initial HOLD-field oracle only, no production changes. Current40/42/44/53/60
+cold/render/input,44+60 service/retest;54 native routing only.
+Dave's20:55UTC priority is continued board generation and PCB realism before
+general roadmap advancement, with periodic real screenshots. Next: one preserved-
+version fallback-cohesion/density candidate, actual native route and render review.
+U05 human remains NOT RUN; HARD/public RB56 and normal population release HELD.
+Modest host owner-deferred/RPG shelved. [Repair/evidence/limits](task-evidence/PCB/current60-repair-r1/README.md).
+
+**Previous current60 checkpoint:** **Private60 cold/render qualified**
+Final525 passed current60 cold84.183s/626/max1.307s. One prior/current pair
+82.211/84.183s gave no causal deadline regression proof; failures stay FAIL/unknown.
+No production optimization or repeated A/B loop. [Comparison](task-evidence/PCB/cold60-comparison-r1/README.md).
 
 **Previous PCB checkpoint:** **Finite realism qualified;60 cold proof then held**
 Private placement3 adds bounded semantic grouping/edge hints, complete readable

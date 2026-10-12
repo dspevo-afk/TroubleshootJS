@@ -1,4 +1,29 @@
-# Current checkpoint: private60 cold/render PASS; U05 human findings next
+# Current checkpoint: current60 repair PASS; PCB realism refinement next
+
+2026-10-12. Production remains `525626df` / GWT
+`BB9CE498943156894544DDD2CD758215`, branch `codex/q60-faulted-profile-counts`.
+Fresh current60 source-guided real-input repair PASS: cold84.462s/626
+work/max1.323s, powered unrepaired FAIL, safe OFF/real enabled
+Remove, actual Shop/tray10k replacement, original+unused stock retained, powered
+repaired customer retest PASS, Close and all product/browser/native cleanup PASS.
+Headed210 host124.167s/player120.842s;
+three root-inspected captures. Collector209 FAIL retained (incorrect initial HOLD
+field; cold PASS, no repair inputs, application retirement UNPROVED, OS cleanup PASS).
+No production fix/gate waiver; exact21 source+1564 source/served audit reuses192/50.
+[Evidence/coverage](task-evidence/PCB/current60-repair-r1/README.md), SHA `e6be76a23ed014150418ca906754e27156243b91cb0d6d462f3996ce0d4e8d81`.
+
+Curated40/42/44/53/60 current cold/render/input;44+60 actual service/retest;
+54 native routing only;44 saved1/2/3 remain exact. U05 human NOT RUN,
+public HARD/normal RB56 release HELD, modest-host owner-deferred/RPG shelved.
+Dave's20:55UTC priority: keep improving generation/PCB realism before general
+roadmap work. Current40/44/60 fit screenshots inspected and Android-accessible
+anonymous immutable PNG links byte verified; Library helper unavailable, no IDs.
+Next: one new-interpretation fallback-cohesion/density candidate; preserve v3 saves,
+compare actual routed six-root metrics and current renders before acceptance.
+Original8 byte preserved; tracked production unchanged, no owned runtime remains.
+No email/unrelated repos/Core/Android/C4130/GPU/main merge/Q30 corpus rerun.
+
+# Historical checkpoint: private60 cold/render PASS; U05 human findings next
 
 2026-10-12. No production changes over verified `525626df4d71cbd526cfdccb2eb062faac6dc42c`
 on `codex/q60-faulted-profile-counts`, GWT `BB9CE498943156894544DDD2CD758215`.
