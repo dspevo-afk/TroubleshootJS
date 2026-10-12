@@ -16,6 +16,7 @@ public final class U06SessionSaveContractTest {
         verifyBounds();
         verifyHistoryPages();
         verifyHistoryPageLeases();
+        verifyQualificationResultsRecovery();
         verifyInventoryPopulation();
         System.out.println("PASS: U06 session save contracts assertions=" + assertions);
     }
@@ -380,6 +381,74 @@ public final class U06SessionSaveContractTest {
             check(history.size() == 1 && controller.historyPage(controller.session.token(), controller.openView(), -1).total == 0,
                 "successor history is independent and predecessor journal remains intact");
         } finally { sim.playerSessionController = priorController; }
+    }
+
+    /** Controller predicate only: reflective completed/passed inputs are not electrical retest evidence. */
+    private static void verifyQualificationResultsRecovery() {
+        CirSim sim = new CirSim(); sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
+        CircuitElm.sim = sim; sim.generationCoordinator = new GenerationCoordinator(sim);
+        GenerationRequest request = new PlayerLaunchRequest("LED_INDICATOR", "0", "EASY").generation();
+        GeneratedBoardInstance owner = request.resolve(new GenerationRequest.PlanCache()).construct().instance;
+        installHistoryOwner(sim, owner);
+        PlayerSessionController controller = new PlayerSessionController(sim);
+        PlayerSessionController prior = sim.playerSessionController; sim.playerSessionController = controller;
+        try {
+            controller.session.adoptQualification(owner);
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.WORKBENCH);
+            GeneratedChallengeController challenge = sim.generatedChallengeController;
+            setRecoveryGateInputs(challenge, GeneratedChallengeState.COMPLETED,
+                new GeneratedCustomerRetestResult(true, "Native predicate fixture only"));
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.RESULTS,
+                "only current completed passed qualification resumes retained Results");
+            int restore = controller.session.beginQualificationRestore(owner);
+            controller.session.failed(restore, true, "cancelled fixture");
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.RESULTS,
+                "cancelled file import preserves completed-owner Results recovery");
+            restore = controller.session.beginQualificationRestore(owner);
+            controller.session.failed(restore, false, "failed fixture");
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.RESULTS,
+                "failed file import preserves completed-owner Results recovery");
+            for (GeneratedCustomerRetestResult result : new GeneratedCustomerRetestResult[] {
+                    null, new GeneratedCustomerRetestResult(false, "Native failed predicate") }) {
+                setRecoveryGateInputs(challenge, GeneratedChallengeState.COMPLETED, result);
+                controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+                controller.action(controller.session.token(), 0, "resume", "", "", "");
+                check(controller.session.screen() == PlayerSession.Screen.WORKBENCH,
+                    "completed flag without a passed live retest cannot authorize Results");
+            }
+            setRecoveryGateInputs(challenge, GeneratedChallengeState.READY,
+                new GeneratedCustomerRetestResult(true, "Native ready predicate"));
+            controller.session.enter(controller.session.token(), PlayerSession.Screen.MENU);
+            controller.action(controller.session.token(), 0, "resume", "", "", "");
+            check(controller.session.screen() == PlayerSession.Screen.WORKBENCH,
+                "passed value alone cannot authorize completed qualification Results");
+            int current = controller.session.token();
+            setRecoveryGateInputs(challenge, GeneratedChallengeState.COMPLETED,
+                new GeneratedCustomerRetestResult(true, "Native stale predicate"));
+            controller.action(current - 1, 0, "resume", "", "", "");
+            check(controller.session.token() == current && controller.session.screen() == PlayerSession.Screen.WORKBENCH,
+                "stale resume callback cannot reveal preserved Results");
+            GeneratedBoardInstance successor = request.resolve(new GenerationRequest.PlanCache()).construct().instance;
+            installHistoryOwner(sim, successor);
+            controller.action(current, 0, "resume", "", "", "");
+            check(controller.session.token() == current && controller.session.owner() == owner &&
+                controller.session.screen() == PlayerSession.Screen.WORKBENCH,
+                "foreign current owner cannot consume the retained completed lease");
+        } finally { sim.playerSessionController = prior; }
+    }
+
+    private static void setRecoveryGateInputs(GeneratedChallengeController challenge,
+            GeneratedChallengeState state, GeneratedCustomerRetestResult result) {
+        try {
+            java.lang.reflect.Field stateField = GeneratedChallengeController.class.getDeclaredField("state");
+            stateField.setAccessible(true); stateField.set(challenge, state);
+            java.lang.reflect.Field resultField = GeneratedChallengeController.class.getDeclaredField("customerRetestResult");
+            resultField.setAccessible(true); resultField.set(challenge, result);
+        } catch (ReflectiveOperationException failure) { throw new AssertionError("Missing controller predicate fixture", failure); }
     }
 
     /** Native fixture uses the real capability installation before challenge validation. */

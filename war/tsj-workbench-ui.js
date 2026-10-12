@@ -20,6 +20,7 @@
       typeof owner.available === 'function' && owner.available() === true;
   }
   function privateSession() { return snapshot && snapshot.privateQualification === true; }
+  function sessionPersistence() { return !privateSession() || snapshot.sessionPersistenceAvailable === true; }
   function listen(node, name, callback, capture) {
     var owner = bridge;
     var guarded = function (event) {
@@ -105,7 +106,8 @@
   function invoke(token, view, name, a, b, c) {
     // Java rechecks the exact controller, session owner, token and modal lease.
     if (!ownsBridge(bridge) || !snapshot) return;
-    if (privateSession() && ['launch', 'random', 'replay', 'load-session'].indexOf(name) >= 0) {
+    if (privateSession() && (['launch', 'random', 'replay'].indexOf(name) >= 0 ||
+        (name === 'load-session' && !sessionPersistence()))) {
       status('New boards, replay and persistence are unavailable in this private qualification session.'); return;
     }
     var owner = bridge;
@@ -142,7 +144,7 @@
   }
   function identity(parent) {
     if (privateSession()) {
-      append(parent, 'p', 'Private qualification session. Normal catalog, HARD, replay and session files remain unavailable.', 'tsj-product-hint');
+      append(parent, 'p', sessionPersistence() ? 'Private qualification session. Normal catalog, HARD and replay remain unavailable.' : 'Private qualification session. Normal catalog, HARD, replay and session files remain unavailable.', 'tsj-product-hint');
       readOnly(parent, 'Interpretation / build', snapshot.epoch + ' / ' + snapshot.build); return;
     }
     var details = append(parent, 'details', undefined, 'tsj-product-identity');
@@ -156,7 +158,7 @@
     var note = append(parent, 'section', undefined, 'tsj-product-support');
     append(note, 'h3', 'About this desktop alpha');
     if (privateSession()) {
-      append(note, 'p', 'This retained private board uses the ordinary ticket, workbench, Shop and customer retest. Normal catalog admission, HARD, new generation, replay and session files remain unavailable.'); return;
+      append(note, 'p', 'This retained private board uses the ordinary ticket, workbench, Shop and customer retest. Normal catalog admission, HARD, new generation and replay remain unavailable.' + (sessionPersistence() ? ' Private session files require this exact qualification board.' : ' Session files remain unavailable.')); return;
     }
     append(note, 'p', 'Selected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.');
     append(note, 'p', 'EASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Use Main menu to save or load a session file. Loading restarts dynamic state; retest the board afterward.');
@@ -186,7 +188,7 @@
   function updateSessionControls() {
     var panel = controls.sessionPanel;
     if (!panel || !panel.isConnected) return;
-    if (privateSession()) { updateSessionHistory(); return; }
+    if (!sessionPersistence()) { updateSessionHistory(); return; }
     var busy = sessionSaving || sessionRead !== null || snapshot.screen === 'PREPARING' || snapshot.screen === 'RETEST';
     panel.setAttribute('aria-busy', busy ? 'true' : 'false');
     controls.sessionSave.disabled = busy || snapshot.sessionSaveAvailable !== true;
@@ -229,7 +231,7 @@
     showSessionHistory(history, history.page && history.page.nextOffset >= 0 ? history.page.offset : -1);
   }
   function saveSession(token, view, node) {
-    if (privateSession() || !ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
+    if (!sessionPersistence() || !ownsSessionControl(token, view, node) || sessionRead || sessionSaving) return;
     sessionSaving = true; updateSessionControls(); status('Preparing session download...');
     var link = null;
     try {
@@ -267,7 +269,7 @@
     detachSessionReader(read); updateSessionControls(); return current;
   }
   function loadSessionFile(token, view, picker) {
-    if (privateSession() || !ownsSessionControl(token, view, picker) || sessionRead || sessionSaving) return;
+    if (!sessionPersistence() || !ownsSessionControl(token, view, picker) || sessionRead || sessionSaving) return;
     var file = picker.files && picker.files[0]; picker.value = '';
     if (!file) return;
     if (!/\.tsjsave$/i.test(file.name)) { status('Choose a .tsjsave session file.'); return; }
@@ -304,7 +306,8 @@
     controls.sessionPanel = panel;
     append(panel, 'h3', 'Your session');
     var token = snapshot.token, view = lease;
-    if (!privateSession()) {
+    if (sessionPersistence()) {
+      if (privateSession()) append(panel, 'p', 'These private session files can be loaded only in this qualification view. Public advanced sessions and replay remain unavailable.', 'tsj-product-hint');
       append(panel, 'p', 'Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).', 'tsj-product-hint');
       var disclosure = append(panel, 'p', 'Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.');
       disclosure.id = 'tsj-session-disclosure-' + (++serial);
@@ -711,7 +714,7 @@
       append(audioText, 'small', 'Mechanical clicks follow actual relay pickup and release.');
       listen(audioInput, 'change', function () { window.tsjBenchAudio.setMuted(!audioInput.checked); });
     }
-    append(parent, 'p', privateSession() ? 'Session history remains available. Save, load and replay are unavailable in this private qualification session.' :
+    append(parent, 'p', privateSession() ? (sessionPersistence() ? 'Use Main menu for private session files and Session history. Public replay remains unavailable; loading restarts dynamic state.' : 'Session history remains available. Save, load and replay are unavailable in this private qualification session.') :
       'Use Main menu to save or load a session file and review Session history. Loading restarts dynamic state; retest the board afterward.');
   }
 
@@ -970,7 +973,7 @@
       else if (page === 'Settings') settingsPage(content);
       else if (page === 'PREPARING') {
         progressView(content);
-        append(content, 'p', 'Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.', 'tsj-product-hint');
+        append(content, 'p', 'Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait.' + (privateSession() ? ' Keep this qualification view in the foreground during preparation.' : ' Switching away pauses preparation until you return.'), 'tsj-product-hint');
         actionButton(content, 'Cancel preparation', 'cancel');
       } else if (page === 'RETEST') append(content, 'p', 'Checking the live board against the customer’s required behavior.');
       else {

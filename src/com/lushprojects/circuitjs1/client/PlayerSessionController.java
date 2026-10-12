@@ -15,7 +15,7 @@ final class PlayerSessionController {
     final PlayerSession session = new PlayerSession();
     private final QuickPlayIdentityAllocator newBoardIdentities = new QuickPlayIdentityAllocator();
     private String notice = "";
-    private boolean bridgeReady, released;
+    private boolean bridgeReady, released, qualificationPersistence;
     private JavaScriptObject bridge;
     private int viewToken;
     private PendingRetest pendingRetest;
@@ -61,7 +61,9 @@ final class PlayerSessionController {
     }
 
     /** The caller has completed the existing held-family publication/D01 admission. */
-    void openQualifiedBoard(GeneratedBoardInstance owner) {
+    void openQualifiedBoard(GeneratedBoardInstance owner) { openQualifiedBoard(owner, false); }
+
+    void openQualifiedBoard(GeneratedBoardInstance owner, boolean persistence) {
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         if (released || sim.playerSessionController != this || owner == null ||
                 sim.getGeneratedBoardInstance() != owner || challenge == null || !challenge.isReady() ||
@@ -75,14 +77,17 @@ final class PlayerSessionController {
         proof.requireAssessmentOwner(owner);
         session.adoptQualification(owner);
         owner.getPhysicalBoardRuntime().getSessionHistory().start();
-        notice = "This qualification board cannot be saved, shared or replaced.";
+        qualificationPersistence = persistence;
+        notice = persistence ? "Private session files can be restored only in this qualification view." :
+            "This qualification board cannot be saved, shared or replaced.";
         bridge = installBridge(); bridgeReady = true;
         refresh();
     }
 
     boolean isBridgeAvailable() {
         return !released && sim.playerSessionController == this &&
-            (!session.isQualification() || sim.getGeneratedBoardInstance() == session.owner());
+            (!session.isQualification() || sim.getGeneratedBoardInstance() == session.owner() ||
+                (qualificationPersistence && Rb56QualificationVerifier.ownsPersistenceLease(sim, this)));
     }
 
     /** Keep the lease reachable for retry if exact UI/bridge teardown fails. */
@@ -147,6 +152,37 @@ final class PlayerSessionController {
         }
     }
 
+    int beginQualificationRestore(Object expectedOwner) {
+        if (!qualificationPersistence || !isBridgeAvailable())
+            throw new IllegalStateException("Private persistence is unavailable");
+        clearRetest();
+        int token = session.beginQualificationRestore(expectedOwner);
+        notice = ""; refresh(); return token;
+    }
+
+    void finishQualificationRestore(int token, Object previousOwner, GeneratedBoardInstance nextOwner,
+            GenerationJob.Outcome outcome) {
+        if (nextOwner != null) {
+            if (!session.restoredQualification(token, previousOwner, nextOwner))
+                throw new IllegalStateException("Private restore belongs to a closed session");
+            notice = "Session restored. Transient behavior restarted; retest the board.";
+        } else if (!session.failed(token, outcome == GenerationJob.Outcome.CANCELLED,
+                "The session could not be restored. The previous board is retained. Resume it or choose another file."))
+            throw new IllegalStateException("Private restore failure belongs to a closed session");
+        if (nextOwner == null && outcome == GenerationJob.Outcome.CANCELLED)
+            resumeQualification(session.token());
+        sim.refreshChallengeInteractionState(); refresh(); sim.repaint();
+    }
+
+    /** Resume preserved results only from the exact retained controller's passed job. */
+    private void resumeQualification(int expected) {
+        if (!ownsCurrentBoard()) return;
+        GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        GeneratedCustomerRetestResult result = challenge.getCustomerRetestResult();
+        boolean completed = challenge.isCompleted() && result != null && result.isPassed();
+        session.resumeQualification(expected, sim.getGeneratedBoardInstance(), completed);
+    }
+
     /** Captured modal leases invalidate a retained Shop callback on close/reopen. */
     int openView() {
         if (!isBridgeAvailable()) throw new IllegalStateException("This session has closed");
@@ -157,7 +193,7 @@ final class PlayerSessionController {
     String action(int expected, int view, String action, String first, String second, String third) {
         if (!isBridgeAvailable() || !session.accepts(expected)) return "This control belongs to an earlier session.";
         if (session.isQualification() && ("launch".equals(action) || "random".equals(action) ||
-                "replay".equals(action) || "load-session".equals(action)))
+                "replay".equals(action) || ("load-session".equals(action) && !qualificationPersistence)))
             return "This qualification board cannot be saved, shared or replaced.";
         try {
             if ("launch".equals(action)) launch(new PlayerLaunchRequest(first, second, third));
@@ -168,11 +204,15 @@ final class PlayerSessionController {
                 PlayerSessionSave saved;
                 try { saved = PlayerSessionSave.parse(first); }
                 catch (RuntimeException invalid) { return "This session file is incomplete, incompatible or unsupported. The current board is unchanged."; }
-                launch(PlayerLaunchRequest.parse(saved.replay), saved);
+                if (session.isQualification()) Rb56QualificationVerifier.restoreSession(sim, this, saved);
+                else launch(PlayerLaunchRequest.parse(saved.replay), saved);
             }
             else if ("cancel".equals(action) && session.screen() == PlayerSession.Screen.PREPARING) sim.generationCoordinator.cancel();
             else if ("menu".equals(action)) session.enter(expected, PlayerSession.Screen.MENU);
-            else if ("resume".equals(action)) session.enter(expected, PlayerSession.Screen.WORKBENCH);
+            else if ("resume".equals(action)) {
+                if (session.isQualification()) resumeQualification(expected);
+                else session.enter(expected, PlayerSession.Screen.WORKBENCH);
+            }
             else if ("retest".equals(action)) retest(expected);
             else if ("end-qualification".equals(action) && session.isQualification()) {
                 if (session.screen() != PlayerSession.Screen.RESULTS || !ownsCurrentBoard() ||
@@ -196,7 +236,7 @@ final class PlayerSessionController {
     }
 
     private boolean canSaveSession() {
-        return !session.isQualification() && ownsCurrentBoard() && sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
+        return (!session.isQualification() || qualificationPersistence) && ownsCurrentBoard() && sim.isGeneratedRuntimeSettled() && !sim.activeMeasurementOverlay &&
             session.screen() != PlayerSession.Screen.PREPARING && session.screen() != PlayerSession.Screen.RETEST;
     }
 
@@ -205,9 +245,11 @@ final class PlayerSessionController {
         try {
             if (!session.accepts(expected) || view != viewToken || !canSaveSession())
                 throw new IllegalStateException("The current session is busy or this view has closed.");
-            PlayerSessionSave saved = PlayerSessionState.capture(sim, session.request(),
-                sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().operations(),
-                GWT.getPermutationStrongName());
+            PlayerSessionSave saved = session.isQualification() ?
+                Rb56QualificationVerifier.captureSession(sim, this, GWT.getPermutationStrongName()) :
+                PlayerSessionState.capture(sim, session.request(),
+                    sim.getGeneratedBoardInstance().getPhysicalBoardRuntime().getSessionHistory().operations(),
+                    GWT.getPermutationStrongName());
             put(result, "contents", saved.encode());
             result.put("ok", JSONBoolean.getInstance(true));
         } catch (RuntimeException failure) {
@@ -350,6 +392,7 @@ final class PlayerSessionController {
         put(out, "epoch", PlayerLaunchRequest.EPOCH); put(out, "build", GWT.getPermutationStrongName());
         out.put("hasBoard", JSONBoolean.getInstance(!released && session.owner() != null));
         out.put("privateQualification", JSONBoolean.getInstance(session.isQualification()));
+        out.put("sessionPersistenceAvailable", JSONBoolean.getInstance(!session.isQualification() || qualificationPersistence));
         out.put("sessionSaveAvailable", JSONBoolean.getInstance(canSaveSession()));
         out.put("sessionHistoryCount", new JSONNumber(ownsCurrentBoard() ? sim.getGeneratedBoardInstance()
             .getPhysicalBoardRuntime().getSessionHistory().size() : 0));

@@ -1,0 +1,661 @@
+{
+  "status": "PASS_ONE_PRIVATE44_DURABLE_FILE_FLOW_PUBLIC_RELEASE_HELD",
+  "createdUtc": "2026-10-12T00:15:04.178231+00:00",
+  "baseCommit": "9a82c97b5a07632c58374014c25900de2eb8c0d5",
+  "branch": "codex/q60-faulted-profile-counts",
+  "compiledBuild": "BFBD92FBE2D7CAD48AFB6D2DC0C119ED",
+  "compiledPermutations": {
+    "53AB719835188B5107E5F2E84996E0BD.cache.js": "fbfbb9e2d042f745149ba7deaa7797bcc62a875d6a1e45d71aa4d066513bc1f8",
+    "571990EEF1D026E98F2E1012D8A2BC88.cache.js": "3e01de1322ef894c65899894b2fd1b5173e5d65140bdb8f0cfa9a0d3705e2699",
+    "BFBD92FBE2D7CAD48AFB6D2DC0C119ED.cache.js": "702ad81795e00bcf4b15e2afeecc5939dfac97433f8c15d95c1774b7c601a314",
+    "E43EFDCEB3615ACFA32D9A8BE62734C3.cache.js": "a3cfd72d14f1859d41034bbf5c2344019e40bf46ff26255f90d25117f449bf35",
+    "EDF2B473959745A8FA9439F3BD59AF7B.cache.js": "b375028025bb3281a19b8f58aede41b1b169ad0974d3bc6ff99aa87f404a2a58"
+  },
+  "interpretation": {
+    "publicReplay": "tsj-alpha/5",
+    "dependency": "tsj-generation-dependencies-v16",
+    "schema": "tsj-session/1",
+    "model": "tsj-session-model/1",
+    "mode": "restart"
+  },
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSession.java": {
+      "rawSha256": "925c83ff05d577aea8c1f821ba43f6a99b0f4311ed3e6d1f74f76d2e21bea4d9",
+      "committedLfSha256": "fdfb4d66f73ab18ee45f8e57007275bf961b4d2e1017c47bee6b0ed8e4eec8e3"
+    },
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": {
+      "rawSha256": "afde6c3c10128f0bc3df38fd0ba0cd0797f469bb6eb8b4c4eac3b6d9766f77f1",
+      "committedLfSha256": "634dbba22c6f4271eb5583148522342f9793723dab739b48daec97d96d1050b5"
+    },
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java": {
+      "rawSha256": "014cfa552d65071f9280bca94ac9509b3f742a3b34681d299067799e7dd9d0a4",
+      "committedLfSha256": "1d1d2d0d1aff026d7770bfeb739083261015589ba7d814ae68fcd3668c556f14"
+    },
+    "tests/contracts/U04SessionContractTest.java": {
+      "rawSha256": "75b0741635ce6e823afae0e18df748d768502888e4d23bcd90dc6695e111c763",
+      "committedLfSha256": "ad45884d5163514025d6ebbdba99f67d901bcd7dccaff225152fc9d380526e4a"
+    },
+    "war/tsj-workbench-ui.js": {
+      "rawSha256": "1ba90c1ee158526dcc5510dd8c9d133e5ba726d769105fe7c6406f19e1ff987b",
+      "committedLfSha256": "c560ea692d7de18f04e9934f4d15a0ac6634cd31ea62c92d53bf2daba7734a9f"
+    },
+    "tests/contracts/U06SessionSaveContractTest.java": {
+      "rawSha256": "6090719d9aa7e40e4ffbbcd497834fee074306f2ccbe6ebcd89d29db561a35cb",
+      "committedLfSha256": "8901d330e700db5e8efcefbe38e0948dff89e895dc9bc927dd5686e0a9a08b48"
+    }
+  },
+  "acceptedPrivateRoundTrip": {
+    "commit": "9a82c97b5a07632c58374014c25900de2eb8c0d5",
+    "evidenceSha256": "473611d925e1de57ac0c45ca4cdb1dbeef6b6f37daad808ecc53018b7ebd5283",
+    "unchangedInputs": {
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "1c8f264152012c9dbe46b5a8ff08935cb99cecbc6baf10d85a37e5da4b3a0fa6",
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionSave.java": "eee7f8b3326138b4087122cd4cc1d01722dc4690dcc434777edc2b0d69ff76c3",
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionState.java": "b551878f895a69244c14c34fa64420461f194cd4f2fdd0b713871581ae8cd546",
+      "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java": "d85d6d3c3319ccf5e5c0f07dbb6cd49082406fa87ecd64e1677c44a1a5b9a0af",
+      "src/com/lushprojects/circuitjs1/client/U06SessionDeveloperVerifier.java": "e9deaf59318590324b8119449526d9d0cb1d5920d7128a823eb380b6a924752b",
+      "scripts/verify-current-contracts.ps1": "5f96306647098b6e2c4cd1cdee7f0a9e3a416d5fa70f9a490e1697f34b5fef88",
+      "tests/contracts/RelBSessionIdentityContractTest.java": "2cdf66dc9fe9668f81ab060d1b98949520444e9dbed738447ba699ceb96fc3a2"
+    },
+    "scope": "Reuse codec/state/coordinator/typed fixture algorithm and recorded two-failure proof only; current GWT/UI qualified freshly; not entire prior served-input equality"
+  },
+  "gates": {
+    "native-r173": {
+      "status": "PASS",
+      "operationMillis": 39528,
+      "consumedInputs": 1355,
+      "sourceInputsUnchanged": true,
+      "cleanup": {
+        "pid": 188068,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "resultSha256": "46908abdf24cd7ad2d71ad27f6f0b4a78f27331d6eeb315bab4ec14ecba32dca",
+      "launchSha256": "cabb445609288bc7759f132ecefd964586d5912daffc5aedbdffc3946c3ae85b"
+    },
+    "build-r43": {
+      "status": "PASS",
+      "operationMillis": 87672,
+      "consumedInputs": 1223,
+      "sourceInputsUnchanged": true,
+      "cleanup": {
+        "pid": 60808,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "resultSha256": "a188aaa6ecbc85d8c04fff58fd979d1addd17e9843b2e557a54770192c682057",
+      "launchSha256": "a9b4ca9d5090193e8f6a139da04c6206629f67ac1a40ddb532510debc73aa60f"
+    },
+    "compiled-r181": {
+      "status": "PASS",
+      "operationMillis": 149929,
+      "consumedInputs": 1226,
+      "sourceInputsUnchanged": true,
+      "cleanup": {
+        "pid": 168776,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      },
+      "handlesClosed": true,
+      "resultSha256": "b6f92f827bed3e4cbba570e0749b4a2158e81c51ea2f6f19e4fb1361ea53d390",
+      "launchSha256": "8fb655bc42c92d9064905e845cd7e5a156cd06426fe23a48488243aaeb37acd4"
+    }
+  },
+  "nativeAssertions": {
+    "U04SessionContractTest": 4010,
+    "U06SessionSaveContractTest": 34935,
+    "RelBSessionIdentityContractTest": 28,
+    "PlayerSessionFingerprintContractTest": 119,
+    "U05DifficultyContractTest": 52
+  },
+  "browserInputAudit": {
+    "status": "PASS",
+    "beforeSha256": "03dd8fc80d693af5ab1f689c123ba7efce821ae3259e072370860444c32e834f",
+    "afterSha256": "03dd8fc80d693af5ab1f689c123ba7efce821ae3259e072370860444c32e834f",
+    "sourceSha256Before": "22397bd31756d1ab63a1462109c1e85d5eaf539256e0d53a2f68b162eb163f99",
+    "sourceSha256After": "22397bd31756d1ab63a1462109c1e85d5eaf539256e0d53a2f68b162eb163f99",
+    "webSha256Before": "f35b06d2ce426b840b951fc68cbffde0cddceac71795958b439507d7df33a4d0",
+    "webSha256After": "f35b06d2ce426b840b951fc68cbffde0cddceac71795958b439507d7df33a4d0",
+    "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+    "fileCountBefore": 1563,
+    "fileCountAfter": 1563,
+    "seconds": 0.3932350000250153
+  },
+  "browserCleanup": {
+    "status": "PASS",
+    "seconds": 1.1624515000148676,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "browserCases": [
+    {
+      "case": {
+        "index": 1,
+        "name": "private44-durable-download-reload-file-load-and-failure-recovery",
+        "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&tsjRb56Persistence=true&running=true",
+        "stateAttribute": "data-tsj-verification",
+        "expectedState": "HOLD:rb56",
+        "expectedPrefix": null,
+        "terminalPrefixes": [
+          "HOLD",
+          "FAIL"
+        ],
+        "reportAttribute": "data-tsj-rb56-report",
+        "timeoutSeconds": 450.0,
+        "slug": "001-private44-durable-download-reload-file-load-and-failure-recovery"
+      },
+      "outcome": "PASS",
+      "operationSeconds": 146.68187199998647,
+      "scope": "GUIDED_SAVE_LOAD_UI_NOT_HUMAN_DIAGNOSIS"
+    }
+  ],
+  "ui": {
+    "status": "PASS",
+    "observations": [
+      {
+        "name": "private44-durable-download-reload-file-load-and-failure-recovery",
+        "status": "PASS",
+        "build": "BFBD92FBE2D7CAD48AFB6D2DC0C119ED",
+        "privatePackages": 44,
+        "seed": "-1004",
+        "sourceControls": 2,
+        "historyBefore": [
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Added a part to the tray.",
+          "Added a part to the tray."
+        ],
+        "historyAfter": [
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Changed a supply setting.",
+          "Added a part to the tray.",
+          "Added a part to the tray.",
+          "Added a part to the tray."
+        ],
+        "purchases": [
+          "Add to Parts Tray: SENSOR_CONTROL parts, Compatible five-terminal sensor threshold controller",
+          "Add to Parts Tray: SENSOR_CONTROL parts, Compatible five-terminal sensor threshold controller"
+        ],
+        "fileRoundTrip": {
+          "currentSchema": true,
+          "identityHistorySourcesExact": true,
+          "permanentProviderStateExact": true,
+          "serviceClockContinues": true,
+          "isolatedFuseCooldown": true,
+          "fullBytesEqual": true
+        },
+        "actualReload": true,
+        "malformedRefusal": true,
+        "oversizedRefusal": true,
+        "wrongExactSeedRefusal": true,
+        "publicPrivateFileRefusal": true,
+        "failedRestore": {
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 31678,
+          "work": 517,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "priorOwnerRetained": true
+        },
+        "restoreOutcomes": [
+          {
+            "outcome": "PROGRAMMING_FAILURE",
+            "stage": "PUBLISH",
+            "elapsedMillis": 31678,
+            "work": 517,
+            "maxJobMillis": 90000,
+            "maxJobSteps": 640,
+            "maxUnitMillis": 5000,
+            "priorOwnerRetained": true
+          },
+          {
+            "outcome": "CANCELLED",
+            "stage": "HEALTHY",
+            "elapsedMillis": 3350,
+            "work": 8,
+            "maxJobMillis": 90000,
+            "maxJobSteps": 640,
+            "maxUnitMillis": 5000,
+            "priorOwnerRetained": true
+          },
+          {
+            "outcome": "PASS",
+            "stage": "PUBLISH",
+            "elapsedMillis": 31853,
+            "work": 517,
+            "maxJobMillis": 90000,
+            "maxJobSteps": 640,
+            "maxUnitMillis": 5000,
+            "freshOwner": true,
+            "priorOwnerRetired": true
+          }
+        ],
+        "ownedViewCleanup": true
+      }
+    ],
+    "files": [
+      {
+        "path": "mutated-private44.tsjsave",
+        "bytes": 1627,
+        "sha256": "7c2ff8e321e170fe9b54f830ac3ee2c837bbc0fabf75a8e8bb4bdae664cb28af"
+      },
+      {
+        "path": "restored-private44.tsjsave",
+        "bytes": 1627,
+        "sha256": "7c2ff8e321e170fe9b54f830ac3ee2c837bbc0fabf75a8e8bb4bdae664cb28af"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "durable-mutated-session-menu.png",
+        "sha256": "40cdf8668863739d1ad86dd8077aafe1f27ba9858193e2ccc130eca41d31f3a0"
+      },
+      {
+        "path": "durable-failed-restore-recovery.png",
+        "sha256": "051bdbb5e344a6e127e8c258f4d79c649e797d7f43ff25bbe2686a42da8a7561"
+      },
+      {
+        "path": "durable-restored-session-menu.png",
+        "sha256": "6a087715cf976e66791fbb2bc8d5e78b92e7788dfe74da0e9bc1c989c8066507"
+      }
+    ],
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Bench power",
+      "select real supply limit: 25mA",
+      "click: Bench power",
+      "click: Board Power: ON",
+      "click: Shop",
+      "click: Add to Parts Tray: SENSOR_CONTROL parts, Compatible five-terminal sensor threshold controller",
+      "click: Add to Parts Tray: SENSOR_CONTROL parts, Compatible five-terminal sensor threshold controller",
+      "click: Close",
+      "click: Main menu",
+      "click: Session history",
+      "click: Save session",
+      "click: Resume current board",
+      "click: End qualification view",
+      "click: Load session",
+      "actual filechooser.set_files: mutated-private44.tsjsave",
+      "reopen actual route after disk download and owned view closure",
+      "click: Accept ticket and start",
+      "click: Main menu",
+      "click: Session history",
+      "click: Load session",
+      "actual filechooser.set_files: wrong-seed.tsjsave",
+      "click: Load session",
+      "actual filechooser.set_files: truncated.tsjsave",
+      "click: Load session",
+      "actual filechooser.set_files: oversized.tsjsave",
+      "click: Load session",
+      "actual filechooser.set_files: bad-signature.tsjsave",
+      "click: Resume previous board",
+      "click: Main menu",
+      "click: Session history",
+      "click: Load session",
+      "actual filechooser.set_files: mutated-private44.tsjsave",
+      "click: Cancel preparation",
+      "click: Main menu",
+      "click: Session history",
+      "click: Load session",
+      "actual filechooser.set_files: mutated-private44.tsjsave",
+      "click: Bench power",
+      "click: Bench power",
+      "click: Main menu",
+      "click: Session history",
+      "click: Save session",
+      "click: Resume current board",
+      "click: Shop",
+      "click: post-restore additional tray purchase",
+      "click: Close",
+      "click: Main menu",
+      "click: Session history",
+      "click: Resume current board",
+      "click: End qualification view"
+    ],
+    "browserDisplay": "HEADED",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "defaultHumanPersistence": "UNAVAILABLE",
+    "normalAdvancedDurableRelease": "NOT QUALIFIED",
+    "reuse": "Current private codec/state/coordinator and accepted two-failure fixture unchanged"
+  },
+  "reusedCanaries": {
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "normal-private-durable-flag-inert",
+          "path": "circuitjs.html?tsjDebug=false&tsjVerifyRb56=true&tsjRb56Persistence=true&tsjRb56Seed=invalid&difficulty=HARD",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "UNUSED",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "reportAttribute": null,
+          "timeoutSeconds": 30.0,
+          "slug": "001-normal-private-durable-flag-inert"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 0.43247729999711737,
+        "scope": "GUIDED_SAVE_LOAD_UI_NOT_HUMAN_DIAGNOSIS"
+      },
+      {
+        "schema": 1,
+        "case": {
+          "index": 2,
+          "name": "ordinary-u06-current-format-regression",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyU06=true&tsjU06Family=LED_INDICATOR&tsjU06Seed=0&running=true",
+          "stateAttribute": "data-tsj-u06-state",
+          "expectedState": "PASS",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "PASS",
+            "FAIL"
+          ],
+          "timeoutSeconds": 120.0,
+          "reportAttribute": "data-tsj-u06-report"
+        },
+        "url": "http://127.0.0.1:61125/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyU06=true&tsjU06Family=LED_INDICATOR&tsjU06Seed=0&running=true",
+        "startedUtc": "2026-10-11T23:52:10.379205+00:00",
+        "finishedUtc": "2026-10-11T23:52:12.084002+00:00",
+        "operationSeconds": 1.7047955999732949,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "stateMatch": true,
+        "observedState": "PASS",
+        "lastObservedState": "PASS",
+        "timedOut": false,
+        "expectedFailureCanary": false,
+        "expectedFailureStateWasNotAnUnexpectedError": false,
+        "reportObserved": true,
+        "reportJsonValid": true,
+        "reportJsonError": null,
+        "reportMatch": true,
+        "reportLength": 20414,
+        "reportSha256": "ec31c54ed2b8f350a888471bba82564e5231fd1b8a9295510821326d982f69c0",
+        "reportFile": "cases/002-ordinary-u06-current-format-regression.report.json",
+        "pageErrors": [],
+        "httpErrors": [],
+        "consoleErrors": [],
+        "attributeReadErrors": [],
+        "observerErrors": [],
+        "observation": {
+          "transport": "PASSIVE_CDP_DOM",
+          "stateEvents": 2,
+          "compiledScriptsHeld": 1,
+          "scriptAttachment": {
+            "generation": 1,
+            "documentBackend": 20,
+            "htmlBackend": 22,
+            "exactPageUrl": true,
+            "resourceType": "script"
+          },
+          "currentDocuments": 2,
+          "finalStateReadRequired": true,
+          "terminalScopeVerified": true,
+          "scopeIdentity": {
+            "generationBefore": 2,
+            "generationAfter": 2,
+            "stateChangesBefore": 2,
+            "stateChangesAfter": 2,
+            "documentNodeBefore": 4,
+            "documentNodeAfter": 7,
+            "htmlNodeBefore": 6,
+            "htmlNodeAfter": 9,
+            "documentBackendBefore": 20,
+            "documentBackendAfter": 20,
+            "htmlBackendBefore": 22,
+            "htmlBackendAfter": 22,
+            "pageUrlMatches": true,
+            "documentUrlMatches": true,
+            "stateMatches": true,
+            "attributeMatches": true
+          }
+        },
+        "listenerCleanupErrors": [],
+        "navigationError": null
+      },
+      {
+        "case": {
+          "index": 3,
+          "name": "default-human-private-persistence-held",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 120.0,
+          "slug": "003-default-human-private-persistence-held"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 36.08483140001772,
+        "scope": "GUIDED_SAVE_LOAD_UI_NOT_HUMAN_DIAGNOSIS"
+      }
+    ],
+    "unchangedSourceServedSha256": "03dd8fc80d693af5ab1f689c123ba7efce821ae3259e072370860444c32e834f",
+    "resultSha256": "28a51bbff40d8afe002785e3322b7ac2ae2f123717cf6c2e719878c6d770368e",
+    "scope": "Three successful final-source launch/privacy/ordinary wire cases reused after exact manifest equality"
+  },
+  "retainedBrowserFailures": [
+    {
+      "phase": "compiled-r176",
+      "outcome": "FAIL",
+      "operationMillis": 89999,
+      "cause": "Driver used visible Supplies caption instead of actual accessible Bench power name; first three unchanged canaries passed.",
+      "resultSha256": "313e577cc051aee33bf77e10958743bc1d16ff5569fa3c61786bea14175bd203",
+      "cleanup": {
+        "pid": 49168,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    },
+    {
+      "phase": "compiled-r177",
+      "outcome": "FAIL",
+      "operationMillis": 44876,
+      "cause": "Driver Bench power selector matched both button and native dialog; unique real dialog locator now used.",
+      "resultSha256": "fbe0cf712d25baa03419850bb4db1fcb3243f73476815800eae8f49234f8b016",
+      "cleanup": {
+        "pid": 121024,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    },
+    {
+      "phase": "compiled-r178",
+      "outcome": "FAIL",
+      "operationMillis": 45877,
+      "cause": "Second relay acquisition did not enter tray; premature click was counted before successful acquisition. Static relay discharge guard explains the negative; returned failure cause was not captured.",
+      "resultSha256": "93e9b46f93e856a3607b6bc80bbfc37f5c2ae056b24474bcd8dfd82a0fc1dafa",
+      "cleanup": {
+        "pid": 143652,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    },
+    {
+      "phase": "compiled-r179",
+      "outcome": "FAIL",
+      "operationMillis": 50573,
+      "cause": "Per-click public tray assertion confirmed first sensor stock accepted, relay stock refused; all-source isolation is not coil-discharge evidence. Final file/inventory scope uses two sensor stocks; relay workflow remains pending.",
+      "resultSha256": "2138a5788bd6bf4c1e6a30cb1eb5661691884da9984ac9ae567bea8c0f006c8f",
+      "cleanup": {
+        "pid": 182192,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    },
+    {
+      "phase": "compiled-r180",
+      "outcome": "FAIL",
+      "operationMillis": 109698,
+      "cause": "Real download, reopen and public/wrong-seed/truncated/oversized refusals passed, but task fixture text writer changed all140LF toCRLF. App refused that framing before preparation; final181 corrupts exactly1signature hexbyte with unchanged canonical LF/length.",
+      "resultSha256": "d068aa22193e1be144ca69fefa456ef39aa00d0636465b0211e7556378ea74dd",
+      "cleanup": {
+        "pid": 181508,
+        "processSignaled": true,
+        "jobActiveProcesses": 0,
+        "jobClosedForCleanup": false,
+        "drainsComplete": true,
+        "liveDrainers": 0,
+        "drainerWaitMs": 0,
+        "drainerErrors": [],
+        "cleanupVerified": true,
+        "cleanupElapsedMs": 0,
+        "jobAccountingDrainMs": 0,
+        "jobAccountingDrainSucceeded": true,
+        "jobAccountingError": null
+      }
+    }
+  ],
+  "rawEvidence": {
+    "browserResultSha256": "df7f0099bccd741e9d88823916c2d18fab0c9ff7d53df8fef9633d97b1d5f553",
+    "uiResultSha256": "bfc0d8fab14a4241c96a49c53339e44293d63e81431da5976d0b36dfe5ca8051"
+  },
+  "retainedFailure": {
+    "phase": "native-r171",
+    "outcome": "FAIL",
+    "operationMillis": 22367,
+    "cause": "Native abandoned-restore fixture started from TICKET; existing production screen guard correctly refused. Fixture now enters WORKBENCH; guards/assertions retained.",
+    "resultSha256": "206ea97145f11713436f9217a715edfd2f8fef50baef9e6f2e1be920fdb5f345",
+    "logSha256": "4d35e6af5ebccbb7f2947ed12d65cee2a250cbcf4e4d070f4748f9a71d405e67",
+    "cleanup": {
+      "pid": 25396,
+      "processSignaled": true,
+      "jobActiveProcesses": 0,
+      "jobClosedForCleanup": false,
+      "drainsComplete": true,
+      "liveDrainers": 0,
+      "drainerWaitMs": 0,
+      "drainerErrors": [],
+      "cleanupVerified": true,
+      "cleanupElapsedMs": 100,
+      "jobAccountingDrainMs": 100,
+      "jobAccountingDrainSucceeded": true,
+      "jobAccountingError": null
+    }
+  },
+  "supersededPassingGate": {
+    "phase": "native-r172",
+    "scope": "Pre-completed-owner recovery correction; retained, not final-source proof",
+    "resultSha256": "1c7ff05ce1893dcecff51d41b789d0198502f921544eb3c3d0ac6c708d62c623"
+  },
+  "review": {
+    "scope": "Independent static six-input and seven-unchanged-input audit",
+    "result": "PASS",
+    "resolved": "Settings disclosure and completed-owner Results recovery; prior double-driver concern withdrawn after explicit timer cancellation read"
+  },
+  "limits": {
+    "humanTrial": "NOT RUN",
+    "hardProfile": "UNFROZEN_UNAVAILABLE",
+    "normalRb56Catalog": "HELD",
+    "normalAdvancedDurableRelease": "NOT QUALIFIED",
+    "completedAdvancedGuiRecovery": "NOT RUN; native model/controller predicate only",
+    "populationRetryDiversity": "PENDING",
+    "modestHost": "DEFERRED BY OWNER / NOT RUN",
+    "relayDischargeUiWorkflow": "PENDING; premature purchase refusal retained, no successful relay purchase claim",
+    "nativeFileIoErrors": "NOT RUN",
+    "delayedFileReaderCallback": "NOT RUN",
+    "maximumCapacity": "NOT MEASURED",
+    "privateViewExpiryDuringRestore": "STATIC OWNERSHIP REVIEW ONLY",
+    "transientContinuation": "NOT SUPPORTED; restart capacitor charge, relay motion, hysteresis and simulation time",
+    "localCharsetPresentation": "Observed nonblocking separator/range mojibake; release follow-up"
+  },
+  "originalEightPreserved": true,
+  "serverHold": "C4130 unchanged",
+  "persistentOwnedPreview": "NONE",
+  "rootReview": {
+    "status": "PASS",
+    "scope": "Integrated source and all three current screenshots inspected; actionable ERROR/resume, true ordered history and private restrictions visible",
+    "nonblocking": "Localhost screenshots show title separator/history dash character encoding defect; no presentation fix or broad browser claim"
+  }
+}

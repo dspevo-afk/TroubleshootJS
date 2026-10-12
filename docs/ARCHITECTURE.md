@@ -5365,3 +5365,20 @@ Native170/GWT42/compiled175 pass within the [declared private-format scope](task
 Normal advanced durable load/menu/FileReader/population and human HARD remain
 unqualified; no public catalog/profile/persistence enablement or transient
 continuation follows. Existing 90s/640/5s caps and source/instrument owners remain.
+
+## Current private advanced durable file transport
+
+The existing RB56 retained transaction can opt into `tsjRb56Persistence=true`.
+PlayerSessionController and the shared menu/Blob/FileReader controls then use
+the accepted current private identity and restart codec only for that exact
+qualified board. Default human/public catalog/profile/replay admission stays held.
+The transaction is the sole manually scoped restore driver and owns expiry,
+cancellation, failed-owner rollback, actual successor publication and exact
+retirement. The controller retains its lease during private PREPARING without
+exporting graph/proof/selected fault data; session tokens invalidate old controls.
+Restored history becomes active again. Failed/cancelled file import can resume
+preserved Results only from the exact live completed challenge and passed retest;
+successful import invalidates completion and requires a new retest.
+Native173/GWT43/headed181 pass for one44 source/Shop/file/recovery flow, as scoped
+in [the current packet](task-evidence/REL-B/durable-file-flow-r1/README.md).
+This is private software qualification, not public advanced release or human HARD.

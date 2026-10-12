@@ -14,6 +14,8 @@ public final class U04SessionContractTest {
         }
         verifyQ30PlayerRequestAndOwner();
         verifyQualificationSession();
+        verifyQualificationRestoreSession();
+        verifyQualificationResume();
         verifyHeldRb56Admission();
         for (final String invalid : new String[] {"01", "+1", "-0", "1.0", "1e3", " 1", "1 ", "9223372036854775808", "-9223372036854775809", "", "NaN"})
             reject(new Attempt() { public void run() { new PlayerLaunchRequest("LED_INDICATOR", invalid, "EASY"); }});
@@ -149,6 +151,154 @@ public final class U04SessionContractTest {
             !session.isQualification(), "ordinary completion and replay remain available after private use");
     }
 
+    private static void verifyQualificationRestoreSession() {
+        final PlayerLaunchRequest launch = new PlayerLaunchRequest("LED_INDICATOR", "0", "EASY");
+        final PlayerSession session = new PlayerSession();
+        final Object owner = new Object(), successor = new Object(), lateOwner = new Object();
+        session.adoptQualification(owner);
+        SessionSnapshot before = new SessionSnapshot(session);
+        rejectState(new Attempt() { public void run() { session.beginQualificationRestore(null); }});
+        rejectState(new Attempt() { public void run() { session.beginQualificationRestore(successor); }});
+        rejectState(new Attempt() { public void run() { session.beginQualificationRestore(owner); }});
+        before.requireUnchanged(session, "null, foreign and ticket-state restores cannot mutate the private lease");
+
+        check(session.enter(session.token(), PlayerSession.Screen.WORKBENCH),
+            "private ticket reaches workbench before restoration");
+        int workbenchToken = session.token();
+        int restore = session.beginQualificationRestore(owner);
+        check(restore != workbenchToken && session.accepts(restore) &&
+            session.screen() == PlayerSession.Screen.PREPARING && session.owner() == owner &&
+            session.request() == null && session.isQualification() &&
+            Boolean.TRUE.equals(field(session, "qualificationRestorePending")) &&
+            field(session, "pending") == null &&
+            field(session, "savedScreen") == PlayerSession.Screen.WORKBENCH,
+            "private restore locks only its exact request-free qualification owner");
+        before = new SessionSnapshot(session);
+        rejectState(new Attempt() { public void run() { session.beginQualificationRestore(owner); }});
+        check(!session.prepared(restore, launch, successor) &&
+            !session.prepared(restore, null, successor),
+            "normal prepared callbacks cannot consume a private restore");
+        check(!session.restoredQualification(restore - 1, owner, successor) &&
+            !session.restoredQualification(restore, owner, owner),
+            "stale token and same-owner completions are refused");
+        check(!session.restoredQualification(restore, null, successor) &&
+            !session.restoredQualification(restore, lateOwner, successor) &&
+            !session.restoredQualification(restore, owner, null),
+            "null and foreign restore owners are refused");
+        before.requireUnchanged(session, "refused completion paths preserve every private restore field");
+
+        check(session.failed(restore, true, "cancelled") &&
+            session.screen() == PlayerSession.Screen.WORKBENCH && session.owner() == owner &&
+            session.request() == null && session.isQualification() &&
+            Boolean.FALSE.equals(field(session, "qualificationRestorePending")),
+            "cancelled restore resumes the workbench with the same private owner");
+        check(!session.restoredQualification(restore, owner, lateOwner),
+            "cancelled private restore cannot complete late");
+        check(session.enter(session.token(), PlayerSession.Screen.MENU),
+            "private workbench can return to its menu");
+        int menuRestore = session.beginQualificationRestore(owner);
+        check(session.failed(menuRestore, true, "cancelled from menu") &&
+            session.screen() == PlayerSession.Screen.WORKBENCH && session.owner() == owner,
+            "restore begun from menu also resumes the saved workbench on cancellation");
+
+        int retest = session.retest(session.token(), owner);
+        before = new SessionSnapshot(session);
+        rejectState(new Attempt() { public void run() { session.beginQualificationRestore(owner); }});
+        before.requireUnchanged(session, "restore cannot begin while the private owner is in retest");
+        check(session.retested(retest, owner, true, "passed") &&
+            session.screen() == PlayerSession.Screen.RESULTS,
+            "private owner can return to results before restoration");
+        int failedRestore = session.beginQualificationRestore(owner);
+        check(session.failed(failedRestore, false, "failed") &&
+            session.screen() == PlayerSession.Screen.ERROR && session.owner() == owner &&
+            session.request() == null && session.isQualification() &&
+            Boolean.FALSE.equals(field(session, "qualificationRestorePending")),
+            "failed restore retains the current private owner in error");
+        check(!session.restoredQualification(failedRestore, owner, lateOwner),
+            "failed private restore cannot complete late");
+
+        check(session.beginQualificationRestore(owner) > failedRestore,
+            "private restore can retry from error");
+        int retry = session.token();
+        check(session.restoredQualification(retry, owner, successor) &&
+            session.screen() == PlayerSession.Screen.WORKBENCH && session.owner() == successor &&
+            session.request() == null && session.isQualification() &&
+            Boolean.FALSE.equals(field(session, "qualificationRestorePending")) &&
+            !session.accepts(retry),
+            "exact private restore successor replaces the owner and returns to workbench");
+        check(!session.restoredQualification(retry, owner, lateOwner) &&
+            !session.restoredQualification(retry, successor, lateOwner),
+            "completed restore token cannot replace or finish a later owner");
+
+        PlayerSession revoked = new PlayerSession();
+        revoked.adoptQualification(owner);
+        check(revoked.enter(revoked.token(), PlayerSession.Screen.WORKBENCH), "revoke fixture enters an allowed restore screen");
+        int abandoned = revoked.beginQualificationRestore(owner);
+        revoked.revoke(owner);
+        check(revoked.screen() == PlayerSession.Screen.MENU && revoked.owner() == null &&
+            !revoked.isQualification() && Boolean.FALSE.equals(field(revoked, "qualificationRestorePending")) &&
+            !revoked.accepts(abandoned) &&
+            !revoked.restoredQualification(abandoned, owner, successor),
+            "revoke clears an active private restore and retires its callback");
+    }
+
+    private static void verifyQualificationResume() {
+        final Object owner = new Object(), foreign = new Object(), successor = new Object();
+        final PlayerSession session = new PlayerSession();
+        session.adoptQualification(owner);
+        check(session.enter(session.token(), PlayerSession.Screen.WORKBENCH),
+            "private ticket enters the workbench before restore recovery");
+        int failedRestore = session.beginQualificationRestore(owner);
+        check(session.failed(failedRestore, false, "failed") &&
+            session.screen() == PlayerSession.Screen.ERROR,
+            "failed private restore supplies an error recovery state");
+        int errorToken = session.token();
+        SessionSnapshot before = new SessionSnapshot(session);
+        check(!session.resumeQualification(errorToken, null, true) &&
+            !session.resumeQualification(errorToken, foreign, true) &&
+            !session.resumeQualification(errorToken - 1, owner, true),
+            "null, foreign and stale qualification resume requests are refused");
+        before.requireUnchanged(session, "invalid error recovery leaves the private session unchanged");
+        check(session.resumeQualification(errorToken, owner, true) &&
+            session.screen() == PlayerSession.Screen.RESULTS && session.owner() == owner &&
+            session.request() == null && session.isQualification() && !session.accepts(errorToken),
+            "caller-reported completion resumes the qualified screen from error");
+
+        int cancelledRestore = session.beginQualificationRestore(owner);
+        check(session.failed(cancelledRestore, true, "cancelled") &&
+            session.screen() == PlayerSession.Screen.WORKBENCH,
+            "cancelled private restore leaves the qualified workbench available");
+        check(session.resumeQualification(session.token(), owner, true) &&
+            session.screen() == PlayerSession.Screen.RESULTS && session.owner() == owner,
+            "caller-reported completion resumes the qualified screen after cancellation");
+
+        check(session.enter(session.token(), PlayerSession.Screen.WORKBENCH) &&
+            session.enter(session.token(), PlayerSession.Screen.MENU),
+            "qualified owner can reach the menu before recovery");
+        check(session.resumeQualification(session.token(), owner, true) &&
+            session.screen() == PlayerSession.Screen.RESULTS && session.owner() == owner,
+            "caller-reported completion resumes the qualified screen from menu");
+
+        int preparing = session.beginQualificationRestore(owner);
+        before = new SessionSnapshot(session);
+        check(!session.resumeQualification(preparing, owner, true),
+            "qualification resume is refused while restoration is preparing");
+        before.requireUnchanged(session, "preparing restore state remains unchanged by resume");
+
+        PlayerSession restored = new PlayerSession();
+        restored.adoptQualification(owner);
+        check(restored.enter(restored.token(), PlayerSession.Screen.WORKBENCH),
+            "restored-successor fixture reaches workbench");
+        int token = restored.beginQualificationRestore(owner);
+        check(restored.restoredQualification(token, owner, successor),
+            "private restoration installs its exact successor");
+        int successorToken = restored.token();
+        check(restored.resumeQualification(successorToken, successor, false) &&
+            restored.screen() == PlayerSession.Screen.WORKBENCH && restored.owner() == successor &&
+            restored.request() == null && restored.isQualification() && !restored.accepts(successorToken),
+            "restored successor without caller-reported completion remains in workbench");
+    }
+
     private static void verifyHeldRb56Admission() {
         check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
             !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
@@ -167,16 +317,18 @@ public final class U04SessionContractTest {
         final Object owner, pending, savedScreen;
         final PlayerLaunchRequest request;
         final String message;
-        final boolean qualification;
+        final boolean qualification, qualificationRestorePending;
         SessionSnapshot(PlayerSession session) {
             token = session.token(); screen = session.screen(); owner = session.owner();
             request = session.request(); message = session.message(); qualification = session.isQualification();
             pending = field(session, "pending"); savedScreen = field(session, "savedScreen");
+            qualificationRestorePending = Boolean.TRUE.equals(field(session, "qualificationRestorePending"));
         }
         void requireUnchanged(PlayerSession session, String label) {
             check(token == session.token() && screen == session.screen() && owner == session.owner() &&
                 request == session.request() && message.equals(session.message()) && qualification == session.isQualification() &&
-                pending == field(session, "pending") && savedScreen == field(session, "savedScreen"), label);
+                pending == field(session, "pending") && savedScreen == field(session, "savedScreen") &&
+                qualificationRestorePending == Boolean.TRUE.equals(field(session, "qualificationRestorePending")), label);
         }
     }
     private static Object field(PlayerSession session, String name) {

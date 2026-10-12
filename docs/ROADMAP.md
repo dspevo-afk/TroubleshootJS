@@ -19,8 +19,8 @@ permission is pending; the bounded U05 continuation may proceed under existing
 authorization. The modest-host deferral remains the only deferred item.
 Public Q60/HARD/advanced durable release stays held for fresh U05/REL-B proof.
 REL-B independent preparation and the exact private human launch now pass;
-The private 44-part round trip now passes; actual human findings and normal advanced
-durable/load/population qualification remain.
+The private 44-part round trip and opt-in headed durable file flow now pass;
+actual human findings and normal advanced population/release qualification remain.
 See [current checkpoint](CODEX_TASK_REPORT.md) and
 [admission decision](task-evidence/Q60/reference-pc-admission-r1/README.md).
 
@@ -3104,7 +3104,7 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** IN PROGRESS — independent preparation and one actual private 44-part current-format capture/fresh restore/two-failure rollback pass native170, actual GWT42 and compiled175. Normal advanced durable/menu/FileReader load, population/release matrix and actual human HARD calibration remain pending; beta unqualified. [Current private-format evidence](task-evidence/REL-B/private-session-roundtrip-r1/README.md), [earlier preparation](task-evidence/REL-B/preparation-r1/README.md).
+**Status:** IN PROGRESS — private typed round trip/two-failure rollback retained; one opt-in private 44-part headed durable download/reopen/menu/FileReader flow and failed/cancelled/retried restore pass native173, actual GWT43 and compiled181. Public normal advanced admission/durable release, population/release matrix and actual human HARD calibration remain pending; beta unqualified. [Current durable-flow evidence](task-evidence/REL-B/durable-file-flow-r1/README.md), [accepted private reconstruction](task-evidence/REL-B/private-session-roundtrip-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 

@@ -1,4 +1,40 @@
-# Current checkpoint: private advanced save/restore round trip and safe rollback PASS
+# Current checkpoint: private advanced durable file flow and recovery PASS
+
+2026-10-12. Candidate over `9a82c97b5a07632c58374014c25900de2eb8c0d5` on existing
+`codex/q60-faulted-profile-counts`. Six source/test inputs qualify opt-in private
+44-part seed -1004 menu download/reopen/filepicker/FileReader restore, actual
+source/Shop history, bad-file refusal, failed publication recovery, cancellation
+and successful retry. Public HARD/RB56 and default human save/load remain held.
+
+Final native173 PASS 39.528 s/five suites; actual JDK8/GWT43 PASS 87.672 s,
+all five permutations; headed compiled181 PASS 149.929 s (unchanged176 canaries reused). Build `BFBD92FBE2D7CAD48AFB6D2DC0C119ED`.
+U04 4,010/U06 34,935 assertions retain earlier tests. Reflective completed/passed
+native inputs test only exact-controller Results recovery, not electrical success.
+Source/served and exact owned browser/listener/native cleanup pass. Independent
+static integrated review PASS; root inspected all three retained UI screenshots.
+[Current sealed flow/scope](task-evidence/REL-B/durable-file-flow-r1/README.md).
+
+Existing codec/state/coordinator/typed fixture inputs are audited unchanged;
+accepted round-trip/two-failure evidence is retained, not rerun. New real file
+restore outcomes are PROGRAMMING_FAILURE at PUBLISH, CANCELLED and PASS, each
+inside original 90s/640/5s caps. Staged abort preserves exact owner; actual PASS
+starts restored history and retires the disconnected predecessor. Resumed Results
+require the retained live completed + passed controller, never imported completion.
+Native171 retained FAIL from a TICKET-state test setup; corrected fixture preserves
+guard/assertions. Native172 pre-recovery-fix PASS is superseded by final173.
+
+REL-B remains IN PROGRESS; normal advanced public durable admission, population/
+retry/diversity and full advertised release matrix remain. Human HARD calibration
+requires actual strategies/outcomes; NOT RUN. Completed-advanced GUI recovery,
+delayed FileReader/I/O failure/expiry timing and measured format capacity NOT RUN.
+Modest-host alone owner-deferred; Q100 UNSTARTED; controlling Oct11 all-clear intact.
+All eight originals/user data/historical failures preserved, C4130 hold unchanged.
+No unchanged Q30 corpus, email, Core/Android, protected main or unrelated processes.
+No owned browser/preview remains; existing exact launch/manual human route ready.
+
+---
+
+# Historical checkpoint: private advanced save/restore round trip and safe rollback PASS
 
 2026-10-11. Final candidate over `fe93f7fc0e5c6dbea2263149bb8d677d459475a3`
 on existing `codex/q60-faulted-profile-counts`. Distinct internal private identity

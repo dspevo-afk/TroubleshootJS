@@ -1,0 +1,33 @@
+# Private advanced durable file flow: PASS; public release held
+
+Candidate over `9a82c97b5a07632c58374014c25900de2eb8c0d5` qualifies one **44-part RB56 seed -1004** shared menu/Blob download/file picker/FileReader flow in headed Edge. The opt-in is `tsjRb56Persistence=true` on the existing explicit private qualification route. Public HARD/RB56 and the default human-play route remain held. [Sealed facts](evidence-r1.json) bind the six changed inputs, final native/GWT/browser gates, current build `BFBD92FBE2D7CAD48AFB6D2DC0C119ED`, unchanged accepted reconstruction inputs and retained failures.
+
+The real user flow changes a supply current limit, disconnects every shown supply and acquires two real sensor-controller Shop stock parts. A premature relay purchase was refused; that separate coil-discharge workflow remains pending. Download is a real local `.tsjsave` file. The view closes with exact owned cleanup, the app is reopened, and file selection invokes the real file picker and FileReader. A private file refuses on the public menu; a different exact seed, truncated file and file above 2 MiB reject without changing the retained owner/history. A corrupt current signature fails at PUBLISH with an actionable ERROR and Resume previous board; cancellation retains the prior board; a subsequent valid file restores a fresh owner. Ordered public history, source isolation/current limit, identity and permanent provider state survive. A new purchase after load appends to the restored history. Independent downloaded-artifact comparison allows the real resistor service clock to advance and isolated fuse heat to cool; the two observed downloads were byte-identical (1,627 bytes, same SHA-256), without a broader dynamic-continuation promise.
+
+The existing qualification transaction remains cleanup authority. It temporarily enters debug/verifier scope only for capture or one manual coordinator turn; shared UI presents normal labels. Callbackless manual restore cancels the coordinator's timers and keeps original 90 s/640 work/5 s limits. Only an actual PASS transfers the session to the fresh owner and retires the disconnected superseded graph. Cancel/failure uses the existing staged abort. The private lease remains exact during PREPARING, rejects stale/foreign tokens and files before replacement, and restarts the restored journal. Failed or cancelled load can return an already-completed owner to Results only when its exact live challenge is completed and its current retest passed; native tests seed these predicate inputs explicitly, not as physics evidence. Imported sessions still receive no completion grant.
+
+Final five-suite native173 PASS **39.528 s**: U04 4,010; U06 34,935; private identity 28; fingerprint 119; U05 52. Actual JDK8/GWT43 PASS **87.672 s**, all five permutations. Headed compiled181 PASS **149.929 s**, for the unfinished actual file flow. Successful ordinary current-format regression, normal-route privacy and unchanged default-human persistence restriction from headed176 are reused after exact current source/served-manifest equality. Exact owned browser/listener/native handles/drainers cleanup and frozen source/served-input audits pass. The full native matrix and unchanged Q30 corpora were not rerun. Independent static review passes; three screenshots were inspected separately by root before publication.
+
+| Actual file restore | Terminal stage | Time ms | Work |
+| --- | --- | --- | --- |
+| PROGRAMMING_FAILURE | PUBLISH | 31678 | 517 |
+| CANCELLED | HEALTHY | 3350 | 8 |
+| PASS | PUBLISH | 31853 | 517 |
+
+Native171's 22.367 s fixture failure is retained with successful cleanup; the fixture entered TICKET rather than an allowed restore screen. Native172 passed before the later completed-owner recovery correction and is retained as historical, not final-source proof. Browser176/177 retain their accessible-name and ambiguous-panel driver failures;178/179 retain the premature relay purchase / tray-history expectation failures, with no successful relay service claim. Every failed host has successful exact owned cleanup and unchanged inputs. Browser180 retains its task-fixture CRLF corruption and early parse refusal; final181 preflights exactly one signature byte with canonical LF framing preserved. Final181 uses two real sensor stocks and checks each actual tray increment; no physical guard, journal assertion, job budget or public gate was relaxed. Accepted [private typed round-trip/two-failure evidence](../private-session-roundtrip-r1/README.md) is reused at its explicitly unchanged code/state/identity boundary; it is not a fresh whole-build or population claim.
+
+To try this private software path, start the existing foreground preview from the repository:
+
+```powershell
+.\scripts\preview.ps1 -Port 8898 -ForceTcpListener
+```
+
+```text
+http://127.0.0.1:8898/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&tsjRb56Persistence=true&running=true
+```
+
+Accept ticket, isolate supplies before physical service, use Shop if wanted, then Main menu → Save session. To restore, reopen the same exact opt-in route and use Main menu → Load session. Files require this current exact private board/epoch; they are not public replay codes. Restoring restarts dynamic state and requires a fresh retest. The existing six-minute private window still starts at ticket publication; stop the foreground preview with Ctrl+C. End qualification view without a passed retest intentionally records verifier FAIL, separately from successful file-flow and exact owner cleanup. The unchanged [human trial](../../U05/q60-human-play-r1/README.md) does not opt into these software controls.
+
+REL-B remains IN PROGRESS. Human U05 strategies/outcomes are NOT RUN and HARD is not frozen. Normal advanced population/retry/diversity, relay-discharge UI service and the complete advertised release matrix remain unqualified. Actual completed-advanced GUI recovery, native file I/O errors, delayed FileReader callbacks, measured maximum capacity and restore-expiry timing are NOT RUN; completed-controller recovery is native predicate/model evidence only. No modest-host/portability, leak/endurance, new 60-part flow, transient continuation, public beta or Q100 claim. Original eight files, historical failures and C4130 hold remain; no email, Core/Android, protected main or unrelated processes changed.
+
+The retained localhost screenshots show a nonblocking character-encoding defect in the alpha title separator and history range dash. File contents, ASCII controls and ordered history labels passed; this presentation defect is a release follow-up, not a claimed fix.

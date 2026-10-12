@@ -11,6 +11,7 @@ final class PlayerSession {
     private Screen savedScreen;
     private String message = "";
     private boolean qualification;
+    private boolean qualificationRestorePending;
 
     int token() { return token; }
     Screen screen() { return screen; }
@@ -33,15 +34,36 @@ final class PlayerSession {
         return prepared(expected, next, next, nextOwner);
     }
     boolean prepared(int expected, PlayerLaunchRequest launched, PlayerLaunchRequest accepted, Object nextOwner) {
-        if (!accepts(expected) || screen != Screen.PREPARING || launched != pending || nextOwner == null ||
-                !launched.accepts(accepted)) return false;
+        if (qualificationRestorePending || !accepts(expected) || screen != Screen.PREPARING ||
+                launched != pending || nextOwner == null || !launched.accepts(accepted)) return false;
         pending = null;
         owner = nextOwner; request = accepted; screen = Screen.TICKET; message = ""; token++; return true;
     }
 
+    int beginQualificationRestore(Object expectedOwner) {
+        if (!qualification || expectedOwner == null || owner != expectedOwner)
+            throw new IllegalStateException("Qualification restore belongs to a different owner");
+        if (screen != Screen.MENU && screen != Screen.WORKBENCH &&
+                screen != Screen.RESULTS && screen != Screen.ERROR)
+            throw new IllegalStateException("Qualification session is busy");
+        savedScreen = Screen.WORKBENCH;
+        qualificationRestorePending = true;
+        screen = Screen.PREPARING; message = "Preparing and checking the board.";
+        return ++token;
+    }
+
+    boolean restoredQualification(int expected, Object expectedOwner, Object nextOwner) {
+        if (!accepts(expected) || !qualification || !qualificationRestorePending ||
+                screen != Screen.PREPARING || expectedOwner == null || owner != expectedOwner ||
+                nextOwner == null || nextOwner == expectedOwner) return false;
+        qualificationRestorePending = false;
+        pending = null; owner = nextOwner; request = null;
+        screen = Screen.WORKBENCH; message = ""; token++; return true;
+    }
+
     boolean failed(int expected, boolean cancelled, String publicMessage) {
         if (!accepts(expected) || screen != Screen.PREPARING) return false;
-        pending = null;
+        pending = null; qualificationRestorePending = false;
         screen = cancelled ? savedScreen : Screen.ERROR;
         message = publicMessage; token++; return true;
     }
@@ -51,6 +73,13 @@ final class PlayerSession {
         if (next != Screen.MENU && next != Screen.WORKBENCH) return false;
         if (next == Screen.WORKBENCH && owner == null) return false;
         screen = next; message = ""; token++; return true;
+    }
+
+    boolean resumeQualification(int expected, Object currentOwner, boolean completed) {
+        if (!qualification || currentOwner == null || owner != currentOwner ||
+                !enter(expected, Screen.WORKBENCH)) return false;
+        if (completed) screen = Screen.RESULTS;
+        return true;
     }
 
     int retest(int expected, Object currentOwner) {
@@ -77,6 +106,7 @@ final class PlayerSession {
         if (qualification || owner != null || screen == Screen.PREPARING || screen == Screen.RETEST)
             throw new IllegalStateException("Session already belongs to an owner");
         owner = currentOwner; request = null; pending = null; qualification = true;
+        qualificationRestorePending = false;
         screen = Screen.TICKET; message = ""; token++;
     }
 
@@ -85,6 +115,7 @@ final class PlayerSession {
         if (owner == null || owner != expectedOwner)
             throw new IllegalStateException("Session release belongs to a different owner");
         owner = null; request = null; pending = null; savedScreen = null; qualification = false;
+        qualificationRestorePending = false;
         screen = Screen.MENU; message = ""; token++;
     }
 }
