@@ -1,0 +1,1563 @@
+{
+  "schema": 1,
+  "status": "PASS_FINITE_PRIVATE6_SINGLE_GROUP_DENSITY_RENDER_FILES_REPAIR",
+  "createdUtc": "2026-10-13T03:36:12.012538+00:00",
+  "baseCommit": "200bdf6fd08121ae073171bc66198570cea5bbf4",
+  "actualBuild": "A699B3336850CA2E595F0123DA59CAEB",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "f8d6e6cf8d0fdd24d637eae977fc20021568039ac9ef0595c22a20d6c3cf2dc6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+    "tests/contracts/U06SessionSaveContractTest.java": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+    "tests/contracts/PcbSavedDensityGeometryContractTest.java": "fe5a9930a9c5ffa172e21b3dfd8c6df6225d8d99af816c61dc8eddfa1fa09056",
+    "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+    "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+    "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c",
+    "tests/contracts/PcbSingleGroupDensityContractTest.java": "cb5190ce483cbda7c36e3edeaadea0bcb1536b5041be199081cb657f024ff864",
+    "tests/contracts/PcbSavedLargeGeometryContractTest.java": "9ffafc963d3ca32845abf210bc2ad32b1518650d7b9ce01b46c62ac6b58c698a"
+  },
+  "sourceFreezeSha256": "d11051b59896dcf099722c743ec11d78c0558212bcf325bdcae59c4ef6e0e61a",
+  "gates": [
+    {
+      "phase": "native-r211",
+      "status": "PASS",
+      "operationSeconds": 29.79,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "ab7e054f702f98bf9e30339139a02503740fad7f308a6cd8e474c425bc6b3afc",
+      "launchSha256": "66a90e8e3088be2f81c814f9e70c2fc90701390fc2d8b1217facaec2326d411b"
+    },
+    {
+      "phase": "native-r212",
+      "status": "PASS",
+      "operationSeconds": 88.58,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "4b27202f81448bb67630d97c4170b914ea2449cfb8bf193132cc4667e5ca0172",
+      "launchSha256": "e0c48306a2ca20ebe6f3729eed73c5770111eddcb0da9244d7d8a471255bdba7"
+    },
+    {
+      "phase": "build-r59",
+      "status": "PASS",
+      "operationSeconds": 92.251,
+      "hostDeadlineMs": 1100000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "a5e6542d72c979577a40470fbd27ec51b738b34094ccff7d6ebee9828c5adfba",
+      "launchSha256": "af1d64b147fbc8c2f401fdd5fca3c93ce553caa40fa568298f7ddf73a2eadcdc"
+    },
+    {
+      "phase": "compiled-r224",
+      "status": "PASS",
+      "operationSeconds": 110.944,
+      "hostDeadlineMs": 360000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "d227d63e6eaad5781cb502fb87533a34d5b4e310112b7698718cc77810d0d8c9",
+      "launchSha256": "15b5e09b50a535aecccb0d4a2d63f5a0fe7d2e4ce224101536876e482dcb5496"
+    },
+    {
+      "phase": "compiled-r225",
+      "status": "PASS",
+      "operationSeconds": 125.446,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "f47126b3cd0840eac3a8907644925a94b4a273c38e5989b56ba8bbbc667337dc",
+      "launchSha256": "e3d62d6898e7976cf27ee38e8462631f6d1cb74300dd28ab519fb8b5f9082c8d"
+    }
+  ],
+  "geometryComparison": [
+    {
+      "seed": "-1017",
+      "parts": 40,
+      "pads": 96,
+      "before": {
+        "seed": "-1017",
+        "version": 5,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 3571,
+        "height": 1469,
+        "area": 5245799,
+        "courtyardArea": 759448,
+        "regionBoundingAreaSum": 4846106,
+        "sameRegionCenterManhattanMean": 811.1507936507936,
+        "twoPadNetSpanSum": 3900,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 29670,
+        "traceSegments": 170,
+        "vias": 36,
+        "selectedAttempt": 1,
+        "routingExpansions": 3374597,
+        "geometrySha256": "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf"
+      },
+      "after": {
+        "seed": "-1017",
+        "version": 6,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 3701,
+        "height": 1384,
+        "area": 5122184,
+        "courtyardArea": 759448,
+        "regionBoundingAreaSum": 3996245,
+        "sameRegionCenterManhattanMean": 717.6984126984127,
+        "twoPadNetSpanSum": 3890,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 29510,
+        "traceSegments": 174,
+        "vias": 30,
+        "selectedAttempt": 1,
+        "routingExpansions": 3495921,
+        "geometrySha256": "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b"
+      },
+      "areaChangePercent": -2.36,
+      "whitespaceBefore": {
+        "seed": "-1017",
+        "version": 5,
+        "parts": 40,
+        "gridUnits": 10,
+        "sampledCells": 52122,
+        "packageAccessOccupiedCells": 21275,
+        "protectedFreeCells": 25919,
+        "protectedFreeFraction": 0.4972756225777982,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 121,
+          "width": 1130,
+          "height": 390,
+          "area": 440700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1017",
+        "version": 6,
+        "parts": 40,
+        "gridUnits": 10,
+        "sampledCells": 51060,
+        "packageAccessOccupiedCells": 21170,
+        "protectedFreeCells": 25220,
+        "protectedFreeFraction": 0.49392871132001565,
+        "largestProtectedEmptyRectangle": {
+          "x": 370,
+          "y": 50,
+          "width": 1390,
+          "height": 320,
+          "area": 444800
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": 0.93
+    },
+    {
+      "seed": "-1004",
+      "parts": 44,
+      "pads": 104,
+      "before": {
+        "seed": "-1004",
+        "version": 5,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3591,
+        "height": 1399,
+        "area": 5023809,
+        "courtyardArea": 798304,
+        "regionBoundingAreaSum": 4319186,
+        "sameRegionCenterManhattanMean": 647.4395161290323,
+        "twoPadNetSpanSum": 4600,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30530,
+        "traceSegments": 200,
+        "vias": 47,
+        "selectedAttempt": 0,
+        "routingExpansions": 3640026,
+        "geometrySha256": "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573"
+      },
+      "after": {
+        "seed": "-1004",
+        "version": 6,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3600,
+        "height": 1284,
+        "area": 4622400,
+        "courtyardArea": 798304,
+        "regionBoundingAreaSum": 4343925,
+        "sameRegionCenterManhattanMean": 714.2137096774194,
+        "twoPadNetSpanSum": 3180,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30250,
+        "traceSegments": 193,
+        "vias": 45,
+        "selectedAttempt": 0,
+        "routingExpansions": 2994659,
+        "geometrySha256": "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28"
+      },
+      "areaChangePercent": -7.99,
+      "whitespaceBefore": {
+        "seed": "-1004",
+        "version": 5,
+        "parts": 44,
+        "gridUnits": 10,
+        "sampledCells": 49901,
+        "packageAccessOccupiedCells": 22602,
+        "protectedFreeCells": 23817,
+        "protectedFreeFraction": 0.47728502434820946,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 900,
+          "width": 850,
+          "height": 540,
+          "area": 459000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1004",
+        "version": 6,
+        "parts": 44,
+        "gridUnits": 10,
+        "sampledCells": 46080,
+        "packageAccessOccupiedCells": 22403,
+        "protectedFreeCells": 19307,
+        "protectedFreeFraction": 0.41898871527777776,
+        "largestProtectedEmptyRectangle": {
+          "x": 2230,
+          "y": 50,
+          "width": 840,
+          "height": 210,
+          "area": 176400
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": -61.57
+    },
+    {
+      "seed": "-1022",
+      "parts": 60,
+      "pads": 143,
+      "before": {
+        "seed": "-1022",
+        "version": 5,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 4111,
+        "height": 2054,
+        "area": 8443994,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 9569831,
+        "sameRegionCenterManhattanMean": 978.8,
+        "twoPadNetSpanSum": 3120,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 41970,
+        "traceSegments": 269,
+        "vias": 48,
+        "selectedAttempt": 4,
+        "routingExpansions": 4665056,
+        "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+      },
+      "after": {
+        "seed": "-1022",
+        "version": 6,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 4111,
+        "height": 2054,
+        "area": 8443994,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 9569831,
+        "sameRegionCenterManhattanMean": 978.8,
+        "twoPadNetSpanSum": 3120,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 41970,
+        "traceSegments": 269,
+        "vias": 48,
+        "selectedAttempt": 4,
+        "routingExpansions": 4665056,
+        "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "-1022",
+        "version": 5,
+        "parts": 60,
+        "gridUnits": 10,
+        "sampledCells": 84255,
+        "packageAccessOccupiedCells": 30506,
+        "protectedFreeCells": 47913,
+        "protectedFreeFraction": 0.5686665479793485,
+        "largestProtectedEmptyRectangle": {
+          "x": 1220,
+          "y": 50,
+          "width": 1310,
+          "height": 670,
+          "area": 877700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1022",
+        "version": 6,
+        "parts": 60,
+        "gridUnits": 10,
+        "sampledCells": 84255,
+        "packageAccessOccupiedCells": 30506,
+        "protectedFreeCells": 47913,
+        "protectedFreeFraction": 0.5686665479793485,
+        "largestProtectedEmptyRectangle": {
+          "x": 1220,
+          "y": 50,
+          "width": 1310,
+          "height": 670,
+          "area": 877700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": 0.0
+    },
+    {
+      "seed": "0",
+      "parts": 42,
+      "pads": 100,
+      "before": {
+        "seed": "0",
+        "version": 5,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 3411,
+        "height": 1465,
+        "area": 4997115,
+        "courtyardArea": 777184,
+        "regionBoundingAreaSum": 3428584,
+        "sameRegionCenterManhattanMean": 708.1395348837209,
+        "twoPadNetSpanSum": 2570,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28030,
+        "traceSegments": 181,
+        "vias": 28,
+        "selectedAttempt": 1,
+        "routingExpansions": 3343585,
+        "geometrySha256": "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2"
+      },
+      "after": {
+        "seed": "0",
+        "version": 6,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 3401,
+        "height": 1376,
+        "area": 4679776,
+        "courtyardArea": 777184,
+        "regionBoundingAreaSum": 4199461,
+        "sameRegionCenterManhattanMean": 772.7519379844962,
+        "twoPadNetSpanSum": 2590,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28810,
+        "traceSegments": 186,
+        "vias": 29,
+        "selectedAttempt": 1,
+        "routingExpansions": 3423073,
+        "geometrySha256": "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd"
+      },
+      "areaChangePercent": -6.35,
+      "whitespaceBefore": {
+        "seed": "0",
+        "version": 5,
+        "parts": 42,
+        "gridUnits": 10,
+        "sampledCells": 49786,
+        "packageAccessOccupiedCells": 21669,
+        "protectedFreeCells": 24586,
+        "protectedFreeFraction": 0.4938336078415619,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 1020,
+          "width": 1340,
+          "height": 490,
+          "area": 656600
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "0",
+        "version": 6,
+        "parts": 42,
+        "gridUnits": 10,
+        "sampledCells": 46580,
+        "packageAccessOccupiedCells": 21035,
+        "protectedFreeCells": 22035,
+        "protectedFreeFraction": 0.47305710605410045,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 760,
+          "width": 570,
+          "height": 660,
+          "area": 376200
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": -42.7
+    },
+    {
+      "seed": "17",
+      "parts": 53,
+      "pads": 129,
+      "before": {
+        "seed": "17",
+        "version": 5,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "courtyardArea": 998648,
+        "regionBoundingAreaSum": 10470110,
+        "sameRegionCenterManhattanMean": 932.3237179487179,
+        "twoPadNetSpanSum": 4930,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 44900,
+        "traceSegments": 249,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5136281,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+      },
+      "after": {
+        "seed": "17",
+        "version": 6,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "courtyardArea": 998648,
+        "regionBoundingAreaSum": 10470110,
+        "sameRegionCenterManhattanMean": 932.3237179487179,
+        "twoPadNetSpanSum": 4930,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 44900,
+        "traceSegments": 249,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5136281,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "17",
+        "version": 5,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 77004,
+        "packageAccessOccupiedCells": 28201,
+        "protectedFreeCells": 42202,
+        "protectedFreeFraction": 0.5480494519765207,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1000,
+          "width": 2030,
+          "height": 900,
+          "area": 1827000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "17",
+        "version": 6,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 77004,
+        "packageAccessOccupiedCells": 28201,
+        "protectedFreeCells": 42202,
+        "protectedFreeFraction": 0.5480494519765207,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1000,
+          "width": 2030,
+          "height": 900,
+          "area": 1827000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": 0.0
+    },
+    {
+      "seed": "42",
+      "parts": 54,
+      "pads": 131,
+      "before": {
+        "seed": "42",
+        "version": 5,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 3131,
+        "height": 2035,
+        "area": 6371585,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 9497751,
+        "sameRegionCenterManhattanMean": 961.5857142857143,
+        "twoPadNetSpanSum": 4440,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42260,
+        "traceSegments": 244,
+        "vias": 47,
+        "selectedAttempt": 4,
+        "routingExpansions": 4962096,
+        "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+      },
+      "after": {
+        "seed": "42",
+        "version": 6,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 3131,
+        "height": 2035,
+        "area": 6371585,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 9497751,
+        "sameRegionCenterManhattanMean": 961.5857142857143,
+        "twoPadNetSpanSum": 4440,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42260,
+        "traceSegments": 244,
+        "vias": 47,
+        "selectedAttempt": 4,
+        "routingExpansions": 4962096,
+        "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "42",
+        "version": 5,
+        "parts": 54,
+        "gridUnits": 10,
+        "sampledCells": 63539,
+        "packageAccessOccupiedCells": 27565,
+        "protectedFreeCells": 30222,
+        "protectedFreeFraction": 0.47564487952281276,
+        "largestProtectedEmptyRectangle": {
+          "x": 40,
+          "y": 1145,
+          "width": 650,
+          "height": 910,
+          "area": 591500
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "42",
+        "version": 6,
+        "parts": 54,
+        "gridUnits": 10,
+        "sampledCells": 63539,
+        "packageAccessOccupiedCells": 27565,
+        "protectedFreeCells": 30222,
+        "protectedFreeFraction": 0.47564487952281276,
+        "largestProtectedEmptyRectangle": {
+          "x": 40,
+          "y": 1145,
+          "width": 650,
+          "height": 910,
+          "area": 591500
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "largestEmptyRectangleAreaChangePercent": 0.0
+    }
+  ],
+  "saved5LiteralGeometry": [
+    {
+      "seed": "-1017",
+      "version": 5,
+      "accepted": true,
+      "parts": 40,
+      "pads": 96,
+      "width": 3571,
+      "height": 1469,
+      "area": 5245799,
+      "courtyardArea": 759448,
+      "regionBoundingAreaSum": 4846106,
+      "sameRegionCenterManhattanMean": 811.1507936507936,
+      "twoPadNetSpanSum": 3900,
+      "twoPadNetCount": 11,
+      "copperManhattanLength": 29670,
+      "traceSegments": 170,
+      "vias": 36,
+      "selectedAttempt": 1,
+      "routingExpansions": 3374597,
+      "geometrySha256": "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf"
+    },
+    {
+      "seed": "-1004",
+      "version": 5,
+      "accepted": true,
+      "parts": 44,
+      "pads": 104,
+      "width": 3591,
+      "height": 1399,
+      "area": 5023809,
+      "courtyardArea": 798304,
+      "regionBoundingAreaSum": 4319186,
+      "sameRegionCenterManhattanMean": 647.4395161290323,
+      "twoPadNetSpanSum": 4600,
+      "twoPadNetCount": 11,
+      "copperManhattanLength": 30530,
+      "traceSegments": 200,
+      "vias": 47,
+      "selectedAttempt": 0,
+      "routingExpansions": 3640026,
+      "geometrySha256": "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573"
+    },
+    {
+      "seed": "-1022",
+      "version": 5,
+      "accepted": true,
+      "parts": 60,
+      "pads": 143,
+      "width": 4111,
+      "height": 2054,
+      "area": 8443994,
+      "courtyardArea": 1061240,
+      "regionBoundingAreaSum": 9569831,
+      "sameRegionCenterManhattanMean": 978.8,
+      "twoPadNetSpanSum": 3120,
+      "twoPadNetCount": 11,
+      "copperManhattanLength": 41970,
+      "traceSegments": 269,
+      "vias": 48,
+      "selectedAttempt": 4,
+      "routingExpansions": 4665056,
+      "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+    },
+    {
+      "seed": "0",
+      "version": 5,
+      "accepted": true,
+      "parts": 42,
+      "pads": 100,
+      "width": 3411,
+      "height": 1465,
+      "area": 4997115,
+      "courtyardArea": 777184,
+      "regionBoundingAreaSum": 3428584,
+      "sameRegionCenterManhattanMean": 708.1395348837209,
+      "twoPadNetSpanSum": 2570,
+      "twoPadNetCount": 10,
+      "copperManhattanLength": 28030,
+      "traceSegments": 181,
+      "vias": 28,
+      "selectedAttempt": 1,
+      "routingExpansions": 3343585,
+      "geometrySha256": "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2"
+    },
+    {
+      "seed": "17",
+      "version": 5,
+      "accepted": true,
+      "parts": 53,
+      "pads": 129,
+      "width": 4142,
+      "height": 1861,
+      "area": 7708262,
+      "courtyardArea": 998648,
+      "regionBoundingAreaSum": 10470110,
+      "sameRegionCenterManhattanMean": 932.3237179487179,
+      "twoPadNetSpanSum": 4930,
+      "twoPadNetCount": 12,
+      "copperManhattanLength": 44900,
+      "traceSegments": 249,
+      "vias": 48,
+      "selectedAttempt": 2,
+      "routingExpansions": 5136281,
+      "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+    },
+    {
+      "seed": "42",
+      "version": 5,
+      "accepted": true,
+      "parts": 54,
+      "pads": 131,
+      "width": 3131,
+      "height": 2035,
+      "area": 6371585,
+      "courtyardArea": 1000808,
+      "regionBoundingAreaSum": 9497751,
+      "sameRegionCenterManhattanMean": 961.5857142857143,
+      "twoPadNetSpanSum": 4440,
+      "twoPadNetCount": 11,
+      "copperManhattanLength": 42260,
+      "traceSegments": 244,
+      "vias": 47,
+      "selectedAttempt": 4,
+      "routingExpansions": 4962096,
+      "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+    }
+  ],
+  "geometryBrowser": {
+    "status": "PASS",
+    "receiptSha256": "cfabde638177e35c5aa97d388a26567ff897cdc6610efed2b65e1d4a1512a97a",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after40",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1017&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after40"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 31.92710089997854,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 2,
+          "name": "after42",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=0&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "002-after42"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 34.593327500042506,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 3,
+          "name": "after44",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "003-after44"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 38.40789719996974,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "b02bd841b4a4e2a9875c06465a98d8e5c9e97aa59d08d6c921e55a1ae8348464",
+      "afterSha256": "b02bd841b4a4e2a9875c06465a98d8e5c9e97aa59d08d6c921e55a1ae8348464",
+      "sourceSha256Before": "ab4fe15c6e955cb303063c25e203e7715f9e33ca67a7bc0b34b415db731f2d7f",
+      "sourceSha256After": "ab4fe15c6e955cb303063c25e203e7715f9e33ca67a7bc0b34b415db731f2d7f",
+      "webSha256Before": "49ba2438ed019ae0270f1fc8a339f9e09da53ac407c4738065e2c75cf6a6d401",
+      "webSha256After": "49ba2438ed019ae0270f1fc8a339f9e09da53ac407c4738065e2c75cf6a6d401",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.3767983999568969
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.2886290999595076,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "fileBrowser": {
+    "status": "PASS",
+    "receiptSha256": "456e9a0266baa4c062f99b8c15708eb96c833c9487eddf4ce86be85cb80a3aca",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "private44-save6-accepted5-restore6-real-repair-retest-close",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&tsjRb56Persistence=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-private44-save6-accepted5-restore6-real-repair-retest-close"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 122.30161049996968,
+        "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "b02bd841b4a4e2a9875c06465a98d8e5c9e97aa59d08d6c921e55a1ae8348464",
+      "afterSha256": "b02bd841b4a4e2a9875c06465a98d8e5c9e97aa59d08d6c921e55a1ae8348464",
+      "sourceSha256Before": "ab4fe15c6e955cb303063c25e203e7715f9e33ca67a7bc0b34b415db731f2d7f",
+      "sourceSha256After": "ab4fe15c6e955cb303063c25e203e7715f9e33ca67a7bc0b34b415db731f2d7f",
+      "webSha256Before": "49ba2438ed019ae0270f1fc8a339f9e09da53ac407c4738065e2c75cf6a6d401",
+      "webSha256After": "49ba2438ed019ae0270f1fc8a339f9e09da53ac407c4738065e2c75cf6a6d401",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.40115910000167787
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.3029769000131637,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "coldReports": [
+    {
+      "path": "001-after40.report.json",
+      "sha256": "a3cfb92d77bbdeb6941540850acf3b032eb31492dcf3080e23b5e831f9c3cbd5",
+      "report": {
+        "seed": "-1017",
+        "packages": 40,
+        "status": "HOLD",
+        "coldProof": true,
+        "normalPhysicalAdmission": true,
+        "generationMillis": 28096,
+        "generationWork": 520,
+        "maxManualUnitMillis": 992,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000
+      }
+    },
+    {
+      "path": "002-after42.report.json",
+      "sha256": "13895798a77b1b397093e403b6c894ae39470180961193dae083ee05b04b4eb8",
+      "report": {
+        "seed": "0",
+        "packages": 42,
+        "status": "HOLD",
+        "coldProof": true,
+        "normalPhysicalAdmission": true,
+        "generationMillis": 31054,
+        "generationWork": 521,
+        "maxManualUnitMillis": 1078,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000
+      }
+    },
+    {
+      "path": "003-after44.report.json",
+      "sha256": "7bb6ba4946b48734a5ae3623a30317c4b6c0a9c18c26f9d0ef0b8f6350bcdf73",
+      "report": {
+        "seed": "-1004",
+        "packages": 44,
+        "status": "HOLD",
+        "coldProof": true,
+        "normalPhysicalAdmission": true,
+        "generationMillis": 34580,
+        "generationWork": 518,
+        "maxManualUnitMillis": 1070,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000
+      }
+    }
+  ],
+  "views": [
+    {
+      "view": "fit",
+      "semanticReferenceCount": 40,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after40-fit.png",
+        "sha256": "4f150aedc472abb744f342f545e30f39efe2440e4717a2f3d004fbe994d1ebb9"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 660,
+        "trayTop": 834.0,
+        "gap": 174.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "view": "fit_bench",
+      "semanticReferenceCount": 40,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after40-fit_bench.png",
+        "sha256": "a82591325a08bf758761fbc0a6b1470d1c0f8a150226263b36d4332755b7f87b"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 660,
+        "trayTop": 834.0,
+        "gap": 174.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      "realInteractions": {
+        "fitBenchSeconds": 0.26152790000196546
+      }
+    },
+    {
+      "view": "wheel_zoom",
+      "semanticReferenceCount": 40,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after40-wheel_zoom.png",
+        "sha256": "3c609b313eb0fdabf7e463519c8165678023db2c213bdc7b3714301cd43aed4c"
+      },
+      "realInteractions": {
+        "mousewheelSeconds": 0.10678880009800196,
+        "physicalBodySelectionAndInspectionSeconds": 0.13648739992640913,
+        "selectedPublicTitle": "U2A"
+      }
+    },
+    {
+      "view": "fit",
+      "semanticReferenceCount": 42,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after42-fit.png",
+        "sha256": "1335d66dbeb59830bbd0d43e4ab89b41e3047007e7c2376e7070af5cccb1ca1c"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 678,
+        "trayTop": 834.0,
+        "gap": 156.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "view": "fit_bench",
+      "semanticReferenceCount": 42,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after42-fit_bench.png",
+        "sha256": "c61c5e5358001eac498093cf7f1e042536ca0c63cae436173a98e3e3f051cdfe"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 678,
+        "trayTop": 834.0,
+        "gap": 156.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      "realInteractions": {
+        "fitBenchSeconds": 0.3430349000263959
+      }
+    },
+    {
+      "view": "wheel_zoom",
+      "semanticReferenceCount": 42,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [
+        [
+          "120 VAC RMS / 60 Hz",
+          "1"
+        ]
+      ],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after42-wheel_zoom.png",
+        "sha256": "9b22dd059a4b5348424b19326a4b91e3246a2110845001271d3f1e613aecc550"
+      },
+      "realInteractions": {
+        "mousewheelSeconds": 0.07704010000452399,
+        "physicalBodySelectionAndInspectionSeconds": 0.22465440002270043,
+        "selectedPublicTitle": "U2A"
+      }
+    },
+    {
+      "view": "fit",
+      "semanticReferenceCount": 44,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after44-fit.png",
+        "sha256": "466136ae3ba2bd3cbfdf72ef88f6467fefc11fcf76298fbd744bf42a0651ea09"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 648,
+        "trayTop": 834.0,
+        "gap": 186.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      "requiredSecondarySilkFullTextMultiset": "MATCH",
+      "requiredSecondarySilkCount": 74
+    },
+    {
+      "view": "fit_bench",
+      "semanticReferenceCount": 44,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after44-fit_bench.png",
+        "sha256": "7106725ed5b1971b42ce6b6291fdf08fb91cbed7359245d3a41131da7fff5f3d"
+      },
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 648,
+        "trayTop": 834.0,
+        "gap": 186.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      "realInteractions": {
+        "fitBenchSeconds": 0.3740690000122413
+      },
+      "requiredSecondarySilkFullTextMultiset": "MATCH",
+      "requiredSecondarySilkCount": 74
+    },
+    {
+      "view": "wheel_zoom",
+      "semanticReferenceCount": 44,
+      "semanticReferenceCoverage": "MATCH",
+      "semanticReferenceCollisionPairs": [],
+      "fullyVisibleSecondarySilkCollisionPairs": [],
+      "allDrawnTextCollisionPairs": [
+        [
+          "120 VAC RMS / 60 Hz",
+          "1"
+        ]
+      ],
+      "secondarySilkMetricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "screenshot": {
+        "path": "after44-wheel_zoom.png",
+        "sha256": "ab64c437e94fb85b1d5f87f02d2a03c32d3088b933ba738394d2aa2885c6fa93"
+      },
+      "realInteractions": {
+        "mousewheelSeconds": 0.08249089994933456,
+        "physicalBodySelectionAndInspectionSeconds": 0.13695089996326715,
+        "selectedPublicTitle": "U2A"
+      },
+      "requiredSecondarySilkFullTextMultiset": "MATCH",
+      "requiredSecondarySilkCount": 74
+    }
+  ],
+  "rawViewObservationsSha256": "64ece93fda040c778c881f9f76ee76ceb4c64f84b2110e2ee0358c271105fe4e",
+  "fileEvidence": {
+    "status": "PASS",
+    "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "sourceFreeze": {
+      "path": "pcb-single-group-v6-freeze-r2.json",
+      "sha256": "d11051b59896dcf099722c743ec11d78c0558212bcf325bdcae59c4ef6e0e61a",
+      "status": "SECOND_PRIVATE6_BOTH_TIGHT_PREFIX_TRIAL_NOT_QUALIFIED"
+    },
+    "prerequisites": [
+      {
+        "phase": "native-r211",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "native-r212",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "build-r59",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "compiled-r224",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      }
+    ],
+    "acceptedR221Outcome": "PASS",
+    "acceptedR221OperationSeconds": 124.49973619997036,
+    "acceptedR221InputManifestSha256": "72b8733c446d9b2553aa2037b08efe24dfb037cb35f6380c48cb9311d3cf63f9",
+    "acceptedSaved5Artifact": {
+      "bytes": 1391,
+      "sha256": "3449252417b64b5ff1405dfaf3c8629c32469f90af0ba430baf7e6ff2054d0bb",
+      "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+      "historyCount": 3
+    },
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Bench power",
+      "actual Bench power current-limit selection: 250 mA",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: fresh-dense6-private44.tsjsave",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-dense5-private44.tsjsave",
+      "click: Bench power",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-accepted5-restore.tsjsave",
+      "accepted saved5 actual geometry, source and semantic history restored/resaved",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-dense6-private44.tsjsave",
+      "click: Bench power",
+      "actual FileReader restore selected the fresh dense-6 artifact",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-dense6-restore.tsjsave",
+      "dense-6 geometry fingerprint, source setting and history restored; no completion imported",
+      "click: Resume current board",
+      "click: Run customer retest",
+      "actual unrepaired-board customer retest failed",
+      "click: Board Power: ON",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "observe real relay service interlock; initially enabled=False",
+      "click: Parts Tray",
+      "click: Parts Tray",
+      "actual Parts Tray public popover toggle closes before catalog acquisition",
+      "click: Shop",
+      "actual Shop acquisition: Add to Parts Tray: Relays, 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "click: Close",
+      "click: Parts Tray",
+      "click: Component",
+      "actual Remove component: KA",
+      "click: Parts Tray",
+      "select actual loose relay: Part 45 - 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "actual install: Install as Channel A / KA",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "click: Board Power: OFF",
+      "click: Run customer retest",
+      "actual dense-6 Shop repair customer retest PASS",
+      "click: Close session"
+    ],
+    "observations": [
+      {
+        "name": "fresh private placement-5 cold owner",
+        "status": "PASS",
+        "seed": "-1004",
+        "packages": 44,
+        "coldProof": "PASS",
+        "coldOperationSeconds": 37.482824000064284,
+        "placementEvidence": "actual version-6 Save and strict replay-owner restore"
+      },
+      {
+        "name": "actual fresh dense-6 download",
+        "status": "PASS",
+        "replay": "tsj-private-session/6/tsj-generation-dependencies-v16/rb56-placement-6/RB56_CONTROL/-1004",
+        "historyCount": 3,
+        "sourceHistoryVisible": true
+      },
+      {
+        "name": "accepted5 actual FileReader and resave",
+        "status": "PASS",
+        "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+        "realization": "89dece8b44693f1f32b786ac14962fda0c4bd8744801538a4032cbebb0836550",
+        "historyCount": 3
+      },
+      {
+        "name": "real relay discharge/service guard",
+        "status": "PASS",
+        "initiallyEnabled": false,
+        "waitSeconds": 5.058949599973857,
+        "publicMarkings": "KA\n\n\nType: relay\n\n\nMarkings: 5 V coil / SPDT / 24 V DC, 0.5 A contacts\n\n\nState: Installed\n\n\nLead A1: KA.A1\n\n\nLead A2: KA.A2\n\n\nLead COM: KA.COM\n\n\nLead NC: KA.NC\n\n\nLead NO: KA.NO\n\n\n\nLift lead A1\nLift lead A2\nLift lead COM\nLift lead NC\nLift lead NO\nRemove component"
+      },
+      {
+        "name": "final dense-6 UI close and owned cleanup",
+        "status": "PASS",
+        "saved5And6Restores": [
+          "PASS",
+          "PASS"
+        ],
+        "finalRetest": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "coordinatorReleased": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "cleanupPending": false,
+        "finalReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 518,
+          "generationMillis": 36071,
+          "maxManualUnitMillis": 1149,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "97f1c672f67b41c8658339e7107a359986bce94bf8f3e2664d2f3469959bbe3b",
+          "diagnosticContextDigest": "275e189a84df25f79cde7e94f5b5f8bc26e82d61e7cf1249af70bab0a868453c",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": true,
+          "sessionRestores": [
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 34972,
+              "work": 524,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            },
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 33168,
+              "work": 518,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            }
+          ],
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": true,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 121564
+        }
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "fresh-dense6-source-state.png",
+        "sha256": "0cfa93cf285394826eac5298d8f5588b8007fe399d6a43a03b1258d6372cf91a"
+      },
+      {
+        "path": "accepted-saved5-source-state.png",
+        "sha256": "8034030ef31303079621a809fdcb9affe896c2dd8880299f1472308fd5956913"
+      }
+    ],
+    "files": [
+      {
+        "path": "fresh-dense6-private44.tsjsave",
+        "bytes": 1375,
+        "sha256": "f6ea5cda39fd77b240a5b93ffc00338c336fb33b25c52482f24fa08d23b93724",
+        "replay": "tsj-private-session/6/tsj-generation-dependencies-v16/rb56-placement-6/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-accepted5-restore.tsjsave",
+        "bytes": 1375,
+        "sha256": "e7e0a285ebf248b403a13336f27701e8f440946c679a0f5a1587784fdedcaae9",
+        "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-dense6-restore.tsjsave",
+        "bytes": 1375,
+        "sha256": "b6020f8db4ad928699c9005f89acf9a385479bac9a99a85205c65bbb8de13182",
+        "replay": "tsj-private-session/6/tsj-generation-dependencies-v16/rb56-placement-6/RB56_CONTROL/-1004",
+        "historyCount": 3
+      }
+    ]
+  },
+  "fileEvidenceSha256": "4303490a35e7b42383ece76a8753618a32d5c4814f7214df56efc1fe323d272d",
+  "collectorLabelLimit": "One source225 observation name still says fresh placement5; actual replay/Save/native request and subsequent6 restore bind placement6. Raw receipt retained unchanged.",
+  "visualReview": {
+    "status": "ACCEPT_FINITE_PRIVATE6",
+    "scope": "Root actual40/42/44 fit images and accepted42/44 baselines; independent read-only fit/wheel review",
+    "fullBoardsClear": true,
+    "bodyAndReferenceReadable": true,
+    "no40SkinnyRibbonRegression": true,
+    "independentReview": "PASS: fit clearance40/42/44=174/156/186px, complete parts/reference coverage; U1/U2 banks small at fit, readable at zoom.",
+    "wheelMetricLimit": "44 reported120VAC/1 pair lies wholly left of visible canvas;42 reports same cropped-input pair. Required fully-visible text/reference pairs empty. Whole input edge is inspected at fit.",
+    "remaining": "Sparse pockets remain at42 upper/right and lower/left, smaller pockets at44; not optimal fill or guaranteed30%."
+  },
+  "images": [
+    {
+      "path": "before42-fit.png",
+      "sha256": "f206793041d6042ef1ca81e424c95c48edda088ca92138c17666fd8f8bd9fba8",
+      "bytes": 322788,
+      "provenance": "Actual accepted private5 GWT57/source220; world geometry exact5 in final native212. Earlier viewport inset than after."
+    },
+    {
+      "path": "after42-fit.png",
+      "sha256": "1335d66dbeb59830bbd0d43e4ab89b41e3047007e7c2376e7070af5cccb1ca1c",
+      "bytes": 333909,
+      "provenance": "Actual current private6 GWT59/source224 initial fit; all42 parts."
+    },
+    {
+      "path": "before44-fit.png",
+      "sha256": "0f77f4aa559ad173c31b791ac662ef5cebea5be613bb85d8bd05649531ee8844",
+      "bytes": 355931,
+      "provenance": "Actual accepted private5 GWT57/source220; world geometry exact5 in final native212. Earlier viewport inset than after."
+    },
+    {
+      "path": "after44-fit.png",
+      "sha256": "466136ae3ba2bd3cbfdf72ef88f6467fefc11fcf76298fbd744bf42a0651ea09",
+      "bytes": 379443,
+      "provenance": "Actual current private6 GWT59/source224 initial fit; all44 parts."
+    },
+    {
+      "path": "after40-fit.png",
+      "sha256": "4f150aedc472abb744f342f545e30f39efe2440e4717a2f3d004fbe994d1ebb9",
+      "bytes": 359321,
+      "provenance": "Actual current private6 GWT59/source224 initial fit; all40 parts."
+    },
+    {
+      "path": "fresh6-save-state.png",
+      "sha256": "0cfa93cf285394826eac5298d8f5588b8007fe399d6a43a03b1258d6372cf91a",
+      "bytes": 383404,
+      "provenance": "Actual current6 source/history after real Save session download/source225."
+    },
+    {
+      "path": "restored5-save-state.png",
+      "sha256": "8034030ef31303079621a809fdcb9affe896c2dd8880299f1472308fd5956913",
+      "bytes": 359551,
+      "provenance": "Actual accepted5 FileReader reconstruction/history/source225; old world geometry retained."
+    }
+  ],
+  "design": {
+    "groupTarget": "Private6 tight0/1 reuses existing3 group-centre/source-lane behavior; whole-content/group score already existed. No new weight or search.",
+    "routePrefix": "Single declared group compares existingtight0 and1 actual final crops then provenroomy5. Repeated-group moderate4/compact/roomy prefix unchanged. Same6 placements/3 routes perpolicy.",
+    "versioning": "Fresh private6; explicit saved5 stays separate;1-4 semantic branches unchanged, publicalpha5/sessionmodel1/epoch16 unchanged.",
+    "sides": "TOP only; backside assessed but not necessary for this finite result, not implemented."
+  },
+  "reuse": {
+    "labelAndFitOwners": {
+      "sourceFiles": {
+        "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+        "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+        "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+        "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+        "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+        "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c"
+      },
+      "labelGate": {
+        "phase": "native-r200",
+        "status": "PASS",
+        "operationSeconds": 22.783,
+        "hostDeadlineMs": 600000,
+        "sourceInputsUnchanged": true,
+        "ownedCleanupVerified": true,
+        "handlesClosed": true,
+        "receiptSha256": "3d77356ea12cccaf919e42a65c8a2f36ff896e6d0aeebb6f878b266cf298d03c",
+        "launchSha256": "387b4fe5e0d9b0c4a703c9bf206a641c7035164b78c1429905a07f5f36983458"
+      },
+      "fitGate": {
+        "phase": "native-r208",
+        "status": "PASS",
+        "operationSeconds": 22.483,
+        "hostDeadlineMs": 600000,
+        "sourceInputsUnchanged": true,
+        "ownedCleanupVerified": true,
+        "handlesClosed": true,
+        "receiptSha256": "025018506f1798c1abeec26280fad55ea5c84c4ab43d1923bc8edd3f55f5459c",
+        "launchSha256": "dc14b1f39fd3db96334fd3f046a19e3d91f6cd2680fe04902e1981c979ddebd8"
+      },
+      "scope": "Raw owners/fixture byte-exact vs accepted5; current actual224 fit fresh."
+    },
+    "backingGate": {
+      "phase": "native-r211",
+      "status": "PASS",
+      "operationSeconds": 29.79,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "ab7e054f702f98bf9e30339139a02503740fad7f308a6cd8e474c425bc6b3afc",
+      "launchSha256": "66a90e8e3088be2f81c814f9e70c2fc90701390fc2d8b1217facaec2326d411b"
+    },
+    "old1To4": "Version<6 semantic branches and retained geometry test literals unchanged; codec/identity1-6 fresh. Prior3/4 geometry206 reused only across that boundary; no fresh1-4 full matrix claimed.",
+    "unchangedLargeViews": "60/53/54 exact accepted5 current6 geometry; prior5 actual cold/render/service evidence reused. No repeated cold corpus."
+  },
+  "firstCandidate": {
+    "gate": {
+      "phase": "native-r209",
+      "status": "PASS",
+      "operationSeconds": 31.712,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "cc2f54c0636b8de36ab0b526efa4594030267d33e5c81bc38f09abfc82b08b4d",
+      "launchSha256": "bcd71c481e304bd16e4ac608e7d5564029ae6f67e72de06b88084c632be3a531"
+    },
+    "densityVerdict": "REJECTED",
+    "reason": "44 outline grew14.83% vs accepted5 though native structural PASS; preliminary prefix chose larger actual crop.",
+    "rows": [
+      {
+        "seed": "-1004",
+        "version": 6,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 4051,
+        "height": 1424,
+        "area": 5768624,
+        "courtyardArea": 811504,
+        "regionBoundingAreaSum": 5049104,
+        "sameRegionCenterManhattanMean": 725.9475806451613,
+        "twoPadNetSpanSum": 4350,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30230,
+        "traceSegments": 187,
+        "vias": 28,
+        "selectedAttempt": 1,
+        "routingExpansions": 3097868,
+        "geometrySha256": "f68424cacfdfd2913e52beb2e00ecafa35a26a136dc1485526dd6c328299cbca"
+      },
+      {
+        "seed": "0",
+        "version": 6,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 3401,
+        "height": 1376,
+        "area": 4679776,
+        "courtyardArea": 777184,
+        "regionBoundingAreaSum": 4199461,
+        "sameRegionCenterManhattanMean": 772.7519379844962,
+        "twoPadNetSpanSum": 2590,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28810,
+        "traceSegments": 186,
+        "vias": 29,
+        "selectedAttempt": 1,
+        "routingExpansions": 3530164,
+        "geometrySha256": "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd"
+      }
+    ],
+    "rejectionReceiptSha256": "81322ca792dfa6900afee8125d11ea30b78e9f11ab1a17db4db2223550854bdf"
+  },
+  "whitespaceMetricLimit": "Grid10 conservative raster reserves full package/access,both copper faces,vias,model silk and isolation; free cells/rectangle not routability or removable-outline proof.",
+  "limits": {
+    "originalJobMillis": 90000,
+    "originalJobWork": 640,
+    "originalUnitMillis": 5000,
+    "originalHoldMillis": 360000,
+    "perJvmMillis": 60000,
+    "placements": 6,
+    "routesPerPolicy": 3,
+    "fullNativeMatrix": "NOT RUN",
+    "humanU05": "NOT RUN",
+    "normalPopulation": "NOT RUN",
+    "publicHardAndNormalRb56": "HELD",
+    "modestHost": "DEFERRED_BY_OWNER_NOT_RUN",
+    "unchangedQ30Corpora": "NOT RERUN",
+    "additional30Percent": "ASPIRATIONAL_NOT_ACHIEVED_OR_GUARANTEED",
+    "manufacturingOrOptimalPackingClaim": false,
+    "causalTimingImprovementClaim": false
+  },
+  "previousFailures": "Native193/194/195/198, compiled212 54-part timeout, rejected206 and collector222 failures and rejected skinny40 remain in previous packets. Q30 unknown91.616s failure,6 missing scratch inventories and late audit unchanged.",
+  "originalEightHashesPreserved": true,
+  "noEmail": true,
+  "resources": "All current owned jobs/handles/drainers/browser/server retire PASS; no unrelated process,desktop focus,ADB/tablet change. Heavy phases serial.",
+  "documentationReview": "Independent read-only final packet review PASS; metrics/limits/versioned files/privacy agree with actual evidence. Root also inspected both actual source-setting screenshots."
+}

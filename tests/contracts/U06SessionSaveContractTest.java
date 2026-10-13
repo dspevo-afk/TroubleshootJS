@@ -86,8 +86,10 @@ public final class U06SessionSaveContractTest {
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM);
         GenerationRequest denseRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_DENSE);
+        GenerationRequest largeRequest = currentRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LARGE);
         GenerationRequest[] requests = new GenerationRequest[] {
-            legacyRequest, compactRequest, realismRequest, denseRequest, currentRequest
+            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, currentRequest
         };
         String[] expected = new String[] {
             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -99,7 +101,9 @@ public final class U06SessionSaveContractTest {
             "tsj-private-session/4/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-4/RB56_CONTROL/77",
             "tsj-private-session/5/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-5/RB56_CONTROL/77"
+                "/rb56-placement-5/RB56_CONTROL/77",
+            "tsj-private-session/6/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-6/RB56_CONTROL/77"
         };
         for (int i = 0; i < requests.length; i++) {
             final GenerationRequest request = requests[i];

@@ -397,6 +397,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
         @{ Name = 'PcbSavedRealismGeometryContractTest'; Marker = 'saved placement3 geometry contracts ' },
         @{ Name = 'PcbSavedDensityGeometryContractTest'; Marker = 'saved placement4 geometry contracts ' },
+        @{ Name = 'PcbSavedLargeGeometryContractTest'; Marker = 'saved placement5 geometry contracts ' },
+        @{ Name = 'PcbSingleGroupDensityContractTest'; Marker = 'focused single-group density contracts ' },
         @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
         @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },

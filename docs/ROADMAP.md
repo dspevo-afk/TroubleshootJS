@@ -7,7 +7,23 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Finite private5 density and complete fit accepted**
+**Current task:** **Finite private6 single-group density accepted**
+All parts/pads stay.42/44 outline area falls6.35%/7.99%,40 falls2.36%;60/53/54
+remain exact accepted5. Existing grouped tight0/1 plus actual two-tight/roomy
+route comparison stay within six placements/three routes. Fresh6 and saved1-5
+remain distinct. Native211/212, actual final GWT59/all five, headless224 real
+40/42/44 cold/fit/wheel/body input and225 actual saved5/6 files, guarded KA Shop
+repair/customer retest/Close PASS. Source/geometry/input/cleanup gates complete;
+root/independent image review accept full outlines/labels and no40 ribbon.
+Additional30%/further internal gaps remain open; both component sides assessed,
+not implemented. This finite scope completes continued42/44 compaction. Next is
+Dave's remaining PCB realism target before general roadmap advancement.
+Human U05/normal population NOT RUN, HARD/normal RB56 HELD, modest host owner-
+deferred. No unchanged Q30 corpus or new PC hold; all previous failures retained.
+[Final evidence, before/after screenshots and limits](task-evidence/PCB/density-v6-r1/README.md).
+The task handoff records exact normal-push verification.
+
+**Previous private5 task:** **Finite private5 density and complete fit accepted**
 Every part/pad remains.60/54 outlines shrink15.41%/13.29%;40/42/44/53 retain exact
 accepted4 geometry. Audited native207/206/label200 scope, fresh1277 U01 assertions,
 final GWT58/all five, actual final22360/54 fit/wheel/body and221 real saved4/5

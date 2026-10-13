@@ -1,4 +1,55 @@
-# Current checkpoint: private5 density and complete fit accepted; final gates complete
+# Current checkpoint: private6 single-group density accepted; final gates complete
+
+2026-10-13. Finite PCB refinement accepted over published
+`200bdf6fd08121ae073171bc66198570cea5bbf4` on `codex/q60-faulted-profile-counts`.
+This checkpoint is sealed before commit; task publication receipt/handoff gives
+the resulting exact SHA and verified normal push. No main merge or email.
+Dave's dated continuation supersedes the old undated availability reply; heavy
+gates ran serially with unrelated processes/focus/ADB/tablet left untouched.
+
+All parts/pads retained.42/44 outlines fall6.35%/7.99%;40 falls2.36%;60/53/54
+remain exact accepted5. The existing tight0/1 group-centre/source-lane behavior
+also applies to6. Single groups compare both actual tight crops plus roomy5;
+repeated groups retain5's prefix. Six placements/three routes, all package,
+access, clearance, routing/electrical and90s/640/5s/360s limits stay. Fresh private6
+is explicit; saved1-5/publicalpha5/sessionmodel1/epoch16 stay. TOP only; backside
+assessed, not implemented. Additional30% and visible sparse pockets remain open.
+
+Native211 PASS29.790s focused42/44/backing205; native212 PASS88.580s/five suites:
+current6P07/admission1488, saved5literal6/1499, U06saves34957, identity92,
+dependency1166. Labels200/fit208 and older1-4 geometry reuse only across audited
+unchanged inputs/branches. Full native/global population matrix NOT RUN.
+Final actual JDK8/GWT59 PASS92.251s/all five; served/save strong name
+A699B3336850CA2E595F0123DA59CAEB. Actual headless224 PASS110.944s:40/42/44 cold/initial
+fit/Fit bench/wheel/U2A body selection; references/visible ink preserved, full
+board gaps174/156/186px. Root/independent visual review PASS, no skinny40 ribbon.
+Banks small at fit/readable at zoom; input edge naturally clips on zoom.
+Cold28.096/31.054/34.580s, work520/521/518, max unit0.992/1.078/1.070s.
+Unrepaired closures retain expected product FAIL and complete cleanup.
+
+Actual headless225 PASS125.446s: fresh6 Save -> accepted5 FileReader/resave ->
+fresh6 FileReader/resave preserves geometry,250mA source and history3 without
+completion; ordinary guarded KA Shop repair/powered customer retest/Close PASS.
+All seven restoration flags and owned job/handle/drainer/browser/server cleanup
+PASS. Source-guided engineering input is not human U05/OS-input certification.
+One raw225 observation caption says5 though its strict replay/download is6;
+receipt retained unchanged. Before images use accepted5 geometry/earlier57 fit
+inset; exact native dimensions quantify reduction.
+
+[Portable final evidence and actual images](task-evidence/PCB/density-v6-r1/README.md).
+First209 structural PASS/density REJECTED (+14.83%44) is retained. Previous
+native193/194/195/198 failures, compiled212 54-part timeout, rejected206 and
+collector222 failure plus skinny40 rejection stay historical.
+Q30 unknown91.616s failure,6 missing scratch inventories and late audit persist.
+Original8 untracked byte-exact/unstaged; no owned runtime remains. No unchanged
+Q30 corpora/cold A/B, Core/Android/GPU/unrelated repo work. Human U05/normal
+population NOT RUN; HARD/RB56 HELD; modest host owner-deferred/RPG shelved.
+
+Next: Dave's remaining PCB density/realism target before general roadmap work;
+avoid asserting30% or optimal packing. This finite checkpoint completes the
+42/44 scope; any further backside path needs explicit versioned physical mechanics.
+
+# Previous checkpoint: private5 density and complete fit accepted; final gates complete
 
 2026-10-13. Finite PCB refinement is accepted over published base
 `02f65fb003ef29122f02b1c7b0a63d797002518c` on `codex/q60-faulted-profile-counts`.

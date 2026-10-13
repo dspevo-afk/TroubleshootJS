@@ -465,6 +465,14 @@ class SeededPcbLayoutGenerator {
                     break;
                 }
         }
+        if (version >= 6 && !repeatedControl) {
+            // Preliminary quality can prefer a larger final crop. Compare both
+            // existing tight alternatives, retaining the same roomy fallback.
+            selected.clear();
+            for(int attempt:new int[]{0,1,5})
+                for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
+                    if(candidate.attempt==attempt) {selected.add(candidate);break;}
+        }
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(selected);
         for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)

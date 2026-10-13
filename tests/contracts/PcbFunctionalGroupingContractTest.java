@@ -7,7 +7,7 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=5;
+    private static final int MEASURED_VERSION=6;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     private static final String[] SAVED3_GEOMETRY_SHA256={
@@ -26,6 +26,14 @@ public final class PcbFunctionalGroupingContractTest {
         "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
         "99ced1b9f1efd568aa178f99f7b35c703dda8c890b91cf83112ab0d4c0d65044"
     };
+    private static final String[] SAVED5_GEOMETRY_SHA256={
+        "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf",
+        "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573",
+        "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
+        "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2",
+        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
+        "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+    };
     private static int checks;
     public static void main(String[] args) {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,MEASURED_VERSION);
@@ -39,6 +47,14 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedDensityGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,4);
         System.out.println("PASS: saved placement4 geometry contracts roots="+ROOTS.length+" assertions="+checks);
+    }
+    static void verifyFocusedSingleGroup() {
+        for(int index:new int[]{1,3}) measure(ROOTS[index],index,MEASURED_VERSION);
+        System.out.println("PASS: focused single-group density contracts roots=2 assertions="+checks);
+    }
+    static void verifySavedLargeGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,5);
+        System.out.println("PASS: saved placement5 geometry contracts roots=6 assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -119,6 +135,9 @@ public final class PcbFunctionalGroupingContractTest {
         if(version==5 && (index==0 || index==1 || index==3))
             check(SAVED4_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
                 "published single-group40/44/42 geometry must not regress: "+seed);
+        if(version==5) check(SAVED5_GEOMETRY_SHA256[index].equals(
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            "published saved5 geometry remains byte-exact: "+seed);
         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
             "published saved4 geometry remains byte-exact: "+seed);

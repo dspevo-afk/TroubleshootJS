@@ -253,7 +253,8 @@ final class PcbPlacementPlanner {
             TreeMap<String,Region> groups,Vector<Item> anchors,long demandArea,
             long courtyardArea,int maxWidth,int anchorWidth) {
         int placementVersion = constraints.placementDensityVersion;
-        boolean useGrouped = placementVersion == 3 && candidate < 2;
+        // Private6 reuses the established group-centred target and source-lane hints.
+        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2;
         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
             (placementVersion >= 4 && candidate < 4);
         boolean scoreWholeContent = useCompact;

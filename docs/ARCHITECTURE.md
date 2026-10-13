@@ -5501,7 +5501,7 @@ guarded repair/retest/Close. 44/42 visibly shrink; 60 is exact roomy fallback an
 qualification remain unproved. Original candidate/evaluation/route/90s/640/5s
 limits remain; this is bounded layout selection, not optimal packing.
 
-## Current private5 density and tray-aware fit
+## Accepted private5 density and tray-aware fit
 
 Fresh held RB56 requests name private placement/session5 explicitly, retaining
 saved1–4 interpretations and public alpha5/session-model1/epoch16. Existing
@@ -5524,3 +5524,28 @@ generation/session/labels, prior22053/60 cold/service, and final223/221 current
 view/file input. All route/time/work limits remain. This is not optimal packing,
 manufacturing clearance, human calibration or normal-population release. Both
 component sides remain an assessed option requiring explicit lead/access mechanics.
+
+
+## Current private6 single-group placement and saved5 identity
+
+Fresh held RB56 requests and private sessions use placement6. Explicit LARGE5
+constants/prefixes preserve saved5 before cache lookup/reconstruction, while
+public alpha5/sessionmodel1/generationepoch16 remain. Existing1-4 branches are
+unchanged. P07 remains required for3-6 and actual physical admission fails closed.
+
+`PcbPlacementPlanner.planMedium` reuses the established3 group-centre target
+and source-lane hints for6 tight candidates0/1. Existing whole-content/group
+scoring and all protected envelopes remain. For one declared control group,
+`SeededPcbLayoutGenerator` compares those two actual final route crops plus the
+existingroomy5 fallback; repeated groups retain5's moderate/compact/roomy prefix.
+No seed/count predicate, new weights, route algorithm or expanded search. All
+six-placement/three-route and time/work/evaluation limits stay. Component poses
+remain TOP; backside mechanics are assessed, not implemented.
+
+[Finite final proof](task-evidence/PCB/density-v6-r1/README.md) records six current
+and six exact saved5 native layouts, source-guided actual40/42/44 fit/zoom/body
+input and real5/6 file restoration with guarded repair/retest/Close. Outline
+reductions and conservative internal-empty-rectangle metrics are separate from
+mixed locality/copper metrics and do not certify optimal/manufacturable packing.
+View/label/fit owners stay byte-exact; final actual views are fresh. Human U05,
+normal-population release and the additional30% target remain open.
