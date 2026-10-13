@@ -1,0 +1,75 @@
+{
+  "status": "SCREENSHOT_CHECKPOINT_CODE_UNPUBLISHED_EDGE_INSET_FIX_PENDING",
+  "createdUtc": "2026-10-13T01:23:31.673946+00:00",
+  "actualBuild": "C335F8DD621095BD904B15E9B3334D49",
+  "sourceFreezeSha256": "2e8d20a974416228ea07e8ae49f391e11a4006b90c02e8ef19b462c865d28b00",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "f915cf02f81abb8506c6828417d64b71155ac06a2f5c0c083aa3df1b0f5bf67f",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "f3eb71ca857ef556718309d25546022665df434e6ba3071de4515f85d3979c8f",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "56513e9e54ed19db10e3b5bfc8233675d6fcc25685304a3518c3a821e20d8ef2",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "507d26cbe9b176d3be3dc809aad5cfbe747316e772c48580cf933b7c90edb885",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "74d1e4188eb7b54d4bc1cf2249f90283bf0911688f63ce6f93b1efcfc528d6dd",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "36dcc517adf76fcc0a13116825a59982317819c52687483c801b2d6ba06c1a1c",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "ed996e3d0d8db0789f7859fbad4de2f58fac62391983c66793a2f2118d788918",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "d90ffa1b21bde3e2e1de5cbcc11c4bf4617fac43947d3f279ea988da0b96f620",
+    "tests/contracts/U06SessionSaveContractTest.java": "51b4b1c267c570a5a95ea20675f3698cd2daaa1bfda02b972d74d881ac5e5300",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "667080e7124d12a97899aaa287330f01033bfe02606f7c4b59175222ee7cba58"
+  },
+  "gates": [
+    {
+      "phase": "native-r199",
+      "status": "PASS",
+      "seconds": 136.417,
+      "receiptSha256": "cf693716db1ff13b2fbfc153eb14718131e418c9cf9f1ffb4227ec17ffbc7319"
+    },
+    {
+      "phase": "build-r55",
+      "status": "PASS",
+      "seconds": 98.202,
+      "receiptSha256": "5914a6266f01705160b3110db6cce5fdde89286ffa0d03fe1f00e5f7e75930fd"
+    },
+    {
+      "phase": "compiled-r216",
+      "status": "PASS",
+      "seconds": 222.532,
+      "receiptSha256": "f05b7d9700ab0ae0f73ecdf6dedfa7691e1bdc1eceeda04fc5cc8ed1dc837492"
+    },
+    {
+      "phase": "compiled-r217",
+      "status": "PASS",
+      "seconds": 145.237,
+      "receiptSha256": "67a6dc7abea32b6723c647bf4345138d6f9fbd23b383f7b1c003f5971dcee8f8"
+    }
+  ],
+  "counts": {
+    "before44": 44,
+    "after44": 44,
+    "dense60": 60
+  },
+  "density": {
+    "parts44AreaChangePercent": -22.91,
+    "parts42AreaChangePercent": -20.34,
+    "parts54NativeOnlyAreaChangePercent": -14.17,
+    "parts40AreaChangePercent": 0.21,
+    "parts60": "UNCHANGED_ROOMY_P07_FALLBACK"
+  },
+  "images": [
+    {
+      "path": "after44-fit.png",
+      "sha256": "0f77f4aa559ad173c31b791ac662ef5cebea5be613bb85d8bd05649531ee8844",
+      "bytes": 355931
+    },
+    {
+      "path": "../realism-r1/after44-fit.png",
+      "sha256": "f1e88dd5cc011c2b8a0edd58bbf3beb767c097fcbb5baaea9f7c4e19ca4adbd5"
+    },
+    {
+      "path": "../cold60-comparison-r1/after60-fit.png",
+      "sha256": "f90f2f0ca49eb4d5a355b13f87d55645527dcbd0a796a2f4bc5955cc663243eb"
+    }
+  ],
+  "review": "Root and independent actual44 fit/zoom accept denser composition and readable full labels/edge access.40 no worse;60 unchanged.42 terminal bank almost flush with lower PCB edge: revise presentation inset before code publication.",
+  "files": "Actual3/4 FileReader/source/history/geometry, ordinary unrepairedFAIL/KA Shop repair/poweredPASS/Close completed on R7. Final inset source still requires fresh label/GWT/render/file acceptance.",
+  "scope": "Finite engineering checkpoint, not human U05 or normal population/release qualification. No candidate production code published here. Original limits retained; native198FAIL and previous failures remain."
+}
