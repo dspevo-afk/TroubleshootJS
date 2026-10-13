@@ -7,7 +7,7 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=4;
+    private static final int MEASURED_VERSION=5;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     private static final String[] SAVED3_GEOMETRY_SHA256={
@@ -18,6 +18,14 @@ public final class PcbFunctionalGroupingContractTest {
         "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8",
         "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
     };
+    private static final String[] SAVED4_GEOMETRY_SHA256={
+        "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf",
+        "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573",
+        "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16",
+        "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2",
+        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
+        "99ced1b9f1efd568aa178f99f7b35c703dda8c890b91cf83112ab0d4c0d65044"
+    };
     private static int checks;
     public static void main(String[] args) {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,MEASURED_VERSION);
@@ -27,6 +35,10 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedRealismGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,3);
         System.out.println("PASS: saved placement3 geometry contracts roots="+ROOTS.length+" assertions="+checks);
+    }
+    static void verifySavedDensityGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,4);
+        System.out.println("PASS: saved placement4 geometry contracts roots="+ROOTS.length+" assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -102,8 +114,15 @@ public final class PcbFunctionalGroupingContractTest {
         if(version==3) check(SAVED3_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
             "published saved3 geometry remains byte-exact: "+seed);
+        if(version>=4) reportWhitespace(board,layout,seed,version);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
-        if(version==4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
+        if(version==5 && (index==0 || index==1 || index==3))
+            check(SAVED4_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                "published single-group40/44/42 geometry must not regress: "+seed);
+        if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            "published saved4 geometry remains byte-exact: "+seed);
+        if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
         System.out.println("PCB_GROUPING_CASE {\"seed\":\""+seed+"\",\"version\":"+version+
             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+
             ",\"width\":"+outline.width+",\"height\":"+outline.height+",\"area\":"+((long)outline.width*outline.height)+
@@ -114,6 +133,84 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"vias\":"+layout.getHoles().size()+",\"selectedAttempt\":"+stats.selectedPlacementAttempt+
             ",\"routingExpansions\":"+stats.routingExpansions+
             ",\"geometrySha256\":\""+PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
+    }
+    /** Drawing-space sampling, not a statement that free cells are packable. */
+    private static void reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+        Rectangle outline=layout.getBoardOutline();int step=10,cols=outline.width/step,rows=outline.height/step;
+        check(cols>0&&rows>0&&(long)cols*rows<=250000,"bounded whitespace sampling");
+        boolean[] blocked=new boolean[cols*rows];
+        for(PcbComponentPlacement part:layout.getComponents()) {
+            Vector<PcbPadPlacement> pads=new Vector<PcbPadPlacement>();
+            for(String id:board.getComponent(part.getComponentId()).getPadIds())pads.add(layout.getPad(id));
+            PcbFootprint footprint=new PcbFootprint(part,pads);
+            Rectangle envelope=PcbPlacementPlanner.envelope(footprint,
+                board.getPlacementConstraints().get(part.getComponentId()).accessMargin);
+            mark(blocked,cols,rows,outline,envelope,step);
+        }
+        int packageOccupied=0;for(boolean cell:blocked)if(cell)packageOccupied++;
+        int guard=PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
+        for(PcbTraceGeometry trace:layout.getTraces()) {
+            int[] x=trace.getXPoints(),y=trace.getYPoints();
+            for(int i=1;i<x.length;i++)mark(blocked,cols,rows,outline,new Rectangle(
+                Math.min(x[i-1],x[i])-guard,Math.min(y[i-1],y[i])-guard,
+                Math.abs(x[i]-x[i-1])+guard*2,Math.abs(y[i]-y[i-1])+guard*2),step);
+        }
+        for(PcbBoardHole hole:layout.getHoles()) {
+            Rectangle r=hole.getBounds();mark(blocked,cols,rows,outline,
+                new Rectangle(r.x-guard,r.y-guard,r.width+guard*2,r.height+guard*2),step);
+        }
+        for(PcbSilkscreenLabel label:layout.getSilkscreenLabels())
+            mark(blocked,cols,rows,outline,label.getBounds(),step);
+        // Count the actual declared domain isolation strip as reserved, even
+        // where the normal front view paints it as bare green substrate.
+        TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
+        for(PcbComponentPlacement part:layout.getComponents())
+            for(java.util.Map.Entry<String,Rectangle> entry:board.getPlacementConstraints().domainCourtyards(part).entrySet()) {
+                Rectangle prior=domains.get(entry.getKey()),r=entry.getValue();
+                if(prior==null)domains.put(entry.getKey(),new Rectangle(r.x,r.y,r.width,r.height));
+                else {int left=Math.min(prior.x,r.x),top=Math.min(prior.y,r.y);
+                    domains.put(entry.getKey(),new Rectangle(left,top,
+                        Math.max(prior.x+prior.width,r.x+r.width)-left,
+                        Math.max(prior.y+prior.height,r.y+r.height)-top));}
+            }
+        for(PcbPlacementConstraints.Barrier barrier:board.getPlacementConstraints().getBarriers()) {
+            Rectangle a=domains.get(barrier.firstDomain),b=domains.get(barrier.secondDomain);int gap=barrier.clearance;
+            Rectangle reserved;
+            if(a.x+a.width+gap<=b.x || b.x+b.width+gap<=a.x) {
+                int lo=a.x<b.x?a.x+a.width:b.x+b.width,hi=a.x<b.x?b.x:a.x;
+                int mid=lo+(hi-lo)/2;reserved=new Rectangle(mid-(gap+1)/2,outline.y,gap,outline.height);
+            } else {
+                int lo=a.y<b.y?a.y+a.height:b.y+b.height,hi=a.y<b.y?b.y:a.y;
+                int mid=lo+(hi-lo)/2;reserved=new Rectangle(outline.x,mid-(gap+1)/2,outline.width,gap);
+            }
+            mark(blocked,cols,rows,outline,reserved,step);
+        }
+        int free=0,bestArea=0,bestX=0,bestY=0,bestW=0,bestH=0;
+        int[] height=new int[cols],stack=new int[cols+1];
+        for(int y=0;y<rows;y++) {
+            for(int x=0;x<cols;x++) {boolean occupied=blocked[y*cols+x];if(!occupied)free++;
+                height[x]=occupied?0:height[x]+1;}
+            int top=-1;
+            for(int x=0;x<=cols;x++) {
+                int current=x==cols?0:height[x];
+                while(top>=0&&height[stack[top]]>current) {
+                    int h=height[stack[top--]],left=top<0?0:stack[top]+1,w=x-left;
+                    if(h*w>bestArea) {bestArea=h*w;bestX=left;bestY=y-h+1;bestW=w;bestH=h;}
+                }
+                if(x<cols)stack[++top]=x;
+            }
+        }
+        System.out.println("PCB_WHITESPACE_CASE {\"seed\":\""+seed+"\",\"version\":"+version+
+            ",\"parts\":"+layout.getComponents().size()+",\"gridUnits\":10,\"sampledCells\":"+(cols*rows)+
+            ",\"packageAccessOccupiedCells\":"+packageOccupied+",\"protectedFreeCells\":"+free+
+            ",\"protectedFreeFraction\":"+(free/(double)(cols*rows))+",\"largestProtectedEmptyRectangle\":{\"x\":"+
+            (outline.x+bestX*step)+",\"y\":"+(outline.y+bestY*step)+",\"width\":"+(bestW*step)+
+            ",\"height\":"+(bestH*step)+",\"area\":"+(bestArea*step*step)+"},\"scope\":\"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF\"}");
+    }
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+        int x0=Math.max(0,(r.x-outline.x)/step),y0=Math.max(0,(r.y-outline.y)/step);
+        int x1=Math.min(cols-1,(r.x+r.width-outline.x+step-1)/step),y1=Math.min(rows-1,(r.y+r.height-outline.y+step-1)/step);
+        for(int y=y0;y<=y1;y++)for(int x=x0;x<=x1;x++)blocked[y*cols+x]=true;
     }
     private static void check(boolean value,String message){checks++;if(!value)throw new AssertionError(message);}
 }

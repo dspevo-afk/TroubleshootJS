@@ -1,4 +1,120 @@
-# Current checkpoint: private PCB density 4 accepted; final gates complete
+# Current checkpoint: private5 density and complete fit accepted; final gates complete
+
+2026-10-13. Finite PCB refinement is accepted over published base
+`02f65fb003ef29122f02b1c7b0a63d797002518c` on `codex/q60-faulted-profile-counts`.
+This checkpoint is sealed before commit; the task publication receipt/handoff
+records the resulting exact SHA and verified normal push. No main merge or email.
+Dave's dated00:55 release and02:04 keep-TJS-going instruction remain authority;
+the undated older availability reply was briefly misread, then corrected.
+Serial gates/current low-load samples preserved ServerCenter priority, desktop
+focus and unrelated apps/processes/ADB/tablet. No fresh PC hold is pending.
+
+Private placement5 retains all parts/pads. Six current native P07/RB56 layouts
+pass:60/54 board area falls15.41%/13.29%;40/42/44/53 geometry is exact accepted4.
+Repeated declared control groups use existing moderate4 with2x full protected
+demand; single groups retain tight0/1, compact2/3 and roomy5 stay within the same
+six placements/three routes. Full model-label scan tries content-near original
+positions first; no package/access/copper/font reduction. Saved1–4/public
+alpha5/session-model1/epoch16 remain. Additional30% and further42/44 remain open.
+
+Native207 PASS63.871s/five affected suites qualifies current6/session/backing/
+dependency before the later fit-only patch. Native206 old3/old4 literal geometry
+and native200 labels273 are reused only across audited unchanged scope; unused
+diagnostic selector removal changes no selected207 suite or bridge command.
+Fresh native208 PASS22.483s/1277 U01 numeric assertions qualifies fit math.
+Final actual JDK8/GWT58 PASS90.704s/all five permutations; served/save strong
+name F3C3D615B4503B771CB59AD38D94382A. No full native matrix rerun is claimed.
+
+Prior actual headed220 PASS316.994s: private5 cold60/42/44/53/54 all within
+original90s/640-work/5s, plus ordinary60 RSA Shop repair/tray retention/powered
+retest/Close PASS.54 initial fit overlapped the24px tray by4px and was withheld
+from visual acceptance. Existing viewport/shared initial and Fit bench path now
+reserves collapsed24px or current expanded drawer height, keeping actual hit
+area/world/session geometry unchanged. Collector222 FAIL87.347s is preserved:
+wrong accessible name View; initial60 passed, Fit bench/54 not reached; cleanup
+PASS. Corrected223 changes only selectors to actual Board view and phase paths.
+
+Final browser223 PASS159.029s: actual60/54 cold, initial fit, ordinary Fit bench,
+full-label clearance, wheel and physical U2A selection; complete outlines clear
+the real DOM tray. Root inspected both corrected fits; independent visual review
+PASS with about90px/22px bottom gap. U2B's full terminal stack is tightest, clearer
+in zoom; substantial sparse regions remain. Unrepaired views close with exact
+expected product FAIL plus all seven restoration flags; host PASS is not customer
+PASS. Final browser221 PASS127.379s: actual fresh5 Save, accepted4 FileReader/
+resave, fresh5 FileReader/resave retain geometry,250mA source and three-entry
+history without completion; ordinary guarded relay Shop repair, powered retest
+PASS and Close/all seven flags PASS. Final browsers use headless Edge to preserve
+desktop focus; actual compiled UI screenshots/source-guided input, not human U05
+or OS-input/CDP certification. All owned input/handle/process cleanup PASS.
+
+[Final portable evidence and actual screenshots](task-evidence/PCB/density-v5-r1/README.md).
+[Historical clipped fit and pending record](task-evidence/PCB/density-v5-pending-r1/README.md).
+Original90s/640/5s/360s hold,60s JVM and all route/evaluation bounds remain.
+Original eight untracked files are byte-exact/unstaged; no owned runtime remains.
+Native193/194/195/198, prior21254 timeout, rejected20642 area growth and222
+collector FAIL stay preserved. Q30 unknown91.616s failure, six missing scratch
+inventories and late audit limitation remain. No unchanged Q30 corpora/cold A/B.
+Human U05/normal population NOT RUN; public HARD/RB56 HELD; modest host owner-
+deferred/RPG shelved. No Core/Android/GPU/unrelated repo/process work.
+
+Next: continued42/44 PCB density/realism before general roadmap advancement.
+The publication receipt/handoff supplies the verified normal-push result.
+Both component sides are authorized and assessed, not implemented: eligible private side capabilities,
+side-aware placement and explicit opposite-face through-lead/access guards are
+needed. Copper layers/bottom viewing alone do not establish mechanical clearance.
+
+# Historical checkpoint: private5 density candidate; focused fit gates resumed
+
+2026-10-13. Actual local/remote HEAD is
+`02f65fb003ef29122f02b1c7b0a63d797002518c` on `codex/q60-faulted-profile-counts`.
+No new commit or push. Work remains PCB density/realism before general roadmap
+advancement. The delivered availability question reply had no dated source and was briefly
+misread as a new hold. Parent clarified that the00:55 release and02:04 keep-TJS-
+going instruction supersede it. Focused gates resume serially after current
+load checks; preserve ServerCenter priority and all unrelated apps/processes.
+
+Private5 candidate retains all parts/pads and six-placement/three-route caps.
+Native207 PASS63.871s/five affected suites: six current P07/RB56 layouts,
+session identity/save and backing/dependency.60/54 outlines shrink15.41%/13.29%;
+40/42/44/53 retain exact accepted4 geometry. Single control groups retain tight
+0/1; repeated declared channel groups use the2x protected-demand moderate4,
+with compact2/3 and roomy5 retained. Model silkscreen's existing full-text scan
+tries content-near positions first. Saved1–4/public schema/model/epoch remain.
+Prior206 nine-suite compatibility and native200 labels are reusable only within
+their recorded unchanged behavior/input boundaries; no new full matrix claim.
+
+Actual GWT57 PASS92.489s/all five; served E28A0809BB4495092BF001DFF95D559E.
+Actual headed220 PASS316.994s/five cold/render/input cases with complete owned
+cleanup.60/42/44/53/54 cold72.391/31.049/35.375/61.841/68.634s; work599/522/524/621/609,
+max unit1.412/1.095/1.139/1.462/1.394s. Original90s/640/5s/360s hold unchanged.
+Real60 ordinary RSA Shop replacement/tray retention/powered retest/Close PASS.
+Other cases intentionally closed unrepaired with exact product FAIL and all seven
+cleanup flags; browser-host PASS is not customer PASS. Human U05 NOT RUN.
+
+Root/independent image review found54 initial-fit lower outline clipped by4px:
+canvas858h, board bottom838, collapsed tray top834. It is a production fit-area
+issue before any wheel input. Existing viewport/renderer now reserve collapsed24
+or expanded tray height; actual canvas hit area and world/save geometry remain.
+Focused U01 numeric checks cover both faces, both insets and old no-drawer fit.
+Four-file static review PASS; native208/GWT58/actual final fit/files NOT RUN.
+Final18-input freeze and native208 are prepared in task storage. No active owned
+runtime remains. Prepared221/old sealing inputs still require final-source rebind.
+
+[Pending evidence and three actual screenshots](task-evidence/PCB/density-v5-pending-r1/README.md).
+This packet is UNACCEPTED. Root reviewed five useful before/after/repair images
+across the candidate continuation. No post-fix image or final acceptance exists.
+Original eight untracked bytes are exact/unstaged; all candidate changes preserved.
+Additional30%/further42/44 density remain open; top/left/internal whitespace remains.
+Both component sides are authorized and assessed, not implemented; require private
+side-enabled axial capabilities and opposite-face lead/access guards. No Core/Android,
+email, main merge, unrelated repo/process/tablet or unchanged Q30 corpus work.
+U05/normal population NOT RUN, public HARD/RB56 HELD, modest host owner-deferred.
+All prior failures, Q30 unknown91.616s failure, six missing scratch inventories
+and late audit limitation remain. Next after availability: focused fit native,
+final GWT, complete54 real Fit bench evidence, rebound actual saved4/5 repair flow,
+then final review/seal/normal publication. Avoid an unchanged cold cohort loop.
+
+# Historical checkpoint: private PCB density 4 accepted; final gates complete
 
 2026-10-13. Dave's later "you can start up TJS" release supersedes the earlier
 estimate/availability holds. Work remains on generation and PCB realism before

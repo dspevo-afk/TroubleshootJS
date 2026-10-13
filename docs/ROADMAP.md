@@ -7,7 +7,24 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Finite private PCB density4 accepted; realism remains priority**
+**Current task:** **Finite private5 density and complete fit accepted**
+Every part/pad remains.60/54 outlines shrink15.41%/13.29%;40/42/44/53 retain exact
+accepted4 geometry. Audited native207/206/label200 scope, fresh1277 U01 assertions,
+final GWT58/all five, actual final22360/54 fit/wheel/body and221 real saved4/5
+files plus ordinary guarded Shop repair/powered retest/Close PASS. Prior220 also
+provides actual53 cold/render and60 repair before the later fit-only correction.
+54 full outline now clears the tray;222 selector failure and all older failures
+remain. Final browsers use headless Edge to preserve desktop focus, not human
+trial evidence. Additional30%/further42/44 density and dual component sides remain
+open; backside mechanics assessed, not implemented. Dave keeps PCB realism
+priority before general roadmap advancement. Next: that focused refinement;
+exact normal publication verification is recorded in the task handoff.
+U05/normal population NOT RUN,
+public HARD/RB56 HELD, modest host owner-deferred. No unchanged Q30 corpora.
+The undated stale availability reply is superseded by the dated continuation.
+[Final evidence, screenshots and limits](task-evidence/PCB/density-v5-r1/README.md).
+
+**Previous current task:** **Finite private PCB density4 accepted; realism remains priority**
 All components/pads retained; 44/42 boards shrink 22.91%/20.34%,54 shrinks 14.17%
 in native geometry only. 40 is +0.21%,53 -0.09%; 60 retains exact roomy P07 layout.
 Fresh label 273/GWT 56/all five/headed 218 four actual render/input cases and 219

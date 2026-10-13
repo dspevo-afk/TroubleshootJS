@@ -8,7 +8,8 @@ final class GenerationRequest {
     static final int RB56_PLACEMENT_INTERPRETATION_LEGACY = 1;
     static final int RB56_PLACEMENT_INTERPRETATION_COMPACT = 2;
     static final int RB56_PLACEMENT_INTERPRETATION_REALISM = 3;
-    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 4;
+    static final int RB56_PLACEMENT_INTERPRETATION_DENSE = 4;
+    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 5;
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;

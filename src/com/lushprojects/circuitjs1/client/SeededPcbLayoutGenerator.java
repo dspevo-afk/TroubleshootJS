@@ -263,9 +263,10 @@ class SeededPcbLayoutGenerator {
             session.mediumPlacementScores.add(candidate.toCanonical());
         }
         if (session.board.getPlacementConstraints().placementDensityVersion == 3 ||
-                session.board.getPlacementConstraints().placementDensityVersion == 4)
+                session.board.getPlacementConstraints().placementDensityVersion >= 4)
             session.mediumPlacements = prioritizeGroupedPlacementRouteCandidates(session.mediumPlacements,
-                session.board.getPlacementConstraints().placementDensityVersion == 4);
+                session.board.getPlacementConstraints().placementDensityVersion,
+                hasRepeatedControlRegions(session.board.getPlacementConstraints()));
         else if (session.board.getPlacementConstraints().placementDensityVersion == 2)
             session.mediumPlacements = prioritizeLegacyPlacementRouteCandidate(session.mediumPlacements);
         if (session.mediumPlacements.isEmpty())
@@ -434,13 +435,14 @@ class SeededPcbLayoutGenerator {
 
     private static boolean compactPlacementInterpretation(PcbPlacementConstraints constraints) {
         return constraints.placementDensityVersion == 2 || constraints.placementDensityVersion == 3 ||
-            constraints.placementDensityVersion == 4;
+            constraints.placementDensityVersion >= 4;
     }
 
     /** V3 keeps grouped/compact/roomy; v4 keeps tight/retained-compact/proven-roomy.
      * Every interpretation retains the same maximum three routed candidates. */
     private static Vector<MediumBoardPhysicalPolicy.PlacementCandidate>
-            prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked, boolean dense) {
+            prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked, int version, boolean repeatedControl) {
+        boolean dense=version>=4;
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> selected=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>();
         for(int category=0;category<3;category++)
@@ -449,11 +451,35 @@ class SeededPcbLayoutGenerator {
                 if(dense && candidate.attempt==4) candidateCategory=-1;
                 if(candidateCategory==category) {selected.add(candidate);break;}
             }
+        if (version >= 5 && repeatedControl) {
+            // Repeated control groups need the evidenced moderate profile;
+            // single-group boards retain their tighter existing alternative.
+            for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
+                if(candidate.attempt==4) {
+                    boolean replaced=false;
+                    for(int i=0;i<selected.size();i++) if(selected.get(i).attempt<2) {
+                        selected.set(i,candidate);replaced=true;break;
+                    }
+                    if(!replaced && selected.size()<MediumBoardPhysicalPolicy.ROUTING_CANDIDATES)
+                        selected.insertElementAt(candidate,0);
+                    break;
+                }
+        }
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(selected);
         for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
             if(!selected.contains(candidate))result.add(candidate);
         return result;
+    }
+
+    private static boolean hasRepeatedControlRegions(PcbPlacementConstraints constraints) {
+        String first=null;
+        for(PcbPlacementConstraints.Part part:constraints.getParts())
+            if(part.regionId.startsWith("channel-")) {
+                if(first==null)first=part.regionId;
+                else if(!first.equals(part.regionId))return true;
+            }
+        return false;
     }
 
     private static String routeFailure(boolean twoLayer,
@@ -479,7 +505,7 @@ class SeededPcbLayoutGenerator {
         long area = (long) bounds.width * bounds.height;
         int majorSide = Math.max(bounds.width, bounds.height);
         boolean preferCompact = compactPlacementInterpretation(session.board.getPlacementConstraints());
-        boolean preferDensePacking = session.board.getPlacementConstraints().placementDensityVersion == 4;
+        boolean preferDensePacking = session.board.getPlacementConstraints().placementDensityVersion >= 4;
         if (twoLayer) {
             if (mediumRouteCandidateBetter(score, area, majorSide, candidate,
                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,
@@ -920,10 +946,35 @@ class SeededPcbLayoutGenerator {
         // scan before rejecting an otherwise valid route.
         Rectangle sample = candidates.isEmpty() ? null : candidates.get(0);
         if (sample != null) {
+            Rectangle preferred=null;
+            if(board.getPlacementConstraints().placementDensityVersion>=5) {
+                // A fallback legend must not pull the outline into remote unused
+                // planner space. Keep the same full-text/grid candidates, trying
+                // those near actual parts/copper first; preserve the complete scan.
+                Rectangle content=layout.getOccupiedContentBounds();
+                int margin=FINAL_EDGE_MARGIN;
+                for(PcbPlacementConstraints.Part part:board.getPlacementConstraints().getParts())
+                    margin=Math.max(margin,part.accessMargin+30);
+                int left=Math.max(outline.x+4,content.x-margin);
+                int top=Math.max(outline.y+4,content.y-margin);
+                int right=Math.min(outline.x+outline.width,content.x+content.width+margin);
+                int bottom=Math.min(outline.y+outline.height,content.y+content.height+margin);
+                int x=outline.x+4+(Math.max(0,left-outline.x-4)+GRID-1)/GRID*GRID;
+                int y=outline.y+4+(Math.max(0,top-outline.y-4)+GRID-1)/GRID*GRID;
+                preferred=new Rectangle(x,y,Math.max(0,right-x),Math.max(0,bottom-y));
+                for(int py=preferred.y;py+sample.height<=preferred.y+preferred.height;py+=GRID)
+                    for(int px=preferred.x;px+sample.width<=preferred.x+preferred.width;px+=GRID) {
+                        Rectangle fallback=new Rectangle(px,py,sample.width,sample.height);
+                        if(isLabelPositionFree(layout,board,outline,fallback))return fallback;
+                    }
+            }
             for (int y = outline.y + 4; y + sample.height <= outline.y + outline.height;
                     y += GRID) {
                 for (int x = outline.x + 4; x + sample.width <= outline.x + outline.width;
                         x += GRID) {
+                    if(preferred!=null && x>=preferred.x && y>=preferred.y &&
+                            x+sample.width<=preferred.x+preferred.width &&
+                            y+sample.height<=preferred.y+preferred.height)continue;
                     Rectangle fallback = new Rectangle(x, y, sample.width, sample.height);
                     if (isLabelPositionFree(layout, board, outline, fallback))
                         return fallback;

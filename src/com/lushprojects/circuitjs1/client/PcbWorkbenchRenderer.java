@@ -1082,7 +1082,9 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     }
 
     void fitWorkbench() {
-        viewport.fitWorkbench(getWorkbenchBounds());
+        // The DOM tray overlays the canvas; fit into the usable bench above it.
+        viewport.fitWorkbench(getWorkbenchBounds(), drawer == null ? 0 :
+            (drawer.isOpen() ? drawer.height() : PartsTrayViewport.COLLAPSED_HEIGHT));
         updateProjection();
     }
 

@@ -93,18 +93,21 @@ final class PcbViewport {
         dismiss(); face = value;
     }
     void fitBoard() { fit(outline); }
-    void fit(Rectangle target) { fit(target, true); }
-    void fitWorkbench(Rectangle target) { fit(target, false); }
-    private void fit(Rectangle target, boolean mirrorTarget) {
+    void fit(Rectangle target) { fit(target, true, 0); }
+    void fitWorkbench(Rectangle target) { fitWorkbench(target, 0); }
+    void fitWorkbench(Rectangle target, int bottomInset) { fit(target, false, bottomInset); }
+    private void fit(Rectangle target, boolean mirrorTarget, int bottomInset) {
         PcbCoordinateSystem.requireBoardRectangle(target);
         if (target.width <= 0 || target.height <= 0) throw new IllegalArgumentException("Empty target");
+        if (bottomInset < 0) throw new IllegalArgumentException("Negative fit inset");
         dismiss();
+        int fitHeight = Math.max(1, area.height - bottomInset);
         scale = Math.min(MAX_SCALE, Math.min(Math.max(1, area.width - 40) / (double)target.width,
-            Math.max(1, area.height - 40) / (double)target.height));
+            Math.max(1, fitHeight - 40) / (double)target.height));
         double cx = target.x + target.width / 2.0;
         if (mirrorTarget && face == PcbBoardSide.BOTTOM) cx = mirror() - cx;
         x = area.x + area.width / 2.0 - scale * cx;
-        y = area.y + area.height / 2.0 - scale * (target.y + target.height / 2.0);
+        y = area.y + fitHeight / 2.0 - scale * (target.y + target.height / 2.0);
     }
     void pan(double dx, double dy) {
         if (!finite(dx) || !finite(dy)) throw new IllegalArgumentException("Invalid camera motion");

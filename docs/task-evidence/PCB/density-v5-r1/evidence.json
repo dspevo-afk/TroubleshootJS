@@ -1,0 +1,2136 @@
+{
+  "schema": 1,
+  "status": "PASS_FINITE_PRIVATE5_LARGER_BOARD_DENSITY_FIT_FILES_REPAIR",
+  "createdUtc": "2026-10-13T02:49:24.034385+00:00",
+  "baseCommit": "02f65fb003ef29122f02b1c7b0a63d797002518c",
+  "actualBuild": "F3C3D615B4503B771CB59AD38D94382A",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "8d033c3264a5d23cee4124779bbaa0b9359aa64babea0543d2f04d1dbda7b3aa",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "5f1481f78efa127f4f499331e8a75118d4383b9b6e59acb53e5347a4b58f09fc",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "df972ee22f90e6719a4f119c6969cc4ff59d5f246bf054cc67ca2091a673cb87",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "ada6fde1a922543dbf725529249b0c4dd52df005ffc447a4ad5c41cda019104d",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "c0fc641b894204164e167a662f012247c326e2d82d5768a3380e3e6191c46698",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "284a1e5c2a6026436450224db626fceaa53cf80596629e19f1a62306c1ce0aee",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "0955abe40440c79a5a3187fd8c5eed5988b645d3199edc47ad440591277ae0bc",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "361a6b378b18cbd6a2d2a3fd4fdd224cc2e6748900951d90fe48a371f5794d04",
+    "tests/contracts/U06SessionSaveContractTest.java": "13263e2409154761f21914b1ba0718d16fffe9a953893f044590ae23827c470b",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "b8fd0ab1b14c19b84ba38acc5f24fb86c2139fff0b4ef06f6766ceddca9a0568",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+    "tests/contracts/PcbSavedDensityGeometryContractTest.java": "fe5a9930a9c5ffa172e21b3dfd8c6df6225d8d99af816c61dc8eddfa1fa09056",
+    "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+    "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+    "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c"
+  },
+  "sourceFreezeSha256": "fa70eea621b8e6bd28e5e2e4114b2435c2d31d047fb55d513df6b753030a7a6a",
+  "gates": [
+    {
+      "phase": "native-r207",
+      "status": "PASS",
+      "operationSeconds": 63.871,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "fef3c4ec21d30dae60b454c53e08db4e3ab1c81f648cf22dea1abceb7ca8e270"
+    },
+    {
+      "phase": "native-r208",
+      "status": "PASS",
+      "operationSeconds": 22.483,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "025018506f1798c1abeec26280fad55ea5c84c4ab43d1923bc8edd3f55f5459c"
+    },
+    {
+      "phase": "build-r58",
+      "status": "PASS",
+      "operationSeconds": 90.704,
+      "hostDeadlineMs": 1100000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "a48954a027691879da559b38af35651523eddc010d14274827cfd3b398388e25"
+    },
+    {
+      "phase": "compiled-r220",
+      "status": "PASS",
+      "operationSeconds": 316.994,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "912b4b83a5dfefb6a74df517bede0ff3878399991f33bcdbf3b8a7911630676b"
+    },
+    {
+      "phase": "compiled-r223",
+      "status": "PASS",
+      "operationSeconds": 159.029,
+      "hostDeadlineMs": 360000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "f9236141fc4e129647e051389b0632f84967e46246572fcd1af04f134baecd25"
+    },
+    {
+      "phase": "compiled-r221",
+      "status": "PASS",
+      "operationSeconds": 127.379,
+      "hostDeadlineMs": 420000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "cbc9dd01ca2a71c5181b1c6bb639f846e8b9221f65d60846959e27428b2a63ca"
+    }
+  ],
+  "compatibilityReuse": {
+    "nativePhase": "native-r206",
+    "scope": "Six literal old3 and six literal old4 passed. New prefix condition is guarded version>=5; old1–4 behavior unchanged. Fresh207 tests current5 and relevant session/dependency owners, final GWT and actual4/5 restore required."
+  },
+  "compatibilityGate": {
+    "phase": "native-r206",
+    "status": "PASS",
+    "operationSeconds": 142.104,
+    "hostDeadlineMs": 600000,
+    "sourceInputsUnchanged": true,
+    "ownedCleanupVerified": true,
+    "handlesClosed": true,
+    "receiptSha256": "e9bba8b039fa9a4b9d9d53ed34739f661a743a28448022232e243bee809138cf"
+  },
+  "verifierRemovalAudit": {
+    "status": "PASS_UNUSED_DIAGNOSTIC_SELECTOR_REMOVAL",
+    "removed": "Diagnostic registration and two bridge-flag predicates only. No native207 selected-suite/bridge command changes; all production and selected contract bytes match native207 launch."
+  },
+  "native207LaunchSha256": "d2d4991fad16bd4fca07e48335bfffec446b1524d7f40aa29da4c698fe646540",
+  "labelHelperReuse": {
+    "status": "PASS_UNCHANGED_OWNER_AND_FIXTURE",
+    "gate": {
+      "phase": "native-r200",
+      "status": "PASS",
+      "operationSeconds": 22.783,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "3d77356ea12cccaf919e42a65c8a2f36ff896e6d0aeebb6f878b266cf298d03c"
+    },
+    "sourceFiles": {
+      "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+      "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089"
+    }
+  },
+  "collectorFailurePreserved": {
+    "phase": "compiled-r222",
+    "status": "FAIL",
+    "operationSeconds": 87.347,
+    "receiptSha256": "1ff6112f8f24b0e650b3b65c26c3c439d0857e8b6e635734fff5fc769d71df9c",
+    "ownedCleanupVerified": true,
+    "reason": "Collector requested visiblecaption View as accessible name; actual existing control is Board view. Initial60 tray-clearance capture passed; ordinary Fit bench and54 not reached. Corrected223 changes the accessible selector and mechanical phase/output identity only; no production/build/budget change."
+  },
+  "generationAndSessionReuseAudit": {
+    "status": "PASS_BOUNDED_BEHAVIOR_AND_INPUT_AUDIT",
+    "scope": "Four later files change only bench fit and numeric U01 checks. All14 density/codec/session/label inputs remain exact; no generator/replay/routing/copper/access change. Native207/206 scope reused for those owners, not current fit. Native208/final58/223/221 qualify the corrected current views/files.",
+    "priorFitFiles": {
+      "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "64be4ad2a91364b985bf7598bb22570621017c7a3507f9179946827e55b738b2",
+      "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "00ba57659a39ff6fe1b99e456dafc02468105dec81480c5c027970360cc1d57c",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "828f588f1b53344f61e2b5d0553fdb9f85842b94bf051f069921defb73a85725",
+      "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "2731c9b927678f3435a3fd4c0b6fc177f3e0f29ee794921d1cf765057e602a06"
+    },
+    "currentFitFiles": {
+      "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+      "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+      "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c"
+    }
+  },
+  "finalFitColdReports": [
+    {
+      "path": "001-after60.report.json",
+      "sha256": "c1c63aa8d66195412b95ca03ea8598007395c3357ad7145831c7f1488075d182",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 599,
+        "generationMillis": 74051,
+        "maxManualUnitMillis": 1363,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "bb9cb456e70423555382e8800f841ce05544c2db4a1a71802179a4ab4baef22c",
+        "diagnosticContextDigest": "88d4f06dcb26ca25298a03259c3b3ceb9842b9d18d70b9d4d288f7e4d38e05f3",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "002-after54.report.json",
+      "sha256": "ec52d3f2abe76a1249b23bda7273688f6523225d9a4717dd13cf5d785362f329",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "42",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 54,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 609,
+        "generationMillis": 70073,
+        "maxManualUnitMillis": 1410,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "a0f5eb16f77b341565903cf331d602384b23338da4e9fa51df950e27e60675af",
+        "diagnosticContextDigest": "169972d5b337505138df5edae6b66e8180ca781721c9507d7058294d1c167094",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    }
+  ],
+  "geometryComparison": [
+    {
+      "seed": "-1017",
+      "parts": 40,
+      "pads": 96,
+      "before": {
+        "seed": "-1017",
+        "version": 4,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 3571,
+        "height": 1469,
+        "area": 5245799,
+        "courtyardArea": 759448,
+        "regionBoundingAreaSum": 4846106,
+        "sameRegionCenterManhattanMean": 811.1507936507936,
+        "twoPadNetSpanSum": 3900,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 29670,
+        "traceSegments": 170,
+        "vias": 36,
+        "selectedAttempt": 1,
+        "routingExpansions": 3374597,
+        "geometrySha256": "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf"
+      },
+      "after": {
+        "seed": "-1017",
+        "version": 5,
+        "accepted": true,
+        "parts": 40,
+        "pads": 96,
+        "width": 3571,
+        "height": 1469,
+        "area": 5245799,
+        "courtyardArea": 759448,
+        "regionBoundingAreaSum": 4846106,
+        "sameRegionCenterManhattanMean": 811.1507936507936,
+        "twoPadNetSpanSum": 3900,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 29670,
+        "traceSegments": 170,
+        "vias": 36,
+        "selectedAttempt": 1,
+        "routingExpansions": 3374597,
+        "geometrySha256": "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "-1017",
+        "version": 4,
+        "parts": 40,
+        "gridUnits": 10,
+        "sampledCells": 52122,
+        "packageAccessOccupiedCells": 21275,
+        "protectedFreeCells": 25919,
+        "protectedFreeFraction": 0.4972756225777982,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 121,
+          "width": 1130,
+          "height": 390,
+          "area": 440700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1017",
+        "version": 5,
+        "parts": 40,
+        "gridUnits": 10,
+        "sampledCells": 52122,
+        "packageAccessOccupiedCells": 21275,
+        "protectedFreeCells": 25919,
+        "protectedFreeFraction": 0.4972756225777982,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 121,
+          "width": 1130,
+          "height": 390,
+          "area": 440700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    },
+    {
+      "seed": "-1004",
+      "parts": 44,
+      "pads": 104,
+      "before": {
+        "seed": "-1004",
+        "version": 4,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3591,
+        "height": 1399,
+        "area": 5023809,
+        "courtyardArea": 798304,
+        "regionBoundingAreaSum": 4319186,
+        "sameRegionCenterManhattanMean": 647.4395161290323,
+        "twoPadNetSpanSum": 4600,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30530,
+        "traceSegments": 200,
+        "vias": 47,
+        "selectedAttempt": 0,
+        "routingExpansions": 3640026,
+        "geometrySha256": "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573"
+      },
+      "after": {
+        "seed": "-1004",
+        "version": 5,
+        "accepted": true,
+        "parts": 44,
+        "pads": 104,
+        "width": 3591,
+        "height": 1399,
+        "area": 5023809,
+        "courtyardArea": 798304,
+        "regionBoundingAreaSum": 4319186,
+        "sameRegionCenterManhattanMean": 647.4395161290323,
+        "twoPadNetSpanSum": 4600,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 30530,
+        "traceSegments": 200,
+        "vias": 47,
+        "selectedAttempt": 0,
+        "routingExpansions": 3640026,
+        "geometrySha256": "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "-1004",
+        "version": 4,
+        "parts": 44,
+        "gridUnits": 10,
+        "sampledCells": 49901,
+        "packageAccessOccupiedCells": 22602,
+        "protectedFreeCells": 23817,
+        "protectedFreeFraction": 0.47728502434820946,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 900,
+          "width": 850,
+          "height": 540,
+          "area": 459000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1004",
+        "version": 5,
+        "parts": 44,
+        "gridUnits": 10,
+        "sampledCells": 49901,
+        "packageAccessOccupiedCells": 22602,
+        "protectedFreeCells": 23817,
+        "protectedFreeFraction": 0.47728502434820946,
+        "largestProtectedEmptyRectangle": {
+          "x": 70,
+          "y": 900,
+          "width": 850,
+          "height": 540,
+          "area": 459000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    },
+    {
+      "seed": "-1022",
+      "parts": 60,
+      "pads": 143,
+      "before": {
+        "seed": "-1022",
+        "version": 4,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 5341,
+        "height": 1869,
+        "area": 9982329,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 8803692,
+        "sameRegionCenterManhattanMean": 950.0,
+        "twoPadNetSpanSum": 3510,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42910,
+        "traceSegments": 274,
+        "vias": 46,
+        "selectedAttempt": 5,
+        "routingExpansions": 5185407,
+        "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+      },
+      "after": {
+        "seed": "-1022",
+        "version": 5,
+        "accepted": true,
+        "parts": 60,
+        "pads": 143,
+        "width": 4111,
+        "height": 2054,
+        "area": 8443994,
+        "courtyardArea": 1061240,
+        "regionBoundingAreaSum": 9569831,
+        "sameRegionCenterManhattanMean": 978.8,
+        "twoPadNetSpanSum": 3120,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 41970,
+        "traceSegments": 269,
+        "vias": 48,
+        "selectedAttempt": 4,
+        "routingExpansions": 4665056,
+        "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+      },
+      "areaChangePercent": -15.41,
+      "whitespaceBefore": {
+        "seed": "-1022",
+        "version": 4,
+        "parts": 60,
+        "gridUnits": 10,
+        "sampledCells": 99324,
+        "packageAccessOccupiedCells": 30535,
+        "protectedFreeCells": 62526,
+        "protectedFreeFraction": 0.6295155249486529,
+        "largestProtectedEmptyRectangle": {
+          "x": 1630,
+          "y": 50,
+          "width": 1820,
+          "height": 710,
+          "area": 1292200
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "-1022",
+        "version": 5,
+        "parts": 60,
+        "gridUnits": 10,
+        "sampledCells": 84255,
+        "packageAccessOccupiedCells": 30506,
+        "protectedFreeCells": 47913,
+        "protectedFreeFraction": 0.5686665479793485,
+        "largestProtectedEmptyRectangle": {
+          "x": 1220,
+          "y": 50,
+          "width": 1310,
+          "height": 670,
+          "area": 877700
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    },
+    {
+      "seed": "0",
+      "parts": 42,
+      "pads": 100,
+      "before": {
+        "seed": "0",
+        "version": 4,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 3411,
+        "height": 1465,
+        "area": 4997115,
+        "courtyardArea": 777184,
+        "regionBoundingAreaSum": 3428584,
+        "sameRegionCenterManhattanMean": 708.1395348837209,
+        "twoPadNetSpanSum": 2570,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28030,
+        "traceSegments": 181,
+        "vias": 28,
+        "selectedAttempt": 1,
+        "routingExpansions": 3343585,
+        "geometrySha256": "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2"
+      },
+      "after": {
+        "seed": "0",
+        "version": 5,
+        "accepted": true,
+        "parts": 42,
+        "pads": 100,
+        "width": 3411,
+        "height": 1465,
+        "area": 4997115,
+        "courtyardArea": 777184,
+        "regionBoundingAreaSum": 3428584,
+        "sameRegionCenterManhattanMean": 708.1395348837209,
+        "twoPadNetSpanSum": 2570,
+        "twoPadNetCount": 10,
+        "copperManhattanLength": 28030,
+        "traceSegments": 181,
+        "vias": 28,
+        "selectedAttempt": 1,
+        "routingExpansions": 3343585,
+        "geometrySha256": "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "0",
+        "version": 4,
+        "parts": 42,
+        "gridUnits": 10,
+        "sampledCells": 49786,
+        "packageAccessOccupiedCells": 21669,
+        "protectedFreeCells": 24586,
+        "protectedFreeFraction": 0.4938336078415619,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 1020,
+          "width": 1340,
+          "height": 490,
+          "area": 656600
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "0",
+        "version": 5,
+        "parts": 42,
+        "gridUnits": 10,
+        "sampledCells": 49786,
+        "packageAccessOccupiedCells": 21669,
+        "protectedFreeCells": 24586,
+        "protectedFreeFraction": 0.4938336078415619,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 1020,
+          "width": 1340,
+          "height": 490,
+          "area": 656600
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    },
+    {
+      "seed": "17",
+      "parts": 53,
+      "pads": 129,
+      "before": {
+        "seed": "17",
+        "version": 4,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "courtyardArea": 998648,
+        "regionBoundingAreaSum": 10470110,
+        "sameRegionCenterManhattanMean": 932.3237179487179,
+        "twoPadNetSpanSum": 4930,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 44900,
+        "traceSegments": 249,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5044647,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+      },
+      "after": {
+        "seed": "17",
+        "version": 5,
+        "accepted": true,
+        "parts": 53,
+        "pads": 129,
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "courtyardArea": 998648,
+        "regionBoundingAreaSum": 10470110,
+        "sameRegionCenterManhattanMean": 932.3237179487179,
+        "twoPadNetSpanSum": 4930,
+        "twoPadNetCount": 12,
+        "copperManhattanLength": 44900,
+        "traceSegments": 249,
+        "vias": 48,
+        "selectedAttempt": 2,
+        "routingExpansions": 5136281,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+      },
+      "areaChangePercent": 0.0,
+      "whitespaceBefore": {
+        "seed": "17",
+        "version": 4,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 77004,
+        "packageAccessOccupiedCells": 28201,
+        "protectedFreeCells": 42202,
+        "protectedFreeFraction": 0.5480494519765207,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1000,
+          "width": 2030,
+          "height": 900,
+          "area": 1827000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "17",
+        "version": 5,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 77004,
+        "packageAccessOccupiedCells": 28201,
+        "protectedFreeCells": 42202,
+        "protectedFreeFraction": 0.5480494519765207,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1000,
+          "width": 2030,
+          "height": 900,
+          "area": 1827000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    },
+    {
+      "seed": "42",
+      "parts": 54,
+      "pads": 131,
+      "before": {
+        "seed": "42",
+        "version": 4,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 4011,
+        "height": 1832,
+        "area": 7348152,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 7281289,
+        "sameRegionCenterManhattanMean": 876.0142857142857,
+        "twoPadNetSpanSum": 3460,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 46460,
+        "traceSegments": 247,
+        "vias": 48,
+        "selectedAttempt": 0,
+        "routingExpansions": 5222310,
+        "geometrySha256": "99ced1b9f1efd568aa178f99f7b35c703dda8c890b91cf83112ab0d4c0d65044"
+      },
+      "after": {
+        "seed": "42",
+        "version": 5,
+        "accepted": true,
+        "parts": 54,
+        "pads": 131,
+        "width": 3131,
+        "height": 2035,
+        "area": 6371585,
+        "courtyardArea": 1000808,
+        "regionBoundingAreaSum": 9497751,
+        "sameRegionCenterManhattanMean": 961.5857142857143,
+        "twoPadNetSpanSum": 4440,
+        "twoPadNetCount": 11,
+        "copperManhattanLength": 42260,
+        "traceSegments": 244,
+        "vias": 47,
+        "selectedAttempt": 4,
+        "routingExpansions": 4962096,
+        "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+      },
+      "areaChangePercent": -13.29,
+      "whitespaceBefore": {
+        "seed": "42",
+        "version": 4,
+        "parts": 54,
+        "gridUnits": 10,
+        "sampledCells": 73383,
+        "packageAccessOccupiedCells": 28294,
+        "protectedFreeCells": 38648,
+        "protectedFreeFraction": 0.5266614883556137,
+        "largestProtectedEmptyRectangle": {
+          "x": 40,
+          "y": 1168,
+          "width": 1460,
+          "height": 670,
+          "area": 978200
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "whitespaceAfter": {
+        "seed": "42",
+        "version": 5,
+        "parts": 54,
+        "gridUnits": 10,
+        "sampledCells": 63539,
+        "packageAccessOccupiedCells": 27565,
+        "protectedFreeCells": 30222,
+        "protectedFreeFraction": 0.47564487952281276,
+        "largestProtectedEmptyRectangle": {
+          "x": 40,
+          "y": 1145,
+          "width": 650,
+          "height": 910,
+          "area": 591500
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      }
+    }
+  ],
+  "whitespaceMetricLimit": "Grid10 conservative raster outside full package/access, both copper faces, vias, model silk and declared isolation. Free cells/largest empty rectangle are NOT guaranteed packable; outlines are exact drawing-unit area.",
+  "views": [
+    {
+      "parts": 60,
+      "view": "fit",
+      "fullReferenceCount": 60,
+      "fullSecondaryMultiset": "MATCH",
+      "fullSecondaryTextCount": 100,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 744,
+        "trayTop": 834.0,
+        "gap": 90.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "parts": 60,
+      "view": "fit_bench",
+      "fullReferenceCount": 60,
+      "fullSecondaryMultiset": "MATCH",
+      "fullSecondaryTextCount": 100,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": {
+        "fitBenchSeconds": 0.7948173000477254
+      },
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 744,
+        "trayTop": 834.0,
+        "gap": 90.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "parts": 60,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 60,
+      "fullSecondaryMultiset": "MATCH",
+      "fullSecondaryTextCount": 100,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": {
+        "mousewheelSeconds": 0.19409760006237775,
+        "physicalBodySelectionAndInspectionSeconds": 0.636550199938938,
+        "selectedPublicTitle": "U2A"
+      },
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": null
+    },
+    {
+      "parts": 54,
+      "view": "fit",
+      "fullReferenceCount": 54,
+      "fullSecondaryMultiset": "NO_LITERAL_PRIOR_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": null,
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 814,
+        "trayTop": 834.0,
+        "gap": 20.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "parts": 54,
+      "view": "fit_bench",
+      "fullReferenceCount": 54,
+      "fullSecondaryMultiset": "NO_LITERAL_PRIOR_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": {
+        "fitBenchSeconds": 0.6766940000234172
+      },
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": {
+        "status": "PASS",
+        "boardBottom": 814,
+        "trayTop": 834.0,
+        "gap": 20.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    },
+    {
+      "parts": 54,
+      "view": "wheel_zoom",
+      "fullReferenceCount": 54,
+      "fullSecondaryMultiset": "NO_LITERAL_PRIOR_TEXT_CENSUS_FOR_THIS_COUNT",
+      "fullSecondaryTextCount": null,
+      "referenceCollisions": [],
+      "fullyVisibleRequiredTextCollisions": [],
+      "realInteractions": {
+        "mousewheelSeconds": 0.1545190999750048,
+        "physicalBodySelectionAndInspectionSeconds": 0.4442130000097677,
+        "selectedPublicTitle": "U2A"
+      },
+      "metricScope": "Actual full-size reference/title/terminal ink inside visible canvas; body markings and natural offscreen clipping excluded; image inspection still required",
+      "fullBoardClearOfTray": null
+    }
+  ],
+  "geometryBrowser": {
+    "status": "PASS",
+    "receiptSha256": "732fc7ffd5ea7bb43121e34068c6827e470f943c5ac5dd935200a02ee6138103",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after60",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1022&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after60"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 80.53359490004368,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 2,
+          "name": "after54",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=42&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "002-after54"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 75.44783089996781,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "72b8733c446d9b2553aa2037b08efe24dfb037cb35f6380c48cb9311d3cf63f9",
+      "afterSha256": "72b8733c446d9b2553aa2037b08efe24dfb037cb35f6380c48cb9311d3cf63f9",
+      "sourceSha256Before": "1817e1994917d44e63eb761587a2c13ba44e9f4a24b2399200ba4a3ed0415152",
+      "sourceSha256After": "1817e1994917d44e63eb761587a2c13ba44e9f4a24b2399200ba4a3ed0415152",
+      "webSha256Before": "47a816a4f835961507d6aa4b125fc4bb43b08e932a68bf8d21323325ec4b0781",
+      "webSha256After": "47a816a4f835961507d6aa4b125fc4bb43b08e932a68bf8d21323325ec4b0781",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.4048759000143036
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.0853237999835983,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "priorGenerationAndServiceBrowser": {
+    "status": "PASS",
+    "receiptSha256": "10e40e78e0ce23699de0284904072dc1de6c84669fc238dd8ec2d2049f7939f2",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "after60",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1022&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-after60"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 100.17324379994534,
+        "scope": "AFTER_REAL_UI_GEOMETRY_AND_SOURCE_GUIDED_CUSTOMER_RETEST_NOT_HUMAN",
+        "actualClosedQualificationVerdict": "PASS:rb56",
+        "ordinaryCustomerRetestPassed": true,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 2,
+          "name": "after42",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=0&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "002-after42"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 33.679884499986656,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 3,
+          "name": "after44",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "003-after44"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 38.17794500000309,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 4,
+          "name": "after53",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=17&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "004-after53"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 65.62522619997617,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      },
+      {
+        "case": {
+          "index": 5,
+          "name": "after54",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyGeometry=true&tsjVerifyRb56=true&tsjRb56Seed=42&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "005-after54"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 72.33707770006731,
+        "scope": "AFTER_REAL_UI_GEOMETRY_NOT_HUMAN_OR_CUSTOMER_RETEST",
+        "actualClosedQualificationVerdict": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup",
+        "ordinaryCustomerRetestPassed": false,
+        "ownedCleanup": "PASS"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "d296fb15707a77f1c0270238614336180d9da2e252bc8ad7f08b0bd0c949b02c",
+      "afterSha256": "d296fb15707a77f1c0270238614336180d9da2e252bc8ad7f08b0bd0c949b02c",
+      "sourceSha256Before": "c32ce75f85161f768d579ca6786ef521d27413aa4106fa18d501977a9307158b",
+      "sourceSha256After": "c32ce75f85161f768d579ca6786ef521d27413aa4106fa18d501977a9307158b",
+      "webSha256Before": "a4211c4b536bec220b8b6435da93d2dbef7fdca48b670b67dcf54ca798b33dff",
+      "webSha256After": "a4211c4b536bec220b8b6435da93d2dbef7fdca48b670b67dcf54ca798b33dff",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.43504599994048476
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.1201356999808922,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "coldReportsBeforeFitCorrection": [
+    {
+      "path": "001-after60.report.json",
+      "sha256": "4734e109f3ab80212c2c1930f9adc100cdac03cfbed26acb330dddfb7b911c78",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1022",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 60,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 599,
+        "generationMillis": 72391,
+        "maxManualUnitMillis": 1412,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "bb9cb456e70423555382e8800f841ce05544c2db4a1a71802179a4ab4baef22c",
+        "diagnosticContextDigest": "88d4f06dcb26ca25298a03259c3b3ceb9842b9d18d70b9d4d288f7e4d38e05f3",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "002-after42.report.json",
+      "sha256": "5d2b7712ee5fe8f5328762c1fb199cc8af29f654e2b5049d8c63163000c013c8",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "0",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 42,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 522,
+        "generationMillis": 31049,
+        "maxManualUnitMillis": 1095,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "23249788c04fa1792efae317a1256110acaba0fb883179703e99323ed43b8d9d",
+        "diagnosticContextDigest": "17893e864cc9ea50d6d4f3e47cfecff16e509fd4bea5b81e335013bedfd0deb0",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "003-after44.report.json",
+      "sha256": "8de366f51c48b761a935cbd9c0be4b20dac51a3c88d7bf12f307c733ef342c7f",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "-1004",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 44,
+        "hypotheses": 5,
+        "solverSamples": 55,
+        "generationStages": 6,
+        "generationWork": 524,
+        "generationMillis": 35375,
+        "maxManualUnitMillis": 1139,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "0543cc5a7924a19f2fec5e16a7ca314ed25ff618e823c0b65abb25e610df62a5",
+        "diagnosticContextDigest": "1a7864eb55ce506aad963ec11c56c6bf33030bad9445893a0ee52cdaa66d50cb",
+        "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "004-after53.report.json",
+      "sha256": "0586d0c0ff087cc4c0d716951388fbf04c069208ea1a8dd7ef4900cd90c55ca4",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "17",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 53,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 621,
+        "generationMillis": 61841,
+        "maxManualUnitMillis": 1462,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "0f336f07f3220e86b14852c43c82709fe4f1b5d94bd6f46376208db196507d5a",
+        "diagnosticContextDigest": "41c3e01bd85c8d1ebbc0bf73653a1f249cb4947d7d4c8b5d8dc55663203cb17c",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    },
+    {
+      "path": "005-after54.report.json",
+      "sha256": "a2dc1bc49d288a0287297fde87a9eaca37276d65237361fb16017168e6d2a4cf",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "42",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 54,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 609,
+        "generationMillis": 68634,
+        "maxManualUnitMillis": 1394,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "a0f5eb16f77b341565903cf331d602384b23338da4e9fa51df950e27e60675af",
+        "diagnosticContextDigest": "169972d5b337505138df5edae6b66e8180ca781721c9507d7058294d1c167094",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": false
+      }
+    }
+  ],
+  "rawViewObservationsSha256": "10cc1587202db039ff516a2e45d2d191b0e84b2287ccde7df738d4f335850e4f",
+  "service60Evidence": {
+    "status": "PASS",
+    "scope": "SOURCE_GUIDED_PRIVATE60_V5_RENDER_AND_REPAIR_NOT_HUMAN",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "sourceFreeze": {
+      "path": "pcb-large-prefix-v5-freeze-r5.json",
+      "sha256": "79d8125d24295eb542e9e191fb19e37ad79e8a960d593700f104bb2063bbc539"
+    },
+    "actions": [
+      {
+        "action": "click: Run customer retest",
+        "seconds": 1.8086307999910787
+      },
+      {
+        "action": "actual powered unrepaired customer retest failed"
+      },
+      {
+        "action": "click: Board view",
+        "seconds": 0.2033870000159368
+      },
+      {
+        "action": "select public component: RSA"
+      },
+      {
+        "action": "click: Component",
+        "seconds": 0.19900610006880015
+      },
+      {
+        "action": "click: Board Power: ON",
+        "seconds": 0.30887910001911223
+      },
+      {
+        "action": "click: Component",
+        "seconds": 0.4818059999961406
+      },
+      {
+        "action": "real residual-energy service guard permits removal"
+      },
+      {
+        "action": "click: Parts Tray",
+        "seconds": 0.2829873999580741
+      },
+      {
+        "action": "click: Parts Tray",
+        "seconds": 0.25547490001190454
+      },
+      {
+        "action": "click: Shop",
+        "seconds": 0.30963270005304366
+      },
+      {
+        "action": "search public catalog: 10000 Ohm +/-5%"
+      },
+      {
+        "action": "click: Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing",
+        "seconds": 0.3737762999953702
+      },
+      {
+        "action": "click: Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing",
+        "seconds": 0.3712539999978617
+      },
+      {
+        "action": "click: Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing",
+        "seconds": 0.3893191999522969
+      },
+      {
+        "action": "click: Close",
+        "seconds": 0.30088150000665337
+      },
+      {
+        "action": "click: Parts Tray",
+        "seconds": 0.2301633000606671
+      },
+      {
+        "action": "click: Board view",
+        "seconds": 0.2896626000292599
+      },
+      {
+        "action": "select public component: RSA"
+      },
+      {
+        "action": "click: Component",
+        "seconds": 0.2778726000105962
+      },
+      {
+        "action": "click: Remove component",
+        "seconds": 0.3825311999535188
+      },
+      {
+        "action": "click: Parts Tray",
+        "seconds": 0.2857182000298053
+      },
+      {
+        "action": "click: Part 61 - 10000 Ohm +/-5%",
+        "seconds": 0.2855039000278339
+      },
+      {
+        "action": "click: Part 62 - 10000 Ohm +/-5%",
+        "seconds": 0.2837848999770358
+      },
+      {
+        "action": "click: Part 63 - 10000 Ohm +/-5%",
+        "seconds": 0.3072617999278009
+      },
+      {
+        "action": "click: Part 61 - 10000 Ohm +/-5%",
+        "seconds": 0.306778599973768
+      },
+      {
+        "action": "click: Install as Channel A / RSA",
+        "seconds": 0.3796946998918429
+      },
+      {
+        "action": "click: Board view",
+        "seconds": 0.29389810003340244
+      },
+      {
+        "action": "select public component: RSA"
+      },
+      {
+        "action": "click: Component",
+        "seconds": 0.262610400095582
+      },
+      {
+        "action": "click: Parts Tray",
+        "seconds": 0.26334029994904995
+      },
+      {
+        "action": "click: Board Power: OFF",
+        "seconds": 0.29945689998567104
+      },
+      {
+        "action": "click: Run customer retest",
+        "seconds": 2.1888350000372157
+      },
+      {
+        "action": "actual repaired powered customer retest PASS"
+      },
+      {
+        "action": "click: Close session",
+        "seconds": 0.1832385000307113
+      }
+    ],
+    "observations": [],
+    "screenshots": [
+      {
+        "path": "01-unrepaired-rsa-public-bands.png",
+        "sha256": "1ae62baab528ed0cc97722008a1a68cd96971126f0bbc952557e3661faa9785e"
+      },
+      {
+        "path": "02-retained-original-and-unused-stock.png",
+        "sha256": "bbd100f03d15c80ccc084d3cfeb225f1100bff091efd8b7fc958cfa6ebaf431c"
+      },
+      {
+        "path": "03-repaired-customer-results.png",
+        "sha256": "6ddd90673a7038f15c7d32ff28c12d6e2bbe2b1b56f59fb7c8dcf3e2e269dc5c"
+      }
+    ],
+    "unrepairedRetest": "FAIL_EXPECTED_ACTUAL_POWERED_CUSTOMER_RETEST",
+    "publicBandInterpretation": {
+      "markings": "RSA\n\n\nType: resistor\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\nTurn board power off before modifying components.\n\nLift lead 1\nLift lead 2\nRemove component",
+      "colors": [
+        "BROWN",
+        "BLACK",
+        "ORANGE",
+        "GOLD"
+      ],
+      "replacement": "10000 Ohm +/-5%"
+    },
+    "poweredRemovalGuard": "PASS_ACTUAL_REMOVE_DISABLED_WHILE_POWER_ON",
+    "serviceGuard": {
+      "status": "PASS",
+      "initiallyEnabled": false,
+      "waitSeconds": 6.188705499982461,
+      "readiness": "Actual guarded Remove component enabled after OFF; no fixed delay"
+    },
+    "publicShopSelection": {
+      "observedRows": [
+        {
+          "title": "10000 Ohm +/-5% - Wide lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+        },
+        {
+          "title": "100000 Ohm +/-5% - Wide lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Wide lead spacing"
+        },
+        {
+          "title": "1000000 Ohm +/-5% - Wide lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Wide lead spacing"
+        },
+        {
+          "title": "10000000 Ohm +/-5% - Wide lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Wide lead spacing"
+        },
+        {
+          "title": "10000 Ohm +/-5% - Narrow lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing"
+        },
+        {
+          "title": "100000 Ohm +/-5% - Narrow lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Narrow lead spacing"
+        },
+        {
+          "title": "1000000 Ohm +/-5% - Narrow lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Narrow lead spacing"
+        },
+        {
+          "title": "10000000 Ohm +/-5% - Narrow lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Narrow lead spacing"
+        },
+        {
+          "title": "10000 Ohm +/-5% - Medium lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing"
+        },
+        {
+          "title": "100000 Ohm +/-5% - Medium lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% - Medium lead spacing"
+        },
+        {
+          "title": "1000000 Ohm +/-5% - Medium lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% - Medium lead spacing"
+        },
+        {
+          "title": "10000000 Ohm +/-5% - Medium lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% - Medium lead spacing"
+        },
+        {
+          "title": "10000 Ohm +/-5% / 10 W",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% / 10 W"
+        },
+        {
+          "title": "100000 Ohm +/-5% / 10 W",
+          "acquire": "Add to Parts Tray: Resistors, 100000 Ohm +/-5% / 10 W"
+        },
+        {
+          "title": "1000000 Ohm +/-5% / 10 W",
+          "acquire": "Add to Parts Tray: Resistors, 1000000 Ohm +/-5% / 10 W"
+        },
+        {
+          "title": "10000000 Ohm +/-5% / 10 W",
+          "acquire": "Add to Parts Tray: Resistors, 10000000 Ohm +/-5% / 10 W"
+        }
+      ],
+      "choices": [
+        {
+          "title": "10000 Ohm +/-5% - Wide lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Wide lead spacing"
+        },
+        {
+          "title": "10000 Ohm +/-5% - Narrow lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Narrow lead spacing"
+        },
+        {
+          "title": "10000 Ohm +/-5% - Medium lead spacing",
+          "acquire": "Add to Parts Tray: Resistors, 10000 Ohm +/-5% - Medium lead spacing"
+        }
+      ]
+    },
+    "repair": {
+      "component": "RSA",
+      "before": [],
+      "acquired": [
+        "Part 61 - 10000 Ohm +/-5%",
+        "Part 62 - 10000 Ohm +/-5%",
+        "Part 63 - 10000 Ohm +/-5%"
+      ],
+      "compatible": [
+        {
+          "loose": "Part 61 - 10000 Ohm +/-5%",
+          "target": "Install as Channel A / RSA",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "loose": "Part 62 - 10000 Ohm +/-5%",
+          "target": "Install as Channel A / RSA",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "loose": "Part 63 - 10000 Ohm +/-5%",
+          "target": "Install as Channel A / RSA",
+          "observedTargets": [
+            {
+              "label": "Install as Channel A / RSA",
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "selectionRule": "First acquired part in actual public tray order",
+      "compatibilityScope": "Three enabled public target affordances; one actual installation and powered retest",
+      "selected": {
+        "loose": "Part 61 - 10000 Ohm +/-5%",
+        "target": "Install as Channel A / RSA",
+        "observedTargets": [
+          {
+            "label": "Install as Channel A / RSA",
+            "enabled": true
+          }
+        ]
+      },
+      "original": "Part 28 - RESISTOR RSA",
+      "retainedLooseParts": [
+        "Part 28 - RESISTOR RSA",
+        "Part 62 - 10000 Ohm +/-5%",
+        "Part 63 - 10000 Ohm +/-5%"
+      ],
+      "installedMarkings": "RSA\n\n\nType: resistor\n\n\nValue: 10000 Ohm +/-5%\n\n\nColor bands: BROWN, BLACK, ORANGE, GOLD\n\n\nState: Installed\n\n\nLead 1: RSA.1\n\n\nLead 2: RSA.2\n\n\n\nLift lead 1\nLift lead 2\nRemove component"
+    },
+    "repairedRetest": "PASS_ACTUAL_POWERED_CUSTOMER_RETEST",
+    "finalReport": {
+      "protocol": "TSJ-RB56-QUALIFICATION-1",
+      "scope": "PRIVATE_PLAYER_SESSION",
+      "family": "RB56_CONTROL",
+      "seed": "-1022",
+      "sourceEpoch": "tsj-generation-dependencies-v16",
+      "planVersion": 1,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "forcedAfterPublish": false,
+      "normalCatalogEnabled": false,
+      "status": "PASS",
+      "phase": "RESTORED",
+      "packages": 60,
+      "hypotheses": 5,
+      "solverSamples": 60,
+      "generationStages": 6,
+      "generationWork": 599,
+      "generationMillis": 72391,
+      "maxManualUnitMillis": 1412,
+      "physicalAdmission": "RB56_BOARD_NORMAL@1",
+      "normalPhysicalAdmission": true,
+      "fullProductionD01": true,
+      "coldProof": true,
+      "generationReceiptDigest": "bb9cb456e70423555382e8800f841ce05544c2db4a1a71802179a4ab4baef22c",
+      "diagnosticContextDigest": "88d4f06dcb26ca25298a03259c3b3ceb9842b9d18d70b9d4d288f7e4d38e05f3",
+      "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+      "holdMillis": 360000,
+      "normalLabels": true,
+      "playerSessionInstalled": true,
+      "privatePersistence": false,
+      "qualifiedPublication": true,
+      "ownerRestored": true,
+      "candidateDisposed": true,
+      "temporaryMeterClean": true,
+      "debugRestored": true,
+      "coordinatorReleased": true,
+      "ordinaryCustomerRetestPassed": true,
+      "cleanupPending": false,
+      "playerSessionReleased": true,
+      "playerBridgeReleased": true,
+      "wallMillis": 99366
+    },
+    "teardown": {
+      "shellAbsent": true,
+      "overlayAbsent": true,
+      "playerScreenAbsent": true,
+      "workbenchClassAbsent": true
+    },
+    "retainedSeconds": 23.685899500036612,
+    "pageErrors": []
+  },
+  "service60Scope": "Actual GWT57 private5 service before later fit-only correction; fresh final GWT58 ordinary44 repair/retest in file evidence.",
+  "service60EvidenceSha256": "c67935be5b7344434dd7ee985ebb84b7e54fac430f72d2ef32e3c1a5d5668315",
+  "fileEvidence": {
+    "status": "PASS",
+    "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN",
+    "humanTrial": "NOT RUN",
+    "publicHardAndRb56": "HELD",
+    "sourceFreeze": {
+      "path": "pcb-v5-fit-inset-freeze-r6.json",
+      "sha256": "fa70eea621b8e6bd28e5e2e4114b2435c2d31d047fb55d513df6b753030a7a6a",
+      "status": "FIT_FIX_PREPARED_RUNTIME_GATES_PENDING"
+    },
+    "prerequisites": [
+      {
+        "phase": "native-r207",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "native-r208",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "build-r58",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "compiled-r220",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      },
+      {
+        "phase": "compiled-r223",
+        "status": "PASS",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true
+      }
+    ],
+    "acceptedR219Outcome": "PASS",
+    "acceptedR219OperationSeconds": 117.68457789998502,
+    "acceptedR219InputManifestSha256": "144e66c39300d2b528293a68c340157676f038a85ec74e4c971eb12de00ba207",
+    "acceptedSaved4Artifact": {
+      "bytes": 1391,
+      "sha256": "8ab85fd03800c061823c8d0637e99c6053c8cb43fcc509dbed49429c9f41e539",
+      "replay": "tsj-private-session/4/tsj-generation-dependencies-v16/rb56-placement-4/RB56_CONTROL/-1004",
+      "historyCount": 3
+    },
+    "actions": [
+      "click: Accept ticket and start",
+      "click: Bench power",
+      "actual Bench power current-limit selection: 250 mA",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: fresh-dense5-private44.tsjsave",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-dense4-private44.tsjsave",
+      "click: Bench power",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-accepted4-restore.tsjsave",
+      "accepted saved4 actual geometry, source and semantic history restored/resaved",
+      "click: Load session",
+      "actual FileReader picker selection: fresh-dense5-private44.tsjsave",
+      "click: Bench power",
+      "actual FileReader restore selected the fresh dense-5 artifact",
+      "click: Main menu",
+      "click: Save session",
+      "actual Save session download: saved-after-dense5-restore.tsjsave",
+      "dense-5 geometry fingerprint, source setting and history restored; no completion imported",
+      "click: Resume current board",
+      "click: Run customer retest",
+      "actual unrepaired-board customer retest failed",
+      "click: Board Power: ON",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "observe real relay service interlock; initially enabled=False",
+      "click: Parts Tray",
+      "click: Parts Tray",
+      "actual Parts Tray public popover toggle closes before catalog acquisition",
+      "click: Shop",
+      "actual Shop acquisition: Add to Parts Tray: Relays, 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "click: Close",
+      "click: Parts Tray",
+      "click: Component",
+      "actual Remove component: KA",
+      "click: Parts Tray",
+      "select actual loose relay: Part 45 - 5 V coil / SPDT / 24 V DC, 0.5 A contacts",
+      "actual install: Install as Channel A / KA",
+      "click: Board view",
+      "select public component: KA",
+      "click: Component",
+      "click: Board Power: OFF",
+      "click: Run customer retest",
+      "actual dense-5 Shop repair customer retest PASS",
+      "click: Close session"
+    ],
+    "observations": [
+      {
+        "name": "fresh private placement-5 cold owner",
+        "status": "PASS",
+        "seed": "-1004",
+        "packages": 44,
+        "coldProof": "PASS",
+        "coldOperationSeconds": 38.24587950005662,
+        "placementEvidence": "actual version-5 Save and strict replay-owner restore"
+      },
+      {
+        "name": "actual fresh dense-5 download",
+        "status": "PASS",
+        "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+        "historyCount": 3,
+        "sourceHistoryVisible": true
+      },
+      {
+        "name": "accepted4 actual FileReader and resave",
+        "status": "PASS",
+        "replay": "tsj-private-session/4/tsj-generation-dependencies-v16/rb56-placement-4/RB56_CONTROL/-1004",
+        "realization": "89dece8b44693f1f32b786ac14962fda0c4bd8744801538a4032cbebb0836550",
+        "historyCount": 3
+      },
+      {
+        "name": "real relay discharge/service guard",
+        "status": "PASS",
+        "initiallyEnabled": false,
+        "waitSeconds": 4.546693200012669,
+        "publicMarkings": "KA\n\n\nType: relay\n\n\nMarkings: 5 V coil / SPDT / 24 V DC, 0.5 A contacts\n\n\nState: Installed\n\n\nLead A1: KA.A1\n\n\nLead A2: KA.A2\n\n\nLead COM: KA.COM\n\n\nLead NC: KA.NC\n\n\nLead NO: KA.NO\n\n\n\nLift lead A1\nLift lead A2\nLift lead COM\nLift lead NC\nLift lead NO\nRemove component"
+      },
+      {
+        "name": "final dense-5 UI close and owned cleanup",
+        "status": "PASS",
+        "saved4And5Restores": [
+          "PASS",
+          "PASS"
+        ],
+        "finalRetest": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "coordinatorReleased": true,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "cleanupPending": false,
+        "finalReport": {
+          "protocol": "TSJ-RB56-QUALIFICATION-1",
+          "scope": "PRIVATE_PLAYER_SESSION",
+          "family": "RB56_CONTROL",
+          "seed": "-1004",
+          "sourceEpoch": "tsj-generation-dependencies-v16",
+          "planVersion": 1,
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000,
+          "forcedAfterPublish": false,
+          "normalCatalogEnabled": false,
+          "status": "PASS",
+          "phase": "RESTORED",
+          "packages": 44,
+          "hypotheses": 5,
+          "solverSamples": 55,
+          "generationStages": 6,
+          "generationWork": 524,
+          "generationMillis": 36886,
+          "maxManualUnitMillis": 1201,
+          "physicalAdmission": "RB56_BOARD_NORMAL@1",
+          "normalPhysicalAdmission": true,
+          "fullProductionD01": true,
+          "coldProof": true,
+          "generationReceiptDigest": "0543cc5a7924a19f2fec5e16a7ca314ed25ff618e823c0b65abb25e610df62a5",
+          "diagnosticContextDigest": "1a7864eb55ce506aad963ec11c56c6bf33030bad9445893a0ee52cdaa66d50cb",
+          "diagnosticProgramDigest": "fb61283dcc72e0c88cb62441f847b7661e8b5fc77c0c60ae6051bf7deb17bbda",
+          "holdMillis": 360000,
+          "normalLabels": true,
+          "playerSessionInstalled": true,
+          "privatePersistence": true,
+          "sessionRestores": [
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 35572,
+              "work": 524,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            },
+            {
+              "outcome": "PASS",
+              "stage": "PUBLISH",
+              "elapsedMillis": 35038,
+              "work": 524,
+              "maxJobMillis": 90000,
+              "maxJobSteps": 640,
+              "maxUnitMillis": 5000,
+              "freshOwner": true,
+              "priorOwnerRetired": true
+            }
+          ],
+          "qualifiedPublication": true,
+          "ownerRestored": true,
+          "candidateDisposed": true,
+          "temporaryMeterClean": true,
+          "debugRestored": true,
+          "coordinatorReleased": true,
+          "ordinaryCustomerRetestPassed": true,
+          "cleanupPending": false,
+          "playerSessionReleased": true,
+          "playerBridgeReleased": true,
+          "wallMillis": 123791
+        }
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "fresh-dense5-source-state.png",
+        "sha256": "5eb2eda132186ae97b6604666b04e02bd861081b8fb2be578c20950720167b63"
+      },
+      {
+        "path": "accepted-saved4-source-state.png",
+        "sha256": "8034030ef31303079621a809fdcb9affe896c2dd8880299f1472308fd5956913"
+      }
+    ],
+    "files": [
+      {
+        "path": "fresh-dense5-private44.tsjsave",
+        "bytes": 1391,
+        "sha256": "3449252417b64b5ff1405dfaf3c8629c32469f90af0ba430baf7e6ff2054d0bb",
+        "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-accepted4-restore.tsjsave",
+        "bytes": 1391,
+        "sha256": "30efa819d724dd1d77638c5a18ce9b5c9b267e67b1b993980fe3ae3d03277954",
+        "replay": "tsj-private-session/4/tsj-generation-dependencies-v16/rb56-placement-4/RB56_CONTROL/-1004",
+        "historyCount": 3
+      },
+      {
+        "path": "saved-after-dense5-restore.tsjsave",
+        "bytes": 1391,
+        "sha256": "5d94d731e68fc5eeae7aa92da1c3caacbd3bd6b8bf2e080bac1e2bbf3197a307",
+        "replay": "tsj-private-session/5/tsj-generation-dependencies-v16/rb56-placement-5/RB56_CONTROL/-1004",
+        "historyCount": 3
+      }
+    ]
+  },
+  "fileEvidenceSha256": "4a7c3a3b6bdfcaa26749e312a168a52401dd0434892a4e317ce5326d2bfb83d6",
+  "fileBrowser": {
+    "status": "PASS",
+    "receiptSha256": "255761af092cb481f3a19aabe84e2596748447b397339e85eeb9dd25d11529ce",
+    "cases": [
+      {
+        "case": {
+          "index": 1,
+          "name": "private44-save5-accepted4-restore5-real-repair-retest-close",
+          "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-1004&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Session=true&tsjRb56Persistence=true&running=true",
+          "stateAttribute": "data-tsj-verification",
+          "expectedState": "HOLD:rb56",
+          "expectedPrefix": null,
+          "terminalPrefixes": [
+            "HOLD",
+            "FAIL"
+          ],
+          "reportAttribute": "data-tsj-rb56-report",
+          "timeoutSeconds": 115.0,
+          "slug": "001-private44-save5-accepted4-restore5-real-repair-retest-close"
+        },
+        "outcome": "PASS",
+        "operationSeconds": 124.49973619997036,
+        "scope": "SOURCE_GUIDED_PRIVATE44_CROSS_VERSION_SAVE_RESTORE_NOT_HUMAN"
+      }
+    ],
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "72b8733c446d9b2553aa2037b08efe24dfb037cb35f6380c48cb9311d3cf63f9",
+      "afterSha256": "72b8733c446d9b2553aa2037b08efe24dfb037cb35f6380c48cb9311d3cf63f9",
+      "sourceSha256Before": "1817e1994917d44e63eb761587a2c13ba44e9f4a24b2399200ba4a3ed0415152",
+      "sourceSha256After": "1817e1994917d44e63eb761587a2c13ba44e9f4a24b2399200ba4a3ed0415152",
+      "webSha256Before": "47a816a4f835961507d6aa4b125fc4bb43b08e932a68bf8d21323325ec4b0781",
+      "webSha256After": "47a816a4f835961507d6aa4b125fc4bb43b08e932a68bf8d21323325ec4b0781",
+      "runnerBeforeSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "runnerAfterSha256": "fb6c78570101c19c8b477da48884ff00d7563eb35c2e5f52033c9be63e74d839",
+      "fileCountBefore": 1564,
+      "fileCountAfter": 1564,
+      "seconds": 0.3805275000631809
+    },
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.1473547000205144,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "visualReview": {
+    "status": "ACCEPT_FINITE_V5_DENSITY_REFINEMENT",
+    "recordedUtc": "2026-10-13T02:47:11.812022+00:00",
+    "scope": "Root visual acceptance of final GWT58 actual60/54 fit only; final file/repair gate separately required before candidate publication.",
+    "rootInspected": [
+      {
+        "path": "after60-fit.png",
+        "sha256": "292c26672c54853626b15bebdaf005309bfb73afa7f4591a9dc07fc75ebb7c92"
+      },
+      {
+        "path": "after54-fit.png",
+        "sha256": "54fd227a4e32fbcbc1f2ed94fc20b243e99456cbc068e99a9e872541bf4ec44c"
+      }
+    ],
+    "initialAndRealFitBenchClearance": [
+      {
+        "parts": 60,
+        "view": "fit",
+        "status": "PASS",
+        "boardBottom": 744,
+        "trayTop": 834.0,
+        "gap": 90.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      {
+        "parts": 60,
+        "view": "fit_bench",
+        "status": "PASS",
+        "boardBottom": 744,
+        "trayTop": 834.0,
+        "gap": 90.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      {
+        "parts": 54,
+        "view": "fit",
+        "status": "PASS",
+        "boardBottom": 814,
+        "trayTop": 834.0,
+        "gap": 20.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      },
+      {
+        "parts": 54,
+        "view": "fit_bench",
+        "status": "PASS",
+        "boardBottom": 814,
+        "trayTop": 834.0,
+        "gap": 20.0,
+        "bounds": "Actual renderer board and DOM tray in canvas coordinates"
+      }
+    ],
+    "rootJudgement": "Complete outlines now clear the tray; groups/edge connectors and full references are readable, with no apparent body/trace collision. Actual54 lower outline fixed. Density is a finite improvement, not optimal packing.",
+    "independentReview": {
+      "agent": "pcb_compact_replay_audit",
+      "status": "PASS_FINITE_VISUAL",
+      "scope": "Actual22360/54 initial,Fitbench andzoom images; static inspection only.",
+      "findings": "54 lower outline complete with about22px wood gap;60 about90px. Functional input/opto,regulator,sensor/rails and relay groups remain visible and edge access clear. U2B stacked labels are tightest and clearer in zoom."
+    },
+    "limitations": [
+      "Substantial upper/left/lower internal whitespace remains.",
+      "42/44 physical geometry unchanged fromaccepted4; additional30% target unachieved.",
+      "No manufacturing/optimal packing guarantee.",
+      "No human U05,normal population or customer success claim from a fit image.",
+      "Both component sides assessed but not implemented."
+    ]
+  },
+  "images": [
+    {
+      "path": "after60-fit.png",
+      "sha256": "292c26672c54853626b15bebdaf005309bfb73afa7f4591a9dc07fc75ebb7c92",
+      "bytes": 309760,
+      "provenance": "Actual final GWT58 private5 initial fit, all60 components; tray-aware correction included."
+    },
+    {
+      "path": "after60-wheel_zoom.png",
+      "sha256": "84d0735c41f54f5f0de59b102cbf7262329b7270e111594727517e6aabfea0f7",
+      "bytes": 124196,
+      "provenance": "Actual final wheel zoom."
+    },
+    {
+      "path": "after54-fit.png",
+      "sha256": "54fd227a4e32fbcbc1f2ed94fc20b243e99456cbc068e99a9e872541bf4ec44c",
+      "bytes": 240111,
+      "provenance": "Actual final GWT58 private5 initial54 fit; complete outline and measured tray clearance."
+    },
+    {
+      "path": "after54-wheel_zoom.png",
+      "sha256": "0122d0ff0f54e87b16dd84d91bc8c18caa42a58137e54c088d2d7a768c2b876e",
+      "bytes": 123131,
+      "provenance": "Actual final54 wheel zoom."
+    },
+    {
+      "path": "60-repaired-customer-results.png",
+      "sha256": "6ddd90673a7038f15c7d32ff28c12d6e2bbe2b1b56f59fb7c8dcf3e2e269dc5c",
+      "bytes": 217329,
+      "provenance": "Actual ordinary60 RSA Shop repair/customer retest PASS under GWT57 before the later fit-only correction."
+    },
+    {
+      "path": "../cold60-comparison-r1/after60-fit.png",
+      "sha256": "f90f2f0ca49eb4d5a355b13f87d55645527dcbd0a796a2f4bc5955cc663243eb",
+      "provenance": "Accepted same-seed60 before; version4 actual218 byte equality was sealed at02f65fb0."
+    }
+  ],
+  "diagnosticsAndRejectedCandidates": [
+    {
+      "phase": "native-r201",
+      "status": "PASS",
+      "operationSeconds": 28.37,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "477e245b375d2c93aed6944fd71c259b6cfa8ddb1eb9867eb5183e4f0a2a3e0d",
+      "interpretation": "Direct old4 moderate profile outcomes:60 success,53/54 typed rejection; report only."
+    },
+    {
+      "phase": "native-r202",
+      "status": "PASS",
+      "operationSeconds": 144.203,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "ce9f231a8cc69bb51c683bf4af2fe3f1084c2b1736e74365e0f0b9211632ff04",
+      "interpretation": "Initial5 prefix structural PASS but60 retained roomy winner; no density acceptance."
+    },
+    {
+      "phase": "native-r203",
+      "status": "PASS",
+      "operationSeconds": 26.22,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "f8de7826121ea4d3dbebb7cbf68aafae535da344dcecad8f4d7d531982610f31",
+      "interpretation": "Actual finalization revealed remote silkscreen growth; first crop PASS, not access-guard failure."
+    },
+    {
+      "phase": "native-r204",
+      "status": "PASS",
+      "operationSeconds": 148.635,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "4564e5e325b6b70bf9fad19d4c7e2ca4c659ee5d14e065a4b610788685b6b07a",
+      "interpretation": "Content-first scan structural PASS;60 -3.45%,42/44 unchanged, not final source."
+    },
+    {
+      "phase": "native-r205",
+      "status": "PASS",
+      "operationSeconds": 29.258,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "71e4a5fe193cc2396a23b4a4e3c2badf10ecfa0105f687db2ab8e86019c99db7",
+      "interpretation": "One2x protected-demand profile direct6 assessment;53 typed rejection, others route success; not population qualification."
+    },
+    {
+      "phase": "native-r206",
+      "status": "PASS",
+      "operationSeconds": 142.104,
+      "hostDeadlineMs": 600000,
+      "sourceInputsUnchanged": true,
+      "ownedCleanupVerified": true,
+      "handlesClosed": true,
+      "receiptSha256": "e9bba8b039fa9a4b9d9d53ed34739f661a743a28448022232e243bee809138cf",
+      "interpretation": "Structural nine-suite PASS; candidate density REJECTED because42 area grew39.70%. Six literal old3 and six literal old4 geometries passed."
+    }
+  ],
+  "design": {
+    "repeatedControl": "Two distinct existing channel-* declaration regions select moderate4. Single group retains tight0/1;compact2/3 androomy5 retained in same3 routes.",
+    "moderateDemand": "Private5 candidate4 uses2x full protected package demand plus existing500k allowance. Saved4 factor3 remains.",
+    "labels": "Stable partition of original full-text/grid scan: content-near candidates first, every other original candidate preserved exactly once. No font/part/copper/access reduction.",
+    "unusedDiagnosticCode": "Report-only fixture archived byte-exact in task storage; not product code or published verifier registration."
+  },
+  "remaining": {
+    "requestedAdditional30Percent": "ASPIRATIONAL_NOT_ACHIEVED_OR_GUARANTEED",
+    "boards42And44": "UNCHANGED_FROM_ACCEPTED4; large visible/internal sparse regions remain; not certified fully packable.",
+    "backside": "AUTHORIZED_DESIGN_OPTION_ASSESSED_NOT_IMPLEMENTED; existing pose/view/probe primitives but private side-enabled axial packages, side-aware planner and explicit opposite-face through-lead/access guards needed. Do not alter global package permission/dependency bytes."
+  },
+  "limits": {
+    "originalJobMillis": 90000,
+    "originalJobWork": 640,
+    "originalUnitMillis": 5000,
+    "originalHoldMillis": 360000,
+    "perJvmMillis": 60000,
+    "placements": 6,
+    "routesPerPolicy": 3,
+    "actualFinalFitColdCounts": [
+      60,
+      54
+    ],
+    "priorPrivate5ColdCounts": [
+      60,
+      42,
+      44,
+      53,
+      54
+    ],
+    "current40": "Native exact4 geometry; unchanged prior actual fit evidence reused; no fresh40 cold.",
+    "humanU05": "NOT RUN",
+    "publicHardAndNormalRb56": "HELD",
+    "normalPopulation": "NOT RUN",
+    "modestHost": "DEFERRED_BY_OWNER_NOT_RUN",
+    "fullNativeMatrix": "NOT RUN",
+    "unchangedQ30Corpora": "NOT RERUN",
+    "manufacturingOrOptimalPackingClaim": false,
+    "allBoardsImprovedClaim": false,
+    "causalTimingImprovementClaim": false
+  },
+  "priorFailures": "Prior21254 TIMEOUT and native193/194/195/198 remain as published historical failures; no relabel. Q30 unknown91.616s failure, six missing scratch inventories and late-audit limitation preserved.",
+  "originalEightHashesPreserved": true,
+  "noEmail": true,
+  "serverCenterCoordination": "Serial TJS heavy gates and low-load preflight only; unrelated apps,ADB/tablet unchanged. No global process action."
+}

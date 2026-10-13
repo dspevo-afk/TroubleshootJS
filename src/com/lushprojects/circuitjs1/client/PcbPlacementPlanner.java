@@ -75,7 +75,7 @@ final class PcbPlacementPlanner {
         constraints.validate(board);
         if (board.getComponentIds().isEmpty() || board.getComponentIds().size()>MAX_PARTS) throw new Rejected("PART_LIMIT");
         boolean compactMediumInterpretation = (constraints.placementDensityVersion == 2 ||
-            constraints.placementDensityVersion == 3 || constraints.placementDensityVersion == 4) &&
+            constraints.placementDensityVersion == 3 || constraints.placementDensityVersion >= 4) &&
             board.getComponentIds().size() >= MEDIUM_MIN_PARTS;
         // The final two v2 route alternatives use the actual legacy planner algorithms 0 and 1.
         int algorithmCandidate = compactMediumInterpretation && candidate >= OUTLINE_CANDIDATES - 2 ?
@@ -84,11 +84,11 @@ final class PcbPlacementPlanner {
         // V3 keeps two grouped, two compact and two legacy roomy alternatives.
         // V4 reserves slot5 for the proven roomy algorithm0 while tightening0-4.
         // Candidate breadth and routing-attempt budgets remain unchanged.
-        if ((constraints.placementDensityVersion == 3 || constraints.placementDensityVersion == 4) &&
+        if ((constraints.placementDensityVersion == 3 || constraints.placementDensityVersion >= 4) &&
                 candidate >= 2 && candidate < 4)
             // Spread the established compact fallbacks across aspect/order variants.
             algorithmCandidate = candidate == 2 ? 0 : 3;
-        if (constraints.placementDensityVersion == 4) {
+        if (constraints.placementDensityVersion >= 4) {
             if (candidate < 2) algorithmCandidate = candidate == 0 ? 0 : 3;
             if (candidate == 5) algorithmCandidate = 0;
         }
@@ -255,7 +255,7 @@ final class PcbPlacementPlanner {
         int placementVersion = constraints.placementDensityVersion;
         boolean useGrouped = placementVersion == 3 && candidate < 2;
         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
-            (placementVersion == 4 && candidate < 4);
+            (placementVersion >= 4 && candidate < 4);
         boolean scoreWholeContent = useCompact;
         TopologyPlacementGraph topology=new TopologyPlacementGraph(board);
         Vector<Item> all=new Vector<Item>();
@@ -288,10 +288,10 @@ final class PcbPlacementPlanner {
             spacingFactor+=Math.min(6.0,(partCount-40)*.10);
         // The new moderate alternative avoids the large-inventory room multiplier.
         // Slot5 retains the original allocation and placement preferences.
-        if(placementVersion == 4 && candidate == 4) spacingFactor=3.0;
+        if(placementVersion >= 4 && candidate == 4) spacingFactor=placementVersion>=5 ? 2.0 : 3.0;
         // The compact interpretation begins from actual protected package demand.
         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
-        boolean tight=placementVersion == 4 && candidate < 2;
+        boolean tight=placementVersion >= 4 && candidate < 2;
         double compactFactor=tight ? 1.65 : 2.35;
         long compactAllowance=tight ? 150000L : 250000L;
         long targetArea=useCompact ?
@@ -333,7 +333,7 @@ final class PcbPlacementPlanner {
         }});
         for (Item item:orderedAnchors) {
             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion == 4 && candidate < 2,
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
                 true,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
             item.footprint=selected; placed.add(selected);
@@ -343,7 +343,7 @@ final class PcbPlacementPlanner {
                 seed,algorithmCandidate);
             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion == 4 && candidate < 2,
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
                 false,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
             next.footprint=selected; placed.add(selected);
@@ -352,7 +352,7 @@ final class PcbPlacementPlanner {
         validate(board,constraints,outline,placed);
         Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
             demandArea,candidate,evaluations[0]);
-        if(placementVersion == 4 && candidate < 2) {
+        if(placementVersion >= 4 && candidate < 2) {
             // Reuse the protected-strip compactor before the existing route request.
             // It preserves complete envelopes and revalidates access/isolation.
             Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);

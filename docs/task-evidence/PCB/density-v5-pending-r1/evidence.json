@@ -1,0 +1,236 @@
+{
+  "schema": 1,
+  "status": "UNACCEPTED_FIT_FIX_AND_FINAL_FILES_PENDING",
+  "recordedUtc": "2026-10-13T02:31:44.327644+00:00",
+  "publishedCommit": "02f65fb003ef29122f02b1c7b0a63d797002518c",
+  "branch": "codex/q60-faulted-profile-counts",
+  "candidateCommitted": false,
+  "newPushAttempted": false,
+  "gatesBeforeFitCorrection": [
+    {
+      "phase": "native-r207",
+      "status": "PASS",
+      "operationSeconds": 63.871,
+      "receiptSha256": "fef3c4ec21d30dae60b454c53e08db4e3ab1c81f648cf22dea1abceb7ca8e270",
+      "sourceInputsUnchangedAtExecution": true,
+      "ownedCleanupVerified": true,
+      "limitation": "Prior to the four-file fit correction; does not qualify that correction."
+    },
+    {
+      "phase": "build-r57",
+      "status": "PASS",
+      "operationSeconds": 92.489,
+      "receiptSha256": "f37e75f3262c02cffa59b327da0b776358189be6d8f33d22c042dc713d60800d",
+      "sourceInputsUnchangedAtExecution": true,
+      "ownedCleanupVerified": true,
+      "limitation": "Prior to the four-file fit correction; does not qualify that correction."
+    },
+    {
+      "phase": "compiled-r220",
+      "status": "PASS",
+      "operationSeconds": 316.994,
+      "receiptSha256": "912b4b83a5dfefb6a74df517bede0ff3878399991f33bcdbf3b8a7911630676b",
+      "sourceInputsUnchangedAtExecution": true,
+      "ownedCleanupVerified": true,
+      "limitation": "Prior to the four-file fit correction; does not qualify that correction."
+    }
+  ],
+  "geometry": [
+    {
+      "parts": 40,
+      "seed": "-1017",
+      "beforeArea": 5245799,
+      "afterArea": 5245799,
+      "afterWidth": 3571,
+      "afterHeight": 1469,
+      "areaChangePercent": 0.0,
+      "geometrySha256": "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf",
+      "allPartsAndPadsRetained": true
+    },
+    {
+      "parts": 44,
+      "seed": "-1004",
+      "beforeArea": 5023809,
+      "afterArea": 5023809,
+      "afterWidth": 3591,
+      "afterHeight": 1399,
+      "areaChangePercent": 0.0,
+      "geometrySha256": "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573",
+      "allPartsAndPadsRetained": true
+    },
+    {
+      "parts": 60,
+      "seed": "-1022",
+      "beforeArea": 9982329,
+      "afterArea": 8443994,
+      "afterWidth": 4111,
+      "afterHeight": 2054,
+      "areaChangePercent": -15.41,
+      "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
+      "allPartsAndPadsRetained": true
+    },
+    {
+      "parts": 42,
+      "seed": "0",
+      "beforeArea": 4997115,
+      "afterArea": 4997115,
+      "afterWidth": 3411,
+      "afterHeight": 1465,
+      "areaChangePercent": 0.0,
+      "geometrySha256": "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2",
+      "allPartsAndPadsRetained": true
+    },
+    {
+      "parts": 53,
+      "seed": "17",
+      "beforeArea": 7708262,
+      "afterArea": 7708262,
+      "afterWidth": 4142,
+      "afterHeight": 1861,
+      "areaChangePercent": 0.0,
+      "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
+      "allPartsAndPadsRetained": true
+    },
+    {
+      "parts": 54,
+      "seed": "42",
+      "beforeArea": 7348152,
+      "afterArea": 6371585,
+      "afterWidth": 3131,
+      "afterHeight": 2035,
+      "areaChangePercent": -13.29,
+      "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16",
+      "allPartsAndPadsRetained": true
+    }
+  ],
+  "coldBeforeFitCorrection": [
+    {
+      "seed": "-1022",
+      "packages": 60,
+      "generationMillis": 72391,
+      "generationWork": 599,
+      "maxManualUnitMillis": 1412,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    {
+      "seed": "0",
+      "packages": 42,
+      "generationMillis": 31049,
+      "generationWork": 522,
+      "maxManualUnitMillis": 1095,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    {
+      "seed": "-1004",
+      "packages": 44,
+      "generationMillis": 35375,
+      "generationWork": 524,
+      "maxManualUnitMillis": 1139,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    {
+      "seed": "17",
+      "packages": 53,
+      "generationMillis": 61841,
+      "generationWork": 621,
+      "maxManualUnitMillis": 1462,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    {
+      "seed": "42",
+      "packages": 54,
+      "generationMillis": 68634,
+      "generationWork": 609,
+      "maxManualUnitMillis": 1394,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    }
+  ],
+  "observedBuild": "E28A0809BB4495092BF001DFF95D559E",
+  "completedService60": {
+    "status": "PASS",
+    "evidenceSha256": "c67935be5b7344434dd7ee985ebb84b7e54fac430f72d2ef32e3c1a5d5668315",
+    "scope": "Source-guided real input under GWT57, before presentation-only fit correction; human U05 NOT RUN."
+  },
+  "fitProblem": {
+    "canvasHeight": 858,
+    "boardBottom": 838,
+    "trayTop": 834,
+    "overlapPixels": 4,
+    "cause": "Fit used full canvas and20px margin, while collapsed tray overlays24px.",
+    "fix": "Existing fit math reserves collapsed24px or expanded drawer height; actual viewport/hit area and physical coordinates stay unchanged.",
+    "status": "PREPARED_STATIC_REVIEW_PASS_RUNTIME_NOT_RUN",
+    "sourceFiles": {
+      "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "8d033c3264a5d23cee4124779bbaa0b9359aa64babea0543d2f04d1dbda7b3aa",
+      "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "5f1481f78efa127f4f499331e8a75118d4383b9b6e59acb53e5347a4b58f09fc",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "df972ee22f90e6719a4f119c6969cc4ff59d5f246bf054cc67ca2091a673cb87",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "ada6fde1a922543dbf725529249b0c4dd52df005ffc447a4ad5c41cda019104d",
+      "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "c0fc641b894204164e167a662f012247c326e2d82d5768a3380e3e6191c46698",
+      "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "284a1e5c2a6026436450224db626fceaa53cf80596629e19f1a62306c1ce0aee",
+      "tests/contracts/PcbFunctionalGroupingContractTest.java": "0955abe40440c79a5a3187fd8c5eed5988b645d3199edc47ad440591277ae0bc",
+      "tests/contracts/RelBSessionIdentityContractTest.java": "361a6b378b18cbd6a2d2a3fd4fdd224cc2e6748900951d90fe48a371f5794d04",
+      "tests/contracts/U06SessionSaveContractTest.java": "13263e2409154761f21914b1ba0718d16fffe9a953893f044590ae23827c470b",
+      "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+      "scripts/verify-current-contracts.ps1": "b8fd0ab1b14c19b84ba38acc5f24fb86c2139fff0b4ef06f6766ceddca9a0568",
+      "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+      "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+      "tests/contracts/PcbSavedDensityGeometryContractTest.java": "fe5a9930a9c5ffa172e21b3dfd8c6df6225d8d99af816c61dc8eddfa1fa09056",
+      "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+      "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+      "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+      "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c"
+    },
+    "sourceFreezeSha256": "4fdd9a9f53473c4929814a7cbc4496bb05e5beb3b26c0cac4bd93298dc68a478"
+  },
+  "pcAvailability": "Dated00:55 release/02:04 continuation reaffirmed by parent; undated old reply superseded. Serial gates/current load checks.",
+  "pending": [
+    "Focused native208 U01 fit contract",
+    "Actual final-source GWT58",
+    "Actual complete54 initial and explicit Fit bench recapture",
+    "Rebound actual saved4/5 FileReader/repair/retest flow",
+    "Final visual acceptance and evidence sealing",
+    "Explicit stage/commit/normal push and remote SHA verification"
+  ],
+  "constraints": {
+    "additional30Percent": "ASPIRATIONAL_UNMET",
+    "boards42And44": "UNCHANGED_FROM_ACCEPTED4",
+    "bothComponentSides": "AUTHORIZED_OPTION_ASSESSED_NOT_IMPLEMENTED; existing bottom pose/copper/view support does not itself enable safe overlapping parts.",
+    "originalBudgetsUnchanged": true,
+    "humanU05": "NOT RUN",
+    "normalHardRb56": "HELD",
+    "modestHost": "OWNER_DEFERRED_NOT_RUN",
+    "unchangedQ30Corpora": "NOT RERUN",
+    "originalEightByteExactAndUnstaged": true,
+    "noEmail": true,
+    "historicalQ30Risks": "Unknown91.616s failure, six missing scratch inventories and late audit remain preserved."
+  },
+  "images": [
+    {
+      "path": "60-fit-before-inset-fix.png",
+      "sha256": "18428f10703852099a57362a26db0bb79b36c0d023bf0d21edbba93ec884589b",
+      "bytes": 308805,
+      "scope": "Actual GWT57 private5 fit before the later inset correction."
+    },
+    {
+      "path": "54-clipped-fit-before-inset-fix.png",
+      "sha256": "177b2f853bbc82c678171977cd6596dcfda7fa795bc715214c88b9a77cd9dbe0",
+      "bytes": 216059,
+      "scope": "Actual GWT57 initial54 fit; lower outline overlaps collapsed tray by4px. NOT full-board visual acceptance."
+    },
+    {
+      "path": "60-customer-retest-pass.png",
+      "sha256": "6ddd90673a7038f15c7d32ff28c12d6e2bbe2b1b56f59fb7c8dcf3e2e269dc5c",
+      "bytes": 217329,
+      "scope": "Actual source-guided ordinary Shop repair and powered customer retest PASS; not a human trial."
+    }
+  ]
+}

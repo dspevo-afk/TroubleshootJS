@@ -66,6 +66,7 @@ final class U01ViewportChecks {
         require(rejected, "invalid zoom rejected");
         verifyPanLimits();
         verifyFurnitureFit();
+        verifyTrayInsetFit();
     }
     private void verifyFurnitureFit() {
         Rectangle board = new Rectangle(40, 20, 800, 400);
@@ -89,6 +90,27 @@ final class U01ViewportChecks {
             require(r.x > b.x + b.width && r.x + r.width <= 1181 && m.y + m.height <= 681,
                 "full meter and right tray fit together");
         }
+    }
+    private void verifyTrayInsetFit() {
+        Rectangle board = new Rectangle(40, 20, 800, 1000);
+        Rectangle bench = board.union(new Rectangle(-244, 20, 252, 454));
+        PcbViewport camera = new PcbViewport(board);
+        camera.resize(new Rectangle(0, 0, 1440, 858));
+        for (PcbBoardSide side : PcbBoardSide.values()) {
+            camera.setFace(side);
+            for (int inset : new int[] {24, 172}) {
+                camera.fitWorkbench(bench, inset);
+                PcbViewport.Transform t = camera.permanent();
+                near(t.scale, inset == 24 ? .794 : .646, "literal height-limited tray fit scale");
+                near(t.screenY(20), 20, "tray fit preserves top margin");
+                near(t.screenY(1020), 858 - inset - 20, "full lower edge clears tray with margin");
+                require(camera.getArea().height == 858 && camera.contains(0, 857),
+                    "fit inset preserves actual viewport and hit area");
+            }
+        }
+        camera.fitWorkbench(bench);
+        near(camera.permanent().scale, .818, "no-drawer fit retains original scale");
+        require(PartsTrayViewport.COLLAPSED_HEIGHT == 24, "collapsed overlay matches DOM/CSS height");
     }
     private void verifyPanLimits() {
         Rectangle board = new Rectangle(40, 20, 800, 400);

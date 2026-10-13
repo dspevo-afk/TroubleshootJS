@@ -5468,7 +5468,7 @@ view cache includes bank identity/order; projection remains presentation state,
 without changing copper, probe/service targets or saved realization.
 [Finite native/actual-input/file proof and held60 boundary](task-evidence/PCB/realism-r1/README.md).
 
-## Current private placement 4 density and screen-bank inset
+## Accepted private placement 4 baseline and screen-bank inset
 
 Fresh held RB56 requests use explicit placement 4; private sessions 4 name
 `rb56-placement-4`. Saved 1/2/3 reconstruct their prior requests before cache
@@ -5500,3 +5500,27 @@ guarded repair/retest/Close. 44/42 visibly shrink; 60 is exact roomy fallback an
 54 gains native area only. Current 53/54 cold/render and human/normal population
 qualification remain unproved. Original candidate/evaluation/route/90s/640/5s
 limits remain; this is bounded layout selection, not optimal packing.
+
+## Current private5 density and tray-aware fit
+
+Fresh held RB56 requests name private placement/session5 explicitly, retaining
+saved1–4 interpretations and public alpha5/session-model1/epoch16. Existing
+placement/layout owners select moderate4 for repeated declared control groups,
+retain the tight prefix for single groups, and preserve compact/roomy alternatives
+within six placements/three routes. Only private5 moderate demand uses factor2
+over full protected package/access area. Existing full-text model-label scan
+positions are stably partitioned to try content-near candidates first; all other
+original candidates remain. No part/font/access/copper envelope is cut.
+
+`PcbViewport` accepts a bench-fit bottom inset; the shared renderer initial/Fit
+bench path reserves the24px collapsed or current expanded tray overlay. Its
+actual viewport/hit bounds and world/session geometry remain unchanged. Existing
+U01 numeric checks add height-limited closed/open expectations across both faces,
+including the original no-drawer path. Final source is qualified by fresh U01,
+actual GWT58 and actual60/54 initial/Fit bench plus saved4/5 repair flows.
+
+[Finite evidence](task-evidence/PCB/density-v5-r1/README.md) separates reused
+generation/session/labels, prior22053/60 cold/service, and final223/221 current
+view/file input. All route/time/work limits remain. This is not optimal packing,
+manufacturing clearance, human calibration or normal-population release. Both
+component sides remain an assessed option requiring explicit lead/access mechanics.

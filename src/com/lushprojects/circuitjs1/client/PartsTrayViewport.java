@@ -2,7 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 /** Screen-space drawer projection. Source package geometry and part identities never change. */
 final class PartsTrayViewport {
-    static final int HEIGHT = 172, CELL_PITCH = 184, MARGIN = 14;
+    static final int HEIGHT = 172, COLLAPSED_HEIGHT = 24, CELL_PITCH = 184, MARGIN = 14;
     private int width = 1, height = 1, count, scroll;
     private boolean open;
     boolean isOpen() { return open; }
