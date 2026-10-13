@@ -7,7 +7,22 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Current60 repair qualified; generation/PCB realism refinement next**
+**Current task:** **Finite private PCB density4 accepted; realism remains priority**
+All components/pads retained; 44/42 boards shrink 22.91%/20.34%,54 shrinks 14.17%
+in native geometry only. 40 is +0.21%,53 -0.09%; 60 retains exact roomy P07 layout.
+Fresh label 273/GWT 56/all five/headed 218 four actual render/input cases and 219
+real saved 3/4 files plus guarded Shop repair/powered retest/Close PASS.
+Native 199/eight suites reused only for eleven unchanged core inputs; final
+presentation owner is freshly tested.42 full bank edge margin is resolved.
+All original limits and failures remain; current 53/54 cold/render NOT RUN.
+Dave prioritizes continued PCB density/realism before general roadmap advancement.
+Next is that remaining refinement, particularly 60's unchanged roomy fallback,
+with bounded actual user flows and periodic screenshots. This finite acceptance
+does not certify the normal population: U05 human NOT RUN, HARD/normal RB56
+release HELD, modest host owner-deferred/RPG shelved. No unchanged Q30 corpora.
+[Final evidence, screenshots and limits](task-evidence/PCB/density-v4-r1/README.md).
+
+**Previous current60 repair checkpoint:** **Current60 repair qualified; generation/PCB realism refinement next**
 Fresh current placement3 60-part real-input Shop/guarded removal/tray/replacement/
 powered retest/Close PASS; cold84.462s/626/max1.323s,
 original90s/640/5s/360s hold unchanged. Collector209 FAIL retained;210 corrected

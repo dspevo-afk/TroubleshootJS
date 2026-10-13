@@ -75,17 +75,23 @@ final class PcbPlacementPlanner {
         constraints.validate(board);
         if (board.getComponentIds().isEmpty() || board.getComponentIds().size()>MAX_PARTS) throw new Rejected("PART_LIMIT");
         boolean compactMediumInterpretation = (constraints.placementDensityVersion == 2 ||
-            constraints.placementDensityVersion == 3) &&
+            constraints.placementDensityVersion == 3 || constraints.placementDensityVersion == 4) &&
             board.getComponentIds().size() >= MEDIUM_MIN_PARTS;
         // The final two v2 route alternatives use the actual legacy planner algorithms 0 and 1.
         int algorithmCandidate = compactMediumInterpretation && candidate >= OUTLINE_CANDIDATES - 2 ?
             candidate - (OUTLINE_CANDIDATES - 2) : candidate;
         boolean useCompact = compactMediumInterpretation && candidate < OUTLINE_CANDIDATES - 2;
-        // V3 has two grouped candidates, two unchanged v2 compact alternatives,
-        // and the same two legacy roomy alternatives. No extra routing attempts.
-        if (constraints.placementDensityVersion == 3 && candidate >= 2 && candidate < 4)
+        // V3 keeps two grouped, two compact and two legacy roomy alternatives.
+        // V4 reserves slot5 for the proven roomy algorithm0 while tightening0-4.
+        // Candidate breadth and routing-attempt budgets remain unchanged.
+        if ((constraints.placementDensityVersion == 3 || constraints.placementDensityVersion == 4) &&
+                candidate >= 2 && candidate < 4)
             // Spread the established compact fallbacks across aspect/order variants.
             algorithmCandidate = candidate == 2 ? 0 : 3;
+        if (constraints.placementDensityVersion == 4) {
+            if (candidate < 2) algorithmCandidate = candidate == 0 ? 0 : 3;
+            if (candidate == 5) algorithmCandidate = 0;
+        }
         int offset = constraints.routingLayer == PcbCopperLayer.BOTTOM ?
             (int)((seed ^ (seed >>> 32)) & 0x7fffffffL) % OUTLINE_CANDIDATES : 0;
         // Give the root-selected small-board shape several ordering attempts
@@ -246,7 +252,11 @@ final class PcbPlacementPlanner {
             boolean useCompact,
             TreeMap<String,Region> groups,Vector<Item> anchors,long demandArea,
             long courtyardArea,int maxWidth,int anchorWidth) {
-        boolean useGrouped = constraints.placementDensityVersion == 3 && candidate < 2;
+        int placementVersion = constraints.placementDensityVersion;
+        boolean useGrouped = placementVersion == 3 && candidate < 2;
+        boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
+            (placementVersion == 4 && candidate < 4);
+        boolean scoreWholeContent = useCompact;
         TopologyPlacementGraph topology=new TopologyPlacementGraph(board);
         Vector<Item> all=new Vector<Item>();
         TreeMap<String,Item> byId=new TreeMap<String,Item>();
@@ -276,10 +286,16 @@ final class PcbPlacementPlanner {
         double spacingFactor=3.0;
         if(partCount>40)
             spacingFactor+=Math.min(6.0,(partCount-40)*.10);
+        // The new moderate alternative avoids the large-inventory room multiplier.
+        // Slot5 retains the original allocation and placement preferences.
+        if(placementVersion == 4 && candidate == 4) spacingFactor=3.0;
         // The compact interpretation begins from actual protected package demand.
         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
+        boolean tight=placementVersion == 4 && candidate < 2;
+        double compactFactor=tight ? 1.65 : 2.35;
+        long compactAllowance=tight ? 150000L : 250000L;
         long targetArea=useCompact ?
-            (long)Math.ceil(demandArea*2.35)+250000L :
+            (long)Math.ceil(demandArea*compactFactor)+compactAllowance :
             Math.max(MEDIUM_MIN_AREA,(long)Math.ceil(demandArea*spacingFactor)+500000L);
         /* Connector strips add a full-height allowance to the content width;
          * leave bounded headroom for that allowance on very large inventories. */
@@ -317,7 +333,8 @@ final class PcbPlacementPlanner {
         }});
         for (Item item:orderedAnchors) {
             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,true,evaluations);
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion == 4 && candidate < 2,
+                true,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
             item.footprint=selected; placed.add(selected);
         }
@@ -326,14 +343,22 @@ final class PcbPlacementPlanner {
                 seed,algorithmCandidate);
             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,false,evaluations);
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion == 4 && candidate < 2,
+                false,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
             next.footprint=selected; placed.add(selected);
             remaining.remove(next.demand.componentId);
         }
         validate(board,constraints,outline,placed);
-        return new Plan(outline,placed,navigationFor(constraints),courtyardArea,
+        Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
             demandArea,candidate,evaluations[0]);
+        if(placementVersion == 4 && candidate < 2) {
+            // Reuse the protected-strip compactor before the existing route request.
+            // It preserves complete envelopes and revalidates access/isolation.
+            Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);
+            if(packed.evaluations<=MEDIUM_MAX_EVALUATIONS) return packed;
+        }
+        return plan;
     }
 
     private static Vector<PcbLayoutRegion> navigationFor(
@@ -537,7 +562,8 @@ final class PcbPlacementPlanner {
     private static PcbFootprint mediumPlace(Item item,Vector<PcbFootprint> placed,
             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
-            long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,boolean anchor,int[] evaluations) {
+            long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
+            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean anchor,int[] evaluations) {
         RegionHint hint=hints.get(regionKey(item.demand));
         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
@@ -554,13 +580,14 @@ final class PcbPlacementPlanner {
             topology.getLinksFor(item.demand.componentId),preferredX,preferredY,board);
         int direction=hint==null||hint.xFraction<.45?1:hint.xFraction>.55?-1:0;
         if(anchor)direction=0;
-        Rectangle group=useGrouped ? mediumGroupBounds(item,placed,constraints) : null;
-        if(group!=null && !anchor) {
+        Rectangle group=scoreGrouped ? mediumGroupBounds(item,placed,constraints) : null;
+        if(useGrouped && group!=null && !anchor) {
             preferredX=group.x+group.width/2-item.footprint.getPlacement().getWidth()/2;
             preferredY=group.y+group.height/2-item.footprint.getPlacement().getHeight()/2;
         }
         int baseX=anchor?preferredX:(connected.x*3+preferredX)/4+
-            direction*(useGrouped ? CHANNEL : MEDIUM_CHAIN_GAP);
+            direction*(useGrouped || tight ?
+                CHANNEL : MEDIUM_CHAIN_GAP);
         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
         PcbFootprint best=null;double bestScore=Double.POSITIVE_INFINITY;
         int maxRing=anchor?24:20;
@@ -583,7 +610,7 @@ final class PcbPlacementPlanner {
                 if(evaluations[0]>MEDIUM_MAX_EVALUATIONS)
                     throw new Rejected("MEDIUM_PLACEMENT_BUDGET");
                 if(!fits(trial,outline,placed,-1,constraints))continue;
-                double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,group);
+                double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(score<bestScore){best=trial;bestScore=score;}
             }
         }
@@ -617,7 +644,7 @@ final class PcbPlacementPlanner {
                     mediumGridOrigin(item.footprint,y,outline,margin,true));
                 evaluations[0]++;
                 if(!fits(trial,outline,placed,-1,constraints))continue;
-                double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,group);
+                double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(score<bestScore){best=trial;bestScore=score;}
                 /* The fallback only needs one legal escape from a crowded
                  * target.  Keeping the first seeded hit bounds worst-case
@@ -669,7 +696,7 @@ final class PcbPlacementPlanner {
     private static double mediumPlacementScore(PcbFootprint footprint,Item item,
             Vector<PcbFootprint> placed,TopologyPlacementGraph topology,
             TroubleshootBoard board,RegionHint hint,Rectangle outline,
-            boolean useCompact,Rectangle group) {
+            boolean useCompact,boolean scoreWholeContent,Rectangle group) {
         double score=0;
         for(TopologyPlacementGraph.PadLink link:topology.getLinksFor(
                 item.demand.componentId)) {
@@ -704,7 +731,7 @@ final class PcbPlacementPlanner {
                 }
             }
         }
-        if(useCompact && !footprint.getPlacement().getPhysicalPackage().isConnector()) {
+        if(scoreWholeContent && !footprint.getPlacement().getPhysicalPackage().isConnector()) {
             Rectangle occupied=null;
             for(PcbFootprint other:placed)
                 if(!other.getPlacement().getPhysicalPackage().isConnector())

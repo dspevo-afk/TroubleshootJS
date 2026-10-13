@@ -5443,20 +5443,20 @@ contains the exact before/after dimensions, legacy3 SHA match, actual via witnes
 fit/wheel full-text checks and real private1/private2 file reconstruction/retests.
 
 
-## Current private functional grouping and terminal banks
+## Saved private placement 3 functional grouping and terminal banks
 
-Fresh private RB56 placement3 is distinct from saved legacy1/compact2. The
+Saved private RB56 placement 3 is distinct from legacy1/compact2. The
 versioned request, staged plan, constraints, dependency identity and private replay
 bind it before cache lookup; capture checks the actual owner and restore commits
 the saved request only after successful publication/retirement. Public alpha5,
-session/model1 and epoch16 remain. Electrical choices/values/faults/random seeds
+session/model1 and epoch 16 remain. Electrical choices/values/faults/random seeds
 continue through the existing plan; grouping reads its existing domain/region and
 connectivity declarations. Two grouped, two established compact and two roomy
 alternatives share the original six-placement/three-per-policy routing caps.
 
 `PcbPlacementConstraints.requiresTwoLayerRouting` defaults false for existing
-callers and is true only for private RB56 placement 3. Its dependency field is conditional,
-preserving saved1/2 bytes. Required owners use the original three P07 candidates
+callers and is true for private RB56 placements 3 and 4. Its dependency field is conditional,
+preserving saved 1/2 bytes. Required owners use the original three P07 candidates
 even after a P05 success, and selection fails closed without a real accepted P07
 winner. Actual RB56 admission remains unchanged and verifies the receipt/geometry.
 
@@ -5467,3 +5467,36 @@ parts and impossible banks retain individual full-text placement/fallback. The
 view cache includes bank identity/order; projection remains presentation state,
 without changing copper, probe/service targets or saved realization.
 [Finite native/actual-input/file proof and held60 boundary](task-evidence/PCB/realism-r1/README.md).
+
+## Current private placement 4 density and screen-bank inset
+
+Fresh held RB56 requests use explicit placement 4; private sessions 4 name
+`rb56-placement-4`. Saved 1/2/3 reconstruct their prior requests before cache
+lookup, and retain their exact geometry. Public alpha5, session/model1 and
+generation epoch 16 remain. Existing electrical plans, values, faults and random
+concerns continue through their existing owners.
+
+`PcbPlacementPlanner` reserves two tight ungrouped candidates, two retained
+compact candidates with soft functional-group scoring, one moderate alternate
+and the proven roomy algorithm 0 fallback. Tight candidates reuse the existing
+protected-strip compactor before routing, preserving complete access envelopes
+and isolation. `SeededPcbLayoutGenerator` routes one tight 0/1, one compact 2/3 and
+roomy 5 within the same three candidates per policy; no new search is added.
+Among legal routes, placement 4 compares 9 times area plus longest-side squared
+before the prior deterministic tie-breaks. Saved 3 ordering/selection is unchanged.
+Required P07 and actual RB56 physical admission remain fail-closed.
+
+`PcbScreenLabelLayout` considers the same four full terminal-bank columns. It
+prefers an already legal complete column whose ink lies inside an 8px projected
+PCB inset, and otherwise keeps its original complete-text selection. Metrics,
+fonts, source order, identities, obstacles and leader ownership remain. This
+presentation preference changes neither physical geometry nor session identity;
+the existing cache already includes the projected board rectangle.
+
+[Finite evidence](task-evidence/PCB/density-v4-r1/README.md) records six native
+P07 admissions, saved 3 literal geometry, eleven-input native 199 semantic reuse,
+fresh label 273/GWT 56, four actual cold/render/input cases and real 3/4 files with
+guarded repair/retest/Close. 44/42 visibly shrink; 60 is exact roomy fallback and
+54 gains native area only. Current 53/54 cold/render and human/normal population
+qualification remain unproved. Original candidate/evaluation/route/90s/640/5s
+limits remain; this is bounded layout selection, not optimal packing.

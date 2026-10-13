@@ -395,6 +395,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
         @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
+        @{ Name = 'PcbSavedRealismGeometryContractTest'; Marker = 'saved placement3 geometry contracts ' },
         @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
         @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },

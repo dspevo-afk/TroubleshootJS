@@ -262,8 +262,10 @@ class SeededPcbLayoutGenerator {
             session.mediumRankedAttempts.add(Integer.valueOf(candidate.attempt));
             session.mediumPlacementScores.add(candidate.toCanonical());
         }
-        if (session.board.getPlacementConstraints().placementDensityVersion == 3)
-            session.mediumPlacements = prioritizeGroupedPlacementRouteCandidates(session.mediumPlacements);
+        if (session.board.getPlacementConstraints().placementDensityVersion == 3 ||
+                session.board.getPlacementConstraints().placementDensityVersion == 4)
+            session.mediumPlacements = prioritizeGroupedPlacementRouteCandidates(session.mediumPlacements,
+                session.board.getPlacementConstraints().placementDensityVersion == 4);
         else if (session.board.getPlacementConstraints().placementDensityVersion == 2)
             session.mediumPlacements = prioritizeLegacyPlacementRouteCandidate(session.mediumPlacements);
         if (session.mediumPlacements.isEmpty())
@@ -431,17 +433,22 @@ class SeededPcbLayoutGenerator {
     }
 
     private static boolean compactPlacementInterpretation(PcbPlacementConstraints constraints) {
-        return constraints.placementDensityVersion == 2 || constraints.placementDensityVersion == 3;
+        return constraints.placementDensityVersion == 2 || constraints.placementDensityVersion == 3 ||
+            constraints.placementDensityVersion == 4;
     }
 
-    /** One grouped, one established compact, one roomy candidate in the same route budget. */
+    /** V3 keeps grouped/compact/roomy; v4 keeps tight/retained-compact/proven-roomy.
+     * Every interpretation retains the same maximum three routed candidates. */
     private static Vector<MediumBoardPhysicalPolicy.PlacementCandidate>
-            prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked) {
+            prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked, boolean dense) {
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> selected=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>();
         for(int category=0;category<3;category++)
-            for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
-                if(candidate.attempt/2==category) {selected.add(candidate);break;}
+            for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked) {
+                int candidateCategory=candidate.attempt/2;
+                if(dense && candidate.attempt==4) candidateCategory=-1;
+                if(candidateCategory==category) {selected.add(candidate);break;}
+            }
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(selected);
         for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
@@ -470,22 +477,24 @@ class SeededPcbLayoutGenerator {
         double score = layout.getRouteQualityScore(session.board);
         Rectangle bounds = layout.getBoardOutline();
         long area = (long) bounds.width * bounds.height;
+        int majorSide = Math.max(bounds.width, bounds.height);
         boolean preferCompact = compactPlacementInterpretation(session.board.getPlacementConstraints());
+        boolean preferDensePacking = session.board.getPlacementConstraints().placementDensityVersion == 4;
         if (twoLayer) {
-            if (mediumRouteCandidateBetter(score, area, candidate,
+            if (mediumRouteCandidateBetter(score, area, majorSide, candidate,
                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,
                     session.mediumTwoLayerArea, session.mediumTwoLayerPlacementAttempt,
-                    session.mediumTwoLayerPlacementScore, preferCompact)) {
+                    session.mediumTwoLayerPlacementScore, preferCompact, preferDensePacking)) {
                 session.mediumTwoLayerLayout = layout;
                 session.mediumTwoLayerQuality = score;
                 session.mediumTwoLayerArea = area;
                 session.mediumTwoLayerPlacementAttempt = candidate.attempt;
                 session.mediumTwoLayerPlacementScore = candidate.cheapScore;
             }
-        } else if (mediumRouteCandidateBetter(score, area, candidate,
+        } else if (mediumRouteCandidateBetter(score, area, majorSide, candidate,
                 session.mediumOneFaceLayout, session.mediumOneFaceQuality,
                 session.mediumOneFaceArea, session.mediumOneFacePlacementAttempt,
-                session.mediumOneFacePlacementScore, preferCompact)) {
+                session.mediumOneFacePlacementScore, preferCompact, preferDensePacking)) {
             session.mediumOneFaceLayout = layout;
             session.mediumOneFaceQuality = score;
             session.mediumOneFaceArea = area;
@@ -494,11 +503,21 @@ class SeededPcbLayoutGenerator {
         }
     }
 
-    private static boolean mediumRouteCandidateBetter(double quality, long area,
+    private static boolean mediumRouteCandidateBetter(double quality, long area, int majorSide,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate,
             PcbBoardLayout current, double currentQuality, long currentArea,
-            int currentAttempt, long currentPlacementScore, boolean preferCompact) {
+            int currentAttempt, long currentPlacementScore, boolean preferCompact,
+            boolean preferDensePacking) {
         if (current == null) return true;
+        if (preferDensePacking) {
+            Rectangle currentBounds = current.getBoardOutline();
+            int currentMajorSide = Math.max(currentBounds.width, currentBounds.height);
+            // Area dominates; a small shape term rejects thin-ribbon savings.
+            // This compares only already legal routes, without another request.
+            long packingCost=area*9L+(long)majorSide*majorSide;
+            long currentPackingCost=currentArea*9L+(long)currentMajorSide*currentMajorSide;
+            if (packingCost != currentPackingCost) return packingCost < currentPackingCost;
+        }
         // Every candidate already passed the physical and route-quality guards.
         // New compact boards prioritize occupied outline area among those legal choices.
         if (preferCompact && area != currentArea) return area < currentArea;

@@ -7,16 +7,29 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=3;
+    private static final int MEASURED_VERSION=4;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
+    private static final String[] SAVED3_GEOMETRY_SHA256={
+        "3cf61944fa5f2002304a32b9061b71691c3e20f1942d7cb1e65a698f221938ef",
+        "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1",
+        "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16",
+        "cc397a2f30ca51618bf1dd966bd074ebc34f9025b662d08cd7264b53b13f1bf5",
+        "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8",
+        "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
+    };
     private static int checks;
     public static void main(String[] args) {
-        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index);
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,MEASURED_VERSION);
         System.out.println("PASS: PCB functional grouping contracts roots="+ROOTS.length+" assertions="+checks);
     }
-    private static void measure(long seed,int index) {
-        Rb56Plan plan=Rb56Plan.resolve(seed,MEASURED_VERSION);
+    /** Separate existing 60-second JVM bound for the six compatibility cases. */
+    static void verifySavedRealismGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,3);
+        System.out.println("PASS: saved placement3 geometry contracts roots="+ROOTS.length+" assertions="+checks);
+    }
+    private static void measure(long seed,int index,int version) {
+        Rb56Plan plan=Rb56Plan.resolve(seed,version);
         TroubleshootBoard board=plan.board();
         MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
             .generateWithPolicyResult(board,plan.layoutSeed,plan.routingSeed);
@@ -86,8 +99,12 @@ public final class PcbFunctionalGroupingContractTest {
                 copperLength+=Math.abs(x[i]-x[i-1])+Math.abs(y[i]-y[i-1]);segments++;
             }
         }
+        if(version==3) check(SAVED3_GEOMETRY_SHA256[index].equals(
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            "published saved3 geometry remains byte-exact: "+seed);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
-        System.out.println("PCB_GROUPING_CASE {\"seed\":\""+seed+"\",\"version\":"+MEASURED_VERSION+
+        if(version==4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
+        System.out.println("PCB_GROUPING_CASE {\"seed\":\""+seed+"\",\"version\":"+version+
             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+
             ",\"width\":"+outline.width+",\"height\":"+outline.height+",\"area\":"+((long)outline.width*outline.height)+
             ",\"courtyardArea\":"+layout.getRoutingCourtyardArea()+",\"regionBoundingAreaSum\":"+regionArea+

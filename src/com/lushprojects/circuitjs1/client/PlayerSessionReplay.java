@@ -8,8 +8,10 @@ final class PlayerSessionReplay {
     private static final String PRIVATE_PREFIX = "tsj-private-session/1/";
     private static final String PRIVATE_COMPACT_PREFIX = "tsj-private-session/2/";
     private static final String PRIVATE_REALISM_PREFIX = "tsj-private-session/3/";
+    private static final String PRIVATE_CURRENT_PREFIX = "tsj-private-session/4/";
     private static final String COMPACT_PLACEMENT_TOKEN = "rb56-placement-2";
     private static final String REALISM_PLACEMENT_TOKEN = "rb56-placement-3";
+    private static final String CURRENT_PLACEMENT_TOKEN = "rb56-placement-4";
     private static final int MAX_LENGTH = 180;
 
     private final String replay;
@@ -55,9 +57,13 @@ final class PlayerSessionReplay {
             identity = PRIVATE_COMPACT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + COMPACT_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
                 Long.toString(request.getDescriptor().getRootSeed());
-        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT) {
+        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM) {
             identity = PRIVATE_REALISM_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + REALISM_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
+                Long.toString(request.getDescriptor().getRootSeed());
+        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT) {
+            identity = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + CURRENT_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
                 Long.toString(request.getDescriptor().getRootSeed());
         } else {
             throw invalid("Private RB56 session has no supported placement interpretation");
@@ -102,6 +108,14 @@ final class PlayerSessionReplay {
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 REALISM_PLACEMENT_TOKEN.equals(fields[3]) &&
                 isHeldQualificationFamily(fields[4])) {
+            placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM;
+            familyId = fields[4];
+            seedText = fields[5];
+        } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
+                "4".equals(fields[1]) &&
+                GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
+                CURRENT_PLACEMENT_TOKEN.equals(fields[3]) &&
+                isHeldQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT;
             familyId = fields[4];
             seedText = fields[5];
@@ -115,9 +129,12 @@ final class PlayerSessionReplay {
         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT) {
             canonical = PRIVATE_COMPACT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + COMPACT_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
-        } else {
+        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM) {
             canonical = PRIVATE_REALISM_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + REALISM_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
+        } else {
+            canonical = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/" + CURRENT_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
         }
         if (!canonical.equals(text)) throw invalid("Use canonical private replay identity");
         return new PlayerSessionReplay(canonical, familyId, seed, placementVersion);

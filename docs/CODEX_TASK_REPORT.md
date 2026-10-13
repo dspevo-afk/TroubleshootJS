@@ -1,25 +1,51 @@
-# Current checkpoint: v4 area-first visual REJECTED; shorter-span revision active
+# Current checkpoint: private PCB density 4 accepted; final gates complete
 
-2026-10-12. Repair3c77758a remains published/verified, accepted source525626df.
-Unpublished area-first4 native196 PASS134.774/eight suites; actual GWT52 PASS108.900/
-all5, build11522DDFA25E5E8CE1E0025F3D6C9DF2; headed211 PASS181.361 actual60/40/44
-cold/fit/wheel/body/retirement. Root+independent visual judgement REJECTS40 ribbon
-3.58:1 vsaccepted3 2.62:1 despitegroup/copper/area gains.44/60 unchanged. Actual53
-case212 PASS62.425; whole212 FAIL because54 firstcold HYPOTHESES TIMEOUT90,131ms/
-616work/495hyp, no54render; allproduct/OS cleanup PASS. No causal claim or waiver.
-[Assessment/five inspected captures](task-evidence/PCB/cohesion-v4-assessment-r1/README.md),
-SHA `8878bd6c2b63ee9192bf70746e70588b785021838aecf1da8dd20a3fedf5cd86`. Failures193/194/195/212 preserved.
+2026-10-13. Dave's later "you can start up TJS" release supersedes the earlier
+estimate/availability holds. Work remains on generation and PCB realism before
+general roadmap advancement. Existing branch is codex/q60-faulted-profile-counts;
+At sealing, published checkpoint HEAD 231a9999 contains screenshots only. This
+change includes the accepted source and final packet. The final task handoff
+records the resulting commit and verified normal push; no main merge or email.
 
-Active revision uses v4-only shorter longestoutline side among existing legal
-routes, then existing area/quality ties. Bothroomy fallbacks and all1/2/3 rules
-remain; no extraattempt or budget. Native197 running; GWT53/render/file acceptance
-pending. Source11/test/script files uncommitted, exactold3 geometry remains required.
-No candidate production publication or visual acceptance claimed. Current served
-build52 is the rejected trial; accepted build50 WAR is byte-backed-up in tasktemp.
-Next: complete197, actual53 build and evaluate revised actual layouts; then needed
-private3/4 FileReader proof before accepted-source publication. U05 human NOT RUN/
-HARD+normal RB56 held/modest-host owner-deferred. Original8 preserved; only owned
-native197 runtime active. No unrelated repo/email/Core/Android/C4130/GPU/main merge.
+Private placement 4 retains all parts and pads. Six actual native P07/RB56 layouts
+pass:44/42/54 board area changes -22.91%/-20.34%/-14.17%; 40 +0.21%,53 -0.09%,
+60 unchanged. Tight 0/1, retained compact 2/3 and proven roomy 5 supply the original
+three-route prefix. Legal-route selection balances area and longest-side length.
+Saved 1/2/3 layouts and public schema/model/epoch remain unchanged. Screen annotation
+chooses an existing legal full terminal column with 8px inset when available,
+keeping original full-text fallback and physical geometry separate.
+
+Native 199 PASS 136.417 s/eight suites is reused only for eleven
+unchanged core inputs. Fresh native 200 PASS 22.783 s/273 label
+assertions and actual final JDK8/GWT 56 PASS 92.169 s/all five
+permutations. Served strong name: 9433C150F66F56E63C69EA342E3DF90E.
+Fresh headed 218 PASS 186.657 s/four boards: cold 60: 75.327 s, 40: 27.618 s, 42: 31.030 s, 44: 35.513 s.
+Fit, real wheel/physical U2A selection, full reference coverage, literal terminal multisets for 44/60 and
+observed required ink clearance pass. Exact deliberately unfinished product
+FAIL and all seven cleanup flags pass; view-host PASS is not customer PASS.
+Root inspected five useful final/before images; independent 42/44/60 visual
+review found the 42-part edge margin fixed, 44 clear and 60 unchanged.
+
+Fresh headed 219 PASS 120.739 s: actual Save download,
+accepted 3 FileReader/resave, fresh 4 FileReader/resave; layout identity, geometry,
+250 mA source and three-entry semantic history preserved without importing completion.
+Two fresh-owner restores PASS. Ordinary unrepaired retest FAIL, power-off guarded
+KA removal, public Shop replacement/tray retention, powered retest PASS and Close
+all seven restoration flags PASS. Automation is source-guided; human U05 NOT RUN.
+
+[Final portable evidence and actual screenshots](task-evidence/PCB/density-v4-r1/README.md).
+Original 90s/640-work/5s/360s hold, 60s JVM and six-placement/three-route caps
+remain. All gate inputs and owned native/browser cleanup pass; no owned runtime
+remains. Original eight untracked bytes remain exact and unstaged. No unrelated
+repo/Core/Android/C4130/GPU/process work. No unchanged Q30 corpora or cold A/B.
+Native 193/194/195/198 failures and the prior 212 54-part cold timeout remain FAIL; rejected
+R4 ribbon stays rejected. Current 53/54 cold/render NOT RUN; 54 is native-only.
+Dense60 compaction remains a limitation; copper/via/locality tradeoffs are mixed.
+U05 human/normal population NOT RUN, public HARD/RB56 HELD, modest host owner-
+deferred, RPG shelved. Historical Q30 unknown 91.616 s failure, six missing scratch
+inventories and late audit limitation are preserved. Next: publish this accepted
+finite scope and verified PNG links; continued PCB density/realism remains the
+user priority before general roadmap work. No new timing cohort is declared.
 
 # Historical checkpoint: version4 candidate native PASS; render acceptance pending
 

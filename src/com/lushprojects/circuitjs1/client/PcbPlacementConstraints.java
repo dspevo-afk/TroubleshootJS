@@ -94,7 +94,7 @@ final class PcbPlacementConstraints {
             PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
             boolean requiresTwoLayerRouting) {
         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
-        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3)
+        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4)
             throw new IllegalArgumentException("Unknown placement density interpretation");
         placementDensityVersion = densityVersion;
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");

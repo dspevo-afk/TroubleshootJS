@@ -35,6 +35,10 @@ public final class RelBSessionIdentityContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-2/RB56_CONTROL/1");
         } }, "public parser refuses the versioned private replay namespace");
         reject(new Attempt() { public void run() {
+            PlayerLaunchRequest.parse("tsj-private-session/4/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-4/RB56_CONTROL/1");
+        } }, "public parser refuses the private placement4 namespace");
+        reject(new Attempt() { public void run() {
             PlayerLaunchRequest.parse("tsj-private-session/3/" +
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/1");
         } }, "public parser refuses the private placement-3 replay namespace");
@@ -51,17 +55,28 @@ public final class RelBSessionIdentityContractTest {
             GenerationRequest request =
                 GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
-            String expected = "tsj-private-session/3/" +
-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/" + seed;
+            String expected = "tsj-private-session/4/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-4/RB56_CONTROL/" + seed;
             check(request.getRb56PlacementInterpretationVersion() ==
                     GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT &&
                     expected.equals(identity.canonical()) && identity.matches(request),
-                "exact signed-long fresh private identity selects placement 3: " + seed);
+                "exact signed-long fresh private identity selects placement 4: " + seed);
             PlayerSessionSave original = emptySave(identity.canonical());
             PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
             check(original.encode().equals(parsed.encode()) &&
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
-                "placement-3 private identity survives the unchanged bounded session codec: " + seed);
+                "placement-4 private identity survives the unchanged bounded session codec: " + seed);
+
+            GenerationRequest realismRequest = request.withRb56PlacementInterpretationVersion(
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM);
+            PlayerSessionReplay realism = PlayerSessionReplay.forQualification(realismRequest);
+            String realismExpected = "tsj-private-session/3/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/" + seed;
+            check(realismExpected.equals(realism.canonical()) && realism.matches(realismRequest) &&
+                !realism.matches(request), "saved placement3 identity stays distinct from fresh4: " + seed);
+            PlayerSessionSave realismSave = emptySave(realismExpected);
+            check(realismSave.encode().equals(PlayerSessionSave.parse(realismSave.encode()).encode()),
+                "saved3 bounded session wire remains exact: " + seed);
 
             GenerationRequest compactRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT);
@@ -82,13 +97,17 @@ public final class RelBSessionIdentityContractTest {
             check(!request.canonical().equals(legacyRequest.canonical()) &&
                 !request.canonical().equals(compactRequest.canonical()) &&
                 !compactRequest.canonical().equals(legacyRequest.canonical()),
-                "placement 1, 2 and 3 have distinct plan-cache/request identities: " + seed);
+                "placement 1, 2 and 4 have distinct plan-cache/request identities: " + seed);
             check(compactRequest.canonical().contains("placement-interpretation=2;") &&
-                request.canonical().contains("placement-interpretation=3;") &&
+                request.canonical().contains("placement-interpretation=4;") &&
                 legacyRequest.canonical().indexOf("placement-interpretation=") < 0,
-                "legacy canonical stays exact while placement 2 and 3 are explicitly keyed: " + seed);
+                "legacy canonical stays exact while placement 2 and 4 are explicitly keyed: " + seed);
         }
         for (final String invalid : new String[] {
+                "tsj-private-session/4/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
+                "tsj-private-session/4/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/1",
+                "tsj-private-session/4/tsj-generation-dependencies-v15/rb56-placement-4/RB56_CONTROL/1",
+                "tsj-private-session/4/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-4/RB56_CONTROL/1/extra",
                 "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
                 "tsj-private-session/2/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-1/RB56_CONTROL/1",
                 "tsj-private-session/2/tsj-generation-dependencies-v15/rb56-placement-2/RB56_CONTROL/1",

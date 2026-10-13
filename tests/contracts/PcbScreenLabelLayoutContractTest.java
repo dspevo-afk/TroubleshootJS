@@ -14,6 +14,7 @@ public final class PcbScreenLabelLayoutContractTest {
         checkCollisionFreeView("zoom", 640, 420, 2, 20);
         checkSourceOrderedTerminalBank("fit", 480, 320, 16);
         checkSourceOrderedTerminalBank("zoom", 640, 420, 23);
+        terminalBankKeepsBoardEdgeBreathingRoom();
         mixedEdgeTerminalNamesStayAtTheirOwnPads();
         affinePlacementCoordinatesRoundTrip();
         keepsFullTextWhenNoSlotExists();
@@ -74,6 +75,30 @@ public final class PcbScreenLabelLayoutContractTest {
                 name+" retains the matching pad as leader origin "+i);
             check(!intersects(expand(p.ink,PcbScreenLabelLayout.GAP),title.ink),
                 name+" does not cover the title "+i);
+        }
+    }
+
+    private static void terminalBankKeepsBoardEdgeBreathingRoom() {
+        String[] names={"INPUT","OUTPUT","RETURN","ENABLE"};
+        int[] widths={31,39,37,37};
+        Rectangle board=new Rectangle(20,20,400,280),view=new Rectangle(0,0,480,360);
+        Vector<PcbScreenLabelLayout.Label> labels=new Vector<PcbScreenLabelLayout.Label>();
+        Vector<Rectangle> obstacles=new Vector<Rectangle>();
+        obstacles.add(new Rectangle(184,200,64,34));
+        for(int i=0;i<names.length;i++) {
+            int x=192+i*16;
+            labels.add(terminalLabel("U1/provider/"+i,names[i],"U1/terminal-bank",i,
+                x,250,x,270+i*11,widths[i]));
+            obstacles.add(new Rectangle(x-4,246,8,8));
+        }
+        PcbScreenLabelLayout.Result result=PcbScreenLabelLayout.place(labels,obstacles,board,view);
+        check(result.allPlaced()&&result.placements.size()==4,"edge bank retains every complete terminal");
+        for(int i=0;i<names.length;i++) {
+            PcbScreenLabelLayout.Placement p=find(result,"U1/provider/"+i);
+            check(p!=null&&p.label.text.text.equals(names[i]),"edge bank retains full source name "+i);
+            check(p!=null&&p.ink.x>=28&&p.ink.y>=28&&p.ink.x+p.ink.width<=412&&
+                p.ink.y+p.ink.height<=292,"edge bank chooses available PCB inset "+i);
+            check(p!=null&&p.label.text.fontSize==10,"edge bank keeps the original readable font "+i);
         }
     }
 

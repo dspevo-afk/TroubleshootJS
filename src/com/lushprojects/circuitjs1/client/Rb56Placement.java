@@ -4,14 +4,15 @@ import java.util.Vector;
 
 /** RB56 drawing-space placement intent; no manufacturing or equipment safety rating. */
 final class Rb56Placement {
-    static final int LEGACY_VERSION = 1, COMPACT_VERSION = 2, CURRENT_VERSION = 3;
+    static final int LEGACY_VERSION = 1, COMPACT_VERSION = 2,
+        REALISM_VERSION = 3, CURRENT_VERSION = 4;
     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
     static final int BARRIER_DRAWING_UNITS = 80;
     private Rb56Placement() { }
 
     static boolean supportsVersion(int version) {
         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
-            version == CURRENT_VERSION;
+            version == REALISM_VERSION || version == CURRENT_VERSION;
     }
 
     /** One demand per declared package; the plan remains the only package inventory. */
@@ -57,7 +58,7 @@ final class Rb56Placement {
         // This is the existing structural routing algorithm, not Q30 normal eligibility.
         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, placementVersion,
-            placementVersion == CURRENT_VERSION);
+            placementVersion == REALISM_VERSION || placementVersion == CURRENT_VERSION);
     }
 
     static String domain(String net) {

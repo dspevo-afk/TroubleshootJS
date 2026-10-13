@@ -100,7 +100,7 @@ final class PcbScreenLabelLayout {
                     attemptedBanks.add(bankId);
                     Vector<Label> bank=bankMembers(labels,bankId);
                     if(requiresTerminalBank(bank)&&allOwnersVisible(bank,view)) {
-                        Vector<Placement> bankPlacements=findTerminalBank(bank,occupied,view);
+                        Vector<Placement> bankPlacements=findTerminalBank(bank,occupied,board,view);
                         if(bankPlacements!=null) {
                             placedBanks.add(bankId);
                             for(Placement p:bankPlacements) {
@@ -201,7 +201,7 @@ final class PcbScreenLabelLayout {
 
     /** Tries one measured, source-ordered text column on each side of the owned pads. */
     private static Vector<Placement> findTerminalBank(Vector<Label> bank,
-            Vector<Rectangle> occupied,Rectangle view) {
+            Vector<Rectangle> occupied,Rectangle board,Rectangle view) {
         if(bank.size()<3)return null;
         int minX=Integer.MAX_VALUE,minY=Integer.MAX_VALUE;
         int maxX=Integer.MIN_VALUE,maxY=Integer.MIN_VALUE;
@@ -226,14 +226,16 @@ final class PcbScreenLabelLayout {
             centerX-bankWidth/2,centerX-bankWidth/2};
         int[] top={centerY-totalHeight/2,centerY-totalHeight/2,
             minY-clearance-totalHeight,maxY+clearance};
-        Vector<Placement> best=null;
-        long bestScore=Long.MAX_VALUE;
+        Vector<Placement> best=null,bestInset=null;
+        long bestScore=Long.MAX_VALUE,bestInsetScore=Long.MAX_VALUE;
+        Rectangle inset=board.width>16 && board.height>16 ?
+            new Rectangle(board.x+8,board.y+8,board.width-16,board.height-16) : null;
         for(int side=0;side<4;side++) {
             Vector<Placement> candidate=new Vector<Placement>();
             Vector<Rectangle> candidateOccupied=new Vector<Rectangle>();
             int rowTop=top[side];
             long score=0;
-            boolean legal=true;
+            boolean legal=true,comfortable=inset!=null;
             for(int i=0;i<bank.size();i++) {
                 Label label=bank.elementAt(i);
                 Rectangle relative=relativeInk.elementAt(i);
@@ -245,6 +247,7 @@ final class PcbScreenLabelLayout {
                         !clear(ink,candidateOccupied)) {
                     legal=false;break;
                 }
+                if(inset==null || !inside(inset,ink))comfortable=false;
                 Point leaderTo=nearestPoint(label.owner,ink);
                 long dx=(long)label.owner.x-leaderTo.x;
                 long dy=(long)label.owner.y-leaderTo.y;
@@ -257,8 +260,11 @@ final class PcbScreenLabelLayout {
                 rowTop+=ink.height+2*GAP;
             }
             if(legal&&score<bestScore) {best=candidate;bestScore=score;}
+            if(legal&&comfortable&&score<bestInsetScore) {bestInset=candidate;bestInsetScore=score;}
         }
-        return best;
+        // Prefer a complete column with breathing room inside the PCB when one
+        // is already legal. Preserve the existing full-text choice otherwise.
+        return bestInset!=null ? bestInset : best;
     }
 
     private static boolean containsValue(Vector<String> values,String value) {
