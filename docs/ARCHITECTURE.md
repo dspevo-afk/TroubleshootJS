@@ -5573,3 +5573,17 @@ slice must preserve prior package dependency bytes and explicitly guard PTH
 tails versus opposite bodies/probe/service access, with actual repair/save proof.
 The current evidence favors demand-based primary/secondary macro packing first;
 neither extra copper faces nor body faces remove the declared common corridor.
+
+
+## Rejected domain packing and routed-category coverage
+
+Accepted version 6 owners remain byte-exact. Domain-capacity hints on moderate candidate 4 passed
+native 215 structural checks but grew the 60-part outline by 18.22%. Mixed-boundary-first
+compact candidate 3 retained pure graph targets and existing candidates 2/4/5; native 217 lost the 53-part route.
+Its lower preliminary score evicted successful candidate 2 from the compact category's
+three-route selection, then new candidate 3 failed routing. No rejected version 7 implementation or
+save interpretation ships. Existing placement score is not a routing witness;
+further integration needs useful route coverage within the same cap. The common 80
+isolation corridor remains; the 53-part board's lower primary-side vacancy is not itself a full
+blanket reserve. Two-dimensional/backside possibilities remain unqualified.
+[Actual trials, outcomes and retained limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).

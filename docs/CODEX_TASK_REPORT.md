@@ -1,4 +1,45 @@
-# Current checkpoint: remaining PCB region assessment complete; private6 retained
+# Current checkpoint: domain-packing trials rejected; accepted version 6 restored
+
+2026-10-13. Implementation remains verified
+`6b5d1d2fb9eeed65f13bea2c8c51021a66282b28` on `codex/q60-faulted-profile-counts`;
+checkpoint base `7ad70ac1d0fcc81c5b9a9f366cd0a6886f401162`. This docs-only
+checkpoint is sealed before commit; task publication receipt gives resulting
+SHA and normal-push outcome. No rejected version 7 code/save interpretation ships.
+
+Two finite initial-placement trials, the same guards and caps: domain-capacity/mixed gap
+hints on moderate candidate 4 native 215 PASS, 40.495s focused 575/backing 205, but 60 area+18.22%
+and 53 exact version 6. REJECTED. Mixed-boundary-first compact candidate 3 native 217 FAIL, 36.587s:
+60 exact version 6; 53 new candidate 3 preliminary score 1770364 beat old candidate 2 1871029 and evicted candidate 2 from routed
+compact category. Candidates 4/3/5 all reject; successful candidate 2 stayed in placement pool but was not
+routed. Backing NOT RUN after first suite FAIL. No retry/cap increase. Frozen inputs,
+owned job/handles/drainers/scratch cleanup complete for both. Native 216/218,
+GWT 61/62/new browser/save gates NOT RUN after rejection.
+
+All 20 accepted version 6 source/test/owner hashes restored byte-exact twice; original 8
+untracked exact/unstaged. Both 11-file trials/diffs/raw receipts archived in task
+storage. Existing native 212/GWT 59/actual browser 224/225 scope retained; no new trial
+render or human evidence claimed. Static root/independent reviews found no
+weakened guards; runtime/density verdicts above supersede static PASS.
+
+The 80-unit common primary/secondary isolation corridor is necessary. The 53-part board's 2030x900
+lower-left primary-side patch is not blanket-reserved by it; PRIMARY entry
+circuitry can use it subject to all guards. Free cells are not removable outline.
+Next design must preserve useful route coverage under the same 3-slot cap while
+evaluating narrower primary/mixed-boundary packing. No geometry/parameter sweep
+continues without that concrete issue addressed. 2D is not exhausted; backside still
+needs scoped capabilities/opposite PTH-tail/body/probe/service guards and actual
+flip/repair/save proof. Additional 30% remains OPEN.
+
+[Portable outcomes and limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).
+Serial gates after the ServerCenter 04:00 critical window; host 15%/7% CPU/no relevant
+competing builds. No owned runtime remains; no unrelated process/focus/ADB/tablet/
+email/main merge/force push/deletion/Core/Android/other repository action. Human U05/
+normal population NOT RUN; HARD/normal RB56 HELD, modest host owner-deferred. All
+previous FAILs/Q30 unknown 91.616s failure/6 missing inventories/late audit preserved.
+Dated continuation persists; no new PC hold. General roadmap advance remains
+behind Dave's PCB realism priority.
+
+# Previous checkpoint: remaining PCB region assessment complete; private6 retained
 
 2026-10-13. Implementation remains verified
 `6b5d1d2fb9eeed65f13bea2c8c51021a66282b28` on `codex/q60-faulted-profile-counts`.

@@ -1,0 +1,548 @@
+{
+  "schema": 1,
+  "status": "REJECTED_TWO_DOMAIN_PACKING_TRIALS_ACCEPTED6_PRESERVED",
+  "createdUtc": "2026-10-13T04:39:09.424595+00:00",
+  "checkpointBaseCommit": "7ad70ac1d0fcc81c5b9a9f366cd0a6886f401162",
+  "implementationCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "f8d6e6cf8d0fdd24d637eae977fc20021568039ac9ef0595c22a20d6c3cf2dc6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+    "tests/contracts/U06SessionSaveContractTest.java": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+    "tests/contracts/PcbSavedDensityGeometryContractTest.java": "fe5a9930a9c5ffa172e21b3dfd8c6df6225d8d99af816c61dc8eddfa1fa09056",
+    "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+    "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+    "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c",
+    "tests/contracts/PcbSingleGroupDensityContractTest.java": "cb5190ce483cbda7c36e3edeaadea0bcb1536b5041be199081cb657f024ff864",
+    "tests/contracts/PcbSavedLargeGeometryContractTest.java": "9ffafc963d3ca32845abf210bc2ad32b1518650d7b9ce01b46c62ac6b58c698a"
+  },
+  "existingBaselineEvidenceSha256": "3197b26b239ac5d2d8b878f25400c2b78b20c396dc52f78201fb1a582208214a",
+  "trials": [
+    {
+      "status": "REJECTED_DOMAIN_HINTS_NATIVE_PASS_DENSITY_REGRESSION_ACCEPTED6_RESTORED",
+      "createdUtc": "2026-10-13T04:29:51.985141+00:00",
+      "baseCommit": "7ad70ac1d0fcc81c5b9a9f366cd0a6886f401162",
+      "implementationCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+      "reason": "Modified moderate4 fails A_COIL_LOW early in both targets; 60 falls back to roomy5 and grows18.22%;53 selects unchanged2. Free-cell improvement is not outline density acceptance.",
+      "nativeGate": {
+        "status": "PASS",
+        "operationSeconds": 40.495,
+        "roots": 2,
+        "geometryAssertions": 575,
+        "backingAssertions": 205,
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true,
+        "rawEvidenceSha256": {
+          "native-r215-result.json": "79bf65727feb289fb8e576a605a5a03addfb84871fcaee9d7a5ad691e3493e29",
+          "native-r215-launch.json": "64088a87977d21696ce214514cfaf2b38940f303b935f771e69ee545513a52b7",
+          "native-r215-full-output.log": "253041e1f71bfffd4c95d4fb75848da1aa4cff29f0322725cb1bced7062779a3"
+        }
+      },
+      "comparison": [
+        {
+          "parts": 60,
+          "seed": "-1022",
+          "before": {
+            "seed": "-1022",
+            "version": 6,
+            "accepted": true,
+            "parts": 60,
+            "pads": 143,
+            "width": 4111,
+            "height": 2054,
+            "area": 8443994,
+            "courtyardArea": 1061240,
+            "regionBoundingAreaSum": 9569831,
+            "sameRegionCenterManhattanMean": 978.8,
+            "twoPadNetSpanSum": 3120,
+            "twoPadNetCount": 11,
+            "copperManhattanLength": 41970,
+            "traceSegments": 269,
+            "vias": 48,
+            "selectedAttempt": 4,
+            "routingExpansions": 4665056,
+            "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+          },
+          "after": {
+            "seed": "-1022",
+            "version": 7,
+            "accepted": true,
+            "parts": 60,
+            "pads": 143,
+            "width": 5341,
+            "height": 1869,
+            "area": 9982329,
+            "courtyardArea": 1061240,
+            "regionBoundingAreaSum": 8803692,
+            "sameRegionCenterManhattanMean": 950.0,
+            "twoPadNetSpanSum": 3510,
+            "twoPadNetCount": 11,
+            "copperManhattanLength": 42910,
+            "traceSegments": 274,
+            "vias": 46,
+            "selectedAttempt": 5,
+            "routingExpansions": 5111786,
+            "geometrySha256": "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16"
+          },
+          "areaChangePercent": 18.22,
+          "whitespaceBefore": {
+            "seed": "-1022",
+            "version": 6,
+            "parts": 60,
+            "gridUnits": 10,
+            "sampledCells": 84255,
+            "packageAccessOccupiedCells": 30506,
+            "protectedFreeCells": 47913,
+            "protectedFreeFraction": 0.5686665479793485,
+            "largestProtectedEmptyRectangle": {
+              "x": 1220,
+              "y": 50,
+              "width": 1310,
+              "height": 670,
+              "area": 877700
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "whitespaceAfter": {
+            "seed": "-1022",
+            "version": 7,
+            "parts": 60,
+            "gridUnits": 10,
+            "sampledCells": 99324,
+            "packageAccessOccupiedCells": 30535,
+            "protectedFreeCells": 62526,
+            "protectedFreeFraction": 0.6295155249486529,
+            "largestProtectedEmptyRectangle": {
+              "x": 1630,
+              "y": 50,
+              "width": 1820,
+              "height": 710,
+              "area": 1292200
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "largestEmptyRectangleAreaChangePercent": 47.23
+        },
+        {
+          "parts": 53,
+          "seed": "17",
+          "before": {
+            "seed": "17",
+            "version": 6,
+            "accepted": true,
+            "parts": 53,
+            "pads": 129,
+            "width": 4142,
+            "height": 1861,
+            "area": 7708262,
+            "courtyardArea": 998648,
+            "regionBoundingAreaSum": 10470110,
+            "sameRegionCenterManhattanMean": 932.3237179487179,
+            "twoPadNetSpanSum": 4930,
+            "twoPadNetCount": 12,
+            "copperManhattanLength": 44900,
+            "traceSegments": 249,
+            "vias": 48,
+            "selectedAttempt": 2,
+            "routingExpansions": 5136281,
+            "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+          },
+          "after": {
+            "seed": "17",
+            "version": 7,
+            "accepted": true,
+            "parts": 53,
+            "pads": 129,
+            "width": 4142,
+            "height": 1861,
+            "area": 7708262,
+            "courtyardArea": 998648,
+            "regionBoundingAreaSum": 10470110,
+            "sameRegionCenterManhattanMean": 932.3237179487179,
+            "twoPadNetSpanSum": 4930,
+            "twoPadNetCount": 12,
+            "copperManhattanLength": 44900,
+            "traceSegments": 249,
+            "vias": 48,
+            "selectedAttempt": 2,
+            "routingExpansions": 5136281,
+            "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+          },
+          "areaChangePercent": 0.0,
+          "whitespaceBefore": {
+            "seed": "17",
+            "version": 6,
+            "parts": 53,
+            "gridUnits": 10,
+            "sampledCells": 77004,
+            "packageAccessOccupiedCells": 28201,
+            "protectedFreeCells": 42202,
+            "protectedFreeFraction": 0.5480494519765207,
+            "largestProtectedEmptyRectangle": {
+              "x": 60,
+              "y": 1000,
+              "width": 2030,
+              "height": 900,
+              "area": 1827000
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "whitespaceAfter": {
+            "seed": "17",
+            "version": 7,
+            "parts": 53,
+            "gridUnits": 10,
+            "sampledCells": 77004,
+            "packageAccessOccupiedCells": 28201,
+            "protectedFreeCells": 42202,
+            "protectedFreeFraction": 0.5480494519765207,
+            "largestProtectedEmptyRectangle": {
+              "x": 60,
+              "y": 1000,
+              "width": 2030,
+              "height": 900,
+              "area": 1827000
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "largestEmptyRectangleAreaChangePercent": 0.0
+        }
+      ],
+      "routeOutcomes": [
+        "PCB_GROUPING_ROUTE_CASE seed=-1022 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=48463;routes=6;routingWork=14/5111786;p05=3/0;p07=3/1;selectedAttempt=5;ranked=[1, 0, 3, 5, 4, 2];placementScores=[1{total=1604443;electrical=185630;region=14552;connector=3160;corridor=2484;outline=7624800;courtyard=1064840;demand=3739540}, 0{total=1817036;electrical=206150;region=14835;connector=5200;corridor=5416;outline=7514400;courtyard=1061240;demand=3729940}, 3{total=1822754;electrical=207830;region=15485;connector=3970;corridor=4911;outline=10619000;courtyard=1064840;demand=3739540}, 5{total=1849202;electrical=209290;region=17270;connector=7990;corridor=2648;outline=21296000;courtyard=1061240;demand=3729940}, 4{total=1879094;electrical=212810;region=16870;connector=5170;corridor=5331;outline=9352400;courtyard=1061240;demand=3729940}, 2{total=1881200;electrical=213790;region=14645;connector=4260;corridor=5954;outline=10502800;courtyard=1061240;demand=3729940}];selectedScore=1849202;selectedQualityMilli=441727434;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=SUCCESS];failure=null",
+        "PCB_GROUPING_ROUTE_CASE seed=17 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=42622;routes=6;routingWork=18/5136281;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[0, 1, 5, 2, 4, 3];placementScores=[0{total=1542183;electrical=178250;region=11650;connector=3270;corridor=3217;outline=6948000;courtyard=998648;demand=3413134}, 1{total=1768082;electrical=200290;region=11930;connector=4110;corridor=6831;outline=7017300;courtyard=993848;demand=3400334}, 5{total=1823220;electrical=209160;region=15460;connector=4830;corridor=3135;outline=17089800;courtyard=998648;demand=3413134}, 2{total=1871029;electrical=207690;region=16800;connector=6590;corridor=7390;outline=9678900;courtyard=998648;demand=3413134}, 4{total=1957673;electrical=219710;region=16270;connector=4710;corridor=7799;outline=8654600;courtyard=998648;demand=3413134}, 3{total=1985060;electrical=223520;region=13975;connector=4500;corridor=8323;outline=9731800;courtyard=993848;demand=3400334}];selectedScore=1871029;selectedQualityMilli=302465486;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:Unable to route net RAIL5 from KA.A1@2850,2070 to connected tree, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:BRANCH_QUALITY_LIMIT];failure=null"
+      ],
+      "archive": [
+        {
+          "path": "scripts/verify-current-contracts.ps1",
+          "trialSha256": "5cf3466062fba54238ac461957171b213ff768c885d37693b9e6dc3a8f7a9474",
+          "beforeSha256": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+          "archiveName": "verify-current-contracts.ps1"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+          "trialSha256": "a8a758eff5cd46b1dab426144859b7426c17b18c7503f822f1d4369b96aa91a3",
+          "beforeSha256": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+          "archiveName": "GenerationRequest.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+          "trialSha256": "5f5dcdf50b625e322d835c6e36d70b4452b4f718a01ef07e151c213c9d209ed9",
+          "beforeSha256": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+          "archiveName": "PcbPlacementConstraints.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+          "trialSha256": "fb0d87ad2c01aef69139a14b4ea0c8ada9403d80578e11443728e7f205d2d258",
+          "beforeSha256": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+          "archiveName": "PcbPlacementPlanner.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+          "trialSha256": "f1b41096dac96a0809c344bf0e0f05343891efd1e4d5810501e7302617c5d29c",
+          "beforeSha256": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+          "archiveName": "PlayerSessionReplay.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+          "trialSha256": "e066d89c0d4d9c35e551a9a1380a7027e0d2aa8bbc14a6a8adbbbb0982abe530",
+          "beforeSha256": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+          "archiveName": "Rb56Placement.java"
+        },
+        {
+          "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+          "trialSha256": "1fb786dc623abd2a174f7717dab6d9db19937de8243b199db92699dee0ab49b5",
+          "beforeSha256": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+          "archiveName": "PcbFunctionalGroupingContractTest.java"
+        },
+        {
+          "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+          "trialSha256": "79ced187bdd7fd0b6fc495d38dbba2b5b98cc4acfcc031fb6d1cf14edfef2050",
+          "beforeSha256": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+          "archiveName": "RelBSessionIdentityContractTest.java"
+        },
+        {
+          "path": "tests/contracts/U06SessionSaveContractTest.java",
+          "trialSha256": "0e7a2c4777ded0adeed2a86d4ea6e579a01f6f89abfe504c6998ec2296e55008",
+          "beforeSha256": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+          "archiveName": "U06SessionSaveContractTest.java"
+        },
+        {
+          "path": "tests/contracts/PcbFocusedDomainPackingContractTest.java",
+          "trialSha256": "df87cef39dfbc2a56a61338ed78ea49b2155712808771a1bf46a837ce9fd2785",
+          "archiveName": "PcbFocusedDomainPackingContractTest.java",
+          "taskCreatedFilePreservedByExactMove": true
+        },
+        {
+          "path": "tests/contracts/PcbSavedGroupedGeometryContractTest.java",
+          "trialSha256": "4b234dfcd7948aa63c61765ead24cc2047f1a90d72b258b925634c3520f9386a",
+          "archiveName": "PcbSavedGroupedGeometryContractTest.java",
+          "taskCreatedFilePreservedByExactMove": true
+        }
+      ],
+      "rawDiffSha256": "73dda7517bc806258fdfdd86dd92c209f8e5568a101f6495c779e60bf7b55a77",
+      "sourceFreezeSha256": "7fa0ce4e25a5c27dc0033812c2ea24c81b8703b5d74b070ff0f271c174fa46d8",
+      "limits": {
+        "placements": 6,
+        "routesPerPolicy": 3,
+        "maxMediumEvaluationsPerPlacement": 60000,
+        "perJvmMillis": 60000,
+        "originalJobMillis": 90000,
+        "originalJobWork": 640,
+        "originalUnitMillis": 5000,
+        "originalHoldMillis": 360000
+      },
+      "gatesNotRun": [
+        "native216 broad saved/current contracts",
+        "GWT61 build",
+        "browser/save flow"
+      ],
+      "accepted6RawSourcesByteExact": true,
+      "rejectedCodePreserved": true,
+      "originalEightByteExactAndUnstaged": true,
+      "hostCleanupComplete": true,
+      "densityReleaseAccepted": false
+    },
+    {
+      "status": "REJECTED_MIXED_BOUNDARY_NATIVE_FAIL_ACCEPTED6_RESTORED",
+      "createdUtc": "2026-10-13T04:36:46.008053+00:00",
+      "baseCommit": "7ad70ac1d0fcc81c5b9a9f366cd0a6886f401162",
+      "implementationCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+      "reason": "60 selects exact accepted6 moderate4;53 newcompact3 cheapscore displaces successfulold2 from compactcategory. Selected4/3/5 allreject; native assertslost53 route. No accepted outline gain.",
+      "nativeGate": {
+        "status": "FAIL",
+        "operationSeconds": 36.587,
+        "completedGeometryRoots": 1,
+        "failedRoot": "17",
+        "backingSuite": "NOT_RUN_AFTER_FIRST_SUITE_FAIL",
+        "sourceInputsUnchanged": true,
+        "cleanupVerified": true,
+        "rawEvidenceSha256": {
+          "native-r217-result.json": "10f9b0178127ab8b5a4ab4dad0ac487e51ebf12e812607c73d042768b26c3d8d",
+          "native-r217-launch.json": "0b04a4e0af3e3e05f23b239e5c8091000ab295a8a4a09a790eb8eb42013683f1",
+          "native-r217-full-output.log": "d232d7a12f9ed90de0a2a9b400c693a17416e776dbab31cf4cbcc7d1ff9c9211"
+        }
+      },
+      "comparison": [
+        {
+          "parts": 60,
+          "seed": "-1022",
+          "before": {
+            "seed": "-1022",
+            "version": 6,
+            "accepted": true,
+            "parts": 60,
+            "pads": 143,
+            "width": 4111,
+            "height": 2054,
+            "area": 8443994,
+            "courtyardArea": 1061240,
+            "regionBoundingAreaSum": 9569831,
+            "sameRegionCenterManhattanMean": 978.8,
+            "twoPadNetSpanSum": 3120,
+            "twoPadNetCount": 11,
+            "copperManhattanLength": 41970,
+            "traceSegments": 269,
+            "vias": 48,
+            "selectedAttempt": 4,
+            "routingExpansions": 4665056,
+            "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+          },
+          "after": {
+            "seed": "-1022",
+            "version": 7,
+            "accepted": true,
+            "parts": 60,
+            "pads": 143,
+            "width": 4111,
+            "height": 2054,
+            "area": 8443994,
+            "courtyardArea": 1061240,
+            "regionBoundingAreaSum": 9569831,
+            "sameRegionCenterManhattanMean": 978.8,
+            "twoPadNetSpanSum": 3120,
+            "twoPadNetCount": 11,
+            "copperManhattanLength": 41970,
+            "traceSegments": 269,
+            "vias": 48,
+            "selectedAttempt": 4,
+            "routingExpansions": 4737645,
+            "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+          },
+          "areaChangePercent": 0.0,
+          "copperLengthChangePercent": 0.0,
+          "whitespaceBefore": {
+            "seed": "-1022",
+            "version": 6,
+            "parts": 60,
+            "gridUnits": 10,
+            "sampledCells": 84255,
+            "packageAccessOccupiedCells": 30506,
+            "protectedFreeCells": 47913,
+            "protectedFreeFraction": 0.5686665479793485,
+            "largestProtectedEmptyRectangle": {
+              "x": 1220,
+              "y": 50,
+              "width": 1310,
+              "height": 670,
+              "area": 877700
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "whitespaceAfter": {
+            "seed": "-1022",
+            "version": 7,
+            "parts": 60,
+            "gridUnits": 10,
+            "sampledCells": 84255,
+            "packageAccessOccupiedCells": 30506,
+            "protectedFreeCells": 47913,
+            "protectedFreeFraction": 0.5686665479793485,
+            "largestProtectedEmptyRectangle": {
+              "x": 1220,
+              "y": 50,
+              "width": 1310,
+              "height": 670,
+              "area": 877700
+            },
+            "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+          },
+          "largestEmptyRectangleAreaChangePercent": 0.0
+        }
+      ],
+      "failed53Canonical": "Exception in thread \"main\" java.lang.AssertionError: accepted baseline route lost: 17 MEDIUM_BOARD@1;outcome=REJECTED;selected=null;placements=6;placementRejects=0;placementEvaluations=42252;routes=6;routingWork=18/5616091;p05=3/0;p07=3/0;selectedAttempt=-1;ranked=[0, 1, 3, 5, 2, 4];placementScores=[0{total=1542183;electrical=178250;region=11650;connector=3270;corridor=3217;outline=6948000;courtyard=998648;demand=3413134}, 1{total=1768082;electrical=200290;region=11930;connector=4110;corridor=6831;outline=7017300;courtyard=993848;demand=3400334}, 3{total=1770364;electrical=201010;region=15755;connector=4340;corridor=4925;outline=9731800;courtyard=993848;demand=3400334}, 5{total=1823220;electrical=209160;region=15460;connector=4830;corridor=3135;outline=17089800;courtyard=998648;demand=3413134}, 2{total=1871029;electrical=207690;region=16800;connector=6590;corridor=7390;outline=9678900;courtyard=998648;demand=3413134}, 4{total=1928361;electrical=211750;region=16453;connector=5340;corridor=10287;outline=8654600;courtyard=998648;demand=3413134}];selectedScore=-1;selectedQualityMilli=-1;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:LOAD_RETURN:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:BRANCH_QUALITY_LIMIT];failure=PCB routing candidate rejected at attempt 12: P07_FULLER_TWO_LAYER:CTRL_RETURN:BRANCH_QUALITY_LIMIT",
+      "archive": [
+        {
+          "path": "scripts/verify-current-contracts.ps1",
+          "trialSha256": "5cf3466062fba54238ac461957171b213ff768c885d37693b9e6dc3a8f7a9474",
+          "beforeSha256": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+          "archiveName": "verify-current-contracts.ps1"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+          "trialSha256": "a8a758eff5cd46b1dab426144859b7426c17b18c7503f822f1d4369b96aa91a3",
+          "beforeSha256": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+          "archiveName": "GenerationRequest.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+          "trialSha256": "5f5dcdf50b625e322d835c6e36d70b4452b4f718a01ef07e151c213c9d209ed9",
+          "beforeSha256": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+          "archiveName": "PcbPlacementConstraints.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+          "trialSha256": "0c03fe6c55de67dc30b7896d018d579e919c9546de19eb45af48d47704c13c65",
+          "beforeSha256": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+          "archiveName": "PcbPlacementPlanner.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+          "trialSha256": "f1b41096dac96a0809c344bf0e0f05343891efd1e4d5810501e7302617c5d29c",
+          "beforeSha256": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+          "archiveName": "PlayerSessionReplay.java"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+          "trialSha256": "e066d89c0d4d9c35e551a9a1380a7027e0d2aa8bbc14a6a8adbbbb0982abe530",
+          "beforeSha256": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+          "archiveName": "Rb56Placement.java"
+        },
+        {
+          "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+          "trialSha256": "1fb786dc623abd2a174f7717dab6d9db19937de8243b199db92699dee0ab49b5",
+          "beforeSha256": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+          "archiveName": "PcbFunctionalGroupingContractTest.java"
+        },
+        {
+          "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+          "trialSha256": "79ced187bdd7fd0b6fc495d38dbba2b5b98cc4acfcc031fb6d1cf14edfef2050",
+          "beforeSha256": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+          "archiveName": "RelBSessionIdentityContractTest.java"
+        },
+        {
+          "path": "tests/contracts/U06SessionSaveContractTest.java",
+          "trialSha256": "0e7a2c4777ded0adeed2a86d4ea6e579a01f6f89abfe504c6998ec2296e55008",
+          "beforeSha256": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+          "archiveName": "U06SessionSaveContractTest.java"
+        },
+        {
+          "path": "tests/contracts/PcbFocusedDomainPackingContractTest.java",
+          "trialSha256": "df87cef39dfbc2a56a61338ed78ea49b2155712808771a1bf46a837ce9fd2785",
+          "archiveName": "PcbFocusedDomainPackingContractTest.java",
+          "taskCreatedFilePreservedByExactMove": true
+        },
+        {
+          "path": "tests/contracts/PcbSavedGroupedGeometryContractTest.java",
+          "trialSha256": "4b234dfcd7948aa63c61765ead24cc2047f1a90d72b258b925634c3520f9386a",
+          "archiveName": "PcbSavedGroupedGeometryContractTest.java",
+          "taskCreatedFilePreservedByExactMove": true
+        }
+      ],
+      "rawDiffSha256": "507bd855f21102af29ffd367ac1dc2f95fbbab757fa7f27de038a33f79fdc3f1",
+      "sourceFreezeSha256": "869e12864ed292bb304d9c9b9ef231b9c6aa8540e16de1fbd259f2170d9d37ab",
+      "limits": {
+        "placements": 6,
+        "routesPerPolicy": 3,
+        "maxMediumEvaluationsPerPlacement": 60000,
+        "perJvmMillis": 60000,
+        "originalJobMillis": 90000,
+        "originalJobWork": 640,
+        "originalUnitMillis": 5000,
+        "originalHoldMillis": 360000
+      },
+      "gatesNotRun": [
+        "native218 broad saved/current contracts",
+        "GWT62 build",
+        "browser/save flow"
+      ],
+      "accepted6RawSourcesByteExact": true,
+      "rejectedCodePreserved": true,
+      "originalEightByteExactAndUnstaged": true,
+      "hostCleanupComplete": true,
+      "densityReleaseAccepted": false,
+      "nextIssue": "Preliminary compactcategory score is not a routing witness; mixed-first candidate displaced a provenroute under the unchangedthree-slot cap. Require a concrete route-aware integration design before another geometry trial; no blind score/spacing sweep."
+    }
+  ],
+  "physicalAssessment": {
+    "necessary": "80-unit common PRIMARY/SECONDARY conductive-courtyard corridor on both copper faces; complete package, escape and service envelopes remain.",
+    "avoidableInference": "53 lower-left2030x900 patch is on the PRIMARY side. The corridor does not reserve that whole patch; ordinary PRIMARY entry parts may legally occupy it, subject to access/routing. This does not prove removable outline.",
+    "mixed": "UAC/UFB have actual split conductive courtyards; their inert bodies may span the boundary. Their geometry is not represented by a single packing-domain point."
+  },
+  "diagnosis": {
+    "trial1": "Broad half-domain hint remapping also moved pure secondary group targets; earlyA_COIL_LOW limits are compatible with that routing sensitivity but raw logs do not contain per-part coordinates, so causality is unproven.",
+    "trial2": "Onlycompact3 mixed-package boundary/order changed; pure graph hints,2/4/5 and route selection stayed. Seed17 new3 cheapscore1770364 beat old2 1871029 and displaced2 from compactcategory. Selected4/3/5 all rejected. Existingcategory score is not a routing witness.",
+    "next": "A concrete integration must preserve useful proven route coverage under the same3-route cap while evaluating narrower primary/boundary packing. Replacing a candidate without addressing score-based eviction is insufficient; no further geometry or parameter sweep performed."
+  },
+  "reviews": {
+    "root": "Reviewed actualdiff, route records, both outcomes, exact restoration and original8. No production7 published.",
+    "independent": "Read-only staticreviews of both trialdiffs/freeze/guards. Identified broad target movement and mixed-first hypothesis; staticPASS did not certify routing/density. Native217FAIL retained."
+  },
+  "reusedProof": "Accepted6 native212/GWT59/actual224/225 retains only its previously recorded scope after all20 rawsource hashes restore exact.",
+  "notRun": [
+    "Broader native216/218",
+    "GWT61/62",
+    "newtrial browser/save/side campaign",
+    "unchangedQ30 corpora",
+    "humanU05/normalpopulation"
+  ],
+  "remaining": {
+    "additional30Percent": "OPEN_NOT_ACHIEVED",
+    "twoDPacking": "NOT_EXHAUSTED_NO_OPTIMUM_CLAIM",
+    "backside": "DEFERRED: scoped capabilities/oppositePTH-tail/body/probe/service guards and actualflip/repair/save proofs still missing",
+    "normalHardRb56": "HELD",
+    "modestHost": "DEFERRED_BY_OWNER"
+  },
+  "resources": "Native21540.495s PASS; native21736.587s FAIL; bothfrozeninput/ownedjob/handles/drainers/scratch cleanup complete. Serialgates after04:00; read-only samples15%/7%CPU with no relevantcompetingbuilds. No unrelatedprocess/focus/ADB/tablet action.",
+  "preservation": "Both11-file trials/rawdiffs/rawreceipts preserved in taskstorage; exactownrestoration/moves only; original8 byte-exact/unstaged; noemail/mainmerge/forcepush/deletion/Core/Android/otherrepo. HistoricalQ30 unknown91.616failure/6missinginventories/lateaudit and allpreviousFAILs remain."
+}

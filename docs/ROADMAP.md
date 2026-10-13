@@ -7,19 +7,26 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Remaining PCB region assessment complete; private6 retained**
-Measured largest remaining53/60 gaps and binding common isolation/edgeport/access
-constraints. One existing-owner completed-graph reflow passed native213 structural
-checks but was rejected:60 area-.24%,53 area/gap unchanged, copper/locality worse.
-Accepted6 production restored byte-exact; trial code preserved. No broader build/
-browser/saved7 campaign. Backside needs scoped permissions and opposite-face
-lead/access guards; it does not remove the common corridor. Evidence favors
-domain-aware2D macro packing as the next concrete design, rather than another
-local-score/spacing sweep. Additional30%, human U05/normal population, HARD/normal
-release and modest-host proof remain open in their prior recorded scopes.
-[Actual regions, baseline images, experiment and limits](task-evidence/PCB/remaining-regions-r1/README.md).
-No unrelated milestone or unchanged Q30 corpus; the task handoff records normal
-publication verification of this documentation checkpoint.
+**Current task:** **Domain-packing trials rejected; private version 6 retained**
+Native 215 domain-capacity hint trial passed structural checks but grew the 60-part board's outline
+18.22%; the 53-part board stayed exact version 6. A narrower mixed-boundary-first compact candidate 3 trial preserved
+pure graph hints/2/4/5 but native 217 FAIL lost the 53-part board's route: better preliminary score evicted
+successful candidate 2 from the routed compact category; candidates 4/3/5 all rejected. The 60-part board stayed exact version 6.
+Both trials, code and raw receipts preserved; all 20 accepted version 6 owners restored exact,
+original 8 untracked unchanged. No broader native/GWT/browser/save trial gates.
+Next concrete design must address route coverage under the existing 3-route cap
+before another primary/boundary geometry trial. The fixed 80-unit isolation is necessary;
+the entire 53-part board's lower-left primary-side patch is not inherently reserved. Packing
+remains open, not exhausted. Backside guards still missing; additional 30%, human
+U05/normal population/HARD-release and modest-host scopes remain as recorded.
+[Two trials, actual outcomes and limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).
+No general roadmap advancement or unchanged Q30 corpus. ServerCenter priority
+respected; task publication receipt records exact normal push verification.
+
+**Previous region assessment:** Completed-neighbour native 213 was rejected
+(60 area-.24%,53 unchanged); exact version 6 restored. Actual baseline regions/images and
+the assessed backside limitations remain
+[in that packet](task-evidence/PCB/remaining-regions-r1/README.md).
 
 **Previous private6 task:** **Finite private6 single-group density accepted**
 All parts/pads stay.42/44 outline area falls6.35%/7.99%,40 falls2.36%;60/53/54
