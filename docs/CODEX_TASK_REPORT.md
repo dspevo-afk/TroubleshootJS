@@ -1,4 +1,48 @@
-# Current checkpoint: private6 single-group density accepted; final gates complete
+# Current checkpoint: remaining PCB region assessment complete; private6 retained
+
+2026-10-13. Implementation remains verified
+`6b5d1d2fb9eeed65f13bea2c8c51021a66282b28` on `codex/q60-faulted-profile-counts`.
+This documentation checkpoint is sealed before commit; task publication receipt
+records its resulting SHA/normal push. No main merge/email. All twenty accepted6
+raw source/test/owner hashes are restored exactly; native212/GWT59/224/225 proof
+retains its scope. No accepted7 source or new save interpretation is shipped.
+
+Actual remaining regions mapped:53 protected-free54.80%, largest2030x900 lower
+left (23.70% outline);60 free56.87%,1310x670 upper middle (10.39%);54 lower-left
+650x910 (9.28%).42/44 largest570x660/840x210 (8.04%/3.82%). Grid10 reserves full
+access/packages, both copper faces/vias/silk/isolation; free is not packability.
+The80-unit common primary/secondary corridor, edge ports and unequal domain
+occupancy bind placement. Actual53/60/54 baseline images were inspected; earlier5
+view sources are explicit and exact6 world geometry is independently established.
+
+One completed-neighbour private7 reflow through the existing owner was tried
+after04:00UTC, with legal baseline/anchors/roomy5/full validation and original
+60000 evaluations per plan/six placements/three routes/time/work limits.
+Native213 PASS37.403s: routed/admission53/60 roots578, backing205; frozen-input,
+ownedjob/handles/drainers/scratch cleanup PASS. Density REJECTED:60 area-.24%,
+53 unchanged;60 largest empty rectangle-44.15% without meaningful outline gain,
+53's large gap unchanged; copper/locality worsened. No broader native214/GWT60/
+browser/save/side flow run. All11 trial files/diff preserved in task archive;
+only own changes restored/moved. Original8 untracked byte-exact/unstaged; no owned
+runtime remains. No retry/small-metric sweep or unchanged Q30 corpus.
+
+Backside pose/face/PTH/fingerprint primitives exist; RB56 package permissions
+and planner remain TOP/planar. Conservative opposite-face PTH-tail/body/access
+guards, scoped capabilities and real flip/probe/Shop/save tests are missing.
+Global permission changes would alter prior dependencies. Best next inference:
+domain-aware2D macro packing, narrowing primary entry/conversion/feedback and
+aligning UAC/UFB with the secondary boundary using full demand. A second face
+does not remove isolation/port constraints; no backside benchmark is claimed.
+
+[Assessment, rejected trial and actual baseline images](task-evidence/PCB/remaining-regions-r1/README.md).
+Additional30% remains open. Human U05/normal population NOT RUN; HARD/normal
+RB56 HELD; modest host owner-deferred/RPG shelved. Prior failures, Q30 unknown
+91.616s failure/6 missing scratch inventories/late audit remain. No Core/Android/
+GPU/otherrepo/process/focus/ADB/tablet action. ServerCenter release window respected;
+dated availability authority persists. Next: a bounded domain-aware placement
+design, not another spacing/local-score sweep or general roadmap milestone.
+
+# Previous checkpoint: private6 single-group density accepted; final gates complete
 
 2026-10-13. Finite PCB refinement accepted over published
 `200bdf6fd08121ae073171bc66198570cea5bbf4` on `codex/q60-faulted-profile-counts`.

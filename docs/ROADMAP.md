@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Finite private6 single-group density accepted**
+**Current task:** **Remaining PCB region assessment complete; private6 retained**
+Measured largest remaining53/60 gaps and binding common isolation/edgeport/access
+constraints. One existing-owner completed-graph reflow passed native213 structural
+checks but was rejected:60 area-.24%,53 area/gap unchanged, copper/locality worse.
+Accepted6 production restored byte-exact; trial code preserved. No broader build/
+browser/saved7 campaign. Backside needs scoped permissions and opposite-face
+lead/access guards; it does not remove the common corridor. Evidence favors
+domain-aware2D macro packing as the next concrete design, rather than another
+local-score/spacing sweep. Additional30%, human U05/normal population, HARD/normal
+release and modest-host proof remain open in their prior recorded scopes.
+[Actual regions, baseline images, experiment and limits](task-evidence/PCB/remaining-regions-r1/README.md).
+No unrelated milestone or unchanged Q30 corpus; the task handoff records normal
+publication verification of this documentation checkpoint.
+
+**Previous private6 task:** **Finite private6 single-group density accepted**
 All parts/pads stay.42/44 outline area falls6.35%/7.99%,40 falls2.36%;60/53/54
 remain exact accepted5. Existing grouped tight0/1 plus actual two-tight/roomy
 route comparison stay within six placements/three routes. Fresh6 and saved1-5

@@ -5549,3 +5549,27 @@ reductions and conservative internal-empty-rectangle metrics are separate from
 mixed locality/copper metrics and do not certify optimal/manufacturable packing.
 View/label/fit owners stay byte-exact; final actual views are fresh. Human U05,
 normal-population release and the additional30% target remain open.
+
+
+## Measured remaining-domain packing boundary
+
+Accepted private6 remains current. The original common80-unit primary/secondary
+conductive-courtyard corridor, inward edgeport anchoring and full package/access
+envelopes are preserved across both copper faces. Current53/60 have substantial
+protected-free regions despite package/access occupancy36.62%/36.21% of their
+sampled area. Full-axis compaction does not remove distributed2D pockets.
+
+A completed-graph local reflow experiment retained the current legal poses,
+existing score/rings and per-plan60000 evaluation limit, with full validation
+and candidate5 unchanged. Native213 passed structural53/60 routing/admission,
+but53 did not shrink
+and60 gained only.24% area while copper/locality worsened. It was rejected;
+no placement7 interpretation or implementation is shipped. Accepted6 raw owners
+are restored byte-exact. [Actual assessment and limits](task-evidence/PCB/remaining-regions-r1/README.md).
+
+Backside pose mirroring, face inspection/PTH access and side fingerprints exist.
+RB56 side permission/planner geometry is still TOP/planar. A side-capable private
+slice must preserve prior package dependency bytes and explicitly guard PTH
+tails versus opposite bodies/probe/service access, with actual repair/save proof.
+The current evidence favors demand-based primary/secondary macro packing first;
+neither extra copper faces nor body faces remove the declared common corridor.

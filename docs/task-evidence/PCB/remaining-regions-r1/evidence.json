@@ -1,0 +1,506 @@
+{
+  "schema": 1,
+  "status": "PASS_CURRENT6_REGION_ASSESSMENT_PRIVATE7_REFLOW_REJECTED",
+  "createdUtc": "2026-10-13T04:07:22.814698+00:00",
+  "implementationCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+  "sourceFiles": {
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "f8d6e6cf8d0fdd24d637eae977fc20021568039ac9ef0595c22a20d6c3cf2dc6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+    "tests/contracts/RelBSessionIdentityContractTest.java": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+    "tests/contracts/U06SessionSaveContractTest.java": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+    "tests/contracts/PcbSavedRealismGeometryContractTest.java": "e2196cf9f68ba73d0df902a4edc31b7514792034f7cfa3e6f41da0931d6be229",
+    "scripts/verify-current-contracts.ps1": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+    "src/com/lushprojects/circuitjs1/client/PcbScreenLabelLayout.java": "4c21478231c8212ca8796ea1c6bad43763df8cdfc572c0baf8eaed4b150d2b2d",
+    "tests/contracts/PcbScreenLabelLayoutContractTest.java": "f14fa343c78f86a280e18f81357d873e2d2f2dca3daf5fbc4ec27800e4208089",
+    "tests/contracts/PcbSavedDensityGeometryContractTest.java": "fe5a9930a9c5ffa172e21b3dfd8c6df6225d8d99af816c61dc8eddfa1fa09056",
+    "src/com/lushprojects/circuitjs1/client/PcbViewport.java": "d6c5d96d5f0a049c85542e0cb87ccb7be6f565b67c814b2d9f1673cad73d6775",
+    "src/com/lushprojects/circuitjs1/client/PartsTrayViewport.java": "f2cce6089c44a699f33f7d253f6b3d2468bb016e8c31ced13d3a84c33d92e45d",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "0c8eda0a79ee9defc9928b7efe92b45924dbbfcde7aa08006dbe47d7e5cba58a",
+    "src/com/lushprojects/circuitjs1/client/U01ViewportChecks.java": "6b5092b40214db41b92bf7963482a60bdcdfc216948889e7eeb15bfaafa5f37c",
+    "tests/contracts/PcbSingleGroupDensityContractTest.java": "cb5190ce483cbda7c36e3edeaadea0bcb1536b5041be199081cb657f024ff864",
+    "tests/contracts/PcbSavedLargeGeometryContractTest.java": "9ffafc963d3ca32845abf210bc2ad32b1518650d7b9ce01b46c62ac6b58c698a"
+  },
+  "regionBaseline": {
+    "status": "CURRENT6_ACTUAL_REGION_BASELINE_LIGHTWEIGHT_ANALYSIS",
+    "createdUtc": "2026-10-13T03:45:56.648269+00:00",
+    "baseCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+    "evidenceSha256": "3197b26b239ac5d2d8b878f25400c2b78b20c396dc52f78201fb1a582208214a",
+    "rows": [
+      {
+        "parts": 53,
+        "seed": "17",
+        "width": 4142,
+        "height": 1861,
+        "area": 7708262,
+        "selectedAttempt": 2,
+        "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
+        "packageAccessOccupiedPercent": 36.62,
+        "protectedFreePercent": 54.8,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1000,
+          "width": 2030,
+          "height": 900,
+          "area": 1827000
+        },
+        "emptyRectangleShareOfBoardPercent": 23.7,
+        "actualFitPath": "after53-fit.png",
+        "actualFitSha256": "12b397c504e9ca2eb558586b07cdf62b50e7405feaf6347df9421f7995d8ffab",
+        "viewSource": "220/current5 exact6 world"
+      },
+      {
+        "parts": 60,
+        "seed": "-1022",
+        "width": 4111,
+        "height": 2054,
+        "area": 8443994,
+        "selectedAttempt": 4,
+        "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
+        "packageAccessOccupiedPercent": 36.21,
+        "protectedFreePercent": 56.87,
+        "largestProtectedEmptyRectangle": {
+          "x": 1220,
+          "y": 50,
+          "width": 1310,
+          "height": 670,
+          "area": 877700
+        },
+        "emptyRectangleShareOfBoardPercent": 10.39,
+        "actualFitPath": "after60-fit.png",
+        "actualFitSha256": "292c26672c54853626b15bebdaf005309bfb73afa7f4591a9dc07fc75ebb7c92",
+        "viewSource": "223/current5 exact6 world"
+      },
+      {
+        "parts": 54,
+        "seed": "42",
+        "width": 3131,
+        "height": 2035,
+        "area": 6371585,
+        "selectedAttempt": 4,
+        "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16",
+        "packageAccessOccupiedPercent": 43.38,
+        "protectedFreePercent": 47.56,
+        "largestProtectedEmptyRectangle": {
+          "x": 40,
+          "y": 1145,
+          "width": 650,
+          "height": 910,
+          "area": 591500
+        },
+        "emptyRectangleShareOfBoardPercent": 9.28,
+        "actualFitPath": "after54-fit.png",
+        "actualFitSha256": "54fd227a4e32fbcbc1f2ed94fc20b243e99456cbc068e99a9e872541bf4ec44c",
+        "viewSource": "223/current5 exact6 world"
+      },
+      {
+        "parts": 40,
+        "seed": "-1017",
+        "width": 3701,
+        "height": 1384,
+        "area": 5122184,
+        "selectedAttempt": 1,
+        "geometrySha256": "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b",
+        "packageAccessOccupiedPercent": 41.46,
+        "protectedFreePercent": 49.39,
+        "largestProtectedEmptyRectangle": {
+          "x": 370,
+          "y": 50,
+          "width": 1390,
+          "height": 320,
+          "area": 444800
+        },
+        "emptyRectangleShareOfBoardPercent": 8.68,
+        "actualFitPath": "after40-fit.png",
+        "actualFitSha256": "4f150aedc472abb744f342f545e30f39efe2440e4717a2f3d004fbe994d1ebb9",
+        "viewSource": "224/current6"
+      },
+      {
+        "parts": 42,
+        "seed": "0",
+        "width": 3401,
+        "height": 1376,
+        "area": 4679776,
+        "selectedAttempt": 1,
+        "geometrySha256": "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
+        "packageAccessOccupiedPercent": 45.16,
+        "protectedFreePercent": 47.31,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 760,
+          "width": 570,
+          "height": 660,
+          "area": 376200
+        },
+        "emptyRectangleShareOfBoardPercent": 8.04,
+        "actualFitPath": "after42-fit.png",
+        "actualFitSha256": "1335d66dbeb59830bbd0d43e4ab89b41e3047007e7c2376e7070af5cccb1ca1c",
+        "viewSource": "224/current6"
+      },
+      {
+        "parts": 44,
+        "seed": "-1004",
+        "width": 3600,
+        "height": 1284,
+        "area": 4622400,
+        "selectedAttempt": 0,
+        "geometrySha256": "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28",
+        "packageAccessOccupiedPercent": 48.62,
+        "protectedFreePercent": 41.9,
+        "largestProtectedEmptyRectangle": {
+          "x": 2230,
+          "y": 50,
+          "width": 840,
+          "height": 210,
+          "area": 176400
+        },
+        "emptyRectangleShareOfBoardPercent": 3.82,
+        "actualFitPath": "after44-fit.png",
+        "actualFitSha256": "466136ae3ba2bd3cbfdf72ef88f6467fefc11fcf76298fbd744bf42a0651ea09",
+        "viewSource": "224/current6"
+      }
+    ],
+    "constraints": {
+      "isolation": "One common80-unit primary/secondary corridor on either axis, built from complete conductive domain courtyard unions, not one80gap perpart orperface.",
+      "bodyAccess": "Full selection+routing+pad escape envelopes plus20 access and top label margin; all must fit and separate.",
+      "anchors": "Primary connector LEFT, secondary connectors RIGHT; edgeport x positions can bind outlinewidth.",
+      "compaction": "Only full-axis unoccupied strips currently contract; 2D holes remain if otherparts or copper occupy same x/y ranges.",
+      "placement": "Initial greedy medium search only sees previouslyplaced neighbours; no medium postassembly full-graph relocation pass. Fallback takes firstlegal seeded escape.",
+      "routing": "Required actual P07 admission/clearance/quality, sixplacements/3routes,60k medium eval and90s/640/5s unchanged."
+    },
+    "limits": "Conservative grid10 largestrectangle includes bothcopper/vias/silk/access/isolation; no packability/removableoutline/mechanical certification. Images actual, no new runtime.",
+    "heavyWork": "Not started during ServerCenter04:00UTC releasewindow; dated PCcontinuation authority persists, unrelated processes untouched."
+  },
+  "baselineEvidenceSha256": "3197b26b239ac5d2d8b878f25400c2b78b20c396dc52f78201fb1a582208214a",
+  "images": [
+    {
+      "path": "baseline53-fit.png",
+      "sha256": "12b397c504e9ca2eb558586b07cdf62b50e7405feaf6347df9421f7995d8ffab",
+      "bytes": 341815,
+      "provenance": "Actual accepted5/source220; exact6 world geometry, earlier fit inset."
+    },
+    {
+      "path": "baseline60-fit.png",
+      "sha256": "292c26672c54853626b15bebdaf005309bfb73afa7f4591a9dc07fc75ebb7c92",
+      "bytes": 309760,
+      "provenance": "Actual final223 accepted5 render; exact6 world geometry."
+    },
+    {
+      "path": "baseline54-fit.png",
+      "sha256": "54fd227a4e32fbcbc1f2ed94fc20b243e99456cbc068e99a9e872541bf4ec44c",
+      "bytes": 240111,
+      "provenance": "Actual final223 accepted5 render; exact6 world geometry."
+    }
+  ],
+  "rejectedExperiment": {
+    "status": "REJECTED_PRIVATE7_NATIVE_PASS_NOT_MEANINGFUL_DENSITY_ACCEPTED6_RESTORED",
+    "createdUtc": "2026-10-13T04:04:21.576970+00:00",
+    "implementationCommit": "6b5d1d2fb9eeed65f13bea2c8c51021a66282b28",
+    "reason": "53 area/largest empty rectangle unchanged;60 area only-.24% despite largest empty rectangle-44.15%; copper/locality worsen. Do not publish extra refinement complexity for a metric-only gain.",
+    "nativeGate": {
+      "status": "PASS",
+      "operationSeconds": 37.403,
+      "roots": 2,
+      "geometryAssertions": 578,
+      "backingAssertions": 205,
+      "sourceInputsUnchanged": true,
+      "cleanupVerified": true,
+      "hostReceiptSha256": "48545080f68f761f499fb306fa083382a3653d32f5799f0421c809e7ec57145e",
+      "launchSha256": "2619b5cbdcca3cf0ad54fab7b21f9aaab9ebc21187d7e480f013a1014af2b884",
+      "fullOutputSha256": "00996a22333dfb9dfa369263ac9945e131e396c1d2ebd50214fa184418c42dc5"
+    },
+    "comparison": [
+      {
+        "parts": 60,
+        "seed": "-1022",
+        "before": {
+          "seed": "-1022",
+          "version": 6,
+          "accepted": true,
+          "parts": 60,
+          "pads": 143,
+          "width": 4111,
+          "height": 2054,
+          "area": 8443994,
+          "courtyardArea": 1061240,
+          "regionBoundingAreaSum": 9569831,
+          "sameRegionCenterManhattanMean": 978.8,
+          "twoPadNetSpanSum": 3120,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 41970,
+          "traceSegments": 269,
+          "vias": 48,
+          "selectedAttempt": 4,
+          "routingExpansions": 4665056,
+          "geometrySha256": "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e"
+        },
+        "after": {
+          "seed": "-1022",
+          "version": 7,
+          "accepted": true,
+          "parts": 60,
+          "pads": 143,
+          "width": 4101,
+          "height": 2054,
+          "area": 8423454,
+          "courtyardArea": 1061240,
+          "regionBoundingAreaSum": 10109141,
+          "sameRegionCenterManhattanMean": 986.9,
+          "twoPadNetSpanSum": 3110,
+          "twoPadNetCount": 11,
+          "copperManhattanLength": 43010,
+          "traceSegments": 266,
+          "vias": 48,
+          "selectedAttempt": 4,
+          "routingExpansions": 4397517,
+          "geometrySha256": "c8691fe6d6d1dde75b5b1f90bb3325efc99ee8fe9c228e4411c1f4846f17566c"
+        },
+        "areaChangePercent": -0.24,
+        "whitespaceBefore": {
+          "seed": "-1022",
+          "version": 6,
+          "parts": 60,
+          "gridUnits": 10,
+          "sampledCells": 84255,
+          "packageAccessOccupiedCells": 30506,
+          "protectedFreeCells": 47913,
+          "protectedFreeFraction": 0.5686665479793485,
+          "largestProtectedEmptyRectangle": {
+            "x": 1220,
+            "y": 50,
+            "width": 1310,
+            "height": 670,
+            "area": 877700
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "whitespaceAfter": {
+          "seed": "-1022",
+          "version": 7,
+          "parts": 60,
+          "gridUnits": 10,
+          "sampledCells": 84050,
+          "packageAccessOccupiedCells": 30538,
+          "protectedFreeCells": 46557,
+          "protectedFreeFraction": 0.5539202855443188,
+          "largestProtectedEmptyRectangle": {
+            "x": 1220,
+            "y": 1530,
+            "width": 860,
+            "height": 570,
+            "area": 490200
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "largestEmptyRectangleAreaChangePercent": -44.15
+      },
+      {
+        "parts": 53,
+        "seed": "17",
+        "before": {
+          "seed": "17",
+          "version": 6,
+          "accepted": true,
+          "parts": 53,
+          "pads": 129,
+          "width": 4142,
+          "height": 1861,
+          "area": 7708262,
+          "courtyardArea": 998648,
+          "regionBoundingAreaSum": 10470110,
+          "sameRegionCenterManhattanMean": 932.3237179487179,
+          "twoPadNetSpanSum": 4930,
+          "twoPadNetCount": 12,
+          "copperManhattanLength": 44900,
+          "traceSegments": 249,
+          "vias": 48,
+          "selectedAttempt": 2,
+          "routingExpansions": 5136281,
+          "geometrySha256": "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772"
+        },
+        "after": {
+          "seed": "17",
+          "version": 7,
+          "accepted": true,
+          "parts": 53,
+          "pads": 129,
+          "width": 4142,
+          "height": 1861,
+          "area": 7708262,
+          "courtyardArea": 998648,
+          "regionBoundingAreaSum": 10616850,
+          "sameRegionCenterManhattanMean": 937.7724358974359,
+          "twoPadNetSpanSum": 4930,
+          "twoPadNetCount": 12,
+          "copperManhattanLength": 45090,
+          "traceSegments": 253,
+          "vias": 48,
+          "selectedAttempt": 2,
+          "routingExpansions": 5150570,
+          "geometrySha256": "15e86972fd55aacd344913ea387bac075bd59cd2abd8feca8199e8238690949e"
+        },
+        "areaChangePercent": 0.0,
+        "whitespaceBefore": {
+          "seed": "17",
+          "version": 6,
+          "parts": 53,
+          "gridUnits": 10,
+          "sampledCells": 77004,
+          "packageAccessOccupiedCells": 28201,
+          "protectedFreeCells": 42202,
+          "protectedFreeFraction": 0.5480494519765207,
+          "largestProtectedEmptyRectangle": {
+            "x": 60,
+            "y": 1000,
+            "width": 2030,
+            "height": 900,
+            "area": 1827000
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "whitespaceAfter": {
+          "seed": "17",
+          "version": 7,
+          "parts": 53,
+          "gridUnits": 10,
+          "sampledCells": 77004,
+          "packageAccessOccupiedCells": 28201,
+          "protectedFreeCells": 42200,
+          "protectedFreeFraction": 0.5480234792997767,
+          "largestProtectedEmptyRectangle": {
+            "x": 60,
+            "y": 1000,
+            "width": 2030,
+            "height": 900,
+            "area": 1827000
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "largestEmptyRectangleAreaChangePercent": 0.0
+      }
+    ],
+    "archive": [
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "trialSha256": "da513710ff11498d9923606510e9c8090fe18bf323002c6862185258424a5a6b",
+        "beforeSha256": "9e85260ec87a2b62028f1a919a30a61d8659f34319ced11fdc026068302d10bb",
+        "archiveName": "verify-current-contracts.ps1"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+        "trialSha256": "a8a758eff5cd46b1dab426144859b7426c17b18c7503f822f1d4369b96aa91a3",
+        "beforeSha256": "3ed6e6f64f4514d9618c9a8babf7253cc13ef874a818b5e84a1b691a986170af",
+        "archiveName": "GenerationRequest.java"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+        "trialSha256": "5f5dcdf50b625e322d835c6e36d70b4452b4f718a01ef07e151c213c9d209ed9",
+        "beforeSha256": "cb22155987bd38118850349283be36bb2654d236f1c4ec21f8d94017432f3b01",
+        "archiveName": "PcbPlacementConstraints.java"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "trialSha256": "8707d2c5790d52ad533275e5bd692f56ff87fba2f111f8b6e80f551bd51cf3d0",
+        "beforeSha256": "c6802f2717fe0aa1e79adc9b35c59963db896b5f1fd9e87638b47c596671ce57",
+        "archiveName": "PcbPlacementPlanner.java"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+        "trialSha256": "f1b41096dac96a0809c344bf0e0f05343891efd1e4d5810501e7302617c5d29c",
+        "beforeSha256": "8d9d82032641bf84648f9a223b42472abbfe5004dbd7cc282573b07f670fc959",
+        "archiveName": "PlayerSessionReplay.java"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+        "trialSha256": "e066d89c0d4d9c35e551a9a1380a7027e0d2aa8bbc14a6a8adbbbb0982abe530",
+        "beforeSha256": "1c42ca7dde113b7cf01a54a1e9bd0bd8ae5e87d87b0b09d2f8793cfb468dbe97",
+        "archiveName": "Rb56Placement.java"
+      },
+      {
+        "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+        "trialSha256": "4e8806ede99b2e033c41c25327d5c580898fc8ee31a8be400987e4a860e83dc7",
+        "beforeSha256": "34a5dfad3c619fc763c7bbc8a39f8d18d4dd210e518efcaf80e2be8ed469a20b",
+        "archiveName": "PcbFunctionalGroupingContractTest.java"
+      },
+      {
+        "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+        "trialSha256": "b13e3a34a6e074150d565fa058139b023d6546eefe68143b74baefc8cd72ae5a",
+        "beforeSha256": "1c6b1f251aa4da95234ac83f364c5e3926dc3c06867f550130f9f8d0dbd1108d",
+        "archiveName": "RelBSessionIdentityContractTest.java"
+      },
+      {
+        "path": "tests/contracts/U06SessionSaveContractTest.java",
+        "trialSha256": "0e7a2c4777ded0adeed2a86d4ea6e579a01f6f89abfe504c6998ec2296e55008",
+        "beforeSha256": "f50d6e53147ccc3b4ec3ea1cc59c06af88367ebecbe74b3038a50d68166310ce",
+        "archiveName": "U06SessionSaveContractTest.java"
+      },
+      {
+        "path": "tests/contracts/PcbFocusedReflowContractTest.java",
+        "trialSha256": "38aee964d908006e35bb9b3dc16bb1249f0f026a40d97c72d988ad8cdef5ae49",
+        "archiveName": "PcbFocusedReflowContractTest.java",
+        "taskCreatedFilePreservedByExactMove": true
+      },
+      {
+        "path": "tests/contracts/PcbSavedGroupedGeometryContractTest.java",
+        "trialSha256": "56e4d357b9a318fa5361a3c610a95a354b38840fb11919b4a300694164cad9aa",
+        "archiveName": "PcbSavedGroupedGeometryContractTest.java",
+        "taskCreatedFilePreservedByExactMove": true
+      }
+    ],
+    "rawDiffSha256": "7887f1f2802cce0a0221cfb18657d6831bd2982322111ac28e27bdb60dd2a92b",
+    "sourceFreezeSha256": "477b55948223a65b3242df3f8d3e0fb928606dafb395ddc804bed6ced5d3a7e4",
+    "limits": {
+      "placements": 6,
+      "routesPerPolicy": 3,
+      "maxMediumEvaluationsPerPlacement": 60000,
+      "perJvmMillis": 60000,
+      "originalJobMillis": 90000,
+      "originalJobWork": 640,
+      "originalUnitMillis": 5000,
+      "originalHoldMillis": 360000
+    },
+    "gatesNotRun": [
+      "native-r214 broader current/old6/codec gate",
+      "build-r60 GWT",
+      "new browser/save/side/userflow campaign"
+    ],
+    "accepted6RawSourcesByteExact": true,
+    "rejectedCodePreserved": true,
+    "originalEightByteExactAndUnstaged": true,
+    "noOwnedRuntime": true,
+    "schedule": "Only native213 launched after04:00UTC; earlier work light; no competing build processes in03:59 read-only4%CPU sample; no unrelated process/focus/ADB changes."
+  },
+  "constraintAssessment": {
+    "isolation": "One common80-unit primary/secondary corridor between complete conductive courtyard unions across the board; no perface waiver.",
+    "access": "Full package/selection/routing/escape envelopes with original access margins; P07 copper/quality/access stay fail-closed.",
+    "anchors": "Primary entry LEFT; secondary ports RIGHT. Edgeport spread and unequal domain occupancy can bind outline.",
+    "compactor": "Contracts only whole-axis free strips; partial2D pockets persist. Batch axis rollback is a possible missedcut mechanism, not established for these boards."
+  },
+  "backsideAssessment": {
+    "existing": "Mirrored side-aware poses/fingerprints, face switching and PTH conductor access exist.",
+    "missing": "RB56 package side permission is TOP only; planner treats full envelopes as planar. Opposite-face layout body checks lack explicit through-hole lead-tail versus opposite-body/access guards.",
+    "compatibility": "Global package side-list edits would change dependency bytes; use a new private interpretation and scoped package capabilities, preserving1-6 identities and Shop/service compatibility.",
+    "judgment": "Evidence currently favors domain-aware2D packing before backside. Existing free area and unequal primary/secondary macroshape need rebalancing; a second face does not waive isolation or anchored ports.",
+    "inferenceLimit": "No backside candidate was implemented or benchmarked; this is a code/constraint assessment, not proof of the globally best physical layout."
+  },
+  "nextAction": "Plan narrower primary entry/conversion/feedback occupancy and align mixed converter/opto boundary with secondary groups using actual full demand; validate existing common corridor, then actual route/images. Avoid another local-score or spacing-factor sweep.",
+  "qualification": {
+    "current6": "Previous native212/GWT59/224/225 accepted proof reused only after exact raw source restoration; production/electrical/side/save owners unchanged.",
+    "experiment7": "Native213 routed/admission/backing only; not saved6/7 file or side/userflow proof. Trial unpublished and all11 codefiles/diff preserved in task-owned archive.",
+    "humanU05": "NOT RUN",
+    "normalPopulation": "NOT RUN",
+    "publicHardAndNormalRb56": "HELD",
+    "modestHost": "DEFERRED_BY_OWNER_NOT_RUN",
+    "additional30Percent": "OPEN_NOT_ACHIEVED_OR_GUARANTEED"
+  },
+  "resources": "Native21337.403s PASS, source/ownedjob/handles/drainers/scratch cleanup PASS. No broader gate/GWT/browser/unchangedQ30 run; no owned runtime remains.",
+  "originalEightByteExactAndUnstaged": true,
+  "noEmail": true,
+  "noMainMerge": true,
+  "priorRisks": "All previous failed/rejected trials stay historical; Q30 unknown91.616s failure,6 missing scratch inventories and late audit remain.",
+  "independentReview": "PASS_READ_ONLY_ASSESSMENT: metrics/limits/private6 preservation/3actualPNG hashes/privacy agree. No new runtime, private7 render or backside proof claimed."
+}
