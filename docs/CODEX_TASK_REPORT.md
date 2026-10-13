@@ -1,4 +1,56 @@
-# Current checkpoint: domain-packing trials rejected; accepted version 6 restored
+# Current checkpoint: guarded private7 routing and 60-part density qualified
+
+2026-10-13. Base `24cf8482` on `codex/q60-faulted-profile-counts`; enclosing
+commit is the accepted candidate. Continued the referenced session's PCB priority.
+Repeated groups protect moderate4/compact2 from preliminary-score eviction;
+roomy5 remains unless that same routing policy already succeeds, then slot three
+may explore the best remaining placement. Six placements/three routes and every
+physical/electrical/evaluation/time cap stay. No domain geometry trial was added.
+
+The60-part seed-1022 now accepts tight candidate1: outline8443994 ->7395541
+(-12.42%),4111x2054 ->3571x2071, all60 parts/143 pads. Five other representative
+current geometries stay exact6; all six saved6 hashes stay exact. Fresh private7
+and saved6 dispatch separately; publicalpha5/sessionmodel1/epoch16 stay. This
+does not finish the additional30%, optimal packing, human U05 or normal release.
+
+PASS: guarded ranking7932 assertions/all720 permutations; U06save34960;
+privateidentity100 (final message-only correction freshly rerun); actual current
+physical/admission1498; saved6literal1494; full dependency capture1166. Both
+focused native phases plus final identity phase exited0 with verified cleanup.
+Independent twelve-row/prior-hash/actual-route-chain audit PASS. First broad
+all-current-equal audit assertion FAIL was corrected to recognize60's measured
+change; no assertion/golden was weakened. Root source/test/image review; no
+independent agent review. Full native/global population NOT RUN.
+
+Final actual JDK8/GWT PASS all five,89.881s compile/2.749s link; strong name
+B8309382CF2D3FDEE43A4593CDF56A29. Visible built-in Browser1440x900:60 cold PASS
+75.921s/589work/1.389s max unit; fit/underside, unrepaired customer FAIL,
+4.996V U1 rail, actual RSA-body selection, powered Remove guard, OFF,
+Save/FileReader restore PASS77.213s, real Shop resistor acquisition/guarded
+remove/install, powered repaired customer PASS and Close. Seven cleanup flags
+PASS;425.469s total includes cold;349.548s retained is below360s. Existing6-44
+actual FileReader/resave preserves exact replay/realization/history/sources/
+damage/fuses. Live service counters advance before resave; their signature and
+the build strong name change, as the field-by-field receipt records. Its intentionally unrepaired final
+view is raw FAIL with all cleanup PASS, not a whole-flow PASS.
+
+Earlier3s locator deadlines and a chooser timeout/reset are recorded as browser
+automation failures; recovered after visible state inspection. Product receipts
+remain separate. Source-guided engineering input is not human calibration or
+CDP/OS-input-wrapper certification. Five inspected images are retained with the
+older before60 source/fit-inset limit explicit. [Evidence and portable receipts](task-evidence/PCB/guarded-route-coverage-r1/README.md).
+
+Task preview PID12832 positively stopped/port8899 released; tab closed and
+temporary viewport reset. Native scratch cleanup proved; task evidence/scratch
+and download cleanup recorded before publication. Pre-existing qualification
+worktree evidence/cache data and the Desktop checkout's seven tracked edits plus
+untracked data remain untouched. No main merge/email, retaining prior scope.
+Normal RB56/HARD HELD, human/normal population NOT RUN, modest host owner-deferred;
+Q30 unknown91.616s failure/six missing inventories/late audit and earlier rejected
+trials remain. Next: narrower primary/mixed-boundary geometry with4/2 protected;
+general roadmap advancement remains behind PCB realism.
+
+# Previous checkpoint: domain-packing trials rejected; accepted version 6 restored
 
 2026-10-13. Implementation remains verified
 `6b5d1d2fb9eeed65f13bea2c8c51021a66282b28` on `codex/q60-faulted-profile-counts`;

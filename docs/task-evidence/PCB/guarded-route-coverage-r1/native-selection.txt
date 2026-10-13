@@ -1,0 +1,5 @@
+PASS: guarded PCB route selection contracts assertions=7932
+PASS: U06 session save contracts assertions=34960
+PASS: REL-B session identity contracts assertions=100 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false
+PASS: focused current contracts; 3 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

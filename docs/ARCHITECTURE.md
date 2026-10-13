@@ -5587,3 +5587,25 @@ further integration needs useful route coverage within the same cap. The common 
 isolation corridor remains; the 53-part board's lower primary-side vacancy is not itself a full
 blanket reserve. Two-dimensional/backside possibilities remain unqualified.
 [Actual trials, outcomes and retained limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).
+
+## Guarded private7 route selection and explicit saved6 replay
+
+Fresh private RB56 requests select placement7; SINGLE_GROUP6 remains explicitly
+named and parsed before plan-cache/proof lookup. Saved1-6/publicalpha5/sessionmodel1/
+generationepoch16 retain their interpretation. Planner geometry and package/domain
+constraints are unchanged; private7 changes the existing SeededPcbLayoutGenerator
+route selection owner. Single groups keep0/1/5. Repeated groups preserve actual
+moderate4/compact2/roomy5 order irrespective of preliminary rank. A validated
+success in that same routing policy permits replacing only slot three with the
+best remaining preliminary candidate. P05 success never counts as P07 success;
+missing fallback placements do not enable that replacement. Full original ranks
+remain recorded and route outcomes name the dynamic third request. Existing final
+route crops/quality choose the winner under unchanged6/3/evaluation/resource caps.
+
+This preserves the53-part candidate2 route and admits existing60-part tight1 with
+12.42% less outline area. Five other current representative geometries and all
+six saved6 literal layouts stay exact. Actual new60 Save/FileReader/Shop repair/
+customer retest/cleanup and accepted6 file reconstruction/resave are independently
+recorded. The latter unrepaired closure is raw FAIL/clean cleanup, not full-flow
+PASS. No normal advanced release, optimal packing or new domain geometry is claimed.
+See [finite current evidence](task-evidence/PCB/guarded-route-coverage-r1/README.md).

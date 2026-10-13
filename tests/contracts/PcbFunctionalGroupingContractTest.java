@@ -7,9 +7,19 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=6;
+    private static final int MEASURED_VERSION=7;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
+    // Independent accepted6 receipts, frozen before guarded route selection.
+    private static final long[] SAVED6_AREA={5122184,4622400,8443994,4679776,7708262,6371585};
+    private static final String[] SAVED6_GEOMETRY_SHA256={
+        "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b",
+        "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28",
+        "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
+        "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
+        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
+        "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+    };
     private static final String[] SAVED3_GEOMETRY_SHA256={
         "3cf61944fa5f2002304a32b9061b71691c3e20f1942d7cb1e65a698f221938ef",
         "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1",
@@ -55,6 +65,10 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedLargeGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,5);
         System.out.println("PASS: saved placement5 geometry contracts roots=6 assertions="+checks);
+    }
+    static void verifySavedSingleGroupGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,6);
+        System.out.println("PASS: saved placement6 geometry contracts roots=6 assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -132,6 +146,13 @@ public final class PcbFunctionalGroupingContractTest {
             "published saved3 geometry remains byte-exact: "+seed);
         if(version>=4) reportWhitespace(board,layout,seed,version);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
+        if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved6 geometry stays byte-exact: "+seed);
+        if(version==7) {
+            check((long)outline.width*outline.height<=SAVED6_AREA[index],"no representative outline regression: "+seed);
+            check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
+                "guarded selection keeps original placement and per-policy route caps");
+        }
         if(version==5 && (index==0 || index==1 || index==3))
             check(SAVED4_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
                 "published single-group40/44/42 geometry must not regress: "+seed);

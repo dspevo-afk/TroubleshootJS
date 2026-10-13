@@ -291,6 +291,10 @@ class SeededPcbLayoutGenerator {
                 candidateIndex = mediumPlacementIndex(session,
                     session.mediumOneFacePlacementAttempt);
             }
+            if (session.board.getPlacementConstraints().placementDensityVersion >= 7 &&
+                    hasRepeatedControlRegions(session.board.getPlacementConstraints()))
+                candidateIndex = guardedRouteCandidateIndex(session.mediumPlacements, candidateIndex,
+                    twoLayer ? session.mediumTwoLayerSuccesses : session.mediumOneFaceSuccesses);
             MediumBoardPhysicalPolicy.PlacementCandidate candidate =
                 session.mediumPlacements.get(candidateIndex);
             session.mediumRouteAttempt++;
@@ -440,7 +444,7 @@ class SeededPcbLayoutGenerator {
 
     /** V3 keeps grouped/compact/roomy; v4 keeps tight/retained-compact/proven-roomy.
      * Every interpretation retains the same maximum three routed candidates. */
-    private static Vector<MediumBoardPhysicalPolicy.PlacementCandidate>
+    static Vector<MediumBoardPhysicalPolicy.PlacementCandidate>
             prioritizeGroupedPlacementRouteCandidates(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked, int version, boolean repeatedControl) {
         boolean dense=version>=4;
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> selected=
@@ -473,11 +477,33 @@ class SeededPcbLayoutGenerator {
                 for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
                     if(candidate.attempt==attempt) {selected.add(candidate);break;}
         }
+        if (version >= 7 && repeatedControl) {
+            // Protect the unchanged moderate/compact/roomy route chain from
+            // preliminary scoring. Exploration can use slot three only after
+            // this routing policy has already produced a validated layout.
+            selected.clear();
+            for (int attempt : new int[]{4,2,5})
+                for (MediumBoardPhysicalPolicy.PlacementCandidate candidate : ranked)
+                    if (candidate.attempt == attempt) { selected.add(candidate); break; }
+        }
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> result=
             new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(selected);
         for(MediumBoardPhysicalPolicy.PlacementCandidate candidate:ranked)
             if(!selected.contains(candidate))result.add(candidate);
         return result;
+    }
+
+    /** Policy-local success never substitutes for a missing required P07 route. */
+    static int guardedRouteCandidateIndex(
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> candidates,
+            int routeIndex, int policySuccesses) {
+        // Missing retained placements spend the slot on remaining fallbacks.
+        // A complete 4/2/5 chain is required before displacing roomy5.
+        if (routeIndex != 2 || policySuccesses <= 0 || candidates.size() <= 3 ||
+                candidates.get(0).attempt != 4 || candidates.get(1).attempt != 2 ||
+                candidates.get(2).attempt != 5)
+            return routeIndex;
+        return 3; // Best remaining preliminary rank, with both routed owners retained.
     }
 
     private static boolean hasRepeatedControlRegions(PcbPlacementConstraints constraints) {

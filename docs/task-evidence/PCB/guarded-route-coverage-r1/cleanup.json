@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "scratch": "Exact task-owned directory contained only regular files; removed through checked nonrecursive deletions",
+  "downloads": "Two task-created downloads matched retained evidence SHA256 and were removed",
+  "preview": "Owned PID12832 stopped by maintained command and port8899 released; final listener check empty",
+  "browser": "Task tab closed and temporary viewport reset",
+  "cleanupReview": "Combined recursive command rejected by automatic policy; narrower checked nonrecursive deletion succeeded",
+  "preserved": "Pre-existing worktree evidence/caches, prior session files and Desktop checkout changes untouched"
+}

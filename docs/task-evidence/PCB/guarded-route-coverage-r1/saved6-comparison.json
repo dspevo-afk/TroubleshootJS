@@ -1,0 +1,25 @@
+{
+  "changedLineIndexesZeroBased": [
+    4,
+    6,
+    36,
+    41,
+    46,
+    51,
+    56,
+    61,
+    66,
+    71,
+    76,
+    81,
+    86,
+    91,
+    96,
+    101,
+    106,
+    111
+  ],
+  "oldServiceTime": 0.9993049999999551,
+  "resavedServiceTime": 2.9969049999997353,
+  "interpretation": "Live serviceTime advanced before resave; build and resulting state signature changed. All other fields exact."
+}

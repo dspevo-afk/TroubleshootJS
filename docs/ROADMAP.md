@@ -7,21 +7,26 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Domain-packing trials rejected; private version 6 retained**
-Native 215 domain-capacity hint trial passed structural checks but grew the 60-part board's outline
-18.22%; the 53-part board stayed exact version 6. A narrower mixed-boundary-first compact candidate 3 trial preserved
-pure graph hints/2/4/5 but native 217 FAIL lost the 53-part board's route: better preliminary score evicted
-successful candidate 2 from the routed compact category; candidates 4/3/5 all rejected. The 60-part board stayed exact version 6.
-Both trials, code and raw receipts preserved; all 20 accepted version 6 owners restored exact,
-original 8 untracked unchanged. No broader native/GWT/browser/save trial gates.
-Next concrete design must address route coverage under the existing 3-route cap
-before another primary/boundary geometry trial. The fixed 80-unit isolation is necessary;
-the entire 53-part board's lower-left primary-side patch is not inherently reserved. Packing
-remains open, not exhausted. Backside guards still missing; additional 30%, human
-U05/normal population/HARD-release and modest-host scopes remain as recorded.
-[Two trials, actual outcomes and limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).
-No general roadmap advancement or unchanged Q30 corpus. ServerCenter priority
-respected; task publication receipt records exact normal push verification.
+**Current task:** **Guarded private7 route coverage and 60-part compaction qualified**
+Repeated control groups protect moderate4/compact2 before cheap-score exploration;
+slot three retains roomy5 until that same policy has a validated route. The existing
+60-part seed-1022 now routes tight1: outline area falls12.42%, all60 parts/143 pads.
+Five other representative current layouts and all six saved6 layouts stay exact6.
+All six-placement/three-route/clearance/electrical/evaluation/time limits remain.
+Native selection/save/identity/current+saved6 geometry/dependency PASS; final actual
+JDK8/GWT five permutations and visible60 fit/underside/measurement/guarded Shop
+repair/customer PASS/Save+FileReader/cleanup PASS. Existing6 actual-file restore/
+resave PASS; its intentional unrepaired closure is separately raw FAIL with clean
+resources. Public/HARD/normal RB56 remain held; additional30% and previous limits
+stay open. No main merge/email or broader roadmap milestone started.
+[Current evidence and limitations](task-evidence/PCB/guarded-route-coverage-r1/README.md).
+Next: narrower primary/mixed-boundary packing can preserve routed4/2 under the same
+cap; general roadmap advancement stays behind the PCB realism priority.
+
+**Previous domain trials:** Native215 structural PASS/density regression and
+native217 lost-route FAIL remain rejected. No rejected trial geometry ships;
+[raw outcomes and limits](task-evidence/PCB/domain-packing-rejected-r1/README.md)
+are preserved. The80-unit isolation corridor remains necessary.
 
 **Previous region assessment:** Completed-neighbour native 213 was rejected
 (60 area-.24%,53 unchanged); exact version 6 restored. Actual baseline regions/images and
