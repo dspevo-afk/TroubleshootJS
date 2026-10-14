@@ -31,6 +31,9 @@ User's realism goal remains active until9amAmerica/New_York2026-10-14.
 Next unstarted PCB work: role-specific physical copper widths under routing,
 clearance, conductor/probe and saved-layout contracts; inherited60 timing remains
 open. General roadmap milestones remain behind the user's PCB realism work.
+A small [timing assessment](task-evidence/PCB/placement-fingerprint-cache-r1/README.md)
+separates millisecond capture costs from whole-case construction/routing time;
+the proposed placement-string cache is deferred without production changes.
 
 **Previous packing task:** **Pin-local private10 PCB packing delivered**
 Paired-net passives prefer corresponding pins of already placed chips/relays

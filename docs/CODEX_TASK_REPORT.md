@@ -1,4 +1,22 @@
-# Current checkpoint: private11 accepted; continued realism goal active
+# Current checkpoint: capture timing clarified; cache deferred; realism goal active
+
+2026-10-14. HEAD a4e41a90de483349d7fd61b37f50070aaec5b84a/private11 normal push
+verified on origin/codex/q60-faulted-profile-counts. Enclosing assessment commit
+changes native timing metadata/docs only; production remains that accepted11.
+Full40/55/60 native capture1166 PASS56.179s including proven scratch cleanup.
+Isolated first/repeat capture timings are reported separately from whole-case
+construction/routing/checks/cleanup; actual fixture placement interpretation1
+is now explicit. All three complete context lengths/SHA256 identities remain
+exact11 baseline. Retain40 first-call369.6073ms outlier;55/60 first12.3684/7.9089ms,
+repeat15.488/8.958ms. No browser speedup/headroom inference or fixed timing oracle.
+No cache/fixture production change: worker kept proposed files untouched after
+read-only immutability audit; no dominant fingerprint cost established. GWT/UI
+NOT APPLICABLE for unchanged production. Evidence: PCB/placement-fingerprint-cache-r1.
+All owned resources clean; shared tools, original five untracked entries and
+Desktop edits preserved. No main/email. Next: verified publication, then actual
+role-specific copper widths; goal remains active until9amAmerica/New_York.
+
+# Previous checkpoint: private11 accepted; continued realism goal active
 
 2026-10-14. Base a9636fe05bbb0da17bf16853c1ef4f1b5283e57b; enclosing commit is
 accepted candidate on codex/q60-faulted-profile-counts. User authorized continued

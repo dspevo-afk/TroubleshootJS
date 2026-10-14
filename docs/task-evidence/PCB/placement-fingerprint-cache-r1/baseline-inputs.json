@@ -1,0 +1,17 @@
+{
+  "phase": "baseline before lazy cache",
+  "files": [
+    {
+      "sha256": "3f3225e9652c022cb454a77f7dd62d795b6263e387b7e8e98da24add45a171cc",
+      "path": "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java"
+    },
+    {
+      "sha256": "214dfd3ef31bd643b489b510b1a3214a5bde492ed04e8d3a57a44e104699f131",
+      "path": "tests/contracts/Rb56TemporalWorkContractTest.java"
+    },
+    {
+      "sha256": "2155cc1e04ca677e77743fa557049e1a1c04e4ab1cc16d9661952ee1fabc1794",
+      "path": "scripts/verify-current-contracts.ps1"
+    }
+  ]
+}

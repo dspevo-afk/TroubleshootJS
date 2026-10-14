@@ -147,9 +147,12 @@ public final class Rb56TemporalWorkContractTest {
         GeneratedBoardInstance owner = null; Rb56Generator.Candidate candidate = null; Throwable failure = null;
         int packages = -1, elements = -1, contextChars = -1, keyChars = -1, pristineChars = -1, currentChars = -1;
         String digest = null; boolean tailChanged = false; long began = System.nanoTime();
+        double firstCaptureMillis = -1, repeatedKeyCaptureMillis = -1;
+        int placementVersion = -1;
         CircuitElm.sim = sim;
         try {
             Rb56Plan plan = Rb56Plan.resolve(seed);
+            placementVersion = plan.placementInterpretationVersion;
             check(plan.physicalPackageCount() == expectedPackages, "actual resolved seed has its declared package census");
             GenerationRequest request = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, seed);
             MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator().generateWithPolicyResult(
@@ -192,7 +195,9 @@ public final class Rb56TemporalWorkContractTest {
             for (int n = 0; n < elements; n++)
                 check(sim.elmList.get(n) == actualElements.get(n), "installed graph retains every owner element in order");
             String requestManifest = request.candidateManifest(0), realization = plan.canonical();
+            long captureBegan = System.nanoTime();
             GenerationDependencyContext context = GenerationDependencyContext.capture(sim, owner, requestManifest, realization);
+            firstCaptureMillis = (System.nanoTime() - captureBegan) / 1e6;
             GeneratedDiagnosticContextKey key = GeneratedDiagnosticContextKey.from(context);
             String complete = context.canonical(); contextChars = complete.length(); keyChars = key.canonical().length();
             String pristine = owner.getPristineConductorGraph().toCanonical();
@@ -209,7 +214,9 @@ public final class Rb56TemporalWorkContractTest {
                 "actual55/60 context crosses the unchanged ordinary session1MiB boundary");
             digest = PlayerSessionFingerprint.ofDiagnosticContext(key);
             check(digest.equals(captureSha(key.canonical())), "typed full-context digest matches independent JVM UTF8 SHA256");
+            captureBegan = System.nanoTime();
             GeneratedDiagnosticContextKey repeated = GeneratedDiagnosticContextKey.capture(sim, owner, requestManifest, realization);
+            repeatedKeyCaptureMillis = (System.nanoTime() - captureBegan) / 1e6;
             check(key.equals(repeated) && digest.equals(PlayerSessionFingerprint.ofDiagnosticContext(repeated)),
                 "unchanged actual owner repeats the same full identity without solver work");
             // Value-key sensitivity only: no admitted gameplay copper mutation is claimed.
@@ -252,6 +259,9 @@ public final class Rb56TemporalWorkContractTest {
             System.out.println("RB56_DEPENDENCY_CAPTURE {\"status\":\"" + (failure == null ? "COMPLETE" : "FAIL") +
                 "\",\"seed\":\"" + Long.toString(seed) + "\",\"packages\":" + packages + ",\"elements\":" + elements +
                 ",\"contextCharacters\":" + contextChars + ",\"keyCharacters\":" + keyChars +
+                ",\"placementInterpretationVersion\":" + placementVersion +
+                ",\"firstCaptureMillis\":" + firstCaptureMillis +
+                ",\"repeatedKeyCaptureMillis\":" + repeatedKeyCaptureMillis +
                 ",\"pristineConductorCharacters\":" + pristineChars + ",\"currentConductorCharacters\":" + currentChars +
                 ",\"digest\":" + (digest == null ? "null" : "\"" + digest + "\"") + ",\"tailMutationChangesIdentity\":" + tailChanged +
                 ",\"simTime\":" + number(sim.t) + ",\"acceptedSteps\":" + sim.a01AcceptedStepCount +
