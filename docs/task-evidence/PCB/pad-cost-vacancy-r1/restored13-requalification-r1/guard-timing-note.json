@@ -1,0 +1,6 @@
+{
+  "recheck": "By the next persisted DOM recheck the real discharge guard had enabled removal; stored artifact is named guard-recheck, not disabled",
+  "initial": "Actual Component popup input returned Remove component disabled after powerOFF",
+  "forcedInput": false,
+  "status": "OBSERVATION_CLARIFIED"
+}

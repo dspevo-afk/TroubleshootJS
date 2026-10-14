@@ -17,10 +17,9 @@ FileReader, guarded repair/customer retest/Close pass. Fresh60 repair/customer/
 Close also pass; its first unrepaired-close FAIL remains explicit. Frozen input
 and served identity audits and owned cleanup pass. Finite private/reference-host
 scope only; general population, normaladvanced/HARD and modest-host gates stay held.
-No main/email. Branch publication next; user's work continues until9amNewYork.
+No main/email. Branch push96bd1b1414866733927f93bdf0b039bd09cae204 verified; the timed PCB session continued through9amAmerica/New_York.
 [Evidence and limits](task-evidence/PCB/nearest-vacancy-preference-r1/README.md).
-Next unstarted PCB experiment: actual weighted pad-cost pocket preference, keeping
-saved13 exact and the existing candidate/evaluation/routing bounds.
+The subsequent actual pad-cost trial was rejected: all ten layouts stayed exact13. Its patch and failures remain; accepted13 code is restored. Fresh49/JDK8GWT and desktop/narrow actual save-load/customer/cleanup checks passed after checkout EOL fingerprint changes. Next unstarted PCB work is a cause-led domain/pocket audit under the existing isolation and search bounds.
 
 **Previous task:** **Private12 role-specific PCB copper widths accepted**
 The generator carries HIGH_CURRENT13, SUPPLY/RETURN11 and CONTROL/SIGNAL9 drawing

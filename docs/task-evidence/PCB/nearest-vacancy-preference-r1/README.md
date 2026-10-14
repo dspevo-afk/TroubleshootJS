@@ -1,6 +1,6 @@
 # Nearest connected vacancy preference — private13
 
-Status: accepted for branch publication. The scope was frozen before implementation in
+Status: accepted and normally pushed as96bd1b1414866733927f93bdf0b039bd09cae204; exact remote SHA verified. The scope was frozen before implementation in
 `scope.json`; accepted baseline is private12 commit
 `5d4de10b56c10fbf1012a2ac39324382074fc6a1`.
 

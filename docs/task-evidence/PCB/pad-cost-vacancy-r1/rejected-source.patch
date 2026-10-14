@@ -1,0 +1,1004 @@
+diff --git a/scripts/verify-current-contracts.ps1 b/scripts/verify-current-contracts.ps1
+index 1f16ab8a..f490a18d 100644
+--- a/scripts/verify-current-contracts.ps1
++++ b/scripts/verify-current-contracts.ps1
+@@ -400,9 +400,12 @@ final class PhysicalSpecificationDeveloperVerifier {
+         @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
+         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
+         @{ Name = 'PcbNearestVacancyPreferenceContractTest'; Marker = 'PCB nearest vacancy preference contracts ' },
+-        @{ Name = 'PcbNearestVacancyContractTest'; Marker = 'PCB nearest vacancy contracts ' },
+-        @{ Name = 'PcbNearestVacancyHoldoutContractTest'; Marker = 'PCB nearest vacancy holdouts ' },
+-        @{ Name = 'PcbNearestVacancyIdentityContractTest'; Marker = 'nearest vacancy identity contracts ' },
++        @{ Name = 'PcbNearestVacancyContractTest'; Marker = 'PCB pad cost vacancy contracts ' },
++        @{ Name = 'PcbNearestVacancyHoldoutContractTest'; Marker = 'PCB pad cost vacancy holdouts ' },
++        @{ Name = 'PcbNearestVacancyIdentityContractTest'; Marker = 'pad-cost vacancy identity contracts ' },
++        @{ Name = 'PcbSavedNearestVacancyGeometryContractTest'; Marker = 'saved13 nearest-vacancy geometry contracts ' },
++        @{ Name = 'PcbSavedNearestVacancyHoldoutContractTest'; Marker = 'saved13 nearest-vacancy holdout contracts ' },
++        @{ Name = 'PcbVacancyPadPreferenceContractTest'; Marker = 'PCB vacancy pad preference contracts assertions=' },
+         @{ Name = 'PcbSavedRoleWidthGeometryContractTest'; Marker = 'saved role-width geometry contracts ' },
+         @{ Name = 'PcbSavedRoleWidthHoldoutContractTest'; Marker = 'saved role-width holdout contracts ' },
+         @{ Name = 'PcbGuardedRouteSelectionContractTest'; Marker = 'guarded PCB route selection contracts ' },
+diff --git a/src/com/lushprojects/circuitjs1/client/GenerationRequest.java b/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+index dfc98f93..46b14ad4 100644
+--- a/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
++++ b/src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+@@ -17,7 +17,8 @@ final class GenerationRequest {
+     static final int RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL = 10;
+     static final int RB56_PLACEMENT_INTERPRETATION_VACANCY = 11;
+     static final int RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS = 12;
+-    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 13;
++    static final int RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY = 13;
++    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 14;
+     private final ChallengeDescriptor descriptor;
+     private final boolean composition;
+     private final boolean quickPlay;
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+index ebacd1d4..956a6915 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+@@ -104,7 +104,7 @@ final class PcbPlacementConstraints {
+             throw new IllegalArgumentException("Missing PCB trace width profile");
+         this.traceWidthProfile = traceWidthProfile;
+         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+-        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12)
++        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13)
+             throw new IllegalArgumentException("Unknown placement density interpretation");
+         placementDensityVersion = densityVersion;
+         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index b700dbcd..b43279a8 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -578,6 +578,54 @@ final class PcbPlacementPlanner {
+         return Math.max(.02,weight);
+     }
+ 
++    /**
++     * Selects the existing advisory origin with the least actual weighted
++     * pad-to-pad Manhattan cost after the same grid snap used by ring-zero
++     * placement trials. This only chooses the soft vacancy preference; normal
++     * placement scoring and fit evaluation remain authoritative.
++     */
++    static Point nearestVacancyByPadDistance(Vector<Point> origins,Point fallback,
++            PcbFootprint prototype,Vector<PcbFootprint> placed,
++            Vector<TopologyPlacementGraph.PadLink> links,TroubleshootBoard board,
++            Rectangle outline,int margin) {
++        Point fallbackOrigin=PcbVacancyTargets.nearest(origins,fallback);
++        if(prototype==null || placed==null || links==null || board==null || outline==null ||
++                outline.width<=0 || outline.height<=0 || margin<0)
++            throw new IllegalArgumentException("Missing or invalid vacancy pad-cost inputs");
++        String componentId=prototype.getPlacement().getComponentId();
++        for(PcbFootprint other:placed)
++            if(other==null)throw new IllegalArgumentException("Missing placed vacancy neighbor");
++        boolean hasPlacedNeighbor=false;
++        for(TopologyPlacementGraph.PadLink link:links) {
++            if(link==null || !componentId.equals(link.getComponentId()) ||
++                    Double.isNaN(link.getWeight()) || Double.isInfinite(link.getWeight()) ||
++                    link.getWeight()<0)
++                throw new IllegalArgumentException("Invalid vacancy pad-cost link");
++            if(findPlacedFootprint(placed,link.getOtherComponentId())!=null)
++                hasPlacedNeighbor=true;
++        }
++        if(!hasPlacedNeighbor)return fallbackOrigin;
++
++        Point best=null;
++        double bestCost=Double.POSITIVE_INFINITY;
++        for(Point origin:origins) {
++            int x=mediumGridOrigin(prototype,origin.x,outline,margin,false);
++            int y=mediumGridOrigin(prototype,origin.y,outline,margin,true);
++            PcbFootprint candidate=prototype.translated(x,y);
++            double cost=0;
++            for(TopologyPlacementGraph.PadLink link:links) {
++                PcbFootprint other=findPlacedFootprint(placed,link.getOtherComponentId());
++                if(other==null)continue;
++                cost+=weightedPadDistance(candidate.getPad(link.getPadId()),
++                    other.getPad(link.getOtherPadId()),mediumLinkWeight(board,link));
++                if(Double.isNaN(cost) || Double.isInfinite(cost))
++                    throw new IllegalArgumentException("Vacancy pad-cost arithmetic overflow");
++            }
++            if(cost<bestCost) {best=origin;bestCost=cost;}
++        }
++        return new Point(best);
++    }
++
+     private static Item chooseMediumItem(java.util.Collection<Item> values,
+             Vector<PcbFootprint> placed,TopologyPlacementGraph topology,
+             TroubleshootBoard board,long seed,int candidate) {
+@@ -660,7 +708,11 @@ final class PcbPlacementPlanner {
+             }
+         }
+         Point vacancyPreference=support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
+-        if(constraints.placementDensityVersion>=12 && vacancyPreference!=null)
++        if(constraints.placementDensityVersion>=13 && vacancyPreference!=null)
++            vacancyPreference=nearestVacancyByPadDistance(vacancies,connected,item.footprint,
++                placed,topology.getLinksFor(item.demand.componentId),board,outline,
++                itemsMargin(item,constraints));
++        else if(constraints.placementDensityVersion>=12 && vacancyPreference!=null)
+             vacancyPreference=PcbVacancyTargets.nearest(vacancies,connected);
+         Rectangle vacancyPocket=null;
+         if(vacancies!=null && !vacancies.isEmpty()) {
+@@ -845,8 +897,7 @@ final class PcbPlacementPlanner {
+             PcbFootprint other=findPlacedFootprint(placed,link.getOtherComponentId());
+             if(other==null)continue;
+             PcbPadPlacement a=footprint.getPad(link.getPadId()),b=other.getPad(link.getOtherPadId());
+-            score+=(Math.abs(a.getX()-b.getX())+Math.abs(a.getY()-b.getY()))*
+-                mediumLinkWeight(board,link);
++            score+=weightedPadDistance(a,b,mediumLinkWeight(board,link));
+             if (useCompact) {
+                 // A diagonal link does not reserve its entire bounding rectangle.
+                 // Score the less obstructed of its two actual Manhattan L corridors.
+@@ -903,6 +954,12 @@ final class PcbPlacementPlanner {
+         return score;
+     }
+ 
++    private static double weightedPadDistance(PcbPadPlacement first,PcbPadPlacement second,
++            double weight) {
++        return (Math.abs(first.getX()-second.getX())+
++            Math.abs(first.getY()-second.getY()))*weight;
++    }
++
+     private static Rectangle mediumCorridor(PcbPadPlacement a,PcbPadPlacement b) {
+         return mediumCorridor(a.getX(),a.getY(),b.getX(),b.getY());
+     }
+diff --git a/src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java b/src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java
+index d8f1ffb7..b75fe162 100644
+--- a/src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java
++++ b/src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java
+@@ -17,7 +17,8 @@ final class PlayerSessionReplay {
+     private static final String PRIVATE_PIN_LOCAL_PREFIX = "tsj-private-session/10/";
+     private static final String PRIVATE_VACANCY_PREFIX = "tsj-private-session/11/";
+     private static final String PRIVATE_ROLE_WIDTHS_PREFIX = "tsj-private-session/12/";
+-    private static final String PRIVATE_CURRENT_PREFIX = "tsj-private-session/13/";
++    private static final String PRIVATE_NEAREST_VACANCY_PREFIX = "tsj-private-session/13/";
++    private static final String PRIVATE_CURRENT_PREFIX = "tsj-private-session/14/";
+     private static final String COMPACT_PLACEMENT_TOKEN = "rb56-placement-2";
+     private static final String REALISM_PLACEMENT_TOKEN = "rb56-placement-3";
+     private static final String DENSE_PLACEMENT_TOKEN = "rb56-placement-4";
+@@ -29,7 +30,8 @@ final class PlayerSessionReplay {
+     private static final String PIN_LOCAL_PLACEMENT_TOKEN = "rb56-placement-10";
+     private static final String VACANCY_PLACEMENT_TOKEN = "rb56-placement-11";
+     private static final String ROLE_WIDTHS_PLACEMENT_TOKEN = "rb56-placement-12";
+-    private static final String CURRENT_PLACEMENT_TOKEN = "rb56-placement-13";
++    private static final String NEAREST_VACANCY_PLACEMENT_TOKEN = "rb56-placement-13";
++    private static final String CURRENT_PLACEMENT_TOKEN = "rb56-placement-14";
+     private static final int MAX_LENGTH = 180;
+ 
+     private final String replay;
+@@ -115,6 +117,10 @@ final class PlayerSessionReplay {
+             identity = PRIVATE_ROLE_WIDTHS_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                 "/" + ROLE_WIDTHS_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
+                 Long.toString(request.getDescriptor().getRootSeed());
++        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY) {
++            identity = PRIVATE_NEAREST_VACANCY_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
++                "/" + NEAREST_VACANCY_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
++                Long.toString(request.getDescriptor().getRootSeed());
+         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT) {
+             identity = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                 "/" + CURRENT_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
+@@ -234,6 +240,14 @@ final class PlayerSessionReplay {
+         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
+                 "13".equals(fields[1]) &&
+                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
++                NEAREST_VACANCY_PLACEMENT_TOKEN.equals(fields[3]) &&
++                isHeldQualificationFamily(fields[4])) {
++            placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY;
++            familyId = fields[4];
++            seedText = fields[5];
++        } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
++                "14".equals(fields[1]) &&
++                GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
+                 CURRENT_PLACEMENT_TOKEN.equals(fields[3]) &&
+                 isHeldQualificationFamily(fields[4])) {
+             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT;
+@@ -279,6 +293,9 @@ final class PlayerSessionReplay {
+         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS) {
+             canonical = PRIVATE_ROLE_WIDTHS_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                 "/" + ROLE_WIDTHS_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
++        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY) {
++            canonical = PRIVATE_NEAREST_VACANCY_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
++                "/" + NEAREST_VACANCY_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
+         } else {
+             canonical = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                 "/" + CURRENT_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+index 0b01c786..fdb30650 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -7,14 +7,15 @@ final class Rb56Placement {
+     static final int LEGACY_VERSION = 1, COMPACT_VERSION = 2,
+         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
+         GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10,
+-        VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12, CURRENT_VERSION = 13;
++        VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12,
++        NEAREST_VACANCY_VERSION13 = 13, CURRENT_VERSION = 14;
+     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
+     static final int BARRIER_DRAWING_UNITS = 80;
+     private Rb56Placement() { }
+ 
+     static boolean supportsVersion(int version) {
+         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
+-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == CURRENT_VERSION;
++            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION;
+     }
+ 
+     /** Replay interpretation includes copper policy; packing density alone is not its identity. */
+@@ -22,13 +23,15 @@ final class Rb56Placement {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+         if (placementVersion == ROLE_WIDTHS_VERSION12) return VACANCY_VERSION;
+-        return placementVersion == CURRENT_VERSION ? ROLE_WIDTHS_VERSION12 : placementVersion;
++        if (placementVersion == NEAREST_VACANCY_VERSION13) return ROLE_WIDTHS_VERSION12;
++        return placementVersion == CURRENT_VERSION ? NEAREST_VACANCY_VERSION13 : placementVersion;
+     }
+ 
+     static PcbTraceWidthProfile widthProfile(int placementVersion) {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION ?
++        return placementVersion == ROLE_WIDTHS_VERSION12 ||
++            placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION ?
+             PcbTraceWidthProfile.ROLE_WIDTHS :
+             PcbTraceWidthProfile.UNIFORM;
+     }
+@@ -77,7 +80,7 @@ final class Rb56Placement {
+         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
+             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION,
+             densityVersion(placementVersion),
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION,
+             widthProfile(placementVersion));
+     }
+ 
+diff --git a/tests/contracts/PcbFunctionalGroupingContractTest.java b/tests/contracts/PcbFunctionalGroupingContractTest.java
+index 09b8d9f6..66e16eaf 100644
+--- a/tests/contracts/PcbFunctionalGroupingContractTest.java
++++ b/tests/contracts/PcbFunctionalGroupingContractTest.java
+@@ -27,6 +27,17 @@ public final class PcbFunctionalGroupingContractTest {
+         "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
+         "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f"
+     };
++    // Literal accepted private13 geometry, captured before the private14 change.
++    private static final long[] SAVED13_AREA={4529785,4466664,6943752,4358809,5814368,5519502};
++    private static final long[] SAVED13_LARGEST_VOID={555900,193200,729600,179200,416000,178200};
++    private static final String[] SAVED13_GEOMETRY_SHA256={
++        "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
++        "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
++        "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
++        "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
++        "bb3de4b5418fb7e0a61666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16",
++        "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a"
++    };
+     private static final long[] ROLE_WIDTH_HOLDOUT_SEEDS={1L,7L,5L,14L};
+     private static final long[] SAVED12_HOLDOUT_AREA={4615974,6397152,9445744,7347009};
+     private static final long[] SAVED12_HOLDOUT_LARGEST_VOID={474000,965600,1367100,894600};
+@@ -36,6 +47,14 @@ public final class PcbFunctionalGroupingContractTest {
+         "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
+         "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf"
+     };
++    private static final long[] SAVED13_HOLDOUT_AREA={4615974,6397152,9445744,7347009};
++    private static final long[] SAVED13_HOLDOUT_LARGEST_VOID={474000,965600,1367100,894600};
++    private static final String[] SAVED13_HOLDOUT_GEOMETRY_SHA256={
++        "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
++        "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
++        "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
++        "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf"
++    };
+     private static final String[] SAVED8_GEOMETRY_SHA256={
+         "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
+         "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
+@@ -213,6 +232,52 @@ public final class PcbFunctionalGroupingContractTest {
+         return verifyHoldoutCohort(13,false);
+     }
+ 
++    static int verifyPadCostVacancyRepresentatives() {
++        int firstCheck=checks,failures=0,version=Rb56Placement.CURRENT_VERSION;
++        for(int index=0;index<ROOTS.length;index++) {
++            try { measure(ROOTS[index],index,version); }
++            catch(AssertionError failure) {
++                failures++;
++                System.out.println("PCB_PAD_COST_VACANCY_FAILURE seed="+ROOTS[index]+
++                    " message="+failure.getMessage());
++            }
++            catch(RuntimeException failure) {
++                failures++;
++                System.out.println("PCB_PAD_COST_VACANCY_FAILURE seed="+ROOTS[index]+
++                    " exception="+failure);
++            }
++        }
++        if(failures>0)throw new AssertionError("private14 pad-cost vacancy representative failures="+failures);
++        return checks-firstCheck;
++    }
++
++    static int verifyPadCostVacancyHoldouts() {
++        return verifyHoldoutCohort(Rb56Placement.CURRENT_VERSION,false,false);
++    }
++
++    static int verifySaved13NearestVacancyRepresentatives() {
++        int firstCheck=checks,failures=0;
++        for(int index=0;index<ROOTS.length;index++) {
++            try { measure(ROOTS[index],index,Rb56Placement.NEAREST_VACANCY_VERSION13,true); }
++            catch(AssertionError failure) {
++                failures++;
++                System.out.println("PCB_SAVED13_VACANCY_FAILURE seed="+ROOTS[index]+
++                    " message="+failure.getMessage());
++            }
++            catch(RuntimeException failure) {
++                failures++;
++                System.out.println("PCB_SAVED13_VACANCY_FAILURE seed="+ROOTS[index]+
++                    " exception="+failure);
++            }
++        }
++        if(failures>0)throw new AssertionError("saved13 nearest-vacancy representative failures="+failures);
++        return checks-firstCheck;
++    }
++
++    static int verifySaved13NearestVacancyHoldouts() {
++        return verifyHoldoutCohort(Rb56Placement.NEAREST_VACANCY_VERSION13,false,true);
++    }
++
+     static int verifySavedRoleWidthRepresentatives() {
+         int firstCheck=checks,failures=0;
+         for(int index=0;index<ROOTS.length;index++) {
+@@ -244,27 +309,35 @@ public final class PcbFunctionalGroupingContractTest {
+     }
+ 
+     private static int verifyHoldoutCohort(int version,boolean exactSaved12) {
++        return verifyHoldoutCohort(version,exactSaved12,false);
++    }
++
++    private static int verifyHoldoutCohort(int version,boolean exactSaved12,boolean exactSaved13) {
+         int firstCheck=checks,failures=0;
+         for(int index=0;index<ROLE_WIDTH_HOLDOUT_SEEDS.length;index++) {
+             long seed=ROLE_WIDTH_HOLDOUT_SEEDS[index];
+-            try { measureHoldout(seed,index,version,exactSaved12); }
++            try { measureHoldout(seed,index,version,exactSaved12,exactSaved13); }
+             catch(AssertionError failure) {
+                 failures++;
+-                System.out.println("PCB_"+(version==13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
++                System.out.println("PCB_"+(version==Rb56Placement.CURRENT_VERSION?"PAD_COST_VACANCY":
++                    version==Rb56Placement.NEAREST_VACANCY_VERSION13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
+                     "_FAILURE seed="+seed+" message="+failure.getMessage());
+             }
+             catch(RuntimeException failure) {
+                 failures++;
+-                System.out.println("PCB_"+(version==13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
++                System.out.println("PCB_"+(version==Rb56Placement.CURRENT_VERSION?"PAD_COST_VACANCY":
++                    version==Rb56Placement.NEAREST_VACANCY_VERSION13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
+                     "_FAILURE seed="+seed+" exception="+failure);
+             }
+         }
+-        if(failures>0)throw new AssertionError((version==13?"private13 nearest vacancy":"saved12")+
+-            " holdout failures="+failures);
++        if(failures>0)throw new AssertionError((version==Rb56Placement.CURRENT_VERSION?
++            "private14 pad-cost vacancy":version==Rb56Placement.NEAREST_VACANCY_VERSION13?
++            "saved13 nearest vacancy":"saved12")+" holdout failures="+failures);
+         return checks-firstCheck;
+     }
+ 
+-    private static void measureHoldout(long seed,int index,int version,boolean exactSaved12) {
++    private static void measureHoldout(long seed,int index,int version,boolean exactSaved12,
++            boolean exactSaved13) {
+         Rb56Plan plan=Rb56Plan.resolve(seed,version);
+         TroubleshootBoard board=plan.board();
+         MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
+@@ -279,7 +352,9 @@ public final class PcbFunctionalGroupingContractTest {
+         PcbTraceClearance.validate(layout.getTraces());
+         PcbPlacementConstraints constraints=board.getPlacementConstraints();
+         check(constraints.requiresTwoLayerRouting,"holdout retains P07 two-layer admission: "+seed);
+-        check(constraints.placementDensityVersion==(version==13?12:11),
++        int expectedDensity=version==Rb56Placement.CURRENT_VERSION?13:
++            version==Rb56Placement.NEAREST_VACANCY_VERSION13?12:11;
++        check(constraints.placementDensityVersion==expectedDensity,
+             "holdout uses the interpretation's literal packing density: "+seed+"/"+version);
+         check(layout.getComponents().size()==board.getComponentIds().size(),
+             "holdout retains every source component: "+seed);
+@@ -336,6 +411,34 @@ public final class PcbFunctionalGroupingContractTest {
+             check(largestVoid<=SAVED12_HOLDOUT_LARGEST_VOID[index],
+                 "private13 holdout protected void does not exceed published12: "+seed+
+                 " void="+largestVoid+" baseline="+SAVED12_HOLDOUT_LARGEST_VOID[index]);
++            if(exactSaved13) {
++                check(area==SAVED13_HOLDOUT_AREA[index],
++                    "saved13 holdout outline area remains exact: "+seed);
++                check(largestVoid==SAVED13_HOLDOUT_LARGEST_VOID[index],
++                    "saved13 holdout protected void remains exact: "+seed);
++                check(SAVED13_HOLDOUT_GEOMETRY_SHA256[index].equals(hash),
++                    "saved13 holdout geometry remains byte-exact: "+seed);
++                System.out.println("PCB_SAVED13_VACANCY_CASE {\"seed\":\""+seed+
++                    "\",\"area\":"+area+",\"largestProtectedEmptyRectangleArea\":"+
++                    largestVoid+",\"geometrySha256\":\""+hash+"\"}");
++            }
++        } else if(version==Rb56Placement.CURRENT_VERSION) {
++            System.out.println("PCB_PAD_COST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
++            System.out.println("PCB_PAD_COST_VACANCY_CASE {\"seed\":\""+seed+
++                "\",\"version\":"+version+",\"density\":"+constraints.placementDensityVersion+
++                ",\"area\":"+area+",\"areaBaseline\":"+SAVED13_HOLDOUT_AREA[index]+
++                ",\"largestProtectedEmptyRectangleArea\":"+largestVoid+
++                ",\"largestProtectedEmptyRectangleBaseline\":"+SAVED13_HOLDOUT_LARGEST_VOID[index]+
++                ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
++                ",\"vias\":"+vias+",\"geometrySha256\":\""+hash+"\"}");
++            check(constraints.placementDensityVersion==13,
++                "private14 pad-cost vacancy uses declared density13: "+seed);
++            check(area<=SAVED13_HOLDOUT_AREA[index],
++                "private14 holdout outline does not exceed published13: "+seed+" area="+area+
++                " baseline="+SAVED13_HOLDOUT_AREA[index]);
++            check(largestVoid<=SAVED13_HOLDOUT_LARGEST_VOID[index],
++                "private14 holdout protected void does not exceed published13: "+seed+
++                " void="+largestVoid+" baseline="+SAVED13_HOLDOUT_LARGEST_VOID[index]);
+         } else if(exactSaved12) {
+             System.out.println("PCB_SAVED_ROLE_WIDTH_ROUTE seed="+seed+" "+result.toCanonical());
+             check(area==SAVED12_HOLDOUT_AREA[index],"published12 holdout area remains exact: "+seed);
+@@ -370,6 +473,10 @@ public final class PcbFunctionalGroupingContractTest {
+             check(trace.getWidth()==9,"saved placement trace remains width9: "+trace.getNetId());
+     }
+     static PcbBoardLayout measure(long seed,int index,int version) {
++        return measure(seed,index,version,false);
++    }
++
++    private static PcbBoardLayout measure(long seed,int index,int version,boolean exactSaved13) {
+         Rb56Plan plan=Rb56Plan.resolve(seed,version);
+         TroubleshootBoard board=plan.board();
+         MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
+@@ -390,7 +497,7 @@ public final class PcbFunctionalGroupingContractTest {
+         PcbTraceClearance.validate(layout.getTraces());
+         check(layout.getComponents().size()==board.getComponentIds().size(),"every component retained");
+         check(layout.getPads().size()==board.getPadIds().size(),"every pad retained");
+-        if(version==13) {
++        if(version>=Rb56Placement.NEAREST_VACANCY_VERSION13) {
+             TreeSet<String> componentIds=new TreeSet<String>();
+             for(PcbComponentPlacement component:layout.getComponents())
+                 check(componentIds.add(component.getComponentId()),"unique physical component identity");
+@@ -457,7 +564,10 @@ public final class PcbFunctionalGroupingContractTest {
+             ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
+             ",\"vias\":"+layout.getHoles().size()+",\"geometrySha256\":\""+
+             PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
+-        if(version==13) System.out.println("PCB_NEAREST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
++        if(version==Rb56Placement.NEAREST_VACANCY_VERSION13)
++            System.out.println("PCB_NEAREST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
++        else if(version==Rb56Placement.CURRENT_VERSION)
++            System.out.println("PCB_PAD_COST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
+         else if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
+         int largestProtectedVoid=0;
+         if(version>=4) largestProtectedVoid=reportWhitespace(board,layout,seed,version);
+@@ -507,7 +617,7 @@ public final class PcbFunctionalGroupingContractTest {
+                 " area="+area+" baseline="+SAVED11_AREA[index]);
+             verifyRoleTraceWidths(board,layout);
+         }
+-        if(version==13) {
++        if(version==Rb56Placement.NEAREST_VACANCY_VERSION13) {
+             long area=(long)outline.width*outline.height;
+             check(board.getPlacementConstraints().placementDensityVersion==12,
+                 "private13 nearest vacancy uses declared density12: "+seed);
+@@ -527,6 +637,36 @@ public final class PcbFunctionalGroupingContractTest {
+             check(largestProtectedVoid<=SAVED12_LARGEST_VOID[index],
+                 "private13 representative protected void does not exceed published12: "+seed+
+                 " void="+largestProtectedVoid+" baseline="+SAVED12_LARGEST_VOID[index]);
++            if(exactSaved13) {
++                String hash=PlayerSessionFingerprint.of(layout.geometryFingerprint());
++                check(area==SAVED13_AREA[index],"saved13 representative outline area remains exact: "+seed);
++                check(largestProtectedVoid==SAVED13_LARGEST_VOID[index],
++                    "saved13 representative protected void remains exact: "+seed);
++                check(SAVED13_GEOMETRY_SHA256[index].equals(hash),
++                    "saved13 representative geometry remains byte-exact: "+seed);
++                System.out.println("PCB_SAVED13_VACANCY_CASE {\"seed\":\""+seed+
++                    "\",\"area\":"+area+",\"largestProtectedEmptyRectangleArea\":"+
++                    largestProtectedVoid+",\"geometrySha256\":\""+hash+"\"}");
++            }
++        } else if(version==Rb56Placement.CURRENT_VERSION) {
++            long area=(long)outline.width*outline.height;
++            check(board.getPlacementConstraints().placementDensityVersion==13,
++                "private14 pad-cost vacancy uses declared density13: "+seed);
++            verifyRoleTraceWidths(board,layout);
++            System.out.println("PCB_PAD_COST_VACANCY_CASE {\"seed\":\""+seed+
++                "\",\"version\":"+version+",\"density\":"+
++                board.getPlacementConstraints().placementDensityVersion+",\"area\":"+area+
++                ",\"areaBaseline\":"+SAVED13_AREA[index]+
++                ",\"largestProtectedEmptyRectangleArea\":"+largestProtectedVoid+
++                ",\"largestProtectedEmptyRectangleBaseline\":"+SAVED13_LARGEST_VOID[index]+
++                ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
++                ",\"vias\":"+layout.getHoles().size()+",\"geometrySha256\":\""+
++                PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
++            check(area<=SAVED13_AREA[index],"private14 representative outline does not exceed published13: "+
++                seed+" area="+area+" baseline="+SAVED13_AREA[index]);
++            check(largestProtectedVoid<=SAVED13_LARGEST_VOID[index],
++                "private14 representative protected void does not exceed published13: "+seed+
++                " void="+largestProtectedVoid+" baseline="+SAVED13_LARGEST_VOID[index]);
+         }
+         if(version>=8) {
+             long area=(long)outline.width*outline.height;
+@@ -545,7 +685,9 @@ public final class PcbFunctionalGroupingContractTest {
+         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
+             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+             "published saved4 geometry remains byte-exact: "+seed);
+-        String caseMarker=version==13?"PCB_NEAREST_VACANCY_REPORT":"PCB_GROUPING_CASE";
++        String caseMarker=version==Rb56Placement.NEAREST_VACANCY_VERSION13?
++            "PCB_NEAREST_VACANCY_REPORT":version==Rb56Placement.CURRENT_VERSION?
++            "PCB_PAD_COST_VACANCY_REPORT":"PCB_GROUPING_CASE";
+         System.out.println(caseMarker+" {\"seed\":\""+seed+"\",\"version\":"+version+
+             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+
+             ",\"width\":"+outline.width+",\"height\":"+outline.height+",\"area\":"+((long)outline.width*outline.height)+
+diff --git a/tests/contracts/PcbNearestVacancyContractTest.java b/tests/contracts/PcbNearestVacancyContractTest.java
+index c20c36a8..a8631d42 100644
+--- a/tests/contracts/PcbNearestVacancyContractTest.java
++++ b/tests/contracts/PcbNearestVacancyContractTest.java
+@@ -1,11 +1,11 @@
+ package com.lushprojects.circuitjs1.client;
+ 
+-/** Six frozen representatives for the private13 nearest-vacancy trial. */
++/** Six frozen representatives for the private14 pad-cost vacancy trial. */
+ public final class PcbNearestVacancyContractTest {
+     private PcbNearestVacancyContractTest() { }
+ 
+     public static void main(String[] args) {
+-        int assertions=PcbFunctionalGroupingContractTest.verifyNearestVacancyRepresentatives();
+-        System.out.println("PASS: PCB nearest vacancy contracts roots=6 assertions="+assertions);
++        int assertions=PcbFunctionalGroupingContractTest.verifyPadCostVacancyRepresentatives();
++        System.out.println("PASS: PCB pad cost vacancy contracts roots=6 assertions="+assertions);
+     }
+ }
+diff --git a/tests/contracts/PcbNearestVacancyHoldoutContractTest.java b/tests/contracts/PcbNearestVacancyHoldoutContractTest.java
+index 973680ee..98e0d1ed 100644
+--- a/tests/contracts/PcbNearestVacancyHoldoutContractTest.java
++++ b/tests/contracts/PcbNearestVacancyHoldoutContractTest.java
+@@ -1,11 +1,11 @@
+ package com.lushprojects.circuitjs1.client;
+ 
+-/** Four frozen holdouts for the private13 nearest-vacancy trial. */
++/** Four frozen holdouts for the private14 pad-cost vacancy trial. */
+ public final class PcbNearestVacancyHoldoutContractTest {
+     private PcbNearestVacancyHoldoutContractTest() { }
+ 
+     public static void main(String[] args) {
+-        int assertions=PcbFunctionalGroupingContractTest.verifyNearestVacancyHoldouts();
+-        System.out.println("PASS: PCB nearest vacancy holdouts roots=4 assertions="+assertions);
++        int assertions=PcbFunctionalGroupingContractTest.verifyPadCostVacancyHoldouts();
++        System.out.println("PASS: PCB pad cost vacancy holdouts roots=4 assertions="+assertions);
+     }
+ }
+diff --git a/tests/contracts/PcbNearestVacancyIdentityContractTest.java b/tests/contracts/PcbNearestVacancyIdentityContractTest.java
+index 9408c6dc..bd503998 100644
+--- a/tests/contracts/PcbNearestVacancyIdentityContractTest.java
++++ b/tests/contracts/PcbNearestVacancyIdentityContractTest.java
+@@ -6,7 +6,7 @@ import java.util.TreeSet;
+ import java.util.Vector;
+ 
+ /**
+- * Raw placement-only comparison for the private13 nearest-vacancy trial.
++ * Raw placement-only comparison for the private14 pad-cost vacancy trial.
+  * This diagnostic compares candidate geometry and source inventory only. It
+  * does not validate placement admission, route, run a solver, or claim packing
+  * acceptance.
+@@ -14,7 +14,7 @@ import java.util.Vector;
+ public final class PcbNearestVacancyIdentityContractTest {
+     private static final long[] SEEDS = {-1022L, 7L, 14L};
+     private static final int[] PRESERVED_CANDIDATES = {0, 2, 3, 4, 5};
+-    private static final int BEFORE_VERSION = Rb56Placement.ROLE_WIDTHS_VERSION12;
++    private static final int BEFORE_VERSION = Rb56Placement.NEAREST_VACANCY_VERSION13;
+     private static final int AFTER_VERSION = Rb56Placement.CURRENT_VERSION;
+     private static int assertions;
+ 
+@@ -25,19 +25,19 @@ public final class PcbNearestVacancyIdentityContractTest {
+                 inspectSeed(SEEDS[i]);
+             } catch (AssertionError failure) {
+                 failures++;
+-                System.out.println("NEAREST_VACANCY_IDENTITY_FAILURE seed=" + SEEDS[i] +
++                System.out.println("PAD_COST_VACANCY_IDENTITY_FAILURE seed=" + SEEDS[i] +
+                     " message=" + failure.getMessage());
+                 failure.printStackTrace(System.out);
+             } catch (RuntimeException failure) {
+                 failures++;
+-                System.out.println("NEAREST_VACANCY_IDENTITY_FAILURE seed=" + SEEDS[i] +
++                System.out.println("PAD_COST_VACANCY_IDENTITY_FAILURE seed=" + SEEDS[i] +
+                     " message=" + failure.getMessage());
+                 failure.printStackTrace(System.out);
+             }
+         }
+         if (failures != 0)
+-            throw new AssertionError("nearest vacancy placement identity source/inventory failures=" + failures);
+-        System.out.println("PASS: nearest vacancy identity contracts seeds=" + SEEDS.length +
++            throw new AssertionError("pad-cost vacancy placement identity source/inventory failures=" + failures);
++        System.out.println("PASS: pad-cost vacancy identity contracts seeds=" + SEEDS.length +
+             " candidates=" + PRESERVED_CANDIDATES.length + " assertions=" + assertions +
+             " preservedRawPlansExact=true packingAcceptance=NOT_CLAIMED " +
+             "routing=NOT_RUN admission=NOT_RUN");
+@@ -59,9 +59,9 @@ public final class PcbNearestVacancyIdentityContractTest {
+         PcbPlacementConstraints beforeConstraints = beforeBoard.getPlacementConstraints();
+         PcbPlacementConstraints afterConstraints = afterBoard.getPlacementConstraints();
+         check(beforeConstraints.placementDensityVersion == Rb56Placement.densityVersion(BEFORE_VERSION),
+-            "saved12 planner density changed");
++            "saved13 planner density changed");
+         check(afterConstraints.placementDensityVersion == Rb56Placement.densityVersion(AFTER_VERSION),
+-            "current13 planner density changed");
++            "current14 planner density changed");
+         String profile = beforeConstraints.getTraceWidthProfile().canonical();
+         check("ROLE_TRACE@1".equals(beforeConstraints.getTraceWidthProfile().getIdentity()),
+             "diagnostic cases do not use the declared role-width profile");
+@@ -79,13 +79,13 @@ public final class PcbNearestVacancyIdentityContractTest {
+                 afterPlan.layoutSeed, candidate);
+ 
+             check(sourcePlanSignature(beforePlan).equals(beforeSource),
+-                "candidate " + candidate + " mutated saved12 source plan");
++                "candidate " + candidate + " mutated saved13 source plan");
+             check(sourcePlanSignature(afterPlan).equals(afterSource),
+-                "candidate " + candidate + " mutated current13 source plan");
++                "candidate " + candidate + " mutated current14 source plan");
+             check(boardInventorySignature(beforeBoard).equals(beforeInventory),
+-                "candidate " + candidate + " mutated saved12 board graph");
++                "candidate " + candidate + " mutated saved13 board graph");
+             check(boardInventorySignature(afterBoard).equals(afterInventory),
+-                "candidate " + candidate + " mutated current13 board graph");
++                "candidate " + candidate + " mutated current14 board graph");
+             validateRawPlan(beforeBoard, before, BEFORE_VERSION, candidate);
+             validateRawPlan(afterBoard, after, AFTER_VERSION, candidate);
+ 
+@@ -105,7 +105,7 @@ public final class PcbNearestVacancyIdentityContractTest {
+             boolean rawPlanMetricsEqual = before.candidate == after.candidate &&
+                 before.courtyardArea == after.courtyardArea && before.demandArea == after.demandArea;
+ 
+-            System.out.println("NEAREST_VACANCY_IDENTITY_DIAGNOSTIC seed=" + seed +
++            System.out.println("PAD_COST_VACANCY_IDENTITY_DIAGNOSTIC seed=" + seed +
+                 " versions=" + BEFORE_VERSION + "/" + AFTER_VERSION + " candidate=" + candidate +
+                 " routing=NOT_RUN admission=NOT_RUN packingAcceptance=NOT_CLAIMED " +
+                 "sourcePlan=UNCHANGED inventory=UNCHANGED outlineExact=" + outlineEqual +
+diff --git a/tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java b/tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java
+index 0ab9ad0a..3dbd8de6 100644
+--- a/tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java
++++ b/tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java
+@@ -14,24 +14,30 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
+         try {
+             GenerationRequest request11=privateRequest(11,0L);
+             GenerationRequest roleWidthsRequest12=privateRequest(12,0L);
+-            GenerationRequest request13=privateRequest(13,0L);
++            GenerationRequest request13=privateRequest(Rb56Placement.NEAREST_VACANCY_VERSION13,0L);
++            GenerationRequest request14=privateRequest(Rb56Placement.CURRENT_VERSION,0L);
+             PlayerSessionReplay replay11=PlayerSessionReplay.forQualification(request11);
+             PlayerSessionReplay replay12=PlayerSessionReplay.forQualification(roleWidthsRequest12);
+             PlayerSessionReplay replay13=PlayerSessionReplay.forQualification(request13);
++            PlayerSessionReplay replay14=PlayerSessionReplay.forQualification(request14);
+             GeneratedBoardInstance saved11=constructAdmitted(request11);
+             owners.add(saved11);
+             GeneratedBoardInstance saved12=constructAdmitted(roleWidthsRequest12);
+             owners.add(saved12);
+-            GeneratedBoardInstance current13=constructAdmitted(request13);
+-            owners.add(current13);
++            GeneratedBoardInstance saved13=constructAdmitted(request13);
++            owners.add(saved13);
++            GeneratedBoardInstance current14=constructAdmitted(request14);
++            owners.add(current14);
+ 
+             PcbPlacementConstraints constraints11=saved11.getBoard().getPlacementConstraints();
+             PcbPlacementConstraints constraints12=saved12.getBoard().getPlacementConstraints();
+-            PcbPlacementConstraints constraints13=current13.getBoard().getPlacementConstraints();
++            PcbPlacementConstraints constraints13=saved13.getBoard().getPlacementConstraints();
++            PcbPlacementConstraints constraints14=current14.getBoard().getPlacementConstraints();
+             check(saved11.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved11.getSeed()==0L &&
+                     saved12.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved12.getSeed()==0L &&
+-                    current13.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && current13.getSeed()==0L,
+-                "all actual admitted owners are RB56 seed0");
++                    saved13.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved13.getSeed()==0L &&
++                    current14.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && current14.getSeed()==0L,
++                "all four actual admitted owners are RB56 seed0");
+             check(constraints11.placementDensityVersion==11 &&
+                     constraints11.getTraceWidthProfile()==PcbTraceWidthProfile.UNIFORM,
+                 "saved11 owner independently retains density11 and uniform trace width");
+@@ -40,26 +46,31 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
+                 "saved12 owner independently retains density11 and role trace widths");
+             check(constraints13.placementDensityVersion==12 &&
+                     constraints13.getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS,
+-                "current13 owner independently retains density12 and role trace widths");
++                "saved13 owner independently retains density12 and role trace widths");
++            check(constraints14.placementDensityVersion==13 &&
++                    constraints14.getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS,
++                "current14 owner independently selects density13 and role trace widths");
+             check(replay11.rb56PlacementInterpretationVersion()==11 && replay11.matches(saved11) &&
+                     replay12.rb56PlacementInterpretationVersion()==12 && replay12.matches(saved12) &&
+-                    replay13.rb56PlacementInterpretationVersion()==13 && replay13.matches(current13),
++                    replay13.rb56PlacementInterpretationVersion()==13 && replay13.matches(saved13) &&
++                    replay14.rb56PlacementInterpretationVersion()==14 && replay14.matches(current14),
+                 "each private replay identity matches its own normally admitted owner");
+-            check(!replay11.matches(saved12),"saved11 replay rejects the saved12 owner");
+-            check(!replay11.matches(current13),"saved11 replay rejects the current13 owner");
+-            check(!replay12.matches(saved11),"saved12 replay rejects the saved11 owner");
+-            check(!replay12.matches(current13),"saved12 replay rejects the current13 owner");
+-            check(!replay13.matches(saved11),"current13 replay rejects the saved11 owner");
+-            check(!replay13.matches(saved12),"current13 replay rejects the saved12 owner");
++            PlayerSessionReplay[] replays=new PlayerSessionReplay[] {replay11,replay12,replay13,replay14};
++            GeneratedBoardInstance[] actualOwners=new GeneratedBoardInstance[] {saved11,saved12,saved13,current14};
++            for(int replayIndex=0;replayIndex<replays.length;replayIndex++)
++                for(int ownerIndex=0;ownerIndex<actualOwners.length;ownerIndex++)
++                    check(replays[replayIndex].matches(actualOwners[ownerIndex]) == (replayIndex==ownerIndex),
++                        "real saved/current replay owner matrix is exact: replay " + (replayIndex+11) +
++                            " owner " + (ownerIndex+11));
+ 
+             PlayerSessionReplay wrongSeed=PlayerSessionReplay.forQualification(privateRequest(13,1L));
+-            check(!wrongSeed.matches(current13),"private owner identity rejects a different exact seed");
++            check(!wrongSeed.matches(saved13),"private owner identity rejects a different exact seed");
+             GeneratedBoardInstance otherFamily=GenerationRequest.leaf("LED_INDICATOR",0L,false)
+                 .resolve(new GenerationRequest.PlanCache()).construct().instance;
+             owners.add(otherFamily);
+             otherFamily.requireNormalPhysicalAdmission();
+-            check(!replay13.matches(otherFamily),"RB56 private owner identity rejects another family owner");
+-            check(!replay13.matches((GeneratedBoardInstance)null),
++            check(!replay14.matches(otherFamily),"RB56 private owner identity rejects another family owner");
++            check(!replay14.matches((GeneratedBoardInstance)null),
+                 "private owner identity rejects a missing candidate");
+             System.out.println("PASS: PCB role width owner identity contracts assertions="+assertions);
+         } finally {
+diff --git a/tests/contracts/PcbTraceWidthProfileContractTest.java b/tests/contracts/PcbTraceWidthProfileContractTest.java
+index fba09e0c..a9aa7cd4 100644
+--- a/tests/contracts/PcbTraceWidthProfileContractTest.java
++++ b/tests/contracts/PcbTraceWidthProfileContractTest.java
+@@ -55,44 +55,63 @@ public final class PcbTraceWidthProfileContractTest {
+ 
+     private static void privatePlanWidthBoundary() {
+         long seed = 20261014L;
++        for (int savedVersion = 1; savedVersion <= 11; savedVersion++) {
++            check(Rb56Placement.widthProfile(savedVersion) == PcbTraceWidthProfile.UNIFORM &&
++                    Rb56Placement.densityVersion(savedVersion) == savedVersion,
++                "saved placement " + savedVersion + " keeps its uniform-width density mapping");
++        }
+         Rb56Plan saved11 = Rb56Plan.resolve(seed, Rb56Placement.VACANCY_VERSION);
+         Rb56Plan saved12 = Rb56Plan.resolve(seed, Rb56Placement.ROLE_WIDTHS_VERSION12);
+-        Rb56Plan current13 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
++        Rb56Plan saved13 = Rb56Plan.resolve(seed, Rb56Placement.NEAREST_VACANCY_VERSION13);
++        Rb56Plan current14 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
+         TroubleshootBoard savedBoard = saved11.board();
+         TroubleshootBoard saved12Board = saved12.board();
+-        TroubleshootBoard currentBoard = current13.board();
++        TroubleshootBoard saved13Board = saved13.board();
++        TroubleshootBoard currentBoard = current14.board();
+         PcbPlacementConstraints saved = savedBoard.getPlacementConstraints();
+         PcbPlacementConstraints saved12Constraints = saved12Board.getPlacementConstraints();
++        PcbPlacementConstraints saved13Constraints = saved13Board.getPlacementConstraints();
+         PcbPlacementConstraints current = currentBoard.getPlacementConstraints();
+ 
+         check(saved11.placementInterpretationVersion == 11 &&
+                 saved12.placementInterpretationVersion == 12 &&
+-                current13.placementInterpretationVersion == 13,
+-            "saved11, saved12, and current13 resolve their declared placement versions");
++                saved13.placementInterpretationVersion == 13 &&
++                current14.placementInterpretationVersion == 14,
++            "saved11, saved12, saved13, and current14 resolve their declared placement versions");
+         check(saved.getTraceWidthProfile() == PcbTraceWidthProfile.UNIFORM &&
+                 saved12Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
++                saved13Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
+                 current.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
+-            "saved12 and current13 retain role widths while saved11 remains uniform");
++            "saved12, saved13, and current14 retain role widths while saved11 remains uniform");
+         check(saved.placementDensityVersion == 11 &&
+                 saved12Constraints.placementDensityVersion == 11 &&
+-                current.placementDensityVersion == 12,
+-            "saved12 retains density11 while current13 selects density12");
++                saved13Constraints.placementDensityVersion == 12 &&
++                current.placementDensityVersion == 13,
++            "saved12 retains density11, saved13 retains density12, and current14 selects density13");
+         check(saved.requiresTwoLayerRouting && saved12Constraints.requiresTwoLayerRouting &&
+-                current.requiresTwoLayerRouting && saved.routingLayer == current.routingLayer,
+-            "role-width versions retain the same declared routing mode and layer");
+-        check(saved11.layoutSeed == saved12.layoutSeed && saved12.layoutSeed == current13.layoutSeed &&
+-                saved11.routingSeed == saved12.routingSeed && saved12.routingSeed == current13.routingSeed &&
+-                saved11.topology().equals(saved12.topology()) && saved12.topology().equals(current13.topology()),
++                saved13Constraints.requiresTwoLayerRouting && current.requiresTwoLayerRouting &&
++                saved.routingLayer == current.routingLayer,
++            "saved/current role-width versions retain the same declared routing mode and layer");
++        check(saved11.layoutSeed == saved12.layoutSeed && saved12.layoutSeed == saved13.layoutSeed &&
++                saved13.layoutSeed == current14.layoutSeed &&
++                saved11.routingSeed == saved12.routingSeed && saved12.routingSeed == saved13.routingSeed &&
++                saved13.routingSeed == current14.routingSeed &&
++                saved11.topology().equals(saved12.topology()) &&
++                saved12.topology().equals(saved13.topology()) &&
++                saved13.topology().equals(current14.topology()),
+             "placement version leaves seeded electrical and routing intents stable");
+ 
+         Vector<Rb56Plan.Part> oldParts = saved11.parts();
+         Vector<Rb56Plan.Part> saved12Parts = saved12.parts();
+-        Vector<Rb56Plan.Part> newParts = current13.parts();
+-        check(oldParts.size() == saved12Parts.size() && saved12Parts.size() == newParts.size(),
+-            "saved11, saved12, and current13 retain one package inventory");
++        Vector<Rb56Plan.Part> saved13Parts = saved13.parts();
++        Vector<Rb56Plan.Part> newParts = current14.parts();
++        check(oldParts.size() == saved12Parts.size() && saved12Parts.size() == saved13Parts.size() &&
++                saved13Parts.size() == newParts.size(),
++            "saved11, saved12, saved13, and current14 retain one package inventory");
+         for (int index = 0; index < oldParts.size(); index++)
+             check(oldParts.get(index).canonical().equals(saved12Parts.get(index).canonical()) &&
+-                    saved12Parts.get(index).canonical().equals(newParts.get(index).canonical()),
++                    saved12Parts.get(index).canonical().equals(saved13Parts.get(index).canonical()) &&
++                    saved13Parts.get(index).canonical().equals(newParts.get(index).canonical()),
+                 "plan part declaration stays byte-equal across interpretations at index " + index);
+     }
+ 
+diff --git a/tests/contracts/RelBSessionIdentityContractTest.java b/tests/contracts/RelBSessionIdentityContractTest.java
+index 0efc02d4..40e11131 100644
+--- a/tests/contracts/RelBSessionIdentityContractTest.java
++++ b/tests/contracts/RelBSessionIdentityContractTest.java
+@@ -71,17 +71,17 @@ public final class RelBSessionIdentityContractTest {
+             GenerationRequest request =
+                 GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
+             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
+-            String expected = "tsj-private-session/13/" +
+-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-13/RB56_CONTROL/" + seed;
++            String expected = "tsj-private-session/14/" +
++                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-14/RB56_CONTROL/" + seed;
+             check(request.getRb56PlacementInterpretationVersion() ==
+                     GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT &&
+                     expected.equals(identity.canonical()) && identity.matches(request),
+-                "exact signed-long fresh private identity selects placement 13: " + seed);
++                "exact signed-long fresh private identity selects placement 14: " + seed);
+             PlayerSessionSave original = emptySave(identity.canonical());
+             PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
+             check(original.encode().equals(parsed.encode()) &&
+                 PlayerSessionReplay.parse(parsed.replay).matches(request),
+-                "placement-13 private identity survives the unchanged bounded session codec: " + seed);
++                "placement-14 private identity survives the unchanged bounded session codec: " + seed);
+             GenerationRequest roleWidthsRequest = request.withRb56PlacementInterpretationVersion(
+                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS);
+             String roleWidthsExpected = "tsj-private-session/12/" +
+@@ -93,32 +93,49 @@ public final class RelBSessionIdentityContractTest {
+                         GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS,
+                 "explicit saved12 keeps its exact private identity and placement interpretation: " + seed);
+             check(!identity.matches(roleWidthsRequest) && !roleWidthsIdentity.matches(request),
+-                "saved12 and fresh13 remain distinct in both replay directions: " + seed);
++                "saved12 and current14 remain distinct in both replay directions: " + seed);
++            GenerationRequest nearestVacancyRequest=request.withRb56PlacementInterpretationVersion(
++                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY);
++            String nearestVacancyExpected="tsj-private-session/13/"+
++                GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-13/RB56_CONTROL/"+seed;
++            PlayerSessionReplay nearestVacancyIdentity=PlayerSessionReplay.forQualification(nearestVacancyRequest);
++            check(nearestVacancyRequest.getRb56PlacementInterpretationVersion()==13 &&
++                    nearestVacancyExpected.equals(nearestVacancyIdentity.canonical()) &&
++                    nearestVacancyIdentity.matches(nearestVacancyRequest) &&
++                    PlayerSessionReplay.parse(nearestVacancyExpected).matches(nearestVacancyRequest),
++                "saved13 nearest-vacancy replay token remains exact and parseable: " + seed);
++            PlayerSessionSave nearestVacancySave=emptySave(nearestVacancyExpected);
++            check(nearestVacancySave.encode().equals(PlayerSessionSave.parse(nearestVacancySave.encode()).encode()),
++                "saved13 replay survives the unchanged bounded session codec: " + seed);
++            check(!nearestVacancyIdentity.matches(request) && !identity.matches(nearestVacancyRequest) &&
++                    !nearestVacancyIdentity.matches(roleWidthsRequest) &&
++                    !roleWidthsIdentity.matches(nearestVacancyRequest),
++                "saved12, saved13, and current14 remain distinct across replay owners: " + seed);
+             GenerationRequest vacancyRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_VACANCY);
+             String vacancyExpected="tsj-private-session/11/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-11/RB56_CONTROL/"+seed;
+             check(vacancyExpected.equals(PlayerSessionReplay.forQualification(vacancyRequest).canonical()) &&
+                 PlayerSessionReplay.parse(vacancyExpected).matches(vacancyRequest) &&
+-                !PlayerSessionReplay.parse(vacancyExpected).matches(request),"saved11 stays distinct from fresh13: "+seed);
++                !PlayerSessionReplay.parse(vacancyExpected).matches(request),"saved11 stays distinct from current14: "+seed);
+             check(emptySave(vacancyExpected).encode().equals(PlayerSessionSave.parse(emptySave(vacancyExpected).encode()).encode()),
+                 "saved11 bounded wire remains exact: "+seed);
+             GenerationRequest localRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL);
+             String localExpected="tsj-private-session/10/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-10/RB56_CONTROL/"+seed;
+             check(localExpected.equals(PlayerSessionReplay.forQualification(localRequest).canonical()) &&
+                 PlayerSessionReplay.parse(localExpected).matches(localRequest) &&
+-                !PlayerSessionReplay.parse(localExpected).matches(request),"saved10 stays distinct from fresh13: "+seed);
++                !PlayerSessionReplay.parse(localExpected).matches(request),"saved10 stays distinct from current14: "+seed);
+             GenerationRequest connectedRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CONNECTED);
+             String connectedExpected="tsj-private-session/9/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-9/RB56_CONTROL/"+seed;
+-            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from fresh13: "+seed);
++            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from current14: "+seed);
+             GenerationRequest narrowRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NARROW);
+             String narrowExpected="tsj-private-session/8/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-8/RB56_CONTROL/"+seed;
+-            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from fresh13: "+seed);
++            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from current14: "+seed);
+             GenerationRequest guardedRequest=request.withRb56PlacementInterpretationVersion(
+                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED);
+             String guardedExpected="tsj-private-session/7/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
+                 "/rb56-placement-7/RB56_CONTROL/"+seed;
+             check(guardedExpected.equals(PlayerSessionReplay.forQualification(guardedRequest).canonical()) &&
+                 PlayerSessionReplay.parse(guardedExpected).matches(guardedRequest) &&
+-                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from fresh13: "+seed);
++                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from current14: "+seed);
+ 
+             GenerationRequest realismRequest = request.withRb56PlacementInterpretationVersion(
+                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM);
+@@ -126,7 +143,7 @@ public final class RelBSessionIdentityContractTest {
+             String realismExpected = "tsj-private-session/3/" +
+                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/" + seed;
+             check(realismExpected.equals(realism.canonical()) && realism.matches(realismRequest) &&
+-                !realism.matches(request), "saved placement3 identity stays distinct from fresh13: " + seed);
++                !realism.matches(request), "saved placement3 identity stays distinct from current14: " + seed);
+             PlayerSessionSave realismSave = emptySave(realismExpected);
+             check(realismSave.encode().equals(PlayerSessionSave.parse(realismSave.encode()).encode()),
+                 "saved3 bounded session wire remains exact: " + seed);
+@@ -137,7 +154,7 @@ public final class RelBSessionIdentityContractTest {
+                 "/rb56-placement-6/RB56_CONTROL/"+seed;
+             PlayerSessionReplay single=PlayerSessionReplay.forQualification(singleRequest);
+             check(singleExpected.equals(single.canonical()) && single.matches(singleRequest) && !single.matches(request),
+-                "saved6 stays distinct from fresh13: "+seed);
++                "saved6 stays distinct from current14: "+seed);
+             check(emptySave(singleExpected).encode().equals(PlayerSessionSave.parse(emptySave(singleExpected).encode()).encode()),
+                 "saved6 wire remains exact: "+seed);
+             GenerationRequest largeRequest=request.withRb56PlacementInterpretationVersion(
+@@ -146,7 +163,7 @@ public final class RelBSessionIdentityContractTest {
+                 "/rb56-placement-5/RB56_CONTROL/"+seed;
+             PlayerSessionReplay large=PlayerSessionReplay.forQualification(largeRequest);
+             check(largeExpected.equals(large.canonical()) && large.matches(largeRequest) && !large.matches(request),
+-                "published saved5 stays distinct from fresh13: "+seed);
++                "published saved5 stays distinct from current14: "+seed);
+             check(emptySave(largeExpected).encode().equals(PlayerSessionSave.parse(emptySave(largeExpected).encode()).encode()),
+                 "saved5 wire remains exact: "+seed);
+             GenerationRequest denseRequest=request.withRb56PlacementInterpretationVersion(
+@@ -155,7 +172,7 @@ public final class RelBSessionIdentityContractTest {
+                 GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-4/RB56_CONTROL/"+seed;
+             PlayerSessionReplay dense=PlayerSessionReplay.forQualification(denseRequest);
+             check(denseExpected.equals(dense.canonical()) && dense.matches(denseRequest) &&
+-                !dense.matches(request),"published saved4 stays distinct from fresh13: "+seed);
++                !dense.matches(request),"published saved4 stays distinct from current14: "+seed);
+             PlayerSessionSave denseSave=emptySave(denseExpected);
+             check(denseSave.encode().equals(PlayerSessionSave.parse(denseSave.encode()).encode()),
+                 "saved4 wire remains exact: "+seed);
+@@ -180,12 +197,13 @@ public final class RelBSessionIdentityContractTest {
+                 !request.canonical().equals(compactRequest.canonical()) &&
+                 !compactRequest.canonical().equals(legacyRequest.canonical()) &&
+                 !request.canonical().equals(roleWidthsRequest.canonical()),
+-                "placement 1, 2, 12 and 13 have distinct plan-cache/request identities: " + seed);
++                "placement 1, 2, 12, 13 and 14 have distinct plan-cache/request identities: " + seed);
+             check(compactRequest.canonical().contains("placement-interpretation=2;") &&
+                 roleWidthsRequest.canonical().contains("placement-interpretation=12;") &&
+-                request.canonical().contains("placement-interpretation=13;") &&
++                nearestVacancyRequest.canonical().contains("placement-interpretation=13;") &&
++                request.canonical().contains("placement-interpretation=14;") &&
+                 legacyRequest.canonical().indexOf("placement-interpretation=") < 0,
+-                "legacy canonical stays exact while saved12 and current13 are explicitly keyed: " + seed);
++                "legacy canonical stays exact while saved12, saved13, and current14 are explicitly keyed: " + seed);
+         }
+         reject(new Attempt() { public void run() {
+             PlayerLaunchRequest.parse("tsj-private-session/5/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
+@@ -199,8 +217,12 @@ public final class RelBSessionIdentityContractTest {
+                 "tsj-private-session/12/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-12/RB56_CONTROL/1/extra",
+                 "tsj-private-session/12/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-13/RB56_CONTROL/1",
+                 "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-12/RB56_CONTROL/1",
++                "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-14/RB56_CONTROL/1",
+                 "tsj-private-session/13/tsj-generation-dependencies-v15/rb56-placement-13/RB56_CONTROL/1",
+                 "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-13/RB56_CONTROL/1/extra",
++                "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-13/RB56_CONTROL/1",
++                "tsj-private-session/14/tsj-generation-dependencies-v15/rb56-placement-14/RB56_CONTROL/1",
++                "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-14/RB56_CONTROL/1/extra",
+                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
+                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-4/RB56_CONTROL/1",
+                 "tsj-private-session/7/tsj-generation-dependencies-v15/rb56-placement-7/RB56_CONTROL/1",
+diff --git a/tests/contracts/U06SessionSaveContractTest.java b/tests/contracts/U06SessionSaveContractTest.java
+index ad5e49c6..e73e19e5 100644
+--- a/tests/contracts/U06SessionSaveContractTest.java
++++ b/tests/contracts/U06SessionSaveContractTest.java
+@@ -98,8 +98,12 @@ public final class U06SessionSaveContractTest {
+         GenerationRequest vacancyRequest = currentRequest.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_VACANCY);
+         GenerationRequest roleWidthsRequest = currentRequest.withRb56PlacementInterpretationVersion(
+             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS);
++        GenerationRequest nearestVacancyRequest = currentRequest.withRb56PlacementInterpretationVersion(
++            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY);
+         GenerationRequest[] requests = new GenerationRequest[] {
+-            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, guardedRequest, narrowRequest, connectedRequest, localRequest, vacancyRequest, roleWidthsRequest, currentRequest
++            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest,
++            guardedRequest, narrowRequest, connectedRequest, localRequest, vacancyRequest,
++            roleWidthsRequest, nearestVacancyRequest, currentRequest
+         };
+         String[] expected = new String[] {
+             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+@@ -127,7 +131,9 @@ public final class U06SessionSaveContractTest {
+             "tsj-private-session/12/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                 "/rb56-placement-12/RB56_CONTROL/77",
+             "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+-                "/rb56-placement-13/RB56_CONTROL/77"
++                "/rb56-placement-13/RB56_CONTROL/77",
++            "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
++                "/rb56-placement-14/RB56_CONTROL/77"
+         };
+         for (int i = 0; i < requests.length; i++) {
+             final GenerationRequest request = requests[i];
+@@ -148,7 +154,16 @@ public final class U06SessionSaveContractTest {
+         }
+         check(currentRequest.getRb56PlacementInterpretationVersion() ==
+                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
+-            "new private RB56 requests default to placement 13");
++            "new private RB56 requests default to placement 14");
++        check(nearestVacancyRequest.getRb56PlacementInterpretationVersion() ==
++                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY &&
++                PlayerSessionReplay.forQualification(nearestVacancyRequest).canonical().contains(
++                    "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
++                    "/rb56-placement-13/"),
++            "saved13 nearest-vacancy replay remains explicitly selectable and exact");
++        check(!PlayerSessionReplay.forQualification(nearestVacancyRequest).matches(currentRequest) &&
++                !PlayerSessionReplay.forQualification(currentRequest).matches(nearestVacancyRequest),
++            "saved13 and current14 replay interpretations reject each other");
+         check(roleWidthsRequest.getRb56PlacementInterpretationVersion() ==
+                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS,
+             "saved private role-width interpretation remains explicitly selectable as placement 12");

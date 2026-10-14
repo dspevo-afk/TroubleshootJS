@@ -1,0 +1,37 @@
+{
+  "expectedSha256": "2ba96234766479964d68ca3acdc5dd11100fe86867b51fa97090157dfbcf013f",
+  "currentSha256": "246ed496842315d533e18dbf0a1b768761fbbb3e2f391ba56a15d3dca34827c3",
+  "allLfSha256": "4b8043de5cfa73fa3ba97eb15127f7a4a0dbf0d701f05520785db3cc2e832a62",
+  "allCrlfSha256": "246ed496842315d533e18dbf0a1b768761fbbb3e2f391ba56a15d3dca34827c3",
+  "headBlobSha256": "4b8043de5cfa73fa3ba97eb15127f7a4a0dbf0d701f05520785db3cc2e832a62",
+  "currentNormalizesToHeadBlob": true,
+  "currentNewlineCounts": {
+    "crlf": 1210,
+    "lf": 1210,
+    "bareCr": 0
+  },
+  "lineCount": 1210,
+  "blameCommitGroups": 53,
+  "searchedRecentBlameGroups": [
+    "96bd1b141486",
+    "5d4de10b56c1",
+    "a4e41a90de48",
+    "a9636fe05bbb",
+    "d00c4f3ef1cf",
+    "368f3b0dfeff",
+    "bbc0c1e6e169",
+    "32451a07a201",
+    "6b5d1d2fb9ee",
+    "200bdf6fd081",
+    "02f65fb003ef",
+    "525626df4d71",
+    "933ace2643ef",
+    "9a82c97b5a07",
+    "b9e38afd4457",
+    "30374e0a46d6"
+  ],
+  "testedCandidates": 65537,
+  "consumedCopySha256": "37cb834eaf3e04c4628261d972570aaaaa27497ca4d0c2c338457b71f82b5c16",
+  "consumedCopyNormalizesToHeadBlob": false,
+  "matches": []
+}

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    "No hard per-domain allowed rectangles. Validator preserves80 courtyard separation, allowing common gap on X or Y. Advisory vacancyDomainBox clips suggestions only, not general fits.",
+    "Root42 selected candidate1 with pin-local/vacancy advice; root-1022 selected candidate0 without that advice. Current whitespace receipts alone cannot establish a specific primary-side strip cause.",
+    "Full-axis monotone compaction cannot relocate parts into partial two-dimensional pockets. The score does not compare the largest interior empty rectangle.",
+    "A future soft axis-aware preference within existing slots is plausible; hard horizontal split would also require top/bottom connector/hint ownership changes."
+  ],
+  "status": "READ_ONLY_CAUSE_AUDIT",
+  "references": [
+    "PcbPlacementPlanner.java:758-790 advisory domain box",
+    "PcbPlacementPlanner.java:987-1026 physical/global gap",
+    "PcbPlacementCompactor.java:37 routed full-axis contraction",
+    "Rb56Placement.java:64 connector anchors"
+  ],
+  "runtime": "NOT_RUN; no code edits",
+  "candidate": "Accepted13 HEAD96bd1b1414866733927f93bdf0b039bd09cae204",
+  "next": "First add independent literal two-domain fixture and domain/occupancy overlays; preserve80barrier, mixed-pad conductive courtyards and existing work/routing bounds. No parameter fishing or claims that free raster proves fit."
+}

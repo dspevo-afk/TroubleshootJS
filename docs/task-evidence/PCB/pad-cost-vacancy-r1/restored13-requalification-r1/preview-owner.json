@@ -1,0 +1,8 @@
+{
+  "creationUtcTicks": "639275788513340404",
+  "script": "scripts/preview.ps1",
+  "fullOwner": "Maintained .tools/preview/state.json until exact cleanup",
+  "port": 8899,
+  "executable": "WindowsPowerShell/powershell.exe",
+  "pid": 89828
+}

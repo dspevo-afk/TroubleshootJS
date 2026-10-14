@@ -1,0 +1,8 @@
+{
+  "sha256": "45b4eceb7e0e4e8b202e17474fa95ab3bd9cc8077c9e5f444c970608d6ea443a",
+  "diff": "save-state-comparison.patch",
+  "status": "OBSERVED_EXPECTED_LIVE_STATE_DIFFERENCES",
+  "different": "Healthy stress-exposure duration fields and their current-state signature reflect different real interaction elapsed time; each state remainsHEALTHY/NONE",
+  "same": "Private13 replay, build, realization and operation/source history",
+  "scope": "Freshactualdownloadcopy is byte-exact to its own2183-byte download. It is not expected to equal an earlier play session byte-for-byte."
+}

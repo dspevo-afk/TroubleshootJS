@@ -1,0 +1,21 @@
+{
+  "status": "FAIL",
+  "changedPaths": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java",
+    "tests/contracts/PcbNearestVacancyContractTest.java",
+    "tests/contracts/PcbNearestVacancyHoldoutContractTest.java",
+    "tests/contracts/PcbNearestVacancyIdentityContractTest.java",
+    "tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java",
+    "tests/contracts/PcbTraceWidthProfileContractTest.java",
+    "tests/contracts/RelBSessionIdentityContractTest.java",
+    "tests/contracts/U06SessionSaveContractTest.java"
+  ],
+  "frozenInputCount": 1440,
+  "actualInputCount": 1440,
+  "scope": "Source/scripts/contracts/GWT jars; generated war provenance checked separately"
+}

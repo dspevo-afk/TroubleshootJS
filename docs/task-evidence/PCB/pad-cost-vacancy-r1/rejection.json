@@ -1,0 +1,11 @@
+{
+  "metrics": "Strict assessorFAIL allten metrics unchanged; independentalltengeometryhashesexactpublished13",
+  "status": "REJECTED_UNCHANGED",
+  "restoration": "Raw1440auditFAIL after Git checkout EOL conversion; pureLFprecheckfoundmixedEOLhashmismatchandwrote nothing; boundedreadonlyrecoveryfailed. Freshrestored13requalificationselected instead of reusingoldrawproof.",
+  "freshScope": "restored13-requalification-r1/scope.json",
+  "focused": "4suites PASS83.175001s including actual terminal cleanup; frozen1443 auditPASS",
+  "limits": "Focused nativePASS not packingacceptance; no14codepublished",
+  "gates": "Private14 final52/GWT/browser/publication NOT RUN",
+  "resources": "All owned resources cleaned; fresh restored13 final49/GWT/desktop+narrow/player/provenance audits PASS",
+  "source": "Trialproduction/testchangesremoved; currentnormalizedcodeexactaccepted13HEAD96bd1b1414866733927f93bdf0b039bd09cae204"
+}

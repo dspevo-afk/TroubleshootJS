@@ -1,0 +1,8 @@
+{
+  "sourceCanonical": "Exact accepted13 Git blobs after newline normalization; originalrawhashaudit remainsFAIL",
+  "status": "PASS",
+  "retainedFailure": "Earlier cold-only60 finalFAIL remains explicit",
+  "scope": "Entire compiled web tree byte-identical to accepted13 first build. Source/script raw EOL hashes changed; fresh49/GWT1440 audits and fresh54 desktop/narrow flows are separate. Earlier60 repair proof retained for unchanged executable web inputs, not called a fresh rerun.",
+  "prior60": "nearest-vacancy-preference-r1/large60-repair-r1/final-report.json",
+  "compiledWebSha256": "6b847272c939877321153b023eb982813f9288fa47588b1f5db5c7dd2f8cf0e9"
+}

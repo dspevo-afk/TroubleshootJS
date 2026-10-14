@@ -1,0 +1,186 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Vector;
+
+/** Bounded real-pad contracts for the private14 vacancy preference. */
+public final class PcbVacancyPadPreferenceContractTest {
+    private static int assertions;
+
+    private PcbVacancyPadPreferenceContractTest() { }
+
+    public static void main(String[] args) {
+        TestGeometry fixture=fixture();
+        exactPadCostBeatsMean(fixture);
+        snappedTieKeepsCanonicalOrigin(fixture);
+        noPlacedNeighborPreservesMeanFallback(fixture);
+        invalidInputsReject(fixture);
+        System.out.println("PASS: PCB vacancy pad preference contracts assertions=" + assertions);
+    }
+
+    private static void exactPadCostBeatsMean(TestGeometry fixture) {
+        Vector<Point> origins=points(new Point(34,4),new Point(4,4));
+        Point fallback=new Point(25,0);
+        Point oldNearest=PcbVacancyTargets.nearest(origins,fallback);
+        check(oldNearest.equals(new Point(34,4)),"mean-nearest baseline selects first pocket origin");
+
+        PcbFootprint snapped30=fixture.prototype.translated(30,0);
+        PcbFootprint snapped0=fixture.prototype.translated(0,0);
+        check(snapped0.getPad("LED1.A").getX()==20 && snapped0.getPad("LED1.A").getY()==70 &&
+            fixture.resistor.getPad("R1.2").getX()==20 && fixture.resistor.getPad("R1.2").getY()==70,
+            "real resistor and LED package pad offsets coincide at snapped origin zero");
+        check(snapped0.getPad("LED1.K").getX()==60 && snapped0.getPad("LED1.K").getY()==70 &&
+            fixture.connector.getPad("J1.2").getX()==160 && fixture.connector.getPad("J1.2").getY()==70,
+            "real connector and LED pad identities produce a 100-unit second link");
+        check(snapped30.getPad("LED1.A").getX()==50 && snapped30.getPad("LED1.K").getX()==90,
+            "candidate package pin offsets translate with its snapped origin");
+        check(fixture.resistorLink.getWeight()==3.0 && fixture.connectorLink.getWeight()==1.35,
+            "topology links retain distinct direct-net and connector weights");
+        check(fixture.board.getNet(fixture.connectorLink.getNetId()).getPadIds().size()==2 &&
+            fixture.board.getComponent("J1").getPhysicalPackage().isConnector(),
+            "literal board net degree and connector identity explain the existing medium weights");
+        check(Math.round((100.0*1.0125)/(3.0+1.0125))==25,
+            "existing weighted-mean target rounds to the supplied mean-nearest reference");
+
+        double costAtZero=0*3.0+100*1.0125;
+        double costAtThirty=30*3.0+70*1.0125;
+        check(costAtZero==101.25 && costAtThirty==160.875 && costAtZero<costAtThirty,
+            "literal board-adjusted weighted Manhattan costs favor snapped origin zero");
+        Point selected=select(fixture,origins,fallback,fixture.prototype,fixture.placed);
+        check(selected.equals(new Point(4,4)),"exact weighted pad cost selects the second pocket origin");
+        check(selected!=origins.get(1),"selected vacancy preference is a point copy");
+        check(origins.size()==2 && origins.get(0).equals(new Point(34,4)) &&
+            origins.get(1).equals(new Point(4,4)) && fallback.equals(new Point(25,0)),
+            "selection leaves target vector, points, and fallback unchanged");
+        check(fixture.prototype.geometryFingerprint().equals(fixture.prototypeFingerprint) &&
+            fixture.resistor.geometryFingerprint().equals(fixture.resistorFingerprint) &&
+            fixture.connector.geometryFingerprint().equals(fixture.connectorFingerprint),
+            "cost evaluation leaves candidate and placed package geometry unchanged");
+        selected.x=999;
+        check(origins.get(1).equals(new Point(4,4)),"mutating returned point cannot alter input target");
+    }
+
+    private static void snappedTieKeepsCanonicalOrigin(TestGeometry fixture) {
+        Vector<Point> origins=points(new Point(34,4),new Point(32,2));
+        check(literalRawCostAtThirtyFourFour()>literalRawCostAtThirtyTwoTwo(),
+            "without grid snapping the later target has lower pad cost");
+        Point selected=select(fixture,origins,new Point(25,0),fixture.prototype,fixture.placed);
+        check(selected.equals(new Point(34,4)),
+            "both origins snap to the same tested pose and exact ties retain canonical order");
+    }
+
+    private static void noPlacedNeighborPreservesMeanFallback(TestGeometry fixture) {
+        Vector<Point> origins=points(new Point(34,4),new Point(4,4));
+        Vector<PcbFootprint> none=new Vector<PcbFootprint>();
+        Point selected=select(fixture,origins,new Point(25,0),fixture.prototype,none);
+        check(selected.equals(new Point(34,4)),"no placed linked pad preserves density13 nearest fallback");
+        check(selected!=origins.get(0),"fallback result remains a copy of the existing target");
+    }
+
+    private static void invalidInputsReject(TestGeometry fixture) {
+        reject(fixture,null,new Point(25,0),fixture.prototype,fixture.placed,"null target vector rejects");
+        reject(fixture,new Vector<Point>(),new Point(25,0),fixture.prototype,fixture.placed,
+            "empty target vector rejects");
+        reject(fixture,points(new Point(0,0),new Point(10,0),new Point(20,0),
+            new Point(30,0),new Point(40,0),new Point(50,0)),new Point(25,0),
+            fixture.prototype,fixture.placed,"more than five targets reject");
+        reject(fixture,points(new Point(0,0)),null,fixture.prototype,fixture.placed,
+            "null fallback reference rejects");
+        reject(fixture,points(new Point(0,0)),new Point(25,0),null,fixture.placed,
+            "null candidate footprint rejects");
+        Vector<PcbFootprint> nullNeighbor=new Vector<PcbFootprint>();
+        nullNeighbor.add(null);
+        reject(fixture,points(new Point(0,0)),new Point(25,0),fixture.prototype,nullNeighbor,
+            "null placed footprint rejects");
+    }
+
+    private static TestGeometry fixture() {
+        TroubleshootBoard board=TroubleshootBoardFixtures.createLedIndicatorBoard();
+        PcbFootprint prototype=PcbFootprint.fromPhysicalPackage(board.getComponent("LED1"),0,0);
+        PcbFootprint resistor=PcbFootprint.fromPhysicalPackage(board.getComponent("R1"),-170,40);
+        PcbFootprint connector=PcbFootprint.fromPhysicalPackage(board.getComponent("J1"),70,-30);
+        Vector<PcbFootprint> placed=new Vector<PcbFootprint>();
+        placed.add(resistor);
+        placed.add(connector);
+        Vector<TopologyPlacementGraph.PadLink> links=
+            new TopologyPlacementGraph(board).getLinksFor("LED1");
+        TopologyPlacementGraph.PadLink resistorLink=linkTo(links,"R1","LED1.A","R1.2");
+        TopologyPlacementGraph.PadLink connectorLink=linkTo(links,"J1","LED1.K","J1.2");
+        return new TestGeometry(board,prototype,resistor,connector,placed,links,resistorLink,
+            connectorLink,new Rectangle(-500,-500,1000,1000));
+    }
+
+    private static TopologyPlacementGraph.PadLink linkTo(
+            Vector<TopologyPlacementGraph.PadLink> links,String componentId,
+            String sourcePadId,String otherPadId) {
+        for(TopologyPlacementGraph.PadLink link:links)
+            if(componentId.equals(link.getOtherComponentId()) &&
+                    sourcePadId.equals(link.getPadId()) && otherPadId.equals(link.getOtherPadId()))
+                return link;
+        throw new AssertionError("Missing literal topology link " + sourcePadId + " -> " + otherPadId);
+    }
+
+    private static Point select(TestGeometry fixture,Vector<Point> origins,Point fallback,
+            PcbFootprint prototype,Vector<PcbFootprint> placed) {
+        return PcbPlacementPlanner.nearestVacancyByPadDistance(origins,fallback,prototype,
+            placed,fixture.links,fixture.board,fixture.outline,0);
+    }
+
+    private static void reject(TestGeometry fixture,Vector<Point> origins,Point fallback,
+            PcbFootprint prototype,Vector<PcbFootprint> placed,String label) {
+        boolean rejected=false;
+        try {
+            select(fixture,origins,fallback,prototype,placed);
+        } catch(IllegalArgumentException expected) {
+            rejected=true;
+        }
+        check(rejected,label);
+    }
+
+    private static double literalRawCostAtThirtyFourFour() {
+        return (34+4)*3.0+(70+4)*1.0125;
+    }
+
+    private static double literalRawCostAtThirtyTwoTwo() {
+        return (32+2)*3.0+(68+2)*1.0125;
+    }
+
+    private static Vector<Point> points(Point... values) {
+        Vector<Point> result=new Vector<Point>();
+        for(Point value:values)result.add(value);
+        return result;
+    }
+
+    private static void check(boolean condition,String message) {
+        assertions++;
+        if(!condition)throw new AssertionError(message);
+    }
+
+    private static final class TestGeometry {
+        final TroubleshootBoard board;
+        final PcbFootprint prototype,resistor,connector;
+        final Vector<PcbFootprint> placed;
+        final Vector<TopologyPlacementGraph.PadLink> links;
+        final TopologyPlacementGraph.PadLink resistorLink,connectorLink;
+        final Rectangle outline;
+        final String prototypeFingerprint,resistorFingerprint,connectorFingerprint;
+
+        TestGeometry(TroubleshootBoard board,PcbFootprint prototype,PcbFootprint resistor,
+                PcbFootprint connector,Vector<PcbFootprint> placed,
+                Vector<TopologyPlacementGraph.PadLink> links,
+                TopologyPlacementGraph.PadLink resistorLink,
+                TopologyPlacementGraph.PadLink connectorLink,Rectangle outline) {
+            this.board=board;
+            this.prototype=prototype;
+            this.resistor=resistor;
+            this.connector=connector;
+            this.placed=placed;
+            this.links=links;
+            this.resistorLink=resistorLink;
+            this.connectorLink=connectorLink;
+            this.outline=outline;
+            this.prototypeFingerprint=prototype.geometryFingerprint();
+            this.resistorFingerprint=resistor.geometryFingerprint();
+            this.connectorFingerprint=connector.geometryFingerprint();
+        }
+    }
+}

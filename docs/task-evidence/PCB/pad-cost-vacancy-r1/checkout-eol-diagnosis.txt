@@ -1,0 +1,13 @@
+scripts/verify-current-contracts.ps1 LF=False CRLF=False CRs=1210 LFs=1210
+src/com/lushprojects/circuitjs1/client/GenerationRequest.java LF=False CRLF=False CRs=409 LFs=409
+src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java LF=True CRLF=False CRs=250 LFs=250
+src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java LF=False CRLF=False CRs=344 LFs=344
+src/com/lushprojects/circuitjs1/client/Rb56Placement.java LF=True CRLF=False CRs=131 LFs=131
+tests/contracts/PcbFunctionalGroupingContractTest.java LF=False CRLF=False CRs=675 LFs=675
+tests/contracts/PcbNearestVacancyContractTest.java LF=True CRLF=False CRs=11 LFs=11
+tests/contracts/PcbNearestVacancyHoldoutContractTest.java LF=True CRLF=False CRs=11 LFs=11
+tests/contracts/PcbNearestVacancyIdentityContractTest.java LF=True CRLF=False CRs=262 LFs=262
+tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java LF=True CRLF=False CRs=97 LFs=97
+tests/contracts/PcbTraceWidthProfileContractTest.java LF=True CRLF=False CRs=365 LFs=365
+tests/contracts/RelBSessionIdentityContractTest.java LF=False CRLF=False CRs=305 LFs=305
+tests/contracts/U06SessionSaveContractTest.java LF=False CRLF=False CRs=607 LFs=607

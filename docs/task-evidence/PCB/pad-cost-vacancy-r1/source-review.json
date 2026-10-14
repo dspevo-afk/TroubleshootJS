@@ -1,0 +1,8 @@
+{
+  "plannerSha256": "65042c4057fd5d081500a7646c18a05bddd06a56ff97f41d1919ca3bb3812559",
+  "scope": "Frozenplanner/helper/unit/versionandreplaymapping",
+  "findings": "No actionable issue; <=5existing snapped origins, actualpadidentity+weights, canonicaltie/copy/purity, no-neighborfallback, support-null gate, saved13density12 retained; nofit/routing/budgetchange",
+  "productAcceptance": "REJECTED_UNCHANGED despitefocusednativePASS",
+  "runtime": "NOT_RUNbyreviewer",
+  "status": "SOURCE_REVIEW_PASS"
+}

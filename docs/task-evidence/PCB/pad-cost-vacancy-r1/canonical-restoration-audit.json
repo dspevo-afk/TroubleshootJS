@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "scope": "Text equality to accepted13 Git blobs after newline normalization only; not a raw-input PASS or substitute for fresh qualification",
+  "cases": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "rawSha256": "246ed496842315d533e18dbf0a1b768761fbbb3e2f391ba56a15d3dca34827c3",
+      "acceptedBlobSha256": "4b8043de5cfa73fa3ba97eb15127f7a4a0dbf0d701f05520785db3cc2e832a62",
+      "canonicalEqual": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "rawSha256": "bc5308e63de31ff152d4cb682c41bedce22f0c7cea1b8fb6a9215b4536e37d68",
+      "acceptedBlobSha256": "6bf828642c427aa1eeff9943554e13e84e649c6eca6ba24bf31f61301d633f9d",
+      "canonicalEqual": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "rawSha256": "40aaaf3ec3c285732ff0c02c78badf9d90a281f557ddb7872609a747f6f70f7c",
+      "acceptedBlobSha256": "ee23a998e6de8423a448c9b3e5e38db1a28bd8ea0dae9329c0dfd352f28e6ef1",
+      "canonicalEqual": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+      "rawSha256": "f9bc44806298a07001503409ea71c65263ec61eff673b61d7cee3a9be7855ce5",
+      "acceptedBlobSha256": "4bc75d8a6c3f8e8db2af5f7a7a33ffacc36a81f6c5a69186b00578baac66e6ef",
+      "canonicalEqual": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "rawSha256": "c0bdbac46f90e4f7715797619626f51e7747b5f967d1d6b0cc855bcd2c8342f8",
+      "acceptedBlobSha256": "f44ebda689e3a30fea34158e7d287bfeb4deb8c58aa32685570f67d2320e0c8d",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "rawSha256": "d378f971bd8fdb63ac5f368be92697412f641db9b34474718ae22d01856c5cbf",
+      "acceptedBlobSha256": "2db7141b28c20d5bac7cd291cfcf07cf80e0835f3b85730a896071f808e250d1",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbNearestVacancyContractTest.java",
+      "rawSha256": "88594e8447d7a1effb13e9f245ee160aa75fc0dfc5f12ae3f46a0dae678e5234",
+      "acceptedBlobSha256": "d992b77cdbdf8564a134b5191dd44a20a6bcc0d5d025e343414e92370108d3f4",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbNearestVacancyHoldoutContractTest.java",
+      "rawSha256": "42d2577931e4484f94a80e8c3b4cfa76db41719083ce36bb7006d8c8af33c8d6",
+      "acceptedBlobSha256": "3a0aaaf3a9684489ef2009937afb4feaec508aff88dd1b40e9f89c9c303e0801",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbNearestVacancyIdentityContractTest.java",
+      "rawSha256": "befa1efb94f6a6d2b8d4e825b6e2cdf1b9338d2fde16ffce0bbe6545e3960788",
+      "acceptedBlobSha256": "d17cc6c217da1fd03b6fd9dabf231dee6091a081ba3f5bd1b8c418f337002742",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java",
+      "rawSha256": "95520622eb3c1df858734a82d3d8fb929f96ec9f26eb0039ecb15e46a5cbff2b",
+      "acceptedBlobSha256": "b32c4056d777fffab172942960fead52e77537953efc28ca6474e2daefcc31c4",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/PcbTraceWidthProfileContractTest.java",
+      "rawSha256": "2f24e9dc57a503fd3239b289474e0fbb7bbafa7d61869249f97b36d60f8ee7d2",
+      "acceptedBlobSha256": "f5f1ac325861a2cbbd5eca08f5a8b956ef055ff38f0fe18f5e324a2899877417",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+      "rawSha256": "7f7272a2394a6c63bddd9de743dd44da74708c1984bc7c8087d32934c63f0518",
+      "acceptedBlobSha256": "afe64ae01eb9285c6bf544220180441cabfed32862b3a8317c9d39aafff7f968",
+      "canonicalEqual": true
+    },
+    {
+      "path": "tests/contracts/U06SessionSaveContractTest.java",
+      "rawSha256": "ef610f99eda1fde129f7d3d3be73fdcd90ca184cb067fbcc6aed024b5db7dceb",
+      "acceptedBlobSha256": "30608086bb29f661cf27cfd09c31fbb9d34f6a49ff71644cd1b8e339b196dd56",
+      "canonicalEqual": true
+    }
+  ]
+}

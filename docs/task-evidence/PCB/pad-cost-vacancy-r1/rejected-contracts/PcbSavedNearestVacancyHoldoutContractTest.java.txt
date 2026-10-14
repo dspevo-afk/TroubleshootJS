@@ -1,0 +1,11 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Literal saved13 holdout geometry guards. */
+public final class PcbSavedNearestVacancyHoldoutContractTest {
+    private PcbSavedNearestVacancyHoldoutContractTest() { }
+
+    public static void main(String[] args) {
+        int assertions=PcbFunctionalGroupingContractTest.verifySaved13NearestVacancyHoldouts();
+        System.out.println("PASS: saved13 nearest-vacancy holdout contracts roots=4 assertions="+assertions);
+    }
+}

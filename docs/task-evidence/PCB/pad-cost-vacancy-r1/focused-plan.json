@@ -1,0 +1,10 @@
+{
+  "suites": [
+    "PcbVacancyPadPreferenceContractTest",
+    "PcbNearestVacancyContractTest",
+    "PcbNearestVacancyHoldoutContractTest",
+    "PcbNearestVacancyIdentityContractTest"
+  ],
+  "scope": "Unit/current6+4/rawidentity first; if metrics improve final52 adds saved13/profile/realowner/codec/replay without duplicating focused old13 runs",
+  "status": "FROZEN_FOCUSED_SELECTION"
+}

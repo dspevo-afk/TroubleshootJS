@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_RETAINED",
+  "repair": "UTF8mode explicit; README append made idempotent before rerun",
+  "phase": "Evidence finalizer, after native/GWT/player/provenance/ownedcleanup allPASS",
+  "cause": "Windows Python defaultcp1252 could not decode historicalUTF8 report",
+  "productionInputsChanged": false
+}

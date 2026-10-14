@@ -1,0 +1,9 @@
+{
+  "originalFiveUntracked": "Preserved",
+  "download": "Exact owned file removed after retained-copy/hash/tick/reparse checks",
+  "previewPid": 89828,
+  "port": 8899,
+  "status": "PASS",
+  "sharedTools": "Retained",
+  "processAndPortReleased": true
+}

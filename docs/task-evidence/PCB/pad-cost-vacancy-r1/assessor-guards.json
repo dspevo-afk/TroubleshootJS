@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic metric-assessor boundary only; no generator or physical admission claim",
+  "scratchCleanup": "TemporaryDirectory completed",
+  "cases": [
+    {
+      "case": "unchanged is not acceptance",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "one strict improvement with no regression",
+      "status": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "regression wins over improvement elsewhere",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "missing root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "duplicate root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "unexpected root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong interpretation",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong density",
+      "status": "PASS",
+      "actual": "REJECT"
+    }
+  ]
+}
