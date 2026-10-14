@@ -16,6 +16,26 @@ public final class PcbFunctionalGroupingContractTest {
     private static final long[] SAVED8_AREA={4529785,4466664,6943752,4679776,5814368,6211431};
     private static final long[] SAVED9_AREA={4529785,4466664,6943752,4358809,5814368,6211431};
     private static final long[] SAVED11_AREA={4529785,4466664,6943752,4358809,5814368,6036952};
+    // Exact accepted private12 receipts are an independent bound for private13.
+    private static final long[] SAVED12_AREA={4529785,4466664,6943752,4358809,5814368,6036952};
+    private static final long[] SAVED12_LARGEST_VOID={555900,193200,729600,179200,416000,225500};
+    private static final String[] SAVED12_GEOMETRY_SHA256={
+        "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+        "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+        "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
+        "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
+        "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
+        "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f"
+    };
+    private static final long[] ROLE_WIDTH_HOLDOUT_SEEDS={1L,7L,5L,14L};
+    private static final long[] SAVED12_HOLDOUT_AREA={4615974,6397152,9445744,7347009};
+    private static final long[] SAVED12_HOLDOUT_LARGEST_VOID={474000,965600,1367100,894600};
+    private static final String[] SAVED12_HOLDOUT_GEOMETRY_SHA256={
+        "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+        "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
+        "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
+        "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf"
+    };
     private static final String[] SAVED8_GEOMETRY_SHA256={
         "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
         "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
@@ -170,6 +190,167 @@ public final class PcbFunctionalGroupingContractTest {
         return checks-firstCheck;
     }
 
+    static int verifyNearestVacancyRepresentatives() {
+        int firstCheck=checks,failures=0;
+        for(int index=0;index<ROOTS.length;index++) {
+            try { measure(ROOTS[index],index,13); }
+            catch(AssertionError failure) {
+                failures++;
+                System.out.println("PCB_NEAREST_VACANCY_FAILURE seed="+ROOTS[index]+
+                    " message="+failure.getMessage());
+            }
+            catch(RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_NEAREST_VACANCY_FAILURE seed="+ROOTS[index]+
+                    " exception="+failure);
+            }
+        }
+        if(failures>0)throw new AssertionError("private13 nearest-vacancy representative failures="+failures);
+        return checks-firstCheck;
+    }
+
+    static int verifyNearestVacancyHoldouts() {
+        return verifyHoldoutCohort(13,false);
+    }
+
+    static int verifySavedRoleWidthRepresentatives() {
+        int firstCheck=checks,failures=0;
+        for(int index=0;index<ROOTS.length;index++) {
+            try {
+                PcbBoardLayout layout=measure(ROOTS[index],index,12);
+                long area=(long)layout.getBoardOutline().width*layout.getBoardOutline().height;
+                String hash=PlayerSessionFingerprint.of(layout.geometryFingerprint());
+                check(area==SAVED12_AREA[index],"published12 representative area remains exact: "+ROOTS[index]);
+                check(SAVED12_GEOMETRY_SHA256[index].equals(hash),
+                    "published12 representative geometry remains byte-exact: "+ROOTS[index]);
+            }
+            catch(AssertionError failure) {
+                failures++;
+                System.out.println("PCB_SAVED_ROLE_WIDTH_FAILURE seed="+ROOTS[index]+
+                    " message="+failure.getMessage());
+            }
+            catch(RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_SAVED_ROLE_WIDTH_FAILURE seed="+ROOTS[index]+
+                    " exception="+failure);
+            }
+        }
+        if(failures>0)throw new AssertionError("saved12 representative failures="+failures);
+        return checks-firstCheck;
+    }
+
+    static int verifySavedRoleWidthHoldouts() {
+        return verifyHoldoutCohort(12,true);
+    }
+
+    private static int verifyHoldoutCohort(int version,boolean exactSaved12) {
+        int firstCheck=checks,failures=0;
+        for(int index=0;index<ROLE_WIDTH_HOLDOUT_SEEDS.length;index++) {
+            long seed=ROLE_WIDTH_HOLDOUT_SEEDS[index];
+            try { measureHoldout(seed,index,version,exactSaved12); }
+            catch(AssertionError failure) {
+                failures++;
+                System.out.println("PCB_"+(version==13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
+                    "_FAILURE seed="+seed+" message="+failure.getMessage());
+            }
+            catch(RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_"+(version==13?"NEAREST_VACANCY":"SAVED_ROLE_WIDTH")+
+                    "_FAILURE seed="+seed+" exception="+failure);
+            }
+        }
+        if(failures>0)throw new AssertionError((version==13?"private13 nearest vacancy":"saved12")+
+            " holdout failures="+failures);
+        return checks-firstCheck;
+    }
+
+    private static void measureHoldout(long seed,int index,int version,boolean exactSaved12) {
+        Rb56Plan plan=Rb56Plan.resolve(seed,version);
+        TroubleshootBoard board=plan.board();
+        MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board,plan.layoutSeed,plan.routingSeed);
+        check(result.accepted(),"holdout route accepted: "+seed+"/"+version+" "+result.toCanonical());
+        PcbBoardLayout layout=result.getLayout();
+        GeneratedPhysicalAdmission admission=MediumBoardNormalAdmission.fromAcceptedRb56Route(
+            board,result,plan.layoutSeed,plan.routingSeed);
+        admission.requireConstruction(board,layout);
+        layout.validateGeometry(board);layout.validateRoutingGeometry(board);layout.validateRouteQuality();
+        new PcbTwoLayerRules(board,layout).validate(layout);
+        PcbTraceClearance.validate(layout.getTraces());
+        PcbPlacementConstraints constraints=board.getPlacementConstraints();
+        check(constraints.requiresTwoLayerRouting,"holdout retains P07 two-layer admission: "+seed);
+        check(constraints.placementDensityVersion==(version==13?12:11),
+            "holdout uses the interpretation's literal packing density: "+seed+"/"+version);
+        check(layout.getComponents().size()==board.getComponentIds().size(),
+            "holdout retains every source component: "+seed);
+        TreeSet<String> componentIds=new TreeSet<String>();
+        for(PcbComponentPlacement part:layout.getComponents())
+            check(componentIds.add(part.getComponentId()),"holdout component identity is unique: "+seed);
+        check(componentIds.equals(new TreeSet<String>(board.getComponentIds())),
+            "holdout component inventory is exact: "+seed);
+        check(layout.getPads().size()==board.getPadIds().size(),
+            "holdout retains every source pad: "+seed);
+        TreeSet<String> padIds=new TreeSet<String>();
+        for(PcbPadPlacement pad:layout.getPads())
+            check(padIds.add(pad.getPadId()),"holdout physical pad identity is unique: "+seed);
+        check(padIds.equals(new TreeSet<String>(board.getPadIds())),
+            "holdout physical pad inventory is exact: "+seed);
+        verifyRoleTraceWidths(board,layout);
+        for(PcbTraceGeometry trace:layout.getTraces()) {
+            if(trace.getStartPadId()!=null)
+                check(board.getPad(trace.getStartPadId()).getNetId().equals(trace.getNetId()),
+                    "holdout start endpoint net binding: "+seed+"/"+trace.getNetId());
+            if(trace.getEndPadId()!=null)
+                check(board.getPad(trace.getEndPadId()).getNetId().equals(trace.getNetId()),
+                    "holdout end endpoint net binding: "+seed+"/"+trace.getNetId());
+        }
+        Rectangle outline=layout.getBoardOutline();
+        long area=(long)outline.width*outline.height;
+        int largestVoid=reportWhitespace(board,layout,seed,version);
+        MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
+        check(stats.placementCandidates==6&&stats.oneFaceAttempts<=3&&stats.twoLayerAttempts<=3,
+            "holdout preserves original placement and per-policy route caps: "+seed);
+        long copperLength=0;int segments=0,vias=0;
+        for(PcbTraceGeometry trace:layout.getTraces()) {
+            int[] x=trace.getXPoints(),y=trace.getYPoints();
+            for(int i=1;i<x.length;i++) {
+                copperLength+=Math.abs((long)x[i]-x[i-1])+Math.abs((long)y[i]-y[i-1]);
+                segments++;
+            }
+        }
+        for(PcbBoardHole hole:layout.getHoles())if(hole.kind==PcbBoardHole.Kind.VIA)vias++;
+        String hash=PlayerSessionFingerprint.of(layout.geometryFingerprint());
+        if(version==13) {
+            System.out.println("PCB_NEAREST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
+            System.out.println("PCB_NEAREST_VACANCY_CASE {\"seed\":\""+seed+
+                "\",\"version\":13,\"density\":"+constraints.placementDensityVersion+
+                ",\"area\":"+area+",\"areaBaseline\":"+SAVED12_HOLDOUT_AREA[index]+
+                ",\"largestProtectedEmptyRectangleArea\":"+largestVoid+
+                ",\"largestProtectedEmptyRectangleBaseline\":"+
+                SAVED12_HOLDOUT_LARGEST_VOID[index]+",\"copperLength\":"+copperLength+
+                ",\"segments\":"+segments+",\"vias\":"+vias+",\"geometrySha256\":\""+
+                hash+"\"}");
+            check(area<=SAVED12_HOLDOUT_AREA[index],
+                "private13 holdout outline does not exceed published12: "+seed+" area="+area+
+                " baseline="+SAVED12_HOLDOUT_AREA[index]);
+            check(largestVoid<=SAVED12_HOLDOUT_LARGEST_VOID[index],
+                "private13 holdout protected void does not exceed published12: "+seed+
+                " void="+largestVoid+" baseline="+SAVED12_HOLDOUT_LARGEST_VOID[index]);
+        } else if(exactSaved12) {
+            System.out.println("PCB_SAVED_ROLE_WIDTH_ROUTE seed="+seed+" "+result.toCanonical());
+            check(area==SAVED12_HOLDOUT_AREA[index],"published12 holdout area remains exact: "+seed);
+            check(largestVoid==SAVED12_HOLDOUT_LARGEST_VOID[index],
+                "published12 holdout protected void remains exact: "+seed);
+            check(SAVED12_HOLDOUT_GEOMETRY_SHA256[index].equals(hash),
+                "published12 holdout geometry remains byte-exact: "+seed);
+            System.out.println("PCB_SAVED_ROLE_WIDTH_CASE {\"seed\":\""+seed+
+                "\",\"version\":12,\"density\":"+constraints.placementDensityVersion+
+                ",\"area\":"+area+",\"largestProtectedEmptyRectangleArea\":"+largestVoid+
+                ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
+                ",\"vias\":"+vias+",\"geometrySha256\":\""+hash+"\"}");
+        }
+    }
+
     private static void verifySavedUniformProfiles() {
         for(int version=1;version<=11;version++) {
             PcbPlacementConstraints constraints=Rb56Plan.resolve(ROOTS[0],version).board()
@@ -188,7 +369,7 @@ public final class PcbFunctionalGroupingContractTest {
         for(PcbTraceGeometry trace:layout.getTraces())
             check(trace.getWidth()==9,"saved placement trace remains width9: "+trace.getNetId());
     }
-    private static void measure(long seed,int index,int version) {
+    static PcbBoardLayout measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
         TroubleshootBoard board=plan.board();
         MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
@@ -209,6 +390,13 @@ public final class PcbFunctionalGroupingContractTest {
         PcbTraceClearance.validate(layout.getTraces());
         check(layout.getComponents().size()==board.getComponentIds().size(),"every component retained");
         check(layout.getPads().size()==board.getPadIds().size(),"every pad retained");
+        if(version==13) {
+            TreeSet<String> componentIds=new TreeSet<String>();
+            for(PcbComponentPlacement component:layout.getComponents())
+                check(componentIds.add(component.getComponentId()),"unique physical component identity");
+            check(componentIds.equals(new TreeSet<String>(board.getComponentIds())),
+                "exact physical component census");
+        }
         TreeSet<String> pads=new TreeSet<String>();
         for(PcbPadPlacement pad:layout.getPads()) {
             check(pads.add(pad.getPadId()),"unique physical pad");
@@ -269,8 +457,10 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
             ",\"vias\":"+layout.getHoles().size()+",\"geometrySha256\":\""+
             PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
-        if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
-        if(version>=4) reportWhitespace(board,layout,seed,version);
+        if(version==13) System.out.println("PCB_NEAREST_VACANCY_ROUTE seed="+seed+" "+result.toCanonical());
+        else if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
+        int largestProtectedVoid=0;
+        if(version>=4) largestProtectedVoid=reportWhitespace(board,layout,seed,version);
         if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved6 geometry stays byte-exact: "+seed);
         if(version==7) {
@@ -317,6 +507,27 @@ public final class PcbFunctionalGroupingContractTest {
                 " area="+area+" baseline="+SAVED11_AREA[index]);
             verifyRoleTraceWidths(board,layout);
         }
+        if(version==13) {
+            long area=(long)outline.width*outline.height;
+            check(board.getPlacementConstraints().placementDensityVersion==12,
+                "private13 nearest vacancy uses declared density12: "+seed);
+            verifyRoleTraceWidths(board,layout);
+            System.out.println("PCB_NEAREST_VACANCY_CASE {\"seed\":\""+seed+
+                "\",\"version\":13,\"density\":"+
+                board.getPlacementConstraints().placementDensityVersion+",\"area\":"+area+
+                ",\"areaBaseline\":"+SAVED12_AREA[index]+
+                ",\"largestProtectedEmptyRectangleArea\":"+largestProtectedVoid+
+                ",\"largestProtectedEmptyRectangleBaseline\":"+SAVED12_LARGEST_VOID[index]+
+                ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
+                ",\"vias\":"+layout.getHoles().size()+",\"geometrySha256\":\""+
+                PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
+            check(area<=SAVED12_AREA[index],
+                "private13 representative outline does not exceed published12: "+seed+
+                " area="+area+" baseline="+SAVED12_AREA[index]);
+            check(largestProtectedVoid<=SAVED12_LARGEST_VOID[index],
+                "private13 representative protected void does not exceed published12: "+seed+
+                " void="+largestProtectedVoid+" baseline="+SAVED12_LARGEST_VOID[index]);
+        }
         if(version>=8) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED7_AREA[index],"no representative outline regression against accepted7: "+seed);
@@ -334,7 +545,8 @@ public final class PcbFunctionalGroupingContractTest {
         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
             "published saved4 geometry remains byte-exact: "+seed);
-        System.out.println("PCB_GROUPING_CASE {\"seed\":\""+seed+"\",\"version\":"+version+
+        String caseMarker=version==13?"PCB_NEAREST_VACANCY_REPORT":"PCB_GROUPING_CASE";
+        System.out.println(caseMarker+" {\"seed\":\""+seed+"\",\"version\":"+version+
             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+
             ",\"width\":"+outline.width+",\"height\":"+outline.height+",\"area\":"+((long)outline.width*outline.height)+
             ",\"courtyardArea\":"+layout.getRoutingCourtyardArea()+",\"regionBoundingAreaSum\":"+regionArea+
@@ -344,9 +556,10 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"vias\":"+layout.getHoles().size()+",\"selectedAttempt\":"+stats.selectedPlacementAttempt+
             ",\"routingExpansions\":"+stats.routingExpansions+
             ",\"geometrySha256\":\""+PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
+        return layout;
     }
     /** Drawing-space sampling, not a statement that free cells are packable. */
-    static void reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
         Rectangle outline=layout.getBoardOutline();int step=10,cols=outline.width/step,rows=outline.height/step;
         check(cols>0&&rows>0&&(long)cols*rows<=250000,"bounded whitespace sampling");
         boolean[] blocked=new boolean[cols*rows];
@@ -425,6 +638,7 @@ public final class PcbFunctionalGroupingContractTest {
             "the targeted primary-side void shrinks by at least half");
         if(version>=11 && seed==42L)check(bestArea*step*step<327600,
             "vacancy probes improve the frozen10 protected empty rectangle");
+        return bestArea*step*step;
     }
     private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
         int x0=Math.max(0,(r.x-outline.x)/step),y0=Math.max(0,(r.y-outline.y)/step);

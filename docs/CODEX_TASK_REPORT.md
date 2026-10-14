@@ -1,4 +1,46 @@
-# Current checkpoint: private12 accepted; publication being finalized; goal active
+# Current checkpoint: private13 nearest-vacancy packing accepted
+
+2026-10-14. Base5d4de10b56c10fbf1012a2ac39324382074fc6a1 on
+codex/q60-faulted-profile-counts. Commit/normal verified push next. No main/email.
+User's PCB realism work continues until9amAmerica/New_York; general roadmap stays
+behind it. Preserve five original untracked entries, unrelated Desktop work and
+shared tools. All four owned tabs closed, viewport reset, preview3176/port8899
+positively stopped, exact owned download and checked oracle scratch removed.
+
+Private13/density12/ROLE changes only existing candidate1 unpaired vacancy-origin
+preference to nearest connected target. Same five targets, order, scoring,
+physical/access/isolation and candidate/evaluation/route/work/time bounds.
+Saved12 density11ROLE and saved1–11 stay exact; alpha5/model1/epoch16 unchanged.
+Root42 area6036952→5519502(-8.57%), protected void225500→178200(-20.98%),
+Cu43440→42230(-2.79%), vias48→45. Other nine cases exact12. Free raster does not
+prove packability. Allten literal saved12 geometry and independent metric guards.
+
+Packet PCB/nearest-vacancy-preference-r1. Final49 nativePASS553.3999899s;
+actual final-source JDK8/GWT5 PASS91.2671063s; frozen1440 native/build/player audits
+PASS. Build5AA93A87743D88DB7F4A80EEFC257760; desktop/narrow five served identity
+fields match. Root integrated review and separate source/stored-evidence review
+found no actionable issue; reviewers did not rerun runtime.
+Desktop54cold75.420s/622/max1.480s; actualchipmenu/pinout/bothfaces/pad4.996V,
+unrepairedFAIL, guardedShop55medium1k/original30RDA repair/customerPASS,
+actualSave13/FileReader13restore77.213s/622/freshowner/priorretired/OFF+onepart,
+retest/ClosePASS393.461s/all7. Narrow319cold79.552s/622/max1.486s, actualcommitted
+saved12 FileReader81.673s/608/OFF+onepart/retest/ClosePASS222.161s/all7.
+Fresh60cold72.826s/586/max1.464s; removalguarddisableduntil discharge, Shop61medium
+10k/original28RSA repair/customerPASS/ClosePASS200.351s/all7. Five core plus two
+large repair captures inspected; zero browserwarn/errors. 60 Save/load NOT RUN.
+Initial60coldPASS75.474s/586 then intentionally ended unrepaired: finalFAIL missing
+ordinary customerpass, all7cleanuptrue; retained alongside complete subsequentPASS.
+
+Earlier candidate0/isolation-aware/finite-copper/candidate2 trials rejected;
+all patches/failures/limits retained, production paths removed. Initial fixture,
+metric marker, tool selector, oracle compile failures and experimental ~2s cleanup
+overlap remain recorded. 49selected is not fullregistry/allseed/modesthost or
+normaladvanced/HARD/manufacturing/optimality release. Current54 uses622work versus
+prior608; caps unchanged, timings are not a controlled speed comparison.
+Next unstarted PCB experiment: choose an existing pocket origin by actual weighted
+pad connection cost under the same bounds, with explicit saved13 isolation and
+strict nonregression against the newly accepted13 cohort. No seed-specific tuning.
+# Previous checkpoint: private12 accepted before verified publication; goal active
 
 2026-10-14. Base HEAD68ae9284360e379ca1e31cf10690e11d9b26280d, prior normal push
 verified. Private12 candidate accepted; intended source/docs/evidence commit and

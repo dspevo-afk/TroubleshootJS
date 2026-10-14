@@ -7,7 +7,22 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private12 role-specific PCB copper widths accepted**
+**Current task:** **Private13 connected vacancy preference accepted**
+Existing candidate1 prefers the existing pocket origin nearest its connected
+circuitry, with paired-support targeting and all search/routing/physical limits
+preserved. Root42 area shrinks8.57%, largest protected void20.98%, copper2.79%,
+vias48→45; other nine cases remain exact12. Saved1–12 retain their layouts.
+Final49 native/JDK8GWT5 and actual desktop54/current13 Save/load, narrow/saved12
+FileReader, guarded repair/customer retest/Close pass. Fresh60 repair/customer/
+Close also pass; its first unrepaired-close FAIL remains explicit. Frozen input
+and served identity audits and owned cleanup pass. Finite private/reference-host
+scope only; general population, normaladvanced/HARD and modest-host gates stay held.
+No main/email. Branch publication next; user's work continues until9amNewYork.
+[Evidence and limits](task-evidence/PCB/nearest-vacancy-preference-r1/README.md).
+Next unstarted PCB experiment: actual weighted pad-cost pocket preference, keeping
+saved13 exact and the existing candidate/evaluation/routing bounds.
+
+**Previous task:** **Private12 role-specific PCB copper widths accepted**
 The generator carries HIGH_CURRENT13, SUPPLY/RETURN11 and CONTROL/SIGNAL9 drawing
 widths through routing, clearance, conductor/probe surfaces, rendering and physical
 identity. ROLE-only turn estimation, failed-net next-order promotion and nearest
@@ -23,12 +38,10 @@ FileReader/OFF/customerPASS/Close all PASS. Five inspected final captures, exact
 served provenance/input audits and owned process/tab/viewport/download cleanup.
 All failed trials and initial save/fixture/tool failures remain explicit. No normal
 advanced/HARD, all-seed, manufacturing, optimality or modest-host performance
-release. No main merge/email. Normal branch publication is being finalized.
+release. No main merge/email. Normal branch push5d4de10b56c10fbf1012a2ac39324382074fc6a1 verified.
 [Accepted evidence and limits](task-evidence/PCB/role-widths-r1/README.md).
 User's realism goal remains active until9amAmerica/New_York2026-10-14.
-Next unstarted PCB experiment: reuse existing vacancy advice for repeated-control
-candidate0 under the same candidate/evaluation/routing budgets. Inherited60 timing
-remains open; general roadmap milestones stay behind the user's PCB realism work.
+The inherited60 reference-host timing check is now fresh under13; no modest-host release follows. General roadmap milestones stay behind the user's PCB realism work.
 **Previous packing task:** **Vacancy-guided private11 PCB packing accepted**
 Bounded coarse free-envelope targets reuse duplicate placement evaluations in
 repeated-control candidate1. Complete package/access envelopes, actual per-pad

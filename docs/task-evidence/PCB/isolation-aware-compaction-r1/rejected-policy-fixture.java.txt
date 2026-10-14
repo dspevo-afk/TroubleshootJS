@@ -1,0 +1,124 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Vector;
+
+/** Physical-only fixtures; no electrical or generated-population admission claim. */
+public final class PcbIsolationCompactionPolicyContractTest {
+    private static int checks;
+    public static void main(String[] args) {
+        safeStripSurvivesIsolationRollback();
+        intervalCoordinatesAndHistoricalBoundary();
+        mixedTerminalDomains();
+        System.out.println("PASS: PCB isolation compaction policy contracts assertions="+checks);
+    }
+    private static void safeStripSurvivesIsolationRollback() {
+        TroubleshootBoard board=new TroubleshootBoard("ISOLATION_COMPACTION_FIXTURE");
+        Vector<PcbFootprint> parts=new Vector<PcbFootprint>();
+        for(int i=0;i<3;i++) {
+            String id="U"+i;
+            BoardComponent component=new BoardComponent(id,"REGULATOR",PhysicalPackages.TO220_REGULATOR_4);
+            board.addComponent(component);
+            for(String terminal:component.getPhysicalPackage().getTerminalIds()) {
+                String net=id+"_"+terminal;
+                board.addNet(new BoardNet(net));
+                board.addPad(new BoardPad(id+"."+terminal,id,terminal,net));
+            }
+            parts.add(PcbFootprint.fromPhysicalPackage(component,new int[]{100,600,1000}[i],100));
+        }
+        PcbPlacementConstraints old=constraints(11),current=constraints(12);
+        old.validate(board);current.validate(board);
+        PcbPlacementPlanner.Plan input=new PcbPlacementPlanner.Plan(new Rectangle(0,0,1500,500),
+            parts,new Vector<PcbLayoutRegion>(),0,0,0,7);
+        String untouched=input.materialize().geometryFingerprint();
+        PcbPlacementPlanner.validate(board,current,input.outline,input.footprints);
+        PcbPlacementPlanner.Plan before=PcbPlacementCompactor.compact(board,old,input);
+        PcbPlacementPlanner.Plan after=PcbPlacementCompactor.compact(board,current,input);
+        check(before.outline.width==1500,"historical full-axis rollback discards the safe strip too");
+        check(after.outline.width==1200 && after.outline.height==500,
+            "literal safe cuts remove300 while preserving the declared corridor");
+        PcbPlacementPlanner.validate(board,current,after.outline,after.footprints);
+        Rectangle low=after.footprints.get(1).getPlacement().getRoutingCourtyard();
+        Rectangle high=after.footprints.get(2).getPlacement().getRoutingCourtyard();
+        check(high.x-low.x-low.width==120,"literal resulting isolation is120, above required80");
+        check(untouched.equals(input.materialize().geometryFingerprint()),"input placement remains immutable");
+        check(after.materialize().geometryFingerprint().equals(PcbPlacementCompactor.compact(
+            board,current,input).materialize().geometryFingerprint()),"deterministic safe strip projection");
+        for(int i=0;i<parts.size();i++) {
+            PcbFootprint a=parts.get(i),b=after.footprints.get(i);
+            int dx=b.getPlacement().getX()-a.getPlacement().getX();
+            check(a.getPlacement().getPhysicalGeometry()==b.getPlacement().getPhysicalGeometry(),
+                "rigid original package geometry retained");
+            for(PcbPadPlacement pad:a.getPads()) {
+                PcbPadPlacement moved=b.getPad(pad.getPadId());
+                check(moved.getX()==pad.getX()+dx && moved.getY()==pad.getY(),
+                    "each authoritative pad follows exactly its package translation");
+            }
+        }
+    }
+    private static PcbPlacementConstraints constraints(int density) {
+        Vector<PcbPlacementConstraints.Part> demands=new Vector<PcbPlacementConstraints.Part>();
+        for(int i=0;i<3;i++)demands.add(new PcbPlacementConstraints.Part("U"+i,"region","Region",
+            i==2?"B":"A",PcbPlacementConstraints.Anchor.NONE,20));
+        Vector<PcbPlacementConstraints.Barrier> barriers=new Vector<PcbPlacementConstraints.Barrier>();
+        barriers.add(new PcbPlacementConstraints.Barrier("A","B",80));
+        return new PcbPlacementConstraints(demands,barriers,PcbCopperLayer.BOTTOM,
+            MediumBoardPhysicalPolicy.ID,1,density,true,PcbTraceWidthProfile.ROLE_WIDTHS);
+    }
+    private static void intervalCoordinatesAndHistoricalBoundary() {
+        BoardComponent a=physicalComponent("U0",PhysicalPackages.TO220_REGULATOR_4);
+        BoardComponent b=physicalComponent("U2",PhysicalPackages.TO220_REGULATOR_4);
+        Vector<PcbFootprint> parts=new Vector<PcbFootprint>();
+        parts.add(PcbFootprint.fromPhysicalPackage(a,-1000,0));
+        parts.add(PcbFootprint.fromPhysicalPackage(b,0,0));
+        expectInterval(constraints(12),parts,true,-785,-705,"negative x coordinates");
+        parts.set(0,PcbFootprint.fromPhysicalPackage(a,0,0));
+        parts.set(1,PcbFootprint.fromPhysicalPackage(b,-1000,0));
+        expectInterval(constraints(12),parts,true,-785,-705,"geometric order overrides lexical domain order");
+        parts.set(0,PcbFootprint.fromPhysicalPackage(a,0,-1000));
+        parts.set(1,PcbFootprint.fromPhysicalPackage(b,0,0));
+        expectInterval(constraints(12),parts,false,-795,-715,"vertical declared corridor");
+        Vector<int[]> untouched=new Vector<int[]>();
+        PcbPlacementCompactor.protectIsolationIntervals(constraints(11),parts,false,untouched);
+        check(untouched.isEmpty(),"saved12 density11 does not acquire new masks");
+        PcbPlacementCompactor.protectIsolationIntervals(constraints(12),parts,true,untouched);
+        check(untouched.isEmpty(),"overlapping axis invents no corridor");
+        parts.remove(1);
+        PcbPlacementCompactor.protectIsolationIntervals(constraints(12),parts,false,untouched);
+        check(untouched.isEmpty(),"absent domain invents no occupied interval");
+    }
+    private static void mixedTerminalDomains() {
+        BoardComponent mixed=physicalComponent("M",PhysicalPackages.ISOLATED_CONVERTER_7);
+        Vector<PcbFootprint> parts=new Vector<PcbFootprint>();
+        parts.add(PcbFootprint.fromPhysicalPackage(mixed,-1000,100));
+        String original=parts.get(0).geometryFingerprint();
+        for(boolean swapped:new boolean[]{false,true}) {
+            Vector<PcbPlacementConstraints.TerminalDomain> terminals=new Vector<PcbPlacementConstraints.TerminalDomain>();
+            for(String terminal:mixed.getPhysicalPackage().getTerminalIds()) {
+                boolean left=!("PRE_L+".equals(terminal)||"OUT-".equals(terminal));
+                terminals.add(new PcbPlacementConstraints.TerminalDomain(terminal,left!=swapped?"A":"B"));
+            }
+            Vector<PcbPlacementConstraints.Part> demands=new Vector<PcbPlacementConstraints.Part>();
+            demands.add(new PcbPlacementConstraints.Part("M","mixed","Mixed",swapped?"B":"A",
+                PcbPlacementConstraints.Anchor.NONE,20,terminals));
+            Vector<PcbPlacementConstraints.Barrier> barriers=new Vector<PcbPlacementConstraints.Barrier>();
+            barriers.add(new PcbPlacementConstraints.Barrier("A","B",80));
+            PcbPlacementConstraints c=new PcbPlacementConstraints(demands,barriers,PcbCopperLayer.BOTTOM,
+                MediumBoardPhysicalPolicy.ID,1,12,true,PcbTraceWidthProfile.ROLE_WIDTHS);
+            expectInterval(c,parts,true,-885,-805,"actual mixed terminal courtyards, swapped="+swapped);
+        }
+        check(original.equals(parts.get(0).geometryFingerprint()),"mask discovery cannot mutate mixed package");
+    }
+    private static BoardComponent physicalComponent(String id,PhysicalPackage physical) {
+        BoardComponent component=new BoardComponent(id,"FIXTURE",physical);
+        for(String terminal:physical.getTerminalIds())component.addPadId(id+"."+terminal);
+        return component;
+    }    private static void expectInterval(PcbPlacementConstraints c,Vector<PcbFootprint> parts,
+            boolean x,int first,int last,String reason) {
+        Vector<int[]> intervals=new Vector<int[]>();
+        PcbPlacementCompactor.protectIsolationIntervals(c,parts,x,intervals);
+        check(intervals.size()==1 && intervals.get(0)[0]==first && intervals.get(0)[1]==last,reason);
+    }
+    private static void check(boolean condition,String reason) {
+        checks++;if(!condition)throw new AssertionError(reason);
+    }
+}

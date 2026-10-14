@@ -1,0 +1,86 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index 52a18a68..d08add05 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -258,6 +258,10 @@ final class PcbPlacementPlanner {
+         int placementVersion = constraints.placementDensityVersion;
+         boolean pinLocal=placementVersion>=10 && candidate==1 &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
++        // The next density interpretation reuses candidate0's duplicate slots
++        // without extending candidate1's pin-local or support-pair eligibility.
++        boolean vacancyAdvice=pinLocal || placementVersion>=12 && candidate==0 &&
++            SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
+         // Private6 reuses the established group-centred target and source-lane hints.
+         boolean narrow=placementVersion >= 8 && (candidate == 3 || pinLocal || candidate == 0 &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints));
+@@ -372,7 +376,7 @@ final class PcbPlacementPlanner {
+         for (Item item:orderedAnchors) {
+             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,true,boundaryX,evaluations);
++                pinLocal,vacancyAdvice,true,boundaryX,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
+             item.footprint=selected; placed.add(selected);
+         }
+@@ -386,7 +390,7 @@ final class PcbPlacementPlanner {
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,false,boundaryX,evaluations);
++                pinLocal,vacancyAdvice,false,boundaryX,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
+             next.footprint=selected; placed.add(selected);
+             remaining.remove(next.demand.componentId);
+@@ -605,7 +609,8 @@ final class PcbPlacementPlanner {
+             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
+             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
+             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
+-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations) {
++            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,
++            boolean vacancyAdvice,boolean anchor,int boundaryX,int[] evaluations) {
+         RegionHint hint=hints.get(regionKey(item.demand));
+         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
+             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
+@@ -648,7 +653,13 @@ final class PcbPlacementPlanner {
+         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
+         if(support!=null) { baseX=connected.x+direction*CHANNEL; baseY=connected.y; }
+         Vector<Point> vacancies=null;
+-        if(constraints.placementDensityVersion>=11 && pinLocal && !anchor) {
++        BoardComponent vacancyPart=board.getComponent(item.demand.componentId);
++        boolean smallPassive=vacancyPart!=null && !vacancyPart.getPhysicalPackage().isConnector() &&
++            vacancyPart.getPadIds().size()==2 && ("RESISTOR".equals(vacancyPart.getType()) ||
++            "CAPACITOR".equals(vacancyPart.getType()) || "DIODE".equals(vacancyPart.getType()) ||
++            "ZENER".equals(vacancyPart.getType()));
++        if(constraints.placementDensityVersion>=11 && vacancyAdvice && !anchor &&
++                (pinLocal || smallPassive && functionalPackagesPlaced(board,placed))) {
+             Rectangle allowed=vacancyDomainBox(item.footprint,placed,constraints,outline);
+             if(allowed!=null) {
+                 Vector<Rectangle> obstacles=new Vector<Rectangle>();
+@@ -659,9 +670,9 @@ final class PcbPlacementPlanner {
+                     item.demand.accessMargin),new Point(pose.getX(),pose.getY()));
+             }
+         }
+-        Point vacancyPreference=support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
++        Point vacancyPreference=pinLocal && support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
+         Rectangle vacancyPocket=null;
+-        if(vacancies!=null && !vacancies.isEmpty()) {
++        if(pinLocal && vacancies!=null && !vacancies.isEmpty()) {
+             int left=vacancies.get(0).x,right=left,top=vacancies.get(0).y,bottom=top;
+             for(Point point:vacancies) {left=Math.min(left,point.x);right=Math.max(right,point.x);
+                 top=Math.min(top,point.y);bottom=Math.max(bottom,point.y);}
+@@ -751,6 +762,15 @@ final class PcbPlacementPlanner {
+         return best;
+     }
+ 
++    /** Residual pocket targets must not perturb the earlier functional package stage. */
++    private static boolean functionalPackagesPlaced(TroubleshootBoard board,Vector<PcbFootprint> placed) {
++        for(String id:board.getComponentIds()) {
++            BoardComponent component=board.getComponent(id);
++            if(!component.getPhysicalPackage().isConnector() && component.getPadIds().size()>=3 &&
++                    findPlacedFootprint(placed,id)==null)return false;
++        }
++        return true;
++    }
+     /** Advisory clipping preserves the already established declared-domain axis.
+      * The existing fits/global corridor checks remain the admission authority. */
+     static Rectangle vacancyDomainBox(PcbFootprint source,Vector<PcbFootprint> placed,

@@ -1,0 +1,17 @@
+{
+  "review": "Root integrated diff and separate source/stored-evidence reviews; reviewers did not rerun runtime",
+  "metrics": "Allten area and protected void nonregression; root42area-8.57%/void-20.98%/Cu-2.79%/vias48to45;othernineexact12",
+  "retainedFailure": "First large60 ended unrepaired: coldPASS75.474s/586, finalFAIL ordinary customer retest missing; all7cleanuptrue. Subsequent full repair run PASS, original FAIL retained.",
+  "status": "ACCEPTED_FOR_BRANCH_PUBLICATION",
+  "large60": "Fresh60 cold72.826s/586; guarded Shop61medium10k/original28RSA repair/customerPASS/ClosePASS200.351s/all7",
+  "gwtFive": "PASS91.2671063s",
+  "publication": "PENDING",
+  "scope": "Private13 density12 ROLE nearest existing vacancy preference",
+  "audit": "Frozen1440 unchanged after native/build/player; desktop/narrow five served identity fields match; browserwarnerrors empty",
+  "desktop": "54 cold75.420s/622; probe4.996V; chipmenu/pinout/bothfaces; unrepairedFAIL; Shop55/RDArepairPASS; actualSave13/FileReader13restore77.213s/622; OFF/onepart preserved; retest/ClosePASS393.461s/all7",
+  "narrow": "319x670 cold79.552s/622; saved12 actualFileReader81.673s/608; OFF/onepart preserved; retest/ClosePASS222.161s/all7",
+  "resources": "Preview3176/port8899 stopped; all4tabs closed/viewport reset; exact downloaded file removed; fault-oracle scratch verified and removed; sharedtools retained",
+  "limits": "49selected not fullregistry; finite seeds/referencehost/private; no allseed, modesthost, normaladvanced/HARD, optimality or manufacturingrelease; no main/email",
+  "native49": "PASS553.3999899s",
+  "base": "5d4de10b56c10fbf1012a2ac39324382074fc6a1"
+}

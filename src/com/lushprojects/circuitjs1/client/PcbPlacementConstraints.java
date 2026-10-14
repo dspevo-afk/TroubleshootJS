@@ -104,7 +104,7 @@ final class PcbPlacementConstraints {
             throw new IllegalArgumentException("Missing PCB trace width profile");
         this.traceWidthProfile = traceWidthProfile;
         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
-        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11)
+        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12)
             throw new IllegalArgumentException("Unknown placement density interpretation");
         placementDensityVersion = densityVersion;
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");

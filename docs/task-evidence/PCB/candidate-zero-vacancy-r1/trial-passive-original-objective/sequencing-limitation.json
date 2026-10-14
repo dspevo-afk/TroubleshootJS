@@ -1,0 +1,8 @@
+{
+  "nextScopeCreationUtc": "2026-10-14T10:53:13Z",
+  "previousTimingWriteUtc": "2026-10-14T10:53:15Z",
+  "previous": "trial-original-objective",
+  "status": "SEQUENCING_LIMITATION",
+  "next": "trial-passive-original-objective",
+  "finding": "Root began next experimental launch before observing prior terminal completion; about two seconds overlapped prior wrapper cleanup. Both trials use task-specific scratch. This is not final qualification evidence. Any accepted variant requires fresh serialized final gates with prior actual terminal and cleanup observed."
+}

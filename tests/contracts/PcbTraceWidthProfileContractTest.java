@@ -56,34 +56,44 @@ public final class PcbTraceWidthProfileContractTest {
     private static void privatePlanWidthBoundary() {
         long seed = 20261014L;
         Rb56Plan saved11 = Rb56Plan.resolve(seed, Rb56Placement.VACANCY_VERSION);
-        Rb56Plan current12 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
+        Rb56Plan saved12 = Rb56Plan.resolve(seed, Rb56Placement.ROLE_WIDTHS_VERSION12);
+        Rb56Plan current13 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
         TroubleshootBoard savedBoard = saved11.board();
-        TroubleshootBoard currentBoard = current12.board();
+        TroubleshootBoard saved12Board = saved12.board();
+        TroubleshootBoard currentBoard = current13.board();
         PcbPlacementConstraints saved = savedBoard.getPlacementConstraints();
+        PcbPlacementConstraints saved12Constraints = saved12Board.getPlacementConstraints();
         PcbPlacementConstraints current = currentBoard.getPlacementConstraints();
 
         check(saved11.placementInterpretationVersion == 11 &&
-                current12.placementInterpretationVersion == 12,
-            "saved11 and current12 resolve their declared placement versions");
+                saved12.placementInterpretationVersion == 12 &&
+                current13.placementInterpretationVersion == 13,
+            "saved11, saved12, and current13 resolve their declared placement versions");
         check(saved.getTraceWidthProfile() == PcbTraceWidthProfile.UNIFORM &&
+                saved12Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
                 current.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
-            "only current12 constraints opt into role widths");
-        check(saved.placementDensityVersion == 11 && current.placementDensityVersion == 11,
-            "width profile does not widen the already selected density interpretation");
-        check(saved.requiresTwoLayerRouting && current.requiresTwoLayerRouting &&
-                saved.routingLayer == current.routingLayer,
-            "width profile retains the same declared routing mode and layer");
-        check(saved11.layoutSeed == current12.layoutSeed &&
-                saved11.routingSeed == current12.routingSeed &&
-                saved11.topology().equals(current12.topology()),
+            "saved12 and current13 retain role widths while saved11 remains uniform");
+        check(saved.placementDensityVersion == 11 &&
+                saved12Constraints.placementDensityVersion == 11 &&
+                current.placementDensityVersion == 12,
+            "saved12 retains density11 while current13 selects density12");
+        check(saved.requiresTwoLayerRouting && saved12Constraints.requiresTwoLayerRouting &&
+                current.requiresTwoLayerRouting && saved.routingLayer == current.routingLayer,
+            "role-width versions retain the same declared routing mode and layer");
+        check(saved11.layoutSeed == saved12.layoutSeed && saved12.layoutSeed == current13.layoutSeed &&
+                saved11.routingSeed == saved12.routingSeed && saved12.routingSeed == current13.routingSeed &&
+                saved11.topology().equals(saved12.topology()) && saved12.topology().equals(current13.topology()),
             "placement version leaves seeded electrical and routing intents stable");
 
         Vector<Rb56Plan.Part> oldParts = saved11.parts();
-        Vector<Rb56Plan.Part> newParts = current12.parts();
-        check(oldParts.size() == newParts.size(), "saved11 and current12 retain one package inventory");
+        Vector<Rb56Plan.Part> saved12Parts = saved12.parts();
+        Vector<Rb56Plan.Part> newParts = current13.parts();
+        check(oldParts.size() == saved12Parts.size() && saved12Parts.size() == newParts.size(),
+            "saved11, saved12, and current13 retain one package inventory");
         for (int index = 0; index < oldParts.size(); index++)
-            check(oldParts.get(index).canonical().equals(newParts.get(index).canonical()),
-                "plan part declaration stays byte-equal across width interpretation at index " + index);
+            check(oldParts.get(index).canonical().equals(saved12Parts.get(index).canonical()) &&
+                    saved12Parts.get(index).canonical().equals(newParts.get(index).canonical()),
+                "plan part declaration stays byte-equal across interpretations at index " + index);
     }
 
     private static void supportedEnvelopeWidthBoundary() {

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "guards": {
+    "unchangedRejected": true,
+    "oneStrictImprovementAccepted": true,
+    "regressionDespiteImprovementRejected": true,
+    "missingRejected": true,
+    "duplicateRejected": true
+  },
+  "scope": "Independent metric assessor only; not board qualification"
+}

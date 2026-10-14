@@ -1,0 +1,345 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
+/** One real routed saved12 board exercises the private13 finite-copper projection. */
+public final class PcbFiniteCopperCompactionPolicyContractTest {
+    private static int assertions;
+
+    public static void main(String[] args) {
+        verifyRealRoleWidthRoute();
+        System.out.println("PASS: PCB finite copper compaction policy contracts assertions=" + assertions);
+    }
+
+    private static void verifyRealRoleWidthRoute() {
+        long seed = 42L;
+        Rb56Plan saved12 = Rb56Plan.resolve(seed, Rb56Placement.ROLE_WIDTHS_VERSION12);
+        TroubleshootBoard board = saved12.board();
+        PcbPlacementConstraints originalConstraints = board.getPlacementConstraints();
+        check(originalConstraints.placementDensityVersion == 11 &&
+                originalConstraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
+            "source fixture is the real saved12 density11 role-width board");
+
+        MediumBoardPhysicalPolicy.Result generated = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, saved12.layoutSeed, saved12.routingSeed);
+        check(generated != null && generated.accepted() && generated.getFailure() == null,
+            "one actual saved12 route is accepted");
+        check(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+                generated.getStatistics().selectedRoutePolicy),
+            "fixture uses the selected real two-layer routing policy");
+
+        PcbBoardLayout original = generated.getLayout();
+        original.validateGeometry(board);
+        check(!original.getHoles().isEmpty(), "real routed fixture includes plated layer connections");
+        PcbPlacementConstraints current13Constraints = withDensityVersion(originalConstraints, 12);
+        check(current13Constraints.placementDensityVersion == 12 &&
+                current13Constraints.getTraceWidthProfile() == originalConstraints.getTraceWidthProfile() &&
+                sameDeclarations(originalConstraints, current13Constraints),
+            "density12 clone changes only the placement interpretation");
+        current13Constraints.validate(board);
+
+        PcbPlacementPlanner.Plan input = reconstructPlan(original);
+        PcbBoardLayout routedInput = input.materialize();
+        for (PcbTraceGeometry trace : original.getTraces()) routedInput.addTrace(trace);
+        for (PcbBoardHole hole : original.getHoles()) routedInput.addHole(hole);
+        routedInput.setRoutingStatistics(original.getRoutingExpansions(),
+            original.getRawRoutingSegments(), original.getRoutingCongestionRejections());
+        String originalFingerprint = original.geometryFingerprint();
+        String routedInputFingerprint = routedInput.geometryFingerprint();
+        String inputPlanFingerprint = planFingerprint(input);
+        long oldArea = area(routedInput.getBoardOutline());
+        int oldGap = largestNearestAccessGap(originalConstraints, routedInput);
+        double oldQualityScore = routedInput.getRouteQualityScore(board);
+        TreeMap<String, Integer> oldTraceIdentities = traceIdentities(routedInput);
+        TreeMap<String, Integer> oldTraceBends = traceBendIdentities(routedInput);
+        TreeMap<String, Integer> oldHoleIdentities = holeIdentities(routedInput);
+
+        PcbPlacementCompactor.Routed compact = PcbPlacementCompactor.compactRouted(
+            board, current13Constraints, input, routedInput);
+        check(compact != null && compact.plan != null && compact.layout != null,
+            "finite-copper projection returns a routed plan");
+        long newArea = area(compact.plan.outline);
+        int newGap = largestNearestAccessGap(originalConstraints, compact.layout);
+        check(newArea <= oldArea, "compacted outline area does not exceed the saved12 route");
+        check(originalFingerprint.equals(original.geometryFingerprint()) &&
+                routedInputFingerprint.equals(routedInput.geometryFingerprint()) &&
+                inputPlanFingerprint.equals(planFingerprint(input)),
+            "compaction leaves the admitted layout, reconstructed route, and source plan untouched");
+        check(compact.plan.candidate == input.candidate && compact.plan.evaluations == input.evaluations,
+            "compaction does not add placement candidates or evaluations");
+        check(board.getPlacementConstraints().placementDensityVersion == 11 &&
+                board.getPlacementConstraints().getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
+            "policy probe does not mutate the board's saved12 constraints");
+
+        PcbPlacementPlanner.validate(board, current13Constraints, compact.plan.outline,
+            compact.plan.footprints);
+        compact.layout.validateRoutingGeometry(board);
+        new PcbTwoLayerRules(board, compact.layout).validate(compact.layout);
+        PcbTraceClearance.validate(compact.layout.getTraces());
+        compact.layout.validateRouteQuality();
+        check(componentIdentities(routedInput).equals(componentIdentities(compact.layout)),
+            "all package identities and fixed geometry variants survive projection");
+        check(padIdentities(routedInput).equals(padIdentities(compact.layout)),
+            "all pad identities, access dimensions, and component-relative endpoints survive");
+        check(regionIdentities(routedInput).equals(regionIdentities(compact.layout)),
+            "navigation region membership remains exact");
+        check(oldTraceIdentities.equals(traceIdentities(compact.layout)),
+            "trace source, net, endpoint, layer, exposure, and width identities survive");
+        check(oldHoleIdentities.equals(holeIdentities(compact.layout)),
+            "via plating, net, drill, land size, and exposure identities survive");
+        check(oldTraceBends.equals(traceBendIdentities(compact.layout)),
+            "piecewise axis projection preserves each routed source's bend count");
+        check(compact.layout.getRoutingExpansions() == original.getRoutingExpansions() &&
+                compact.layout.getRawRoutingSegments() == original.getRawRoutingSegments() &&
+                compact.layout.getRoutingCongestionRejections() == original.getRoutingCongestionRejections(),
+            "compaction preserves the original route-work receipt without rerouting");
+        check(board.getPlacementConstraints().getTraceWidthProfile() ==
+                PcbTraceWidthProfile.ROLE_WIDTHS,
+            "the real route and all final physical validators retain role-width copper");
+
+        System.out.println("METRIC: saved12 seed42 outlineArea=" + oldArea + "->" + newArea +
+            "; maxNearestAccessEnvelopeGap=" + oldGap + "->" + newGap +
+            "; routeQualityScore=" + oldQualityScore + "->" +
+            compact.layout.getRouteQualityScore(board) +
+            "; traces=" + oldTraceIdentities.size() + "; vias=" + oldHoleIdentities.size());
+    }
+
+    private static PcbPlacementConstraints withDensityVersion(
+            PcbPlacementConstraints source, int densityVersion) {
+        Vector<PcbPlacementConstraints.Part> parts = new Vector<PcbPlacementConstraints.Part>();
+        for (PcbPlacementConstraints.Part part : source.getParts())
+            parts.add(new PcbPlacementConstraints.Part(part.componentId, part.regionId,
+                part.regionLabel, part.domainId, part.anchor, part.accessMargin,
+                part.getTerminalDomains()));
+        Vector<PcbPlacementConstraints.Barrier> barriers = new Vector<PcbPlacementConstraints.Barrier>();
+        for (PcbPlacementConstraints.Barrier barrier : source.getBarriers())
+            barriers.add(new PcbPlacementConstraints.Barrier(barrier.firstDomain,
+                barrier.secondDomain, barrier.clearance));
+        return new PcbPlacementConstraints(parts, barriers, source.routingLayer,
+            source.physicalPolicyId, source.physicalPolicyVersion, densityVersion,
+            source.requiresTwoLayerRouting, source.getTraceWidthProfile());
+    }
+
+    private static boolean sameDeclarations(PcbPlacementConstraints first,
+            PcbPlacementConstraints second) {
+        if (first.routingLayer != second.routingLayer ||
+                !first.physicalPolicyId.equals(second.physicalPolicyId) ||
+                first.physicalPolicyVersion != second.physicalPolicyVersion ||
+                first.requiresTwoLayerRouting != second.requiresTwoLayerRouting ||
+                first.getTraceWidthProfile() != second.getTraceWidthProfile()) return false;
+        Vector<PcbPlacementConstraints.Part> firstParts = first.getParts();
+        Vector<PcbPlacementConstraints.Part> secondParts = second.getParts();
+        if (firstParts.size() != secondParts.size()) return false;
+        for (int index = 0; index < firstParts.size(); index++) {
+            PcbPlacementConstraints.Part a = firstParts.get(index);
+            PcbPlacementConstraints.Part b = secondParts.get(index);
+            if (!a.componentId.equals(b.componentId) || !a.regionId.equals(b.regionId) ||
+                    !a.regionLabel.equals(b.regionLabel) || !a.domainId.equals(b.domainId) ||
+                    a.anchor != b.anchor || a.accessMargin != b.accessMargin) return false;
+            Vector<PcbPlacementConstraints.TerminalDomain> aDomains = a.getTerminalDomains();
+            Vector<PcbPlacementConstraints.TerminalDomain> bDomains = b.getTerminalDomains();
+            if (aDomains.size() != bDomains.size()) return false;
+            for (int domain = 0; domain < aDomains.size(); domain++)
+                if (!aDomains.get(domain).terminalId.equals(bDomains.get(domain).terminalId) ||
+                        !aDomains.get(domain).domainId.equals(bDomains.get(domain).domainId)) return false;
+        }
+        Vector<PcbPlacementConstraints.Barrier> firstBarriers = first.getBarriers();
+        Vector<PcbPlacementConstraints.Barrier> secondBarriers = second.getBarriers();
+        if (firstBarriers.size() != secondBarriers.size()) return false;
+        for (int index = 0; index < firstBarriers.size(); index++) {
+            PcbPlacementConstraints.Barrier a = firstBarriers.get(index);
+            PcbPlacementConstraints.Barrier b = secondBarriers.get(index);
+            if (!a.firstDomain.equals(b.firstDomain) || !a.secondDomain.equals(b.secondDomain) ||
+                    a.clearance != b.clearance) return false;
+        }
+        return true;
+    }
+
+    private static PcbPlacementPlanner.Plan reconstructPlan(PcbBoardLayout layout) {
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        for (PcbComponentPlacement component : layout.getComponents()) {
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            for (String terminal : component.getPhysicalGeometry().getTerminalIds()) {
+                PcbPadPlacement pad = layout.getPad(component.getComponentId() + "." + terminal);
+                if (pad == null) throw new AssertionError("Missing real routed pad " +
+                    component.getComponentId() + "." + terminal);
+                pads.add(pad);
+            }
+            footprints.add(new PcbFootprint(component, pads));
+        }
+        return new PcbPlacementPlanner.Plan(layout.getBoardOutline(), footprints,
+            layout.getRegions(), 0L, 0L, 0, 0);
+    }
+
+    private static String planFingerprint(PcbPlacementPlanner.Plan plan) {
+        TreeMap<String, String> byComponent = new TreeMap<String, String>();
+        for (PcbFootprint footprint : plan.footprints)
+            byComponent.put(footprint.getPlacement().getComponentId(), footprint.geometryFingerprint());
+        return plan.outline.x + "," + plan.outline.y + "," + plan.outline.width + "," +
+            plan.outline.height + "|" + byComponent.toString() + "|" +
+            regionIdentities(plan.regions).toString();
+    }
+
+    private static TreeMap<String, String> componentIdentities(PcbBoardLayout layout) {
+        TreeMap<String, String> result = new TreeMap<String, String>();
+        for (PcbComponentPlacement component : layout.getComponents()) {
+            StringBuilder identity = new StringBuilder();
+            append(identity, component.getPhysicalPackage().getId());
+            append(identity, component.getGeometryVariantKey());
+            append(identity, component.getGeometryTransformKey());
+            append(identity, Integer.toString(component.getGeometryContractVersionValue()));
+            append(identity, Integer.toString(component.getWidth()));
+            append(identity, Integer.toString(component.getHeight()));
+            append(identity, component.getRotation().name());
+            append(identity, component.getMountingSide().name());
+            Rectangle keepOut = component.getKeepOut();
+            Rectangle courtyard = component.getRoutingCourtyard();
+            appendRectangleRelative(identity, keepOut, component.getX(), component.getY());
+            appendRectangleRelative(identity, courtyard, component.getX(), component.getY());
+            result.put(component.getComponentId(), identity.toString());
+        }
+        return result;
+    }
+
+    private static TreeMap<String, String> padIdentities(PcbBoardLayout layout) {
+        TreeMap<String, String> result = new TreeMap<String, String>();
+        for (PcbPadPlacement pad : layout.getPads()) {
+            int separator = pad.getPadId().lastIndexOf('.');
+            String componentId = separator < 0 ? "" : pad.getPadId().substring(0, separator);
+            PcbComponentPlacement component = layout.getComponent(componentId);
+            if (component == null) throw new AssertionError("Pad has no placed component " + pad.getPadId());
+            StringBuilder identity = new StringBuilder();
+            append(identity, pad.getAttachment().name());
+            append(identity, pad.getMountingSide().name());
+            append(identity, pad.getExposure().name());
+            append(identity, Integer.toString(pad.getEscapeDx()));
+            append(identity, Integer.toString(pad.getEscapeDy()));
+            append(identity, Integer.toString(pad.getEscapeLength()));
+            append(identity, Integer.toString(pad.getX() - component.getX()));
+            append(identity, Integer.toString(pad.getY() - component.getY()));
+            appendRectangleRelative(identity, pad.getPadBounds(), component.getX(), component.getY());
+            appendRectangleRelative(identity, pad.getProbeBounds(), component.getX(), component.getY());
+            result.put(pad.getPadId(), identity.toString());
+        }
+        return result;
+    }
+
+    private static TreeMap<String, String> regionIdentities(PcbBoardLayout layout) {
+        return regionIdentities(layout.getRegions());
+    }
+
+    private static TreeMap<String, String> regionIdentities(Vector<PcbLayoutRegion> regions) {
+        TreeMap<String, String> result = new TreeMap<String, String>();
+        for (PcbLayoutRegion region : regions)
+            result.put(region.id, region.label + "|" + region.getComponentIds().toString());
+        return result;
+    }
+
+    private static TreeMap<String, Integer> traceIdentities(PcbBoardLayout layout) {
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>();
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            StringBuilder identity = new StringBuilder();
+            append(identity, trace.getSourceId());
+            append(identity, trace.getNetId());
+            append(identity, trace.getStartPadId());
+            append(identity, trace.getEndPadId());
+            append(identity, trace.getLayer().name());
+            append(identity, trace.getExposure().name());
+            append(identity, Integer.toString(trace.getWidth()));
+            increment(result, identity.toString());
+        }
+        return result;
+    }
+
+    private static TreeMap<String, Integer> holeIdentities(PcbBoardLayout layout) {
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>();
+        for (PcbBoardHole hole : layout.getHoles()) {
+            StringBuilder identity = new StringBuilder();
+            append(identity, hole.id);
+            append(identity, hole.kind.name());
+            append(identity, hole.netId);
+            append(identity, Integer.toString(hole.drillRadius));
+            append(identity, Integer.toString(hole.landRadius));
+            append(identity, hole.exposure.name());
+            increment(result, identity.toString());
+        }
+        return result;
+    }
+
+    private static TreeMap<String, Integer> traceBendIdentities(PcbBoardLayout layout) {
+        TreeMap<String, Integer> result = new TreeMap<String, Integer>();
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            StringBuilder identity = new StringBuilder();
+            append(identity, trace.getSourceId());
+            append(identity, trace.getNetId());
+            append(identity, trace.getStartPadId());
+            append(identity, trace.getEndPadId());
+            append(identity, trace.getLayer().name());
+            append(identity, trace.getExposure().name());
+            append(identity, Integer.toString(trace.getWidth()));
+            append(identity, Integer.toString(layout.getTraceBendCount(trace)));
+            increment(result, identity.toString());
+        }
+        return result;
+    }
+
+    private static int largestNearestAccessGap(PcbPlacementConstraints constraints,
+            PcbBoardLayout layout) {
+        Vector<Rectangle> envelopes = new Vector<Rectangle>();
+        for (PcbComponentPlacement component : layout.getComponents()) {
+            Vector<PcbPadPlacement> pads = new Vector<PcbPadPlacement>();
+            for (String terminal : component.getPhysicalGeometry().getTerminalIds())
+                pads.add(layout.getPad(component.getComponentId() + "." + terminal));
+            PcbFootprint footprint = new PcbFootprint(component, pads);
+            envelopes.add(PcbPlacementPlanner.envelope(footprint,
+                constraints.get(component.getComponentId()).accessMargin));
+        }
+        int largestNearest = 0;
+        for (int first = 0; first < envelopes.size(); first++) {
+            int nearest = Integer.MAX_VALUE;
+            for (int second = 0; second < envelopes.size(); second++) {
+                if (first == second) continue;
+                nearest = Math.min(nearest, envelopeGap(envelopes.get(first), envelopes.get(second)));
+            }
+            largestNearest = Math.max(largestNearest, nearest);
+        }
+        return largestNearest;
+    }
+
+    private static int envelopeGap(Rectangle first, Rectangle second) {
+        long dx = Math.max(0L, Math.max((long) first.x - ((long) second.x + second.width),
+            (long) second.x - ((long) first.x + first.width)));
+        long dy = Math.max(0L, Math.max((long) first.y - ((long) second.y + second.height),
+            (long) second.y - ((long) first.y + first.height)));
+        return (int) Math.max(dx, dy);
+    }
+
+    private static long area(Rectangle outline) {
+        return (long) outline.width * outline.height;
+    }
+
+    private static void appendRectangleRelative(StringBuilder result, Rectangle rectangle,
+            int x, int y) {
+        append(result, Integer.toString(rectangle.x - x));
+        append(result, Integer.toString(rectangle.y - y));
+        append(result, Integer.toString(rectangle.width));
+        append(result, Integer.toString(rectangle.height));
+    }
+
+    private static void append(StringBuilder result, String value) {
+        result.append(value == null ? -1 : value.length()).append(':');
+        if (value != null) result.append(value);
+    }
+
+    private static void increment(TreeMap<String, Integer> result, String key) {
+        Integer count = result.get(key);
+        result.put(key, Integer.valueOf(count == null ? 1 : count.intValue() + 1));
+    }
+
+    private static void check(boolean condition, String message) {
+        assertions++;
+        if (!condition) throw new AssertionError(message);
+    }
+}

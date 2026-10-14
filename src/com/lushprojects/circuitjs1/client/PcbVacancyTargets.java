@@ -12,6 +12,20 @@ public final class PcbVacancyTargets {
 
     private PcbVacancyTargets() { }
 
+    /** Choose among the existing five advisory origins without adding trials or
+     * changing their canonical order. Equal distances retain the earlier target. */
+    static Point nearest(Vector<Point> origins,Point reference) {
+        if(origins==null || origins.isEmpty() || origins.size()>5 || reference==null)
+            throw new IllegalArgumentException("Missing or unbounded vacancy preference inputs");
+        Point best=null;long bestDistance=Long.MAX_VALUE;
+        for(Point origin:origins) {
+            if(origin==null)throw new IllegalArgumentException("Null vacancy preference origin");
+            long distance=Math.abs((long)origin.x-reference.x)+Math.abs((long)origin.y-reference.y);
+            if(distance<bestDistance) {best=origin;bestDistance=distance;}
+        }
+        return new Point(best);
+    }
+
     /**
      * Returns the center and corner origins for the largest conservative free
      * grid rectangle that can contain {@code sourceEnvelope}.

@@ -1,0 +1,11 @@
+src\com\lushprojects\circuitjs1\client\ChallengeContractException.java:49: error: cannot find symbol
+            return FunctionalBlockDescriptor.requireId(value, fieldId);
+                   ^
+  symbol:   variable FunctionalBlockDescriptor
+  location: class ChallengeContractException
+src\com\lushprojects\circuitjs1\client\ChallengeContractException.java:50: error: cannot find symbol
+        } catch (BlockContractException ex) {
+                 ^
+  symbol:   class BlockContractException
+  location: class ChallengeContractException
+2 errors

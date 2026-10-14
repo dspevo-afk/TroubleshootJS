@@ -3,7 +3,7 @@
 Accepted: final native42, actual JDK8/GWT five, real desktop repair/Save12/
 FileReader12 and narrow319 saved11 restoration/retest/closure all PASS. All
 owned resources are cleaned and final consumed-input/provenance audits PASS.
-Publication is pending. Base commit:
+Published normally as `5d4de10b56c10fbf1012a2ac39324382074fc6a1`; exact remote SHA verified. Base commit:
 `68ae9284360e379ca1e31cf10690e11d9b26280d`.
 
 The generator now assigns HIGH_CURRENT copper width13, SUPPLY/RETURN11 and

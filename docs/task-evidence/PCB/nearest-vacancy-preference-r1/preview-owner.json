@@ -1,0 +1,8 @@
+{
+  "pid": 3176,
+  "executable": "WindowsPowerShell/powershell.exe",
+  "script": "scripts/preview.ps1",
+  "creationUtcTicks": "639275759702758553",
+  "fullOwner": "Maintained .tools/preview/state.json; exact launch identity retained locally until cleanup",
+  "port": 8899
+}

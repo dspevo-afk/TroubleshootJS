@@ -1,0 +1,5 @@
+{
+  "status": "FIXTURE_FAILURE",
+  "fix": "Populate actual physical terminal IDs on helper components; retain negative-coordinate, swapped-domain and mixed-package expectations unchanged.",
+  "reason": "First two fixture attempts omitted BoardComponent terminal pad identities in interval-only helpers. Both threw IllegalStateException terminal-count mismatch before negative-coordinate or mixed-domain behavior. Initial attribution to negative coordinates was incorrect."
+}

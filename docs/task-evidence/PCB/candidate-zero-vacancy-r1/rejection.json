@@ -1,0 +1,6 @@
+{
+  "production": "All candidate-zero vacancy source changes removed before next experiment. No GWT/browser13 build was made. Existing private13 identity work remains unpublished and will be used only if a separate coherent experiment qualifies.",
+  "reason": "Five generic variants failed original frozen per-case area/void bounds; no acceptance oracle weakened. Broad and passive-biased variants regress60; target-only improves60 but regressesuntuned7; late-passive variantsregress60.",
+  "gate": "Native diagnostic+profile+realowner+codec+identity5 PASS49.6529393s; not packing acceptance. Every failed gate cleanup observed; 2s experimental sequencing limitation separately retained.",
+  "status": "REJECTED_NOT_PUBLISHED"
+}

@@ -1,0 +1,116 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+VACANCY_PLACEMENT_DIAGNOSTIC seed=-1022 versions=12/13 candidate=0 routing=NOT_RUN admission=NOT_RUN packingAcceptance=NOT_CLAIMED sourcePlan=UNCHANGED inventory=UNCHANGED
+  PLAN seed=-1022 version=12 candidate=0 evaluations=7616 outline=20,20,3720,2020 outlineArea=7514400 courtyardArea=1061240 demandArea=3729940 footprints=60
+  PLAN seed=-1022 version=13 candidate=0 evaluations=7556 outline=20,20,3730,2020 outlineArea=7534600 courtyardArea=1061240 demandArea=3729940 footprints=60
+  CHANGED component=C5 type=CAPACITOR before=2140,120,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2310,500,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CBULK type=CAPACITOR before=520,620,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=700,730,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CFB type=CAPACITOR before=430,100,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=930,970,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CFLT_A type=CAPACITOR before=2260,290,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2970,100,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CFLT_B type=CAPACITOR before=2940,440,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2260,800,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D2 type=DIODE before=180,560,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=450,900,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D4 type=DIODE before=470,800,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=390,580,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DA type=DIODE before=2730,940,DEG_0,TOP,variant=SPAN_230,transform=IDENTITY after=1530,1620,DEG_0,TOP,variant=SPAN_230,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DB type=DIODE before=1820,1350,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=1880,1600,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=JLOAD type=CONNECTOR before=3560,780,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X after=3570,780,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X moved=true geometryChanged=true
+  CHANGED component=JOA type=OUTPUT_HEADER before=2730,1280,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=3150,1090,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=JOB type=OUTPUT_HEADER before=2540,1760,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2830,1220,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=JSA type=CONNECTOR before=3560,160,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X after=3570,160,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X moved=true geometryChanged=true
+  CHANGED component=JSB type=CONNECTOR before=3560,410,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X after=3570,410,DEG_0,TOP,variant=DEFAULT_MIRRORED_X,transform=MIRROR_X moved=true geometryChanged=true
+  CHANGED component=KA type=RELAY before=2450,1460,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1910,1310,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=KB type=RELAY before=1790,1550,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2420,1520,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LED1 type=LED before=1610,1010,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2120,960,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LED12 type=LED before=2140,750,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1740,950,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LEDOUT_A type=LED before=3200,1030,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=3340,1050,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LEDOUT_B type=LED before=3350,790,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=3210,1240,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=QA type=BJT before=2270,1070,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2400,1150,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=QB type=NMOS before=1980,1070,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=3240,840,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RBLEED5 type=RESISTOR before=2030,930,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=2070,100,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RDA type=RESISTOR before=3060,790,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2930,860,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RDB type=RESISTOR before=2390,930,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2830,1070,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RFB_A type=RESISTOR before=2570,660,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=2860,650,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RFB_B type=RESISTOR before=2710,780,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2590,810,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RLED type=RESISTOR before=1290,1220,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=1670,1140,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RLEDOUT_A type=RESISTOR before=2850,1070,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=3200,700,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RLEDOUT_B type=RESISTOR before=3010,1400,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=3030,1420,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPDA type=RESISTOR before=2220,1300,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=2330,1350,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPDB type=RESISTOR before=2320,790,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=2050,1160,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPIN_A type=RESISTOR before=1950,290,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2680,90,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPIN_B type=RESISTOR before=2330,440,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2480,940,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPRIMARY type=RESISTOR before=140,70,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=180,100,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RREF_H type=RESISTOR before=2450,70,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2420,230,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RREF_L type=RESISTOR before=2450,190,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=2420,670,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=U2A type=SENSOR_CONTROL before=2830,70,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2850,270,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=U2B type=SENSOR_CONTROL before=2630,370,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2540,350,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  DELTA changedFootprints=39 movedComponents=39 outlineArea=7514400->7534600 outlineAreaDelta=20200 routing=NOT_RUN admission=NOT_RUN
+VACANCY_PLACEMENT_DIAGNOSTIC seed=7 versions=12/13 candidate=0 routing=NOT_RUN admission=NOT_RUN packingAcceptance=NOT_CLAIMED sourcePlan=UNCHANGED inventory=UNCHANGED
+  PLAN seed=7 version=12 candidate=0 evaluations=6548 outline=20,20,3560,1910 outlineArea=6799600 courtyardArea=976088 demandArea=3326734 footprints=52
+  PLAN seed=7 version=13 candidate=0 evaluations=6548 outline=20,20,3560,1910 outlineArea=6799600 courtyardArea=976088 demandArea=3326734 footprints=52
+  CHANGED component=C5 type=CAPACITOR before=1740,1370,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2400,840,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CBIAS type=CAPACITOR before=650,650,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=800,880,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CBULK type=CAPACITOR before=420,490,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=430,410,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CFB type=CAPACITOR before=770,840,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=880,630,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CFLT_A type=CAPACITOR before=3460,680,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1480,940,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=CIN type=CAPACITOR before=1630,1780,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2090,1500,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=COUT type=CAPACITOR before=1460,1780,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1450,1780,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D1 type=DIODE before=530,1000,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=530,660,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D2 type=DIODE before=240,330,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=200,240,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D3 type=DIODE before=390,830,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=460,790,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=D4 type=DIODE before=670,390,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=660,350,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DA type=DIODE before=3010,1100,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=2500,670,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DFREE type=DIODE before=1660,1170,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=1890,740,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DZ1 type=ZENER before=1690,1050,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=1540,780,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=JOA type=OUTPUT_HEADER before=2980,620,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2800,820,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=JOB type=OUTPUT_HEADER before=1840,1590,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1880,1590,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=KA type=RELAY before=2600,710,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2980,700,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=L1 type=INDUCTOR before=1640,1530,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1670,1050,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LED1 type=LED before=2420,700,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2250,620,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=LED12 type=LED before=2380,300,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2570,800,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=QA type=NMOS before=2470,970,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2470,1000,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=QB type=NMOS before=2650,1600,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2950,1670,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=REN type=RESISTOR before=2060,1490,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=1560,1490,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RENAC type=RESISTOR before=830,530,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY after=630,1170,DEG_0,TOP,variant=SPAN_260,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RFB type=RESISTOR before=1140,820,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=960,860,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RLED type=RESISTOR before=2400,530,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2440,530,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RLED12 type=RESISTOR before=2060,580,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2080,890,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=ROUT type=RESISTOR before=1430,1310,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=1630,1280,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPDA type=RESISTOR before=2150,1090,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=2150,1110,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPDB type=RESISTOR before=2880,1670,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=2620,1710,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPIN_A type=RESISTOR before=3050,810,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=3030,1110,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RPRIMARY type=RESISTOR before=720,1130,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY after=690,470,DEG_0,TOP,variant=SPAN_220,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RREF_H type=RESISTOR before=1930,1310,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=1950,1320,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RREF_L type=RESISTOR before=2290,1230,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=2320,1260,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RSENSE type=RESISTOR before=1750,920,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=1660,910,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=U1 type=REGULATOR before=2350,1380,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=2290,1380,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=UAC type=CONVERTER before=1190,400,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=990,1040,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=UFB type=OPTOCOUPLER before=1230,960,DEG_180,TOP,variant=DEFAULT,transform=IDENTITY after=1080,600,DEG_180,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  DELTA changedFootprints=38 movedComponents=38 outlineArea=6799600->6799600 outlineAreaDelta=0 routing=NOT_RUN admission=NOT_RUN
+VACANCY_PLACEMENT_DIAGNOSTIC seed=14 versions=12/13 candidate=0 routing=NOT_RUN admission=NOT_RUN packingAcceptance=NOT_CLAIMED sourcePlan=UNCHANGED inventory=UNCHANGED
+  PLAN seed=14 version=12 candidate=0 evaluations=7211 outline=20,20,3630,1950 outlineArea=7078500 courtyardArea=1014008 demandArea=3480334 footprints=54
+  PLAN seed=14 version=13 candidate=0 evaluations=7211 outline=20,20,3630,1950 outlineArea=7078500 courtyardArea=1014008 demandArea=3480334 footprints=54
+  CHANGED component=D2 type=DIODE before=670,870,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=320,1070,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=DFREE type=DIODE before=2000,340,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY after=1910,230,DEG_0,TOP,variant=SPAN_250,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=L1 type=INDUCTOR before=1800,110,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY after=1800,440,DEG_0,TOP,variant=DEFAULT,transform=IDENTITY moved=true geometryChanged=true
+  CHANGED component=RSENSE type=RESISTOR before=1710,550,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY after=2030,550,DEG_0,TOP,variant=SPAN_240,transform=IDENTITY moved=true geometryChanged=true
+  DELTA changedFootprints=4 movedComponents=4 outlineArea=7078500->7078500 outlineAreaDelta=0 routing=NOT_RUN admission=NOT_RUN
+PASS: vacancy placement diagnostic contracts cases=3 assertions=739 packingAcceptance=NOT_CLAIMED routing=NOT_RUN admission=NOT_RUN
+
+PASS: PCB trace width profile contracts assertions=89
+
+PASS: PCB role width owner identity contracts assertions=14
+
+PASS: U06 session save contracts assertions=34979
+
+PASS: REL-B session identity contracts assertions=144 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false
+
+PASS: focused current contracts; 5 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

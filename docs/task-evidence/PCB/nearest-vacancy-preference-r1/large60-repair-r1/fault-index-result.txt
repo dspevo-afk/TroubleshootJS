@@ -1,0 +1,2 @@
+seed=42 index=3
+seed=-1022 index=2

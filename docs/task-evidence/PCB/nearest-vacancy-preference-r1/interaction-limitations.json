@@ -1,0 +1,9 @@
+{
+  "status": "LIMITATION_RECORDED",
+  "productFailures": "None observed in these input corrections",
+  "toolIssues": [
+    "Initial fit/face capture retained a deferred popup; replaced each with an unobstructed unedited capture after observed dismissal.",
+    "Shop close selector used stale remembered label Close Shop and timed out; fresh DOM showed Close. Corrected actual input succeeded."
+  ],
+  "proof": "Final screenshots and DOM receipts are from successful actual visible input; no controller injection"
+}

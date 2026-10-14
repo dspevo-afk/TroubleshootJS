@@ -660,6 +660,8 @@ final class PcbPlacementPlanner {
             }
         }
         Point vacancyPreference=support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
+        if(constraints.placementDensityVersion>=12 && vacancyPreference!=null)
+            vacancyPreference=PcbVacancyTargets.nearest(vacancies,connected);
         Rectangle vacancyPocket=null;
         if(vacancies!=null && !vacancies.isEmpty()) {
             int left=vacancies.get(0).x,right=left,top=vacancies.get(0).y,bottom=top;

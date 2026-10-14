@@ -5784,3 +5784,21 @@ decisions. Candidate, branch, shared-expansion and host budgets are unchanged.
 Qualification and retained trial failures are tracked separately in the
 [current evidence packet](task-evidence/PCB/role-widths-r1/README.md); implementation
 ownership alone is not a normal advanced, performance or manufacturing release.
+
+## Private13 connected vacancy preference
+
+`PcbVacancyTargets.nearest` chooses an existing advisory origin by Manhattan
+distance to the planner's weighted connected target. Arithmetic uses long deltas;
+canonical order resolves ties and the returned point does not alias an input.
+`PcbPlacementPlanner` applies this preference only to density12, repeated-control
+candidate1, where the component has no paired support target. Pair-supported
+components retain their existing pin-target preference. Target generation, five
+origins, scoring weights, overlap reward, candidate/evaluation/routing allocation,
+physical isolation and work/time limits keep their existing owners and bounds.
+
+`Rb56Placement` maps private13 to density12 with ROLE_TRACE@1. Saved private12 maps
+to density11 with the same width profile, and saved1–11 retain their prior rules.
+`PlayerSessionReplay` distinguishes the private12 and private13 namespaces before
+owner restoration. Public alpha5, session model1 and dependency epoch16 stay.
+Qualification status and finite-seed limits are recorded in the
+[nearest-vacancy evidence packet](task-evidence/PCB/nearest-vacancy-preference-r1/README.md).

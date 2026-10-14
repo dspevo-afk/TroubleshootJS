@@ -1,0 +1,13 @@
+{
+  "rootFindings": [
+    "Legacy false pass runs first and density<12 returns it directly, preserving saved1..12; raw planner restoredexactbase.",
+    "Finite guard ceil(width/2) plus CHANNEL20 retains more than actual trace clearance for all supported odd widths9..63; full package/access and via guard expressions unchanged.",
+    "Identical coordinate map applied to trace points, whole package/pads, and via centers; withPath retains trace identity/metadata.",
+    "Each extra axis retains placement, routing geometry/connectivity/clearance and route-quality checks, rejecting to previous valid axis.",
+    "GenerationJob.Failure is a subclass of IllegalStateException and is explicitly rethrown before expected projection-geometry exceptions; construction and arbitrary runtime errors remain outside catch.",
+    "No new isolationmask/pocket targets/routing search/solver approximation."
+  ],
+  "pending": "Frozen final native/generation lifecycle/tenmetrics/saved12/GWT/actualvisibleplayerinputs/provenance/cleanup stillrequired.",
+  "status": "SOURCE_REVIEW_ONLY_NOT_ACCEPTANCE",
+  "scope": "Two-pass finite copper projection; all original placement/route/physical/time/work limits retained except explicit bounded two extra projection axes."
+}

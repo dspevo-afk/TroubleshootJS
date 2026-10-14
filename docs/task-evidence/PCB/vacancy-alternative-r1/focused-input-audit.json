@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "changedPaths": [],
+  "frozenInputCount": 1439,
+  "actualInputCount": 1439,
+  "scope": "Source/scripts/contracts/GWT jars; generated war provenance checked separately"
+}

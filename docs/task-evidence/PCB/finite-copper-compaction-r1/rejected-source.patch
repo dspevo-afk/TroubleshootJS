@@ -1,0 +1,52 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
+index c4830454..9547a0de 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
+@@ -36,8 +36,17 @@ final class PcbPlacementCompactor {
+      * connectivity and routing clearance. Original input remains untouched. */
+     static Routed compactRouted(TroubleshootBoard board,PcbPlacementConstraints constraints,
+             PcbPlacementPlanner.Plan input,PcbBoardLayout routed) {
++        Routed established=compactRoutedPass(board,constraints,input,routed,false);
++        if(constraints.placementDensityVersion<12)return established;
++        // Start from the established valid result, so a rejected tighter axis
++        // cannot discard the original compaction. No routing search is repeated.
++        return compactRoutedPass(board,constraints,established.plan,established.layout,true);
++    }
++    private static Routed compactRoutedPass(TroubleshootBoard board,PcbPlacementConstraints constraints,
++            PcbPlacementPlanner.Plan input,PcbBoardLayout routed,boolean finiteCopperGuard) {
+         Routed result=new Routed(input,routed);
+         for(int axis=0;axis<2;axis++) {
++            if(finiteCopperGuard)GenerationWorkScope.check();
+             boolean xAxis=axis==0;
+             PcbPlacementPlanner.Plan plan=result.plan;
+             Vector<int[]> occupied=new Vector<int[]>();
+@@ -48,7 +57,11 @@ final class PcbPlacementCompactor {
+             // Parallel rails and all terminal/branch endpoints keep at least
+             // their full centerline clearance, even inside a furniture-sized gap.
+             for(PcbTraceGeometry trace:result.layout.getTraces()) {
+-                int guard=PcbTraceRules.clearance(trace.getWidth(),trace.getWidth());
++                // The existing 20-unit channel adds more than the visible
++                // clearance beyond both finite copper half-widths. Keep the
++                // original reservation exact for all earlier interpretations.
++                int guard=finiteCopperGuard?(trace.getWidth()+1)/2:
++                    PcbTraceRules.clearance(trace.getWidth(),trace.getWidth());
+                 int[] points=xAxis?trace.getXPoints():trace.getYPoints();
+                 for(int point:points)occupied.add(new int[]{point-guard,point+guard});
+             }
+@@ -95,7 +108,15 @@ final class PcbPlacementCompactor {
+             candidate.setRoutingStatistics(result.layout.getRoutingExpansions(),result.layout.getRawRoutingSegments(),result.layout.getRoutingCongestionRejections());
+             try {
+                 PcbPlacementPlanner.validate(board,constraints,outline,moved);
+-                candidate.validateRoutingGeometry(board);
++                if(finiteCopperGuard) {
++                    // These exceptions are this validator's invalid-geometry
++                    // contract. Limit fallback to the projection validation
++                    // call; construction bugs and cancellation still propagate.
++                    try { candidate.validateRoutingGeometry(board); }
++                    catch(GenerationJob.Failure lifecycleFailure) { throw lifecycleFailure; }
++                    catch(IllegalStateException invalidProjection) { continue; }
++                    catch(IllegalArgumentException invalidProjection) { continue; }
++                } else candidate.validateRoutingGeometry(board);
+                 // Retain the per-axis detour rejection here.
+                 // A rigid monotone compaction can shorten endpoint separation
+                 // faster than the copper path, exceeding the unchanged detour

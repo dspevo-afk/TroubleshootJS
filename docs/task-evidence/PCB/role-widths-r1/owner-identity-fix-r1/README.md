@@ -46,4 +46,4 @@ is unobstructed. These tool corrections do not stand in for player proof.
 Source review is bounded and separate from runtime receipts. The first build's
 cold/repair/Close passes never certify its failed Save. No full-registry,
 all-seed, normal advanced/HARD, modest-host performance, manufacturing or optimal
-packing release is claimed. Normal branch publication is pending; no main/email.
+packing release is claimed. Normal branch publication verified at5d4de10b56c10fbf1012a2ac39324382074fc6a1; no main/email.

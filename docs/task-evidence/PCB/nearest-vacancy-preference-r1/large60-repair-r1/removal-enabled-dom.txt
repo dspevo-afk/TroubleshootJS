@@ -1,0 +1,147 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row "Reset":
+      - cell "Reset":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row:
+              - cell
+    - row "Workbench navigation Workbench meter and oscilloscope":
+      - cell "Workbench navigation Workbench meter and oscilloscope":
+        - banner:
+          - strong: TroubleshootJS
+          - generic: ELECTRONICS WORKBENCH
+          - generic: ALPHA
+        - navigation "Workbench navigation":
+          - button "Main menu":
+            - generic: Main menu
+          - button "Shop":
+            - generic: Shop
+          - button "Resources":
+            - generic: Resources
+          - button "Settings":
+            - generic: Settings
+          - button "Run customer retest":
+            - generic: Run customer retest
+        - status: Added to the real Parts Tray. Select the loose part on the workbench to install it.
+        - group "Workbench meter and oscilloscope":
+          - rowgroup:
+            - 'row "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+              - 'cell "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+                - 'button "Move multimeter: drag, or use arrow keys. Home resets its position."': TSJ MM-90
+                - generic: DIGITAL MULTIMETER
+                - button "Hold / not implemented" [disabled]: HOLD
+                - button "Manual range / not implemented" [disabled]: RANGE
+                - button "Minimum / maximum / not implemented" [disabled]: MIN/MAX
+                - button "Toggle meter backlight": LIGHT
+                - slider "Meter and oscilloscope function selector"
+                - button "Turn multimeter off" [pressed]: "OFF"
+                - button "AC voltage RMS": V~
+                - button "Current / not implemented" [disabled]: A
+                - button "Milliamps / not implemented" [disabled]: mA
+                - button "Microamps / not implemented" [disabled]: µA
+                - button "Capacitance / not implemented" [disabled]: CAP
+                - button "Oscilloscope / frequency": Hz
+                - button "Duty cycle / not implemented" [disabled]: "%"
+                - button "Temperature / not implemented" [disabled]: °C/°F
+                - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+                - generic: 10A
+                - generic: COM
+                - generic: V Ω
+                - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell
+                    - row "OHM":
+                      - cell
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V":
+                - generic: "--- V"
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator" [disabled]
+    - 'row "Board Power: OFF"':
+      - 'cell "Board Power: OFF"':
+        - 'button "Board Power: OFF"'
+    - row "New control board":
+      - cell "New control board":
+        - button "New control board" [disabled]
+    - row "Bench power":
+      - cell "Bench power":
+        - button "Bench power":
+          - generic: Supplies
+    - row "Board view":
+      - cell "Board view":
+        - button "Board view":
+          - generic: View
+    - row "Service ticket":
+      - cell "Service ticket":
+        - button "Service ticket":
+          - generic: Ticket
+    - row "Component Component":
+      - cell "Component Component":
+        - button "Component" [active]:
+          - generic: Component
+        - dialog "Component":
+          - rowgroup:
+            - row "RSA":
+              - cell "RSA":
+                - generic: RSA
+            - 'row "Type: resistor"':
+              - 'cell "Type: resistor"':
+                - generic: "Type: resistor"
+            - 'row "Color bands: BROWN, BLACK, ORANGE, GOLD"':
+              - 'cell "Color bands: BROWN, BLACK, ORANGE, GOLD"':
+                - generic: "Color bands: BROWN, BLACK, ORANGE, GOLD"
+            - 'row "State: Installed"':
+              - 'cell "State: Installed"':
+                - generic: "State: Installed"
+            - 'row "Lead 1: RSA.1"':
+              - 'cell "Lead 1: RSA.1"':
+                - generic: "Lead 1: RSA.1"
+            - 'row "Lead 2: RSA.2"':
+              - 'cell "Lead 2: RSA.2"':
+                - generic: "Lead 2: RSA.2"
+            - row:
+              - cell
+            - row "Lift lead 1":
+              - cell "Lift lead 1":
+                - button "Lift lead 1"
+            - row "Lift lead 2":
+              - cell "Lift lead 2":
+                - button "Lift lead 2"
+            - row "Remove component":
+              - cell "Remove component":
+                - button "Remove component"
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - button "Parts Tray":
+          - generic: Parts tray
+    - row "End qualification view":
+      - cell "End qualification view":
+        - button "End qualification view"
+- region "Physical parts tray":
+  - button "Show or hide parts tray": ▲ PARTS TRAY · 1 part

@@ -1,0 +1,64 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
+index c4830454..f80d2f70 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java
+@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
+ 
+ import java.util.Collections;
+ import java.util.Comparator;
++import java.util.TreeMap;
+ import java.util.Vector;
+ 
+ /** Removes empty placement strips without shrinking parts, probe targets or access envelopes. */
+@@ -61,6 +62,7 @@ final class PcbPlacementCompactor {
+                     PcbTwoLayerRules.VIA_LAND+PcbTraceRules.MIN_VISIBLE_CLEARANCE);
+                 occupied.add(new int[]{start-viaGuard,end+viaGuard});
+             }
++            protectIsolationIntervals(constraints,plan.footprints,xAxis,occupied);
+             Collections.sort(occupied,new Comparator<int[]>() {public int compare(int[] a,int[] b){return a[0]-b[0];}});
+             Vector<int[]> cuts=new Vector<int[]>();
+             int end=occupied.get(0)[1],removed=0;
+@@ -111,6 +113,35 @@ final class PcbPlacementCompactor {
+         int result=0;for(int[] cut:cuts)if(coordinate>=cut[0])result+=cut[1];return result;
+     }
+ 
++    /** Keep declared conductive-domain clearance before proposing empty strips.
++     * The final validators still decide legality, including escapes and detours.
++     * Earlier interpretations retain their exact all-or-nothing axis behavior. */
++    static void protectIsolationIntervals(PcbPlacementConstraints constraints,
++            Vector<PcbFootprint> parts,boolean xAxis,Vector<int[]> occupied) {
++        if(constraints.placementDensityVersion<12 || constraints.getBarriers().isEmpty())return;
++        TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
++        for(PcbFootprint part:parts) {
++            TreeMap<String,Rectangle> courtyards=constraints.domainCourtyards(part.getPlacement());
++            for(String domain:courtyards.keySet()) {
++                Rectangle previous=domains.get(domain),next=courtyards.get(domain);
++                domains.put(domain,previous==null?new Rectangle(next):previous.union(next));
++            }
++        }
++        for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers()) {
++            Rectangle first=domains.get(barrier.firstDomain),second=domains.get(barrier.secondDomain);
++            if(first==null || second==null)continue;
++            long firstStart=xAxis?first.x:first.y,secondStart=xAxis?second.x:second.y;
++            long firstEnd=firstStart+(xAxis?first.width:first.height);
++            long secondEnd=secondStart+(xAxis?second.width:second.height);
++            long start;
++            if(firstEnd+barrier.clearance<=secondStart)start=firstEnd;
++            else if(secondEnd+barrier.clearance<=firstStart)start=secondEnd;
++            else continue; // This axis is not the existing common corridor.
++            occupied.add(new int[]{PcbCoordinateSystem.checkedInt(start),
++                PcbCoordinateSystem.checkedInt(start+barrier.clearance)});
++        }
++    }
++
+     private static PcbPlacementPlanner.Plan compactAxis(PcbPlacementConstraints constraints,
+             PcbPlacementPlanner.Plan plan, final int axis) {
+         Vector<int[]> intervals = new Vector<int[]>();
+@@ -120,6 +151,7 @@ final class PcbPlacementCompactor {
+             int start = axis == 0 ? box.x : box.y;
+             intervals.add(new int[] { start, start + (axis == 0 ? box.width : box.height) });
+         }
++        protectIsolationIntervals(constraints,plan.footprints,axis==0,intervals);
+         Collections.sort(intervals, new Comparator<int[]>() {
+             public int compare(int[] a, int[] b) { return a[0] < b[0] ? -1 : a[0] == b[0] ? 0 : 1; }
+         });

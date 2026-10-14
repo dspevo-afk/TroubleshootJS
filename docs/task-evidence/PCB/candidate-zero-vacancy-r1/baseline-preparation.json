@@ -1,0 +1,5 @@
+{
+  "reason": "Optional Git-blob baseline reconstruction did not match recorded working-file bytes; no source was changed by preparation.",
+  "status": "FAILED_PREPARATION_NO_SOURCE_MUTATION",
+  "cleanup": "Exact task-owned empty non-reparse temp directory inspected and removed nonrecursively."
+}

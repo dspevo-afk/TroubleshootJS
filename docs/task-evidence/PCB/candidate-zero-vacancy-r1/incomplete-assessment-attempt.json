@@ -1,0 +1,6 @@
+{
+  "followup": "Assessment repeated only after all ten measurement records were emitted; result FAIL retained for both original-objective trials.",
+  "status": "FAIL_CLOSED",
+  "result": "ValueError for missing exact ten-root cohort, no PASS/result file written",
+  "operation": "Independent metric assessment invoked before the running cohort emitted four holdouts"
+}

@@ -1,0 +1,7 @@
+{
+  "reason": "Policy success can replace candidate2 with narrow3 and support1/room0, so preserving all raw winners did not create measured outcome improvements. No claimcandidate2wasalwaysrouted.",
+  "metric": "StrictindependentassessmentFAIL alltenunchanged",
+  "focused": "3suites PASS81.9793s including cleanup; frozen1439inputauditPASS",
+  "status": "REJECTED_UNCHANGED",
+  "production": "PlannerrestoredHEAD; noGWT/browser13build, nopublication"
+}

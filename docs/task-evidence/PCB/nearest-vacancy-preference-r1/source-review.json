@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-14T11:49:33.8926331Z",
+  "status": "SOURCE_REVIEW_PASS",
+  "scope": "PcbVacancyTargets.nearest, planner density gate/support exception, version/replay mapping, and saved12 literal guard ownership",
+  "runtime": "NOT RUN by reviewer; root owns final native/build/player acceptance",
+  "reviewer": "Independent leaf reviewer",
+  "findings": [
+    "No actionable source issue found. New preference applies only density12/candidate1 repeated-control with no paired support.",
+    "Old1..12 preferences stay exact; saved12 density11ROLE distinct from current13density12ROLE and replayowner checks both.",
+    "Five target positions/order/trialcount/overlapbonus/scoreweights/evaluationcap unchanged; longManhattan safe across int extremes, first canonical tie wins, result copied.",
+    "Rawidentityfixture checks preserved0/2/3/4/5 only; all-ten literal saved12 geometry/holdout suites protect saved candidate1."
+  ]
+}
