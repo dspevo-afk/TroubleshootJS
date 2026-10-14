@@ -296,15 +296,20 @@ class SeededPcbLayoutGenerator {
                 candidateIndex = guardedRouteCandidateIndex(session.mediumPlacements, candidateIndex,
                     twoLayer ? session.mediumTwoLayerSuccesses : session.mediumOneFaceSuccesses);
             if(session.board.getPlacementConstraints().placementDensityVersion >= 8) {
-                boolean narrowTried=false;
+                boolean narrowTried=false,narrowSucceeded=false;
                 String prefix=(twoLayer?MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER:
                     MediumBoardPhysicalPolicy.P05_ONE_FACE)+"@3=";
                 for(String outcome:session.mediumRouteOutcomes)
-                    if(outcome.startsWith(prefix))narrowTried=true;
+                    if(outcome.startsWith(prefix)) { narrowTried=true;
+                        if(outcome.equals(prefix+"SUCCESS"))narrowSucceeded=true; }
                 candidateIndex=narrowRouteCandidateIndex(session.mediumPlacements,
                     session.mediumRouteAttempt,candidateIndex,
                     twoLayer?session.mediumTwoLayerSuccesses:session.mediumOneFaceSuccesses,
                     narrowTried,hasRepeatedControlRegions(session.board.getPlacementConstraints()));
+                if(session.board.getPlacementConstraints().placementDensityVersion>=10)
+                    candidateIndex=supportRouteCandidateIndex(session.mediumPlacements,session.mediumRouteAttempt,
+                        candidateIndex,twoLayer?session.mediumTwoLayerSuccesses:session.mediumOneFaceSuccesses,
+                        narrowSucceeded,hasRepeatedControlRegions(session.board.getPlacementConstraints()));
             }
             MediumBoardPhysicalPolicy.PlacementCandidate candidate =
                 session.mediumPlacements.get(candidateIndex);
@@ -536,6 +541,21 @@ class SeededPcbLayoutGenerator {
             // if that alternative failed placement. Never request candidate3 twice.
             return roomier>=0?roomier:1;
         }
+        return fallback;
+    }
+
+    /** Explore local support only with the original narrow route already legal in this policy. */
+    static int supportRouteCandidateIndex(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> candidates,
+            int routeIndex,int fallback,int policySuccesses,boolean narrowSucceeded,boolean repeated) {
+        if(routeIndex!=2 || !repeated || !narrowSucceeded || policySuccesses<=0 || candidates.size()<4 ||
+                candidates.get(0).attempt!=4 || candidates.get(1).attempt!=2 || candidates.get(2).attempt!=5)
+            return fallback;
+        int support=-1,narrow=-1;
+        for(int i=3;i<candidates.size();i++) {
+            if(candidates.get(i).attempt==1)support=i;
+            if(candidates.get(i).attempt==3)narrow=i;
+        }
+        if(support>=0 && narrow>=0)return support;
         return fallback;
     }
 

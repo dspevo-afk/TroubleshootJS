@@ -1,0 +1,10 @@
+{
+  "rootDiffReviewed": true,
+  "executionDigest": "616abc42502fddfb8155e475a30930d22e622d5c68e6028afe5ce8aaee0f815e",
+  "priorAuditCommandError": "Compared nonexistent executionDigest property; actual module property Digest verified after inspecting maintained owner. No input changed.",
+  "status": "PASS",
+  "previewFileCount": 1587,
+  "consumedFiles": 1339,
+  "sourceScriptContractInputsUnchanged": true,
+  "servedProductionProvenanceUnchanged": true
+}

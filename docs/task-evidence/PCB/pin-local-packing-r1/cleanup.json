@@ -1,0 +1,11 @@
+{
+  "preexistingDataPreserved": true,
+  "previewStopped": true,
+  "status": "PASS",
+  "downloadRemovedAfterExactOwnershipCheck": true,
+  "sessionCleanupFlags": 7,
+  "temporaryViewportReset": true,
+  "portReleased": true,
+  "twoTaskTabsClosed": true,
+  "sourceToolchainsPreserved": true
+}

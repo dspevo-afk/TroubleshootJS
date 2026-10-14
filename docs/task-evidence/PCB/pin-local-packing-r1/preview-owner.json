@@ -1,0 +1,7 @@
+{
+  "processId": 90776,
+  "processStartTicks": 639275521956707212,
+  "executable": "powershell.exe",
+  "port": 8899,
+  "script": "scripts/preview.ps1"
+}

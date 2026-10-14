@@ -5685,3 +5685,30 @@ six literal saved6/7/8 cases protect replay. Actual42 guarded Shop resistor repa
 customer retest, Save/FileReader fresh-owner restore and cleanup PASS accompany
 final native/GWT/input/image gates. Normal RB56/HARD and inherited performance
 limits stay held. [Evidence and limits](task-evidence/PCB/connected-packing-r1/README.md).
+
+## Pin-local private10 packing and explicit saved9 replay
+
+Fresh private RB56 requests select placement10; explicit CONNECTED9 resolves
+before cache/proof reconstruction. Public alpha5, session model1 and generation
+epoch16 stay. PcbSupportPairPlacement owns advisory paired-net matching for
+two-terminal capacitors, resistors, diodes and zeners. It requires two distinct
+authoritative nets and compatible per-pad physical domains on an already placed
+nonconnector with at least three pads. Same-region peers take precedence; distance
+and canonical identities break ties. The target averages the two actual peer pin
+positions after subtracting source-local pad offsets. This expresses a physical
+relationship without assigning an inferred decoupling role or changing circuitry.
+
+Only repeated-control candidate1 consumes that target and actual paired endpoint
+span in the existing bounded placement search. It uses the established narrow
+demand-sized shape and primary-band guidance; original0/3 and every single-control
+path stay. SeededPcbLayoutGenerator may route it in the third slot only after that
+same policy has tried and accepted narrow3 in the complete retained4/2/5 chain.
+Otherwise the preceding guarded fallback stays. Full access, probe, isolation and
+routing validators remain authoritative, with unchanged6/3/work/time caps.
+
+On the six representatives,54/root42 area falls1.73%,23 paired endpoint spans
+fall31.55% and copper length falls13.18%; the other five and untuned1/7 stay exact9.
+Saved6/7/8/9 literal geometries remain independently checked. An initial single-
+control holdout regression is retained and fixed by both repeated-control gates.
+These finite fixtures do not prove all seeds, optimal packing, manufacturing
+readiness or normal advanced release. [Evidence](task-evidence/PCB/pin-local-packing-r1/README.md).

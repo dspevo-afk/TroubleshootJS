@@ -1,0 +1,36 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB support pair contracts assertions=12
+
+PCB_PIN_LOCAL_ROUTE seed=-1017 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=30627;routes=6;routingWork=16/3405032;p05=3/0;p07=3/3;selectedAttempt=0;ranked=[3, 0, 5, 4, 1, 2];placementScores=[3{total=1066839;electrical=125490;region=7960;connector=1860;corridor=1011;outline=4499200;courtyard=749848;demand=2539199}, 0{total=1116329;electrical=130430;region=8950;connector=1980;corridor=1433;outline=4725000;courtyard=749848;demand=2539199}, 5{total=1173511;electrical=136300;region=9820;connector=3000;corridor=1092;outline=9439200;courtyard=749848;demand=2539199}, 4{total=1182904;electrical=137890;region=9700;connector=2680;corridor=1245;outline=6676700;courtyard=749848;demand=2539199}, 1{total=1186042;electrical=137360;region=9365;connector=2380;corridor=2239;outline=5231100;courtyard=759448;demand=2564799}, 2{total=1239735;electrical=144580;region=8935;connector=2590;corridor=1763;outline=7371000;courtyard=749848;demand=2539199}];selectedScore=1116329;selectedQualityMilli=168799964;routeOutcomes=[P05_ONE_FACE@0=REJECTED:Unable to route net A_CMD from U2A.OUTPUT@1820,1180 to RDA.1@1860,1350, P05_ONE_FACE@1=REJECTED:Unable to route net LOAD_RETURN from JOA.2@3430,430 to JLOAD.2@3560,450, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS];failure=null
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RREF_LA owner=U2A endpoints=U2A.REFERENCE,U2A.RETURN span=870
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RREF_HA owner=U2A endpoints=U2A.RAIL,U2A.REFERENCE span=670
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RFB owner=UAC endpoints=UAC.BIAS,UAC.FB span=950
+PCB_PIN_LOCAL_PAIR seed=-1017 source=C5 owner=U1 endpoints=U1.OUTPUT,U1.RETURN span=1920
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RPIN_A owner=U2A endpoints=U2A.SENSOR,U2A.RETURN span=900
+PCB_PIN_LOCAL_PAIR seed=-1017 source=COUT owner=U1 endpoints=U1.INPUT,U1.RETURN span=2130
+PCB_PIN_LOCAL_PAIR seed=-1017 source=CBULK owner=UAC endpoints=UAC.IN+,UAC.IN- span=1180
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RPDA owner=QA endpoints=QA.B,QA.E span=1100
+PCB_PIN_LOCAL_PAIR seed=-1017 source=CIN owner=U1 endpoints=U1.INPUT,U1.RETURN span=1330
+PCB_PIN_LOCAL_PAIR seed=-1017 source=DFREE owner=UAC endpoints=UAC.OUT-,UAC.PRE_L+ span=970
+PCB_PIN_LOCAL_PAIR seed=-1017 source=CBIAS owner=UAC endpoints=UAC.BIAS,UAC.IN- span=530
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RPRIMARY owner=UAC endpoints=UAC.IN+,UAC.IN- span=1730
+PCB_PIN_LOCAL_PAIR seed=-1017 source=RENAC owner=UAC endpoints=UAC.BIAS,UAC.EN span=600
+PCB_PIN_LOCAL_PAIR seed=-1017 source=REN owner=U1 endpoints=U1.INPUT,U1.ENABLE span=680
+PCB_PIN_LOCAL_PAIR seed=-1017 source=ROUT owner=U1 endpoints=U1.INPUT,U1.RETURN span=980
+PCB_PIN_LOCAL_PAIR seed=-1017 source=DA owner=KA endpoints=KA.A2,KA.A1 span=770
+PCB_PIN_LOCAL_PAIR seed=-1017 source=CFB owner=UFB endpoints=UFB.C,UFB.E span=640
+PCB_PIN_LOCAL_PAIR seed=-1017 source=CFLT_A owner=U2A endpoints=U2A.SENSOR,U2A.RETURN span=1500
+PCB_PIN_LOCAL_CASE seed=-1017 area=4585000 baseline=4529785 pairs=18 span=19450 geometry=c858679158103dbf7facbff6dcaa7471dda32b55f6e4ae9dbee907ce982a7796
+
+Exception in thread "main" java.lang.AssertionError: local area regression: -1017
+	at com.lushprojects.circuitjs1.client.PcbPinLocalPackingContractTest.main(PcbPinLocalPackingContractTest.java:41)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbPinLocalPackingContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

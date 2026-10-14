@@ -1,0 +1,44 @@
+[
+  {
+    "file": "01-top-unrepaired.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      64.58760315616972,
+      41.712089543502564,
+      33.56495213887976
+    ],
+    "sha256": "6c0aaac16ca8c3fbfcf63888131ac292fb0a53a25fdfe588c446a81431197657",
+    "status": "PASS"
+  },
+  {
+    "file": "02-bottom-unrepaired.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      63.27618127305558,
+      40.00369804738708,
+      31.495944758105292
+    ],
+    "sha256": "f272119181a13f8fa86274f1d3bdfaf52aefc8a0684f291f300ad2bf8daa8ada",
+    "status": "PASS"
+  },
+  {
+    "file": "03-repaired-retest.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      94.2496787766059,
+      76.5485516517557,
+      57.17480747110787
+    ],
+    "sha256": "f27fe08a3156b208cbe830dd47cd3bd1a8c6c1105a5328d055114de3880cc537",
+    "status": "PASS"
+  }
+]

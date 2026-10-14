@@ -93,6 +93,8 @@ final class PcbPlacementPlanner {
             if (candidate == 5) algorithmCandidate = 0;
         }
         if (constraints.placementDensityVersion >= 8 && candidate == 3) algorithmCandidate=0;
+        if (constraints.placementDensityVersion >= 10 && candidate == 1 &&
+                SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints))algorithmCandidate=0;
         int offset = constraints.routingLayer == PcbCopperLayer.BOTTOM ?
             (int)((seed ^ (seed >>> 32)) & 0x7fffffffL) % OUTLINE_CANDIDATES : 0;
         // Give the root-selected small-board shape several ordering attempts
@@ -254,8 +256,10 @@ final class PcbPlacementPlanner {
             TreeMap<String,Region> groups,Vector<Item> anchors,long demandArea,
             long courtyardArea,int maxWidth,int anchorWidth) {
         int placementVersion = constraints.placementDensityVersion;
+        boolean pinLocal=placementVersion>=10 && candidate==1 &&
+            SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
         // Private6 reuses the established group-centred target and source-lane hints.
-        boolean narrow=placementVersion >= 8 && (candidate == 3 || candidate == 0 &&
+        boolean narrow=placementVersion >= 8 && (candidate == 3 || pinLocal || candidate == 0 &&
             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints));
         boolean useGrouped = ((placementVersion == 3 || placementVersion >= 6) && candidate < 2) || narrow;
         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
@@ -306,7 +310,7 @@ final class PcbPlacementPlanner {
         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
         boolean tight=(placementVersion >= 4 && candidate < 2) || narrow;
         double compactFactor=tight ? 1.65 : 2.35;
-        if((narrow && candidate == 3) || connectedPacking)compactFactor=1.35;
+        if((narrow && candidate == 3) || connectedPacking || pinLocal)compactFactor=1.35;
         long compactAllowance=tight ? 150000L : 250000L;
         long targetArea=useCompact ?
             (long)Math.ceil(demandArea*compactFactor)+compactAllowance :
@@ -334,7 +338,7 @@ final class PcbPlacementPlanner {
 
         Vector<PcbFootprint> placed=new Vector<PcbFootprint>();
         int boundaryX=-1;
-        if(placementVersion>=8 && candidate==3 &&
+        if(placementVersion>=8 && (candidate==3 || pinLocal) &&
                 SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints) && constraints.getBarriers().size()==1) {
             String firstDomain=constraints.getBarriers().get(0).firstDomain;
             double firstDemand=0,totalDemand=0;
@@ -368,7 +372,7 @@ final class PcbPlacementPlanner {
         for (Item item:orderedAnchors) {
             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
-                true,boundaryX,evaluations);
+                pinLocal,true,boundaryX,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
             item.footprint=selected; placed.add(selected);
         }
@@ -382,7 +386,7 @@ final class PcbPlacementPlanner {
             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
-                false,boundaryX,evaluations);
+                pinLocal,false,boundaryX,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
             next.footprint=selected; placed.add(selected);
             remaining.remove(next.demand.componentId);
@@ -601,7 +605,7 @@ final class PcbPlacementPlanner {
             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean anchor,int boundaryX,int[] evaluations) {
+            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations) {
         RegionHint hint=hints.get(regionKey(item.demand));
         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
@@ -616,6 +620,9 @@ final class PcbPlacementPlanner {
         // Center the search with the same shared-rail weights used to score it.
         Point connected=weightedConnectedTarget(item.footprint,placed,
             topology.getLinksFor(item.demand.componentId),preferredX,preferredY,board);
+        PcbSupportPairPlacement.Pair support=pinLocal && !anchor ? PcbSupportPairPlacement.find(
+            board,constraints,item.footprint,placed,connected) : null;
+        if(support!=null)connected=support.target;
         int direction=hint==null||hint.xFraction<.45?1:hint.xFraction>.55?-1:0;
         if(anchor)direction=0;
         Rectangle group=scoreGrouped ? mediumGroupBounds(item,placed,constraints) : null;
@@ -639,6 +646,7 @@ final class PcbPlacementPlanner {
                 CHANNEL : MEDIUM_CHAIN_GAP);
         if(boundaryPackage)baseX=preferredX;
         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
+        if(support!=null) { baseX=connected.x+direction*CHANNEL; baseY=connected.y; }
         PcbFootprint best=null;double bestScore=Double.POSITIVE_INFINITY;
         int maxRing=anchor?24:20;
         for(int ring=0;ring<=maxRing;ring++) {
@@ -661,6 +669,7 @@ final class PcbPlacementPlanner {
                     throw new Rejected("MEDIUM_PLACEMENT_BUDGET");
                 if(!fits(trial,outline,placed,-1,constraints))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
+                if(support!=null)score+=support.endpointSpan(trial)*3.0;
                 if(score<bestScore){best=trial;bestScore=score;}
             }
         }
@@ -695,6 +704,7 @@ final class PcbPlacementPlanner {
                 evaluations[0]++;
                 if(!fits(trial,outline,placed,-1,constraints))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
+                if(support!=null)score+=support.endpointSpan(trial)*3.0;
                 if(score<bestScore){best=trial;bestScore=score;}
                 /* The fallback only needs one legal escape from a crowded
                  * target.  Keeping the first seeded hit bounds worst-case

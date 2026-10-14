@@ -1,0 +1,16 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_ORIENTATION_ROUTE seed=-1017 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=31387;routes=6;routingWork=16/3109654;p05=3/0;p07=3/3;selectedAttempt=0;ranked=[5, 0, 4, 3, 1, 2];placementScores=[5{total=1161024;electrical=135380;region=9235;connector=2840;corridor=950;outline=9285300;courtyard=758248;demand=2561599}, 0{total=1173511;electrical=136300;region=9820;connector=3000;corridor=1092;outline=9439200;courtyard=749848;demand=2539199}, 4{total=1286386;electrical=150460;region=10285;connector=2760;corridor=1002;outline=9667800;courtyard=757048;demand=2558399}, 3{total=1296391;electrical=150890;region=11020;connector=3550;corridor=934;outline=9360500;courtyard=759448;demand=2564799}, 1{total=1363127;electrical=158680;region=11180;connector=3820;corridor=1091;outline=9614000;courtyard=764248;demand=2577599}, 2{total=1497175;electrical=172600;region=11985;connector=3390;corridor=2942;outline=9464000;courtyard=760648;demand=2567999}];selectedScore=1173511;selectedQualityMilli=205821291;routeOutcomes=[P05_ONE_FACE@5=REJECTED:Unable to route net RAIL12 from REN.1@3970,830 to L1.2@3400,1600, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:Unable to route net RAIL5 from U1.OUTPUT@3360,450 to connected tree, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@4=SUCCESS];failure=null
+PCB_ORIENTATION_CASE seed=-1017 area=6374950 baseline=4529785 turned=1 geometry=72ad2dc88c440746a5166e6dc488a6c31395e8c4bbbae94adb8c881a7bf442d0
+
+Exception in thread "main" java.lang.AssertionError: orientation area regression: -1017
+	at com.lushprojects.circuitjs1.client.PcbOrientationPackingContractTest.main(PcbOrientationPackingContractTest.java:29)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbOrientationPackingContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

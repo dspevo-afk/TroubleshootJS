@@ -42,6 +42,7 @@ public final class PcbGuardedRouteSelectionContractTest {
                 SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(original,7,true);
             verifyNarrow(original,true);
             verifyNarrow(original,false);
+            verifySupport(original);
             check(chosen.size()==6 && original.get(0).attempt==order[0], "retains full census without mutating input");
             check(chosen.get(0).attempt==4 && chosen.get(1).attempt==2 && chosen.get(2).attempt==5,
                 "every adversarial rank preserves 4/2/5 fallback chain");
@@ -68,6 +69,31 @@ public final class PcbGuardedRouteSelectionContractTest {
             new PcbPlacementPlanner.Plan(new Rectangle(0,0,100,100),new Vector<PcbFootprint>(),
                 new Vector<PcbLayoutRegion>(),0,0,id,0)));
         return rows;
+    }
+    private static void verifySupport(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> original) {
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> chosen=
+            SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(original,10,true);
+        int fallback=SeededPcbLayoutGenerator.narrowRouteCandidateIndex(chosen,2,2,1,true,true);
+        int local=SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,2,fallback,2,true,true);
+        check(chosen.get(local).attempt==1,"policy-local legal3 permits support1 in the third slot");
+        check(chosen.get(local).attempt!=4 && chosen.get(local).attempt!=3,"support request remains unique after4/3");
+        check(SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,0,0,2,true,true)==0 &&
+            SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,1,1,2,true,true)==1,
+            "support exploration cannot displace either preceding request");
+        check(SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,2,fallback,0,true,true)==fallback,
+            "success in another policy cannot authorize support exploration");
+        check(SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,2,fallback,2,false,true)==fallback,
+            "failed or untried3 retains the existing roomier0 path");
+        check(SeededPcbLayoutGenerator.supportRouteCandidateIndex(chosen,2,fallback,2,true,false)==fallback,
+            "single-control prefix already contains support1");
+        for(int missing:new int[]{1,2,3,4,5}) {
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> subset=new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>();
+            for(MediumBoardPhysicalPolicy.PlacementCandidate row:original)if(row.attempt!=missing)subset.add(row);
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> ranked=
+                SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(subset,10,true);
+            check(SeededPcbLayoutGenerator.supportRouteCandidateIndex(ranked,2,2,2,true,true)==2,
+                "missing retained/narrow/support candidate cannot authorize substitution");
+        }
     }
     private static void verifyNarrow(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> original,boolean repeated) {
         Vector<MediumBoardPhysicalPolicy.PlacementCandidate> rows=

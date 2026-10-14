@@ -1,0 +1,10 @@
+{
+  "data-tsj-preview-execution-digest": "616abc42502fddfb8155e475a30930d22e622d5c68e6028afe5ce8aaee0f815e",
+  "data-tsj-preview-file-count": "1587",
+  "data-tsj-preview-identity-protocol": "troubleshootjs-execution-provenance-v1",
+  "data-tsj-preview-script-digest": "f2629fb5dbee7babe8dd7403f145a895eb70fbe27575e34ceea44b24f3760746",
+  "data-tsj-preview-source-digest": "dbdf1753827ac2cb98af8a57afd8d6c493c3007038d6ab04cab006168b718e4d",
+  "data-tsj-preview-web-digest": "2a20392b80d3605ef88a7707ff632e5d772e1a759ea2829b4d91a435b907784f",
+  "data-tsj-rb56-report": "{\"protocol\":\"TSJ-RB56-QUALIFICATION-1\", \"scope\":\"PRIVATE_PLAYER_SESSION\", \"family\":\"RB56_CONTROL\", \"seed\":\"42\", \"sourceEpoch\":\"tsj-generation-dependencies-v16\", \"planVersion\":1, \"maxJobMillis\":90000, \"maxJobSteps\":640, \"maxUnitMillis\":5000, \"forcedAfterPublish\":false, \"normalCatalogEnabled\":false, \"status\":\"HOLD\", \"phase\":\"HOLD\", \"packages\":54, \"hypotheses\":5, \"solverSamples\":60, \"generationStages\":6, \"generationWork\":623, \"generationMillis\":78226, \"maxManualUnitMillis\":1466, \"physicalAdmission\":\"RB56_BOARD_NORMAL@1\", \"normalPhysicalAdmission\":true, \"fullProductionD01\":true, \"coldProof\":true, \"generationReceiptDigest\":\"e65b41f664354e502d482fbbaa61dfc1cde8759c647319789921f8298781faf9\", \"diagnosticContextDigest\":\"4014f5af21a18810bfc108f08133dd37706cc55ee1af66efa282afb3d8f6053e\", \"diagnosticProgramDigest\":\"1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747\", \"holdMillis\":360000, \"normalLabels\":true, \"playerSessionInstalled\":true, \"privatePersistence\":true}",
+  "data-tsj-verification": "HOLD:rb56"
+}

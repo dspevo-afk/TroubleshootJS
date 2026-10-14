@@ -7,7 +7,28 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Connected private9 PCB packing delivered**
+**Current task:** **Pin-local private10 PCB packing delivered**
+Paired-net passives prefer corresponding pins of already placed chips/relays
+under matching per-pad domains. Only repeated-control candidate1 changes; its
+third route slot requires that same policy's original narrow3 to succeed.
+54/root42 area falls1.73%, paired endpoint spans31.55%, copper13.18% and largest
+protected empty rectangle56.92%; a remaining lower-left pocket stays open. Other
+five representatives and untuned1/7 retain exact9 geometry. Initial single-group
+holdout regression is retained and fixed by both repeated-control gates. All
+inventory/access/probe/isolation and search/work/time caps stay. Fresh10/explicit
+saved9, saved6/7/8/9 literal layouts and signed-long identities preserved.
+Final native15, actual JDK8/GWT five, real54 guarded Shop repair/customer PASS/
+Save/FileReaderfresh-owner/OFF-preserved/retest/Close and actual saved9 file
+reconstruction/retest/Close PASS. Three inspected captures, exact provenance and
+owned process/tab/viewport/download cleanup. No main merge/email or normal
+advanced/performance/whole-population/manufacturing/optimality release claim.
+[Final evidence](task-evidence/PCB/pin-local-packing-r1/README.md).
+User's continued realism goal remains active until9amAmerica/New_York2026-10-14.
+Next: remaining voids through generic placement/compaction under full routing
+and access contracts. Optocoupler180 orientation is already implemented; the
+discarded no-op assessment does not deliver quarter-turn catalog support.
+
+**Previous packing task:** **Connected private9 PCB packing delivered**
 Single-control candidate0 tries a square demand-sized outline around actual
 connected neighbors.42/root0 shrinks another6.86%; its largest protected empty
 rectangle falls54.49%. Copper grows6.46%, explicitly retained as a packing

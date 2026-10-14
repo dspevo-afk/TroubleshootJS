@@ -93,8 +93,9 @@ public final class U06SessionSaveContractTest {
         GenerationRequest guardedRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED);
         GenerationRequest narrowRequest = currentRequest.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NARROW);
+        GenerationRequest connectedRequest = currentRequest.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CONNECTED);
         GenerationRequest[] requests = new GenerationRequest[] {
-            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, guardedRequest, narrowRequest, currentRequest
+            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, guardedRequest, narrowRequest, connectedRequest, currentRequest
         };
         String[] expected = new String[] {
             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -114,7 +115,9 @@ public final class U06SessionSaveContractTest {
             "tsj-private-session/8/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-8/RB56_CONTROL/77",
             "tsj-private-session/9/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-9/RB56_CONTROL/77"
+                "/rb56-placement-9/RB56_CONTROL/77",
+            "tsj-private-session/10/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-10/RB56_CONTROL/77"
         };
         for (int i = 0; i < requests.length; i++) {
             final GenerationRequest request = requests[i];
@@ -135,7 +138,7 @@ public final class U06SessionSaveContractTest {
         }
         check(currentRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
-            "new private RB56 requests default to placement 9");
+            "new private RB56 requests default to placement 10");
     }
 
     private static void verifyOperationsAndCopies() {

@@ -7,13 +7,14 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=9;
+    private static final int MEASURED_VERSION=10;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     // Independent accepted6 receipts, frozen before guarded route selection.
     private static final long[] SAVED6_AREA={5122184,4622400,8443994,4679776,7708262,6371585};
     private static final long[] SAVED7_AREA={5122184,4622400,7395541,4679776,7708262,6371585};
     private static final long[] SAVED8_AREA={4529785,4466664,6943752,4679776,5814368,6211431};
+    private static final long[] SAVED9_AREA={4529785,4466664,6943752,4358809,5814368,6211431};
     private static final String[] SAVED8_GEOMETRY_SHA256={
         "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
         "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
@@ -87,6 +88,10 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedNarrowGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,8);
         System.out.println("PASS: saved placement8 geometry contracts roots=6 assertions="+checks);
+    }
+    static void verifySavedConnectedGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,9);
+        System.out.println("PASS: saved placement9 geometry contracts roots=6 assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -184,6 +189,14 @@ public final class PcbFunctionalGroupingContractTest {
             if(index==3) check(area<SAVED8_AREA[index],"connected packing reduces the retained42 fixture");
             else check(SAVED8_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
                 "other representative layouts remain exact accepted8: "+seed);
+        }
+        if(version==10) {
+            long area=(long)outline.width*outline.height;
+            check(area<=SAVED9_AREA[index],"no representative regression against accepted9: "+seed);
+            if(index==5)check(area<SAVED9_AREA[index],"local-support candidate reduces the declared54 fixture");
+            else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
+                SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                "other representative layouts remain exact accepted9: "+seed);
         }
         if(version>=8) {
             long area=(long)outline.width*outline.height;

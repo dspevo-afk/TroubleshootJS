@@ -6,7 +6,7 @@ public final class PcbConnectedPackingHoldoutContractTest {
         int checks=0;
         for(long seed:new long[]{1L,7L}) {
             long previousArea=0;
-            for(int version:new int[]{8,9}) {
+            for(int version:new int[]{9,10}) {
                 Rb56Plan plan=Rb56Plan.resolve(seed,version);
                 TroubleshootBoard board=plan.board();
                 MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
@@ -21,7 +21,7 @@ public final class PcbConnectedPackingHoldoutContractTest {
                     layout.getPads().size()!=board.getPadIds().size())throw new AssertionError("holdout inventory changed");
                 Rectangle outline=layout.getBoardOutline();
                 long area=(long)outline.width*outline.height;
-                if(version==8)previousArea=area;
+                if(version==9)previousArea=area;
                 else if(area>previousArea)throw new AssertionError("holdout area regression: "+seed);
                 System.out.println("PCB_CONNECTED_HOLDOUT seed="+seed+" version="+version+" area="+area+
                     " geometry="+PlayerSessionFingerprint.of(layout.geometryFingerprint()));

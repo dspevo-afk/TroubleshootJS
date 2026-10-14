@@ -1,4 +1,49 @@
-# Current checkpoint: connected private9 PCB packing delivered
+# Current checkpoint: private10 paired-pin packing delivered; realism goal active
+
+2026-10-14. Base d00c4f3ef1cf8e7f4530b04af80a3213cc4d8854 on
+codex/q60-faulted-profile-counts; enclosing commit is the accepted candidate.
+User authorized continued PCB realism work until9amAmerica/New_York2026-10-14
+and optional subagents. Goal remains active; no main merge/email.
+
+PcbSupportPairPlacement derives advisory two-net source/peer pin proximity from
+actual pads and matching per-pad physical domains. Only repeated candidate1
+uses it; original0/3 and all single-control paths stay. Same-policy legal narrow3
+permits local1 in the third guarded route slot; no budgets/validators relaxed.
+Fresh10 and explicit savedCONNECTED9 preserve signed-long dispatch before proof/
+cache. 54/root42 area6211431->6103992 (-1.73%), paired span29920->20480 (-31.55%),
+copper47120->40910 (-13.18%). Other five representatives and untuned1/7 exact9.
+Largest protected empty rectangle760500->327600 (-56.92%); residual pocket open.
+Initial single1 holdout regression retained and fixed by both repeated gates.
+Orientation helper discarded: provider already180; failures/no-op exact9 retained.
+
+PASS final native15 exit0,259.283s including proven scratch cleanup; current1510,
+route permutations31692, saved6/7/8/9 literals, holdouts, independent pair fixture18,
+local6, save34969, identity113, dependency1166, fixed geometry1601, compaction858,
+medium59. PASS final-source JDK8/GWT5 compile93.240/link1.516s, wall96.684s.
+Actual EB586753A93C8A8AB41FB44E16F9FE96; exact inputs/five DOM provenance audited.
+Three scoped read-only Luna MAX audits, fresh scope-fix review no blockers;
+no agent tests claimed. Root integrated production/replay/contracts diff reviewed.
+
+Real54 cold78.226s/623work/max1.466s, unrepaired expected FAIL, top/bottom inspection,
+4.996V rail,4.846V controller vs479.747uV gate. OFF/discharge/Shop1k medium Part55
+replaces RDA Part30; customer PASS. Actual Save/FileReader10 fresh-owner restore
+77.878s/623work, OFF preserved; retest/Close final PASS. Wall298.897s includes cold;
+retained220.671s<360s. Actual prior9 file restores33.058s/519work in fresh current10
+root0 view; OFF preserved/customerPASS/Close, wall108.932s includes31.940s cold.
+Both seven cleanup flags true, no pending cleanup/errors. Three inspected actual
+captures decoded/nonblank. Full details/raw failures in evidence README.
+
+Owned preview90776 PID/start ticks verified and stopped;8899 released. Two task
+tabs closed, temporary1280x720 viewport reset. Exact owned download removed after
+creation/size/hash/reparse audit; byte-exact evidence save retained. Toolchains,
+five original untracked entries and Desktop seven unrelated tracked edits/data
+preserved. Normal RB56/HARD, whole-population/full matrix/human/modest-host and
+inherited60 timing remain held/unqualified; finite54 PASS is not60 performance proof.
+
+[Evidence](task-evidence/PCB/pin-local-packing-r1/README.md).
+Next: explicit staging/cached review/normal commit and verified push, then continue
+remaining-void placement/compaction work through the requested9am deadline.
+# Previous checkpoint: connected private9 PCB packing delivered
 
 2026-10-14. Base `368f3b0dfeff026c352f671cd45333c8cdfda50e`, branch
 `codex/q60-faulted-profile-counts`; enclosing commit is the accepted candidate.
