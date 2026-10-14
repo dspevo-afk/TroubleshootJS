@@ -1,0 +1,11 @@
+UAC — Pinout schematic
+
+
+Package top view. Match the pin arrangement; board orientation may differ.
+
+
+
+
+Pins: IN+, IN-, PRE_L+, OUT-, EN, FB, BIAS
+
+Close schematic

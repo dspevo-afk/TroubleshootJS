@@ -388,6 +388,8 @@ body.tsj-reduced-motion .tsj-ui-overlay * { animation: none !important; transiti
 .tsj-component-context-menu button:hover { background: #ceddca; }
 .tsj-component-context-menu button:focus-visible { outline: 3px solid #397b99; outline-offset: 2px; }
 .tsj-component-context-menu button:disabled { opacity: .55; cursor: default; }
+.tsj-chip-pinout { width: 440px; max-width: calc(100vw - 32px); }
+.tsj-chip-pinout-diagram { display: block; width: 100%; height: auto; margin: 10px 0; border-radius: 6px; }
 .tsj-interaction-notice { z-index: 10005; padding: 9px 16px; border: 1px solid #889f8d; border-radius: 7px; background: #213b30ee; color: #f2f1e4; box-shadow: 0 4px 14px #12271b30; font: 13px/1.5 'Segoe UI', sans-serif; pointer-events: none; }
 
 /* Service-desk presentation: chunky lettering, ink outlines and hard-offset shadows. */

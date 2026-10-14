@@ -1,0 +1,11 @@
+U1 — Pinout schematic
+
+
+Package top view. Match the pin arrangement; board orientation may differ.
+
+
+
+
+Pins: INPUT, OUTPUT, RETURN, ENABLE
+
+Close schematic

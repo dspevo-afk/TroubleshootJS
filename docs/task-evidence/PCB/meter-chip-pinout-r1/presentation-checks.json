@@ -1,0 +1,86 @@
+[
+  {
+    "phase": "fit44",
+    "chipMenuOpen": false,
+    "height": 353.4061279296875,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 196.1637420654297,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": 20,
+    "y": 332.15625
+  },
+  {
+    "phase": "zoom44",
+    "chipMenuOpen": false,
+    "height": 530.109130859375,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 294.24560546875,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": -330,
+    "y": 237.734375
+  },
+  {
+    "phase": "bottom44",
+    "chipMenuOpen": false,
+    "height": 353.4061279296875,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 196.1637420654297,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": 20,
+    "y": 332.15625
+  },
+  {
+    "phase": "moved44",
+    "chipMenuOpen": false,
+    "height": 353.4061279296875,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 196.1637420654297,
+    "worldX": "-543.9285714285714",
+    "worldY": "152",
+    "x": 40,
+    "y": 332.15625
+  },
+  {
+    "phase": "home44",
+    "chipMenuOpen": false,
+    "height": 353.4061279296875,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 196.1637420654297,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": 20,
+    "y": 332.15625
+  },
+  {
+    "phase": "responsive1000x700",
+    "chipMenuOpen": false,
+    "height": 242.33563232421875,
+    "mode": "DC_VOLTAGE",
+    "reading": "5 V",
+    "width": 134.5122833251953,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": 20,
+    "y": 287.734375
+  },
+  {
+    "phase": "restoredFit44",
+    "chipMenuOpen": false,
+    "height": 353.4061279296875,
+    "mode": "NONE",
+    "reading": "--- V",
+    "width": 196.1637420654297,
+    "worldX": "-605",
+    "worldY": "152",
+    "x": 20,
+    "y": 332.15625
+  }
+]

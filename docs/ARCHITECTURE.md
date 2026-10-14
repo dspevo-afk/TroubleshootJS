@@ -475,6 +475,25 @@ includes case, board and tray. `PcbViewport.fitWorkbench` fits that unmirrored
 furniture envelope on either board face. Native widget ownership is unchanged;
 explicit overflow release on the GWT dock and layout wrapper avoids clipping.
 
+`BenchInstrumentLayout` derives the case envelope from the PCB outline: height is
+the greater of 454 drawing units, 75% of board height and 30% of board width.
+Width and separation preserve the original case proportions. The renderer fits
+this envelope alongside the PCB; the DOM adapter converts its width to the CSS
+case scale exactly once. Drag mapping remains in bench coordinates. This changes
+furniture presentation, never PCB realization, seed identity or meter behavior.
+
+Chip context menus offer **View schematic** for the declared regulator, decision
+controller, optocoupler and isolated converter packages. `ChipPinout` exposes only
+their canonical public package geometry and terminal names. The controller draws
+a top-view pinout diagram and accessible pin list; it reads no live wiring,
+diagnostic answer or fault state. These packages omit terminal-name annotations
+in installed and loose rendering while retaining their physical leads, pads,
+reference names and probe targets. Menu callbacks require the current owner,
+menu lease, same registered part and its installed/loose state. Both installed
+and loose tray chip menus offer the view. The diagram uses the existing component-popup
+cleanup owner, including detach/reset; right-click conductive targets still places
+the black probe before any body menu can open.
+
 Only its header is a drag handle, with primary-pointer capture/window fallback,
 keyboard arrows/Home/Escape, and cancellation on blur/resize/overlay/owner change.
 World position survives same-board menu navigation. Camera pan, zoom, resize and

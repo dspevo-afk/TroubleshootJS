@@ -1,0 +1,5 @@
+PASS: PcbScreenLabelLayoutContractTest: 273 assertions
+PASS: U01 viewport contracts assertions=1277
+PASS: bench instrument presentation contracts assertions=59
+PASS: focused current contracts; 3 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

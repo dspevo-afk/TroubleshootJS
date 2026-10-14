@@ -811,6 +811,7 @@ final class StandardPhysicalPartRenderProviders {
             graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(10, context.scale(10))));
             graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                if (ChipPinout.supports(context.getPart().getPackage())) continue;
                 Point point = terminal.getBoardPadPoint();
                 if (point != null)
                     graphics.drawProviderLabel(context.getComponentId()+"/provider/"+
@@ -833,8 +834,9 @@ final class StandardPhysicalPartRenderProviders {
                 graphics.setColor(WorkbenchVisualTheme.TEXT);
                 graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(8, context.scale(10))));
                 Point point = terminal.getPoint();
-                graphics.drawString(terminal.getTerminalId(), point.x + context.scale(7),
-                    point.y - context.scale(7));
+                if (!ChipPinout.supports(context.getPart().getPackage()))
+                    graphics.drawString(terminal.getTerminalId(), point.x + context.scale(7),
+                        point.y - context.scale(7));
             }
             context.markBodyDrawn();
         }

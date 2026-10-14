@@ -1,4 +1,56 @@
-# Current checkpoint: guarded private7 routing and 60-part density qualified
+# Current checkpoint: board-relative meter and chip pinout menu delivered
+
+2026-10-13. Base `32451a07a2019b30f3546ea8d8c9d382e2d222d5` on
+`codex/q60-faulted-profile-counts`; enclosing commit is the accepted UI candidate.
+User explicitly requested this UI scope after guarded private7 routing. Meter
+case scales from PCB dimensions and participates in Fit bench; its existing
+world position/projection/native controls remain. Four declared chip families
+omit pin-name annotations and offer right-click menu **View schematic**, a
+public package top-view pinout for both installed and loose tray chips.
+Leads/pads/probe identities remain; black probe
+priority, stale menu/part guards and popup owner cleanup stay. No full-board
+schematic, hidden fault, electrical/seed/geometry or budget changes.
+
+PASS: maintained native presentation59/viewport1277/labels273, exit0 and cleanup;
+actual final JDK8/GWT all five108.283s/1.526s, strong name
+6755B76A35351ABD8A3FE495094B8DB5; node syntax; final input-hash audit. Preceding
+solver/generation/mutation inputs remain exact. Root integrated diff/receipt/image
+review, no independent agent review. Full native/global population NOT RUN.
+
+Visible built-in Browser PASS: public small-board fit; private44 seed-1004 cold
+51.143s/518work/1.612s maximum unit; actual menus and all four public pinouts;
+U1 red OUTPUT/black RETURN5V without a menu;1.5x zoom/world-lock, flip/Fit,
+header movement/Home;1000x700 meter fit and restored1440x900. Unrepaired retest
+FAIL expected, real Shop5V relay/guarded OFF remove/Part45 install/ON/customer
+PASS, Close verifier PASS/all seven cleanup flags.190.348s total includes cold,
+139.205s retained below360s. Five inspected captures and independent receipt
+assertions retained. No injected controller mutation; source-guided, not human U05.
+
+Limits/failures: initial hidden-chat60 cold PASS73.814s, screenshot failures/black
+frame, queued browser, unavailable Edge/canvas export; unrepaired closure raw
+FAIL/all cleanup PASS. User opened chat and capture worked. Two fresh visible60
+cold attempts FAIL HYPOTHESES at90.001s/90.267s, clean cleanup. No third unchanged
+retry, budget increase or causal claim. Final visible acceptance is finite44;
+visible60 timing remains unresolved (pre-tray-patch CB170; final6755 cold60 NOT RUN).
+Final-source all-family/loose-Part21 pinout, OFF removal/reinstallation and5V
+checks passed, but that inspection's whole session expired at403.876s total /
+360.322s retained before customer retest: raw FAIL/all cleanup PASS. Separate
+same-final-source repair/Close PASS above; no pre-fix whole-flow evidence reused.
+Native/GWT freshly rerun after tray addition; five final6755 captures retained.
+Viewport-navigation, retired observer, resize-popup and readiness-menu automation
+failures recovered only after inspecting actual state.
+Normal RB56/HARD HELD, human/global population
+NOT RUN, modest host owner-deferred; previous density/Q30 failures remain.
+[Evidence, actual inputs and precise limits](task-evidence/PCB/meter-chip-pinout-r1/README.md).
+
+Task preview PID89480 positively stopped/port8899 released; tab closed and
+viewport reset. Native scratch cleanup PASS; exact task scratch removal recorded
+in evidence before publication. Pre-existing worktree evidence/cache files and
+Desktop seven tracked edits/untracked data untouched. No main merge/email,
+preserving prior publication scope. Next: narrower primary/mixed-boundary PCB
+packing; diagnose visible60 deadline behavior before stronger performance claims.
+
+# Previous checkpoint: guarded private7 routing and 60-part density qualified
 
 2026-10-13. Base `24cf8482` on `codex/q60-faulted-profile-counts`; enclosing
 commit is the accepted candidate. Continued the referenced session's PCB priority.

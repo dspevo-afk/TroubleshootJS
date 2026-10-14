@@ -17,6 +17,8 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.Context2d;
 
 class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final CirSim sim;
@@ -715,12 +717,18 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         VerticalPanel actions = new VerticalPanel();
         if (component != null) {
             actions.add(styledLabel(playerComponentName(component),"tsj-component-title"));
+            addChipSchematicAction(actions, playerComponentName(component),
+                instance.getPhysicalBoardRuntime().getInstalledPart(component), component);
             Vector<GeneratedComponentConnectionBinding> bindings = instance.getConnectionBindings().getForComponentOrEmpty(component);
             if (!sim.getBoardPowerController().isElectricallyUnpowered()) actions.add(new Label("Switch off board power to modify this part."));
             if (!bindings.isEmpty()) addActions(actions,component,bindings,!sim.getBoardPowerController().isElectricallyUnpowered());
         } else {
             WorkbenchPartsProvider provider = instance.getPhysicalBoardRuntime().getWorkbenchPartsProviderForPart(partId);
-            if (provider != null) addSelectedPartControls(actions,provider,partId);
+            if (provider != null) {
+                PhysicalPart<?> loosePart = provider.getPart(partId);
+                addChipSchematicAction(actions, playerPartLabel(provider, loosePart), loosePart, null);
+                addSelectedPartControls(actions,provider,partId);
+            }
         }
         popup.add(actions);
         popup.addCloseHandler(new CloseHandler<PopupPanel>() { public void onClose(CloseEvent<PopupPanel> event) {
@@ -731,8 +739,100 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         popup.show();
         popup.setPopupPosition(Math.max(8,Math.min(sim.cv.getAbsoluteLeft()+x,Window.getClientWidth()-popup.getOffsetWidth()-8)),
             Math.max(8,Math.min(sim.cv.getAbsoluteTop()+y,Window.getClientHeight()-popup.getOffsetHeight()-8)));
-        if (actions.getWidgetCount()>1 && actions.getWidget(1) instanceof Button) ((Button)actions.getWidget(1)).setFocus(true);
+        for (int i = 0; i < actions.getWidgetCount(); i++) {
+            if (actions.getWidget(i) instanceof Button) {
+                ((Button)actions.getWidget(i)).setFocus(true); break;
+            }
+        }
         return true;
+    }
+
+    private void addChipSchematicAction(VerticalPanel actions, final String title,
+            final PhysicalPart<?> part, final String component) {
+        if (part == null || !ChipPinout.supports(part.getPackage())) return;
+        final Object menuLease = componentMenuLease;
+        Button schematic = new Button("View schematic");
+        schematic.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                PhysicalBoardRuntime runtime = instance.getPhysicalBoardRuntime();
+                if (!isCurrentPhysicalActionable() || menuLease != componentMenuLease ||
+                        runtime.getPart(part.getId()) != part ||
+                        (component == null ? part.isInstalled() : runtime.getInstalledPart(component) != part)) return;
+                showChipPinout(title, part.getPackage());
+            }
+        });
+        actions.add(schematic);
+    }
+
+    private void showChipPinout(String title, PhysicalPackage physicalPackage) {
+        closeComponentMenu();
+        final PopupPanel popup = new PopupPanel(true);
+        componentMenu = popup; componentMenuLease = new Object();
+        popup.setStyleName("tsj-component-context-menu tsj-chip-pinout");
+        popup.getElement().setAttribute("role", "dialog");
+        popup.getElement().setAttribute("aria-label", title + " pinout schematic");
+        VerticalPanel content = new VerticalPanel();
+        content.add(styledLabel(title + " — Pinout schematic", "tsj-component-title"));
+        content.add(new Label("Package top view. Match the pin arrangement; board orientation may differ."));
+        PhysicalPackageGeometry geometry = ChipPinout.geometry(physicalPackage);
+        Canvas diagram = Canvas.createIfSupported();
+        if (diagram != null) {
+            diagram.setCoordinateSpaceWidth(440); diagram.setCoordinateSpaceHeight(350);
+            diagram.setStyleName("tsj-chip-pinout-diagram");
+            diagram.getElement().setAttribute("role", "img");
+            diagram.getElement().setAttribute("aria-label", "Package outline and named pins; pin list follows");
+            content.add(diagram);
+            drawChipPinout(diagram.getContext2d(), geometry);
+        }
+        // Text also makes the diagram usable without Canvas and by screen readers.
+        content.add(new Label("Pins: " + joinPinNames(geometry)));
+        Button close = new Button("Close schematic");
+        close.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) { if (componentMenu == popup) closeComponentMenu(); }
+        });
+        content.add(close); popup.add(content);
+        popup.addCloseHandler(new CloseHandler<PopupPanel>() {
+            public void onClose(CloseEvent<PopupPanel> event) {
+                if (componentMenu == popup) { componentMenuLease = null; componentMenu = null; }
+                if (isCurrentOwner()) sim.cv.getElement().focus();
+            }
+        });
+        popup.center(); close.setFocus(true);
+    }
+
+    private static String joinPinNames(PhysicalPackageGeometry geometry) {
+        StringBuilder names = new StringBuilder();
+        for (String name : geometry.getTerminalIds()) {
+            if (names.length() > 0) names.append(", ");
+            names.append(name);
+        }
+        return names.toString();
+    }
+
+    private static void drawChipPinout(Context2d g, PhysicalPackageGeometry geometry) {
+        double scale = Math.min(280.0 / geometry.getWidth(), 220.0 / geometry.getHeight());
+        double ox = (440 - geometry.getWidth() * scale) / 2, oy = 25;
+        Rectangle body = geometry.getBodyBounds();
+        g.setFillStyle("#f5f1df"); g.fillRect(0, 0, 440, 350);
+        g.setFillStyle("#293739");
+        g.fillRect(ox + body.x * scale, oy + body.y * scale, body.width * scale, body.height * scale);
+        g.setStrokeStyle("#466368"); g.setLineWidth(2); g.setFont("13px sans-serif");
+        for (PhysicalPackageGeometry.Terminal terminal : geometry.getTerminals()) {
+            Point pad = terminal.getPadCenter(), start = terminal.getConnectedLead().getBodyPoint();
+            double x = ox + pad.x * scale, y = oy + pad.y * scale;
+            g.beginPath(); g.moveTo(ox + start.x * scale, oy + start.y * scale); g.lineTo(x, y); g.stroke();
+            g.setFillStyle("#466368"); g.fillRect(x - 3, y - 3, 6, 6);
+            g.setFillStyle("#243536");
+            if (pad.y >= body.y + body.height) {
+                g.save(); g.translate(x, y + 10); g.rotate(Math.PI / 2);
+                g.fillText(terminal.getTerminalId(), 0, 4); g.restore();
+            } else if (pad.x <= body.x) {
+                g.setTextAlign(Context2d.TextAlign.RIGHT); g.fillText(terminal.getTerminalId(), x - 10, y + 4);
+            } else {
+                g.setTextAlign(Context2d.TextAlign.LEFT); g.fillText(terminal.getTerminalId(), x + 10, y + 4);
+            }
+            g.setTextAlign(Context2d.TextAlign.LEFT);
+        }
     }
 
     private String operationLabel(PhysicalPart part, WorkbenchOperation operation,

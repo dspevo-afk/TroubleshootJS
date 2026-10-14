@@ -7,7 +7,25 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Guarded private7 route coverage and 60-part compaction qualified**
+**Current task:** **Board-relative meter and chip pinout menu delivered**
+Meter case follows PCB dimensions and Fit includes its actual envelope. Four
+chip families retain physical leads/pads/references while pin-name annotations
+move to right-click menu **View schematic** for installed and loose tray parts.
+The public package pinout shows no board wiring or hidden fault; black-probe
+priority and current-owner/menu/part guards remain. Native presentation/viewport/
+labels and final actual JDK8/GWT five permutations PASS. Final visible small fit,
+all chip/loose pinouts and actual regulator removal/reinstallation/5V verified.
+That inspection's whole view expired before customer retest: raw FAIL/clean
+cleanup. Separate same-final-source44 measurement/zoom/flip/movement/responsive/
+guarded Shop repair/customer retest/Close PASS within360s. Five final captures.
+Earlier CB170 visible60 cold runs hit90s and stay FAIL; final6755 cold60 NOT RUN.
+This finite UI acceptance does not advance normal RB56/HARD or performance release.
+Full matrix, human U05, global population and prior limits remain. No main merge/email.
+[Final evidence, source boundaries and retained failures](task-evidence/PCB/meter-chip-pinout-r1/README.md).
+Next PCB priority remains narrower primary/mixed-boundary packing; visible60
+preparation timing needs diagnosis before stronger performance claims.
+
+**Previous guarded route task:** **Private7 route coverage and 60-part compaction qualified**
 Repeated control groups protect moderate4/compact2 before cheap-score exploration;
 slot three retains roomy5 until that same policy has a validated route. The existing
 60-part seed-1022 now routes tight1: outline area falls12.42%, all60 parts/143 pads.

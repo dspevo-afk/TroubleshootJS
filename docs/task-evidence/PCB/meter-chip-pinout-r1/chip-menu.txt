@@ -1,0 +1,11 @@
+U1
+
+View schematic
+
+Switch off board power to modify this part.
+
+Lift lead INPUT
+Lift lead OUTPUT
+Lift lead RETURN
+Lift lead ENABLE
+Remove component

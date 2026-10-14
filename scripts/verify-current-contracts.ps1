@@ -481,6 +481,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'P01PhysicalPoseContractTest'; Marker = 'P01 physical pose contracts ' },
         @{ Name = 'P02ConductorContractTest'; Marker = 'P02 conductor contracts ' },
         @{ Name = 'U01ViewportContractTest'; Marker = 'U01 viewport contracts ' },
+        @{ Name = 'BenchInstrumentPresentationContractTest'; Marker = 'bench instrument presentation contracts ' },
         @{ Name = 'U02MeasurementContractTest'; Marker = 'U02 measurement contracts ' },
         @{ Name = 'U03ObservationContractTest'; Marker = 'U03 observation contracts ' },
         @{ Name = 'WorkbenchLiftedLeadAppearanceContractTest'; Marker = 'lifted lead appearance contracts ' },

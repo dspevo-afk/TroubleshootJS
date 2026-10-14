@@ -66,9 +66,12 @@
     if (!(rx > 0 && ry > 0 && c.scale > 0 && bounds.right > bounds.left && bounds.bottom > bounds.top)) return null;
     // The camera determines physical size. Viewport and drawer bounds clip
     // presentation only; they must never resize or relocate bench furniture.
-    var scale = c.scale * Math.min(rx, ry);
+    var cameraScale = c.scale * Math.min(rx, ry);
+    // Home is the board-relative case envelope; CSS uses a 252px-wide case.
+    // The same physical envelope participates in GWT bench fitting and drag mapping.
+    var scale = cameraScale * c.home.width / 252;
     return { rect: r, rx: rx, ry: ry, bounds: bounds, scale: scale,
-      width: c.home.width * scale, height: c.home.height * scale };
+      width: c.home.width * cameraScale, height: c.home.height * cameraScale };
   }
   function toWorld(clientX, clientY, g) {
     var c = scene.view;

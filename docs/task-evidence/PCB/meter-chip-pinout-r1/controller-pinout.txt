@@ -1,0 +1,11 @@
+U2A — Pinout schematic
+
+
+Package top view. Match the pin arrangement; board orientation may differ.
+
+
+
+
+Pins: SENSOR, REFERENCE, RAIL, OUTPUT, RETURN
+
+Close schematic

@@ -1072,8 +1072,7 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
 
     // Furniture uses unmirrored bench coordinates, not the PCB face transform.
     Rectangle getMeterHome() {
-        Rectangle board = layout.getBoardOutline();
-        return new Rectangle(board.x - 284, board.y + Math.max(0, (board.height - 454) / 2), 252, 454);
+        return BenchInstrumentLayout.meterHome(layout.getBoardOutline());
     }
 
     private Rectangle getWorkbenchBounds() {

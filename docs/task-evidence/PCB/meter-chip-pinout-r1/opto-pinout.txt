@@ -1,0 +1,11 @@
+UFB — Pinout schematic
+
+
+Package top view. Match the pin arrangement; board orientation may differ.
+
+
+
+
+Pins: A, K, C, E
+
+Close schematic

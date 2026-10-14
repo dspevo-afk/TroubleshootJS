@@ -1,0 +1,123 @@
+{
+  "status": "PASS_BOUNDED_UI_WITH_RETAINED_60_TIMING_FAILURES",
+  "base": "32451a07a2019b30f3546ea8d8c9d382e2d222d5",
+  "candidate": "Enclosing commit",
+  "branch": "codex/q60-faulted-profile-counts",
+  "buildStrongName": "6755B76A35351ABD8A3FE495094B8DB5",
+  "nativeAssertions": {
+    "presentation": 59,
+    "viewport": 1277,
+    "labels": 273
+  },
+  "jdk": "Temurin8u502-b07",
+  "gwt": "2.7.0",
+  "permutations": 5,
+  "compileSeconds": 108.283,
+  "linkSeconds": 1.526,
+  "nodeSyntax": "PASS",
+  "productionInputsUnchangedAcrossChecks": true,
+  "priorElectricalGenerationMutationInputsUnchanged": true,
+  "changedExistingJavaOwners": [
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java"
+  ],
+  "visible44": {
+    "status": "PASS",
+    "seed": "-1004",
+    "parts": 44,
+    "coldMillis": 51143,
+    "wallMillis": 190348,
+    "retainedMillis": 139205,
+    "holdMillis": 360000,
+    "customerRetest": true,
+    "cleanupFlags": [
+      "ownerRestored",
+      "candidateDisposed",
+      "temporaryMeterClean",
+      "debugRestored",
+      "coordinatorReleased",
+      "playerSessionReleased",
+      "playerBridgeReleased"
+    ]
+  },
+  "visible60": {
+    "status": "FAIL",
+    "cause": "Existing 90-second cold-generation deadline in HYPOTHESES; causal attribution not proven",
+    "attempts": [
+      90001,
+      90267
+    ],
+    "thirdUnchangedRetry": "NOT_RUN",
+    "candidate": "Pre-loose-menu compiled candidate CB170; final6755 cold60 NOT_RUN"
+  },
+  "initialHidden60": {
+    "cold": "PASS",
+    "generationMillis": 73814,
+    "renderedDimensionsOnly": {
+      "width": 265.6979064941406,
+      "height": 478.677978515625
+    },
+    "closure": "FAIL_UNREPAIRED",
+    "cleanup": "PASS"
+  },
+  "captureFailures": [
+    "Hidden chat: screenshots timed out; compositor-independent capture returned black",
+    "DOM canvas export unavailable",
+    "Edge unavailable",
+    "Current chat browser was queued; user opened it, then captures worked",
+    "Final page navigation resized to1634x1301; body-menu locator timed out, actual viewport inspected and1440x900 reapplied",
+    "Observation helper retained retired tab4; rebound to current tab5",
+    "Responsive resize closed view popup; reopened after inspection",
+    "Relay context menu retired during detachment-readiness refresh; used normal Component panel and verified acquisition count"
+  ],
+  "review": "Root integrated source, independent receipt reader and five actual images; no agent review",
+  "limitations": [
+    "No normal RB56/HARD release",
+    "Full native/global population NOT_RUN",
+    "Human U05 NOT_RUN",
+    "Modest-host proof remains owner-deferred",
+    "60 visible cold-generation timing remains unresolved",
+    "No CDP-wrapper certification or manufacturing-size claim"
+  ],
+  "images": {
+    "chip-pinout.jpg": "6bbd341466b5f9ff7a67ad69de86545d2b98f6b892ba4d46bfc39ffc1617fd55",
+    "large-board-fit.jpg": "5ace9c0a62c4527f9739d391c1392f8cd9ec2bfa2b2c2a72e15ffd42077e59bd",
+    "loose-chip-pinout.jpg": "38de36636dd41540b6bf9a7f868367bc72486e3a062f4a40764bad19a40e3799",
+    "repaired-customer-retest.jpg": "530dc99a82ed4ff00a4adac252347c93e13b497b58b5f09c43723c7b3ad807e0",
+    "small-board-fit.jpg": "669e99c3b7a6bd70c94095b164b5033554466770d350b6cd4e8612d4565ad263"
+  },
+  "imageDimensions": {
+    "chip-pinout.jpg": [
+      1440,
+      900
+    ],
+    "large-board-fit.jpg": [
+      1440,
+      900
+    ],
+    "loose-chip-pinout.jpg": [
+      1440,
+      900
+    ],
+    "repaired-customer-retest.jpg": [
+      1440,
+      900
+    ],
+    "small-board-fit.jpg": [
+      666,
+      670
+    ]
+  },
+  "auditCorrection": "Initial50KB heuristic failed on actual666x670 JPEG49121bytes; subsequent PNG assumption failed because API returns JPEG. Files renamed .jpg without pixel edits; actual JPEG decoding, exact dimensions and nonblank pixels verified. Production assertions unchanged.",
+  "preLooseMenuBuildStrongName": "CB170C8508695225819D6CED4574A2F2",
+  "finalPinoutInspection": {
+    "individualChecks": "PASS_INSTALLED_AND_LOOSE_WITH_REGULATOR_REINSTALL_AND_5V",
+    "rawSession": "FAIL_HOLD_EXPIRY_BEFORE_CUSTOMER_RETEST",
+    "receipt": "browser-final-build-pinout-hold-expiry.json",
+    "generationMillis": 43554,
+    "wallMillis": 403876,
+    "retainedMillis": 360322,
+    "cleanup": "PASS"
+  }
+}
