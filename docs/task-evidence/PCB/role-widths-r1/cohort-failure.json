@@ -1,0 +1,13 @@
+{
+  "status": "FAIL_RETAINED",
+  "phase": "current12 six-representative generation",
+  "terminalExitCode": 1,
+  "elapsedIncludingCleanupSeconds": 44.4831577,
+  "cleanup": "PASS",
+  "firstCase": "root-1017 PASS area4485025 vs4529785 accepted11, width2941 height1525, copper26830 vs26750, vias29 vs28",
+  "failure": "root-1004 RAIL5/C5 endpoint escape: width11 route segment1270,1300->1270,1840 intersects courtyard1255,1810,80,90",
+  "hypothesis": "Validator uses an extra discrete boundary coordinate in its width11 escape envelope; actual router and rectangle stroke interval being audited independently",
+  "fixStatus": "IN_PROGRESS_NOT_ACCEPTED",
+  "subsequentSuites": "NOT_RUN; first cohort abort preserved",
+  "limits": "UNCHANGED"
+}

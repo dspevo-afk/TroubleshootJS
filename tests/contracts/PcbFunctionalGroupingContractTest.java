@@ -7,7 +7,7 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=11;
+    private static final int MEASURED_VERSION=12;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     // Independent accepted6 receipts, frozen before guarded route selection.
@@ -15,6 +15,7 @@ public final class PcbFunctionalGroupingContractTest {
     private static final long[] SAVED7_AREA={5122184,4622400,7395541,4679776,7708262,6371585};
     private static final long[] SAVED8_AREA={4529785,4466664,6943752,4679776,5814368,6211431};
     private static final long[] SAVED9_AREA={4529785,4466664,6943752,4358809,5814368,6211431};
+    private static final long[] SAVED11_AREA={4529785,4466664,6943752,4358809,5814368,6036952};
     private static final String[] SAVED8_GEOMETRY_SHA256={
         "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
         "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
@@ -57,7 +58,18 @@ public final class PcbFunctionalGroupingContractTest {
     };
     private static int checks;
     public static void main(String[] args) {
-        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,MEASURED_VERSION);
+        verifySavedUniformProfiles();
+        int failedCases=0;
+        for(int index=0;index<ROOTS.length;index++) {
+            try { measure(ROOTS[index],index,MEASURED_VERSION); }
+            catch(AssertionError failure) {
+                failedCases++;
+                System.out.println("PCB_GROUPING_CASE_FAILURE seed="+ROOTS[index]+" version="+
+                    MEASURED_VERSION+" message="+failure.getMessage());
+                failure.printStackTrace(System.out);
+            }
+        }
+        if(failedCases>0)throw new AssertionError("representative acceptance failures="+failedCases);
         System.out.println("PASS: PCB functional grouping contracts roots="+ROOTS.length+" assertions="+checks);
     }
     /** Separate existing 60-second JVM bound for the six compatibility cases. */
@@ -93,6 +105,89 @@ public final class PcbFunctionalGroupingContractTest {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,9);
         System.out.println("PASS: saved placement9 geometry contracts roots=6 assertions="+checks);
     }
+    static int verifyRoleWidthHoldouts() {
+        int firstCheck=checks;
+        long[] seeds={1L,7L,5L,14L};
+        long[] accepted11Areas={4615974,6587808,9445744,8585034};
+        for(int index=0;index<seeds.length;index++) {
+            long seed=seeds[index];
+            Rb56Plan plan=Rb56Plan.resolve(seed,12);
+            TroubleshootBoard board=plan.board();
+            MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
+                .generateWithPolicyResult(board,plan.layoutSeed,plan.routingSeed);
+            check(result.accepted(),"private12 role-width holdout route accepted: "+seed+
+                " "+result.toCanonical());
+            PcbBoardLayout layout=result.getLayout();
+            GeneratedPhysicalAdmission admission=MediumBoardNormalAdmission.fromAcceptedRb56Route(
+                board,result,plan.layoutSeed,plan.routingSeed);
+            admission.requireConstruction(board,layout);
+            layout.validateGeometry(board);layout.validateRoutingGeometry(board);layout.validateRouteQuality();
+            new PcbTwoLayerRules(board,layout).validate(layout);
+            PcbTraceClearance.validate(layout.getTraces());
+            PcbPlacementConstraints constraints=board.getPlacementConstraints();
+            check(constraints.requiresTwoLayerRouting,"holdout retains P07 two-layer admission: "+seed);
+            check(constraints.placementDensityVersion==11,"role-width placement retains density11: "+seed);
+            check(layout.getComponents().size()==board.getComponentIds().size(),
+                "holdout retains every source component: "+seed);
+            TreeSet<String> componentIds=new TreeSet<String>();
+            for(PcbComponentPlacement part:layout.getComponents())
+                check(componentIds.add(part.getComponentId()),"holdout component identity is unique: "+seed);
+            check(componentIds.equals(new TreeSet<String>(board.getComponentIds())),
+                "holdout component inventory is exact: "+seed);
+            check(layout.getPads().size()==board.getPadIds().size(),
+                "holdout retains every source pad: "+seed);
+            TreeSet<String> padIds=new TreeSet<String>();
+            for(PcbPadPlacement pad:layout.getPads())
+                check(padIds.add(pad.getPadId()),"holdout physical pad identity is unique: "+seed);
+            check(padIds.equals(new TreeSet<String>(board.getPadIds())),
+                "holdout physical pad inventory is exact: "+seed);
+            verifyRoleTraceWidths(board,layout);
+            Rectangle outline=layout.getBoardOutline();
+            long area=(long)outline.width*outline.height;
+            check(area*100L<=accepted11Areas[index]*101L,
+                "private12 holdout outline is within 101% of accepted11: "+seed+
+                " area="+area+" baseline="+accepted11Areas[index]);
+            MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
+            check(stats.placementCandidates==6&&stats.oneFaceAttempts<=3&&stats.twoLayerAttempts<=3,
+                "holdout preserves the existing placement and routing caps: "+seed);
+            long copperLength=0;
+            int segments=0,vias=0;
+            for(PcbTraceGeometry trace:layout.getTraces()) {
+                int[] x=trace.getXPoints(),y=trace.getYPoints();
+                for(int i=1;i<x.length;i++) {
+                    copperLength+=Math.abs((long)x[i]-x[i-1])+Math.abs((long)y[i]-y[i-1]);
+                    segments++;
+                }
+            }
+            for(PcbBoardHole hole:layout.getHoles()) if(hole.kind==PcbBoardHole.Kind.VIA)vias++;
+            System.out.println("PCB_ROLE_WIDTH_HOLDOUT_ROUTE seed="+seed+" "+result.toCanonical());
+            reportWhitespace(board,layout,seed,12);
+            System.out.println("PCB_ROLE_WIDTH_HOLDOUT {\"seed\":\""+seed+"\",\"area\":"+area+
+                ",\"accepted11Area\":"+accepted11Areas[index]+",\"copperLength\":"+copperLength+
+                ",\"segments\":"+segments+",\"vias\":"+vias+",\"geometrySha256\":\""+
+                PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
+        }
+        return checks-firstCheck;
+    }
+
+    private static void verifySavedUniformProfiles() {
+        for(int version=1;version<=11;version++) {
+            PcbPlacementConstraints constraints=Rb56Plan.resolve(ROOTS[0],version).board()
+                .getPlacementConstraints();
+            PcbTraceWidthProfile profile=constraints.getTraceWidthProfile();
+            check(profile==PcbTraceWidthProfile.UNIFORM&&profile.isLegacyUniform()&&
+                "UNIFORM_TRACE@1".equals(profile.getIdentity())&&profile.maximumWidth()==9,
+                "saved RB56 placement version retains uniform9 profile: "+version);
+        }
+    }
+
+    static void verifySavedUniformTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+        PcbTraceWidthProfile profile=board.getPlacementConstraints().getTraceWidthProfile();
+        check(profile==PcbTraceWidthProfile.UNIFORM&&profile.maximumWidth()==9,
+            "saved placement keeps the uniform9 trace profile");
+        for(PcbTraceGeometry trace:layout.getTraces())
+            check(trace.getWidth()==9,"saved placement trace remains width9: "+trace.getNetId());
+    }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
         TroubleshootBoard board=plan.board();
@@ -105,6 +200,7 @@ public final class PcbFunctionalGroupingContractTest {
         GeneratedPhysicalAdmission admission=MediumBoardNormalAdmission.fromAcceptedRb56Route(
             board,result,plan.layoutSeed,plan.routingSeed);
         admission.requireConstruction(board,layout);
+        if(version<=11) verifySavedUniformTraceWidths(board,layout);
         check(board.getComponentIds().size()==PART_COUNTS[index],"literal representative part census");
         check(board.getPadIds().size()==PAD_COUNTS[index],"literal representative pad census");
         check(board.getPlacementConstraints().requiresTwoLayerRouting,"RB56 current placement requires P07");
@@ -167,9 +263,14 @@ public final class PcbFunctionalGroupingContractTest {
         if(version==3) check(SAVED3_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
             "published saved3 geometry remains byte-exact: "+seed);
-        if(version>=4) reportWhitespace(board,layout,seed,version);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
+        if(version==12)System.out.println("PCB_ROLE_WIDTH_MEASUREMENT {\"seed\":\""+seed+
+            "\",\"version\":12,\"area\":"+((long)outline.width*outline.height)+
+            ",\"copperLength\":"+copperLength+",\"segments\":"+segments+
+            ",\"vias\":"+layout.getHoles().size()+",\"geometrySha256\":\""+
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
         if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
+        if(version>=4) reportWhitespace(board,layout,seed,version);
         if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved6 geometry stays byte-exact: "+seed);
         if(version==7) {
@@ -206,6 +307,15 @@ public final class PcbFunctionalGroupingContractTest {
             else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
                 SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
                 "other representative layouts remain exact accepted10: "+seed);
+        }
+        if(version==12) {
+            long area=(long)outline.width*outline.height;
+            check(board.getPlacementConstraints().placementDensityVersion==11,
+                "private12 role widths retain accepted11 packing density: "+seed);
+            check(area*100L<=SAVED11_AREA[index]*101L,
+                "private12 representative outline is within 101% of accepted11: "+seed+
+                " area="+area+" baseline="+SAVED11_AREA[index]);
+            verifyRoleTraceWidths(board,layout);
         }
         if(version>=8) {
             long area=(long)outline.width*outline.height;
@@ -249,16 +359,18 @@ public final class PcbFunctionalGroupingContractTest {
             mark(blocked,cols,rows,outline,envelope,step);
         }
         int packageOccupied=0;for(boolean cell:blocked)if(cell)packageOccupied++;
-        int guard=PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
+        PcbTraceWidthProfile profile=board.getPlacementConstraints().getTraceWidthProfile();
         for(PcbTraceGeometry trace:layout.getTraces()) {
+            int guard=PcbTraceRules.clearance(trace.getWidth(),profile.maximumWidth());
             int[] x=trace.getXPoints(),y=trace.getYPoints();
             for(int i=1;i<x.length;i++)mark(blocked,cols,rows,outline,new Rectangle(
                 Math.min(x[i-1],x[i])-guard,Math.min(y[i-1],y[i])-guard,
                 Math.abs(x[i]-x[i-1])+guard*2,Math.abs(y[i]-y[i-1])+guard*2),step);
         }
+        int holeGuard=PcbTraceRules.clearance(profile.maximumWidth(),profile.maximumWidth());
         for(PcbBoardHole hole:layout.getHoles()) {
             Rectangle r=hole.getBounds();mark(blocked,cols,rows,outline,
-                new Rectangle(r.x-guard,r.y-guard,r.width+guard*2,r.height+guard*2),step);
+                new Rectangle(r.x-holeGuard,r.y-holeGuard,r.width+holeGuard*2,r.height+holeGuard*2),step);
         }
         for(PcbSilkscreenLabel label:layout.getSilkscreenLabels())
             mark(blocked,cols,rows,outline,label.getBounds(),step);
@@ -318,6 +430,32 @@ public final class PcbFunctionalGroupingContractTest {
         int x0=Math.max(0,(r.x-outline.x)/step),y0=Math.max(0,(r.y-outline.y)/step);
         int x1=Math.min(cols-1,(r.x+r.width-outline.x+step-1)/step),y1=Math.min(rows-1,(r.y+r.height-outline.y+step-1)/step);
         for(int y=y0;y<=y1;y++)for(int x=x0;x<=x1;x++)blocked[y*cols+x]=true;
+    }
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+        PcbTraceWidthProfile profile=board.getPlacementConstraints().getTraceWidthProfile();
+        check("ROLE_TRACE@1".equals(profile.getIdentity()),"current route identifies ROLE_TRACE@1");
+        check(profile.maximumWidth()==13,"ROLE_TRACE maximum drawing width is13");
+        for(BoardNet.RoutingRole role:BoardNet.RoutingRole.values())
+            check(profile.widthFor(role)==literalRoleWidth(role),
+                "profile uses literal width for role "+role);
+        for(PcbTraceGeometry trace:layout.getTraces()) {
+            BoardNet net=board.getNet(trace.getNetId());
+            BoardNet.RoutingRole role=net.getRoutingRole();
+            int expected=literalRoleWidth(role);
+            check(profile.widthFor(role)==expected,"profile width agrees with net role: "+role);
+            check(trace.getWidth()==expected,"actual routed width agrees with net role: "+
+                trace.getNetId()+"/"+role+" expected="+expected+" actual="+trace.getWidth());
+        }
+    }
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+        switch(role) {
+        case HIGH_CURRENT:return 13;
+        case SUPPLY:
+        case RETURN:return 11;
+        case CONTROL:
+        case SIGNAL:return 9;
+        default:throw new AssertionError("Unexpected PCB routing role: "+role);
+        }
     }
     private static void check(boolean value,String message){checks++;if(!value)throw new AssertionError(message);}
 }

@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "actualGeometry": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+      "area": 4529785,
+      "seed": "-1017",
+      "expectedGeometry": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+      "pass": true
+    },
+    {
+      "actualGeometry": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+      "area": 4466664,
+      "seed": "-1004",
+      "expectedGeometry": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+      "pass": true
+    },
+    {
+      "actualGeometry": "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
+      "area": 6943752,
+      "seed": "-1022",
+      "expectedGeometry": "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
+      "pass": true
+    },
+    {
+      "actualGeometry": "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
+      "area": 4358809,
+      "seed": "0",
+      "expectedGeometry": "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
+      "pass": true
+    },
+    {
+      "actualGeometry": "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
+      "area": 5814368,
+      "seed": "17",
+      "expectedGeometry": "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
+      "pass": true
+    },
+    {
+      "actualGeometry": "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f",
+      "area": 6036952,
+      "seed": "42",
+      "expectedGeometry": "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f",
+      "pass": true
+    },
+    {
+      "actualGeometry": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+      "area": 4615974,
+      "seed": "1",
+      "expectedGeometry": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+      "pass": true
+    },
+    {
+      "actualGeometry": "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
+      "area": 6397152,
+      "seed": "7",
+      "expectedGeometry": "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
+      "pass": true
+    },
+    {
+      "actualGeometry": "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
+      "area": 9445744,
+      "seed": "5",
+      "expectedGeometry": "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
+      "pass": true
+    },
+    {
+      "actualGeometry": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+      "area": 7347009,
+      "seed": "14",
+      "expectedGeometry": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+      "pass": true
+    }
+  ],
+  "scope": "Fresh final42 ten current12 geometry hashes/areas exactly match accepted-for-cohort nearest-branch candidate; not a substitute for runtime persistence proof"
+}

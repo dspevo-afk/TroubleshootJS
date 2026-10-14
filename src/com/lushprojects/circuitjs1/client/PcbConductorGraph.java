@@ -43,18 +43,28 @@ final class PcbConductorGraph {
         final String id, first, second, netId;
         final Kind kind;
         private final List<String> sources;
+        private final int width;
         Edge(String id, String first, String second, String net, Kind kind, Iterable<String> provenance) {
+            this(id,first,second,net,kind,provenance,PcbTraceRules.TRACE_WIDTH);
+        }
+        Edge(String id, String first, String second, String net, Kind kind,
+                Iterable<String> provenance, int width) {
             this.id = requireId(id); this.first = requireId(first);
             this.second = requireId(second); this.netId = requireId(net);
             if (first.equals(second) || kind == null || provenance == null)
                 throw new IllegalArgumentException("Invalid conductor edge");
+            if (kind == Kind.TRACE) PcbTraceRules.requireWidth(width);
+            else if (width != PcbTraceRules.TRACE_WIDTH)
+                throw new IllegalArgumentException("Non-trace copper cannot declare a trace width");
             this.kind = kind;
+            this.width = width;
             TreeSet<String> copy = new TreeSet<String>();
             for (String source : provenance) copy.add(requireId(source));
             if (copy.isEmpty()) throw new IllegalArgumentException("Missing copper provenance");
             sources = Collections.unmodifiableList(new ArrayList<String>(copy));
         }
         List<String> getSources() { return sources; }
+        int getWidth() { return width; }
     }
 
     static final class Surface {
@@ -118,7 +128,8 @@ final class PcbConductorGraph {
                 Junction a = js.get(edge.first), b = js.get(edge.second);
                 if (edge.kind != Kind.TRACE || s.padId != null ||
                         (!edge.first.equals(s.junctionId) && !edge.second.equals(s.junctionId)) ||
-                        !s.bounds.equals(PcbConductorBuilder.stroke(a.x,a.y,b.x,b.y)))
+                        !s.bounds.equals(PcbConductorBuilder.stroke(a.x,a.y,b.x,b.y,
+                            edge.getWidth())))
                     throw new IllegalArgumentException("Surface does not match its physical copper edge");
             }
             if (s.padId != null && !s.junctionId.equals(padFaces.get(faceKey(s.padId,s.layer))))
@@ -141,7 +152,10 @@ final class PcbConductorGraph {
             .append(j.layer).append(':').append(j.x).append(',').append(j.y).append('\n');
         for (Edge e : es.values()) {
             out.append("E").append(field(e.id)).append(field(e.first)).append(field(e.second))
-                .append(field(e.netId)).append(e.kind).append(':');
+                .append(field(e.netId)).append(e.kind);
+            if (e.getWidth() != PcbTraceRules.TRACE_WIDTH)
+                out.append('W').append(e.getWidth());
+            out.append(':');
             for (String source : e.sources) out.append(field(source));
             out.append('\n');
         }

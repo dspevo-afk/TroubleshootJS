@@ -1,0 +1,11 @@
+{
+  "processId": 9984,
+  "state": ".tools/preview/state.json",
+  "creationTicks": "639275688861232163",
+  "creationUtc": "2026-10-14T10:01:26.1232163Z",
+  "profile": "task-owned localhost production preview",
+  "status": "OWNED_LAUNCHED",
+  "executable": "powershell.exe",
+  "port": 8899,
+  "script": "scripts/preview.ps1"
+}

@@ -5744,3 +5744,43 @@ removes overview-pixel ambiguity from admission without inventing probe access.
 Final native21/GWT five and real narrow54 plus saved10 restoration/customer retest/
 closure pass. Finite evidence does not release population/performance gates.
 [Accepted evidence and retained failures](task-evidence/PCB/pocket-packing-r1/README.md).
+
+## Private12 role-specific physical copper widths
+
+`PcbTraceWidthProfile` owns finite drawing-space profiles. Private interpretation12
+selects `ROLE_TRACE@1`: HIGH_CURRENT13, SUPPLY/RETURN11, CONTROL/SIGNAL9. Placement
+density remains11. Existing constructors and saved interpretations1–11 select
+uniform9; their implicit-width canonical records remain unchanged. The private12
+replay prefix and explicit profile canonical enter dependency identity before
+cache/proof reconstruction. Publicalpha5/sessionmodel1/epoch16 are unchanged;
+the qualified public single-face envelope rejects a nonlegacy profile.
+
+`Rb56Placement` owns the interpretation-to-density and width-profile mapping.
+Replay owner matching uses both fields along with family and exact seed: private12
+uses density11 with role widths, while saved11 uses density11 with uniform widths.
+Packing density alone cannot identify a saved owner. Capture and restoration keep
+their current-owner, cold-proof, physical-admission and realization checks.
+
+`PcbTraceGeometry` carries an immutable width through path normalization and
+compaction. Layout validation requires the width declared for that net's role.
+Routing, courtyard escapes, access reservations, clearance, crop and silkscreen
+placement consume actual stroke geometry. Trace pairs retain their six-unit edge
+gap; via clearance and actual foreign-pad closed contact remain separate rules.
+The maximum pair clearance19 fits the existing10-unit routing grid/one-cell halo.
+
+The conductor builder carries width into trace edges and exact probe surfaces.
+`PcbCopperViewCache`, the workbench renderer and SVG backend consume those edges;
+cuts/restores change current availability while preserving the original graph.
+Physical and graph fingerprints distinguish nondefault widths. Valid generated
+nets have one width; this does not promise arbitrary mixed-width taper unions.
+Widths do not add ampacity, material resistance or manufacturing dimensions.
+CircuitJS remains electrical truth with its existing ideal-copper model.
+
+Only ROLE routing uses the relaxed-plane turn lower bound, active failed-net
+promotion into the next existing P07 ordering, and nearest-to-reached branches
+on all three orderings. The helper reuses four directional arrays plus an axial
+minimum and one construction scratch array. Uniform routing keeps its prior
+decisions. Candidate, branch, shared-expansion and host budgets are unchanged.
+Qualification and retained trial failures are tracked separately in the
+[current evidence packet](task-evidence/PCB/role-widths-r1/README.md); implementation
+ownership alone is not a normal advanced, performance or manufacturing release.

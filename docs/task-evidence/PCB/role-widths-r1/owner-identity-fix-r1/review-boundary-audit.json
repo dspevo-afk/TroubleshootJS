@@ -1,0 +1,26 @@
+{
+  "changes": [
+    {
+      "after": "d962f975e5dbe020e188263366c7c75598326d02762264268ef999a578a71180",
+      "before": "d3addd2d35b7898f7eaedd127b3ae6c5d86cc1e78bc96d67e486e4e51a5091d2",
+      "path": "scripts/verify-current-contracts.ps1"
+    },
+    {
+      "after": "4e4ba9e100d4a9473b816601038cf1791a0b5536efba22f79251cc2a49a7889f",
+      "before": "0d1e6ade72d0cf6dc945f4c2f08afceb5768a83d7eb3d48d5f0db372f30f52f5",
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java"
+    },
+    {
+      "after": "678ad0c6e25ade1f2cca761ac729dfa5b5cc0de75365686a5d2c5cb00b47f24d",
+      "before": "39556a1da24b6ef1a95c81bbd4df1253c7368bdaa2cb1f7d473d9aaf07a4f62d",
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java"
+    },
+    {
+      "after": "c44ef63d789115310bcd4718f26389f2f1776dc5870c6bf492527cabcac9849f",
+      "before": null,
+      "path": "tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java"
+    }
+  ],
+  "scope": "Consumed source/test/script/GWT jar inputs from passing final41r2 to fresh final42 freeze. Router/width geometry implementation and its independent reviewer scope unchanged; new owner matching/mapping/test/registry separately reviewed. No screenshot or persistence acceptance reused.",
+  "status": "AUDITED"
+}

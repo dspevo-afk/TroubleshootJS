@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "inventoryChanges": [],
+  "inputAudit": "PASS",
+  "changedPaths": [],
+  "elapsedIncludingCleanupSeconds": 451.9421698,
+  "cleanupDuration": "NOT_MEASURED separately; maintained cleanup result in log and actual terminal observed",
+  "utc": "2026-10-14T09:59:04.2259989Z"
+}

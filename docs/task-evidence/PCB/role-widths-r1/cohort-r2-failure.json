@@ -1,0 +1,10 @@
+{
+  "status": "FAILED_CANDIDATE_NOT_ACCEPTED",
+  "phase": "post-exact-escape current12 cohort",
+  "terminalExitCode": 1,
+  "elapsedIncludingCleanupSeconds": 51.0713276,
+  "cleanup": "PASS",
+  "result": "-1017 and-1004 pass physical+size; -1022 admitted but8443994 area exceeds101% of6943752; latercases notrun in aborting cohort",
+  "followup": "assessment-native.txt evaluates allsix independently and retains two FAILs, fourPASS; laterfresh gates mustqualifychangedsource",
+  "policy": "No oracle/limit changes"
+}

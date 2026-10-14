@@ -1,0 +1,12 @@
+{
+  "status": "PREDECLARED_CANARY_NOT_IMPLEMENTED",
+  "utc": "2026-10-14T08:58:05.8368103Z",
+  "evidence": "search-diagnostic-r2-native.txt actual1mexpansions/0reopens but wrapperFAIL missingprefix; r3 reruns correctcompletionprotocol before anysourcechange",
+  "trigger": "Broad real frontiers; pass0 388781expansions endsFB_ACquality;pass1 512757 endsOUT_Bbranchlimit;pass2 98462endsB_CMDtotallimit",
+  "scope": "ROLE-only P07 turn-aware admissible estimate; retain legacyUNIFORM heuristic exactly",
+  "formula": "d==0?0:min(d+35,s), unionofeitherfacegoals; s forwardray distanceoranyaxialrayfordirection4",
+  "implementation": "Four bounded linear grid scans with observer checks; immutable per-branch rays, no extra route candidates or expansions; samegrid10/turn35/via>=60/secondary>=0",
+  "hardLimits": "P071000000total/100000branch/3orderings; unchanged candidatechain/3attempts, physical checks,10case101%area bounds and root42void, native60s and browserbudgets",
+  "validation": "Independent directed Dijkstra admissibility and edge consistency onsmall2facegrids, multiplegoals/turns/reversals/vias/obstacles/translation; focusedwidth/twoface/slicedparity, sixcurrent/fourheld and exactsavedguards; finalnative/GWT/actualUIifallpass",
+  "acceptance": "NOT_ACCEPTED; retainfailureifcap/area/void remainsviolated"
+}

@@ -1047,7 +1047,7 @@ final class PcbPlacementPlanner {
             }
         }
         if(!hasGlobalCorridors(constraints,null,placed,-1,true))throw new Rejected("DOMAIN_CORRIDOR");
-        PcbAccessPlanner.validate(outline,placed);
+        PcbAccessPlanner.validate(outline,placed,constraints.getTraceWidthProfile().maximumWidth());
     }
     /**
      * Calculates an unplaced component origin from already placed neighbors.

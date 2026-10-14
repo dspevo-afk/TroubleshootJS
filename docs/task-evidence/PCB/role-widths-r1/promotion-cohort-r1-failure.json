@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_RETAINED",
+  "terminalExitCode": 1,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 61.9363108,
+  "inputAudit": "PASS promotion-r1-inputs unchanged",
+  "scope": "ROLE failed-netpromotion plusexactrelaxedturnbound",
+  "representatives": "FivePASS; root42stillarea6371585/void591500; two-turn-1022areaimprovementretained",
+  "diagnostic": "678481expansions, actualpromotedREF_SHAREDthenOUT_B, membershipexact, blocking-vs1unitparityPASS; B_CMDlastpassbranchcap",
+  "next": "Read actual per-face endpoint step masks on failed branches before anyadditionalroutingpolicychange",
+  "holdoutsForThisCanary": "NOT_RUN after representativeFAIL"
+}

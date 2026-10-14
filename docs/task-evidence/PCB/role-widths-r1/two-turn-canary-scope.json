@@ -1,0 +1,12 @@
+{
+  "status": "PREDECLARED_CANARY_NOT_IMPLEMENTED",
+  "utc": "2026-10-14T09:09:47.6748286Z",
+  "base": "turn-bound-r1-inputs.json and retained turn-bound-r1-source.patch",
+  "trigger": "One-turn oracle7690PASS, zero reopens anddiagnosed751880 expansions; currentroot42stillfailsarea6524231/void644000",
+  "scope": "ROLE-only exact relaxed open-plane direction estimate, maximumtwo35-unitturns; legacyuniformdecisions/costs/capsunchanged",
+  "formula": "cardinal min(d+70,Dforward+35,axisMin+35,currentRay), zeroatgoal;dir4 min(d+35,axisMin); allusebothfacegoalunion",
+  "implementation": "Fourexistingrayarrays reusedasdirectionbounds; onepersistentaxisMin andonetemporaryrowMin array; strictnextcol/rowforwardrecurrences viafouradditionallinear scans. Fivepersistentarrays/onescratchatpeak vsfourprevious; observerchecksretainboundedlatency",
+  "proof": "support_pair_audit read-onlyproof: exactrelaxedplane+virtualdirectionreset35<=actualvia60/160; admissibleandconsistent withobstacles/nonnegativecosts/face-specificgoals. No routeexistenceclaim",
+  "validation": "ExistingindependentDijkstrastate/edgeoracles unchanged plusbehind-diagonal literal110; fullfocused/current6/held4/exactsavedguards and finalnative41/GWT/realUIifallpass. ExtraCPU/allocationsmustfitexistinghostbudgets; noheadroomassumption",
+  "acceptance": "NOT_ACCEPTED; no area/void/work/timeoracle orcandidate relaxation"
+}

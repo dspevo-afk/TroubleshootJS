@@ -39,7 +39,7 @@ final class SvgWorkbenchCanaryBackend implements WorkbenchRenderBackend {
             PcbConductorGraph.Edge e=scene.copper.getGraph().getEdges().get(s.edgeId);
             PcbConductorGraph.Junction a=scene.copper.getGraph().getJunctions().get(e.first),b=scene.copper.getGraph().getJunctions().get(e.second);
             Point p=project(a.x,a.y,true),q=project(b.x,b.y,true);
-            svg.append("<path fill='none' stroke='#6e987e' stroke-width='").append(Math.max(1,scale*PcbTraceRules.TRACE_WIDTH))
+            svg.append("<path fill='none' stroke='#6e987e' stroke-width='").append(Math.max(1,scale*e.getWidth()))
                 .append("' d='M").append(p.x).append(' ').append(p.y).append('L').append(q.x).append(' ').append(q.y).append("'/>");
         }
         for(WorkbenchPhysicalScene.Part p:scene.parts) {

@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-14T10:22:08.8232007Z",
+  "changedPaths": [],
+  "elapsedIncludingCleanupSeconds": 455.8079942,
+  "status": "PASS",
+  "inputAudit": "PASS",
+  "inventoryChanges": [],
+  "cleanupDuration": "NOT_MEASURED separately; maintained wrapper returned"
+}

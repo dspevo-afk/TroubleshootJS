@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-14T10:32:23.8652677Z",
+  "scope": "Exact task download only; reparse/ticks/length/SHA revalidated; byte-exact evidence copy retained",
+  "remainingOriginalDownload": false,
+  "sha256": "84e7c24e4f090c6f9900176fc7d28986a265d3ba8a56e56b74426de13815ac9a"
+}

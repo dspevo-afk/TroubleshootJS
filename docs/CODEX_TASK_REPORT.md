@@ -1,4 +1,52 @@
-# Current checkpoint: capture timing clarified; cache deferred; realism goal active
+# Current checkpoint: private12 accepted; publication being finalized; goal active
+
+2026-10-14. Base HEAD68ae9284360e379ca1e31cf10690e11d9b26280d, prior normal push
+verified. Private12 candidate accepted; intended source/docs/evidence commit and
+normal origin/codex/q60-faulted-profile-counts push are next. No main merge/email.
+User's PCB realism goal stays active until9amAmerica/New_York. Preserve the five
+original untracked entries and unrelated Desktop edits. Shared JDK8/Python stay.
+No owned preview, native/build process, browser tab, viewport override or download
+remains. Both previews/PIDs9984 and61480/port8899 positively cleaned.
+
+Packet PCB/role-widths-r1. ROLE_TRACE@1 widths13 HIGH_CURRENT,11 SUPPLY/RETURN,
+9 CONTROL/SIGNAL; density11. Saved1–11 uniform9 exact; alpha5/model1/epoch16 stay.
+CircuitJS ideal copper unchanged. Actual-width geometry/copper/probes/render and
+bounded ROLE-only P07 refinements integrated. Six reps/four untuned: eight areas
+exact11;7 -2.89% withCu+9.63%;14 -14.42% withCu-5.32%.54/root42 area6036952 and
+protected void225500 exact11, Cu45970→43440 (-5.50%). Free raster is not packability.
+
+Final-source freeze owner-identity-fix-r1/final-inputs.json. Native42 PASS455.8079942s;
+actual JDK8/GWT five PASS89.644611s. Actual terminal exits/cleanup and final consumed
+input hash/inventory audits PASS. All ten current geometry hashes/areas rechecked
+exact, saved literal guards retained. Independent turn-bound Dijkstra7692 and
+sliced/blocking parity; root integration review and scoped routing/identity reviews
+found no unresolved actionable issue. Selected42 is not the full registry/matrix.
+
+Final build45D6A87A67298947F828898A0C966703, source420b49dc6d32a956aec7c3154ea1aaa11cc791eb69b236fc18cd1550d29f4c31.
+Desktop1280 cold54 PASS72.359s/608, max unit1.471s; actual4.996V pad clicks, chip
+menu/public pinout/both faces, unrepaired FAIL, guarded Shop55 medium1k replacement
+for30/RDA/customerPASS. Actual Save12/FileReader12 PASS73.887s/608, fresh owner/
+prior retired, OFF and loose part preserved, retestPASS/ClosePASS396.099s/all7.
+Narrow319 cold PASS77.414s/608; actual committed saved11 FileReader80.034s/627,
+OFF/loosepart preserved, customerPASS/ClosePASS232.115s/all7. Five inspected unedited
+final-source images; all five provenance fields match; zero browser warnings/errors.
+Exact download ticks/length/SHA/reparse ownership checked before removal; raw copy
+retained. Final audit PASS; shared tools and unrelated data untouched.
+
+All earlier search/area/void/fixture/marker failures remain. Final41 attempt1 failed
+old held-HARD public fixture; corrected private qualification keeps all service
+checks/640 bound. First real Save12 failed density-versus-interpretation owner
+matching. New real11/12 owner fixture: initial null-overload compile failure retained,
+causal RED45.0062035s, focused4 GREEN46.4673921s. Shared density/profile mapping fixes
+both positive and cross-version checks. Fresh42/GWT/player proofs above supersede
+prior passes; no initial failed-save screenshot/proof reused. Timestamp/REPL/popup
+input corrections and cleanup boundaries are recorded, not hidden.
+
+Next: inspect/stage explicit intended paths, cached checks, commit, normal push and
+verify exact remote SHA. Then begin the bounded generic candidate0 vacancy-advice
+experiment; it is currently only a read-only recommendation. Normal advanced/HARD,
+60 performance, all-seed, optimality and manufacturing release remain held.
+# Previous checkpoint: capture timing clarified; cache deferred; realism goal active
 
 2026-10-14. HEAD a4e41a90de483349d7fd61b37f50070aaec5b84a/private11 normal push
 verified on origin/codex/q60-faulted-profile-counts. Enclosing assessment commit

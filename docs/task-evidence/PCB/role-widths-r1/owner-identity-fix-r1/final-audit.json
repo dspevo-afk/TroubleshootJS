@@ -1,0 +1,27 @@
+{
+  "download": "exact ticks/length/SHA/reparse revalidated and removed; byte-exact fixture retained",
+  "ownedPreview": "maintained stop positively released PID61480 and port8899",
+  "playerReports": [
+    {
+      "restoreMillis": 73887,
+      "file": "desktop-final-report.json",
+      "wallMillis": 396099,
+      "pass": true
+    },
+    {
+      "restoreMillis": 80034,
+      "file": "narrow-final-report.json",
+      "wallMillis": 232115,
+      "pass": true
+    }
+  ],
+  "cleanupDuration": "NOT_MEASURED separately from overall player reports; maintained preview cleanup log retained",
+  "utc": "2026-10-14T10:36:04.4387441Z",
+  "changedConsumedPaths": [],
+  "inventoryChanges": [],
+  "viewport": "temporary override reset",
+  "browserWarningErrorCount": 0,
+  "status": "PASS",
+  "tabs": "actual final inventory empty",
+  "finalFiveFieldProvenanceMatches": true
+}

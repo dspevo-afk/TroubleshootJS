@@ -1,0 +1,10 @@
+{
+  "status": "FAIL_RETAINED",
+  "command": "focused-plan.json",
+  "elapsedIncludingCleanupSeconds": 39.9518758,
+  "terminalExitCode": 1,
+  "cleanup": "PASS: maintained verifier removed task-owned scratch",
+  "cause": "New independent legacy graph literal duplicated the length prefix for net N after the second junction field",
+  "fix": "Correct the single fixture E record to E2:e11:a1:b1:NTRACE:1:r. Existing encoder unchanged; prior published geometry goldens unchanged",
+  "gateAfterFix": "NOT_RUN"
+}

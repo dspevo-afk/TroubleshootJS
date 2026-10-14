@@ -1,0 +1,8 @@
+{
+  "status": "SCOPED_READ_ONLY_NO_ACTIONABLE_FINDING",
+  "reviewer": "pin_local_review",
+  "scope": "Only failurepromotion currentNet lifecycle/carryconsume/errorcleanup/memberreorder/UNIFORMbypass",
+  "sourceSha256": "df94f0b7c58703047bf7a5ed91bd8142679deb833439283abab92a0226ebc1fb",
+  "gatesRunByReviewer": false,
+  "notClaimed": "No overallcandidateacceptance or independentgate execution"
+}

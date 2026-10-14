@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_RETAINED",
+  "terminalExitCode": 1,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 61.4030214,
+  "inputAudit": "PASS unchanged two-turn-r1-inputs.json",
+  "representatives": "Five PASS; -1022 area6943752->6525841 withcopper45110->56510; root42stillarea6524231/void644000 fails",
+  "diagnostic": "687518expansions; REF_SHARED:NO_PATH /OUT_Bbranchlimit/B_CMDbranchlimit",
+  "focused": "PASS7 44.7274411s: geometry78/profile89/routing1003/Dijkstra7692/save34975/identity131/measurement",
+  "holdoutsForThisCanary": "NOT_RUN after representativefailure",
+  "next": "Predeclared ROLE-only failed-net promotion within existing next pass, noextraorderings orbudget"
+}

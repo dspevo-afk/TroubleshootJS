@@ -10,6 +10,7 @@ class PcbTraceGeometry {
     private final String endPadId;
     private final int[] xPoints;
     private final int[] yPoints;
+    private final int width;
 
     PcbTraceGeometry(String netId, int[] xPoints, int[] yPoints) {
         this(netId, null, null, xPoints, yPoints);
@@ -25,8 +26,16 @@ class PcbTraceGeometry {
     PcbTraceGeometry(String sourceId, String netId, String startPadId, String endPadId,
             PcbCopperLayer layer, PcbCopperAccess.Exposure exposure,
             int[] xPoints, int[] yPoints) {
+        this(sourceId, netId, startPadId, endPadId, layer, exposure, xPoints, yPoints,
+            PcbTraceRules.TRACE_WIDTH);
+    }
+
+    PcbTraceGeometry(String sourceId, String netId, String startPadId, String endPadId,
+            PcbCopperLayer layer, PcbCopperAccess.Exposure exposure,
+            int[] xPoints, int[] yPoints, int width) {
         if (layer == null || exposure == null)
             throw new IllegalArgumentException("Missing PCB copper layer/access");
+        PcbTraceRules.requireWidth(width);
         if (sourceId != null) PcbConductorGraph.requireId(sourceId);
         if (xPoints == null || yPoints == null || xPoints.length < 2 ||
                 xPoints.length != yPoints.length)
@@ -43,15 +52,18 @@ class PcbTraceGeometry {
         this.endPadId = endPadId;
         this.xPoints = copy(xPoints);
         this.yPoints = copy(yPoints);
+        this.width = width;
     }
 
     String getNetId() { return netId; }
     String getSourceId() { return sourceId; }
     PcbCopperLayer getLayer() { return layer; }
     PcbCopperAccess.Exposure getExposure() { return exposure; }
+    int getWidth() { return width; }
 
     PcbTraceGeometry withPath(int[] x, int[] y) {
-        return new PcbTraceGeometry(sourceId, netId, startPadId, endPadId, layer, exposure, x, y);
+        return new PcbTraceGeometry(sourceId, netId, startPadId, endPadId, layer, exposure,
+            x, y, width);
     }
 
     static String defaultSourceId(String start, String end, PcbCopperLayer layer) {

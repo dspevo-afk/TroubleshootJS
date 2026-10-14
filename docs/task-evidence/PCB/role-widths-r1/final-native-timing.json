@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "elapsedIncludingCleanupSeconds": 381.468849,
+  "cleanupDuration": "NOT_MEASURED separately; maintained cleanup result in log and actual terminal observed",
+  "inputAudit": "PASS",
+  "changedPaths": [],
+  "inventoryChanges": [],
+  "utc": "2026-10-14T09:44:35.0317450Z"
+}

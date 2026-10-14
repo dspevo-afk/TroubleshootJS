@@ -1,0 +1,29 @@
+{
+  "integrationReview": {
+    "reviewer": "Planck",
+    "mode": "READ_ONLY_NO_GATES",
+    "scope": "Root profile/constraints/private12 dispatch/replay/dependency/physical fingerprint/cache/Canvas/SVG/public envelope diffs vs68ae9284",
+    "result": "No actionable findings in inspected scope",
+    "limit": "Not dynamic qualification; core escape validator not reviewed by this integration assignment"
+  },
+  "routingReview": {
+    "reviewer": "Avicenna",
+    "mode": "READ_ONLY_NO_GATES",
+    "scope": "Router/P07/access/compactor/domain/crop diffs before cohort failure",
+    "result": "No blocking findings at that snapshot",
+    "limit": "Superseded for changed escape validation by actual current12 cohort FAIL; not reused as post-fix acceptance"
+  },
+  "failureDiagnosis": {
+    "reviewer": "Pascal",
+    "mode": "READ_ONLY_NO_GATES",
+    "scope": "Logged RAIL5/C5 width11 physical stroke, router endpoint escape and validator clipping interval",
+    "result": "Confirms validator overreach at near edge; router actual stroke uses half-open rectangle overlap before endpoint corridor exception",
+    "boundary": "Exact integer centerline collision interval for courtyard[a,b), width2h+1 is[a-h,b+h-1]. Preserve historical9 semantics; new11/13 source correction pending gates"
+  },
+  "nextPackingAssessment": {
+    "reviewer": "Harvey",
+    "mode": "READ_ONLY_NO_GATES_NO_EDITS",
+    "result": "No justified next packing change without source-envelope fit and vacancy-origin receipts",
+    "boundary": "Largest protected rectangle410x550 is not proof of package fit; no oracle/physical/work/time loosened"
+  }
+}

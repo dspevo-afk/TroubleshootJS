@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "fields": [
+    {
+      "observed": "420b49dc6d32a956aec7c3154ea1aaa11cc791eb69b236fc18cd1550d29f4c31",
+      "pass": true,
+      "expected": "420b49dc6d32a956aec7c3154ea1aaa11cc791eb69b236fc18cd1550d29f4c31",
+      "field": "data-tsj-preview-source-digest"
+    },
+    {
+      "observed": "437783ac834d010d98c1198d007eb502c67c6972f1dbfdbc7e6aaff3293baf2f",
+      "pass": true,
+      "expected": "437783ac834d010d98c1198d007eb502c67c6972f1dbfdbc7e6aaff3293baf2f",
+      "field": "data-tsj-preview-script-digest"
+    },
+    {
+      "observed": "3ba1525660ba319ba1c6953725e887c0bb470b376f04d91eae1102c1338d209f",
+      "pass": true,
+      "expected": "3ba1525660ba319ba1c6953725e887c0bb470b376f04d91eae1102c1338d209f",
+      "field": "data-tsj-preview-web-digest"
+    },
+    {
+      "observed": "47e54f052c6854f4050a2c9ecd2a9c2ce9e02fdc852220b725ea9debaa9d2ffc",
+      "pass": true,
+      "expected": "47e54f052c6854f4050a2c9ecd2a9c2ce9e02fdc852220b725ea9debaa9d2ffc",
+      "field": "data-tsj-preview-execution-digest"
+    },
+    {
+      "observed": "1589",
+      "pass": true,
+      "expected": "1589",
+      "field": "data-tsj-preview-file-count"
+    }
+  ],
+  "viewport": [
+    1280,
+    720
+  ]
+}

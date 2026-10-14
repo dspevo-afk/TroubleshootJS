@@ -23,7 +23,10 @@ final class PcbTraceClearance {
     static Statistics validate(List<PcbTraceGeometry> traces) {
         ArrayList<Segment> segments=new ArrayList<Segment>();
         ArrayList<PcbSpatialIndex.Box> boxes=new ArrayList<PcbSpatialIndex.Box>();
+        int widest = PcbTraceRules.TRACE_WIDTH;
         for(PcbTraceGeometry trace:traces) {
+            PcbTraceRules.requireWidth(trace.getWidth());
+            widest = Math.max(widest, trace.getWidth());
             int[] x=trace.getXPoints(), y=trace.getYPoints();
             for(int i=1;i<x.length;i++) {
                 Segment s=new Segment(trace,x[i-1],y[i-1],x[i],y[i]);
@@ -35,14 +38,15 @@ final class PcbTraceClearance {
         PcbSpatialIndex index=new PcbSpatialIndex(boxes,masks);
         Statistics result=new Statistics();result.index=index.statistics;
         result.potentialPairs=(long)segments.size()*(segments.size()-1)/2;
-        int margin=PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
-        long minimumSquared=(long)margin*margin;
         for(int i=0;i<segments.size();i++) {
             Segment a=segments.get(i);
-            for(int j:index.query(a.bounds.expanded(margin),masks[i])) {
+            int searchMargin=PcbTraceRules.clearance(a.trace.getWidth(),widest);
+            for(int j:index.query(a.bounds.expanded(searchMargin),masks[i])) {
                 Segment b=segments.get(j);
                 if(j<=i || a.trace==b.trace || a.trace.getNetId().equals(b.trace.getNetId()))continue;
                 result.exactPairs++;
+                int margin=PcbTraceRules.clearance(a.trace.getWidth(),b.trace.getWidth());
+                long minimumSquared=(long)margin*margin;
                 long distance=PcbBoardLayout.segmentDistanceSquared(a.x1,a.y1,a.x2,a.y2,b.x1,b.y1,b.x2,b.y2);
                 if(distance<minimumSquared)throw new IllegalStateException(
                     "PCB traces violate copper clearance: "+a.trace.getNetId()+" / "+b.trace.getNetId()+

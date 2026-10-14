@@ -1,0 +1,178 @@
+{
+  "status": "MEASUREMENT_ONLY_CANDIDATE_NOT_ACCEPTED",
+  "profile": "ROLE_TRACE@1 13/11/9",
+  "currentSource": "pad-touch-r1-inputs.json unchanged through all reported gates",
+  "cases": [
+    {
+      "seed": "-1017",
+      "area": 4529785,
+      "baseline11": {
+        "area": 4529785,
+        "copperLength": 26750,
+        "segments": 174,
+        "vias": 28
+      },
+      "areaChangePercent": 0,
+      "copperLength": 26760,
+      "copperChangePercent": 0.037383177570093455,
+      "segments": 174,
+      "vias": 28,
+      "areaGate": "PASS",
+      "geometrySha256": "9f028170574513465529a88fae0268621772feb469c62d6474771f29a7aa2f38"
+    },
+    {
+      "seed": "-1004",
+      "area": 4466664,
+      "baseline11": {
+        "area": 4466664,
+        "copperLength": 30900,
+        "segments": 189,
+        "vias": 25
+      },
+      "areaChangePercent": 0,
+      "copperLength": 30910,
+      "copperChangePercent": 0.032362459546925564,
+      "segments": 189,
+      "vias": 25,
+      "areaGate": "PASS",
+      "geometrySha256": "58c169a58d37e9edd6ed51f70054ef776e982840e2bb2d21fcab49a97a2d4bc8"
+    },
+    {
+      "seed": "-1022",
+      "area": 6943752,
+      "baseline11": {
+        "area": 6943752,
+        "copperLength": 45110,
+        "segments": 271,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 45140,
+      "copperChangePercent": 0.06650410108623366,
+      "segments": 271,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "59f4e8742d2df49049eb9de3b0ae7bd065aea96657b184f7c09f106e5c9cf72b"
+    },
+    {
+      "seed": "0",
+      "area": 4358809,
+      "baseline11": {
+        "area": 4358809,
+        "copperLength": 30670,
+        "segments": 179,
+        "vias": 35
+      },
+      "areaChangePercent": 0,
+      "copperLength": 30690,
+      "copperChangePercent": 0.06521030322791001,
+      "segments": 180,
+      "vias": 36,
+      "areaGate": "PASS",
+      "geometrySha256": "f147b59b09685018ddd18da6000db16ed8c35607eb1fed6034e0674d3cdc6594"
+    },
+    {
+      "seed": "17",
+      "area": 5814368,
+      "baseline11": {
+        "area": 5814368,
+        "copperLength": 43550,
+        "segments": 261,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 43510,
+      "copperChangePercent": -0.09184845005740529,
+      "segments": 263,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "effeb8b1e1c4026a5103807bb4d51512674d663cb03701d93eb3b0d9a0cd1fe8"
+    },
+    {
+      "seed": "42",
+      "area": 9062088,
+      "baseline11": {
+        "area": 6036952,
+        "copperLength": 45970,
+        "segments": 263,
+        "vias": 48
+      },
+      "areaChangePercent": 50.11032057236831,
+      "copperLength": 41900,
+      "copperChangePercent": -8.853600174026539,
+      "segments": 250,
+      "vias": 48,
+      "areaGate": "FAIL",
+      "geometrySha256": "35a769e5f1d0fecb17b671052978d12901b8ca1aa884ae750419356b7c698192"
+    },
+    {
+      "seed": "1",
+      "area": 4615974,
+      "baseline11": {
+        "area": 4615974,
+        "copperLength": 27670,
+        "segments": 174,
+        "vias": 28
+      },
+      "areaChangePercent": 0,
+      "copperLength": 27680,
+      "copperChangePercent": 0.03614022406938923,
+      "segments": 174,
+      "vias": 29,
+      "areaGate": "PASS",
+      "geometrySha256": "803132379813b021bbfe9f5eddd9baada111d02aea9e82ea6fde959da9061b96"
+    },
+    {
+      "seed": "7",
+      "area": 6587808,
+      "baseline11": {
+        "area": 6587808,
+        "copperLength": 39770,
+        "segments": 242,
+        "vias": 45
+      },
+      "areaChangePercent": 0,
+      "copperLength": 39290,
+      "copperChangePercent": -1.2069399044505909,
+      "segments": 242,
+      "vias": 47,
+      "areaGate": "PASS",
+      "geometrySha256": "da495a2f7260997682945ed6612a6ce7bf494264aa1576404c9fc2089e68f4b2"
+    },
+    {
+      "seed": "5",
+      "area": 7345812,
+      "baseline11": {
+        "area": 9445744,
+        "copperLength": 38800,
+        "segments": 251,
+        "vias": 48
+      },
+      "areaChangePercent": -22.23151506117464,
+      "copperLength": 45040,
+      "copperChangePercent": 16.082474226804123,
+      "segments": 259,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "c24c90c7ffdc3d912824ab2e2c81212c0b55fa02fdc3bb95d5ed003cbaac107c"
+    },
+    {
+      "seed": "14",
+      "area": 8585034,
+      "baseline11": {
+        "area": 8585034,
+        "copperLength": 44590,
+        "segments": 263,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 44620,
+      "copperChangePercent": 0.06727965911639382,
+      "segments": 263,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "564e50cdbb432357b58e07bad4a7ad04fa396069ad3177830ba30b4a297d03d7"
+    }
+  ],
+  "limitations": "Root42 also violates unchanged protected-empty-rectangle oracle; this comparison does not replace full admission or UI proof."
+}

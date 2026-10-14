@@ -1,0 +1,14 @@
+{
+  "gate": "final-native41 attempt1",
+  "unchangedAtFailure": [
+    "DifficultyProfile.java",
+    "PlayerFamilyCatalog.java",
+    "PlayerLaunchRequest.java",
+    "PhysicalServiceabilityContractTest.java"
+  ],
+  "elapsedIncludingCleanupSeconds": 381.468849,
+  "fix": "Fixture selects existing forFamilyQualification for held registrations, preserves all registered families and physical assertions, and uses existing bounded staged construction. Native scratch logger/factory adapters selected for direct fixture invocation.",
+  "status": "FAIL",
+  "failure": "PhysicalServiceabilityContractTest public PlayerLaunchRequest rejects held RB56 HARD before geometry generation",
+  "acceptance": "FAIL retained. Fresh focused and full final gates required; no public availability change."
+}

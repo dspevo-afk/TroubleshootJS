@@ -1,0 +1,14 @@
+{
+  "status": "READ_ONLY_REVIEW_NO_BLOCKING_FINDING",
+  "scope": [
+    "PcbNetRouter exact pad-touch broadphase/signed ceil-floor",
+    "fixed-width reservation lifecycle",
+    "legacy bypass",
+    "existing focused fixture coverage"
+  ],
+  "reviewer": "pin_local_review",
+  "testsRunByReviewer": false,
+  "sourceSha256": "57cf9db656fdee48b8b737c4a4d980c69f799dccc021cf370a32168a9a13e498",
+  "finding": "No blocking correctness finding. Negative absolute coordinate and ROLE9 actual-touch tests are missing; assigned bounded fixture extension. Grid-array resets per width transition can add bounded work; not profiled.",
+  "notClaimed": "No whole-candidate acceptance, no independent gate rerun, no performance proof"
+}

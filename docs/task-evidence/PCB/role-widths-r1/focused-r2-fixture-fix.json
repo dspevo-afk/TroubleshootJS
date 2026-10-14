@@ -1,0 +1,14 @@
+{
+  "status": "FAIL_RETAINED",
+  "terminalExitCode": 1,
+  "elapsedIncludingCleanupSeconds": 40.211434,
+  "cleanup": "PASS",
+  "passed": [
+    "trace width geometry64",
+    "trace width profile75"
+  ],
+  "cause": "New P07 fixture assumed OVER high-current net would transition, while the legal route transitions the independent UNDER signal net",
+  "fixScope": "Fixture will declare both crossing paths high-current13 and require actual13 copper on TOP and BOTTOM regardless of which net transitions. Preserve all terminal mappings, whole-net connectivity and cross-net separation; P05 independently retains9/13 mixed roles",
+  "productionChangesForFix": "NONE",
+  "nextGate": "NOT_RUN"
+}

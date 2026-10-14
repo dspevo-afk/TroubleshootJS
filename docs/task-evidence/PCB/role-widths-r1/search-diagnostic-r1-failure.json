@@ -1,0 +1,11 @@
+{
+  "status": "FAIL_RETAINED",
+  "phase": "diagnostic fixture setup before routing",
+  "elapsedIncludingCleanupSeconds": 38.920929,
+  "terminalExitCode": 1,
+  "cleanup": "PASS",
+  "focusedRoutingAssertions": 1351,
+  "cause": "Fixture used empty footprint registry; actual production default uses StandardPcbFootprintProviders.createRegistry()",
+  "fix": "Replace fixture registry with production registry factory; no production or acceptance oracle change",
+  "routeMeasurements": "NOT_RUN"
+}

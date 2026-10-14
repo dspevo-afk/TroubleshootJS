@@ -285,6 +285,8 @@ final class PhysicalSpecificationDeveloperVerifier {
 }
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
+        $Suite -contains 'PhysicalServiceabilityContractTest' -or
+        $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'InductorAcceptedStateContractTest' -or
         $Suite -contains 'Q30ServiceFlowContractTest' -or
         $Suite -contains 'Q30PowerReadinessContractTest' -or
@@ -312,6 +314,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
     $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or
+        $Suite -contains 'PhysicalServiceabilityContractTest' -or
+        $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
         $Suite -contains 'ConverterPhysicalPartContractTest' -or
         $Suite -contains 'PowerServicePartContractTest' -or
@@ -403,6 +407,13 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbConnectedPackingHoldoutContractTest'; Marker = 'connected packing holdouts ' },
         @{ Name = 'PcbSupportPairPlacementContractTest'; Marker = 'PCB support pair contracts ' },
         @{ Name = 'PcbPinLocalPackingContractTest'; Marker = 'pin-local packing contracts ' },
+        @{ Name = 'PcbTraceWidthGeometryContractTest'; Marker = 'PCB trace width geometry contracts ' },
+        @{ Name = 'PcbTraceWidthProfileContractTest'; Marker = 'PCB trace width profile contracts ' },
+        @{ Name = 'PcbRoleWidthRoutingContractTest'; Marker = 'PCB role width routing contracts ' },
+        @{ Name = 'PcbRoleWidthReplayDiagnosticTest'; Marker = 'PCB role width replay diagnostic complete' },
+        @{ Name = 'PcbRoleWidthSearchDiagnosticTest'; Marker = 'PCB role width search diagnostic complete' },
+        @{ Name = 'PcbRoleWidthTurnBoundContractTest'; Marker = 'PCB role width turn bound contracts ' },
+        @{ Name = 'PcbRoleWidthHoldoutContractTest'; Marker = 'PCB role width holdout contracts ' },
         @{ Name = 'PcbPocketPackingContractTest'; Marker = 'pocket packing contracts ' },
         @{ Name = 'PcbPocketHoldoutContractTest'; Marker = 'pocket packing holdout contracts ' },
         @{ Name = 'PcbVacancyDomainContractTest'; Marker = 'PCB vacancy domain contracts ' },
@@ -417,6 +428,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
         @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
         @{ Name = 'PhysicalServiceabilityContractTest'; Marker = 'physical serviceability contracts ' },
+        @{ Name = 'PcbRoleWidthOwnerIdentityContractTest'; Marker = 'PCB role width owner identity contracts assertions=' },
         @{ Name = 'FaultObservationInspectionContractTest'; Marker = 'fault observation inspection contracts ' },
         @{ Name = 'U04SessionContractTest'; Marker = 'U04 session contracts ' },
         @{ Name = 'U06SessionSaveContractTest'; Marker = 'U06 session save contracts ' },

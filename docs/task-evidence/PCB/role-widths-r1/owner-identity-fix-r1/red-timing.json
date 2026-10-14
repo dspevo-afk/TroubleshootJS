@@ -1,0 +1,5 @@
+{
+  "elapsedIncludingCleanupSeconds": 30.3519027,
+  "status": "FAIL_FIXTURE_COMPILATION",
+  "scope": "New fixture null overload was ambiguous; fixed explicit GeneratedBoardInstance cast. This did not reproduce the runtime identity bug."
+}

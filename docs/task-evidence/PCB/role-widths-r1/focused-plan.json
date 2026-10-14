@@ -1,0 +1,13 @@
+{
+  "suites": [
+    "PcbTraceWidthGeometryContractTest",
+    "PcbTraceWidthProfileContractTest",
+    "PcbRoleWidthRoutingContractTest",
+    "U06SessionSaveContractTest",
+    "RelBSessionIdentityContractTest"
+  ],
+  "command": "./scripts/verify-current-contracts.ps1 -JavaHome <selected-JDK8> -PythonExe <selected-Python> -Suite <listed suites> -ReceiptOutputPath docs/task-evidence/PCB/role-widths-r1/focused-receipts.txt",
+  "limits": "Maintained per-JVM 60000ms; no time/work override",
+  "status": "PLANNED",
+  "serialization": "Wait for actual terminal exit and cleanup before any next expensive gate"
+}

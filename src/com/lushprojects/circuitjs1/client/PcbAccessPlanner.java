@@ -6,11 +6,16 @@ import java.util.Vector;
 final class PcbAccessPlanner {
     static final int GRID=10;
     static int validate(Rectangle outline,Vector<PcbFootprint> footprints) {
+        return validate(outline,footprints,PcbTraceRules.TRACE_WIDTH);
+    }
+    /** Placement has no routed nets yet, so reserve access for the selected profile maximum. */
+    static int validate(Rectangle outline,Vector<PcbFootprint> footprints,int traceWidth) {
+        PcbTraceRules.requireWidth(traceWidth);
         int width=outline.width/GRID+1,height=outline.height/GRID+1;
         if((long)width*height>700000) throw new PcbPlacementPlanner.Rejected("ACCESS_GRID_BUDGET");
         boolean[] blocked=new boolean[width*height],reached=new boolean[width*height];
         for(PcbFootprint footprint:footprints) {
-            Rectangle r=footprint.getPlacement().getRoutingCourtyard(); int margin=(PcbTraceRules.TRACE_WIDTH+1)/2;
+            Rectangle r=footprint.getPlacement().getRoutingCourtyard(); int margin=(traceWidth+1)/2;
             int minX=Math.max(0,(r.x-margin-outline.x)/GRID),maxX=Math.min(width-1,(r.x+r.width+margin-outline.x+GRID-1)/GRID);
             int minY=Math.max(0,(r.y-margin-outline.y)/GRID),maxY=Math.min(height-1,(r.y+r.height+margin-outline.y+GRID-1)/GRID);
             for(int y=minY;y<=maxY;y++) for(int x=minX;x<=maxX;x++) blocked[y*width+x]=true;

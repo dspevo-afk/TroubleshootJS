@@ -110,6 +110,8 @@ final class PhysicalBoardFingerprint {
             field(route, trace.getNetId());
             field(route, trace.getLayer().name());
             field(route, trace.getExposure().name());
+            if (trace.getWidth() != PcbTraceRules.TRACE_WIDTH)
+                field(route, "width=" + trace.getWidth());
             field(route, forward.toString().compareTo(reverse.toString()) <= 0 ?
                 forward.toString() : reverse.toString());
             routes.add(route.toString());
@@ -118,7 +120,7 @@ final class PhysicalBoardFingerprint {
         for (String route : routes) field(out, route);
     }
 
-    /** Compare the drawn copper union, independent of route tree segmentation. */
+    /** Compare copper width groups, independent of same-width route segmentation. */
     static String copperUnion(PcbBoardLayout layout, int originX, int originY) {
         StringBuilder result = new StringBuilder();
         mergedCopper(result, layout, originX, originY);
@@ -137,7 +139,7 @@ final class PhysicalBoardFingerprint {
                 int a = horizontal ? x[i] - originX : y[i] - originY;
                 int b = horizontal ? x[i - 1] - originX : y[i - 1] - originY;
                 spans.add(new Span(trace.getLayer(), trace.getExposure(), horizontal,
-                    fixed, Math.min(a, b), Math.max(a, b)));
+                    fixed, Math.min(a, b), Math.max(a, b), trace.getWidth()));
             }
         }
         Collections.sort(spans, new Comparator<Span>() {
@@ -148,6 +150,8 @@ final class PhysicalBoardFingerprint {
                 if (order != 0) return order;
                 if (a.horizontal != b.horizontal) return a.horizontal ? -1 : 1;
                 order = compareInt(a.fixed, b.fixed);
+                if (order != 0) return order;
+                order = compareInt(a.width, b.width);
                 return order != 0 ? order : compareInt(a.start, b.start);
             }
         });
@@ -169,20 +173,21 @@ final class PhysicalBoardFingerprint {
         final PcbCopperLayer layer;
         final PcbCopperAccess.Exposure exposure;
         final boolean horizontal;
-        final int fixed, start;
+        final int fixed, start, width;
         int end;
         Span(PcbCopperLayer layer, PcbCopperAccess.Exposure exposure,
-                boolean horizontal, int fixed, int start, int end) {
+                boolean horizontal, int fixed, int start, int end, int width) {
             this.layer = layer; this.exposure = exposure; this.horizontal = horizontal;
-            this.fixed = fixed; this.start = start; this.end = end;
+            this.fixed = fixed; this.start = start; this.end = end; this.width = width;
         }
         boolean sameLine(Span other) {
             return layer == other.layer && exposure == other.exposure &&
-                horizontal == other.horizontal && fixed == other.fixed;
+                horizontal == other.horizontal && fixed == other.fixed && width == other.width;
         }
         String record() {
             return layer.name() + '/' + exposure.name() + '/' + (horizontal ? 'H' : 'V') +
-                '/' + fixed + '/' + start + '/' + end;
+                '/' + fixed + '/' + start + '/' + end +
+                (width == PcbTraceRules.TRACE_WIDTH ? "" : "/width=" + width);
         }
     }
 

@@ -46,16 +46,20 @@ public final class PhysicalServiceabilityContractTest {
         System.out.println("PASS: physical serviceability contracts assertions=" + assertions);
     }
     private static GeneratedBoardInstance construct(String family, long seed) {
-        GenerationRequest request = new PlayerLaunchRequest(family, Long.toString(seed),
-            PlayerFamilyCatalog.candidateProfile(family).name()).generation();
+        // Held families remain private qualification cases, never public difficulty launches.
+        GenerationRequest request = PlayerFamilyCatalog.isNormalPlayerEnabled(family)
+            ? new PlayerLaunchRequest(family, Long.toString(seed),
+                PlayerFamilyCatalog.candidateProfile(family).name()).generation()
+            : GenerationRequest.forFamilyQualification(family, seed);
         GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
-        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM)
+        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                !request.isPrivateDiagnosticQualification())
             return prepared.construct().instance;
         GenerationRequest.ConstructionSession session = prepared.beginConstruction();
         int steps = 0;
         while (!session.advance()) {
             if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
-                throw new AssertionError("Normal Q30 route exceeded the unchanged shared step bound");
+                throw new AssertionError(family + " route exceeded the unchanged shared step bound");
         }
         return session.result().instance;
     }

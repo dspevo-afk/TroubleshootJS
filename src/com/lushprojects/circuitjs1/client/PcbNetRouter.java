@@ -26,9 +26,18 @@ final class PcbNetRouter {
     private static Rejected reject(PcbRoutingRejectedException.Kind kind,String message) {
         return new Rejected(Reason.NO_PATH,message,null);
     }
-    private static Rectangle traceCollisionEnvelope(Rectangle r) {
-        int margin=PcbTraceRules.TRACE_WIDTH/2;
-        return new Rectangle(r.x-margin,r.y-margin,r.width+margin*2,r.height+margin*2);
+    private static Rectangle traceCollisionEnvelope(Rectangle r,int width) {
+        PcbTraceRules.requireWidth(width);
+        int half=width/2;
+        // Saved uniform routes keep the original symmetric inclusive envelope.
+        if(width==PcbTraceRules.TRACE_WIDTH)
+            return new Rectangle(r.x-half,r.y-half,r.width+half*2,r.height+half*2);
+        // This rectangle is consumed as an inclusive range of centerline
+        // coordinates. Wider odd strokes overlap [a,b) exactly when their
+        // centerline lies in [a-half,b+half-1].
+        int spanExpansion=2*half-1;
+        return new Rectangle(r.x-half,r.y-half,r.width+spanExpansion,
+            r.height+spanExpansion);
     }
     static void route(PcbBoardLayout layout,TroubleshootBoard board,Rectangle outline,int attempt,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
@@ -284,6 +293,7 @@ final class PcbNetRouter {
         int expansions,rawSegments,congestionRejections;
         private final PcbBoardLayout layout;
         private final TroubleshootBoard board;
+        private final boolean checkProfiledPadTouches;
         private final Rectangle outline;
         private final int minX;
         private final int minY;
@@ -295,9 +305,15 @@ final class PcbNetRouter {
         // snapshot instead of copying collections and physical bounds per edge.
         private final PcbPadPlacement[] pads;
         private final String[] padNets;
+        private final int[] padWidths;
+        private final Rectangle[] padBounds;
+        private final Rectangle[] escapeCorridors;
         private final Rectangle[] escapeReservations;
         private final PcbComponentPlacement[] components;
-        private final Rectangle[] courtyards, collisionCourtyards;
+        private final Rectangle[] courtyards;
+        private Rectangle[] collisionCourtyards;
+        private int activeTraceWidth=-1;
+        private String activeNetId;
         private final int attempt;
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
         private final PcbCopperLayer layer;
@@ -319,6 +335,7 @@ final class PcbNetRouter {
             this.layout = layout;
             work=new PcbRoutingWork(PcbRoutingWork.Limits.DEFAULT,board.getNetIds().size());
             this.board = board;
+            checkProfiledPadTouches=!board.getPlacementConstraints().getTraceWidthProfile().isLegacyUniform();
             this.outline = outline;
             this.attempt = attempt;
             this.observer = observer;
@@ -333,14 +350,22 @@ final class PcbNetRouter {
                 throw new Rejected(Reason.GRID_LIMIT,"ROUTING_GRID_BUDGET",null);
             occupiedNet = new String[gridWidth][gridHeight];
             clearanceNet = new String[gridWidth][gridHeight];
+            int maximumWidth=board.getPlacementConstraints().getTraceWidthProfile().maximumWidth();
+            if(PcbTraceRules.clearance(maximumWidth,maximumWidth)>2*GRID)
+                throw new IllegalArgumentException("PCB role trace width exceeds the bounded routing grid clearance");
             pads = layout.getPads().toArray(new PcbPadPlacement[0]);
             padNets = new String[pads.length];
+            padWidths = new int[pads.length];
+            padBounds = new Rectangle[pads.length];
+            escapeCorridors = new Rectangle[pads.length];
             escapeReservations = new Rectangle[pads.length];
             for (int index = 0; index < pads.length; index++) {
                 PcbPadPlacement pad = pads[index];
                 if(!PcbCopperAccess.hasCopper(pad,layer))
                     throw new IllegalArgumentException("Requested routing layer has no pad land: "+pad.getPadId());
                 padNets[index] = board.getPad(pad.getPadId()).getNetId();
+                padWidths[index] = traceWidth(padNets[index]);
+                padBounds[index] = pad.getPadBounds();
                 int length = ((pad.getEscapeLength() + GRID - 1) / GRID) * GRID;
                 if(escapeOutletLand>0 && pad.getEscapeLength()>0 && pad.getMountingSide()==layer.getFace()) {
                     // A P07 via land must clear the owning courtyard before earlier copper can use this outlet.
@@ -353,42 +378,109 @@ final class PcbNetRouter {
                 }
                 int ex = pad.getX() + pad.getEscapeDx() * length;
                 int ey = pad.getY() + pad.getEscapeDy() * length;
-                int margin = PcbTraceRules.MIN_CENTERLINE_CLEARANCE - 1;
-                escapeReservations[index] = new Rectangle(Math.min(pad.getX(), ex) - margin,
-                    Math.min(pad.getY(), ey) - margin, Math.abs(pad.getX() - ex) + margin * 2,
-                    Math.abs(pad.getY() - ey) + margin * 2);
+                escapeCorridors[index] = new Rectangle(Math.min(pad.getX(), ex),
+                    Math.min(pad.getY(), ey), Math.abs(pad.getX() - ex),
+                    Math.abs(pad.getY() - ey));
                 if(pad.getMountingSide()!=layer.getFace())
-                    escapeReservations[index]=new Rectangle(pad.getX()-margin,pad.getY()-margin,margin*2,margin*2);
+                    escapeCorridors[index]=new Rectangle(pad.getX(),pad.getY(),0,0);
             }
             components = layout.getComponents().toArray(new PcbComponentPlacement[0]);
             courtyards = new Rectangle[components.length];
-            collisionCourtyards = new Rectangle[components.length];
             for (int index = 0; index < components.length; index++) {
                 courtyards[index] = components[index].getRoutingCourtyard();
                 if(components[index].getMountingSide()==layer.getFace()) emptyComponentFace=false;
-                collisionCourtyards[index] = traceCollisionEnvelope(courtyards[index]);
             }
             // The private placement snapshot is fixed for this routing attempt.
             // Reuse its exact escape-step reservations on either component face.
             horizontalReservation=new String[gridWidth][gridHeight];verticalReservation=new String[gridWidth][gridHeight];
             if(emptyComponentFace) padAt=new String[gridWidth][gridHeight];
             for(int i=0;i<pads.length;i++) {
-                Rectangle r=escapeReservations[i];
                 int px=gridX(pads[i].getX()),py=gridY(pads[i].getY());
                 if(emptyComponentFace && px>=0&&py>=0&&px<gridWidth&&py<gridHeight)padAt[px][py]=pads[i].getPadId();
-                int x0=Math.max(0,(r.x-minX)/GRID-1),x1=Math.min(gridWidth-1,(r.x+r.width-minX)/GRID+1);
-                int y0=Math.max(0,(r.y-minY)/GRID-1),y1=Math.min(gridHeight-1,(r.y+r.height-minY)/GRID+1);
-                for(int x=x0;x<=x1;x++) for(int y=y0;y<=y1;y++) {
-                    if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,GRID,1))) reserve(horizontalReservation,x,y,padNets[i]);
-                    if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,1,GRID))) reserve(verticalReservation,x,y,padNets[i]);
-                }
             }
+        }
+        /** Prepare exact role-width geometry once per routed net, outside its bounded search loop. */
+        private void prepareNet(String netId) {
+            if(netId!=null && netId.equals(activeNetId)) return;
+            int width=traceWidth(netId);
+            activeNetId=netId;
+            if(activeTraceWidth==width) return;
+            activeTraceWidth=width;
+            collisionCourtyards=new Rectangle[components.length];
+            for(int index=0;index<components.length;index++)
+                collisionCourtyards[index]=traceCollisionEnvelope(courtyards[index],width);
+            for(int x=0;x<gridWidth;x++) {
+                java.util.Arrays.fill(horizontalReservation[x],null);
+                java.util.Arrays.fill(verticalReservation[x],null);
+            }
+            for(int i=0;i<pads.length;i++) {
+                int margin=PcbTraceRules.clearance(width,padWidths[i])-1;
+                Rectangle corridor=escapeCorridors[i];
+                Rectangle r=new Rectangle(corridor.x-margin,corridor.y-margin,
+                    corridor.width+margin*2,corridor.height+margin*2);
+                escapeReservations[i]=r;
+                reserveRectangle(r,padNets[i]);
+                if(checkProfiledPadTouches)
+                    reservePadTouchSteps(i,width);
+            }
+        }
+        /** Reserve only adjacent grid edges whose actual finite-width stroke touches a foreign land. */
+        private void reservePadTouchSteps(int padIndex,int width) {
+            Rectangle bounds=padBounds[padIndex];
+            int half=width/2;
+            int horizontalX0=clampGridStart((long)bounds.x-GRID-half-1,minX,gridWidth);
+            int horizontalX1=clampGridEnd((long)bounds.x+bounds.width+half,minX,gridWidth);
+            int horizontalY0=clampGridStart((long)bounds.y-half-1,minY,gridHeight);
+            int horizontalY1=clampGridEnd((long)bounds.y+bounds.height+half,minY,gridHeight);
+            for(int x=horizontalX0;x<=horizontalX1;x++)
+                for(int y=horizontalY0;y<=horizontalY1;y++) {
+                    int firstX=minX+x*GRID,firstY=minY+y*GRID;
+                    if(PcbConductorBuilder.touch(traceStroke(firstX,firstY,firstX+GRID,firstY,width),bounds))
+                        reserve(horizontalReservation,x,y,padNets[padIndex]);
+                }
+
+            int verticalX0=clampGridStart((long)bounds.x-half-1,minX,gridWidth);
+            int verticalX1=clampGridEnd((long)bounds.x+bounds.width+half,minX,gridWidth);
+            int verticalY0=clampGridStart((long)bounds.y-GRID-half-1,minY,gridHeight);
+            int verticalY1=clampGridEnd((long)bounds.y+bounds.height+half,minY,gridHeight);
+            for(int x=verticalX0;x<=verticalX1;x++)
+                for(int y=verticalY0;y<=verticalY1;y++) {
+                    int firstX=minX+x*GRID,firstY=minY+y*GRID;
+                    if(PcbConductorBuilder.touch(traceStroke(firstX,firstY,firstX,firstY+GRID,width),bounds))
+                        reserve(verticalReservation,x,y,padNets[padIndex]);
+                }
+        }
+        private int clampGridStart(long physical,int origin,int size) {
+            long delta=physical-origin;
+            long index=delta/GRID;
+            if(delta>0 && delta%GRID!=0) index++;
+            return (int)Math.max(0,Math.min((long)size,index));
+        }
+        private int clampGridEnd(long physical,int origin,int size) {
+            long delta=physical-origin;
+            long index=delta/GRID;
+            if(delta<0 && delta%GRID!=0) index--;
+            return (int)Math.max(-1,Math.min((long)size-1,index));
+        }
+        private void reserveRectangle(Rectangle r,String net) {
+            int x0=Math.max(0,(r.x-minX)/GRID-1),x1=Math.min(gridWidth-1,(r.x+r.width-minX)/GRID+1);
+            int y0=Math.max(0,(r.y-minY)/GRID-1),y1=Math.min(gridHeight-1,(r.y+r.height-minY)/GRID+1);
+            for(int x=x0;x<=x1;x++) for(int y=y0;y<=y1;y++) {
+                if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,GRID,1))) reserve(horizontalReservation,x,y,net);
+                if(r.intersects(new Rectangle(minX+x*GRID,minY+y*GRID,1,GRID))) reserve(verticalReservation,x,y,net);
+            }
+        }
+        private int traceWidth(String netId) {
+            BoardNet net=board.getNet(netId);
+            if(net==null) throw new IllegalArgumentException("Unknown PCB routing net: "+netId);
+            return board.getPlacementConstraints().getTraceWidthProfile().widthFor(net.getRoutingRole());
         }
         private void reserve(String[][] cells,int x,int y,String net) {
             cells[x][y]=cells[x][y]==null || cells[x][y].equals(net)?net:"";
         }
 
         PcbTraceGeometry route(String netId, String startPadId, String endPadId) {
+            prepareNet(netId);
             work.branchSearches++;
             PcbPadPlacement startPad = layout.getPad(startPadId);
             PcbPadPlacement endPad = layout.getPad(endPadId);
@@ -403,7 +495,7 @@ final class PcbNetRouter {
             boolean[] goals=new boolean[gridWidth*gridHeight];
             if(endPad!=null) goals[endY*gridWidth+endX]=true;
             else for(int gx=0;gx<gridWidth;gx++) for(int gy=0;gy<gridHeight;gy++)
-                goals[gy*gridWidth+gx]=netId.equals(occupiedNet[gx][gy]) && canJoinTree(gx,gy);
+                goals[gy*gridWidth+gx]=netId.equals(occupiedNet[gx][gy]) && canJoinTree(gx,gy,netId);
             int[] distances=distanceField(goals);
 
             final int noneDirection = 4;
@@ -498,16 +590,19 @@ final class PcbNetRouter {
             }
             return new PcbTraceGeometry(endPadId==null ? "tree/"+netId+"/branch/"+startPadId :
                 PcbTraceGeometry.defaultSourceId(startPadId,endPadId,layer),netId,
-                startPadId,endPadId,layer,PcbCopperAccess.Exposure.EXPOSED,xPoints,yPoints);
+                startPadId,endPadId,layer,PcbCopperAccess.Exposure.EXPOSED,xPoints,yPoints,
+                activeTraceWidth);
         }
 
-        private boolean canJoinTree(int x,int y) {
+        private boolean canJoinTree(int x,int y,String netId) {
+            prepareNet(netId);
             if(emptyComponentFace) return true;
             int px=minX+x*GRID,py=minY+y*GRID;
             for(int i=0;i<collisionCourtyards.length;i++)
                 if(components[i].getMountingSide()==layer.getFace() &&
                         containsInclusive(collisionCourtyards[i],px,py) &&
-                        !(factoryUnderpasses && components[i].permitsUnderpass(layer,traceStroke(px,py,px,py)))) return false;
+                        !(factoryUnderpasses && components[i].permitsUnderpass(layer,
+                            traceStroke(px,py,px,py,activeTraceWidth)))) return false;
             return true;
         }
         private int lowerBound(int distance,PcbPadPlacement end) {
@@ -555,6 +650,7 @@ final class PcbNetRouter {
 
         private boolean canOccupy(int x, int y, String netId, PcbPadPlacement startPad,
                 PcbPadPlacement endPad) {
+            prepareNet(netId);
             int physicalX = minX + x * GRID;
             int physicalY = minY + y * GRID;
             if ((occupiedNet[x][y] != null && !netId.equals(occupiedNet[x][y])) ||
@@ -583,7 +679,7 @@ final class PcbNetRouter {
                     board.getPad(endPad.getPadId()).getComponentId()) &&
                     endPad.isInEscapeCorridor(physicalX, physicalY);
                 if (!startEscape && !endEscape && !(factoryUnderpasses && component.permitsUnderpass(layer,
-                        traceStroke(physicalX,physicalY,physicalX,physicalY))))
+                        traceStroke(physicalX,physicalY,physicalX,physicalY,activeTraceWidth))))
                     return false;
             }
             return true;
@@ -591,12 +687,15 @@ final class PcbNetRouter {
 
         private boolean canTraverse(int fromX, int fromY, int toX, int toY,
                 PcbPadPlacement startPad, PcbPadPlacement endPad,String net) {
+            prepareNet(net);
             // The same corridor owner rejects both copper faces before route publication.
             if (domainRules!=null && !domainRules.permits(net,traceStroke(
-                    minX+fromX*GRID,minY+fromY*GRID,minX+toX*GRID,minY+toY*GRID))) return false;
+                    minX+fromX*GRID,minY+fromY*GRID,minX+toX*GRID,minY+toY*GRID,
+                    activeTraceWidth))) return false;
             // Cache the exact existing rectangle/step intersection predicate on
             // the unpopulated face, avoiding a per-search-edge scan of every pad.
-            if(emptyComponentFace) {
+            boolean adjacentStep=Math.abs(fromX-toX)+Math.abs(fromY-toY)==1;
+            if(emptyComponentFace && (adjacentStep || !checkProfiledPadTouches)) {
                 String reserved=fromY==toY?horizontalReservation[Math.min(fromX,toX)][fromY]:verticalReservation[fromX][Math.min(fromY,toY)];
                 return reserved==null || reserved.equals(net);
             }
@@ -604,9 +703,11 @@ final class PcbNetRouter {
             int startPhysicalY = minY + fromY * GRID;
             int endPhysicalX = minX + toX * GRID;
             int endPhysicalY = minY + toY * GRID;
+            Rectangle stroke = traceStroke(startPhysicalX,startPhysicalY,endPhysicalX,endPhysicalY,
+                activeTraceWidth);
             String startComponentId = board.getPad(startPad.getPadId()).getComponentId();
             String endComponentId = endPad==null?null:board.getPad(endPad.getPadId()).getComponentId();
-            if(net!=null && Math.abs(fromX-toX)+Math.abs(fromY-toY)==1) {
+            if(net!=null && adjacentStep) {
                 String reserved=fromY==toY?horizontalReservation[Math.min(fromX,toX)][fromY]:verticalReservation[fromX][Math.min(fromY,toY)];
                 // Stored board net IDs are nonempty; the empty string means mixed owners.
                 if(reserved!=null && (reserved.length()==0 || !reserved.equals(net))) return false;
@@ -619,9 +720,10 @@ final class PcbNetRouter {
                     // Reserve every terminal's escape before routing any net. An early rail
                     // cannot occupy the only way out of a later signal's courtyard.
                     if(escapeReservations[index].intersects(move)) return false;
+                    if(checkProfiledPadTouches && PcbConductorBuilder.touch(stroke,padBounds[index]))
+                        return false;
                 }
             }
-            Rectangle stroke = traceStroke(startPhysicalX, startPhysicalY, endPhysicalX, endPhysicalY);
             for (int index = 0; index < components.length; index++) {
                 PcbComponentPlacement component = components[index];
                 if(component.getMountingSide()!=layer.getFace()) continue;
@@ -807,9 +909,10 @@ final class PcbNetRouter {
         // The layered router shares this exact outline, origin and grid size.
         boolean ownsLayerGridCell(int x,int y,String net) {
             return x>=0 && y>=0 && x<gridWidth && y<gridHeight &&
-                net.equals(occupiedNet[x][y]) && canJoinTree(x,y);
+                net.equals(occupiedNet[x][y]) && canJoinTree(x,y,net);
         }
         boolean freeLayerCell(int px,int py,String net) {
+            prepareNet(net);
             int x=gridX(px),y=gridY(py);
             return x>=0 && y>=0 && x<gridWidth && y<gridHeight &&
                 (occupiedNet[x][y]==null || net.equals(occupiedNet[x][y])) &&
@@ -830,16 +933,14 @@ final class PcbNetRouter {
                 x <= rectangle.x + rectangle.width && y <= rectangle.y + rectangle.height;
         }
 
-        private static Rectangle traceStroke(int firstX, int firstY, int secondX, int secondY) {
-            int half = PcbTraceRules.TRACE_WIDTH / 2;
+        private static Rectangle traceStroke(int firstX,int firstY,int secondX,int secondY,int width) {
+            int half = width / 2;
             if (firstX == secondX)
                 return new Rectangle(firstX - half, Math.min(firstY, secondY) - half,
-                    PcbTraceRules.TRACE_WIDTH,
-                    Math.abs(secondY - firstY) + PcbTraceRules.TRACE_WIDTH);
+                    width,Math.abs(secondY-firstY)+width);
             if (firstY == secondY)
                 return new Rectangle(Math.min(firstX, secondX) - half, firstY - half,
-                    Math.abs(secondX - firstX) + PcbTraceRules.TRACE_WIDTH,
-                    PcbTraceRules.TRACE_WIDTH);
+                    Math.abs(secondX-firstX)+width,width);
             throw new IllegalStateException("PCB router encountered a non-Manhattan move");
         }
 

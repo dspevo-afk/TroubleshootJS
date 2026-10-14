@@ -1,0 +1,9 @@
+{
+  "status": "FAIL_RETAINED",
+  "terminalExitCode": 1,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 71.7362911,
+  "assertionPolicy": "Each representative still evaluates original assertions; collect AssertionError per independent case and fail final suite if any fail. No PASS marker on any failure",
+  "result": "Four representatives pass; -1022 physical routing passes but area8443994 exceeds101% of6943752;42 protected empty rectangle591500 fails frozen10 improvement327600",
+  "next": "Diagnose lost compact routes under actual role widths before any acceptance; no limits/oracles loosened"
+}

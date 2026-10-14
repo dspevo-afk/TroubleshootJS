@@ -1,0 +1,22 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB role width routing contracts assertions=1351
+
+PCB_ROLE_WIDTH_SEARCH_DIAGNOSTIC status=MEASUREMENT_FAILURE reason=No_PCB_footprint_provider_for_package:_RADIAL_CERAMIC_CAPACITOR type=java.lang.IllegalStateException
+
+Exception in thread "main" java.lang.AssertionError: java.lang.IllegalStateException: No PCB footprint provider for package: RADIAL_CERAMIC_CAPACITOR
+	at com.lushprojects.circuitjs1.client.PcbRoleWidthSearchDiagnosticTest.main(PcbRoleWidthSearchDiagnosticTest.java:31)
+Caused by: java.lang.IllegalStateException: No PCB footprint provider for package: RADIAL_CERAMIC_CAPACITOR
+	at com.lushprojects.circuitjs1.client.PcbFootprintRegistry.create(PcbFootprintRegistry.java:38)
+	at com.lushprojects.circuitjs1.client.PcbPlacementPlanner.plan(PcbPlacementPlanner.java:114)
+	at com.lushprojects.circuitjs1.client.PcbRoleWidthSearchDiagnosticTest.measureRoot42Placement3(PcbRoleWidthSearchDiagnosticTest.java:43)
+	at com.lushprojects.circuitjs1.client.PcbRoleWidthSearchDiagnosticTest.main(PcbRoleWidthSearchDiagnosticTest.java:20)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbRoleWidthSearchDiagnosticTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

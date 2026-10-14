@@ -1,0 +1,9 @@
+{
+  "status": "PROPOSED_NOT_IMPLEMENTED",
+  "scope": "ROLE-only P07 lower-bound canary after branch diagnosis",
+  "formula": "d==0 ? 0 : min(d+35,s); d is Manhattan to union of all-face goals; s straight-forward-ray distance, any axial ray for direction4",
+  "costAssumptions": "GRID10, turn35, secondary>=0, via60or160 resetsdirection4",
+  "readOnlyMathematicalAudit": "support_pair_audit found admissible and consistent under shared all-face goal union; no commands/tests run",
+  "independentOraclePlan": "Small two-face Dijkstra for every state, directed transition consistency including vias, forward/reverse/perpendicular/multigoals and translation; unchanged routingcaps/physicaloracles and legacy decisions",
+  "candidateStatus": "NOT_ACCEPTED"
+}

@@ -47,8 +47,8 @@ final class PcbPlacementCompactor {
             }
             // Parallel rails and all terminal/branch endpoints keep at least
             // their full centerline clearance, even inside a furniture-sized gap.
-            int guard=PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
             for(PcbTraceGeometry trace:result.layout.getTraces()) {
+                int guard=PcbTraceRules.clearance(trace.getWidth(),trace.getWidth());
                 int[] points=xAxis?trace.getXPoints():trace.getYPoints();
                 for(int point:points)occupied.add(new int[]{point-guard,point+guard});
             }
@@ -56,7 +56,10 @@ final class PcbPlacementCompactor {
                 Rectangle bounds=hole.getBounds();
                 int start=xAxis?bounds.x:bounds.y;
                 int end=start+(xAxis?bounds.width:bounds.height);
-                occupied.add(new int[]{start-guard,end+guard});
+                // VIA_LAND and visible-clearance limits are independent of a trace's width.
+                int viaGuard=Math.max(PcbTraceRules.MIN_CENTERLINE_CLEARANCE,
+                    PcbTwoLayerRules.VIA_LAND+PcbTraceRules.MIN_VISIBLE_CLEARANCE);
+                occupied.add(new int[]{start-viaGuard,end+viaGuard});
             }
             Collections.sort(occupied,new Comparator<int[]>() {public int compare(int[] a,int[] b){return a[0]-b[0];}});
             Vector<int[]> cuts=new Vector<int[]>();

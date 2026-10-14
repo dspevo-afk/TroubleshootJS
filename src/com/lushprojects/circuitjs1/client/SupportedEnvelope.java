@@ -80,6 +80,8 @@ final class SupportedEnvelope {
         requireWork(layout);
     }
     private void requireRoutes(TroubleshootBoard board,PcbBoardLayout layout) {
+        if (!board.getPlacementConstraints().getTraceWidthProfile().isLegacyUniform())
+            reject(Reason.ACCESS_FLOOR,"this qualified single-face envelope requires uniform trace widths");
         if(PcbTraceRules.TRACE_WIDTH<9 || PcbTraceRules.MIN_VISIBLE_CLEARANCE<6 ||
                 PcbTraceRules.MIN_CENTERLINE_CLEARANCE<PcbTraceRules.TRACE_WIDTH+6)
             reject(Reason.ACCESS_FLOOR,"display/clearance floor cannot be disabled by a profile");

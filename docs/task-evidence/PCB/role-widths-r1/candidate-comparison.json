@@ -1,0 +1,179 @@
+{
+  "status": "COHORT_PASS_PRODUCTION_GATES_PENDING",
+  "profile": "ROLE_TRACE@1 13/11/9",
+  "currentSource": "nearest-branch-r1-inputs.json; unchanged audit through cohort",
+  "cohortElapsedIncludingCleanupSeconds": 164.0750156,
+  "cases": [
+    {
+      "seed": "-1017",
+      "area": 4529785,
+      "baseline11": {
+        "area": 4529785,
+        "copperLength": 26750,
+        "segments": 174,
+        "vias": 28
+      },
+      "areaChangePercent": 0,
+      "copperLength": 26660,
+      "copperChangePercent": -0.3364485981308411,
+      "segments": 173,
+      "vias": 28,
+      "areaGate": "PASS",
+      "geometrySha256": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421"
+    },
+    {
+      "seed": "-1004",
+      "area": 4466664,
+      "baseline11": {
+        "area": 4466664,
+        "copperLength": 30900,
+        "segments": 189,
+        "vias": 25
+      },
+      "areaChangePercent": 0,
+      "copperLength": 30720,
+      "copperChangePercent": -0.5825242718446602,
+      "segments": 189,
+      "vias": 26,
+      "areaGate": "PASS",
+      "geometrySha256": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877"
+    },
+    {
+      "seed": "-1022",
+      "area": 6943752,
+      "baseline11": {
+        "area": 6943752,
+        "copperLength": 45110,
+        "segments": 271,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 45670,
+      "copperChangePercent": 1.2414098869430281,
+      "segments": 270,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71"
+    },
+    {
+      "seed": "0",
+      "area": 4358809,
+      "baseline11": {
+        "area": 4358809,
+        "copperLength": 30670,
+        "segments": 179,
+        "vias": 35
+      },
+      "areaChangePercent": 0,
+      "copperLength": 30280,
+      "copperChangePercent": -1.2716009129442452,
+      "segments": 184,
+      "vias": 38,
+      "areaGate": "PASS",
+      "geometrySha256": "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d"
+    },
+    {
+      "seed": "17",
+      "area": 5814368,
+      "baseline11": {
+        "area": 5814368,
+        "copperLength": 43550,
+        "segments": 261,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 43520,
+      "copperChangePercent": -0.06888633754305395,
+      "segments": 263,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46"
+    },
+    {
+      "seed": "42",
+      "area": 6036952,
+      "baseline11": {
+        "area": 6036952,
+        "copperLength": 45970,
+        "segments": 263,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 43440,
+      "copperChangePercent": -5.503589297367848,
+      "segments": 259,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f"
+    },
+    {
+      "seed": "1",
+      "area": 4615974,
+      "baseline11": {
+        "area": 4615974,
+        "copperLength": 27670,
+        "segments": 174,
+        "vias": 28
+      },
+      "areaChangePercent": 0,
+      "copperLength": 27660,
+      "copperChangePercent": -0.03614022406938923,
+      "segments": 174,
+      "vias": 29,
+      "areaGate": "PASS",
+      "geometrySha256": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e"
+    },
+    {
+      "seed": "7",
+      "area": 6397152,
+      "baseline11": {
+        "area": 6587808,
+        "copperLength": 39770,
+        "segments": 242,
+        "vias": 45
+      },
+      "areaChangePercent": -2.8940734156186703,
+      "copperLength": 43600,
+      "copperChangePercent": 9.630374654262006,
+      "segments": 254,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c"
+    },
+    {
+      "seed": "5",
+      "area": 9445744,
+      "baseline11": {
+        "area": 9445744,
+        "copperLength": 38800,
+        "segments": 251,
+        "vias": 48
+      },
+      "areaChangePercent": 0,
+      "copperLength": 38610,
+      "copperChangePercent": -0.4896907216494845,
+      "segments": 244,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39"
+    },
+    {
+      "seed": "14",
+      "area": 7347009,
+      "baseline11": {
+        "area": 8585034,
+        "copperLength": 44590,
+        "segments": 263,
+        "vias": 48
+      },
+      "areaChangePercent": -14.420734967386268,
+      "copperLength": 42220,
+      "copperChangePercent": -5.315093070195111,
+      "segments": 247,
+      "vias": 48,
+      "areaGate": "PASS",
+      "geometrySha256": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf"
+    }
+  ],
+  "limitations": "Finite6+4 physical cohort; fullfinal41/build/actualplayerpending. Protectedfree isnotpackable; noallseed/optimality/manufacturing/performance claim."
+}

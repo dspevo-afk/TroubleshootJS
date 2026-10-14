@@ -140,10 +140,10 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         graphics.setColor(WorkbenchVisualTheme.BOARD_BEVEL);
         graphics.drawLine(outline.x + 1, outline.y + 1, outline.x + outline.width - 1, outline.y + 1);
         graphics.drawLine(outline.x + 1, outline.y + 1, outline.x + 1, outline.y + outline.height - 2);
-        int traceWidth = Math.max(1, scaleInt(PcbTraceRules.TRACE_WIDTH));
         PcbConductorGraph.Snapshot copper = instance.getCurrentConductorSnapshot();
         for (PcbCopperViewCache.Entry entry:copperView.entries(copper,projection,viewingFace,PcbCopperViewCache.POLICY_VERSION)) {
             if(entry.surface.edgeId==null)continue;
+            int traceWidth = Math.max(1, scaleInt(entry.traceWidth));
             // Both material strokes stay centered on the exact current conductor.
             // The highlight is narrower; it adds no copper or probe surface.
             graphics.setColor(WorkbenchVisualTheme.COPPER);

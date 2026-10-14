@@ -1,0 +1,28 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_WHITESPACE_CASE {"seed":"-1017","version":12,"parts":40,"gridUnits":10,"sampledCells":44688,"packageAccessOccupiedCells":20828,"protectedFreeCells":19615,"protectedFreeFraction":0.43893215180809164,"largestProtectedEmptyRectangle":{"x":70,"y":1060,"width":1080,"height":510,"area":550800},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_GROUPING_ROUTE_CASE seed=-1017 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=30627;routes=6;routingWork=17/3136503;p05=3/0;p07=3/3;selectedAttempt=3;ranked=[3, 0, 5, 4, 1, 2];placementScores=[3{total=1091127;electrical=126930;region=8875;connector=2090;corridor=1655;outline=4499200;courtyard=749848;demand=2539199}, 0{total=1116329;electrical=130430;region=8950;connector=1980;corridor=1433;outline=4725000;courtyard=749848;demand=2539199}, 5{total=1173511;electrical=136300;region=9820;connector=3000;corridor=1092;outline=9439200;courtyard=749848;demand=2539199}, 4{total=1182904;electrical=137890;region=9700;connector=2680;corridor=1245;outline=6676700;courtyard=749848;demand=2539199}, 1{total=1186042;electrical=137360;region=9365;connector=2380;corridor=2239;outline=5231100;courtyard=759448;demand=2564799}, 2{total=1239735;electrical=144580;region=8935;connector=2590;corridor=1763;outline=7371000;courtyard=749848;demand=2539199}];selectedScore=1091127;selectedQualityMilli=169129402;routeOutcomes=[P05_ONE_FACE@0=REJECTED:Unable to route net RAIL5 from C5.1@1130,1020 to U2A.RAIL@1770,1180, P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from RREF_HA.1@2730,670 to connected tree, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS];failure=null
+PCB_GROUPING_CASE {"seed":"-1017","version":12,"accepted":true,"parts":40,"pads":96,"width":2941,"height":1525,"area":4485025,"courtyardArea":749848,"regionBoundingAreaSum":4202076,"sameRegionCenterManhattanMean":723.8492063492064,"twoPadNetSpanSum":3610,"twoPadNetCount":11,"copperManhattanLength":26830,"traceSegments":174,"vias":29,"selectedAttempt":3,"routingExpansions":3136503,"geometrySha256":"c7d35df942fe604639fa64350ceec178cbfbaebd966127a79ea35e0a75521717"}
+
+Exception in thread "main" java.lang.IllegalStateException: PCB trace passes through component routing courtyard: RAIL5 / C5 segment 1270,1300 -> 1270,1840 keepOut=Rect(1255,1810,80,90) startPad=RBLEED5.1 endPad=C5.1
+	at com.lushprojects.circuitjs1.client.PcbBoardLayout.validateTraceCourtyards(PcbBoardLayout.java:356)
+	at com.lushprojects.circuitjs1.client.PcbBoardLayout.validateRoutingGeometry(PcbBoardLayout.java:279)
+	at com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Session.advanceSlice(PcbLayerRoutingPrototype.java:128)
+	at com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Session.advanceSlice(PcbLayerRoutingPrototype.java:96)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMediumTwoLayerRoute(SeededPcbLayoutGenerator.java:374)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMedium(SeededPcbLayoutGenerator.java:224)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.access$200(SeededPcbLayoutGenerator.java:10)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$Session.advance(SeededPcbLayoutGenerator.java:173)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:101)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:94)
+	at com.lushprojects.circuitjs1.client.PcbFunctionalGroupingContractTest.measure(PcbFunctionalGroupingContractTest.java:185)
+	at com.lushprojects.circuitjs1.client.PcbFunctionalGroupingContractTest.main(PcbFunctionalGroupingContractTest.java:62)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbFunctionalGroupingContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

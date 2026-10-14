@@ -7,7 +7,29 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Vacancy-guided private11 PCB packing accepted**
+**Current task:** **Private12 role-specific PCB copper widths accepted**
+The generator carries HIGH_CURRENT13, SUPPLY/RETURN11 and CONTROL/SIGNAL9 drawing
+widths through routing, clearance, conductor/probe surfaces, rendering and physical
+identity. ROLE-only turn estimation, failed-net next-order promotion and nearest
+branch selection retain the original candidate/work/time limits. Eight of ten
+board areas stay exact11; untuned7 and14 shrink2.89% and14.42%. Root7 copper grows
+9.63%; root42 area/void stay exact while copper falls5.50%. Full tradeoffs retained.
+Private12 keeps density11; saved1–11 remain exact uniform9. Replay owner matching
+uses density plus copper profile, after actual Save exposed the old density-only
+assumption. Independent real-owner11/12 positive and cross-version tests cover it.
+Fresh native42, actual JDK8/GWT five, real desktop54 probing/guarded Shop repair/
+customer PASS/Save12/FileReader12/OFF/retest/Close and narrow319 saved11 real
+FileReader/OFF/customerPASS/Close all PASS. Five inspected final captures, exact
+served provenance/input audits and owned process/tab/viewport/download cleanup.
+All failed trials and initial save/fixture/tool failures remain explicit. No normal
+advanced/HARD, all-seed, manufacturing, optimality or modest-host performance
+release. No main merge/email. Normal branch publication is being finalized.
+[Accepted evidence and limits](task-evidence/PCB/role-widths-r1/README.md).
+User's realism goal remains active until9amAmerica/New_York2026-10-14.
+Next unstarted PCB experiment: reuse existing vacancy advice for repeated-control
+candidate0 under the same candidate/evaluation/routing budgets. Inherited60 timing
+remains open; general roadmap milestones stay behind the user's PCB realism work.
+**Previous packing task:** **Vacancy-guided private11 PCB packing accepted**
 Bounded coarse free-envelope targets reuse duplicate placement evaluations in
 repeated-control candidate1. Complete package/access envelopes, actual per-pad
 domains, global80 isolation and existing routing/work/time limits stay.54/root42

@@ -1,0 +1,208 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java b/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
+index 6c0b6632..9b235233 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java
+@@ -17,7 +17,7 @@ final class PcbLayerRoutingPrototype {
+             this.secondaryCost=secondaryCost; this.underpasses=underpasses;
+         }
+     }
+-    static final int GRID=10, MAX_CELLS=250000, MAX_EXPANSIONS=1000000;
++    static final int GRID=10, TURN_COST=35, MAX_CELLS=250000, MAX_EXPANSIONS=1000000;
+     static final int MAX_BRANCH_EXPANSIONS=100000, ORDERINGS=3;
+     static final int WORK_QUANTUM=32768;
+     private static final int PATH_OCCUPANCY_CHUNK=256;
+@@ -210,6 +210,136 @@ final class PcbLayerRoutingPrototype {
+             return result;
+         }
+     }
++    /** Turn-aware admissible relaxed-plane lower bound for role-width route ordering. */
++    static final class TurnLowerBound {
++        private static final int INFINITY=Integer.MAX_VALUE/4;
++        private final int cells;
++        private final int[] manhattan,north,east,south,west,axisMin;
++        TurnLowerBound(int width,int height,boolean[] goals,int[] distance,
++                SeededPcbLayoutGenerator.AttemptObserver observer,int pass) {
++            long cellCount=(long)width*height;
++            if(width<1 || height<1 || cellCount>MAX_CELLS || goals==null ||
++                    goals.length!=cellCount*2L || distance==null ||
++                    distance.length!=cellCount || observer==null)
++                throw new IllegalArgumentException("Invalid turn lower-bound grid");
++            cells=(int)cellCount;
++            manhattan=distance;
++            north=new int[cells]; east=new int[cells];
++            south=new int[cells]; west=new int[cells];
++            axisMin=new int[cells];
++            int scanned=0;
++            for(int x=0;x<width;x++) {
++                int nearest=-1;
++                for(int y=0;y<height;y++) {
++                    int cell=y*width+x;
++                    if(goals[cell] || goals[cell+cells]) nearest=y;
++                    north[cell]=nearest>=0?(y-nearest)*GRID:INFINITY;
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            for(int y=0;y<height;y++) {
++                int nearest=-1;
++                for(int x=width-1;x>=0;x--) {
++                    int cell=y*width+x;
++                    if(goals[cell] || goals[cell+cells]) nearest=x;
++                    east[cell]=nearest>=0?(nearest-x)*GRID:INFINITY;
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            for(int x=0;x<width;x++) {
++                int nearest=-1;
++                for(int y=height-1;y>=0;y--) {
++                    int cell=y*width+x;
++                    if(goals[cell] || goals[cell+cells]) nearest=y;
++                    south[cell]=nearest>=0?(nearest-y)*GRID:INFINITY;
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            int[] rowMin=new int[cells];
++            for(int y=0;y<height;y++) {
++                int nearest=-1;
++                for(int x=0;x<width;x++) {
++                    int cell=y*width+x;
++                    if(goals[cell] || goals[cell+cells]) nearest=x;
++                    west[cell]=nearest>=0?(x-nearest)*GRID:INFINITY;
++                    rowMin[cell]=Math.min(east[cell],west[cell]);
++                    axisMin[cell]=Math.min(Math.min(north[cell],south[cell]),rowMin[cell]);
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++
++            // East/west forward half-planes use old vertical rays at each
++            // strict next column; preserve each current ray before overwriting it.
++            for(int y=0;y<height;y++) {
++                int forward=INFINITY;
++                for(int x=width-1;x>=0;x--) {
++                    int cell=y*width+x;
++                    int dForward=add(forward,GRID);
++                    int vertical=Math.min(north[cell],south[cell]);
++                    int oldRay=east[cell];
++                    east[cell]=cardinalValue(cell,dForward,oldRay);
++                    forward=Math.min(vertical,dForward);
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            for(int y=0;y<height;y++) {
++                int forward=INFINITY;
++                for(int x=0;x<width;x++) {
++                    int cell=y*width+x;
++                    int dForward=add(forward,GRID);
++                    int vertical=Math.min(north[cell],south[cell]);
++                    int oldRay=west[cell];
++                    west[cell]=cardinalValue(cell,dForward,oldRay);
++                    forward=Math.min(vertical,dForward);
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++
++            // North/south forward half-planes use rowMin from the old E/W rays.
++            for(int x=0;x<width;x++) {
++                int forward=INFINITY;
++                for(int y=0;y<height;y++) {
++                    int cell=y*width+x;
++                    int dForward=add(forward,GRID);
++                    int oldRay=north[cell];
++                    north[cell]=cardinalValue(cell,dForward,oldRay);
++                    forward=Math.min(rowMin[cell],dForward);
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            for(int x=0;x<width;x++) {
++                int forward=INFINITY;
++                for(int y=height-1;y>=0;y--) {
++                    int cell=y*width+x;
++                    int dForward=add(forward,GRID);
++                    int oldRay=south[cell];
++                    south[cell]=cardinalValue(cell,dForward,oldRay);
++                    forward=Math.min(rowMin[cell],dForward);
++                    if((scanned++&4095)==0) observer.check(pass);
++                }
++            }
++            observer.check(pass);
++        }
++        int value(int cell,int direction) {
++            if(cell<0 || cell>=cells || direction<0 || direction>4)
++                throw new IllegalArgumentException("Invalid turn lower-bound state");
++            int manhattanDistance=manhattan[cell];
++            if(manhattanDistance<=0) return 0;
++            if(direction==4) return Math.min(add(manhattanDistance,TURN_COST),axisMin[cell]);
++            return direction==0?north[cell]:direction==1?east[cell]:
++                direction==2?south[cell]:west[cell];
++        }
++        private int cardinalValue(int cell,int forward,int currentRay) {
++            int distance=manhattan[cell];
++            if(distance<=0) return 0;
++            return Math.min(Math.min(add(distance,2*TURN_COST),add(forward,TURN_COST)),
++                Math.min(add(axisMin[cell],TURN_COST),currentRay));
++        }
++        private static int add(int value,int amount) {
++            return value<0 || value>=INFINITY-amount?INFINITY:value+amount;
++        }
++    }
++
+     private static final class Search {
+         final TroubleshootBoard board;
+         final PcbBoardLayout layout;
+@@ -348,6 +478,7 @@ final class PcbLayerRoutingPrototype {
+             final PcbPadPlacement start,root;
+             final boolean[] goal;
+             final int[] distance;
++            final TurnLowerBound turnLowerBound;
+             final PcbBoardHole[] holes;
+             final Rectangle[] holeBounds;
+             final HashMap<Integer,Node> best=new HashMap<Integer,Node>();
+@@ -364,19 +495,25 @@ final class PcbLayerRoutingPrototype {
+                 holeBounds=new Rectangle[holes.length];
+                 for(int i=0;i<holes.length;i++) holeBounds[i]=holes[i].getBounds();
+                 goal=goals(net,root); distance=lowerBound(goal);
++                turnLowerBound=board.getPlacementConstraints().getTraceWidthProfile()==
++                    PcbTraceWidthProfile.ROLE_WIDTHS?
++                    new TurnLowerBound(width,height,goal,distance,observer,pass):null;
+                 for(int layer=0;layer<2;layer++) if(layer==primary || policy==Policy.FULLER_TWO_LAYER)
+                     offer(queue,best,new Node(cell(start),layer,4,0,layer==primary?0:policy.secondaryCost,
+-                        distance[cell(start)],serial++,cells,null));
++                        heuristic(cell(start),4),serial++,cells,null));
+                 observer.check(pass);
+             }
++            int heuristic(int cell,int direction) {
++                return turnLowerBound==null?distance[cell]:turnLowerBound.value(cell,direction);
++            }
+             void offerStep(Node current,int n,int direction) {
+                 // The face predicate already checks this exact domain corridor.
+-                // In-grid adjacent centers keep the 9-unit stroke inside the validated outline.
++                // The profile's widest 13-unit stroke still fits inside the 10-unit outline margin.
+                 if(!faces[current.layer].permitsLayerStep(x(current.cell),y(current.cell),x(n),y(n),net,start,root)) return;
+                 int cost=current.cost+GRID+(current.layer==primary?0:policy.secondaryCost)+
+-                    (current.direction!=4 && current.direction!=direction?35:0);
++                    (current.direction!=4 && current.direction!=direction?TURN_COST:0);
+                 offer(queue,best,new Node(n,current.layer,direction,current.transitions,cost,
+-                    distance[n],serial++,cells,current));
++                    heuristic(n,direction),serial++,cells,current));
+             }
+             void advanceOne() {
+                 Node current=queue.poll();
+@@ -395,7 +532,7 @@ final class PcbLayerRoutingPrototype {
+                 if(current.direction!=4 && current.transitions<policy.transitions &&
+                         pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell),holes,holeBounds))
+                     offer(queue,best,new Node(current.cell,1-current.layer,4,current.transitions+1,
+-                        current.cost+policy.viaCost,distance[current.cell],serial++,cells,current));
++                        current.cost+policy.viaCost,heuristic(current.cell,4),serial++,cells,current));
+             }
+         }
+         private final class Publisher {
+@@ -477,7 +614,9 @@ final class PcbLayerRoutingPrototype {
+                         String endPad=pieceEnd==reversed.size()-1 && end.cell==cell(root)?root.getPadId():null;
+                         layout.addTrace(new PcbTraceGeometry("p07/"+net+"/"+branches+"/"+(piece++),net,
+                             pieceStart==0?start.getPadId():null,endPad,PcbCopperLayer.values()[begin.layer],
+-                            PcbCopperAccess.Exposure.EXPOSED,traceX,traceY));
++                            PcbCopperAccess.Exposure.EXPOSED,traceX,traceY,
++                            board.getPlacementConstraints().getTraceWidthProfile().widthFor(
++                                board.getNet(net).getRoutingRole())));
+                         segments+=pathCount-1;
+                     }
+                     if(transition) {

@@ -1,0 +1,30 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_ROLE_WIDTH_REPLAY_SOURCE seed=-1022 hash=1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9 attempt=0 traces=151 vias=48
+PCB_ROLE_WIDTH_REPLAY_CHECK validateRoutingGeometry status=REJECTED reason=IllegalStateException:PCB trace passes through component routing courtyard: RAIL12 / COUT segment 1996,749 -> 1996,519 keepOut=Rect(2001,533,110,110) startPad=null endPad=null
+PCB_ROLE_WIDTH_REPLAY_CHECK validateGeometry status=REJECTED reason=IllegalStateException:PCB trace passes through component routing courtyard: RAIL12 / COUT segment 1996,749 -> 1996,519 keepOut=Rect(2001,533,110,110) startPad=null endPad=null
+PCB_ROLE_WIDTH_REPLAY_CHECK PcbTwoLayerRules status=LEGAL
+PCB_ROLE_WIDTH_REPLAY_CHECK PcbTraceClearance status=LEGAL
+PCB_ROLE_WIDTH_REPLAY_CHECK conductorGraphConnectivity status=REJECTED reason=IllegalStateException:Unrelated PCB conductors share copper: B_COIL_LOW / RAIL5
+PCB_ROLE_WIDTH_REPLAY_PATH seed=-1022 status=NOT_RUN detail=first-step-search-replay-deferred
+PCB_ROLE_WIDTH_REPLAY_ACCEPTANCE seed=-1022 status=NOT_PROVEN
+PCB_ROLE_WIDTH_REPLAY_SOURCE seed=42 hash=df2494c31141ac8c6ccb5065454ba70e2190d29d9690a195f518c1c268c5fb01 attempt=1 traces=144 vias=48
+PCB_ROLE_WIDTH_REPLAY_CHECK validateRoutingGeometry status=REJECTED reason=IllegalStateException:PCB trace passes through component routing courtyard: AC_RETURN / D2 segment 286,845 -> 286,1295 keepOut=Rect(158,1300,226,60) startPad=JAC.2 endPad=D2.A
+PCB_ROLE_WIDTH_REPLAY_CHECK validateGeometry status=REJECTED reason=IllegalStateException:PCB trace passes through component routing courtyard: AC_RETURN / D2 segment 286,845 -> 286,1295 keepOut=Rect(158,1300,226,60) startPad=JAC.2 endPad=D2.A
+PCB_ROLE_WIDTH_REPLAY_CHECK PcbTwoLayerRules status=LEGAL
+PCB_ROLE_WIDTH_REPLAY_CHECK PcbTraceClearance status=LEGAL
+PCB_ROLE_WIDTH_REPLAY_CHECK conductorGraphConnectivity status=REJECTED reason=IllegalStateException:Unrelated PCB conductors share copper: PRE_L / SENSE_ZENER
+PCB_ROLE_WIDTH_REPLAY_PATH seed=42 status=NOT_RUN detail=first-step-search-replay-deferred
+PCB_ROLE_WIDTH_REPLAY_ACCEPTANCE seed=42 status=NOT_PROVEN
+PCB_ROLE_WIDTH_GOAL_BOUNDARY width=11 court=115,110,130,40 gridPoint=250,130 actualStroke=245,125,11,11 physicalCourtyardIntersection=false searchGoal=REJECTED
+PCB_ROLE_WIDTH_GOAL_BOUNDARY width=13 court=114,110,130,40 gridPoint=250,130 actualStroke=244,124,13,13 physicalCourtyardIntersection=false searchGoal=REJECTED
+PASS: PCB role width replay diagnostic complete
+
+PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,15 @@
+{
+  "sha256": "84e7c24e4f090c6f9900176fc7d28986a265d3ba8a56e56b74426de13815ac9a",
+  "cleanup": "PENDING exact ownership revalidation",
+  "identity": "Actual download event; exact private12/current45D6 build in payload; byte-exact copy",
+  "creationUtc": "2026-10-14T10:28:35.3813029Z",
+  "evidence": "repaired12-54.tsjsave",
+  "lastWriteTicks": "639275705158073059",
+  "creationTicks": "639275705153813029",
+  "lastWriteUtc": "2026-10-14T10:28:35.8073059Z",
+  "bytes": 2183,
+  "status": "ACTUAL_DOWNLOAD_BYTE_EXACT_COPY",
+  "fileName": "troubleshootjs-session.tsjsave",
+  "creationAudit": "PASS: native Int64 creation ticks after preview creation ticks. Initial DateTime/string reparse lost UTC Kind after ConvertFrom-Json and incorrectly shifted preview four hours; no file mutation occurred on that rejected check.",
+  "eventRetrieval": "Actual Save completed; stale undefined REPL handle prevented first result print. Same resolved download event retrieved without another Save click."
+}

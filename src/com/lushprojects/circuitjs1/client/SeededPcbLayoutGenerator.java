@@ -1093,7 +1093,7 @@ class SeededPcbLayoutGenerator {
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {
                 if (candidate.intersects(traceStroke(xPoints[index - 1],
-                        yPoints[index - 1], xPoints[index], yPoints[index])))
+                        yPoints[index - 1], xPoints[index], yPoints[index],trace.getWidth())))
                     return false;
             }
         }
@@ -1117,16 +1117,14 @@ class SeededPcbLayoutGenerator {
         return Math.max(18, text.length() * (fontSize <= 12 ? 8 : 9));
     }
 
-    private static Rectangle traceStroke(int firstX, int firstY, int secondX, int secondY) {
-        int half = PcbTraceRules.TRACE_WIDTH / 2;
+    private static Rectangle traceStroke(int firstX,int firstY,int secondX,int secondY,int width) {
+        int half = width / 2;
         if (firstX == secondX)
             return new Rectangle(firstX - half, Math.min(firstY, secondY) - half,
-                PcbTraceRules.TRACE_WIDTH,
-                Math.abs(secondY - firstY) + PcbTraceRules.TRACE_WIDTH);
+                width,Math.abs(secondY-firstY)+width);
         if (firstY == secondY)
             return new Rectangle(Math.min(firstX, secondX) - half, firstY - half,
-                Math.abs(secondX - firstX) + PcbTraceRules.TRACE_WIDTH,
-                PcbTraceRules.TRACE_WIDTH);
+                Math.abs(secondX-firstX)+width,width);
         throw new IllegalStateException("PCB layout encountered a non-Manhattan trace");
     }
 

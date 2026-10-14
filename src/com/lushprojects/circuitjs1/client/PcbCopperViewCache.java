@@ -12,12 +12,14 @@ final class PcbCopperViewCache {
     static final class Entry {
         final PcbConductorGraph.Surface surface;
         final int firstX,firstY,secondX,secondY;
+        final int traceWidth;
         private final Rectangle bounds;
         private final Point marker;
         Entry(PcbConductorGraph graph,PcbConductorGraph.Surface surface,PcbViewport.Transform view) {
             this.surface=surface;bounds=view.project(surface.getBounds());
             marker=view.project(PcbCopperProbeAccess.marker(surface));
             PcbConductorGraph.Edge edge=surface.edgeId==null?null:graph.getEdges().get(surface.edgeId);
+            traceWidth=edge==null?PcbTraceRules.TRACE_WIDTH:edge.getWidth();
             PcbConductorGraph.Junction a=graph.getJunctions().get(surface.junctionId);
             PcbConductorGraph.Junction b=edge==null?a:graph.getJunctions().get(edge.second);
             if(edge!=null)a=graph.getJunctions().get(edge.first);

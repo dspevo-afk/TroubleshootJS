@@ -347,7 +347,8 @@ final class PcbTwoLayerRules {
         }
         for(PcbTraceGeometry trace:layout.getTraces()) {
             int[] x=trace.getXPoints(),y=trace.getYPoints();
-            for(int i=1;i<x.length;i++) if(!permits(trace.getNetId(),PcbConductorBuilder.stroke(x[i-1],y[i-1],x[i],y[i])))
+            for(int i=1;i<x.length;i++) if(!permits(trace.getNetId(),PcbConductorBuilder.stroke(
+                    x[i-1],y[i-1],x[i],y[i],trace.getWidth())))
                 throw new IllegalStateException("P07 copper crosses a physical domain barrier");
         }
         for(PcbBoardHole hole:layout.getHoles()) {
@@ -367,7 +368,7 @@ final class PcbTwoLayerRules {
                 if(hole.netId!=null && hole.netId.equals(trace.getNetId())) continue;
                 int[] x=trace.getXPoints(),y=trace.getYPoints();
                 for(int i=1;i<x.length;i++) if(PcbConductorBuilder.touch(clearance,
-                        PcbConductorBuilder.stroke(x[i-1],y[i-1],x[i],y[i])))
+                        PcbConductorBuilder.stroke(x[i-1],y[i-1],x[i],y[i],trace.getWidth())))
                     throw new IllegalStateException("P07 via violates foreign copper clearance");
             }
             for(PcbBoardHole other:layout.getHoles()) if(!hole.id.equals(other.id) &&

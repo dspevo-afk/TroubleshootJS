@@ -1,0 +1,132 @@
+{
+  "status": "MEASUREMENT_COMPLETED",
+  "candidateAcceptance": "NOT_EVALUATED",
+  "terminalExitCode": 0,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 42.4645266,
+  "branchCount": 204,
+  "reopenedExpansions": 0.0,
+  "staleQueuePops": 140300.0,
+  "passBoundaries": [
+    "PCB_ROLE_WIDTH_SEARCH_PASS_BOUNDARY step=465336 from=0 to=1 completedPassExpansions=388781 cumulativeExpansions=388781 reason=FB_AC:BRANCH_QUALITY_LIMIT",
+    "PCB_ROLE_WIDTH_SEARCH_PASS_BOUNDARY step=1061497 from=1 to=2 completedPassExpansions=512757 cumulativeExpansions=901538 reason=OUT_B:BRANCH_SEARCH_LIMIT",
+    "PCB_ROLE_WIDTH_SEARCH_PASS_BOUNDARY step=1182983 from=2 to=3 completedPassExpansions=98462 cumulativeExpansions=1000000 reason=B_CMD:TOTAL_SEARCH_LIMIT"
+  ],
+  "final": [
+    "PCB_ROLE_WIDTH_SEARCH_FINAL seed=42 version=12 candidate=3 steps=1182984 expansions=1000000 cap=1000000 orderings=3 outcome=B_CMD:TOTAL_SEARCH_LIMIT p07ResultAccepted=false candidateAcceptance=NOT_EVALUATED inputGeometryUnchanged=true sessionReason=B_CMD:TOTAL_SEARCH_LIMIT measurementOnly=true"
+  ],
+  "largestBranches": [
+    {
+      "pass": "1",
+      "net": "OUT_B",
+      "start": "KB.NO",
+      "outcome": "SEARCH_ENDED",
+      "expanded": "100000",
+      "queue": "1643",
+      "best": "101633",
+      "staleQueuePops": "661",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "2",
+      "net": "B_CMD",
+      "start": "RFB_B.1",
+      "outcome": "SEARCH_ENDED",
+      "expanded": "87115",
+      "queue": "12849",
+      "best": "97822",
+      "staleQueuePops": "19563",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "0",
+      "net": "B_SENSE",
+      "start": "RSB.2",
+      "outcome": "PATH_FOUND",
+      "expanded": "63349",
+      "queue": "4826",
+      "best": "67646",
+      "staleQueuePops": "8380",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "0",
+      "net": "A_COIL_LOW",
+      "start": "KA.A2",
+      "outcome": "PATH_FOUND",
+      "expanded": "44182",
+      "queue": "21084",
+      "best": "61921",
+      "staleQueuePops": "7276",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "1",
+      "net": "HV_POS",
+      "start": "UAC.IN+",
+      "outcome": "PATH_FOUND",
+      "expanded": "43706",
+      "queue": "26726",
+      "best": "65732",
+      "staleQueuePops": "5903",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "0",
+      "net": "HV_POS",
+      "start": "UAC.IN+",
+      "outcome": "PATH_FOUND",
+      "expanded": "42747",
+      "queue": "27882",
+      "best": "66907",
+      "staleQueuePops": "6512",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "1",
+      "net": "AC_FUSED",
+      "start": "F1.2",
+      "outcome": "PATH_FOUND",
+      "expanded": "33953",
+      "queue": "14959",
+      "best": "45734",
+      "staleQueuePops": "6863",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "1",
+      "net": "B_SENSE",
+      "start": "RSB.2",
+      "outcome": "PATH_FOUND",
+      "expanded": "30091",
+      "queue": "13120",
+      "best": "41184",
+      "staleQueuePops": "5242",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "1",
+      "net": "RAIL5",
+      "start": "RREF_H.1",
+      "outcome": "PATH_FOUND",
+      "expanded": "28142",
+      "queue": "12998",
+      "best": "39526",
+      "staleQueuePops": "5478",
+      "reopenedStateExpansions": "0"
+    },
+    {
+      "pass": "0",
+      "net": "AC_FUSED",
+      "start": "F1.2",
+      "outcome": "PATH_FOUND",
+      "expanded": "25145",
+      "queue": "11496",
+      "best": "34582",
+      "staleQueuePops": "5891",
+      "reopenedStateExpansions": "0"
+    }
+  ],
+  "decision": "Canary moreinformative admissible ROLE-onlyturnlowerbound with independentDijkstra proof; keepwidths/caps/oracles andalllegacydecisions",
+  "priorFailures": "r1emptyregistryfixture; r2missingPASSprotocolprefix; bothretained"
+}

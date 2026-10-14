@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_RETAINED",
+  "phase": "maintained verifier completion protocol",
+  "terminalJavaExitCode": 0,
+  "terminalWrapperExitCode": 1,
+  "elapsedIncludingCleanupSeconds": 41.9848879,
+  "cleanup": "PASS",
+  "measurement": "Actual unchanged-cap root42candidate3 reached1mexpansions,1182984steps; inputgeometryunchanged; routingcandidateREJECTED",
+  "cause": "New diagnostic emitted completion text without maintained PASS: prefix; verifier correctly refused qualification",
+  "fix": "Add required prefix in diagnostic only; maintained verifier unchanged",
+  "acceptance": "NOT_EVALUATED"
+}

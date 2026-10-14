@@ -11,7 +11,7 @@ public final class PcbPinLocalPackingContractTest {
         long[] accepted10Spans={19610,24320,28140,22890,25220,20480};
         long totalSpan=0;
         for(int i=0;i<seeds.length;i++) {
-            Rb56Plan plan=Rb56Plan.resolve(seeds[i],Rb56Placement.CURRENT_VERSION);
+            Rb56Plan plan=Rb56Plan.resolve(seeds[i],Rb56Placement.VACANCY_VERSION);
             TroubleshootBoard board=plan.board();
             MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(board,plan.layoutSeed,plan.routingSeed);
@@ -48,7 +48,7 @@ public final class PcbPinLocalPackingContractTest {
                 " pairs="+pairs+" span="+span+" copper="+copper+" geometry="+PlayerSessionFingerprint.of(layout.geometryFingerprint()));
             if(area>areas[i])throw new AssertionError("local area regression: "+seeds[i]);
             if(i==5 && span>baselineSpans[i]*3/4)throw new AssertionError("paired-pin span gain below declared quarter");
-            if(Rb56Placement.CURRENT_VERSION>=11 && span>accepted10Spans[i])
+            if(Rb56Placement.VACANCY_VERSION>=11 && span>accepted10Spans[i])
                 throw new AssertionError("paired-pin span regresses against accepted10: "+seeds[i]);
             totalSpan+=span;
         }

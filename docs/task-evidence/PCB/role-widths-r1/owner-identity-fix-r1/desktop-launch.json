@@ -1,0 +1,16 @@
+{
+  "attributes": {
+    "data-tsj-preview-execution-digest": "47e54f052c6854f4050a2c9ecd2a9c2ce9e02fdc852220b725ea9debaa9d2ffc",
+    "data-tsj-preview-file-count": "1589",
+    "data-tsj-preview-identity-protocol": "troubleshootjs-execution-provenance-v1",
+    "data-tsj-preview-script-digest": "437783ac834d010d98c1198d007eb502c67c6972f1dbfdbc7e6aaff3293baf2f",
+    "data-tsj-preview-source-digest": "420b49dc6d32a956aec7c3154ea1aaa11cc791eb69b236fc18cd1550d29f4c31",
+    "data-tsj-preview-web-digest": "3ba1525660ba319ba1c6953725e887c0bb470b376f04d91eae1102c1338d209f",
+    "data-tsj-rb56-report": "{\"protocol\":\"TSJ-RB56-QUALIFICATION-1\", \"scope\":\"PRIVATE_PLAYER_SESSION\", \"family\":\"RB56_CONTROL\", \"seed\":\"42\", \"sourceEpoch\":\"tsj-generation-dependencies-v16\", \"planVersion\":1, \"maxJobMillis\":90000, \"maxJobSteps\":640, \"maxUnitMillis\":5000, \"forcedAfterPublish\":false, \"normalCatalogEnabled\":false, \"status\":\"RUNNING\", \"phase\":\"STARTUP\"}",
+    "data-tsj-verification": "RUNNING:rb56"
+  },
+  "viewport": [
+    1280,
+    720
+  ]
+}

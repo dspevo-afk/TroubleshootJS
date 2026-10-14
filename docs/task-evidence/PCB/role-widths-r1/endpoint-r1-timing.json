@@ -1,0 +1,8 @@
+{
+  "status": "MEASUREMENT_COMPLETED",
+  "candidateAcceptance": "NOT_EVALUATED",
+  "elapsedIncludingCleanupSeconds": 42.4056954,
+  "inputAudit": "PASS",
+  "changedPaths": [],
+  "utc": "2026-10-14T09:28:15.8349787Z"
+}

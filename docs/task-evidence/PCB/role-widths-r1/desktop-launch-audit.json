@@ -1,0 +1,39 @@
+{
+  "fields": [
+    {
+      "pass": true,
+      "expected": "5755df433bfeb1d9587aab68730785738b139c0fec28196d13ee8eacc3be01b0",
+      "field": "data-tsj-preview-source-digest",
+      "observed": "5755df433bfeb1d9587aab68730785738b139c0fec28196d13ee8eacc3be01b0"
+    },
+    {
+      "pass": true,
+      "expected": "dc7be7e655311cd71d7f660c0342a3a7b0222a198a0571076c28269c05223f00",
+      "field": "data-tsj-preview-script-digest",
+      "observed": "dc7be7e655311cd71d7f660c0342a3a7b0222a198a0571076c28269c05223f00"
+    },
+    {
+      "pass": true,
+      "expected": "d21161da614277c06d1c2a1785315d6be039a8eea95aad6c63969b31de417bac",
+      "field": "data-tsj-preview-web-digest",
+      "observed": "d21161da614277c06d1c2a1785315d6be039a8eea95aad6c63969b31de417bac"
+    },
+    {
+      "pass": true,
+      "expected": "1f3aca2c4c20d5f45e6fb4bd5e3a6207d903a6e728805b27c532205471a09fcd",
+      "field": "data-tsj-preview-execution-digest",
+      "observed": "1f3aca2c4c20d5f45e6fb4bd5e3a6207d903a6e728805b27c532205471a09fcd"
+    },
+    {
+      "pass": true,
+      "expected": "1589",
+      "field": "data-tsj-preview-file-count",
+      "observed": "1589"
+    }
+  ],
+  "viewport": [
+    1280,
+    720
+  ],
+  "status": "PASS"
+}

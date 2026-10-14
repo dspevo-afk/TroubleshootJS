@@ -1,0 +1,10 @@
+{
+  "status": "MEASUREMENT_COMPLETED_NOT_PCB_ACCEPTANCE",
+  "terminalExitCode": 0,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 42.4056954,
+  "inputAudit": "PASS endpoint-r1-inputs",
+  "finding": "Actualpass1B_CMD Output@2370,1360 toRDB1@2470,440 PATH_FOUND11392 expansions; thenRFB_B1@2500,1700 toconnectedtree PATH_FOUND5222. Pass2lexicalchoosesRFBfirstandhits100000branchcap.",
+  "limitation": "Different precedingcopper/passcontexts; branch-ordercauseisahypothesis requiringcontrolledcanary. Endpointstepmasksquerylocalpredicatesonly, rootinboundmaskdoesnotcertifyadjacent-celloccupancyor globalreachability; no cagingclaim.",
+  "parity": "One-unit andseparateblocking results/accounting identical678481expansions/3orders/B_CMDbranchlimit; inputgeometryunchanged"
+}

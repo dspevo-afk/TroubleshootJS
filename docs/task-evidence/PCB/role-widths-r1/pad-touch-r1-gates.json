@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "sourceInputCount": 1030,
+  "changedPaths": [],
+  "gates": {
+    "focusedR6": "PASS5 40.8405086s",
+    "holdoutsR1": "PASS3 suites: four current holdouts plus20 exact saved10/11 cases 148.2034488s",
+    "cohortR4": "FAIL six current representatives: root42 outline/void regression; five others PASS; elapsed including cleanup 62.9343079s"
+  },
+  "cleanup": "All three actual terminal exits observed; task scratch cleanup confirmed",
+  "acceptance": "NOT_ACCEPTED"
+}

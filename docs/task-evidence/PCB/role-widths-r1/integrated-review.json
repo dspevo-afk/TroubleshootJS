@@ -1,0 +1,14 @@
+{
+  "status": "ROOT_DIFF_REVIEW_COMPLETED_FINAL_GATES_PENDING",
+  "head": "68ae9284360e379ca1e31cf10690e11d9b26280d",
+  "sourceDigest": "5755df433bfeb1d9587aab68730785738b139c0fec28196d13ee8eacc3be01b0",
+  "scriptDigest": "dc7be7e655311cd71d7f660c0342a3a7b0222a198a0571076c28269c05223f00",
+  "webDigest": "f9beac5b597b9991aa7a5abdb568b8e6cc81ccc766362ac004c421a9ff1a6e0a",
+  "executionDigest": "bcab0115dc60aa4e2882bb9c520c997d9aaeb4dc6a3cc87676ce73ea2874eadd",
+  "executionFileCount": 1589,
+  "nativeInputCount": 1425,
+  "scope": "All changed production owners: profile/version/replay/dependency/envelope, trace/layout/clearance/endpoint geometry, P05/P07 widths and search, compaction/access/crop, conductor/snapshot width identity, render/cache/SVG; new/changedfixtures andregistry. ConfirmednewROLEonlyrouting, default9implicitgoldens, no seed/provider/net-ID branchesinproduction. Later fixture-only correction reviewed: held registration uses opted-in private qualification and existing staged640 bound; every serviceability assertion preserved. Direct suite selects existing native scratch bridges.",
+  "decisions": "Rootreviewfoundno unresolvedcorrectnessblocker on integrated source; current6+4 andexact20saved passed. Actualfinal41/GWT/playerstillrequired. Read-onlyexternalreviewsseparatelyscoped; no broadindependentPASSclaimed.",
+  "limits": "No manufacturing/ampacity/resistance/optimality/allseed/normaladvanced/performance release; no main/email",
+  "resources": "One finalnativegate active; allwritersfrozen; nopreview/browser/download"
+}

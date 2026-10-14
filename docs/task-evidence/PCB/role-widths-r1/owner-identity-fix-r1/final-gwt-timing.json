@@ -1,0 +1,8 @@
+{
+  "cleanupDuration": "NOT_MEASURED separately; maintained build wrapper returned",
+  "utc": "2026-10-14T10:23:49.6974578Z",
+  "changedPaths": [],
+  "inputAudit": "PASS",
+  "status": "PASS",
+  "elapsedIncludingCleanupSeconds": 89.644611
+}

@@ -167,9 +167,16 @@ class PcbBoardLayout {
             if (board.getComponent(componentId) == null)
                 throw new IllegalStateException("PCB layout references unknown component: " + componentId);
         }
+        PcbTraceWidthProfile widthProfile = board.getPlacementConstraints().getTraceWidthProfile();
         for (PcbTraceGeometry trace : traces) {
-            if (board.getNet(trace.getNetId()) == null)
+            BoardNet net = board.getNet(trace.getNetId());
+            if (net == null)
                 throw new IllegalStateException("PCB layout references unknown net: " + trace.getNetId());
+            int expectedWidth = widthProfile.widthFor(net.getRoutingRole());
+            if (trace.getWidth() != expectedWidth)
+                throw new IllegalStateException("PCB trace width disagrees with net profile: " +
+                    trace.getNetId() + " expected=" + expectedWidth + " actual=" +
+                    trace.getWidth());
         }
         for (String padId : board.getPadIds()) {
             if (!pads.containsKey(padId))
@@ -262,7 +269,7 @@ class PcbBoardLayout {
                 if (index == 0)
                     continue;
                 Rectangle stroke = getTraceSegmentBounds(xPoints[index - 1], yPoints[index - 1],
-                    xPoints[index], yPoints[index]);
+                    xPoints[index], yPoints[index], trace.getWidth());
                 if (!rectangleInside(boardOutline, stroke))
                     throw new IllegalStateException("PCB trace leaves board: " +
                         trace.getNetId() + " segment=" + xPoints[index - 1] + "," +
@@ -335,10 +342,10 @@ class PcbBoardLayout {
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 1; index < xPoints.length; index++) {
-                if (keepOut.intersects(getTraceSegmentBounds(xPoints[index - 1],
-                        yPoints[index - 1], xPoints[index], yPoints[index])) &&
-                        !component.permitsUnderpass(trace.getLayer(), getTraceSegmentBounds(
-                            xPoints[index - 1], yPoints[index - 1], xPoints[index], yPoints[index])) &&
+                Rectangle stroke = getTraceSegmentBounds(xPoints[index - 1],
+                    yPoints[index - 1], xPoints[index], yPoints[index], trace.getWidth());
+                if (keepOut.intersects(stroke) &&
+                        !component.permitsUnderpass(trace.getLayer(), stroke) &&
                         !isLegalEndpointEscape(component, trace, startPad, endPad,
                             xPoints[index - 1], yPoints[index - 1], xPoints[index],
                             yPoints[index]))
@@ -373,7 +380,8 @@ class PcbBoardLayout {
             escapePad = endPlacement;
         if (escapePad == null)
             return false;
-        Rectangle keepOut = traceCollisionEnvelope(component.getRoutingCourtyard());
+        Rectangle keepOut = traceCollisionEnvelope(component.getRoutingCourtyard(),
+            trace.getWidth());
         int left = Math.min(x1, x2);
         int right = Math.max(x1, x2);
         int top = Math.min(y1, y2);
@@ -469,38 +477,50 @@ class PcbBoardLayout {
         }
     }
 
-    private static Rectangle getTraceSegmentBounds(int firstX, int firstY, int secondX, int secondY) {
+    private static Rectangle getTraceSegmentBounds(int firstX, int firstY, int secondX,
+            int secondY, int traceWidth) {
         if (firstX == secondX && firstY == secondY)
             throw new IllegalStateException("PCB trace segment has zero length: " +
                 firstX + "," + firstY);
-        int half = PcbTraceRules.TRACE_WIDTH / 2;
+        PcbTraceRules.requireWidth(traceWidth);
+        int half = traceWidth / 2;
         if (firstX == secondX) {
             int x = checkedSubtract(firstX, half);
-            int width = checkedInt(PcbTraceRules.TRACE_WIDTH);
+            int width = checkedInt(traceWidth);
             int top = Math.min(firstY, secondY);
             long height = checkedSubtract(Math.max(firstY, secondY), top);
-            height = checkedAdd(height, PcbTraceRules.TRACE_WIDTH);
+            height = checkedAdd(height, traceWidth);
             return new Rectangle(x, checkedSubtract(top, half), width, checkedInt(height));
         }
         if (firstY == secondY) {
             int y = checkedSubtract(firstY, half);
-            int height = checkedInt(PcbTraceRules.TRACE_WIDTH);
+            int height = checkedInt(traceWidth);
             int left = Math.min(firstX, secondX);
             long width = checkedSubtract(Math.max(firstX, secondX), left);
-            width = checkedAdd(width, PcbTraceRules.TRACE_WIDTH);
+            width = checkedAdd(width, traceWidth);
             return new Rectangle(checkedSubtract(left, half), y, checkedInt(width), height);
         }
         throw new IllegalStateException("PCB trace segment is not Manhattan routed: " +
             firstX + "," + firstY + " -> " + secondX + "," + secondY);
     }
 
-    private static Rectangle traceCollisionEnvelope(Rectangle rectangle) {
-        int half = PcbTraceRules.TRACE_WIDTH / 2;
-        int extension = PcbTraceRules.TRACE_WIDTH - half;
+    private static Rectangle traceCollisionEnvelope(Rectangle rectangle, int traceWidth) {
+        PcbTraceRules.requireWidth(traceWidth);
+        int half = traceWidth / 2;
+        // This rectangle is consumed as an inclusive range of centerline
+        // coordinates. For an odd-width physical stroke of 2*half+1 drawing
+        // units, its half-open bounds overlap [a,b) exactly when the integer
+        // centerline lies in [a-half, b+half-1]. Keep the historical width9
+        // envelope byte-for-byte equivalent; wider profile widths use the
+        // exact discrete stroke interval at both courtyard edges.
+        int extension = traceWidth == PcbTraceRules.TRACE_WIDTH ?
+            traceWidth - half : half;
+        int spanExpansion = traceWidth == PcbTraceRules.TRACE_WIDTH ?
+            traceWidth : traceWidth - 2;
         return new Rectangle(checkedSubtract(rectangle.x, extension),
             checkedSubtract(rectangle.y, extension),
-            checkedAdd(rectangle.width, PcbTraceRules.TRACE_WIDTH),
-            checkedAdd(rectangle.height, PcbTraceRules.TRACE_WIDTH));
+            checkedAdd(rectangle.width, spanExpansion),
+            checkedAdd(rectangle.height, spanExpansion));
     }
 
     private static boolean rectangleInside(Rectangle outer, Rectangle inner) {
@@ -561,7 +581,8 @@ class PcbBoardLayout {
                 int[] yPoints = trace.getYPoints();
                 for (int index = 1; index < xPoints.length; index++) {
                     if (bounds.intersects(getTraceSegmentBounds(xPoints[index - 1],
-                            yPoints[index - 1], xPoints[index], yPoints[index])))
+                            yPoints[index - 1], xPoints[index], yPoints[index],
+                            trace.getWidth())))
                         throw new IllegalStateException("Silkscreen label overlaps copper: " +
                             label.getId() + " / " + trace.getNetId());
                 }
@@ -894,7 +915,7 @@ class PcbBoardLayout {
             for (int index = 1; index < xPoints.length; index++)
                 result = union(result,
                     getTraceSegmentBounds(xPoints[index - 1], yPoints[index - 1],
-                        xPoints[index], yPoints[index]));
+                        xPoints[index], yPoints[index], trace.getWidth()));
         }
         for (PcbSilkscreenLabel label : silkscreenLabels.values())
             result = union(result, label.getBounds());
@@ -1135,6 +1156,9 @@ class PcbBoardLayout {
                 result = String.valueOf(first.getEndPadId()).compareTo(String.valueOf(second.getEndPadId()));
                 if (result != 0) return result;
                 result = first.getLayer().compareTo(second.getLayer());
+                if (result != 0) return result;
+                result = first.getWidth() < second.getWidth() ? -1 :
+                    first.getWidth() == second.getWidth() ? 0 : 1;
                 return result != 0 ? result : String.valueOf(first.getSourceId()).compareTo(String.valueOf(second.getSourceId()));
             }
         });
@@ -1143,6 +1167,8 @@ class PcbBoardLayout {
                 .append(trace.getLayer()).append(':').append(trace.getExposure()).append(':')
                 .append(trace.getNetId()).append(':')
                 .append(trace.getStartPadId()).append('-').append(trace.getEndPadId()).append('@');
+            if (trace.getWidth() != PcbTraceRules.TRACE_WIDTH)
+                result.append("W").append(trace.getWidth()).append(':');
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 0; index < xPoints.length; index++)
@@ -1171,12 +1197,17 @@ class PcbBoardLayout {
                 int result = first.getNetId().compareTo(second.getNetId());
                 if (result != 0) return result;
                 result = first.getLayer().compareTo(second.getLayer());
+                if (result != 0) return result;
+                result = first.getWidth() < second.getWidth() ? -1 :
+                    first.getWidth() == second.getWidth() ? 0 : 1;
                 return result != 0 ? result : String.valueOf(first.getSourceId()).compareTo(String.valueOf(second.getSourceId()));
             }
         });
         for (PcbTraceGeometry trace : orderedTraces) {
             result.append(PcbConductorGraph.field(trace.getSourceId())).append(trace.getLayer()).append(':')
                 .append(trace.getExposure()).append(':').append(trace.getNetId()).append(':');
+            if (trace.getWidth() != PcbTraceRules.TRACE_WIDTH)
+                result.append("W").append(trace.getWidth()).append(':');
             int[] xPoints = trace.getXPoints();
             int[] yPoints = trace.getYPoints();
             for (int index = 0; index < xPoints.length; index++)

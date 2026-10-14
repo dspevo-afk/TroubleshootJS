@@ -1,0 +1,5 @@
+{
+  "status": "EXPECTED_IDENTITY_FAILURE_REPRODUCED",
+  "scope": "Causal RED on real11/12 admitted owners before production identity correction",
+  "elapsedIncludingCleanupSeconds": 45.0062035
+}

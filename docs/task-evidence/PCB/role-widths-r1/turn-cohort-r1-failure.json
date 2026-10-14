@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_RETAINED",
+  "terminalExitCode": 1,
+  "cleanup": "PASS",
+  "elapsedIncludingCleanupSeconds": 61.2583611,
+  "inputAudit": "PASS unchanged turn-bound-r1-inputs.json",
+  "representatives": "Five areas exact11; root42 area6524231 vs6036952 (+8.0716%), void644000>327600",
+  "outcomes": "P07@4SUCCESS;@3B_CMD:BRANCH_SEARCH_LIMIT;@0RAIL5:TOTAL_SEARCH_LIMIT",
+  "scopeHeld": "Unchanged thirteen/eleven/nine widths; all saved/area/void/work/time/candidate oracles retained",
+  "next": "Read-only proof of exact free-plane two-turn estimate before separatepredeclaredcanary",
+  "holdoutsAndLegacyForThisCanary": "NOT_RUN because representativegatefailed; earlier pad-touch gate passes are not current turn-canary acceptance"
+}

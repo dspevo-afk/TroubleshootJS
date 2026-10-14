@@ -75,6 +75,7 @@ final class PcbPlacementConstraints {
     final int physicalPolicyVersion;
     final int placementDensityVersion;
     final boolean requiresTwoLayerRouting;
+    private final PcbTraceWidthProfile traceWidthProfile;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
         this(declarations,barriers,PcbCopperLayer.TOP);
     }
@@ -93,6 +94,15 @@ final class PcbPlacementConstraints {
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
             PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
             boolean requiresTwoLayerRouting) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion,
+            requiresTwoLayerRouting, PcbTraceWidthProfile.UNIFORM);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile) {
+        if (traceWidthProfile == null)
+            throw new IllegalArgumentException("Missing PCB trace width profile");
+        this.traceWidthProfile = traceWidthProfile;
         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
         if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11)
             throw new IllegalArgumentException("Unknown placement density interpretation");
@@ -122,6 +132,7 @@ final class PcbPlacementConstraints {
         }
     }
     String getPhysicalPolicyId() { return physicalPolicyId; }
+    PcbTraceWidthProfile getTraceWidthProfile() { return traceWidthProfile; }
     int getPhysicalPolicyVersion() { return physicalPolicyVersion; }
     String getPhysicalPolicyIdentity() {
         return physicalPolicyId + "@" + physicalPolicyVersion;

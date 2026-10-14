@@ -1,0 +1,7 @@
+{
+  "basis": "Exact native Int64 ticks; no JSNumber or culture/Kind-dependent time comparison",
+  "status": "PASS",
+  "sha256": "84e7c24e4f090c6f9900176fc7d28986a265d3ba8a56e56b74426de13815ac9a",
+  "downloadCreationTicks": "639275705153813029",
+  "previewCreationTicks": "639275702697148250"
+}

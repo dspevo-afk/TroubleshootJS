@@ -1,0 +1,81 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+      - generic: ALPHA
+    - navigation:
+      - button:
+        - generic: Main menu
+      - button [disabled]:
+        - generic: Shop
+      - button:
+        - generic: Resources
+      - button:
+        - generic: Settings
+      - button [disabled]:
+        - generic: Run customer retest
+    - status: The session could not be saved. Wait for the board to settle and try again; this format supports up to 8192 operations.
+    - row:
+      - cell:
+        - button [disabled]: Open controlled indicator
+    - row:
+      - cell:
+        - button: "Board Power: OFF"
+    - row:
+      - cell:
+        - button [disabled]: New control board
+    - row:
+      - cell:
+        - button:
+          - generic: Supplies
+    - row:
+      - cell:
+        - button:
+          - generic: View
+    - row:
+      - cell:
+        - button:
+          - generic: Ticket
+    - row:
+      - cell:
+        - button:
+          - generic: Parts tray
+    - row:
+      - cell:
+        - button: End qualification view
+- dialog "TroubleshootJS · Desktop alpha":
+  - banner:
+    - heading "TroubleshootJS · Desktop alpha" [level=2]
+  - status: The session could not be saved. Wait for the board to settle and try again; this format supports up to 8192 operations.
+  - banner:
+    - paragraph: THE ELECTRONICS REPAIR GAME
+    - heading "Troubleshoot!" [level=3]
+    - paragraph: A customer. A faulty board. A bench full of possibilities.
+    - list:
+      - listitem: Examine
+      - listitem: Measure
+      - listitem: Isolate
+      - listitem: Repair
+      - listitem: Retest
+  - heading "Your session" [level=3]
+  - paragraph: These private session files can be loaded only in this qualification view. Public advanced sessions and replay remain unavailable.
+  - paragraph: Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).
+  - paragraph: Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.
+  - button "Save session" [active]
+  - button "Load session"
+  - generic "Session history"
+  - button "Resume current board"
+  - button "Resources"
+  - button "Settings"
+  - generic "About this alpha"
+  - paragraph: Private qualification session. Normal catalog, HARD and replay remain unavailable.
+  - text: Interpretation / build
+  - textbox "Interpretation / build": tsj-alpha/5 / 1445D3DB640582B8C5FDF1139386C5EF

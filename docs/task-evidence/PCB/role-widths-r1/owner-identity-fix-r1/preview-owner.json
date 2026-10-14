@@ -1,0 +1,11 @@
+{
+  "status": "OWNED_LAUNCHED",
+  "profile": "task-owned localhost production preview",
+  "creationUtc": "2026-10-14T10:24:29.7148250Z",
+  "script": "scripts/preview.ps1",
+  "processId": 61480,
+  "creationTicks": "639275702697148250",
+  "executable": "powershell.exe",
+  "state": ".tools/preview/state.json",
+  "port": 8899
+}
