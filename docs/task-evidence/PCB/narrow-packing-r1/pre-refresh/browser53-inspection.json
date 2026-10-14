@@ -1,0 +1,10 @@
+{
+  "build": "tsj-alpha/5 / B586023C5BFD749E890A366FFF13AA10",
+  "chip": "UAC",
+  "pinout": "IN+, IN-, PRE_L+, OUT-, EN, FB, BIAS",
+  "poweredRemoveDisabled": true,
+  "voltage": "4.996 V",
+  "probeInput": "Real canvas left OUTPUT/right RETURN",
+  "contextDialogCount": 0,
+  "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting."
+}

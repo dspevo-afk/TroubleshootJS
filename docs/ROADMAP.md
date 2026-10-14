@@ -7,7 +7,28 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Board-relative meter and chip pinout menu delivered**
+**Current task:** **Private8 PCB packing and primary void reduction delivered**
+The user-targeted53 lower-left swatch now uses vertically placed primary circuitry.
+Its largest protected empty rectangle falls64.94% from the actual pointed-at
+preview; board area falls another4.85%,24.57% below published7. 40/44/60/54 shrink
+11.57/3.37/6.11/2.51%;42 stays exact. All parts/pads, common80 isolation, complete
+access/probe envelopes and original search/work/time caps remain. Fresh8 and
+explicit saved7 preserve all twelve saved6/7 literal layouts; publicalpha5/model1/
+epoch16 stay. Final native9 and actual JDK8/GWT five PASS; final hashes/caps audited.
+Fresh final preview source/scripts/build identity matches actual DOM. Real53
+fit/underside/chip menu/4.996V/expected unrepaired FAIL/clean closure; real44 actual8
+FileReader fresh-owner restore/OFF preservation/4.996V/customer PASS/clean Close.
+Same-B586 actual Shop repair/save/restore PASS is separately audited across preview
+refresh; stale launcher metadata is not certified. Four final inspected captures.
+Both preview processes, tabs, viewport, exact task scratch/pointer/download clean.
+This finite acceptance does not advance normal RB56/HARD, full matrix/global
+population, human U05, modest-host proof or performance release; current60 visible
+NOT RUN and all prior failures remain. No main merge/email.
+[Final source, real player evidence and precise limits](task-evidence/PCB/narrow-packing-r1/README.md).
+Next unstarted PCB work: remaining42/other gaps under guarded route coverage;
+inherited60 timing needs diagnosis before performance claims.
+
+**Previous UI task:** **Board-relative meter and chip pinout menu delivered**
 Meter case follows PCB dimensions and Fit includes its actual envelope. Four
 chip families retain physical leads/pads/references while pin-name annotations
 move to right-click menu **View schematic** for installed and loose tray parts.

@@ -1,0 +1,66 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index 4f0eff82..dff972cb 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -254,7 +254,8 @@ final class PcbPlacementPlanner {
+             long courtyardArea,int maxWidth,int anchorWidth) {
+         int placementVersion = constraints.placementDensityVersion;
+         // Private6 reuses the established group-centred target and source-lane hints.
+-        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2;
++        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2 ||
++            placementVersion >= 7 && candidate == 3;
+         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
+             (placementVersion >= 4 && candidate < 4);
+         boolean scoreWholeContent = useCompact;
+@@ -283,6 +284,9 @@ final class PcbPlacementPlanner {
+         int aspectIndex=(int)(((long)algorithmCandidate+
+             ((seed^(seed>>>32))&0x7fffffffL))%aspects.length);
+         double aspect=aspects[aspectIndex];
++        // Trial: use the unprotected compact alternative for a narrower outline.
++        boolean boundaryFirst=placementVersion >= 7 && candidate == 3;
++        if(boundaryFirst) aspect=1.10;
+         int partCount=board.getComponentIds().size();
+         double spacingFactor=3.0;
+         if(partCount>40)
+@@ -292,7 +296,7 @@ final class PcbPlacementPlanner {
+         if(placementVersion >= 4 && candidate == 4) spacingFactor=placementVersion>=5 ? 2.0 : 3.0;
+         // The compact interpretation begins from actual protected package demand.
+         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
+-        boolean tight=placementVersion >= 4 && candidate < 2;
++        boolean tight=placementVersion >= 4 && candidate < 2 || boundaryFirst;
+         double compactFactor=tight ? 1.65 : 2.35;
+         long compactAllowance=tight ? 150000L : 250000L;
+         long targetArea=useCompact ?
+@@ -334,7 +338,7 @@ final class PcbPlacementPlanner {
+         }});
+         for (Item item:orderedAnchors) {
+             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
+-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
++                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                 true,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
+             item.footprint=selected; placed.add(selected);
+@@ -342,9 +346,13 @@ final class PcbPlacementPlanner {
+         while(!remaining.isEmpty()) {
+             Item next=chooseMediumItem(remaining.values(),placed,topology,board,
+                 seed,algorithmCandidate);
++            if(boundaryFirst) for(Item item:remaining.values())
++                if(item.footprint.getPlacement().getPhysicalGeometry().getIsolationBody()!=null) {
++                    next=item;break;
++                }
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
++                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                 false,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
+             next.footprint=selected; placed.add(selected);
+@@ -353,7 +361,7 @@ final class PcbPlacementPlanner {
+         validate(board,constraints,outline,placed);
+         Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
+             demandArea,candidate,evaluations[0]);
+-        if(placementVersion >= 4 && candidate < 2) {
++        if(tight) {
+             // Reuse the protected-strip compactor before the existing route request.
+             // It preserves complete envelopes and revalidates access/isolation.
+             Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);

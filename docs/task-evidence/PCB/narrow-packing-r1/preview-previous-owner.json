@@ -1,0 +1,8 @@
+{
+  "ownership": "Maintained start-preview state",
+  "processId": 31144,
+  "executable": "powershell.exe",
+  "script": "scripts/preview.ps1",
+  "processStartTicks": 639275435390526816,
+  "port": 8899
+}

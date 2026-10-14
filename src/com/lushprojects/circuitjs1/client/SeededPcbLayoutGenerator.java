@@ -295,6 +295,17 @@ class SeededPcbLayoutGenerator {
                     hasRepeatedControlRegions(session.board.getPlacementConstraints()))
                 candidateIndex = guardedRouteCandidateIndex(session.mediumPlacements, candidateIndex,
                     twoLayer ? session.mediumTwoLayerSuccesses : session.mediumOneFaceSuccesses);
+            if(session.board.getPlacementConstraints().placementDensityVersion >= 8) {
+                boolean narrowTried=false;
+                String prefix=(twoLayer?MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER:
+                    MediumBoardPhysicalPolicy.P05_ONE_FACE)+"@3=";
+                for(String outcome:session.mediumRouteOutcomes)
+                    if(outcome.startsWith(prefix))narrowTried=true;
+                candidateIndex=narrowRouteCandidateIndex(session.mediumPlacements,
+                    session.mediumRouteAttempt,candidateIndex,
+                    twoLayer?session.mediumTwoLayerSuccesses:session.mediumOneFaceSuccesses,
+                    narrowTried,hasRepeatedControlRegions(session.board.getPlacementConstraints()));
+            }
             MediumBoardPhysicalPolicy.PlacementCandidate candidate =
                 session.mediumPlacements.get(candidateIndex);
             session.mediumRouteAttempt++;
@@ -506,7 +517,29 @@ class SeededPcbLayoutGenerator {
         return 3; // Best remaining preliminary rank, with both routed owners retained.
     }
 
-    private static boolean hasRepeatedControlRegions(PcbPlacementConstraints constraints) {
+    /** Spend routing room on narrower placement only after this policy has a legal route. */
+    static int narrowRouteCandidateIndex(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> candidates,
+            int routeIndex,int fallback,int policySuccesses,boolean narrowTried,boolean repeated) {
+        int first=repeated?4:0,second=repeated?2:1;
+        if(policySuccesses<=0 || candidates.size()<4 || candidates.get(0).attempt!=first ||
+                candidates.get(1).attempt!=second || candidates.get(2).attempt!=5)return fallback;
+        int narrow=-1,roomier=-1;
+        for(int i=3;i<candidates.size();i++) {
+            if(candidates.get(i).attempt==3)narrow=i;
+            if(candidates.get(i).attempt==0)roomier=i;
+        }
+        if(narrow<0)return fallback;
+        if(routeIndex==1 && repeated)return narrow;
+        if(routeIndex==2) {
+            if(!narrowTried)return narrow;
+            // Candidate0 supplies more routing room; compact2 remains available
+            // if that alternative failed placement. Never request candidate3 twice.
+            return roomier>=0?roomier:1;
+        }
+        return fallback;
+    }
+
+    static boolean hasRepeatedControlRegions(PcbPlacementConstraints constraints) {
         String first=null;
         for(PcbPlacementConstraints.Part part:constraints.getParts())
             if(part.regionId.startsWith("channel-")) {
@@ -539,7 +572,8 @@ class SeededPcbLayoutGenerator {
         long area = (long) bounds.width * bounds.height;
         int majorSide = Math.max(bounds.width, bounds.height);
         boolean preferCompact = compactPlacementInterpretation(session.board.getPlacementConstraints());
-        boolean preferDensePacking = session.board.getPlacementConstraints().placementDensityVersion >= 4;
+        int placementVersion=session.board.getPlacementConstraints().placementDensityVersion;
+        boolean preferDensePacking = placementVersion >= 4 && placementVersion < 8;
         if (twoLayer) {
             if (mediumRouteCandidateBetter(score, area, majorSide, candidate,
                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,

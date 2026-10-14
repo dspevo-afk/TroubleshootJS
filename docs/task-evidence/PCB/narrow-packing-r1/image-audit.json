@@ -1,0 +1,42 @@
+[
+  {
+    "file": "compact53-fit.jpg",
+    "format": "JPEG",
+    "width": 1440,
+    "height": 900,
+    "bytes": 143937,
+    "sha256": "8accda868f753571c14c69326881f4d884f00828f7f2e8d1bcb82d09c1658d40",
+    "decode": "PASS",
+    "nonblank": "PASS"
+  },
+  {
+    "file": "compact53-bottom.jpg",
+    "format": "JPEG",
+    "width": 1440,
+    "height": 900,
+    "bytes": 124482,
+    "sha256": "ca00f1b7bb78ae9e6332f739ecdc19e2ac8453861e7ecf269f976c6e4e051d25",
+    "decode": "PASS",
+    "nonblank": "PASS"
+  },
+  {
+    "file": "compact44-fit.jpg",
+    "format": "JPEG",
+    "width": 1440,
+    "height": 900,
+    "bytes": 136410,
+    "sha256": "8f999a08035428024e145594fcde4294280bad6504da79926ebe29c78eca99a8",
+    "decode": "PASS",
+    "nonblank": "PASS"
+  },
+  {
+    "file": "repaired44-customer-retest.jpg",
+    "format": "JPEG",
+    "width": 1440,
+    "height": 900,
+    "bytes": 90439,
+    "sha256": "5b67212adc06c39d1f8b99e2418699eef8f046c0e8622fe153808b0efe6fff9c",
+    "decode": "PASS",
+    "nonblank": "PASS"
+  }
+]

@@ -1,0 +1,20 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_WHITESPACE_CASE {"seed":"-1017","version":7,"parts":40,"gridUnits":10,"sampledCells":51060,"packageAccessOccupiedCells":21170,"protectedFreeCells":25220,"protectedFreeFraction":0.49392871132001565,"largestProtectedEmptyRectangle":{"x":370,"y":50,"width":1390,"height":320,"area":444800},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_GROUPING_ROUTE_CASE seed=-1017 MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=1;placementEvaluations=25560;routes=6;routingWork=16/3433087;p05=3/0;p07=3/3;selectedAttempt=1;ranked=[3, 5, 4, 1, 2];placementScores=[3{total=1081563;electrical=126010;region=8275;connector=2800;corridor=1080;outline=7300800;courtyard=759448;demand=2564799}, 5{total=1173511;electrical=136300;region=9820;connector=3000;corridor=1092;outline=9439200;courtyard=749848;demand=2539199}, 4{total=1182904;electrical=137890;region=9700;connector=2680;corridor=1245;outline=6676700;courtyard=749848;demand=2539199}, 1{total=1186042;electrical=137360;region=9365;connector=2380;corridor=2239;outline=5231100;courtyard=759448;demand=2564799}, 2{total=1239735;electrical=144580;region=8935;connector=2590;corridor=1763;outline=7371000;courtyard=749848;demand=2539199}];selectedScore=1186042;selectedQualityMilli=195631409;routeOutcomes=[P05_ONE_FACE@1=REJECTED:Unable to route net LOAD_RETURN from JOA.2@3430,430 to JLOAD.2@3560,450, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@3=REJECTED:Unable to route net RAIL12 from COUT.+@2830,1080 to connected tree, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS];failure=null
+PCB_GROUPING_CASE {"seed":"-1017","version":7,"accepted":true,"parts":40,"pads":96,"width":3701,"height":1384,"area":5122184,"courtyardArea":759448,"regionBoundingAreaSum":3996245,"sameRegionCenterManhattanMean":717.6984126984127,"twoPadNetSpanSum":3890,"twoPadNetCount":11,"copperManhattanLength":29510,"traceSegments":174,"vias":30,"selectedAttempt":1,"routingExpansions":3433087,"geometrySha256":"bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b"}
+PCB_WHITESPACE_CASE {"seed":"-1004","version":7,"parts":44,"gridUnits":10,"sampledCells":57510,"packageAccessOccupiedCells":23039,"protectedFreeCells":30281,"protectedFreeFraction":0.5265345157363936,"largestProtectedEmptyRectangle":{"x":70,"y":846,"width":1780,"height":610,"area":1085800},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+
+Exception in thread "main" java.lang.AssertionError: no representative outline regression: -1004
+	at com.lushprojects.circuitjs1.client.PcbFunctionalGroupingContractTest.check(PcbFunctionalGroupingContractTest.java:255)
+	at com.lushprojects.circuitjs1.client.PcbFunctionalGroupingContractTest.measure(PcbFunctionalGroupingContractTest.java:152)
+	at com.lushprojects.circuitjs1.client.PcbFunctionalGroupingContractTest.main(PcbFunctionalGroupingContractTest.java:49)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbFunctionalGroupingContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

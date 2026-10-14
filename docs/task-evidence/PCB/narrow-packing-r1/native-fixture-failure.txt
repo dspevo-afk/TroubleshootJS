@@ -1,0 +1,32 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_COMPACTION family=LED_INDICATOR before=325600 after=272800
+PCB_COMPACTION family=DIODE_PROTECTED_INDICATOR before=456000 after=366000
+PCB_COMPACTION family=PARALLEL_DUAL_INDICATOR before=648000 after=477400
+PCB_COMPACTION family=RC_DELAY before=620400 after=508200
+PCB_COMPACTION family=NPN_LOW_SIDE_SWITCH before=837500 after=699600
+PCB_COMPACTION family=NMOS_LOW_SIDE_SWITCH before=737800 after=514600
+PCB_COMPACTION family=RELAY_OUTPUT before=1093400 after=877800
+PCB_COMPACTION family=SENSOR_CONTROL before=1221200 after=1066400
+PCB_COMPACTION family=RB15_CONTROL before=2452800 after=2111400
+PCB_COMPACTION family=COMPOSED_CONTROLLED_INDICATOR before=2009600 after=1817600
+PCB_COMPACTION family=RB30_CONTROL before=6102000 after=5040000
+
+Exception in thread "main" java.lang.IllegalArgumentException: This difficulty profile is unavailable
+	at com.lushprojects.circuitjs1.client.DifficultyProfile.parseAvailable(DifficultyProfile.java:13)
+	at com.lushprojects.circuitjs1.client.PlayerLaunchRequest.<init>(PlayerLaunchRequest.java:18)
+	at com.lushprojects.circuitjs1.client.PlayerLaunchRequest.<init>(PlayerLaunchRequest.java:12)
+	at com.lushprojects.circuitjs1.client.PcbCompactionContractTest.construct(PcbCompactionContractTest.java:36)
+	at com.lushprojects.circuitjs1.client.PcbCompactionContractTest.main(PcbCompactionContractTest.java:14)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbCompactionContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

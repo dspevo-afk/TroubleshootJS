@@ -1,0 +1,10 @@
+{
+  "compileSeconds": 89.796,
+  "sanitizedFields": [
+    "worktree absolute path"
+  ],
+  "permutations": 5,
+  "commandWrapperExitCode": 0,
+  "linkSeconds": 1.392,
+  "rawBuildSha256": "b121416e724038c7534d34cc17661822a3c7d6731152fadc5a25c1fa0fb1ca49"
+}

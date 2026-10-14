@@ -1,0 +1,74 @@
+[
+  {
+    "parts": 40,
+    "afterArea": 4529785,
+    "width": 2951,
+    "reductionPercent": 11.565359620037075,
+    "root": "-1017",
+    "height": 1535,
+    "beforeArea": 5122184,
+    "pads": 96,
+    "geometrySha256": "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
+    "selectedAttempt": 3
+  },
+  {
+    "parts": 44,
+    "afterArea": 4466664,
+    "width": 3051,
+    "reductionPercent": 3.3691588785046744,
+    "root": "-1004",
+    "height": 1464,
+    "beforeArea": 4622400,
+    "pads": 104,
+    "geometrySha256": "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
+    "selectedAttempt": 3
+  },
+  {
+    "parts": 60,
+    "afterArea": 6943752,
+    "width": 3672,
+    "reductionPercent": 6.108937804550063,
+    "root": "-1022",
+    "height": 1891,
+    "beforeArea": 7395541,
+    "pads": 143,
+    "geometrySha256": "1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
+    "selectedAttempt": 0
+  },
+  {
+    "parts": 42,
+    "afterArea": 4679776,
+    "width": 3401,
+    "reductionPercent": 0.0,
+    "root": "0",
+    "height": 1376,
+    "beforeArea": 4679776,
+    "pads": 100,
+    "geometrySha256": "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
+    "selectedAttempt": 1
+  },
+  {
+    "parts": 53,
+    "afterArea": 6110400,
+    "width": 3350,
+    "reductionPercent": 20.729212369792304,
+    "root": "17",
+    "height": 1824,
+    "beforeArea": 7708262,
+    "pads": 129,
+    "geometrySha256": "288608791ef3ac31956e48af5c4dca51b733f35a9976232382bc891545b9ee29",
+    "selectedAttempt": 3
+  },
+  {
+    "parts": 54,
+    "afterArea": 6371585,
+    "width": 3131,
+    "reductionPercent": 0.0,
+    "root": "42",
+    "height": 2035,
+    "beforeArea": 6371585,
+    "pads": 131,
+    "geometrySha256": "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16",
+    "selectedAttempt": 4
+  }
+]

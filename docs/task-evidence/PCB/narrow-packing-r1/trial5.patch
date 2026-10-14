@@ -1,0 +1,105 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index 4f0eff82..5ed42a49 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -92,6 +92,7 @@ final class PcbPlacementPlanner {
+             if (candidate < 2) algorithmCandidate = candidate == 0 ? 0 : 3;
+             if (candidate == 5) algorithmCandidate = 0;
+         }
++        if (constraints.placementDensityVersion >= 7 && candidate == 3) algorithmCandidate=0;
+         int offset = constraints.routingLayer == PcbCopperLayer.BOTTOM ?
+             (int)((seed ^ (seed >>> 32)) & 0x7fffffffL) % OUTLINE_CANDIDATES : 0;
+         // Give the root-selected small-board shape several ordering attempts
+@@ -254,7 +255,8 @@ final class PcbPlacementPlanner {
+             long courtyardArea,int maxWidth,int anchorWidth) {
+         int placementVersion = constraints.placementDensityVersion;
+         // Private6 reuses the established group-centred target and source-lane hints.
+-        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2;
++        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2 ||
++            placementVersion >= 7 && candidate == 3;
+         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
+             (placementVersion >= 4 && candidate < 4);
+         boolean scoreWholeContent = useCompact;
+@@ -283,6 +285,9 @@ final class PcbPlacementPlanner {
+         int aspectIndex=(int)(((long)algorithmCandidate+
+             ((seed^(seed>>>32))&0x7fffffffL))%aspects.length);
+         double aspect=aspects[aspectIndex];
++        // Trial: use the unprotected compact alternative for a narrower outline.
++        boolean boundaryFirst=placementVersion >= 7 && candidate == 3;
++        if(boundaryFirst) aspect=1.55;
+         int partCount=board.getComponentIds().size();
+         double spacingFactor=3.0;
+         if(partCount>40)
+@@ -292,7 +297,7 @@ final class PcbPlacementPlanner {
+         if(placementVersion >= 4 && candidate == 4) spacingFactor=placementVersion>=5 ? 2.0 : 3.0;
+         // The compact interpretation begins from actual protected package demand.
+         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
+-        boolean tight=placementVersion >= 4 && candidate < 2;
++        boolean tight=placementVersion >= 4 && candidate < 2 || boundaryFirst;
+         double compactFactor=tight ? 1.65 : 2.35;
+         long compactAllowance=tight ? 150000L : 250000L;
+         long targetArea=useCompact ?
+@@ -334,7 +339,7 @@ final class PcbPlacementPlanner {
+         }});
+         for (Item item:orderedAnchors) {
+             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
+-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
++                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                 true,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
+             item.footprint=selected; placed.add(selected);
+@@ -344,7 +349,7 @@ final class PcbPlacementPlanner {
+                 seed,algorithmCandidate);
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
++                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                 false,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
+             next.footprint=selected; placed.add(selected);
+@@ -353,7 +358,7 @@ final class PcbPlacementPlanner {
+         validate(board,constraints,outline,placed);
+         Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
+             demandArea,candidate,evaluations[0]);
+-        if(placementVersion >= 4 && candidate < 2) {
++        if(tight) {
+             // Reuse the protected-strip compactor before the existing route request.
+             // It preserves complete envelopes and revalidates access/isolation.
+             Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);
+diff --git a/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java b/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
+index 533b69a5..1855eed4 100644
+--- a/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
++++ b/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
+@@ -295,6 +295,24 @@ class SeededPcbLayoutGenerator {
+                     hasRepeatedControlRegions(session.board.getPlacementConstraints()))
+                 candidateIndex = guardedRouteCandidateIndex(session.mediumPlacements, candidateIndex,
+                     twoLayer ? session.mediumTwoLayerSuccesses : session.mediumOneFaceSuccesses);
++            if(session.board.getPlacementConstraints().placementDensityVersion >= 7) {
++                int successes=twoLayer?session.mediumTwoLayerSuccesses:session.mediumOneFaceSuccesses;
++                int narrow=-1;
++                for(int i=0;i<session.mediumPlacements.size();i++)
++                    if(session.mediumPlacements.get(i).attempt==3)narrow=i;
++                if(narrow>=0 && successes>0) {
++                    if(session.mediumRouteAttempt==1 && hasRepeatedControlRegions(session.board.getPlacementConstraints()))
++                        candidateIndex=narrow;
++                    if(session.mediumRouteAttempt==2) {
++                        boolean used=false;
++                        String prefix=(twoLayer?MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER:MediumBoardPhysicalPolicy.P05_ONE_FACE)+"@3=";
++                        for(String outcome:session.mediumRouteOutcomes)if(outcome.startsWith(prefix))used=true;
++                        if(!used)candidateIndex=narrow;
++                        else for(int i=3;i<session.mediumPlacements.size();i++)
++                            if(i!=narrow) {candidateIndex=i;break;}
++                    }
++                }
++            }
+             MediumBoardPhysicalPolicy.PlacementCandidate candidate =
+                 session.mediumPlacements.get(candidateIndex);
+             session.mediumRouteAttempt++;
+@@ -540,6 +558,7 @@ class SeededPcbLayoutGenerator {
+         int majorSide = Math.max(bounds.width, bounds.height);
+         boolean preferCompact = compactPlacementInterpretation(session.board.getPlacementConstraints());
+         boolean preferDensePacking = session.board.getPlacementConstraints().placementDensityVersion >= 4;
++        if(session.board.getPlacementConstraints().placementDensityVersion >= 7) preferDensePacking=false;
+         if (twoLayer) {
+             if (mediumRouteCandidateBetter(score, area, majorSide, candidate,
+                     session.mediumTwoLayerLayout, session.mediumTwoLayerQuality,

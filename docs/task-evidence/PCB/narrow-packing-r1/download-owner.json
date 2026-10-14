@@ -1,0 +1,10 @@
+{
+  "actualBrowserDownload": true,
+  "copiedByteExact": true,
+  "bytes": 1756,
+  "sha256": "88c2b5c0049941ef2ffa7a73b58199c95b22328e50f1618bbc94e04c5fd1a3af",
+  "path": "Downloads/troubleshootjs-session.tsjsave",
+  "creationTimeUtcTicks": 639275450223177331,
+  "status": "PASS: exact task download removed after creation-time/hash/ancestor check; byte-exact save retained in evidence",
+  "initialMetadataWrite": "FAIL: PowerShell true literal; corrected to $true, hash assertion unchanged"
+}

@@ -1,4 +1,51 @@
-# Current checkpoint: board-relative meter and chip pinout menu delivered
+# Current checkpoint: narrow private8 packing and primary void reduction delivered
+
+2026-10-14. Base `bbc0c1e6e16972d73984a2d86f6dc5c08536a542`, branch
+`codex/q60-faulted-profile-counts`; enclosing commit is the accepted candidate.
+User specifically targeted the visible53 lower-left green swatch. Demand-based
+primary/mixed-gap targeting and connected placement use that vertical space;
+protected empty rectangle1186500 ->416000 (-64.94%) versus the pointed-at preview.
+Its board area6110400 ->5814368 (-4.85% further),24.57% below published7.
+Other40/44/60/54 areas fall11.57/3.37/6.11/2.51%;42 exact. All parts/pads,
+common80 isolation, full probe/access envelopes and original6/3/evaluation/time
+caps stay. Fresh private8; saved7/saved6 literal layouts stay exact; publicalpha5/
+sessionmodel1/epoch16 unchanged. No global optimum or normal advanced release.
+
+PASS final native9 (155.922s incl verified scratch cleanup): compaction858,
+geometry1501, selection23772/all720 ranks, saved6/7 literals1494/1504,
+save34963/identity105/dependency1166/policy59. Actual final JDK8/GWT five
+89.796s/1.392s, B586023C5BFD749E890A366FFF13AA10; final input/18-row/cap audits PASS.
+Root integrated source/receipt/four final-image review; no independent agent review.
+
+Fresh final preview's five actual DOM identity fields match maintained final
+source/scripts/served-build manifest.53 cold81.974s/604work/max2.704s; top/Fit/
+underside, actual moved UAC menu/public pinout/powered Remove guard, real red
+OUTPUT/black RETURN4.996V/no popup, unrepaired customer FAIL expected. End raw
+FAIL/all seven cleanup PASS;269.730s total incl cold,187.756s retained<360s.
+44 cold50.980s/521work/max1.774s; real FileReader8 restore50.657s/521work,
+fresh owner/prior owner retired and saved OFF retained; powered4.996V/customer
+PASS/Close PASS/all cleanup.395.290s total incl cold,344.310s retained<360s.
+Actual same-B586 Shop5V relay/guarded Remove/Part45 install/Save/restore/customer/
+Close PASS under pre-refresh (377.691s total,339.095s retained). Its launcher
+cached old identity metadata; that run does not certify provenance. Source/served
+code hashes and generation/context/program receipts are exact across refresh;
+fresh preview repeats the actual saved repair and customer check. No injected
+controller mutation, human difficulty or CDP-wrapper certification claim.
+
+Pre-primary/grouped-domain/native-fixture/automation failures retained separately;
+no oracle/budget weakened. Current60 visible timing NOT RUN; prior CB17090s FAIL
+remains. Full matrix/global population/human U05 NOT RUN, normal RB56/HARD HELD,
+modest-host proof owner-deferred. [Evidence and limits](task-evidence/PCB/narrow-packing-r1/README.md).
+
+Both owned previews31144/97332 positively stopped/port8899 released; tabs closed,
+viewport reset. Exact scratch/backup/empty-directory/pointer/download cleanup PASS;
+initial combined/forced deletions rejected, separate checked single literals
+succeeded. Before source and actual8 save retained in evidence. Pre-existing five
+active-worktree untracked entries and Desktop seven tracked edits/untracked data
+preserved; normal build outputs remain. Normal branch publication, no main merge/
+email. Next unstarted: remaining42/other PCB gaps under guarded routing; inherited
+60 timing diagnosis before performance claims. General roadmap work stays held.
+# Previous checkpoint: board-relative meter and chip pinout menu delivered
 
 2026-10-13. Base `32451a07a2019b30f3546ea8d8c9d382e2d222d5` on
 `codex/q60-faulted-profile-counts`; enclosing commit is the accepted UI candidate.

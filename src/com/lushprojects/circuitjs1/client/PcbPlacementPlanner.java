@@ -92,6 +92,7 @@ final class PcbPlacementPlanner {
             if (candidate < 2) algorithmCandidate = candidate == 0 ? 0 : 3;
             if (candidate == 5) algorithmCandidate = 0;
         }
+        if (constraints.placementDensityVersion >= 8 && candidate == 3) algorithmCandidate=0;
         int offset = constraints.routingLayer == PcbCopperLayer.BOTTOM ?
             (int)((seed ^ (seed >>> 32)) & 0x7fffffffL) % OUTLINE_CANDIDATES : 0;
         // Give the root-selected small-board shape several ordering attempts
@@ -254,7 +255,9 @@ final class PcbPlacementPlanner {
             long courtyardArea,int maxWidth,int anchorWidth) {
         int placementVersion = constraints.placementDensityVersion;
         // Private6 reuses the established group-centred target and source-lane hints.
-        boolean useGrouped = (placementVersion == 3 || placementVersion >= 6) && candidate < 2;
+        boolean narrow=placementVersion >= 8 && (candidate == 3 || candidate == 0 &&
+            SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints));
+        boolean useGrouped = ((placementVersion == 3 || placementVersion >= 6) && candidate < 2) || narrow;
         boolean scoreGrouped = (placementVersion == 3 && candidate < 2) ||
             (placementVersion >= 4 && candidate < 4);
         boolean scoreWholeContent = useCompact;
@@ -283,6 +286,9 @@ final class PcbPlacementPlanner {
         int aspectIndex=(int)(((long)algorithmCandidate+
             ((seed^(seed>>>32))&0x7fffffffL))%aspects.length);
         double aspect=aspects[aspectIndex];
+        // Two narrow aspect alternatives share the established topology targets.
+        // Repeated groups keep compact2/moderate4/roomy5; single groups keep0/1/5.
+        if(narrow) aspect=1.55;
         int partCount=board.getComponentIds().size();
         double spacingFactor=3.0;
         if(partCount>40)
@@ -292,8 +298,9 @@ final class PcbPlacementPlanner {
         if(placementVersion >= 4 && candidate == 4) spacingFactor=placementVersion>=5 ? 2.0 : 3.0;
         // The compact interpretation begins from actual protected package demand.
         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
-        boolean tight=placementVersion >= 4 && candidate < 2;
+        boolean tight=(placementVersion >= 4 && candidate < 2) || narrow;
         double compactFactor=tight ? 1.65 : 2.35;
+        if(narrow && candidate == 3)compactFactor=1.35;
         long compactAllowance=tight ? 150000L : 250000L;
         long targetArea=useCompact ?
             (long)Math.ceil(demandArea*compactFactor)+compactAllowance :
@@ -320,6 +327,26 @@ final class PcbPlacementPlanner {
         Rectangle outline=new Rectangle(20,20,width,height);
 
         Vector<PcbFootprint> placed=new Vector<PcbFootprint>();
+        int boundaryX=-1;
+        if(placementVersion>=8 && candidate==3 &&
+                SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints) && constraints.getBarriers().size()==1) {
+            String firstDomain=constraints.getBarriers().get(0).firstDomain;
+            double firstDemand=0,totalDemand=0;
+            for(Item item:all) {
+                TreeMap<String,Rectangle> domains=constraints.domainCourtyards(item.footprint.getPlacement());
+                long conductiveArea=0,firstArea=0;
+                for(String domain:domains.keySet()) {
+                    Rectangle court=domains.get(domain);long area=(long)court.width*court.height;
+                    conductiveArea+=area;if(domain.equals(firstDomain))firstArea+=area;
+                }
+                double demand=(double)(item.envelope.width+CHANNEL)*(item.envelope.height+CHANNEL);
+                totalDemand+=demand;
+                firstDemand+=demand*firstArea/Math.max(1L,conductiveArea);
+            }
+            double fraction=Math.max(.16,Math.min(.40,firstDemand/totalDemand));
+            boundaryX=align(outline.x+MEDIUM_BORDER+(int)Math.round((outline.width-2*MEDIUM_BORDER)*fraction));
+            useGrouped=false;
+        }
         TreeMap<String,Item> remaining=new TreeMap<String,Item>();
         for (Item item:all) if (item.demand.anchor==PcbPlacementConstraints.Anchor.NONE)
             remaining.put(item.demand.componentId,item);
@@ -334,18 +361,22 @@ final class PcbPlacementPlanner {
         }});
         for (Item item:orderedAnchors) {
             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
-                true,evaluations);
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                true,boundaryX,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
             item.footprint=selected; placed.add(selected);
         }
         while(!remaining.isEmpty()) {
             Item next=chooseMediumItem(remaining.values(),placed,topology,board,
                 seed,algorithmCandidate);
+            if(boundaryX>=0) for(Item item:remaining.values())
+                if(item.footprint.getPlacement().getPhysicalGeometry().getIsolationBody()!=null) {
+                    next=item;break;
+                }
             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
-                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,
-                false,evaluations);
+                constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+                false,boundaryX,evaluations);
             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
             next.footprint=selected; placed.add(selected);
             remaining.remove(next.demand.componentId);
@@ -353,7 +384,7 @@ final class PcbPlacementPlanner {
         validate(board,constraints,outline,placed);
         Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
             demandArea,candidate,evaluations[0]);
-        if(placementVersion >= 4 && candidate < 2) {
+        if(tight) {
             // Reuse the protected-strip compactor before the existing route request.
             // It preserves complete envelopes and revalidates access/isolation.
             Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);
@@ -564,7 +595,7 @@ final class PcbPlacementPlanner {
             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean anchor,int[] evaluations) {
+            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean anchor,int boundaryX,int[] evaluations) {
         RegionHint hint=hints.get(regionKey(item.demand));
         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
@@ -586,9 +617,21 @@ final class PcbPlacementPlanner {
             preferredX=group.x+group.width/2-item.footprint.getPlacement().getWidth()/2;
             preferredY=group.y+group.height/2-item.footprint.getPlacement().getHeight()/2;
         }
+        boolean boundaryPackage=false;
+        if(boundaryX>=0 && !anchor && item.footprint.getPlacement().getPhysicalGeometry().getIsolationBody()!=null) {
+            PcbPlacementConstraints.Barrier barrier=constraints.getBarriers().get(0);
+            TreeMap<String,Rectangle> domains=constraints.domainCourtyards(item.footprint.getPlacement());
+            Rectangle first=domains.get(barrier.firstDomain),second=domains.get(barrier.secondDomain);
+            if(first!=null && second!=null && first.x+first.width<=second.x) {
+                preferredX=boundaryX-(first.x+first.width+second.x)/2+
+                    item.footprint.getPlacement().getX();
+                boundaryPackage=true;direction=0;
+            }
+        }
         int baseX=anchor?preferredX:(connected.x*3+preferredX)/4+
             direction*(useGrouped || tight ?
                 CHANNEL : MEDIUM_CHAIN_GAP);
+        if(boundaryPackage)baseX=preferredX;
         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
         PcbFootprint best=null;double bestScore=Double.POSITIVE_INFINITY;
         int maxRing=anchor?24:20;

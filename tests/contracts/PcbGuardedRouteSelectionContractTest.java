@@ -40,6 +40,8 @@ public final class PcbGuardedRouteSelectionContractTest {
             Vector<MediumBoardPhysicalPolicy.PlacementCandidate> original=candidates(order);
             Vector<MediumBoardPhysicalPolicy.PlacementCandidate> chosen=
                 SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(original,7,true);
+            verifyNarrow(original,true);
+            verifyNarrow(original,false);
             check(chosen.size()==6 && original.get(0).attempt==order[0], "retains full census without mutating input");
             check(chosen.get(0).attempt==4 && chosen.get(1).attempt==2 && chosen.get(2).attempt==5,
                 "every adversarial rank preserves 4/2/5 fallback chain");
@@ -66,6 +68,42 @@ public final class PcbGuardedRouteSelectionContractTest {
             new PcbPlacementPlanner.Plan(new Rectangle(0,0,100,100),new Vector<PcbFootprint>(),
                 new Vector<PcbLayoutRegion>(),0,0,id,0)));
         return rows;
+    }
+    private static void verifyNarrow(Vector<MediumBoardPhysicalPolicy.PlacementCandidate> original,boolean repeated) {
+        Vector<MediumBoardPhysicalPolicy.PlacementCandidate> rows=
+            SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(original,8,repeated);
+        int first=repeated?4:0,second=repeated?2:1;
+        check(rows.get(0).attempt==first && rows.get(1).attempt==second && rows.get(2).attempt==5,
+            "new interpretation retains the pre-success fallback chain");
+        for(int index=0;index<3;index++) {
+            int fallback=repeated?SeededPcbLayoutGenerator.guardedRouteCandidateIndex(rows,index,0):index;
+            check(rows.get(SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,index,fallback,0,false,repeated)).attempt==
+                (index==0?first:index==1?second:5),"no success in selected policy means no narrow exploration");
+        }
+        int narrow=SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,repeated?1:2,2,1,false,repeated);
+        check(rows.get(narrow).attempt==3,"legal predecessor permits tight narrow alternative");
+        if(repeated) {
+            int third=SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,2,3,1,true,true);
+            check(rows.get(third).attempt==0 && third!=narrow,"roomier narrow alternative is a distinct third request");
+            check(rows.get(SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,2,3,1,false,true)).attempt==3,
+                "failed moderate followed by successful compact permits tight narrow third");
+        } else {
+            check(SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,0,0,1,false,false)==0 &&
+                SeededPcbLayoutGenerator.narrowRouteCandidateIndex(rows,1,1,1,false,false)==1,
+                "single-group tight predecessors never displaced");
+        }
+        for(int missing:new int[]{first,second,5,3}) {
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> subset=new Vector<MediumBoardPhysicalPolicy.PlacementCandidate>(rows);
+            for(int i=subset.size()-1;i>=0;i--)if(subset.get(i).attempt==missing)subset.remove(i);
+            subset=SeededPcbLayoutGenerator.prioritizeGroupedPlacementRouteCandidates(subset,8,repeated);
+            check(SeededPcbLayoutGenerator.narrowRouteCandidateIndex(subset,2,2,1,false,repeated)==2,
+                "incomplete retained chain cannot enable narrow substitution");
+        }
+        if(repeated) {
+            Vector<MediumBoardPhysicalPolicy.PlacementCandidate> subset=candidates(new int[]{4,2,5,3});
+            check(subset.get(SeededPcbLayoutGenerator.narrowRouteCandidateIndex(subset,2,3,1,true,true)).attempt==2,
+                "missing roomier narrow candidate falls back to untried compact2 without duplicate3");
+        }
     }
     private static void check(boolean condition,String message) {checks++;if(!condition)throw new AssertionError(message);}
 }

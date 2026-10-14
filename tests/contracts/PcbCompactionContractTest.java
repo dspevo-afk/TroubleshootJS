@@ -11,9 +11,8 @@ public final class PcbCompactionContractTest {
         int smaller = 0;
         for (String family : PlayerFamilyCatalog.registeredFamilies()) {
             // Q30 seed 0 is a retained route rejection; seed 13 is a qualified accepted route.
-            GeneratedBoardInstance instance = construct(family,
+            TroubleshootBoard board = construct(family,
                 Rb30Plan.FAMILY_ID.equals(family) ? 13L : 0L);
-            TroubleshootBoard board = instance.getBoard();
             PcbPlacementPlanner planner = new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry());
             PcbPlacementPlanner.Plan original = planner.plan(board, board.getPlacementConstraints(), 0, 0);
             String untouched = fingerprint(original);
@@ -31,19 +30,22 @@ public final class PcbCompactionContractTest {
         check(smaller > 0, "real playable placement has less empty area");
         System.out.println("PASS: PCB compaction contracts assertions="+assertions+" reducedFamilies="+smaller);
     }
-    private static GeneratedBoardInstance construct(String family, long seed) {
+    private static TroubleshootBoard construct(String family, long seed) {
+        // The held family has no normal-player profile. This physical-only
+        // fixture consumes its real plan without changing player admission.
+        if(Rb56Plan.FAMILY_ID.equals(family))return Rb56Plan.resolve(seed).board();
         GenerationRequest request = new PlayerLaunchRequest(family, Long.toString(seed),
             PlayerFamilyCatalog.candidateProfile(family).name()).generation();
         GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
         if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM)
-            return prepared.construct().instance;
+            return prepared.construct().instance.getBoard();
         GenerationRequest.ConstructionSession session = prepared.beginConstruction();
         int steps = 0;
         while (!session.advance()) {
             if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
                 throw new AssertionError("Normal Q30 route exceeded the unchanged shared step bound");
         }
-        return session.result().instance;
+        return session.result().instance.getBoard();
     }
     private static String fingerprint(PcbPlacementPlanner.Plan plan) {
         StringBuilder value=new StringBuilder(); value.append(plan.outline.width).append('x').append(plan.outline.height);

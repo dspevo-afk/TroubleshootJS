@@ -1,0 +1,9 @@
+{
+  "recovery": "Later idempotent stop overwrote the log; earlier tool result was transcribed, later output retained separately",
+  "status": "PASS",
+  "processId": 97332,
+  "positiveStop": "Actual earlier maintained stop returned exit0 and the retained stdout line",
+  "portReleased": true,
+  "viewportReset": true,
+  "ownedTabsClosed": true
+}

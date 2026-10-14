@@ -1,0 +1,8 @@
+{
+  "script": "scripts/preview.ps1",
+  "processId": 97332,
+  "executable": "powershell.exe",
+  "processStartTicks": 639275455566356193,
+  "port": 8899,
+  "ownership": "Fresh final source/build maintained startup"
+}

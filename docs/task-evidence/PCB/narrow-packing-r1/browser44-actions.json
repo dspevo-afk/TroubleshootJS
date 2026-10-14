@@ -1,0 +1,28 @@
+{
+  "build": "tsj-alpha/5 / B586023C5BFD749E890A366FFF13AA10",
+  "previewIdentity": {
+    "executionDigest": "a08c6c5a223037fa823f745eeda019bacd7527fccdc59618258e02f883074b68",
+    "fileCount": 1586,
+    "scriptDigest": "234a3e3f84eaf6d2fe079e7668c92222470c6c095a9999d759b36640c00af6c0",
+    "sourceDigest": "b7d036c488ae281375ff7a13f9091bf2cc33c0d3b6b96fc64a9bade3e4bb3578",
+    "webDigest": "59cabf8d30f293cf52a0426dadc2d272dbd5f13fc3d7cd64a82aad7af9a0790b"
+  },
+  "powerOffPreserved": true,
+  "restores": [
+    {
+      "outcome": "PASS",
+      "stage": "PUBLISH",
+      "elapsedMillis": 50657,
+      "work": 521,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "freshOwner": true,
+      "priorOwnerRetired": true
+    }
+  ],
+  "repairInput": "Actual downloaded Shop-repaired version8 save retained byte-exact",
+  "voltage": "4.996 V",
+  "automationNote": "Exact 5 V text lookup timed out; inspected actual restored powered load reading 4.996 V. No measurement or product assertion changed.",
+  "customerPassed": true
+}

@@ -1,0 +1,74 @@
+{
+  "status": "PASS_FINITE_DENSITY_AND_PLAYER_ACCEPTANCE",
+  "publicationScope": "Normal branch push; no main merge/email",
+  "sameFinalSourceShopRepair": {
+    "inputAudit": "All final source/served code hashes unchanged and identical generation/context/program receipts; fresh preview repeats actual restore/customer/cleanup",
+    "restoreMillis": 36822,
+    "scope": "Pre-refresh actual Shop/remove/install/save/restore/customer flow, unchanged B586 code; launcher metadata was stale and is not certified by that run",
+    "wallMillis": 377691,
+    "status": "PASS",
+    "coldMillis": 38596,
+    "retainedMillis": 339095
+  },
+  "candidate": "Enclosing commit",
+  "visible44": {
+    "status": "PASS",
+    "priorOwnerRetired": true,
+    "customerRetest": true,
+    "voltage": "4.996 V after repaired load",
+    "restoreMillis": 50657,
+    "work": 521,
+    "retainedMillis": 344310,
+    "wallMillis": 395290,
+    "freshOwner": true,
+    "maximumUnitMillis": 1774,
+    "coldMillis": 50980
+  },
+  "base": "bbc0c1e6e16972d73984a2d86f6dc5c08536a542",
+  "nativeAssertions": {
+    "dependencyCapture": 1166,
+    "selection": 23772,
+    "identity": 105,
+    "physicalPolicy": 59,
+    "saved7": 1504,
+    "save": 34963,
+    "saved6": 1494,
+    "currentGeometry": 1501,
+    "compaction": 858
+  },
+  "nativeSuites": 9,
+  "cleanupFlags": [
+    "ownerRestored",
+    "candidateDisposed",
+    "temporaryMeterClean",
+    "debugRestored",
+    "coordinatorReleased",
+    "playerSessionReleased",
+    "playerBridgeReleased"
+  ],
+  "gwt": {
+    "linkSeconds": 1.392,
+    "permutations": 5,
+    "compileSeconds": 89.796
+  },
+  "branch": "codex/q60-faulted-profile-counts",
+  "resources": "Both previews positively stopped, port8899 released, all owned tabs closed, viewport reset, exact scratch/pointer/download cleanup PASS",
+  "previewIdentity": "PASS: all five actual DOM source/script/web/execution/file-count fields match final maintained manifest",
+  "sourceInputs": "PASS: unchanged across native, GWT and UI",
+  "visible53": {
+    "voltage": "4.996 V",
+    "status": "Scoped inspection PASS; intentionally unrepaired closure raw FAIL",
+    "wallMillis": 269730,
+    "maximumUnitMillis": 2704,
+    "coldMillis": 81974,
+    "work": 604,
+    "retainedMillis": 187756
+  },
+  "limits": [
+    "Finite six roots; no global packing optimum",
+    "Current60 visible timing NOT RUN; prior CB170 90-second failures retained",
+    "Normal RB56/HARD HELD; full matrix/global population/human U05 NOT RUN; modest host owner-deferred"
+  ],
+  "buildStrongName": "B586023C5BFD749E890A366FFF13AA10",
+  "review": "Root integrated diff, receipts and four final images; no independent agent review"
+}

@@ -5607,7 +5607,7 @@ isolation corridor remains; the 53-part board's lower primary-side vacancy is no
 blanket reserve. Two-dimensional/backside possibilities remain unqualified.
 [Actual trials, outcomes and retained limits](task-evidence/PCB/domain-packing-rejected-r1/README.md).
 
-## Guarded private7 route selection and explicit saved6 replay
+## Guarded private7 route selection and explicit saved6 replay (preceding checkpoint)
 
 Fresh private RB56 requests select placement7; SINGLE_GROUP6 remains explicitly
 named and parsed before plan-cache/proof lookup. Saved1-6/publicalpha5/sessionmodel1/
@@ -5628,3 +5628,41 @@ customer retest/cleanup and accepted6 file reconstruction/resave are independent
 recorded. The latter unrepaired closure is raw FAIL/clean cleanup, not full-flow
 PASS. No normal advanced release, optimal packing or new domain geometry is claimed.
 See [finite current evidence](task-evidence/PCB/guarded-route-coverage-r1/README.md).
+
+## Narrow private8 packing and explicit saved7 replay
+
+Fresh private RB56 requests select placement8; GUARDED7 preserves the preceding
+saved interpretation before cache/proof reconstruction. Publicalpha5, sessionmodel1
+and generationepoch16 remain. PcbPlacementPlanner owns two additional narrow
+shapes within the existing six candidates: algorithm0/group-centred placement at
+aspect1.55 and package/access demand factors1.35 for3 and1.65 for repeated-group0.
+The existing compactor validates complete envelopes, access and isolation.
+Repeated candidate3 derives an advisory primary-band target from full demand
+weighted by actual conductive courtyards. Mixed isolation packages seed their
+common gap centre before ordinary components. Connected-target placement retains
+soft group scoring while allowing the primary circuitry to use the available
+vertical space. The existing common80 corridor and complete physical validators
+remain authoritative; there is no new wall, seed/component table or fake connectivity.
+Single-group0/1 and repeated-group4/2/roomy5 retain their geometry. The pure
+repeated-control predicate is shared with the existing generator classification.
+
+SeededPcbLayoutGenerator still owns policy-local route admission and selection.
+Before a legal route, original fallback order stays. After moderate4 succeeds,
+repeated groups may route tight3 second and roomier0 third; if0 failed placement,
+the untried2 fills slot three. If4 fails,2 remains second and only its success
+permits3 third. Single groups retain0/1 and may replace roomy5 with3 only after
+their own policy succeeds. Missing retained chains cannot enable substitution,
+P05 success cannot authorize P07, and route requests remain unique and bounded3.
+Placement8 selects the least final area among already legal routes; preceding
+versions preserve their former shape cost. Electrical graphs, packages, routing
+rules, endpoint identities, margins, service/probe envelopes and budgets stay.
+
+The six representative roots retain all parts/pads, with11.57%/3.37%/6.11%/24.57%/2.51%
+less outline area on40/44/60/53/54;42 retains exact geometry. All saved7 and saved6
+literal geometries stay exact. The53 copper route shortens and its largest
+protected empty rectangle falls64.94% from the earlier narrow candidate shown
+to the user. The independent fixture requires at least half the before rectangle
+area; actual production captures distinguish this from a visual/packing optimum.
+This finite result is not globally optimal packing,
+normal advanced release or completion of the further30% target.
+See [final inputs, gates, visible evidence and limitations](task-evidence/PCB/narrow-packing-r1/README.md).

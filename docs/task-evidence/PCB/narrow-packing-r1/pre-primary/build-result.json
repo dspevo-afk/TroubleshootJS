@@ -1,0 +1,12 @@
+{
+  "compileSeconds": 96.196,
+  "linkSeconds": 1.407,
+  "permutations": 5,
+  "rawBuildSha256": "ae2a8929bbd55a922a2cc48c771dd206b753c08f25a8dc9e7b06aeb6e9b07b6b",
+  "commandWrapperExitCode": 0,
+  "sanitizedFields": [
+    "worktree absolute path",
+    "selected JDK8 absolute path"
+  ],
+  "nativeLastExitCode": null
+}

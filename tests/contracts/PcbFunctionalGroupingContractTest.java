@@ -7,11 +7,12 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=7;
+    private static final int MEASURED_VERSION=8;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     // Independent accepted6 receipts, frozen before guarded route selection.
     private static final long[] SAVED6_AREA={5122184,4622400,8443994,4679776,7708262,6371585};
+    private static final long[] SAVED7_AREA={5122184,4622400,7395541,4679776,7708262,6371585};
     private static final String[] SAVED6_GEOMETRY_SHA256={
         "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b",
         "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28",
@@ -69,6 +70,10 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedSingleGroupGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,6);
         System.out.println("PASS: saved placement6 geometry contracts roots=6 assertions="+checks);
+    }
+    static void verifySavedGuardedGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,7);
+        System.out.println("PASS: saved placement7 geometry contracts roots=6 assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -146,12 +151,25 @@ public final class PcbFunctionalGroupingContractTest {
             "published saved3 geometry remains byte-exact: "+seed);
         if(version>=4) reportWhitespace(board,layout,seed,version);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
+        if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
         if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved6 geometry stays byte-exact: "+seed);
         if(version==7) {
+            String expected=index==2?"f4ea1023da1da851f16846ba6535d05742d4d7e6d30ff9ee878028b9cbc9158e":
+                SAVED6_GEOMETRY_SHA256[index];
+            check(expected.equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                "saved7 geometry stays byte-exact: "+seed);
             check((long)outline.width*outline.height<=SAVED6_AREA[index],"no representative outline regression: "+seed);
             check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
                 "guarded selection keeps original placement and per-policy route caps");
+        }
+        if(version==8) {
+            long area=(long)outline.width*outline.height;
+            check(area<=SAVED7_AREA[index],"no representative outline regression against accepted7: "+seed);
+            if(index==0 || index==1 || index==2 || index==4 || index==5)
+                check(area<SAVED7_AREA[index],"narrow alternatives improve the declared density cases: "+seed);
+            check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
+                "narrow exploration retains original placement and per-policy route caps");
         }
         if(version==5 && (index==0 || index==1 || index==3))
             check(SAVED4_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
@@ -162,7 +180,6 @@ public final class PcbFunctionalGroupingContractTest {
         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
             PlayerSessionFingerprint.of(layout.geometryFingerprint())),
             "published saved4 geometry remains byte-exact: "+seed);
-        if(version>=4) System.out.println("PCB_GROUPING_ROUTE_CASE seed="+seed+" "+result.toCanonical());
         System.out.println("PCB_GROUPING_CASE {\"seed\":\""+seed+"\",\"version\":"+version+
             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+
             ",\"width\":"+outline.width+",\"height\":"+outline.height+",\"area\":"+((long)outline.width*outline.height)+
@@ -246,6 +263,10 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"protectedFreeFraction\":"+(free/(double)(cols*rows))+",\"largestProtectedEmptyRectangle\":{\"x\":"+
             (outline.x+bestX*step)+",\"y\":"+(outline.y+bestY*step)+",\"width\":"+(bestW*step)+
             ",\"height\":"+(bestH*step)+",\"area\":"+(bestArea*step*step)+"},\"scope\":\"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF\"}");
+        // Independent pre-primary trial receipt: 1130x1050 at (60,776).
+        // This bounds the dominant empty patch, not a manufacturing packing optimum.
+        if(version==8 && seed==17L)check(bestArea*step*step<=1186500/2,
+            "the targeted primary-side void shrinks by at least half");
     }
     private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
         int x0=Math.max(0,(r.x-outline.x)/step),y0=Math.max(0,(r.y-outline.y)/step);

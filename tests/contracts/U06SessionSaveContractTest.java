@@ -90,8 +90,10 @@ public final class U06SessionSaveContractTest {
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LARGE);
         GenerationRequest singleRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_SINGLE_GROUP);
+        GenerationRequest guardedRequest = currentRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED);
         GenerationRequest[] requests = new GenerationRequest[] {
-            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, currentRequest
+            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, guardedRequest, currentRequest
         };
         String[] expected = new String[] {
             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -107,7 +109,9 @@ public final class U06SessionSaveContractTest {
             "tsj-private-session/6/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-6/RB56_CONTROL/77",
             "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-7/RB56_CONTROL/77"
+                "/rb56-placement-7/RB56_CONTROL/77",
+            "tsj-private-session/8/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-8/RB56_CONTROL/77"
         };
         for (int i = 0; i < requests.length; i++) {
             final GenerationRequest request = requests[i];
@@ -128,7 +132,7 @@ public final class U06SessionSaveContractTest {
         }
         check(currentRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
-            "new private RB56 requests default to placement 7");
+            "new private RB56 requests default to placement 8");
     }
 
     private static void verifyOperationsAndCopies() {

@@ -1,0 +1,16 @@
+[
+  {
+    "decode": "PASS: byte-exact",
+    "file": "domain-trial.patch.gz",
+    "originalSha256": "4e4b3042215508708dcfca8472733c5dcc24ffe58632b291a02b23f26ca5c5d5",
+    "bytes": 9411,
+    "reason": "Unified-diff context blank line contains a required space; preserve original patch bytes as structured gzip rather than edit raw evidence"
+  },
+  {
+    "decode": "PASS: byte-exact",
+    "file": "domain-ungrouped.patch.gz",
+    "originalSha256": "1717b6eece2c512ab764b3c69eb63156b3e31de5f2c8a97146cfeb7d63bf27e1",
+    "bytes": 9242,
+    "reason": "Unified-diff context blank line contains a required space; preserve original patch bytes as structured gzip rather than edit raw evidence"
+  }
+]

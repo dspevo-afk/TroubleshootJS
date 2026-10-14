@@ -1,0 +1,25 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index 4f0eff82..a1a1d31e 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -283,6 +283,9 @@ final class PcbPlacementPlanner {
+         int aspectIndex=(int)(((long)algorithmCandidate+
+             ((seed^(seed>>>32))&0x7fffffffL))%aspects.length);
+         double aspect=aspects[aspectIndex];
++        // Trial: use the unprotected compact alternative for a narrower outline.
++        boolean boundaryFirst=placementVersion >= 7 && candidate == 3;
++        if(boundaryFirst) aspect=.90;
+         int partCount=board.getComponentIds().size();
+         double spacingFactor=3.0;
+         if(partCount>40)
+@@ -342,6 +345,10 @@ final class PcbPlacementPlanner {
+         while(!remaining.isEmpty()) {
+             Item next=chooseMediumItem(remaining.values(),placed,topology,board,
+                 seed,algorithmCandidate);
++            if(boundaryFirst) for(Item item:remaining.values())
++                if(item.footprint.getPlacement().getPhysicalGeometry().getIsolationBody()!=null) {
++                    next=item;break;
++                }
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,placementVersion >= 4 && candidate < 2,

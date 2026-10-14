@@ -1,0 +1,31 @@
+{
+  "build": "tsj-alpha/5 / B586023C5BFD749E890A366FFF13AA10",
+  "voltage": "5 V",
+  "probeInput": "Real canvas OUTPUT left / RETURN right",
+  "poweredRemoveDisabled": true,
+  "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+  "repair": {
+    "removedOriginal": "Part 35 / KA",
+    "acquiredReplacement": "Part 45 / 5 V coil SPDT",
+    "installedTarget": "Channel A / KA",
+    "customerPassed": true
+  },
+  "restore": {
+    "status": "Session restored. Transient behavior restarted; retest the board.",
+    "powerOffPreserved": true,
+    "receipt": [
+      {
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 36822,
+        "work": 521,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "freshOwner": true,
+        "priorOwnerRetired": true
+      }
+    ]
+  },
+  "restoredCustomerPassed": true
+}
