@@ -7,7 +7,25 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private8 PCB packing and primary void reduction delivered**
+**Current task:** **Connected private9 PCB packing delivered**
+Single-control candidate0 tries a square demand-sized outline around actual
+connected neighbors.42/root0 shrinks another6.86%; its largest protected empty
+rectangle falls54.49%. Copper grows6.46%, explicitly retained as a packing
+tradeoff. Other five representatives and untuned1/7 holdouts retain accepted8
+geometry; no component/seed/fault special casing. All parts/pads, full physical
+validators and6/3/work/time caps stay. Fresh9/explicit saved8; saved6/7/8 literals
+and publicalpha5/model1/epoch16 preserved. Native11 plus final strengthened
+geometry, actual five-permutation JDK8/GWT and real42 OFF/Shop/resistor repair/
+4.996V/customerPASS/Save/FileReaderfresh-owner/customerPASS/Closecleanup PASS.
+Three real captures, exact source/served identity audit and task cleanup complete.
+No normal advanced release, all-seed guarantee, manufacturing/optimality or60
+performance claim; all inherited limits/failures stay. No main merge/email.
+[Evidence and tradeoffs](task-evidence/PCB/connected-packing-r1/README.md).
+Next PCB priority: package orientations and pin-local passive placement under
+existing electrical identity/access constraints; remaining gaps and60 startup
+timing remain open. General roadmap work stays behind PCB realism.
+
+**Previous packing task:** **Private8 PCB packing and primary void reduction delivered**
 The user-targeted53 lower-left swatch now uses vertically placed primary circuitry.
 Its largest protected empty rectangle falls64.94% from the actual pointed-at
 preview; board area falls another4.85%,24.57% below published7. 40/44/60/54 shrink

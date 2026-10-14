@@ -289,6 +289,12 @@ final class PcbPlacementPlanner {
         // Two narrow aspect alternatives share the established topology targets.
         // Repeated groups keep compact2/moderate4/roomy5; single groups keep0/1/5.
         if(narrow) aspect=1.55;
+        // A square alternative packs around the electrical neighbors rather
+        // than pulling every package toward its semantic group centre. Keep
+        // the proven single-group1 and narrow3 alternatives unchanged.
+        boolean connectedPacking=placementVersion>=9 && candidate==0 &&
+            !SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
+        if(connectedPacking) { aspect=1.0; useGrouped=false; }
         int partCount=board.getComponentIds().size();
         double spacingFactor=3.0;
         if(partCount>40)
@@ -300,7 +306,7 @@ final class PcbPlacementPlanner {
         // The two legacy algorithm fallbacks keep their requested candidate metadata below.
         boolean tight=(placementVersion >= 4 && candidate < 2) || narrow;
         double compactFactor=tight ? 1.65 : 2.35;
-        if(narrow && candidate == 3)compactFactor=1.35;
+        if((narrow && candidate == 3) || connectedPacking)compactFactor=1.35;
         long compactAllowance=tight ? 150000L : 250000L;
         long targetArea=useCompact ?
             (long)Math.ceil(demandArea*compactFactor)+compactAllowance :

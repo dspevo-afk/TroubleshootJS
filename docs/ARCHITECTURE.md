@@ -5666,3 +5666,22 @@ area; actual production captures distinguish this from a visual/packing optimum.
 This finite result is not globally optimal packing,
 normal advanced release or completion of the further30% target.
 See [final inputs, gates, visible evidence and limitations](task-evidence/PCB/narrow-packing-r1/README.md).
+
+## Connected private9 packing and explicit saved8 replay
+
+Fresh private RB56 requests select placement9. Explicit NARROW8 dispatches before
+cache/proof reconstruction, preserving published8 geometry and files. Publicalpha5,
+sessionmodel1 and generationepoch16 remain. PcbPlacementPlanner changes only
+single-control candidate0: square aspect1.0, measured package/access demand1.35,
+connected electrical-neighbor centring with existing soft functional-group score.
+Original single1/narrow3 and all repeated-control alternatives retain geometry;
+SeededPcbLayoutGenerator's guarded policy-local routing/area selection stays exact.
+No seed/component/fault predicates, new physical walls, graph, router or budgets.
+
+42/root0 area falls6.86% and largest protected empty rectangle54.49%; copper
+length grows6.46%. This is an explicit packing/locality tradeoff, not manufacturing
+or optimality proof. Other five representative and untuned1/7 layouts remain exact8;
+six literal saved6/7/8 cases protect replay. Actual42 guarded Shop resistor repair,
+customer retest, Save/FileReader fresh-owner restore and cleanup PASS accompany
+final native/GWT/input/image gates. Normal RB56/HARD and inherited performance
+limits stay held. [Evidence and limits](task-evidence/PCB/connected-packing-r1/README.md).

@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "images": [
+    {
+      "name": "compact42-top.jpg",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "format": "JPEG",
+      "sha256": "94592530bac3432401231acd3f5ee79f3b47672bae6369b2dafb6eb07871f9c1",
+      "channelStddev": [
+        70.94363436586487,
+        47.222724839621286,
+        37.086338041380124
+      ]
+    },
+    {
+      "name": "compact42-bottom.jpg",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "format": "JPEG",
+      "sha256": "1eff01e44db0b19c2ab062f64db6ad7de26aa01f4e188d4e86082d803d252733",
+      "channelStddev": [
+        70.31466778849415,
+        45.844985383907506,
+        35.537368400179815
+      ]
+    },
+    {
+      "name": "repaired42-customer-pass.jpg",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "format": "JPEG",
+      "sha256": "5f2956f89c9505f3f89a713de778204b5abe90b00913f03b791f4401d3ab8e07",
+      "channelStddev": [
+        95.4018194772944,
+        78.66929826384386,
+        59.37520796098386
+      ]
+    }
+  ]
+}

@@ -1,4 +1,43 @@
-# Current checkpoint: narrow private8 packing and primary void reduction delivered
+# Current checkpoint: connected private9 PCB packing delivered
+
+2026-10-14. Base `368f3b0dfeff026c352f671cd45333c8cdfda50e`, branch
+`codex/q60-faulted-profile-counts`; enclosing commit is the accepted candidate.
+Generic single-control candidate0 now packs around electrical neighbors in a
+square demand-sized outline; existing single1/narrow3 and repeated layouts stay.
+42/root0 area4679776 ->4358809 (-6.86%); largest protected empty rectangle376200
+->171200 (-54.49%). Copper28810 ->30670 (+6.46%) is an explicit packing tradeoff.
+Five other representative layouts and holdouts1/7 stay exact accepted8. Full
+parts/pads, access/probe/isolation envelopes and all6/3/work/time caps retained.
+Fresh9; explicit saved8 plus six literal saved6/7/8 geometries, publicalpha5/
+epoch16/sessionmodel1 remain. Eight examples, not all-seed/global-optimal proof.
+
+PASS native11/220.815s inclcleanup; final strengthened geometry1513/80.273s
+inclcleanup. All720 ranks23772; saved6/7/8 literals1494/1504/1507; actual holdout
+routes, save34966/identity109/dependency1166/physicalpolicy59/compaction858.
+Actual final-source JDK8/GWT five109.268s compile/1.513s link/113.036s wall;
+E813280114D4B57B4235DE3051A0371C. Final source/scripts/build hashes audited.
+Fresh preview's five DOM provenance fields match maintained startup manifest.
+Real42 cold42.643s/519work/max1.536s, top/Fit/bottom, physical red/black U1 pads,
+unrepaired customerFAILexpected. Input11.191V/enable10.178mV/output~0V; actual
+OFF/right-clickRemoveREN/Shop10kmediumPart43/compatibleInstall/ON4.996V/customer
+PASS. Actual Save/FileReader9 restore39.750s/519work/freshOwner/priorOwnerRetired,
+savedOFF retained; ON/customerPASSagain/ClosewholeflowPASS/all seven cleanup.
+291.821s total inclcold,249.178s retained<360. Three inspected JPEGs, warning/
+errorlogs[]. Root review PASS; no independent reviewer, human U05 or CDP-wrapper
+certification. Rejected44-regressing trials and initial URL/lookup mistakes kept.
+
+[Final evidence and precise limits](task-evidence/PCB/connected-packing-r1/README.md).
+Full matrix/global population/normal RB56/HARD/modest host and inherited60 timing
+remain NOT RUN/HELD. No main merge/email; general roadmap stays behind realism.
+Native scratch clean; exact preview88460 stopped/port8899released, owned tab
+closed, no viewport override. Exact current download removed after ownership
+checks; byte-exact save retained. Pre-existing five active untracked entries and
+Desktop seven tracked edits/data preserved; normal build output/toolchains stay.
+Next unstarted: component orientations and pin-local passive placement under
+existing electrical/identity/access constraints; further internal gaps and60
+timing remain open.
+
+# Previous checkpoint: narrow private8 packing and primary void reduction delivered
 
 2026-10-14. Base `bbc0c1e6e16972d73984a2d86f6dc5c08536a542`, branch
 `codex/q60-faulted-profile-counts`; enclosing commit is the accepted candidate.

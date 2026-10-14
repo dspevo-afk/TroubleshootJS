@@ -12,7 +12,8 @@ final class GenerationRequest {
     static final int RB56_PLACEMENT_INTERPRETATION_LARGE = 5;
     static final int RB56_PLACEMENT_INTERPRETATION_SINGLE_GROUP = 6;
     static final int RB56_PLACEMENT_INTERPRETATION_GUARDED = 7;
-    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 8;
+    static final int RB56_PLACEMENT_INTERPRETATION_NARROW = 8;
+    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 9;
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;

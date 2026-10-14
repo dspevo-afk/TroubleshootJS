@@ -398,6 +398,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbGuardedRouteSelectionContractTest'; Marker = 'guarded PCB route selection contracts ' },
         @{ Name = 'PcbSavedSingleGroupGeometryContractTest'; Marker = 'saved placement6 geometry contracts ' },
         @{ Name = 'PcbSavedGuardedGeometryContractTest'; Marker = 'saved placement7 geometry contracts ' },
+        @{ Name = 'PcbSavedNarrowGeometryContractTest'; Marker = 'saved placement8 geometry contracts ' },
+        @{ Name = 'PcbConnectedPackingHoldoutContractTest'; Marker = 'connected packing holdouts ' },
         @{ Name = 'PcbSavedRealismGeometryContractTest'; Marker = 'saved placement3 geometry contracts ' },
         @{ Name = 'PcbSavedDensityGeometryContractTest'; Marker = 'saved placement4 geometry contracts ' },
         @{ Name = 'PcbSavedLargeGeometryContractTest'; Marker = 'saved placement5 geometry contracts ' },

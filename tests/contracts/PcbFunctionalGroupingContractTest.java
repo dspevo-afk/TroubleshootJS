@@ -7,12 +7,21 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=8;
+    private static final int MEASURED_VERSION=9;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     // Independent accepted6 receipts, frozen before guarded route selection.
     private static final long[] SAVED6_AREA={5122184,4622400,8443994,4679776,7708262,6371585};
     private static final long[] SAVED7_AREA={5122184,4622400,7395541,4679776,7708262,6371585};
+    private static final long[] SAVED8_AREA={4529785,4466664,6943752,4679776,5814368,6211431};
+    private static final String[] SAVED8_GEOMETRY_SHA256={
+        "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
+        "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
+        "1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
+        "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
+        "2e5a36d464418c7411b68055d408d17867012eaec011c8e21e5d5f4da7caee32",
+        "3be6941e60168182fdd377ed938fe298b32d56037e3c3f30d4a22ee39fb79324"
+    };
     private static final String[] SAVED6_GEOMETRY_SHA256={
         "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b",
         "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28",
@@ -74,6 +83,10 @@ public final class PcbFunctionalGroupingContractTest {
     static void verifySavedGuardedGeometry() {
         for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,7);
         System.out.println("PASS: saved placement7 geometry contracts roots=6 assertions="+checks);
+    }
+    static void verifySavedNarrowGeometry() {
+        for(int index=0;index<ROOTS.length;index++) measure(ROOTS[index],index,8);
+        System.out.println("PASS: saved placement8 geometry contracts roots=6 assertions="+checks);
     }
     private static void measure(long seed,int index,int version) {
         Rb56Plan plan=Rb56Plan.resolve(seed,version);
@@ -163,7 +176,16 @@ public final class PcbFunctionalGroupingContractTest {
             check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
                 "guarded selection keeps original placement and per-policy route caps");
         }
-        if(version==8) {
+        if(version==8) check(SAVED8_GEOMETRY_SHA256[index].equals(
+            PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved8 geometry stays byte-exact: "+seed);
+        if(version==9) {
+            long area=(long)outline.width*outline.height;
+            check(area<=SAVED8_AREA[index],"no representative regression against accepted8: "+seed);
+            if(index==3) check(area<SAVED8_AREA[index],"connected packing reduces the retained42 fixture");
+            else check(SAVED8_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                "other representative layouts remain exact accepted8: "+seed);
+        }
+        if(version>=8) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED7_AREA[index],"no representative outline regression against accepted7: "+seed);
             if(index==0 || index==1 || index==2 || index==4 || index==5)
@@ -265,7 +287,7 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"height\":"+(bestH*step)+",\"area\":"+(bestArea*step*step)+"},\"scope\":\"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF\"}");
         // Independent pre-primary trial receipt: 1130x1050 at (60,776).
         // This bounds the dominant empty patch, not a manufacturing packing optimum.
-        if(version==8 && seed==17L)check(bestArea*step*step<=1186500/2,
+        if(version>=8 && seed==17L)check(bestArea*step*step<=1186500/2,
             "the targeted primary-side void shrinks by at least half");
     }
     private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {

@@ -1,0 +1,3 @@
+PASS: all frozen source/scripts/contracts unchanged after native gates.
+PASS: GWT production source and scripts remain exact to the native11 input freeze; final geometry test only strengthens retained assertions.
+PASS: all final source/script/contract/served assets unchanged after actual player flow.
