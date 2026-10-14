@@ -6,14 +6,14 @@ import java.util.Vector;
 final class Rb56Placement {
     static final int LEGACY_VERSION = 1, COMPACT_VERSION = 2,
         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
-        GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, CURRENT_VERSION = 10;
+        GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10, CURRENT_VERSION = 11;
     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
     static final int BARRIER_DRAWING_UNITS = 80;
     private Rb56Placement() { }
 
     static boolean supportsVersion(int version) {
         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == CURRENT_VERSION;
+            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == CURRENT_VERSION;
     }
 
     /** One demand per declared package; the plan remains the only package inventory. */
@@ -59,7 +59,7 @@ final class Rb56Placement {
         // This is the existing structural routing algorithm, not Q30 normal eligibility.
         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, placementVersion,
-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == CURRENT_VERSION);
+            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == CURRENT_VERSION);
     }
 
     static String domain(String net) {

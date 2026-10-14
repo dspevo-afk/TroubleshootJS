@@ -9,9 +9,9 @@ public final class RelBSessionIdentityContractTest {
 
     public static void main(String[] args) {
         reject(new Attempt() { public void run() {
-            PlayerLaunchRequest.parse("tsj-private-session/10/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-10/RB56_CONTROL/1");
-        } }, "public parser refuses the private placement8 namespace");
+            PlayerLaunchRequest.parse("tsj-private-session/11/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-11/RB56_CONTROL/1");
+        } }, "public parser refuses the private placement11 namespace");
         verifyExistingPublicWire();
         verifyPrivateIdentity();
         verifyPreCancelGuards();
@@ -63,30 +63,35 @@ public final class RelBSessionIdentityContractTest {
             GenerationRequest request =
                 GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
-            String expected = "tsj-private-session/10/" +
-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-10/RB56_CONTROL/" + seed;
+            String expected = "tsj-private-session/11/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-11/RB56_CONTROL/" + seed;
             check(request.getRb56PlacementInterpretationVersion() ==
                     GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT &&
                     expected.equals(identity.canonical()) && identity.matches(request),
-                "exact signed-long fresh private identity selects placement 10: " + seed);
+                "exact signed-long fresh private identity selects placement 11: " + seed);
             PlayerSessionSave original = emptySave(identity.canonical());
             PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
             check(original.encode().equals(parsed.encode()) &&
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
-                "placement-10 private identity survives the unchanged bounded session codec: " + seed);
+                "placement-11 private identity survives the unchanged bounded session codec: " + seed);
+            GenerationRequest localRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL);
+            String localExpected="tsj-private-session/10/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-10/RB56_CONTROL/"+seed;
+            check(localExpected.equals(PlayerSessionReplay.forQualification(localRequest).canonical()) &&
+                PlayerSessionReplay.parse(localExpected).matches(localRequest) &&
+                !PlayerSessionReplay.parse(localExpected).matches(request),"saved10 stays distinct from fresh11: "+seed);
             GenerationRequest connectedRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CONNECTED);
             String connectedExpected="tsj-private-session/9/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-9/RB56_CONTROL/"+seed;
-            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from fresh10: "+seed);
+            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from fresh11: "+seed);
             GenerationRequest narrowRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NARROW);
             String narrowExpected="tsj-private-session/8/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-8/RB56_CONTROL/"+seed;
-            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from fresh10: "+seed);
+            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from fresh11: "+seed);
             GenerationRequest guardedRequest=request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED);
             String guardedExpected="tsj-private-session/7/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
                 "/rb56-placement-7/RB56_CONTROL/"+seed;
             check(guardedExpected.equals(PlayerSessionReplay.forQualification(guardedRequest).canonical()) &&
                 PlayerSessionReplay.parse(guardedExpected).matches(guardedRequest) &&
-                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from fresh10: "+seed);
+                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from fresh11: "+seed);
 
             GenerationRequest realismRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM);
@@ -94,7 +99,7 @@ public final class RelBSessionIdentityContractTest {
             String realismExpected = "tsj-private-session/3/" +
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/" + seed;
             check(realismExpected.equals(realism.canonical()) && realism.matches(realismRequest) &&
-                !realism.matches(request), "saved placement3 identity stays distinct from fresh10: " + seed);
+                !realism.matches(request), "saved placement3 identity stays distinct from fresh11: " + seed);
             PlayerSessionSave realismSave = emptySave(realismExpected);
             check(realismSave.encode().equals(PlayerSessionSave.parse(realismSave.encode()).encode()),
                 "saved3 bounded session wire remains exact: " + seed);
@@ -105,7 +110,7 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-6/RB56_CONTROL/"+seed;
             PlayerSessionReplay single=PlayerSessionReplay.forQualification(singleRequest);
             check(singleExpected.equals(single.canonical()) && single.matches(singleRequest) && !single.matches(request),
-                "saved6 stays distinct from fresh10: "+seed);
+                "saved6 stays distinct from fresh11: "+seed);
             check(emptySave(singleExpected).encode().equals(PlayerSessionSave.parse(emptySave(singleExpected).encode()).encode()),
                 "saved6 wire remains exact: "+seed);
             GenerationRequest largeRequest=request.withRb56PlacementInterpretationVersion(
@@ -114,7 +119,7 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-5/RB56_CONTROL/"+seed;
             PlayerSessionReplay large=PlayerSessionReplay.forQualification(largeRequest);
             check(largeExpected.equals(large.canonical()) && large.matches(largeRequest) && !large.matches(request),
-                "published saved5 stays distinct from fresh10: "+seed);
+                "published saved5 stays distinct from fresh11: "+seed);
             check(emptySave(largeExpected).encode().equals(PlayerSessionSave.parse(emptySave(largeExpected).encode()).encode()),
                 "saved5 wire remains exact: "+seed);
             GenerationRequest denseRequest=request.withRb56PlacementInterpretationVersion(
@@ -123,7 +128,7 @@ public final class RelBSessionIdentityContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-4/RB56_CONTROL/"+seed;
             PlayerSessionReplay dense=PlayerSessionReplay.forQualification(denseRequest);
             check(denseExpected.equals(dense.canonical()) && dense.matches(denseRequest) &&
-                !dense.matches(request),"published saved4 stays distinct from fresh10: "+seed);
+                !dense.matches(request),"published saved4 stays distinct from fresh11: "+seed);
             PlayerSessionSave denseSave=emptySave(denseExpected);
             check(denseSave.encode().equals(PlayerSessionSave.parse(denseSave.encode()).encode()),
                 "saved4 wire remains exact: "+seed);
@@ -147,11 +152,11 @@ public final class RelBSessionIdentityContractTest {
             check(!request.canonical().equals(legacyRequest.canonical()) &&
                 !request.canonical().equals(compactRequest.canonical()) &&
                 !compactRequest.canonical().equals(legacyRequest.canonical()),
-                "placement 1, 2 and 10 have distinct plan-cache/request identities: " + seed);
+                "placement 1, 2 and 11 have distinct plan-cache/request identities: " + seed);
             check(compactRequest.canonical().contains("placement-interpretation=2;") &&
-                request.canonical().contains("placement-interpretation=10;") &&
+                request.canonical().contains("placement-interpretation=11;") &&
                 legacyRequest.canonical().indexOf("placement-interpretation=") < 0,
-                "legacy canonical stays exact while placement 2 and 10 are explicitly keyed: " + seed);
+                "legacy canonical stays exact while placement 2 and 11 are explicitly keyed: " + seed);
         }
         reject(new Attempt() { public void run() {
             PlayerLaunchRequest.parse("tsj-private-session/5/"+GenerationDependencyContext.INTERPRETATION_EPOCH+

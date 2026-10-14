@@ -1,0 +1,96 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+    - navigation:
+      - button:
+      - button [disabled]:
+      - button:
+      - button:
+      - button [disabled]:
+    - rowgroup:
+      - button: TSJ MM-90
+      - generic: DIGITAL MULTIMETER
+      - button [disabled]: HOLD
+      - button [disabled]: RANGE
+      - button [disabled]: MIN/MAX
+      - button: LIGHT
+      - slider [disabled]
+      - button [disabled] [pressed]: "OFF"
+      - button [disabled]: V~
+      - button [disabled]: A
+      - button [disabled]: mA
+      - button [disabled]: µA
+      - button [disabled]: CAP
+      - button [disabled]: Hz
+      - button [disabled]: "%"
+      - button [disabled]: °C/°F
+      - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+      - generic: 10A
+      - generic: COM
+      - generic: V Ω
+      - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+      - row:
+        - cell:
+          - table:
+            - rowgroup:
+              - row:
+                - cell:
+                  - button: DC V
+                - cell
+              - row:
+                - cell
+                - cell:
+                  - button: OHM
+              - row:
+                - cell:
+                  - button: CONT
+                - cell:
+                  - button: DIODE
+      - generic: "--- V"
+    - row:
+      - cell:
+        - button [disabled]: Open controlled indicator
+    - row:
+      - cell:
+        - button: "Board Power: ON"
+    - row:
+      - cell:
+        - button [disabled]: New control board
+    - row:
+      - cell:
+        - button: End qualification view
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+- dialog "Customer retest passed":
+  - banner:
+    - heading "Customer retest passed" [level=2]
+  - status: Customer retest passed. The reported behavior is resolved.
+  - paragraph: FUNCTION VERIFIED
+  - heading "Ready to return to the customer." [level=3]
+  - paragraph: The live board passed the customer’s functional checks.
+  - paragraph: You can keep using this board. Later changes do not alter the recorded retest result.
+  - paragraph: Customer retest passed. The reported behavior is resolved.
+  - button "Close session" [active]
+  - button "Return to board"
+  - paragraph: Private qualification session. Normal catalog, HARD and replay remain unavailable.
+  - text: Interpretation / build
+  - textbox "Interpretation / build": tsj-alpha/5 / 82ED61DD8F7C1E462AA512643875A718

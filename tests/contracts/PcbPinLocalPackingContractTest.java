@@ -8,6 +8,7 @@ public final class PcbPinLocalPackingContractTest {
         long[] seeds={-1017L,-1004L,-1022L,0L,17L,42L};
         long[] areas={4529785,4466664,6943752,4358809,5814368,6211431};
         long[] baselineSpans={19610,24320,28140,22890,25220,29920};
+        long[] accepted10Spans={19610,24320,28140,22890,25220,20480};
         long totalSpan=0;
         for(int i=0;i<seeds.length;i++) {
             Rb56Plan plan=Rb56Plan.resolve(seeds[i],Rb56Placement.CURRENT_VERSION);
@@ -47,6 +48,8 @@ public final class PcbPinLocalPackingContractTest {
                 " pairs="+pairs+" span="+span+" copper="+copper+" geometry="+PlayerSessionFingerprint.of(layout.geometryFingerprint()));
             if(area>areas[i])throw new AssertionError("local area regression: "+seeds[i]);
             if(i==5 && span>baselineSpans[i]*3/4)throw new AssertionError("paired-pin span gain below declared quarter");
+            if(Rb56Placement.CURRENT_VERSION>=11 && span>accepted10Spans[i])
+                throw new AssertionError("paired-pin span regresses against accepted10: "+seeds[i]);
             totalSpan+=span;
         }
         if(totalSpan>=150100)throw new AssertionError("paired-pin aggregate does not improve the frozen9 baseline");

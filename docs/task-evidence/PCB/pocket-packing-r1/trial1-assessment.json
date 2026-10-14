@@ -1,0 +1,26 @@
+{
+  "otherFiveRepresentativeGeometry": "EXACT10",
+  "protectedRectangle": {
+    "before": 327600,
+    "status": "FAIL",
+    "after": 328000
+  },
+  "outcome": "REJECTED",
+  "trial11Holdouts": "NOT_RUN_AFTER_REPRESENTATIVE_FAILURE",
+  "cleanup": "PASS",
+  "copper": {
+    "after": 41870,
+    "before": 40910
+  },
+  "area": {
+    "before": 6103992,
+    "status": "FAIL",
+    "after": 6107220
+  },
+  "pairedSpan": {
+    "before": 20480,
+    "status": "PASS",
+    "after": 19540
+  },
+  "next": "Private11 candidate1 demand factor1.32 instead1.35, samevacancyhelper; unchanged6/3/work/time constraints"
+}

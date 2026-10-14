@@ -1,0 +1,10 @@
+{
+  "buildJavaStartUtc": "2026-10-14T06:54:51.3950922Z",
+  "nativeTerminalExitCode": 0,
+  "nextAction": "Require terminal exit_code0 and cleanup proof before next build/preview; keep remaining gates serial.",
+  "nativeTimingFileCreatedUtc": "2026-10-14T06:54:53.9773293Z",
+  "buildJavaProcessId": 4968,
+  "detail": "Build wrapper launched after all21 JVM suites and PASS summary, before native wrapper terminal completion/cleanup receipt. First native completion poll still returned running; root failed to gate next action on exit_code. Native wrapper subsequently exited0 with proven scratch cleanup. No native Java test suite was still executing at the PASS summary; no concurrent performance claim.",
+  "status": "RECORDED_SEQUENCING_ERROR",
+  "nativeCleanup": "PASS"
+}

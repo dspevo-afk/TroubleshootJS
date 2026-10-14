@@ -5712,3 +5712,35 @@ Saved6/7/8/9 literal geometries remain independently checked. An initial single-
 control holdout regression is retained and fixed by both repeated-control gates.
 These finite fixtures do not prove all seeds, optimal packing, manufacturing
 readiness or normal advanced release. [Evidence](task-evidence/PCB/pin-local-packing-r1/README.md).
+
+## Vacancy-guided private11 packing
+
+Fresh private RB56 requests select placement11; explicit PIN_LOCAL10 resolves
+before cache/proof reconstruction. Public alpha5, session model1 and generation
+epoch16 stay. PcbVacancyTargets owns a pure bounded coarse free-envelope search:
+40-unit cells, conservative obstacles/partial cells, at most20000 cells and five
+unique canonical center/corner origins. Checked arithmetic rejects invalid bounds.
+PcbPlacementPlanner clips eligible single-domain parts against actual merged
+per-terminal courtyards and established barrier axes; mixed isolation bodies keep
+their existing boundary path. Complete package/access envelopes remain obstacles.
+
+Only repeated-control candidate1 reuses five duplicate ring-zero evaluations for
+those advisory targets. The first original evaluation and all existing fits,
+physical access, global80 isolation, routing and search/work/time caps remain.
+Typed-pair endpoint proximity retains weight3; unpaired parts prefer the pocket
+center at0.25 distance weight, while complete envelope overlap earns area/40.
+No seed, reference-designator or fault-specific placement is introduced.
+
+The54/root42 representative shrinks1.10%, largest protected empty rectangle
+31.17% and paired spans11.04%; copper length grows12.37%, an explicit tradeoff.
+Other five representatives and four untuned roots retain exact10 geometry.
+Ten literal10 before hashes plus full physical admission protect saved layouts.
+Fault serviceability now follows the same supported fit/face inspection path as
+diagnostic admission. Its production wrapper retains current controller/board
+ownership; the renderer check additionally requires renderer ownership, actual
+component/pad bindings and the exact simulation endpoint. Missing, covered,
+misbound and stale targets still fail; camera/face state restores exactly. This
+removes overview-pixel ambiguity from admission without inventing probe access.
+Final native21/GWT five and real narrow54 plus saved10 restoration/customer retest/
+closure pass. Finite evidence does not release population/performance gates.
+[Accepted evidence and retained failures](task-evidence/PCB/pocket-packing-r1/README.md).

@@ -1,0 +1,25 @@
+{
+  "next": "Restorefactor1.35; add0.25 Manhattan vacancy-center preference onlywhenno pairedsupportrelationship, unchangedfits/evaluations",
+  "area": {
+    "after": 6164074,
+    "status": "FAIL",
+    "before": 6103992
+  },
+  "pairedSpan": {
+    "after": 20060,
+    "status": "PASS",
+    "before": 20480
+  },
+  "trial11Holdouts": "NOT_RUN_AFTER_REPRESENTATIVE_FAILURE",
+  "outcome": "REJECTED",
+  "cleanup": "PASS",
+  "protectedRectangle": {
+    "after": 352600,
+    "status": "FAIL",
+    "before": 327600
+  },
+  "copper": {
+    "after": 41190,
+    "before": 40910
+  }
+}

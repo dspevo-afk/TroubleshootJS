@@ -1,0 +1,10 @@
+{
+  "retainedLogs": "Archived byte-exact stdout/stderr, then exact containment/reparse/name-verified files and empty directory removed",
+  "operation": "combined20-case pocket comparison",
+  "elapsedNativeIncludingCleanup": 124.6580066,
+  "nativeScratchCleanup": "PASS",
+  "boundedChildLimitMillis": 60000,
+  "recovery": "Same20 cases/oracles partitioned6 representative roots and4 holdouts in two JVMs; no timeout or production budget raised",
+  "termination": "PASS: maintained exact handle/start-ticks termination completed before timeout exception",
+  "status": "FAIL_PROCESS_TIMEOUT"
+}

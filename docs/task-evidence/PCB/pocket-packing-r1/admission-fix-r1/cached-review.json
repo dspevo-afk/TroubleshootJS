@@ -1,0 +1,30 @@
+{
+  "result": "No unresolved correctness blocker within finite accepted scope",
+  "scope": "Root integrated/cached review: bounded vacancy/domain safety, saved10/current11 dispatch, same search/work/time caps; real inspection/owner/endpoint correction; independent fixtures and actual native/GWT/UI/resource evidence",
+  "reviewedSubstantivePathsBeforeReceipt": 150,
+  "limits": "Optional Luna placement review is limited to its recorded hashes; root owns final admission/cached integration. No full population/matrix/normal advanced/performance release.",
+  "sourceTestScriptDocPaths": [
+    "docs/ARCHITECTURE.md",
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md",
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GeneratedFaultServiceabilityAdmission.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "tests/contracts/FaultObservationInspectionContractTest.java",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java",
+    "tests/contracts/PcbPinLocalPackingContractTest.java",
+    "tests/contracts/PcbPocketHoldoutContractTest.java",
+    "tests/contracts/PcbPocketPackingContractTest.java",
+    "tests/contracts/PcbVacancyDomainContractTest.java",
+    "tests/contracts/PcbVacancyTargetsContractTest.java",
+    "tests/contracts/RelBSessionIdentityContractTest.java",
+    "tests/contracts/U06SessionSaveContractTest.java"
+  ],
+  "status": "PASS",
+  "checks": "Actual working and cached diff checks PASS after log EOF correction and byte-exact Windows stream attributes"
+}

@@ -7,7 +7,7 @@ import java.util.Vector;
 /** Six predeclared roots; actual routed locality without a packing optimum claim. */
 public final class PcbFunctionalGroupingContractTest {
     private static final long[] ROOTS={-1017L,-1004L,-1022L,0L,17L,42L};
-    private static final int MEASURED_VERSION=10;
+    private static final int MEASURED_VERSION=11;
     private static final int[] PART_COUNTS={40,44,60,42,53,54};
     private static final int[] PAD_COUNTS={96,104,143,100,129,131};
     // Independent accepted6 receipts, frozen before guarded route selection.
@@ -198,6 +198,15 @@ public final class PcbFunctionalGroupingContractTest {
                 SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
                 "other representative layouts remain exact accepted9: "+seed);
         }
+        if(version==11) {
+            long area=(long)outline.width*outline.height;
+            long baseline=index==5?6103992:SAVED9_AREA[index];
+            check(area<=baseline,"no representative regression against accepted10: "+seed);
+            if(index==5)check(area<baseline,"vacancy candidate reduces the declared54 fixture");
+            else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
+                SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                "other representative layouts remain exact accepted10: "+seed);
+        }
         if(version>=8) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED7_AREA[index],"no representative outline regression against accepted7: "+seed);
@@ -227,7 +236,7 @@ public final class PcbFunctionalGroupingContractTest {
             ",\"geometrySha256\":\""+PlayerSessionFingerprint.of(layout.geometryFingerprint())+"\"}");
     }
     /** Drawing-space sampling, not a statement that free cells are packable. */
-    private static void reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+    static void reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
         Rectangle outline=layout.getBoardOutline();int step=10,cols=outline.width/step,rows=outline.height/step;
         check(cols>0&&rows>0&&(long)cols*rows<=250000,"bounded whitespace sampling");
         boolean[] blocked=new boolean[cols*rows];
@@ -302,6 +311,8 @@ public final class PcbFunctionalGroupingContractTest {
         // This bounds the dominant empty patch, not a manufacturing packing optimum.
         if(version>=8 && seed==17L)check(bestArea*step*step<=1186500/2,
             "the targeted primary-side void shrinks by at least half");
+        if(version>=11 && seed==42L)check(bestArea*step*step<327600,
+            "vacancy probes improve the frozen10 protected empty rectangle");
     }
     private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
         int x0=Math.max(0,(r.x-outline.x)/step),y0=Math.max(0,(r.y-outline.y)/step);

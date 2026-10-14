@@ -7,7 +7,32 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Pin-local private10 PCB packing delivered**
+**Current task:** **Vacancy-guided private11 PCB packing accepted**
+Bounded coarse free-envelope targets reuse duplicate placement evaluations in
+repeated-control candidate1. Complete package/access envelopes, actual per-pad
+domains, global80 isolation and existing routing/work/time limits stay.54/root42
+area falls1.10%, paired endpoint spans11.04% and largest protected empty rectangle
+31.17%; copper grows12.37%, an explicit tradeoff. Other five representatives and
+four untuned roots retain exact10 geometry; all ten saved10 hashes stay literal.
+Fresh11/explicit saved10 and publicalpha5/model1/epoch16 preserve interpretation.
+Actual319px cold generation exposed camera-dependent fault-probe admission;
+the existing supported fit/face inspection path now retains exact endpoints and
+current ownership, with missing/covered/misbound/stale negatives. Final native21,
+JDK8/GWT five, actual narrow54 unrepaired FAIL/11 FileReader/customerPASS/Close
+and desktop saved10 FileReader/OFF preserved/customerPASS/Close all PASS.
+Five actual provenance fields match; four desktop images reused only after
+auditing1344 recorded input paths, with final-source admission proof separate.
+Both preview owners, tabs, viewport and exact download cleaned. Retained trial,
+lease, narrow-probe and process-timeout failures plus a2.6s cleanup/build-launch
+sequencing error remain explicit. No normal advanced/performance/manufacturing
+release or all-seed/optimality claim. No main merge/email.
+[Accepted scope, evidence and limits](task-evidence/PCB/pocket-packing-r1/README.md).
+User's realism goal remains active until9amAmerica/New_York2026-10-14.
+Next unstarted PCB work: role-specific physical copper widths under routing,
+clearance, conductor/probe and saved-layout contracts; inherited60 timing remains
+open. General roadmap milestones remain behind the user's PCB realism work.
+
+**Previous packing task:** **Pin-local private10 PCB packing delivered**
 Paired-net passives prefer corresponding pins of already placed chips/relays
 under matching per-pad domains. Only repeated-control candidate1 changes; its
 third route slot requires that same policy's original narrow3 to succeed.

@@ -1,0 +1,112 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row "Reset":
+      - cell "Reset":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row:
+              - cell
+    - row "Workbench navigation Workbench meter and oscilloscope":
+      - cell "Workbench navigation Workbench meter and oscilloscope":
+        - banner:
+          - strong: TroubleshootJS
+          - generic: ELECTRONICS WORKBENCH
+          - generic: ALPHA
+        - navigation "Workbench navigation":
+          - button "Main menu" [active]:
+            - generic: Main menu
+          - button "Shop":
+            - generic: Shop
+          - button "Resources":
+            - generic: Resources
+          - button "Settings":
+            - generic: Settings
+          - button "Run customer retest":
+            - generic: Run customer retest
+        - status: Session restored. Transient behavior restarted; retest the board.
+        - group "Workbench meter and oscilloscope":
+          - rowgroup:
+            - 'row "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+              - 'cell "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+                - 'button "Move multimeter: drag, or use arrow keys. Home resets its position."': TSJ MM-90
+                - generic: DIGITAL MULTIMETER
+                - button "Hold / not implemented" [disabled]: HOLD
+                - button "Manual range / not implemented" [disabled]: RANGE
+                - button "Minimum / maximum / not implemented" [disabled]: MIN/MAX
+                - button "Toggle meter backlight": LIGHT
+                - slider "Meter and oscilloscope function selector"
+                - button "Turn multimeter off" [pressed]: "OFF"
+                - button "AC voltage RMS": V~
+                - button "Current / not implemented" [disabled]: A
+                - button "Milliamps / not implemented" [disabled]: mA
+                - button "Microamps / not implemented" [disabled]: µA
+                - button "Capacitance / not implemented" [disabled]: CAP
+                - button "Oscilloscope / frequency": Hz
+                - button "Duty cycle / not implemented" [disabled]: "%"
+                - button "Temperature / not implemented" [disabled]: °C/°F
+                - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+                - generic: 10A
+                - generic: COM
+                - generic: V Ω
+                - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell
+                    - row "OHM":
+                      - cell
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V":
+                - generic: "--- V"
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator" [disabled]
+    - 'row "Board Power: OFF"':
+      - 'cell "Board Power: OFF"':
+        - 'button "Board Power: OFF"'
+    - row "New control board":
+      - cell "New control board":
+        - button "New control board" [disabled]
+    - row "End qualification view":
+      - cell "End qualification view":
+        - button "End qualification view"
+    - row "Bench power":
+      - cell "Bench power":
+        - button "Bench power":
+          - generic: Supplies
+    - row "Board view":
+      - cell "Board view":
+        - button "Board view":
+          - generic: View
+    - row "Service ticket":
+      - cell "Service ticket":
+        - button "Service ticket":
+          - generic: Ticket
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - button "Parts Tray":
+          - generic: Parts tray
+- region "Physical parts tray":
+  - button "Show or hide parts tray": ▲ PARTS TRAY · 1 part

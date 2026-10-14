@@ -1,0 +1,25 @@
+{
+  "area": {
+    "after": 6024294,
+    "status": "PASS",
+    "before": 6103992
+  },
+  "copper": {
+    "after": 42910,
+    "before": 40910
+  },
+  "pairedSpan": {
+    "after": 18000,
+    "status": "PASS",
+    "before": 20480
+  },
+  "trial11Holdouts": "NOT_RUN_AFTER_REPRESENTATIVE_FAILURE",
+  "next": "Reward actual complete access-envelope area reserved inside advisory vacancy, dividedbyexisting40-unitstep; preserveoriginalscores/fit/evalcountandstrictoracles",
+  "outcome": "REJECTED",
+  "protectedRectangle": {
+    "after": 328000,
+    "status": "FAIL",
+    "before": 327600
+  },
+  "cleanup": "PASS"
+}

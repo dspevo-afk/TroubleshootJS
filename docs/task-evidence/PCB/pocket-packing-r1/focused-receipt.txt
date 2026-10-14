@@ -1,0 +1,7 @@
+PASS: PCB vacancy domain contracts assertions=12
+
+PASS: PCB vacancy targets contracts assertions=74
+
+PASS: U06 session save contracts assertions=34972
+
+PASS: REL-B session identity contracts assertions=117 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false

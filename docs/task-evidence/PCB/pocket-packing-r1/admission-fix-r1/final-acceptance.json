@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "executionProvenanceFieldsMatched": 5,
+  "frozenNativeInputs": 998,
+  "phase": "pre-stage final-source audit",
+  "browserFinal": "narrow11 and desktop saved10 PASS, customer retests and seven cleanup flags each",
+  "diffCheck": "PASS",
+  "personalPathScan": "PASS",
+  "limits": "No full matrix/population/performance/normal advanced release. Sequencing error retained separately.",
+  "buildFinal": "5 GWT permutations PASS100.6540881s including cleanup",
+  "nativeFinal": "21 suites PASS371.1565586s including cleanup"
+}

@@ -1,0 +1,42 @@
+{
+  "after": {
+    "seed": "42",
+    "version": 11,
+    "parts": 54,
+    "gridUnits": 10,
+    "sampledCells": 60300,
+    "packageAccessOccupiedCells": 28338,
+    "protectedFreeCells": 25717,
+    "protectedFreeFraction": 0.42648424543946933,
+    "largestProtectedEmptyRectangle": {
+      "x": 980,
+      "y": 39,
+      "width": 410,
+      "height": 550,
+      "area": 225500
+    },
+    "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+  },
+  "before": {
+    "seed": "42",
+    "version": 10,
+    "parts": 54,
+    "gridUnits": 10,
+    "sampledCells": 60970,
+    "packageAccessOccupiedCells": 28210,
+    "protectedFreeCells": 26959,
+    "protectedFreeFraction": 0.44216827948171233,
+    "largestProtectedEmptyRectangle": {
+      "x": 40,
+      "y": 1449,
+      "width": 840,
+      "height": 390,
+      "area": 327600
+    },
+    "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+  },
+  "protectedRectangleReductionPercent": 31.166056166056165,
+  "areaReductionPercent": 1.098297638660073,
+  "copperIncreasePercent": 12.368614030799318,
+  "pairedSpanReductionPercent": 11.03515625
+}

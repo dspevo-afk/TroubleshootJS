@@ -1,0 +1,353 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row "Reset":
+      - cell "Reset":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row:
+              - cell
+    - row "Workbench navigation Workbench meter and oscilloscope":
+      - cell "Workbench navigation Workbench meter and oscilloscope":
+        - banner:
+          - strong: TroubleshootJS
+          - generic: ELECTRONICS WORKBENCH
+          - generic: ALPHA
+        - navigation "Workbench navigation":
+          - button "Main menu":
+            - generic: Main menu
+          - button "Shop":
+            - generic: Shop
+          - button "Resources":
+            - generic: Resources
+          - button "Settings":
+            - generic: Settings
+          - button "Run customer retest":
+            - generic: Run customer retest
+        - status: Customer retest did not pass. Continue troubleshooting.
+        - group "Workbench meter and oscilloscope":
+          - rowgroup:
+            - 'row "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight DC voltage Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+              - 'cell "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight DC voltage Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+                - 'button "Move multimeter: drag, or use arrow keys. Home resets its position."': TSJ MM-90
+                - generic: DIGITAL MULTIMETER
+                - button "Hold / not implemented" [disabled]: HOLD
+                - button "Manual range / not implemented" [disabled]: RANGE
+                - button "Minimum / maximum / not implemented" [disabled]: MIN/MAX
+                - button "Toggle meter backlight": LIGHT
+                - slider "Meter and oscilloscope function selector"
+                - button "Turn multimeter off": "OFF"
+                - button "AC voltage RMS": V~
+                - button "Current / not implemented" [disabled]: A
+                - button "Milliamps / not implemented" [disabled]: mA
+                - button "Microamps / not implemented" [disabled]: µA
+                - button "Capacitance / not implemented" [disabled]: CAP
+                - button "Oscilloscope / frequency": Hz
+                - button "Duty cycle / not implemented" [disabled]: "%"
+                - button "Temperature / not implemented" [disabled]: °C/°F
+                - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+                - generic: 10A
+                - generic: COM
+                - generic: V Ω
+                - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell
+                    - row "OHM":
+                      - cell
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "4.846 V":
+              - cell "4.846 V":
+                - generic: 4.846 V
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - row "Open controlled indicator":
+      - cell "Open controlled indicator":
+        - button "Open controlled indicator" [disabled]
+    - 'row "Board Power: ON"':
+      - 'cell "Board Power: ON"':
+        - 'button "Board Power: ON"'
+    - row "New control board":
+      - cell "New control board":
+        - button "New control board" [disabled]
+    - row "Bench power":
+      - cell "Bench power":
+        - button "Bench power":
+          - generic: Supplies
+    - row "Board view Board view":
+      - cell "Board view Board view":
+        - button "Board view":
+          - generic: View
+        - dialog "Board view":
+          - rowgroup:
+            - row "BOARD VIEW":
+              - cell "BOARD VIEW":
+                - generic: BOARD VIEW
+            - row "Fit bench":
+              - cell "Fit bench":
+                - table:
+                  - rowgroup:
+                    - row "Fit bench":
+                      - cell "Fit bench":
+                        - button "Fit bench"
+            - row "Zoom + Zoom - View bottom copper":
+              - cell "Zoom + Zoom - View bottom copper":
+                - table:
+                  - rowgroup:
+                    - row "Zoom +":
+                      - cell "Zoom +":
+                        - button "Zoom +"
+                    - row "Zoom -":
+                      - cell "Zoom -":
+                        - button "Zoom -"
+                    - row "View bottom copper":
+                      - cell "View bottom copper":
+                        - button "View bottom copper"
+            - 'row "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+              - 'cell "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+                - generic: "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."
+            - row "Top side / top copper":
+              - cell "Top side / top copper":
+                - generic: Top side / top copper
+            - row "Select component":
+              - cell "Select component":
+                - combobox "Select component":
+                  - option "Select component" [selected]
+                  - option "C5"
+                  - option "CBIAS"
+                  - option "CBULK"
+                  - option "CFB"
+                  - option "CFLT_B"
+                  - option "CIN"
+                  - option "COUT"
+                  - option "D1"
+                  - option "D2"
+                  - option "D3"
+                  - option "D4"
+                  - option "DA"
+                  - option "DB"
+                  - option "DFREE"
+                  - option "DZ1"
+                  - option "F1"
+                  - option "JAC"
+                  - option "JLOAD"
+                  - option "JOA"
+                  - option "JOB"
+                  - option "JSA"
+                  - option "JSB"
+                  - option "KA"
+                  - option "KB"
+                  - option "L1"
+                  - option "LED1"
+                  - option "LED12"
+                  - option "QA"
+                  - option "QB"
+                  - option "RDA"
+                  - option "RDB"
+                  - option "REN"
+                  - option "RENAC"
+                  - option "RFB"
+                  - option "RFB_A"
+                  - option "RFB_B"
+                  - option "RLED"
+                  - option "RLED12"
+                  - option "ROUT"
+                  - option "RPDA"
+                  - option "RPDB"
+                  - option "RPIN_A"
+                  - option "RPIN_B"
+                  - option "RPRIMARY"
+                  - option "RREF_H"
+                  - option "RREF_L"
+                  - option "RSA"
+                  - option "RSB"
+                  - option "RSENSE"
+                  - option "U1"
+                  - option "U2A"
+                  - option "U2B"
+                  - option "UAC"
+                  - option "UFB"
+            - row "U2A terminal OUTPUT":
+              - cell "U2A terminal OUTPUT":
+                - combobox "Probe terminal":
+                  - option "Probe terminal"
+                  - option "C5 terminal 1"
+                  - option "C5 terminal 2"
+                  - option "CBIAS terminal 1"
+                  - option "CBIAS terminal 2"
+                  - option "CBULK terminal +"
+                  - option "CBULK terminal -"
+                  - option "CFB terminal 1"
+                  - option "CFB terminal 2"
+                  - option "CFLT_B terminal 1"
+                  - option "CFLT_B terminal 2"
+                  - option "CIN terminal +"
+                  - option "CIN terminal -"
+                  - option "COUT terminal +"
+                  - option "COUT terminal -"
+                  - option "D1 terminal A"
+                  - option "D1 terminal K"
+                  - option "D2 terminal A"
+                  - option "D2 terminal K"
+                  - option "D3 terminal A"
+                  - option "D3 terminal K"
+                  - option "D4 terminal A"
+                  - option "D4 terminal K"
+                  - option "DA terminal A"
+                  - option "DA terminal K"
+                  - option "DB terminal A"
+                  - option "DB terminal K"
+                  - option "DFREE terminal A"
+                  - option "DFREE terminal K"
+                  - option "DZ1 terminal A"
+                  - option "DZ1 terminal K"
+                  - option "F1 terminal 1"
+                  - option "F1 terminal 2"
+                  - option "JAC terminal 1"
+                  - option "JAC terminal 2"
+                  - option "JLOAD terminal 1"
+                  - option "JLOAD terminal 2"
+                  - option "JOA terminal 1"
+                  - option "JOA terminal 2"
+                  - option "JOB terminal 1"
+                  - option "JOB terminal 2"
+                  - option "JSA terminal 1"
+                  - option "JSA terminal 2"
+                  - option "JSB terminal 1"
+                  - option "JSB terminal 2"
+                  - option "KA terminal A1"
+                  - option "KA terminal A2"
+                  - option "KA terminal COM"
+                  - option "KA terminal NC"
+                  - option "KA terminal NO"
+                  - option "KB terminal A1"
+                  - option "KB terminal A2"
+                  - option "KB terminal COM"
+                  - option "KB terminal NC"
+                  - option "KB terminal NO"
+                  - option "L1 terminal 1"
+                  - option "L1 terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "LED12 terminal A"
+                  - option "LED12 terminal K"
+                  - option "QA terminal G"
+                  - option "QA terminal D"
+                  - option "QA terminal S"
+                  - option "QB terminal B"
+                  - option "QB terminal C"
+                  - option "QB terminal E"
+                  - option "RDA terminal 1"
+                  - option "RDA terminal 2"
+                  - option "RDB terminal 1"
+                  - option "RDB terminal 2"
+                  - option "REN terminal 1"
+                  - option "REN terminal 2"
+                  - option "RENAC terminal 1"
+                  - option "RENAC terminal 2"
+                  - option "RFB terminal 1"
+                  - option "RFB terminal 2"
+                  - option "RFB_A terminal 1"
+                  - option "RFB_A terminal 2"
+                  - option "RFB_B terminal 1"
+                  - option "RFB_B terminal 2"
+                  - option "RLED terminal 1"
+                  - option "RLED terminal 2"
+                  - option "RLED12 terminal 1"
+                  - option "RLED12 terminal 2"
+                  - option "ROUT terminal 1"
+                  - option "ROUT terminal 2"
+                  - option "RPDA terminal 1"
+                  - option "RPDA terminal 2"
+                  - option "RPDB terminal 1"
+                  - option "RPDB terminal 2"
+                  - option "RPIN_A terminal 1"
+                  - option "RPIN_A terminal 2"
+                  - option "RPIN_B terminal 1"
+                  - option "RPIN_B terminal 2"
+                  - option "RPRIMARY terminal 1"
+                  - option "RPRIMARY terminal 2"
+                  - option "RREF_H terminal 1"
+                  - option "RREF_H terminal 2"
+                  - option "RREF_L terminal 1"
+                  - option "RREF_L terminal 2"
+                  - option "RSA terminal 1"
+                  - option "RSA terminal 2"
+                  - option "RSB terminal 1"
+                  - option "RSB terminal 2"
+                  - option "RSENSE terminal 1"
+                  - option "RSENSE terminal 2"
+                  - option "U1 terminal INPUT"
+                  - option "U1 terminal OUTPUT"
+                  - option "U1 terminal RETURN"
+                  - option "U1 terminal ENABLE"
+                  - option "U2A terminal SENSOR"
+                  - option "U2A terminal REFERENCE"
+                  - option "U2A terminal RAIL"
+                  - option "U2A terminal OUTPUT" [selected]
+                  - option "U2A terminal RETURN"
+                  - option "U2B terminal SENSOR"
+                  - option "U2B terminal REFERENCE"
+                  - option "U2B terminal RAIL"
+                  - option "U2B terminal OUTPUT"
+                  - option "U2B terminal RETURN"
+                  - option "UAC terminal IN+"
+                  - option "UAC terminal IN-"
+                  - option "UAC terminal PRE_L+"
+                  - option "UAC terminal OUT-"
+                  - option "UAC terminal EN"
+                  - option "UAC terminal FB"
+                  - option "UAC terminal BIAS"
+                  - option "UFB terminal A"
+                  - option "UFB terminal K"
+                  - option "UFB terminal C"
+                  - option "UFB terminal E"
+            - row "Place red probe Place black probe":
+              - cell "Place red probe Place black probe":
+                - table:
+                  - rowgroup:
+                    - row "Place red probe":
+                      - cell "Place red probe":
+                        - button "Place red probe" [active]
+                    - row "Place black probe":
+                      - cell "Place black probe":
+                        - button "Place black probe"
+            - row:
+              - cell:
+                - status
+    - row "Service ticket":
+      - cell "Service ticket":
+        - button "Service ticket":
+          - generic: Ticket
+    - row "Component":
+      - cell "Component":
+        - button "Component":
+          - generic: Component
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - button "Parts Tray":
+          - generic: Parts tray
+    - row "End qualification view":
+      - cell "End qualification view":
+        - button "End qualification view"
+- region "Physical parts tray":
+  - button "Show or hide parts tray": ▲ PARTS TRAY · 0 parts

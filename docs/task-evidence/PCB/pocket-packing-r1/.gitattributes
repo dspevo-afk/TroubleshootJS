@@ -1,0 +1,3 @@
+repaired11-54.tsjsave -text
+trial4-timeout-stdout.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+trial4-timeout-stderr.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,77 @@
+[
+  {
+    "file": "01-top-unrepaired.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      64.24112090913249,
+      41.67077745946329,
+      33.6483320468892
+    ],
+    "sha256": "831a622fddfb780db3f22bfc495ebe0242b08d3664bf947dbcc54034ee37b670",
+    "status": "PASS",
+    "scope": "ACTUAL_UNEDITED_PRE_CORRECTION_FRAME"
+  },
+  {
+    "file": "02-chip-pinout.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      84.18980033428181,
+      67.60351816311298,
+      60.60850805351731
+    ],
+    "sha256": "ff597acb53e1d2b4c95509ecf9b0f7f90c4958b40e2715d6791d1e7362e46f26",
+    "status": "PASS",
+    "scope": "ACTUAL_UNEDITED_PRE_CORRECTION_FRAME"
+  },
+  {
+    "file": "03-bottom-unrepaired.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      62.90172543023586,
+      39.760550425825954,
+      31.583631513206946
+    ],
+    "sha256": "c7ad66c4704415315f61ecc7170ca093cc756b74d40a479913396400826248b2",
+    "status": "PASS",
+    "scope": "ACTUAL_UNEDITED_PRE_CORRECTION_FRAME"
+  },
+  {
+    "file": "04-repaired-retest.jpg",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "standardDeviation": [
+      94.28623384212227,
+      76.56990273829537,
+      57.19785070325233
+    ],
+    "sha256": "1f0b5bc423578cadf30dda8a63d4aa1fae3b075dc139ca54a47808f612c1dd17",
+    "status": "PASS",
+    "scope": "ACTUAL_UNEDITED_PRE_CORRECTION_FRAME"
+  },
+  {
+    "file": "restore11-cold-probe-failure.jpg",
+    "dimensions": [
+      319,
+      670
+    ],
+    "standardDeviation": [
+      54.83516212386706,
+      48.41770981688893,
+      55.655561632475376
+    ],
+    "sha256": "cbae8cc2b071ec0d34c2b666460e90fe40296f3931aae07adad02e90f18cb6f8",
+    "status": "PASS",
+    "scope": "ACTUAL_UNEDITED_PRE_CORRECTION_FRAME"
+  }
+]

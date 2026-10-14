@@ -1,0 +1,36 @@
+{
+  "testsRun": false,
+  "uiCertification": false,
+  "result": "NO_BLOCKING_FINDING",
+  "scope": "Fresh frozen private11 production/helper/replay review after occupancy score",
+  "reviewer": "Read-only Luna MAX",
+  "buildsRun": false,
+  "findings": [
+    "Advisory per-domain clipping and mixed-source exclusion retain existing fits/corridor admission.",
+    "20000-cell bounded deterministic helper and five targets replace duplicate slots; no extra route/evaluation cap.",
+    "Typed pair suppresses center preference while keeping occupancy score; original first trial retained.",
+    "Explicit saved10/fresh11 dispatch; same-policy retained4/2/5 and legal3 guard stay."
+  ],
+  "files": [
+    {
+      "sha256": "769b7b5b310aacbdbf2383b2bd9be7663d952dc17ae09e0bbb590ff0d1ff620f",
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java"
+    },
+    {
+      "sha256": "4bc2fca41d30347776065e0eb10c7c57206acfba59f6b5b618d9d2b40b08a973",
+      "path": "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java"
+    },
+    {
+      "sha256": "79f9116d3519490749b8aa372a8c29a2aaf0a737ef4d940bc9dee8d062bad72a",
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java"
+    },
+    {
+      "sha256": "eba0e239fb6086dbd3289414d6549bf6c8d72a3565a15a69a13b2787a45849e9",
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java"
+    },
+    {
+      "sha256": "0f9fdb805bcd95739f68e3e211b2e90aaecf87f6fa0dca5fe7278c335b6a93ef",
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java"
+    }
+  ]
+}

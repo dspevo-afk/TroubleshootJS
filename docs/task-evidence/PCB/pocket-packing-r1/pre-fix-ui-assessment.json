@@ -1,0 +1,30 @@
+{
+  "limits": "These receipts are pre-fix evidence; no final-source certification after admission source changes. Retest click acknowledgement timed out for saved10, but actual resulting Customer retest passed DOM and terminal PASS are retained.",
+  "retainedFailures": {
+    "narrowCold": "FAIL KB.A1 at319px; serviceability admission fix pending",
+    "holdLease": "FAIL after restored11 proof; retest not completed in retained360s"
+  },
+  "current11": {
+    "offPreserved": true,
+    "repairRetest": true,
+    "restoreMillis": 82325,
+    "cleanupFlags": 7,
+    "work": 627,
+    "coldMillis": 85070,
+    "status": "PASS",
+    "wallMillis": 237981
+  },
+  "saved10": {
+    "status": "PASS",
+    "offPreserved": true,
+    "cleanupFlags": 7,
+    "restoreWork": 623,
+    "coldMillis": 79244,
+    "inputFile": "docs/task-evidence/PCB/pin-local-packing-r1/repaired10-54.tsjsave",
+    "wallMillis": 244150,
+    "repairRetest": true,
+    "restoreMillis": 74813
+  },
+  "scope": "Pre-admission-fix production browser flows",
+  "build": "5AB4B69626DD695E286E53259527B33C"
+}

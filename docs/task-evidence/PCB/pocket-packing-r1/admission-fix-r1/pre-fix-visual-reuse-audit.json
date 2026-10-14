@@ -1,0 +1,14 @@
+{
+  "addedFixture": "tests/contracts/FaultObservationInspectionContractTest.java",
+  "scope": "Direct current-byte audit of every original5AB4 recorded source/script/contract/resource path for limited desktop visual-flow reuse",
+  "changed": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GeneratedFaultServiceabilityAdmission.java"
+  ],
+  "missing": [],
+  "auditCorrection": "Initial map comparison used the narrower998-file native-only freeze and misclassified omitted resources as removed. Replaced with direct hash audit of every original record; no files are missing.",
+  "status": "PASS_BOUNDARY_AUDIT",
+  "limitedReuse": "Original4 desktop packing/menu/physical probe/guarded Shop repair receipts remain pre-fix. Their source/resource inputs are unchanged apart from common admission correction and native registry. Current final build independently proves cold admission, restore/retest and closure; no prior admission PASS reused.",
+  "allOtherPriorRecordedInputsIdentical": true,
+  "priorRecordedPathsChecked": 1344
+}

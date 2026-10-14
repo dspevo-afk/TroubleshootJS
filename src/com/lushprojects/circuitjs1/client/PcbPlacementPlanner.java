@@ -647,6 +647,29 @@ final class PcbPlacementPlanner {
         if(boundaryPackage)baseX=preferredX;
         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
         if(support!=null) { baseX=connected.x+direction*CHANNEL; baseY=connected.y; }
+        Vector<Point> vacancies=null;
+        if(constraints.placementDensityVersion>=11 && pinLocal && !anchor) {
+            Rectangle allowed=vacancyDomainBox(item.footprint,placed,constraints,outline);
+            if(allowed!=null) {
+                Vector<Rectangle> obstacles=new Vector<Rectangle>();
+                for(PcbFootprint other:placed)obstacles.add(envelope(other,
+                    constraints.get(other.getPlacement().getComponentId()).accessMargin));
+                PcbComponentPlacement pose=item.footprint.getPlacement();
+                vacancies=PcbVacancyTargets.targets(allowed,obstacles,envelope(item.footprint,
+                    item.demand.accessMargin),new Point(pose.getX(),pose.getY()));
+            }
+        }
+        Point vacancyPreference=support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
+        Rectangle vacancyPocket=null;
+        if(vacancies!=null && !vacancies.isEmpty()) {
+            int left=vacancies.get(0).x,right=left,top=vacancies.get(0).y,bottom=top;
+            for(Point point:vacancies) {left=Math.min(left,point.x);right=Math.max(right,point.x);
+                top=Math.min(top,point.y);bottom=Math.max(bottom,point.y);}
+            Rectangle sourceEnvelope=envelope(item.footprint,item.demand.accessMargin);
+            PcbComponentPlacement pose=item.footprint.getPlacement();
+            vacancyPocket=new Rectangle(left+sourceEnvelope.x-pose.getX(),top+sourceEnvelope.y-pose.getY(),
+                right-left+sourceEnvelope.width,bottom-top+sourceEnvelope.height);
+        }
         PcbFootprint best=null;double bestScore=Double.POSITIVE_INFINITY;
         int maxRing=anchor?24:20;
         for(int ring=0;ring<=maxRing;ring++) {
@@ -658,6 +681,11 @@ final class PcbPlacementPlanner {
             int count=Math.min(dx.length,dy.length);
             for(int index=0;index<count;index++) {
                 int x=anchor?preferredX:baseX+dx[index],y=anchor?baseY+dy[index]:baseY+dy[index];
+                // Ring zero formerly tested the same origin six times. Retain
+                // its first trial and reuse duplicate slots for advisory pockets.
+                if(ring==0 && index>0 && vacancies!=null && index<=vacancies.size()) {
+                    Point vacancy=vacancies.get(index-1);x=vacancy.x;y=vacancy.y;
+                }
                 x=mediumGridOrigin(item.footprint,x,outline,itemsMargin(item,constraints),false);
                 y=mediumGridOrigin(item.footprint,y,outline,itemsMargin(item,constraints),true);
                 if(anchor&&side==PcbPlacementConstraints.Anchor.RIGHT)
@@ -670,6 +698,10 @@ final class PcbPlacementPlanner {
                 if(!fits(trial,outline,placed,-1,constraints))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
+                if(vacancyPreference!=null)score+=(Math.abs((long)x-vacancyPreference.x)+
+                    Math.abs((long)y-vacancyPreference.y))*.25;
+                if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
+                    vacancyPocket)/(double)MEDIUM_STEP;
                 if(score<bestScore){best=trial;bestScore=score;}
             }
         }
@@ -705,6 +737,10 @@ final class PcbPlacementPlanner {
                 if(!fits(trial,outline,placed,-1,constraints))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
+                if(vacancyPreference!=null)score+=(Math.abs((long)trial.getPlacement().getX()-vacancyPreference.x)+
+                    Math.abs((long)trial.getPlacement().getY()-vacancyPreference.y))*.25;
+                if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
+                    vacancyPocket)/(double)MEDIUM_STEP;
                 if(score<bestScore){best=trial;bestScore=score;}
                 /* The fallback only needs one legal escape from a crowded
                  * target.  Keeping the first seeded hit bounds worst-case
@@ -713,6 +749,50 @@ final class PcbPlacementPlanner {
             }
         }
         return best;
+    }
+
+    /** Advisory clipping preserves the already established declared-domain axis.
+     * The existing fits/global corridor checks remain the admission authority. */
+    static Rectangle vacancyDomainBox(PcbFootprint source,Vector<PcbFootprint> placed,
+            PcbPlacementConstraints constraints,Rectangle outline) {
+        if(source==null || placed==null || constraints==null || outline==null)
+            throw new IllegalArgumentException("Missing PCB vacancy-domain inputs");
+        if(source.getPlacement().getPhysicalGeometry().getIsolationBody()!=null)return null;
+        long minX=(long)outline.x+10,minY=(long)outline.y+10;
+        long maxX=(long)outline.x+outline.width-10,maxY=(long)outline.y+outline.height-10;
+        if(minX<Integer.MIN_VALUE || minY<Integer.MIN_VALUE || maxX>Integer.MAX_VALUE ||
+                maxY>Integer.MAX_VALUE || maxX<=minX || maxY<=minY)return null;
+        Rectangle allowed=new Rectangle((int)minX,(int)minY,outline.width-20,outline.height-20);
+        if(allowed.width<=0 || allowed.height<=0)return null;
+        TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
+        for(PcbFootprint peer:placed)addDomainCourtyards(constraints,peer,domains);
+        String domain=constraints.get(source.getPlacement().getComponentId()).domainId;
+        Rectangle own=domains.get(domain);
+        for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers()) {
+            String foreign=barrier.firstDomain.equals(domain)?barrier.secondDomain:
+                barrier.secondDomain.equals(domain)?barrier.firstDomain:null;
+            if(foreign==null || domains.get(foreign)==null)continue;
+            if(own==null)return null;
+            Rectangle other=domains.get(foreign);int gap=barrier.clearance;
+            long left=allowed.x,top=allowed.y,right=(long)allowed.x+allowed.width,bottom=(long)allowed.y+allowed.height;
+            if((long)own.x+own.width+gap<=other.x)right=Math.min(right,(long)other.x-gap);
+            else if((long)other.x+other.width+gap<=own.x)left=Math.max(left,(long)other.x+other.width+gap);
+            else if((long)own.y+own.height+gap<=other.y)bottom=Math.min(bottom,(long)other.y-gap);
+            else if((long)other.y+other.height+gap<=own.y)top=Math.max(top,(long)other.y+other.height+gap);
+            else return null;
+            if(right<=left || bottom<=top)return null;
+            allowed=new Rectangle(PcbCoordinateSystem.checkedInt(left),PcbCoordinateSystem.checkedInt(top),
+                PcbCoordinateSystem.checkedInt(right-left),PcbCoordinateSystem.checkedInt(bottom-top));
+        }
+        return allowed;
+    }
+
+    /** Physical envelope area reserved within an advisory empty pocket. */
+    static long vacancyOverlapArea(Rectangle envelope,Rectangle pocket) {
+        long left=Math.max(envelope.x,pocket.x),top=Math.max(envelope.y,pocket.y);
+        long right=Math.min((long)envelope.x+envelope.width,(long)pocket.x+pocket.width);
+        long bottom=Math.min((long)envelope.y+envelope.height,(long)pocket.y+pocket.height);
+        return right>left && bottom>top?(right-left)*(bottom-top):0;
     }
 
     /** Existing semantic group, not a new physical wall or component-ID table. */

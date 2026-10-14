@@ -1,4 +1,48 @@
-# Current checkpoint: private10 paired-pin packing delivered; realism goal active
+# Current checkpoint: private11 accepted; continued realism goal active
+
+2026-10-14. Base a9636fe05bbb0da17bf16853c1ef4f1b5283e57b; enclosing commit is
+accepted candidate on codex/q60-faulted-profile-counts. User authorized continued
+PCB realism work until9amAmerica/New_York and optional subagents. No main/email.
+Five original untracked entries and Desktop's unrelated edits/data preserved.
+
+Private11 reuses duplicate candidate1 placement evaluations for bounded40-grid/
+20000-cell vacancy targets under actual per-pad domains and complete access
+obstacles. Same physical/routing validators and6/3/work/time caps.54/root42 area
+6103992->6036952 (-1.10%), paired span20480->18220 (-11.04%), largest protected
+rectangle327600->225500 (-31.17%); copper40910->45970 (+12.37%) is the tradeoff.
+Other five representatives and untuned1/7/5/14 retain exact10 geometry. Fresh11/
+explicit saved10; publicalpha5/model1/epoch16 unchanged. All trial failures and
+unchanged60000ms timeout retained; same20 comparison cases partitioned12/8.
+
+Actual narrow319 cold failure exposed overview-dependent serviceability. Existing
+fit/face inspection now requires current controller/board/renderer ownership,
+exact component/pad/solver endpoint, and real accessible target. Missing/covered/
+misbound/stale negatives and exact camera/side restoration pass. Final native21
+PASS371.157s and actual JDK8/GWT five PASS100.654s including cleanup. Root recorded
+2.6s build-launch overlap with completed native-wrapper cleanup; all JVM suites
+had finished, native exit0/cleanup PASS, no concurrent performance claim.
+
+Final82ED build actual319x670: cold86.952s/627, unrepaired FAIL,11 FileReader
+84.918s/627/fresh owner/prior retired/OFF preserved/customerPASS/Close overall
+PASS268.537s. Separate desktop saved10: cold84.574s/627, restore83.673s/623,
+OFF preserved/customerPASS/Close PASS258.604s. Both7 cleanup flags true, logs empty.
+Five served provenance fields match. All998 frozen native inputs unchanged;
+1344 prior recorded paths audited for limited reuse of original desktop4.996V/
+chip-menu/guarded Shop repair images; fresh admission proof separate. Five images
+including retained narrow failure. Earlier lease/probe failures remain explicit.
+
+Both owned previews86780/78812 stopped after identity checks;8899 free, all task
+tabs closed, viewport reset, exact owned download removed after byte-exact copy;
+native scratch cleaned/shared toolchains retained. Scoped Luna placement review
+and root integrated admission review report no blocker within their recorded
+scope; workers ran no gates. Full population/matrix, normal RB56/HARD, human U05,
+modest-host and inherited60 timing remain HELD/NOT RUN. No manufacturing/optimality
+or performance release claim. Evidence: docs/task-evidence/PCB/pocket-packing-r1/.
+Next: finish explicit stage/cached review/commit/normal verified push, then start
+role-specific actual copper widths under routing/clearance/conductor/probe and
+saved-layout contracts. Goal stays active until9am; general roadmap stays held.
+
+# Previous checkpoint: private10 paired-pin packing delivered
 
 2026-10-14. Base d00c4f3ef1cf8e7f4530b04af80a3213cc4d8854 on
 codex/q60-faulted-profile-counts; enclosing commit is the accepted candidate.

@@ -1,0 +1,21 @@
+{
+  "byteExactArtifacts": [
+    {
+      "indexMatchesRaw": true,
+      "path": "docs/task-evidence/PCB/pocket-packing-r1/repaired11-54.tsjsave",
+      "sha256": "2b443bc605ebb26773649ef5ccfb30f49cae97e547deb5025537fdc4c76bb1ff"
+    },
+    {
+      "indexMatchesRaw": true,
+      "path": "docs/task-evidence/PCB/pocket-packing-r1/trial4-timeout-stdout.txt",
+      "sha256": "30f8b698d264a840a622e8c3681220f8ec95a4c774ece653cbca7111d8e4ea64"
+    },
+    {
+      "indexMatchesRaw": true,
+      "path": "docs/task-evidence/PCB/pocket-packing-r1/trial4-timeout-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "PASS",
+  "note": "Other source/text files use existing Git normalization. Save and timeout streams disable text normalization. Explicit renormalize restage was needed after attrs changed to replace previously normalized cached log bytes. Cached check initially found an extra EOF blank line in sanitized build log; removed and rechecked. Raw Windows streams explicitly recognize CR at EOL while retaining default blank-at-EOL, blank-at-EOF and space-before-tab checks."
+}

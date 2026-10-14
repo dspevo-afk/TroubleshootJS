@@ -1,0 +1,3 @@
+PASS: fault observation inspection contracts assertions=22
+
+PASS: U01 viewport contracts assertions=1277

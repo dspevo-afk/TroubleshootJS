@@ -251,7 +251,7 @@ final class GeneratedFaultServiceabilityAdmission {
             throw new IllegalArgumentException("Task 40 runtime workbench is not installed");
         validate(instance, binding);
         GeneratedFaultServiceability serviceability = binding.getServiceability();
-        requireControllerObservationSupport(sim.pcbWorkbenchController, instance,
+        requireControllerObservationSupport(sim, sim.pcbWorkbenchController, instance,
             serviceability);
         for (String actionId : serviceability.getIsolationActionIds())
             requireControllerSupport(sim.pcbWorkbenchController, instance, actionId);
@@ -261,18 +261,47 @@ final class GeneratedFaultServiceabilityAdmission {
             requireControllerSupport(sim.pcbWorkbenchController, instance, actionId);
     }
 
-    private static void requireControllerObservationSupport(PcbWorkbenchController controller,
+    private static void requireControllerObservationSupport(CirSim sim,
+            PcbWorkbenchController controller, GeneratedBoardInstance instance,
+            GeneratedFaultServiceability serviceability) {
+        if (sim == null || controller == null || sim.pcbWorkbenchController != controller ||
+                sim.getGeneratedBoardInstance() != instance)
+            throw new IllegalArgumentException("Task 40 runtime workbench is not installed");
+        requireRendererObservationSupport(sim, controller.getRenderer(), instance,
+            serviceability);
+    }
+
+    /**
+     * Current camera scale is not an observation requirement: the player can
+     * use the renderer's supported pad-fit/face path. Keep the stable pad and
+     * board-endpoint mapping checks before asking that path to prove an exact,
+     * real PCB probe target.
+     */
+    static void requireRendererObservationSupport(CirSim sim, PcbWorkbenchRenderer renderer,
             GeneratedBoardInstance instance, GeneratedFaultServiceability serviceability) {
+        if (sim == null || renderer == null || instance == null || serviceability == null ||
+                sim.getGeneratedBoardInstance() != instance ||
+                renderer.getInstanceForProvider() != instance)
+            throw new IllegalArgumentException("Task 40 runtime workbench is not installed");
         String componentId = serviceability.getLocus().getComponentId();
-        for (GeneratedComponentConnectionBinding connection : instance.getConnectionBindings()
-                .getForComponentOrEmpty(componentId)) {
-            PcbWorkbenchRenderer renderer = controller.getRenderer();
-            Point point = renderer.getPadPoint(connection.getPadId());
-            ProbeTarget target = controller.findProbeTarget(point.x, point.y);
-            if (!(target instanceof BoardPadProbeTarget) || !target.isValid() ||
-                    !connection.getPadId().equals(((BoardPadProbeTarget) target).getPadId()))
-                throw new IllegalArgumentException("Fault observation has no executable PCB probe: " +
-                    connection.getPadId());
+        Vector<GeneratedComponentConnectionBinding> connections = instance.getConnectionBindings()
+            .getForComponentOrEmpty(componentId);
+        if (connections.isEmpty())
+            throw new IllegalArgumentException("Fault observation has no physical terminals: " +
+                componentId);
+        for (GeneratedComponentConnectionBinding connection : connections) {
+            String padId = connection.getPadId();
+            BoardPad boardPad = instance.getBoard().getPad(padId);
+            CircuitMeasurementEndpoint expectedEndpoint = instance.getSimulationBindings()
+                .getEndpoint(padId);
+            if (!componentId.equals(connection.getComponentId()) || boardPad == null ||
+                    !componentId.equals(boardPad.getComponentId()) || !renderer.hasPad(padId) ||
+                    expectedEndpoint == null ||
+                    !GeneratedComponentConnectionBindings.sameEndpoint(
+                        connection.getBoardEndpoint(), expectedEndpoint) ||
+                    !renderer.canInspectPad(sim, padId))
+                throw new IllegalArgumentException(
+                    "Fault observation has no executable PCB probe: " + padId);
         }
     }
 

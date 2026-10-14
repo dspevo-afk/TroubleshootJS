@@ -1,0 +1,20 @@
+{
+  "raw": "fixture-failure2-native.txt",
+  "cases": [
+    "PCB_POCKET_CASE seed=-1017 version=10 area=4529785 parts=40 repeated=false geometry=0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
+    "PCB_POCKET_CASE seed=-1004 version=10 area=4466664 parts=44 repeated=false geometry=d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
+    "PCB_POCKET_CASE seed=-1022 version=10 area=6943752 parts=60 repeated=true geometry=1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
+    "PCB_POCKET_CASE seed=0 version=10 area=4358809 parts=42 repeated=false geometry=5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836",
+    "PCB_POCKET_CASE seed=17 version=10 area=5814368 parts=53 repeated=true geometry=2e5a36d464418c7411b68055d408d17867012eaec011c8e21e5d5f4da7caee32",
+    "PCB_POCKET_CASE seed=42 version=10 area=6103992 parts=54 repeated=true geometry=5b4de9612e851257a5d5cb3027fddca8ca8b1e254bfcb3ce75fcab8c2ec2a091",
+    "PCB_POCKET_CASE seed=1 version=10 area=4615974 parts=40 repeated=false geometry=e512e825f8c14bf78bb8a13eb4d8cc38f6270f8ed50757cb57ad6b94bb2b33f9",
+    "PCB_POCKET_CASE seed=7 version=10 area=6587808 parts=52 repeated=true geometry=fed3351826ce0f08014e484b01146a68a6cae799933331ae4f1c44a92815f718",
+    "PCB_POCKET_CASE seed=5 version=10 area=9445744 parts=54 repeated=true geometry=ec8b179776a80fb23a5f2dce032a9ec429dccd1aafd0fe33e4ac47814f7f37b3",
+    "PCB_POCKET_CASE seed=14 version=10 area=8585034 parts=54 repeated=true geometry=ab268c10c0f7b8d8be74f76f71c197b2cdf410c7dd044a943986604130f386cf"
+  ],
+  "unchangedProductionHelperScriptsAndPocketOracle": true,
+  "status": "BASELINE_CASES_PASS_OVERALL_RUN_FAIL",
+  "onlyChangedFixture": [
+    "tests/contracts/PcbVacancyTargetsContractTest.java"
+  ]
+}

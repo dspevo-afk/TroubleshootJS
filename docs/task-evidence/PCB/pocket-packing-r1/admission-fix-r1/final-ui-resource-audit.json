@@ -1,0 +1,17 @@
+{
+  "originalDownload": "Exact owned file removed earlier; byte-exact evidence copy retained",
+  "port8899Free": true,
+  "sharedToolchainsPreserved": true,
+  "allTaskTabsClosed": true,
+  "actualCustomerRetestsPassed": true,
+  "flagsPerReport": 7,
+  "temporaryViewportReset": true,
+  "sourceBuild": "82ED61DD8F7C1E462AA512643875A718",
+  "previewStopped": true,
+  "status": "PASS",
+  "finalReports": [
+    "narrow",
+    "saved10"
+  ],
+  "previewIdentityVerified": true
+}
