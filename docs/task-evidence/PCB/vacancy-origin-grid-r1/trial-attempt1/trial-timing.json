@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "elapsedSeconds": 47.6209915,
+  "suiteCount": 11,
+  "scope": "Pure3, namespace/raw-candidate target,14 explicit16 routed roots in7 bounded partitions; metric reader separate",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

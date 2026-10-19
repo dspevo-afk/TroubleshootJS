@@ -1,0 +1,5 @@
+PASS: PCB nearest vacancy preference contracts assertions=17
+
+PASS: PCB vacancy targets contracts assertions=74
+
+PASS: PCB vacancy origin grid contracts: 167 assertions

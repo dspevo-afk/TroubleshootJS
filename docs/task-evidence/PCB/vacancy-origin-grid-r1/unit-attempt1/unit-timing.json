@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "elapsedSeconds": 35.8669925,
+  "suiteCount": 3,
+  "scope": "Legacy vacancy/nearest fixtures and new unused pure grid helper; generation and routing NOT RUN",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 24228,
+      "startTicks": "639280247447341291",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/vacancy-origin-grid-r1/run_trial.ps1"
+    },
+    {
+      "pid": 25628,
+      "startTicks": "639280247450093949",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/vacancy-origin-grid-r1/run_trial.ps1"
+    }
+  ],
+  "ownership": "Captured before native trial; isolated explicit16 source copy"
+}

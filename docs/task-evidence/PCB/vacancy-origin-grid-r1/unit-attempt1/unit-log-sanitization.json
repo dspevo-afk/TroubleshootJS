@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Known local prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "unit-native.txt",
+      "rawSha256": "9f840967883ab24f57547b2ca7502f3ec5177e33a604d162cf5d7acdcc896187",
+      "sanitizedSha256": "043e653ecc080d95b408d527a28a41200fa6035d44b3a6263d0d616fec0b3f24",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 1
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

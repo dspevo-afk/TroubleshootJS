@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "copyCount": 1476,
+  "baseCount": 1467,
+  "changedOwners": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java"
+  ],
+  "addedOwners": [
+    "tests/contracts/PcbVacancyGridTrialContractTest.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup2.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup3.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup4.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup5.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup6.java",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup7.java",
+    "tests/contracts/PcbVacancyGridTrialTargetContractTest.java",
+    "tests/contracts/PcbVacancyOriginGridContractTest.java"
+  ],
+  "main1475Exact": true
+}

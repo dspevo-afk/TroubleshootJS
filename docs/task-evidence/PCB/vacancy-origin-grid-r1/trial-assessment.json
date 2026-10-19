@@ -1,0 +1,6 @@
+{
+  "status": "FAIL",
+  "phase": "metric-reader-validation",
+  "error": "Missing or extra cases",
+  "limitsChanged": false
+}

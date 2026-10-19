@@ -1,0 +1,8 @@
+{
+  "stage": "Before phase1 runtime/results and before phase2 version/planner edits",
+  "reason": "The planner uses its raw vacancy list both for ring-zero origins and for existing nearest-target/pocket-overlap score inputs. Replacing that list would also perturb the score's reference pocket, contrary to the intended origin-only scope",
+  "pureSharingBoundary": "Alignment arithmetic lives in originsOnGrid(rawOrigins,positiveGrid). The proposed targetsOnOriginGrid(input rectangles,grid) wrapper calls legacy targets exactly once and then that pure arithmetic. The planner can reuse its already computed raw targets without another raster pass",
+  "phase2Hook": "Keep raw vacancies, vacancyPreference, vacancyPocket and every score input/formula exactly as before. Only in explicit density15/candidate1/repeated-control/pin-local branch: derive an aligned origin vector from the same raw targets, use its existing canonical slots for ring zero when nonempty. If no aligned origin exists, retain the old ring-zero list as the existing fallback; do not remove its advice or change candidate breadth",
+  "unchanged": "Legacy API/current15/saved14, one coarse raster, part order/poses, ordinary ring/fallback origins, scores and preferences, candidate0/2/3/4/5, evaluation and routing limits",
+  "acceptance": "Same predeclared14 cases and strict non-regression oracle; no result has been observed or threshold changed"
+}

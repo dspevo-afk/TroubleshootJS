@@ -1,0 +1,25 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB nearest vacancy preference contracts assertions=17
+
+PASS: PCB vacancy targets contracts assertions=74
+
+PASS: PCB vacancy origin grid contracts: 167 assertions
+
+
+Exception in thread "main" java.lang.IllegalArgumentException: Unknown placement density interpretation
+	at com.lushprojects.circuitjs1.client.PcbPlacementConstraints.<init>(PcbPlacementConstraints.java:108)
+	at com.lushprojects.circuitjs1.client.Rb56Placement.create(Rb56Placement.java:86)
+	at com.lushprojects.circuitjs1.client.Rb56Placement.create(Rb56Placement.java:43)
+	at com.lushprojects.circuitjs1.client.Rb56Plan.board(Rb56Plan.java:189)
+	at com.lushprojects.circuitjs1.client.PcbVacancyGridTrialTargetContractTest.verifyRawCandidateBindings(PcbVacancyGridTrialTargetContractTest.java:100)
+	at com.lushprojects.circuitjs1.client.PcbVacancyGridTrialTargetContractTest.main(PcbVacancyGridTrialTargetContractTest.java:18)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbVacancyGridTrialTargetContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

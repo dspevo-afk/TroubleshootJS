@@ -105,6 +105,16 @@ main1475 stays exact. No packing policy is accepted from this tradeoff, which
 fails the earlier strict copper/via non-regression oracle. Next investigate the
 corridor estimate against actual route freedom, preserving all normal caps.
 [Route tradeoff and limits](task-evidence/PCB/qa-route-comparison-r1/RESULTS.md).
+The native-only grid-contained vacancy-origin trial is rejected. Pure3 fixtures
+pass, and15 other-candidate bindings remain exact, but root42 protected void grows
+178200→772200 and fails its existing327600 bound. Five completed routes stay exact15;
+eight later roots were not routed after the native gate stopped. NativeFAIL79.2388s,
+the initial density-registration failure and full frozen source/evidence remain;
+the strict14-case reader also FAILs missing cases. No oracle/budget was changed.
+Accepted1475 main inputs remain exact; copied accepted1467 restored and verified
+task resources retired. No trial GWT/player/current16 promotion. Next measure why
+the existing whole-axis routed compactor rejects otherwise proposed contractions.
+[Rejected origin trial and limits](task-evidence/PCB/vacancy-origin-grid-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

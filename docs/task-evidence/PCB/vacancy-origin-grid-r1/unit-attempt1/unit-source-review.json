@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "scope": "Root source review: grid arithmetic, bounded slots, input purity, literal fixtures, exact legacy bytes",
+  "legacySourceExactOutsideUnusedHelper": true,
+  "preparationFailures": [
+    "Initial read-only checker assumed CRLF in inserted marker; corrected to line-ending independent boundaries",
+    "Second checker had a copied digest typo; corrected to worker actual bytes; no source edits, registration or runtime before correction"
+  ],
+  "runtime": "NOT RUN",
+  "sourceSha256": {
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java": "c06bcea03d0df74e3c2b7565305d00dd8a1ef8abbfcad691feff3c2327901a8b",
+    "tests/contracts/PcbVacancyOriginGridContractTest.java": "eb9d5dc97a3bee5d7a8bccc1122c131268dc54f4d7e8d0b7ae965ebb8f7b859b"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "status": "REJECTED",
+  "nativeGate": "FAIL",
+  "sealedMetricReader": "FAIL: missing cases; no partial promotion",
+  "selectedSuites": 11,
+  "startedSuites": 7,
+  "passedSuites": 6,
+  "failedSuites": 1,
+  "notRunSuites": 4,
+  "elapsedSeconds": 79.2387563,
+  "nativeExitCode": 1,
+  "rawOtherCandidates": "PASS:15 unchanged bindings for0/2/3/4/5 at roots-1022/42/4",
+  "completePhysicalRows": [
+    {
+      "seed": "-1017",
+      "geometryExact15": true,
+      "metrics": {
+        "area": 4529785,
+        "largestProtectedEmptyRectangleArea": 555900,
+        "copperManhattanLength": 26660,
+        "vias": 28
+      },
+      "deltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1004",
+      "geometryExact15": true,
+      "metrics": {
+        "area": 4466664,
+        "largestProtectedEmptyRectangleArea": 193200,
+        "copperManhattanLength": 30720,
+        "vias": 26
+      },
+      "deltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1022",
+      "geometryExact15": true,
+      "metrics": {
+        "area": 6722832,
+        "largestProtectedEmptyRectangleArea": 714400,
+        "copperManhattanLength": 45670,
+        "vias": 48
+      },
+      "deltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "0",
+      "geometryExact15": true,
+      "metrics": {
+        "area": 4274209,
+        "largestProtectedEmptyRectangleArea": 170100,
+        "copperManhattanLength": 30280,
+        "vias": 38
+      },
+      "deltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "17",
+      "geometryExact15": true,
+      "metrics": {
+        "area": 5714148,
+        "largestProtectedEmptyRectangleArea": 410800,
+        "copperManhattanLength": 43520,
+        "vias": 48
+      },
+      "deltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    }
+  ],
+  "failingRoot": {
+    "seed": "42",
+    "phase": "Existing reportWhitespace bound after initial geometry/routing/quality validation, before remaining observation checks",
+    "largestProtectedEmptyRectangleArea": 772200,
+    "accepted15": 178200,
+    "delta": 594000,
+    "existingStrictUpperBound": 327600,
+    "remainingPlacementWorkPurityAndFullMetricExport": "NOT COMPLETED",
+    "areaCopperViaQualityMetrics": "NOT EXPORTED; not inferred"
+  },
+  "notRoutedRoots": [
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "cleanup": "PASS: maintained terminal scratch cleanup and both recorded driver creations exited; duration not separately measured",
+  "promotionGwtPlayer": "NOT RUN after native rejection",
+  "main1475Exact": true,
+  "scope": "Partial informed regression diagnostic only; no all14 or population acceptance",
+  "oracleAndBudgetsChanged": false
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Known local prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "trial-native.txt",
+      "rawSha256": "2dce4c1a4d857063569b6c226ec93d64f995fbcc472e653578f218daabc6ba31",
+      "sanitizedSha256": "2dce4c1a4d857063569b6c226ec93d64f995fbcc472e653578f218daabc6ba31",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

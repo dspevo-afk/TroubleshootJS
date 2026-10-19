@@ -1,4 +1,50 @@
-# Current checkpoint: physical silk rendering accepted; indefinite packing work continues
+# Current checkpoint: origin-grid trial rejected; accepted15 remains exact
+
+2026-10-19. Base5c85b0a7cddfac801439ca12c3ca63b00e8440df on
+codex/q60-faulted-profile-counts; candidate is documentation/evidence only for
+vacancy-origin-grid-r1. Normal branch publication next; no main/email. User's
+indefinite continuation and revoked quota-window stop conditions remain active.
+
+Pure grid fixtures PASS45.73985s/native3: legacy74, nearest17, new167 assertions.
+Literal rounding counterexample confirmed; legacy search outside helper exact.
+Initial compileFAIL35.8669925s/source7 explicit-final test declaration repair and
+full input/log/cleanup remain in unit-attempt1; no assertion/oracle change.
+
+Native-only16/density15 substitutes existing ring-zero origins only, preserving
+raw preference/pocket scores, trim/canvas, candidate/route/work/time bounds.
+Final nativeFAIL79.2387563s/exit1: six suitesPASS, seventhFAIL; four remaining
+suites/eight later roots NOT RUN. Fifteen other-candidate bindings at -1022/42/4
+stay exact. Five complete routed exports(-1017,-1004,-1022,0,17) retain exact15
+geometry/area/void/copper/vias. Root42 void772200 versus15's178200 fails existing
+strict327600 guard. Remaining42 observation/work/purity/full metrics incomplete;
+no other42 metrics inferred. Sealed14-case reader FAILs missing cases. No partial
+promotion, seed/threshold fitting or budget waiver. Trial GWT/player NOT RUN.
+
+First trialFAIL47.6209915s before routes: copied constraints allowlist stopped14.
+Completed source/gates/log/cleanup retained in trial-attempt1; explicit15 added
+with unknown-density16 negative fixture. Final1476 exact through1467 base plus
+seven overrides/nine additions; root static/body/baseline/partition and post-run
+input audits PASS. Initial misplaced worker note recovered byte-exact and stray
+copy-only file/empty dirs retired before registration/freeze/runtime.
+
+Maintained native scratch cleanup and both recorded driver births exited PASS;
+timings include compile/JVMs/terminal cleanup, not separately timed. Exact1467
+accepted copied inputs restored, then contained non-reparse task copy/private
+state removed. Main accepted1475 remains exact; current/default/replay15/saved14
+unchanged. Original five unrelated untracked entries/shared tools preserved.
+No live task test/browser/profile/preview/recovery resource remains.
+
+Accepted silkscreen5c85 retains native7/JDK8GWT5 and actual desktop15/save15 plus
+narrow319/saved14/customer/Close7 proof at its audited unchanged input boundary;
+no fresh full matrix, solver oracle or player proof claimed here. Known narrow
+provider crowding/stale no-mode hint remain. Optional read-only compactor review
+finds one whole-axis x/y pass, no iteration cap; copied trace vertices are not
+pruned, so accepted y cannot create a new x gap. Old density12 full exports cannot
+represent current selected density14. Next: predeclare a bounded read-only cause
+measurement of existing routed-axis proposals/rejections, without extra routes,
+candidates, validation attempts or policy change.
+
+# Previous checkpoint: physical silk rendering accepted; indefinite packing work continues
 
 2026-10-19. Published41cbae07797ad45a6588c92923fe9ca5f3a6dc12 (Record routed
 PCB pocket placement tradeoff) normally pushed/exact origin SHA verified on

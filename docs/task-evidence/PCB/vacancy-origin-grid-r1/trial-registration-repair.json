@@ -1,0 +1,13 @@
+{
+  "status": "REPAIRED_BEFORE_ANY_TRIAL_ROUTE",
+  "failedAttempt": "trial-attempt1",
+  "failureElapsedSeconds": 47.6209915,
+  "copyChanges": [
+    "One explicit allowlist value density15",
+    "Negative unknown-density16 fixture"
+  ],
+  "sourceBeforeSha256": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a",
+  "sourceAfterSha256": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+  "productionMainChanged": false,
+  "metricAndWorkOracleChanged": false
+}

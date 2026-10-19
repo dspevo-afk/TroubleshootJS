@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 45.73985,
+  "suiteCount": 3,
+  "scope": "Legacy vacancy/nearest fixtures and new unused pure grid helper; generation and routing NOT RUN",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

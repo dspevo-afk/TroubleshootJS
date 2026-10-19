@@ -1,0 +1,50 @@
+{
+  "baseSha256": "fa2b985739659281e40d62c255dc40a12f84ae6f4cc5dcce26512eb9012f6465",
+  "copyCount": 1476,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "5b76e457a0aed1a8e659d64ffa02c2026554c6e80a4ee94ebe6fb8ecdaed8f89",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "36ef9c3991f79076136e838a4d132a45f161c6a2bf498292171abd954176cb0c",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java": "c06bcea03d0df74e3c2b7565305d00dd8a1ef8abbfcad691feff3c2327901a8b",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "b039e273e416c3f76ed0bf3ef44d6376508b895e13a88dd4d2dc23f172704d0d",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "380b6a81b0a91f7c0f87502b2032635de8c469e64c862d81b9a09683235577e8"
+  },
+  "additions": {
+    "tests/contracts/PcbVacancyGridTrialContractTest.java": "dc3005211c1dcd62b71c31c11266cca044aa36da8f26a721731063e0930039d0",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup2.java": "363fd089007126ea94747ad2f68e2633c76406bf7adb161292b3419389acfd8e",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup3.java": "83477a06d84036092031c126241172d24a1567d94897a82dc69dfcd275795a2c",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup4.java": "01967ce14d13f4f3dd5d562f7fab2178944b3becf0250adaa0e1827569225255",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup5.java": "597b803bbc9087ff35e54bfc4bda90d83d88ef4df547acd68d8f536fb50252e6",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup6.java": "3739bddd6b04e11f21484b0c07d1b62a6625537548682d634b7042277ba01596",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup7.java": "0752e445eddc9f0a493a4f702e4f702d919204863fe22e20a16b621a98283cb6",
+    "tests/contracts/PcbVacancyGridTrialTargetContractTest.java": "92ae4fcb3662b30226d16dc6685973dc4592565ec9d311b908077c0c3dfb8909",
+    "tests/contracts/PcbVacancyOriginGridContractTest.java": "cd7cd69cd8634b3f2f830a2b36e25721da61d7ba6bc548eb1b9e60a61e364836"
+  },
+  "gateOwners": {
+    "proposal.json": "9b48dc4d6d5b4ed821d0fa4fa087947c6405e25aa132f24c5701cc62709c1543",
+    "phase2-hook-clarification.json": "b1c12f4fee65872324ce1d2df08c0e22b5a459c2c5777e10964c39189eb04c1c",
+    "phase2-plan.json": "c27b5e91296bb2ee0161c6969ad2e5ec4ce836b08fca85324a9356415af5438f",
+    "copy-inputs.json": "fa2b985739659281e40d62c255dc40a12f84ae6f4cc5dcce26512eb9012f6465",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "baseline-seal.json": "705fe90a082338b4dab6bc09440a37e57bd4d2f6b39ba8c2230a0a43560d5e3b",
+    "unit-inputs.json": "84b22d1a17f17cad772635be914f87b0c9e61198dc3c07858ac310e1806ea039",
+    "unit-input-audit.json": "6b57d75acde9f8e8f7541d9598e7034a1e78bfe20404e48fe118af24a62b3276",
+    "unit-timing.json": "4c0b9e6c52f0df5358cd48748fca1d3075ea746dc1da4e10ba93e88c5c0975e4",
+    "unit-process-cleanup.json": "6300950df0639e51f4c1b1b9743c238d9e385fe7205c1a7ce05d0e888bff5db6",
+    "unit-native.txt": "8096af4c6c3f230b68033f16221afefbfc7382c9bae8974ba9f2b6984da41600",
+    "unit-native-receipt.txt": "431cee2e222f86c3f298dc3a1e16127956635edc1f47391afb0a6c70216acf3d",
+    "phase2-worker-notes.md": "7112b74c4866ba01b24e709a0f2aa366608e3c3356bf742b8f3cc813e9536784",
+    "phase2-source-review.json": "085a4a5b6e4677d4ce5cc2f967681e8b9be917b9450120be0c4a4456d72af9a4",
+    "review_trial_source.py": "81ef657d2f3f322ee3e67d6f5c7ff4710e0d05c9a8a298526f1f49e6392367c4",
+    "register_trial.py": "9435094e8c89d41e2d835c821d9a0302747d5d862069508132e13a8f55c603dd",
+    "trial_inputs.py": "3c6fde7fb71d588786590c096907f240e3b15f86462db0ff53b68a5ad4cf4ef2",
+    "run_trial.ps1": "d95a23020b7c1129540a28eef2e9d5157281870ded8a855f32f2028beac8c8c4",
+    "check_trial_process_cleanup.ps1": "5fccb4b95af157da4445c8b7cff4ee1c780343fd881e63da8aef102e3d18b58a",
+    "sanitize_trial.py": "73a6ea8ba779fabf1eac2fd307ce0039f21911693eeb1fb8c899f21a983fd78c",
+    "assess_trial.py": "fef9ff64e683039f1b92a7547a1b9ff4b33345be751a561da7384158b42c5ee8",
+    "check_trial_reader.py": "fd666a3fa80a6ed7746a58aec829b3d12200d22450efe0921b05a53814a34806",
+    "trial-reader-canaries.json": "5ae51d7f95acaab9a29a8ddba5bec17c00c2bb288ce58e9f51d06a85d42361f5",
+    "retire_copy.py": "68ff465e3bf2cd07ed6af3d5bcb50589b50aa0d83cd6a440b486526a91d3e8c6"
+  },
+  "main1475SealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a"
+}

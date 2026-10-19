@@ -1,0 +1,9 @@
+{
+  "scope": "One test local declaration made explicitly final for maintained -source7; no assertion, helper, driver, budget or oracle change",
+  "originalSha256": "eb9d5dc97a3bee5d7a8bccc1122c131268dc54f4d7e8d0b7ae965ebb8f7b859b",
+  "repairedSha256": "cd7cd69cd8634b3f2f830a2b36e25721da61d7ba6bc548eb1b9e60a61e364836",
+  "priorAttempt": "unit-attempt1",
+  "priorStatus": "FAIL",
+  "priorElapsedSeconds": 35.8669925,
+  "priorCleanup": "PASS; maintained terminal cleanup and both recorded drivers exited"
+}

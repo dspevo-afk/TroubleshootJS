@@ -1,0 +1,7 @@
+{
+  "status": "CORRECTED_BEFORE_REGISTRATION_FREEZE_OR_RUNTIME",
+  "failure": "Worker wrote packet note under copy/docs instead of main packet; root review precondition failed",
+  "correction": "Exact reported notes bytes moved to main packet; verified contained non-reparse stray file and empty task-only directories retired",
+  "notesSha256": "7112b74c4866ba01b24e709a0f2aa366608e3c3356bf742b8f3cc813e9536784",
+  "productionSourcesAlteredByCorrection": false
+}

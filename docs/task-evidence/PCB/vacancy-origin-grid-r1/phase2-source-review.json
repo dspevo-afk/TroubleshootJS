@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Root reviewed4 production diffs, adapter and all new fixtures; old physical observation body exact after line-ending normalization, planner outside origin-only hook exact, generator outside inherited density guards exact, constraints outside explicit density15 registration exact, all14 baseline literals/partitions exact",
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "b039e273e416c3f76ed0bf3ef44d6376508b895e13a88dd4d2dc23f172704d0d",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "36ef9c3991f79076136e838a4d132a45f161c6a2bf498292171abd954176cb0c",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "380b6a81b0a91f7c0f87502b2032635de8c469e64c862d81b9a09683235577e8",
+    "tests/contracts/PcbVacancyGridTrialTargetContractTest.java": "b25393ab2ebee23218bbf9943517f0204f0d7f32bf565b68bb881b185c3b3862",
+    "tests/contracts/PcbVacancyGridTrialContractTest.java": "dc3005211c1dcd62b71c31c11266cca044aa36da8f26a721731063e0930039d0",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup2.java": "363fd089007126ea94747ad2f68e2633c76406bf7adb161292b3419389acfd8e",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup3.java": "83477a06d84036092031c126241172d24a1567d94897a82dc69dfcd275795a2c",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup4.java": "01967ce14d13f4f3dd5d562f7fab2178944b3becf0250adaa0e1827569225255",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup5.java": "597b803bbc9087ff35e54bfc4bda90d83d88ef4df547acd68d8f536fb50252e6",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup6.java": "3739bddd6b04e11f21484b0c07d1b62a6625537548682d634b7042277ba01596",
+    "tests/contracts/PcbVacancyGridTrialContractTestGroup7.java": "0752e445eddc9f0a493a4f702e4f702d919204863fe22e20a16b621a98283cb6"
+  },
+  "runtime": "NOT RUN; static review is not physical or metric acceptance",
+  "old14and15EntryGuardsPreserved": true,
+  "metricOracleChanged": false
+}
