@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "drivers": [
+    {
+      "pid": 24256,
+      "startTicks": "639280260078446653",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false,
+      "outcome": "EXITED"
+    },
+    {
+      "pid": 1668,
+      "startTicks": "639280260088002291",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false,
+      "outcome": "EXITED"
+    }
+  ],
+  "verificationElapsedSeconds": 0.0569731,
+  "terminationAttempted": false,
+  "scope": "Recorded driver birth identities only; maintained native terminal receipt owns its bounded child cleanup"
+}

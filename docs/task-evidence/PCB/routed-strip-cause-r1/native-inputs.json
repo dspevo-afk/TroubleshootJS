@@ -1,0 +1,35 @@
+{
+  "baseSha256": "c8f3a6fbc03738681abe6f096c0625409a481a956f267b37497e58ab27dc9861",
+  "copyCount": 1469,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "d8db8974863d6e4cfb35a2d7554affcee58a467538ab0fb6d3680030f3029f41",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "fcb1e2817b028bc6ed46d371493d3430a465bbcb276f4b85061a1ce30b842db3",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "215dfed0c329fd261c93981ab3f2d25b56413885f51ac6ca7af4f1579b5fd488"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedStripCauseContractTest.java": "721e1411f275eee62f4e12e629c5d6a43f4c5e0ea813c9a07b783e4d63fbb744",
+    "tests/contracts/PcbRoutedStripCauseContractTestGroup2.java": "de04afc00a688eb07003dbcade5346ae6a51e1253ea3c24ad999ee38fe6248b4"
+  },
+  "gateOwners": {
+    "proposal.json": "132c0b832346a9f93b61ba6751e4efec7bf0820a3d8361564e2b3f9c8509ab60",
+    "prepare.py": "96b7b11a959ad59d20faf14592f62127fcb9259c00f8af66a48ee3d161e034c1",
+    "copy-inputs.json": "c8f3a6fbc03738681abe6f096c0625409a481a956f267b37497e58ab27dc9861",
+    "accepted15-baselines.json": "18428f70f715726cd5fe4943a100329af89bb272ba10e57f27c081d22495fab3",
+    "worker-notes.md": "af887fa0302f642799571f01a90e765e9d1b53d6b23f175cf7402e705c9bb2e3",
+    "source-review.json": "eaecaeab49c73a9780fc69379f88545d572642592a1d77bcaf198d9a3bc383c8",
+    "review_source.py": "5b7eaf91d36ea83c60729aee6b79b001ad6e570cb1698c2f71193f601d17e028",
+    "register.py": "ae23e87eb4eb6a34350be1d78ffc4e4a1389886d349a779a8e3cb7752370d4eb",
+    "inputs.py": "165ada96539f4c3b03f03168635e6c8c65ce7fdf99681f464996821d82965430",
+    "run_native.ps1": "6f46c87b2784ff398e73ca741d750339f92a0047204cc60b96c3a120755b85eb",
+    "check_process_cleanup.ps1": "04b34c532ea808425b31ce82ffea19004bc7aea5f564492e04895e8ae0b5968b",
+    "sanitize.py": "7e42bf40baffc26c9c6327b7899c257e29cffcaf7eba460ebda44e15aeab9e67",
+    "final_rows.py": "fc4db53fff63287e69827aaafd7d9b0b98595d12816924ea42773226664d4897",
+    "check_final_rows.py": "6993f4a803603c2b451a4b155d89534a472b4e5440d6a646af536481cc96eaab",
+    "final-row-canaries.json": "1d815c26c9d1e8f1d4fd33219626226198acbe225e0935f836252349a639fd51",
+    "assess.py": "7f0e34d4ee41d245e99feaa0c2f800f78732eeba8fcc31e15c6fcc10828b9691",
+    "check_reader.py": "cf2ea60a018a72a86ac1c5802bcf1787828dbafa93c007acf4ba28deae3e49d9",
+    "reader-canaries.json": "ffb3be2d6c78e97f83a870c6d25152834544f94a982d2f792f7c32a162973aae",
+    "retire_copy.py": "9485898d1b4f5d09ae93957bf9a13436c5170edcc9fe092ea31ae4ec0b0bc250"
+  },
+  "main1475SealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a"
+}

@@ -115,6 +115,16 @@ Accepted1475 main inputs remain exact; copied accepted1467 restored and verified
 task resources retired. No trial GWT/player/current16 promotion. Next measure why
 the existing whole-axis routed compactor rejects otherwise proposed contractions.
 [Rejected origin trial and limits](task-evidence/PCB/vacancy-origin-grid-r1/README.md).
+Read-only routed-strip cause measurement reproduces informed42/-1022 exactly15
+in all42 non-timing final fields. Native2PASS58.4202s, frozen1469/reader/main1475
+audits pass; both selected records uniquely match and report NO_CUT on X/Y.
+Five existing compaction calls contain9NO_CUT/1APPLIED, no caught rejection. The
+local empty pockets have no eligible full-axis strip under current guards; neither
+a repeated pass nor partial-cut rejection fix has a measured selected opportunity.
+No minimum-packing/all-seed or new policy claim. Observer copy restored1467 and
+verified retired. Next establish version/identity/marking/repair prerequisites
+before experimenting with passive quarter-turn placement or a new local layout.
+[Strip measurement and limits](task-evidence/PCB/routed-strip-cause-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

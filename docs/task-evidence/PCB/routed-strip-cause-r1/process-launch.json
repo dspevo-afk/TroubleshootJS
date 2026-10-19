@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 24256,
+      "startTicks": "639280260078446653",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-strip-cause-r1/run_native.ps1"
+    },
+    {
+      "pid": 1668,
+      "startTicks": "639280260088002291",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-strip-cause-r1/run_native.ps1"
+    }
+  ],
+  "ownership": "Captured before current15 read-only strip cause work; isolated source copy"
+}

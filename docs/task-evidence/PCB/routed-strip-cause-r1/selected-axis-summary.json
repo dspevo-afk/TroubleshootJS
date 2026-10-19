@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "selectedBoards": [
+    {
+      "seed": "42",
+      "matchingCompactionCalls": [
+        3
+      ],
+      "axes": [
+        {
+          "axis": "X",
+          "status": "NO_CUT",
+          "occupiedIntervalCount": 494,
+          "cutCount": 0,
+          "cuts": []
+        },
+        {
+          "axis": "Y",
+          "status": "NO_CUT",
+          "occupiedIntervalCount": 494,
+          "cutCount": 0,
+          "cuts": []
+        }
+      ]
+    },
+    {
+      "seed": "-1022",
+      "matchingCompactionCalls": [
+        2
+      ],
+      "axes": [
+        {
+          "axis": "X",
+          "status": "NO_CUT",
+          "occupiedIntervalCount": 530,
+          "cutCount": 0,
+          "cuts": []
+        },
+        {
+          "axis": "Y",
+          "status": "NO_CUT",
+          "occupiedIntervalCount": 530,
+          "cutCount": 0,
+          "cuts": []
+        }
+      ]
+    }
+  ],
+  "allRecordedAxisStatuses": {
+    "APPLIED": 1,
+    "NO_CUT": 9
+  },
+  "otherAppliedAxes": [
+    {
+      "seed": "42",
+      "callOrdinal": 1,
+      "axis": "X",
+      "cutCount": 1,
+      "cuts": [
+        [
+          1660,
+          1210
+        ]
+      ]
+    }
+  ],
+  "conclusion": "Both selected layouts have no eligible full-axis strip under existing guards; no selected caught rejection to fix. A repeated or partial strip pass has no measured selected opportunity here",
+  "limits": "Two informed boards only; no minimum-packing, rotation-benefit, transformed-board or population claim"
+}

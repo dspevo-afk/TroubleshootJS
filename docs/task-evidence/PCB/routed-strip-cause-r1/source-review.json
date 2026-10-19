@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Root reviewed observer core diff, immutable capture/signature/lifecycle and both native fixtures; original physical observation body exact after line-ending normalization; original shift/placement compactor body exact; no extra physical validation calls; both baseline literal rows and independent canonical token lengths verified",
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "fcb1e2817b028bc6ed46d371493d3430a465bbcb276f4b85061a1ce30b842db3",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "215dfed0c329fd261c93981ab3f2d25b56413885f51ac6ca7af4f1579b5fd488",
+    "tests/contracts/PcbRoutedStripCauseContractTest.java": "721e1411f275eee62f4e12e629c5d6a43f4c5e0ea813c9a07b783e4d63fbb744",
+    "tests/contracts/PcbRoutedStripCauseContractTestGroup2.java": "de04afc00a688eb07003dbcade5346ae6a51e1253ea3c24ad999ee38fe6248b4"
+  },
+  "preRuntimeCorrection": "Undeclared axial180 fixture replaced with legal zero-pose nonuniform-origin fixture; no catalog/validator change",
+  "limits": "Static review only; standard passive quarter-turn coverage NOT CLAIMED; native runtime and selected binding remain pending"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "phase": "Before observer native runtime",
+  "positiveCases": 1,
+  "negativeCases": 49,
+  "readerSha256": "fc4db53fff63287e69827aaafd7d9b0b98595d12816924ea42773226664d4897",
+  "scope": "Synthetic exact final metric/source/identity/work reader only; event and physical proof separate"
+}

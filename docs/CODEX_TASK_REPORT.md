@@ -1,4 +1,45 @@
-# Current checkpoint: origin-grid trial rejected; accepted15 remains exact
+# Current checkpoint: routed-strip measurement complete; accepted15 remains exact
+
+2026-10-19. Base0031b8a5e38ebe308e41505f7c36a99faef38307 on
+codex/q60-faulted-profile-counts; candidate documents routed-strip-cause-r1.
+Normal branch publication next; no main/email. User's indefinite continuation
+and revoked quota-window stop conditions remain active.
+
+Current15/density14 informed42/-1022 native2PASS58.4202061s/exit0; 32 wrapper
+assertions each plus unchanged authoritative physical body. Frozen1469 via1467
+base/3overrides/2additions exact, main1475 exact, sealed readersPASS. All42
+non-timing final fields reproduce15 for each root, including source/graph/seeds,
+geometry, metrics and route/work decisions. Lifecycle positive/nested/stale/
+sentinel-finally canaries and independent literal signature fixtures pass.
+
+Selected geometry uniquely matches complete compaction call3/root42 and2/-1022;
+both axes NO_CUT: guardedintervals494/530, zero proposals. All five observedcalls
+contain9NO_CUT/1APPLIED, no caught rejection; other42 call1 contractsX1210 at1660.
+Call ordinal is not requested route attempt. No truncation/incomplete/ambiguity.
+Producer caseStatus remains INCONCLUSIVE by design; independent reader derives
+only observed decisions. Actual geometric rejection producerbranches unexercised;
+rotation change outside these fixtures. No full-axis selected opportunity, not
+proof of minimum packing or population. No policy/new placement interpretation.
+
+Maintained native scratch cleanup and both recorded driver births exited PASS;
+timing includes compile/JVM/terminal cleanup, duration not separately measured.
+Exact copied1467 accepted inputs restored, then contained non-reparse copy and
+private state removed. Main current/default/replay15/saved14 unchanged. Original
+five unrelated untracked entries/shared tools preserved. No live task process,
+browser, preview/profile or recovery copy. GWT/player/full matrix/independent
+solver oracles NOT RUN for this retired read-only observer; production unchanged.
+
+Root integrated source/core/adapter/literal review PASS, no extra validation/
+route/candidate/scoring calls. Undeclared-pose fixture and registry-anchor prep
+corrections preceded freeze/runtime without catalog/oracle/budget relaxation.
+Final-row canaries1positive/49negative; event2positive/5INCONCLUSIVE/46negative.
+Separate optional source review finds generic quarter-turn transforms exist, but
+production passive catalog/provider/epoch/polarity/repair prerequisites need a
+scoped version decision before any pose policy. Registry/replacement feasibility
+follow-up remains read-only. Next define that small mechanical foundation with
+independent literal fixtures; no rotation-benefit or migration claim accepted.
+
+# Previous checkpoint: origin-grid trial rejected; accepted15 remains exact
 
 2026-10-19. Base5c85b0a7cddfac801439ca12c3ca63b00e8440df on
 codex/q60-faulted-profile-counts; candidate is documentation/evidence only for

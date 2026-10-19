@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 58.4202061,
+  "suiteCount": 2,
+  "scope": "Two informed current15 routes, one per bounded JVM; observation only and independent signature fixtures",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

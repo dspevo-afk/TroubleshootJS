@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "finalAccepted15Reproduction": [
+    {
+      "seed": "42",
+      "status": "PASS",
+      "exactFieldsExceptElapsed": 42
+    },
+    {
+      "seed": "-1022",
+      "status": "PASS",
+      "exactFieldsExceptElapsed": 42
+    }
+  ],
+  "findings": [
+    {
+      "seed": "42",
+      "status": "PASS",
+      "matchingCallOrdinals": [
+        3
+      ],
+      "recordedCalls": 3,
+      "recordedAxes": 6,
+      "selectedRejectedAxes": [],
+      "cause": "NO_CAUGHT_AXIS_REJECTION",
+      "scope": "Observed selected compaction decisions only; no transformed-board, requested-attempt, minimal-layout or population proof"
+    },
+    {
+      "seed": "-1022",
+      "status": "PASS",
+      "matchingCallOrdinals": [
+        2
+      ],
+      "recordedCalls": 2,
+      "recordedAxes": 4,
+      "selectedRejectedAxes": [],
+      "cause": "NO_CAUGHT_AXIS_REJECTION",
+      "scope": "Observed selected compaction decisions only; no transformed-board, requested-attempt, minimal-layout or population proof"
+    }
+  ],
+  "generationPolicyChanged": false
+}
