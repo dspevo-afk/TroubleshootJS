@@ -1,0 +1,55 @@
+{
+  "status": "AUDITED",
+  "cases": [
+    {
+      "seed": "-1017",
+      "geometryExact13": true,
+      "selectedAttempt14": 3
+    },
+    {
+      "seed": "-1004",
+      "geometryExact13": true,
+      "selectedAttempt14": 3
+    },
+    {
+      "seed": "-1022",
+      "geometryExact13": true,
+      "selectedAttempt14": 0
+    },
+    {
+      "seed": "0",
+      "geometryExact13": true,
+      "selectedAttempt14": 0
+    },
+    {
+      "seed": "17",
+      "geometryExact13": true,
+      "selectedAttempt14": 3
+    },
+    {
+      "seed": "42",
+      "geometryExact13": true,
+      "selectedAttempt14": 1
+    },
+    {
+      "seed": "1",
+      "geometryExact13": true,
+      "selectedAttempt14": 1
+    },
+    {
+      "seed": "7",
+      "geometryExact13": false,
+      "selectedAttempt14": 4
+    },
+    {
+      "seed": "5",
+      "geometryExact13": true,
+      "selectedAttempt14": 5
+    },
+    {
+      "seed": "14",
+      "geometryExact13": false,
+      "selectedAttempt14": 0
+    }
+  ]
+}

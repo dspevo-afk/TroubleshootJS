@@ -1,0 +1,60 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Literal dominance, tie, tradeoff, and input-boundary contracts. */
+public final class PcbVacancyDominanceContractTest {
+    private static int assertions;
+
+    private PcbVacancyDominanceContractTest() { }
+
+    public static void main(String[] args) {
+        expect(true, 9.0d, 900L, 10.0d, 1000L, "both metrics improve");
+        expect(true, 8.5d, 1000L, 10.0d, 1000L, "only wire improves at equal area");
+        expect(true, 10.0d, 900L, 10.0d, 1000L, "only area improves at equal wire");
+        expect(false, 10.0d, 1000L, 10.0d, 1000L, "equal metrics preserve the original");
+        expect(false, 9.0d, 1100L, 10.0d, 1000L, "wire improvement cannot buy larger area");
+        expect(false, 11.0d, 900L, 10.0d, 1000L, "area improvement cannot buy longer wire");
+        expect(false, 11.0d, 1100L, 10.0d, 1000L, "both metrics worsen");
+        expect(true, 0.0d, 1000L, 0.25d, 1000L, "zero wire is a valid strict improvement");
+        expect(false, 1.0d, 1000L, 0.0d, 1000L, "zero original wire is valid");
+        expect(true, 1.125d, 42L, 1.25d, 42L, "fractional wire costs are compared precisely");
+        expect(true, 3.0d, 2147483648L, 3.0d, 2147483649L,
+                "positive areas beyond int range retain their ordering");
+        expect(false, 3.0d, 2147483648L, 3.0d, 2147483647L,
+                "area beyond int range cannot wrap below a smaller original");
+
+        // Each invalid value is placed in each corresponding argument position.
+        reject(Double.NaN, 10L, 1.0d, 20L, "proposed NaN wire is rejected");
+        reject(1.0d, 10L, Double.NaN, 20L, "original NaN wire is rejected");
+        reject(Double.POSITIVE_INFINITY, 10L, 1.0d, 20L, "proposed positive infinity is rejected");
+        reject(1.0d, 10L, Double.POSITIVE_INFINITY, 20L, "original positive infinity is rejected");
+        reject(Double.NEGATIVE_INFINITY, 10L, 1.0d, 20L, "proposed negative infinity is rejected");
+        reject(1.0d, 10L, Double.NEGATIVE_INFINITY, 20L, "original negative infinity is rejected");
+        reject(-0.5d, 10L, 1.0d, 20L, "proposed negative wire is rejected");
+        reject(1.0d, 10L, -0.5d, 20L, "original negative wire is rejected");
+        reject(1.0d, 0L, 2.0d, 20L, "zero proposed area is rejected");
+        reject(1.0d, 10L, 2.0d, 0L, "zero original area is rejected");
+        reject(1.0d, -1L, 2.0d, 20L, "negative proposed area is rejected");
+        reject(1.0d, 10L, 2.0d, -1L, "negative original area is rejected");
+
+        System.out.println("PASS: PCB vacancy dominance contracts assertions=" + assertions);
+    }
+
+    private static void expect(boolean expected, double proposedWire, long proposedArea,
+            double originalWire, long originalArea, String label) {
+        assertions++;
+        boolean actual = PcbPlacementPlanner.vacancyDominates(proposedWire, proposedArea,
+                originalWire, originalArea);
+        if (actual != expected) throw new AssertionError(label + ": expected " + expected + " but was " + actual);
+    }
+
+    private static void reject(double proposedWire, long proposedArea, double originalWire,
+            long originalArea, String label) {
+        assertions++;
+        try {
+            PcbPlacementPlanner.vacancyDominates(proposedWire, proposedArea, originalWire, originalArea);
+        } catch (IllegalArgumentException expected) {
+            return;
+        }
+        throw new AssertionError(label);
+    }
+}

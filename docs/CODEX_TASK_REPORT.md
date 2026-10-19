@@ -1,4 +1,40 @@
-# Current checkpoint: candidate0 probe-only trial rejected; accepted13 restored
+# Current checkpoint: vacancy dominance rejected; accepted13 restored
+
+2026-10-19. HEAD40b109a64323683a46a6307075fcf62e7c479d5e normally pushed and
+exact remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 remains
+production;44c5eb92 contains developer diagnostics. User's indefinite PCB work
+continues. No main/email; original five untracked entries and unrelated work stay.
+
+Scope: docs/task-evidence/PCB/vacancy-dominance-r1/scope.json. Explicit native14/
+density13 repeated-control candidate0 retains at most five legal vacancy choices
+separately from original search/fallback. Admit only a lower-score vacancy with
+non-regressing weighted pad distance and occupied nonconnector courtyard area,
+one strictly improved; a legal vacancy can recover an otherwise failed original.
+Original score arithmetic, candidate1, six placements,3+3 routes,60000 eval cap
+and physical/work/time bounds stay. Actual trial counts may differ after different
+placement outcomes; no extra search stage or allocation is introduced.
+
+Fresh focused5 PASS107.9403328s including terminal cleanup: unit24/diagnostic13
+proof30/representatives2807/regression cohort1947/raw identity3607 assertions.
+All1,445 frozen inputs exact; strict metric FAIL. Root7 area/void still grow and
+14 copper still grows; prior60-part improvement disappears. Other eight geometry
+hashes and metrics exact13. Four archived tests and rejected diff retained.
+
+Root and optional source reviewer found no wiring blocker; reviewer ran no tests.
+Existing fallback may now execute before vacancy recovery, within unchanged60000
+cap; realized counts/time may rise. Per-case actual counts NOT RECORDED here;
+do not claim unchanged performance. Former holdouts now inform design and are
+regression cases. Next approach needs separately declared fresh qualification.
+
+Four source/registry targets restored from verified byte snapshots; accepted
+source/full-web/prior-input boundaries match. All verifier/snapshot resources
+cleaned; no trial preview, tab, viewport override or download. No14 promotion,
+full native, GWT or player gates after rejection. No experimental14 production
+behavior published; evidence commit follows. Next unstarted work: fresh cohort
+baseline, then isolation-package boundary targeting that sets primary width,
+without scenario coordinates or relaxed isolation/physical/work bounds.
+
+# Previous checkpoint: candidate0 probe-only trial rejected; accepted13 restored
 
 2026-10-19. HEAD1282cc12e2185b733fb7d515174f23250bd4f09a normally pushed to
 origin/codex/q60-faulted-profile-counts, exact remote verified. Accepted production

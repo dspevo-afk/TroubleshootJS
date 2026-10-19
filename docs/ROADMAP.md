@@ -7,25 +7,19 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **PCB domain/occupancy cause audit complete; packing continues**
-Developer-only native exports and four inspected overlays identify actual domain,
-access and copper-clearance bounds for roots42/-1022. Native30 assertions pass;
-accepted13 geometry hashes and voids remain exact. Production source and compiled
-web stay byte-identical. Both lower-left pockets extend outside isolation, while
-other package envelopes prevent simply deleting their whole axis spans. Next is
-a bounded candidate0 vacancy-advice trial under the existing6/3+3 limits; no size
-improvement is claimed yet. User's indefinite continuation supersedes the earlier
-9am stop. No main/email. [Evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
-The candidate0 full-guidance trial was rejected: native4 passes, but three of ten
-areas and copper lengths grow. Accepted13 bytes are restored and audited; no14
-production behavior is published. Next is a separately declared probe-only
-variant under candidate0's original scoring, retaining strict acceptance.
-[Rejected trial](task-evidence/PCB/candidate0-vacancy-r1/README.md).
-The probe-only variant is also rejected: -1022 area shrinks4.13% and its pocket
-36.95%, but7 grows and14 uses more copper. Fresh native4 and restored byte-boundary
-audits pass. Next is a separately declared local-dominance guard, preserving the
-same global acceptance and physical/work limits.
-[Probe-only evidence](task-evidence/PCB/candidate0-probes-r1/README.md).
+**Current task:** **Cause-led PCB packing work continues; accepted13 retained**
+Developer-only native exports and four inspected overlays identify domain,
+access/copper-clearance and pocket boundaries for roots42/-1022.
+[Diagnostic evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
+Candidate0 full vacancy guidance, probe-only advice and local-dominance variants
+were rejected by strict finite metrics despite passing native physical/identity
+checks. Exact patches/failures remain; accepted13 source/full-web bytes are
+restored and audited. No experimental14 generator behavior is published.
+[Latest trial and limits](task-evidence/PCB/vacancy-dominance-r1/README.md).
+Former holdouts now inform design and are regression cases. Next is a fresh
+predeclared qualification cohort, then isolation-package boundary targeting that
+sets primary-region width. Keep physical isolation,6/3+3 and work/time limits.
+User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**
 Existing candidate1 prefers the existing pocket origin nearest its connected

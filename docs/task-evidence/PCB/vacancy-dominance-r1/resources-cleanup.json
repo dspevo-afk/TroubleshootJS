@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "verifier": "Terminal cleanup confirmed",
+  "snapshots": "Four snapshot and restored hashes matched; exact five non-reparse files and empty task-owned OS-temp directory removed",
+  "preview": "NOT LAUNCHED",
+  "browser": "No trial tab or viewport override",
+  "preserved": "Original five untracked entries, shared tools and unrelated work"
+}

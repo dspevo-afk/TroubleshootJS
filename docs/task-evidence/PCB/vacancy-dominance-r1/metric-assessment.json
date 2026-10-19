@@ -1,0 +1,79 @@
+{
+  "status": "FAIL",
+  "noCaseRegresses": false,
+  "atLeastOneStrictImprovement": true,
+  "cases": [
+    {
+      "seed": "-1017",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "-1004",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "-1022",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "0",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "17",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "42",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "1",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "7",
+      "areaDelta": 190656,
+      "protectedVoidDelta": 50800,
+      "copperDelta": -4180,
+      "viaDelta": -5
+    },
+    {
+      "seed": "5",
+      "areaDelta": 0,
+      "protectedVoidDelta": 0,
+      "copperDelta": 0,
+      "viaDelta": 0
+    },
+    {
+      "seed": "14",
+      "areaDelta": -47009,
+      "protectedVoidDelta": -85200,
+      "copperDelta": 2540,
+      "viaDelta": 0
+    }
+  ],
+  "scope": "Metric acceptance only; full identity/native/GWT/player gates remain separate",
+  "freshUnchanged13Diagnostics": "PASS: roots42/-1022 exact accepted13 geometry and voids"
+}

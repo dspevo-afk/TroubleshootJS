@@ -1,0 +1,240 @@
+diff --git a/scripts/verify-current-contracts.ps1 b/scripts/verify-current-contracts.ps1
+index b9617c12..fb638165 100644
+--- a/scripts/verify-current-contracts.ps1
++++ b/scripts/verify-current-contracts.ps1
+@@ -399,7 +399,11 @@ final class PhysicalSpecificationDeveloperVerifier {
+         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
+         @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
+         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
++        @{ Name = 'PcbVacancyDominanceContractTest'; Marker = 'PCB vacancy dominance contracts ' },
+         @{ Name = 'PcbOccupancyDiagnosticContractTest'; Marker = 'PCB occupancy diagnostic contracts ' },
++        @{ Name = 'PcbCandidateZeroVacancyContractTest'; Marker = 'PCB candidate zero vacancy contracts ' },
++        @{ Name = 'PcbCandidateZeroVacancyHoldoutContractTest'; Marker = 'PCB candidate zero vacancy holdouts ' },
++        @{ Name = 'PcbCandidateZeroVacancyIdentityContractTest'; Marker = 'PCB candidate zero vacancy identity contracts ' },
+         @{ Name = 'PcbNearestVacancyPreferenceContractTest'; Marker = 'PCB nearest vacancy preference contracts ' },
+         @{ Name = 'PcbNearestVacancyContractTest'; Marker = 'PCB nearest vacancy contracts ' },
+         @{ Name = 'PcbNearestVacancyHoldoutContractTest'; Marker = 'PCB nearest vacancy holdouts ' },
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+index ebacd1d4..956a6915 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+@@ -104,7 +104,7 @@ final class PcbPlacementConstraints {
+             throw new IllegalArgumentException("Missing PCB trace width profile");
+         this.traceWidthProfile = traceWidthProfile;
+         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+-        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12)
++        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13)
+             throw new IllegalArgumentException("Unknown placement density interpretation");
+         placementDensityVersion = densityVersion;
+         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index b700dbcd..17278568 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -55,6 +55,12 @@ final class PcbPlacementPlanner {
+         final PcbPlacementConstraints.Part demand;
+         Item(PcbFootprint f,PcbPlacementConstraints.Part d) { footprint=f; demand=d; envelope=envelope(f,d.accessMargin); }
+     }
++    private static final class VacancyTrial {
++        final PcbFootprint footprint; final double score;
++        VacancyTrial(PcbFootprint footprint,double score) {
++            this.footprint=footprint;this.score=score;
++        }
++    }
+     private static final class Region {
+         final String key,domain;
+         final Vector<Item> items=new Vector<Item>();
+@@ -258,6 +264,10 @@ final class PcbPlacementPlanner {
+         int placementVersion = constraints.placementDensityVersion;
+         boolean pinLocal=placementVersion>=10 && candidate==1 &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
++        // Trial density13 reuses duplicate ring-zero slots in candidate0 only.
++        // Keep its original objective; pin-local support and bonuses stay in1.
++        boolean vacancyGuidance=pinLocal || placementVersion>=13 && candidate==0 &&
++            SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
+         // Private6 reuses the established group-centred target and source-lane hints.
+         boolean narrow=placementVersion >= 8 && (candidate == 3 || pinLocal || candidate == 0 &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints));
+@@ -372,7 +382,7 @@ final class PcbPlacementPlanner {
+         for (Item item:orderedAnchors) {
+             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,true,boundaryX,evaluations);
++                pinLocal,vacancyGuidance,true,boundaryX,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
+             item.footprint=selected; placed.add(selected);
+         }
+@@ -386,7 +396,7 @@ final class PcbPlacementPlanner {
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,false,boundaryX,evaluations);
++                pinLocal,vacancyGuidance,false,boundaryX,evaluations);
+             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
+             next.footprint=selected; placed.add(selected);
+             remaining.remove(next.demand.componentId);
+@@ -605,7 +615,7 @@ final class PcbPlacementPlanner {
+             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
+             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
+             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
+-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations) {
++            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean vacancyGuidance,boolean anchor,int boundaryX,int[] evaluations) {
+         RegionHint hint=hints.get(regionKey(item.demand));
+         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
+             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
+@@ -648,7 +658,7 @@ final class PcbPlacementPlanner {
+         int baseY=anchor?(preferredY):(connected.y*3+preferredY)/4;
+         if(support!=null) { baseX=connected.x+direction*CHANNEL; baseY=connected.y; }
+         Vector<Point> vacancies=null;
+-        if(constraints.placementDensityVersion>=11 && pinLocal && !anchor) {
++        if(constraints.placementDensityVersion>=11 && vacancyGuidance && !anchor) {
+             Rectangle allowed=vacancyDomainBox(item.footprint,placed,constraints,outline);
+             if(allowed!=null) {
+                 Vector<Rectangle> obstacles=new Vector<Rectangle>();
+@@ -659,11 +669,11 @@ final class PcbPlacementPlanner {
+                     item.demand.accessMargin),new Point(pose.getX(),pose.getY()));
+             }
+         }
+-        Point vacancyPreference=support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
++        Point vacancyPreference=pinLocal && support==null && vacancies!=null && !vacancies.isEmpty()?vacancies.get(0):null;
+         if(constraints.placementDensityVersion>=12 && vacancyPreference!=null)
+             vacancyPreference=PcbVacancyTargets.nearest(vacancies,connected);
+         Rectangle vacancyPocket=null;
+-        if(vacancies!=null && !vacancies.isEmpty()) {
++        if(pinLocal && vacancies!=null && !vacancies.isEmpty()) {
+             int left=vacancies.get(0).x,right=left,top=vacancies.get(0).y,bottom=top;
+             for(Point point:vacancies) {left=Math.min(left,point.x);right=Math.max(right,point.x);
+                 top=Math.min(top,point.y);bottom=Math.max(bottom,point.y);}
+@@ -673,6 +683,8 @@ final class PcbPlacementPlanner {
+                 right-left+sourceEnvelope.width,bottom-top+sourceEnvelope.height);
+         }
+         PcbFootprint best=null;double bestScore=Double.POSITIVE_INFINITY;
++        Vector<VacancyTrial> vacancyTrials=vacancyGuidance && !pinLocal &&
++            vacancies!=null && !vacancies.isEmpty()?new Vector<VacancyTrial>():null;
+         int maxRing=anchor?24:20;
+         for(int ring=0;ring<=maxRing;ring++) {
+             int step=ring*MEDIUM_STEP;
+@@ -685,7 +697,8 @@ final class PcbPlacementPlanner {
+                 int x=anchor?preferredX:baseX+dx[index],y=anchor?baseY+dy[index]:baseY+dy[index];
+                 // Ring zero formerly tested the same origin six times. Retain
+                 // its first trial and reuse duplicate slots for advisory pockets.
+-                if(ring==0 && index>0 && vacancies!=null && index<=vacancies.size()) {
++                boolean vacancySlot=ring==0 && index>0 && vacancies!=null && index<=vacancies.size();
++                if(vacancySlot) {
+                     Point vacancy=vacancies.get(index-1);x=vacancy.x;y=vacancy.y;
+                 }
+                 x=mediumGridOrigin(item.footprint,x,outline,itemsMargin(item,constraints),false);
+@@ -704,7 +717,10 @@ final class PcbPlacementPlanner {
+                     Math.abs((long)y-vacancyPreference.y))*.25;
+                 if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
+                     vacancyPocket)/(double)MEDIUM_STEP;
+-                if(score<bestScore){best=trial;bestScore=score;}
++                if(vacancyTrials!=null && vacancySlot) {
++                    if(vacancyTrials.size()>=5)throw new Rejected("VACANCY_TRIAL_LIMIT");
++                    vacancyTrials.add(new VacancyTrial(trial,score));
++                } else if(score<bestScore){best=trial;bestScore=score;}
+             }
+         }
+         /*
+@@ -750,9 +766,55 @@ final class PcbPlacementPlanner {
+                 break;
+             }
+         }
++        if(vacancyTrials!=null && !vacancyTrials.isEmpty()) {
++            // Keep the original search/fallback incumbent as the comparator.
++            // These advisory costs do not certify final route or packing quality.
++            PcbFootprint original=best;
++            double originalWire=original==null?0:mediumPadDistance(original,item,placed,topology,board);
++            long originalArea=original==null?0:mediumOccupiedArea(original,placed);
++            for(VacancyTrial vacancy:vacancyTrials) {
++                if(vacancy.score>=bestScore)continue;
++                if(original!=null && !vacancyDominates(
++                        mediumPadDistance(vacancy.footprint,item,placed,topology,board),
++                        mediumOccupiedArea(vacancy.footprint,placed),originalWire,originalArea))continue;
++                best=vacancy.footprint;bestScore=vacancy.score;
++            }
++        }
+         return best;
+     }
+ 
++    /** A vacancy must improve one local cost without worsening the other. */
++    static boolean vacancyDominates(double proposedWire,long proposedArea,
++            double originalWire,long originalArea) {
++        if(Double.isNaN(proposedWire)||Double.isInfinite(proposedWire)||proposedWire<0 ||
++                Double.isNaN(originalWire)||Double.isInfinite(originalWire)||originalWire<0 ||
++                proposedArea<=0 || originalArea<=0)
++            throw new IllegalArgumentException("Invalid vacancy dominance costs");
++        return proposedWire<=originalWire && proposedArea<=originalArea &&
++            (proposedWire<originalWire || proposedArea<originalArea);
++    }
++
++    private static double mediumPadDistance(PcbFootprint footprint,Item item,
++            Vector<PcbFootprint> placed,TopologyPlacementGraph topology,TroubleshootBoard board) {
++        double distance=0;
++        for(TopologyPlacementGraph.PadLink link:topology.getLinksFor(item.demand.componentId)) {
++            PcbFootprint other=findPlacedFootprint(placed,link.getOtherComponentId());
++            if(other==null)continue;
++            PcbPadPlacement a=footprint.getPad(link.getPadId()),b=other.getPad(link.getOtherPadId());
++            distance+=(Math.abs((long)a.getX()-b.getX())+Math.abs((long)a.getY()-b.getY()))*
++                mediumLinkWeight(board,link);
++        }
++        return distance;
++    }
++
++    private static long mediumOccupiedArea(PcbFootprint footprint,Vector<PcbFootprint> placed) {
++        Rectangle occupied=footprint.getPlacement().getRoutingCourtyard();
++        for(PcbFootprint other:placed)
++            if(!other.getPlacement().getPhysicalPackage().isConnector())
++                occupied=union(occupied,other.getPlacement().getRoutingCourtyard());
++        return (long)occupied.width*occupied.height;
++    }
++
+     /** Advisory clipping preserves the already established declared-domain axis.
+      * The existing fits/global corridor checks remain the admission authority. */
+     static Rectangle vacancyDomainBox(PcbFootprint source,Vector<PcbFootprint> placed,
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+index 0b01c786..7658b686 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -8,13 +8,15 @@ final class Rb56Placement {
+         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
+         GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10,
+         VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12, CURRENT_VERSION = 13;
++    // Explicit native trial only; current replay/session identity remains13.
++    static final int TRIAL_VERSION14 = 14;
+     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
+     static final int BARRIER_DRAWING_UNITS = 80;
+     private Rb56Placement() { }
+ 
+     static boolean supportsVersion(int version) {
+         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
+-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == CURRENT_VERSION;
++            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == CURRENT_VERSION || version == TRIAL_VERSION14;
+     }
+ 
+     /** Replay interpretation includes copper policy; packing density alone is not its identity. */
+@@ -22,13 +24,14 @@ final class Rb56Placement {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+         if (placementVersion == ROLE_WIDTHS_VERSION12) return VACANCY_VERSION;
++        if (placementVersion == TRIAL_VERSION14) return CURRENT_VERSION;
+         return placementVersion == CURRENT_VERSION ? ROLE_WIDTHS_VERSION12 : placementVersion;
+     }
+ 
+     static PcbTraceWidthProfile widthProfile(int placementVersion) {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION ?
++        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION || placementVersion == TRIAL_VERSION14 ?
+             PcbTraceWidthProfile.ROLE_WIDTHS :
+             PcbTraceWidthProfile.UNIFORM;
+     }
+@@ -77,7 +80,7 @@ final class Rb56Placement {
+         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
+             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION,
+             densityVersion(placementVersion),
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION || placementVersion == TRIAL_VERSION14,
+             widthProfile(placementVersion));
+     }
+ 

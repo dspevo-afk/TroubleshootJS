@@ -1,0 +1,32 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Untuned private14 routes, measured in a separate native JVM suite. */
+public final class PcbCandidateZeroVacancyHoldoutContractTest {
+    private static final long[] ROOTS = {1L, 7L, 5L, 14L};
+    private static final int[] PARTS = {40, 52, 54, 54};
+
+    public static void main(String[] args) {
+        if (ROOTS.length != PARTS.length)
+            throw new IllegalStateException("Invalid holdout cohort");
+        int failures = 0;
+        for (int index = 0; index < ROOTS.length; index++) {
+            try {
+                PcbCandidateZeroVacancyContractTest.measure(ROOTS[index], PARTS[index]);
+            } catch (AssertionError failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_HOLDOUT_FAILURE seed=" + ROOTS[index] +
+                    " message=" + failure.getMessage());
+                failure.printStackTrace(System.out);
+            } catch (RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_HOLDOUT_FAILURE seed=" + ROOTS[index] +
+                    " exception=" + failure);
+                failure.printStackTrace(System.out);
+            }
+        }
+        if (failures != 0)
+            throw new AssertionError("candidate-zero vacancy holdout route failures=" + failures);
+        System.out.println("PASS: PCB candidate zero vacancy holdouts roots=" + ROOTS.length +
+            " assertions=" + PcbCandidateZeroVacancyContractTest.assertionCount());
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "operation": "Fresh maintained JDK8 focused5 for vacancy dominance, including terminal wrapper cleanup",
+  "elapsedSeconds": 107.9403328,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "suites": [
+    "PcbVacancyDominanceContractTest",
+    "PcbOccupancyDiagnosticContractTest",
+    "PcbCandidateZeroVacancyContractTest",
+    "PcbCandidateZeroVacancyHoldoutContractTest",
+    "PcbCandidateZeroVacancyIdentityContractTest"
+  ]
+}
