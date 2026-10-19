@@ -5790,7 +5790,7 @@ ownership alone is not a normal advanced, performance or manufacturing release.
 `PcbVacancyTargets.nearest` chooses an existing advisory origin by Manhattan
 distance to the planner's weighted connected target. Arithmetic uses long deltas;
 canonical order resolves ties and the returned point does not alias an input.
-`PcbPlacementPlanner` applies this preference only to density12, repeated-control
+`PcbPlacementPlanner` applies this preference to density12 and later, repeated-control
 candidate1, where the component has no paired support target. Pair-supported
 components retain their existing pin-target preference. Target generation, five
 origins, scoring weights, overlap reward, candidate/evaluation/routing allocation,
@@ -5823,3 +5823,22 @@ before/after generation. The separate full-plan hash includes placement metadata
 and proves per-version purity. A passing negative fixture does not grant physical
 admission or fix the crop; its evidence identifies the cause for a later versioned
 guard. These helpers remain outside production player UI.
+
+
+## Versioned final canvas containment
+
+`PcbBoardLayout.ensureCanvasContainsBoard()` owns minimal virtual workbench
+containment after routed content crop and disjoint tray placement. It requires a
+mutable layout and computes checked right/bottom and both next dimensions before
+publication. It never moves or resizes physical PCB/tray geometry. The existing
+final footprint and geometry validators remain authoritative. The medium-board
+generator invokes it only for density13. It completes existing virtual-canvas
+ownership; it does not change the physical planner area/extent/search limits.
+
+Private current14 maps to density13 with the same ROLE_TRACE/two-layer rules.
+Explicit saved13 maps to density12, retains the exact private13 replay namespace,
+and preserves the prior saved13 root4 rejection. Replay parsing/canonicalization
+keeps13 and14 distinct before owner reconstruction; unknown versions reject.
+Public alpha5, session model1 and dependency epoch16 remain unchanged. Independent
+literal owner fixtures and full native source/live-graph comparisons live outside
+the player UI. See the [canvas-owner evidence and limits](task-evidence/PCB/canvas-owner-fit-r1/README.md).

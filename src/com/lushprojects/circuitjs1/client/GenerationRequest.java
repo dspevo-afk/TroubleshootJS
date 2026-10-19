@@ -17,7 +17,8 @@ final class GenerationRequest {
     static final int RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL = 10;
     static final int RB56_PLACEMENT_INTERPRETATION_VACANCY = 11;
     static final int RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS = 12;
-    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 13;
+    static final int RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY = 13;
+    static final int RB56_PLACEMENT_INTERPRETATION_CURRENT = 14;
     private final ChallengeDescriptor descriptor;
     private final boolean composition;
     private final boolean quickPlay;

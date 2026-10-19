@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "seed": "-1017",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "-1004",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "-1022",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "0",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "17",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "42",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "1",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "7",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "5",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "14",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "2",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "3",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "6",
+      "status": "PASS",
+      "outcome": "EXACT_ACCEPTED13_GEOMETRY_AND_METRICS"
+    },
+    {
+      "seed": "4",
+      "status": "PASS",
+      "outcome": "NEWLY_ADMITTED_PREVIOUSLY_REJECTED"
+    }
+  ],
+  "scope": "Finite admission fix; no shrinkage claim. All14 roots are informed regression data.",
+  "limits": "Selected56 native contracts passed; full matrix and independent oracles NOT RUN. GWT/player gates remain separate.",
+  "phase": "final"
+}

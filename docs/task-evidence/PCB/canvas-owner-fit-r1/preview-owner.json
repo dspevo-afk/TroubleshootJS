@@ -1,0 +1,9 @@
+{
+  "processId": 9784,
+  "processStartTicks": "639279870717684210",
+  "executable": "powershell.exe",
+  "script": "scripts/preview.ps1",
+  "port": 8907,
+  "ownership": "maintained state and live process creation ticks match",
+  "status": "OWNED_RUNNING"
+}

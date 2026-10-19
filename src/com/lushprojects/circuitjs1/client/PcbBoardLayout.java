@@ -332,6 +332,17 @@ class PcbBoardLayout {
         partsTray.setBounds(right.x,right.y,right.width,right.height);
     }
 
+    /** Complete workbench containment without moving any physical board or tray geometry. */
+    void ensureCanvasContainsBoard() {
+        requireMutable();
+        int boardRight = checkedAdd(boardOutline.x, boardOutline.width);
+        int boardBottom = checkedAdd(boardOutline.y, boardOutline.height);
+        int nextWidth = Math.max(width, boardRight);
+        int nextHeight = Math.max(height, boardBottom);
+        width = nextWidth;
+        height = nextHeight;
+    }
+
     private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
             BoardPad startPad, BoardPad endPad) {
         for (PcbComponentPlacement component : components.values()) {

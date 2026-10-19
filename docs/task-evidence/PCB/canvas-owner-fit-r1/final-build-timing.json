@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "operation": "final-source JDK8 GWT production compile",
+  "elapsedSeconds": 93.808813,
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

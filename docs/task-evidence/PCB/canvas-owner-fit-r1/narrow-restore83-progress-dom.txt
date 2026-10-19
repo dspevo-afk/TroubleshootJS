@@ -1,0 +1,54 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button [disabled]: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+    - navigation:
+      - button [disabled]:
+      - button [disabled]:
+      - button:
+      - button:
+      - button [disabled]:
+    - row:
+      - cell:
+        - generic: Preparing board...
+    - row:
+      - cell:
+        - button: Cancel board preparation
+    - row:
+      - cell:
+        - button [disabled]: Open controlled indicator
+    - row:
+      - cell:
+        - button [disabled]: "Board Power: ON"
+    - row:
+      - cell:
+        - button [disabled]: New control board
+    - row:
+      - cell:
+        - button: End qualification view
+- dialog "Preparing board":
+  - banner:
+    - heading "Preparing board" [level=2]
+  - status: Preparing and checking the board.
+  - generic: CIRCUIT CHECK
+  - heading "Verify measurements and repairs" [level=3]
+  - 'progressbar "Board preparation: completed verification stages"'
+  - strong: 66%
+  - status: 83s elapsed / 608 work units completed
+  - list:
+    - listitem: Resolve
+    - listitem: Build & test
+    - listitem: PCB
+    - listitem: Measurements
+    - listitem: Ticket
+    - listitem: Ready
+  - paragraph: Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Keep this qualification view in the foreground during preparation.
+  - button "Cancel preparation" [active]

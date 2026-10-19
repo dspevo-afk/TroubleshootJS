@@ -1,0 +1,62 @@
+[
+  {
+    "sha256": "dcb257d733060df8712bcd40f2c8e7746bf765f3776301efb2f6bb5641896370",
+    "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+    "name": "PcbBoardLayout.java"
+  },
+  {
+    "sha256": "3ddc4d47f475c288caac71e57b21d1b4741ad9b1b8ba1d9045598eea4257ba48",
+    "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "name": "SeededPcbLayoutGenerator.java"
+  },
+  {
+    "sha256": "c0bdbac46f90e4f7715797619626f51e7747b5f967d1d6b0cc855bcd2c8342f8",
+    "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "name": "Rb56Placement.java"
+  },
+  {
+    "sha256": "40aaaf3ec3c285732ff0c02c78badf9d90a281f557ddb7872609a747f6f70f7c",
+    "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "name": "PcbPlacementConstraints.java"
+  },
+  {
+    "sha256": "31a13e036560f53399db6b4f302f58318c4d2f485cf54007024a152d7d43667e",
+    "path": "scripts/verify-current-contracts.ps1",
+    "name": "verify-current-contracts.ps1"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "sha256": "bc5308e63de31ff152d4cb682c41bedce22f0c7cea1b8fb6a9215b4536e37d68",
+    "name": "GenerationRequest.java"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+    "sha256": "f9bc44806298a07001503409ea71c65263ec61eff673b61d7cee3a9be7855ce5",
+    "name": "PlayerSessionReplay.java"
+  },
+  {
+    "path": "tests/contracts/PcbNearestVacancyIdentityContractTest.java",
+    "sha256": "befa1efb94f6a6d2b8d4e825b6e2cdf1b9338d2fde16ffce0bbe6545e3960788",
+    "name": "PcbNearestVacancyIdentityContractTest.java"
+  },
+  {
+    "path": "tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java",
+    "sha256": "95520622eb3c1df858734a82d3d8fb929f96ec9f26eb0039ecb15e46a5cbff2b",
+    "name": "PcbRoleWidthOwnerIdentityContractTest.java"
+  },
+  {
+    "path": "tests/contracts/PcbTraceWidthProfileContractTest.java",
+    "sha256": "2f24e9dc57a503fd3239b289474e0fbb7bbafa7d61869249f97b36d60f8ee7d2",
+    "name": "PcbTraceWidthProfileContractTest.java"
+  },
+  {
+    "path": "tests/contracts/U06SessionSaveContractTest.java",
+    "sha256": "ef610f99eda1fde129f7d3d3be73fdcd90ca184cb067fbcc6aed024b5db7dceb",
+    "name": "U06SessionSaveContractTest.java"
+  },
+  {
+    "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+    "sha256": "7f7272a2394a6c63bddd9de743dd44da74708c1984bc7c8087d32934c63f0518",
+    "name": "RelBSessionIdentityContractTest.java"
+  }
+]

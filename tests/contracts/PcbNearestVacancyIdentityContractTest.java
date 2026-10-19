@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 /**
- * Raw placement-only comparison for the private13 nearest-vacancy trial.
+ * Raw placement-only comparison pinned to the saved13 nearest-vacancy interpretation.
  * This diagnostic compares candidate geometry and source inventory only. It
  * does not validate placement admission, route, run a solver, or claim packing
  * acceptance.
@@ -15,10 +15,12 @@ public final class PcbNearestVacancyIdentityContractTest {
     private static final long[] SEEDS = {-1022L, 7L, 14L};
     private static final int[] PRESERVED_CANDIDATES = {0, 2, 3, 4, 5};
     private static final int BEFORE_VERSION = Rb56Placement.ROLE_WIDTHS_VERSION12;
-    private static final int AFTER_VERSION = Rb56Placement.CURRENT_VERSION;
+    private static final int AFTER_VERSION = Rb56Placement.NEAREST_VACANCY_VERSION13;
     private static int assertions;
 
     public static void main(String[] args) {
+        check(BEFORE_VERSION == 12 && AFTER_VERSION == 13,
+            "raw vacancy oracle remains pinned to saved12 versus saved13");
         int failures = 0;
         for (int i = 0; i < SEEDS.length; i++) {
             try {
@@ -61,12 +63,12 @@ public final class PcbNearestVacancyIdentityContractTest {
         check(beforeConstraints.placementDensityVersion == Rb56Placement.densityVersion(BEFORE_VERSION),
             "saved12 planner density changed");
         check(afterConstraints.placementDensityVersion == Rb56Placement.densityVersion(AFTER_VERSION),
-            "current13 planner density changed");
+            "saved13 planner density changed");
         String profile = beforeConstraints.getTraceWidthProfile().canonical();
         check("ROLE_TRACE@1".equals(beforeConstraints.getTraceWidthProfile().getIdentity()),
             "diagnostic cases do not use the declared role-width profile");
         check(profile.equals(afterConstraints.getTraceWidthProfile().canonical()),
-            "placement trial changed copper profile");
+            "saved13 placement changed the saved12 copper profile");
 
         PcbPlacementPlanner beforePlanner = new PcbPlacementPlanner(
             StandardPcbFootprintProviders.createRegistry());
@@ -81,11 +83,11 @@ public final class PcbNearestVacancyIdentityContractTest {
             check(sourcePlanSignature(beforePlan).equals(beforeSource),
                 "candidate " + candidate + " mutated saved12 source plan");
             check(sourcePlanSignature(afterPlan).equals(afterSource),
-                "candidate " + candidate + " mutated current13 source plan");
+                "candidate " + candidate + " mutated saved13 source plan");
             check(boardInventorySignature(beforeBoard).equals(beforeInventory),
                 "candidate " + candidate + " mutated saved12 board graph");
             check(boardInventorySignature(afterBoard).equals(afterInventory),
-                "candidate " + candidate + " mutated current13 board graph");
+                "candidate " + candidate + " mutated saved13 board graph");
             validateRawPlan(beforeBoard, before, BEFORE_VERSION, candidate);
             validateRawPlan(afterBoard, after, AFTER_VERSION, candidate);
 

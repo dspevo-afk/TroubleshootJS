@@ -1,0 +1,9 @@
+{
+  "status": "OPEN_NONBLOCKING_FOLLOWUP",
+  "trigger": "At319x670, normal Fit bench and Board view toolbar input scrolls a GWT ancestor horizontally; canvas then has rect x=-383,width319 while window.scrollX=0",
+  "scope": "Toolbar/camera viewport behavior, not board admission or geometry. Renderer and toolbar source unchanged in this candidate; old-build runtime reproduction NOT RUN",
+  "attempt": "Real horizontal scroll at blank canvas did not recover it",
+  "recovery": "Actual Main menu, Resume current board, then click meter handle brought canvas to x=-25,right294; entire board outline visible. No DOM mutation/controller injection",
+  "proof": "sideways-after-fit.jpg preserved; root narrow-restored13.jpg shows recovered board; saved13 retest and all7 cleanup PASS",
+  "disposition": "Root accepts finite canvas-owner correctness scope; no passing responsive-layout claim. Next focused UI owner investigation before further packing experiment"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "files": 13,
+  "scope": "Exact named direct child of OS-temp; flat allowlist, non-reparse root/parent/files, all12 original snapshot SHA256 match",
+  "initialRemoval": "Combined dynamic deletion command rejected before execution: blocked by policy. Safer next operation uses explicit literal file paths without recursion.",
+  "finalRemoval": "All13 verified files removed with explicit literal paths and no recursion; empty exact directory removed and absence verified"
+}

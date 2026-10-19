@@ -845,6 +845,10 @@ class SeededPcbLayoutGenerator {
         }
         layout.compactToContent(boardX, boardY, compactEdgeMargin);
         layout.positionPartsTrayDisjointFromBoard();
+        // Tray placement may return early when the tray fits, even if the crop
+        // extends past the old drawing canvas. The PCB geometry stays exact.
+        if (mediumCanvas && board.getPlacementConstraints().placementDensityVersion == 13)
+            layout.ensureCanvasContainsBoard();
         Vector<PcbFootprint> finalFootprints = translatedPlanFootprints(plan, layout, 0, 0);
         try { PcbPlacementPlanner.validate(board,board.getPlacementConstraints(),layout.getBoardOutline(),finalFootprints); }
         catch(PcbPlacementPlanner.Rejected failure) { throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,failure.reason); }

@@ -7,14 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Cause-led PCB packing work continues; accepted13 retained**
+**Current task:** **Private14 canvas containment accepted; PCB realism work continues**
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.
 [Diagnostic evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
 Candidate0 full vacancy guidance, probe-only advice and local-dominance variants
 were rejected by strict finite metrics despite passing native physical/identity
 checks. Exact patches/failures remain; accepted13 source/full-web bytes are
-restored and audited. No experimental14 generator behavior is published.
+restored and audited at that rejected-trial checkpoint.
 [Latest trial and limits](task-evidence/PCB/vacancy-dominance-r1/README.md).
 Former holdouts now inform design and are regression cases. Fresh predeclared
 roots2,3,4,6 exposed an accepted13 canvas failure at4; the other three admitted.
@@ -29,9 +29,16 @@ The explicit14 canvas guard was rejected despite all14 native admissions and
 exact old-ten geometry. Fresh3's protected void grows;6 shrinks but changes too.
 All failures, bounded JVM partition and restored accepted13 bytes are retained.
 [Guard trial and limits](task-evidence/PCB/canvas-guard-trial-r1/README.md).
-Next is an owner-level canvas-containment fix preserving previously admitted
-boards. The soft isolation-package packing proposal stays deferred. Keep
-isolation,6/3+3 and work/time limits.
+The owner-level containment fix is now accepted as private14/density13. All14
+native boards admit; all13 previously admitted boards retain exact13 physical
+geometry/metrics. Final selected56 native, JDK8GWT5, actual desktop55 repair/
+Save14/FileReader14 and narrow54/FileReader13/customer/cleanup gates pass. Physical
+PCB size/geometry and all isolation/search/work/time limits stay unchanged.
+[Canvas-owner acceptance and limits](task-evidence/PCB/canvas-owner-fit-r1/README.md).
+Narrow toolbar focus can scroll the board out of view; the failed capture and
+actual input recovery remain explicit. This UI follow-up is next, before the
+soft isolation-package packing proposal. Finite reference-host evidence only;
+no extra shrinkage, all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "file": "final-build.txt",
+  "rawSha256": "fb68e0e497880a05cd0e428d86ec04c14d305379e606722338d239b6c1481115",
+  "sanitizedSha256": "f84ec1a57dc6029a5428d63cc0da4f36d91ee05bbca58ccd47b7cdc57688a605",
+  "scope": "Replace personal worktree and known JDK8 paths only; compiler output and results preserved"
+}

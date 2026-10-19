@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "nativeSeconds": 695.5263446,
+  "buildSeconds": 93.808813,
+  "runs": [
+    {
+      "label": "desktop-current14-closed",
+      "coldMillis": 67640,
+      "coldWork": 601,
+      "restore": {
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 67394,
+        "work": 601,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "freshOwner": true,
+        "priorOwnerRetired": true
+      },
+      "wallMillis": 304438
+    },
+    {
+      "label": "narrow-saved13-closed",
+      "coldMillis": 86605,
+      "coldWork": 622,
+      "restore": {
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 86322,
+        "work": 622,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "freshOwner": true,
+        "priorOwnerRetired": true
+      },
+      "wallMillis": 299423
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-bottom55.jpg",
+      "sha256": "f6b51209b35d968786a2c5ac3047703da97defae249cb2e7cc33c954f64a739f"
+    },
+    {
+      "file": "desktop-pinout55.jpg",
+      "sha256": "ab8c21a75ad609971cabb127bbc0a20e51de061feafe5150b31640d1352403c7"
+    },
+    {
+      "file": "desktop-repaired55.jpg",
+      "sha256": "e80b7b271b56fb44cbfff8b96f30e759765ec1adcdc62d61214995371df255a3"
+    },
+    {
+      "file": "desktop-unrepaired55.jpg",
+      "sha256": "ac88bcc792c482a240ee4130524000ef7e6af7b264ee66e41b7b81106167586d"
+    },
+    {
+      "file": "narrow-restored13.jpg",
+      "sha256": "8171b9b59799c9ecf35d7540e7b49e1f2e5f3ca300924564cacf7209d469f749"
+    }
+  ],
+  "limits": "Finite informed regression cohort and two reference-host player cases. Narrow toolbar auto-scroll remains an open nonblocking follow-up, not a fixed or passing responsive layout. No shrinkage, all-seed, manufacturing, HARD or modest-host claim. Full native matrix and independent oracles NOT RUN."
+}

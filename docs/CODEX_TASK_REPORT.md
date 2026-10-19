@@ -1,4 +1,42 @@
-# Current checkpoint: canvas guard rejected; accepted13 restored
+# Current checkpoint: private14 canvas containment accepted
+
+2026-10-19. Candidate based on HEAD6d0a1e197f88af7537143102a2ad770380a174b7,
+branch codex/q60-faulted-profile-counts. Source91a6edb7d7cab36c57dc48b70f27329e3a1447aed3c979847c6cf005598374f5;
+web4111c91583c55ec34abb372b220ef1b4f6de3c7d02dfe098c152888aa8f48503.
+Accepted current14/density13 minimally completes virtual canvas containment after
+existing crop/tray placement; physical PCB geometry and all limits stay. Saved13
+exact namespace/density12/negative root4 retained; public alpha/model/epoch stay.
+No shrinkage claim. Indefinite PCB work continues; no main/email.
+
+canvas-owner-fit-r1: focused6 PASS125.5150018s; final selected56 native
+PASS695.5263446s; actual final-source JDK8GWT5 PASS93.808813s. Times include terminal
+cleanup, not separately measured. All1,447 inputs exact after each final phase,
+all5 served/execution fields exact. Final14-case assessor and12 synthetic canaries
+PASS: all14 admit, all13 existing board hashes/metrics exact13;4 newly admits.
+Full native matrix/independent oracles NOT RUN. All14 informed regression data.
+
+Actual desktop55 root4 cold67.640s/601/max1.642s, unrepairedFAIL, public pinout/
+bothfaces/real pad input, discharge guard/medium10k replacement/customerPASS.
+Save14/FileReader14 restore67.394s/601 fresh owner/prior retired; OFF/onepart
+retained, retest/Close all7cleanup PASS, wall304.438s. Narrow54 root42 cold86.605s/
+622/max1.484s, actual saved13 restore86.322s/622, OFF/onepart preserved, customer/
+Close all7cleanup PASS, wall299.423s. Narrow timing margin small; no modest-host
+claim. Five inspected captures plus retained blank-view diagnosis; logs empty.
+
+Root and optional source reviews no candidate blocker. OPEN_NONBLOCKING_FOLLOWUP:
+narrow toolbar focus scrolls GWT ancestor sideways, canvasx=-383; normal menu/
+meter-handle input recovers board. Not fixed or responsive-PASS; old-build runtime
+reproduction NOT RUN. Next inspect existing UI scroll/viewport owner, then soft
+isolation-package boundary targeting under strict routed metrics. Preserve all
+rejected trials and former-holdout limits. See packet README/acceptance for proof.
+
+No preview/tab/viewport/download/task-snapshot resources remain. Preview9784/8907
+positively stopped; unrelated8899 untouched. Combined snapshot deletion rejected
+before execution; safer explicit-literal/nonrecursive cleanup passed. Original
+five untracked entries/shared tools preserved. Final root diff/publication follows
+on established origin branch; no main/email. No next milestone started yet.
+
+# Previous checkpoint: canvas guard rejected; accepted13 restored
 
 2026-10-19. HEADaf94101cece372439e1d8cf4c8fa1a2c0ca3d6d9 normally pushed and
 remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 production

@@ -14,23 +14,31 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
         try {
             GenerationRequest request11=privateRequest(11,0L);
             GenerationRequest roleWidthsRequest12=privateRequest(12,0L);
-            GenerationRequest request13=privateRequest(13,0L);
+            GenerationRequest request13=privateRequest(
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY,0L);
+            GenerationRequest request14=privateRequest(
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,0L);
             PlayerSessionReplay replay11=PlayerSessionReplay.forQualification(request11);
             PlayerSessionReplay replay12=PlayerSessionReplay.forQualification(roleWidthsRequest12);
             PlayerSessionReplay replay13=PlayerSessionReplay.forQualification(request13);
+            PlayerSessionReplay replay14=PlayerSessionReplay.forQualification(request14);
             GeneratedBoardInstance saved11=constructAdmitted(request11);
             owners.add(saved11);
             GeneratedBoardInstance saved12=constructAdmitted(roleWidthsRequest12);
             owners.add(saved12);
-            GeneratedBoardInstance current13=constructAdmitted(request13);
-            owners.add(current13);
+            GeneratedBoardInstance saved13=constructAdmitted(request13);
+            owners.add(saved13);
+            GeneratedBoardInstance current14=constructAdmitted(request14);
+            owners.add(current14);
 
             PcbPlacementConstraints constraints11=saved11.getBoard().getPlacementConstraints();
             PcbPlacementConstraints constraints12=saved12.getBoard().getPlacementConstraints();
-            PcbPlacementConstraints constraints13=current13.getBoard().getPlacementConstraints();
+            PcbPlacementConstraints constraints13=saved13.getBoard().getPlacementConstraints();
+            PcbPlacementConstraints constraints14=current14.getBoard().getPlacementConstraints();
             check(saved11.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved11.getSeed()==0L &&
                     saved12.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved12.getSeed()==0L &&
-                    current13.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && current13.getSeed()==0L,
+                    saved13.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && saved13.getSeed()==0L &&
+                    current14.getCircuitFamilyId().equals(Rb56Plan.FAMILY_ID) && current14.getSeed()==0L,
                 "all actual admitted owners are RB56 seed0");
             check(constraints11.placementDensityVersion==11 &&
                     constraints11.getTraceWidthProfile()==PcbTraceWidthProfile.UNIFORM,
@@ -40,26 +48,52 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
                 "saved12 owner independently retains density11 and role trace widths");
             check(constraints13.placementDensityVersion==12 &&
                     constraints13.getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS,
-                "current13 owner independently retains density12 and role trace widths");
+                "saved13 owner independently retains density12 and role trace widths");
+            check(constraints14.placementDensityVersion==13 &&
+                    constraints14.getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS &&
+                    constraints14.requiresTwoLayerRouting,
+                "current14 owner independently retains density13, ROLE widths, and two-layer routing");
+            check(request13.getRb56PlacementInterpretationVersion()==13 &&
+                    request14.getRb56PlacementInterpretationVersion()==14,
+                "saved13 and current14 requests retain their exact placement identities");
             check(replay11.rb56PlacementInterpretationVersion()==11 && replay11.matches(saved11) &&
                     replay12.rb56PlacementInterpretationVersion()==12 && replay12.matches(saved12) &&
-                    replay13.rb56PlacementInterpretationVersion()==13 && replay13.matches(current13),
+                    replay13.rb56PlacementInterpretationVersion()==13 && replay13.matches(saved13) &&
+                    replay14.rb56PlacementInterpretationVersion()==14 && replay14.matches(current14),
                 "each private replay identity matches its own normally admitted owner");
+            String replay13Text="tsj-private-session/13/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
+                "/rb56-placement-13/RB56_CONTROL/0";
+            String replay14Text="tsj-private-session/14/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
+                "/rb56-placement-14/RB56_CONTROL/0";
+            check(replay13Text.equals(replay13.canonical()) && replay14Text.equals(replay14.canonical()) &&
+                    !replay13.canonical().equals(replay14.canonical()),
+                "saved13 and current14 use distinct versioned replay namespaces");
+            check(replay13.matches(request13) && replay14.matches(request14) &&
+                    !replay13.matches(request14) && !replay14.matches(request13),
+                "saved13/current14 replay identities reject cross-version requests");
             check(!replay11.matches(saved12),"saved11 replay rejects the saved12 owner");
-            check(!replay11.matches(current13),"saved11 replay rejects the current13 owner");
+            check(!replay11.matches(saved13),"saved11 replay rejects the saved13 owner");
+            check(!replay11.matches(current14),"saved11 replay rejects the current14 owner");
             check(!replay12.matches(saved11),"saved12 replay rejects the saved11 owner");
-            check(!replay12.matches(current13),"saved12 replay rejects the current13 owner");
-            check(!replay13.matches(saved11),"current13 replay rejects the saved11 owner");
-            check(!replay13.matches(saved12),"current13 replay rejects the saved12 owner");
+            check(!replay12.matches(saved13),"saved12 replay rejects the saved13 owner");
+            check(!replay12.matches(current14),"saved12 replay rejects the current14 owner");
+            check(!replay13.matches(saved11),"saved13 replay rejects the saved11 owner");
+            check(!replay13.matches(saved12),"saved13 replay rejects the saved12 owner");
+            check(!replay13.matches(current14) && !replay14.matches(saved13),
+                "ROLE-width replay identities reject the density12/density13 cross-match");
+            check(!replay14.matches(saved11) && !replay14.matches(saved12),
+                "current14 replay rejects older density/profile owners");
 
             PlayerSessionReplay wrongSeed=PlayerSessionReplay.forQualification(privateRequest(13,1L));
-            check(!wrongSeed.matches(current13),"private owner identity rejects a different exact seed");
+            check(!wrongSeed.matches(saved13),"saved13 owner identity rejects a different exact seed");
+            PlayerSessionReplay wrongCurrentSeed=PlayerSessionReplay.forQualification(privateRequest(14,1L));
+            check(!wrongCurrentSeed.matches(current14),"current14 owner identity rejects a different exact seed");
             GeneratedBoardInstance otherFamily=GenerationRequest.leaf("LED_INDICATOR",0L,false)
                 .resolve(new GenerationRequest.PlanCache()).construct().instance;
             owners.add(otherFamily);
             otherFamily.requireNormalPhysicalAdmission();
-            check(!replay13.matches(otherFamily),"RB56 private owner identity rejects another family owner");
-            check(!replay13.matches((GeneratedBoardInstance)null),
+            check(!replay14.matches(otherFamily),"current RB56 private owner rejects another family owner");
+            check(!replay14.matches((GeneratedBoardInstance)null),
                 "private owner identity rejects a missing candidate");
             System.out.println("PASS: PCB role width owner identity contracts assertions="+assertions);
         } finally {

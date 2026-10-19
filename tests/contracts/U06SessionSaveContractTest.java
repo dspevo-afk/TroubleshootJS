@@ -98,8 +98,12 @@ public final class U06SessionSaveContractTest {
         GenerationRequest vacancyRequest = currentRequest.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_VACANCY);
         GenerationRequest roleWidthsRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS);
+        GenerationRequest nearestVacancyRequest = currentRequest.withRb56PlacementInterpretationVersion(
+            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY);
         GenerationRequest[] requests = new GenerationRequest[] {
-            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest, guardedRequest, narrowRequest, connectedRequest, localRequest, vacancyRequest, roleWidthsRequest, currentRequest
+            legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest,
+            guardedRequest, narrowRequest, connectedRequest, localRequest, vacancyRequest,
+            roleWidthsRequest, nearestVacancyRequest, currentRequest
         };
         String[] expected = new String[] {
             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -127,7 +131,9 @@ public final class U06SessionSaveContractTest {
             "tsj-private-session/12/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-12/RB56_CONTROL/77",
             "tsj-private-session/13/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-13/RB56_CONTROL/77"
+                "/rb56-placement-13/RB56_CONTROL/77",
+            "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
+                "/rb56-placement-14/RB56_CONTROL/77"
         };
         for (int i = 0; i < requests.length; i++) {
             final GenerationRequest request = requests[i];
@@ -148,7 +154,10 @@ public final class U06SessionSaveContractTest {
         }
         check(currentRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
-            "new private RB56 requests default to placement 13");
+            "new private RB56 requests default to placement 14");
+        check(nearestVacancyRequest.getRb56PlacementInterpretationVersion() ==
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY,
+            "saved private nearest-vacancy interpretation remains explicitly selectable as placement 13");
         check(roleWidthsRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS,
             "saved private role-width interpretation remains explicitly selectable as placement 12");
