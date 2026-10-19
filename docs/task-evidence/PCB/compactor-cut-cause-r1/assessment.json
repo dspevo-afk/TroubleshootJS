@@ -1,0 +1,392 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Observational current15 only; all42 non-time fields must remain exact; no shrinkage claim",
+  "protocolSha256": "62f7f85d4511130b9d60c0b12e4ac1a73a7c23064ad1ec40b1779083198c040d",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "unitPrerequisiteSha256": "619ed29f8bebb0b4869604a184a00225c3a3c58afbe17aa7da7c8deca7f9aa98",
+  "routesSuiteManifestSha256": "7a62dd11beb86db19580bc9599302820d8f4dc5531b212c051b114d725592fd4",
+  "routePhaseInputs": {
+    "routes.txt": "e26718eb28b73e71986de4711a935c2ed6c3b36f56b76747eee1ed154bfbe166",
+    "routes-receipt.txt": "eb76f7dc7be92ea8d1bfc17f109c1668782645e07b1b3f3f708211ab3a5f0b21",
+    "routes-timing.json": "bb763b257e33f0f64ee73d5140f7d215333e351cd39b7d3f6efdae0a7d1b33fe",
+    "routes-suites.json": "7a62dd11beb86db19580bc9599302820d8f4dc5531b212c051b114d725592fd4"
+  },
+  "routePhaseEvidence": {
+    "status": "PASS",
+    "phase": "routes",
+    "suiteCount": 7,
+    "suiteClasses": [
+      "PcbCompactorCutCauseContractTest",
+      "PcbCompactorCutCauseContractTestGroup2",
+      "PcbCompactorCutCauseContractTestGroup3",
+      "PcbCompactorCutCauseContractTestGroup4",
+      "PcbCompactorCutCauseContractTestGroup5",
+      "PcbCompactorCutCauseContractTestGroup6",
+      "PcbCompactorCutCauseContractTestGroup7"
+    ],
+    "reportRows": 167,
+    "orderedMarkers": [
+      "PCB compactor cut cause contracts ",
+      "PCB compactor cut cause Group2 contracts ",
+      "PCB compactor cut cause Group3 contracts ",
+      "PCB compactor cut cause Group4 contracts ",
+      "PCB compactor cut cause Group5 contracts ",
+      "PCB compactor cut cause Group6 contracts ",
+      "PCB compactor cut cause Group7 contracts "
+    ],
+    "census": {
+      "status": "PASS",
+      "roots": [
+        {
+          "seed": "-1017",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 12,
+          "outcomes": {
+            "NOCUT": 6
+          },
+          "reasons": {},
+          "proposedRemoved": 0
+        },
+        {
+          "seed": "-1004",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 12,
+          "outcomes": {
+            "NOCUT": 6
+          },
+          "reasons": {},
+          "proposedRemoved": 0
+        },
+        {
+          "seed": "-1022",
+          "calls": 4,
+          "pairs": 2,
+          "eventRecords": 8,
+          "outcomes": {
+            "NOCUT": 4
+          },
+          "reasons": {},
+          "proposedRemoved": 0
+        },
+        {
+          "seed": "0",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 12,
+          "outcomes": {
+            "NOCUT": 6
+          },
+          "reasons": {},
+          "proposedRemoved": 0
+        },
+        {
+          "seed": "17",
+          "calls": 4,
+          "pairs": 2,
+          "eventRecords": 9,
+          "outcomes": {
+            "NOCUT": 3,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 380
+        },
+        {
+          "seed": "42",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 13,
+          "outcomes": {
+            "NOCUT": 5,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 1210
+        },
+        {
+          "seed": "1",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 12,
+          "outcomes": {
+            "NOCUT": 6
+          },
+          "reasons": {},
+          "proposedRemoved": 0
+        },
+        {
+          "seed": "7",
+          "calls": 4,
+          "pairs": 2,
+          "eventRecords": 9,
+          "outcomes": {
+            "NOCUT": 3,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 180
+        },
+        {
+          "seed": "5",
+          "calls": 2,
+          "pairs": 1,
+          "eventRecords": 7,
+          "outcomes": {
+            "NOCUT": 1,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 850
+        },
+        {
+          "seed": "14",
+          "calls": 4,
+          "pairs": 2,
+          "eventRecords": 10,
+          "outcomes": {
+            "NOCUT": 3,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 780
+        },
+        {
+          "seed": "2",
+          "calls": 2,
+          "pairs": 1,
+          "eventRecords": 7,
+          "outcomes": {
+            "NOCUT": 1,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 430
+        },
+        {
+          "seed": "3",
+          "calls": 6,
+          "pairs": 3,
+          "eventRecords": 14,
+          "outcomes": {
+            "NOCUT": 4,
+            "ACCEPTED": 2
+          },
+          "reasons": {},
+          "proposedRemoved": 310
+        },
+        {
+          "seed": "4",
+          "calls": 4,
+          "pairs": 2,
+          "eventRecords": 9,
+          "outcomes": {
+            "NOCUT": 3,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 640
+        },
+        {
+          "seed": "6",
+          "calls": 2,
+          "pairs": 1,
+          "eventRecords": 5,
+          "outcomes": {
+            "NOCUT": 1,
+            "ACCEPTED": 1
+          },
+          "reasons": {},
+          "proposedRemoved": 620
+        }
+      ],
+      "caseRows": 14,
+      "eventCount": 139,
+      "axisCalls": 62,
+      "proposedRemovedTotal": 5400,
+      "interpretation": "Sum of proposed axis removals across outcomes; not accepted overall shrinkage."
+    }
+  },
+  "census": {
+    "status": "PASS",
+    "roots": [
+      {
+        "seed": "-1017",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 12,
+        "outcomes": {
+          "NOCUT": 6
+        },
+        "reasons": {},
+        "proposedRemoved": 0
+      },
+      {
+        "seed": "-1004",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 12,
+        "outcomes": {
+          "NOCUT": 6
+        },
+        "reasons": {},
+        "proposedRemoved": 0
+      },
+      {
+        "seed": "-1022",
+        "calls": 4,
+        "pairs": 2,
+        "eventRecords": 8,
+        "outcomes": {
+          "NOCUT": 4
+        },
+        "reasons": {},
+        "proposedRemoved": 0
+      },
+      {
+        "seed": "0",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 12,
+        "outcomes": {
+          "NOCUT": 6
+        },
+        "reasons": {},
+        "proposedRemoved": 0
+      },
+      {
+        "seed": "17",
+        "calls": 4,
+        "pairs": 2,
+        "eventRecords": 9,
+        "outcomes": {
+          "NOCUT": 3,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 380
+      },
+      {
+        "seed": "42",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 13,
+        "outcomes": {
+          "NOCUT": 5,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 1210
+      },
+      {
+        "seed": "1",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 12,
+        "outcomes": {
+          "NOCUT": 6
+        },
+        "reasons": {},
+        "proposedRemoved": 0
+      },
+      {
+        "seed": "7",
+        "calls": 4,
+        "pairs": 2,
+        "eventRecords": 9,
+        "outcomes": {
+          "NOCUT": 3,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 180
+      },
+      {
+        "seed": "5",
+        "calls": 2,
+        "pairs": 1,
+        "eventRecords": 7,
+        "outcomes": {
+          "NOCUT": 1,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 850
+      },
+      {
+        "seed": "14",
+        "calls": 4,
+        "pairs": 2,
+        "eventRecords": 10,
+        "outcomes": {
+          "NOCUT": 3,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 780
+      },
+      {
+        "seed": "2",
+        "calls": 2,
+        "pairs": 1,
+        "eventRecords": 7,
+        "outcomes": {
+          "NOCUT": 1,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 430
+      },
+      {
+        "seed": "3",
+        "calls": 6,
+        "pairs": 3,
+        "eventRecords": 14,
+        "outcomes": {
+          "NOCUT": 4,
+          "ACCEPTED": 2
+        },
+        "reasons": {},
+        "proposedRemoved": 310
+      },
+      {
+        "seed": "4",
+        "calls": 4,
+        "pairs": 2,
+        "eventRecords": 9,
+        "outcomes": {
+          "NOCUT": 3,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 640
+      },
+      {
+        "seed": "6",
+        "calls": 2,
+        "pairs": 1,
+        "eventRecords": 5,
+        "outcomes": {
+          "NOCUT": 1,
+          "ACCEPTED": 1
+        },
+        "reasons": {},
+        "proposedRemoved": 620
+      }
+    ],
+    "caseRows": 14,
+    "eventCount": 139,
+    "axisCalls": 62,
+    "proposedRemovedTotal": 5400,
+    "interpretation": "Sum of proposed axis removals across outcomes; not accepted overall shrinkage."
+  },
+  "nativeRuntimeEvidence": "PASS",
+  "limits": [
+    "Fourteen fixed accepted15 roots only; no unseen-root claim.",
+    "All 42 non-time row fields match the sealed baseline; elapsedMillis is bounded separately.",
+    "Proposed axis removals are counted across outcomes and do not establish accepted overall shrinkage.",
+    "No alternative-cut, smaller-board, changed-policy, or broader runtime proof is made."
+  ]
+}

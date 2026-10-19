@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 22656,
+      "startTicks": "639280420752624531",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/compactor-cut-cause-r1/run_native.ps1"
+    },
+    {
+      "pid": 26508,
+      "startTicks": "639280420754974075",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/compactor-cut-cause-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native compactor-cut phase; unique source copy"
+}

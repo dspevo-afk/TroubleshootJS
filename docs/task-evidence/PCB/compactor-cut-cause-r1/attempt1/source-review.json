@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "compactorAfterObserverErasure": "BYTE_EXACT",
+  "physicalWitnessAfterWrapperErasure": "BYTE_EXACT",
+  "verifierAfterRegistrationErasure": "BYTE_EXACT",
+  "diffSha256": "874a4095e28b71723205248d35d35d99302dc2bb44218aa041d77b429c6eaf3e",
+  "sourceDeltas": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "709a52a901ab54c5dabf9ffa5f121e805a68129621c38a239dfa32e4c996b759",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "59287fc95915426b7375100a04896b542629efc82cfa96f0f50d6abe2665318d",
+    "scripts/verify-current-contracts.ps1": "044e7f05fdddd65972c61fce04e34b93ae617ef29d443a0740695673bcc8ee5c",
+    "tests/contracts/PcbCompactorCutObserverContractTest.java": "785f82d0f082ff3eb6339a2ad8777e0c3dfaecf30cd4a9d23c122c6bfe3319ed",
+    "tests/contracts/PcbCompactorCutCauseContractTest.java": "ec00127bd107424e98682f80415faa107e7743cad961e3a952a8c28c42bda20d",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup2.java": "df52a9dcefda38152da7da47e24565f6eb328783162e09fc6fbb5f44c7bb66ab",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup3.java": "62132f0f891c6d3ce92ae83352b9f88185e5a2caabc0b4e7889abbc079831952",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup4.java": "385254d8d71414dc882857a7617bf08cf0ed3dcf89ab0c91968f0c891b081c28",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup5.java": "f5370917eb770dd263b0b6bbbf1f468fafc37a4dd6d8afc71e1831ab62137144",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup6.java": "8ef1dd120bbc9f81ae15abbe15cfd370e01baaaa4720e6a1a819deeed2df62d1",
+    "tests/contracts/PcbCompactorCutCauseContractTestGroup7.java": "9ee9b46d18ed2e5330c0747712eb2ca15ff333489d7d3f9eee7053cb2f4c4595"
+  },
+  "runtimeEvidence": "NOT RUN by source audit"
+}

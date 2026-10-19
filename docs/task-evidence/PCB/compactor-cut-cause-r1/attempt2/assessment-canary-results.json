@@ -1,0 +1,299 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Synthetic offline reader canaries only; native runtime evidence NOT RUN.",
+  "protocolSha256": "62f7f85d4511130b9d60c0b12e4ac1a73a7c23064ad1ec40b1779083198c040d",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "readerSha256": "e51310caf444222769441f9232c013b7c8d5f06bf520ca8bd4fb06ce7c892714",
+  "nativeRuntimeEvidence": "NOT_RUN",
+  "caseCount": 49,
+  "groups": [
+    {
+      "name": "case-proof",
+      "cases": 3
+    },
+    {
+      "name": "cleanup-boundary",
+      "cases": 6
+    },
+    {
+      "name": "event-arithmetic",
+      "cases": 5
+    },
+    {
+      "name": "event-census",
+      "cases": 1
+    },
+    {
+      "name": "event-lifecycle",
+      "cases": 1
+    },
+    {
+      "name": "event-order",
+      "cases": 9
+    },
+    {
+      "name": "event-outcomes",
+      "cases": 5
+    },
+    {
+      "name": "phase-receipts",
+      "cases": 11
+    },
+    {
+      "name": "pinned-inputs",
+      "cases": 4
+    },
+    {
+      "name": "timing-boundary",
+      "cases": 4
+    }
+  ],
+  "cases": [
+    {
+      "group": "pinned-inputs",
+      "name": "protocol and baseline load",
+      "result": "PASS"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "protocol digest mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "protocol content mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "generic input digest mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-census",
+      "name": "14-root complete paired-axis census",
+      "result": "PASS"
+    },
+    {
+      "group": "event-lifecycle",
+      "name": "missing END",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "CUT before BEGIN",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "duplicate cut index",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "non-increasing coordinates",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "noncanonical negative zero",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "coordinate exceeds source bound",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "foreign root event",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "missing root lifecycle",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "axis pair candidate mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-order",
+      "name": "axis one input dimensions mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-arithmetic",
+      "name": "cut sum mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-arithmetic",
+      "name": "dimension equation mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-arithmetic",
+      "name": "off-grid amount",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-arithmetic",
+      "name": "boolean integer field",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-arithmetic",
+      "name": "dimension over bound",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-outcomes",
+      "name": "unlisted placement rejection reason",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-outcomes",
+      "name": "accepted outcome with rejection reason",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-outcomes",
+      "name": "outcome and cut-count mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-outcomes",
+      "name": "duplicate JSON field",
+      "result": "REJECTED"
+    },
+    {
+      "group": "event-outcomes",
+      "name": "unknown PCB report prefix",
+      "result": "REJECTED"
+    },
+    {
+      "group": "case-proof",
+      "name": "non-time case width changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "case-proof",
+      "name": "case elapsed is boolean",
+      "result": "REJECTED"
+    },
+    {
+      "group": "case-proof",
+      "name": "duplicate case row",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "routes log/receipt/timing/suite PASS",
+      "result": "PASS"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unit log/receipt/timing/suite PASS",
+      "result": "PASS"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unit bare PASS detail",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unit wrong fixture count",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unit wrong evaluator",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "routes bare PASS detail",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "routes suite marker detail changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "suite order changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "terminal receipt diverges",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unknown failure output",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unit phase emits corpus reports",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "terminal PASS missing",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "cleanup marker missing",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "cleanup before terminal",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "outer terminal leaked into child receipt",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "log receipt report rows differ",
+      "result": "REJECTED"
+    },
+    {
+      "group": "cleanup-boundary",
+      "name": "report after terminal PASS",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing-boundary",
+      "name": "native scope changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing-boundary",
+      "name": "nonzero process exit",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing-boundary",
+      "name": "cleanup omitted",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing-boundary",
+      "name": "elapsed boolean",
+      "result": "REJECTED"
+    }
+  ]
+}

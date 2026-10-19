@@ -1,0 +1,16 @@
+{
+  "rootReviewed": true,
+  "scope": "Source and synthetic reader review only; native NOT RUN yet",
+  "diffSha256": "874a4095e28b71723205248d35d35d99302dc2bb44218aa041d77b429c6eaf3e",
+  "canaryReceiptSha256": "e2e7389d0a62f459ffad79ee245eb5f61ccf201766f0835aafae95af35d30dbb",
+  "protectedOwners": "Compactor, physical witness, verifier reconstruct byte-exact",
+  "fixtureReview": [
+    "Explicit authoritative30-unit escapes and TOP mounts replace static zero-escape blocker",
+    "Straight700-to140 and observed/no-observer exact equality",
+    "Barrier80-to60 rejects x; original x retained",
+    "U2500/1000 legal, proposed1650/150 detour rejects; separate y may pass"
+  ],
+  "privacy": "Primitive metadata only; no player or fault-state exposure",
+  "numericLimitsChanged": false,
+  "runtimeEvidence": "NOT RUN"
+}

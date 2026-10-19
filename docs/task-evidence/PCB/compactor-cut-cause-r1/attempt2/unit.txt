@@ -1,0 +1,20 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.IllegalArgumentException: Package does not declare requested PCB pose: A / 70,190|rotation=DEG_180|mount=TOP
+	at com.lushprojects.circuitjs1.client.PcbComponentPlacement.<init>(PcbComponentPlacement.java:45)
+	at com.lushprojects.circuitjs1.client.PcbComponentPlacement.fromPhysicalGeometry(PcbComponentPlacement.java:127)
+	at com.lushprojects.circuitjs1.client.PcbFootprint.fromPhysicalPackage(PcbFootprint.java:73)
+	at com.lushprojects.circuitjs1.client.PcbCompactorCutObserverContractTest.addPoint(PcbCompactorCutObserverContractTest.java:179)
+	at com.lushprojects.circuitjs1.client.PcbCompactorCutObserverContractTest.fixture(PcbCompactorCutObserverContractTest.java:149)
+	at com.lushprojects.circuitjs1.client.PcbCompactorCutObserverContractTest.straightCrossingAndNoObserverEquivalence(PcbCompactorCutObserverContractTest.java:24)
+	at com.lushprojects.circuitjs1.client.PcbCompactorCutObserverContractTest.main(PcbCompactorCutObserverContractTest.java:13)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbCompactorCutObserverContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

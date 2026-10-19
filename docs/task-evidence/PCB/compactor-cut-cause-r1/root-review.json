@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "scope": "Exact current15 observation; no changed-policy or smaller-board acceptance",
+  "sourceCopyCount": 1475,
+  "sourceDeltas": 11,
+  "gateOwners": 24,
+  "unitAssertions": 91,
+  "actualUnitFixtures": 3,
+  "unitElapsedSeconds": 45.4756772,
+  "routeElapsedSeconds": 127.8662223,
+  "nativeCases": 14,
+  "saved15ExactNonTimeFieldsPerCase": 42,
+  "axisCalls": 62,
+  "eventRecords": 139,
+  "outcomes": {
+    "NOCUT": 52,
+    "ACCEPTED": 10
+  },
+  "cuts": 15,
+  "proposedRemovedAcrossAlternatives": 5400,
+  "wholeAxisRejectionObserved": false,
+  "syntheticReaderCases": 49,
+  "realPowerShellCanaries": 12,
+  "preservedFailures": [
+    {
+      "name": "attempt1",
+      "archiveFiles": 40,
+      "elapsedSeconds": 1.1759876,
+      "status": "FAIL",
+      "outcome": "NativeFAIL before fixture; one-row PowerShell JSON unwrapping submitted two single-character suite names",
+      "recordedBirthsExited": 2
+    },
+    {
+      "name": "attempt2",
+      "archiveFiles": 43,
+      "elapsedSeconds": 44.9865788,
+      "status": "FAIL",
+      "outcome": "JDK8 compilationPASS; native fixture constructionFAIL: custom package lacks requested TOP/DEG180 declaration; evaluator not reached",
+      "recordedBirthsExited": 2
+    }
+  ],
+  "recordedDriverBirthsExited": 8,
+  "copyRestoredAndRetired": true,
+  "main1475Exact": true,
+  "productionPolicyChanged": false,
+  "limits": "No alternative-cut, new shrinkage, GWT/player/solver/repair/full-matrix/all-seed/manufacturing proof"
+}

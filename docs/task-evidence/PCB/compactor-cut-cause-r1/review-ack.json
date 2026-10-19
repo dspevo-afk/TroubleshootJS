@@ -1,0 +1,21 @@
+{
+  "rootReviewed": true,
+  "scope": "Final-source review after constructor-only fixture correction; fresh native unit required",
+  "diffSha256": "8515219a2a8fef61c119ea52460c5d5643df19acb9353f9129d83357f2f05030",
+  "canaryReceiptSha256": "e2e7389d0a62f459ffad79ee245eb5f61ccf201766f0835aafae95af35d30dbb",
+  "protectedOwners": "Compactor, physical witness, verifier reconstruct byte-exact",
+  "fixtureReview": [
+    "Explicit authoritative30-unit escapes and TOP mounts replace static zero-escape blocker",
+    "Straight700-to140 and observed/no-observer exact equality",
+    "Barrier80-to60 rejects x; original x retained",
+    "U2500/1000 legal, proposed1650/150 detour rejects; separate y may pass"
+  ],
+  "privacy": "Primitive metadata only; no player or fault-state exposure",
+  "numericLimitsChanged": false,
+  "runtimeEvidence": "NOT RUN",
+  "harnessCorrection": "Preserve outer JSON array with shared tested suite resolver; no native/physical limits changed",
+  "preservedFailedAttemptSha256": "7709005507819b9b2634d9efa424c66438a8ed745bdb5a329ec070088d76ce6b",
+  "hostCanaryReceiptSha256": "5cb44beab0f8eb25955c96c7d55b238cbc9b349c59aac9a2908e07c5b51f01f6",
+  "preservedConstructionFailureSha256": "932b968d5303865b2ea0e8ee3bb1b82a20adc61f27c764e68571ab542cabda07",
+  "fixturePoseCorrection": "Existing explicit constructor now declares DEFAULT/IDENTITY, TOP and DEG0/180; geometry/oracles unchanged"
+}

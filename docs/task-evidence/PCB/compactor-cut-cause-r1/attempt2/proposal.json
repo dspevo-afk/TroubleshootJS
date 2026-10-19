@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "baseCommit": "8b88311959d3faa8df2fefa4e31b0dcd9594ff8f",
+  "scope": "Observe existing routed-compactor cuts and outcomes; no changed layout policy",
+  "roots": ["-1017", "-1004", "-1022", "0", "17", "42", "1", "7", "5", "14", "2", "3", "4", "6"],
+  "baseSource": "Accepted1467 only, not rejected16/17/18/19 copies",
+  "unitFixtures": ["Actual straight crossing shortens with identity and width intact", "Actual barrier rejection rolls back x axis", "Actual newly excessive detour rejects x axis"],
+  "observer": "Default-null void primitive callbacks; no mutable geometry or override return; finally cleanup",
+  "preserve": ["All planner and compactor constants and loop order", "All physical and route-quality validators and uncaught errors", "Six placement and three-plus-three routing breadth", "60000 placement evaluations per plan and maintained60s per-JVM cap", "All14 accepted15 non-time fields and exact source graph identity"],
+  "acceptance": ["Root-reviewed source delta before native run", "Actual compactRouted unit fixtures and strict reader canaries before corpus run", "All14 current15 layouts reproduce sealed42 non-time fields", "Complete ordered cut/axis lifecycle receipts or fail closed", "Exact accepted main source before and after; contained copy retirement"],
+  "nonclaims": ["No alternate cut selection", "No demonstrated smaller board", "No production or replay interpretation change", "No fresh GWT/player/solver/repair/all-seed/manufacturing proof"],
+  "nextDecision": "Measure causes before proposing partial cut acceptance"
+}

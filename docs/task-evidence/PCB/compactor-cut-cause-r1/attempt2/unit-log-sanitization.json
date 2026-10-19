@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Known prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "unit.txt",
+      "rawSha256": "10388d7b1ab26e79654a3026ca73139ee8f5182214fb845ce0e48b49ee7eb2c6",
+      "sanitizedSha256": "10388d7b1ab26e79654a3026ca73139ee8f5182214fb845ce0e48b49ee7eb2c6",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,39 @@
-# Current checkpoint: floor census complete; compactor cut diagnosis next
+# Current checkpoint: routed cut diagnosis complete; guard audit next
+
+2026-10-19. Base/published HEAD `8b88311959d3faa8df2fefa4e31b0dcd9594ff8f` on
+`codex/q60-faulted-profile-counts`, exact origin verified. This observation packet
+is ready for normal branch publication. Indefinite continuation active; no
+main/email. Production/default15/general16 and main1475 remain exact.
+
+Fresh JDK8 unit PASS45.4756772s/exit0,91 assertions/3 actual compactRouted cases;
+native7 suites/14 current15 roots PASS127.8662223s/exit0; strict reader PASS.
+All14 cases reproduce42 non-time fields. Source/graph/geometry/work identities
+remain exact. Observed139 events/62 axis passes:52 NOCUT,10 ACCEPTED,0 rejected;
+15 existing cuts sum5400 units across alternatives. No new shrinkage claimed.
+Whole-axis rollback is not observed as a cause in this informed finite corpus.
+
+COPY accepted1467+8 tests=1475 with3 overrides/11 source deltas and24 frozen gates.
+Three original owners reconstruct byte-exact after erasing diagnostic adapters.
+Root49 synthetic reader cases and12 real selected-PowerShell transport canaries
+pass. Final fixtures retain explicit escapes/TOP mounts and declared0/180 poses.
+Attempt1 FAIL1.1759876s before fixture (one-row JSON unwrapping) retains40 exact
+artifacts/21 gates; attempt2 FAIL44.9865788s at construction (missing declared
+pose), JVM1/metadata2, retains43 artifacts/24 gates. Final native phases are fresh;
+no prior native PASS was reused. Root integrated source/packet review PASS.
+
+All8 recorded native driver births exited, no termination. COPY restored exact1467
+and retired within verified ownership/containment; private state removed. No
+native/GWT/browser/preview/profile remains. Original5 unrelated entries/shared
+tools preserved. Phase times include maintained cleanup, not timed separately;
+birth verification has separate receipts. GWT/player/solver/repair/full matrix/
+all-seed/manufacturing NOT RUN for this diagnostic. No interpretation changed.
+
+Next: stage explicit paths, verify normal push/exact remote SHA, then continue to
+the trace-vertex guard ownership/conservatism audit now running read-only. No new
+numeric guard or layout trial has been chosen. Evidence:
+`docs/task-evidence/PCB/compactor-cut-cause-r1/README.md`.
+
+# Previous checkpoint: floor census complete; compactor cut diagnosis next
 
 2026-10-19. Base/published HEAD `748e9c083f2bd4a4ace6289529fba94dc1aa6060` on
 `codex/q60-faulted-profile-counts`; exact origin verified. Indefinite continuation

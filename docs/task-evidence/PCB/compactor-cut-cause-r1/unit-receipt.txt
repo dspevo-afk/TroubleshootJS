@@ -1,0 +1,1 @@
+PASS: PCB compactor cut observer contracts assertions=91 fixtures=3 evaluator=compactRouted

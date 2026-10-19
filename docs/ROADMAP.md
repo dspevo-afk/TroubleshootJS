@@ -188,6 +188,15 @@ the five-million floor; neither area cap applies. The 26 reader-check groups and
 Next measure the existing routed compactor's axis cuts and rejection causes;
 its whole-axis acceptance may hide useful cuts, but that remains unmeasured.
 [Floor census and limits](task-evidence/PCB/minimum-area-floor-census-r1/README.md).
+Routed cut/cause diagnosis now passes actual unit91/3 fixtures and native14
+case fidelity with every42 non-time field exact. Among62 axis passes,52 have no
+cut and10 accept; no placement/quality rejection occurs. Fifteen existing cuts
+sum5400 units across route alternatives, not new shrinkage. Whole-axis rollback
+is not a measured cause in this corpus. Initial single-row transport and fixture
+pose-declaration failures remain; corrected12 real host canaries/49 reader cases
+and fresh final phases pass. COPY restored1467/retired,8 births exited, main1475
+exact. Next audit trace-vertex guard conservatism; no changed policy is accepted.
+[Cut diagnosis and limits](task-evidence/PCB/compactor-cut-cause-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

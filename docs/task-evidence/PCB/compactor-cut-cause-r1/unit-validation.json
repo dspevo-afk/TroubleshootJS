@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Unit-only observer contract; no corpus route claim.",
+  "protocolSha256": "62f7f85d4511130b9d60c0b12e4ac1a73a7c23064ad1ec40b1779083198c040d",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "suiteManifestSha256": "f62a967c3b44f5ee42be87ea60a32f7852344bc32c20584e2170f23d548741b1",
+  "phaseInputs": {
+    "unit.txt": "039485144125d27d20ff983227a082c864d2934260f883b16db1c9f20d14984f",
+    "unit-receipt.txt": "42e4e5650819ae57c0d9484979266f47a2b229e64b8e230c56b6c679b4e2c496",
+    "unit-timing.json": "7795b8a11c7d8b0617ff11f28d03a8353fefa9f614a47dec0ba473a9f8a9b9fb",
+    "unit-suites.json": "f62a967c3b44f5ee42be87ea60a32f7852344bc32c20584e2170f23d548741b1"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 1,
+    "suiteClasses": [
+      "PcbCompactorCutObserverContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB compactor cut observer contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

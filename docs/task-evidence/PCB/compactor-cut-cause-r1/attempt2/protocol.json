@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "baseCommit": "8b88311959d3faa8df2fefa4e31b0dcd9594ff8f",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "unitSuites": [
+    [
+      "PcbCompactorCutObserverContractTest",
+      "PCB compactor cut observer contracts "
+    ]
+  ],
+  "routesSuites": [
+    [
+      "PcbCompactorCutCauseContractTest",
+      "PCB compactor cut cause contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup2",
+      "PCB compactor cut cause Group2 contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup3",
+      "PCB compactor cut cause Group3 contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup4",
+      "PCB compactor cut cause Group4 contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup5",
+      "PCB compactor cut cause Group5 contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup6",
+      "PCB compactor cut cause Group6 contracts "
+    ],
+    [
+      "PcbCompactorCutCauseContractTestGroup7",
+      "PCB compactor cut cause Group7 contracts "
+    ]
+  ],
+  "baselinePath": "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "unitPassDetail": "assertions=N fixtures=3 evaluator=compactRouted",
+  "routePassDetail": "roots=2 rows=2 evaluator=compactRouted diagnosticOnly=true",
+  "casePrefix": "PCB_COMPACTOR_CUT_CASE ",
+  "eventPrefix": "PCB_COMPACTOR_CUT_EVENT ",
+  "outcomes": [
+    "NOCUT",
+    "ACCEPTED",
+    "PLACEMENT_REJECTED",
+    "QUALITY_REJECTED"
+  ],
+  "placementReasons": [
+    "MISSING_COMPONENT",
+    "DUPLICATE_COMPONENT",
+    "ENVELOPE_ACCESS_OR_DOMAIN",
+    "STRANDED_ESCAPE",
+    "DOMAIN_CORRIDOR",
+    "ACCESS_GRID_BUDGET",
+    "DISCONNECTED_ESCAPE_CHANNEL"
+  ],
+  "qualityReasons": [
+    "BENDS",
+    "DETOUR"
+  ],
+  "scope": "Observational current15 only; all42 non-time fields must remain exact; no shrinkage claim"
+}
