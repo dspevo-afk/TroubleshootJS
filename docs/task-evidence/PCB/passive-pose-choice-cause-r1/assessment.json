@@ -1,0 +1,175 @@
+{
+  "status": "PASS",
+  "routeFidelity": "PASS",
+  "captureFidelity": "PASS",
+  "localAttribution": "INCONCLUSIVE",
+  "routeChecks": [
+    {
+      "seed": "42",
+      "version": 15,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "42",
+      "version": 16,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 15,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 16,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    }
+  ],
+  "captureCases": [
+    {
+      "rootSeed": "42",
+      "interpretation": 15,
+      "policyVersion": 0,
+      "mode": "old",
+      "status": "COMPLETE",
+      "lifecycleComplete": true,
+      "itemCount": 54,
+      "actualVisitCount": 6800,
+      "firstDivergenceStage": null,
+      "firstSelectedComponent": null
+    },
+    {
+      "rootSeed": "42",
+      "interpretation": 16,
+      "policyVersion": 1,
+      "mode": "trial",
+      "status": "COMPLETE",
+      "lifecycleComplete": true,
+      "itemCount": 54,
+      "actualVisitCount": 6800,
+      "firstDivergenceStage": "sizing",
+      "firstSelectedComponent": "UAC"
+    },
+    {
+      "rootSeed": "3",
+      "interpretation": 15,
+      "policyVersion": 0,
+      "mode": "old",
+      "status": "COMPLETE",
+      "lifecycleComplete": true,
+      "itemCount": 49,
+      "actualVisitCount": 6170,
+      "firstDivergenceStage": null,
+      "firstSelectedComponent": null
+    },
+    {
+      "rootSeed": "3",
+      "interpretation": 16,
+      "policyVersion": 1,
+      "mode": "trial",
+      "status": "COMPLETE",
+      "lifecycleComplete": true,
+      "itemCount": 49,
+      "actualVisitCount": 6170,
+      "firstDivergenceStage": "sizing",
+      "firstSelectedComponent": "RENAC"
+    }
+  ],
+  "roots": [
+    {
+      "rootSeed": "42",
+      "routeVersions": [
+        15,
+        16
+      ],
+      "captureFidelity": "PASS",
+      "localAttribution": "INCONCLUSIVE",
+      "firstDivergence": {
+        "stage": "sizing",
+        "componentId": null,
+        "visitKey": null
+      },
+      "firstSelectedFootprintDivergence": {
+        "componentId": "UAC",
+        "oldPlaceOrdinal": 4,
+        "trialPlaceOrdinal": 4,
+        "oldSelectedKey": "ISOLATED_CONVERTER_7|DEFAULT|IDENTITY|3|DEG_0|TOP|420x330@640,900",
+        "trialSelectedKey": "ISOLATED_CONVERTER_7|DEFAULT|IDENTITY|3|DEG_0|TOP|420x330@650,900",
+        "sourceGeometryEqual": true,
+        "sizingEqual": false,
+        "outlineEqual": false,
+        "boundaryEqual": false,
+        "samePlaceOrdinal": true,
+        "prefixEqual": true,
+        "guidanceEqual": false,
+        "comparable": false,
+        "reasonCodes": [
+          "SIZING_DIFF",
+          "OUTLINE_DIFF",
+          "BOUNDARY_DIFF",
+          "GUIDANCE_DIFF"
+        ],
+        "oldVisitCount": 126,
+        "trialVisitCount": 126,
+        "visitArraysComplete": true,
+        "exportOverflow": false
+      },
+      "sizingEqual": false,
+      "outlineEqual": false,
+      "boundaryEqual": false,
+      "firstDivergenceIndependentlyVerified": true,
+      "oldCaptureStatus": "COMPLETE",
+      "trialCaptureStatus": "COMPLETE",
+      "limits": "Observed visits only; no unvisited pose/origin fit, score, or counterfactual is inferred"
+    },
+    {
+      "rootSeed": "3",
+      "routeVersions": [
+        15,
+        16
+      ],
+      "captureFidelity": "PASS",
+      "localAttribution": "INCONCLUSIVE",
+      "firstDivergence": {
+        "stage": "sizing",
+        "componentId": null,
+        "visitKey": null
+      },
+      "firstSelectedFootprintDivergence": {
+        "componentId": "RENAC",
+        "oldPlaceOrdinal": 6,
+        "trialPlaceOrdinal": 6,
+        "oldSelectedKey": "AXIAL_RESISTOR|SPAN_240|IDENTITY|3|DEG_0|TOP|240x70@360,620",
+        "trialSelectedKey": "AXIAL_RESISTOR|SPAN_240|IDENTITY|3|DEG_90|TOP|70x240@560,540",
+        "sourceGeometryEqual": true,
+        "sizingEqual": false,
+        "outlineEqual": true,
+        "boundaryEqual": false,
+        "samePlaceOrdinal": true,
+        "prefixEqual": true,
+        "guidanceEqual": true,
+        "comparable": false,
+        "reasonCodes": [
+          "SIZING_DIFF",
+          "BOUNDARY_DIFF"
+        ],
+        "oldVisitCount": 126,
+        "trialVisitCount": 126,
+        "visitArraysComplete": true,
+        "exportOverflow": false
+      },
+      "sizingEqual": false,
+      "outlineEqual": true,
+      "boundaryEqual": false,
+      "firstDivergenceIndependentlyVerified": true,
+      "oldCaptureStatus": "COMPLETE",
+      "trialCaptureStatus": "COMPLETE",
+      "limits": "Observed visits only; no unvisited pose/origin fit, score, or counterfactual is inferred"
+    }
+  ],
+  "limits": "Reader fidelity only; observed visits only, no unvisited pose/origin fit, score, counterfactual, route acceptance, or policy-quality claim"
+}

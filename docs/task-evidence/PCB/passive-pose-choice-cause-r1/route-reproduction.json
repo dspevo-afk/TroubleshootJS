@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "Literal final-row reproduction only; first reader capture validation failed separately",
+  "source": "attempt1/routes.txt",
+  "sourceSha256": "cc42198671193b1f5712dcd62dd6a7d53920851a6a33ea438d86cd022f1146cc",
+  "baselineSha256": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+  "cases": [
+    {
+      "seed": "42",
+      "version": 15,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "42",
+      "version": 16,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 15,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 16,
+      "exactNonTimingFields": 42
+    }
+  ],
+  "limits": "No corrected capture assessment or local causal finding"
+}

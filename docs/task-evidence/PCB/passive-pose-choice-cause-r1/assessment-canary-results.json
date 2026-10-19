@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Synthetic reader-only canaries; no new native choice captures or physical validation consumed.",
+  "nativeChoiceOutputsConsumed": false,
+  "assertions": 33,
+  "caseCount": 25,
+  "positiveCaseCount": 6,
+  "readerRejectionCount": 17,
+  "gateOutcomeCount": 2,
+  "caseIds": {
+    "positive": [
+      "P01_all14_hash_bound_source_bindings",
+      "P02_protocol_sample_schema_only",
+      "P03_full_paired_actual_visit_assessment",
+      "P04_unit_phase_receipt_and_report_order",
+      "P05_route_phase_receipt_and_report_order",
+      "P06_anchor5_remaining6_provider_pose"
+    ],
+    "readerRejections": [
+      "R01_duplicate_json_key",
+      "R02_changed_source_fixture_binding",
+      "R03_reordered_terminal_report_groups",
+      "R04_reordered_physical_route_rows",
+      "R05_reordered_choice_captures",
+      "R06_candidate_identity_mismatch",
+      "R07_provider_pose_not_preserved",
+      "R08_eligible_pose_parity_mismatch",
+      "R09_nonfinite_actual_score",
+      "R10_fabricated_reference_origin_count",
+      "R11_prefix_key_contract_version_leak",
+      "R12_changed_physical_route_metric",
+      "R13_missing_capture_row",
+      "R14_complete_capture_with_export_overflow",
+      "R15_missing_protocol_sample",
+      "R16_anchor_sixth_ring_slot",
+      "R17_remaining_anchor_stride_ordinal"
+    ],
+    "gateOutcomes": [
+      "G01_incomplete_capture_keeps_route_fidelity_separate",
+      "G02_context_mismatch_blocks_local_attribution"
+    ]
+  },
+  "shapeCounts": {
+    "sourceBindings": 14,
+    "routeRows": 4,
+    "captureRows": 4,
+    "captureItemsRoot42": 54,
+    "captureItemsRoot3": 49,
+    "unitSuites": 3,
+    "routeSuites": 2
+  },
+  "sourceFixtureSha256": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570",
+  "runner": "Private Python pointer with -X utf8 -B; executable path not recorded.",
+  "sha256": {
+    "assess.py": "01f99d92a8d6260e71b0672498499842c045966549ccf108fd290db9eae3a8bf",
+    "check_assessment.py": "ed67aae99fd484f40352935502acbc3864967ac721ea8914457d3283fe727889",
+    "assessment-canaries.json": "cee6bfe2dd4b57c44a0830d597b52e14e3c07c5dae98af25bc6a89b69e1abfa2",
+    "reader-notes.md": "999dbf3b2cdd3783cba9697953d61fc71b21adc4ab0d56dd8b47c5da3c8531ad",
+    "route-baselines.json": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+    "unit-suites.json": "8ed3a706bea8080afb14ed242111faeb23e252a2ecbfb9c45226eca2a834b92a",
+    "route-suites.json": "8758ff4828ac1b3f6236189cf9b22b47cb5910549c6712ed4602e51003108693"
+  }
+}

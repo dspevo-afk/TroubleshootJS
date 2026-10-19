@@ -1,0 +1,14 @@
+[
+  [
+    "PcbPassiveChoiceObserverContractTest",
+    "PCB passive choice observer contracts "
+  ],
+  [
+    "PcbPassivePoseSourceContractTest",
+    "PCB passive pose source bindings "
+  ],
+  [
+    "PcbPassivePoseTrialSourceContractTest",
+    "PCB passive pose trial source contracts "
+  ]
+]

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Synthetic reader-only canaries; no new native choice captures or physical validation consumed.",
+  "nativeChoiceOutputsConsumed": false,
+  "assertions": 30,
+  "caseCount": 22,
+  "positiveCaseCount": 5,
+  "readerRejectionCount": 15,
+  "gateOutcomeCount": 2,
+  "caseIds": {
+    "positive": [
+      "P01_all14_hash_bound_source_bindings",
+      "P02_protocol_sample_schema_only",
+      "P03_full_paired_actual_visit_assessment",
+      "P04_unit_phase_receipt_and_report_order",
+      "P05_route_phase_receipt_and_report_order"
+    ],
+    "readerRejections": [
+      "R01_duplicate_json_key",
+      "R02_changed_source_fixture_binding",
+      "R03_reordered_terminal_report_groups",
+      "R04_reordered_physical_route_rows",
+      "R05_reordered_choice_captures",
+      "R06_candidate_identity_mismatch",
+      "R07_provider_pose_not_preserved",
+      "R08_eligible_pose_parity_mismatch",
+      "R09_nonfinite_actual_score",
+      "R10_fabricated_reference_origin_count",
+      "R11_prefix_key_contract_version_leak",
+      "R12_changed_physical_route_metric",
+      "R13_missing_capture_row",
+      "R14_complete_capture_with_export_overflow",
+      "R15_missing_protocol_sample"
+    ],
+    "gateOutcomes": [
+      "G01_incomplete_capture_keeps_route_fidelity_separate",
+      "G02_context_mismatch_blocks_local_attribution"
+    ]
+  },
+  "shapeCounts": {
+    "sourceBindings": 14,
+    "routeRows": 4,
+    "captureRows": 4,
+    "captureItemsRoot42": 54,
+    "captureItemsRoot3": 49,
+    "unitSuites": 3,
+    "routeSuites": 2
+  },
+  "sourceFixtureSha256": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570",
+  "runner": "Private Python pointer with -X utf8 -B; executable path not recorded.",
+  "sha256": {
+    "assess.py": "a9bbb1da3fc9404ddf885fe74b0139af091ee9c63f3c06c5a9f790ab50193ce6",
+    "check_assessment.py": "a7c971a6de7431aba3cbeed7e4edb92080c933b5c1cea7ffae7fb5ff0ae5e916",
+    "assessment-canaries.json": "1b304d7ebfd2cd089dc055a5e96bc81cd77013af6ca6e0be9d0b9fb8f6b5cf71",
+    "reader-notes.md": "fd0dce9e297e738259c8269c65ba8aab7315c662a2358a813b9c3c4270c05bfc",
+    "route-baselines.json": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+    "unit-suites.json": "8ed3a706bea8080afb14ed242111faeb23e252a2ecbfb9c45226eca2a834b92a",
+    "route-suites.json": "8758ff4828ac1b3f6236189cf9b22b47cb5910549c6712ed4602e51003108693"
+  }
+}

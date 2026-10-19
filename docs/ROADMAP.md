@@ -145,6 +145,17 @@ pass; no search/route/time/fitness allowance changed. Accepted1467 restored, own
 copy retired, main1475 exact. No default16, GWT/player or turned-owner/live repair
 claim. Next measure first placement divergence and pose/origin selection causes.
 [Rejected passive policy and limits](task-evidence/PCB/passive-pose-policy-r1/README.md).
+Read-only first-choice measurement reproduces all42 non-timing fields for both
+informed42/3 at15/16. Unit3PASS44.3133s/routes2PASS73.2877s; complete bounded
+captures verify sizing as the first difference.42 moves UAC10 units at ordinal4
+before a passive turns;3 first changes RENAC at ordinal6, with equal outline and
+guidance but different boundary demand operands. Both local pose attributions are
+INCONCLUSIVE under the frozen context rule. Initial reader's five/six-slot failure
+is preserved; corrected25-case/33-assertion reader passes, reusing only audited
+unchanged1508 inputs and12 exact native artifacts. No Java rerun or fitted limits.
+Copy restored1504 then1467/retired; main1475 exact. Next isolate conservative
+sizing from pose scheduling with an explicitly identified native TOP0 control.
+[Choice diagnosis and limits](task-evidence/PCB/passive-pose-choice-cause-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

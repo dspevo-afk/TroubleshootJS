@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "suiteCount": 3,
+  "protocolSample": {
+    "status": "PASS",
+    "sampleCount": 1,
+    "schema": "pcb-passive-choice-observer-v1",
+    "marker": "PCB_PASSIVE_CHOICE_CAPTURE_V1",
+    "syntheticOnly": true
+  },
+  "oldSourceBindings": 14,
+  "derivedTrialBindings": 14,
+  "limits": "Native observer protocol and source prerequisites only; fullroute capture/fidelity separate"
+}

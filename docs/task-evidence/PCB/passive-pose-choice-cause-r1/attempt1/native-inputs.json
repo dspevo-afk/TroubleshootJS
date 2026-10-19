@@ -1,0 +1,46 @@
+{
+  "baseSha256": "5293b14d9949c004f22cb3ae5977f9a784032e89f4b65a4951e200df0eb2dee9",
+  "copyCount": 1508,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "731437e5341f24367534b8720566c7b934a34a68b4f53b3377e981c4b573596d",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "65405ed725ca55fc8399b4fd03213d385c92d0677cec9b3ace968f524f12692e"
+  },
+  "additions": {
+    "src/com/lushprojects/circuitjs1/client/PcbPassiveChoiceObserver.java": "19cecad178df7a4a97e9e4fb3fbf4818769654b2737e7d5b0299adb58485a218",
+    "tests/contracts/PcbPassiveChoiceObserverContractTest.java": "54389bdb1b43d846b5df48d268a0ea5ed44d0e4241c04432da328626cfc61975",
+    "tests/contracts/PcbPassiveChoiceRouteContractTest.java": "0b962b6a772365dd79d8ee43010e0c07dd69b41ec5fa06cff01e860e02c943f6",
+    "tests/contracts/PcbPassiveChoiceRouteContractTestGroup2.java": "899b276c9d54d6df8031079c2d478eef114b4638a486ec7f14cc23fe47e2c793"
+  },
+  "gateOwners": {
+    "proposal.json": "91118a58d05d1eb5d7108df535a6faaf6c6ebb89f44c444da8c43cbe7f3634eb",
+    "prepare.py": "079bd7827d1050530078ba63e7ab74682910f31f19f0fb7b40ae2326d84c1ad4",
+    "prepare_routes.py": "740fb3ea2b36fbecf28efe22181656a7f30106030be325bdbfe088c69922191c",
+    "prepare_phase_gates.py": "ea7af224640418969821ecb6a5d6a4285c0a7279e371994f5b920bbbf605e166",
+    "copy-inputs.json": "5293b14d9949c004f22cb3ae5977f9a784032e89f4b65a4951e200df0eb2dee9",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "route-baselines.json": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+    "unit-suites.json": "8ed3a706bea8080afb14ed242111faeb23e252a2ecbfb9c45226eca2a834b92a",
+    "route-suites.json": "8758ff4828ac1b3f6236189cf9b22b47cb5910549c6712ed4602e51003108693",
+    "worker-notes.md": "2ff3d05f57b86396b42899de61a432732106a49fdaa6c1539343832b4e149c8e",
+    "reader-notes.md": "fd0dce9e297e738259c8269c65ba8aab7315c662a2358a813b9c3c4270c05bfc",
+    "register.py": "ab7019efa2edd6111228de02dbd9ec8adce0c7710ec3c16d565e81abf15ac58f",
+    "inputs.py": "466504fca50d6baa1ba7f802735aaf23450d5043e04ede71f7b4d55b6712a680",
+    "run_native.ps1": "714bf1c462c028fe67f350586f98acda71a4a49c5dffd1b305173ddf907945a7",
+    "check_process_cleanup.ps1": "948e70c23d3cf8de035175cc6fb7e76a626e96e645cf903639f14c42ce1bf95d",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "review_source.py": "45444a5fddcef9499de52e5d858f10404d20541e16061dcd7812fb5a0fcdf212",
+    "hook-normalization.json": "72326d17799f92b5973dc03f35410243b03bf2948bbd290011a9178a64778a9d",
+    "source-review.json": "c10fc40be68f0a69fbbecae1343caa52c96007f47784d7b78e6c950fea075d75",
+    "assess.py": "a9bbb1da3fc9404ddf885fe74b0139af091ee9c63f3c06c5a9f790ab50193ce6",
+    "check_assessment.py": "a7c971a6de7431aba3cbeed7e4edb92080c933b5c1cea7ffae7fb5ff0ae5e916",
+    "assessment-canaries.json": "1b304d7ebfd2cd089dc055a5e96bc81cd77013af6ca6e0be9d0b9fb8f6b5cf71",
+    "assessment-canary-results.json": "9b91ce6051763ae94ae1071d39862087f17d35b70b2e5aba123e9bd5c2095873",
+    "validate_unit.py": "9b2132c7e38e8878ac8a1e7763ede342f68e2da4f7980327a3595ecb496392ea",
+    "run_assessment.py": "12e264bfcece376898e6493f262a5f40292f7bd0b48e278ae299e5753a108186",
+    "retire_copy.py": "663229bbe37c7b206b4216330965d54000968862729322ada54ff6e273a635f2",
+    "preserve_attempt.py": "0cad157c80583207e781c81c57002eebda02c200655b3c1ee0cce70d20282525"
+  },
+  "main1475SealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "reusedPolicySealSha256": "379b393f11d5e2a29ac81bd4ce7038e41a9a1d5cda2a7be90c72531e20144789",
+  "sourceStudySha256": "df22f583853d3e4b95b1a3ab27794dae8a01541ece3496a907b70046b5f075c9"
+}

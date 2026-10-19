@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "scope": "Synthetic reader-only canaries. No new native choice captures or physical outcome claims.",
+  "sourceFixture": {
+    "path": "docs/task-evidence/PCB/passive-pose-policy-r1/unit.txt",
+    "sha256": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570",
+    "use": "Hash-bound prior unit report used only to derive all fourteen accepted source bindings."
+  },
+  "positiveCases": [
+    { "id": "P01_all14_hash_bound_source_bindings" },
+    { "id": "P02_protocol_sample_schema_only" },
+    { "id": "P03_full_paired_actual_visit_assessment" },
+    { "id": "P04_unit_phase_receipt_and_report_order" },
+    { "id": "P05_route_phase_receipt_and_report_order" },
+    { "id": "P06_anchor5_remaining6_provider_pose" }
+  ],
+  "readerRejections": [
+    { "id": "R01_duplicate_json_key" },
+    { "id": "R02_changed_source_fixture_binding" },
+    { "id": "R03_reordered_terminal_report_groups" },
+    { "id": "R04_reordered_physical_route_rows" },
+    { "id": "R05_reordered_choice_captures" },
+    { "id": "R06_candidate_identity_mismatch" },
+    { "id": "R07_provider_pose_not_preserved" },
+    { "id": "R08_eligible_pose_parity_mismatch" },
+    { "id": "R09_nonfinite_actual_score" },
+    { "id": "R10_fabricated_reference_origin_count" },
+    { "id": "R11_prefix_key_contract_version_leak" },
+    { "id": "R12_changed_physical_route_metric" },
+    { "id": "R13_missing_capture_row" },
+    { "id": "R14_complete_capture_with_export_overflow" },
+    { "id": "R15_missing_protocol_sample" },
+    { "id": "R16_anchor_sixth_ring_slot" },
+    { "id": "R17_remaining_anchor_stride_ordinal" }
+  ],
+  "gateOutcomes": [
+    { "id": "G01_incomplete_capture_keeps_route_fidelity_separate" },
+    { "id": "G02_context_mismatch_blocks_local_attribution" }
+  ]
+}

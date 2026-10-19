@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "copyCount": 1508,
+  "main1475Exact": true,
+  "policy1504ReferenceExact": true,
+  "changedOwners": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java"
+  ],
+  "addedOwners": [
+    "src/com/lushprojects/circuitjs1/client/PcbPassiveChoiceObserver.java",
+    "tests/contracts/PcbPassiveChoiceObserverContractTest.java",
+    "tests/contracts/PcbPassiveChoiceRouteContractTest.java",
+    "tests/contracts/PcbPassiveChoiceRouteContractTestGroup2.java"
+  ]
+}

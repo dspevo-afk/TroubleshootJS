@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "Root actual hook/helper/protocol/fixture diff review plus literal text normalization; runtime fidelity remains separate",
+  "reviewedHookReplacements": 21,
+  "plannerOutsideReviewedObservationHooksExact": true,
+  "sameFitScoreClipCallCounts": true,
+  "unchangedOtherPolicyInputs": 1502,
+  "mainProductionMutated": false,
+  "limits": "Static call counts are not a behavioral oracle; four complete native row reproductions and independent capture checks required"
+}

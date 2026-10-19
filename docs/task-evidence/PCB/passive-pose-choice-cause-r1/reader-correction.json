@@ -1,0 +1,9 @@
+{
+  "scope": "Reader implementation correction after the first completed native capture",
+  "preservedFailure": "attempt1/archive-sha256.json",
+  "failure": "The reader treated every ring as five slots and rejected a valid index5 on a remaining component",
+  "independentExpectation": "The unchanged Planner source declares five dx/dy entries for anchor items and six for remaining items. Ring ordinal is ring*count+index. Eligibility selects a pose and does not select the ring count; an ineligible remaining provider still has six slots",
+  "correction": "Derive the event ring count from item orderKind and cover both source branches with synthetic positive and negative cases. Preserve existing reader cases, score comparisons, identities and all physical limits",
+  "nativeBoundary": "All1508 native inputs and all actual phase output bytes remain unchanged. Audit these against the preserved first freeze, freeze the corrected reader, then reuse the existing passing native executions and independently reassess their data",
+  "limits": "The original reader result is FAIL. No successful corrected assessment, new native execution, causal conclusion, policy acceptance or packing improvement is asserted by this plan"
+}

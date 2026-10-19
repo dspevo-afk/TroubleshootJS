@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 44.3133237,
+  "suiteCount": 3,
+  "phase": "unit",
+  "scope": "Read-only candidate1 choice trace; unchanged native per-JVM/search limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

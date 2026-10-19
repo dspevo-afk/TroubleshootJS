@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "scope": "Root source/evidence review; local causal conclusions remain those of the frozen assessment",
+  "assessmentStatus": "PASS",
+  "localAttribution": "INCONCLUSIVE",
+  "fourExactRoutedReproductions": [
+    {
+      "seed": "42",
+      "version": 15,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "42",
+      "version": 16,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 15,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 16,
+      "status": "PASS",
+      "exactNonTimingFields": 42
+    }
+  ],
+  "sourceBindings": 14,
+  "syntheticProtocolSample": {
+    "status": "PASS",
+    "sampleCount": 1,
+    "schema": "pcb-passive-choice-observer-v1",
+    "marker": "PCB_PASSIVE_CHOICE_CAPTURE_V1",
+    "syntheticOnly": true
+  },
+  "diagnosticArchivedSourcesExact": 6,
+  "reusedPolicySourcesExact": 49,
+  "frozenGateOwnersExact": 29,
+  "main1475Exact": true,
+  "copyRestoredAndRetired": true,
+  "recordedDriversExited": 4,
+  "initialReaderFailurePreserved": true,
+  "nativePhaseBytesReusedExact": 12,
+  "newNativeExecutionsAfterReaderCorrection": 0,
+  "review": "Actual 21 hook diff regions, read-only helper, serializer, pure fixture, source bindings, paired adapters, readers and canaries reviewed",
+  "limits": "Leaf implementation/reader work is not independent runtime certification. No new packing policy, owner/replay/repair, GWT/player, full matrix or all-seed proof."
+}

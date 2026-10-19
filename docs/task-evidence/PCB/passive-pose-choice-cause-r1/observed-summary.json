@@ -1,0 +1,189 @@
+{
+  "status": "DESCRIPTIVE",
+  "assessment": "assessment.json",
+  "cases": [
+    {
+      "rootSeed": "42",
+      "firstDivergence": {
+        "stage": "sizing",
+        "componentId": null,
+        "visitKey": null
+      },
+      "demand": [
+        "3445134",
+        "3448134"
+      ],
+      "rawOutline": [
+        {
+          "x": 20,
+          "y": 20,
+          "w": 3330,
+          "h": 1760
+        },
+        {
+          "x": 20,
+          "y": 20,
+          "w": 3330,
+          "h": 1770
+        }
+      ],
+      "boundaryX": [
+        850,
+        860
+      ],
+      "boundaryInputsEqual": false,
+      "itemOrderEqual": true,
+      "actualVisits": [
+        6800,
+        6800
+      ],
+      "firstSelectedComponent": "UAC",
+      "firstSelectedOrdinal": 4,
+      "selected": [
+        {
+          "x": 640,
+          "y": 900,
+          "rotation": "DEG_0",
+          "scoreBits": "4073c8a74f05249b",
+          "visitCount": 126
+        },
+        {
+          "x": 650,
+          "y": 900,
+          "rotation": "DEG_0",
+          "scoreBits": "4073bf56153c0333",
+          "visitCount": 126
+        }
+      ],
+      "context": {
+        "componentId": "UAC",
+        "oldPlaceOrdinal": 4,
+        "trialPlaceOrdinal": 4,
+        "oldSelectedKey": "ISOLATED_CONVERTER_7|DEFAULT|IDENTITY|3|DEG_0|TOP|420x330@640,900",
+        "trialSelectedKey": "ISOLATED_CONVERTER_7|DEFAULT|IDENTITY|3|DEG_0|TOP|420x330@650,900",
+        "sourceGeometryEqual": true,
+        "sizingEqual": false,
+        "outlineEqual": false,
+        "boundaryEqual": false,
+        "samePlaceOrdinal": true,
+        "prefixEqual": true,
+        "guidanceEqual": false,
+        "comparable": false,
+        "reasonCodes": [
+          "SIZING_DIFF",
+          "OUTLINE_DIFF",
+          "BOUNDARY_DIFF",
+          "GUIDANCE_DIFF"
+        ],
+        "oldVisitCount": 126,
+        "trialVisitCount": 126,
+        "visitArraysComplete": true,
+        "exportOverflow": false
+      },
+      "referenceOrigin": {
+        "itemFound": true,
+        "oldSelectedRotation": "DEG_0",
+        "oldSelectedX": 640,
+        "oldSelectedY": 900,
+        "oldSelectedGeometryKey": "ISOLATED_CONVERTER_7|DEFAULT|IDENTITY|3|DEG_0|TOP|420x330",
+        "trialSameOriginDEG0": 0,
+        "trialSameOriginDEG90": 0,
+        "trialSameOriginDEG180": 0,
+        "trialSameOriginDEG270": 0,
+        "trialOldGeometryOriginVisits": 0,
+        "trialOldGeometryOriginVisited": false
+      }
+    },
+    {
+      "rootSeed": "3",
+      "firstDivergence": {
+        "stage": "sizing",
+        "componentId": null,
+        "visitKey": null
+      },
+      "demand": [
+        "3206748",
+        "3209748"
+      ],
+      "rawOutline": [
+        {
+          "x": 20,
+          "y": 20,
+          "w": 3240,
+          "h": 1700
+        },
+        {
+          "x": 20,
+          "y": 20,
+          "w": 3240,
+          "h": 1700
+        }
+      ],
+      "boundaryX": [
+        900,
+        900
+      ],
+      "boundaryInputsEqual": false,
+      "itemOrderEqual": true,
+      "actualVisits": [
+        6170,
+        6170
+      ],
+      "firstSelectedComponent": "RENAC",
+      "firstSelectedOrdinal": 6,
+      "selected": [
+        {
+          "x": 360,
+          "y": 620,
+          "rotation": "DEG_0",
+          "scoreBits": "409d933834df9fb4",
+          "visitCount": 126
+        },
+        {
+          "x": 560,
+          "y": 540,
+          "rotation": "DEG_90",
+          "scoreBits": "409d18eb6812d2e8",
+          "visitCount": 126
+        }
+      ],
+      "context": {
+        "componentId": "RENAC",
+        "oldPlaceOrdinal": 6,
+        "trialPlaceOrdinal": 6,
+        "oldSelectedKey": "AXIAL_RESISTOR|SPAN_240|IDENTITY|3|DEG_0|TOP|240x70@360,620",
+        "trialSelectedKey": "AXIAL_RESISTOR|SPAN_240|IDENTITY|3|DEG_90|TOP|70x240@560,540",
+        "sourceGeometryEqual": true,
+        "sizingEqual": false,
+        "outlineEqual": true,
+        "boundaryEqual": false,
+        "samePlaceOrdinal": true,
+        "prefixEqual": true,
+        "guidanceEqual": true,
+        "comparable": false,
+        "reasonCodes": [
+          "SIZING_DIFF",
+          "BOUNDARY_DIFF"
+        ],
+        "oldVisitCount": 126,
+        "trialVisitCount": 126,
+        "visitArraysComplete": true,
+        "exportOverflow": false
+      },
+      "referenceOrigin": {
+        "itemFound": true,
+        "oldSelectedRotation": "DEG_0",
+        "oldSelectedX": 360,
+        "oldSelectedY": 620,
+        "oldSelectedGeometryKey": "AXIAL_RESISTOR|SPAN_240|IDENTITY|3|DEG_0|TOP|240x70",
+        "trialSameOriginDEG0": 0,
+        "trialSameOriginDEG90": 1,
+        "trialSameOriginDEG180": 0,
+        "trialSameOriginDEG270": 0,
+        "trialOldGeometryOriginVisits": 0,
+        "trialOldGeometryOriginVisited": false
+      }
+    }
+  ],
+  "limits": "Extracted only from captured observations; no unvisited fit/score or final routed causal attribution"
+}

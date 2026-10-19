@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 14748,
+      "startTicks": "639280323860039447",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-choice-cause-r1/run_native.ps1"
+    },
+    {
+      "pid": 24876,
+      "startTicks": "639280323862398188",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-choice-cause-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native choice phase; unique source copy"
+}

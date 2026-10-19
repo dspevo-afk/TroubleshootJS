@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "Exact native phase bytes reused across a source-derived reader correction; no new native execution",
+  "oldSealSha256": "42f4d4517f24a0bd7469bc153750a233bbfa9823cc32a5afaf1a4fa0d4441c2c",
+  "newSealSha256": "b5f723c781f6b5768870644238a9094bf28b8644b7d3a21ac66ca92ab77490a0",
+  "unchangedNativeInputs": 1508,
+  "nativeSourceChanged": false,
+  "changedGateOwners": [
+    "assess.py",
+    "assessment-canaries.json",
+    "assessment-canary-results.json",
+    "check_assessment.py",
+    "inputs.py",
+    "preserve_attempt.py",
+    "reader-notes.md"
+  ],
+  "addedGateOwners": [
+    "reader-correction.json",
+    "reuse_phase_outputs.py"
+  ],
+  "nativeDriversOriginallyVerifiedExited": 4,
+  "phaseArtifactsSha256": {
+    "unit.txt": "de04a6eb13d5ddc45f23c63658eb910e60d3e4957e219aa5a4fdc223c8db311b",
+    "unit-receipt.txt": "f11df1f64f66b96c464e17fb76fca4ad567c8fb74890d716733d7a6b87807e27",
+    "unit-timing.json": "411a5fe1bb43e8a8d3cd7053ccf1d24e36d9f95f5c3768cee6c3505a309d2e47",
+    "unit-process-launch.json": "3351fa33a07edcd9caf75a02fd19da579973ff976d7c557337b318b47105ec13",
+    "unit-process-cleanup.json": "ba5a9e947071f0c9c5e3930f810736c18dc8c6554f3082a6e8d52ef8a2ccd833",
+    "unit-log-sanitization.json": "e1e5f226627faeeb3cf29d4f9099e678f3274c966a2e0e2edb489f797c3c53f0",
+    "routes.txt": "cc42198671193b1f5712dcd62dd6a7d53920851a6a33ea438d86cd022f1146cc",
+    "routes-receipt.txt": "4c89bc552a5356087546bdbe16dd191fd86b028105f7c7af0fc3ad987dc86b95",
+    "routes-timing.json": "22f7d4893904f0dea54798010c521575b92ca88f428c0d47c4006c6d89b90b73",
+    "routes-process-launch.json": "6a32bd56f3949050ed7a67d2c3dec8df8a93ce81ea6e20a24690be3c62d0b932",
+    "routes-process-cleanup.json": "75439fcadae3ce374ffc56c85c672725dc6afaa37a69f4051fc4ef0446424cbf",
+    "routes-log-sanitization.json": "d0049a3f2063bd5b25685001ff76008aaf4762b349402831e9604ce562948b71"
+  }
+}

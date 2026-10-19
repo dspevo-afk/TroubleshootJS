@@ -1,4 +1,49 @@
-# Current checkpoint: passive pose policy rejected; first-divergence cause study next
+# Current checkpoint: passive choice diagnosis complete; sizing control next
+
+2026-10-19. Candidate based on3f1c2282da2eeabb426d966edc06579eafafb59b on
+codex/q60-faulted-profile-counts; publication follows final root checks. User's
+indefinite continuation/revoked quota stops remain active; no main/email. Main
+production/default15, general layout16 and accepted1475 inputs remain exact.
+
+passive-pose-choice-cause-r1 is COMPLETE as a read-only measurement. Four native
+routes (informed42/3 at15/16) reproduce every42 published non-timing field. Corrected
+assessment route/capture fidelity PASS; local pose attribution INCONCLUSIVE on both.
+Sizing is independently verified as the first recorded difference: demand+3000
+both.42 raw outline grows3330x1760 to3330x1770 and boundaryX850 to860; first changed
+selection is UAC ordinal4, TOP0 shifted640,900 to650,900.3 outline3240x1700 and
+boundaryX900 stay equal, but boundary operands differ; RENAC ordinal6 changes
+TOP0(360,620) toTOP90(560,540). Order equal; visits6800/6170 per candidate perversion.
+No isolated rotation/final-routing cause or better policy is proved. The previous
+policy's strict14 fitness remains FAIL; no promotion or fitted seed/oracle/cap.
+
+Actual JDK8 unit3 PASS44.3133237s/exit0: observer23, source114, trial-source128
+assertions; actual synthetic serializer sample plus14+14 source bindings. Actual
+routes2 PASS73.2877039s/exit0. Both include maintained cleanup, not separately timed.
+Initial reader FAILed valid remaining index5 after22-case/30-assertion canaries;
+full27-gate/source/phase failure preserved byte-exact in attempt1. Corrected reader
+uses source-defined anchor5/remaining6. All prior cases retained;25 cases/33
+assertions PASS, including provider TOP180 last-slot/stride positives and negatives.
+Root strengthened these to anchor ring1/index4/ordinal9 and remaining index5/ordinal11.
+
+Successor1508 inputs/6 diagnostic source deltas/29 gate owners frozen. All1508
+native inputs and12 phase output bytes audited unchanged across reader correction;
+no new Java execution. Actual protocol/source prerequisites and complete capture
+assessment rerun through corrected reader. Independent event replay covers only
+first selected divergence's126-event paired arrays; other summaries are checked
+for consistency. Root reviewed21 actual hook regions/helper/fixtures/readers and
+post-packet hashes/results; this is not independent runtime/full-matrix certification.
+
+Copy restored exactly to policy1504 then accepted1467; contained non-reparse copy
+and private state retired. All4 recorded driver births exited; no task native,
+GWT, browser, preview or profile remains. Main1475 and published policy references
+exact; original5 unrelated untracked entries/shared tools preserved. GWT/player,
+owner/replay/repair and all-seed/manufacturing proof NOT RUN or NOT APPLICABLE.
+
+Next unstarted coherent step: explicitly identify a native sizing-only control
+with TOP0 selection to separate conservative sizing from the alternating schedule.
+Finish current evidence commit/normal push first, then continue; no main/email.
+
+# Previous checkpoint: rejected passive rotation placement trial recorded
 
 2026-10-19. Published5e6b1f66f31b9826b3583f8ad025f3b686f6d005 (Validate passive
 PCB rotation mechanics) normally pushed/exact origin verified on
