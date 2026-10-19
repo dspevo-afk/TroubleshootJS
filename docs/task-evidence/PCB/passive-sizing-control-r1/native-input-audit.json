@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "copyCount": 1510,
+  "main1475Exact": true,
+  "policy1504ReferenceExact": true,
+  "changedOwners": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "tests/contracts/PcbPassivePoseAdmissionContractTest.java",
+    "tests/contracts/PcbPassivePosePolicyContractTest.java",
+    "tests/contracts/PcbPassivePoseTrialSourceContractTest.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java"
+  ],
+  "addedOwners": [
+    "tests/contracts/PcbPassiveSizingRawContractTest.java",
+    "tests/contracts/PcbPassiveSizingRawContractTestGroup2.java",
+    "tests/contracts/PcbPassiveSizingRawContractTestGroup3.java",
+    "tests/contracts/PcbPassiveSizingRouteContractTest.java",
+    "tests/contracts/PcbPassiveSizingRouteContractTestGroup2.java",
+    "tests/contracts/PcbPassiveSizingSourceContractTest.java"
+  ]
+}

@@ -1,0 +1,746 @@
+--- scripts/verify-current-contracts.ps1
++++ scripts/verify-current-contracts.ps1
+@@ -405,6 +405,12 @@
+         @{ Name = 'PcbPostSelectionEdgeTrimCopyContractTest'; Marker = 'PCB post-selection edge trim copy ' },
+         @{ Name = 'PcbPostSelectionEdgeTrimGraphContractTest'; Marker = 'PCB post-selection edge trim graph ' },
+         @{ Name = 'PcbPostSelectionEdgeTrimContractTest'; Marker = 'PCB post-selection edge trim ' },
++        @{ Name = 'PcbPassiveSizingSourceContractTest'; Marker = 'PCB passive sizing source contracts ' },
++        @{ Name = 'PcbPassiveSizingRawContractTest'; Marker = 'PCB passive sizing raw42 contracts ' },
++        @{ Name = 'PcbPassiveSizingRawContractTestGroup2'; Marker = 'PCB passive sizing rawneg1022 contracts ' },
++        @{ Name = 'PcbPassiveSizingRawContractTestGroup3'; Marker = 'PCB passive sizing raw4 contracts ' },
++        @{ Name = 'PcbPassiveSizingRouteContractTest'; Marker = 'PCB passive sizing route42 contracts ' },
++        @{ Name = 'PcbPassiveSizingRouteContractTestGroup2'; Marker = 'PCB passive sizing route3 contracts ' },
+         @{ Name = 'PcbPassivePoseFoundationContractTest'; Marker = 'PCB passive pose foundation contracts ' },
+         @{ Name = 'PcbPassivePoseSourceContractTest'; Marker = 'PCB passive pose source bindings ' },
+         @{ Name = 'PcbPassivePosePolicyContractTest'; Marker = 'PCB passive pose policy contracts ' },
+--- src/com/lushprojects/circuitjs1/client/GenerationRequest.java
++++ src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+@@ -78,6 +78,9 @@
+         if (qualification && Rb56Plan.FAMILY_ID.equals(familyId)) {
+             if (!Rb56Placement.supportsVersion(requestedRb56PlacementInterpretationVersion))
+                 throw new IllegalArgumentException("Unknown private RB56 placement interpretation");
++            if (requestedRb56PlacementInterpretationVersion ==
++                    Rb56Placement.SIZING_CONTROL_VERSION17)
++                throw new IllegalArgumentException("RB56 placement17 is available only through direct native plans");
+         } else if (requestedRb56PlacementInterpretationVersion != 0) {
+             throw new IllegalArgumentException("RB56 placement interpretation is private-family-only");
+         }
+@@ -251,9 +254,12 @@
+ 
+     /** Select a saved private RB56 interpretation before canonicalization or cache lookup. */
+     GenerationRequest withRb56PlacementInterpretationVersion(int version) {
+-        if (!isPrivateDiagnosticQualification() || !Rb56Plan.FAMILY_ID.equals(getFamilyId()) ||
+-                !Rb56Placement.supportsVersion(version))
++        if (!isPrivateDiagnosticQualification() || !Rb56Plan.FAMILY_ID.equals(getFamilyId()))
+             throw new IllegalArgumentException("Placement version applies only to an exact private RB56 request");
++        if (!Rb56Placement.supportsVersion(version))
++            throw new IllegalArgumentException("Unknown private RB56 placement interpretation");
++        if (version == Rb56Placement.SIZING_CONTROL_VERSION17)
++            throw new IllegalArgumentException("RB56 placement17 is available only through direct native plans");
+         return new GenerationRequest(descriptor, composition, quickPlay, difficulty,
+             candidateSearch, privateQualification, normalExecutionPolicy, stagedFamily,
+             executionDeclaration, version);
+--- src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
++++ src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
+@@ -21,27 +21,35 @@
+ 
+     static final String RB56_IDENTITY = "RB56_BOARD_NORMAL@1";
+     static final String RB56_POSE_IDENTITY = "RB56_BOARD_NORMAL@2";
++    static final String RB56_SIZING_CONTROL_IDENTITY = "RB56_BOARD_NORMAL@3";
+     static final String RB56_PASSIVE_POSE_POLICY =
+         "policy=1;passives=AXIAL_RESISTOR,AXIAL_DIODE,RADIAL_ELECTROLYTIC_CAPACITOR," +
+         "RADIAL_CERAMIC_CAPACITOR;allowed-poses=TOP/0,TOP/90";
+-    /** Finite eligibility contracts; both use the same bounded structural router. */
++    static final String RB56_SIZING_CONTROL_POLICY =
++        "policy=2;passives=AXIAL_RESISTOR,AXIAL_DIODE,RADIAL_ELECTROLYTIC_CAPACITOR," +
++        "RADIAL_CERAMIC_CAPACITOR;allowed-poses=TOP/0,TOP/90;sizing-only=true;visit-source=TOP/0";
++    /** Finite eligibility contracts; all share the same bounded structural router. */
+     enum Contract {
+         MEDIUM(IDENTITY, MIN_PARTS, MAX_PARTS, 5),
+         RB56(RB56_IDENTITY, 40, 60, 7),
+-        RB56_ORTHOGONAL(RB56_POSE_IDENTITY, 40, 60, 7);
++        RB56_ORTHOGONAL(RB56_POSE_IDENTITY, 40, 60, 7),
++        RB56_SIZING_CONTROL(RB56_SIZING_CONTROL_IDENTITY, 40, 60, 7);
+         final String identity;
+         final int minimumParts, maximumParts, maximumTerminals;
+         Contract(String identity, int minimumParts, int maximumParts, int maximumTerminals) {
+             this.identity = identity; this.minimumParts = minimumParts;
+             this.maximumParts = maximumParts; this.maximumTerminals = maximumTerminals;
+         }
+-        boolean isRb56() { return this == RB56 || this == RB56_ORTHOGONAL; }
++        boolean isRb56() { return this == RB56 || this == RB56_ORTHOGONAL ||
++            this == RB56_SIZING_CONTROL; }
+     }
+ 
+     static String rb56IdentityForPlacement(int placementVersion) {
+         int poseVersion = Rb56Placement.passivePosePolicyVersion(placementVersion);
+         if (poseVersion == PcbPassivePosePolicy.LEGACY) return RB56_IDENTITY;
+         if (poseVersion == PcbPassivePosePolicy.ORTHOGONAL) return RB56_POSE_IDENTITY;
++        if (poseVersion == PcbPassivePosePolicy.SIZING_ONLY)
++            return RB56_SIZING_CONTROL_IDENTITY;
+         throw new IllegalArgumentException("Unknown RB56 passive-pose interpretation");
+     }
+ 
+@@ -51,11 +59,12 @@
+         int poseVersion = constraints.passivePosePolicyVersion;
+         if (!PcbPassivePosePolicy.supportsVersion(poseVersion))
+             throw new IllegalArgumentException("Unknown RB56 passive-pose interpretation");
+-        if (poseVersion == PcbPassivePosePolicy.ORTHOGONAL &&
++        if (poseVersion != PcbPassivePosePolicy.LEGACY &&
+                 (constraints.placementDensityVersion != 14 || !constraints.requiresTwoLayerRouting))
+             throw new IllegalArgumentException("RB56 passive-pose identity requires density14 two-layer routing");
+         if (poseVersion == PcbPassivePosePolicy.LEGACY) return RB56_IDENTITY;
+-        return RB56_POSE_IDENTITY;
++        return poseVersion == PcbPassivePosePolicy.ORTHOGONAL ? RB56_POSE_IDENTITY :
++            RB56_SIZING_CONTROL_IDENTITY;
+     }
+ 
+     static Contract rb56ContractForPlacement(int placementVersion) {
+@@ -69,6 +78,7 @@
+     private static Contract rb56ContractForIdentity(String identity) {
+         if (RB56_IDENTITY.equals(identity)) return Contract.RB56;
+         if (RB56_POSE_IDENTITY.equals(identity)) return Contract.RB56_ORTHOGONAL;
++        if (RB56_SIZING_CONTROL_IDENTITY.equals(identity)) return Contract.RB56_SIZING_CONTROL;
+         throw new IllegalArgumentException("Unknown RB56 physical admission identity");
+     }
+ 
+@@ -110,6 +120,8 @@
+                 "barrier=PRIMARY|SECONDARY|80-drawing-units;UAC=TOP/0;UFB=TOP/180;manufacturing-rating=NONE");
+             if (contract == Contract.RB56_ORTHOGONAL)
+                 field(value, "rb56-passive-pose-policy", RB56_PASSIVE_POSE_POLICY);
++            else if (contract == Contract.RB56_SIZING_CONTROL)
++                field(value, "rb56-passive-pose-policy", RB56_SIZING_CONTROL_POLICY);
+         }
+         canonical = value.toString();
+     }
+--- src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
++++ src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
+@@ -2,15 +2,16 @@
+ 
+ import java.util.Vector;
+ 
+-/** Bounded planner-only allowance for alternating canonical passive top poses. */
++/** Bounded planner-only sizing and visit-selection policies for canonical passive poses. */
+ final class PcbPassivePosePolicy {
+     static final int LEGACY = 0;
+     static final int ORTHOGONAL = 1;
++    static final int SIZING_ONLY = 2;
+ 
+     private PcbPassivePosePolicy() { }
+ 
+     static boolean supportsVersion(int version) {
+-        return version == LEGACY || version == ORTHOGONAL;
++        return version == LEGACY || version == ORTHOGONAL || version == SIZING_ONLY;
+     }
+ 
+     /** Package allowlist is deliberately based on canonical package identity. */
+@@ -57,12 +58,17 @@
+ 
+     /** Select one template for an existing origin visit, without adding visits. */
+     static PcbFootprint forVisit(PcbFootprint source, PcbFootprint alternative,
+-            long visitOrdinal) {
++            int policyVersion, long visitOrdinal) {
++        if (!supportsVersion(policyVersion))
++            throw new IllegalArgumentException("Unknown passive pose policy interpretation");
+         if (visitOrdinal < 0)
+             throw new IllegalArgumentException("Negative passive pose visit ordinal");
+         if (source == null)
+             throw new IllegalArgumentException("Missing passive pose source footprint");
+-        return alternative == null || (visitOrdinal & 1L) == 0L ? source : alternative;
++        if (policyVersion == LEGACY || policyVersion == SIZING_ONLY || alternative == null ||
++                (visitOrdinal & 1L) == 0L)
++            return source;
++        return alternative;
+     }
+ 
+     private static Vector<String> padIds(Vector<PcbPadPlacement> pads) {
+--- src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
++++ src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+@@ -112,12 +112,12 @@
+             throw new IllegalArgumentException("Missing PCB trace width profile");
+         if (!PcbPassivePosePolicy.supportsVersion(passivePosePolicyVersion))
+             throw new IllegalArgumentException("Unknown passive pose policy interpretation");
+-        if (passivePosePolicyVersion == PcbPassivePosePolicy.ORTHOGONAL &&
++        if (passivePosePolicyVersion != PcbPassivePosePolicy.LEGACY &&
+                 (densityVersion != 14 ||
+                 !MediumBoardPhysicalPolicy.ID.equals(policyId) ||
+                 MediumBoardPhysicalPolicy.VERSION != policyVersion ||
+                 !requiresTwoLayerRouting))
+-            throw new IllegalArgumentException("Orthogonal passive pose policy requires density14 MEDIUM_BOARD@1 two-layer constraints");
++            throw new IllegalArgumentException("Passive pose policy requires density14 MEDIUM_BOARD@1 two-layer constraints");
+         this.traceWidthProfile = traceWidthProfile;
+         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+         if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13 && densityVersion != 14)
+--- src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -126,8 +126,9 @@
+             board.getComponentIds().size()<=5 ? candidate/OUTLINE_CANDIDATES : candidate;
+         int variant=(shapeAttempt + offset) % OUTLINE_CANDIDATES;
+         Random random=new Random(seed ^ (0x632be59bd9b4e019L*(algorithmCandidate+1)));
+-        boolean passivePoseSizing=constraints.passivePosePolicyVersion==
+-                PcbPassivePosePolicy.ORTHOGONAL &&
++        boolean passivePoseSizing=(constraints.passivePosePolicyVersion==
++                PcbPassivePosePolicy.ORTHOGONAL || constraints.passivePosePolicyVersion==
++                PcbPassivePosePolicy.SIZING_ONLY) &&
+             constraints.placementDensityVersion>=10 && candidate==1 &&
+             board.getComponentIds().size()>=MEDIUM_MIN_PARTS &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
+@@ -718,7 +719,7 @@
+             for(int index=0;index<count;index++) {
+                 PcbFootprint visitSource=passivePoseAlternative==null ? item.footprint :
+                     PcbPassivePosePolicy.forVisit(item.footprint,passivePoseAlternative,
+-                        (long)ring*count+index);
++                        constraints.passivePosePolicyVersion,(long)ring*count+index);
+                 int x=anchor?preferredX:baseX+dx[index],y=anchor?baseY+dy[index]:baseY+dy[index];
+                 // Ring zero formerly tested the same origin six times. Retain
+                 // its first trial and reuse duplicate slots for advisory pockets.
+@@ -770,7 +771,8 @@
+                 if((row&1)!=0)col=columns-1-col;
+                 int x=minX+col*MEDIUM_STEP,y=minY+row*MEDIUM_STEP;
+                 PcbFootprint visitSource=passivePoseAlternative==null ? item.footprint :
+-                    PcbPassivePosePolicy.forVisit(item.footprint,passivePoseAlternative,visit);
++                    PcbPassivePosePolicy.forVisit(item.footprint,passivePoseAlternative,
++                        constraints.passivePosePolicyVersion,visit);
+                 PcbFootprint trial=visitSource.translated(
+                     mediumGridOrigin(visitSource,x,outline,margin,false),
+                     mediumGridOrigin(visitSource,y,outline,margin,true));
+--- src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
++++ src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
+@@ -200,7 +200,8 @@
+         }
+ 
+         boolean permitsCanonicalQuarterTurn =
+-            contract == MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL;
++            contract == MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL ||
++            contract == MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL;
+         for (String id : board.getComponentIds()) {
+             BoardComponent component = board.getComponent(id);
+             if (component == null)
+--- src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -8,14 +8,15 @@
+         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
+         GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10,
+         VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12, NEAREST_VACANCY_VERSION13 = 13,
+-        CANVAS_OWNER_VERSION14 = 14, CURRENT_VERSION = 15, PASSIVE_POSE_VERSION16 = 16;
++        CANVAS_OWNER_VERSION14 = 14, CURRENT_VERSION = 15, PASSIVE_POSE_VERSION16 = 16,
++        SIZING_CONTROL_VERSION17 = 17;
+     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
+     static final int BARRIER_DRAWING_UNITS = 80;
+     private Rb56Placement() { }
+ 
+     static boolean supportsVersion(int version) {
+         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
+-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION || version == CANVAS_OWNER_VERSION14 || version == PASSIVE_POSE_VERSION16;
++            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION || version == CANVAS_OWNER_VERSION14 || version == PASSIVE_POSE_VERSION16 || version == SIZING_CONTROL_VERSION17;
+     }
+ 
+     /** Replay interpretation includes copper policy; packing density alone is not its identity. */
+@@ -25,19 +26,22 @@
+         if (placementVersion == ROLE_WIDTHS_VERSION12) return VACANCY_VERSION;
+         if (placementVersion == NEAREST_VACANCY_VERSION13) return ROLE_WIDTHS_VERSION12;
+         if (placementVersion == CANVAS_OWNER_VERSION14) return 13;
+-        return placementVersion == CURRENT_VERSION || placementVersion == PASSIVE_POSE_VERSION16 ? 14 : placementVersion;
++        return placementVersion == CURRENT_VERSION || placementVersion == PASSIVE_POSE_VERSION16 ||
++            placementVersion == SIZING_CONTROL_VERSION17 ? 14 : placementVersion;
+     }
+ 
+     static int passivePosePolicyVersion(int placementVersion) {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+-        return placementVersion == PASSIVE_POSE_VERSION16 ? 1 : 0;
++        if (placementVersion == PASSIVE_POSE_VERSION16) return PcbPassivePosePolicy.ORTHOGONAL;
++        return placementVersion == SIZING_CONTROL_VERSION17 ? PcbPassivePosePolicy.SIZING_ONLY :
++            PcbPassivePosePolicy.LEGACY;
+     }
+ 
+     static PcbTraceWidthProfile widthProfile(int placementVersion) {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 ?
++        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 ?
+             PcbTraceWidthProfile.ROLE_WIDTHS :
+             PcbTraceWidthProfile.UNIFORM;
+     }
+@@ -86,7 +90,7 @@
+         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
+             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION,
+             densityVersion(placementVersion),
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17,
+             widthProfile(placementVersion), passivePosePolicyVersion(placementVersion));
+     }
+ 
+--- tests/contracts/PcbPassivePoseAdmissionContractTest.java
++++ tests/contracts/PcbPassivePoseAdmissionContractTest.java
+@@ -30,19 +30,28 @@
+             "the default RB56 placement interpretation remains version15");
+         require(Rb56Placement.PASSIVE_POSE_VERSION16 == 16,
+             "the passive-pose interpretation has its explicit version16 identity");
++        require(Rb56Placement.SIZING_CONTROL_VERSION17 == 17 &&
++                Rb56Placement.supportsVersion(17) && !Rb56Placement.supportsVersion(18),
++            "the sizing control has only its explicit placement17 interpretation");
+         require(Rb56Placement.passivePosePolicyVersion(15) == PcbPassivePosePolicy.LEGACY,
+             "default version15 maps to the legacy pose policy");
+         require(Rb56Placement.passivePosePolicyVersion(16) == PcbPassivePosePolicy.ORTHOGONAL,
+             "explicit version16 maps to the orthogonal pose policy");
++        require(Rb56Placement.passivePosePolicyVersion(17) == PcbPassivePosePolicy.SIZING_ONLY,
++            "explicit version17 maps to the sizing-only pose policy");
+         require(Rb56Placement.densityVersion(15) == 14 &&
+-                Rb56Placement.densityVersion(16) == 14,
+-            "current15 and explicit16 retain density14");
++                Rb56Placement.densityVersion(16) == 14 &&
++                Rb56Placement.densityVersion(17) == 14,
++            "current15 and explicit16/17 retain density14");
+         require("RB56_BOARD_NORMAL@1".equals(
+                 MediumBoardNormalAdmission.rb56IdentityForPlacement(15)),
+             "placement15 selects the literal legacy admission identity");
+         require("RB56_BOARD_NORMAL@2".equals(
+                 MediumBoardNormalAdmission.rb56IdentityForPlacement(16)),
+             "placement16 selects the literal orthogonal admission identity");
++        require("RB56_BOARD_NORMAL@3".equals(
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(17)),
++            "placement17 selects the literal sizing-control admission identity");
+         require("RB56_BOARD_NORMAL@1".equals(MediumBoardNormalAdmission.rb56IdentityFor(
+                 constraints(PcbPassivePosePolicy.LEGACY,
+                     new Vector<PcbPlacementConstraints.Part>()))),
+@@ -51,21 +60,40 @@
+                 constraints(PcbPassivePosePolicy.ORTHOGONAL,
+                     new Vector<PcbPlacementConstraints.Part>()))),
+             "explicit pose1 MEDIUM_BOARD constraints select admission identity @2");
++        require("RB56_BOARD_NORMAL@3".equals(MediumBoardNormalAdmission.rb56IdentityFor(
++                constraints(PcbPassivePosePolicy.SIZING_ONLY,
++                    new Vector<PcbPlacementConstraints.Part>()))),
++            "policy2 MEDIUM_BOARD constraints select admission identity @3");
+         require(MediumBoardNormalAdmission.Contract.RB56 ==
+                 MediumBoardNormalAdmission.rb56ContractForPlacement(15),
+             "placement15 selects the legacy RB56 contract");
+         require(MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL ==
+                 MediumBoardNormalAdmission.rb56ContractForPlacement(16),
+             "placement16 selects the orthogonal RB56 contract");
++        require(MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL ==
++                MediumBoardNormalAdmission.rb56ContractForPlacement(17),
++            "placement17 selects the sizing-control RB56 contract");
++        require(MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL.minimumParts == 40 &&
++                MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL.maximumParts == 60 &&
++                MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL.maximumTerminals == 7,
++            "sizing-control admission keeps the existing RB56 mechanical bounds");
++        Rb56Plan directNativeControl = Rb56Plan.resolve(42017L, 17);
++        require(directNativeControl.placementInterpretationVersion == 17,
++            "placement17 remains available through the direct native plan path");
+         reject(new Runnable() {
+             public void run() {
+-                MediumBoardNormalAdmission.rb56IdentityForPlacement(17);
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(18);
+             }
+         }, "unknown placement versions do not receive an admission identity");
+ 
+         final GenerationRequest current = GenerationRequest.forFamilyQualification(
+             Rb56Plan.FAMILY_ID, 42017L);
+         final GenerationRequest explicitPose = current.withRb56PlacementInterpretationVersion(16);
++        reject(new Runnable() {
++            public void run() {
++                current.withRb56PlacementInterpretationVersion(17);
++            }
++        }, "direct-native placement17 cannot create a private replay request");
+         require("RB56_BOARD_NORMAL@1".equals(current.getRequiredPhysicalAdmissionIdentity()),
+             "default private qualification retains admission identity @1");
+         require("RB56_BOARD_NORMAL@2".equals(explicitPose.getRequiredPhysicalAdmissionIdentity()),
+@@ -103,6 +131,19 @@
+                         "explicit16 rejects canonical " + physical.getId() + " TOP" +
+                             rotation);
+                 }
++                Fixture sizingOnly = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++                    "SIZING_ONLY_" + packageIndex, passiveType(physical), physical,
++                    physical, rotation, PcbBoardSide.TOP);
++                if (rotation == PcbRotation.DEG_0 || rotation == PcbRotation.DEG_90) {
++                    accept(sizingOnly, MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++                        "control17 keeps the same mechanical cap for canonical " +
++                            physical.getId() + " TOP" + rotation);
++                } else {
++                    rejectPose(sizingOnly,
++                        MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++                        "control17 rejects canonical " + physical.getId() + " TOP" +
++                            rotation);
++                }
+ 
+                 Fixture legacy = fixture(PcbPassivePosePolicy.LEGACY,
+                     "LEGACY_PASSIVE_" + packageIndex, passiveType(physical), physical, physical,
+@@ -125,6 +166,14 @@
+                 PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
+             rejectPose(explicitBottom, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+                 "explicit16 rejects bottom-mounted passive geometry");
++            Fixture sizingBottom = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++                "SIZING_BOTTOM_" + physical.getId(), passiveType(physical),
++                PhysicalPackages.RAISED_FACTORY_LINK,
++                PhysicalPackages.RAISED_FACTORY_LINK,
++                PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
++            rejectPose(sizingBottom,
++                MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++                "control17 rejects bottom-mounted passive geometry");
+             Fixture legacyBottom = fixture(PcbPassivePosePolicy.LEGACY,
+                 "LEGACY_BOTTOM_" + physical.getId(), passiveType(physical),
+                 PhysicalPackages.RAISED_FACTORY_LINK,
+@@ -141,12 +190,26 @@
+             PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_0, PcbBoardSide.TOP);
+         accept(foreignTop0, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+             "foreign passive packages retain their original TOP0 pose");
++        Fixture controlForeignTop0 = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++            "CONTROL_FOREIGN_PASSIVE_TOP0", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_0, PcbBoardSide.TOP);
++        accept(controlForeignTop0,
++            MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 keeps foreign passive packages at provider TOP0");
+ 
+         Fixture foreignTop90 = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+             "FOREIGN_PASSIVE_TOP90", "RESISTOR", PhysicalPackages.RAISED_FACTORY_LINK,
+             PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_90, PcbBoardSide.TOP);
+         rejectPose(foreignTop90, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+             "explicit16 does not rotate a foreign passive package");
++        Fixture controlForeignTop90 = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++            "CONTROL_FOREIGN_PASSIVE_TOP90", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_90, PcbBoardSide.TOP);
++        rejectPose(controlForeignTop90,
++            MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 does not rotate a foreign passive package");
+ 
+         Fixture foreignBottom = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+             "FOREIGN_PASSIVE_BOTTOM", "RESISTOR", PhysicalPackages.RAISED_FACTORY_LINK,
+@@ -171,6 +234,18 @@
+             new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
+         accept(allowedMixed[0], MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+             "explicit16 permits a mixed canonical-quarter-turn and foreign-TOP0 owner");
++        Fixture[] controlAllowedMixed = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++            new String[] {"CONTROL_MIXED_CANONICAL", "CONTROL_MIXED_FOREIGN"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_0},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        accept(controlAllowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 preserves the same canonical 0/90 mechanical capability");
+ 
+         Fixture[] disallowedMixed = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+             new String[] {"MIXED_CANONICAL_BAD", "MIXED_FOREIGN_BAD"},
+@@ -183,6 +258,18 @@
+             new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
+         rejectPose(disallowedMixed[0], MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+             "explicit16 rejects a mixed pose set when its foreign passive is turned");
++        Fixture[] controlDisallowedMixed = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++            new String[] {"CONTROL_MIXED_CANONICAL_BAD", "CONTROL_MIXED_FOREIGN_BAD"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_90},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        rejectPose(controlDisallowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 rejects a turned foreign passive in mixed-package geometry");
+ 
+         Fixture genericTop0 = fixture(PcbPassivePosePolicy.LEGACY,
+             "GENERIC_PASSIVE_TOP0", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+@@ -207,14 +294,24 @@
+             PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
+         rejectPose(explicit, MediumBoardNormalAdmission.Contract.RB56,
+             "legacy RB56 contract rejects pose1 constraints");
++        rejectPose(explicit, MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 contract rejects policy1 constraints");
++        Fixture sizing = fixture(PcbPassivePosePolicy.SIZING_ONLY,
++            "CONTRACT_SIZING_ONLY", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
++            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
++        rejectPose(sizing, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
++            "policy1 contract rejects policy2 constraints");
+     }
+ 
+     private static void verifyDependencyCanonicalField() throws Exception {
+         TroubleshootBoard legacy = emptyDependencyBoard(PcbPassivePosePolicy.LEGACY);
+         TroubleshootBoard explicit = emptyDependencyBoard(PcbPassivePosePolicy.ORTHOGONAL);
++        TroubleshootBoard sizingOnly = emptyDependencyBoard(PcbPassivePosePolicy.SIZING_ONLY);
+         String legacyCanonical = appendBoard(legacy);
+         String explicitCanonical = appendBoard(explicit);
++        String sizingCanonical = appendBoard(sizingOnly);
+         String policyField = dependencyField("placement.passive-pose-policy", "1");
++        String sizingField = dependencyField("placement.passive-pose-policy", "2");
+         require(legacyCanonical.equals(expectedLegacyEmptyBoardCanonical(legacy)),
+             "pose0 appendBoard bytes retain the pre-policy canonical sequence exactly");
+         require(legacyCanonical.indexOf("placement.passive-pose-policy") < 0,
+@@ -223,12 +320,17 @@
+             "pose1 appends the explicit dependency policy field");
+         require(explicitCanonical.replace(policyField, "").equals(legacyCanonical),
+             "paired appendBoard canonical differs only by the pose1 field");
++        require(sizingCanonical.contains(sizingField) &&
++                sizingCanonical.replace(sizingField, "").equals(legacyCanonical),
++            "policy2 appends its own namespace without changing the prior dependency fields");
+     }
+ 
+     private static void verifyAdmissionCanonicalIdentity() throws Exception {
+         MediumBoardNormalAdmission legacy = admission(MediumBoardNormalAdmission.Contract.RB56);
+         MediumBoardNormalAdmission explicit = admission(
+             MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL);
++        MediumBoardNormalAdmission sizing = admission(
++            MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL);
+         String priorPhysicalContract = "board=RB56_CONTROL_BOARD;parts=40..60;terminals=2..7;" +
+             "additional-packages=ISOLATED_CONVERTER_7,OPTOCOUPLER_4,RADIAL_INDUCTOR_2;" +
+             "barrier=PRIMARY|SECONDARY|80-drawing-units;UAC=TOP/0;UFB=TOP/180;" +
+@@ -237,6 +339,8 @@
+             "legacy admission retains its literal identity");
+         require("RB56_BOARD_NORMAL@2".equals(explicit.identity()),
+             "explicit pose admission has a separate literal identity");
++        require("RB56_BOARD_NORMAL@3".equals(sizing.identity()),
++            "control17 admission has its separate literal identity");
+         require(legacy.canonical().contains(admissionField("rb56-physical-contract",
+                 priorPhysicalContract)),
+             "legacy RB56 canonical retains the exact prior physical contract field");
+@@ -252,6 +356,18 @@
+                     "RADIAL_ELECTROLYTIC_CAPACITOR,RADIAL_CERAMIC_CAPACITOR;" +
+                     "allowed-poses=TOP/0,TOP/90")),
+             "new canonical admission declares only the bounded four-package pose policy");
++        String sizingWithoutPolicy = sizing.canonical().replace(
++            admissionField("rb56-passive-pose-policy",
++                MediumBoardNormalAdmission.RB56_SIZING_CONTROL_POLICY), "");
++        require(legacy.canonical().substring(MediumBoardNormalAdmission.RB56_IDENTITY.length())
++                .equals(sizingWithoutPolicy.substring(
++                    MediumBoardNormalAdmission.RB56_SIZING_CONTROL_IDENTITY.length())),
++            "control admission preserves every legacy mechanical bound after its identity");
++        require(sizing.canonical().contains(admissionField("rb56-passive-pose-policy",
++                "policy=2;passives=AXIAL_RESISTOR,AXIAL_DIODE," +
++                    "RADIAL_ELECTROLYTIC_CAPACITOR,RADIAL_CERAMIC_CAPACITOR;" +
++                    "allowed-poses=TOP/0,TOP/90;sizing-only=true;visit-source=TOP/0")),
++            "control canonical binds policy2, sizing-only use, and TOP0 visits");
+     }
+ 
+     private static void accept(Fixture fixture,
+--- tests/contracts/PcbPassivePosePolicyContractTest.java
++++ tests/contracts/PcbPassivePosePolicyContractTest.java
+@@ -102,8 +102,14 @@
+         String before = source.geometryFingerprint();
+         PcbFootprint alternative = PcbPassivePosePolicy.alternativeFor(component,
+             source, PcbPassivePosePolicy.ORTHOGONAL, true);
++        PcbFootprint sizingAlternative = PcbPassivePosePolicy.alternativeFor(component,
++            source, PcbPassivePosePolicy.SIZING_ONLY, true);
+         check(alternative != null, "eligible canonical package gets one alternate " +
+             expected.variantKey);
++        check(sizingAlternative != null &&
++                sizingAlternative.geometryFingerprint().equals(alternative.geometryFingerprint()),
++            "policy2 derives the same geometry-bound TOP90 sizing alternative " +
++                expected.variantKey);
+ 
+         PcbComponentPlacement original = source.getPlacement();
+         PcbComponentPlacement turned = alternative.getPlacement();
+@@ -141,12 +147,13 @@
+         check(source.geometryFingerprint().equals(before),
+             "alternate creation leaves TOP0 source immutable " + expected.variantKey);
+ 
+-        verifyConservativeSizing(expected, source, alternative);
++        verifyConservativeSizing(expected, source, alternative, sizingAlternative);
+         return new Pair(component, source, alternative);
+     }
+ 
+     private static void verifyConservativeSizing(VariantCase expected,
+-            PcbFootprint source, PcbFootprint alternative) throws Exception {
++            PcbFootprint source, PcbFootprint alternative,
++            PcbFootprint sizingAlternative) throws Exception {
+         int margin = 20;
+         Rectangle original = PcbPlacementPlanner.envelope(source, margin);
+         Rectangle turned = PcbPlacementPlanner.envelope(alternative, margin);
+@@ -176,6 +183,21 @@
+                 readInt(itemType, item, "sizingEnvelopeHeight") == expectedHeight,
+             "conservative demand and extents cover both poses " + expected.variantKey);
+ 
++        Object sizingItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.SIZING_ONLY, Boolean.TRUE);
++        check(readRectangle(itemType, sizingItem, "alternateEnvelope").equals(turned) &&
++                readRectangle(itemType, sizingItem, "alternateEnvelope").equals(
++                    PcbPlacementPlanner.envelope(sizingAlternative, margin)) &&
++                readLong(itemType, sizingItem, "sizingDemandArea") ==
++                    readLong(itemType, item, "sizingDemandArea") &&
++                readInt(itemType, sizingItem, "sizingEnvelopeWidth") ==
++                    readInt(itemType, item, "sizingEnvelopeWidth") &&
++                readInt(itemType, sizingItem, "sizingEnvelopeHeight") ==
++                    readInt(itemType, item, "sizingEnvelopeHeight"),
++            "policy2 uses policy1's exact conservative sizing envelope and demand " +
++                expected.variantKey);
++
+         Object inactiveItem = constructor.newInstance(source, demand,
+             component(expected.componentId, expected.physicalPackage),
+             PcbPassivePosePolicy.ORTHOGONAL, Boolean.FALSE);
+@@ -184,6 +206,15 @@
+                 readInt(itemType, inactiveItem, "sizingEnvelopeWidth") == original.width &&
+                 readInt(itemType, inactiveItem, "sizingEnvelopeHeight") == original.height,
+             "inactive policy branch retains exact TOP0 sizing " + expected.variantKey);
++
++        Object inactiveSizingItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.SIZING_ONLY, Boolean.FALSE);
++        check(readRectangle(itemType, inactiveSizingItem, "alternateEnvelope") == null &&
++                readLong(itemType, inactiveSizingItem, "sizingDemandArea") == originalDemand &&
++                readInt(itemType, inactiveSizingItem, "sizingEnvelopeWidth") == original.width &&
++                readInt(itemType, inactiveSizingItem, "sizingEnvelopeHeight") == original.height,
++            "inactive policy2 branch retains exact TOP0 sizing " + expected.variantKey);
+ 
+         if (expected.physicalPackage ==
+                 PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR) {
+@@ -250,11 +281,13 @@
+                 PcbBoardSide.TOP), variant.getGeometry());
+         final PcbFootprint alternative = PcbPassivePosePolicy.alternativeFor(component,
+             source, PcbPassivePosePolicy.ORTHOGONAL, true);
++        final String sourceBefore = source.geometryFingerprint();
++        final String alternativeBefore = alternative.geometryFingerprint();
+         int originalCount = 0;
+         int alternateCount = 0;
+         for (long visit = 0; visit < 126; visit++) {
+             PcbFootprint selected = PcbPassivePosePolicy.forVisit(source,
+-                alternative, visit);
++                alternative, PcbPassivePosePolicy.ORTHOGONAL, visit);
+             if ((visit & 1L) == 0L) {
+                 check(selected == source, "even visit keeps TOP0 ordinal=" + visit);
+                 originalCount++;
+@@ -266,11 +299,31 @@
+         }
+         check(originalCount == 63 && alternateCount == 63,
+             "126 visits retain an exact 63/63 pose balance");
+-        check(PcbPassivePosePolicy.forVisit(source, null, 125) == source,
++        for (long visit = 0; visit < 126; visit++)
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.SIZING_ONLY, visit) == source,
++                "policy2 sizing visits retain source TOP0 ordinal=" + visit);
++        long[] fallbackVisits = new long[] {126, 127, 59999};
++        for (long visit : fallbackVisits)
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.SIZING_ONLY, visit) == source,
++                "policy2 fallback visits retain source TOP0 ordinal=" + visit);
++        check(PcbPassivePosePolicy.forVisit(source, null,
++                PcbPassivePosePolicy.ORTHOGONAL, 125) == source,
+             "null alternate always preserves source");
+         rejects(new Attempt() { public void run() {
+-            PcbPassivePosePolicy.forVisit(source, alternative, -1);
++            PcbPassivePosePolicy.forVisit(source, alternative,
++                PcbPassivePosePolicy.ORTHOGONAL, -1);
+         }}, "negative visit ordinal rejected");
++        rejects(new Attempt() { public void run() {
++            PcbPassivePosePolicy.forVisit(source, alternative, 3, 0);
++        }}, "unknown visit policy rejected");
++        check(PcbPassivePosePolicy.forVisit(source, alternative,
++                PcbPassivePosePolicy.LEGACY, 1) == source,
++            "legacy policy retains TOP0 even when given an unused alternate");
++        check(source.geometryFingerprint().equals(sourceBefore) &&
++                alternative.geometryFingerprint().equals(alternativeBefore),
++            "policy1 and policy2 visit selection leaves both templates immutable");
+     }
+ 
+     private static void inactiveAndUnsupported(VariantCase supported) throws Exception {
+@@ -344,11 +397,12 @@
+             "explicit policy1 accepted only in its supported context");
+         check(PcbPassivePosePolicy.supportsVersion(0) &&
+                 PcbPassivePosePolicy.supportsVersion(1) &&
++                PcbPassivePosePolicy.supportsVersion(2) &&
+                 !PcbPassivePosePolicy.supportsVersion(-1) &&
+-                !PcbPassivePosePolicy.supportsVersion(2),
+-            "only policy versions0 and1 are recognized");
+-        rejects(new Attempt() { public void run() {
+-            constraints("MEDIUM_BOARD", 1, 14, true, 2);
++                !PcbPassivePosePolicy.supportsVersion(3),
++            "only policy versions0, 1, and 2 are recognized");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, true, 3);
+         }}, "constraint rejects unknown policy version");
+         rejects(new Attempt() { public void run() {
+             constraints("MEDIUM_BOARD", 1, 13, true,
+@@ -366,6 +420,22 @@
+             constraints("MEDIUM_BOARD", 1, 14, false,
+                 PcbPassivePosePolicy.ORTHOGONAL);
+         }}, "policy1 requires two-layer routing");
++        PcbPlacementConstraints sizingOnly = constraints("MEDIUM_BOARD", 1, 14,
++            true, PcbPassivePosePolicy.SIZING_ONLY);
++        check(sizingOnly.passivePosePolicyVersion == PcbPassivePosePolicy.SIZING_ONLY,
++            "policy2 is accepted only in its supported sizing context");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 13, true, PcbPassivePosePolicy.SIZING_ONLY);
++        }}, "policy2 requires density14");
++        rejects(new Attempt() { public void run() {
++            constraints("OTHER_POLICY", 1, 14, true, PcbPassivePosePolicy.SIZING_ONLY);
++        }}, "policy2 requires MEDIUM_BOARD@1");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 2, 14, true, PcbPassivePosePolicy.SIZING_ONLY);
++        }}, "policy2 rejects an incompatible physical-policy epoch");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, false, PcbPassivePosePolicy.SIZING_ONLY);
++        }}, "policy2 requires two-layer routing");
+     }
+ 
+     private static PcbPlacementConstraints constraints(String policyId,
+@@ -400,10 +470,18 @@
+             "both clipped origins remain inside the actual outline floor");
+     }
+ 
+-    private static void policyIdentityAndVersions() {
++    private static void policyIdentityAndVersions() throws Exception {
+         check(PcbPassivePosePolicy.LEGACY == 0 &&
+-                PcbPassivePosePolicy.ORTHOGONAL == 1,
++                PcbPassivePosePolicy.ORTHOGONAL == 1 &&
++                PcbPassivePosePolicy.SIZING_ONLY == 2,
+             "canonical policy version identifiers");
++        Method selector = PcbPassivePosePolicy.class.getDeclaredMethod("forVisit",
++            PcbFootprint.class, PcbFootprint.class, Integer.TYPE, Long.TYPE);
++        int selectorMethods = 0;
++        for (Method method : PcbPassivePosePolicy.class.getDeclaredMethods())
++            if ("forVisit".equals(method.getName())) selectorMethods++;
++        check(selector.getParameterTypes().length == 4 && selectorMethods == 1,
++            "visit selector requires an explicit policy and has no legacy overload");
+         check(PcbPassivePosePolicy.supportsPackage(PhysicalPackages.AXIAL_RESISTOR) &&
+                 PcbPassivePosePolicy.supportsPackage(PhysicalPackages.AXIAL_DIODE) &&
+                 PcbPassivePosePolicy.supportsPackage(
+--- tests/contracts/PcbPassivePoseTrialSourceContractTest.java
++++ tests/contracts/PcbPassivePoseTrialSourceContractTest.java
+@@ -9,8 +9,8 @@
+             "default RB56/general epochs remain distinct and unchanged");
+         for (long seed : SEEDS) emit(seed);
+         boolean rejected = false;
+-        try { Rb56Plan.resolve(42L, 17); } catch (IllegalArgumentException expected) { rejected=true; }
+-        check(rejected, "unknown RB56 interpretation17 rejects");
++        try { Rb56Plan.resolve(42L, 18); } catch (IllegalArgumentException expected) { rejected=true; }
++        check(rejected, "unknown RB56 interpretation18 rejects");
+         System.out.println("PASS: PCB passive pose trial source contracts roots=14 assertions=" + assertions);
+     }
+     static Rb56Plan bound(long seed, int version) {
+--- tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
++++ tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
+@@ -143,23 +143,24 @@
+     }
+     static String sourceIntentShaForPosePolicy(Rb56Plan plan) {
+         if (plan == null || (plan.placementInterpretationVersion != 15 &&
+-                plan.placementInterpretationVersion != 16))
+-            throw new IllegalArgumentException("Only explicit15/16 source intent is supported");
++                plan.placementInterpretationVersion != 16 &&
++                plan.placementInterpretationVersion != 17))
++            throw new IllegalArgumentException("Only explicit15/16/17 source intent is supported");
+         return PlayerSessionFingerprint.of(savedIntent(plan));
+     }
+     static PosePolicyObservation routePosePolicy(long seed, int version, Rb56Plan plan,
+             TroubleshootBoard board, String intent, String source, String graph) {
+         PcbPassivePoseSourceContractTest.expected(seed); // Fixed14 informed cases only.
+-        if ((version != 15 && version != 16) || plan == null || board == null ||
++        if ((version != 15 && version != 16 && version != 17) || plan == null || board == null ||
+                 plan.seed != seed || plan.placementInterpretationVersion != version ||
+                 board.getPlacementConstraints().placementDensityVersion != 14 ||
+-                board.getPlacementConstraints().passivePosePolicyVersion != (version == 16 ? 1 : 0) ||
++                board.getPlacementConstraints().passivePosePolicyVersion != (version == 15 ? 0 : version == 16 ? 1 : 2) ||
+                 !sourceIntentShaForPosePolicy(plan).equals(intent) ||
+                 !PcbCanvasBoundaryContractTest.sourcePlanSha256(plan).equals(source) ||
+                 !PcbCanvasBoundaryContractTest.liveGraphSha256(board).equals(graph))
+-            throw new IllegalArgumentException("Pose observation requires its exact bound15/16 source");
++            throw new IllegalArgumentException("Pose observation requires its exact bound15/16/17 source");
+         return new PosePolicyObservation(routeAndObserveCore(seed, version, plan, board,
+-            intent, source, graph, version == 15 ? "saved15" : "pose16", System.nanoTime()));
++            intent, source, graph, version == 15 ? "saved15" : version == 16 ? "pose16" : "size17", System.nanoTime()));
+     }
+ 
+     private static Observation routeAndObserve(long seed, int version, Rb56Plan plan,

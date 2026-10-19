@@ -1,7 +1,48 @@
-# Current checkpoint: passive choice diagnosis complete; sizing control next
+# Current checkpoint: sizing-only control rejected; source-sizing trial next
 
-2026-10-19. Candidate based on3f1c2282da2eeabb426d966edc06579eafafb59b on
-codex/q60-faulted-profile-counts; publication follows final root checks. User's
+2026-10-19. Base HEAD dbb2ea4281c3b7e9338d112dd0ef42e794105743 on
+codex/q60-faulted-profile-counts, exact origin verified before this evidence scope.
+User indefinite continuation remains active; no main/email. Production/default15,
+general16, accepted1475 inputs and original5 unrelated untracked entries unchanged.
+
+passive-sizing-control-r1 concluded with native control FAIL and six-case comparison
+INCOMPLETE. Direct-native17/density14/pose2 uses rejected16's max sizing but retains
+all actual TOP0 visits, with separate@3 and live/private request17 rejection.
+All search/physical/time bounds unchanged. Root42 control prints protected empty
+rectangle772200 (1170x660 at980,0), failing maintained strict<327600. Two old42
+rows/censuses reproduce all42 non-timing fields; old15 void178200, old16 void208000.
+No full17 route row, final work/purity/margin proof or root3 cases; no fitted gate,
+partial promotion, complete-control fidelity or strict14 fitness PASS.
+
+First unit8 native PASS49.5870392s/exit0 but reader FAILed request-vs-registry order;
+58 byte-exact artifacts preserve first31 gates/18 source deltas/output/failure in
+attempt1. Root bound declaration to actual registry order, then froze anew and
+ran fresh unit8 PASS48.8837635s/exit0. Policy404/admission115/old-source114/trial128/
+control142 assertions;14+14+14 source bindings and15 untouched raw candidates exact.
+Reader20 canaries/52 expectations PASS. Routes2 requested FAIL68.788078s/exit2 at
+42/17 protected whitespace. Completed-artifact reader FAILs missing route receipt.
+Times include maintained cleanup, not separately timed; no cap change.
+
+Final1510/12 overrides/6 additions/31 gate owners and main1475 audited exact.
+Root diff/packet-integrity review PASS explicitly retains native FAIL/incomplete
+comparison. Success-route reader is unvalidated and would reject maintained
+PCB_WHITESPACE_CASE telemetry; future harness must declare/test it before use.
+Source restored1504 then1467; contained copy/private state retired. All6 recorded
+driver births exited, no termination; no task native/build/browser/preview/profile
+remains. GWT/player/replay/repair NOT APPLICABLE; full matrix/all-seed NOT RUN.
+Evidence: docs/task-evidence/PCB/passive-sizing-control-r1/RESULTS.md.
+
+Next unstarted scope is a direct-native source-sizing/orthogonal-visit trial,
+using actual selected-footprint fit/validation, unchanged finite regression gates,
+seeds and work limits. A read-only leaf is checking the exact archived extended
+planner safety boundary; no new trial edits or native execution yet. Publish this
+honest rejection normally, verify exact remote SHA, then continue. No main/email.
+
+# Previous checkpoint: sizing control before final routing failure
+
+2026-10-19. Publisheddbb2ea4281c3b7e9338d112dd0ef42e794105743 (Trace passive PCB
+placement divergence) normally pushed/exact origin verified on
+codex/q60-faulted-profile-counts. User's
 indefinite continuation/revoked quota stops remain active; no main/email. Main
 production/default15, general layout16 and accepted1475 inputs remain exact.
 
@@ -39,9 +80,25 @@ GWT, browser, preview or profile remains. Main1475 and published policy referenc
 exact; original5 unrelated untracked entries/shared tools preserved. GWT/player,
 owner/replay/repair and all-seed/manufacturing proof NOT RUN or NOT APPLICABLE.
 
-Next unstarted coherent step: explicitly identify a native sizing-only control
-with TOP0 selection to separate conservative sizing from the alternating schedule.
-Finish current evidence commit/normal push first, then continue; no main/email.
+passive-sizing-control-r1 is now in preparation. Its pre-edit proposal fixes an
+explicit placement17/density14/pose2 sizing-only control with TOP0 passive visits,
+same conservative max envelopes and all work/physical limits. Six future routes:
+42/3 at15/16/17, with all four old rows exact. Root prepared a new owned OS-temp
+copy exact1504 from accepted1467 plus49 sealed policy deltas; private state records
+ownership. Read-only scope review completed: distinct@3 preserves @2's policy1
+canonical contract; new control remains direct-native-only and live/private
+request17 rejects. Core and root fixtures completed; static1510 review proves the
+physical core exact after six wrapper migrations and planner exact after the
+policy2 gate/two explicit policy arguments. Main1475 unchanged. Frozen31 gates,
+18 source deltas and20 synthetic canaries/52 assertions preceded execution.
+First actual JDK8 unit8 PASS49.5870392s/exit0, but report reader FAILed ordering:
+the maintained verifier executes registry order, not request order. All first
+freeze/source/output bytes and FAIL preserved in attempt1; both driver births
+exited, no termination. No routes yet. Root corrected manifest/protocol and added
+a static source-derived registry-order gate. Independent reader correction is
+pending; fresh frozen unit8 is required before six routes. No stale runtime PASS
+reuse, Java/source/work limit change, production promotion or main/email. The
+owned sizing copy remains active; original5 unrelated entries preserved.
 
 # Previous checkpoint: rejected passive rotation placement trial recorded
 

@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "Root integrated diff, preserved rejection and packet-integrity audit; native control remains FAIL",
+  "nativeCopyCount": 1510,
+  "sourceDeltaCount": 18,
+  "gateOwnerCount": 31,
+  "nativeControlStatus": "FAIL",
+  "sixCaseComparison": "INCOMPLETE",
+  "nativePrerequisiteSuitesPassed": 8,
+  "routeSuitesRequested": 2,
+  "routeSuitesPassed": 0,
+  "routeCasesRequested": 6,
+  "fullRouteRowsProduced": 2,
+  "oldCasesExact": 2,
+  "rawCasesExact": 15,
+  "sourceRoots": 14,
+  "readerCanaries": 20,
+  "readerExpectationAssertions": 52,
+  "firstAttemptReaderFailurePreserved": true,
+  "failedAttemptArtifactCount": 58,
+  "freshNativeExecutionAfterDeclarationCorrection": true,
+  "phaseElapsedSeconds": {
+    "unit": 48.8837635,
+    "routes": 68.788078
+  },
+  "recordedDriverBirthsExited": 4,
+  "copyRetired": true,
+  "main1475Exact": true,
+  "strict14Fitness": "Existing FAIL remains; no fitness claim from control metrics",
+  "productionPromotion": false,
+  "GwtAndPlayerValidation": "NOT APPLICABLE: main production unchanged",
+  "reviewLimit": "Static root review and finite native diagnostics; no independent runtime review, all-seed or manufacturing proof"
+}

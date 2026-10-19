@@ -1,0 +1,33 @@
+{
+  "status": "FAIL",
+  "phase": "root42/control17/maintained protected-whitespace assertion",
+  "controlWhitespace": {
+    "seed": "42",
+    "version": 17,
+    "parts": 54,
+    "gridUnits": 10,
+    "sampledCells": 62376,
+    "packageAccessOccupiedCells": 27618,
+    "protectedFreeCells": 27987,
+    "protectedFreeFraction": 0.44868218545594457,
+    "largestProtectedEmptyRectangle": {
+      "x": 980,
+      "y": 0,
+      "width": 1170,
+      "height": 660,
+      "area": 772200
+    },
+    "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+  },
+  "requiredStrictUpperBound": 327600,
+  "old42CasesExactNonTimingFields": 42,
+  "old42Versions": [
+    15,
+    16
+  ],
+  "fullControl17RouteRow": "NOT PRODUCED: assertion stops before final work/purity/margin/metrics checks",
+  "root3AllVersions": "NOT RUN: maintained verifier stopped at failed first JVM suite",
+  "sixCaseComparison": "INCOMPLETE; no control metric deltas or complete fidelity PASS",
+  "readerResult": "FAIL: completed route receipt absent after native failure",
+  "limits": "Printed whitespace is GRID10 protected-free measurement, not proof of legally packable space"
+}

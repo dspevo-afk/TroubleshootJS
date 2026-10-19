@@ -1,0 +1,27 @@
+{
+  "schema": "pcb-passive-sizing-control-reader-canaries-v1",
+  "scope": "Synthetic-only assessment reader checks. No native execution and no new native output consumption.",
+  "candidate": "placement17/density14/passivePosePolicy2; RB56_BOARD_NORMAL@3",
+  "cases": [
+    { "name": "complete-source-raw-route-chain", "kind": "positive", "expect": "14 source bindings, 15 untouched raw branches, four exact old route reproductions, and two descriptive control deltas" },
+    { "name": "unit-phase-contract-pass", "kind": "positive", "expect": "Eight suite markers, exact eight-key timing, terminal cleanup, and old14/trial16-14/control17-14/raw15 report order" },
+    { "name": "routes-phase-contract-pass", "kind": "positive", "expect": "Two suite markers, exact timing and cleanup, and six pose-then-route pairs in protocol order" },
+    { "name": "source-case-order-rejected", "kind": "negative", "expect": "Reordered control17 source bindings fail" },
+    { "name": "control17-density-policy-admission-rejected", "kind": "negative", "expect": "Wrong density, policy, or admission identity fails" },
+    { "name": "source-graph-and-signed-long-rejected", "kind": "negative", "expect": "Changed graph identity or an out-of-range signed-long seed fails" },
+    { "name": "source17-digest-and-canonical-rejected", "kind": "negative", "expect": "Changed derived17 digest or canonical source fails" },
+    { "name": "untouched-raw-candidate-change-rejected", "kind": "negative", "expect": "A changed nonselected raw candidate fails" },
+    { "name": "published-old-route-metric-change-rejected", "kind": "negative", "expect": "Any changed non-timing field in the four published old route rows fails" },
+    { "name": "control17-pose-orientation-and-admission-rejected", "kind": "negative", "expect": "TOP90 passive membership or wrong @3 admission identity fails" },
+    { "name": "route-case-order-rejected", "kind": "negative", "expect": "Reordered route cases fail" },
+    { "name": "phase-report-order-rejected", "kind": "negative", "expect": "Reordered unit source report groups fail" },
+    { "name": "phase-missing-suite-marker-rejected", "kind": "negative", "expect": "Missing required suite PASS marker fails" },
+    { "name": "phase-failure-and-timeout-rejected", "kind": "negative", "expect": "Failure status, nonzero exit, and timeout output fail" },
+    { "name": "phase-cleanup-missing-or-early-rejected", "kind": "negative", "expect": "Missing cleanup or cleanup before terminal fails" },
+    { "name": "phase-timing-schema-and-scope-rejected", "kind": "negative", "expect": "Extra timing key or wrong scope fails" },
+    { "name": "phase-duplicate-suite-marker-rejected", "kind": "negative", "expect": "Duplicate expected suite PASS prefix in the log and receipt fails" },
+    { "name": "phase-suite-marker-order-rejected", "kind": "negative", "expect": "Reordered expected suite PASS prefixes fail" },
+    { "name": "phase-log-receipt-suffix-mismatch-rejected", "kind": "negative", "expect": "Different complete suite PASS lines between log and child receipt fail" },
+    { "name": "phase-unrelated-suffix-rejected", "kind": "negative", "expect": "A suite PASS line with free-text instead of a recognized assertion/detail suffix fails" }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "status": "PASS",
+  "readerCanariesStatus": "PASS",
+  "nativeExecutionStatus": "NOT RUN",
+  "strict14FitnessStatus": "NOT RUN; the existing strict14 rejection remains unchanged.",
+  "scope": "Synthetic-only reader canaries; no native execution or new native outputs read.",
+  "candidate": "placement17/density14/passivePosePolicy2; RB56_BOARD_NORMAL@3",
+  "syntheticOnly": true,
+  "newNativeOutputsRead": false,
+  "caseCount": 20,
+  "passedCases": 20,
+  "failedCases": 0,
+  "canaryExpectationAssertions": 52,
+  "cases": [
+    {
+      "name": "complete-source-raw-route-chain",
+      "status": "PASS",
+      "assertions": 7
+    },
+    {
+      "name": "unit-phase-contract-pass",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "routes-phase-contract-pass",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "source-case-order-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "control17-density-policy-admission-rejected",
+      "status": "PASS",
+      "assertions": 3
+    },
+    {
+      "name": "source-graph-and-signed-long-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "source17-digest-and-canonical-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "untouched-raw-candidate-change-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "published-old-route-metric-change-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "control17-pose-orientation-and-admission-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "route-case-order-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-report-order-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-missing-suite-marker-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-failure-and-timeout-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "phase-cleanup-missing-or-early-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "phase-timing-schema-and-scope-rejected",
+      "status": "PASS",
+      "assertions": 2
+    },
+    {
+      "name": "phase-duplicate-suite-marker-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-suite-marker-order-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-log-receipt-suffix-mismatch-rejected",
+      "status": "PASS",
+      "assertions": 1
+    },
+    {
+      "name": "phase-unrelated-suffix-rejected",
+      "status": "PASS",
+      "assertions": 1
+    }
+  ],
+  "consumedSha256": {
+    "proposal.json": "4c42f270f063d931d5180b184f049137cbf6ad0681c776a89783930cbcd08c4d",
+    "protocol.json": "a1e0859389d3890d813f70ba91f19922893e750cfd334ac1a88c51c2583cb1a6",
+    "unit-suites.json": "829d8bea0a3fe4b6ecb79bd74f3019b5623b66c7bfd028321786dc00e6f17897",
+    "route-suites.json": "8498271b32e5a521819ced0ce9288f1d3f6c1c4935bd65c9fa1f3e2fd8f30e59",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "route-baselines.json": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790",
+    "pose-baselines.json": "377f70b7c888722ac1600b8d446cebb4230f7ab9ba78b1fccf8782cfdfa71ce8",
+    "priorPolicyAssess.py": "c9908a3d0439e64b01fa806f353fa7d6e024e8dc6050179a10bf8bef31ff1f26",
+    "publishedPolicyUnit.txt": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570",
+    "assessment-canaries.json": "f887125c2f6cd130521e827d24b88cb8fef4e95d35b423c5b12e5e64378cd592",
+    "assess.py": "18cfe6a5dc28d278bffc0a4514eee81394db44632e74cf988af042bf62094d5d",
+    "check_assessment.py": "748d9b166edf9eaf2fe4014f425a1adc733f39f6248c057c820f4ec0fea3680e"
+  },
+  "limits": [
+    "Published passive-pose-policy-r1/unit.txt was hash-checked and used only for its trial16 sourceCanonical fixtures.",
+    "New17 source/raw/route/pose rows were generated in memory from sealed inputs.",
+    "No new unit/routes output, native process, Java/GWT build, browser, or physical solver execution was used.",
+    "Reader PASS means protocol/identity/old-control reproduction only; control17 metric deltas are descriptive and do not pass the strict14 fitness oracle."
+  ]
+}

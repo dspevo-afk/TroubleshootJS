@@ -1,0 +1,152 @@
+{
+  "schema": "pcb-passive-sizing-control-v1",
+  "cases": [
+    [
+      "42",
+      15
+    ],
+    [
+      "42",
+      16
+    ],
+    [
+      "42",
+      17
+    ],
+    [
+      "3",
+      15
+    ],
+    [
+      "3",
+      16
+    ],
+    [
+      "3",
+      17
+    ]
+  ],
+  "admissionByVersion": {
+    "15": "RB56_BOARD_NORMAL@1",
+    "16": "RB56_BOARD_NORMAL@2",
+    "17": "RB56_BOARD_NORMAL@3"
+  },
+  "policyByVersion": {
+    "15": 0,
+    "16": 1,
+    "17": 2
+  },
+  "density": 14,
+  "sourcePrefixes": {
+    "old": "PCB_PASSIVE_POSE_SOURCE_CASE ",
+    "trial16": "PCB_PASSIVE_POLICY_INPUT ",
+    "control17": "PCB_SIZING_CONTROL_INPUT "
+  },
+  "controlSourceFields": [
+    "seed",
+    "sourceCanonical15",
+    "sourcePlanSha25617",
+    "graph17",
+    "intent17",
+    "layoutSeed17",
+    "routingSeed17",
+    "eligibleIds",
+    "densityVersion17",
+    "passivePosePolicy17",
+    "admissionIdentity17"
+  ],
+  "rawPrefix": "PCB_SIZING_CONTROL_RAW ",
+  "rawFields": [
+    "seed",
+    "attempt",
+    "geometry15",
+    "geometry17",
+    "evaluations15",
+    "evaluations17",
+    "demand15",
+    "demand17",
+    "courtyard15",
+    "courtyard17"
+  ],
+  "rawCases": [
+    [
+      "42",
+      0
+    ],
+    [
+      "42",
+      2
+    ],
+    [
+      "42",
+      3
+    ],
+    [
+      "42",
+      4
+    ],
+    [
+      "42",
+      5
+    ],
+    [
+      "-1022",
+      0
+    ],
+    [
+      "-1022",
+      2
+    ],
+    [
+      "-1022",
+      3
+    ],
+    [
+      "-1022",
+      4
+    ],
+    [
+      "-1022",
+      5
+    ],
+    [
+      "4",
+      0
+    ],
+    [
+      "4",
+      2
+    ],
+    [
+      "4",
+      3
+    ],
+    [
+      "4",
+      4
+    ],
+    [
+      "4",
+      5
+    ]
+  ],
+  "routePrefix": "PCB_SIZING_CONTROL_ROUTE ",
+  "posePrefix": "PCB_SIZING_CONTROL_POSES ",
+  "poseFields": [
+    "seed",
+    "issuedAdmissionIdentity",
+    "version",
+    "top0",
+    "top90"
+  ],
+  "unitReportOrder": "old14,trial16source14,control17source14,raw15; pure policy/admission emit only PASS markers",
+  "routeReportOrder": "pose,route per case;42 at15/16/17 then3 at15/16/17",
+  "timingScope": "Native sizing-only control; unchanged per-JVM/search/physical limits",
+  "limits": "No nested choice capture or synthetic serializer sample. Six normal routes only; no added native pose/origin/fit/score/candidate work. Diagnostics only, no new accepted fitness/packing policy",
+  "baselinesSha256": {
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "route-baselines.json": "aa17f3137be2b929d2bcaf3651640b34a7db511010b5d4a05c1f813799013b19",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790",
+    "pose-baselines.json": "377f70b7c888722ac1600b8d446cebb4230f7ab9ba78b1fccf8782cfdfa71ce8"
+  }
+}

@@ -156,6 +156,13 @@ unchanged1508 inputs and12 exact native artifacts. No Java rerun or fitted limit
 Copy restored1504 then1467/retired; main1475 exact. Next isolate conservative
 sizing from pose scheduling with an explicitly identified native TOP0 control.
 [Choice diagnosis and limits](task-evidence/PCB/passive-pose-choice-cause-r1/RESULTS.md).
+The explicit native sizing-only/TOP0 control17 is rejected: board42's protected
+void grows to772200 and fails the unchanged strict bound. Fresh unit8 source/raw
+prerequisites PASS48.8838s, routes FAIL68.7881s/exit2 before a full17 row or root3.
+Two old42 rows stay exact; the six-case comparison is incomplete. Original
+request-order reader failure and fresh corrected run are preserved. No production
+promotion or changed gate/cap; next is a bounded source-sizing/orthogonal trial.
+[Sizing-control rejection and limits](task-evidence/PCB/passive-sizing-control-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "Root static integrated source review before native execution",
+  "copyCount": 1510,
+  "overrides": 12,
+  "additions": 6,
+  "physicalCoreByteExactAfterSixWrapperMigrations": true,
+  "oldSourceFixtureByteExactExceptUnsupported18": true,
+  "registryByteExactExceptSixEntries": true,
+  "declaredSuitesMatchMaintainedRegistryOrder": true,
+  "plannerByteExactExceptPolicy2GateAndTwoPolicyArguments": true,
+  "productionVisitCallers": [
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java"
+  ],
+  "diffSha256": "0463f1d1267cfa428f712338c36f0dd4f3a8346f3a277e8ae7d2b1cfd9449b64",
+  "behaviorProof": "NOT RUN; fresh native fixtures and six routes required"
+}
