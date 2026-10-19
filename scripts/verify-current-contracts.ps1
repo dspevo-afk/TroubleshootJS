@@ -399,6 +399,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbCompactionContractTest'; Marker = 'PCB compaction contracts ' },
         @{ Name = 'PcbCompactnessContractTest'; Marker = 'actual RB56 geometry report ' },
         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
+        @{ Name = 'PcbOccupancyDiagnosticContractTest'; Marker = 'PCB occupancy diagnostic contracts ' },
         @{ Name = 'PcbNearestVacancyPreferenceContractTest'; Marker = 'PCB nearest vacancy preference contracts ' },
         @{ Name = 'PcbNearestVacancyContractTest'; Marker = 'PCB nearest vacancy contracts ' },
         @{ Name = 'PcbNearestVacancyHoldoutContractTest'; Marker = 'PCB nearest vacancy holdouts ' },

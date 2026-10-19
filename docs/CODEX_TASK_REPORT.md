@@ -1,4 +1,37 @@
-# Current checkpoint: private13 accepted and published; later trial rejected
+# Current checkpoint: domain/occupancy diagnosis complete; packing work continues
+
+2026-10-19. Baseline e0b3052fd030bb30359471bd217a673854612b18 on
+codex/q60-faulted-profile-counts. User requests continued autonomous PCB realism
+work until stopped or usage exhausted; earlier9am finish is superseded. No main
+merge or email. Diagnostic-only commit/push follows this checkpoint.
+
+New native geometry exporter and four inspected domain/access/copper-clearance
+overlays cover roots42 and-1022. Literal vertical/horizontal/exact-gap and invalid
+domain fixtures, unchanged fingerprints, actual geometry/P07 validation and
+existing whitespace metric pass30 assertions. Maintained native1 PASS59.5718274s
+including terminal cleanup; initial missing-helper compile FAIL retained. Exact
+accepted13 hashes/attempts/voids match. All1,440 prior inputs stay byte-identical
+except the one-line suite registration; separate entire source/web digests match.
+GWT/player flows NOT RUN for unchanged production. Local PyMuPDF artifact renders
+were inspected; browser file URL BLOCKED by protocol policy, no alternate browser
+route attempted. Initial unsupported SVG class styling corrected to attributes.
+Optional static review identified missing displayed clearance guards; corrected,
+rerendered and reinspected. Review did not run runtime gates.
+
+Both lower-left pockets extend outside the isolation strip. Root42's810×220
+pocket is bounded by D4 access, isolation and board edges. Root-1022's760×960
+pocket is bounded by JAC/UFB access, isolation and board edge. Package access
+elsewhere overlaps the pocket axis spans; whole-axis contraction cannot remove
+the entire pocket while keeping those packages. Free raster is not fit proof.
+
+Evidence: docs/task-evidence/PCB/occupancy-cause-r1. No production/generation or
+saved-layout change. Five original untracked entries and unrelated Desktop work
+remain preserved. Verifier cleanup confirmed; no preview was launched. Task-only
+backup and blank browser tab cleaned; no viewport override. Next bounded
+experiment: repeated-control candidate0 vacancy advice using its existing ring0
+duplicate slots, preserving6 placements, evaluation caps,3+3 routes and admission.
+
+# Previous checkpoint: private13 accepted and published; later trial rejected
 
 2026-10-14. Code HEAD `96bd1b1414866733927f93bdf0b039bd09cae204`, normally
 pushed to `origin/codex/q60-faulted-profile-counts`; exact remote SHA verified.

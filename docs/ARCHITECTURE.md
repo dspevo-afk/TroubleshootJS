@@ -5802,3 +5802,16 @@ to density11 with the same width profile, and saved1–11 retain their prior rul
 owner restoration. Public alpha5, session model1 and dependency epoch16 stay.
 Qualification status and finite-seed limits are recorded in the
 [nearest-vacancy evidence packet](task-evidence/PCB/nearest-vacancy-preference-r1/README.md).
+
+## Developer occupancy diagnostics
+
+Native-only `PcbOccupancyDiagnosticContractTest` exports accepted routed geometry
+through existing package/access, conductive-domain, copper, via and silk owners.
+Literal corridor fixtures check the diagnostic strip arithmetic against explicit
+coordinates. The existing whitespace metric remains unchanged. The evidence
+renderer retains every matching neighboring sampled obstacle and package axis
+projection witnesses; its SVGs show both copper faces and their metric clearance
+rectangles. Domain unions are descriptive bounding boxes, not allowed-placement
+regions; sampled free space is not proof of package fit or routability. This
+diagnostic contract and its artifacts are outside production player UI and do not
+change generation or electrical behavior.

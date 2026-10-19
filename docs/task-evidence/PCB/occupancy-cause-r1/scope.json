@@ -1,0 +1,15 @@
+{
+  "baseline": "e0b3052fd030bb30359471bd217a673854612b18",
+  "scope": "Developer-only native geometry export and inspectable domain/occupancy overlays before another packing change",
+  "roots": ["42", "-1022"],
+  "interpretation": "private13 density12 ROLE_TRACE@1; unchanged production geometry and electrical behavior",
+  "validation": [
+    "Literal independent vertical/horizontal/exact-clearance/invalid-domain strip fixtures",
+    "Maintained JDK8 native diagnostic suite; authoritative geometry, route and P07 validation",
+    "Exact before/after geometry fingerprint plus accepted13 receipt comparison",
+    "Render and inspect both geometry overlays; free raster is not package-fit proof",
+    "Audit prior qualified production sources and compiled web remain byte-identical; no production build or player-flow change required",
+    "Root integrated diff/check, explicit stage, normal branch commit/push/remote SHA verification"
+  ],
+  "limits": "Two diagnostic cases only. No new placement version, score, route budget, manufacturing claim or player-visible diagnostic UI. No main merge or email."
+}

@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "operation": "Maintained JDK8 native diagnostic suite including wrapper terminal cleanup",
+  "elapsedSeconds": 33.5916896,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "command": "scripts/verify-current-contracts.ps1 -Suite PcbOccupancyDiagnosticContractTest -ReceiptOutputPath packet/native-receipts.txt"
+}

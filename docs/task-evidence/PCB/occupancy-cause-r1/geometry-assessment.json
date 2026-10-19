@@ -1,0 +1,724 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "seed": "42",
+      "selectedPlacementAttempt": 1,
+      "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+      "domainUnions": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            90,
+            185,
+            763,
+            1260
+          ]
+        },
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            940,
+            124,
+            2371,
+            1528
+          ]
+        }
+      ],
+      "barrierReservedStrips": [
+        {
+          "firstDomain": "PRIMARY",
+          "secondDomain": "SECONDARY",
+          "lowDomain": "PRIMARY",
+          "highDomain": "SECONDARY",
+          "axis": "VERTICAL",
+          "clearance": 80,
+          "lowLimit": 856,
+          "highLimit": 936,
+          "rect": [
+            856,
+            40,
+            80,
+            1662
+          ]
+        }
+      ],
+      "largestProtectedEmptyRectangle": {
+        "x": 40,
+        "y": 1480,
+        "width": 810,
+        "height": 220,
+        "area": 178200
+      },
+      "packageProjectionWitnesses": {
+        "x": [
+          {
+            "componentId": "CBIAS",
+            "packageAccess": [
+              486,
+              745,
+              124,
+              165
+            ],
+            "projectionOverlap": 124
+          },
+          {
+            "componentId": "CBULK",
+            "packageAccess": [
+              70,
+              842,
+              150,
+              192
+            ],
+            "projectionOverlap": 150
+          },
+          {
+            "componentId": "CFB",
+            "packageAccess": [
+              706,
+              415,
+              124,
+              165
+            ],
+            "projectionOverlap": 124
+          },
+          {
+            "componentId": "D1",
+            "packageAccess": [
+              475,
+              145,
+              330,
+              120
+            ],
+            "projectionOverlap": 330
+          },
+          {
+            "componentId": "D2",
+            "packageAccess": [
+              65,
+              1145,
+              350,
+              120
+            ],
+            "projectionOverlap": 350
+          },
+          {
+            "componentId": "D3",
+            "packageAccess": [
+              475,
+              265,
+              350,
+              120
+            ],
+            "projectionOverlap": 350
+          },
+          {
+            "componentId": "D4",
+            "packageAccess": [
+              495,
+              1345,
+              330,
+              120
+            ],
+            "projectionOverlap": 330
+          },
+          {
+            "componentId": "F1",
+            "packageAccess": [
+              205,
+              445,
+              320,
+              120
+            ],
+            "projectionOverlap": 320
+          },
+          {
+            "componentId": "JAC",
+            "packageAccess": [
+              109,
+              584,
+              176,
+              202
+            ],
+            "projectionOverlap": 176
+          },
+          {
+            "componentId": "RENAC",
+            "packageAccess": [
+              305,
+              985,
+              320,
+              120
+            ],
+            "projectionOverlap": 320
+          },
+          {
+            "componentId": "RFB",
+            "packageAccess": [
+              575,
+              1215,
+              340,
+              120
+            ],
+            "projectionOverlap": 275
+          },
+          {
+            "componentId": "RPRIMARY",
+            "packageAccess": [
+              345,
+              625,
+              320,
+              120
+            ],
+            "projectionOverlap": 320
+          },
+          {
+            "componentId": "UAC",
+            "packageAccess": [
+              635,
+              820,
+              500,
+              370
+            ],
+            "projectionOverlap": 215
+          },
+          {
+            "componentId": "UFB",
+            "packageAccess": [
+              675,
+              580,
+              420,
+              240
+            ],
+            "projectionOverlap": 175
+          }
+        ],
+        "y": [
+          {
+            "componentId": "DA",
+            "packageAccess": [
+              2855,
+              1495,
+              330,
+              120
+            ],
+            "projectionOverlap": 120
+          },
+          {
+            "componentId": "KA",
+            "packageAccess": [
+              2415,
+              1380,
+              400,
+              270
+            ],
+            "projectionOverlap": 170
+          },
+          {
+            "componentId": "QA",
+            "packageAccess": [
+              1685,
+              1494,
+              185,
+              192
+            ],
+            "projectionOverlap": 192
+          },
+          {
+            "componentId": "RPIN_A",
+            "packageAccess": [
+              2045,
+              1415,
+              360,
+              120
+            ],
+            "projectionOverlap": 55
+          }
+        ]
+      },
+      "sampledBoundaryWitnesses": {
+        "obstacleMatches": {
+          "left": [],
+          "right": [
+            {
+              "kind": "ISOLATION",
+              "sourceId": "PRIMARY/SECONDARY",
+              "guardedRect": [
+                856,
+                40,
+                80,
+                1662
+              ],
+              "adjacentCells": 22
+            }
+          ],
+          "top": [
+            {
+              "kind": "PACKAGE_ACCESS",
+              "sourceId": "D4",
+              "guardedRect": [
+                495,
+                1345,
+                330,
+                120
+              ],
+              "adjacentCells": 35
+            }
+          ],
+          "bottom": []
+        },
+        "outsideSampledGrid": {
+          "left": 22,
+          "right": 0,
+          "top": 0,
+          "bottom": 81
+        },
+        "scope": "All matching records retained; neighboring sampled cells explain metric boundaries, not placement or routing feasibility"
+      },
+      "packages": 54,
+      "traces": 142,
+      "vias": 45
+    },
+    {
+      "seed": "-1022",
+      "selectedPlacementAttempt": 0,
+      "geometrySha256": "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
+      "domainUnions": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            120,
+            134,
+            921,
+            1211
+          ]
+        },
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1151,
+            134,
+            2541,
+            1755
+          ]
+        }
+      ],
+      "barrierReservedStrips": [
+        {
+          "firstDomain": "PRIMARY",
+          "secondDomain": "SECONDARY",
+          "lowDomain": "PRIMARY",
+          "highDomain": "SECONDARY",
+          "axis": "VERTICAL",
+          "clearance": 80,
+          "lowLimit": 1056,
+          "highLimit": 1136,
+          "rect": [
+            1056,
+            50,
+            80,
+            1891
+          ]
+        }
+      ],
+      "largestProtectedEmptyRectangle": {
+        "x": 290,
+        "y": 980,
+        "width": 760,
+        "height": 960,
+        "area": 729600
+      },
+      "packageProjectionWitnesses": {
+        "x": [
+          {
+            "componentId": "CBIAS",
+            "packageAccess": [
+              577,
+              164,
+              124,
+              165
+            ],
+            "projectionOverlap": 124
+          },
+          {
+            "componentId": "CBULK",
+            "packageAccess": [
+              531,
+              621,
+              150,
+              192
+            ],
+            "projectionOverlap": 150
+          },
+          {
+            "componentId": "CFB",
+            "packageAccess": [
+              437,
+              104,
+              124,
+              165
+            ],
+            "projectionOverlap": 124
+          },
+          {
+            "componentId": "D1",
+            "packageAccess": [
+              466,
+              464,
+              330,
+              120
+            ],
+            "projectionOverlap": 330
+          },
+          {
+            "componentId": "D2",
+            "packageAccess": [
+              156,
+              584,
+              350,
+              120
+            ],
+            "projectionOverlap": 216
+          },
+          {
+            "componentId": "D3",
+            "packageAccess": [
+              146,
+              294,
+              350,
+              120
+            ],
+            "projectionOverlap": 206
+          },
+          {
+            "componentId": "D4",
+            "packageAccess": [
+              446,
+              824,
+              350,
+              120
+            ],
+            "projectionOverlap": 350
+          },
+          {
+            "componentId": "F1",
+            "packageAccess": [
+              146,
+              434,
+              320,
+              120
+            ],
+            "projectionOverlap": 176
+          },
+          {
+            "componentId": "RENAC",
+            "packageAccess": [
+              496,
+              334,
+              340,
+              120
+            ],
+            "projectionOverlap": 340
+          },
+          {
+            "componentId": "RFB",
+            "packageAccess": [
+              726,
+              594,
+              340,
+              120
+            ],
+            "projectionOverlap": 324
+          },
+          {
+            "componentId": "RPRIMARY",
+            "packageAccess": [
+              116,
+              94,
+              320,
+              120
+            ],
+            "projectionOverlap": 146
+          },
+          {
+            "componentId": "UAC",
+            "packageAccess": [
+              846,
+              209,
+              500,
+              370
+            ],
+            "projectionOverlap": 204
+          },
+          {
+            "componentId": "UFB",
+            "packageAccess": [
+              886,
+              729,
+              420,
+              240
+            ],
+            "projectionOverlap": 164
+          }
+        ],
+        "y": [
+          {
+            "componentId": "DA",
+            "packageAccess": [
+              2706,
+              964,
+              330,
+              120
+            ],
+            "projectionOverlap": 104
+          },
+          {
+            "componentId": "DB",
+            "packageAccess": [
+              1796,
+              1374,
+              350,
+              120
+            ],
+            "projectionOverlap": 120
+          },
+          {
+            "componentId": "DZ1",
+            "packageAccess": [
+              1316,
+              894,
+              350,
+              120
+            ],
+            "projectionOverlap": 34
+          },
+          {
+            "componentId": "JAC",
+            "packageAccess": [
+              100,
+              1163,
+              176,
+              202
+            ],
+            "projectionOverlap": 202
+          },
+          {
+            "componentId": "JLOAD",
+            "packageAccess": [
+              3536,
+              793,
+              176,
+              202
+            ],
+            "projectionOverlap": 15
+          },
+          {
+            "componentId": "JOA",
+            "packageAccess": [
+              2730,
+              1284,
+              152,
+              145
+            ],
+            "projectionOverlap": 145
+          },
+          {
+            "componentId": "JOB",
+            "packageAccess": [
+              2540,
+              1764,
+              152,
+              145
+            ],
+            "projectionOverlap": 145
+          },
+          {
+            "componentId": "KA",
+            "packageAccess": [
+              2426,
+              1459,
+              400,
+              270
+            ],
+            "projectionOverlap": 270
+          },
+          {
+            "componentId": "KB",
+            "packageAccess": [
+              1766,
+              1549,
+              400,
+              270
+            ],
+            "projectionOverlap": 270
+          },
+          {
+            "componentId": "LED1",
+            "packageAccess": [
+              1617,
+              1033,
+              123,
+              171
+            ],
+            "projectionOverlap": 171
+          },
+          {
+            "componentId": "LEDOUT_A",
+            "packageAccess": [
+              3207,
+              1053,
+              123,
+              171
+            ],
+            "projectionOverlap": 171
+          },
+          {
+            "componentId": "LEDOUT_B",
+            "packageAccess": [
+              3357,
+              813,
+              123,
+              171
+            ],
+            "projectionOverlap": 4
+          },
+          {
+            "componentId": "QA",
+            "packageAccess": [
+              2256,
+              1093,
+              185,
+              192
+            ],
+            "projectionOverlap": 192
+          },
+          {
+            "componentId": "QB",
+            "packageAccess": [
+              1966,
+              1093,
+              185,
+              192
+            ],
+            "projectionOverlap": 192
+          },
+          {
+            "componentId": "RBLEED5",
+            "packageAccess": [
+              2006,
+              954,
+              360,
+              120
+            ],
+            "projectionOverlap": 94
+          },
+          {
+            "componentId": "RDB",
+            "packageAccess": [
+              2366,
+              954,
+              320,
+              120
+            ],
+            "projectionOverlap": 94
+          },
+          {
+            "componentId": "RLED",
+            "packageAccess": [
+              1266,
+              1244,
+              360,
+              120
+            ],
+            "projectionOverlap": 120
+          },
+          {
+            "componentId": "RLEDOUT_A",
+            "packageAccess": [
+              2826,
+              1094,
+              360,
+              120
+            ],
+            "projectionOverlap": 120
+          },
+          {
+            "componentId": "RLEDOUT_B",
+            "packageAccess": [
+              2986,
+              1424,
+              320,
+              120
+            ],
+            "projectionOverlap": 120
+          },
+          {
+            "componentId": "RPDA",
+            "packageAccess": [
+              2196,
+              1324,
+              340,
+              120
+            ],
+            "projectionOverlap": 120
+          }
+        ]
+      },
+      "sampledBoundaryWitnesses": {
+        "obstacleMatches": {
+          "left": [
+            {
+              "kind": "PACKAGE_ACCESS",
+              "sourceId": "JAC",
+              "guardedRect": [
+                100,
+                1163,
+                176,
+                202
+              ],
+              "adjacentCells": 22
+            }
+          ],
+          "right": [
+            {
+              "kind": "ISOLATION",
+              "sourceId": "PRIMARY/SECONDARY",
+              "guardedRect": [
+                1056,
+                50,
+                80,
+                1891
+              ],
+              "adjacentCells": 96
+            }
+          ],
+          "top": [
+            {
+              "kind": "PACKAGE_ACCESS",
+              "sourceId": "UFB",
+              "guardedRect": [
+                886,
+                729,
+                420,
+                240
+              ],
+              "adjacentCells": 17
+            }
+          ],
+          "bottom": []
+        },
+        "outsideSampledGrid": {
+          "left": 0,
+          "right": 0,
+          "top": 0,
+          "bottom": 76
+        },
+        "scope": "All matching records retained; neighboring sampled cells explain metric boundaries, not placement or routing feasibility"
+      },
+      "packages": 60,
+      "traces": 152,
+      "vias": 48
+    }
+  ],
+  "limits": "Actual drawing geometry and existing conservative GRID10 metric. Domain unions are bounding boxes, not allowed placement regions. Empty rectangle is not proof any package fits."
+}

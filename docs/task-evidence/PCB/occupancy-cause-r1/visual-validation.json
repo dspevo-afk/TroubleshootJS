@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "method": "Local SVG rasterization through installed PyMuPDF; native file view inspection",
+  "inspected": ["root-42-full.png", "root-42-pocket.png", "root--1022-full.png", "root--1022-pocket.png"],
+  "initialRaster": "FAIL: local SVG renderer did not apply class CSS, producing black fills. Corrected with explicit SVG presentation attributes; final four views inspected.",
+  "browserAttempt": "BLOCKED: browser policy allows HTTP/HTTPS only, rejecting file URL. No alternate browser route attempted; local non-browser artifact rendering used.",
+  "playerInputEvidence": "NOT APPLICABLE: no production UI change or player interaction in this diagnostic scope"
+}

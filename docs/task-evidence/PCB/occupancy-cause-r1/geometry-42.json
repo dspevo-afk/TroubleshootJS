@@ -1,0 +1,7715 @@
+{
+  "seed": "42",
+  "placementVersion": 13,
+  "placementDensityVersion": 12,
+  "geometryFingerprintBefore": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+  "geometryFingerprintAfter": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+  "selectedPlacementAttempt": 1,
+  "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+  "outline": [
+    40,
+    40,
+    3321,
+    1662
+  ],
+  "packages": [
+    {
+      "componentId": "C5",
+      "packageId": "RADIAL_CERAMIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1596,
+        525,
+        124,
+        165
+      ],
+      "routingCourtyard": [
+        1620,
+        580,
+        80,
+        90
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1620,
+            580,
+            80,
+            90
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "C5.1",
+          "net": "RAIL5",
+          "bounds": [
+            1622,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1620,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "C5.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1662,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1660,
+            595,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "CBIAS",
+      "packageId": "RADIAL_CERAMIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        486,
+        745,
+        124,
+        165
+      ],
+      "routingCourtyard": [
+        510,
+        800,
+        80,
+        90
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            510,
+            800,
+            80,
+            90
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "CBIAS.1",
+          "net": "BIAS_AC",
+          "bounds": [
+            512,
+            817,
+            26,
+            26
+          ],
+          "probeBounds": [
+            510,
+            815,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "CBIAS.2",
+          "net": "HV_RETURN",
+          "bounds": [
+            552,
+            817,
+            26,
+            26
+          ],
+          "probeBounds": [
+            550,
+            815,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "CBULK",
+      "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        70,
+        842,
+        150,
+        192
+      ],
+      "routingCourtyard": [
+        90,
+        904,
+        110,
+        110
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            90,
+            904,
+            110,
+            110
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "CBULK.+",
+          "net": "HV_POS",
+          "bounds": [
+            102,
+            917,
+            26,
+            26
+          ],
+          "probeBounds": [
+            100,
+            915,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "CBULK.-",
+          "net": "HV_RETURN",
+          "bounds": [
+            152,
+            917,
+            26,
+            26
+          ],
+          "probeBounds": [
+            150,
+            915,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "CFB",
+      "packageId": "RADIAL_CERAMIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        706,
+        415,
+        124,
+        165
+      ],
+      "routingCourtyard": [
+        730,
+        470,
+        80,
+        90
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            730,
+            470,
+            80,
+            90
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "CFB.1",
+          "net": "FB_AC",
+          "bounds": [
+            732,
+            487,
+            26,
+            26
+          ],
+          "probeBounds": [
+            730,
+            485,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "CFB.2",
+          "net": "HV_RETURN",
+          "bounds": [
+            772,
+            487,
+            26,
+            26
+          ],
+          "probeBounds": [
+            770,
+            485,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "CFLT_B",
+      "packageId": "RADIAL_CERAMIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2836,
+        955,
+        124,
+        165
+      ],
+      "routingCourtyard": [
+        2860,
+        1010,
+        80,
+        90
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2860,
+            1010,
+            80,
+            90
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "CFLT_B.1",
+          "net": "B_SENSE",
+          "bounds": [
+            2862,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2860,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "CFLT_B.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2902,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2900,
+            1025,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "CIN",
+      "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1890,
+        522,
+        150,
+        192
+      ],
+      "routingCourtyard": [
+        1910,
+        584,
+        110,
+        110
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1910,
+            584,
+            110,
+            110
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "CIN.+",
+          "net": "RAIL12",
+          "bounds": [
+            1922,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1920,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "CIN.-",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1972,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1970,
+            595,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "COUT",
+      "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1730,
+        522,
+        150,
+        192
+      ],
+      "routingCourtyard": [
+        1750,
+        584,
+        110,
+        110
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1750,
+            584,
+            110,
+            110
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "COUT.+",
+          "net": "RAIL12",
+          "bounds": [
+            1762,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1760,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "COUT.-",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1812,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1810,
+            595,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "D1",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        475,
+        145,
+        330,
+        120
+      ],
+      "routingCourtyard": [
+        537,
+        185,
+        206,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            537,
+            185,
+            206,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "D1.A",
+          "net": "AC_FUSED",
+          "bounds": [
+            542,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            540,
+            195,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "D1.K",
+          "net": "HV_POS",
+          "bounds": [
+            712,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            710,
+            195,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "D2",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        65,
+        1145,
+        350,
+        120
+      ],
+      "routingCourtyard": [
+        127,
+        1185,
+        226,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            127,
+            1185,
+            226,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "D2.A",
+          "net": "AC_RETURN",
+          "bounds": [
+            132,
+            1197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            130,
+            1195,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "D2.K",
+          "net": "HV_POS",
+          "bounds": [
+            322,
+            1197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            320,
+            1195,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "D3",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        475,
+        265,
+        350,
+        120
+      ],
+      "routingCourtyard": [
+        537,
+        305,
+        226,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            537,
+            305,
+            226,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "D3.A",
+          "net": "HV_RETURN",
+          "bounds": [
+            542,
+            317,
+            26,
+            26
+          ],
+          "probeBounds": [
+            540,
+            315,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "D3.K",
+          "net": "AC_FUSED",
+          "bounds": [
+            732,
+            317,
+            26,
+            26
+          ],
+          "probeBounds": [
+            730,
+            315,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "D4",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        495,
+        1345,
+        330,
+        120
+      ],
+      "routingCourtyard": [
+        557,
+        1385,
+        206,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            557,
+            1385,
+            206,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "D4.A",
+          "net": "HV_RETURN",
+          "bounds": [
+            562,
+            1397,
+            26,
+            26
+          ],
+          "probeBounds": [
+            560,
+            1395,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "D4.K",
+          "net": "AC_RETURN",
+          "bounds": [
+            732,
+            1397,
+            26,
+            26
+          ],
+          "probeBounds": [
+            730,
+            1395,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "DA",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        2855,
+        1495,
+        330,
+        120
+      ],
+      "routingCourtyard": [
+        2917,
+        1535,
+        206,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2917,
+            1535,
+            206,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "DA.A",
+          "net": "A_COIL_LOW",
+          "bounds": [
+            2922,
+            1547,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2920,
+            1545,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "DA.K",
+          "net": "RAIL5",
+          "bounds": [
+            3092,
+            1547,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3090,
+            1545,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "DB",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        2485,
+        1065,
+        350,
+        120
+      ],
+      "routingCourtyard": [
+        2547,
+        1105,
+        226,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2547,
+            1105,
+            226,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "DB.A",
+          "net": "B_COIL_LOW",
+          "bounds": [
+            2552,
+            1117,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2550,
+            1115,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "DB.K",
+          "net": "RAIL5",
+          "bounds": [
+            2742,
+            1117,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2740,
+            1115,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "DFREE",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        1145,
+        945,
+        330,
+        120
+      ],
+      "routingCourtyard": [
+        1207,
+        985,
+        206,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1207,
+            985,
+            206,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "DFREE.A",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1212,
+            997,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1210,
+            995,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "DFREE.K",
+          "net": "PRE_L",
+          "bounds": [
+            1382,
+            997,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1380,
+            995,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "DZ1",
+      "packageId": "AXIAL_DIODE",
+      "accessMargin": 20,
+      "packageAccess": [
+        1165,
+        715,
+        330,
+        120
+      ],
+      "routingCourtyard": [
+        1227,
+        755,
+        206,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1227,
+            755,
+            206,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "DZ1.A",
+          "net": "SENSE_LED",
+          "bounds": [
+            1232,
+            767,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1230,
+            765,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "DZ1.K",
+          "net": "SENSE_ZENER",
+          "bounds": [
+            1402,
+            767,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1400,
+            765,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "F1",
+      "packageId": "AXIAL_FUSE",
+      "accessMargin": 20,
+      "packageAccess": [
+        205,
+        445,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        267,
+        485,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            267,
+            485,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "F1.1",
+          "net": "AC_LINE",
+          "bounds": [
+            272,
+            497,
+            26,
+            26
+          ],
+          "probeBounds": [
+            270,
+            495,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "F1.2",
+          "net": "AC_FUSED",
+          "bounds": [
+            432,
+            497,
+            26,
+            26
+          ],
+          "probeBounds": [
+            430,
+            495,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JAC",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        109,
+        584,
+        176,
+        202
+      ],
+      "routingCourtyard": [
+        129,
+        624,
+        112,
+        142
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            129,
+            624,
+            112,
+            142
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JAC.1",
+          "net": "AC_LINE",
+          "bounds": [
+            212,
+            657,
+            26,
+            26
+          ],
+          "probeBounds": [
+            210,
+            655,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JAC.2",
+          "net": "AC_RETURN",
+          "bounds": [
+            212,
+            717,
+            26,
+            26
+          ],
+          "probeBounds": [
+            210,
+            715,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JLOAD",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        3155,
+        264,
+        176,
+        202
+      ],
+      "routingCourtyard": [
+        3199,
+        304,
+        112,
+        142
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            3199,
+            304,
+            112,
+            142
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JLOAD.1",
+          "net": "LOAD12",
+          "bounds": [
+            3202,
+            337,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            335,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JLOAD.2",
+          "net": "LOAD_RETURN",
+          "bounds": [
+            3202,
+            397,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            395,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JOA",
+      "packageId": "THROUGH_HOLE_OUTPUT_HEADER_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        2739,
+        775,
+        152,
+        145
+      ],
+      "routingCourtyard": [
+        2759,
+        830,
+        112,
+        70
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2759,
+            830,
+            112,
+            70
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JOA.1",
+          "net": "OUT_A",
+          "bounds": [
+            2772,
+            847,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2770,
+            845,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JOA.2",
+          "net": "LOAD_RETURN",
+          "bounds": [
+            2822,
+            847,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2820,
+            845,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JOB",
+      "packageId": "THROUGH_HOLE_OUTPUT_HEADER_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        2929,
+        335,
+        152,
+        145
+      ],
+      "routingCourtyard": [
+        2949,
+        390,
+        112,
+        70
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2949,
+            390,
+            112,
+            70
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JOB.1",
+          "net": "OUT_B",
+          "bounds": [
+            2962,
+            407,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2960,
+            405,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JOB.2",
+          "net": "LOAD_RETURN",
+          "bounds": [
+            3012,
+            407,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3010,
+            405,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JSA",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        3155,
+        904,
+        176,
+        202
+      ],
+      "routingCourtyard": [
+        3199,
+        944,
+        112,
+        142
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            3199,
+            944,
+            112,
+            142
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JSA.1",
+          "net": "A_RAW",
+          "bounds": [
+            3202,
+            977,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            975,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JSA.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            3202,
+            1037,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            1035,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "JSB",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        3155,
+        1144,
+        176,
+        202
+      ],
+      "routingCourtyard": [
+        3199,
+        1184,
+        112,
+        142
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            3199,
+            1184,
+            112,
+            142
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "JSB.1",
+          "net": "B_RAW",
+          "bounds": [
+            3202,
+            1217,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            1215,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "JSB.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            3202,
+            1277,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3200,
+            1275,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "KA",
+      "packageId": "RELAY_SPDT",
+      "accessMargin": 20,
+      "packageAccess": [
+        2415,
+        1380,
+        400,
+        270
+      ],
+      "routingCourtyard": [
+        2475,
+        1450,
+        280,
+        180
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2475,
+            1450,
+            280,
+            180
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "KA.A1",
+          "net": "RAIL5",
+          "bounds": [
+            2482,
+            1547,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2480,
+            1545,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KA.A2",
+          "net": "A_COIL_LOW",
+          "bounds": [
+            2722,
+            1547,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2720,
+            1545,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KA.COM",
+          "net": "LOAD12",
+          "bounds": [
+            2522,
+            1457,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2520,
+            1455,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KA.NC",
+          "net": "NC_A",
+          "bounds": [
+            2602,
+            1457,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2600,
+            1455,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KA.NO",
+          "net": "OUT_A",
+          "bounds": [
+            2682,
+            1457,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2680,
+            1455,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "KB",
+      "packageId": "RELAY_SPDT",
+      "accessMargin": 20,
+      "packageAccess": [
+        2495,
+        230,
+        400,
+        270
+      ],
+      "routingCourtyard": [
+        2555,
+        300,
+        280,
+        180
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2555,
+            300,
+            280,
+            180
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "KB.A1",
+          "net": "RAIL5",
+          "bounds": [
+            2562,
+            397,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2560,
+            395,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KB.A2",
+          "net": "B_COIL_LOW",
+          "bounds": [
+            2802,
+            397,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2800,
+            395,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KB.COM",
+          "net": "LOAD12",
+          "bounds": [
+            2602,
+            307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2600,
+            305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KB.NC",
+          "net": "NC_B",
+          "bounds": [
+            2682,
+            307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2680,
+            305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "KB.NO",
+          "net": "OUT_B",
+          "bounds": [
+            2762,
+            307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2760,
+            305,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "L1",
+      "packageId": "RADIAL_INDUCTOR_2",
+      "accessMargin": 20,
+      "packageAccess": [
+        1135,
+        475,
+        170,
+        225
+      ],
+      "routingCourtyard": [
+        1155,
+        515,
+        130,
+        150
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1155,
+            515,
+            130,
+            150
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "L1.1",
+          "net": "PRE_L",
+          "bounds": [
+            1162,
+            617,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1160,
+            615,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "L1.2",
+          "net": "RAIL12",
+          "bounds": [
+            1242,
+            617,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1240,
+            615,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "LED1",
+      "packageId": "THROUGH_HOLE_LED",
+      "accessMargin": 20,
+      "packageAccess": [
+        1986,
+        784,
+        123,
+        171
+      ],
+      "routingCourtyard": [
+        2011,
+        824,
+        78,
+        92
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2011,
+            824,
+            78,
+            92
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "LED1.A",
+          "net": "LED_FEED",
+          "bounds": [
+            2012,
+            877,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2010,
+            875,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "LED1.K",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2052,
+            877,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2050,
+            875,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "LED12",
+      "packageId": "THROUGH_HOLE_LED",
+      "accessMargin": 20,
+      "packageAccess": [
+        2396,
+        624,
+        123,
+        171
+      ],
+      "routingCourtyard": [
+        2421,
+        664,
+        78,
+        92
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2421,
+            664,
+            78,
+            92
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "LED12.A",
+          "net": "LED12_FEED",
+          "bounds": [
+            2422,
+            717,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2420,
+            715,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "LED12.K",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2462,
+            717,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2460,
+            715,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "QA",
+      "packageId": "TO92_NMOS",
+      "accessMargin": 20,
+      "packageAccess": [
+        1685,
+        1494,
+        185,
+        192
+      ],
+      "routingCourtyard": [
+        1730,
+        1534,
+        120,
+        118
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1730,
+            1534,
+            120,
+            118
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "QA.D",
+          "net": "A_COIL_LOW",
+          "bounds": [
+            1772,
+            1607,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1770,
+            1605,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "QA.G",
+          "net": "A_DRIVE",
+          "bounds": [
+            1732,
+            1607,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1730,
+            1605,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "QA.S",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1812,
+            1607,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1810,
+            1605,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "QB",
+      "packageId": "TO92_NPN",
+      "accessMargin": 20,
+      "packageAccess": [
+        2285,
+        84,
+        185,
+        192
+      ],
+      "routingCourtyard": [
+        2330,
+        124,
+        120,
+        118
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2330,
+            124,
+            120,
+            118
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "QB.B",
+          "net": "B_DRIVE",
+          "bounds": [
+            2332,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2330,
+            195,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "QB.C",
+          "net": "B_COIL_LOW",
+          "bounds": [
+            2372,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2370,
+            195,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "QB.E",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2412,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2410,
+            195,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RDA",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1055,
+        1225,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        1117,
+        1265,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1117,
+            1265,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RDA.1",
+          "net": "A_CMD",
+          "bounds": [
+            1122,
+            1277,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1120,
+            1275,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RDA.2",
+          "net": "A_DRIVE",
+          "bounds": [
+            1322,
+            1277,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1320,
+            1275,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RDB",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2735,
+        655,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        2797,
+        695,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2797,
+            695,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RDB.1",
+          "net": "B_CMD",
+          "bounds": [
+            2802,
+            707,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2800,
+            705,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RDB.2",
+          "net": "B_DRIVE",
+          "bounds": [
+            2962,
+            707,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2960,
+            705,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "REN",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1235,
+        305,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        1297,
+        345,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1297,
+            345,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "REN.1",
+          "net": "RAIL12",
+          "bounds": [
+            1302,
+            357,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1300,
+            355,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "REN.2",
+          "net": "EN5",
+          "bounds": [
+            1502,
+            357,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1500,
+            355,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RENAC",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        305,
+        985,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        367,
+        1025,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            367,
+            1025,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RENAC.1",
+          "net": "BIAS_AC",
+          "bounds": [
+            372,
+            1037,
+            26,
+            26
+          ],
+          "probeBounds": [
+            370,
+            1035,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RENAC.2",
+          "net": "ENABLE_AC",
+          "bounds": [
+            532,
+            1037,
+            26,
+            26
+          ],
+          "probeBounds": [
+            530,
+            1035,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RFB",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        575,
+        1215,
+        340,
+        120
+      ],
+      "routingCourtyard": [
+        637,
+        1255,
+        216,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            637,
+            1255,
+            216,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RFB.1",
+          "net": "BIAS_AC",
+          "bounds": [
+            642,
+            1267,
+            26,
+            26
+          ],
+          "probeBounds": [
+            640,
+            1265,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RFB.2",
+          "net": "FB_AC",
+          "bounds": [
+            822,
+            1267,
+            26,
+            26
+          ],
+          "probeBounds": [
+            820,
+            1265,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RFB_A",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2425,
+        1255,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        2487,
+        1295,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2487,
+            1295,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RFB_A.1",
+          "net": "A_CMD",
+          "bounds": [
+            2492,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2490,
+            1305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RFB_A.2",
+          "net": "A_SENSE",
+          "bounds": [
+            2692,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2690,
+            1305,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RFB_B",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2545,
+        535,
+        340,
+        120
+      ],
+      "routingCourtyard": [
+        2607,
+        575,
+        216,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2607,
+            575,
+            216,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RFB_B.1",
+          "net": "B_CMD",
+          "bounds": [
+            2612,
+            587,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2610,
+            585,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RFB_B.2",
+          "net": "B_SENSE",
+          "bounds": [
+            2792,
+            587,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2790,
+            585,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RLED",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1425,
+        1285,
+        340,
+        120
+      ],
+      "routingCourtyard": [
+        1487,
+        1325,
+        216,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1487,
+            1325,
+            216,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RLED.1",
+          "net": "RAIL5",
+          "bounds": [
+            1492,
+            1337,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1490,
+            1335,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RLED.2",
+          "net": "LED_FEED",
+          "bounds": [
+            1672,
+            1337,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1670,
+            1335,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RLED12",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2045,
+        585,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        2107,
+        625,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2107,
+            625,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RLED12.1",
+          "net": "RAIL12",
+          "bounds": [
+            2112,
+            637,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2110,
+            635,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RLED12.2",
+          "net": "LED12_FEED",
+          "bounds": [
+            2272,
+            637,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2270,
+            635,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "ROUT",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1225,
+        185,
+        340,
+        120
+      ],
+      "routingCourtyard": [
+        1287,
+        225,
+        216,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1287,
+            225,
+            216,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "ROUT.1",
+          "net": "RAIL12",
+          "bounds": [
+            1292,
+            237,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1290,
+            235,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "ROUT.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1472,
+            237,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1470,
+            235,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RPDA",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1575,
+        1115,
+        340,
+        120
+      ],
+      "routingCourtyard": [
+        1637,
+        1155,
+        216,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1637,
+            1155,
+            216,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RPDA.1",
+          "net": "A_DRIVE",
+          "bounds": [
+            1642,
+            1167,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1640,
+            1165,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RPDA.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1822,
+            1167,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1820,
+            1165,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RPDB",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1825,
+        145,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        1887,
+        185,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1887,
+            185,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RPDB.1",
+          "net": "B_DRIVE",
+          "bounds": [
+            1892,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1890,
+            195,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RPDB.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2052,
+            197,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2050,
+            195,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RPIN_A",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2045,
+        1415,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        2107,
+        1455,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2107,
+            1455,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RPIN_A.1",
+          "net": "A_SENSE",
+          "bounds": [
+            2112,
+            1467,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2110,
+            1465,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RPIN_A.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2312,
+            1467,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2310,
+            1465,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RPIN_B",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2135,
+        415,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        2197,
+        455,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2197,
+            455,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RPIN_B.1",
+          "net": "B_SENSE",
+          "bounds": [
+            2202,
+            467,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2200,
+            465,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RPIN_B.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2362,
+            467,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2360,
+            465,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RPRIMARY",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        345,
+        625,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        407,
+        665,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            407,
+            665,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RPRIMARY.1",
+          "net": "HV_POS",
+          "bounds": [
+            412,
+            677,
+            26,
+            26
+          ],
+          "probeBounds": [
+            410,
+            675,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RPRIMARY.2",
+          "net": "HV_RETURN",
+          "bounds": [
+            572,
+            677,
+            26,
+            26
+          ],
+          "probeBounds": [
+            570,
+            675,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RREF_H",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1795,
+        1295,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        1857,
+        1335,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1857,
+            1335,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RREF_H.1",
+          "net": "RAIL5",
+          "bounds": [
+            1862,
+            1347,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1860,
+            1345,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RREF_H.2",
+          "net": "REF_SHARED",
+          "bounds": [
+            2022,
+            1347,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2020,
+            1345,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RREF_L",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1785,
+        975,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        1847,
+        1015,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1847,
+            1015,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RREF_L.1",
+          "net": "REF_SHARED",
+          "bounds": [
+            1852,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1850,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RREF_L.2",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2052,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2050,
+            1025,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RSA",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2515,
+        925,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        2577,
+        965,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2577,
+            965,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RSA.1",
+          "net": "A_RAW",
+          "bounds": [
+            2582,
+            977,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2580,
+            975,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RSA.2",
+          "net": "A_SENSE",
+          "bounds": [
+            2742,
+            977,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2740,
+            975,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RSB",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        2835,
+        1185,
+        320,
+        120
+      ],
+      "routingCourtyard": [
+        2897,
+        1225,
+        196,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2897,
+            1225,
+            196,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RSB.1",
+          "net": "B_RAW",
+          "bounds": [
+            2902,
+            1237,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2900,
+            1235,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RSB.2",
+          "net": "B_SENSE",
+          "bounds": [
+            3062,
+            1237,
+            26,
+            26
+          ],
+          "probeBounds": [
+            3060,
+            1235,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "RSENSE",
+      "packageId": "AXIAL_RESISTOR",
+      "accessMargin": 20,
+      "packageAccess": [
+        1505,
+        735,
+        360,
+        120
+      ],
+      "routingCourtyard": [
+        1567,
+        775,
+        236,
+        60
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1567,
+            775,
+            236,
+            60
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "RSENSE.1",
+          "net": "RAIL12",
+          "bounds": [
+            1572,
+            787,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1570,
+            785,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "RSENSE.2",
+          "net": "SENSE_ZENER",
+          "bounds": [
+            1772,
+            787,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1770,
+            785,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "U1",
+      "packageId": "TO220_REGULATOR_4",
+      "accessMargin": 20,
+      "packageAccess": [
+        1330,
+        425,
+        250,
+        275
+      ],
+      "routingCourtyard": [
+        1350,
+        465,
+        210,
+        200
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            1350,
+            465,
+            210,
+            200
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "U1.ENABLE",
+          "net": "EN5",
+          "bounds": [
+            1502,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1500,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U1.INPUT",
+          "net": "RAIL12",
+          "bounds": [
+            1382,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1380,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U1.OUTPUT",
+          "net": "RAIL5",
+          "bounds": [
+            1422,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1420,
+            595,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U1.RETURN",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1462,
+            597,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1460,
+            595,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "U2A",
+      "packageId": "E04_DECISION_CONTROL_5",
+      "accessMargin": 20,
+      "packageAccess": [
+        2120,
+        1135,
+        290,
+        275
+      ],
+      "routingCourtyard": [
+        2140,
+        1175,
+        250,
+        200
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2140,
+            1175,
+            250,
+            200
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "U2A.OUTPUT",
+          "net": "A_CMD",
+          "bounds": [
+            2302,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2300,
+            1305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2A.RAIL",
+          "net": "RAIL5",
+          "bounds": [
+            2252,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2250,
+            1305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2A.REFERENCE",
+          "net": "REF_SHARED",
+          "bounds": [
+            2202,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2200,
+            1305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2A.RETURN",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2352,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2350,
+            1305,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2A.SENSOR",
+          "net": "A_SENSE",
+          "bounds": [
+            2152,
+            1307,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2150,
+            1305,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "U2B",
+      "packageId": "E04_DECISION_CONTROL_5",
+      "accessMargin": 20,
+      "packageAccess": [
+        2190,
+        855,
+        290,
+        275
+      ],
+      "routingCourtyard": [
+        2210,
+        895,
+        250,
+        200
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            2210,
+            895,
+            250,
+            200
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "U2B.OUTPUT",
+          "net": "B_CMD",
+          "bounds": [
+            2372,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2370,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2B.RAIL",
+          "net": "RAIL5",
+          "bounds": [
+            2322,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2320,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2B.REFERENCE",
+          "net": "REF_SHARED",
+          "bounds": [
+            2272,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2270,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2B.RETURN",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            2422,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2420,
+            1025,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "U2B.SENSOR",
+          "net": "B_SENSE",
+          "bounds": [
+            2222,
+            1027,
+            26,
+            26
+          ],
+          "probeBounds": [
+            2220,
+            1025,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "UAC",
+      "packageId": "ISOLATED_CONVERTER_7",
+      "accessMargin": 20,
+      "packageAccess": [
+        635,
+        820,
+        500,
+        370
+      ],
+      "routingCourtyard": [
+        685,
+        860,
+        400,
+        310
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            685,
+            860,
+            105,
+            310
+          ]
+        },
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            980,
+            860,
+            105,
+            310
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "UAC.BIAS",
+          "net": "BIAS_AC",
+          "bounds": [
+            692,
+            1087,
+            26,
+            26
+          ],
+          "probeBounds": [
+            690,
+            1085,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.EN",
+          "net": "ENABLE_AC",
+          "bounds": [
+            692,
+            987,
+            26,
+            26
+          ],
+          "probeBounds": [
+            690,
+            985,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.FB",
+          "net": "FB_AC",
+          "bounds": [
+            692,
+            1037,
+            26,
+            26
+          ],
+          "probeBounds": [
+            690,
+            1035,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.IN+",
+          "net": "HV_POS",
+          "bounds": [
+            692,
+            887,
+            26,
+            26
+          ],
+          "probeBounds": [
+            690,
+            885,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.IN-",
+          "net": "HV_RETURN",
+          "bounds": [
+            692,
+            937,
+            26,
+            26
+          ],
+          "probeBounds": [
+            690,
+            935,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.OUT-",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1052,
+            1047,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1050,
+            1045,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UAC.PRE_L+",
+          "net": "PRE_L",
+          "bounds": [
+            1052,
+            947,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1050,
+            945,
+            30,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "componentId": "UFB",
+      "packageId": "OPTOCOUPLER_4",
+      "accessMargin": 20,
+      "packageAccess": [
+        675,
+        580,
+        420,
+        240
+      ],
+      "routingCourtyard": [
+        725,
+        620,
+        320,
+        180
+      ],
+      "domainCourtyards": [
+        {
+          "domain": "PRIMARY",
+          "rect": [
+            725,
+            620,
+            105,
+            180
+          ]
+        },
+        {
+          "domain": "SECONDARY",
+          "rect": [
+            940,
+            620,
+            105,
+            180
+          ]
+        }
+      ],
+      "pads": [
+        {
+          "padId": "UFB.A",
+          "net": "SENSE_LED",
+          "bounds": [
+            1012,
+            747,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1010,
+            745,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UFB.C",
+          "net": "FB_AC",
+          "bounds": [
+            732,
+            747,
+            26,
+            26
+          ],
+          "probeBounds": [
+            730,
+            745,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UFB.E",
+          "net": "HV_RETURN",
+          "bounds": [
+            732,
+            667,
+            26,
+            26
+          ],
+          "probeBounds": [
+            730,
+            665,
+            30,
+            30
+          ]
+        },
+        {
+          "padId": "UFB.K",
+          "net": "CTRL_RETURN",
+          "bounds": [
+            1012,
+            667,
+            26,
+            26
+          ],
+          "probeBounds": [
+            1010,
+            665,
+            30,
+            30
+          ]
+        }
+      ]
+    }
+  ],
+  "domainUnions": [
+    {
+      "domain": "PRIMARY",
+      "rect": [
+        90,
+        185,
+        763,
+        1260
+      ]
+    },
+    {
+      "domain": "SECONDARY",
+      "rect": [
+        940,
+        124,
+        2371,
+        1528
+      ]
+    }
+  ],
+  "barrierReservedStrips": [
+    {
+      "firstDomain": "PRIMARY",
+      "secondDomain": "SECONDARY",
+      "lowDomain": "PRIMARY",
+      "highDomain": "SECONDARY",
+      "axis": "VERTICAL",
+      "clearance": 80,
+      "lowLimit": 856,
+      "highLimit": 936,
+      "rect": [
+        856,
+        40,
+        80,
+        1662
+      ]
+    }
+  ],
+  "traces": [
+    {
+      "sourceId": "p07/AC_FUSED/64/0",
+      "net": "AC_FUSED",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          745,
+          330
+        ],
+        [
+          745,
+          190
+        ],
+        [
+          555,
+          190
+        ],
+        [
+          555,
+          210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_FUSED/65/0",
+      "net": "AC_FUSED",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          445,
+          510
+        ],
+        [
+          445,
+          210
+        ],
+        [
+          555,
+          210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_LINE/63/0",
+      "net": "AC_LINE",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          225,
+          670
+        ],
+        [
+          225,
+          510
+        ],
+        [
+          285,
+          510
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_RETURN/96/0",
+      "net": "AC_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          225,
+          730
+        ],
+        [
+          225,
+          910
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_RETURN/96/1",
+      "net": "AC_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          225,
+          910
+        ],
+        [
+          225,
+          970
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_RETURN/96/2",
+      "net": "AC_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          225,
+          970
+        ],
+        [
+          225,
+          1210
+        ],
+        [
+          145,
+          1210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/AC_RETURN/97/0",
+      "net": "AC_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          745,
+          1410
+        ],
+        [
+          745,
+          1430
+        ],
+        [
+          225,
+          1430
+        ],
+        [
+          225,
+          1210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_CMD/27/0",
+      "net": "A_CMD",
+      "layer": "TOP",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2315,
+          1320
+        ],
+        [
+          2315,
+          1410
+        ],
+        [
+          1635,
+          1410
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_CMD/27/1",
+      "net": "A_CMD",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1635,
+          1410
+        ],
+        [
+          1135,
+          1410
+        ],
+        [
+          1135,
+          1290
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_CMD/28/0",
+      "net": "A_CMD",
+      "layer": "TOP",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2505,
+          1320
+        ],
+        [
+          2455,
+          1320
+        ],
+        [
+          2455,
+          1410
+        ],
+        [
+          2315,
+          1410
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_COIL_LOW/34/0",
+      "net": "A_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2735,
+          1560
+        ],
+        [
+          2935,
+          1560
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_COIL_LOW/35/0",
+      "net": "A_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          1785,
+          1620
+        ],
+        [
+          1785,
+          1580
+        ],
+        [
+          2745,
+          1580
+        ],
+        [
+          2745,
+          1560
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_DRIVE/25/0",
+      "net": "A_DRIVE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1655,
+          1180
+        ],
+        [
+          1655,
+          1620
+        ],
+        [
+          1745,
+          1620
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_DRIVE/26/0",
+      "net": "A_DRIVE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1335,
+          1290
+        ],
+        [
+          1655,
+          1290
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_RAW/62/0",
+      "net": "A_RAW",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2595,
+          990
+        ],
+        [
+          2595,
+          950
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_RAW/62/1",
+      "net": "A_RAW",
+      "layer": "TOP",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2595,
+          950
+        ],
+        [
+          2895,
+          950
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_RAW/62/2",
+      "net": "A_RAW",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2895,
+          950
+        ],
+        [
+          3215,
+          950
+        ],
+        [
+          3215,
+          990
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_SENSE/22/0",
+      "net": "A_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2755,
+          990
+        ],
+        [
+          2705,
+          990
+        ],
+        [
+          2705,
+          1320
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_SENSE/23/0",
+      "net": "A_SENSE",
+      "layer": "TOP",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2165,
+          1320
+        ],
+        [
+          2165,
+          1390
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_SENSE/23/1",
+      "net": "A_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2165,
+          1390
+        ],
+        [
+          2705,
+          1390
+        ],
+        [
+          2705,
+          1320
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/A_SENSE/24/0",
+      "net": "A_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2125,
+          1480
+        ],
+        [
+          2125,
+          1390
+        ],
+        [
+          2165,
+          1390
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/BIAS_AC/59/0",
+      "net": "BIAS_AC",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          385,
+          1050
+        ],
+        [
+          495,
+          1050
+        ],
+        [
+          495,
+          920
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/BIAS_AC/59/1",
+      "net": "BIAS_AC",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          495,
+          920
+        ],
+        [
+          495,
+          830
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/BIAS_AC/59/2",
+      "net": "BIAS_AC",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          495,
+          830
+        ],
+        [
+          525,
+          830
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/BIAS_AC/60/0",
+      "net": "BIAS_AC",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          705,
+          1100
+        ],
+        [
+          495,
+          1100
+        ],
+        [
+          495,
+          1050
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/BIAS_AC/61/0",
+      "net": "BIAS_AC",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          655,
+          1280
+        ],
+        [
+          655,
+          1100
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_CMD/20/0",
+      "net": "B_CMD",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2625,
+          600
+        ],
+        [
+          2625,
+          720
+        ],
+        [
+          2815,
+          720
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_CMD/21/0",
+      "net": "B_CMD",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2385,
+          1040
+        ],
+        [
+          2385,
+          860
+        ],
+        [
+          2625,
+          860
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_CMD/21/1",
+      "net": "B_CMD",
+      "layer": "TOP",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2625,
+          860
+        ],
+        [
+          2625,
+          820
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_CMD/21/2",
+      "net": "B_CMD",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2625,
+          820
+        ],
+        [
+          2625,
+          720
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/32/0",
+      "net": "B_COIL_LOW",
+      "layer": "TOP",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2815,
+          410
+        ],
+        [
+          2865,
+          410
+        ],
+        [
+          2865,
+          460
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/32/1",
+      "net": "B_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2865,
+          460
+        ],
+        [
+          2565,
+          460
+        ],
+        [
+          2565,
+          820
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/32/2",
+      "net": "B_COIL_LOW",
+      "layer": "TOP",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2565,
+          820
+        ],
+        [
+          2565,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/32/3",
+      "net": "B_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2565,
+          880
+        ],
+        [
+          2565,
+          1130
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/33/0",
+      "net": "B_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2385,
+          210
+        ],
+        [
+          2385,
+          420
+        ],
+        [
+          2505,
+          420
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/33/1",
+      "net": "B_COIL_LOW",
+      "layer": "TOP",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2505,
+          420
+        ],
+        [
+          2505,
+          460
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_COIL_LOW/33/2",
+      "net": "B_COIL_LOW",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2505,
+          460
+        ],
+        [
+          2565,
+          460
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_DRIVE/18/0",
+      "net": "B_DRIVE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1905,
+          210
+        ],
+        [
+          1905,
+          190
+        ],
+        [
+          2345,
+          190
+        ],
+        [
+          2345,
+          210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_DRIVE/19/0",
+      "net": "B_DRIVE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2975,
+          720
+        ],
+        [
+          2975,
+          440
+        ],
+        [
+          2345,
+          440
+        ],
+        [
+          2345,
+          210
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_RAW/58/0",
+      "net": "B_RAW",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2915,
+          1250
+        ],
+        [
+          2915,
+          1270
+        ],
+        [
+          3215,
+          1270
+        ],
+        [
+          3215,
+          1230
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_SENSE/14/0",
+      "net": "B_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          3075,
+          1250
+        ],
+        [
+          3075,
+          1060
+        ],
+        [
+          2875,
+          1060
+        ],
+        [
+          2875,
+          1040
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_SENSE/15/0",
+      "net": "B_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2805,
+          600
+        ],
+        [
+          2875,
+          600
+        ],
+        [
+          2875,
+          1040
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_SENSE/16/0",
+      "net": "B_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2235,
+          1040
+        ],
+        [
+          2235,
+          840
+        ],
+        [
+          2875,
+          840
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/B_SENSE/17/0",
+      "net": "B_SENSE",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2215,
+          480
+        ],
+        [
+          2235,
+          480
+        ],
+        [
+          2235,
+          840
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/75/0",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1825,
+          610
+        ],
+        [
+          1825,
+          570
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/75/1",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1825,
+          570
+        ],
+        [
+          1675,
+          570
+        ],
+        [
+          1675,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/76/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1985,
+          610
+        ],
+        [
+          1985,
+          570
+        ],
+        [
+          1825,
+          570
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/77/0",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1475,
+          610
+        ],
+        [
+          1475,
+          700
+        ],
+        [
+          1675,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/77/1",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1675,
+          700
+        ],
+        [
+          1675,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/78/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2065,
+          890
+        ],
+        [
+          2065,
+          670
+        ],
+        [
+          2035,
+          670
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/78/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2035,
+          670
+        ],
+        [
+          2035,
+          600
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/78/2",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2035,
+          600
+        ],
+        [
+          1985,
+          600
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/79/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2065,
+          1040
+        ],
+        [
+          2055,
+          1040
+        ],
+        [
+          2055,
+          880
+        ],
+        [
+          2065,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/80/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1485,
+          250
+        ],
+        [
+          1675,
+          250
+        ],
+        [
+          1675,
+          570
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/81/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1835,
+          1180
+        ],
+        [
+          1835,
+          1020
+        ],
+        [
+          2055,
+          1020
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/82/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2435,
+          1040
+        ],
+        [
+          2435,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/82/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2435,
+          880
+        ],
+        [
+          2215,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/82/2",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2215,
+          880
+        ],
+        [
+          2065,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/83/0",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2475,
+          730
+        ],
+        [
+          2475,
+          880
+        ],
+        [
+          2435,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/84/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2375,
+          480
+        ],
+        [
+          2465,
+          480
+        ],
+        [
+          2465,
+          770
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/84/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2465,
+          770
+        ],
+        [
+          2475,
+          770
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/85/0",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2425,
+          210
+        ],
+        [
+          2425,
+          460
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/85/1",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2425,
+          460
+        ],
+        [
+          2425,
+          480
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/86/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2365,
+          1320
+        ],
+        [
+          2425,
+          1320
+        ],
+        [
+          2425,
+          1030
+        ],
+        [
+          2435,
+          1030
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/87/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2325,
+          1480
+        ],
+        [
+          2475,
+          1480
+        ],
+        [
+          2475,
+          1410
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/87/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2475,
+          1410
+        ],
+        [
+          2475,
+          1370
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/87/2",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2475,
+          1370
+        ],
+        [
+          2475,
+          1320
+        ],
+        [
+          2425,
+          1320
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/88/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2065,
+          210
+        ],
+        [
+          2065,
+          600
+        ],
+        [
+          2035,
+          600
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/89/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1825,
+          1620
+        ],
+        [
+          1865,
+          1620
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/89/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1865,
+          1620
+        ],
+        [
+          1865,
+          1560
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/89/2",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1865,
+          1560
+        ],
+        [
+          1845,
+          1560
+        ],
+        [
+          1845,
+          1170
+        ],
+        [
+          1835,
+          1170
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/90/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2915,
+          1040
+        ],
+        [
+          2955,
+          1040
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/90/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2955,
+          1040
+        ],
+        [
+          2955,
+          1170
+        ],
+        [
+          2515,
+          1170
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/90/2",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2515,
+          1170
+        ],
+        [
+          2425,
+          1170
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/91/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          3215,
+          1050
+        ],
+        [
+          3215,
+          1040
+        ],
+        [
+          2955,
+          1040
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/92/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          3215,
+          1290
+        ],
+        [
+          3235,
+          1290
+        ],
+        [
+          3235,
+          1040
+        ],
+        [
+          3215,
+          1040
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/93/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1025,
+          680
+        ],
+        [
+          1025,
+          700
+        ],
+        [
+          1375,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/93/1",
+      "net": "CTRL_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1375,
+          700
+        ],
+        [
+          1475,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/94/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1065,
+          1060
+        ],
+        [
+          1005,
+          1060
+        ],
+        [
+          1005,
+          700
+        ],
+        [
+          1025,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/CTRL_RETURN/95/0",
+      "net": "CTRL_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1225,
+          1010
+        ],
+        [
+          1005,
+          1010
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/EN5/13/0",
+      "net": "EN5",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1515,
+          610
+        ],
+        [
+          1515,
+          370
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/ENABLE_AC/12/0",
+      "net": "ENABLE_AC",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          705,
+          1000
+        ],
+        [
+          545,
+          1000
+        ],
+        [
+          545,
+          1050
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/FB_AC/10/0",
+      "net": "FB_AC",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          705,
+          1050
+        ],
+        [
+          755,
+          1050
+        ],
+        [
+          755,
+          760
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/FB_AC/11/0",
+      "net": "FB_AC",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          835,
+          1280
+        ],
+        [
+          835,
+          1050
+        ],
+        [
+          755,
+          1050
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/FB_AC/9/0",
+      "net": "FB_AC",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          745,
+          760
+        ],
+        [
+          765,
+          760
+        ],
+        [
+          765,
+          500
+        ],
+        [
+          745,
+          500
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_POS/54/0",
+      "net": "HV_POS",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          335,
+          1210
+        ],
+        [
+          335,
+          950
+        ],
+        [
+          115,
+          950
+        ],
+        [
+          115,
+          930
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_POS/55/0",
+      "net": "HV_POS",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          425,
+          690
+        ],
+        [
+          425,
+          950
+        ],
+        [
+          335,
+          950
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_POS/56/0",
+      "net": "HV_POS",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          705,
+          900
+        ],
+        [
+          425,
+          900
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_POS/57/0",
+      "net": "HV_POS",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          725,
+          210
+        ],
+        [
+          695,
+          210
+        ],
+        [
+          695,
+          900
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/68/0",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          585,
+          690
+        ],
+        [
+          585,
+          830
+        ],
+        [
+          565,
+          830
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/69/0",
+      "net": "HV_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          745,
+          680
+        ],
+        [
+          675,
+          680
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/69/1",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          675,
+          680
+        ],
+        [
+          675,
+          700
+        ],
+        [
+          585,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/70/0",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          785,
+          500
+        ],
+        [
+          785,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/70/1",
+      "net": "HV_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          785,
+          610
+        ],
+        [
+          715,
+          610
+        ],
+        [
+          715,
+          680
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/71/0",
+      "net": "HV_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          705,
+          950
+        ],
+        [
+          645,
+          950
+        ],
+        [
+          645,
+          830
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/71/1",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          645,
+          830
+        ],
+        [
+          585,
+          830
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/72/0",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          555,
+          330
+        ],
+        [
+          555,
+          700
+        ],
+        [
+          585,
+          700
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/73/0",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          165,
+          930
+        ],
+        [
+          405,
+          930
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/73/1",
+      "net": "HV_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          405,
+          930
+        ],
+        [
+          405,
+          940
+        ],
+        [
+          645,
+          940
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/74/0",
+      "net": "HV_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          575,
+          1410
+        ],
+        [
+          615,
+          1410
+        ],
+        [
+          615,
+          1120
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/HV_RETURN/74/1",
+      "net": "HV_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          615,
+          1120
+        ],
+        [
+          615,
+          940
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LED12_FEED/3/0",
+      "net": "LED12_FEED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2285,
+          650
+        ],
+        [
+          2435,
+          650
+        ],
+        [
+          2435,
+          730
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LED_FEED/2/0",
+      "net": "LED_FEED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1685,
+          1350
+        ],
+        [
+          1685,
+          890
+        ],
+        [
+          2025,
+          890
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD12/52/0",
+      "net": "LOAD12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2615,
+          320
+        ],
+        [
+          2615,
+          300
+        ],
+        [
+          3215,
+          300
+        ],
+        [
+          3215,
+          350
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD12/53/0",
+      "net": "LOAD12",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2535,
+          1470
+        ],
+        [
+          2535,
+          1370
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD12/53/1",
+      "net": "LOAD12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2535,
+          1370
+        ],
+        [
+          2535,
+          880
+        ],
+        [
+          2505,
+          880
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD12/53/2",
+      "net": "LOAD12",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2505,
+          880
+        ],
+        [
+          2505,
+          650
+        ],
+        [
+          2485,
+          650
+        ],
+        [
+          2485,
+          310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD12/53/3",
+      "net": "LOAD12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2485,
+          310
+        ],
+        [
+          2615,
+          310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD_RETURN/66/0",
+      "net": "LOAD_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          3025,
+          420
+        ],
+        [
+          3025,
+          410
+        ],
+        [
+          3215,
+          410
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD_RETURN/67/0",
+      "net": "LOAD_RETURN",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2835,
+          860
+        ],
+        [
+          2835,
+          820
+        ],
+        [
+          3035,
+          820
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/LOAD_RETURN/67/1",
+      "net": "LOAD_RETURN",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          3035,
+          820
+        ],
+        [
+          3035,
+          410
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/OUT_A/1/0",
+      "net": "OUT_A",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2695,
+          1470
+        ],
+        [
+          2785,
+          1470
+        ],
+        [
+          2785,
+          860
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/OUT_B/31/0",
+      "net": "OUT_B",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          2775,
+          320
+        ],
+        [
+          2975,
+          320
+        ],
+        [
+          2975,
+          420
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/PRE_L/29/0",
+      "net": "PRE_L",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          1065,
+          960
+        ],
+        [
+          1395,
+          960
+        ],
+        [
+          1395,
+          1010
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/PRE_L/30/0",
+      "net": "PRE_L",
+      "layer": "TOP",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          1175,
+          630
+        ],
+        [
+          1175,
+          780
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/PRE_L/30/1",
+      "net": "PRE_L",
+      "layer": "BOTTOM",
+      "width": 13,
+      "whitespaceGuard": 19,
+      "points": [
+        [
+          1175,
+          780
+        ],
+        [
+          1175,
+          960
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/45/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1775,
+          610
+        ],
+        [
+          1775,
+          590
+        ],
+        [
+          1935,
+          590
+        ],
+        [
+          1935,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/46/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2125,
+          650
+        ],
+        [
+          1935,
+          650
+        ],
+        [
+          1935,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/47/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1585,
+          800
+        ],
+        [
+          1585,
+          820
+        ],
+        [
+          1805,
+          820
+        ],
+        [
+          1805,
+          590
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/48/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1395,
+          610
+        ],
+        [
+          1395,
+          810
+        ],
+        [
+          1585,
+          810
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/49/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1255,
+          630
+        ],
+        [
+          1395,
+          630
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/50/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1315,
+          370
+        ],
+        [
+          1315,
+          630
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL12/51/0",
+      "net": "RAIL12",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1305,
+          250
+        ],
+        [
+          1305,
+          380
+        ],
+        [
+          1315,
+          380
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/36/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1435,
+          610
+        ],
+        [
+          1435,
+          630
+        ],
+        [
+          1635,
+          630
+        ],
+        [
+          1635,
+          610
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/37/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1505,
+          1350
+        ],
+        [
+          1505,
+          1310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/37/1",
+      "net": "RAIL5",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1505,
+          1310
+        ],
+        [
+          1505,
+          760
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/37/2",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1505,
+          760
+        ],
+        [
+          1505,
+          630
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/38/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1875,
+          1360
+        ],
+        [
+          1875,
+          1310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/38/1",
+      "net": "RAIL5",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          1875,
+          1310
+        ],
+        [
+          1505,
+          1310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/39/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2265,
+          1320
+        ],
+        [
+          2265,
+          1300
+        ],
+        [
+          1875,
+          1300
+        ],
+        [
+          1875,
+          1310
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/40/0",
+      "net": "RAIL5",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2335,
+          1040
+        ],
+        [
+          2335,
+          1130
+        ],
+        [
+          2265,
+          1130
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/40/1",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2265,
+          1130
+        ],
+        [
+          2265,
+          1300
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/41/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2495,
+          1560
+        ],
+        [
+          2015,
+          1560
+        ],
+        [
+          2015,
+          1300
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/42/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2755,
+          1130
+        ],
+        [
+          2755,
+          1090
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/42/1",
+      "net": "RAIL5",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2755,
+          1090
+        ],
+        [
+          2495,
+          1090
+        ],
+        [
+          2495,
+          1130
+        ],
+        [
+          2335,
+          1130
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/43/0",
+      "net": "RAIL5",
+      "layer": "BOTTOM",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          3105,
+          1560
+        ],
+        [
+          3105,
+          1540
+        ],
+        [
+          2485,
+          1540
+        ],
+        [
+          2485,
+          1560
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/RAIL5/44/0",
+      "net": "RAIL5",
+      "layer": "TOP",
+      "width": 11,
+      "whitespaceGuard": 18,
+      "points": [
+        [
+          2575,
+          410
+        ],
+        [
+          2525,
+          410
+        ],
+        [
+          2525,
+          1090
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/REF_SHARED/6/0",
+      "net": "REF_SHARED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2215,
+          1320
+        ],
+        [
+          2215,
+          1360
+        ],
+        [
+          2035,
+          1360
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/REF_SHARED/7/0",
+      "net": "REF_SHARED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          2285,
+          1040
+        ],
+        [
+          2285,
+          1340
+        ],
+        [
+          2215,
+          1340
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/REF_SHARED/8/0",
+      "net": "REF_SHARED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1865,
+          1040
+        ],
+        [
+          1865,
+          1060
+        ],
+        [
+          2285,
+          1060
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/SENSE_LED/5/0",
+      "net": "SENSE_LED",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1025,
+          760
+        ],
+        [
+          1245,
+          760
+        ],
+        [
+          1245,
+          780
+        ]
+      ]
+    },
+    {
+      "sourceId": "p07/SENSE_ZENER/4/0",
+      "net": "SENSE_ZENER",
+      "layer": "BOTTOM",
+      "width": 9,
+      "whitespaceGuard": 17,
+      "points": [
+        [
+          1785,
+          800
+        ],
+        [
+          1785,
+          780
+        ],
+        [
+          1415,
+          780
+        ]
+      ]
+    }
+  ],
+  "vias": [
+    {
+      "id": "p07-via/AC_RETURN/96/1",
+      "net": "AC_RETURN",
+      "bounds": [
+        219,
+        904,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/AC_RETURN/96/2",
+      "net": "AC_RETURN",
+      "bounds": [
+        219,
+        964,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/A_CMD/27/1",
+      "net": "A_CMD",
+      "bounds": [
+        1629,
+        1404,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/A_RAW/62/1",
+      "net": "A_RAW",
+      "bounds": [
+        2589,
+        944,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/A_RAW/62/2",
+      "net": "A_RAW",
+      "bounds": [
+        2889,
+        944,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/A_SENSE/23/1",
+      "net": "A_SENSE",
+      "bounds": [
+        2159,
+        1384,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/BIAS_AC/59/1",
+      "net": "BIAS_AC",
+      "bounds": [
+        489,
+        914,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/BIAS_AC/59/2",
+      "net": "BIAS_AC",
+      "bounds": [
+        489,
+        824,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_CMD/21/1",
+      "net": "B_CMD",
+      "bounds": [
+        2619,
+        854,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_CMD/21/2",
+      "net": "B_CMD",
+      "bounds": [
+        2619,
+        814,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_COIL_LOW/32/1",
+      "net": "B_COIL_LOW",
+      "bounds": [
+        2859,
+        454,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_COIL_LOW/32/2",
+      "net": "B_COIL_LOW",
+      "bounds": [
+        2559,
+        814,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_COIL_LOW/32/3",
+      "net": "B_COIL_LOW",
+      "bounds": [
+        2559,
+        874,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_COIL_LOW/33/1",
+      "net": "B_COIL_LOW",
+      "bounds": [
+        2499,
+        414,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/B_COIL_LOW/33/2",
+      "net": "B_COIL_LOW",
+      "bounds": [
+        2499,
+        454,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/75/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        1819,
+        564,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/77/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        1669,
+        694,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/78/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2029,
+        664,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/78/2",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2029,
+        594,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/82/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2429,
+        874,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/82/2",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2209,
+        874,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/84/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2459,
+        764,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/85/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2419,
+        454,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/87/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2469,
+        1404,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/87/2",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2469,
+        1364,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/89/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        1859,
+        1614,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/89/2",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        1859,
+        1554,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/90/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2949,
+        1034,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/90/2",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        2509,
+        1164,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/CTRL_RETURN/93/1",
+      "net": "CTRL_RETURN",
+      "bounds": [
+        1369,
+        694,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/HV_RETURN/69/1",
+      "net": "HV_RETURN",
+      "bounds": [
+        669,
+        674,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/HV_RETURN/70/1",
+      "net": "HV_RETURN",
+      "bounds": [
+        779,
+        604,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/HV_RETURN/71/1",
+      "net": "HV_RETURN",
+      "bounds": [
+        639,
+        824,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/HV_RETURN/73/1",
+      "net": "HV_RETURN",
+      "bounds": [
+        399,
+        924,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/HV_RETURN/74/1",
+      "net": "HV_RETURN",
+      "bounds": [
+        609,
+        1114,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/LOAD12/53/1",
+      "net": "LOAD12",
+      "bounds": [
+        2529,
+        1364,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/LOAD12/53/2",
+      "net": "LOAD12",
+      "bounds": [
+        2499,
+        874,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/LOAD12/53/3",
+      "net": "LOAD12",
+      "bounds": [
+        2479,
+        304,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/LOAD_RETURN/67/1",
+      "net": "LOAD_RETURN",
+      "bounds": [
+        3029,
+        814,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/PRE_L/30/1",
+      "net": "PRE_L",
+      "bounds": [
+        1169,
+        774,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/RAIL5/37/1",
+      "net": "RAIL5",
+      "bounds": [
+        1499,
+        1304,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/RAIL5/37/2",
+      "net": "RAIL5",
+      "bounds": [
+        1499,
+        754,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/RAIL5/38/1",
+      "net": "RAIL5",
+      "bounds": [
+        1869,
+        1304,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/RAIL5/40/1",
+      "net": "RAIL5",
+      "bounds": [
+        2259,
+        1124,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    },
+    {
+      "id": "p07-via/RAIL5/42/1",
+      "net": "RAIL5",
+      "bounds": [
+        2749,
+        1084,
+        12,
+        12
+      ],
+      "whitespaceGuard": 19
+    }
+  ],
+  "silk": [
+    {
+      "id": "board-title",
+      "bounds": [
+        90,
+        90,
+        225,
+        18
+      ]
+    },
+    {
+      "id": "component:C5",
+      "bounds": [
+        1646,
+        562,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:CBIAS",
+      "bounds": [
+        523,
+        782,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:CBULK",
+      "bounds": [
+        118,
+        882,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:CFB",
+      "bounds": [
+        752,
+        452,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:CFLT_B",
+      "bounds": [
+        2868,
+        992,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:CIN",
+      "bounds": [
+        1947,
+        562,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:COUT",
+      "bounds": [
+        1782,
+        562,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:D1",
+      "bounds": [
+        631,
+        173,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:D2",
+      "bounds": [
+        231,
+        1173,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:D3",
+      "bounds": [
+        641,
+        293,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:D4",
+      "bounds": [
+        651,
+        1373,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:DA",
+      "bounds": [
+        3011,
+        1523,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:DB",
+      "bounds": [
+        2581,
+        1126,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:DFREE",
+      "bounds": [
+        1288,
+        973,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:DZ1",
+      "bounds": [
+        1317,
+        743,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:F1",
+      "bounds": [
+        356,
+        472,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:JAC",
+      "bounds": [
+        172,
+        612,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:JLOAD",
+      "bounds": [
+        3233,
+        292,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:JOA",
+      "bounds": [
+        2802,
+        812,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:JOB",
+      "bounds": [
+        2992,
+        372,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:JSA",
+      "bounds": [
+        3242,
+        932,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:JSB",
+      "bounds": [
+        3242,
+        1172,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:KA",
+      "bounds": [
+        2606,
+        1484,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:KB",
+      "bounds": [
+        2686,
+        334,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:L1",
+      "bounds": [
+        1206,
+        504,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:LED1",
+      "bounds": [
+        2027,
+        805,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:LED12",
+      "bounds": [
+        2433,
+        645,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:QA",
+      "bounds": [
+        1776,
+        1530,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:QB",
+      "bounds": [
+        2376,
+        120,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:RDA",
+      "bounds": [
+        1222,
+        1252,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:RDB",
+      "bounds": [
+        2882,
+        682,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:REN",
+      "bounds": [
+        1402,
+        332,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:RENAC",
+      "bounds": [
+        443,
+        1012,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:RFB",
+      "bounds": [
+        732,
+        1242,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:RFB_A",
+      "bounds": [
+        2583,
+        1282,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:RFB_B",
+      "bounds": [
+        2693,
+        562,
+        45,
+        18
+      ]
+    },
+    {
+      "id": "component:RLED",
+      "bounds": [
+        1577,
+        1380,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:RLED12",
+      "bounds": [
+        2178,
+        612,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:ROUT",
+      "bounds": [
+        1377,
+        212,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:RPDA",
+      "bounds": [
+        1727,
+        1142,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:RPDB",
+      "bounds": [
+        1967,
+        172,
+        36,
+        18
+      ]
+    },
+    {
+      "id": "component:RPIN_A",
+      "bounds": [
+        2198,
+        1442,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:RPIN_B",
+      "bounds": [
+        2268,
+        442,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:RPRIMARY",
+      "bounds": [
+        469,
+        652,
+        72,
+        18
+      ]
+    },
+    {
+      "id": "component:RREF_H",
+      "bounds": [
+        1928,
+        1322,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:RREF_L",
+      "bounds": [
+        1938,
+        1002,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:RSA",
+      "bounds": [
+        2662,
+        1020,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:RSB",
+      "bounds": [
+        2982,
+        1212,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:RSENSE",
+      "bounds": [
+        1658,
+        762,
+        54,
+        18
+      ]
+    },
+    {
+      "id": "component:U1",
+      "bounds": [
+        1446,
+        459,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "component:U2A",
+      "bounds": [
+        2252,
+        1169,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:U2B",
+      "bounds": [
+        2322,
+        889,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:UAC",
+      "bounds": [
+        872,
+        849,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "component:UFB",
+      "bounds": [
+        872,
+        619,
+        27,
+        18
+      ]
+    },
+    {
+      "id": "net:JAC.1",
+      "bounds": [
+        247,
+        647,
+        32,
+        16
+      ]
+    },
+    {
+      "id": "net:JAC.2",
+      "bounds": [
+        247,
+        707,
+        24,
+        16
+      ]
+    },
+    {
+      "id": "net:JLOAD.1",
+      "bounds": [
+        3161,
+        327,
+        32,
+        16
+      ]
+    },
+    {
+      "id": "net:JLOAD.2",
+      "bounds": [
+        3169,
+        387,
+        24,
+        16
+      ]
+    },
+    {
+      "id": "net:JSA.1",
+      "bounds": [
+        3161,
+        967,
+        32,
+        16
+      ]
+    },
+    {
+      "id": "net:JSA.2",
+      "bounds": [
+        3169,
+        1027,
+        24,
+        16
+      ]
+    },
+    {
+      "id": "net:JSB.1",
+      "bounds": [
+        3161,
+        1207,
+        32,
+        16
+      ]
+    },
+    {
+      "id": "net:JSB.2",
+      "bounds": [
+        3169,
+        1267,
+        24,
+        16
+      ]
+    }
+  ]
+}

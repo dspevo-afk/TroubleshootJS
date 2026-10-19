@@ -7,7 +7,17 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private13 connected vacancy preference accepted**
+**Current task:** **PCB domain/occupancy cause audit complete; packing continues**
+Developer-only native exports and four inspected overlays identify actual domain,
+access and copper-clearance bounds for roots42/-1022. Native30 assertions pass;
+accepted13 geometry hashes and voids remain exact. Production source and compiled
+web stay byte-identical. Both lower-left pockets extend outside isolation, while
+other package envelopes prevent simply deleting their whole axis spans. Next is
+a bounded candidate0 vacancy-advice trial under the existing6/3+3 limits; no size
+improvement is claimed yet. User's indefinite continuation supersedes the earlier
+9am stop. No main/email. [Evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
+
+**Previous task:** **Private13 connected vacancy preference accepted**
 Existing candidate1 prefers the existing pocket origin nearest its connected
 circuitry, with paired-support targeting and all search/routing/physical limits
 preserved. Root42 area shrinks8.57%, largest protected void20.98%, copper2.79%,
