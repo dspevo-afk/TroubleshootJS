@@ -1,12 +1,13 @@
 # Passive conservative-sizing control
 
-Preparation only; source edits, freeze and native execution **NOT RUN**. This
-follows the [choice diagnosis](../passive-pose-choice-cause-r1/RESULTS.md), published
-at `dbb2ea4281c3b7e9338d112dd0ef42e794105743`.
+**Native control FAIL; six-case comparison INCOMPLETE.** The sizing-only17 control
+fails the unchanged protected-whitespace bound on board42:772200 versus required
+strict<327600. Fresh unit8 prerequisites pass; root3 is not run after the first
+route suite fails. The [results and limitations](RESULTS.md) distinguish native
+failure, exact old-case reproduction, preserved harness failure and cleanup.
 
-The bounded next question is what conservative two-pose sizing changes when the
-existing source TOP0 template is used for every passive visit. This is an explicit
-native control, not a proposed accepted packing policy. Default15 and main1475
-remain unchanged. No main/email; the five unrelated untracked entries and shared
-tools remain preserved. Source mapping/admission scope is being checked before
-implementation; root owns integration and acceptance.
+This follows the [choice diagnosis](../passive-pose-choice-cause-r1/RESULTS.md).
+Default15 and main1475 remain exact; the owned copy is restored and retired. No
+policy promotion, main merge or email. The five unrelated untracked entries and
+shared tools remain preserved. Next is a separately identified source-sizing
+rotation trial with the existing strict physical/work/regression gates.
