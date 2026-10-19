@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "scope": "Exact reused test/oracle bytes; fresh runtime still required for changed production behavior",
+  "files": [
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/.gitattributes",
+      "consumed": "docs/task-evidence/PCB/candidate0-probes-r1/.gitattributes",
+      "sha256": "9c746cc8b0df6f6502a0f09986d14bc6ce7d3ff3d8528cf1d1a4bab37f7ff39e",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/assess_metrics.py",
+      "consumed": "docs/task-evidence/PCB/candidate0-probes-r1/assess_metrics.py",
+      "sha256": "7c0e9f1308cd48b1a8bbf95a028a39b8a0e53ea5344bdfcdc7fa35d4f6de308f",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/check_assessor.py",
+      "consumed": "docs/task-evidence/PCB/candidate0-probes-r1/check_assessor.py",
+      "sha256": "051e5c48f527ea582778786fef70cac2f1aa3c26fdeb18f88da0df3c03a93ad6",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/published13-baselines.json",
+      "consumed": "docs/task-evidence/PCB/candidate0-probes-r1/published13-baselines.json",
+      "sha256": "0495c3da32783a52372a6afc2875dcc6cf8d6ae1c8c2e745b4daaf5b74dd65ac",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/rejected-contracts/PcbCandidateZeroVacancyContractTest.java.txt",
+      "consumed": "tests/contracts/PcbCandidateZeroVacancyContractTest.java",
+      "sha256": "abf4dda368b164eacef41b4e8b1e169024fa763eaa01afadd33c2b6c235a34f2",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/rejected-contracts/PcbCandidateZeroVacancyHoldoutContractTest.java.txt",
+      "consumed": "tests/contracts/PcbCandidateZeroVacancyHoldoutContractTest.java",
+      "sha256": "588faa4eee6d6a52ec6c17fbd44a0622bc575fe2bb31fc4f75700b4fb6de0d03",
+      "exact": true
+    },
+    {
+      "source": "docs/task-evidence/PCB/candidate0-vacancy-r1/rejected-contracts/PcbCandidateZeroVacancyIdentityContractTest.java.txt",
+      "consumed": "tests/contracts/PcbCandidateZeroVacancyIdentityContractTest.java",
+      "sha256": "ec81dd20a2a1555d2e16511f8e8bc24b7116f9e81af8d2567cb6ef092e705d2c",
+      "exact": true
+    }
+  ]
+}

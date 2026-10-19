@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic metric boundary only; no physical/generation claim",
+  "cases": [
+    {
+      "case": "unchanged cannot pass",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "one strict improvement without regression",
+      "status": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "regression rejected: area",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "regression rejected: largestProtectedEmptyRectangleArea",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "regression rejected: copperManhattanLength",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "regression rejected: vias",
+      "status": "PASS",
+      "actual": "FAIL"
+    },
+    {
+      "case": "missing root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "duplicate root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "unexpected root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong metric/identity: version",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong metric/identity: density",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong metric/identity: parts",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong metric/identity: area",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "wrong metric/identity: vias",
+      "status": "PASS",
+      "actual": "REJECT"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "priorInputs": 1440,
+  "changed": [
+    "scripts/verify-current-contracts.ps1"
+  ],
+  "missing": [],
+  "allowedChange": "Native-only diagnostic suite registration; inspected separately",
+  "boundary": "Every other frozen input is byte-identical, including production sources. Compiled web is checked separately in compiled-web-boundary-audit.json. The new native test is outside the prior manifest and receives fresh focused validation.",
+  "gwtAndPlayerFlow": "NOT RUN for diagnostic-only change; prior production evidence retained only at audited unchanged inputs"
+}

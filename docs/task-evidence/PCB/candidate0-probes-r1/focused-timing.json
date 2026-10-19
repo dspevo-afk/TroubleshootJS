@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "operation": "Fresh maintained JDK8 focused4 native suites for candidate0 probe-only behavior, including terminal wrapper cleanup",
+  "elapsedSeconds": 111.9757666,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "suites": [
+    "PcbOccupancyDiagnosticContractTest",
+    "PcbCandidateZeroVacancyContractTest",
+    "PcbCandidateZeroVacancyHoldoutContractTest",
+    "PcbCandidateZeroVacancyIdentityContractTest"
+  ]
+}

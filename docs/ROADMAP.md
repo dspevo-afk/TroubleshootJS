@@ -21,6 +21,11 @@ areas and copper lengths grow. Accepted13 bytes are restored and audited; no14
 production behavior is published. Next is a separately declared probe-only
 variant under candidate0's original scoring, retaining strict acceptance.
 [Rejected trial](task-evidence/PCB/candidate0-vacancy-r1/README.md).
+The probe-only variant is also rejected: -1022 area shrinks4.13% and its pocket
+36.95%, but7 grows and14 uses more copper. Fresh native4 and restored byte-boundary
+audits pass. Next is a separately declared local-dominance guard, preserving the
+same global acceptance and physical/work limits.
+[Probe-only evidence](task-evidence/PCB/candidate0-probes-r1/README.md).
 
 **Previous task:** **Private13 connected vacancy preference accepted**
 Existing candidate1 prefers the existing pocket origin nearest its connected

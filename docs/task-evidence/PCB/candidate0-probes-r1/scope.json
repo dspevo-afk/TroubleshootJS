@@ -1,0 +1,13 @@
+{
+  "baselineCommit": "1282cc12e2185b733fb7d515174f23250bd4f09a",
+  "hypothesis": "The rejected full-guidance variant inherited candidate1 preference/overlap bonuses and regressed three boards. Candidate0 can instead consider the extra vacancy origins under its own existing objective, without new weights or bonuses.",
+  "change": "Repeated-control candidate0 at explicit native trial14/density13 ROLE reuses five duplicate ring0 slots for the existing canonical vacancy origins. Vacancy preference and pocket-overlap bonuses stay exclusive to the pre-existing pinLocal candidate1 path. Support targets, hints, initial allocation, aspect, order and all score constants remain unchanged.",
+  "identity": "Current/default/replay13 stays unchanged during phase1; trial14 is not published or saved. All earlier placement interpretations retain their geometry. Promote a new current identity only after strict native metrics pass.",
+  "limits": "Six placements, existing evaluation cap,3+3 routing attempts,80-unit isolation, package/access, widths, electrical source graph and work/time bounds unchanged",
+  "cohort": ["-1017", "-1004", "-1022", "0", "17", "42", "1", "7", "5", "14"],
+  "baselineFileSha256": "0495c3da32783a52372a6afc2875dcc6cf8d6ae1c8c2e745b4daaf5b74dd65ac",
+  "acceptance": "All ten actual native routes and identity/mapping checks pass; each area/void/copper/via value must not regress from frozen13 and at least one area or void must strictly improve. Fresh exact13 diagnosed layouts and raw candidates1-5 remain unchanged. Maintained focused4 must finish with terminal cleanup and frozen-input audit.",
+  "gates": "Reuse the preceding experiment's exact three archived native contracts and strict assessor scripts, audit their bytes, then freshly run all four suites for changed behavior. No production GWT/player claim from phase1. Conditional phase2 requires complete current/replay identity promotion, applicable final native/JDK8GWT and real player-flow validation before publishing behavior.",
+  "rejection": "Preserve exact patch/contracts/failed receipts, restore verified byte snapshots and audit accepted production/web boundary before reusing prior passing evidence",
+  "publication": "Normal established branch only; no main merge or email. Preserve original five untracked entries and unrelated work."
+}

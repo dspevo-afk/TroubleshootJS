@@ -1,4 +1,35 @@
-# Current checkpoint: candidate0 vacancy trial rejected; accepted13 restored
+# Current checkpoint: candidate0 probe-only trial rejected; accepted13 restored
+
+2026-10-19. HEAD1282cc12e2185b733fb7d515174f23250bd4f09a normally pushed to
+origin/codex/q60-faulted-profile-counts, exact remote verified. Accepted production
+remains13; diagnostic code is44c5eb92. User's indefinite PCB work continues.
+No main/email; original five untracked entries and unrelated work stay preserved.
+
+Scope: docs/task-evidence/PCB/candidate0-probes-r1/scope.json. Explicit native
+trial14/density13 reuses five duplicate candidate0 ring0 slots for existing vacancy
+origins, but keeps the candidate0 objective. Preference and overlap bonuses stay
+exclusive to pinLocal candidate1; all weights, support, sizing, ordering,6/3+3 and
+physical/work/time bounds stay. Current/default/replay13 is unchanged.
+
+Seven reused test/oracle files match archived bytes. Fresh focused4 native
+PASS111.9757666s with terminal cleanup; reps2805/holdouts1947/raw identity3607/
+diagnostic13 assertions30. All1,444 frozen inputs exact; assessor14 canaries pass.
+Strict metrics FAIL: -1022 area-286883/void-269600/copper-320 (4.13%/36.95%
+size/pocket improvement), but7 area+190656/void+50800 despite copper-4180/vias-5,
+and14 copper+3550 despite area-108630/void-1600. Other seven layouts stay exact13.
+
+Exact rejected patch/contracts/receipts retained. All four production/registry
+files restored byte-exact; accepted source/compiled-web digests and prior input
+boundary pass. All verifier/snapshot resources cleaned; no trial preview, tab,
+viewport override or download. No14 current/replay promotion, full native, GWT or
+player gates after metric rejection. Evidence commit follows; no experimental14
+production behavior published. Static source review found no unrelated change;
+reviewer did not run checks. Next unstarted hypothesis: separate original/vacancy
+incumbents, admit only lower-score vacancy choices with locally non-regressing
+weighted pad distance and occupied courtyard bounding area. Predeclare literal
+guard fixtures and unchanged global acceptance/bounds before implementation.
+
+# Previous checkpoint: candidate0 vacancy trial rejected; accepted13 restored
 
 2026-10-19. HEAD44c5eb92da4004f0ee23953f61c100cb81e132de published and exact
 origin/codex/q60-faulted-profile-counts SHA verified. No main/email. User requests

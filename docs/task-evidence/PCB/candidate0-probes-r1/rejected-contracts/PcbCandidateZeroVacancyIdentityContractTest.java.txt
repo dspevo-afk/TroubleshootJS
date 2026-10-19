@@ -1,0 +1,206 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
+/** Raw planner identity check: private14 changes candidate0 only. */
+public final class PcbCandidateZeroVacancyIdentityContractTest {
+    private static final long[] SEEDS = {-1022L, 7L, 14L};
+    private static final int[] PRESERVED_CANDIDATES = {1, 2, 3, 4, 5};
+    private static final int BEFORE_VERSION = Rb56Placement.CURRENT_VERSION;
+    private static final int AFTER_VERSION = Rb56Placement.TRIAL_VERSION14;
+    private static int assertions;
+
+    public static void main(String[] args) {
+        check(BEFORE_VERSION == 13 && AFTER_VERSION == 14,
+            "trial identity leaves current version13 unchanged");
+        check(Rb56Placement.densityVersion(BEFORE_VERSION) == 12 &&
+                Rb56Placement.densityVersion(AFTER_VERSION) == 13,
+            "trial identity maps version13/14 to density12/13");
+        int failures = 0;
+        for (long seed : SEEDS) {
+            try {
+                inspectSeed(seed);
+            } catch (AssertionError failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_IDENTITY_FAILURE seed=" + seed +
+                    " message=" + failure.getMessage());
+                failure.printStackTrace(System.out);
+            } catch (RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_IDENTITY_FAILURE seed=" + seed +
+                    " exception=" + failure);
+                failure.printStackTrace(System.out);
+            }
+        }
+        if (failures != 0)
+            throw new AssertionError("candidate-zero raw identity failures=" + failures);
+        System.out.println("PASS: PCB candidate zero vacancy identity contracts seeds=" +
+            SEEDS.length + " candidates=" + PRESERVED_CANDIDATES.length +
+            " assertions=" + assertions + " preservedRawPlansExact=true " +
+            "routing=NOT_RUN admission=NOT_RUN");
+    }
+
+    private static void inspectSeed(long seed) {
+        Rb56Plan beforePlan = Rb56Plan.resolve(seed, BEFORE_VERSION);
+        Rb56Plan afterPlan = Rb56Plan.resolve(seed, AFTER_VERSION);
+        check(beforePlan.placementInterpretationVersion == BEFORE_VERSION &&
+                afterPlan.placementInterpretationVersion == AFTER_VERSION,
+            "explicit placement interpretation: " + seed);
+        check(beforePlan.seed == afterPlan.seed && beforePlan.layoutSeed == afterPlan.layoutSeed &&
+                beforePlan.routingSeed == afterPlan.routingSeed,
+            "trial changes no source or random-stream seed: " + seed);
+        String beforeSource = sourcePlanSignature(beforePlan);
+        String afterSource = sourcePlanSignature(afterPlan);
+        check(beforeSource.equals(afterSource), "trial changes no source plan: " + seed);
+
+        TroubleshootBoard beforeBoard = beforePlan.board();
+        TroubleshootBoard afterBoard = afterPlan.board();
+        String beforeInventory = boardInventorySignature(beforeBoard);
+        String afterInventory = boardInventorySignature(afterBoard);
+        check(beforeInventory.equals(afterInventory),
+            "trial changes no board inventory/source graph: " + seed);
+        check(SeededPcbLayoutGenerator.hasRepeatedControlRegions(
+                beforeBoard.getPlacementConstraints()),
+            "identity root is eligible repeated-control board: " + seed);
+
+        PcbPlacementConstraints beforeConstraints = beforeBoard.getPlacementConstraints();
+        PcbPlacementConstraints afterConstraints = afterBoard.getPlacementConstraints();
+        check(beforeConstraints.placementDensityVersion == 12 &&
+                beforeConstraints.placementDensityVersion == Rb56Placement.densityVersion(BEFORE_VERSION),
+            "saved13 planner density remains12: " + seed);
+        check(afterConstraints.placementDensityVersion == 13 &&
+                afterConstraints.placementDensityVersion == Rb56Placement.densityVersion(AFTER_VERSION),
+            "trial14 planner density is13: " + seed);
+        check(beforeConstraints.requiresTwoLayerRouting && afterConstraints.requiresTwoLayerRouting,
+            "trial preserves two-layer requirement: " + seed);
+        PcbTraceWidthProfile beforeProfile = beforeConstraints.getTraceWidthProfile();
+        PcbTraceWidthProfile afterProfile = afterConstraints.getTraceWidthProfile();
+        check("ROLE_TRACE@1".equals(beforeProfile.getIdentity()) &&
+                "ROLE_TRACE@1".equals(afterProfile.getIdentity()) &&
+                beforeProfile.maximumWidth() == 13 && afterProfile.maximumWidth() == 13,
+            "both interpretations retain ROLE_TRACE@1: " + seed);
+        check(beforeProfile.canonical().equals(afterProfile.canonical()),
+            "trial changes no copper profile: " + seed);
+
+        PcbPlacementPlanner beforePlanner = new PcbPlacementPlanner(
+            StandardPcbFootprintProviders.createRegistry());
+        PcbPlacementPlanner afterPlanner = new PcbPlacementPlanner(
+            StandardPcbFootprintProviders.createRegistry());
+        for (int candidate : PRESERVED_CANDIDATES) {
+            PcbPlacementPlanner.Plan before = beforePlanner.plan(beforeBoard,
+                beforeConstraints, beforePlan.layoutSeed, candidate);
+            PcbPlacementPlanner.Plan after = afterPlanner.plan(afterBoard,
+                afterConstraints, afterPlan.layoutSeed, candidate);
+            check(sourcePlanSignature(beforePlan).equals(beforeSource) &&
+                    sourcePlanSignature(afterPlan).equals(afterSource),
+                "candidate planning mutates no source intent: " + seed + "/" + candidate);
+            check(boardInventorySignature(beforeBoard).equals(beforeInventory) &&
+                    boardInventorySignature(afterBoard).equals(afterInventory),
+                "candidate planning mutates no source graph: " + seed + "/" + candidate);
+            validateRawPlan(beforeBoard, before, BEFORE_VERSION, candidate);
+            validateRawPlan(afterBoard, after, AFTER_VERSION, candidate);
+
+            TreeMap<String,PcbFootprint> oldFootprints = indexFootprints(before.footprints);
+            TreeMap<String,PcbFootprint> newFootprints = indexFootprints(after.footprints);
+            boolean sameIds = oldFootprints.keySet().equals(newFootprints.keySet());
+            boolean sameGeometry = sameIds;
+            if (sameGeometry) for (String id : oldFootprints.keySet())
+                if (!oldFootprints.get(id).geometryFingerprint().equals(
+                        newFootprints.get(id).geometryFingerprint())) sameGeometry = false;
+            boolean sameOutline = sameRectangle(before.outline, after.outline);
+            boolean sameEvaluations = before.evaluations == after.evaluations;
+            boolean sameMetadata = before.candidate == after.candidate &&
+                before.courtyardArea == after.courtyardArea &&
+                before.demandArea == after.demandArea;
+            check(sameIds, "candidate component identities are exact: " + seed + "/" + candidate);
+            check(sameGeometry, "candidate raw footprints are exact: " + seed + "/" + candidate);
+            check(sameOutline, "candidate outline is exact: " + seed + "/" + candidate);
+            check(sameEvaluations, "candidate evaluation count is exact: " + seed + "/" + candidate);
+            check(sameMetadata, "candidate plan metadata is exact: " + seed + "/" + candidate);
+            System.out.println("PCB_CANDIDATE_ZERO_IDENTITY_DIAGNOSTIC seed=" + seed +
+                " versions=" + BEFORE_VERSION + "/" + AFTER_VERSION +
+                " candidate=" + candidate + " inventory=UNCHANGED footprintsExact=" +
+                sameGeometry + " outlineExact=" + sameOutline + " evaluationsExact=" +
+                sameEvaluations + " metadataExact=" + sameMetadata +
+                " routing=NOT_RUN admission=NOT_RUN");
+        }
+    }
+
+    private static void validateRawPlan(TroubleshootBoard board, PcbPlacementPlanner.Plan plan,
+            int version, int expectedCandidate) {
+        check(plan != null && plan.candidate == expectedCandidate,
+            "planner retains candidate order: " + expectedCandidate);
+        check(plan.evaluations > 0 && plan.outline != null && plan.outline.width > 0 &&
+                plan.outline.height > 0, "planner returns bounded plan metadata: " + expectedCandidate);
+        check(plan.footprints.size() == board.getComponentIds().size(),
+            "planner footprint count matches source: " + expectedCandidate);
+        TreeMap<String,PcbFootprint> footprints = indexFootprints(plan.footprints);
+        check(footprints.keySet().equals(new TreeSet<String>(board.getComponentIds())),
+            "planner component inventory is exact: " + expectedCandidate);
+        check(board.getPlacementConstraints().placementDensityVersion ==
+                Rb56Placement.densityVersion(version),
+            "planner uses the explicit density interpretation: " + version);
+    }
+
+    private static TreeMap<String,PcbFootprint> indexFootprints(Vector<PcbFootprint> footprints) {
+        TreeMap<String,PcbFootprint> result = new TreeMap<String,PcbFootprint>();
+        for (PcbFootprint footprint : footprints) {
+            String id = footprint.getPlacement().getComponentId();
+            check(result.put(id, footprint) == null, "unique planner component: " + id);
+        }
+        return result;
+    }
+
+    private static String sourcePlanSignature(Rb56Plan plan) {
+        StringBuilder out = new StringBuilder();
+        out.append(plan.seed).append('|').append(plan.layoutSeed).append('|')
+            .append(plan.routingSeed).append('|').append(plan.topology()).append('|');
+        for (Rb56Plan.Part part : plan.parts()) out.append('[').append(part.canonical()).append(']');
+        return out.toString();
+    }
+
+    private static String boardInventorySignature(TroubleshootBoard board) {
+        StringBuilder out = new StringBuilder(board.getId()).append('|');
+        Vector<String> components = board.getComponentIds(); Collections.sort(components);
+        for (String id : components) {
+            BoardComponent component = board.getComponent(id);
+            out.append("component=").append(id).append(':').append(component.getType()).append(':')
+                .append(component.getPhysicalPackage().getId()).append('|');
+        }
+        Vector<String> pads = board.getPadIds(); Collections.sort(pads);
+        for (String id : pads) {
+            BoardPad pad = board.getPad(id);
+            out.append("pad=").append(id).append(':').append(pad.getComponentId()).append(':')
+                .append(pad.getTerminalId()).append(':').append(pad.getNetId()).append('|');
+        }
+        Vector<String> nets = board.getNetIds(); Collections.sort(nets);
+        for (String id : nets) {
+            BoardNet net = board.getNet(id); Vector<String> members = net.getPadIds();
+            Collections.sort(members);
+            out.append("net=").append(id).append(':').append(net.getRoutingRole().name()).append(':');
+            for (String pad : members) out.append(pad).append(',');
+            out.append('|');
+        }
+        Vector<String> inputs = board.getPowerInputIds(); Collections.sort(inputs);
+        for (String id : inputs) {
+            ExternalBoardPowerInput input = board.getPowerInput(id);
+            out.append("input=").append(id).append(':').append(input.getPositivePadId()).append(':')
+                .append(input.getReturnPadId()).append(':').append(input.getPositiveNetId()).append(':')
+                .append(input.getReturnNetId()).append('|');
+        }
+        return out.toString();
+    }
+
+    private static boolean sameRectangle(Rectangle first, Rectangle second) {
+        return first != null && second != null && first.x == second.x && first.y == second.y &&
+            first.width == second.width && first.height == second.height;
+    }
+
+    private static void check(boolean condition, String message) {
+        assertions++;
+        if (!condition) throw new AssertionError(message);
+    }
+}
