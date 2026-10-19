@@ -1,0 +1,7 @@
+{
+  "elapsedSeconds": 53.6755478,
+  "status": "PASS",
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "terminalCleanupIncluded": true,
+  "operation": "maintained native compile and precise saved13 negative canary"
+}

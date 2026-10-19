@@ -1,4 +1,32 @@
-# Current checkpoint: fresh cohort baseline failed; canvas cause investigation
+# Current checkpoint: canvas failure reproduced; narrow guard trial next
+
+2026-10-19. HEADe0a91384b648a9c03e14d1fda4b86a9d4327dc51 normally pushed and
+remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 production
+unchanged. Indefinite PCB work continues; no main/email, original five untracked
+entries and unrelated work preserved.
+
+docs/task-evidence/PCB/canvas-boundary-r1: maintained native negative fixture
+PASS53.6755478s including terminal cleanup (not separately timed),1,600 assertions,
+all1,442 consumed inputs exact. Actual saved13 root4 fails at final
+finishRoutedPlan geometry validation line851. Full source-to-board mappings and
+canonical live graph remain unchanged. This is proof of the existing rejection,
+not admitted or repaired behavior. Prior failed four-root collection stays failed,
+with no baseline seal, substituted seed or geometry-value inspection.
+
+Root review plus optional read-only source investigation confirm symmetric
+fallback crop can exceed fixed canvas after pre-crop validation. Narrow trial is
+declared in canvas-guard-trial-r1/scope.json: explicit14/density13 medium-only
+canvas guard before crop mutation, retaining the validated routed layout.
+Current/replay13 stays until all14-root focused, final native/GWT/player gates.
+No trial production edit yet. Draft worker owns only trial fixture .java.txt;
+root integrates. Next: byte snapshots, source guard, final fixture review/freeze,
+literal and14-root focus with exact old-ten/new-three geometry preservation and
+new admission for4. No area-improvement claim from this bug fix.
+
+Native/snapshot cleanup PASS; no preview/tab/viewport/download. Production/web
+unchanged; GWT/player NOT RUN for this native-only fixture/registration.
+
+# Previous checkpoint: fresh cohort baseline failed; canvas cause investigation
 
 2026-10-19. HEAD22df5e0d0c58de516f40ccc59fe71f1a33fb9305 pushed and exact
 remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 remains

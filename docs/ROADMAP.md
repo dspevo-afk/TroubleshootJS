@@ -20,8 +20,12 @@ Former holdouts now inform design and are regression cases. Fresh predeclared
 roots2,3,4,6 exposed an accepted13 canvas failure at4; the other three admitted.
 The complete-baseline gate failed, no seed was substituted or baseline sealed,
 and geometry values remain uninspected. [Failure and review](task-evidence/PCB/fresh-qualification-r1/README.md).
-Next is a precise canvas-boundary fixture and cause investigation; the soft
-isolation-package boundary proposal is deferred. Keep isolation,6/3+3 and limits.
+Precise saved13 seed4 negative fixture now passes1,600 graph/identity assertions,
+identifying final crop geometry validation as the throwing phase.
+[Canvas cause and limits](task-evidence/PCB/canvas-boundary-r1/README.md).
+Next is an explicit14 guard retaining the validated routed board before an
+oversized crop mutates it. The soft isolation-package packing proposal stays
+deferred. Keep isolation,6/3+3 and work/time limits.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

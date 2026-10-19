@@ -5815,3 +5815,11 @@ rectangles. Domain unions are descriptive bounding boxes, not allowed-placement
 regions; sampled free space is not proof of package fit or routability. This
 diagnostic contract and its artifacts are outside production player UI and do not
 change generation or electrical behavior.
+
+`PcbCanvasBoundaryContractTest` preserves the saved13 root4 negative fixture at
+final routed-layout crop validation. Its native helpers verify full declared
+component/terminal/net and power-input mappings and hash the live board graph
+before/after generation. The separate full-plan hash includes placement metadata
+and proves per-version purity. A passing negative fixture does not grant physical
+admission or fix the crop; its evidence identifies the cause for a later versioned
+guard. These helpers remain outside production player UI.
