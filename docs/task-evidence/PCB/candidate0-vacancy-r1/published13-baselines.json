@@ -1,0 +1,178 @@
+{
+  "status": "FROZEN_PUBLISHED13_BASELINES",
+  "commit": "96bd1b1414866733927f93bdf0b039bd09cae204",
+  "sourceLogSha256": "85ac7c7d8318390e965bce33b31f6bb5f5b70dcf450fbae8ba9a55d0af546035",
+  "scope": "Six representatives and four untuned roots, accepted final49 receipts before private14",
+  "cases": [
+    {
+      "seed": "-1017",
+      "area": 4529785,
+      "copperLength": 26660,
+      "vias": 28,
+      "segments": 173,
+      "geometrySha256": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+      "parts": 40,
+      "protectedFreeCells": 20394,
+      "largestProtectedEmptyRectangle": {
+        "x": 70,
+        "y": 1070,
+        "width": 1090,
+        "height": 510,
+        "area": 555900
+      }
+    },
+    {
+      "seed": "-1004",
+      "area": 4466664,
+      "copperLength": 30720,
+      "vias": 26,
+      "segments": 189,
+      "geometrySha256": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+      "parts": 44,
+      "protectedFreeCells": 17689,
+      "largestProtectedEmptyRectangle": {
+        "x": 70,
+        "y": 150,
+        "width": 840,
+        "height": 230,
+        "area": 193200
+      }
+    },
+    {
+      "seed": "-1022",
+      "area": 6943752,
+      "copperLength": 45670,
+      "vias": 48,
+      "segments": 270,
+      "geometrySha256": "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
+      "parts": 60,
+      "protectedFreeCells": 31867,
+      "largestProtectedEmptyRectangle": {
+        "x": 290,
+        "y": 980,
+        "width": 760,
+        "height": 960,
+        "area": 729600
+      }
+    },
+    {
+      "seed": "0",
+      "area": 4358809,
+      "copperLength": 30280,
+      "vias": 38,
+      "segments": 184,
+      "geometrySha256": "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
+      "parts": 42,
+      "protectedFreeCells": 16601,
+      "largestProtectedEmptyRectangle": {
+        "x": 50,
+        "y": 1130,
+        "width": 280,
+        "height": 640,
+        "area": 179200
+      }
+    },
+    {
+      "seed": "17",
+      "area": 5814368,
+      "copperLength": 43520,
+      "vias": 48,
+      "segments": 263,
+      "geometrySha256": "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
+      "parts": 53,
+      "protectedFreeCells": 23380,
+      "largestProtectedEmptyRectangle": {
+        "x": 950,
+        "y": 1021,
+        "width": 520,
+        "height": 800,
+        "area": 416000
+      }
+    },
+    {
+      "seed": "42",
+      "area": 5519502,
+      "copperLength": 42230,
+      "vias": 45,
+      "segments": 253,
+      "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+      "parts": 54,
+      "protectedFreeCells": 21048,
+      "largestProtectedEmptyRectangle": {
+        "x": 40,
+        "y": 1480,
+        "width": 810,
+        "height": 220,
+        "area": 178200
+      }
+    },
+    {
+      "seed": "1",
+      "area": 4615974,
+      "copperLength": 27660,
+      "vias": 29,
+      "segments": 174,
+      "geometrySha256": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+      "parts": 40,
+      "protectedFreeCells": 21223,
+      "largestProtectedEmptyRectangle": {
+        "x": 60,
+        "y": 690,
+        "width": 790,
+        "height": 600,
+        "area": 474000
+      }
+    },
+    {
+      "seed": "7",
+      "area": 6397152,
+      "copperLength": 43600,
+      "vias": 48,
+      "segments": 254,
+      "geometrySha256": "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
+      "parts": 52,
+      "protectedFreeCells": 29600,
+      "largestProtectedEmptyRectangle": {
+        "x": 40,
+        "y": 1100,
+        "width": 1360,
+        "height": 710,
+        "area": 965600
+      }
+    },
+    {
+      "seed": "5",
+      "area": 9445744,
+      "copperLength": 38610,
+      "vias": 48,
+      "segments": 244,
+      "geometrySha256": "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
+      "parts": 54,
+      "protectedFreeCells": 60637,
+      "largestProtectedEmptyRectangle": {
+        "x": 60,
+        "y": 120,
+        "width": 2170,
+        "height": 630,
+        "area": 1367100
+      }
+    },
+    {
+      "seed": "14",
+      "area": 7347009,
+      "copperLength": 42220,
+      "vias": 48,
+      "segments": 247,
+      "geometrySha256": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+      "parts": 54,
+      "protectedFreeCells": 37355,
+      "largestProtectedEmptyRectangle": {
+        "x": 70,
+        "y": 1311,
+        "width": 1260,
+        "height": 710,
+        "area": 894600
+      }
+    }
+  ]
+}

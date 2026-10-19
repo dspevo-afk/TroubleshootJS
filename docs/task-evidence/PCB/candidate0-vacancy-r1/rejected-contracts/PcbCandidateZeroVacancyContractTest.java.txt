@@ -1,0 +1,159 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.TreeSet;
+import java.util.Vector;
+
+/** Actual routed private14 measurements for the predeclared representative roots. */
+public final class PcbCandidateZeroVacancyContractTest {
+    private static final long[] ROOTS = {-1017L, -1004L, -1022L, 0L, 17L, 42L};
+    private static final int[] PARTS = {40, 44, 60, 42, 53, 54};
+    private static int assertions;
+
+    public static void main(String[] args) {
+        run(ROOTS, PARTS, "PCB candidate zero vacancy contracts");
+    }
+
+    static void measure(long seed, int expectedParts) {
+        Rb56Plan plan = Rb56Plan.resolve(seed, Rb56Placement.TRIAL_VERSION14);
+        check(plan.placementInterpretationVersion == 14, "explicit trial14 plan: " + seed);
+        TroubleshootBoard board = plan.board();
+        MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, plan.layoutSeed, plan.routingSeed);
+        check(route != null && route.accepted(), "trial14 route accepted: " + seed +
+            " " + (route == null ? "null" : route.toCanonical()));
+        PcbBoardLayout layout = route.getLayout();
+        layout.validateGeometry(board);
+        layout.validateRoutingGeometry(board);
+        layout.validateRouteQuality();
+        new PcbTwoLayerRules(board, layout).validate(layout);
+        PcbTraceClearance.validate(layout.getTraces());
+        MediumBoardNormalAdmission.fromAcceptedRb56Route(board, route,
+            plan.layoutSeed, plan.routingSeed).requireConstruction(board, layout);
+
+        PcbPlacementConstraints constraints = board.getPlacementConstraints();
+        check(constraints.placementDensityVersion == 13,
+            "trial14 uses density13: " + seed);
+        check(constraints.requiresTwoLayerRouting,
+            "trial14 retains required two-layer routing: " + seed);
+        verifyRoleWidths(board, layout);
+        verifyInventory(board, layout, expectedParts, seed);
+
+        MediumBoardPhysicalPolicy.Statistics stats = route.getStatistics();
+        check(stats.placementCandidates == 6 && stats.oneFaceAttempts <= 3 &&
+                stats.twoLayerAttempts <= 3 && stats.routeAttempts <= 6,
+            "trial14 preserves six placements and 3+3 routing caps: " + seed);
+        check(stats.selectedPlacementAttempt >= 0 && stats.selectedPlacementAttempt < 6 &&
+                MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(stats.selectedRoutePolicy),
+            "trial14 selects an accepted P07 placement: " + seed);
+
+        Rectangle outline = layout.getBoardOutline();
+        long area = (long)outline.width * (long)outline.height;
+        long copperLength = 0;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            int[] x = trace.getXPoints(), y = trace.getYPoints();
+            for (int index = 1; index < x.length; index++)
+                copperLength += Math.abs((long)x[index] - x[index - 1]) +
+                    Math.abs((long)y[index] - y[index - 1]);
+        }
+        int vias = 0;
+        for (PcbBoardHole hole : layout.getHoles()) {
+            check(hole.kind == PcbBoardHole.Kind.VIA,
+                "normal admission retains via-only holes: " + seed + "/" + hole.id);
+            vias++;
+        }
+        int largestVoid = PcbFunctionalGroupingContractTest.reportWhitespace(
+            board, layout, seed, 14);
+        String geometryHash = PlayerSessionFingerprint.of(layout.geometryFingerprint());
+        System.out.println("PCB_CANDIDATE_ZERO_CASE {\"seed\":\"" + seed +
+            "\",\"version\":14,\"density\":" + constraints.placementDensityVersion +
+            ",\"parts\":" + layout.getComponents().size() + ",\"area\":" + area +
+            ",\"largestProtectedEmptyRectangleArea\":" + largestVoid +
+            ",\"copperManhattanLength\":" + copperLength + ",\"vias\":" + vias +
+            ",\"geometrySha256\":\"" + geometryHash + "\",\"selectedAttempt\":" +
+            stats.selectedPlacementAttempt + ",\"placementCandidates\":" +
+            stats.placementCandidates + ",\"oneFaceAttempts\":" + stats.oneFaceAttempts +
+            ",\"twoLayerAttempts\":" + stats.twoLayerAttempts + "}");
+    }
+
+    static int assertionCount() { return assertions; }
+
+    private static void run(long[] seeds, int[] parts, String marker) {
+        if (seeds.length != parts.length) throw new IllegalArgumentException("Invalid cohort");
+        int failures = 0;
+        for (int index = 0; index < seeds.length; index++) {
+            try {
+                measure(seeds[index], parts[index]);
+            } catch (AssertionError failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_FAILURE seed=" + seeds[index] +
+                    " message=" + failure.getMessage());
+                failure.printStackTrace(System.out);
+            } catch (RuntimeException failure) {
+                failures++;
+                System.out.println("PCB_CANDIDATE_ZERO_FAILURE seed=" + seeds[index] +
+                    " exception=" + failure);
+                failure.printStackTrace(System.out);
+            }
+        }
+        if (failures != 0)
+            throw new AssertionError("candidate-zero vacancy route failures=" + failures);
+        System.out.println("PASS: " + marker + " roots=" + seeds.length +
+            " assertions=" + assertions);
+    }
+
+    private static void verifyRoleWidths(TroubleshootBoard board, PcbBoardLayout layout) {
+        PcbTraceWidthProfile profile = board.getPlacementConstraints().getTraceWidthProfile();
+        check("ROLE_TRACE@1".equals(profile.getIdentity()) && profile.maximumWidth() == 13,
+            "trial14 retains ROLE_TRACE@1 maximum13");
+        for (BoardNet.RoutingRole role : BoardNet.RoutingRole.values())
+            check(profile.widthFor(role) == expectedWidth(role),
+                "trial14 literal role width " + role);
+        boolean top = false, bottom = false;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            BoardNet net = board.getNet(trace.getNetId());
+            check(net != null, "trace net exists: " + trace.getNetId());
+            check(trace.getWidth() == expectedWidth(net.getRoutingRole()),
+                "routed role width: " + trace.getNetId());
+            top |= trace.getLayer() == PcbCopperLayer.TOP;
+            bottom |= trace.getLayer() == PcbCopperLayer.BOTTOM;
+        }
+        check(top && bottom, "trial14 route contains both copper faces");
+    }
+
+    private static int expectedWidth(BoardNet.RoutingRole role) {
+        switch (role) {
+        case HIGH_CURRENT: return 13;
+        case SUPPLY:
+        case RETURN: return 11;
+        case CONTROL:
+        case SIGNAL: return 9;
+        default: throw new AssertionError("Unexpected routing role: " + role);
+        }
+    }
+
+    private static void verifyInventory(TroubleshootBoard board, PcbBoardLayout layout,
+            int expectedParts, long seed) {
+        TreeSet<String> expectedComponents = new TreeSet<String>(board.getComponentIds());
+        TreeSet<String> actualComponents = new TreeSet<String>();
+        for (PcbComponentPlacement placement : layout.getComponents())
+            check(actualComponents.add(placement.getComponentId()),
+                "unique component identity: " + seed + "/" + placement.getComponentId());
+        check(board.getComponentIds().size() == expectedParts &&
+                layout.getComponents().size() == expectedParts &&
+                actualComponents.equals(expectedComponents),
+            "exact component inventory: " + seed);
+
+        TreeSet<String> expectedPads = new TreeSet<String>(board.getPadIds());
+        TreeSet<String> actualPads = new TreeSet<String>();
+        for (PcbPadPlacement pad : layout.getPads())
+            check(actualPads.add(pad.getPadId()), "unique pad identity: " + seed + "/" +
+                pad.getPadId());
+        check(layout.getPads().size() == expectedPads.size() && actualPads.equals(expectedPads),
+            "exact pad inventory: " + seed);
+    }
+
+    private static void check(boolean condition, String message) {
+        assertions++;
+        if (!condition) throw new AssertionError(message);
+    }
+}

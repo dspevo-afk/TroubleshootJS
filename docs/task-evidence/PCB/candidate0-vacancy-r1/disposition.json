@@ -1,0 +1,13 @@
+{
+  "status": "REJECTED",
+  "native": "Focused4 PASS110.9513986s including terminal wrapper cleanup; cleanup duration not separately measured",
+  "focusedInputs": "PASS: all1444 bytes unchanged throughout the run",
+  "staticReview": "No remaining blocker in prototype scope, tests or strict assessor. Separate reviewer did not run runtime checks. Two pre-runtime version-table omissions were fixed before source freeze.",
+  "metrics": "FAIL: three roots regress. Root-1022 area+907470, void+177600, copper+10830; root7 area+89850, void-248000, copper+2540; root14 area+18639, void+263800, copper+8010. Via counts unchanged. Other seven metric sets remain exact13.",
+  "identity": "Raw candidates1-5 exact13 for three explicit roots, source graph/seeds/inventory retained; fresh diagnosed13 hashes/voids exact. Raw preservation does not prove the same routed winner under bounded selection.",
+  "prototype": "Exact diff and three native contracts archived. All four existing source/registry files restored from verified task-owned byte snapshots, without checkout/newline normalization.",
+  "gwtAndPlayer14": "NOT RUN: strict metric phase rejected before current/replay promotion or production qualification",
+  "production": "Accepted13 remains the published generator; no experimental14 behavior published",
+  "nextHypothesis": "Probe existing vacancy origins in candidate0 while keeping its original scoring, rather than inheriting candidate1's preference and overlap bonuses. New predeclared experiment required; do not weaken acceptance bounds.",
+  "limits": "Finite ten-root native experiment only, no normal advanced/HARD, allseed, modesthost, optimality or manufacturing claim. No main/email."
+}

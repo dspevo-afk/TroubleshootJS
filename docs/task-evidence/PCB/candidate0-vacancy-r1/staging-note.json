@@ -1,0 +1,5 @@
+{
+  "initialCachedCheck": "FAIL exit2: byte-preserved CRLF evidence was classified as trailing whitespace",
+  "correction": "Packet-only attributes recognize CR-at-EOL while retaining exact artifact bytes. Literal unified patch context follows the existing historical patch-attribute rule. Production source whitespace rules remain unchanged.",
+  "reason": "Frozen baseline and archive SHA values must survive checkout without newline conversion; no runtime assertion or validation threshold changes"
+}

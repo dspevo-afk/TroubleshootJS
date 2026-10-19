@@ -16,6 +16,11 @@ other package envelopes prevent simply deleting their whole axis spans. Next is
 a bounded candidate0 vacancy-advice trial under the existing6/3+3 limits; no size
 improvement is claimed yet. User's indefinite continuation supersedes the earlier
 9am stop. No main/email. [Evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
+The candidate0 full-guidance trial was rejected: native4 passes, but three of ten
+areas and copper lengths grow. Accepted13 bytes are restored and audited; no14
+production behavior is published. Next is a separately declared probe-only
+variant under candidate0's original scoring, retaining strict acceptance.
+[Rejected trial](task-evidence/PCB/candidate0-vacancy-r1/README.md).
 
 **Previous task:** **Private13 connected vacancy preference accepted**
 Existing candidate1 prefers the existing pocket origin nearest its connected

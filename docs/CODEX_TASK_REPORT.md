@@ -1,4 +1,32 @@
-# Current checkpoint: domain/occupancy diagnosis complete; packing work continues
+# Current checkpoint: candidate0 vacancy trial rejected; accepted13 restored
+
+2026-10-19. HEAD44c5eb92da4004f0ee23953f61c100cb81e132de published and exact
+origin/codex/q60-faulted-profile-counts SHA verified. No main/email. User requests
+indefinite PCB realism work until stopped or usage exhausted.
+
+Evidence: docs/task-evidence/PCB/candidate0-vacancy-r1. Explicit native14/density13
+gave repeated-control candidate0 existing vacancy advice in five duplicate ring0
+slots, preserving pin support, sizing, ordering,6 placements,3+3 routes and caps.
+Focused4 native PASS110.9513986s including terminal cleanup: reps2811 assertions,
+holdouts1958, raw identity3607, unchanged13 diagnostics30. Frozen1,444-input audit
+PASS; strict metric FAIL. Roots-1022/7/14 grow in area and copper;7's smaller void
+does not excuse those regressions. Other seven layouts remain exact13. Synthetic
+assessor14 canaries pass. Static review found no remaining scope/oracle blocker;
+that reviewer did not run runtime gates.
+
+Exact rejected patch and three contracts retained. All four production/registry
+files restored from verified byte snapshots, avoiding checkout/EOL changes.
+Accepted production source and entire compiled web digests match; prior1,440-input
+boundary passes. No14 current/replay promotion, full native, GWT or player gate
+was attempted after rejection. No experimental14 generator behavior published.
+All verifier/snapshot resources cleaned; no trial preview/tab/viewport/download.
+Original five untracked entries and unrelated Desktop work remain preserved.
+Diagnostic code remains published at44c5eb92; rejection evidence commit follows.
+Next unstarted hypothesis: vacancy origins in candidate0 under its original score,
+without candidate1 preference/overlap bonuses. Predeclare and retain the same
+strict metric, physical, identity and work/time bounds before another experiment.
+
+# Previous checkpoint: domain/occupancy diagnosis complete; packing work continues
 
 2026-10-19. Baseline e0b3052fd030bb30359471bd217a673854612b18 on
 codex/q60-faulted-profile-counts. User requests continued autonomous PCB realism
