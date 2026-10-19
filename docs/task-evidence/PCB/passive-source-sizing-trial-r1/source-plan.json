@@ -1,0 +1,39 @@
+{
+  "rootReviewed": true,
+  "baseCopyCount": 1510,
+  "copyCount": 1528,
+  "overrides": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "tests/contracts/PcbPassivePoseAdmissionContractTest.java",
+    "tests/contracts/PcbPassivePosePolicyContractTest.java",
+    "tests/contracts/PcbPassivePoseTrialSourceContractTest.java",
+    "tests/contracts/PcbPassiveSizingSourceContractTest.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java"
+  ],
+  "additions": [
+    "tests/contracts/PcbSourceSizedPoseRawContractTest.java",
+    "tests/contracts/PcbSourceSizedPoseRawContractTestGroup2.java",
+    "tests/contracts/PcbSourceSizedPoseRawContractTestGroup3.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTest.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup10.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup11.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup12.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup13.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup14.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup2.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup3.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup4.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup5.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup6.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup7.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup8.java",
+    "tests/contracts/PcbSourceSizedPoseRouteContractTestGroup9.java",
+    "tests/contracts/PcbSourceSizedPoseSourceContractTest.java"
+  ]
+}

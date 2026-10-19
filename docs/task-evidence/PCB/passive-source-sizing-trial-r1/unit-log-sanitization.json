@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Known prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "unit.txt",
+      "rawSha256": "261daf34696eab5f0452da492eec58f0340c7ae8de878242b119cc1773a1b4c9",
+      "sanitizedSha256": "261daf34696eab5f0452da492eec58f0340c7ae8de878242b119cc1773a1b4c9",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "unit-receipt.txt",
+      "rawSha256": "ff2cf65924cbb3d479f6216b68ae46de8c2e232b8fc9e74b05a9e8b093063f73",
+      "sanitizedSha256": "ff2cf65924cbb3d479f6216b68ae46de8c2e232b8fc9e74b05a9e8b093063f73",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

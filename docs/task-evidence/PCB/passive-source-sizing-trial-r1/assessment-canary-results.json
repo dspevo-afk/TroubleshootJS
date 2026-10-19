@@ -1,0 +1,361 @@
+{
+  "schema": "pcb-source-sized-pose-reader-canary-results-v1",
+  "status": "PASS",
+  "phase": "PRE_RUNTIME_SYNTHETIC_ONLY",
+  "baseCommit": "e464dbfd0bffc052e7e233ec59e012e86c16f8c2",
+  "canaryCount": 52,
+  "positiveCount": 4,
+  "negativeCount": 48,
+  "unitPhase": {
+    "suiteCount": 8,
+    "reportRows": 57,
+    "source18Roots": 14,
+    "rawRows": 15,
+    "source15Roots": 14,
+    "source16Roots": 14
+  },
+  "routePhase": {
+    "suiteCount": 14,
+    "cases": 28,
+    "whitespaceRows": 28,
+    "poseRows": 28,
+    "routeRows": 28
+  },
+  "strictPositive": {
+    "status": "PASS",
+    "metricImprovementRoots": 1,
+    "actualTop90Roots": 1
+  },
+  "canaries": [
+    {
+      "id": "unit-phase-ordered-source18-raw15-source15-source16",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "routes-phase-all28-whitespace-pose-route-cases",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "complete-strict-improvement-with-actual-canonical-top90",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "whitespace-relative-grid-offgrid-origin",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "phase-duplicate-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-reordered-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-missing-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-unknown-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-failure-line",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-timeout",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-cleanup-missing",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-terminal-line-changed",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-log-receipt-pass-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-marker-count-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-graph-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-digest-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-signed-long-overflow",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-population-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-density-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-policy-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source-admission-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-graph-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-seed-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-hash-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-parts-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-pads-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-addfield",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-layout-seed-overflow",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-routing-seed-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw-old15-mutation",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw18-geometry-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw18-evaluations-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw18-demand-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw18-courtyard-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-old15-nontime-mutation",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "routes-missing-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "strict-metric-regression-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-no-improvement-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-no-top90-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "whitespace-missing-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-reordered-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-extra-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-typed-grid",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-free-fraction-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-area-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-relative-grid-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-rectangle-coordinate-type",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-legacy-list",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-population-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-status-failure",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-cap-exceeded",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "pose-admission-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    }
+  ],
+  "consumedSha256": {
+    "assess.py": "291777ab7bc2d96c146ddda5af4d7ad1f9b9cc0aa6ccb990171e46afbb443493",
+    "check_assessment.py": "eddb180572c3fcc9d8b59fbfbe210d7a87399ddc4f19806cef110e63d6683e21",
+    "assessment-canaries.json": "b83c4f6f0a153683120a63ae2ae54dfac093d6ee11f7876556c4490ebcbfb322",
+    "proposal.json": "660278926345ca2a707ac8bce84f6ad1ba16fcbcbe909b55bc4dd4b5c92a98de",
+    "protocol.json": "48b16c668aba3a5606748fd3985175941740b17ac034f3c365f816a6c926761e",
+    "unit-suites.json": "8521298e51c302b65ab7ceaa66d6d405c5ee33722d2a2b2a7ed028a1d90b000b",
+    "routes-suites.json": "0f48566d9b26530e7919e6230eb9c0dec081d7d33848db47073fc1638ee0e0a0",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790",
+    "passive-pose-policy-r1/assess.py": "c9908a3d0439e64b01fa806f353fa7d6e024e8dc6050179a10bf8bef31ff1f26",
+    "passive-pose-policy-r1/unit.txt": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570"
+  },
+  "nativeRuntimeEvidence": "NOT RUN",
+  "limits": [
+    "Synthetic reader canaries do not establish native generation or routing behavior.",
+    "No runtime output, new source output, or control runtime output was read."
+  ]
+}

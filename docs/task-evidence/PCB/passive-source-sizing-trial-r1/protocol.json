@@ -1,0 +1,273 @@
+{
+  "schema": "pcb-passive-source-sizing-trial-v1",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "cases": [
+    [
+      "-1017",
+      15
+    ],
+    [
+      "-1017",
+      18
+    ],
+    [
+      "-1004",
+      15
+    ],
+    [
+      "-1004",
+      18
+    ],
+    [
+      "-1022",
+      15
+    ],
+    [
+      "-1022",
+      18
+    ],
+    [
+      "0",
+      15
+    ],
+    [
+      "0",
+      18
+    ],
+    [
+      "17",
+      15
+    ],
+    [
+      "17",
+      18
+    ],
+    [
+      "42",
+      15
+    ],
+    [
+      "42",
+      18
+    ],
+    [
+      "1",
+      15
+    ],
+    [
+      "1",
+      18
+    ],
+    [
+      "7",
+      15
+    ],
+    [
+      "7",
+      18
+    ],
+    [
+      "5",
+      15
+    ],
+    [
+      "5",
+      18
+    ],
+    [
+      "14",
+      15
+    ],
+    [
+      "14",
+      18
+    ],
+    [
+      "2",
+      15
+    ],
+    [
+      "2",
+      18
+    ],
+    [
+      "3",
+      15
+    ],
+    [
+      "3",
+      18
+    ],
+    [
+      "4",
+      15
+    ],
+    [
+      "4",
+      18
+    ],
+    [
+      "6",
+      15
+    ],
+    [
+      "6",
+      18
+    ]
+  ],
+  "admissionByVersion": {
+    "15": "RB56_BOARD_NORMAL@1",
+    "18": "RB56_BOARD_NORMAL@4"
+  },
+  "policyByVersion": {
+    "15": 0,
+    "18": 3
+  },
+  "density": 14,
+  "sourcePrefixes": {
+    "old": "PCB_PASSIVE_POSE_SOURCE_CASE ",
+    "trial16": "PCB_PASSIVE_POLICY_INPUT ",
+    "trial18": "PCB_SOURCE_SIZED_POSE_INPUT "
+  },
+  "trialSourceFields": [
+    "seed",
+    "sourceCanonical15",
+    "sourcePlanSha25618",
+    "graph18",
+    "intent18",
+    "layoutSeed18",
+    "routingSeed18",
+    "eligibleIds",
+    "densityVersion18",
+    "passivePosePolicy18",
+    "admissionIdentity18"
+  ],
+  "rawPrefix": "PCB_SOURCE_SIZED_POSE_RAW ",
+  "rawFields": [
+    "seed",
+    "attempt",
+    "geometry15",
+    "geometry18",
+    "evaluations15",
+    "evaluations18",
+    "demand15",
+    "demand18",
+    "courtyard15",
+    "courtyard18"
+  ],
+  "rawCases": [
+    [
+      "42",
+      0
+    ],
+    [
+      "42",
+      2
+    ],
+    [
+      "42",
+      3
+    ],
+    [
+      "42",
+      4
+    ],
+    [
+      "42",
+      5
+    ],
+    [
+      "-1022",
+      0
+    ],
+    [
+      "-1022",
+      2
+    ],
+    [
+      "-1022",
+      3
+    ],
+    [
+      "-1022",
+      4
+    ],
+    [
+      "-1022",
+      5
+    ],
+    [
+      "4",
+      0
+    ],
+    [
+      "4",
+      2
+    ],
+    [
+      "4",
+      3
+    ],
+    [
+      "4",
+      4
+    ],
+    [
+      "4",
+      5
+    ]
+  ],
+  "routePrefix": "PCB_SOURCE_SIZED_POSE_ROUTE ",
+  "posePrefix": "PCB_SOURCE_SIZED_POSE_POSES ",
+  "poseFields": [
+    "seed",
+    "issuedAdmissionIdentity",
+    "version",
+    "top0",
+    "top90"
+  ],
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "whitespaceFields": [
+    "seed",
+    "version",
+    "parts",
+    "gridUnits",
+    "sampledCells",
+    "packageAccessOccupiedCells",
+    "protectedFreeCells",
+    "protectedFreeFraction",
+    "largestProtectedEmptyRectangle",
+    "scope"
+  ],
+  "whitespaceScope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF",
+  "unitReportOrder": "trial18source14,raw15,old14,trial16source14; pure policy/admission emit only PASS markers",
+  "routeReportOrder": "whitespace,pose,route per case; fixed14 roots each15 then18",
+  "timingScope": "Native source-sized orthogonal trial; unchanged per-JVM/search/physical limits",
+  "fitnessMetrics": [
+    "area",
+    "largestProtectedEmptyRectangleArea",
+    "copperManhattanLength",
+    "vias"
+  ],
+  "fitness": "Every trial18 metric <= paired15, at least one strict improvement overall, at least one selected canonical TOP90 overall; any missing/failure/no-op rejects",
+  "baselinesSha256": {
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790"
+  },
+  "limits": "Finite informed regressions only; no physical/player/repair/replay/manufacturing promotion from this diagnostic"
+}

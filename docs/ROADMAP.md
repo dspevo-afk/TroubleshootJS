@@ -163,6 +163,14 @@ Two old42 rows stay exact; the six-case comparison is incomplete. Original
 request-order reader failure and fresh corrected run are preserved. No production
 promotion or changed gate/cap; next is a bounded source-sizing/orthogonal trial.
 [Sizing-control rejection and limits](task-evidence/PCB/passive-sizing-control-r1/RESULTS.md).
+Source-sized orthogonal18 now completes all28 native admissions and full artifact
+fidelity, but strict14 fitness FAILs17/42/3.17's area/void shrink while copper grows;
+42/3 regress other metrics. Eleven trial geometries stay exact. Fresh unit8
+PASS49.1966s/routes14 PASS199.0444s; reader52 canaries precede execution. Separate
+max demand preserves DEMAND_LIMIT. Copy restored1510/1504/1467 and retired;
+main1475/default15 unchanged. Next is local pose choice with honest evaluation
+counts and unchanged numeric caps and strict gates.
+[Source-sizing rejection and limits](task-evidence/PCB/passive-source-sizing-trial-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

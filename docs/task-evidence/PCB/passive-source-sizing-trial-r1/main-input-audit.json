@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "acceptedBase": 1467,
+  "policyIntermediate": 1504,
+  "controlBase": 1510,
+  "priorNativeControlStatus": "FAIL; preserved, no runtime PASS reuse"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Root integrated diff, phase/fitness evidence and resource-integrity audit",
+  "nativeInputs": 1528,
+  "sourceDeltas": 30,
+  "gateOwners": 33,
+  "nativeUnitStatus": "PASS",
+  "nativeRouteStatus": "PASS",
+  "unitElapsedSeconds": 49.1965819,
+  "routesElapsedSeconds": 199.0444372,
+  "fullRouteRows": 28,
+  "oldRowsExact42NonTimeFields": 14,
+  "comparison": "COMPLETE",
+  "strictFitness": "FAIL",
+  "canaryCount": 52,
+  "recordedDriverBirthsExited": 4,
+  "copyRetired": true,
+  "main1475Exact": true,
+  "productionPromotion": false,
+  "GwtAndPlayerValidation": "NOT RUN; private native diagnostic only",
+  "limits": "Finite informed source/physical regression scope; no independent runtime, all-seed, manufacturing, live replay/repair or player acceptance proof"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "scope": "Root static integrated diff and source-bound native adapters",
+  "copyCount": 1528,
+  "overrides": 12,
+  "additions": 18,
+  "diffSha256": "f1ad723d955bf11e0f05693cfd88e9fc68ab5e215eabc4d7277dd738b0a7f55a",
+  "rootAcknowledgementSha256": "4c058f51034c6b67a67167e63998f08ad86ef02d8beacbca78a3edcf06c0b44d",
+  "physicalCoreByteExactAfterSixWrapperMigrations": true,
+  "oldSourceFixturesExactExceptUnsupported19": true,
+  "registryExactExcept18Entries": true,
+  "sourceDerivedExecutionOrder": true,
+  "numericWorkCapsUnchanged": true,
+  "plannerByteExactExceptDeclaredSizingGateAndConservativeGuard": true,
+  "behaviorProof": "NOT RUN; fresh unit8 and28 full routes required"
+}

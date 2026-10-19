@@ -1,0 +1,586 @@
+--- scripts/verify-current-contracts.ps1
++++ scripts/verify-current-contracts.ps1
+@@ -413,0 +414,18 @@
++        @{ Name = 'PcbSourceSizedPoseSourceContractTest'; Marker = 'PCB source sized pose source contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRawContractTest'; Marker = 'PCB source sized pose raw42 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRawContractTestGroup2'; Marker = 'PCB source sized pose rawneg1022 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRawContractTestGroup3'; Marker = 'PCB source sized pose raw4 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTest'; Marker = 'PCB source sized pose routeNeg1017 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup2'; Marker = 'PCB source sized pose routeNeg1004 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup3'; Marker = 'PCB source sized pose routeNeg1022 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup4'; Marker = 'PCB source sized pose route0 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup5'; Marker = 'PCB source sized pose route17 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup6'; Marker = 'PCB source sized pose route42 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup7'; Marker = 'PCB source sized pose route1 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup8'; Marker = 'PCB source sized pose route7 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup9'; Marker = 'PCB source sized pose route5 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup10'; Marker = 'PCB source sized pose route14 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup11'; Marker = 'PCB source sized pose route2 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup12'; Marker = 'PCB source sized pose route3 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup13'; Marker = 'PCB source sized pose route4 contracts ' },
++        @{ Name = 'PcbSourceSizedPoseRouteContractTestGroup14'; Marker = 'PCB source sized pose route6 contracts ' },
+--- src/com/lushprojects/circuitjs1/client/GenerationRequest.java
++++ src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+@@ -82,2 +82,4 @@
+-                    Rb56Placement.SIZING_CONTROL_VERSION17)
+-                throw new IllegalArgumentException("RB56 placement17 is available only through direct native plans");
++                    Rb56Placement.SIZING_CONTROL_VERSION17 ||
++                    requestedRb56PlacementInterpretationVersion ==
++                    Rb56Placement.SOURCE_SIZED_VERSION18)
++                throw new IllegalArgumentException("RB56 placement17/18 are available only through direct native plans");
+@@ -261,2 +263,3 @@
+-        if (version == Rb56Placement.SIZING_CONTROL_VERSION17)
+-            throw new IllegalArgumentException("RB56 placement17 is available only through direct native plans");
++        if (version == Rb56Placement.SIZING_CONTROL_VERSION17 ||
++                version == Rb56Placement.SOURCE_SIZED_VERSION18)
++            throw new IllegalArgumentException("RB56 placement17/18 are available only through direct native plans");
+--- src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
++++ src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
+@@ -24,0 +25 @@
++    static final String RB56_SOURCE_SIZED_IDENTITY = "RB56_BOARD_NORMAL@4";
+@@ -30,0 +32,4 @@
++    static final String RB56_SOURCE_SIZED_POLICY =
++        "policy=3;passives=AXIAL_RESISTOR,AXIAL_DIODE,RADIAL_ELECTROLYTIC_CAPACITOR," +
++        "RADIAL_CERAMIC_CAPACITOR;allowed-poses=TOP/0,TOP/90;sizing=source-TOP/0;" +
++        "visits=even-TOP/0,odd-TOP/90";
+@@ -36 +41,2 @@
+-        RB56_SIZING_CONTROL(RB56_SIZING_CONTROL_IDENTITY, 40, 60, 7);
++        RB56_SIZING_CONTROL(RB56_SIZING_CONTROL_IDENTITY, 40, 60, 7),
++        RB56_SOURCE_SIZED(RB56_SOURCE_SIZED_IDENTITY, 40, 60, 7);
+@@ -44 +50 @@
+-            this == RB56_SIZING_CONTROL; }
++            this == RB56_SIZING_CONTROL || this == RB56_SOURCE_SIZED; }
+@@ -52,0 +59,2 @@
++        if (poseVersion == PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL)
++            return RB56_SOURCE_SIZED_IDENTITY;
+@@ -66,2 +74,4 @@
+-        return poseVersion == PcbPassivePosePolicy.ORTHOGONAL ? RB56_POSE_IDENTITY :
+-            RB56_SIZING_CONTROL_IDENTITY;
++        if (poseVersion == PcbPassivePosePolicy.ORTHOGONAL) return RB56_POSE_IDENTITY;
++        if (poseVersion == PcbPassivePosePolicy.SIZING_ONLY)
++            return RB56_SIZING_CONTROL_IDENTITY;
++        return RB56_SOURCE_SIZED_IDENTITY;
+@@ -81,0 +92 @@
++        if (RB56_SOURCE_SIZED_IDENTITY.equals(identity)) return Contract.RB56_SOURCE_SIZED;
+@@ -124,0 +136,2 @@
++            else if (contract == Contract.RB56_SOURCE_SIZED)
++                field(value, "rb56-passive-pose-policy", RB56_SOURCE_SIZED_POLICY);
+--- src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
++++ src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
+@@ -9,0 +10 @@
++    static final int SOURCE_SIZED_ORTHOGONAL = 3;
+@@ -14 +15,2 @@
+-        return version == LEGACY || version == ORTHOGONAL || version == SIZING_ONLY;
++        return version == LEGACY || version == ORTHOGONAL || version == SIZING_ONLY ||
++            version == SOURCE_SIZED_ORTHOGONAL;
+--- src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -60,0 +61,2 @@
++        // Preserve the all-pose demand cap when policy3 ranks from TOP0 only.
++        final long guardDemandArea;
+@@ -71 +73,3 @@
+-            sizingEnvelopeWidth=alternateEnvelope==null ? envelope.width :
++            boolean sourceSized=passivePosePolicyVersion==
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL;
++            sizingEnvelopeWidth=alternateEnvelope==null || sourceSized ? envelope.width :
+@@ -73 +77 @@
+-            sizingEnvelopeHeight=alternateEnvelope==null ? envelope.height :
++            sizingEnvelopeHeight=alternateEnvelope==null || sourceSized ? envelope.height :
+@@ -78 +82,3 @@
+-            sizingDemandArea=Math.max(originalDemand,alternateDemand);
++            sizingDemandArea=alternateEnvelope==null || sourceSized ? originalDemand :
++                Math.max(originalDemand,alternateDemand);
++            guardDemandArea=Math.max(originalDemand,alternateDemand);
+@@ -131 +137,2 @@
+-                PcbPassivePosePolicy.SIZING_ONLY) &&
++                PcbPassivePosePolicy.SIZING_ONLY || constraints.passivePosePolicyVersion==
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL) &&
+@@ -136 +143 @@
+-        long demandArea=0,courtyardArea=0; int maxWidth=0,anchorWidth=0;
++        long demandArea=0,guardDemandArea=0,courtyardArea=0; int maxWidth=0,anchorWidth=0;
+@@ -150,0 +158 @@
++            guardDemandArea+=item.guardDemandArea;
+@@ -164 +172 @@
+-        if (demandArea>MAX_AREA/2) throw new Rejected("DEMAND_LIMIT");
++        if (guardDemandArea>MAX_AREA/2) throw new Rejected("DEMAND_LIMIT");
+--- src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
++++ src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
+@@ -204 +204,2 @@
+-            contract == MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL;
++            contract == MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL ||
++            contract == MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED;
+--- src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -12 +12 @@
+-        SIZING_CONTROL_VERSION17 = 17;
++        SIZING_CONTROL_VERSION17 = 17, SOURCE_SIZED_VERSION18 = 18;
+@@ -19 +19,2 @@
+-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION || version == CANVAS_OWNER_VERSION14 || version == PASSIVE_POSE_VERSION16 || version == SIZING_CONTROL_VERSION17;
++            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION || version == CANVAS_OWNER_VERSION14 || version == PASSIVE_POSE_VERSION16 || version == SIZING_CONTROL_VERSION17 ||
++            version == SOURCE_SIZED_VERSION18;
+@@ -30 +31,2 @@
+-            placementVersion == SIZING_CONTROL_VERSION17 ? 14 : placementVersion;
++            placementVersion == SIZING_CONTROL_VERSION17 ||
++            placementVersion == SOURCE_SIZED_VERSION18 ? 14 : placementVersion;
+@@ -37,2 +39,3 @@
+-        return placementVersion == SIZING_CONTROL_VERSION17 ? PcbPassivePosePolicy.SIZING_ONLY :
+-            PcbPassivePosePolicy.LEGACY;
++        if (placementVersion == SIZING_CONTROL_VERSION17) return PcbPassivePosePolicy.SIZING_ONLY;
++        return placementVersion == SOURCE_SIZED_VERSION18 ?
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL : PcbPassivePosePolicy.LEGACY;
+@@ -44 +47,2 @@
+-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 ?
++        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 ||
++            placementVersion == SOURCE_SIZED_VERSION18 ?
+@@ -93 +97 @@
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 || placementVersion == SOURCE_SIZED_VERSION18,
+--- tests/contracts/PcbPassivePoseAdmissionContractTest.java
++++ tests/contracts/PcbPassivePoseAdmissionContractTest.java
+@@ -3,0 +4 @@
++import java.lang.reflect.InvocationTargetException;
+@@ -34,2 +35,4 @@
+-                Rb56Placement.supportsVersion(17) && !Rb56Placement.supportsVersion(18),
+-            "the sizing control has only its explicit placement17 interpretation");
++                Rb56Placement.supportsVersion(17) &&
++                Rb56Placement.SOURCE_SIZED_VERSION18 == 18 &&
++                Rb56Placement.supportsVersion(18) && !Rb56Placement.supportsVersion(19),
++            "placement17 control and direct-native placement18 are explicit; 19 is unknown");
+@@ -41,0 +45,3 @@
++        require(Rb56Placement.passivePosePolicyVersion(18) ==
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            "direct-native version18 maps to source-sized orthogonal policy3");
+@@ -44,2 +50,3 @@
+-                Rb56Placement.densityVersion(17) == 14,
+-            "current15 and explicit16/17 retain density14");
++                Rb56Placement.densityVersion(17) == 14 &&
++                Rb56Placement.densityVersion(18) == 14,
++            "current15 and explicit16/17/18 retain density14");
+@@ -54,0 +62,3 @@
++        require("RB56_BOARD_NORMAL@4".equals(
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(18)),
++            "placement18 selects the literal source-sized admission identity");
+@@ -66,0 +77,4 @@
++        require("RB56_BOARD_NORMAL@4".equals(MediumBoardNormalAdmission.rb56IdentityFor(
++                constraints(PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++                    new Vector<PcbPlacementConstraints.Part>()))),
++            "policy3 MEDIUM_BOARD constraints select admission identity @4");
+@@ -75,0 +90,3 @@
++        require(MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED ==
++                MediumBoardNormalAdmission.rb56ContractForPlacement(18),
++            "placement18 selects the distinct source-sized RB56 contract");
+@@ -79,0 +97,5 @@
++        require(MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED.minimumParts == 40 &&
++                MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED.maximumParts == 60 &&
++                MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED.maximumTerminals == 7 &&
++                MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED.isRb56(),
++            "source-sized admission retains the RB56 40..60/2..7 mechanical bounds");
+@@ -82,0 +105,12 @@
++        Rb56Plan directNativeTrial = Rb56Plan.resolve(42017L, 18);
++        require(directNativeTrial.placementInterpretationVersion == 18,
++            "placement18 remains available through the direct native plan path");
++        PcbPlacementConstraints trialConstraints = Rb56Placement.create(directNativeTrial);
++        require(trialConstraints.placementDensityVersion == 14 &&
++                trialConstraints.passivePosePolicyVersion ==
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL &&
++                trialConstraints.requiresTwoLayerRouting,
++            "placement18 maps policy3, density14, and required P07 two-layer routing");
++        require(trialConstraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
++                Rb56Placement.widthProfile(18) == PcbTraceWidthProfile.ROLE_WIDTHS,
++            "placement18 retains the current role-width profile");
+@@ -85 +119 @@
+-                MediumBoardNormalAdmission.rb56IdentityForPlacement(18);
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(19);
+@@ -87 +121 @@
+-        }, "unknown placement versions do not receive an admission identity");
++        }, "unknown placement19 does not receive an admission identity");
+@@ -96,0 +131,7 @@
++        reject(new Runnable() {
++            public void run() {
++                current.withRb56PlacementInterpretationVersion(18);
++            }
++        }, "direct-native placement18 cannot create a private replay request");
++        rejectPrivateRequestConstruction(17);
++        rejectPrivateRequestConstruction(18);
+@@ -110,0 +152,26 @@
++    }
++
++    private static void rejectPrivateRequestConstruction(int version) {
++        try {
++            Constructor<GenerationRequest> constructor =
++                GenerationRequest.class.getDeclaredConstructor(ChallengeDescriptor.class,
++                    Boolean.TYPE, Boolean.TYPE, DifficultyProfile.class, Boolean.TYPE,
++                    Boolean.TYPE, GenerationExecutionPolicy.class,
++                    StagedFamilyCapability.class,
++                    PlayerFamilyCatalog.ExecutionDeclaration.class, Integer.TYPE);
++            constructor.setAccessible(true);
++            PlayerFamilyCatalog.RegistrationBoundary registration =
++                PlayerFamilyCatalog.newRegistrationBoundary();
++            constructor.newInstance(ChallengeDescriptor.current(Rb56Plan.FAMILY_ID, 42017L),
++                Boolean.FALSE, Boolean.FALSE, null, Boolean.FALSE, Boolean.TRUE,
++                GenerationExecutionPolicy.SMALL_BOARD,
++                registration.stagedCapability(Rb56Plan.FAMILY_ID), null,
++                Integer.valueOf(version));
++            throw new AssertionError("private replay request constructor accepted placement" +
++                version);
++        } catch (InvocationTargetException expected) {
++            require(expected.getCause() instanceof IllegalArgumentException,
++                "private replay constructor rejects placement" + version);
++        } catch (ReflectiveOperationException failure) {
++            throw new AssertionError("private replay constructor fixture failed", failure);
++        }
+@@ -147,0 +215,16 @@
++                Fixture sourceSized = fixture(
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++                    "SOURCE_SIZED_" + packageIndex, passiveType(physical), physical,
++                    physical, rotation, PcbBoardSide.TOP);
++                if (rotation == PcbRotation.DEG_0 || rotation == PcbRotation.DEG_90) {
++                    accept(sourceSized,
++                        MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++                        "placement18 admits canonical " + physical.getId() + " TOP" +
++                            rotation);
++                } else {
++                    rejectPose(sourceSized,
++                        MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++                        "placement18 rejects canonical " + physical.getId() + " TOP" +
++                            rotation);
++                }
++
+@@ -176,0 +260,9 @@
++            Fixture sourceSizedBottom = fixture(
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++                "SOURCE_SIZED_BOTTOM_" + physical.getId(), passiveType(physical),
++                PhysicalPackages.RAISED_FACTORY_LINK,
++                PhysicalPackages.RAISED_FACTORY_LINK,
++                PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
++            rejectPose(sourceSizedBottom,
++                MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++                "placement18 rejects bottom-mounted canonical passive geometry");
+@@ -199,0 +292,8 @@
++        Fixture sourceSizedForeignTop0 = fixture(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            "SOURCE_SIZED_FOREIGN_PASSIVE_TOP0", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_0, PcbBoardSide.TOP);
++        accept(sourceSizedForeignTop0,
++            MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "placement18 keeps foreign passive packages at provider TOP0");
+@@ -212,0 +313,8 @@
++        Fixture sourceSizedForeignTop90 = fixture(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            "SOURCE_SIZED_FOREIGN_PASSIVE_TOP90", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_90, PcbBoardSide.TOP);
++        rejectPose(sourceSizedForeignTop90,
++            MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "placement18 does not rotate a foreign passive package");
+@@ -236,0 +345,14 @@
++        Fixture[] sourceSizedAllowedMixed = fixture(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            new String[] {"SOURCE_SIZED_MIXED_CANONICAL",
++                "SOURCE_SIZED_MIXED_FOREIGN"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_0},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        accept(sourceSizedAllowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "placement18 permits a canonical quarter-turn beside foreign TOP0");
+@@ -260,0 +383,17 @@
++        Fixture[] sourceSizedDisallowedMixed = fixture(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            new String[] {"SOURCE_SIZED_MIXED_CANONICAL_BAD",
++                "SOURCE_SIZED_MIXED_FOREIGN_BAD"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_90},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        rejectPose(sourceSizedDisallowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "placement18 still rejects a turned foreign passive beside a canonical passive");
++        rejectPose(sourceSizedForeignTop0,
++            MediumBoardNormalAdmission.Contract.MEDIUM,
++            "generic medium rejects policy3 despite the source TOP0 pose");
+@@ -303,0 +443,10 @@
++        Fixture sourceSized = fixture(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            "CONTRACT_SOURCE_SIZED", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
++            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
++        rejectPose(sourceSized, MediumBoardNormalAdmission.Contract.RB56_SIZING_CONTROL,
++            "control17 contract rejects policy3 constraints");
++        rejectPose(sourceSized, MediumBoardNormalAdmission.Contract.RB56,
++            "legacy contract rejects policy3 constraints");
++        rejectPose(explicit, MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "policy3 contract rejects policy1 constraints");
+@@ -309,0 +459,2 @@
++        TroubleshootBoard sourceSized = emptyDependencyBoard(
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
+@@ -312,0 +464 @@
++        String sourceSizedCanonical = appendBoard(sourceSized);
+@@ -314,0 +467 @@
++        String sourceSizedField = dependencyField("placement.passive-pose-policy", "3");
+@@ -325,0 +479,3 @@
++        require(sourceSizedCanonical.contains(sourceSizedField) &&
++                sourceSizedCanonical.replace(sourceSizedField, "").equals(legacyCanonical),
++            "policy3 appends its own dependency namespace without changing prior fields");
+@@ -333,0 +490,2 @@
++        MediumBoardNormalAdmission sourceSized = admission(
++            MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED);
+@@ -343,0 +502,2 @@
++        require("RB56_BOARD_NORMAL@4".equals(sourceSized.identity()),
++            "placement18 admission has a separate literal identity");
+@@ -353 +513 @@
+-            "new admission preserves every legacy canonical field after its versioned identity");
++            "policy1 preserves every legacy canonical field after its versioned identity");
+@@ -358 +518 @@
+-            "new canonical admission declares only the bounded four-package pose policy");
++            "policy1 canonical admission retains its exact bounded pose policy");
+@@ -370,0 +531,16 @@
++        String sourceSizedWithoutPolicy = sourceSized.canonical().replace(
++            admissionField("rb56-passive-pose-policy",
++                MediumBoardNormalAdmission.RB56_SOURCE_SIZED_POLICY), "");
++        require(legacy.canonical().substring(MediumBoardNormalAdmission.RB56_IDENTITY.length())
++                .equals(sourceSizedWithoutPolicy.substring(
++                    MediumBoardNormalAdmission.RB56_SOURCE_SIZED_IDENTITY.length())),
++            "source-sized admission preserves every prior mechanical bound after its identity");
++        require(sourceSized.canonical().contains(admissionField("rb56-physical-contract",
++                priorPhysicalContract)),
++            "placement18 preserves the 40..60/2..7 RB56 physical gate with UAC TOP0/UFB TOP180");
++        require(sourceSized.canonical().contains(admissionField("rb56-passive-pose-policy",
++                "policy=3;passives=AXIAL_RESISTOR,AXIAL_DIODE," +
++                    "RADIAL_ELECTROLYTIC_CAPACITOR,RADIAL_CERAMIC_CAPACITOR;" +
++                    "allowed-poses=TOP/0,TOP/90;sizing=source-TOP/0;" +
++                    "visits=even-TOP/0,odd-TOP/90")),
++            "placement18 canonical binds policy3 source sizing and the even/odd TOP0/TOP90 schedule");
+--- tests/contracts/PcbPassivePosePolicyContractTest.java
++++ tests/contracts/PcbPassivePosePolicyContractTest.java
+@@ -106,0 +107,2 @@
++        PcbFootprint sourceSizedAlternative = PcbPassivePosePolicy.alternativeFor(component,
++            source, PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, true);
+@@ -111,0 +114,5 @@
++                expected.variantKey);
++        check(sourceSizedAlternative != null &&
++                sourceSizedAlternative.geometryFingerprint().equals(
++                    alternative.geometryFingerprint()),
++            "policy3 derives the same geometry-bound TOP90 placement alternative " +
+@@ -150 +157,2 @@
+-        verifyConservativeSizing(expected, source, alternative, sizingAlternative);
++        verifyConservativeSizing(expected, source, alternative, sizingAlternative,
++            sourceSizedAlternative);
+@@ -156 +164,2 @@
+-            PcbFootprint sizingAlternative) throws Exception {
++            PcbFootprint sizingAlternative, PcbFootprint sourceSizedAlternative)
++            throws Exception {
+@@ -157,0 +167 @@
++        String sourceBeforeItems = source.geometryFingerprint();
+@@ -183,2 +193,15 @@
+-                readInt(itemType, item, "sizingEnvelopeHeight") == expectedHeight,
+-            "conservative demand and extents cover both poses " + expected.variantKey);
++                readInt(itemType, item, "sizingEnvelopeHeight") == expectedHeight &&
++                readLong(itemType, item, "guardDemandArea") == expectedDemand,
++            "conservative demand, extents, and guard cover both poses " +
++                expected.variantKey);
++
++        Object legacyItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.LEGACY, Boolean.TRUE);
++        check(readRectangle(itemType, legacyItem, "alternateEnvelope") == null &&
++                readLong(itemType, legacyItem, "sizingDemandArea") == originalDemand &&
++                readInt(itemType, legacyItem, "sizingEnvelopeWidth") == original.width &&
++                readInt(itemType, legacyItem, "sizingEnvelopeHeight") == original.height &&
++                readLong(itemType, legacyItem, "guardDemandArea") == originalDemand,
++            "policy0 keeps its original source sizing and demand guard " +
++                expected.variantKey);
+@@ -197,3 +220,19 @@
+-                    readInt(itemType, item, "sizingEnvelopeHeight"),
+-            "policy2 uses policy1's exact conservative sizing envelope and demand " +
+-                expected.variantKey);
++                    readInt(itemType, item, "sizingEnvelopeHeight") &&
++                readLong(itemType, sizingItem, "guardDemandArea") == expectedDemand,
++            "policy2 retains policy1's conservative sizing and guard basis " +
++                expected.variantKey);
++
++        Object sourceSizedItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, Boolean.TRUE);
++        check(readRectangle(itemType, sourceSizedItem, "alternateEnvelope").equals(turned) &&
++                readRectangle(itemType, sourceSizedItem, "alternateEnvelope").equals(
++                    PcbPlacementPlanner.envelope(sourceSizedAlternative, margin)) &&
++                readLong(itemType, sourceSizedItem, "sizingDemandArea") == originalDemand &&
++                readInt(itemType, sourceSizedItem, "sizingEnvelopeWidth") == original.width &&
++                readInt(itemType, sourceSizedItem, "sizingEnvelopeHeight") == original.height &&
++                readLong(itemType, sourceSizedItem, "guardDemandArea") == expectedDemand &&
++                readLong(itemType, sourceSizedItem, "guardDemandArea") ==
++                    readLong(itemType, item, "sizingDemandArea"),
++            "policy3 ranks by source TOP0 while retaining the actual alternate and " +
++                "conservative guard " + expected.variantKey);
+@@ -216 +255,2 @@
+-                readInt(itemType, inactiveSizingItem, "sizingEnvelopeHeight") == original.height,
++                readInt(itemType, inactiveSizingItem, "sizingEnvelopeHeight") == original.height &&
++                readLong(itemType, inactiveSizingItem, "guardDemandArea") == originalDemand,
+@@ -217,0 +258,14 @@
++
++        Object inactiveSourceSizedItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, Boolean.FALSE);
++        check(readRectangle(itemType, inactiveSourceSizedItem, "alternateEnvelope") == null &&
++                readLong(itemType, inactiveSourceSizedItem, "sizingDemandArea") ==
++                    originalDemand &&
++                readInt(itemType, inactiveSourceSizedItem, "sizingEnvelopeWidth") ==
++                    original.width &&
++                readInt(itemType, inactiveSourceSizedItem, "sizingEnvelopeHeight") ==
++                    original.height &&
++                readLong(itemType, inactiveSourceSizedItem, "guardDemandArea") ==
++                    originalDemand,
++            "inactive policy3 branch retains exact TOP0 sizing " + expected.variantKey);
+@@ -229,3 +283,9 @@
+-                    original.width != turned.width && original.height != turned.height,
+-                "electrolytic escape rotation contributes the larger sizing demand");
+-        }
++                    original.width != turned.width && original.height != turned.height &&
++                    readLong(itemType, sourceSizedItem, "sizingDemandArea") ==
++                        demandProduct(new Rectangle(85, 142, 150, 192)) &&
++                    readLong(itemType, sourceSizedItem, "guardDemandArea") == 44520L,
++                "literal electrolytic asymmetry source-sizes ranking but keeps the max guard");
++        }
++        check(source.geometryFingerprint().equals(sourceBeforeItems),
++            "policy0/1/2/3 Item construction leaves source TOP0 geometry immutable " +
++                expected.variantKey);
+@@ -290,0 +351,4 @@
++            PcbFootprint sourceSizedSelected = PcbPassivePosePolicy.forVisit(source,
++                alternative, PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, visit);
++            check(sourceSizedSelected == selected,
++                "policy3 exactly matches policy1 schedule ordinal=" + visit);
+@@ -307 +371,6 @@
+-        for (long visit : fallbackVisits)
++        for (long visit : fallbackVisits) {
++            PcbFootprint policy1 = PcbPassivePosePolicy.forVisit(source, alternative,
++                PcbPassivePosePolicy.ORTHOGONAL, visit);
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, visit) == policy1,
++                "policy3 fallback visits retain policy1 parity ordinal=" + visit);
+@@ -310,0 +380,13 @@
++        }
++        long[] boundaryVisits = new long[] {Long.MAX_VALUE - 1L, Long.MAX_VALUE};
++        for (long visit : boundaryVisits) {
++            PcbFootprint policy1 = PcbPassivePosePolicy.forVisit(source, alternative,
++                PcbPassivePosePolicy.ORTHOGONAL, visit);
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, visit) == policy1 &&
++                    policy1 == ((visit & 1L) == 0L ? source : alternative),
++                "policy3 preserves policy1 parity at long boundary ordinal=" + visit);
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.SIZING_ONLY, visit) == source,
++                "policy2 retains TOP0 at long boundary ordinal=" + visit);
++        }
+@@ -312 +394,3 @@
+-                PcbPassivePosePolicy.ORTHOGONAL, 125) == source,
++                PcbPassivePosePolicy.ORTHOGONAL, 125) == source &&
++                PcbPassivePosePolicy.forVisit(source, null,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, 125) == source,
+@@ -319,2 +403,2 @@
+-            PcbPassivePosePolicy.forVisit(source, alternative, 3, 0);
+-        }}, "unknown visit policy rejected");
++            PcbPassivePosePolicy.forVisit(source, alternative, 4, 0);
++        }}, "unknown visit policy4 rejected");
+@@ -326 +410 @@
+-            "policy1 and policy2 visit selection leaves both templates immutable");
++            "policy1, policy2, and policy3 visit selection leaves both templates immutable");
+@@ -341,2 +425,4 @@
+-                PcbPassivePosePolicy.ORTHOGONAL, false) == null,
+-            "ineligible planner branch has no alternate pose");
++                PcbPassivePosePolicy.ORTHOGONAL, false) == null &&
++                PcbPassivePosePolicy.alternativeFor(component, source,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, false) == null,
++            "ineligible planner branches have no alternate pose");
+@@ -352,2 +438,4 @@
+-                PcbPassivePosePolicy.ORTHOGONAL, true) == null,
+-            "unsupported package stays at its provider pose");
++                PcbPassivePosePolicy.ORTHOGONAL, true) == null &&
++                PcbPassivePosePolicy.alternativeFor(other, otherSource,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, true) == null,
++            "unsupported package stays at its provider pose under policies1 and3");
+@@ -362,0 +451,3 @@
++        rejects(new Attempt() { public void run() {
++            PcbPassivePosePolicy.alternativeFor(component, source, 4, true);
++        }}, "unknown helper policy4 rejected");
+@@ -397,0 +489,5 @@
++        PcbPlacementConstraints sourceSized = constraints("MEDIUM_BOARD", 1, 14,
++            true, PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
++        check(sourceSized.passivePosePolicyVersion ==
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL,
++            "explicit policy3 accepted only in its supported context");
+@@ -400,0 +497 @@
++                PcbPassivePosePolicy.supportsVersion(3) &&
+@@ -402,5 +499,5 @@
+-                !PcbPassivePosePolicy.supportsVersion(3),
+-            "only policy versions0, 1, and 2 are recognized");
+-        rejects(new Attempt() { public void run() {
+-            constraints("MEDIUM_BOARD", 1, 14, true, 3);
+-        }}, "constraint rejects unknown policy version");
++                !PcbPassivePosePolicy.supportsVersion(4),
++            "only policy versions0, 1, 2, and 3 are recognized");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, true, 4);
++        }}, "constraint rejects unknown policy version4");
+@@ -438,0 +536,16 @@
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 13, true,
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
++        }}, "policy3 requires density14");
++        rejects(new Attempt() { public void run() {
++            constraints("OTHER_POLICY", 1, 14, true,
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
++        }}, "policy3 requires MEDIUM_BOARD@1");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 2, 14, true,
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
++        }}, "policy3 rejects an incompatible physical-policy epoch");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, false,
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL);
++        }}, "policy3 requires two-layer routing");
+@@ -476 +589,2 @@
+-                PcbPassivePosePolicy.SIZING_ONLY == 2,
++                PcbPassivePosePolicy.SIZING_ONLY == 2 &&
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL == 3,
+--- tests/contracts/PcbPassivePoseTrialSourceContractTest.java
++++ tests/contracts/PcbPassivePoseTrialSourceContractTest.java
+@@ -12,2 +12,2 @@
+-        try { Rb56Plan.resolve(42L, 18); } catch (IllegalArgumentException expected) { rejected=true; }
+-        check(rejected, "unknown RB56 interpretation18 rejects");
++        try { Rb56Plan.resolve(42L, 19); } catch (IllegalArgumentException expected) { rejected=true; }
++        check(rejected, "unknown RB56 interpretation19 rejects");
+--- tests/contracts/PcbPassiveSizingSourceContractTest.java
++++ tests/contracts/PcbPassiveSizingSourceContractTest.java
+@@ -10,2 +10,2 @@
+-        try { Rb56Plan.resolve(42L,18); } catch(IllegalArgumentException expected) { rejected=true; }
+-        check(rejected,"unsupported interpretation18 rejects");
++        try { Rb56Plan.resolve(42L,19); } catch(IllegalArgumentException expected) { rejected=true; }
++        check(rejected,"unsupported interpretation19 rejects");
+--- tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
++++ tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
+@@ -147,2 +147,3 @@
+-                plan.placementInterpretationVersion != 17))
+-            throw new IllegalArgumentException("Only explicit15/16/17 source intent is supported");
++                plan.placementInterpretationVersion != 17 &&
++                plan.placementInterpretationVersion != 18))
++            throw new IllegalArgumentException("Only explicit15/16/17/18 source intent is supported");
+@@ -154 +155 @@
+-        if ((version != 15 && version != 16 && version != 17) || plan == null || board == null ||
++        if ((version != 15 && version != 16 && version != 17 && version != 18) || plan == null || board == null ||
+@@ -157 +158 @@
+-                board.getPlacementConstraints().passivePosePolicyVersion != (version == 15 ? 0 : version == 16 ? 1 : 2) ||
++                board.getPlacementConstraints().passivePosePolicyVersion != (version == 15 ? 0 : version == 16 ? 1 : version == 17 ? 2 : 3) ||
+@@ -161 +162 @@
+-            throw new IllegalArgumentException("Pose observation requires its exact bound15/16/17 source");
++            throw new IllegalArgumentException("Pose observation requires its exact bound15/16/17/18 source");
+@@ -163 +164 @@
+-            intent, source, graph, version == 15 ? "saved15" : version == 16 ? "pose16" : "size17", System.nanoTime()));
++            intent, source, graph, version == 15 ? "saved15" : version == 16 ? "pose16" : version == 17 ? "size17" : "pose18", System.nanoTime()));

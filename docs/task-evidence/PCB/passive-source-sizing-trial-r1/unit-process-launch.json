@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 2436,
+      "startTicks": "639280359096970292",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-source-sizing-trial-r1/run_native.ps1"
+    },
+    {
+      "pid": 25068,
+      "startTicks": "639280359112584763",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-source-sizing-trial-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native source-sizing phase; unique source copy"
+}

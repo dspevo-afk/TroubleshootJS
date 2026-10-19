@@ -1,0 +1,7 @@
+{
+  "rootReviewedDiffSha256": "f1ad723d955bf11e0f05693cfd88e9fc68ab5e215eabc4d7277dd738b0a7f55a",
+  "actualSelectedFootprintFitsUnchanged": true,
+  "conservativeDemandLimitBasisRetained": true,
+  "oldControlBoundsAndUnknown9AssertionsRestored": true,
+  "scope": "Root inspected all core and pure-fixture deltas, generated source/raw/route fixtures and exact adapter/registry scope; no runtime proof"
+}

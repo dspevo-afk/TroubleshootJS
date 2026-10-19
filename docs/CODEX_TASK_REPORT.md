@@ -1,4 +1,92 @@
-# Current checkpoint: sizing-only control rejected; source-sizing trial next
+# Current checkpoint: source-sized rotation rejected; local pose choice next
+
+2026-10-19. Base/published HEAD e464dbfd0bffc052e7e233ec59e012e86c16f8c2 on
+codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation
+active; no main/email. Main/default15, general16, accepted1475 and original5
+unrelated untracked entries unchanged.
+
+passive-source-sizing-trial-r1 is REJECTED by frozen strict14 fitness. Native28
+and full actual artifact fidelity PASS; all14 saved15 rows reproduce42 non-time
+fields. Eleven trial18 selected geometries and metrics stay exact. Changed17
+area-169700/void-214800/copper+440/vias0 with12 TOP90;42 area+436987/void+29800/
+copper+930/vias+3 with20 TOP90;3 area+3852/void-46800/copper+3720/vias+1 with11 TOP90.
+All three selectcandidate1. No fitted threshold, seed selection or partial promotion.
+Source-sizing/orthogonal18 uses density14/pose3/@4, same existing visits; actual
+selected-footprint fit owns safety. Separate max demand retains DEMAND_LIMIT;
+initial proposal and pre-freeze code-only amendment preserved. Private17/18 reject.
+
+Fresh JDK8 unit8 PASS49.1965819s/exit0: policy578/admission159/old-source114/
+trial-source128/new-source142 assertions,14+14+14 source bindings and15 untouched
+raw cases exact. Fresh routes14 PASS199.0444372s/exit0, all28 actual admission,
+physical/access/isolation/strict-whitespace/work/purity cases. Times include
+maintained cleanup, not separately timed. Actual frozen reader fidelity PASS,
+strictFitness FAIL. Reader52 pre-runtime canaries (4 positive/48 negative) PASS;
+root preflight fixes old-source/raw-equality/off-origin whitespace gaps, retains
+old@3/unknown9 oracles. Final1528/30 source deltas/33 gate owners exact. Root
+integrated diff/packet integrity PASS; no independent runtime/all-seed proof.
+
+Owned copy restored1528->1510->1504->1467 and safely retired, private state gone.
+All4 driver births exited; no task native/GWT/browser/preview/profile remains.
+Main1475/reference seals exact; original5/shared tools preserved. GWT/player/live
+owner/replay/repair/full matrix/manufacturing NOT RUN for rejected prototype.
+Evidence: docs/task-evidence/PCB/passive-source-sizing-trial-r1/RESULTS.md.
+
+Next unstarted scope: local two-pose choice retains the horizontal option at each
+existing origin and counts every pose evaluation within unchanged caps, with
+explicit interpretation, deterministic tie-breaking and the existing strict
+regression gates. Publish this honest rejection normally, verify exactremote,
+then continue. No main/email.
+
+# Previous checkpoint: source-sizing rotation full routes running
+
+2026-10-19. Published e464dbfd0bffc052e7e233ec59e012e86c16f8c2 normally pushed and
+exact origin verified on codex/q60-faulted-profile-counts; includes704cef304de8884b32a2395d4d4d6344c0762f2e
+sizing-control rejection evidence plus corrected index. Indefinite continuation
+active; no main/email. Accepted/default15, general16, main1475 and original5
+unrelated untracked entries remain unchanged. Prior task copy/resources retired.
+
+passive-source-sizing-trial-r1 is PREPARATION ONLY. Proposal fixes direct-native18,
+density14/pose3/@4, original TOP0 sizing with policy1 alternating existing0/90
+visits, same candidate1/repeated-control/medium/nonanchor eligibility. Prior15/16/17
+and @1/@2/@3 meanings remain; live/private17/18 requests reject. Static safety leaf
+confirmed actual selected-footprint fit/access/final validation owns safety, but
+sizing demand also feeds DEMAND_LIMIT. Initial proposal preserved; pre-freeze
+amendment retains separate max-two-pose guard for unchanged MAX_AREA/2 threshold.
+Source demand feeds sizing/boundary/ranking only; no cap/oracle relaxed.
+
+Root reconstructed exact1510 from accepted1467 +policy1504 +sealed control deltas
+in a new owned tsj-passive-source-size OS-temp copy; private local-state owns path.
+Two fresh leaf workers own copied core6/puretests2 and independent5-file readers.
+Root prepared18 new source/raw/14 pair-route fixtures, unsupported19 migrations,
+six wrapper-only native adapter changes, registry18 entries, exact source-derived
+unit8/routes14 manifests, protocol28cases and maintained whitespace rows. New
+root preparation/runtime/cleanup/privacy/failure/freeze/retirement helpers exist.
+Root integrated source review passed; old@3 bounds and unknown9 assertions were
+restored alongside new tests. Actual1528/12 overrides/18 additions/33 gate owners
+frozen after52 synthetic canaries (4 positive/48 negative), no native proof yet.
+Root review also fixed pre-runtime old-source binding/raw equality and board-origin
+relative whitespace-reader gaps before freeze. Fresh JDK8 unit8 PASS49.1965819s/exit0 (maintained cleanup included, not separately
+timed): policy578/admission159/old-source114/trial-source128/new-source142 assertions.
+Actual unit reader PASS:14+14+14 source bindings and15 untouched raw comparisons.
+Recorded unit driver births exited, no termination; exactinputs/privacy audit PASS.
+Full route14 phase is now running under run_native.ps1; recorded births are in
+routes-process-launch.json.
+
+Fresh unit8 must bind14 old15/trial16/new18 sources and15 untouched raw candidates.
+Then14 bounded JVM suites generate all28 paired15/18 routes on the fixed14 informed
+roots; every old42 non-time field exact. All18 native admission/physical/strict
+whitespace/work/purity gates and strict per-root area/void/copper/via nonregression,
+>=one improvement and >=one actual TOP90 required. Report any partial/failure
+honestly; no accepted promotion from this diagnostic. Future production needs
+owner/replay/repair plus final-source JDK8/GWT/real-player gates.
+
+Next: await route14 completion, verify cleanup/exactinputs/privacy, assess28 rows
+with frozen strict reader. Preserve failures,
+restore1528->1510->1504->1467 and safely retire, update evidence/roadmap/report,
+normal commit/push/exactremote, then continue. One native route phase and one owned
+copy active; no GWT/browser/preview/profile. No staged paths; original5 preserved.
+
+# Previous checkpoint: sizing-only control rejected; source-sizing trial next
 
 2026-10-19. Base HEAD dbb2ea4281c3b7e9338d112dd0ef42e794105743 on
 codex/q60-faulted-profile-counts, exact origin verified before this evidence scope.
