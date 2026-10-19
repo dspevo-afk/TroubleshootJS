@@ -1,0 +1,36 @@
+{
+  "baseSha256": "38c1fc710873828c455778957c9a264a62981b0ae4b91d4a86de30804920dfa2",
+  "copyCount": 1471,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "b1560e546f5041cc83c3f2de9617e80332e70ef3fd4840dcd23f89ec811ec5a5",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "09c58e1d68767c703ad8c871a80c9a67b8288c616a35c0dfe06cd6daa1e3f475",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "215dfed0c329fd261c93981ab3f2d25b56413885f51ac6ca7af4f1579b5fd488"
+  },
+  "additions": {
+    "tests/contracts/PcbPassivePoseCurrent15ContractTest.java": "104767f7a63665fa7664ceb781790cb27dd2e06fa0c0400846473f8dbf101ac2",
+    "tests/contracts/PcbPassivePoseCurrent15ContractTestGroup2.java": "721b8b2e0641aebf4616c7606e768864753bca7ae911f2ac5e68a8eb5ce29406",
+    "tests/contracts/PcbPassivePoseFoundationContractTest.java": "1e723caa087e99e6a8efe0b0fde953725854947ed4b099e8a847db1f2318966e",
+    "tests/contracts/PcbPassivePoseSourceContractTest.java": "17557dcc00f6b4adb4d1e7be29e61416d62dd473ee58b6b7683a7a98366b9bce"
+  },
+  "gateOwners": {
+    "proposal.json": "be1272ab4d261c99d6f4014b3ce07119c277850176a0f1f7f24674a4338c71c6",
+    "prepare.py": "db7028e436ad873cd9b5e016b0e2352483d104eda3c96894ae0a1c57d96b4347",
+    "prepare_gates.py": "892a77c7af09b9494b6c1443bc1d09e7b3a34ec196ea81d19aacb76b9ae4b11f",
+    "copy-inputs.json": "38c1fc710873828c455778957c9a264a62981b0ae4b91d4a86de30804920dfa2",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "worker-notes.md": "a572b9b08dbb632d51bd2e7c2efca00a0c323ab2e30a160375eb29dbca6b7c5c",
+    "source-review.json": "e894ba43db2d6e0e755857506e774c96a5d76409f4bc1c7cc13a60e4110068e0",
+    "review_source.py": "9091a7c8bdd5db59c2730bdb6b10b516fe6696b56eea59d22729ac13107e9a68",
+    "register.py": "608f634eac9da71bf9e81c26925cc912a60b929cdb34bc657679c4cff94d8cc2",
+    "inputs.py": "1f08e3088a78fffa6a2ac87887a63b175163a9a8c2f8d3d666e29df8cc6a7828",
+    "run_native.ps1": "5f3dc25e41f04719325db522c0abc7d2b7d27c2129807c360ddfe1f6fe6a5e9c",
+    "check_process_cleanup.ps1": "66ff56b06bd30b8423ec77c9c311dea56b62243fe00f92c43b5d55488ac43c22",
+    "sanitize.py": "530682d8ebaf6a406e609bfac7f0da0d30b249b4ec93a39030990336f7333e04",
+    "final_rows.py": "cac0dbbcd414742ba9da13744f8549d476a383fcbb2ab1b7f89736c4b066e393",
+    "check_final_rows.py": "befb00847ef20758d88c2a369b3a83ad77f851e2d3c84a1256bb94082fd7f659",
+    "final-row-canaries.json": "293c7b6e47f7f20bbcce613f8ca4e3313cf8309df6809505871047a81f2e8b37",
+    "retire_copy.py": "778968b1fcd1ab65df70122e26d0791891f3a385429a24240a0e927fba3c5b7a",
+    "preserve_attempt.py": "fd9d7d2a59b88c5ee844b4c3b5b60f2da01ccaf2f46ebfaea00d5475962f4e4e"
+  },
+  "main1475SealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "acceptedBaselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "authoritativeRouteBodyExact": true,
+  "sourceBindingLiteralRoots": 14,
+  "catalogOutsideFourDeclarationsAndNarrowHelpersExact": true,
+  "unchangedOtherProductionOwners": true,
+  "rootMechanicalReview": "See README final review; worker source is reviewed before registration/freeze"
+}

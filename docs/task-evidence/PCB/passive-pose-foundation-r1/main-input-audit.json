@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "acceptedMainExact": 1475,
+  "copiedNativeExact": 1467,
+  "excluded": "Git, caches, history, compiled web and private state"
+}

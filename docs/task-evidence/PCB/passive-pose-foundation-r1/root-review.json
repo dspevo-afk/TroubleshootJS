@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "finalNativeInputs": 1471,
+  "finalGateOwnersExact": 18,
+  "failedAttemptFilesExact": 31,
+  "productionPatchBetweenAttemptsExact": true,
+  "onlyChangedFixture": "tests/contracts/PcbPassivePoseFoundationContractTest.java",
+  "integratedRootReview": "Four declarations/narrow helpers; seven literal local geometries; independent affine/corner expectations and12 turned spots; real typed stock/registry/binding; exact original routing body; explicit source and cache boundaries",
+  "optionalLeafReview": "Bounded implementation and separate read-only future planner/admission review; root owns runtime and acceptance",
+  "cleanupReceiptLabelErratum": "Inherited ownership wording says routed-strip; actual frozen guard checks unique tsj-passive-pose OS-temp prefix. Restoration/containment/reparse/retirement checks PASS; raw receipt retained unchanged",
+  "limits": "No enabled pose policy, main production capability, packing improvement, full matrix, GWT/player, whole-cache or solver-mutation proof"
+}

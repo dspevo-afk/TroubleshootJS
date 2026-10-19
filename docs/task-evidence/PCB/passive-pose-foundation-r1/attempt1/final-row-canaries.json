@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "phase": "Before passive foundation native runtime",
+  "positiveCases": 1,
+  "negativeCases": 49,
+  "sourcePositiveCases": 1,
+  "sourceNegativeCases": 117,
+  "terminalPositiveCases": 1,
+  "terminalNegativeCases": 21,
+  "receiptPositiveCases": 1,
+  "receiptNegativeCases": 6,
+  "readerSha256": "cac0dbbcd414742ba9da13744f8549d476a383fcbb2ab1b7f89736c4b066e393",
+  "scope": "Synthetic exact final metric/source/identity/work reader only; event and physical proof separate"
+}

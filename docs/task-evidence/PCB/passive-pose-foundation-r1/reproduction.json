@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "sourceBindings": {
+    "status": "PASS",
+    "roots": 14,
+    "fieldsPerRoot": 8
+  },
+  "finalRows": [
+    {
+      "seed": "42",
+      "status": "PASS",
+      "exactFieldsExceptElapsed": 42
+    },
+    {
+      "seed": "-1022",
+      "status": "PASS",
+      "exactFieldsExceptElapsed": 42
+    }
+  ],
+  "limits": "Native capability/identity prerequisite only; pose policy, replay, solver mutation and visual acceptance separate"
+}

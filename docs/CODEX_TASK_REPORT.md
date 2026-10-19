@@ -1,4 +1,40 @@
-# Current checkpoint: routed-strip measurement complete; accepted15 remains exact
+# Current checkpoint: native passive pose foundation complete; placement trial next
+
+2026-10-19. Published9f29107ccf9c21c84558c71ac9d334760e1a97a0 normally pushed
+and exact origin SHA verified on codex/q60-faulted-profile-counts. User indefinite
+continuation and revoked quota-window stops active; no main/email. Production
+current/default/replay15/saved14 remains unchanged at accepted1475 inputs.
+
+Native-only passive-pose-foundation-r1 PASS60.2059417s/exit0/native4. Shared TOP
+quarter-turn capability stays in archived source only. Mechanical999 assertions
+cover7 geometries/28 poses/12 literal spots, stock/registry/slot and paired real
+appendPackage canonical delta; no whole-cache claim. All14 source bindings114
+wrapper assertions plus shared graph checks PASS. Both current15 routes reproduce
+all42 non-timing fields exactly, including source/graph/seeds/geometry/metrics/
+rank/work. Current15=density14; separate general layout remains16. No new pose
+selection/default/replay interpretation or packing benefit is accepted here.
+
+Initial FAIL43.4825193s stock capacitor fixture missing CircuitElm.sim grid is
+preserved in attempt1 with complete source/gates/logs/cleanup. Only real scoped
+simulator setup/finally restoration changed; catalog/oracles/budgets exact. Final
+1471 frozen via1467 base/3overrides/4additions and18 gates exact; reader canaries
+final1/49,source1/117,terminal1/21,receipt1/6 pass, actual reproduction PASS. Root
+diff/literal/API/integration review PASS; optional leaf implementation and bounded
+source planning remain accurately scoped. Maintained terminal cleanup and both
+driver births exited PASS; timing includes cleanup, duration not separately timed.
+Copied accepted1467 restored exactly, contained non-reparse source copy/private
+state retired, main1475 exact. Raw cleanup label inherited routed-strip wording;
+actual passive-pose prefix guard/checks PASS, additive root erratum retained.
+
+No active test/build/browser/preview/profile/source copy. Original5 unrelated
+untracked entries/shared tools preserved. GWT/player/full matrix/solver mutation
+NOT RUN for retired native probe. Prior production evidence remains scoped to
+unchanged1475. Next freeze a small explicit RB56 pose-policy interpretation while
+preserving density14, independent variant entropy, existing candidate/route/work
+caps and saved15; prove packing, markings, admission, repair and replay before
+production promotion. Normal branch publication next; no main/email.
+
+# Previous checkpoint: routed-strip measurement complete; accepted15 remains exact
 
 2026-10-19. Base0031b8a5e38ebe308e41505f7c36a99faef38307 on
 codex/q60-faulted-profile-counts; candidate documents routed-strip-cause-r1.

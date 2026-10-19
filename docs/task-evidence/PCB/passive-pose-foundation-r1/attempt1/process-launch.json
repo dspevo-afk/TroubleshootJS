@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 26312,
+      "startTicks": "639280274573227810",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-foundation-r1/run_native.ps1"
+    },
+    {
+      "pid": 25272,
+      "startTicks": "639280274575627275",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-foundation-r1/run_native.ps1"
+    }
+  ],
+  "ownership": "Captured before passive mechanical capability probe; isolated source copy"
+}

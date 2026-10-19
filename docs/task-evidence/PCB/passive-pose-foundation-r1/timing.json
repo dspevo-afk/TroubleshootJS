@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 60.2059417,
+  "suiteCount": 4,
+  "scope": "Pure mechanical foundation,14 source bindings, two current15 routes; pose selection disabled",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

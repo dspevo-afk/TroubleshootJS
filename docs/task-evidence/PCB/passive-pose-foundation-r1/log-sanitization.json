@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Known local prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "native.txt",
+      "rawSha256": "ebf672bfdb541b4016fdd4be9d38da25c52906bd1287eb94fa78624c6a2e9775",
+      "sanitizedSha256": "ebf672bfdb541b4016fdd4be9d38da25c52906bd1287eb94fa78624c6a2e9775",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "native-receipt.txt",
+      "rawSha256": "81dca823e9fb50b067f96efd553c12d616695d83c55cf8f0d41fb128c8ba81cc",
+      "sanitizedSha256": "81dca823e9fb50b067f96efd553c12d616695d83c55cf8f0d41fb128c8ba81cc",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

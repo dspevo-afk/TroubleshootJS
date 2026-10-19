@@ -125,6 +125,17 @@ No minimum-packing/all-seed or new policy claim. Observer copy restored1467 and
 verified retired. Next establish version/identity/marking/repair prerequisites
 before experimenting with passive quarter-turn placement or a new local layout.
 [Strip measurement and limits](task-evidence/PCB/routed-strip-cause-r1/README.md).
+Native-only passive pose foundation now passes999 mechanical assertions over
+seven geometries/four TOP poses, real stock/registry/slot and paired package
+canonical identity checks. All14 informed source bindings and both full current15 routes
+stay exact (42 non-timing fields each); final native4PASS60.2059s/frozen1471 and
+sealed readers pass. The initial stock-capacitor fixture missing-grid failure is
+retained; only simulator setup/finally restoration changed. Accepted1467 restored,
+owned copy retired, main1475 exact. No enabled pose policy, main capability change,
+packing benefit, whole-cache, GWT/player or live mutation claim. Next implement
+an explicit RB56 pose interpretation with preserved density/random/work boundaries,
+then prove packing, polarity, repair and replay before promotion.
+[Mechanical prerequisite and limits](task-evidence/PCB/passive-pose-foundation-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
