@@ -1,0 +1,18 @@
+{
+  "status": "PASS_WITH_LIMITS",
+  "reviewer": "Luna MAX leaf global_pocket_review",
+  "scope": "Frozen diff/source only; no runtime outputs read or tests run",
+  "nativeInputSealSha256": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4",
+  "blockingFindings": [],
+  "findings": [
+    "Pass remains selected-policy density15 candidate2 with canonical eligible passive order",
+    "Distinct snapped proposals consume shared60000 count; only strict whole-plan improvement and physical validation accepted",
+    "Rigid translated footprints remain local to plan state",
+    "Literal score fixture provides independent component expectations"
+  ],
+  "limits": [
+    "Access-envelope negative is hypothetical, not generated proposal rejection evidence",
+    "No cancellation fixture or cancellation check inside score/validation; boundary responsiveness unmeasured",
+    "Native, build, routing and player behavior require separate gates"
+  ]
+}

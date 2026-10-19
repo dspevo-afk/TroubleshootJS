@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "baseCommit": "a3a0b851c1e5b80212b1d604a3962a8e77437893",
+  "scope": "COPY-only private22/density15 candidate2 whole-plan-scored passive pocket descent; default15/general16 unchanged",
+  "hypothesis": "Using the existing authoritative whole-plan placement cost for complete proposed moves can avoid the measured local/global score mismatch; physical benefit remains unproved",
+  "selection": "One canonical component-ID pass after candidate2 initial legal placement; same four passive package IDs and connector/anchor/isolation exclusions as the rejected21 experiment",
+  "origins": "Existing largest40-grid pocket and at mostfive center/corner origins, existing20000-cell bound, domain clipping and10-grid snapping; current position incumbent, ties retained",
+  "cost": "A narrow package-private MediumBoardPhysicalPolicy.scorePlan(board,plan) adapter delegates to its existing private scorer; accept only strict lower complete-plan PlacementScore.total and unchanged full placement/access/domain validation; initial greedy mediumPlacementScore stays unchanged",
+  "purity": "No new weights/formula/state: existing MST role weights, region cohesion, connector distances, corridor overlaps and area normalization remain exact; scorer adapter requires nonnull board/plan; source graph/inventory/pose/outline unchanged",
+  "budget": "Every distinct snapped nonincumbent proposal tried consumes the same60000 plan counter including scoring; optional exhaustion keeps legal incumbent; no extra candidate/router request or changed caps",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "requiredBeforeCorpus": [
+    "root source/core review",
+    "literal independent global cost components and role/MST/corridor/connector fixtures",
+    "actual global-pass move including a linked case",
+    "source/pose identity and raw other-candidate parity",
+    "budget/eligibility/access-envelope/tie fixtures",
+    "strict reader canaries including global score monotonicity",
+    "actual selected-PowerShell4/7-suite transport",
+    "frozen consumed inputs",
+    "fresh native unit4 PASS"
+  ],
+  "finiteAcceptance": "All14 saved15 rows exact42 non-time fields; all14 explicit22 physical/source admissions; all14 existing global candidate2 total costs never increase and otherfive score records remain exact; board area, protected void, copper and vias never increase with at least one area/void decrease",
+  "rejection": "Preserve exact failure and source; restore/retire owned COPY; no promotion or altered acceptance limits",
+  "promotion": "Only after finite acceptance, separate actual production/native/JDK8-GWT/visible player/replay qualification",
+  "limits": "Informed finite corpus; whole-plan cost is still a coarse proxy, not route/electrical truth; no all-seed/manufacturing/general performance claim"
+}

@@ -1,0 +1,18 @@
+[
+  [
+    "PcbGlobalPocketDescentContractTest",
+    "PCB global pocket descent contracts "
+  ],
+  [
+    "PcbMediumPlacementCostContractTest",
+    "PCB medium placement cost contracts "
+  ],
+  [
+    "PcbVacancyTargetsContractTest",
+    "PCB vacancy targets contracts "
+  ],
+  [
+    "RelBSessionIdentityContractTest",
+    "REL-B session identity contracts "
+  ]
+]

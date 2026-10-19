@@ -221,6 +221,18 @@ their stated limits. COPY restored1467/retired, all6 driver births exited;
 main1475/default15/general16 unchanged. No production/GWT/player promotion.
 Next audit local/global scoring ownership before choosing another bounded policy.
 [Local descent rejection and limits](task-evidence/PCB/local-pocket-descent-trial-r1/RESULTS.md).
+Private22 whole-plan passive descent is rejected by its frozen copper rule.
+Fresh unit4 PASS53.030s and routes7 PASS206.513s admit all28 boards and preserve
+all14 saved15 rows in42 non-time fields. Candidate2 scores improve14/14; otherfive
+score records stay exact. Seed2 area falls3.46%, void5.87%, copper6.05%; seed5 area
+falls33.42% and void78.34%, but copper grows11.53%. Other12 geometries remain exact.
+Seed5 c2 rank stays6; newly successful2 changes third P07 opportunity5→3 and
+winner5→3. That is not rank displacement or individual-move attribution. Root51
+reader/12 actual host canaries, source erasure, integrated review and optional
+source review pass within their limits. COPY1476 restored1467/retired,4 births
+exited; main1475/default15/general16 unchanged, no production/GWT/player promotion.
+Next measure already-successful routed alternatives before changing policy.
+[Global descent rejection and limits](task-evidence/PCB/global-pocket-descent-trial-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

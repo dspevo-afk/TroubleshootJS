@@ -1,0 +1,215 @@
+{
+  "status": "PASS",
+  "scope": "Integrated native/fitness/global-cost/source/cleanup review; no production promotion",
+  "baseCommit": "a3a0b851c1e5b80212b1d604a3962a8e77437893",
+  "main1475Exact": true,
+  "frozenGates": 27,
+  "sourceDeltas": 17,
+  "syntheticReaderCases": 51,
+  "actualTransportCases": 12,
+  "unitSuites": 4,
+  "routeSuites": 7,
+  "cases": 28,
+  "saved15ExactRows": 14,
+  "trial22AdmittedRows": 14,
+  "strictFitness": "FAIL",
+  "independentMetricDeltas": [
+    {
+      "seed": "-1017",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1004",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1022",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "0",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "17",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "42",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "1",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "7",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "5",
+      "area": -3065524,
+      "largestProtectedEmptyRectangleArea": -1061100,
+      "copperManhattanLength": 4450,
+      "vias": 0
+    },
+    {
+      "seed": "14",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "2",
+      "area": -317871,
+      "largestProtectedEmptyRectangleArea": -106000,
+      "copperManhattanLength": -3140,
+      "vias": 0
+    },
+    {
+      "seed": "3",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "4",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "6",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    }
+  ],
+  "violations": [
+    {
+      "seed": "5",
+      "metric": "copperManhattanLength",
+      "baseline": 38610,
+      "trial": 43060,
+      "delta": 4450
+    }
+  ],
+  "globalCosts": [
+    {
+      "seed": "-1017",
+      "candidate2Total15": 1239735,
+      "candidate2Total22": 1229439,
+      "delta": -10296
+    },
+    {
+      "seed": "-1004",
+      "candidate2Total15": 1356296,
+      "candidate2Total22": 1303080,
+      "delta": -53216
+    },
+    {
+      "seed": "-1022",
+      "candidate2Total15": 1881200,
+      "candidate2Total22": 1872412,
+      "delta": -8788
+    },
+    {
+      "seed": "0",
+      "candidate2Total15": 1219312,
+      "candidate2Total22": 1213208,
+      "delta": -6104
+    },
+    {
+      "seed": "17",
+      "candidate2Total15": 1871029,
+      "candidate2Total22": 1852909,
+      "delta": -18120
+    },
+    {
+      "seed": "42",
+      "candidate2Total15": 1611984,
+      "candidate2Total22": 1606524,
+      "delta": -5460
+    },
+    {
+      "seed": "1",
+      "candidate2Total15": 1145756,
+      "candidate2Total22": 1140524,
+      "delta": -5232
+    },
+    {
+      "seed": "7",
+      "candidate2Total15": 1694976,
+      "candidate2Total22": 1689376,
+      "delta": -5600
+    },
+    {
+      "seed": "5",
+      "candidate2Total15": 2042037,
+      "candidate2Total22": 1978265,
+      "delta": -63772
+    },
+    {
+      "seed": "14",
+      "candidate2Total15": 1808902,
+      "candidate2Total22": 1752890,
+      "delta": -56012
+    },
+    {
+      "seed": "2",
+      "candidate2Total15": 2005671,
+      "candidate2Total22": 1956191,
+      "delta": -49480
+    },
+    {
+      "seed": "3",
+      "candidate2Total15": 1595918,
+      "candidate2Total22": 1526434,
+      "delta": -69484
+    },
+    {
+      "seed": "4",
+      "candidate2Total15": 1580761,
+      "candidate2Total22": 1560313,
+      "delta": -20448
+    },
+    {
+      "seed": "6",
+      "candidate2Total15": 1751505,
+      "candidate2Total22": 1702105,
+      "delta": -49400
+    }
+  ],
+  "otherFiveCandidateScoreRecordsExact": true,
+  "recordedDriverBirthsExited": 4,
+  "copyRestored1467AndRetired": true,
+  "productionBuildPlayerSolverAllSeed": "NOT_RUN"
+}

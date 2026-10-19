@@ -1,0 +1,688 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "COPY-only private22/density15 candidate2 whole-plan-scored passive pocket descent; default15/general16 unchanged",
+  "proposalSha256": "0a5ec22a2990bd6df7ffcc32d4102b497f2974cc58b9e8c6a90f0db8cb659662",
+  "protocolSha256": "a934363b2817217dfde6b9bfdf7f2c8b8c9d953f3335803e9f1882a5648f17bd",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "unitPrerequisiteSha256": "648bbc4d8dd3fd09135fc1066252b4332b34c2106ec9edf8975027482f8b59e6",
+  "routesSuiteManifestSha256": "ec06fedcbc76e823839b4590d2f2061e52ff817467a79f1941cca5f09227b3c8",
+  "routePhaseInputs": {
+    "routes.txt": "dcca3fd2f61eae74b770857c56ac87082a03e491fac83a147c46f9f9cfe773d7",
+    "routes-receipt.txt": "24041c8f4a7b586d2d1fc4c7657b1c2abb54d9b92b76ce74b317ed361c79fe34",
+    "routes-timing.json": "5a9fd17308604a1e2f92911df79272d17dc1beb26e31a6c176231457ac226577",
+    "routes-suites.json": "ec06fedcbc76e823839b4590d2f2061e52ff817467a79f1941cca5f09227b3c8"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 7,
+      "suiteClasses": [
+        "PcbGlobalPocketDescentTrialContractTest",
+        "PcbGlobalPocketDescentTrialContractTestGroup2",
+        "PcbGlobalPocketDescentTrialContractTestGroup3",
+        "PcbGlobalPocketDescentTrialContractTestGroup4",
+        "PcbGlobalPocketDescentTrialContractTestGroup5",
+        "PcbGlobalPocketDescentTrialContractTestGroup6",
+        "PcbGlobalPocketDescentTrialContractTestGroup7"
+      ],
+      "reportRows": 56,
+      "orderedMarkers": [
+        "PCB global pocket descent trial contracts ",
+        "PCB global pocket descent trial Group2 contracts ",
+        "PCB global pocket descent trial Group3 contracts ",
+        "PCB global pocket descent trial Group4 contracts ",
+        "PCB global pocket descent trial Group5 contracts ",
+        "PCB global pocket descent trial Group6 contracts ",
+        "PCB global pocket descent trial Group7 contracts "
+      ],
+      "census": {
+        "nativeAdmission": {
+          "status": "PASS",
+          "cases": 28,
+          "roots": 14,
+          "explicit15ExactRows": 14,
+          "explicit22AdmittedRows": 14
+        },
+        "strictFitness": {
+          "status": "FAIL",
+          "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+          "reasons": [
+            "one or more strict metrics increased"
+          ],
+          "violations": [
+            {
+              "seed": "5",
+              "metric": "copperManhattanLength",
+              "baseline": 38610,
+              "trial": 43060,
+              "delta": 4450
+            }
+          ],
+          "deltas": [
+            {
+              "seed": "-1017",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1004",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1022",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "0",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "17",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "42",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "1",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "7",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "5",
+              "area": -3065524,
+              "largestProtectedEmptyRectangleArea": -1061100,
+              "copperManhattanLength": 4450,
+              "vias": 0
+            },
+            {
+              "seed": "14",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "2",
+              "area": -317871,
+              "largestProtectedEmptyRectangleArea": -106000,
+              "copperManhattanLength": -3140,
+              "vias": 0
+            },
+            {
+              "seed": "3",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "4",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "6",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            }
+          ]
+        },
+        "globalScoreMonotonicity": {
+          "status": "PASS",
+          "requirements": "candidate2 existing whole-plan total never increases; all eight score components for the other five ranked candidates remain exact to saved15; every recorded total is recomputed from the frozen formula",
+          "candidateCount": 14,
+          "violations": [],
+          "rows": [
+            {
+              "seed": "-1017",
+              "candidate2TotalBefore": 1239735,
+              "candidate2TotalAfter": 1229439,
+              "candidate2TotalDelta": -10296,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "-1004",
+              "candidate2TotalBefore": 1356296,
+              "candidate2TotalAfter": 1303080,
+              "candidate2TotalDelta": -53216,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "-1022",
+              "candidate2TotalBefore": 1881200,
+              "candidate2TotalAfter": 1872412,
+              "candidate2TotalDelta": -8788,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "0",
+              "candidate2TotalBefore": 1219312,
+              "candidate2TotalAfter": 1213208,
+              "candidate2TotalDelta": -6104,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "17",
+              "candidate2TotalBefore": 1871029,
+              "candidate2TotalAfter": 1852909,
+              "candidate2TotalDelta": -18120,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "42",
+              "candidate2TotalBefore": 1611984,
+              "candidate2TotalAfter": 1606524,
+              "candidate2TotalDelta": -5460,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "1",
+              "candidate2TotalBefore": 1145756,
+              "candidate2TotalAfter": 1140524,
+              "candidate2TotalDelta": -5232,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "7",
+              "candidate2TotalBefore": 1694976,
+              "candidate2TotalAfter": 1689376,
+              "candidate2TotalDelta": -5600,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "5",
+              "candidate2TotalBefore": 2042037,
+              "candidate2TotalAfter": 1978265,
+              "candidate2TotalDelta": -63772,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "14",
+              "candidate2TotalBefore": 1808902,
+              "candidate2TotalAfter": 1752890,
+              "candidate2TotalDelta": -56012,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "2",
+              "candidate2TotalBefore": 2005671,
+              "candidate2TotalAfter": 1956191,
+              "candidate2TotalDelta": -49480,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "3",
+              "candidate2TotalBefore": 1595918,
+              "candidate2TotalAfter": 1526434,
+              "candidate2TotalDelta": -69484,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "4",
+              "candidate2TotalBefore": 1580761,
+              "candidate2TotalAfter": 1560313,
+              "candidate2TotalDelta": -20448,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            },
+            {
+              "seed": "6",
+              "candidate2TotalBefore": 1751505,
+              "candidate2TotalAfter": 1702105,
+              "candidate2TotalDelta": -49400,
+              "candidate2Nonincreasing": true,
+              "otherFiveScoreRecordsExact": true,
+              "changedOtherCandidateIds": []
+            }
+          ]
+        },
+        "routeCaseRows": 28,
+        "whitespaceRows": 28,
+        "orderedRootVersions": [
+          {
+            "seed": "-1017",
+            "version": 15
+          },
+          {
+            "seed": "-1017",
+            "version": 22
+          },
+          {
+            "seed": "-1004",
+            "version": 15
+          },
+          {
+            "seed": "-1004",
+            "version": 22
+          },
+          {
+            "seed": "-1022",
+            "version": 15
+          },
+          {
+            "seed": "-1022",
+            "version": 22
+          },
+          {
+            "seed": "0",
+            "version": 15
+          },
+          {
+            "seed": "0",
+            "version": 22
+          },
+          {
+            "seed": "17",
+            "version": 15
+          },
+          {
+            "seed": "17",
+            "version": 22
+          },
+          {
+            "seed": "42",
+            "version": 15
+          },
+          {
+            "seed": "42",
+            "version": 22
+          },
+          {
+            "seed": "1",
+            "version": 15
+          },
+          {
+            "seed": "1",
+            "version": 22
+          },
+          {
+            "seed": "7",
+            "version": 15
+          },
+          {
+            "seed": "7",
+            "version": 22
+          },
+          {
+            "seed": "5",
+            "version": 15
+          },
+          {
+            "seed": "5",
+            "version": 22
+          },
+          {
+            "seed": "14",
+            "version": 15
+          },
+          {
+            "seed": "14",
+            "version": 22
+          },
+          {
+            "seed": "2",
+            "version": 15
+          },
+          {
+            "seed": "2",
+            "version": 22
+          },
+          {
+            "seed": "3",
+            "version": 15
+          },
+          {
+            "seed": "3",
+            "version": 22
+          },
+          {
+            "seed": "4",
+            "version": 15
+          },
+          {
+            "seed": "4",
+            "version": 22
+          },
+          {
+            "seed": "6",
+            "version": 15
+          },
+          {
+            "seed": "6",
+            "version": 22
+          }
+        ]
+      }
+    }
+  },
+  "admission": {
+    "status": "PASS",
+    "cases": 28,
+    "roots": 14,
+    "explicit15ExactRows": 14,
+    "explicit22AdmittedRows": 14
+  },
+  "strictFitness": {
+    "status": "FAIL",
+    "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+    "reasons": [
+      "one or more strict metrics increased"
+    ],
+    "violations": [
+      {
+        "seed": "5",
+        "metric": "copperManhattanLength",
+        "baseline": 38610,
+        "trial": 43060,
+        "delta": 4450
+      }
+    ],
+    "deltas": [
+      {
+        "seed": "-1017",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1004",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1022",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "0",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "17",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "42",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "1",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "7",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "5",
+        "area": -3065524,
+        "largestProtectedEmptyRectangleArea": -1061100,
+        "copperManhattanLength": 4450,
+        "vias": 0
+      },
+      {
+        "seed": "14",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "2",
+        "area": -317871,
+        "largestProtectedEmptyRectangleArea": -106000,
+        "copperManhattanLength": -3140,
+        "vias": 0
+      },
+      {
+        "seed": "3",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "4",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "6",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    ]
+  },
+  "globalScoreMonotonicity": {
+    "status": "PASS",
+    "requirements": "candidate2 existing whole-plan total never increases; all eight score components for the other five ranked candidates remain exact to saved15; every recorded total is recomputed from the frozen formula",
+    "candidateCount": 14,
+    "violations": [],
+    "rows": [
+      {
+        "seed": "-1017",
+        "candidate2TotalBefore": 1239735,
+        "candidate2TotalAfter": 1229439,
+        "candidate2TotalDelta": -10296,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "-1004",
+        "candidate2TotalBefore": 1356296,
+        "candidate2TotalAfter": 1303080,
+        "candidate2TotalDelta": -53216,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "-1022",
+        "candidate2TotalBefore": 1881200,
+        "candidate2TotalAfter": 1872412,
+        "candidate2TotalDelta": -8788,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "0",
+        "candidate2TotalBefore": 1219312,
+        "candidate2TotalAfter": 1213208,
+        "candidate2TotalDelta": -6104,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "17",
+        "candidate2TotalBefore": 1871029,
+        "candidate2TotalAfter": 1852909,
+        "candidate2TotalDelta": -18120,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "42",
+        "candidate2TotalBefore": 1611984,
+        "candidate2TotalAfter": 1606524,
+        "candidate2TotalDelta": -5460,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "1",
+        "candidate2TotalBefore": 1145756,
+        "candidate2TotalAfter": 1140524,
+        "candidate2TotalDelta": -5232,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "7",
+        "candidate2TotalBefore": 1694976,
+        "candidate2TotalAfter": 1689376,
+        "candidate2TotalDelta": -5600,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "5",
+        "candidate2TotalBefore": 2042037,
+        "candidate2TotalAfter": 1978265,
+        "candidate2TotalDelta": -63772,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "14",
+        "candidate2TotalBefore": 1808902,
+        "candidate2TotalAfter": 1752890,
+        "candidate2TotalDelta": -56012,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "2",
+        "candidate2TotalBefore": 2005671,
+        "candidate2TotalAfter": 1956191,
+        "candidate2TotalDelta": -49480,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "3",
+        "candidate2TotalBefore": 1595918,
+        "candidate2TotalAfter": 1526434,
+        "candidate2TotalDelta": -69484,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "4",
+        "candidate2TotalBefore": 1580761,
+        "candidate2TotalAfter": 1560313,
+        "candidate2TotalDelta": -20448,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      },
+      {
+        "seed": "6",
+        "candidate2TotalBefore": 1751505,
+        "candidate2TotalAfter": 1702105,
+        "candidate2TotalDelta": -49400,
+        "candidate2Nonincreasing": true,
+        "otherFiveScoreRecordsExact": true,
+        "changedOtherCandidateIds": []
+      }
+    ]
+  },
+  "caseCounts": {
+    "globalPocketDescent": 28,
+    "whitespace": 28
+  },
+  "nativeRuntimeEvidence": "PASS",
+  "limits": [
+    "Fourteen fixed roots only; the result makes no unseen-root or all-seed claim.",
+    "All14 explicit15 route cases match all42 non-time saved fields; elapsedMillis is bounded separately.",
+    "Explicit22 native admission, whole-plan cost monotonicity, and four-metric fitness are reported separately.",
+    "Explicit22 player replay, solver, manufacturing and production promotion are NOT RUN."
+  ]
+}

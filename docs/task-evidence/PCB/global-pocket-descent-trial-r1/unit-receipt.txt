@@ -1,0 +1,7 @@
+PASS: PCB global pocket descent contracts assertions=147 fixtures=11 evaluator=globalPocketDescent
+
+PASS: PCB medium placement cost contracts assertions=15 fixtures=1 evaluator=mediumWholePlanCost
+
+PASS: PCB vacancy targets contracts assertions=74
+
+PASS: REL-B session identity contracts assertions=191 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false

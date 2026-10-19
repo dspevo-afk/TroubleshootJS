@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "copyCount": 1476,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "1cc543a51a0d84ccd371e9ebc9ba97d7e7722264f6d9f46a47bd6d64f3abfdc0",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "7f613a9f8c1dd8e23bbec79a6678ade3e43a468dab01fe7d4580c5de80cd6845",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "fa205f0eac1e6d67a7a43da4a0ecf247000409abbd6f9c1fccb53b46999cbe3f",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "53fda383ae1eda0a295e9268c4e8dd1d1a1465c07dccde3af00c72f6a11cbaf5",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "dc6487d3285bd3e350c0f2b7f68172ea9262ae232b4f5b1f675988624c71edd6",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "7079fd0f2d95945d308b911abc84a576ac2a66effddcda4ab3b9d55e32b1c8e1"
+  },
+  "additions": {
+    "tests/contracts/PcbGlobalPocketDescentContractTest.java": "84d7bfa2686513cd38950a4655fe7509dcfc2a54e31bcd5ae4768b6f12a3b2d9",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTest.java": "f44443b02e14796ffdbcbafaa614f2e3c26fe3ab9f37b8d573756965febdbfc7",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup2.java": "c80044ff331df764bd1c7d04d084481e1d30fe112a682c1c7406d25a1da8f38e",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup3.java": "f71910edcfdd1e733a953936a5e2335e9e872960d7f64d67f34c9ebe41617335",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup4.java": "d51ee4d3299c27e9aac064661d09cd1d593c1315ec93277c926c080565bde4fc",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup5.java": "cc5fd4914c734814895e0b422562cd5385ff3b034e9b05a5bd109b367406c2e4",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup6.java": "a045f2a4847edad96576761b897be37155063a1c20efd8b461001856e53e77ee",
+    "tests/contracts/PcbGlobalPocketDescentTrialContractTestGroup7.java": "6528b3148ebda5f6a60bf9fd605eccb08dbba428c8b0ec8ff6d8d918df95502f",
+    "tests/contracts/PcbMediumPlacementCostContractTest.java": "164c07cd22300775370fdc56c1cc1e9f25f80ce61b794b86d5ca3e33c5db17b0"
+  },
+  "existingPhysicalWitnessCoreExact": true,
+  "verifierUnchangedOutsideRegistrations": true,
+  "existingGlobalCostOwnerExactOutsideAdapter": true,
+  "diffSha256": "960b2a8de6beb204a711026f234a05e9ce45638f8bd7c1c1c3b4f7f05c67801c"
+}

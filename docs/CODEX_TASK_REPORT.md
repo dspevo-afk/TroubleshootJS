@@ -1,4 +1,73 @@
-# Current checkpoint: private21 local passive descent rejected; scoring audit next
+# Current checkpoint: private22 rejected; successful route pool audit next
+
+2026-10-19. Base HEAD `a3a0b851c1e5b80212b1d604a3962a8e77437893` on
+`codex/q60-faulted-profile-counts`, origin verified at scope start. Packet complete
+for normal branch publication. Indefinite continuation active; no main/email.
+Main1475/default15/general16 stay unchanged; original5 entries preserved.
+
+COPY-only private22/density15 candidate2 single-pass global-score passive descent
+preserves source/poses/outline, current scorer,60000 evaluations and six candidates/
+three routes per strategy. Fresh unit4 PASS53.0296486s/exit0:147 global assertions/
+11 scenarios,15 cost assertions/1 literal scenario,74 vacancy,191 identity.
+Fresh routes7 PASS206.5126202s/exit0:28 physical admissions, all14 saved15 rows exact
+42 non-time fields. Candidate2 cost falls14/14; otherfive full score records exact.
+Strict fitness FAIL/assessor2: seed5 area-33.42%, void-78.34%, copper+4450(+11.53%),
+vias0. Seed2 area-3.46%, void-5.87%, copper-6.05%, vias0; other12 geometries exact.
+
+Seed5 c2 rank stays6, but rejected route2 becomes successful; third P07 attempt
+changes fallback5→3 and selected5→3. This is a success-dependent route opportunity,
+not observed rank displacement or move-level cause. Need observe the actual
+successful pool before choosing another bounded policy. All14 plan counts rise
+135–195, route counts unchanged; work can change. No timing generalization.
+
+FinalCOPY1476/8overrides/9adds/17deltas/27gates sealed
+`f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4`.
+Root51 reader/12 actual4/7 host canaries, owner erasure and integrated review pass.
+Optional Luna/MAX source review finds no blocking defect; hypothetical access,
+limited package-positive and cancellation responsiveness coverage remain explicit.
+No runtime rerun or post-unblinding oracle/budget change. GWT/player/22 actual
+owner roundtrip/solver/repair/full matrix/unseen/all-seed/manufacturing NOT RUN.
+
+All4 driver births exited without termination; COPY1476 restored exact1467 and
+safely retired, private state removed. No native/browser/preview/profile active.
+One bounded read-only leaf audits route selection/observation seams. Next publish
+explicit packet/docs, verify remote SHA, then measure successful route alternatives.
+Evidence `docs/task-evidence/PCB/global-pocket-descent-trial-r1/RESULTS.md`.
+
+# Previous checkpoint: private22 preparation and freeze
+
+2026-10-19. HEAD `a3a0b851c1e5b80212b1d604a3962a8e77437893` on
+`codex/q60-faulted-profile-counts`, exact origin verified. Indefinite continuation
+active; no main/email. Published21 is rejected:13 selected geometries exact15,
+seed2area+11.6169% after modified2 route-quality failure and larger5 fallback.
+All previous COPY/native resources restored/retired; original5 entries preserved.
+
+Read-only cost audit finds the existing authoritative owner in
+MediumBoardPhysicalPolicy, distinct from the planner's local pairwise heuristic.
+New COPY-only private22/density15 will use a narrow pure scorePlan adapter and
+strict complete-plan total decreases for candidate2 pocket moves. Initialgreedy,
+existing scorer/weights, source/poses/outline, canonical targets,60000 evaluations,
+six candidates and per-strategy route caps stay fixed. No benefit assumed.
+
+Fresh sourceCOPY begins accepted1467 excluding rejected16–21. Three leaf workers
+own isolated global code/unit, independent literal cost unit, and strict reader.
+Root owns corpus/harness/lifecycle/integration. Plannedfinal1476/8overrides/9adds/
+17deltas/27gates. Actual selected-PowerShell4/7 transport12 passes. Protocolscope
+label21→22 was corrected before freeze; manifests/host consumed bytes unchanged.
+Root source/fixture review complete; final11/global and1/cost named scenarios.
+Fresh reader51 synthetic cases match receipt;8 worker source hashes match notes.
+COPY1476/8overrides/9adds/17deltas/27gates frozen; actual native unit4 is active.
+One optional read-only leaf reviews frozen source; no native PASS claimed yet.
+GWT/player NOT RUN. One sourceCOPYactive; no browser/preview/profile;
+production/default15/general16/main1475 exact.
+
+Acceptance stays strict14: saved15exact42fields,22physical/sourceadmission,
+candidate2 globalcost nonincrease/otherfive scoreexact, fourphysicalmetrics
+nonincrease plus an area/void improvement. Next complete freshunit4, then
+pairedroutes7 only onPASS. No new policy promotion or budget/oracle weakening.
+Evidence `docs/task-evidence/PCB/global-pocket-descent-trial-r1/proposal.json`.
+
+# Previous checkpoint: private21 local passive descent rejected; scoring audit next
 
 2026-10-19. Base/published HEAD `91ffe9a3c0e444c28b1ad0ae51005071e7fe0c8a` on
 `codex/q60-faulted-profile-counts`; exact origin verified. Rejection packet is

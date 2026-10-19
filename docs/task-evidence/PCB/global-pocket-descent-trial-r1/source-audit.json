@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "scope": "Read-only accepted-source binding; no runtime claim",
+  "baseCommit": "a3a0b851c1e5b80212b1d604a3962a8e77437893",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java": "be1d9aad55da71692214bb351db301d35c9cbee924b4dcf7efa14de2a9d63951",
+    "src/com/lushprojects/circuitjs1/client/PcbFootprint.java": "322596458d3ad616cff73e66170aa48c0d1d38bb514ec5428dee543472e296a9",
+    "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "57cf9db656fdee48b8b737c4a4d980c69f799dccc021cf370a32168a9a13e498",
+    "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "b0cecbaa71ede48acb490704d125985391c908a19570a0254934c937b65e81cf",
+    "src/com/lushprojects/circuitjs1/client/TopologyPlacementGraph.java": "d27c698c961725ba2b046da2e277cdce0377b2b2f5046177ebbfca1e11ae5d4a"
+  },
+  "scaffoldingReuse": {
+    "oldSealSha256": "00dea91518cd61c95378edcf92f1aa5f28b517e887f78d9dd82f190ef69699c5",
+    "scope": "Adapted21 harness/corpus only: new22 namespace, independent fourth cost unit and1476 restoration; no rejected production source copied by bootstrap",
+    "files": {
+      "prepare_cases.py": "c969c55a9ae95f4c042b26ec5b25a09d59b19a3920fe62a865d0ea7158f5de82",
+      "run_native.ps1": "89f8099ddce589b9f41a09e3eb953783db1d4b8082717a80e2b9d6cf625abd19",
+      "check_process_cleanup.ps1": "bfd871b63b89ba486ee8928a2d7adfd81edf3392752568ba23a93f2a61fa18ad",
+      "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+      "suite_transport.ps1": "7d81427b83a736d0b161ca8120ae88f67e05ba808b38121575ad4585a820865d",
+      "check_suite_transport.ps1": "74c6e9dff1c7f0e719f6791852a9948965eeda199f120180588790337b08b713",
+      "retire_copy.py": "ad87d642ffdf51d1b62220e2dcac05daf1e2336bc144495316a2ca796a941924"
+    }
+  }
+}

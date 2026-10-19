@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "baseCommit": "a3a0b851c1e5b80212b1d604a3962a8e77437893",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "versions": [
+    15,
+    22
+  ],
+  "densities": [
+    14,
+    15
+  ],
+  "unitSuites": [
+    [
+      "PcbGlobalPocketDescentContractTest",
+      "PCB global pocket descent contracts "
+    ],
+    [
+      "PcbMediumPlacementCostContractTest",
+      "PCB medium placement cost contracts "
+    ],
+    [
+      "PcbVacancyTargetsContractTest",
+      "PCB vacancy targets contracts "
+    ],
+    [
+      "RelBSessionIdentityContractTest",
+      "REL-B session identity contracts "
+    ]
+  ],
+  "routesSuites": [
+    [
+      "PcbGlobalPocketDescentTrialContractTest",
+      "PCB global pocket descent trial contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup2",
+      "PCB global pocket descent trial Group2 contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup3",
+      "PCB global pocket descent trial Group3 contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup4",
+      "PCB global pocket descent trial Group4 contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup5",
+      "PCB global pocket descent trial Group5 contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup6",
+      "PCB global pocket descent trial Group6 contracts "
+    ],
+    [
+      "PcbGlobalPocketDescentTrialContractTestGroup7",
+      "PCB global pocket descent trial Group7 contracts "
+    ]
+  ],
+  "baselinePath": "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourcePath": "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "casePrefix": "PCB_GLOBAL_POCKET_CASE ",
+  "routePassDetail": "roots=2 pairs=2 rows=4 evaluator=planMedium",
+  "metrics": [
+    "area",
+    "largestProtectedEmptyRectangleArea",
+    "copperManhattanLength",
+    "vias"
+  ],
+  "timingScope": "Native global pocket descent trial; unchanged per-JVM/search/physical limits",
+  "scope": "COPY-only explicit22; all14 explicit15 replay42 non-time fields exact; strict four-metric no-regression with an area/void improvement required"
+}

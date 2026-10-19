@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 28316,
+      "startTicks": "639280479166180046",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/global-pocket-descent-trial-r1/run_native.ps1"
+    },
+    {
+      "pid": 24620,
+      "startTicks": "639280479168623494",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/global-pocket-descent-trial-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native global-pocket phase; unique source copy"
+}

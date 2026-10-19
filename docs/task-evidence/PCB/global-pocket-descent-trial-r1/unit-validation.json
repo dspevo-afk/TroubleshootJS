@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Unit global-pocket, whole-plan cost, vacancy-target, and session-identity contracts only; routes and fitness are not evaluated.",
+  "proposalSha256": "0a5ec22a2990bd6df7ffcc32d4102b497f2974cc58b9e8c6a90f0db8cb659662",
+  "protocolSha256": "a934363b2817217dfde6b9bfdf7f2c8b8c9d953f3335803e9f1882a5648f17bd",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "suiteManifestSha256": "d70197f6f11dd4919b16983af9f9a3f470caad856bd8c0c8346edcea32a581e2",
+  "phaseInputs": {
+    "unit.txt": "361dea84b9198bc36f431df201e171a7fb076dddce2da21b3af75543e291b86b",
+    "unit-receipt.txt": "d7456f988c2d919da1ecc59f9566aca4a645f0d6a12342a561f447d9f736385a",
+    "unit-timing.json": "a67ce12a6fa011706fb4adf0153defcd63f3f126ce94470b9c66e9b155060afe",
+    "unit-suites.json": "d70197f6f11dd4919b16983af9f9a3f470caad856bd8c0c8346edcea32a581e2"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 4,
+    "suiteClasses": [
+      "PcbGlobalPocketDescentContractTest",
+      "PcbMediumPlacementCostContractTest",
+      "PcbVacancyTargetsContractTest",
+      "RelBSessionIdentityContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB global pocket descent contracts ",
+      "PCB medium placement cost contracts ",
+      "PCB vacancy targets contracts ",
+      "REL-B session identity contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

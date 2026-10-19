@@ -1,0 +1,362 @@
+{
+  "status": "PASS",
+  "scope": "Descriptive complete native receipt comparison; no move-level causation or general performance claim",
+  "strictFitness": "FAIL",
+  "globalScoreMonotonicity": "PASS",
+  "selectedGeometriesExact": 12,
+  "candidate2CostDecreases": 14,
+  "candidate2CostEqual": 0,
+  "candidate2CostIncreases": 0,
+  "pairs": [
+    {
+      "seed": "-1017",
+      "geometryExact": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt22": 3,
+      "candidate2Total15": 1239735,
+      "candidate2Total22": 1229439,
+      "candidate2TotalDelta": -10296,
+      "candidate2Rank15": 6,
+      "candidate2Rank22": 6,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 135,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_CMD from U2A.OUTPUT@1820,1180 to RDA.1@1860,1350, P05_ONE_FACE@1=REJECTED:Unable to route net LOAD_RETURN from JOA.2@3430,430 to JLOAD.2@3560,450, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_CMD from U2A.OUTPUT@1820,1180 to RDA.1@1860,1350, P05_ONE_FACE@1=REJECTED:Unable to route net LOAD_RETURN from JOA.2@3430,430 to JLOAD.2@3560,450, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]"
+    },
+    {
+      "seed": "-1004",
+      "geometryExact": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt22": 3,
+      "candidate2Total15": 1356296,
+      "candidate2Total22": 1303080,
+      "candidate2TotalDelta": -53216,
+      "candidate2Rank15": 6,
+      "candidate2Rank22": 5,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 150,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_CMD from U2A.OUTPUT@1840,1530 to RFB_A.1@1820,1240, P05_ONE_FACE@1=REJECTED:Unable to route net A_CMD from RFB_A.1@2990,1180 to RDA.1@3060,720, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_CMD from U2A.OUTPUT@1840,1530 to RFB_A.1@1820,1240, P05_ONE_FACE@1=REJECTED:Unable to route net A_CMD from RFB_A.1@2990,1180 to RDA.1@3060,720, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]"
+    },
+    {
+      "seed": "-1022",
+      "geometryExact": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt22": 0,
+      "candidate2Total15": 1881200,
+      "candidate2Total22": 1872412,
+      "candidate2TotalDelta": -8788,
+      "candidate2Rank15": 4,
+      "candidate2Rank22": 4,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 195,
+        "routeAttempts": 0,
+        "routingOrders": 1,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:B_DRIVE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]"
+    },
+    {
+      "seed": "0",
+      "geometryExact": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt22": 0,
+      "candidate2Total15": 1219312,
+      "candidate2Total22": 1213208,
+      "candidate2TotalDelta": -6104,
+      "candidate2Rank15": 3,
+      "candidate2Rank22": 3,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 140,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_COIL_LOW from DA.A@1770,970 to QA.D@2450,1060, P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U1.OUTPUT@1910,1530 to KA.A1@3100,980, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@0=REJECTED:Unable to route net A_COIL_LOW from DA.A@1770,970 to QA.D@2450,1060, P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U1.OUTPUT@1910,1530 to KA.A1@3100,980, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]"
+    },
+    {
+      "seed": "17",
+      "geometryExact": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt22": 3,
+      "candidate2Total15": 1871029,
+      "candidate2Total22": 1852909,
+      "candidate2TotalDelta": -18120,
+      "candidate2Rank15": 4,
+      "candidate2Rank22": 4,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 170,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 129947
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:Unable to route net RAIL5 from KA.A1@2850,2070 to connected tree, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT]"
+    },
+    {
+      "seed": "42",
+      "geometryExact": true,
+      "selectedAttempt15": 1,
+      "selectedAttempt22": 1,
+      "candidate2Total15": 1611984,
+      "candidate2Total22": 1606524,
+      "candidate2TotalDelta": -5460,
+      "candidate2Rank15": 2,
+      "candidate2Rank22": 2,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 175,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]"
+    },
+    {
+      "seed": "1",
+      "geometryExact": true,
+      "selectedAttempt15": 1,
+      "selectedAttempt22": 1,
+      "candidate2Total15": 1145756,
+      "candidate2Total22": 1140524,
+      "candidate2TotalDelta": -5232,
+      "candidate2Rank15": 4,
+      "candidate2Rank22": 4,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 135,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@0=REJECTED:Unable to route net RAIL5 from RLED.1@2240,190 to U1.OUTPUT@1940,820, P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U1.OUTPUT@2760,1200 to KA.A1@3380,500, P05_ONE_FACE@5=REJECTED:Unable to route net A_SENSE from U2A.SENSOR@3830,1750 to connected tree, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@0=REJECTED:Unable to route net RAIL5 from RLED.1@2240,190 to U1.OUTPUT@1940,820, P05_ONE_FACE@1=REJECTED:Unable to route net RAIL5 from U1.OUTPUT@2760,1200 to KA.A1@3380,500, P05_ONE_FACE@5=REJECTED:Unable to route net A_SENSE from U2A.SENSOR@3830,1750 to connected tree, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]"
+    },
+    {
+      "seed": "7",
+      "geometryExact": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt22": 0,
+      "candidate2Total15": 1694976,
+      "candidate2Total22": 1689376,
+      "candidate2TotalDelta": -5600,
+      "candidate2Rank15": 2,
+      "candidate2Rank22": 2,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 165,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]"
+    },
+    {
+      "seed": "5",
+      "geometryExact": false,
+      "selectedAttempt15": 5,
+      "selectedAttempt22": 3,
+      "candidate2Total15": 2042037,
+      "candidate2Total22": 1978265,
+      "candidate2TotalDelta": -63772,
+      "candidate2Rank15": 6,
+      "candidate2Rank22": 6,
+      "metricDeltas": {
+        "area": -3065524,
+        "largestProtectedEmptyRectangleArea": -1061100,
+        "copperManhattanLength": 4450,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 170,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 256858
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:NO_PATH, P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:NO_PATH, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS]"
+    },
+    {
+      "seed": "14",
+      "geometryExact": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt22": 0,
+      "candidate2Total15": 1808902,
+      "candidate2Total22": 1752890,
+      "candidate2TotalDelta": -56012,
+      "candidate2Rank15": 4,
+      "candidate2Rank22": 4,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 165,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:Unable to route net LOAD12 from JLOAD.1@4770,1040 to KB.COM@4320,1420, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:HV_RETURN:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:Unable to route net LOAD12 from JLOAD.1@4770,1040 to KB.COM@4320,1420, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:HV_RETURN:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]"
+    },
+    {
+      "seed": "2",
+      "geometryExact": false,
+      "selectedAttempt15": 2,
+      "selectedAttempt22": 2,
+      "candidate2Total15": 2005671,
+      "candidate2Total22": 1956191,
+      "candidate2TotalDelta": -49480,
+      "candidate2Rank15": 3,
+      "candidate2Rank22": 2,
+      "metricDeltas": {
+        "area": -317871,
+        "largestProtectedEmptyRectangleArea": -106000,
+        "copperManhattanLength": -3140,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 172,
+        "routeAttempts": 0,
+        "routingOrders": -1,
+        "routingExpansions": -405659
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:PRE_L:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:TOTAL_SEARCH_LIMIT]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:PRE_L:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:TOTAL_SEARCH_LIMIT]"
+    },
+    {
+      "seed": "3",
+      "geometryExact": true,
+      "selectedAttempt15": 1,
+      "selectedAttempt22": 1,
+      "candidate2Total15": 1595918,
+      "candidate2Total22": 1526434,
+      "candidate2TotalDelta": -69484,
+      "candidate2Rank15": 3,
+      "candidate2Rank22": 1,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 160,
+        "routeAttempts": 0,
+        "routingOrders": -1,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]"
+    },
+    {
+      "seed": "4",
+      "geometryExact": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt22": 0,
+      "candidate2Total15": 1580761,
+      "candidate2Total22": 1560313,
+      "candidate2TotalDelta": -20448,
+      "candidate2Rank15": 1,
+      "candidate2Rank22": 1,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 175,
+        "routeAttempts": 0,
+        "routingOrders": -1,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=SUCCESS]"
+    },
+    {
+      "seed": "6",
+      "geometryExact": true,
+      "selectedAttempt15": 4,
+      "selectedAttempt22": 4,
+      "candidate2Total15": 1751505,
+      "candidate2Total22": 1702105,
+      "candidate2TotalDelta": -49400,
+      "candidate2Rank15": 2,
+      "candidate2Rank22": 1,
+      "metricDeltas": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      "workDeltas": {
+        "acceptedPlanEvaluations": 175,
+        "routeAttempts": 0,
+        "routingOrders": 0,
+        "routingExpansions": 0
+      },
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH, P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH]",
+      "routeOutcomes22": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH, P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:NO_PATH]"
+    }
+  ]
+}
