@@ -1,0 +1,26 @@
+[
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "sha256": "985757d787ff00cfd1ac4a5d974c873f0e6b92e7f0b6043cb351a85d14e746a1"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "sha256": "0cb3f1948ede9e90d5275cd6a989acb2650069f55d480e7de7323ff691a7943f"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "sha256": "edf9a872e1eb71ad569622ece259056d6da3a189465f97316761082a23099f9e"
+  },
+  {
+    "path": "scripts/verify-current-contracts.ps1",
+    "sha256": "61c005d5c7635c31b9ca4ff2ce818715d829db360a2cfc0c3d538a1328d8e974"
+  },
+  {
+    "path": "tests/contracts/PcbCanvasBoundaryContractTest.java",
+    "sha256": "4aaa2d718ca2845eb0e38a0e6d9bcde5ed37144ea4f3199d795c99242e819aa6"
+  },
+  {
+    "path": "tests/contracts/PcbCanvasGuardContractTest.java",
+    "sha256": "f25faea990e8fc88e36b8e13a7effeb87867d7a6238606d33e6ef1babc5ada6d"
+  }
+]

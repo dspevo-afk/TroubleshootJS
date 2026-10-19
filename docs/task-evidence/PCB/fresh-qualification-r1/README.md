@@ -25,7 +25,11 @@ Native collection FAILED in74.0138399s including terminal cleanup, whose duratio
 was not separately measured. Roots2,3,6 admitted;4 threw
 `IllegalStateException: PCB board outline leaves workbench canvas`. No seed was
 substituted, no complete baseline cohort or seal exists, and measurement values
-remain uninspected. All1,442 consumed inputs stayed exact through the run.
+were uninspected through collection. All1,442 consumed inputs stayed exact through
+the run. Later, the frozen canvas-guard trial passed all ten existing regression
+hashes/metrics before numerical unblinding; its fresh comparisons and rejection
+are recorded in `../canvas-guard-trial-r1/README.md`. These roots are now informed
+regression data, not unseen holdouts.
 
 Source review also found that recomputing the plan hash does not prove the live
 board graph stayed unchanged: this precursor checks ID sets, not full mappings.

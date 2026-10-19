@@ -1,0 +1,23 @@
+{
+  "status": "FAIL",
+  "comparisons": [
+    {
+      "geometryExact": true,
+      "seed": "2"
+    },
+    {
+      "geometryExact": false,
+      "seed": "3"
+    },
+    {
+      "geometryExact": false,
+      "seed": "6"
+    }
+  ],
+  "numericValues": "Not displayed by this audit",
+  "next": "Investigate guard effects on already valid layouts, including tray-driven canvas expansion",
+  "native": "PASS122.5315952s including cleanup",
+  "root4": "Newly admitted in complete native positive group",
+  "gates": "No promotion/fullnative/GWT/player acceptance",
+  "reason": "Predeclared exact fresh-geometry preservation failed"
+}

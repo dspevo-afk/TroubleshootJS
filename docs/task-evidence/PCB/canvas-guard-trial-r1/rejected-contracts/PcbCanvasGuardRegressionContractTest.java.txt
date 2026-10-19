@@ -1,0 +1,9 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Same trial assertions, separate JVM within the unchanged 60-second bound. */
+public final class PcbCanvasGuardRegressionContractTest {
+    public static void main(String[] args) {
+        PcbCanvasGuardContractTest.runSeeds(new long[] {1L, 7L, 5L, 14L},
+            "PCB canvas guard regression contracts ");
+    }
+}

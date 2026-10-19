@@ -1,0 +1,42 @@
+{
+  "inputAudit": "PASS1443",
+  "privatePathSanitization": {
+    "change": "Only host user-profile path prefix replaced by <user-profile> in preserved wrapper failure log",
+    "sanitizedSha256": "48244c94639b4c0b3326612555735276329cdfbca8713fd4bbdb697ce5df9161",
+    "originalRawNativeSha256": "1b05e51ceb0b71f43b1b445633ace36ad033782a77c7991f40f6ef0867e0deec"
+  },
+  "limitMillis": 60000,
+  "logs": [
+    {
+      "sha256": "54325dd24353cd234b78c259a74e256864d15e9039497eac7b359469f34ac7b7",
+      "name": "stdout.log"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "stderr.log"
+    }
+  ],
+  "wrapperElapsedIncludingCleanupSeconds": 110.2453198,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "negativeFixture": "PASS1600",
+  "completedPositiveRoots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3"
+  ],
+  "operation": "single JVM covering14 positive roots",
+  "next": "Partition same14cases into6+4+3+1 JVM groups, unchanged60s per-process limit and all assertions/case owners",
+  "status": "FAIL_TIMEOUT_PRESERVED",
+  "termination": "Maintained runner Stop-VerifierBoundedProcessExactly returned before timeout exception; no separate cleanup failure",
+  "completePositiveSuite": "NOT_PROVEN",
+  "taskLogs": "Two exact log files copied/hash-verified then removed with empty verified task-only directory"
+}

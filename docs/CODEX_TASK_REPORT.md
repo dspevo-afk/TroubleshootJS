@@ -1,6 +1,36 @@
-# Current checkpoint: canvas failure reproduced; narrow guard trial next
+# Current checkpoint: canvas guard rejected; accepted13 restored
 
-2026-10-19. HEADe0a91384b648a9c03e14d1fda4b86a9d4327dc51 normally pushed and
+2026-10-19. HEADaf94101cece372439e1d8cf4c8fa1a2c0ca3d6d9 normally pushed and
+remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 production
+remains; indefinite PCB work continues. No main/email; original five untracked
+entries and unrelated work preserved.
+
+canvas-guard-trial-r1: first combined14-positive JVM timed out at unchanged60s;
+12 partial positives not acceptance, wrapper110.2453198s withcleanup. Same14 roots
+partitioned6+4+3+1 at unchanged60s each. Focused5 PASS122.5315952s withcleanup:
+negative1600/reps3519/reg2439/fresh1950/recovery670 local assertions. All14admit,
+all1,446 frozen inputs exact, assessor12 synthetic canaries pass. No terminal
+cleanup time separately measured. Timeout/logs and exact rejected sources kept.
+
+Old ten hashes/metrics exact. After that frozen-proposal prerequisite passed,
+fresh measurements unblinded:2exact;3 area-49320/void+48400/Cu-1570/vias-5;
+6 area-410082/void-64600/Cu/vias unchanged.4 newly admits. Exact preservation
+FAIL3/6;3's void regression also fails metric non-regression. Four roots now
+informed regressions, no unseen-cohort or sealed complete baseline claim.
+
+Source review found no wiring blocker, not runtime acceptance. Existing tray
+placement can grow virtual canvas, so the guard intercepted valid crops too.
+Next is a separately declared owner-level containment fix preserving all13
+previously admitted PCB geometries; do not relax this trial's failed oracle.
+Three production files plus registry (four total) byte-restored; four trial
+contracts archived/removed live. Source/full-web hashes exact accepted13. All
+verified snapshot/log/native resources cleaned; no preview/tab/viewport/download.
+No14promotion/finalnative/GWT/player gates after rejection. Evidence publication
+follows; optional next-proposal source reviewer active read-only, no edits.
+
+# Previous checkpoint: canvas failure reproduced; narrow guard trial next
+
+2026-10-19. HEADaf94101cece372439e1d8cf4c8fa1a2c0ca3d6d9 normally pushed and
 remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 production
 unchanged. Indefinite PCB work continues; no main/email, original five untracked
 entries and unrelated work preserved.
@@ -18,13 +48,17 @@ fallback crop can exceed fixed canvas after pre-crop validation. Narrow trial is
 declared in canvas-guard-trial-r1/scope.json: explicit14/density13 medium-only
 canvas guard before crop mutation, retaining the validated routed layout.
 Current/replay13 stays until all14-root focused, final native/GWT/player gates.
-No trial production edit yet. Draft worker owns only trial fixture .java.txt;
-root integrates. Next: byte snapshots, source guard, final fixture review/freeze,
+Trial production guard prepared, focused runtime NOT RUN yet. Current/replay13
+unchanged; only explicit14/density13 enters canvas-only pre-mutation fallback.
+Three production files modified. Byte-exact snapshots of those plus registry
+retained in unique task-owned tsj-canvas-guard OS-temp directory. Draft worker
+owns only trial fixture .java.txt; root integrates. Next: final fixture review/freeze,
 literal and14-root focus with exact old-ten/new-three geometry preservation and
 new admission for4. No area-improvement claim from this bug fix.
 
-Native/snapshot cleanup PASS; no preview/tab/viewport/download. Production/web
-unchanged; GWT/player NOT RUN for this native-only fixture/registration.
+Prior native/snapshot cleanup PASS; new source snapshots retained for trial
+rollback. No preview/tab/viewport/download. Compiled web unchanged; trial14
+native/GWT/player NOT RUN, no trial behavior published or accepted yet.
 
 # Previous checkpoint: fresh cohort baseline failed; canvas cause investigation
 

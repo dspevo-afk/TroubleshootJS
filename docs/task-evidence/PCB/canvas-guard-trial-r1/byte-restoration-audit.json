@@ -1,0 +1,28 @@
+{
+  "newContracts": "Four exact source archives retained; live trial contracts removed",
+  "method": "Verified task-owned byte snapshots; no checkout or newline normalization",
+  "files": [
+    {
+      "sha256": "3ddc4d47f475c288caac71e57b21d1b4741ad9b1b8ba1d9045598eea4257ba48",
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "status": "EXACT_RESTORED"
+    },
+    {
+      "sha256": "c0bdbac46f90e4f7715797619626f51e7747b5f967d1d6b0cc855bcd2c8342f8",
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "status": "EXACT_RESTORED"
+    },
+    {
+      "sha256": "40aaaf3ec3c285732ff0c02c78badf9d90a281f557ddb7872609a747f6f70f7c",
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "status": "EXACT_RESTORED"
+    },
+    {
+      "sha256": "31a13e036560f53399db6b4f302f58318c4d2f485cf54007024a152d7d43667e",
+      "path": "scripts/verify-current-contracts.ps1",
+      "status": "EXACT_RESTORED"
+    }
+  ],
+  "acceptedNegative": "Saved13 negative fixture and registration retained",
+  "status": "PASS"
+}

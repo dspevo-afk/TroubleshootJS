@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic assessor boundary only; no native/physical proof or real cohort values read",
+  "cases": [
+    {
+      "case": "complete admitted cohort and exact hashes",
+      "status": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "reject 4/status",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 2/geometrySha256",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 42/area",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 42/copperManhattanLength",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 42/version",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 2/layoutSeed",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 2/routingSeed",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 4/area",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "reject 4/twoLayerAttempts",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "missing originally rejected case",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "duplicate parsed seed",
+      "status": "PASS",
+      "actual": "REJECT"
+    }
+  ]
+}

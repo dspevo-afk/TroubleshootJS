@@ -18,14 +18,20 @@ restored and audited. No experimental14 generator behavior is published.
 [Latest trial and limits](task-evidence/PCB/vacancy-dominance-r1/README.md).
 Former holdouts now inform design and are regression cases. Fresh predeclared
 roots2,3,4,6 exposed an accepted13 canvas failure at4; the other three admitted.
-The complete-baseline gate failed, no seed was substituted or baseline sealed,
-and geometry values remain uninspected. [Failure and review](task-evidence/PCB/fresh-qualification-r1/README.md).
+The complete-baseline gate failed; no seed was substituted or baseline sealed.
+Values stayed uninspected through collection and were unblinded only after the
+next frozen trial preserved all ten existing regression cases.
+[Failure and review](task-evidence/PCB/fresh-qualification-r1/README.md).
 Precise saved13 seed4 negative fixture now passes1,600 graph/identity assertions,
 identifying final crop geometry validation as the throwing phase.
 [Canvas cause and limits](task-evidence/PCB/canvas-boundary-r1/README.md).
-Next is an explicit14 guard retaining the validated routed board before an
-oversized crop mutates it. The soft isolation-package packing proposal stays
-deferred. Keep isolation,6/3+3 and work/time limits.
+The explicit14 canvas guard was rejected despite all14 native admissions and
+exact old-ten geometry. Fresh3's protected void grows;6 shrinks but changes too.
+All failures, bounded JVM partition and restored accepted13 bytes are retained.
+[Guard trial and limits](task-evidence/PCB/canvas-guard-trial-r1/README.md).
+Next is an owner-level canvas-containment fix preserving previously admitted
+boards. The soft isolation-package packing proposal stays deferred. Keep
+isolation,6/3+3 and work/time limits.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

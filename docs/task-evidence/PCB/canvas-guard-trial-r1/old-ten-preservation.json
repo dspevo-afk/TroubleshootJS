@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "All ten existing regression geometry hashes and area/void/copper/via metrics exact accepted13",
+  "blindingBoundary": "Proposal source frozen and old-ten preservation passed. Fresh measurement values not printed by this audit; later explicit inspection may now inform diagnosis and makes cohort regression data.",
+  "seeds": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14"
+  ],
+  "inputAudit": "PASS1446",
+  "nativeGate": "PASS5 including all14positive roots and saved13negative"
+}

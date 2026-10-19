@@ -1,0 +1,103 @@
+diff --git a/scripts/verify-current-contracts.ps1 b/scripts/verify-current-contracts.ps1
+index 59574cc0..1579bbb7 100644
+--- a/scripts/verify-current-contracts.ps1
++++ b/scripts/verify-current-contracts.ps1
+@@ -401,6 +401,10 @@ final class PhysicalSpecificationDeveloperVerifier {
+         @{ Name = 'PcbFunctionalGroupingContractTest'; Marker = 'PCB functional grouping contracts ' },
+         @{ Name = 'PcbOccupancyDiagnosticContractTest'; Marker = 'PCB occupancy diagnostic contracts ' },
+         @{ Name = 'PcbCanvasBoundaryContractTest'; Marker = 'PCB canvas boundary contracts ' },
++        @{ Name = 'PcbCanvasGuardContractTest'; Marker = 'PCB canvas guard contracts ' },
++        @{ Name = 'PcbCanvasGuardRegressionContractTest'; Marker = 'PCB canvas guard regression contracts ' },
++        @{ Name = 'PcbCanvasGuardFreshContractTest'; Marker = 'PCB canvas guard fresh contracts ' },
++        @{ Name = 'PcbCanvasGuardRecoveryContractTest'; Marker = 'PCB canvas guard recovery contracts ' },
+         @{ Name = 'PcbNearestVacancyPreferenceContractTest'; Marker = 'PCB nearest vacancy preference contracts ' },
+         @{ Name = 'PcbNearestVacancyContractTest'; Marker = 'PCB nearest vacancy contracts ' },
+         @{ Name = 'PcbNearestVacancyHoldoutContractTest'; Marker = 'PCB nearest vacancy holdouts ' },
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+index ebacd1d4..956a6915 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java
+@@ -104,7 +104,7 @@ final class PcbPlacementConstraints {
+             throw new IllegalArgumentException("Missing PCB trace width profile");
+         this.traceWidthProfile = traceWidthProfile;
+         this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+-        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12)
++        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13)
+             throw new IllegalArgumentException("Unknown placement density interpretation");
+         placementDensityVersion = densityVersion;
+         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
+diff --git a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+index 0b01c786..40958380 100644
+--- a/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ b/src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -8,13 +8,15 @@ final class Rb56Placement {
+         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
+         GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10,
+         VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12, CURRENT_VERSION = 13;
++    // Explicit native trial; current replay/session identity remains13.
++    static final int TRIAL_VERSION14 = 14;
+     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
+     static final int BARRIER_DRAWING_UNITS = 80;
+     private Rb56Placement() { }
+ 
+     static boolean supportsVersion(int version) {
+         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
+-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == CURRENT_VERSION;
++            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == CURRENT_VERSION || version == TRIAL_VERSION14;
+     }
+ 
+     /** Replay interpretation includes copper policy; packing density alone is not its identity. */
+@@ -22,13 +24,14 @@ final class Rb56Placement {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+         if (placementVersion == ROLE_WIDTHS_VERSION12) return VACANCY_VERSION;
++        if (placementVersion == TRIAL_VERSION14) return CURRENT_VERSION;
+         return placementVersion == CURRENT_VERSION ? ROLE_WIDTHS_VERSION12 : placementVersion;
+     }
+ 
+     static PcbTraceWidthProfile widthProfile(int placementVersion) {
+         if (!supportsVersion(placementVersion))
+             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
+-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION ?
++        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION || placementVersion == TRIAL_VERSION14 ?
+             PcbTraceWidthProfile.ROLE_WIDTHS :
+             PcbTraceWidthProfile.UNIFORM;
+     }
+@@ -77,7 +80,7 @@ final class Rb56Placement {
+         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
+             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION,
+             densityVersion(placementVersion),
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == CURRENT_VERSION || placementVersion == TRIAL_VERSION14,
+             widthProfile(placementVersion));
+     }
+ 
+diff --git a/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java b/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
+index 9f43d987..6f828023 100644
+--- a/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
++++ b/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java
+@@ -843,6 +843,12 @@ class SeededPcbLayoutGenerator {
+             boardX = fitCanvasOrigin(preferredBoardX, compactWidth, layout.getWidth());
+             boardY = fitCanvasOrigin(preferredBoardY, compactHeight, layout.getHeight());
+         }
++        // A symmetric fallback margin can be larger than the validated outline.
++        // Keep the already validated routed layout before an impossible crop
++        // mutates it; shifting the crop origin cannot repair an oversized extent.
++        if (mediumCanvas && board.getPlacementConstraints().placementDensityVersion >= 13 &&
++                !compactFitsCanvas(compactWidth, compactHeight, layout.getWidth(), layout.getHeight()))
++            return layout;
+         layout.compactToContent(boardX, boardY, compactEdgeMargin);
+         layout.positionPartsTrayDisjointFromBoard();
+         Vector<PcbFootprint> finalFootprints = translatedPlanFootprints(plan, layout, 0, 0);
+@@ -925,6 +931,11 @@ class SeededPcbLayoutGenerator {
+         return (int) extent;
+     }
+ 
++    static boolean compactFitsCanvas(int width, int height, int canvasWidth, int canvasHeight) {
++        return width > 0 && height > 0 && canvasWidth > 0 && canvasHeight > 0 &&
++            width <= canvasWidth && height <= canvasHeight;
++    }
++
+     private static int fitCanvasOrigin(int preferred, int extent, int canvas) {
+         if (extent <= 0 || canvas <= 0)
+             throw new IllegalArgumentException("Invalid PCB compacting envelope");

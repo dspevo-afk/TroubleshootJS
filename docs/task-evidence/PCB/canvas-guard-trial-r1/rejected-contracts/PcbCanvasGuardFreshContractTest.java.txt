@@ -1,0 +1,9 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Preserves the three admitted fresh cases without inspecting baseline metrics. */
+public final class PcbCanvasGuardFreshContractTest {
+    public static void main(String[] args) {
+        PcbCanvasGuardContractTest.runSeeds(new long[] {2L, 3L, 6L},
+            "PCB canvas guard fresh contracts ");
+    }
+}

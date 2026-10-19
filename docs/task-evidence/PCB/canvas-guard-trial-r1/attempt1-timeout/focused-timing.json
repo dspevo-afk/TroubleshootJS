@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "elapsedSeconds": 110.2453198,
+  "operation": "maintained native compile, saved13 negative and explicit14 fourteen-case/literal positive gates",
+  "terminalCleanupIncluded": true
+}

@@ -1,0 +1,9 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Gives the previously rejected root its own unchanged 60-second process bound. */
+public final class PcbCanvasGuardRecoveryContractTest {
+    public static void main(String[] args) {
+        PcbCanvasGuardContractTest.runSeeds(new long[] {4L},
+            "PCB canvas guard recovery contracts ");
+    }
+}

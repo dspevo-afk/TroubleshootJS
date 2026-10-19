@@ -1,0 +1,30 @@
+{
+  "root4": "No admitted13baseline;14positive",
+  "boundary": "Frozen proposal and all old-ten regression hashes/metrics passed before these fresh numerical deltas were inspected",
+  "status": "DIAGNOSTIC_UNBLINDING_AFTER_PREREQUISITE",
+  "prerequisiteSha256": "1b7832b5b264efadd1c09a6f6702d75387ae56d179c75d87789620a274a2e134",
+  "qualification": "Exact-preservation gate still FAIL. These four roots now serve as informed regression data, not unseen holdouts.",
+  "cases": [
+    {
+      "protectedVoidDelta": 0,
+      "areaDelta": 0,
+      "copperDelta": 0,
+      "seed": "2",
+      "viaDelta": 0
+    },
+    {
+      "protectedVoidDelta": 48400,
+      "areaDelta": -49320,
+      "copperDelta": -1570,
+      "seed": "3",
+      "viaDelta": -5
+    },
+    {
+      "protectedVoidDelta": -64600,
+      "areaDelta": -410082,
+      "copperDelta": 0,
+      "seed": "6",
+      "viaDelta": 0
+    }
+  ]
+}
