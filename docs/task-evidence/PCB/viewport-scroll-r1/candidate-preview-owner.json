@@ -1,0 +1,8 @@
+{
+  "status": "OWNED_RUNNING",
+  "processId": 23412,
+  "processStartTicks": "639279883440022004",
+  "executable": "powershell.exe",
+  "script": "scripts/preview.ps1",
+  "port": 8907
+}

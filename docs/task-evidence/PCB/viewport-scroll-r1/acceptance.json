@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "scope": "Local toolbar/focus owner; finite public LED3 and private54 root42,319/1280 widths; unchanged PCB/electrical proof reused at audited JVM boundary only",
+  "limits": "No packing change. Full native matrix/independent electrical oracles NOT RUN. One unchanged-fixture retry after a preserved90.048s strict restore timing failure; no all-run or modest-host timing claim. Reference-host timings only. Preserved failed canaries and recorder error remain failures."
+}

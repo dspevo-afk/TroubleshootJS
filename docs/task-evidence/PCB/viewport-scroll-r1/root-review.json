@@ -1,0 +1,16 @@
+{
+  "status": "ROOT_REVIEW_NO_SOURCE_BLOCKER",
+  "productionScope": [
+    "war/tsj-workbench-ui.css",
+    "war/tsj-workbench-ui.js"
+  ],
+  "findings": [
+    "Local TBODY stays static; positioned TABLE remains the existing absolute meter containing block. No Java, meter adapter, graph, coordinates, probe transforms, layout/version changes.",
+    "One existing listen(document,focusin) owner captures the bridge and guards availability/current identity. Teardown removes the exact callback; retained old callbacks remain inert. New helper uses only current shell/toolbarHost and local scrollLeft.",
+    "Pointer focus is excluded before local movement to prevent pointerdown/up target drift. Meter and native popover descendants are excluded. Literal finite bounds/range clamps are checked.",
+    "Fixture corrections preserve explicit wrap edge and stale lease oracle; add detached inertness, replacement host and exact callback release/successor cases.",
+    "Public actual edge click, keyboard, local scroll, unclipped popover/meter, drag-arrow-Home and real J1 red-black12V checks pass. Private first functional lifecycle passes but strict90s timing fails at90.048s; preserve and require same-fixture retry below unchanged threshold."
+  ],
+  "optionalReview": "Worker implemented bounded JS/test scope; root reviewed integrated actual diff. A later read-only packing-map followup could not run because its selected model was at capacity; it supplies no review/runtime proof and is not a completion dependency.",
+  "pending": "None for UI acceptance. Same-fixture strict retry PASS87.308s, exact inputs/served identities and all owned resources audited; final recorded-gate assessorPASS. Normal publication next."
+}

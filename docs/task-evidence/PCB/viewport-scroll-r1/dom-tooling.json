@@ -1,0 +1,9 @@
+{
+  "status": "INSTALLED_TASK_LOCAL",
+  "tempName": "tsj-ui-dom-e2d3d8d110d84d24a889e1fe949c54ea",
+  "package": "jsdom@26.1.0",
+  "registry": "https://registry.npmjs.org",
+  "scripts": "ignored",
+  "repositoryDependencies": "unchanged",
+  "lockSha256": "1a8045d9b84474c04a14a450675c6c5dad09967db60899f729e0eafdb2a9720b"
+}

@@ -1,0 +1,20 @@
+{
+  "file": "war/tsj-workbench-ui.css",
+  "sha256": "990d638e9b706d7233a33b852fea627b015236b810460da578a08a6eb9d91f4b",
+  "taskTempName": "tsj-viewport-scroll-aaf5a6843d2041aeb07ac7db2e8ca728",
+  "status": "BYTE_SNAPSHOT_BEFORE_CANDIDATE",
+  "files": 1,
+  "additionalOriginals": [
+    {
+      "file": "war/tsj-workbench-ui.js",
+      "snapshot": "original-tsj-workbench-ui.js",
+      "sha256": "8ddb7c76013ec3ab25b86ad18aec27445dde2d6738155dc63a37f638f3e03d3a"
+    },
+    {
+      "file": "tests/contracts/u04_ui_contract.mjs",
+      "snapshot": "original-u04_ui_contract.mjs",
+      "sha256": "97313996bd1f2c64c0bc60f1476066e1ce5ccb251aea290f4e813f118c680cb1"
+    }
+  ],
+  "snapshotCount": 3
+}

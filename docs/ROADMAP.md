@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private14 canvas containment accepted; PCB realism work continues**
+**Current task:** **Private14 canvas containment and local toolbar scrolling accepted; PCB realism continues**
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.
 [Diagnostic evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
@@ -35,10 +35,17 @@ geometry/metrics. Final selected56 native, JDK8GWT5, actual desktop55 repair/
 Save14/FileReader14 and narrow54/FileReader13/customer/cleanup gates pass. Physical
 PCB size/geometry and all isolation/search/work/time limits stay unchanged.
 [Canvas-owner acceptance and limits](task-evidence/PCB/canvas-owner-fit-r1/README.md).
-Narrow toolbar focus can scroll the board out of view; the failed capture and
-actual input recovery remain explicit. This UI follow-up is next, before the
-soft isolation-package packing proposal. Finite reference-host evidence only;
-no extra shrinkage, all-seed, manufacturing or modest-host claim.
+Narrow toolbar/header now own local horizontal scrollports; focus-visible chrome
+is revealed without scrolling the GWT ancestor or moving the board. Final DOM130/
+380, actual GWT5, public319/1280 input and private54/saved13/customer/Closeall7
+checks pass. The first90.048s restore fails the strict90s wall gate and remains
+explicit; one unchanged same-fixture retry passes87.308s. No budget or oracle
+change, general timing or extra shrinkage claim. Native56 proof reused only at
+its audited unchanged JVM boundary. Full matrix/independent oracles NOT RUN.
+[Toolbar acceptance and limits](task-evidence/PCB/viewport-scroll-r1/README.md).
+Next: candidate0-only soft isolation-package boundary advice with strict routed
+regression metrics and unchanged physical/search/work limits. Finite reference-
+host scope; no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

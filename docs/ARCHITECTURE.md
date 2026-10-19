@@ -467,6 +467,15 @@ explicitly disabled rather than producing invented readings. Meter movement
 changes presentation only and consumes its pointer/keyboard gestures before
 the underlying board can interpret them.
 
+The static toolbar TBODY and header shell own horizontal scrollports within the
+unchanged112px GWT dock. The positioned toolbar TABLE remains the absolute
+meter containing block, outside the TBODY scrollport; native popovers retain
+their top-layer owner. The existing bridge-guarded focus listener reveals only
+focus-visible chrome controls by changing that local scrollLeft. It excludes
+meter/popover descendants and pointer focus, and is removed with the bridge.
+No ancestor scroll reset, meter reparenting or board-coordinate change is used.
+See [viewport evidence](task-evidence/PCB/viewport-scroll-r1/README.md).
+
 The meter has a per-board WeakMap state (world position and captured-pointer drag
 metadata), projected by a read-only `PcbWorkbenchController` presentation seam.
 It shares the unmirrored permanent bench camera, not PCB face mirroring or the

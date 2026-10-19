@@ -1,0 +1,68 @@
+{
+  "active": "Settings",
+  "ancestors": [
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "CANVAS",
+      "top": 0
+    },
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "cls": "tsj-workbench-ui",
+      "left": 0,
+      "tag": "BODY",
+      "top": 0
+    },
+    {
+      "cls": "",
+      "left": 0,
+      "tag": "HTML",
+      "top": 0
+    }
+  ],
+  "canvas": {
+    "bottom": 670,
+    "height": 558,
+    "left": 0,
+    "right": 319,
+    "top": 112,
+    "width": 319,
+    "x": 0,
+    "y": 112
+  },
+  "rect": {
+    "bottom": 40,
+    "height": 37,
+    "left": 277.40625,
+    "right": 315.40625,
+    "top": 3,
+    "width": 38,
+    "x": 277.40625,
+    "y": 3
+  },
+  "shell": 39
+}

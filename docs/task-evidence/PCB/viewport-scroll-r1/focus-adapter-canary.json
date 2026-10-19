@@ -1,0 +1,216 @@
+{
+  "status": "PASS_EARLY_PUBLIC_CANARY",
+  "candidate": "CSS A28D / JS E080",
+  "pointerEdge": "Actual click 318,20 opened partially visible Settings; no lost pointer activation",
+  "keyboard": {
+    "active": "Settings",
+    "ancestors": [
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "CANVAS",
+        "top": 0
+      },
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "cls": "tsj-workbench-ui",
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "cls": "",
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "canvas": {
+      "bottom": 670,
+      "height": 558,
+      "left": 0,
+      "right": 319,
+      "top": 112,
+      "width": 319,
+      "x": 0,
+      "y": 112
+    },
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 277.40625,
+      "right": 315.40625,
+      "top": 3,
+      "width": 38,
+      "x": 277.40625,
+      "y": 3
+    },
+    "shell": 39
+  },
+  "before": {
+    "meter": [
+      [
+        "cellspacing",
+        "0"
+      ],
+      [
+        "cellpadding",
+        "0"
+      ],
+      [
+        "data-mode",
+        "NONE"
+      ],
+      [
+        "class",
+        "tsj-meter-panel tsj-bench-meter"
+      ],
+      [
+        "role",
+        "group"
+      ],
+      [
+        "aria-label",
+        "Workbench meter and oscilloscope"
+      ],
+      [
+        "data-bench-visible",
+        "true"
+      ],
+      [
+        "data-bench-world-x",
+        "-234"
+      ],
+      [
+        "data-bench-world-y",
+        "50"
+      ],
+      [
+        "style",
+        "clip-path: inset(-12px); inset: 317.212px auto auto 20px; --meter-scale: 0.27219512195121953;"
+      ]
+    ],
+    "ribbon": {
+      "clientHeight": 101,
+      "left": 30,
+      "scrollHeight": 101,
+      "top": 0
+    },
+    "served": [
+      [
+        "data-tsj-preview-identity-protocol",
+        "troubleshootjs-execution-provenance-v1"
+      ],
+      [
+        "data-tsj-preview-source-digest",
+        "91a6edb7d7cab36c57dc48b70f27329e3a1447aed3c979847c6cf005598374f5"
+      ],
+      [
+        "data-tsj-preview-script-digest",
+        "c2ba6240238afa756ce83336a52161d7fd874a4d10d3877d48e48b96e1c887ed"
+      ],
+      [
+        "data-tsj-preview-web-digest",
+        "0730f55f3a2e55a3795c415dfbc30b2772e0177a24bf3ee93bdec8abbf2df8a0"
+      ],
+      [
+        "data-tsj-preview-execution-digest",
+        "8659a36ef2017dcf40e7511fd680e7354f4d895e3746066f16848b23479a4f6e"
+      ],
+      [
+        "data-tsj-preview-file-count",
+        "1589"
+      ]
+    ]
+  },
+  "arrowMoved": {
+    "worldX": "-123.78494623655915",
+    "worldY": "86.73835125448029"
+  },
+  "after": {
+    "canvas": {
+      "bottom": 670,
+      "height": 558,
+      "left": 0,
+      "right": 319,
+      "top": 112,
+      "width": 319,
+      "x": 0,
+      "y": 112
+    },
+    "meter": [
+      [
+        "cellspacing",
+        "0"
+      ],
+      [
+        "cellpadding",
+        "0"
+      ],
+      [
+        "data-mode",
+        "DC_VOLTAGE"
+      ],
+      [
+        "class",
+        "tsj-meter-panel tsj-bench-meter"
+      ],
+      [
+        "role",
+        "group"
+      ],
+      [
+        "aria-label",
+        "Workbench meter and oscilloscope"
+      ],
+      [
+        "data-bench-visible",
+        "true"
+      ],
+      [
+        "data-bench-world-x",
+        "-234"
+      ],
+      [
+        "data-bench-world-y",
+        "50"
+      ],
+      [
+        "style",
+        "clip-path: inset(-12px); inset: 317.212px auto auto 20px; --meter-scale: 0.27219512195121953;"
+      ]
+    ],
+    "ribbon": {
+      "clientHeight": 101,
+      "left": 30,
+      "scrollHeight": 101,
+      "top": 0
+    },
+    "text": "MULTIMETERTSJ MM-90DIGITAL MULTIMETERHOLDRANGEMIN/MAXLIGHTOFFV~AmAµACAPHz%°C/°FADDITIONAL FUNCTIONS: NOT IMPLEMENTED10ACOMV ΩClick a mode, or turn the dial. Left / right click: red / black probe.DC VAC VSCOPEOHMCONTDIODE12 VBEEPTIMEVOLTSTRIGGER"
+  },
+  "probeInputs": "DC V button; actual left255,368/right255,386 on J1 pads; real displayed12V",
+  "limits": "Early public canary only; final freeze/build/private lifecycle still required"
+}

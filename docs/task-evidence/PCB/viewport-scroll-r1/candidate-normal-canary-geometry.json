@@ -1,0 +1,50 @@
+{
+  "canvases": [
+    {
+      "bottom": 670,
+      "height": 558,
+      "left": 0,
+      "right": 319,
+      "top": 112,
+      "width": 319,
+      "x": 0,
+      "y": 112
+    }
+  ],
+  "power": [
+    {
+      "bottom": 93.6875,
+      "height": 48.375,
+      "left": 46.96875,
+      "right": 142.96875,
+      "top": 45.3125,
+      "width": 96,
+      "x": 46.96875,
+      "y": 45.3125
+    }
+  ],
+  "scrollports": [
+    {
+      "clientHeight": 101,
+      "clientWidth": 319,
+      "cls": "",
+      "overflow": "auto hidden",
+      "position": "static",
+      "scrollHeight": 108,
+      "scrollLeft": 30,
+      "scrollWidth": 359,
+      "tag": "TBODY"
+    },
+    {
+      "clientHeight": 45,
+      "clientWidth": 319,
+      "cls": "tsj-workbench-shell",
+      "overflow": "auto hidden",
+      "position": "absolute",
+      "scrollHeight": 45,
+      "scrollLeft": 0,
+      "scrollWidth": 406,
+      "tag": "DIV"
+    }
+  ]
+}

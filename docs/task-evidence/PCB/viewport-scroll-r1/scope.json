@@ -1,0 +1,10 @@
+{
+  "baselineCommit": "5ad170cdea01808bfe25341457b77e709c60fa17",
+  "status": "CAUSE_AUDIT_NO_IMPLEMENTATION",
+  "symptom": "At319x670 qualification player toolbar focus moves GWT ancestor scrollLeft383, moving319px canvas entirely outside viewport despite window.scrollX0",
+  "priorEvidence": "../canvas-owner-fit-r1/narrow-view-diagnosis",
+  "scope": "Find existing viewport/toolbar owner and reproduce using actual production input, distinguish normal player and private qualification. Root writes only after cause and coherent fix are defined",
+  "constraints": "Keep board/copper/probe identities, actual coordinate transforms, CircuitJS instrument/repair behavior, saved1-14 interpretation and all physical/work/time bounds. No hidden or clipped inaccessible controls, broad scroll resets or DOM test injection",
+  "validation": "Actual baseline and candidate production preview with real toolbar/keyboard input at319x670 and1280x720; rendered canvas bounds plus accessiblecontrols and modal flows. Appropriate focused owner contracts and actual JDK8/GWT if Java changes. Reuse prior electrical/packing proof only after exact unchanged-input audit",
+  "sequence": "Resolve bounded UI follow-up if applicable, then deferred soft isolation-package packing target. No main/email; preserve original five untracked entries"
+}

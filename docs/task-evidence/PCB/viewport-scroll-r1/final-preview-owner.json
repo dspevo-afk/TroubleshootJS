@@ -1,0 +1,8 @@
+{
+  "status": "OWNED_RUNNING",
+  "pid": 19156,
+  "creationTicks": "639279896404053266",
+  "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "script": "scripts/preview.ps1",
+  "port": 8907
+}

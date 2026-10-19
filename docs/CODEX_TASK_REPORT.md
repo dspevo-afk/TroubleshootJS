@@ -1,6 +1,47 @@
-# Current checkpoint: private14 canvas containment accepted
+# Current checkpoint: local toolbar/focus accepted; normal publication next
 
-2026-10-19. Candidate based on HEAD6d0a1e197f88af7537143102a2ad770380a174b7,
+2026-10-19. BaseHEAD5ad170cdea01808bfe25341457b77e709c60fa17, established branch
+codex/q60-faulted-profile-counts. Current candidate UI CSSa28d0e49/JS e080b2d2;
+private14/density13 and all Java/PCB/electrical/seed/save limits unchanged.
+User indefinite PCB work remains active; no main merge/email.
+
+viewport-scroll-r1 fixes narrow GWT ancestor scrolling through local static TBODY/
+header scrollports and existing owner-guarded focus-visible handling; pointer,
+meter/popovers excluded. Root actual diff/owner review PASS. Final U04 DOM130
+PASS1.346501s, bench DOM380 PASS0.3986517s, pinned1236files auditPASS. Fixture fixes
+retain wrap/stale-rejection oracles; initial parse/focus failures preserved.
+Actual final-source JDK8GWT5 PASS94.9011382s incl bounded cleanup, cleanupduration
+not separate. Original null-LASTEXITCODE recorderFAIL retained and corrected from
+maintained numeric child-exit/normal completion/compile-link proof. Selected56
+native reused only at exact unchanged Java/scripts/jars/Java-fixture boundary;
+broad1447 has changed mjs. Fresh1447 final audits, compiled web reconstruction and
+all5 expected served fields PASS. Full native matrix/independent oracles NOT RUN.
+Web0730f55f3a2e55a3795c415dfbc30b2772e0177a24bf3ee93bdec8abbf2df8a0.
+
+Actual public319 partial Settingsedgeclick/Tab/localribbon/meterdrag-arrow-Home/
+J1red-black12V and actual1280 keyboardmodal/popover PASS. Private root42 cold54
+first86.885s; restored physicalstate/customer/all7cleanup PASS but strict timing
+FAIL90.048s retained. Atomic-publication telemetry explains runtimePASS; no budget/
+oracle changed. One samefixture retry cold85.321s/622/max1.535s, FileReader13restore
+87.308s/622/freshowner/priorretired; OFF+Part30RDA retained,319+1280 localcontrols,
+customerPASS/Closeall7 PASS, wall230.628s. Tight reference-host margin; no all-run/
+modest-host claim. Five selected captures inspected; browser logs empty. Final
+recorded-gate assessorPASS, including preserving earlier timing failure.
+
+All owned previews/tabs closed, viewportreset; two verified tasktemp directories
+removed. Combined forcecleanup rejected beforeexecution; safer separate literal
+removals withoutforce PASS after containment/reparse/inventory/hash checks. Shared
+toolchains/HTTP.sys PID4 and original five untracked entries preserved. Optional
+packing-map followup could not run due modelcapacity; no proof inferred.
+
+Next: root final diff/cached checks, explicit stage, normal commit/push and verify
+origin exactSHA. Then candidate0-only advisory spatial ordering of mixed-package
+courtyards under strict14-case routed regression metrics; not implemented yet.
+
+# Previous checkpoint: private14 pushed; viewport cause audit starts
+
+2026-10-19. HEAD5ad170cdea01808bfe25341457b77e709c60fa17 normally pushed and exact
+remote verified; implementation Complete versioned PCB canvas containment,
 branch codex/q60-faulted-profile-counts. Source91a6edb7d7cab36c57dc48b70f27329e3a1447aed3c979847c6cf005598374f5;
 web4111c91583c55ec34abb372b220ef1b4f6de3c7d02dfe098c152888aa8f48503.
 Accepted current14/density13 minimally completes virtual canvas containment after
@@ -33,8 +74,18 @@ rejected trials and former-holdout limits. See packet README/acceptance for proo
 No preview/tab/viewport/download/task-snapshot resources remain. Preview9784/8907
 positively stopped; unrelated8899 untouched. Combined snapshot deletion rejected
 before execution; safer explicit-literal/nonrecursive cleanup passed. Original
-five untracked entries/shared tools preserved. Final root diff/publication follows
-on established origin branch; no main/email. No next milestone started yet.
+five untracked entries/shared tools preserved. Root staged/unstaged/cached checks
+and normal origin push/exact SHA verification passed; no main/email.
+viewport-scroll-r1: actual publicLED3 at319x670 reproduces canvasx-30 after
+Parts Tray focus (initialx0); private54 priorx-383 reused only at exact unchanged
+input/compiled-web boundary. Root candidate changes only workbench CSS: local
+horizontal scrollports on static TBODY and absolute shell, positioned TABLE stays
+meter containing block. No meter/JS/Java/seed/probe changes. Real production
+clipping/focus/drag/probe canary next; candidate unaccepted. Byte snapshot in owned
+OS-temp tsj-viewport-scroll-aaf5a6843d2041aeb07ac7db2e8ca728 retained. Baseline
+preview20852/8907 and owned tab closed, viewport reset. Candidate preview launch
+now running; inspect state/creation identity. Soft isolation-package packing stays
+deferred.
 
 # Previous checkpoint: canvas guard rejected; accepted13 restored
 

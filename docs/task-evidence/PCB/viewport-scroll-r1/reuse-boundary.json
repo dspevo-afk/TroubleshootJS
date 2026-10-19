@@ -1,0 +1,26 @@
+{
+  "status": "PASS_UNCHANGED_JVM_AND_COMPILED_WEB_BOUNDARY",
+  "acceptedCommit": "5ad170cdea01808bfe25341457b77e709c60fa17",
+  "priorFrozenSupersetCount": 1447,
+  "changedNonJvmSupersetPaths": [
+    "tests/contracts/u04_ui_contract.mjs"
+  ],
+  "selection": "Maintained selected56 compiles src/*.java, selected *.java contracts and fixed Java fixtures; the Node-only mjs fixture is not consumed. All other frozen inputs match byte-for-byte.",
+  "selected56Reuse": "PASS only at unchanged JVM input boundary; not fresh execution",
+  "reconstructedAcceptedWebDigest": "4111c91583c55ec34abb372b220ef1b4f6de3c7d02dfe098c152888aa8f48503",
+  "candidateWebDigest": "0730f55f3a2e55a3795c415dfbc30b2772e0177a24bf3ee93bdec8abbf2df8a0",
+  "webFileCount": 392,
+  "changedWebAssets": [
+    {
+      "path": "war/tsj-workbench-ui.css",
+      "before": "990d638e9b706d7233a33b852fea627b015236b810460da578a08a6eb9d91f4b",
+      "after": "a28d0e4948f69f4aba88489e098eadb0c9501b322429be5b1f70f4ccb209b42f"
+    },
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "before": "8ddb7c76013ec3ab25b86ad18aec27445dde2d6738155dc63a37f638f3e03d3a",
+      "after": "e080b2d2e989ff088c37590d038eae24c315ac3b311fe9b1a7e8a8a346ce02ec"
+    }
+  ],
+  "limits": "No UI PASS from reused proof. Fresh Node and actual production input are required for changed focus/layout. Broad1447 superset is not wholly unchanged."
+}

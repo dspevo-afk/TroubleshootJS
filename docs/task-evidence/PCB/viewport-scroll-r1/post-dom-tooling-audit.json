@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "expectedCount": 1236,
+  "actualCount": 1236,
+  "changedPaths": [],
+  "scope": "All pinned task-local dependency files remain byte-identical after final DOM runs"
+}

@@ -35,7 +35,10 @@ body.tsj-workbench-ui .tsj-workbench-toolbar-host {
 }
 body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody {
   display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; height: 100%;
-  box-sizing: border-box; padding: 59px 18px 7px;
+  box-sizing: border-box; padding: 56px 18px 1px;
+  /* Stay static: the positioned table remains the meter's containing block,
+   * outside this scrollport, so its absolute bench projection is not clipped. */
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; overscroll-behavior-x: contain;
 }
 body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody > tr { display: block; flex-shrink: 0; }
 body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody > tr > td { display: block; padding: 0; }
@@ -104,6 +107,7 @@ body.tsj-workbench-ui .tsj-component-panel select:disabled {
 /* The meter's own stylesheet presents these same native widgets on the bench. */
 body.tsj-workbench-ui .tsj-power-button {
   width: 142px; margin: 0 8px 0 0; min-height: 42px;
+  padding-top: 4px; padding-bottom: 4px; line-height: 1.25;
   background: var(--tsj-panel-raised); font-weight: 600; letter-spacing: .02em;
 }
 body.tsj-workbench-ui .tsj-action-button { width: 100%; margin-top: 6px; border-color: var(--tsj-panel-muted); }
@@ -131,7 +135,8 @@ body.tsj-workbench-ui .tsj-native-popover {
 body.tsj-workbench-ui .tsj-native-popover:not(:popover-open) { display: none; }
 body.tsj-workbench-ui .tsj-native-popover:popover-open { display: block; }
 body.tsj-workbench-ui .tsj-native-popover > tbody { display: table; width: 100%; }
-.tsj-workbench-shell { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 20px; width: 100%; min-width: 0; height: 56px; padding: 0 18px; border-bottom: 1px solid var(--tsj-panel-line); box-sizing: border-box; background: var(--tsj-chrome); }
+.tsj-workbench-shell { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 20px; width: 100%; min-width: 0; height: 54px; padding: 0 18px; border-bottom: 1px solid var(--tsj-panel-line); box-sizing: border-box; background: var(--tsj-chrome); }
+.tsj-workbench-shell { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; overscroll-behavior-x: contain; }
 .tsj-product-floating { position: fixed; z-index: 10000; }
 .tsj-workbench-brand { display: flex; flex-shrink: 0; align-items: center; gap: 9px; color: var(--tsj-panel-ink); font-family: var(--tsj-font); }
 .tsj-workbench-brand > .tsj-ui-icon { width: 25px; height: 25px; color: var(--tsj-panel-muted); }
@@ -349,7 +354,8 @@ body.tsj-reduced-motion .tsj-ui-overlay * { animation: none !important; transiti
   .tsj-workbench-brand .tsj-alpha-badge { display: none; }
   .tsj-ui-strip { gap: 4px; }
   .tsj-tool-trigger { width: 38px; min-width: 38px; }
-  body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody { gap: 6px; padding-left: 10px; padding-right: 10px; }
+  /* Reserve the local scrollbars within GWT's unchanged 112px dock. */
+  body.tsj-workbench-ui .tsj-workbench-toolbar-host > tbody { gap: 6px; padding: 56px 10px 1px; }
   body.tsj-workbench-ui .tsj-meter-display { font-size: 18px; }
   body.tsj-workbench-ui .tsj-power-button { width: 96px; }
 }

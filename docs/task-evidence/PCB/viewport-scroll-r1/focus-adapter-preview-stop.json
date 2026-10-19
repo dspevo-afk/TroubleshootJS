@@ -1,0 +1,9 @@
+{
+  "status": "PASS_RELEASED",
+  "pid": 23996,
+  "creationTicks": "639279894195532044",
+  "port": 8907,
+  "operation": "scripts/stop-preview.ps1 -StateFile .tools/preview/state.json",
+  "observedOutput": "Stopped TroubleshootJS preview PID 23996 and positively released port 8907.",
+  "note": "Maintained script writes host output; pipeline did not create the requested text log. This receipt records observed output plus fresh process/state absence."
+}

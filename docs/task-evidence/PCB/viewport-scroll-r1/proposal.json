@@ -1,0 +1,12 @@
+{
+  "status": "BASELINE_REPRODUCED",
+  "normalFixture": "Public tsjChallenge=led&seed=3,319x670, actual ticket/View/Fit/close then Parts Tray",
+  "before": "canvasx0,right319; wrapping ancestor width319 scrollWidth396",
+  "after": "PartsTray focus scrolls root30; canvasx-30,right289; window scroll0",
+  "privateFixture": "Previous packet actual private54 saved13 same compiled baseline, canvasx-383; all1447 consumed inputs and compiled web audited unchanged before baseline reuse",
+  "proposal": "Keep positioned toolbar TABLE as meter containing block and static descendant TD/TR/TBODY. Give only static flex TBODY and absolute header shell bounded horizontal scrollports with thin bars; no GWT/JS/meter/probe changes",
+  "specification": "https://drafts.csswg.org/css2/visufx.html#overflow",
+  "oracle": "Existing absolute meter contract and literal world/camera/parent projections remain unmodified. Real production initial/change/far-controls/Tab/popover/meterdrag/probe and desktop checks must show root scroll0 + canvasx0. If local scrolling clips furniture, reject this proposal",
+  "resources": "Baseline owned tab closed/viewport reset; maintained preview stop receipt below",
+  "publication": "No candidate changes yet; preserve no main/email"
+}

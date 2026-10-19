@@ -1,0 +1,14 @@
+[
+  {
+    "suite": "u04_ui_contract",
+    "exitCode": 1,
+    "elapsedSeconds": 0.8781892,
+    "status": "FAIL"
+  },
+  {
+    "suite": "bench_meter_contract",
+    "exitCode": 0,
+    "elapsedSeconds": 0.403687,
+    "status": "PASS"
+  }
+]

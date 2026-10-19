@@ -1,0 +1,9 @@
+{
+  "status": "FAIL_CONTROL_BAND",
+  "phase": "Actual production public319x670 canary",
+  "sourceSha256": "85354df501ff7a4bb1bf11a9105fb25abf4a88a61bdd622e865075bf800035d5",
+  "horizontal": "PASS: far PartsTray scrolls local TBODY30, canvasx0 and meter stays visible",
+  "vertical": "FAIL: TBODY clientHeight101, scrollHeight108, scrollTop7, powerheight48.375 andtop45.3125 overlaps header; thin Windows scrollbar consumes10px",
+  "limits": "Not final acceptance; no GWT/native gate claimed for this candidate",
+  "next": "Keep same local scrollport design. At<=760 reserve52px header, padding56top/1bottom, reduce power vertical padding/lineheight while retaining42px min hit height; verify actual geometry/focus independently"
+}

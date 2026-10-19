@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "operation": "actual final production JDK8/GWT five-permutation compile",
+  "elapsedSeconds": 94.9011382,
+  "childExitProof": "Maintained build.ps1 checks numeric bounded child ExitCode, throws/exits2 on nonzero; completed normally and parent exec exited0; compile/link success markers present",
+  "callerLastExitCode": null,
+  "wrapperCorrection": "First receipt incorrectly required LASTEXITCODE=0 for a normally returning PowerShell script. That variable is null because build owns its child exit code. Preserved original wrapperFAIL, audited actual script normal completion/log and no remaining Java process; no unchanged build rerun.",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

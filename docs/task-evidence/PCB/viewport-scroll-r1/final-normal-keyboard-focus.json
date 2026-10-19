@@ -1,0 +1,268 @@
+[
+  {
+    "active": "Shop",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 232.40625,
+      "right": 270.40625,
+      "top": 3,
+      "width": 38,
+      "x": 232.40625,
+      "y": 3
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Resources",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 274.40625,
+      "right": 312.40625,
+      "top": 3,
+      "width": 38,
+      "x": 274.40625,
+      "y": 3
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Settings",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 316.40625,
+      "right": 354.40625,
+      "top": 3,
+      "width": 38,
+      "x": 316.40625,
+      "y": 3
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Run customer retest",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 87,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 271.40625,
+      "right": 309.40625,
+      "top": 3,
+      "width": 38,
+      "x": 271.40625,
+      "y": 3
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Move multimeter: drag, or use arrow keys. Home resets its position.",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 87,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 330.15789794921875,
+      "height": 8.055267333984375,
+      "left": 26.80487823486328,
+      "right": 81.78829956054688,
+      "top": 322.1026306152344,
+      "width": 54.983421325683594,
+      "x": 26.80487823486328,
+      "y": 322.1026306152344
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Toggle meter backlight",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 87,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 359.1211853027344,
+      "height": 6.532684326171875,
+      "left": 68.58683013916016,
+      "right": 81.24390411376953,
+      "top": 352.5885009765625,
+      "width": 12.657073974609377,
+      "x": 68.58683013916016,
+      "y": 352.5885009765625
+    },
+    "tag": "BUTTON"
+  },
+  {
+    "active": "Meter and oscilloscope function selector",
+    "canvas": [
+      {
+        "bottom": 670,
+        "height": 558,
+        "left": 0,
+        "right": 319,
+        "top": 112,
+        "width": 319,
+        "x": 0,
+        "y": 112
+      }
+    ],
+    "ports": [
+      {
+        "tag": "TBODY",
+        "x": 30,
+        "y": 0
+      },
+      {
+        "tag": "DIV",
+        "x": 87,
+        "y": 0
+      }
+    ],
+    "rect": {
+      "bottom": 395.5953369140625,
+      "height": 27.763916015625,
+      "left": 40.41463470458984,
+      "right": 68.17854309082031,
+      "top": 367.8314208984375,
+      "width": 27.76390838623047,
+      "x": 40.41463470458984,
+      "y": 367.8314208984375
+    },
+    "tag": "DIV"
+  }
+]

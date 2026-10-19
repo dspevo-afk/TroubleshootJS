@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "operation": "JDK8 GWT production compile; Java and production UI source frozen, Node-only fixture diagnosis separate",
+  "exitCode": null,
+  "elapsedSeconds": 94.9011382,
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

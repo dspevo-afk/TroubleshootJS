@@ -1,0 +1,64 @@
+{
+  "label": "public-new-tab-narrow-parts-tray",
+  "canvas": {
+    "bottom": 670,
+    "height": 558,
+    "left": 0,
+    "right": 319,
+    "top": 112,
+    "width": 319,
+    "x": 0,
+    "y": 112
+  },
+  "canvasAncestors": [
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "BODY",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "HTML",
+      "top": 0
+    }
+  ],
+  "meter": {
+    "bottom": 440.77972412109375,
+    "height": 123.57659912109376,
+    "left": 20,
+    "right": 88.59317016601562,
+    "top": 317.203125,
+    "width": 68.59317016601562,
+    "x": 20,
+    "y": 317.203125
+  },
+  "ribbon": {
+    "clientHeight": 101,
+    "left": 30,
+    "scrollHeight": 101,
+    "top": 0
+  },
+  "shell": 39,
+  "viewportWidth": 319,
+  "observationNote": "New tab inherited319 until viewport explicitly applied1280. Original capture renamed to actual narrow width; separate desktop observation is1280. No geometry values changed."
+}

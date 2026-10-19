@@ -14,7 +14,7 @@ function check(value, message) { assert.ok(value, message); checks++; }
 const pause = () => new Promise(resolve => setTimeout(resolve, 12));
 const initial = () => ({ token: 1, screen: 'MENU', message: '', notice: '', epoch: 'tsj-alpha/1', build: 'test-build', hasBoard: false,
   families: [{ id: 'led', name: 'Indicator board', profile: 'EASY' }, { id: 'control', name: 'Control board', profile: 'MEDIUM' }] });
-async function fixture({ storage, deny = false, noBridge = false } = {}) {
+async function fixture({ storage, deny = false, noBridge = false, trackFocusListeners = false } = {}) {
   const dom = new JSDOM('<!doctype html><body><main aria-hidden="false"><table id="native-toolbar"><tbody><tr><td><table class="tsj-meter-panel"><tbody><tr><td>Multimeter</td></tr></tbody></table></td></tr></tbody></table></main><aside inert="kept" aria-hidden="true"></aside></body>', { url: 'https://example.invalid/circuitjs.html', runScripts: 'outside-only', pretendToBeVisual: true });
   const w = dom.window, d = w.document;
   // jsdom has no layout. Visibility below is a unit-test approximation only.
@@ -24,9 +24,22 @@ async function fixture({ storage, deny = false, noBridge = false } = {}) {
   };
   if (storage !== undefined) w.localStorage.setItem('tsj.presentation.v1', storage);
   if (deny) Object.defineProperty(w, 'localStorage', { get() { throw new Error('storage denied'); } });
-  let state = initial(), view = 0, snapshots = 0;
+  let state = initial(), view = 0, snapshots = 0, available = true;
   const calls = [], closed = [];
+  const focusListenersAdded = [], focusListenersRemoved = [];
+  if (trackFocusListeners) {
+    const add = d.addEventListener.bind(d), remove = d.removeEventListener.bind(d);
+    d.addEventListener = function (name, callback, options) {
+      if (name === 'focusin') focusListenersAdded.push(callback);
+      return add(name, callback, options);
+    };
+    d.removeEventListener = function (name, callback, options) {
+      if (name === 'focusin') focusListenersRemoved.push(callback);
+      return remove(name, callback, options);
+    };
+  }
   const api = {
+    available() { return available; },
     snapshot() { snapshots++; return structuredClone(state); },
     openView() { return ++view; },
     closeView(token) { closed.push(token); if (token === view) view++; },
@@ -38,13 +51,33 @@ async function fixture({ storage, deny = false, noBridge = false } = {}) {
   };
   if (!noBridge) w.tsjProduct = api;
   w.eval(source); await pause();
-  return { w, d, calls, closed, api, snapshots: () => snapshots, state: () => state,
+  return { w, d, calls, closed, api, focusListenersAdded, focusListenersRemoved, snapshots: () => snapshots, state: () => state,
+    setAvailable(value) { available = value; },
     async update(change) { state = { ...state, ...change }; w.tsjProductRefresh(); await pause(); },
     async flush() { await pause(); }, close() { w.close(); } };
 }
 function byText(d, text) { const result = [...d.querySelectorAll('button')].find(node => node.textContent === text && !node.closest('[hidden], [inert]')); assert.ok(result, 'Missing button: ' + text); return result; }
 function click(f, text) { byText(f.d, text).click(); }
 function key(f, name, shiftKey = false) { f.d.activeElement.dispatchEvent(new f.w.KeyboardEvent('keydown', { key: name, shiftKey, bubbles: true, cancelable: true })); }
+function literalRect(node, left, right, top = 0, bottom = 20) {
+  node.getBoundingClientRect = () => ({ left, right, top, bottom, width: right - left, height: bottom - top });
+}
+function literalScrollport(node, left, width, scrollWidth, initial = 0) {
+  literalRect(node, left, left + width);
+  let scrollLeft = initial;
+  Object.defineProperties(node, {
+    clientLeft: { configurable: true, value: 0 },
+    clientWidth: { configurable: true, value: width },
+    scrollWidth: { configurable: true, value: scrollWidth },
+    scrollLeft: { configurable: true, get: () => scrollLeft, set: value => { scrollLeft = value; } }
+  });
+  return { value: () => scrollLeft, set: value => { scrollLeft = value; } };
+}
+function focusin(f, target, focusVisible) {
+  const matches = target.matches.bind(target);
+  target.matches = selector => selector === ':focus-visible' ? focusVisible : matches(selector);
+  target.dispatchEvent(new f.w.FocusEvent('focusin', { bubbles: true }));
+}
 
 const f = await fixture();
 check(f.w.tsjWorkbenchOverlayOpen, 'initial menu blocks board');
@@ -56,7 +89,9 @@ check([...f.d.querySelectorAll('.tsj-workbench-shell svg')].length === 6 && [...
 check([...f.d.querySelectorAll('.tsj-ui-strip button')].map(button => button.textContent).join('|') === 'Main menu|Shop|Resources|Settings|Run customer retest', 'decorative navigation retains all existing visible action names and order');
 check([...f.d.querySelectorAll('.tsj-ui-strip button')].every(button => button.getAttribute('aria-label') === button.textContent && button.title === button.textContent && button.querySelector('.tsj-button-label')), 'all navigation actions retain full accessible names and tooltips when compact CSS hides their visual labels');
 check([...f.d.querySelectorAll('option')].filter(n => n.disabled).map(n => n.value).join(',') === 'HARD,PSYCHOTIC', 'advanced profiles unavailable');
-const menuFirst = f.d.querySelector('select'), disclosure = f.d.querySelector('.tsj-product-identity');
+// Session controls now precede the board setup form. Start from its first
+// visible keyboard control so this still tests the actual reverse-wrap edge.
+const menuFirst = byText(f.d, 'Load session'), disclosure = f.d.querySelector('.tsj-product-identity');
 menuFirst.focus(); key(f, 'Tab', true);
 check(f.d.activeElement === disclosure.querySelector('summary'), 'collapsed replay fields cannot trap reverse menu focus');
 key(f, 'Tab'); check(f.d.activeElement === menuFirst, 'collapsed disclosure summary wraps to first menu control');
@@ -154,7 +189,12 @@ click(f, 'Clear search'); check(visibleCards().length === 152 && f.d.activeEleme
 click(f, 'Resistors'); searchFor('330'); search.focus();
 await f.update({ catalogs: f.state().catalogs.map((catalog, index) => index === 0 ? { ...catalog, title: 'Axial resistors' } : catalog) });
 check(visibleCards().length === 2 && visibleCards().every(card => card.querySelector('.tsj-store-type').textContent === 'Axial resistors') && search.value === '330' && f.d.activeElement === search && byText(f.d, 'Axial resistors').getAttribute('aria-pressed') === 'true', 'catalog change updates public titles while preserving search and category');
-oldAcquire.click(); check(!f.calls.at(-1).accepted, 'changed catalog revokes callbacks holding earlier ephemeral specification handles');
+const previousAcquire = f.calls.at(-1), callsBeforeDetachedAcquire = f.calls.length;
+oldAcquire.click(); check(!oldAcquire.isConnected && f.calls.length === callsBeforeDetachedAcquire && f.calls.at(-1) === previousAcquire && previousAcquire.accepted,
+  'removed catalog cards cannot issue actions through detached controls or replace the preceding accepted result');
+content.append(oldAcquire); oldAcquire.click();
+check(!f.calls.at(-1).accepted, 'changed catalog revokes callbacks holding earlier ephemeral specification handles');
+oldAcquire.remove();
 check(shopStatus().textContent === 'This control belongs to an earlier session or closed view.' && shopStatus().getAttribute('aria-live') === 'polite', 'rejected acquisition announces its actual action error');
 const closingAcquire = byText(f.d, 'Add to Parts Tray');
 click(f, 'Close'); check(!f.d.querySelector('[role=dialog]').classList.contains('tsj-store-dialog'), 'closing Shop removes its presentation class');
@@ -253,6 +293,78 @@ check(triggers().length === 5 && replacement.id !== oldToolId && replacement.par
 const nativeSnapshotCount = top.snapshots(); originalPanels[0].nativeControl.textContent = 'Refreshed native reading'; await top.flush();
 check(top.snapshots() === nativeSnapshotCount && originalPanels[0].cell.querySelector('.tsj-tool-trigger') === triggers()[0], 'native reading refresh neither polls the simulator snapshot nor rebuilds controls');
 top.close();
+
+// Focus reveal is a local-scrollport adapter only. This shim checks literal
+// rectangles and focus-visible gating; Chromium below remains the clip/input oracle.
+const focusUI = await fixture({ trackFocusListeners: true });
+await focusUI.update({ screen: 'WORKBENCH', token: 2, hasBoard: true, ready: true });
+const focusShell = focusUI.d.querySelector('.tsj-workbench-shell');
+const shellPort = literalScrollport(focusShell, 0, 319, 500);
+const mainScroll = focusUI.d.querySelector('main'), rootScroll = focusUI.d.documentElement;
+mainScroll.scrollLeft = 29; rootScroll.scrollLeft = 13; focusUI.d.body.scrollLeft = 17;
+const settingsButton = byText(focusUI.d, 'Settings');
+literalRect(settingsButton, 316, 354);
+focusin(focusUI, settingsButton, true);
+check(shellPort.value() === 39, 'keyboard-visible header control moves the local shell just enough to reveal its full 316..354 rect with a four-pixel margin');
+check(mainScroll.scrollLeft === 29 && rootScroll.scrollLeft === 13 && focusUI.d.body.scrollLeft === 17, 'header focus reveal never changes ancestor or document scroll positions');
+shellPort.set(0); focusin(focusUI, settingsButton, false);
+check(shellPort.value() === 0, 'non-focus-visible pointer focus does not shift a partially visible control during pointerdown');
+shellPort.set(3); literalRect(settingsButton, -12, 20); focusin(focusUI, settingsButton, true);
+check(shellPort.value() === 0, 'left-edge reveal clamps local scroll at zero');
+shellPort.set(0); literalRect(settingsButton, 4, 315); focusin(focusUI, settingsButton, true);
+check(shellPort.value() === 0, 'control already inside both four-pixel margins causes no scroll');
+literalRect(settingsButton, 900, 950); focusin(focusUI, settingsButton, true);
+check(shellPort.value() === 181, 'right-edge reveal clamps to the local scroll range');
+
+const focusHost = focusUI.d.querySelector('#native-toolbar');
+const focusPanelCell = focusHost.tBodies[0].insertRow().insertCell();
+const focusPanel = focusUI.d.createElement('table'); focusPanel.className = 'tsj-component-panel'; focusPanel.setAttribute('aria-label', 'Board view');
+const popoverChild = focusUI.d.createElement('button'); popoverChild.textContent = 'Existing board action';
+focusPanel.createTBody().insertRow().insertCell().append(popoverChild); focusPanelCell.append(focusPanel); await focusUI.flush();
+const ribbonPort = literalScrollport(focusHost.tBodies[0], 0, 319, 700);
+const boardViewTrigger = focusUI.d.querySelector('.tsj-tool-trigger[title="Board view"]');
+check(!!boardViewTrigger, 'native ribbon exposes the existing Board view owner');
+literalRect(boardViewTrigger, 320, 360); focusin(focusUI, boardViewTrigger, true);
+check(ribbonPort.value() === 45, 'keyboard-visible native trigger moves only the ribbon scrollport to expose its full rect');
+ribbonPort.set(12); literalRect(popoverChild, 760, 800); focusin(focusUI, popoverChild, true);
+check(ribbonPort.value() === 12, 'native popover descendants never drive ribbon scrolling');
+const meterChild = focusUI.d.createElement('button'); meterChild.textContent = 'Meter action';
+focusUI.d.querySelector('.tsj-meter-panel').append(meterChild);
+literalRect(meterChild, 760, 800); focusin(focusUI, meterChild, true);
+check(ribbonPort.value() === 12, 'meter descendants never drive ribbon scrolling');
+
+const replacementHost = focusUI.d.createElement('table'); replacementHost.id = 'native-toolbar-replacement';
+const replacementMeterCell = replacementHost.createTBody().insertRow().insertCell();
+replacementMeterCell.append(focusUI.d.querySelector('.tsj-meter-panel'));
+const replacementToolCell = replacementHost.tBodies[0].insertRow().insertCell();
+const replacementPanel = focusUI.d.createElement('table'); replacementPanel.className = 'tsj-component-panel'; replacementPanel.setAttribute('aria-label', 'Board view');
+replacementPanel.createTBody().insertRow().insertCell().textContent = 'Replacement native tool'; replacementToolCell.append(replacementPanel);
+focusHost.replaceWith(replacementHost); focusUI.w.tsjProductRefresh(); await focusUI.flush();
+const replacementPort = literalScrollport(replacementHost.tBodies[0], 0, 319, 700, 7);
+const replacementTrigger = focusUI.d.querySelector('.tsj-tool-trigger[title="Board view"]');
+literalRect(replacementTrigger, 320, 360); focusin(focusUI, replacementTrigger, true);
+check(replacementPort.value() === 52 && ribbonPort.value() === 12, 'focus reveal follows the replacement GWT toolbar owner and leaves the retired ribbon unchanged');
+check(focusUI.focusListenersAdded.length === 1 && focusUI.focusListenersRemoved.length === 0, 'one document focus listener serves the current bridge and toolbar');
+const retainedFocusCallback = focusUI.focusListenersAdded[0];
+focusUI.setAvailable(false);
+check(focusUI.w.tsjProductTeardown(focusUI.api), 'revoking the current bridge tears down its UI owner');
+check(focusUI.focusListenersRemoved.length === 1 && focusUI.focusListenersRemoved[0] === retainedFocusCallback, 'teardown removes the exact focus listener owned by the retired bridge');
+const unchangedAfterRelease = replacementPort.value();
+retainedFocusCallback({ target: replacementTrigger });
+check(replacementPort.value() === unchangedAfterRelease, 'a retained retired-owner callback is inert after release');
+const successorApi = {
+  available: () => true,
+  snapshot: () => ({ ...focusUI.state(), token: 3 }),
+  openView: () => 1, closeView: () => {}, action: () => ''
+};
+focusUI.w.tsjProduct = successorApi; focusUI.w.tsjProductRefresh(); await focusUI.flush();
+const successorShell = focusUI.d.querySelector('.tsj-workbench-shell');
+const successorPort = literalScrollport(successorShell, 0, 319, 500);
+const successorSettings = byText(focusUI.d, 'Settings');
+literalRect(successorSettings, 316, 354); focusin(focusUI, successorSettings, true);
+check(successorPort.value() === 39 && focusUI.focusListenersAdded.length === 2 && focusUI.focusListenersRemoved.length === 1,
+  'successor bridge installs one fresh focus owner and reveals locally without duplicate listeners');
+focusUI.close();
 
 const denied = await fixture({ deny: true }); click(denied, 'Settings'); denied.d.querySelector('input[type=checkbox]').click();
 check(denied.d.querySelector('.tsj-product-content').textContent.includes('only to this session'), 'storage denial is truthful and nonfatal'); denied.close();

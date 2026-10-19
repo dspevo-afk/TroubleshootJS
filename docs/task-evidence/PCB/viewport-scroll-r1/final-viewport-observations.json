@@ -1,0 +1,330 @@
+[
+  {
+    "label": "public-desktop-parts-tray",
+    "canvas": {
+      "bottom": 720,
+      "height": 608,
+      "left": 0,
+      "right": 1280,
+      "top": 112,
+      "width": 1280,
+      "x": 0,
+      "y": 112
+    },
+    "canvasAncestors": [
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "meter": {
+      "bottom": 676,
+      "height": 544,
+      "left": 25.890625,
+      "right": 327.8465881347656,
+      "top": 132,
+      "width": 301.9559631347656,
+      "x": 25.890625,
+      "y": 132
+    },
+    "ribbon": {
+      "clientHeight": 111,
+      "left": 0,
+      "scrollHeight": 111,
+      "top": 0
+    },
+    "shell": 0,
+    "viewportWidth": 1280
+  },
+  {
+    "label": "private-narrow-parts-tray",
+    "canvas": {
+      "bottom": 670,
+      "height": 528,
+      "left": 0,
+      "right": 319,
+      "top": 142,
+      "width": 319,
+      "x": 0,
+      "y": 142
+    },
+    "canvasAncestors": [
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "meter": {
+      "bottom": 436.3624877929687,
+      "height": 84.81561279296875,
+      "left": 20,
+      "right": 67.07827758789062,
+      "top": 351.546875,
+      "width": 47.078277587890625,
+      "x": 20,
+      "y": 351.546875
+    },
+    "ribbon": {
+      "clientHeight": 101,
+      "left": 324,
+      "scrollHeight": 101,
+      "top": 0
+    },
+    "shell": 89,
+    "viewportWidth": 319
+  },
+  {
+    "label": "private-narrow-keyboard",
+    "canvas": {
+      "bottom": 670,
+      "height": 528,
+      "left": 0,
+      "right": 319,
+      "top": 142,
+      "width": 319,
+      "x": 0,
+      "y": 142
+    },
+    "canvasAncestors": [
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "meter": {
+      "bottom": 436.3624877929687,
+      "height": 84.81561279296875,
+      "left": 20,
+      "right": 67.07827758789062,
+      "top": 351.546875,
+      "width": 47.078277587890625,
+      "x": 20,
+      "y": 351.546875
+    },
+    "ribbon": {
+      "clientHeight": 101,
+      "left": 324,
+      "scrollHeight": 101,
+      "top": 0
+    },
+    "shell": 89,
+    "viewportWidth": 319,
+    "focus": {
+      "rect": {
+        "bottom": 70,
+        "height": 37,
+        "left": 239.40625,
+        "right": 277.40625,
+        "top": 33,
+        "width": 38,
+        "x": 239.40625,
+        "y": 33
+      },
+      "text": "Settings"
+    }
+  },
+  {
+    "label": "private-narrow-restored",
+    "canvas": {
+      "bottom": 670,
+      "height": 528,
+      "left": 0,
+      "right": 319,
+      "top": 142,
+      "width": 319,
+      "x": 0,
+      "y": 142
+    },
+    "canvasAncestors": [
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "meter": {
+      "bottom": 436.3624877929687,
+      "height": 84.81561279296875,
+      "left": 20,
+      "right": 67.07827758789062,
+      "top": 351.546875,
+      "width": 47.078277587890625,
+      "x": 20,
+      "y": 351.546875
+    },
+    "ribbon": {
+      "clientHeight": 101,
+      "left": 471,
+      "scrollHeight": 101,
+      "top": 0
+    },
+    "shell": 87,
+    "viewportWidth": 319
+  },
+  {
+    "label": "private-desktop-restored",
+    "canvas": {
+      "bottom": 720,
+      "height": 578,
+      "left": 0,
+      "right": 1280,
+      "top": 142,
+      "width": 1280,
+      "x": 0,
+      "y": 142
+    },
+    "canvasAncestors": [
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "DIV",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "BODY",
+        "top": 0
+      },
+      {
+        "left": 0,
+        "tag": "HTML",
+        "top": 0
+      }
+    ],
+    "meter": {
+      "bottom": 607.2708129882812,
+      "height": 376.9583129882813,
+      "left": 20,
+      "right": 229.2367706298828,
+      "top": 230.3125,
+      "width": 209.2367706298828,
+      "x": 20,
+      "y": 230.3125
+    },
+    "ribbon": {
+      "clientHeight": 111,
+      "left": 0,
+      "scrollHeight": 111,
+      "top": 0
+    },
+    "shell": 0,
+    "viewportWidth": 1280
+  }
+]

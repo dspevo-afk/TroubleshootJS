@@ -1,0 +1,68 @@
+{
+  "canvas": [
+    {
+      "bottom": 670,
+      "height": 558,
+      "left": 0,
+      "right": 319,
+      "top": 112,
+      "width": 319,
+      "x": 0,
+      "y": 112
+    }
+  ],
+  "ports": [
+    {
+      "clientHeight": 101,
+      "clientWidth": 319,
+      "cls": "",
+      "rect": {
+        "bottom": 111,
+        "height": 111,
+        "left": 0,
+        "right": 319,
+        "top": 0,
+        "width": 319,
+        "x": 0,
+        "y": 0
+      },
+      "scrollHeight": 101,
+      "scrollLeft": 30,
+      "scrollTop": 0,
+      "scrollWidth": 359,
+      "tag": "TBODY"
+    },
+    {
+      "clientHeight": 43,
+      "clientWidth": 319,
+      "cls": "tsj-workbench-shell",
+      "rect": {
+        "bottom": 54,
+        "height": 54,
+        "left": 0,
+        "right": 319,
+        "top": 0,
+        "width": 319,
+        "x": 0,
+        "y": 0
+      },
+      "scrollHeight": 43,
+      "scrollLeft": 0,
+      "scrollTop": 0,
+      "scrollWidth": 406,
+      "tag": "DIV"
+    }
+  ],
+  "power": [
+    {
+      "bottom": 99,
+      "height": 42,
+      "left": 46.96875,
+      "right": 142.96875,
+      "top": 57,
+      "width": 96,
+      "x": 46.96875,
+      "y": 57
+    }
+  ]
+}

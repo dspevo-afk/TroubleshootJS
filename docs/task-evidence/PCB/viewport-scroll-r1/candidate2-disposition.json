@@ -1,0 +1,6 @@
+{
+  "status": "NOT_RUN",
+  "scope": "Candidate2 launch only; no browser tab or input was opened",
+  "reason": "Before player input, source review generalized scrollbar space reservation to all widths where horizontal overflow can occur; keep112px dock and42px power target",
+  "retained": "Launch/owner/stop receipts; no acceptance or failure reinterpretation"
+}

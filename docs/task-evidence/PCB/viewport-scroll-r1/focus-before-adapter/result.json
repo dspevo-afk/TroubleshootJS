@@ -1,0 +1,26 @@
+{
+  "status": "FAIL_KEYBOARD_VISIBILITY",
+  "observation": {
+    "active": "Settings",
+    "headerScroll": 0,
+    "rect": {
+      "bottom": 40,
+      "height": 37,
+      "left": 316.40625,
+      "right": 354.40625,
+      "top": 3,
+      "width": 38,
+      "x": 316.40625,
+      "y": 3
+    },
+    "served": {
+      "data-tsj-preview-execution-digest": "fe2bd1986cd7c9ec0db4ee08d2cb016e41ad4d4cd3d8a6425840ff5a1179a967",
+      "data-tsj-preview-file-count": "1589",
+      "data-tsj-preview-identity-protocol": "troubleshootjs-execution-provenance-v1",
+      "data-tsj-preview-script-digest": "c2ba6240238afa756ce83336a52161d7fd874a4d10d3877d48e48b96e1c887ed",
+      "data-tsj-preview-source-digest": "91a6edb7d7cab36c57dc48b70f27329e3a1447aed3c979847c6cf005598374f5",
+      "data-tsj-preview-web-digest": "d293f13e25f03d4745eb02efcd15ba77d01ef93244269ae21cb3cce10d6591b1"
+    }
+  },
+  "scope": "CSS3 canvas alignment/vertical band passed, but full visible keyboard focus not yet accepted"
+}

@@ -1,0 +1,14 @@
+{
+  "status":"PASS_AFTER_FIXTURE_CORRECTIONS",
+  "finalTestSha256":"5466d592440ac478b50e390d99547f8820da2de4e2e2c83b9feb6e3c8751d255",
+  "productionJsSha256":"e080b2d2e989ff088c37590d038eae24c315ac3b311fe9b1a7e8a8a346ce02ec",
+  "corrections":[
+    "Initial new fixture had a duplicate module const replacementCell; root renamed only the new meter-cell binding.",
+    "Bridge mock lacked production-required available(); added mutable availability to exercise actual owner revocation.",
+    "Reverse-wrap test previously focused a select although visible Load session now precedes it; explicit Load session start retains last-summary/first-control wrap expectations.",
+    "Detached old acquisition controls are correctly inert under the connected-node guard. Added exact no-new-action and unchanged-prior-result assertions, then reattached the old control to retain the stale-lease rejection/status oracle."
+  ],
+  "workerRun":"exit0,130assertions,1.35s; source-only scope plus DOM, no browser certification",
+  "rootReview":"Actual integrated fixture diff reviewed; original focus-wrap/stale-rejection expectations retained; root fresh130+380 DOM assertions PASS in final-dom-results.json",
+  "limits":"Attempts1/2 preserved. Worker diagnosis encountered stale acquisition assertion before final fixture correction; that intermediate run has no separately persisted raw log and is not claimed as a PASS."
+}

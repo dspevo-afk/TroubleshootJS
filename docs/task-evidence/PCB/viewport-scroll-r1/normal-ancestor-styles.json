@@ -1,0 +1,121 @@
+[
+  {
+    "cls": "",
+    "overflow": "clip",
+    "rect": {
+      "bottom": 670,
+      "height": 558,
+      "left": -30,
+      "right": 289,
+      "top": 112,
+      "width": 319,
+      "x": -30,
+      "y": 112
+    },
+    "scrollLeft": 0,
+    "style": "width: 319px; height: 558px; position: absolute; inset: 0px;",
+    "tag": "CANVAS"
+  },
+  {
+    "cls": "",
+    "overflow": "hidden",
+    "rect": {
+      "bottom": 670,
+      "height": 558,
+      "left": -30,
+      "right": 289,
+      "top": 112,
+      "width": 319,
+      "x": -30,
+      "y": 112
+    },
+    "scrollLeft": 0,
+    "style": "position: absolute; overflow: hidden; inset: 112px 0px 0px;",
+    "tag": "DIV"
+  },
+  {
+    "cls": "",
+    "overflow": "visible",
+    "rect": {
+      "bottom": 670,
+      "height": 670,
+      "left": -30,
+      "right": 289,
+      "top": 0,
+      "width": 319,
+      "x": -30,
+      "y": 0
+    },
+    "scrollLeft": 0,
+    "style": "position: absolute; inset: 0px;",
+    "tag": "DIV"
+  },
+  {
+    "cls": "",
+    "overflow": "hidden",
+    "rect": {
+      "bottom": 670,
+      "height": 670,
+      "left": 0,
+      "right": 319,
+      "top": 0,
+      "width": 319,
+      "x": 0,
+      "y": 0
+    },
+    "scrollLeft": 30,
+    "style": "position: absolute; overflow: hidden; inset: 0px;",
+    "tag": "DIV"
+  },
+  {
+    "cls": "",
+    "overflow": "visible",
+    "rect": {
+      "bottom": 670,
+      "height": 670,
+      "left": 0,
+      "right": 319,
+      "top": 0,
+      "width": 319,
+      "x": 0,
+      "y": 0
+    },
+    "scrollLeft": 0,
+    "style": "position: absolute; inset: 0px;",
+    "tag": "DIV"
+  },
+  {
+    "cls": "tsj-workbench-ui",
+    "overflow": "visible",
+    "rect": {
+      "bottom": 25,
+      "height": 15,
+      "left": 10,
+      "right": 309,
+      "top": 10,
+      "width": 299,
+      "x": 10,
+      "y": 10
+    },
+    "scrollLeft": 0,
+    "style": null,
+    "tag": "BODY"
+  },
+  {
+    "cls": "",
+    "overflow": "visible",
+    "rect": {
+      "bottom": 35,
+      "height": 35,
+      "left": 0,
+      "right": 319,
+      "top": 0,
+      "width": 319,
+      "x": 0,
+      "y": 0
+    },
+    "scrollLeft": 0,
+    "style": null,
+    "tag": "HTML"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "status": "VERIFIED_FOR_EXACT_OWNED_CLEANUP",
+  "resources": [
+    {
+      "name": "tsj-viewport-scroll-aaf5a6843d2041aeb07ac7db2e8ca728",
+      "resolvedDirectChild": true,
+      "noReparse": true,
+      "files": 3
+    },
+    {
+      "name": "tsj-ui-dom-e2d3d8d110d84d24a889e1fe949c54ea",
+      "resolvedDirectChild": true,
+      "noReparse": true,
+      "files": 1403
+    }
+  ],
+  "priorDependencyAudit": "post-dom-tooling-audit.json",
+  "snapshotHashes": "snapshot-audit.json",
+  "operation": "Remove only these two task-owned temp direct children; source snapshots explicit nonrecursive files then empty directory"
+}

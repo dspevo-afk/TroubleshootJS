@@ -1,0 +1,63 @@
+{
+  "label": "public-desktop-parts-tray",
+  "canvas": {
+    "bottom": 720,
+    "height": 608,
+    "left": 0,
+    "right": 1280,
+    "top": 112,
+    "width": 1280,
+    "x": 0,
+    "y": 112
+  },
+  "canvasAncestors": [
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "DIV",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "BODY",
+      "top": 0
+    },
+    {
+      "left": 0,
+      "tag": "HTML",
+      "top": 0
+    }
+  ],
+  "meter": {
+    "bottom": 676,
+    "height": 544,
+    "left": 25.890625,
+    "right": 327.8465881347656,
+    "top": 132,
+    "width": 301.9559631347656,
+    "x": 25.890625,
+    "y": 132
+  },
+  "ribbon": {
+    "clientHeight": 111,
+    "left": 0,
+    "scrollHeight": 111,
+    "top": 0
+  },
+  "shell": 0,
+  "viewportWidth": 1280
+}

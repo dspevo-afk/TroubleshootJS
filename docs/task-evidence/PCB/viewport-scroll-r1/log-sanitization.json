@@ -1,0 +1,20 @@
+[
+  {
+    "file": "final-build.txt",
+    "rawSha256": "db904f3d9d4d77f341dbc7342e5a1b17be7d2030343464b3b1672bce0ac5a18e",
+    "sanitizedSha256": "2b579109183135e48354b457989a3c08f620c06fbe85ebb2e9c61b89a1e6d55e",
+    "pathReplacements": 1
+  },
+  {
+    "file": "u04_ui_contract-attempt1.txt",
+    "rawSha256": "2726bf01fb5284169d6d225a649a6e0690a99304d8a8821dd5255cf305e66e1b",
+    "sanitizedSha256": "b05ab43a8c50e41ea529a57ea3ef9b6ac81e904550698079590c24b4abd95646",
+    "pathReplacements": 1
+  },
+  {
+    "file": "u04_ui_contract.txt",
+    "rawSha256": "266b26b037e6e6807038c8a3f0b0dd34fb21211fb226cf2f697a460fa0da9576",
+    "sanitizedSha256": "786a6b3b12949a42334650349d1fa8b692da7e732366b8b85572c1058474245a",
+    "pathReplacements": 2
+  }
+]

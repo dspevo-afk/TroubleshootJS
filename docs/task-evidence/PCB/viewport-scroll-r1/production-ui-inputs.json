@@ -1,0 +1,14 @@
+{
+  "status": "PRODUCTION_UI_FROZEN",
+  "files": [
+    {
+      "path": "war/tsj-workbench-ui.css",
+      "sha256": "a28d0e4948f69f4aba88489e098eadb0c9501b322429be5b1f70f4ccb209b42f"
+    },
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "sha256": "e080b2d2e989ff088c37590d038eae24c315ac3b311fe9b1a7e8a8a346ce02ec"
+    }
+  ],
+  "limits": "Node fixture is being diagnosed separately and is not consumed by GWT; no JVM/UI production edits during build"
+}

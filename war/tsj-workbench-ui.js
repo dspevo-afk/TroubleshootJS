@@ -43,6 +43,36 @@
       toolbarClasses.push({ node: node, name: name, present: node.classList.contains(name) });
     node.classList.toggle(name, present);
   }
+  function revealInsideScrollport(port, target) {
+    if (!port || !target || !port.contains(target) || !port.isConnected || !target.isConnected) return;
+    var bounds = port.getBoundingClientRect(), targetBounds = target.getBoundingClientRect();
+    var clientWidth = port.clientWidth, current = port.scrollLeft;
+    if (!(clientWidth > 0) || !isFinite(bounds.left) || !isFinite(targetBounds.left) ||
+        !isFinite(targetBounds.right) || !isFinite(current)) return;
+    var margin = 4, visibleLeft = bounds.left + port.clientLeft + margin;
+    var visibleRight = bounds.left + port.clientLeft + clientWidth - margin, delta = 0;
+    if (targetBounds.left < visibleLeft) delta = targetBounds.left - visibleLeft;
+    else if (targetBounds.right > visibleRight) delta = targetBounds.right - visibleRight;
+    if (!delta) return;
+    var maximum = Math.max(0, port.scrollWidth - clientWidth);
+    var next = Math.max(0, Math.min(maximum, current + delta));
+    if (next !== current) port.scrollLeft = next;
+  }
+  function revealFocusedToolbarControl(target) {
+    if (!target || target.nodeType !== 1 || typeof target.closest !== 'function') return;
+    // Pointer focus can arrive during pointerdown. Moving its target before
+    // pointerup can lose the click, so only reveal controls the browser marks
+    // as keyboard/programmatic focus-visible.
+    try { if (!target.matches(':focus-visible')) return; }
+    catch (ignore) { return; }
+    if (target.closest('.tsj-meter-panel, .tsj-bench-meter, .tsj-native-popover')) return;
+    if (shell && shell.isConnected && shell.contains(target)) {
+      revealInsideScrollport(shell, target); return;
+    }
+    var ribbon = toolbarHost && toolbarHost.isConnected && toolbarHost.contains(target) &&
+      target.closest('.tsj-workbench-toolbar-host') === toolbarHost && toolbarHost.tBodies[0];
+    if (ribbon) revealInsideScrollport(ribbon, target);
+  }
   function element(tag, text, className) {
     var node = document.createElement(tag);
     if (text !== undefined) node.textContent = text;
@@ -1065,7 +1095,10 @@
       listen(document, name, function (event) { if (window.tsjWorkbenchOverlayOpen) event.stopImmediatePropagation(); }, true);
     });
     listen(document, 'focusin', function (event) {
-      if (window.tsjWorkbenchOverlayOpen && dialog && !dialog.contains(event.target)) focusDialog();
+      if (window.tsjWorkbenchOverlayOpen && dialog && !dialog.contains(event.target)) {
+        focusDialog(); return;
+      }
+      revealFocusedToolbarControl(event.target);
     }, true);
     listen(window, 'blur', function () {
       // Closing Shop revokes retained acquisition callbacks across lost window focus.

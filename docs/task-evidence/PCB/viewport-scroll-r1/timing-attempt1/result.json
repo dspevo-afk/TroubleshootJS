@@ -1,0 +1,9 @@
+{
+  "status":"FAIL_STRICT_RESTORE_WALL_GATE",
+  "runtimeOutcome":"PASS, functional retest and all7cleanup PASS; preserve separately from strict timing",
+  "generationMillis":86885,
+  "restoreElapsedMillis":90048,
+  "maxJobMillis":90000,
+  "sourceCause":"GenerationJob.runPublish checkpoints before services.publish; observeAfterPublish intentionally samples later telemetry without invalidating committed atomic publication. Rb56QualificationVerifier reads job.getElapsedMillis() after publication. Thus runtime PASS can include publication overhead above90s. No budget or oracle change made.",
+  "next":"One same-fixture retry root42/saved13, same source/bounds/host, no seed substitution or filtering. Keep this failed gate even if retry passes; no general timing claim."
+}

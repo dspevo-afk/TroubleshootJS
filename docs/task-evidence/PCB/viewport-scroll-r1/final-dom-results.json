@@ -1,0 +1,20 @@
+{
+  "nodeVersion": "v24.19.0",
+  "nodeSha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+  "jsdom": "26.1.0",
+  "results": [
+    {
+      "suite": "u04_ui_contract",
+      "exitCode": 0,
+      "elapsedSeconds": 1.346501,
+      "status": "PASS"
+    },
+    {
+      "suite": "bench_meter_contract",
+      "exitCode": 0,
+      "elapsedSeconds": 0.3986517,
+      "status": "PASS"
+    }
+  ],
+  "limits": "DOM-only; actual production browser is separate"
+}

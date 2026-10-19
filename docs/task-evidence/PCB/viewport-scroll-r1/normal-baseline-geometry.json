@@ -1,0 +1,30 @@
+[
+  {
+    "parentChain": [
+      {
+        "clientWidth": 319,
+        "cls": "",
+        "scrollLeft": 0,
+        "scrollWidth": 396,
+        "tag": "DIV"
+      },
+      {
+        "clientWidth": 319,
+        "cls": "",
+        "scrollLeft": 30,
+        "scrollWidth": 396,
+        "tag": "DIV"
+      }
+    ],
+    "rect": {
+      "bottom": 670,
+      "height": 558,
+      "left": -30,
+      "right": 289,
+      "top": 112,
+      "width": 319,
+      "x": -30,
+      "y": 112
+    }
+  }
+]

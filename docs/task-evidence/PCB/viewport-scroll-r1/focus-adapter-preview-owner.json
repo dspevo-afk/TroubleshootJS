@@ -1,0 +1,9 @@
+{
+  "status": "OWNED_RUNNING",
+  "pid": 23996,
+  "creationTicks": "639279894195532044",
+  "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "script": "scripts/preview.ps1",
+  "port": 8907,
+  "note": "HTTP.sys listener PID4 is shared; terminate only maintained owned preview"
+}

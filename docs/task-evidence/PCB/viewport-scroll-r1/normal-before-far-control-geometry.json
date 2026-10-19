@@ -1,0 +1,30 @@
+[
+  {
+    "ancestors": [
+      {
+        "clientWidth": 319,
+        "cls": "",
+        "scrollLeft": 0,
+        "scrollWidth": 396,
+        "tag": "DIV"
+      },
+      {
+        "clientWidth": 319,
+        "cls": "",
+        "scrollLeft": 0,
+        "scrollWidth": 396,
+        "tag": "DIV"
+      }
+    ],
+    "rect": {
+      "bottom": 670,
+      "height": 558,
+      "left": 0,
+      "right": 319,
+      "top": 112,
+      "width": 319,
+      "x": 0,
+      "y": 112
+    }
+  }
+]
