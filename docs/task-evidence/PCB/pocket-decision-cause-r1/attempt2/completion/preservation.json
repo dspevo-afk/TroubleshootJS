@@ -1,0 +1,29 @@
+{
+  "status": "FAILED_ATTEMPT_COMPLETION_PRESERVED",
+  "files": [
+    {
+      "file": "focused-native.txt",
+      "rawSha256": "2b5563c632c790b763b4eeb5a5fcb7308444512bcb6e581c34020998da496141",
+      "archivedSha256": "2b5563c632c790b763b4eeb5a5fcb7308444512bcb6e581c34020998da496141",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "focused-timing.json",
+      "rawSha256": "913ccd48871063ce088bedbbf4be95c1acceddb9262213c5a64e1d0efc6c0ee8",
+      "archivedSha256": "913ccd48871063ce088bedbbf4be95c1acceddb9262213c5a64e1d0efc6c0ee8",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "process-launch.json",
+      "rawSha256": "b981a84f824d9d9c99bf5a7bad9a0cda2d4945550504d39c1b8a03c404c22f45",
+      "archivedSha256": "b981a84f824d9d9c99bf5a7bad9a0cda2d4945550504d39c1b8a03c404c22f45",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "focused-input-audit.json",
+      "rawSha256": "443b953ae8d3f3e0591e69b914b6829f908dc9e794351a34741d618a8ef5e051",
+      "archivedSha256": "443b953ae8d3f3e0591e69b914b6829f908dc9e794351a34741d618a8ef5e051",
+      "privateRepoPrefixSubstitutions": 0
+    }
+  ]
+}

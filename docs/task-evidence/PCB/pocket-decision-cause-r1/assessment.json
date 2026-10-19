@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "acceptedExportsExact": true,
+  "cases": [
+    {
+      "seed": "-1022",
+      "status": "INCONCLUSIVE",
+      "rawArea": 930600,
+      "wholePlanValidations": 0
+    },
+    {
+      "seed": "42",
+      "status": "INCONCLUSIVE",
+      "rawArea": 356400,
+      "wholePlanValidations": 16
+    }
+  ],
+  "claim": "Read-only bounded raw-placement measurement; no routed improvement or production acceptance",
+  "nativeLogSha256": "ec3c40456877334d5bcdb4db850bcb456d617fe1445dc4037cf61468d7fe6cbe"
+}

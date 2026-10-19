@@ -1,4 +1,50 @@
-# Current checkpoint: private15 border reduction accepted; publication pending
+# Current checkpoint: raw-pocket measurement complete; accepted15 restored
+
+2026-10-19. Base/published HEADb502278e9deacad1a724e65b68a34015bc7d21ea
+(Trim excess border from generated PCBs) on codex/q60-faulted-profile-counts.
+Candidate is the docs-only commit containing pocket-decision-cause-r1. No
+main/email; indefinite PCB goal ACTIVE. Root review/diff-check/stage/publication
+next; no further production heuristic accepted in this measurement.
+
+Fixed informed current15 roots-1022 selects0 and42 selects1. Optional leaf
+instrumentation/test plus root source/schema review and maintained final native
+suite PASS3411 assertions/57.3700223s/exit0; cleanup included, not separately timed.
+Frozen1474 audit/independent exact accepted exports PASS, reader28 negative and3
+positive synthetic canaries PASS. Both returned/raw chosen bindings are complete,
+trace7556/6800 uncapped. Both causal outcomes INCONCLUSIVE under unchanged caps:
+-1022 JAC32/125 origins,0 whole validations;42 rectangle16/16 cap and RLED origin
+cap,16 full validations. Raw package-only rectangle930600/356400 is not routed
+protected void. Observed QA move reduces raw area but remains capped; no scoring,
+routability, final-shrinkage, optimality, unseen/all-seed/manufacturing claim.
+
+Attempt1 compileFAIL4.3060372s missing MarginFacts, no generation; helper restored.
+Attempt2 runtimeFAIL49.936979s copied canonical p07=3/3 versus immutable accepted
+-1022 p07=3/2; exact one-byte fixture correction, strict equality retained. Both
+frozen audits PASS. Initial attempt2 preservation premature/stale timing explicitly
+retained/corrected in completion subdirectory; all failure/log hashes preserved.
+Initial selected-attempt preparation guard failure also retained. No oracle or
+physical/search/work/time limit weakened. See packet README for bounds/commands.
+
+Exact accepted planner/registry restored; archived active diagnostic retired.
+Owned original2 snapshots/private local-state removed. Final1466 audit PASS and
+all5 execution fields exact: source6e06f4534dec1ff6b548bfbba214c34f46b905306c193b24ab927d40445a2768,
+execution247e1c0c92ddd5b2e262f00236959335d042ab585b2f576833755f462d9ab237,
+fileCount1589. Accepted15 final66/native830.0759s, actual JDK8/GWT5/93.6715s and
+production new15/save15/old14 desktop/narrow/customer/Closeall7 evidence reused
+only at that exact restored boundary. Fresh diagnostic GWT/player/full matrix/
+independent electrical oracles NOT RUN. No preview/tab/viewport was created;
+final native22732/8404 birth identities exited and maintained scratch cleaned.
+Original five unrelated untracked entries/shared tools/HTTP.sys4:8899 preserved.
+
+Next: physical silkscreen rendering. Separate read-only source review confirms
+renderer drawRequiredLabels clamps stored physical silk to10 screen pixels and
+moves it through annotation placement while the board keeps scaling. Keep silk
+at its stored projected baseline/size, reserve measured ink for provider legends,
+and preserve generator/model/probe identities. Integer Font quantization and
+heuristic stored ink bounds need explicit handling. No renderer edit/runtime yet;
+future change requires actual GWT and narrow/desktop Fit bench/Zoom input/captures.
+
+# Previous checkpoint: private15 border reduction accepted before publication
 
 2026-10-19. BaseHEADfc8751e07859febc1bedabddafe7a063582f89f9 on established
 codex/q60-faulted-profile-counts. Candidate is the commit containing this packet;

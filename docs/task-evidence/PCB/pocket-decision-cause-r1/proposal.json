@@ -1,0 +1,13 @@
+{
+  "status": "PREDECLARED_BEFORE_INSTRUMENTATION_AND_RUNTIME",
+  "baseCommit": "b502278e9deacad1a724e65b68a34015bc7d21ea",
+  "purpose": "Read-only measurement of existing placement decisions around internal pockets; no new scoring heuristic or accepted generation search",
+  "cases": [{"seed":"42","selectedAttempt":1},{"seed":"-1022","selectedAttempt":0}],
+  "coordinateFrame": "Capture the fully validated raw plan immediately before placement-axis compaction. Existing origins and one-move witnesses must use this SAME raw frame; never compare raw origins directly with final routed-pocket coordinates.",
+  "observation": "Temporary optional planner observer records only already evaluated origins/fit/effective scores, selected positions, raw pre-compaction plan and returned compacted plan. Tie to the actual selected PlacementCandidate.plan and exact accepted15 final geometry/source/work fields. Mismatch or capped trace is inconclusive, never causal PASS.",
+  "witnessBudget": "Per root: at most4 deterministic pocket-border components,32 already-recorded successful SAME-pose origins each,128 whole-plan placement validation calls total. Trace cap60000 records per selected attempt. Raw GRID10 raster cap1000000 cells. Cap hit INCONCLUSIVE. No new origins/search in accepted generation; unchanged60s JVM,6x60000 placement,3+3 route bounds.",
+  "measurement": "Largest empty rectangle in raw package-access union only, explicitly NOT protected routed void. Keep other raw placements fixed; apply full existing placement/isolation validator. Report witnesses, no witness and sampled/capped limits honestly. No routability/final-board-shrink inference.",
+  "selectionCorrection": "Preparation initially assumed both selected attempts0 from old occupancy context; guard failed before proposal/source edits. Current15 actual42 selects1, -1022 selects0. Both original roots retained and bound to accepted-case records. Candidate1 already has nearest-vacancy advice; measure its actual decisions too, without re-proposing rejected candidate0 advice.",
+  "gates": "Current15 final layout/source/selected/rank/work fields exact pinned accepted cases; observer purity and raw/returned/actual-selected-plan binding. Restore exact accepted planner/registry and retire archived active diagnostic after execution. Audit accepted1466 inputs/full compiled identity before docs-only publication. No fresh GWT/player inferred from diagnostic native run.",
+  "limits": "Two informed roots, no unseen/all-seed/optimal/manufacturing claim. Existing rejected advice stays rejected. No main/email."
+}

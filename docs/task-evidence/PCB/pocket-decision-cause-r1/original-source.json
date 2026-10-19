@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "sha256": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "57d7d714d981b4d6e2fe4b5de23e0279654481fc4623b85a3c1ec3b067f87a69"
+    }
+  ]
+}

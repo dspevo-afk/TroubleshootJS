@@ -1,0 +1,16 @@
+{
+  "status": "FAIL_PREPARATION_ONLY",
+  "reason": "An initial preparation guard incorrectly assumed both selected attempts were0 from older occupancy context. It stopped before writing proposal or modifying source. Bind each fixed root to its actual current15 selected attempt; no root replacement, metric or production change.",
+  "source": "post-selection-edge-trim-r1/final-native.txt",
+  "caseCount": 2,
+  "observed": [
+    {
+      "seed": "-1022",
+      "selectedAttempt": 0
+    },
+    {
+      "seed": "42",
+      "selectedAttempt": 1
+    }
+  ]
+}

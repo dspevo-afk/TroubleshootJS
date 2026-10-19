@@ -1,0 +1,60 @@
+{
+  "status": "FAILED_ATTEMPT_PRESERVED",
+  "files": [
+    {
+      "file": "focused-native.txt",
+      "rawSha256": "e4c513e01c7371a362fa3ebb747473d7f0d30b7f0ae2efd7ff53b03ac6bfbcc5",
+      "archivedSha256": "e4c513e01c7371a362fa3ebb747473d7f0d30b7f0ae2efd7ff53b03ac6bfbcc5",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "focused-timing.json",
+      "rawSha256": "80abb2913a4c019cf2825b879d3732db441dc6a304578ba80f23830c118084fb",
+      "archivedSha256": "80abb2913a4c019cf2825b879d3732db441dc6a304578ba80f23830c118084fb",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "focused-inputs.json",
+      "rawSha256": "7d1d7ba29145fc2441d36aa8f490aa3b6d3706411515771094881972569a79b9",
+      "archivedSha256": "7d1d7ba29145fc2441d36aa8f490aa3b6d3706411515771094881972569a79b9",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "focused-input-audit.json",
+      "rawSha256": "443b953ae8d3f3e0591e69b914b6829f908dc9e794351a34741d618a8ef5e051",
+      "archivedSha256": "443b953ae8d3f3e0591e69b914b6829f908dc9e794351a34741d618a8ef5e051",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "diagnostic-source.json",
+      "rawSha256": "e94a6178d067a1f27dd963a38a5a999e3bec585157a17d26a3268d340ea08fb3",
+      "archivedSha256": "e94a6178d067a1f27dd963a38a5a999e3bec585157a17d26a3268d340ea08fb3",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "process-launch.json",
+      "rawSha256": "b981a84f824d9d9c99bf5a7bad9a0cda2d4945550504d39c1b8a03c404c22f45",
+      "archivedSha256": "b981a84f824d9d9c99bf5a7bad9a0cda2d4945550504d39c1b8a03c404c22f45",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "PcbPocketDecisionDiagnosticContractTest.java",
+      "rawSha256": "bc9957c299f4d345fd321a137de777b670295cb0591bb806f5b9a6e3458da671",
+      "archivedSha256": "bc9957c299f4d345fd321a137de777b670295cb0591bb806f5b9a6e3458da671",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "assess_decisions.py",
+      "rawSha256": "2b9dd088d127b10a67f6af783036819fab526ab00f5c1995e41d73bdb331c176",
+      "archivedSha256": "2b9dd088d127b10a67f6af783036819fab526ab00f5c1995e41d73bdb331c176",
+      "privateRepoPrefixSubstitutions": 0
+    },
+    {
+      "file": "check_assessor.py",
+      "rawSha256": "d2f58581ca602a8be8ef3dd7a5b669f86c5d61a400a62299db6e04aa78498f46",
+      "archivedSha256": "d2f58581ca602a8be8ef3dd7a5b669f86c5d61a400a62299db6e04aa78498f46",
+      "privateRepoPrefixSubstitutions": 0
+    }
+  ],
+  "scope": "Exact bytes except documented repository-prefix sanitization in text logs"
+}

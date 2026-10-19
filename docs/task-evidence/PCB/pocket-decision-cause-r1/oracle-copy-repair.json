@@ -1,0 +1,11 @@
+{
+  "status": "STRICT_ORACLE_COPY_CORRECTED_FROM_IMMUTABLE_ACCEPTED_RECORD",
+  "root": "-1022",
+  "oldLiteral": "p07=3/3",
+  "acceptedLiteral": "p07=3/2",
+  "changedBytes": 1,
+  "oldTestSha256": "bc9957c299f4d345fd321a137de777b670295cb0591bb806f5b9a6e3458da671",
+  "newTestSha256": "45fee501354b0de39dadc3c98e447fb3ed2c6032e66a37ab762de395f748810f",
+  "acceptedCasesSha256": "fc08639a03ef95080c56d4b40d08fbcf2a14a99bde363693d38bf44bc17ab3d9",
+  "limits": "No measured result copied or assertion weakened; full canonical equality retained"
+}

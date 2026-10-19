@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "negativeCases": [
+    "missing-root",
+    "duplicate-root",
+    "accepted-area",
+    "accepted-selectedAttempt",
+    "accepted-routingOrders",
+    "accepted-acceptedPlanEvaluations",
+    "accepted-geometrySha256",
+    "mixed-frame",
+    "trace-cap",
+    "trace-overrun",
+    "binding-false",
+    "raw-binding-lie",
+    "raster-overrun",
+    "rectangle-area",
+    "validation-overrun",
+    "validation-count",
+    "witness-not-reduced",
+    "witness-better-score",
+    "witness-unjoined",
+    "witness-false-validation",
+    "unrecorded-origin",
+    "wrong-pose",
+    "rejected-witness",
+    "silently-omitted-witness",
+    "sample-cap-causal-claim",
+    "moving-domain",
+    "sampled-score-substitution",
+    "sampled-pose-substitution"
+  ],
+  "negativeCaseCount": 28,
+  "positiveCases": [
+    "bound-witness",
+    "honest-capped-inconclusive",
+    "finite-no-witness"
+  ],
+  "scope": "Synthetic reader guards only; no native or layout proof"
+}

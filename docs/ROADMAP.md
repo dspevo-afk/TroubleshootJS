@@ -69,8 +69,16 @@ customer/cleanup gates pass. Frozen1466/served identities remain exact. Five
 captures include the observed narrow zoomed-out label crowding, an open rendering
 limitation; no general legibility/all-seed/manufacturing/modest-host claim.
 [Border reduction acceptance and limits](task-evidence/PCB/post-selection-edge-trim-r1/README.md).
-Next: bounded read-only raw-placement pocket-decision measurement in one
-pre-compaction coordinate frame; no new placement heuristic yet.
+Read-only raw-pocket decision measurement now reproduces both informed current15
+layouts/source/work exactly. Native3411 assertions/57.3700s and frozen1474 reader
+gates pass, but both causal results are INCONCLUSIVE under the declared sampling
+caps. Temporary observer/active test retired; accepted1466/full compiled identity
+restored exactly. Failed fixture attempts remain explicit; no scoring heuristic
+or final-board shrinkage is inferred.
+[Measurement and limits](task-evidence/PCB/pocket-decision-cause-r1/README.md).
+Next: scale stored physical silkscreen with the board while preserving readable
+provider annotations; fresh production build and visible zoom/viewport proof are
+required for that rendering change. Internal packing remains open.
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

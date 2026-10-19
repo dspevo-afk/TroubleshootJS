@@ -1,0 +1,9 @@
+{
+  "status": "DECLARED_BEFORE_NATIVE_EXECUTION",
+  "domain": "Fixed GRID10 raw full-access-envelope bounding box for the baseline and every trial; occupancy from moved envelopes outside that domain is clipped for this measurement. Full physical validation still uses the whole raw outline and all placements.",
+  "raster": "Allocate against the full raw outline, at most1000000 cells. Report allocation, requested count, fixed-domain count and empty-rectangle count separately.",
+  "additionalConservativeLimit": "At most16 successful post-move rectangle recomputations per root, excluding the initial baseline. Check this before another full validation. Existing128 whole-plan validations and4x32 sampling maxima remain upper bounds.",
+  "caps": "Any trace, origin-sample, recomputation, validation or raster cap prevents causal WITNESS classification. Preserve observations and reasons under INCONCLUSIVE. A finite sample does not establish absence of other improvements.",
+  "binding": "Export actual raw/recorded chosen coordinates and rotations/mounting sides for every component. A causal witness requires complete raw/returned/actual-selected plan and chosen-pose binding. Verify source/graph/layout/selected-plan immutability after analysis too.",
+  "generation": "No new origins, fits, scores, work charges or route candidates in accepted generation. No production behavior change is proposed by this diagnostic."
+}

@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 3656,
+      "startTicks": "639279980699943533",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/pocket-decision-cause-r1/run_focused.ps1"
+    },
+    {
+      "pid": 12012,
+      "startTicks": "639279980702184483",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/pocket-decision-cause-r1/run_focused.ps1"
+    }
+  ],
+  "ownership": "Captured before native work"
+}

@@ -1,0 +1,4 @@
+{
+  "status": "CORRECTION",
+  "reason": "Initial preservation preceded driver completion: initial focused-timing.json was stale attempt1 timing4.3060372s; partial log omitted cleanup. Completion subdirectory holds terminal attempt2 log and actual49.936979s FAIL. Initial bytes retained honestly; no source changed during either capture."
+}

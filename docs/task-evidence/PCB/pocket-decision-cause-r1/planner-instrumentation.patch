@@ -1,0 +1,208 @@
+diff --git a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+index b700dbcd..75ef6e04 100644
+--- a/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ b/src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -23,6 +23,8 @@ final class PcbPlacementPlanner {
+     private static final int MEDIUM_CHAIN_GAP=120;
+     private static final int MEDIUM_MAX_EVALUATIONS=60000;
+     private static final long MEDIUM_MIN_AREA=5000000L;
++    private static final int DIAGNOSTIC_TRACE_CAP=60000;
++    private static volatile DiagnosticObserver diagnosticObserver;
+     static final class Rejected extends RuntimeException {
+         final String reason;
+         Rejected(String reason) { super(reason); this.reason=reason; }
+@@ -49,6 +51,93 @@ final class PcbPlacementPlanner {
+             return layout;
+         }
+     }
++    /** Native-only, read-only observation of an already running placement attempt. */
++    interface DiagnosticObserver {
++        boolean matches(long seed,int attempt,int densityVersion);
++        void origin(DiagnosticOrigin origin);
++        void chosen(DiagnosticChoice choice);
++        void rawPlan(Plan snapshot);
++        void returnedPlan(Plan snapshot);
++        void traceCapped(long seed,int attempt,int cap);
++    }
++    static final class DiagnosticOrigin {
++        final int sequence,x,y;
++        final String componentId,rotation,mountingSide;
++        final boolean fits;
++        final double effectiveScore;
++        DiagnosticOrigin(int sequence,String componentId,int x,int y,String rotation,
++                String mountingSide,boolean fits,double effectiveScore) {
++            this.sequence=sequence;this.componentId=componentId;this.x=x;this.y=y;
++            this.rotation=rotation;this.mountingSide=mountingSide;this.fits=fits;
++            this.effectiveScore=effectiveScore;
++        }
++    }
++    static final class DiagnosticChoice {
++        final String componentId;
++        final String rotation,mountingSide;
++        final boolean found;
++        final int x,y;
++        final double effectiveScore;
++        DiagnosticChoice(String componentId,PcbFootprint footprint,double effectiveScore) {
++            this.componentId=componentId;this.found=footprint!=null;
++            this.x=found?footprint.getPlacement().getX():0;
++            this.y=found?footprint.getPlacement().getY():0;
++            this.rotation=found?footprint.getPlacement().getRotation().name():null;
++            this.mountingSide=found?footprint.getPlacement().getMountingSide().name():null;
++            this.effectiveScore=found?effectiveScore:Double.NaN;
++        }
++    }
++    private static final class DiagnosticCapture {
++        final DiagnosticObserver observer;
++        final long seed;
++        final int attempt;
++        int records;
++        boolean capped;
++        DiagnosticCapture(DiagnosticObserver observer,long seed,int attempt) {
++            this.observer=observer;this.seed=seed;this.attempt=attempt;
++        }
++        void origin(String componentId,PcbFootprint footprint,boolean fits,double score) {
++            if(records>=DIAGNOSTIC_TRACE_CAP) {
++                if(!capped)observer.traceCapped(seed,attempt,DIAGNOSTIC_TRACE_CAP);
++                capped=true;return;
++            }
++            PcbComponentPlacement placement=footprint.getPlacement();
++            observer.origin(new DiagnosticOrigin(records++,componentId,placement.getX(),
++                placement.getY(),placement.getRotation().name(),
++                placement.getMountingSide().name(),fits,score));
++        }
++        void chosen(String componentId,PcbFootprint footprint,double score) {
++            observer.chosen(new DiagnosticChoice(componentId,footprint,score));
++        }
++        void rawPlan(Plan plan) { observer.rawPlan(diagnosticSnapshot(plan)); }
++        void returnedPlan(Plan plan) { observer.returnedPlan(diagnosticSnapshot(plan)); }
++    }
++
++    /** Install only around the native diagnostic's ordinary synchronous run. */
++    static DiagnosticObserver installDiagnosticObserver(DiagnosticObserver observer) {
++        if(observer==null)throw new IllegalArgumentException("Missing PCB placement diagnostic observer");
++        DiagnosticObserver previous=diagnosticObserver;diagnosticObserver=observer;return previous;
++    }
++    static void restoreDiagnosticObserver(DiagnosticObserver installed,
++            DiagnosticObserver previous) {
++        if(installed==null || diagnosticObserver!=installed)
++            throw new IllegalStateException("PCB placement diagnostic observer ownership changed");
++        diagnosticObserver=previous;
++    }
++    private static DiagnosticCapture diagnosticCapture(long seed,int attempt,int densityVersion) {
++        DiagnosticObserver observer=diagnosticObserver;
++        return densityVersion==14 && observer!=null && observer.matches(seed,attempt,densityVersion)?
++            new DiagnosticCapture(observer,seed,attempt):null;
++    }
++    private static Plan diagnosticSnapshot(Plan plan) {
++        Vector<PcbFootprint> footprints=new Vector<PcbFootprint>();
++        for(PcbFootprint footprint:plan.footprints) {
++            PcbComponentPlacement placement=footprint.getPlacement();
++            footprints.add(footprint.translated(placement.getX(),placement.getY()));
++        }
++        return new Plan(new Rectangle(plan.outline),footprints,plan.regions,plan.courtyardArea,
++            plan.demandArea,plan.candidate,plan.evaluations);
++    }
+     private static final class Item {
+         PcbFootprint footprint;
+         final Rectangle envelope;
+@@ -256,6 +345,7 @@ final class PcbPlacementPlanner {
+             TreeMap<String,Region> groups,Vector<Item> anchors,long demandArea,
+             long courtyardArea,int maxWidth,int anchorWidth) {
+         int placementVersion = constraints.placementDensityVersion;
++        DiagnosticCapture diagnostic=diagnosticCapture(seed,candidate,placementVersion);
+         boolean pinLocal=placementVersion>=10 && candidate==1 &&
+             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
+         // Private6 reuses the established group-centred target and source-lane hints.
+@@ -372,7 +462,7 @@ final class PcbPlacementPlanner {
+         for (Item item:orderedAnchors) {
+             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,true,boundaryX,evaluations);
++                pinLocal,true,boundaryX,evaluations,diagnostic);
+             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
+             item.footprint=selected; placed.add(selected);
+         }
+@@ -386,7 +476,7 @@ final class PcbPlacementPlanner {
+             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
+             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
+                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
+-                pinLocal,false,boundaryX,evaluations);
++                pinLocal,false,boundaryX,evaluations,diagnostic);
+             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
+             next.footprint=selected; placed.add(selected);
+             remaining.remove(next.demand.componentId);
+@@ -394,13 +484,16 @@ final class PcbPlacementPlanner {
+         validate(board,constraints,outline,placed);
+         Plan plan=new Plan(outline,placed,navigationFor(constraints),courtyardArea,
+             demandArea,candidate,evaluations[0]);
++        if(diagnostic!=null)diagnostic.rawPlan(plan);
++        Plan result=plan;
+         if(tight) {
+             // Reuse the protected-strip compactor before the existing route request.
+             // It preserves complete envelopes and revalidates access/isolation.
+             Plan packed=PcbPlacementCompactor.compact(board,constraints,plan);
+-            if(packed.evaluations<=MEDIUM_MAX_EVALUATIONS) return packed;
++            if(packed.evaluations<=MEDIUM_MAX_EVALUATIONS) result=packed;
+         }
+-        return plan;
++        if(diagnostic!=null)diagnostic.returnedPlan(result);
++        return result;
+     }
+ 
+     private static Vector<PcbLayoutRegion> navigationFor(
+@@ -605,7 +698,8 @@ final class PcbPlacementPlanner {
+             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
+             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
+             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
+-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations) {
++            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations,
++            DiagnosticCapture diagnostic) {
+         RegionHint hint=hints.get(regionKey(item.demand));
+         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
+             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
+@@ -697,13 +791,17 @@ final class PcbPlacementPlanner {
+                 evaluations[0]++;
+                 if(evaluations[0]>MEDIUM_MAX_EVALUATIONS)
+                     throw new Rejected("MEDIUM_PLACEMENT_BUDGET");
+-                if(!fits(trial,outline,placed,-1,constraints))continue;
++                if(!fits(trial,outline,placed,-1,constraints)) {
++                    if(diagnostic!=null)diagnostic.origin(item.demand.componentId,trial,false,Double.NaN);
++                    continue;
++                }
+                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
+                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
+                 if(vacancyPreference!=null)score+=(Math.abs((long)x-vacancyPreference.x)+
+                     Math.abs((long)y-vacancyPreference.y))*.25;
+                 if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
+                     vacancyPocket)/(double)MEDIUM_STEP;
++                if(diagnostic!=null)diagnostic.origin(item.demand.componentId,trial,true,score);
+                 if(score<bestScore){best=trial;bestScore=score;}
+             }
+         }
+@@ -736,13 +834,17 @@ final class PcbPlacementPlanner {
+                     mediumGridOrigin(item.footprint,x,outline,margin,false),
+                     mediumGridOrigin(item.footprint,y,outline,margin,true));
+                 evaluations[0]++;
+-                if(!fits(trial,outline,placed,-1,constraints))continue;
++                if(!fits(trial,outline,placed,-1,constraints)) {
++                    if(diagnostic!=null)diagnostic.origin(item.demand.componentId,trial,false,Double.NaN);
++                    continue;
++                }
+                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
+                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
+                 if(vacancyPreference!=null)score+=(Math.abs((long)trial.getPlacement().getX()-vacancyPreference.x)+
+                     Math.abs((long)trial.getPlacement().getY()-vacancyPreference.y))*.25;
+                 if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
+                     vacancyPocket)/(double)MEDIUM_STEP;
++                if(diagnostic!=null)diagnostic.origin(item.demand.componentId,trial,true,score);
+                 if(score<bestScore){best=trial;bestScore=score;}
+                 /* The fallback only needs one legal escape from a crowded
+                  * target.  Keeping the first seeded hit bounds worst-case
+@@ -750,6 +852,7 @@ final class PcbPlacementPlanner {
+                 break;
+             }
+         }
++        if(diagnostic!=null)diagnostic.chosen(item.demand.componentId,best,bestScore);
+         return best;
+     }
+ 

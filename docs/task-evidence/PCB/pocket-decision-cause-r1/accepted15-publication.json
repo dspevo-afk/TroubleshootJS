@@ -1,0 +1,11 @@
+{
+  "status": "VERIFIED_NORMAL_PUBLICATION",
+  "sha": "b502278e9deacad1a724e65b68a34015bc7d21ea",
+  "message": "Trim excess border from generated PCBs",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteContainsExactSha": true,
+  "mainMerge": "NOT_REQUESTED_NOT_DONE",
+  "email": "DISABLED_BY_PRIOR_USER_SCOPE",
+  "continuation": "Goal remains ACTIVE: internal-pocket cause measurement next"
+}

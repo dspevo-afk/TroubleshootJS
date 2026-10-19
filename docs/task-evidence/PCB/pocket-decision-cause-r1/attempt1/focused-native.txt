@@ -1,0 +1,31 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<repo>\tests\contracts\PcbPocketDecisionDiagnosticContractTest.java:296: error: cannot find symbol
+    private static MarginFacts marginFacts(TroubleshootBoard board,
+                   ^
+  symbol:   class MarginFacts
+  location: class PcbPocketDecisionDiagnosticContractTest
+<repo>\tests\contracts\PcbPocketDecisionDiagnosticContractTest.java:173: error: cannot find symbol
+        MarginFacts margins = marginFacts(board, layout, finalFootprints, seed);
+        ^
+  symbol:   class MarginFacts
+  location: class PcbPocketDecisionDiagnosticContractTest
+<repo>\tests\contracts\PcbPocketDecisionDiagnosticContractTest.java:324: error: cannot find symbol
+        return new MarginFacts(fixed, access, Math.max(26, access),
+                   ^
+  symbol:   class MarginFacts
+  location: class PcbPocketDecisionDiagnosticContractTest
+<repo>\tests\contracts\PcbPocketDecisionDiagnosticContractTest.java:735: error: cannot find symbol
+        MarginFacts margins = marginFacts(board, layout, footprints, seed);
+        ^
+  symbol:   class MarginFacts
+  location: class PcbPocketDecisionDiagnosticContractTest
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+4 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.
