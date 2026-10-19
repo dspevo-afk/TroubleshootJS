@@ -1,0 +1,14 @@
+{
+  "scope": "Offline analysis of already observed QA origins; no production edit, generation or routing",
+  "sourceCommit": "61a5f9501be53849adf14a1dc224c5d924369316",
+  "sourceLog": "placement-score-terms-r1/native.txt",
+  "sourceLogSha256": "276b732b16d3912221cf76e0fbac2615615253c4b158da94bb8d435577784f90",
+  "root": "42",
+  "attempt": 1,
+  "component": "QA",
+  "existingOriginsCap": 128,
+  "metric": "Largest axis-aligned residual rectangle within the recorded advisory pocket after subtracting this single trial access envelope",
+  "counterfactual": "Existing recorded effective score minus (pocketArea-largestResidualRectangleArea)/40; fixed40 from existing MEDIUM_STEP, no fitted weight",
+  "bounds": "At most128 existing QA origins; no new fits, physics, routes or search. Four exact strips compute one-rectangle complement. Four literal/small exhaustive fixtures check geometry independently.",
+  "limits": "Single recorded intermediate advisory pocket only; other placements fixed. Not full board protected void or final routability/selection. No heuristic acceptance or causal witness promotion. All roots informed."
+}

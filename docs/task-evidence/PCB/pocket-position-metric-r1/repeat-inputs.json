@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "path": "docs/task-evidence/PCB/pocket-position-metric-r1/proposal.json",
+      "sha256": "2c408e63de0d4f8f3c3f58d9c758f788c6ad0727faa7911f8d7cf52246449660"
+    },
+    {
+      "path": "docs/task-evidence/PCB/pocket-position-metric-r1/analyze.py",
+      "sha256": "5f87a71862f8f416c5a237e7da68538bd1e9958703e61e52af952f2e94309b39"
+    },
+    {
+      "path": "docs/task-evidence/PCB/pocket-position-metric-r1/README.md",
+      "sha256": "aae712390c3e3c6adee39a481d1d65c45b49e6138743f51ea51c08f6f8328462"
+    },
+    {
+      "path": "docs/task-evidence/PCB/pocket-position-metric-r1/seal_and_check.py",
+      "sha256": "88bc6b4b4c91e332fb7df7a2046b8d266ce6add8121c40775a93054235f10161"
+    },
+    {
+      "path": "docs/task-evidence/PCB/placement-score-terms-r1/native.txt",
+      "sha256": "276b732b16d3912221cf76e0fbac2615615253c4b158da94bb8d435577784f90"
+    }
+  ],
+  "phase": "Offline repeat; exploratory execution already recorded"
+}

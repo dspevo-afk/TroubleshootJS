@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "boundInputCount": 5,
+  "outputSha256": "06978c24266b7e4d84cbda323d9a1b8612b6d17c532ff4604c4e81183a9e08c2",
+  "repeatedOutputExact": true,
+  "executed": "Offline Python reader only; no native/build/generation/routing",
+  "coldOrRestoreBudgetChange": false,
+  "resourcesCreated": false
+}

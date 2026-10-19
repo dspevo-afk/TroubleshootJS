@@ -87,6 +87,9 @@ actual visible zoom/viewport acceptance is pending while this chat's browser
 panel is hidden. Next: resume that visible gate when available, and investigate
 pocket-position discrimination versus actual routing needs before a new packing
 policy. Internal packing remains open.
+Offline comparison of all126 recorded QA origins (16legal) keeps the same choice
+under a fixed residual-pocket-reduction/40 bonus. No new board or routes run.
+[Offline comparison and limits](task-evidence/PCB/pocket-position-metric-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

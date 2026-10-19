@@ -1,11 +1,11 @@
-# Current checkpoint: score decomposition complete; silkscreen visual gate pending
+# Current checkpoint: stopped at user usage boundary; silkscreen visual gate pending
 
-2026-10-19. HEADffd02ec83ce04465447f31c2a0df568dad52a543 (Record bounded PCB
-pocket decision measurements) normally pushed and exact origin SHA verified on
+2026-10-19. Published61a5f9501be53849adf14a1dc224c5d924369316 (Record PCB pocket
+placement score tradeoffs) normally pushed and exact origin SHA verified on
 codex/q60-faulted-profile-counts. No main/email; indefinite PCB goal ACTIVE.
 Prior raw-pocket measurement complete but both causal results INCONCLUSIVE under
-predeclared caps. Accepted15 planner/registry1466/full execution identity restored;
-source geometry/routing remains unchanged. Previous packet immutable/published.
+predeclared caps. Accepted15 geometry/routing remains unchanged. Main renderer
+candidate below differs from accepted production and remains unpublished.
 
 New packet silkscreen-scale-r1 proposal precedes production edits. Renderer-only:
 physical silk uses stored baseline/logical font under fractional board projection,
@@ -25,13 +25,16 @@ change,1464 prior inputs exact; one new permanent contract. Actual JDK8/GWT5 bui
 PASS93.7667267s/exit0, post-build1475 audit PASS; native/build driver creations
 verified exited. Compiled execution e3cb67d8b5c87ab1c25e8e794f5f7ed342b194c410e0e9679d9ddf23bd4497f6
 (fileCount1589). Preview832 birth639279991051638337/port8907 is task-owned/running,
-state .tools/preview/state.json. IAB2 tab13 served all5 exact fields; cold current15
+state .tools/preview/state.json (historical launch record). IAB2 tab13 served all5 exact fields; cold current15
 root4 reached HOLD in71935ms/601work/max1966ms/55packages. Two screenshot attempts
 timed out; open_in_codex reports queued because this chat is hidden. Navigation
 did not resolve visibility. No image or player-flow PASS. User visibility request
 pending. Real Main menu input also timed out; cleanup7 was NOT OBSERVED. Owned
-tab13 closed and viewport reset; preview832 remains for retry after visibility
-changes. Frozen1475 blocked-visual audit PASS; browser logs warn/error empty.
+tab13 closed and viewport reset. At usage stop, preview832 creation/command/parent/
+executable revalidated and terminated through maintained exact-process helper;
+pocket-position-metric-r1/suspended-renderer-preview-cleanup.json PASS is process-only.
+Shared HTTP.sys4 untouched; no live task test phase remains. Restart owned preview
+after visibility changes. Frozen1475 blocked-visual audit PASS; logs warn/error empty.
 Player-scope4 owners frozen before interactive actions; no completion claim.
 
 Independent placement-score-terms-r1 measurement COMPLETE in isolated accepted1466
@@ -47,11 +50,19 @@ from that rule; strict bindings/limits retained; completed failure preserved.
 Copy restored1466 then verified removed, private state retired; native drivers
 exited. Managed checkout had failed Windows path length; no global settings or
 unrelated worktrees changed. Source-only measurement archived, main1475 stillexact.
-Renderer recovery2/private state and preview remain for UI gate. Original unrelated
-five entries/shared tools/HTTP.sys4:8899 preserved. Next: review/diff-check/publish
-only accepted measurement docs, then pocket-position/corridor investigation or
-fresh actual desktop1280/narrow319 input when visible. Rendering stays unpublished
-until its visual gate passes. No weakened90s/640/5s/hold360s; no main/email.
+Renderer recovery2/private state remain for UI gate; preview now stopped. Original unrelated
+five entries/shared tools/HTTP.sys4:8899 preserved. Measurement publication61a5f950
+verified; no main/email. New pocket-position-metric-r1 offline fixed /40 bonus
+retains chosen QA across126 existing/16legal origins. Four literal/exhaustive
+geometry fixtures and sealed exact repeat5 PASS; no generator/native/routes run.
+Leaf read-only route feasibility study interrupted at user usage-stop condition;
+no completed result, file change, route experiment or new source copy is claimed.
+Goal continuation stops at that requested boundary. Next unstarted work: establish
+smallest actual route-owner comparison for original versus previously legal QA
+alternative, preserving candidate/work/physical limits; or restart preview/fresh
+actual desktop1280/narrow319 input once visible. Rendering stays unpublished until
+visual gate passes. No weakened90s/640/5s/hold360s. Only completed offline evidence
+and this checkpoint are eligible for the final normal docs-only publication.
 
 # Previous checkpoint: raw-pocket measurement complete; accepted15 restored
 

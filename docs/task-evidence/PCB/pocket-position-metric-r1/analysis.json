@@ -1,0 +1,250 @@
+{
+  "status": "PASS",
+  "scope": "Offline analysis of already observed QA origins; no production edit, generation or routing",
+  "nativeOrRoutingExecuted": false,
+  "sourceLogSha256": "276b732b16d3912221cf76e0fbac2615615253c4b158da94bb8d435577784f90",
+  "advisoryPocket": {
+    "x": 898,
+    "y": 1470,
+    "width": 1080,
+    "height": 280
+  },
+  "observedOrigins": 126,
+  "successfulOrigins": 16,
+  "geometryFixtures": [
+    {
+      "pocket": {
+        "x": -2,
+        "y": -1,
+        "width": 6,
+        "height": 5
+      },
+      "hole": {
+        "x": 0,
+        "y": 0,
+        "width": 2,
+        "height": 2
+      },
+      "literalExpected": 12,
+      "analytic": 12,
+      "exhaustive": 12
+    },
+    {
+      "pocket": {
+        "x": -2,
+        "y": -1,
+        "width": 6,
+        "height": 5
+      },
+      "hole": {
+        "x": 4,
+        "y": 0,
+        "width": 2,
+        "height": 2
+      },
+      "literalExpected": 30,
+      "analytic": 30,
+      "exhaustive": 30
+    },
+    {
+      "pocket": {
+        "x": -2,
+        "y": -1,
+        "width": 6,
+        "height": 5
+      },
+      "hole": {
+        "x": -3,
+        "y": -2,
+        "width": 8,
+        "height": 7
+      },
+      "literalExpected": 0,
+      "analytic": 0,
+      "exhaustive": 0
+    },
+    {
+      "pocket": {
+        "x": -2,
+        "y": -1,
+        "width": 6,
+        "height": 5
+      },
+      "hole": {
+        "x": -3,
+        "y": 0,
+        "width": 2,
+        "height": 2
+      },
+      "literalExpected": 25,
+      "analytic": 25,
+      "exhaustive": 25
+    }
+  ],
+  "observedChoice": {
+    "sequence": 6390,
+    "x": 1690,
+    "y": 1580,
+    "existingScore": 1808.5128484848483,
+    "largestResidualRectangleArea": 210560,
+    "pocketAreaReduction": 91840,
+    "counterfactualScore": -487.4871515151517
+  },
+  "counterfactualChoice": {
+    "sequence": 6390,
+    "x": 1690,
+    "y": 1580,
+    "existingScore": 1808.5128484848483,
+    "largestResidualRectangleArea": 210560,
+    "pocketAreaReduction": 91840,
+    "counterfactualScore": -487.4871515151517
+  },
+  "changesExistingChoice": false,
+  "choices": [
+    {
+      "sequence": 6297,
+      "x": 1390,
+      "y": 1550,
+      "existingScore": 5948.889212121212,
+      "largestResidualRectangleArea": 126560,
+      "pocketAreaReduction": 175840,
+      "counterfactualScore": 1552.889212121212
+    },
+    {
+      "sequence": 6298,
+      "x": 940,
+      "y": 1510,
+      "existingScore": 4357.349818181818,
+      "largestResidualRectangleArea": 250040,
+      "pocketAreaReduction": 52360,
+      "counterfactualScore": 3048.3498181818177
+    },
+    {
+      "sequence": 6299,
+      "x": 1830,
+      "y": 1510,
+      "existingScore": 4436.537696969698,
+      "largestResidualRectangleArea": 249760,
+      "pocketAreaReduction": 52640,
+      "counterfactualScore": 3120.537696969698
+    },
+    {
+      "sequence": 6300,
+      "x": 940,
+      "y": 1590,
+      "existingScore": 4692.818909090909,
+      "largestResidualRectangleArea": 250040,
+      "pocketAreaReduction": 52360,
+      "counterfactualScore": 3383.818909090909
+    },
+    {
+      "sequence": 6301,
+      "x": 1830,
+      "y": 1590,
+      "existingScore": 4736.406787878788,
+      "largestResidualRectangleArea": 249760,
+      "pocketAreaReduction": 52640,
+      "counterfactualScore": 3420.4067878787882
+    },
+    {
+      "sequence": 6384,
+      "x": 1730,
+      "y": 1540,
+      "existingScore": 4675.495272727272,
+      "largestResidualRectangleArea": 221760,
+      "pocketAreaReduction": 80640,
+      "counterfactualScore": 2659.495272727272
+    },
+    {
+      "sequence": 6390,
+      "x": 1690,
+      "y": 1580,
+      "existingScore": 1808.5128484848483,
+      "largestResidualRectangleArea": 210560,
+      "pocketAreaReduction": 91840,
+      "counterfactualScore": -487.4871515151517
+    },
+    {
+      "sequence": 6396,
+      "x": 1650,
+      "y": 1610,
+      "existingScore": 3960.6007272727284,
+      "largestResidualRectangleArea": 199360,
+      "pocketAreaReduction": 103040,
+      "counterfactualScore": 1384.6007272727284
+    },
+    {
+      "sequence": 6399,
+      "x": 2970,
+      "y": 980,
+      "existingScore": 12084.702681818186,
+      "largestResidualRectangleArea": 302400,
+      "pocketAreaReduction": 0,
+      "counterfactualScore": 12084.702681818186
+    },
+    {
+      "sequence": 6402,
+      "x": 1610,
+      "y": 1610,
+      "existingScore": 4045.770424242425,
+      "largestResidualRectangleArea": 188160,
+      "pocketAreaReduction": 114240,
+      "counterfactualScore": 1189.7704242424252
+    },
+    {
+      "sequence": 6404,
+      "x": 1570,
+      "y": 980,
+      "existingScore": 7722.469212121211,
+      "largestResidualRectangleArea": 302400,
+      "pocketAreaReduction": 0,
+      "counterfactualScore": 7722.469212121211
+    },
+    {
+      "sequence": 6408,
+      "x": 1570,
+      "y": 1610,
+      "existingScore": 5767.303757575758,
+      "largestResidualRectangleArea": 176960,
+      "pocketAreaReduction": 125440,
+      "counterfactualScore": 2631.303757575758
+    },
+    {
+      "sequence": 6410,
+      "x": 1530,
+      "y": 980,
+      "existingScore": 7805.947999999999,
+      "largestResidualRectangleArea": 302400,
+      "pocketAreaReduction": 0,
+      "counterfactualScore": 7805.947999999999
+    },
+    {
+      "sequence": 6414,
+      "x": 1530,
+      "y": 1610,
+      "existingScore": 5853.382545454546,
+      "largestResidualRectangleArea": 165760,
+      "pocketAreaReduction": 136640,
+      "counterfactualScore": 2437.382545454546
+    },
+    {
+      "sequence": 6416,
+      "x": 1490,
+      "y": 980,
+      "existingScore": 7892.1540606060635,
+      "largestResidualRectangleArea": 302400,
+      "pocketAreaReduction": 0,
+      "counterfactualScore": 7892.1540606060635
+    },
+    {
+      "sequence": 6420,
+      "x": 1490,
+      "y": 1610,
+      "existingScore": 5942.188606060607,
+      "largestResidualRectangleArea": 154560,
+      "pocketAreaReduction": 147840,
+      "counterfactualScore": 2246.1886060606066
+    }
+  ],
+  "limits": "Single recorded intermediate advisory pocket only; other placements fixed. Not full board protected void or final routability/selection. No heuristic acceptance or causal witness promotion. All roots informed."
+}
