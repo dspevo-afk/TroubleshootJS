@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "baseCommit": "ca050e0445168249481b68dbb357f9e7b5553f9f",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "versions": [
+    15,
+    20
+  ],
+  "densities": [
+    14,
+    15
+  ],
+  "unitSuites": [
+    [
+      "PcbRoutedTraceGuardContractTest",
+      "PCB routed trace guard contracts "
+    ],
+    [
+      "PcbTraceWidthGeometryContractTest",
+      "PCB trace width geometry contracts "
+    ],
+    [
+      "RelBSessionIdentityContractTest",
+      "REL-B session identity contracts "
+    ]
+  ],
+  "routesSuites": [
+    [
+      "PcbRoutedTraceGuardTrialContractTest",
+      "PCB routed trace guard trial contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup2",
+      "PCB routed trace guard trial Group2 contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup3",
+      "PCB routed trace guard trial Group3 contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup4",
+      "PCB routed trace guard trial Group4 contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup5",
+      "PCB routed trace guard trial Group5 contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup6",
+      "PCB routed trace guard trial Group6 contracts "
+    ],
+    [
+      "PcbRoutedTraceGuardTrialContractTestGroup7",
+      "PCB routed trace guard trial Group7 contracts "
+    ]
+  ],
+  "baselinePath": "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourcePath": "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "casePrefix": "PCB_TRACE_GUARD_CASE ",
+  "routePassDetail": "roots=2 pairs=2 rows=4 evaluator=compactRouted",
+  "metrics": [
+    "area",
+    "largestProtectedEmptyRectangleArea",
+    "copperManhattanLength",
+    "vias"
+  ],
+  "timingScope": "Native trace guard trial; unchanged per-JVM/search/physical limits",
+  "scope": "COPY-only explicit20; all14 explicit15 replay42 non-time fields exact; strict four-metric no-regression with an area/void improvement required"
+}

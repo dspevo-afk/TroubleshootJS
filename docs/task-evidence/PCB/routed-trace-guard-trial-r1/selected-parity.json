@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "pairs": 14,
+  "physicalGeometryExactPairs": 14,
+  "workAndSelectionExactPairs": 14,
+  "other39NonTimeIdentityFieldsExactPairs": 14,
+  "ignoredInterpretationFields": [
+    "version",
+    "density",
+    "sourcePlanSha256"
+  ],
+  "separatelyBoundedTimeField": "elapsedMillis",
+  "rows": [
+    {
+      "seed": "-1017",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "-1004",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "-1022",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "0",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "17",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "42",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "1",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "7",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "5",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "14",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "2",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "3",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "4",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    },
+    {
+      "seed": "6",
+      "changedFieldsExceptVersionDensityPlanTime": []
+    }
+  ]
+}

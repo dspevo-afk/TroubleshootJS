@@ -197,6 +197,17 @@ pose-declaration failures remain; corrected12 real host canaries/49 reader cases
 and fresh final phases pass. COPY restored1467/retired,8 births exited, main1475
 exact. Next audit trace-vertex guard conservatism; no changed policy is accepted.
 [Cut diagnosis and limits](task-evidence/PCB/compactor-cut-cause-r1/README.md).
+Private20 split trace-vertex guard is rejected for no measured improvement.
+Fresh unit3 PASS49.073s (93 compactor/78 width/191 replay assertions) and routes7
+PASS205.297s physically admit all28 boards and reproduce all14 saved15 cases.
+All14 selected geometry/work receipts remain exact, with zero deltas in area,
+protected void, copper and vias; strict fitness FAILs the required improvement.
+The width-profile fixture failure is preserved49 artifacts/25 gates; final27-gate
+freeze,43 reader canaries,12 actual host canaries and root review pass. COPY
+restored1467/retired; all6 births exited; main1475/default15/general16 unchanged.
+No production/GWT/player promotion. Next examine bounded local placement rather
+than repeating a guard change that leaves these selected boards exact.
+[Guard trial and limits](task-evidence/PCB/routed-trace-guard-trial-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

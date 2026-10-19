@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Synthetic offline-reader canaries only; native runtime evidence NOT RUN.",
+  "protocolSha256": "6473758c9248a9958cb73229b0a0cfa8c825d8c66712f9341db4b92d7644389e",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "consumedSha256": {
+    "assess.py": "1827c6486665b6d6617d5dade01b1c256a07d5ee02bbe1385ecd80433d18fd7f",
+    "check_assessment.py": "f9c33316226c411c4bd4841b50e30d38f4c74e2c8973cc93568c93f3004a9ddc",
+    "proposal.json": "4ec7c2be29cd54a8037ec7b829f53b1785a83767a7a94a2bb258067cf3382576",
+    "protocol.json": "6473758c9248a9958cb73229b0a0cfa8c825d8c66712f9341db4b92d7644389e",
+    "unit-suites.json": "38abfae20c6e2e179a541bcd701bf12f91dd26f2ca55b8c6f8cb8bc7ef7e6097",
+    "routes-suites.json": "034cb9fb8ba6b91df3d4ffab257412b7d745923c3e31f5434285d23ab0490a31",
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d"
+  },
+  "nativeRuntimeEvidence": "NOT_RUN",
+  "caseCount": 43,
+  "groups": [
+    {
+      "name": "case-timing",
+      "cases": 2
+    },
+    {
+      "name": "closed-reports",
+      "cases": 1
+    },
+    {
+      "name": "identity",
+      "cases": 4
+    },
+    {
+      "name": "markers",
+      "cases": 4
+    },
+    {
+      "name": "ordered-reports",
+      "cases": 5
+    },
+    {
+      "name": "phase-receipts",
+      "cases": 4
+    },
+    {
+      "name": "pinned-inputs",
+      "cases": 4
+    },
+    {
+      "name": "positive-phases",
+      "cases": 2
+    },
+    {
+      "name": "strict-fitness",
+      "cases": 4
+    },
+    {
+      "name": "strict-json",
+      "cases": 5
+    },
+    {
+      "name": "strict-types",
+      "cases": 2
+    },
+    {
+      "name": "timing",
+      "cases": 4
+    },
+    {
+      "name": "unit-prerequisite",
+      "cases": 2
+    }
+  ],
+  "cases": [
+    {
+      "group": "pinned-inputs",
+      "name": "frozen proposal, protocol, baseline and original log load",
+      "result": "PASS"
+    },
+    {
+      "group": "strict-json",
+      "name": "duplicate JSON object keys",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-json",
+      "name": "NaN rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-json",
+      "name": "infinite float rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-json",
+      "name": "noncanonical negative zero rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-json",
+      "name": "invalid UTF-8 rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "protocol digest mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "proposal content mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "pinned-inputs",
+      "name": "suite manifest digest mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "positive-phases",
+      "name": "complete ordered 15/20 route phase with finite metrics",
+      "result": "PASS"
+    },
+    {
+      "group": "positive-phases",
+      "name": "all three unit markers, terminal and cleanup",
+      "result": "PASS"
+    },
+    {
+      "group": "unit-prerequisite",
+      "name": "exact current unit-validation recomputation",
+      "result": "PASS"
+    },
+    {
+      "group": "unit-prerequisite",
+      "name": "stale unit-validation input hash rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "ordered-reports",
+      "name": "15/20 report order changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "ordered-reports",
+      "name": "case row schema/order changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "ordered-reports",
+      "name": "case field order changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "ordered-reports",
+      "name": "duplicate case row",
+      "result": "REJECTED"
+    },
+    {
+      "group": "ordered-reports",
+      "name": "missing case row",
+      "result": "REJECTED"
+    },
+    {
+      "group": "identity",
+      "name": "foreign root identity",
+      "result": "REJECTED"
+    },
+    {
+      "group": "identity",
+      "name": "noncanonical negative-zero seed rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "identity",
+      "name": "saved15 non-time mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "identity",
+      "name": "explicit20 live graph mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-types",
+      "name": "seed transported as floating point",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-types",
+      "name": "boolean metric rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "closed-reports",
+      "name": "unknown PCB report rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "case-timing",
+      "name": "per-case time over 60000ms rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "case-timing",
+      "name": "boolean case elapsed rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "strict-fitness",
+      "name": "area regression retained in assessment",
+      "result": "NATIVE_PASS_STRICT_FAIL"
+    },
+    {
+      "group": "strict-fitness",
+      "name": "largestProtectedEmptyRectangleArea regression retained in assessment",
+      "result": "NATIVE_PASS_STRICT_FAIL"
+    },
+    {
+      "group": "strict-fitness",
+      "name": "copperManhattanLength regression retained in assessment",
+      "result": "NATIVE_PASS_STRICT_FAIL"
+    },
+    {
+      "group": "strict-fitness",
+      "name": "vias regression retained in assessment",
+      "result": "NATIVE_PASS_STRICT_FAIL"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "log and child receipt report mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "missing terminal PASS rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "missing cleanup marker rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "phase-receipts",
+      "name": "unknown failure or skip rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing",
+      "name": "boolean elapsed seconds rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing",
+      "name": "negative elapsed seconds rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing",
+      "name": "elapsed seconds above unchanged cap rejected",
+      "result": "REJECTED"
+    },
+    {
+      "group": "timing",
+      "name": "timing field order changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "markers",
+      "name": "route rows detail changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "markers",
+      "name": "unit fixture count changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "markers",
+      "name": "REL-B identity owner marker changed",
+      "result": "REJECTED"
+    },
+    {
+      "group": "markers",
+      "name": "routes suite order changed",
+      "result": "REJECTED"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Unit trace-guard, width-geometry, and replay-identity contracts only; routes and fitness are not evaluated.",
+  "proposalSha256": "4ec7c2be29cd54a8037ec7b829f53b1785a83767a7a94a2bb258067cf3382576",
+  "protocolSha256": "6473758c9248a9958cb73229b0a0cfa8c825d8c66712f9341db4b92d7644389e",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "suiteManifestSha256": "38abfae20c6e2e179a541bcd701bf12f91dd26f2ca55b8c6f8cb8bc7ef7e6097",
+  "phaseInputs": {
+    "unit.txt": "a5afdc536c2868bf9d7af402726af8513877050638c54e5ee0e4e3e9dd503594",
+    "unit-receipt.txt": "93705cfbf1f9a263d42ef7ac78ec537555768bb5fa2f4f6381705d765ed16285",
+    "unit-timing.json": "0cbc0d4fe2a75f282f4250d0fe65eb971ba51ba35760b0d1169f11ac4f17ab30",
+    "unit-suites.json": "38abfae20c6e2e179a541bcd701bf12f91dd26f2ca55b8c6f8cb8bc7ef7e6097"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 3,
+    "suiteClasses": [
+      "PcbRoutedTraceGuardContractTest",
+      "PcbTraceWidthGeometryContractTest",
+      "RelBSessionIdentityContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed trace guard contracts ",
+      "PCB trace width geometry contracts ",
+      "REL-B session identity contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

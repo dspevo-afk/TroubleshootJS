@@ -1,0 +1,52 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1475,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "c99d77116b4b31e19c0b1f3a244e394944a64e74ec4482ca0d0cea3e1ad51f15",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "d87375493505fe9af424e8a9c13be8b1e021ddecdf5238504c34550e74c6d450",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "f9e1efbeab16721c7c26b7d9d31df4e5a263883566281aeea1fcc2d8e956f9f3",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "b0cc281469ba54f111d7b4233c86046ff890243d12340019d9b4cb04e3ca01f5",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "72a5c0ab8010500e814d3e9994b4bda75991ebdcc1abea0e7579283ef06feafc"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedTraceGuardContractTest.java": "f7280274e28622aff4b8f47ce67ee1c8210d612304687e775a9fc5f9e5804338",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTest.java": "60e4e55c5612b22d6c600adf702526b9095ee5a90afca7db4d9d001c726c2e21",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup2.java": "403dd91ff6380617622caddc8e243c49299dc5480eaf566602f89fa0db264945",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup3.java": "8b5839041201055194e936ea66c1d3f8fd83594111f76828f94646f3991237b2",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup4.java": "756e65261cd443ab9d67d36808166319def55df4bc7f1933ce71b51f7a285862",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup5.java": "5d7b459745a9a99661b816c9a0b24da5ef82312c44d212775f821e67d0ca5e34",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup6.java": "348ffb71320b1b0ce67303e303877dd35ffb50cf078fb516245e8874b1ad4914",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup7.java": "5b65a035f381016f4ebde3720bc8a2be859ee3af1b326fc5732e105f8f07e65f"
+  },
+  "gateOwners": {
+    "proposal.json": "4ec7c2be29cd54a8037ec7b829f53b1785a83767a7a94a2bb258067cf3382576",
+    "guard-audit.md": "5e577a06f2bba4e6f8dabd6e77b76eae222351620941be13ae22c6b3b03fdff2",
+    "prepare.py": "aef79eebc6711c27e9f6e749399215c446f66faee7340dd2b80588ba36167487",
+    "prepare_cases.py": "3f34239b3d1973048b8e5cc333505169c50419dcbf5f76a332c3654b67489eda",
+    "prepare_phase_gates.py": "ddc6932301afe9482cbfca76c3392b162e328a4069b5884c3a4477718cc8af66",
+    "protocol.json": "6473758c9248a9958cb73229b0a0cfa8c825d8c66712f9341db4b92d7644389e",
+    "unit-suites.json": "38abfae20c6e2e179a541bcd701bf12f91dd26f2ca55b8c6f8cb8bc7ef7e6097",
+    "routes-suites.json": "034cb9fb8ba6b91df3d4ffab257412b7d745923c3e31f5434285d23ab0490a31",
+    "inputs.py": "ade7b301b34106a98382605a0577dfd84cf9deabda1966daca58a36ad165542a",
+    "run_native.ps1": "254d1dc91cb49e96622d6a79eeabf07fb1a69914a6bc4c179b0bf0f4d07b1366",
+    "check_process_cleanup.ps1": "39da3a6b39cef00e5f10f332efa2d591e5281752b718a3cf8dd6367891c28aef",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "assess.py": "1827c6486665b6d6617d5dade01b1c256a07d5ee02bbe1385ecd80433d18fd7f",
+    "check_assessment.py": "f9c33316226c411c4bd4841b50e30d38f4c74e2c8973cc93568c93f3004a9ddc",
+    "assessment-canary-results.json": "e0c45a4bf6f96fbc9f31fe8a0a32dd43ada09624a507ea06824ca6cae42bc475",
+    "reader-notes.md": "ee3a1a039792b56ebc3b312426f0ab7a965b9c85a125c515644dc0037f713b3a",
+    "worker-notes.md": "3cc4c57873b3aa956176ad08df4c3303bf5dccfe0ab501847b0daccf6608f97f",
+    "review_source.py": "200e1365a565c234aa1915bb6feedec11ef6503d46bd01323365cfbd76ffe603",
+    "source-review.diff": "d6887c66f77df5afcfa28943a2c28a67422ea440a666e0cfd6ecb6352930bfe8",
+    "source-review.json": "49613eacd72140a1c256d6b5ffe40fe9334ab31856d0e09728f929d3486bc790",
+    "review-ack.json": "06dcb35b5e02db5c0d5e20326a4e0b0fad91c72c537a36dbc8aacebf4edbc330",
+    "retire_copy.py": "a5a3e1bf7a7566b116205c5ab8fa3895bf036b1c2dca73606af222eaef5dfd60",
+    "suite_transport.ps1": "16c79dd693111ea1450562436d905c910c23304fcfd0bff59a924ed7ba4d62f6",
+    "check_suite_transport.ps1": "c2c7704505e6c0495136635e44151dc28e86138417cd9d0252a3e7340ab37943",
+    "suite-transport-canaries.json": "356d0b67d1cfe0c6cab479c758c09a9633f19ab2437f0080b61c5b07b07f611f"
+  },
+  "accepted15BaselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816"
+}

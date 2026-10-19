@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 205.2969005,
+  "suiteCount": 7,
+  "phase": "routes",
+  "scope": "Native trace guard trial; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

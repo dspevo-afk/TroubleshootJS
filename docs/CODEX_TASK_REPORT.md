@@ -1,4 +1,40 @@
-# Current checkpoint: routed cut diagnosis complete; guard audit next
+# Current checkpoint: private20 trace guard rejected; local placement next
+
+2026-10-19. Base/published predecessor `ca050e0445168249481b68dbb357f9e7b5553f9f`
+on `codex/q60-faulted-profile-counts`. Packet complete, ready for normal branch
+publication. Indefinite continuation active; no main/email. All1475 accepted
+production inputs/default15/general16 remain exact.
+
+Private20/density15 split routed trace guards with CHANNEL20/GRID10, full package
+access, hole/via guards, physical validators and all numeric caps unchanged.
+Fresh unit3 PASS49.0729538s/exit0:93 compactor/78 widthgeometry/191 replay assertions.
+Fresh routes7 PASS205.2969005s/exit0:28 physical admissions, all14 saved15 rows exact
+in42 non-time fields. Strict reader exits2: fitness FAIL because allfour metrics
+have zero deltas. All14 selected geometry/work receipts and39 fields remain exact
+across15/20 after excluding version/density/source-plan/time. No improvement.
+
+Final COPY1475 has7 overrides/8 additions/27 frozen gates. Existing physical
+witness/verifier reconstruct byte-exact outside adapter/registrations. Root43
+synthetic reader cases and12 actual PowerShell3/7-suite transport canaries pass.
+Attempt1 FAIL45.9804363s metadata2/JVM1 at input validation before any compactor
+call is retained49 exact artifacts/25 gates/15 deltas. Fixture-only role/profile
+correction preserves every production/helper/verifier byte and geometry oracle.
+Final phases are fresh; no native PASS reuse. Root integrated packet review PASS.
+
+All6 recorded driver births exited without termination. COPY restored exact1467
+and retired with contained non-reparse checks; private state removed. No active
+native/GWT/browser/preview/profile. Original5 unrelated entries/shared tools remain.
+Phase elapsed includes maintained cleanup, not timed separately; birth checks
+have separate receipts. GWT/player/actual20 Save-Load/solver/repair/full matrix/
+unseen/all-seed/manufacturing NOT RUN; no production promotion or ownership change.
+
+Next: publish explicit packet/docs paths, verify exact remote SHA, then continue
+source-grounded local placement under existing candidate/work/router caps. A
+read-only leaf audit is running; no next policy/threshold has been chosen. A
+same-guard winner-only pass has no measured opportunity in these unchanged boards.
+Evidence `docs/task-evidence/PCB/routed-trace-guard-trial-r1/README.md`.
+
+# Previous checkpoint: routed cut diagnosis complete; guard audit next
 
 2026-10-19. Base/published HEAD `8b88311959d3faa8df2fefa4e31b0dcd9594ff8f` on
 `codex/q60-faulted-profile-counts`, exact origin verified. This observation packet

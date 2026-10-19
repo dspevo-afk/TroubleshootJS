@@ -1,0 +1,15 @@
+{
+  "rootReviewed": true,
+  "diffSha256": "94761e2d765769f515764fb15f8865e5c1c1b50c96eda85c7139abb8b1a0b343",
+  "scope": "All7overrides/8additions reviewed; newunit3fixture configurations plus one repeat; oldphysicalwitness/verifier exact outside narrowadapter/registrations",
+  "preparationFindingsResolved": [
+    "fixture endpoint escape directions corrected before first native run; same cut expectations",
+    "unit rejection helper catches only IllegalArgumentException",
+    "unit marker matches frozen registry/protocol",
+    "existing replay identity suite added before freeze; fresh3/7transport12PASS",
+    "final43 reader canaries freshly recomputed in memory; exact receipt match",
+    "source-erasure proof corrected to constructor/main boundary before first native run",
+    "Attempt1 native FAIL45.9804363s preserved49artifacts/25gates; fixture-only SIGNAL9/SUPPLY11 plus explicit ROLE_WIDTHS; same geometry/oracles and production bytes; fresh unit required"
+  ],
+  "limits": "Native/GWT/player NOT RUN at this review; no source promotion"
+}

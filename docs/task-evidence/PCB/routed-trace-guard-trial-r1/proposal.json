@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "baseCommit": "ca050e0445168249481b68dbb357f9e7b5553f9f",
+  "scope": "COPY-only private20 routed trace-vertex guard experiment; production15 and general16 unchanged",
+  "hypothesis": "Splitting the self-clearance reserve across two trace vertices may expose legal whole-grid strip cuts without reducing any physical minimum",
+  "newTraceGuard": "ceil(PcbTraceRules.clearance(width,width)/2)",
+  "unchanged": ["CHANNEL20", "GRID10", "full package access envelopes", "hole/via guards", "physical validators", "route quality", "candidate order", "search work caps", "routing caps", "seed order", "signed-long seed transport"],
+  "roots": ["-1017", "-1004", "-1022", "0", "17", "42", "1", "7", "5", "14", "2", "3", "4", "6"],
+  "requiredBeforeRuntime": ["review explicit interpretation mapping and source diff", "direct actual-compactor unit fixtures including mixed-width copper", "strict reader synthetic canaries", "actual selected-PowerShell suite transport canaries", "freeze all consumed sources and gate owners"],
+  "finiteAcceptance": "All14 explicit15 replays exact in42 non-time fields; all14 explicit20 routes physically admit with unchanged graph/source intent; area, protected empty rectangle, copper length and via count never increase; at least one area or protected-empty-rectangle decrease",
+  "rejection": "Preserve failures and exact trial source; restore and retire COPY; no promotion or changed thresholds",
+  "promotion": "Only after finite acceptance: separately qualify production interpretation, required native contracts, actual JDK8/GWT build and visible player flow",
+  "limits": "Informed finite corpus; no all-seed, solver, manufacturing, or player-flow claim from native trial"
+}

@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 20756,
+      "startTicks": "639280437894002802",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-trace-guard-trial-r1/run_native.ps1"
+    },
+    {
+      "pid": 9876,
+      "startTicks": "639280437896459819",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-trace-guard-trial-r1/run_native.ps1"
+    }
+  ],
+  "phase": "routes",
+  "ownership": "Captured before bounded native trace-guard phase; unique source copy"
+}

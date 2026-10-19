@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "copyCount": 1475,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "c99d77116b4b31e19c0b1f3a244e394944a64e74ec4482ca0d0cea3e1ad51f15",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "d87375493505fe9af424e8a9c13be8b1e021ddecdf5238504c34550e74c6d450",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "f9e1efbeab16721c7c26b7d9d31df4e5a263883566281aeea1fcc2d8e956f9f3",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "b0cc281469ba54f111d7b4233c86046ff890243d12340019d9b4cb04e3ca01f5",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "72a5c0ab8010500e814d3e9994b4bda75991ebdcc1abea0e7579283ef06feafc"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedTraceGuardContractTest.java": "4afbb2b7b7e1b2ccfb306c26142a878cd0ff4337424e3c327d8d1b25d5f60c2b",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTest.java": "60e4e55c5612b22d6c600adf702526b9095ee5a90afca7db4d9d001c726c2e21",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup2.java": "403dd91ff6380617622caddc8e243c49299dc5480eaf566602f89fa0db264945",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup3.java": "8b5839041201055194e936ea66c1d3f8fd83594111f76828f94646f3991237b2",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup4.java": "756e65261cd443ab9d67d36808166319def55df4bc7f1933ce71b51f7a285862",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup5.java": "5d7b459745a9a99661b816c9a0b24da5ef82312c44d212775f821e67d0ca5e34",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup6.java": "348ffb71320b1b0ce67303e303877dd35ffb50cf078fb516245e8874b1ad4914",
+    "tests/contracts/PcbRoutedTraceGuardTrialContractTestGroup7.java": "5b65a035f381016f4ebde3720bc8a2be859ee3af1b326fc5732e105f8f07e65f"
+  },
+  "existingPhysicalWitnessCoreExact": true,
+  "verifierUnchangedOutsideRegistrations": true,
+  "diffSha256": "94761e2d765769f515764fb15f8865e5c1c1b50c96eda85c7139abb8b1a0b343"
+}

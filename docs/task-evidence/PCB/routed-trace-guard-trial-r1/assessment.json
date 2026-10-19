@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "COPY-only explicit20; all14 explicit15 replay42 non-time fields exact; strict four-metric no-regression with an area/void improvement required",
+  "proposalSha256": "4ec7c2be29cd54a8037ec7b829f53b1785a83767a7a94a2bb258067cf3382576",
+  "protocolSha256": "6473758c9248a9958cb73229b0a0cfa8c825d8c66712f9341db4b92d7644389e",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "unitPrerequisiteSha256": "3765eb485252d57d57860b3e61a4b89cc4f63b1602f38a32ecddef0f634a6bd4",
+  "routesSuiteManifestSha256": "034cb9fb8ba6b91df3d4ffab257412b7d745923c3e31f5434285d23ab0490a31",
+  "routePhaseInputs": {
+    "routes.txt": "bef989d6ecac8b900aa9b2864a5accdc4b07dbfd330f2a8977b313537b2fe3b6",
+    "routes-receipt.txt": "0ea3c3d5b6dcb705e39f1c167b4e7f1b57553dbe0cab17e8325e073f0aaa17de",
+    "routes-timing.json": "2d6572997fd731a90f92d8242ec3f4abb7e8ac3f433100394896e77ab7f9097d",
+    "routes-suites.json": "034cb9fb8ba6b91df3d4ffab257412b7d745923c3e31f5434285d23ab0490a31"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 7,
+      "suiteClasses": [
+        "PcbRoutedTraceGuardTrialContractTest",
+        "PcbRoutedTraceGuardTrialContractTestGroup2",
+        "PcbRoutedTraceGuardTrialContractTestGroup3",
+        "PcbRoutedTraceGuardTrialContractTestGroup4",
+        "PcbRoutedTraceGuardTrialContractTestGroup5",
+        "PcbRoutedTraceGuardTrialContractTestGroup6",
+        "PcbRoutedTraceGuardTrialContractTestGroup7"
+      ],
+      "reportRows": 56,
+      "orderedMarkers": [
+        "PCB routed trace guard trial contracts ",
+        "PCB routed trace guard trial Group2 contracts ",
+        "PCB routed trace guard trial Group3 contracts ",
+        "PCB routed trace guard trial Group4 contracts ",
+        "PCB routed trace guard trial Group5 contracts ",
+        "PCB routed trace guard trial Group6 contracts ",
+        "PCB routed trace guard trial Group7 contracts "
+      ],
+      "census": {
+        "nativeAdmission": {
+          "status": "PASS",
+          "cases": 28,
+          "roots": 14,
+          "explicit15ExactRows": 14,
+          "explicit20AdmittedRows": 14
+        },
+        "strictFitness": {
+          "status": "FAIL",
+          "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+          "reasons": [
+            "no area or protected-empty-rectangle decrease was observed"
+          ],
+          "violations": [],
+          "deltas": [
+            {
+              "seed": "-1017",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1004",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1022",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "0",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "17",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "42",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "1",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "7",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "5",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "14",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "2",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "3",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "4",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "6",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            }
+          ]
+        },
+        "routeCaseRows": 28,
+        "whitespaceRows": 28,
+        "orderedRootVersions": [
+          {
+            "seed": "-1017",
+            "version": 15
+          },
+          {
+            "seed": "-1017",
+            "version": 20
+          },
+          {
+            "seed": "-1004",
+            "version": 15
+          },
+          {
+            "seed": "-1004",
+            "version": 20
+          },
+          {
+            "seed": "-1022",
+            "version": 15
+          },
+          {
+            "seed": "-1022",
+            "version": 20
+          },
+          {
+            "seed": "0",
+            "version": 15
+          },
+          {
+            "seed": "0",
+            "version": 20
+          },
+          {
+            "seed": "17",
+            "version": 15
+          },
+          {
+            "seed": "17",
+            "version": 20
+          },
+          {
+            "seed": "42",
+            "version": 15
+          },
+          {
+            "seed": "42",
+            "version": 20
+          },
+          {
+            "seed": "1",
+            "version": 15
+          },
+          {
+            "seed": "1",
+            "version": 20
+          },
+          {
+            "seed": "7",
+            "version": 15
+          },
+          {
+            "seed": "7",
+            "version": 20
+          },
+          {
+            "seed": "5",
+            "version": 15
+          },
+          {
+            "seed": "5",
+            "version": 20
+          },
+          {
+            "seed": "14",
+            "version": 15
+          },
+          {
+            "seed": "14",
+            "version": 20
+          },
+          {
+            "seed": "2",
+            "version": 15
+          },
+          {
+            "seed": "2",
+            "version": 20
+          },
+          {
+            "seed": "3",
+            "version": 15
+          },
+          {
+            "seed": "3",
+            "version": 20
+          },
+          {
+            "seed": "4",
+            "version": 15
+          },
+          {
+            "seed": "4",
+            "version": 20
+          },
+          {
+            "seed": "6",
+            "version": 15
+          },
+          {
+            "seed": "6",
+            "version": 20
+          }
+        ]
+      }
+    }
+  },
+  "admission": {
+    "status": "PASS",
+    "cases": 28,
+    "roots": 14,
+    "explicit15ExactRows": 14,
+    "explicit20AdmittedRows": 14
+  },
+  "strictFitness": {
+    "status": "FAIL",
+    "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+    "reasons": [
+      "no area or protected-empty-rectangle decrease was observed"
+    ],
+    "violations": [],
+    "deltas": [
+      {
+        "seed": "-1017",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1004",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1022",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "0",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "17",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "42",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "1",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "7",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "5",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "14",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "2",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "3",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "4",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "6",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    ]
+  },
+  "caseCounts": {
+    "traceGuard": 28,
+    "whitespace": 28
+  },
+  "nativeRuntimeEvidence": "PASS",
+  "limits": [
+    "Fourteen fixed roots only; the result makes no unseen-root or all-seed claim.",
+    "All14 explicit15 route cases match all42 non-time saved fields; elapsedMillis is bounded separately.",
+    "Explicit20 native admission and four-metric fitness are reported separately.",
+    "Explicit20 player replay, solver, manufacturing and production promotion are NOT RUN."
+  ]
+}

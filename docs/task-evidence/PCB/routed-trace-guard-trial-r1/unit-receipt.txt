@@ -1,0 +1,5 @@
+PASS: PCB routed trace guard contracts assertions=93 fixtures=3 evaluator=compactRouted
+
+PASS: PCB trace width geometry contracts assertions=78
+
+PASS: REL-B session identity contracts assertions=191 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false

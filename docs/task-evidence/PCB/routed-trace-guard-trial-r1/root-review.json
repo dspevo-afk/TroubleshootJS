@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "scope": "Integrated source/receipt/strict-fitness/cleanup review; no production promotion",
+  "baseCommit": "ca050e0445168249481b68dbb357f9e7b5553f9f",
+  "main1475Exact": true,
+  "frozenGates": 27,
+  "sourceDeltas": 15,
+  "syntheticReaderCases": 43,
+  "actualTransportCases": 12,
+  "unitSuites": 3,
+  "routeSuites": 7,
+  "cases": 28,
+  "saved15ExactRows": 14,
+  "trial20AdmittedRows": 14,
+  "strictFitness": "FAIL",
+  "selectedGeometryAndWorkExactPairs": 14,
+  "independentMetricDeltas": [
+    {
+      "seed": "-1017",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1004",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1022",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "0",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "17",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "42",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "1",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "7",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "5",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "14",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "2",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "3",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "4",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "6",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    }
+  ],
+  "violations": [],
+  "recordedDriverBirthsExited": 6,
+  "failedAttempt1PreservedArtifacts": 49,
+  "failedAttempt1Gates": 25,
+  "copyRestored1467AndRetired": true,
+  "productionBuildPlayerSolverAllSeed": "NOT_RUN"
+}
