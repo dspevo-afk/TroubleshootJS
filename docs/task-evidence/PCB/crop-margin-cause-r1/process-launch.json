@@ -1,0 +1,17 @@
+{
+  "session": 84451,
+  "drivers": [
+    {
+      "pid": 22500,
+      "startTicks": "639279924074186021",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/crop-margin-cause-r1/run_focused.ps1"
+    },
+    {
+      "pid": 23956,
+      "startTicks": "639279924082468672",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/crop-margin-cause-r1/run_focused.ps1"
+    }
+  ]
+}

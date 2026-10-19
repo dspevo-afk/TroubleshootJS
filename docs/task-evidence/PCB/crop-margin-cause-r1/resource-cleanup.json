@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "remainingOwnedPids": [],
+  "taskTempRemains": false,
+  "activeDiagnosticContracts": [],
+  "terminal": "Native exit0 and maintained scratch cleanup marker",
+  "preserved": "Original five untracked entries/shared tools/unrelated resources"
+}

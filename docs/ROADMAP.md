@@ -55,7 +55,13 @@ attempts stay the same. Modified0 routing rejection/selection causes the prior
 regressions, not rank displacement. Rejected15 remains rejected; accepted1447
 inputs/full compiled identity restored. No fresh GWT/player/full matrix claim.
 [Route cause and limits](task-evidence/PCB/route-ranking-cause-r1/README.md).
-Next: accepted14 crop-margin measurement under unchanged physical/search/work limits.
+Accepted14-only crop audit reproduces six informed selected layouts exactly.
+Native3PASS85.4362s; actual/fixed/access margins identify five fixed floors above
+access needs and no selected fallback increase. Registry/active diagnostics cleaned;
+accepted1447/full compiled identity exact. No production or margin-policy change.
+[Crop observations and limits](task-evidence/PCB/crop-margin-cause-r1/README.md).
+Next: bounded post-selection border-trim trial with previous valid margin fallback,
+under unchanged routing, physical and search/work limits.
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

@@ -1,4 +1,35 @@
-# Current checkpoint: route availability cause resolved; accepted14 restored
+# Current checkpoint: crop-margin cause measured; accepted14 exact
+
+2026-10-19. BaseHEADcdfa8af1de4c1373a5f58972df7c44fe7af18fb4 normally pushed/
+exact originSHA verified on established branch. Production14/density13 exact410;
+indefinite continuation/no main/no email active. Original five untracked entries/
+shared tools preserved. No native/build/preview/tab/viewport/task temp remains.
+
+crop-margin-cause-r1 accepted14-only diagnostic roots-1022/7/14/4/6/42, three
+2-root JVM partitions. Native3 PASS85.4361605s including terminal cleanup (not
+separately timed), numeric exit0; fixed60s/6x60000/3+3 bounds unchanged. Frozen
+1462 input audit PASS;11 synthetic reader guards PASS. All6 geometry/metrics/
+identity fields exact accepted14. Physical/source/probe/margin assertions11123.
+Full matrix/independent electrical/GWT/player NOT RUN; no production source edit.
+
+Actual/fixed/access margins: -1022 50/50/30;4 50/50/35;6 50/50/35;7 50/50/34;
+14 65/50/65;42 50/50/44. No selected layout fallback increment. Five fixed floors
+exceed reconstructed access need; this is not minimal-valid-margin proof. Final
+footprints checked against exact poses/pads/escapes/probes; margin formula is
+translation-invariant; both extents/four sides and observation purity verified.
+
+Registry byte-restored,3 active diagnostic copies retired after archive checks.
+Verified snapshot/private state removed;22500/23956 recorded identities exited.
+Restored1447 and all5 source/script/compiled-web identity fields exact410 PASS;
+prior accepted GWT/player proof reused only at that boundary, not fresh execution.
+Root review/result audit PASS. Diagnostic docs/evidence only, no shrinkage yet.
+
+Next: final diff/cached checks/normal diagnostic publication; then bounded native
+post-selection margin-trim trial under unchanged route/physical limits, fallback
+to old valid margin on rejection, whole10-unit translations. Read-only worker
+review pending before implementation; no new production behavior implemented.
+
+# Previous checkpoint: route availability cause resolved; accepted14 restored
 
 2026-10-19. BaseHEAD202aa5e685961a47c7884d136608dda93ef2ea87 on established
 branch; production14/density13 exact410bcd73. Indefinite PCB continuation active,

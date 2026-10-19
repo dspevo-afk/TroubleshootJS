@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "canaryCount": 11,
+  "scope": "Synthetic exact/fallback observations and nine rejection guards; no PCB runtime proof"
+}

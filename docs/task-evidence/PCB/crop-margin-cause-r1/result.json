@@ -1,0 +1,8 @@
+{
+  "status": "PASS_DIAGNOSTIC_AND_RESTORATION",
+  "cases": 6,
+  "nativeSeconds": 85.4361605,
+  "finding": "Five selected layouts have fixed floor above reconstructed access need; zero selected-layout fallback increments observed",
+  "production": "Exact accepted14/density13 and full compiled execution identity; no production algorithm change",
+  "limits": "Finite informed roots, not minimal-valid-margin proof. No fresh GWT/player/full-matrix/independent electrical qualification. Prior proof reused only at exact restored execution boundary."
+}

@@ -1,0 +1,79 @@
+{
+  "status": "PASS_EXACT_REPRODUCTION_AND_CROP_OBSERVATION",
+  "cases": [
+    {
+      "seed": "-1022",
+      "width": 3672,
+      "height": 1891,
+      "occupiedWidth": 3572,
+      "occupiedHeight": 1791,
+      "actualMargin": 50,
+      "requestedMargin": 50,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 30,
+      "inferredFallbackUsed": false
+    },
+    {
+      "seed": "4",
+      "width": 3611,
+      "height": 2041,
+      "occupiedWidth": 3511,
+      "occupiedHeight": 1941,
+      "actualMargin": 50,
+      "requestedMargin": 50,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 35,
+      "inferredFallbackUsed": false
+    },
+    {
+      "seed": "6",
+      "width": 4081,
+      "height": 1922,
+      "occupiedWidth": 3981,
+      "occupiedHeight": 1822,
+      "actualMargin": 50,
+      "requestedMargin": 50,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 35,
+      "inferredFallbackUsed": false
+    },
+    {
+      "seed": "7",
+      "width": 3602,
+      "height": 1776,
+      "occupiedWidth": 3502,
+      "occupiedHeight": 1676,
+      "actualMargin": 50,
+      "requestedMargin": 50,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 34,
+      "inferredFallbackUsed": false
+    },
+    {
+      "seed": "14",
+      "width": 3621,
+      "height": 2029,
+      "occupiedWidth": 3491,
+      "occupiedHeight": 1899,
+      "actualMargin": 65,
+      "requestedMargin": 65,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 65,
+      "inferredFallbackUsed": false
+    },
+    {
+      "seed": "42",
+      "width": 3321,
+      "height": 1662,
+      "occupiedWidth": 3221,
+      "occupiedHeight": 1562,
+      "actualMargin": 50,
+      "requestedMargin": 50,
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 44,
+      "inferredFallbackUsed": false
+    }
+  ],
+  "fallbackCount": 0,
+  "scope": "Six informed accepted14 layouts exact; requested margin reconstructed from final physical envelopes; fallback is source-supported inference, not captured exception telemetry"
+}

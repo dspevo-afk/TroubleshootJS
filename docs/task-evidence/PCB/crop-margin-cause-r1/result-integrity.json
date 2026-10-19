@@ -1,0 +1,108 @@
+{
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "assess.py",
+      "sha256": "f9486c1176278f9370d3574dcd669cb28b42a7bd0db0b7e9ebbe54224b1bee54"
+    },
+    {
+      "path": "assessment.json",
+      "sha256": "1d70762e53ea30ea767564a6ebd5e6144aa71981f8dba41a839b2ce21e9446fe"
+    },
+    {
+      "path": "assessor-canaries.json",
+      "sha256": "c9bc57a8fc83439c9b1e233bcdcebcd2a96adca0d7e66a44b8c1c0b74b518bbc"
+    },
+    {
+      "path": "byte-restoration.json",
+      "sha256": "995016c99328271c7b61f7e5d00b74c0993c0bbcee8844928d3a174ee18c35e2"
+    },
+    {
+      "path": "check_assessor.py",
+      "sha256": "b2c8716677c3c4aafc3932f1f2d06806423b07d87b3a0baa4bee2a8200caf91a"
+    },
+    {
+      "path": "focused-input-audit.json",
+      "sha256": "b0e87f9f2a99335f1f1cef6e1f05f887721a3790b900e153929bb2205a28cb27"
+    },
+    {
+      "path": "focused-inputs.json",
+      "sha256": "3b48ce3fcb9f6fce3294af5d324fecbc37881bb534bea28ceee5abbdeb3b18ac"
+    },
+    {
+      "path": "focused-native.txt",
+      "sha256": "d7495af7736a3ad5cf293be4ea73c17f82797796e16a18c69ccc48fa8c465943"
+    },
+    {
+      "path": "focused-plan.json",
+      "sha256": "85f42cfa9ba85bdd6a9510be3802ca63e6a8c79c0237d2a3901773289b661978"
+    },
+    {
+      "path": "focused-receipt.json",
+      "sha256": "313678225ee3751e76f392cecd87fb279c47c679fb6cda6a924e35369cfe1a68"
+    },
+    {
+      "path": "focused-timing.json",
+      "sha256": "072b299ea2631bed84075e402dfae65032a12c7d50ea73bb8d9a7a0be9c98880"
+    },
+    {
+      "path": "manage.py",
+      "sha256": "80b37cfa1677b67de1ecd4aa1f27948cc6d819eda041216a810b815f872fab37"
+    },
+    {
+      "path": "PcbCropMarginCauseContractTest.java",
+      "sha256": "3853d5ae316cd29170b242d8e28cd626837ac8c52281f4c7d88ced874e406dae"
+    },
+    {
+      "path": "PcbCropMarginCauseContractTestLast.java",
+      "sha256": "d629d67b71065c1968a7235db023b6d6b410756bc48550ab37e2dd9864442b76"
+    },
+    {
+      "path": "PcbCropMarginCauseContractTestSecond.java",
+      "sha256": "7ffee9025c7d9abba1a6904d5140021b5e54371e38e8d3a542770042fc1bb14a"
+    },
+    {
+      "path": "phase_inputs.py",
+      "sha256": "089e157139563da846ee541a5cfe5825816e96bff7bd2cb5e82d02633b91fb8f"
+    },
+    {
+      "path": "process-launch.json",
+      "sha256": "934427d0b5d732fde5267fc8854b7ddd0c8fce13ee7c53b0a829006967acce3a"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "df628a71654053b86555c6d6c59b5dcb1f0973d86ae8d5dcab7e5c5f572fd93f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8536c2590cb650d638e2586a2b9ae00debe4e115393ff5464fe62dd10cacffff"
+    },
+    {
+      "path": "resource-cleanup.json",
+      "sha256": "501139e7233e9886036f0e93dcc94571c96cb68f94d9da828ed6281f56874b50"
+    },
+    {
+      "path": "restored-accepted-input-audit.json",
+      "sha256": "7ddc080015ddf81c5fda205ada8b93c900eb1b2903f527458d5bc7e1990d51ce"
+    },
+    {
+      "path": "restored-provenance.json",
+      "sha256": "9c2df1158964e3c6a44c2f3e0be4c2c873810f42c3ad092e55ba4915f2359b68"
+    },
+    {
+      "path": "result.json",
+      "sha256": "9ea7840e868b8d0b944971a6a6589c6755d06c53c6e695db55ad650ce7edb748"
+    },
+    {
+      "path": "run_focused.ps1",
+      "sha256": "300256ec3eefb71b5f56ba7eb261ef50a301aa0b495f4b5fd6f0997d5746afa8"
+    },
+    {
+      "path": "verify_results.py",
+      "sha256": "aba9a6d0c89651e1843fa7d036100e6b82e0edce886cf5050c29aa5636425626"
+    }
+  ]
+}
