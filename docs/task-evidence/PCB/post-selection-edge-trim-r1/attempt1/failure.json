@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_PRESERVED",
+  "exitCode": 1,
+  "elapsedSeconds": 43.4196043,
+  "configuredSuites": 9,
+  "passedSuites": 1,
+  "failedSuite": "PcbPostSelectionEdgeTrimCopyContractTest",
+  "remainingSuites": "NOT_RUN",
+  "failure": "Fixture incorrectly treated x=-1 as invalid, but coordinate contract supports negatives. Correct fixture tests explicit invalid edge margin -1; production unchanged.",
+  "inputAudit": "PASS1478",
+  "cleanup": "Maintained native scratch cleanup marker and terminal exec exit1; active trial source/tests intentionally retained for correction"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "SANITIZED_PATH_PREFIX_ONLY",
+  "file": "final-build.txt",
+  "rawSha256": "ca662ab7c2f9241a331fe959d87b42dff2eb2f87005ed7402c186006d8a1ee76",
+  "sanitizedSha256": "aa8a7da776104f5bbb43b493286f7719c36104eefde0571dde466e249616dada",
+  "substitutionCount": 1,
+  "scope": "Replace exact private repository prefix with <repo>; preserve diagnostics, numeric phase receipt and all compile/link results"
+}

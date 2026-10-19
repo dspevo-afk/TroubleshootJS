@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "pairs": 14,
+  "scope": "Every deterministic native14/15 export field exact across explicit trial and default/replay promotion; elapsedMillis excluded. Additional reproduction check, no replacement for strict metric gate."
+}

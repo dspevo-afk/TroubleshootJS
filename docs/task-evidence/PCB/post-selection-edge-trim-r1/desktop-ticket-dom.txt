@@ -1,0 +1,110 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+      - generic: ALPHA
+    - navigation:
+      - button:
+        - generic: Main menu
+      - button [disabled]:
+        - generic: Shop
+      - button:
+        - generic: Resources
+      - button:
+        - generic: Settings
+      - button [disabled]:
+        - generic: Run customer retest
+    - status: Private session files can be restored only in this qualification view.
+    - rowgroup:
+      - button: TSJ MM-90
+      - generic: DIGITAL MULTIMETER
+      - button [disabled]: HOLD
+      - button [disabled]: RANGE
+      - button [disabled]: MIN/MAX
+      - button: LIGHT
+      - slider [disabled]
+      - button [disabled] [pressed]: "OFF"
+      - button [disabled]: V~
+      - button [disabled]: A
+      - button [disabled]: mA
+      - button [disabled]: µA
+      - button [disabled]: CAP
+      - button [disabled]: Hz
+      - button [disabled]: "%"
+      - button [disabled]: °C/°F
+      - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+      - generic: 10A
+      - generic: COM
+      - generic: V Ω
+      - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+      - row:
+        - cell:
+          - table:
+            - rowgroup:
+              - row:
+                - cell:
+                  - button: DC V
+                - cell
+              - row:
+                - cell
+                - cell:
+                  - button: OHM
+              - row:
+                - cell:
+                  - button: CONT
+                - cell:
+                  - button: DIODE
+      - generic: "--- V"
+    - row:
+      - cell:
+        - button [disabled]: Open controlled indicator
+    - row:
+      - cell:
+        - button: "Board Power: ON"
+    - row:
+      - cell:
+        - button [disabled]: New control board
+    - row:
+      - cell:
+        - button:
+          - generic: Supplies
+    - row:
+      - cell:
+        - button:
+          - generic: View
+    - row:
+      - cell:
+        - button:
+          - generic: Ticket
+    - row:
+      - cell:
+        - button:
+          - generic: Parts tray
+    - row:
+      - cell:
+        - button: End qualification view
+- dialog "Customer ticket":
+  - banner:
+    - heading "Customer ticket" [level=2]
+  - status: Private session files can be restored only in this qualification view.
+  - article:
+    - paragraph: SERVICE JOB
+    - heading "Customer complaint" [level=3]
+    - paragraph: One or both loads fail to follow their sensor inputs. Check each channel separately and together.
+    - heading "Functional retest" [level=3]
+    - paragraph: Check that each external load follows its own sensor, including both loads together.
+  - paragraph: Examine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.
+  - button "Accept ticket and start" [active]
+  - button "Main menu"
+  - button "Resources"
+  - paragraph: Private qualification session. Normal catalog, HARD and replay remain unavailable.
+  - text: Interpretation / build
+  - textbox "Interpretation / build": tsj-alpha/5 / 60D1436FC1090237C7841C05C4732674

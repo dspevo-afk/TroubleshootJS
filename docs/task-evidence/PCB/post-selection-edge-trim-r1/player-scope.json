@@ -1,0 +1,24 @@
+{
+  "status": "PREPARED_BEFORE_PLAYER_INPUT",
+  "owners": [
+    {
+      "path": "docs/task-evidence/PCB/post-selection-edge-trim-r1/check_player.py",
+      "sha256": "b36e05623f29f8886ad2319fab6f6aa47faea5e891b1b56b9d71e195fd07be75"
+    },
+    {
+      "path": "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-inputs.json",
+      "sha256": "ed03cecbd1bd438bda921a6a7b5e0f4938725294ce4c0523eab6022aa7c7c4a7"
+    },
+    {
+      "path": "docs/task-evidence/PCB/canvas-owner-fit-r1/repaired14-55.tsjsave",
+      "sha256": "453928609c7a09c533da3e7df64bd08190ac384b5982cdd712fde7e2a1bb2c71"
+    }
+  ],
+  "flows": [
+    "desktop1280: cold current15 root4 packages55, unrepaired/meter/repair/customer, actual downloaded save15, FileReader15 restore/customer/Closeall7",
+    "narrow319: cold current15 root4 packages55, actual unchanged saved14 FileReader restore/customer/Closeall7"
+  ],
+  "bounds": "90000ms/640 advances/5000ms unit and 360000ms hold unchanged",
+  "evidence": "Two to five raw inspected screenshots, actual visible input, exact served and post-player tree identity",
+  "limits": "Two reference-host private55-package cases; no all-seed/manufacturing/modest-host or full-matrix claim"
+}

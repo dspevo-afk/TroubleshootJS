@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_PRESERVED",
+  "execSession": 69719,
+  "exitCode": 1,
+  "elapsedSeconds": 15.2323303,
+  "diagnosis": "Root score-refresh call omitted required TroubleshootBoard argument; corrected before final paired phase",
+  "rawLogSha256": "48af72042ef1eb34a22cfb519d7d3bac0279f5ba44c82b8dd69e20a129ae8e14",
+  "sanitizedLogSha256": "a1d976f21518ee24a7076604e14e94df2495f8b2dc763612ad63b4efa4c93bd3",
+  "redaction": "Private repository absolute prefix only; all compiler diagnostics/failure/cleanup retained",
+  "processOwnership": "Unified exec handle recorded at launch. Driver already exited before PID discovery; no process termination attempted. Both maintained verifier and canary registry/test cleanup markers observed.",
+  "scope": "Development compilation failed, no native target/copy assertions ran. Not candidate acceptance."
+}

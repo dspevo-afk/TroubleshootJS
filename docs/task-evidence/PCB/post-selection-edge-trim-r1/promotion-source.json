@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "sha256": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "sha256": "e20a0cb5f6a535642327c9a029536e94575437bc567045689a66dc54c7be6ad1"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+      "sha256": "b0cecbaa71ede48acb490704d125985391c908a19570a0254934c937b65e81cf"
+    }
+  ]
+}

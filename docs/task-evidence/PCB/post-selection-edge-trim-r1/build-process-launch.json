@@ -1,0 +1,19 @@
+{
+  "drivers": [
+    {
+      "pid": 424,
+      "startTicks": "639279954546547169",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/post-selection-edge-trim-r1/run_final.ps1",
+      "phase": "build"
+    },
+    {
+      "pid": 19960,
+      "startTicks": "639279954553849861",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/post-selection-edge-trim-r1/run_final.ps1",
+      "phase": "build"
+    }
+  ],
+  "ownership": "Captured by actual phase driver before work"
+}

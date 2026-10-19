@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_PREPARATION_ONLY",
+  "owners": [],
+  "flows": [
+    "desktop1280: cold current15 root4 packages55, unrepaired/meter/repair/customer, actual downloaded save15, FileReader15 restore/customer/Closeall7",
+    "narrow319: cold current15 root4 packages55, actual unchanged saved14 FileReader restore/customer/Closeall7"
+  ],
+  "bounds": "90000ms/640 advances/5000ms unit and 360000ms hold unchanged",
+  "evidence": "Two to five raw inspected screenshots, DOM/report events from actual visible input, exact served and post-player tree identity",
+  "limits": "Two reference-host private55-package cases; no all-seed/manufacturing/modest-host or full-matrix claim",
+  "reason": "PowerShell array concatenation precedence produced one combined path; failed owner hashing before player input. Corrected array grouping and added count checks."
+}

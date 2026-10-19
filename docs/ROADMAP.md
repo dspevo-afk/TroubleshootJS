@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private14 canvas containment and local toolbar scrolling accepted; PCB realism continues**
+**Current task:** **Private15 selected-board border reduction accepted; internal-pocket work continues**
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.
 [Diagnostic evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
@@ -60,8 +60,17 @@ Native3PASS85.4362s; actual/fixed/access margins identify five fixed floors abov
 access needs and no selected fallback increase. Registry/active diagnostics cleaned;
 accepted1447/full compiled identity exact. No production or margin-policy change.
 [Crop observations and limits](task-evidence/PCB/crop-margin-cause-r1/README.md).
-Next: bounded post-selection border-trim trial with previous valid margin fallback,
-under unchanged routing, physical and search/work limits.
+Private15 now removes whole-grid excess border only after the existing route
+winner is selected. Eight of14 informed boards shrink1.45–3.18%; six stay exact.
+Protected void never grows, copper/vias and route/work decisions stay exact, and
+all saved14 geometry remains exact. Final66 native, actual JDK8/GWT five-permutation
+build and visible desktop55 save15/FileReader15 plus narrow55/FileReader14
+customer/cleanup gates pass. Frozen1466/served identities remain exact. Five
+captures include the observed narrow zoomed-out label crowding, an open rendering
+limitation; no general legibility/all-seed/manufacturing/modest-host claim.
+[Border reduction acceptance and limits](task-evidence/PCB/post-selection-edge-trim-r1/README.md).
+Next: bounded read-only raw-placement pocket-decision measurement in one
+pre-compaction coordinate frame; no new placement heuristic yet.
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

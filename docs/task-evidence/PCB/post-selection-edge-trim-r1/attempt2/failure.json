@@ -1,0 +1,17 @@
+{
+  "status": "FAIL_PRESERVED",
+  "exitCode": 1,
+  "elapsedSeconds": 68.9905323,
+  "configuredSuites": 9,
+  "passedSuites": 3,
+  "failedSuite": "PcbPostSelectionEdgeTrimContractTestGroup2",
+  "failedCases": [
+    "-1022",
+    "0"
+  ],
+  "remainingSuites": "Group3..Group7 NOT_RUN",
+  "inputAudit": "PASS1478",
+  "finding": "Raw junction/edge serials derive from TreeMap coordinate-string order; translation can renumber them. Cross-model raw-ID assertion invalid. No connectivity success claimed until full mapping proof passes.",
+  "next": "Preserve direct component/pad/trace identities and strengthen graph equivalence using complete geometry/net/layer/endpoint/provenance/terminal/probe bijection with independent negative fixtures. No production algorithm/metric/seed/limit change.",
+  "cleanup": "Maintained scratch cleanup marker plus terminal exec exit1; trial source/tests retained for fixture correction"
+}

@@ -690,9 +690,97 @@ class SeededPcbLayoutGenerator {
         return session.bestLayout != null;
     }
 
+    private static int accessEdgeMargin(PcbPlacementConstraints constraints,
+            Vector<PcbFootprint> footprints, Rectangle occupied, int edgeMargin) {
+        for (PcbFootprint footprint:footprints) {
+            PcbPlacementConstraints.Part demand=constraints.get(
+                footprint.getPlacement().getComponentId());
+            Rectangle access=PcbPlacementPlanner.envelope(footprint,demand.accessMargin);
+            edgeMargin=Math.max(edgeMargin,occupied.x-access.x+10);
+            edgeMargin=Math.max(edgeMargin,occupied.y-access.y+10);
+            edgeMargin=Math.max(edgeMargin,access.x+access.width-occupied.x-occupied.width+10);
+            edgeMargin=Math.max(edgeMargin,access.y+access.height-occupied.y-occupied.height+10);
+        }
+        return edgeMargin;
+    }
+
+    /** Preserve the existing drawing-grid phase while removing spare border. */
+    static int finalEdgeTrimTarget(int oldMargin, int requiredMargin) {
+        if (oldMargin < FINAL_EDGE_MARGIN || requiredMargin < FINAL_EDGE_MARGIN)
+            throw new IllegalArgumentException("Invalid final PCB edge margin");
+        if (requiredMargin >= oldMargin) return oldMargin;
+        return oldMargin - ((oldMargin - requiredMargin) / GRID) * GRID;
+    }
+
+    /** Selection is complete before this physical border-only contraction. */
+    private void trimSelectedMediumBorder(Session session) {
+        PcbPlacementConstraints constraints=session.board.getPlacementConstraints();
+        if (constraints.placementDensityVersion != 14) return;
+        PcbBoardLayout layout=session.bestLayout;
+        Rectangle outline=layout.getBoardOutline(),occupied=layout.getOccupiedContentBounds();
+        long widthDifference=(long)outline.width-occupied.width;
+        long heightDifference=(long)outline.height-occupied.height;
+        if (widthDifference < 0 || widthDifference != heightDifference ||
+                (widthDifference & 1L) != 0 ||
+                (long)occupied.x-outline.x != widthDifference/2L ||
+                (long)occupied.y-outline.y != widthDifference/2L)
+            throw new IllegalStateException("Selected PCB has no uniform crop margin");
+        int oldMargin=PcbCoordinateSystem.checkedInt(widthDifference/2L);
+        PcbPlacementPlanner.Plan plan=null;
+        for (MediumBoardPhysicalPolicy.PlacementCandidate candidate:session.mediumPlacements)
+            if (candidate.attempt == session.mediumSelectedPlacementAttempt) {
+                if (plan != null) throw new IllegalStateException("Duplicate selected PCB placement");
+                plan=candidate.plan;
+            }
+        if (plan == null) throw new IllegalStateException("Missing selected PCB placement");
+        Vector<PcbFootprint> footprints=translatedPlanFootprints(plan,layout,0,0);
+        int requiredMargin=accessEdgeMargin(constraints,footprints,occupied,FINAL_EDGE_MARGIN);
+        int target=finalEdgeTrimTarget(oldMargin,requiredMargin);
+        if (target == oldMargin) return;
+        int validated=validatedCompactEdgeMargin(session.board,constraints,plan,layout,
+            outline,occupied,outline.x,outline.y,target);
+        if (validated == oldMargin) return;
+        if (validated != target)
+            throw new IllegalStateException("Selected PCB crop exceeded its valid outline");
+        PcbBoardLayout candidate=layout.copyForCompaction();
+        try {
+            candidate.compactToContent(outline.x,outline.y,validated);
+            candidate.positionPartsTrayDisjointFromBoard();
+            candidate.ensureCanvasContainsBoard();
+            PcbPlacementPlanner.validate(session.board,constraints,candidate.getBoardOutline(),
+                translatedPlanFootprints(plan,candidate,0,0));
+            candidate.validateGeometry(session.board);
+            candidate.validateRoutingGeometry(session.board);
+            candidate.validateRouteQuality();
+            PcbTraceClearance.validate(candidate.getTraces());
+            if (MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(session.mediumSelectedRoute))
+                new PcbTwoLayerRules(session.board,candidate).validate(candidate);
+        } catch (PcbPlacementPlanner.Rejected rejected) {
+            return; // Original selected geometry remains untouched.
+        } catch (PcbBoardLayout.RouteQualityRejectedException rejected) {
+            return; // Preserve the admitted route when its unchanged quality guard rejects.
+        }
+        // Unexpected errors and generation cancellation propagate; no live state was mutated.
+        session.bestLayout=candidate;
+        Rectangle trimmed=candidate.getBoardOutline();
+        session.bestArea=(long)trimmed.width*trimmed.height;
+        session.bestScore=candidate.getRouteQualityScore(session.board);
+        session.mediumSelectedRouteQualityMilli=routeQualityMilli(session.bestScore);
+        if (layout == session.mediumTwoLayerLayout) {
+            session.mediumTwoLayerLayout=candidate;
+            session.mediumTwoLayerArea=session.bestArea;
+            session.mediumTwoLayerQuality=session.bestScore;
+        } else {
+            session.mediumOneFaceLayout=candidate;
+            session.mediumOneFaceArea=session.bestArea;
+            session.mediumOneFaceQuality=session.bestScore;
+        }
+    }
+
     private boolean finishMediumSuccess(Session session) {
         if (!selectMediumLayout(session))
             return finishMediumFailure(session);
+        trimSelectedMediumBorder(session);
         session.bestLayout.setGenerationStatistics(session.statistics.placements,
             session.statistics.routes, session.statistics.expansions,
             session.statistics.routeMillis, session.seed, session.routingSeed);
@@ -807,15 +895,8 @@ class SeededPcbLayoutGenerator {
         // Otherwise valid layouts with a low LED or a left-facing resistor are
         // rejected after routing, biasing every root toward the same arrangement.
         Rectangle occupied=layout.getOccupiedContentBounds();
-        for (PcbFootprint footprint:plan.footprints) {
-            PcbPlacementConstraints.Part demand=board.getPlacementConstraints().get(
-                footprint.getPlacement().getComponentId());
-            Rectangle access=PcbPlacementPlanner.envelope(footprint,demand.accessMargin);
-            edgeMargin=Math.max(edgeMargin,occupied.x-access.x+10);
-            edgeMargin=Math.max(edgeMargin,occupied.y-access.y+10);
-            edgeMargin=Math.max(edgeMargin,access.x+access.width-occupied.x-occupied.width+10);
-            edgeMargin=Math.max(edgeMargin,access.y+access.height-occupied.y-occupied.height+10);
-        }
+        edgeMargin=accessEdgeMargin(board.getPlacementConstraints(),
+            plan.footprints,occupied,edgeMargin);
         int preferredBoardX = FINAL_BOARD_X + variationMode * 10;
         int preferredBoardY = FINAL_BOARD_Y + (variationMode % 2) * 10;
         int compactWidth = compactExtent(occupied.width, edgeMargin);
@@ -847,7 +928,8 @@ class SeededPcbLayoutGenerator {
         layout.positionPartsTrayDisjointFromBoard();
         // Tray placement may return early when the tray fits, even if the crop
         // extends past the old drawing canvas. The PCB geometry stays exact.
-        if (mediumCanvas && board.getPlacementConstraints().placementDensityVersion == 13)
+        if (mediumCanvas && (board.getPlacementConstraints().placementDensityVersion == 13 ||
+                board.getPlacementConstraints().placementDensityVersion == 14))
             layout.ensureCanvasContainsBoard();
         Vector<PcbFootprint> finalFootprints = translatedPlanFootprints(plan, layout, 0, 0);
         try { PcbPlacementPlanner.validate(board,board.getPlacementConstraints(),layout.getBoardOutline(),finalFootprints); }

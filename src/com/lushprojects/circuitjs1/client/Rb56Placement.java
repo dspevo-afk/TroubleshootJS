@@ -8,14 +8,14 @@ final class Rb56Placement {
         REALISM_VERSION = 3, DENSE_VERSION = 4, LARGE_VERSION = 5, SINGLE_GROUP_VERSION = 6,
         GUARDED_VERSION = 7, NARROW_VERSION = 8, CONNECTED_VERSION = 9, PIN_LOCAL_VERSION = 10,
         VACANCY_VERSION = 11, ROLE_WIDTHS_VERSION12 = 12, NEAREST_VACANCY_VERSION13 = 13,
-        CURRENT_VERSION = 14;
+        CANVAS_OWNER_VERSION14 = 14, CURRENT_VERSION = 15;
     static final String PRIMARY = "PRIMARY", SECONDARY = "SECONDARY";
     static final int BARRIER_DRAWING_UNITS = 80;
     private Rb56Placement() { }
 
     static boolean supportsVersion(int version) {
         return version == LEGACY_VERSION || version == COMPACT_VERSION ||
-            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION;
+            version == REALISM_VERSION || version == DENSE_VERSION || version == LARGE_VERSION || version == SINGLE_GROUP_VERSION || version == GUARDED_VERSION || version == NARROW_VERSION || version == CONNECTED_VERSION || version == PIN_LOCAL_VERSION || version == VACANCY_VERSION || version == ROLE_WIDTHS_VERSION12 || version == NEAREST_VACANCY_VERSION13 || version == CURRENT_VERSION || version == CANVAS_OWNER_VERSION14;
     }
 
     /** Replay interpretation includes copper policy; packing density alone is not its identity. */
@@ -24,13 +24,14 @@ final class Rb56Placement {
             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
         if (placementVersion == ROLE_WIDTHS_VERSION12) return VACANCY_VERSION;
         if (placementVersion == NEAREST_VACANCY_VERSION13) return ROLE_WIDTHS_VERSION12;
-        return placementVersion == CURRENT_VERSION ? 13 : placementVersion;
+        if (placementVersion == CANVAS_OWNER_VERSION14) return 13;
+        return placementVersion == CURRENT_VERSION ? 14 : placementVersion;
     }
 
     static PcbTraceWidthProfile widthProfile(int placementVersion) {
         if (!supportsVersion(placementVersion))
             throw new IllegalArgumentException("Unknown RB56 placement interpretation");
-        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION ?
+        return placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 ?
             PcbTraceWidthProfile.ROLE_WIDTHS :
             PcbTraceWidthProfile.UNIFORM;
     }
@@ -79,7 +80,7 @@ final class Rb56Placement {
         return new PcbPlacementConstraints(demands, barriers, PcbCopperLayer.BOTTOM,
             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION,
             densityVersion(placementVersion),
-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION,
+            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14,
             widthProfile(placementVersion));
     }
 

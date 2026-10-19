@@ -64,9 +64,18 @@ class PcbBoardLayout {
     int getGenerationRoutingAttempts() { return generationRoutingAttempts; }
     int getGenerationRoutingExpansions() { return generationRoutingExpansions; }
     long getGenerationRoutingMillis() { return generationRoutingMillis; }
+    /** Isolated physical candidate; shared geometry values are immutable. */
+    PcbBoardLayout copyForCompaction() {
+        requireMutable();
+        return copyWithCopper();
+    }
     /** Fresh layout owner from frozen coordinate values; never repeats routing. */
     PcbBoardLayout copySealed() {
         if(!sealed)throw new IllegalStateException("Only a frozen realization can be copied");
+        PcbBoardLayout copy=copyWithCopper();
+        copy.seal();return copy;
+    }
+    private PcbBoardLayout copyWithCopper() {
         PcbBoardLayout copy=new PcbBoardLayout(width,height,boardOutline,partsTray,layoutAlgorithmVersion);
         copy.pads.putAll(pads);copy.components.putAll(components);
         copy.silkscreenLabels.putAll(silkscreenLabels);copy.traces.addAll(traces);
@@ -75,7 +84,7 @@ class PcbBoardLayout {
         copy.setRoutingRecoveryStatistics(routingRecoveryStatistics);
         if(procedural)copy.setGenerationStatistics(generationPlacementAttempts,generationRoutingAttempts,
             generationRoutingExpansions,generationRoutingMillis,generationPlacementSeed,generationRoutingSeed);
-        copy.seal();return copy;
+        return copy;
     }
     void replaceTraces(Vector<PcbTraceGeometry> candidates) {
         requireMutable();

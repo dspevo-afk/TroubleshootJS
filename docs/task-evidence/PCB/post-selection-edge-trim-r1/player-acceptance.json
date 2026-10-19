@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "runs": [
+    {
+      "label": "desktop-current15-closed",
+      "coldMillis": 67818,
+      "coldWork": 601,
+      "restore": {
+        "elapsedMillis": 67361,
+        "freshOwner": true,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "outcome": "PASS",
+        "priorOwnerRetired": true,
+        "stage": "PUBLISH",
+        "work": 601
+      },
+      "wallMillis": 350666
+    },
+    {
+      "label": "narrow-saved14-closed",
+      "coldMillis": 73850,
+      "coldWork": 601,
+      "restore": {
+        "elapsedMillis": 73129,
+        "freshOwner": true,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "outcome": "PASS",
+        "priorOwnerRetired": true,
+        "stage": "PUBLISH",
+        "work": 601
+      },
+      "wallMillis": 211747
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-meter15.jpg",
+      "sha256": "b662021d81e827a771c3afeb1a21ef02cec46582410f21b1ae009f87f4698773"
+    },
+    {
+      "file": "desktop-repaired15.jpg",
+      "sha256": "17863aeaefa6532ea5be60b621556188b4639d81fb586b96c93380ebfb20fc8e"
+    },
+    {
+      "file": "desktop-restored15.jpg",
+      "sha256": "dbe24ee10b59223afca9508d02cd8cfb77cd7bc775fc9560a873f0e06df152ce"
+    },
+    {
+      "file": "desktop-ticket15.jpg",
+      "sha256": "e69e407e5c416fb7fb53690eefa063f77e62e92993839a20bf2c145b015965d2"
+    },
+    {
+      "file": "narrow-restored14.jpg",
+      "sha256": "0efde8cdcf3cc6418995a7c3306b5c42da39b8b216613dcbac4c09ec2c5ec0b7"
+    }
+  ],
+  "limits": "Two reference-host real-input private55-package flows, new15/save15 and preserved actual14 file. Strict90s/640/5s and cleanup7 unchanged. Full native matrix, independent electrical oracles, unseen/all-seed/manufacturing/modest-host claims NOT RUN."
+}

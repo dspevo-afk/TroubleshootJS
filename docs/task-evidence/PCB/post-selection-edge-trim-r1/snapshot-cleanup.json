@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "verifiedOriginalsRemoved": 5,
+  "ownedEmptySnapshotDirectoryRemoved": true,
+  "privateRecoveryStateRemoved": true,
+  "acceptedSourceRetained": true,
+  "scope": "Nonrecursive deletion after exact original bytes, final owner hashes, direct OS-temp containment and no-reparse checks"
+}

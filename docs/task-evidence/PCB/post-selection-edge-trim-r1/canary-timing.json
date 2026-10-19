@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "elapsedSeconds": 15.2323303,
+  "suiteCount": 2,
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "scope": "Development canary; final paired phase will independently compile/run final sources under frozen inputs"
+}

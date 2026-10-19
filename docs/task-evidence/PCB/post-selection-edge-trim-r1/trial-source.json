@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "sha256": "d325ebbd14c10899f4b59d2ad20ad74ddb7650f8668ab7d793fa761d1ef0ba9a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "sha256": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sha256": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+      "sha256": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "57d7d714d981b4d6e2fe4b5de23e0279654481fc4623b85a3c1ec3b067f87a69"
+    }
+  ]
+}

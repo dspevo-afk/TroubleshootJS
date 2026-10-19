@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Task runtime resources only; source snapshots retained pending final adoption",
+  "previewPid": 23632,
+  "previewBirth": "639279955790866857",
+  "previewExited": true,
+  "browserTabs11and12Closed": true,
+  "browserInventoryEmpty": true,
+  "viewportOverrideReset": true,
+  "nativeAndBuildDriversExited": true,
+  "sharedHttpSysPid4Port8899": "UNTOUCHED"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "changedPaths": [],
+  "frozenInputCount": 1480,
+  "actualInputCount": 1480,
+  "scope": "All native source/scripts/contracts/GWT jars and explicit final native/strict-assessor gate owners"
+}

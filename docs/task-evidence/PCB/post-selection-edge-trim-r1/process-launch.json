@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 23884,
+      "startTicks": "639279938857430340",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/post-selection-edge-trim-r1/run_focused.ps1"
+    },
+    {
+      "pid": 19068,
+      "startTicks": "639279938859926513",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/post-selection-edge-trim-r1/run_focused.ps1"
+    }
+  ],
+  "ownership": "Captured by actual native driver before compilation"
+}

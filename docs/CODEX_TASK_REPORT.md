@@ -1,4 +1,41 @@
-# Current checkpoint: crop-margin cause measured; accepted14 exact
+# Current checkpoint: private15 border reduction accepted; publication pending
+
+2026-10-19. BaseHEADfc8751e07859febc1bedabddafe7a063582f89f9 on established
+codex/q60-faulted-profile-counts. Candidate is the commit containing this packet;
+execution digest247e1c0c92ddd5b2e262f00236959335d042ab585b2f576833755f462d9ab237.
+Indefinite PCB continuation/no main/no email. Default/private15 maps density14;
+explicit saved14/density13 and all earlier replay interpretations retained.
+
+Post-selection isolated-copy uniform grid10 trim removes only spare border;
+minimum26/access-envelope policy replaces prior fixed floor at this final stage.
+Eight of14 informed boards shrink1.45-3.18%, six exact. Protected void never grows;
+copper/vias, route decisions/work, source intent/graph and physical mappings exact.
+Saved14 exact; unexpected failures/cancellation propagate, typed crop rejection
+retains original. Larger internal pockets remain. No threshold/budget relaxation.
+
+Final66 native PASS830.0759271s exit0, actual JDK8/GWT five permutations
+PASS93.6715477s exit0; cleanup included, not separately timed. Frozen1466 audits
+PASS after native/build/player; strict metrics and exact trial-to-promotion exports
+PASS. Optional pre-promotion physical source review no blocker; root integrated
+review PASS. Prior compile/attempt1/attempt2 failures and corrections retained.
+
+Actual desktop55 current15 cold67818ms/601, repair/customer PASS, real save15 and
+FileReader15 restore67361ms/601/OFF/one-part/fresh owner/customer/Closeall7 PASS.
+Actual narrow319 cold73850ms/601; unchanged saved14 FileReader73129ms/601 plus
+state/customer/Closeall7 PASS. Five inspected raw captures, empty browser warnings/
+errors and exact served/post-player five-field identity. Initial unpowered retest
+failure retained. Narrow zoomed-out labels crowd; open rendering limitation, no
+legibility/general responsive claim. No fresh canvas hit/chip-menu proof. Full
+matrix/independent electrical oracles/unseen/all-seed/manufacturing/modest-host
+proof NOT RUN. See post-selection-edge-trim-r1/README.md for commands and limits.
+
+Preview23632 and native/build identities exited; tabs11/12 closed, viewport reset;
+verified OS-temp originals5/private recovery state removed. Shared tools and
+HTTP.sys PID4/8899 untouched. Original five unrelated untracked entries preserved.
+Next: final cached review/normal established-branch publication, then bounded
+raw-placement pocket-decision measurement in one pre-compaction coordinate frame.
+No new planner heuristic yet; goal remains ACTIVE beyond this accepted increment.
+# Previous checkpoint: crop-margin cause measured; accepted14 exact
 
 2026-10-19. BaseHEADcdfa8af1de4c1373a5f58972df7c44fe7af18fb4 normally pushed/
 exact originSHA verified on established branch. Production14/density13 exact410;

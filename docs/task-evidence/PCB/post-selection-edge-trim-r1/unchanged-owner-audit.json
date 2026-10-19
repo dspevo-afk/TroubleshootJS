@@ -1,0 +1,19 @@
+{
+  "status": "AUDITED_EXPLICIT_BOUNDARY",
+  "baseInputCount": 1447,
+  "changedPriorInputs": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbRoleWidthOwnerIdentityContractTest.java",
+    "tests/contracts/PcbTraceWidthProfileContractTest.java",
+    "tests/contracts/RelBSessionIdentityContractTest.java",
+    "tests/contracts/U06SessionSaveContractTest.java"
+  ],
+  "unchangedPriorInputCount": 1436,
+  "scope": "All prior accepted source/script/contract inputs except enumerated6 production,4 migrated contracts,registry. Existing renderer, instrument and toolbar/input owners unchanged; no fresh claim inferred outside their audited bytes."
+}

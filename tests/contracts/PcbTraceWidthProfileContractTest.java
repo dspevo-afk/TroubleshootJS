@@ -58,58 +58,69 @@ public final class PcbTraceWidthProfileContractTest {
         Rb56Plan saved11 = Rb56Plan.resolve(seed, Rb56Placement.VACANCY_VERSION);
         Rb56Plan saved12 = Rb56Plan.resolve(seed, Rb56Placement.ROLE_WIDTHS_VERSION12);
         Rb56Plan saved13 = Rb56Plan.resolve(seed, Rb56Placement.NEAREST_VACANCY_VERSION13);
-        Rb56Plan current14 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
+        Rb56Plan saved14 = Rb56Plan.resolve(seed, Rb56Placement.CANVAS_OWNER_VERSION14);
+        Rb56Plan current15 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
         TroubleshootBoard savedBoard = saved11.board();
         TroubleshootBoard saved12Board = saved12.board();
         TroubleshootBoard saved13Board = saved13.board();
-        TroubleshootBoard currentBoard = current14.board();
+        TroubleshootBoard saved14Board = saved14.board();
+        TroubleshootBoard current15Board = current15.board();
         PcbPlacementConstraints saved = savedBoard.getPlacementConstraints();
         PcbPlacementConstraints saved12Constraints = saved12Board.getPlacementConstraints();
         PcbPlacementConstraints saved13Constraints = saved13Board.getPlacementConstraints();
-        PcbPlacementConstraints current14Constraints = currentBoard.getPlacementConstraints();
+        PcbPlacementConstraints saved14Constraints = saved14Board.getPlacementConstraints();
+        PcbPlacementConstraints current15Constraints = current15Board.getPlacementConstraints();
 
         check(saved11.placementInterpretationVersion == 11 &&
                 saved12.placementInterpretationVersion == 12 &&
                 saved13.placementInterpretationVersion == 13 &&
-                current14.placementInterpretationVersion == 14,
-            "saved11, saved12, saved13, and current14 resolve their declared versions");
+                saved14.placementInterpretationVersion == 14 &&
+                current15.placementInterpretationVersion == 15,
+            "saved11 through saved14 and current15 resolve their declared versions");
         check(saved.getTraceWidthProfile() == PcbTraceWidthProfile.UNIFORM &&
                 saved12Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
                 saved13Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
-                current14Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
-            "saved12, saved13, and current14 retain role widths while saved11 remains uniform");
+                saved14Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
+                current15Constraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
+            "saved12 through current15 retain role widths while saved11 remains uniform");
         check(saved.placementDensityVersion == 11 &&
                 saved12Constraints.placementDensityVersion == 11 &&
                 saved13Constraints.placementDensityVersion == 12 &&
-                current14Constraints.placementDensityVersion == 13,
-            "saved12 retains density11, saved13 retains density12, and current14 selects density13");
+                saved14Constraints.placementDensityVersion == 13 &&
+                current15Constraints.placementDensityVersion == 14,
+            "saved12 retains density11, saved13 density12, saved14 density13, and current15 density14");
         check(saved.requiresTwoLayerRouting && saved12Constraints.requiresTwoLayerRouting &&
-                saved13Constraints.requiresTwoLayerRouting && current14Constraints.requiresTwoLayerRouting &&
+                saved13Constraints.requiresTwoLayerRouting && saved14Constraints.requiresTwoLayerRouting &&
+                current15Constraints.requiresTwoLayerRouting &&
                 saved.routingLayer == saved12Constraints.routingLayer &&
                 saved12Constraints.routingLayer == saved13Constraints.routingLayer &&
-                saved13Constraints.routingLayer == current14Constraints.routingLayer,
-            "role-width versions retain the same declared routing mode and layer");
+                saved13Constraints.routingLayer == saved14Constraints.routingLayer &&
+                saved14Constraints.routingLayer == current15Constraints.routingLayer,
+            "saved and current role-width versions retain the same declared routing mode and layer");
         check(saved11.layoutSeed == saved12.layoutSeed && saved12.layoutSeed == saved13.layoutSeed &&
-                saved13.layoutSeed == current14.layoutSeed &&
+                saved13.layoutSeed == saved14.layoutSeed && saved14.layoutSeed == current15.layoutSeed &&
                 saved11.routingSeed == saved12.routingSeed && saved12.routingSeed == saved13.routingSeed &&
-                saved13.routingSeed == current14.routingSeed &&
+                saved13.routingSeed == saved14.routingSeed && saved14.routingSeed == current15.routingSeed &&
                 saved11.topology().equals(saved12.topology()) &&
                 saved12.topology().equals(saved13.topology()) &&
-                saved13.topology().equals(current14.topology()),
-            "placement version leaves seeded electrical and routing intents stable");
+                saved13.topology().equals(saved14.topology()) &&
+                saved14.topology().equals(current15.topology()),
+            "saved and current placement versions preserve seed-derived electrical and routing intents");
 
         Vector<Rb56Plan.Part> oldParts = saved11.parts();
         Vector<Rb56Plan.Part> saved12Parts = saved12.parts();
         Vector<Rb56Plan.Part> saved13Parts = saved13.parts();
-        Vector<Rb56Plan.Part> current14Parts = current14.parts();
+        Vector<Rb56Plan.Part> saved14Parts = saved14.parts();
+        Vector<Rb56Plan.Part> current15Parts = current15.parts();
         check(oldParts.size() == saved12Parts.size() && saved12Parts.size() == saved13Parts.size() &&
-                saved13Parts.size() == current14Parts.size(),
-            "saved11, saved12, saved13, and current14 retain one package inventory");
+                saved13Parts.size() == saved14Parts.size() && saved14Parts.size() == current15Parts.size(),
+            "saved11 through current15 retain one package inventory");
         for (int index = 0; index < oldParts.size(); index++)
             check(oldParts.get(index).canonical().equals(saved12Parts.get(index).canonical()) &&
                     saved12Parts.get(index).canonical().equals(saved13Parts.get(index).canonical()) &&
-                    saved13Parts.get(index).canonical().equals(current14Parts.get(index).canonical()),
-                "plan part declaration stays byte-equal across interpretations at index " + index);
+                    saved13Parts.get(index).canonical().equals(saved14Parts.get(index).canonical()) &&
+                    saved14Parts.get(index).canonical().equals(current15Parts.get(index).canonical()),
+                "source package inventory stays byte-equal across interpretations at index " + index);
     }
 
     private static void supportedEnvelopeWidthBoundary() {

@@ -5841,13 +5841,42 @@ containment after routed content crop and disjoint tray placement. It requires a
 mutable layout and computes checked right/bottom and both next dimensions before
 publication. It never moves or resizes physical PCB/tray geometry. The existing
 final footprint and geometry validators remain authoritative. The medium-board
-generator invokes it only for density13. It completes existing virtual-canvas
+generator invokes it for density13 and its density14 successor. It completes existing virtual-canvas
 ownership; it does not change the physical planner area/extent/search limits.
 
-Private current14 maps to density13 with the same ROLE_TRACE/two-layer rules.
+Explicit saved14 maps to density13 with the same ROLE_TRACE/two-layer rules.
 Explicit saved13 maps to density12, retains the exact private13 replay namespace,
 and preserves the prior saved13 root4 rejection. Replay parsing/canonicalization
 keeps13 and14 distinct before owner reconstruction; unknown versions reject.
 Public alpha5, session model1 and dependency epoch16 remain unchanged. Independent
 literal owner fixtures and full native source/live-graph comparisons live outside
 the player UI. See the [canvas-owner evidence and limits](task-evidence/PCB/canvas-owner-fit-r1/README.md).
+
+## Selected-board border reduction
+
+Private current15 maps to density14. Its planner, routing requests and winner
+selection retain version14 behavior. After selection, the generator reconstructs
+the winner's final footprint positions and computes the access-envelope margin.
+It may remove whole ten-unit steps of uniform excess border, preserving the
+existing drawing-grid phase and board origin. The target starts at26 units and
+includes each access-envelope protrusion plus10; this final policy can go below
+the earlier conservative accessMargin+30 floor. Existing physical/access,
+geometry, routing, clearance and two-layer validators remain authoritative.
+
+The previous valid outline is the crop validator's fallback. A tighter candidate
+uses `PcbBoardLayout.copyForCompaction()`, which shares immutable geometry values
+while owning mutable collections and rectangles. Expected placement/route-quality
+rejection retains the original selected layout; unexpected failures propagate.
+Only a fully validated candidate replaces the winner and refreshes its actual
+area/quality metadata. Canvas and disjoint parts-tray placement remain separate
+from physical PCB dimensions. `copySealed()` retains its sealing contract through
+the same private state-copy owner.
+
+Replay parsing gives saved14 and current15 distinct canonical namespaces before
+live reconstruction; public alpha5, session model1 and dependency epoch16 stay
+unchanged. Direct source/terminal/pad/trace identities are stable. Derived
+conductor serials are coordinate-sorted and can renumber between interpretations
+when translation crosses a decimal digit boundary. Paired native proof therefore
+requires complete translated junction/edge/provenance and land/terminal/probe
+surface bijections, with literal negative fixtures, rather than raw serial equality.
+See the [border-trim evidence and current gate status](task-evidence/PCB/post-selection-edge-trim-r1/README.md).

@@ -1,0 +1,127 @@
+{
+  "status": "PASS",
+  "canaryCount": 24,
+  "canaries": [
+    {
+      "name": "uniform10-unit border shrink with same copper/vias",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "name": "no area benefit rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "area regression elsewhere rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "largestProtectedEmptyRectangleArea growth rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "copperManhattanLength growth rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "vias growth rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "changed geometrySha256 rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "changed liveBoardGraphSha256 rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "changed layoutSeed rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "changed routingSeed rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "current14 full rank receipt exact",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "current14 work receipt exact",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "trial selection unchanged",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "trial work receipt unchanged",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "less copper also violates border-only topology",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "fewer vias also violates border-only topology",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "missing root rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "wrong density rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "placement bound unchanged",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "route bound unchanged",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "no-op geometry must be exact",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "shrunken geometry must differ",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "subgrid crop rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "name": "duplicate paired case rejects",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    }
+  ],
+  "scope": "Synthetic scalar/receipt guards only; actual native/physical/candidate proof separate"
+}
