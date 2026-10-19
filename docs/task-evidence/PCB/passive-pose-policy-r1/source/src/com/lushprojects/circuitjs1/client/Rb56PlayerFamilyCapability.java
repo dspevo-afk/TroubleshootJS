@@ -1,0 +1,103 @@
+package com.lushprojects.circuitjs1.client;
+
+/** Registered family owner for the bounded isolated AC/control board. */
+final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamilyCapability {
+    public String familyId() { return Rb56Plan.FAMILY_ID; }
+    public String displayName() { return "Isolated AC control board"; }
+    public String routeId() { return "isolated-ac-control"; }
+    public DifficultyProfile candidateProfile() { return DifficultyProfile.HARD; }
+    public GenerationExecutionPolicy executionPolicy() { return GenerationExecutionPolicy.RB56; }
+    public String physicalAdmissionIdentity() { return MediumBoardNormalAdmission.RB56_IDENTITY; }
+    public boolean supportsPrivateQualification() { return true; }
+
+    public Plan resolve(long seed) {
+        // Historical direct fixtures retain the original RB56 placement interpretation.
+        return new ResolvedPlan(Rb56Plan.resolve(seed));
+    }
+
+    public Plan resolve(long seed, RequestIdentity request) {
+        if (request == null || !familyId().equals(request.familyId))
+            throw new IllegalArgumentException("Versioned RB56 placement requires its exact family request");
+        if (!request.privateQualification) {
+            if (request.rb56PlacementInterpretationVersion != 0)
+                throw new IllegalArgumentException("Private RB56 placement version leaked into a normal request");
+            return new ResolvedPlan(Rb56Plan.resolve(seed));
+        }
+        if (!Rb56Placement.supportsVersion(request.rb56PlacementInterpretationVersion))
+            throw new IllegalArgumentException("Versioned RB56 placement requires a supported private interpretation");
+        return new ResolvedPlan(Rb56Plan.resolve(seed,
+            request.rb56PlacementInterpretationVersion));
+    }
+
+    public String canonicalIdentity(Plan plan) {
+        return resolved(plan).plan.canonical();
+    }
+
+    public String canonicalRequest(Plan plan, RequestIdentity request) {
+        Rb56Plan resolved = resolved(plan).plan;
+        if (request.privateQualification) {
+            if (resolved.placementInterpretationVersion !=
+                    request.rb56PlacementInterpretationVersion)
+                throw new IllegalArgumentException("RB56 plan differs from its requested placement interpretation");
+            return "tsj-generation-request/4;native;qualification-only;" +
+                request.descriptorCanonical + ";quickPlay=false;layout=" +
+                request.layoutVersion + ";qualification=true;explicitCompletion=true;planEpoch=" +
+                Rb56Plan.PLAN_VERSION + ";plan=" + resolved.canonical() +
+                ";physicalPolicy=" + MediumBoardPhysicalPolicy.identity() +
+                ";physicalAdmission=" + MediumBoardNormalAdmission.rb56IdentityForPlacement(
+                    resolved.placementInterpretationVersion);
+        }
+        if (request.difficulty == null)
+            throw new IllegalArgumentException("Staged normal-family request requires a difficulty profile");
+        return "tsj-generation-request/5;advanced-control@1;native;" +
+            request.descriptorCanonical + ";replay=" + request.replayEpoch + "/" +
+            request.difficulty.name() + "/" + request.familyId + "/" +
+            Long.toString(request.rootSeed) + ";quickPlay=" + request.quickPlay +
+            ";layout=" + request.layoutVersion + ";planEpoch=" + Rb56Plan.PLAN_VERSION +
+            ";plan=" + resolved.canonical() + ";route=" + MediumBoardPhysicalPolicy.identity() +
+            ";physicalAdmission=" + request.physicalAdmissionIdentity +
+            ";executionPolicy=" + request.executionPolicyCanonical +
+            ";familyExecution=" + request.familyExecutionCanonical +
+            ";admission=" + request.admissionVersion + ";search=" + request.candidateSearch +
+            ";difficulty=" + request.difficulty.name() + "@" + request.difficultyVersion +
+            ";assessment=" + request.assessmentVersion;
+    }
+
+    public ConstructionSession beginConstruction(Plan plan) {
+        final Rb56Plan resolved = resolved(plan).plan;
+        final SeededPcbLayoutGenerator.Session routing = new SeededPcbLayoutGenerator().begin(
+            resolved.board(), resolved.layoutSeed, resolved.routingSeed, null);
+        return new ConstructionSession() {
+            private GenerationRequest.Construction result;
+
+            public boolean advance() {
+                if (result != null) throw new IllegalStateException("Construction already completed");
+                if (!routing.advance()) return false;
+                MediumBoardPhysicalPolicy.Result route = routing.mediumResult();
+                if (route == null || !route.accepted())
+                    throw new IllegalStateException("Family construction requires its accepted physical route");
+                result = Rb56Generator.constructFromAcceptedRoute(resolved, route);
+                return true;
+            }
+
+            public GenerationRequest.Construction result() {
+                if (result == null) throw new IllegalStateException("Construction is incomplete");
+                return result;
+            }
+        };
+    }
+
+    private static ResolvedPlan resolved(Plan plan) {
+        if (!(plan instanceof ResolvedPlan))
+            throw new IllegalArgumentException("Resolved plan belongs to a different family capability");
+        return (ResolvedPlan) plan;
+    }
+
+    private static final class ResolvedPlan implements Plan {
+        final Rb56Plan plan;
+        ResolvedPlan(Rb56Plan plan) {
+            if (plan == null) throw new IllegalArgumentException("Missing family plan");
+            this.plan = plan;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "verifiedExactFilesRemoved": 1467,
+  "ownership": "Unique tsj-passive-policy OS-temp copy",
+  "symlinkOrReparseBoundariesCrossed": false,
+  "privateStateRemoved": true,
+  "mainProductionMutated": false,
+  "sharedResourcesTouched": false
+}

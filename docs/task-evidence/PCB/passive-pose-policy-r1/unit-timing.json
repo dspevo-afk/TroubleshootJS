@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 49.4877489,
+  "suiteCount": 8,
+  "phase": "unit",
+  "scope": "Explicit native-only passive policy prerequisite; unchanged per-JVM and search limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "sourceBindings": 14,
+  "derivedTrialBindings": 14,
+  "unchangedRawCandidates": 15,
+  "suiteCount": 8,
+  "limits": "Native pure/source/raw prerequisites; no full routed or owner/player proof"
+}

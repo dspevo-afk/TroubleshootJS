@@ -1,0 +1,146 @@
+{
+  "status": "FAIL",
+  "saved15ExactCases": 14,
+  "trial16Cases": 14,
+  "regressions": [
+    "42",
+    "3"
+  ],
+  "areaOrVoidImprovements": [
+    "3"
+  ],
+  "selectedTurnCases": [
+    "42",
+    "3"
+  ],
+  "firstCanonicalTurnedOwnerCase": "42",
+  "metricDeltas": [
+    {
+      "seed": "-1017",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1004",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1022",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "0",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "17",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "42",
+      "delta": {
+        "area": 514750,
+        "largestProtectedEmptyRectangleArea": 29800,
+        "copperManhattanLength": 7630,
+        "vias": 3
+      }
+    },
+    {
+      "seed": "1",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "7",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "5",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "14",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "2",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "3",
+      "delta": {
+        "area": 3852,
+        "largestProtectedEmptyRectangleArea": -46800,
+        "copperManhattanLength": 3720,
+        "vias": 1
+      }
+    },
+    {
+      "seed": "4",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "6",
+      "delta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    }
+  ],
+  "limits": "Finite native prerequisite only; turned-owner/replay/markings/GWT/player/full-matrix proof separate"
+}

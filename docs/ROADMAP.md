@@ -136,6 +136,15 @@ packing benefit, whole-cache, GWT/player or live mutation claim. Next implement
 an explicit RB56 pose interpretation with preserved density/random/work boundaries,
 then prove packing, polarity, repair and replay before promotion.
 [Mechanical prerequisite and limits](task-evidence/PCB/passive-pose-foundation-r1/README.md).
+The explicit passive TOP0/90 policy trial is rejected. Unit8PASS49.4877s and
+full28 routesPASS209.4706s preserve all14 saved15 full rows and validate all14
+trial16 physical admissions, but strict fitness fails42 and3: both grow area,
+copper and vias;3 alone reduces its largest protected void. Other12 selected
+physical geometries remain exact15. Frozen1504/26gate owners and reader51 canaries
+pass; no search/route/time/fitness allowance changed. Accepted1467 restored, owned
+copy retired, main1475 exact. No default16, GWT/player or turned-owner/live repair
+claim. Next measure first placement divergence and pose/origin selection causes.
+[Rejected passive policy and limits](task-evidence/PCB/passive-pose-policy-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

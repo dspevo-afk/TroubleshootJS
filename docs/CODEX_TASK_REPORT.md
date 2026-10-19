@@ -1,4 +1,46 @@
-# Current checkpoint: native passive pose foundation complete; placement trial next
+# Current checkpoint: passive pose policy rejected; first-divergence cause study next
+
+2026-10-19. Published5e6b1f66f31b9826b3583f8ad025f3b686f6d005 (Validate passive
+PCB rotation mechanics) normally pushed/exact origin verified on
+codex/q60-faulted-profile-counts. Indefinite continuation and revoked quota stops
+remain active; no main/email. Main production/default15, general layout16 and
+accepted1475 inputs unchanged. Original5 untracked entries preserved.
+
+Native-only passive-pose-policy-r1 is REJECTED by its frozen strict14 fitness.
+Explicit16/density14/pose1 alternated existing candidate1 pin-local nonanchor
+TOP0/90 visits, with canonical same-geometry/no-draw templates and separate
+RB56_BOARD_NORMAL@2. No origin/candidate/route/search/time allowance changed.
+Original false sizing assumption remains byte-exact; pre-runtime real-envelope
+revision and literal radial counterexample are preserved. Legacy/default15
+stays policy0/TOP0, generic medium and exact mixed-package poses remain intact.
+
+Frozen1504 = accepted1467/12overrides/37additions; source49/26gate owners exact.
+Root integrated diff/physical-body review PASS; two implementation leaves and
+bounded reader leaf work do not constitute independent runtime review. Reader51
+synthetic cases/64assertions PASS with exact six input hashes. Unit8 JDK8 PASS
+49.4877489s/exit0, including maintained cleanup. Mechanical999, source114, policy245,
+admission77 and trial-source128 wrapper assertions pass; all14+14 source bindings
+and15 unaffected raw candidates exact. Routes28 PASS209.4705792s/exit0, including
+cleanup (not separately measured). Every saved15 row reproduces all42 non-timing
+fields; every trial16 passes the unchanged physical/strict-whitespace body and
+actual construction admission. Source/graph/intent and signed-long seeds preserved.
+
+Strict reader FAIL:42 area+514750/void+29800/copper+7630/vias+3;3 area+3852/
+void-46800/copper+3720/vias+1. Both still select candidate1 with18/11 TOP90 parts.
+Other12 selected physical geometries and all four metrics exact15. No threshold,
+seed or oracle change, partial promotion, accepted16 or packing benefit. Candidate1
+demand grows only3000 in both cases; metrics alone do not establish the cause.
+Owner/lifecycle/replay/markings/GWT/player/full-matrix NOT RUN for rejected probe.
+
+Maintained terminal cleanup, four driver births exited, post-input audits and
+root packet review PASS. Copied accepted1467 restored exactly; verified contained
+non-reparse copy/private state retired. No active test/build/browser/preview/profile
+or source copy. Five unrelated untracked entries and shared tools preserved.
+Next root publishes the truthful rejected trial on the established branch, then
+measures first placement divergence before proposing another rotation heuristic.
+One leaf has bounded read-only source planning in progress; no source writer.
+
+# Previous checkpoint: native passive pose foundation complete; placement trial next
 
 2026-10-19. Published9f29107ccf9c21c84558c71ac9d334760e1a97a0 normally pushed
 and exact origin SHA verified on codex/q60-faulted-profile-counts. User indefinite

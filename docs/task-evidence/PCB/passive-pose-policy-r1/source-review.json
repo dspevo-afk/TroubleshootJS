@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "authoritativePhysicalOracleBodyAndHelpersExactAfterAdapterNormalization": true,
+  "reusedMechanicalAndOldSourceBindingsExact": true,
+  "oldRb56PhysicalContractFieldExact": true,
+  "unchangedRoutingPhysicsFinishingOwners": true,
+  "changedBaseOwners": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Generator.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java"
+  ],
+  "rootReview": "Actual helper/planner/constraints/admission/consumers/tests diff reviewed; conservative real-envelope sizing; one template per existing visit; canonical package identity and separate pose/admission namespaces",
+  "deferred": "DifficultyAssessment consumer, turned-owner lifecycle/request replay and used-pose visuals required only after strict14 fitness; no promotion from native prerequisite"
+}

@@ -1,0 +1,168 @@
+{
+  "status": "OBSERVED",
+  "scope": "Post-verdict descriptive results only; no new acceptance rule or causal claim",
+  "geometryExact15Cases": 12,
+  "observations": [
+    {
+      "seed": "-1017",
+      "geometryExact15": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt16": 3,
+      "top90": []
+    },
+    {
+      "seed": "-1004",
+      "geometryExact15": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt16": 3,
+      "top90": []
+    },
+    {
+      "seed": "-1022",
+      "geometryExact15": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt16": 0,
+      "top90": []
+    },
+    {
+      "seed": "0",
+      "geometryExact15": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt16": 0,
+      "top90": []
+    },
+    {
+      "seed": "17",
+      "geometryExact15": true,
+      "selectedAttempt15": 3,
+      "selectedAttempt16": 3,
+      "top90": []
+    },
+    {
+      "seed": "42",
+      "geometryExact15": false,
+      "selectedAttempt15": 1,
+      "selectedAttempt16": 1,
+      "top90": [
+        "C5",
+        "CBIAS",
+        "CBULK",
+        "CFB",
+        "CFLT_B",
+        "CIN",
+        "COUT",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "DFREE",
+        "RDA",
+        "REN",
+        "RENAC",
+        "RPRIMARY",
+        "RREF_H",
+        "RREF_L"
+      ],
+      "metrics15": {
+        "area": 5519502,
+        "largestProtectedEmptyRectangleArea": 178200,
+        "copperManhattanLength": 42230,
+        "vias": 45
+      },
+      "metrics16": {
+        "area": 6034252,
+        "largestProtectedEmptyRectangleArea": 208000,
+        "copperManhattanLength": 49860,
+        "vias": 48
+      },
+      "candidate1Score15": "total=1603093;electrical=185270;region=13200;connector=3410;corridor=3114;outline=5860800;courtyard=1000808;demand=3445134",
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]",
+      "candidate1Score16": "total=1949218;electrical=220520;region=15335;connector=4060;corridor=7418;outline=5894100;courtyard=1000808;demand=3448134",
+      "routeOutcomes16": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]"
+    },
+    {
+      "seed": "1",
+      "geometryExact15": true,
+      "selectedAttempt15": 1,
+      "selectedAttempt16": 1,
+      "top90": []
+    },
+    {
+      "seed": "7",
+      "geometryExact15": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt16": 0,
+      "top90": []
+    },
+    {
+      "seed": "5",
+      "geometryExact15": true,
+      "selectedAttempt15": 5,
+      "selectedAttempt16": 5,
+      "top90": []
+    },
+    {
+      "seed": "14",
+      "geometryExact15": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt16": 0,
+      "top90": []
+    },
+    {
+      "seed": "2",
+      "geometryExact15": true,
+      "selectedAttempt15": 2,
+      "selectedAttempt16": 2,
+      "top90": []
+    },
+    {
+      "seed": "3",
+      "geometryExact15": false,
+      "selectedAttempt15": 1,
+      "selectedAttempt16": 1,
+      "top90": [
+        "C5",
+        "CBIAS",
+        "CBULK",
+        "CFB",
+        "CIN",
+        "COUT",
+        "DB",
+        "RBLEED5",
+        "RENAC",
+        "RFB",
+        "RPRIMARY"
+      ],
+      "metrics15": {
+        "area": 5557320,
+        "largestProtectedEmptyRectangleArea": 277200,
+        "copperManhattanLength": 41650,
+        "vias": 47
+      },
+      "metrics16": {
+        "area": 5561172,
+        "largestProtectedEmptyRectangleArea": 230400,
+        "copperManhattanLength": 45370,
+        "vias": 48
+      },
+      "candidate1Score15": "total=1727978;electrical=196240;region=12303;connector=4600;corridor=5965;outline=5508000;courtyard=952376;demand=3206748",
+      "routeOutcomes15": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]",
+      "candidate1Score16": "total=1839217;electrical=209440;region=12695;connector=6550;corridor=5329;outline=5508000;courtyard=952376;demand=3209748",
+      "routeOutcomes16": "[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=SUCCESS, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS]"
+    },
+    {
+      "seed": "4",
+      "geometryExact15": true,
+      "selectedAttempt15": 0,
+      "selectedAttempt16": 0,
+      "top90": []
+    },
+    {
+      "seed": "6",
+      "geometryExact15": true,
+      "selectedAttempt15": 4,
+      "selectedAttempt16": 4,
+      "top90": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PRE_RUNTIME_SCOPE_CORRECTION",
+  "initialProposalSha256": "f3dedbaa88a39c8cfaef14e92c752442e93a945216d1d37301e595c2df6c63e9",
+  "nativeStatus": "NOT RUN",
+  "cause": "PcbPlacementPlanner.envelope adds20 only to vertical extent; rotated terminal escapes can widen radial access envelope",
+  "literalCounterexample": {
+    "package": "RADIAL_ELECTROLYTIC_CAPACITOR",
+    "origin": [
+      100,
+      200
+    ],
+    "margin": 20,
+    "TOP0Envelope": [
+      85,
+      142,
+      150,
+      192
+    ],
+    "TOP90Envelope": [
+      86,
+      165,
+      172,
+      170
+    ]
+  },
+  "decision": "Retain true access envelope; conservatively size enabled items for both poses only. Do not replace failed planning assumption with nominal-package-width assertion. Preserve legacy and work/search/physical/metric gates",
+  "source": "PcbPlacementPlanner.envelope and existing package geometry; no policy trial outputs consumed"
+}

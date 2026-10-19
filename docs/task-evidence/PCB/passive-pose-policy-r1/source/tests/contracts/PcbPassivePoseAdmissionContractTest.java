@@ -1,0 +1,428 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.Vector;
+
+/** Pure identity and actual-owner pose-boundary fixtures; no route admission is inferred. */
+public final class PcbPassivePoseAdmissionContractTest {
+    private static int assertions;
+
+    private static final PhysicalPackage[] CANONICAL_PASSIVES = new PhysicalPackage[] {
+        PhysicalPackages.AXIAL_RESISTOR,
+        PhysicalPackages.AXIAL_DIODE,
+        PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
+        PhysicalPackages.RADIAL_CERAMIC_CAPACITOR
+    };
+
+    public static void main(String[] args) throws Exception {
+        verifyVersionedIdentitySelection();
+        verifyCanonicalPassivePoses();
+        verifyForeignAndMixedPassives();
+        verifyDependencyCanonicalField();
+        verifyAdmissionCanonicalIdentity();
+        System.out.println("PASS: PCB passive pose admission contracts " + assertions +
+            " assertions");
+    }
+
+    private static void verifyVersionedIdentitySelection() {
+        require(Rb56Placement.CURRENT_VERSION == 15,
+            "the default RB56 placement interpretation remains version15");
+        require(Rb56Placement.PASSIVE_POSE_VERSION16 == 16,
+            "the passive-pose interpretation has its explicit version16 identity");
+        require(Rb56Placement.passivePosePolicyVersion(15) == PcbPassivePosePolicy.LEGACY,
+            "default version15 maps to the legacy pose policy");
+        require(Rb56Placement.passivePosePolicyVersion(16) == PcbPassivePosePolicy.ORTHOGONAL,
+            "explicit version16 maps to the orthogonal pose policy");
+        require(Rb56Placement.densityVersion(15) == 14 &&
+                Rb56Placement.densityVersion(16) == 14,
+            "current15 and explicit16 retain density14");
+        require("RB56_BOARD_NORMAL@1".equals(
+                MediumBoardNormalAdmission.rb56IdentityForPlacement(15)),
+            "placement15 selects the literal legacy admission identity");
+        require("RB56_BOARD_NORMAL@2".equals(
+                MediumBoardNormalAdmission.rb56IdentityForPlacement(16)),
+            "placement16 selects the literal orthogonal admission identity");
+        require("RB56_BOARD_NORMAL@1".equals(MediumBoardNormalAdmission.rb56IdentityFor(
+                constraints(PcbPassivePosePolicy.LEGACY,
+                    new Vector<PcbPlacementConstraints.Part>()))),
+            "legacy MEDIUM_BOARD constraints select admission identity @1");
+        require("RB56_BOARD_NORMAL@2".equals(MediumBoardNormalAdmission.rb56IdentityFor(
+                constraints(PcbPassivePosePolicy.ORTHOGONAL,
+                    new Vector<PcbPlacementConstraints.Part>()))),
+            "explicit pose1 MEDIUM_BOARD constraints select admission identity @2");
+        require(MediumBoardNormalAdmission.Contract.RB56 ==
+                MediumBoardNormalAdmission.rb56ContractForPlacement(15),
+            "placement15 selects the legacy RB56 contract");
+        require(MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL ==
+                MediumBoardNormalAdmission.rb56ContractForPlacement(16),
+            "placement16 selects the orthogonal RB56 contract");
+        reject(new Runnable() {
+            public void run() {
+                MediumBoardNormalAdmission.rb56IdentityForPlacement(17);
+            }
+        }, "unknown placement versions do not receive an admission identity");
+
+        final GenerationRequest current = GenerationRequest.forFamilyQualification(
+            Rb56Plan.FAMILY_ID, 42017L);
+        final GenerationRequest explicitPose = current.withRb56PlacementInterpretationVersion(16);
+        require("RB56_BOARD_NORMAL@1".equals(current.getRequiredPhysicalAdmissionIdentity()),
+            "default private qualification retains admission identity @1");
+        require("RB56_BOARD_NORMAL@2".equals(explicitPose.getRequiredPhysicalAdmissionIdentity()),
+            "explicit private16 qualification selects admission identity @2");
+        require(MediumBoardNormalAdmission.RB56_IDENTITY.equals(
+                new Rb56PlayerFamilyCapability().physicalAdmissionIdentity()),
+            "normal/default family registration remains pinned to admission identity @1");
+        String oldRequest = current.canonical();
+        String poseRequest = explicitPose.canonical();
+        String namespace = "tsj-generation-request/4;native;qualification-only;";
+        require(oldRequest.startsWith(namespace) && poseRequest.startsWith(namespace),
+            "private pose selection does not change the replay namespace");
+        require(poseRequest.contains("physicalAdmission=RB56_BOARD_NORMAL@2"),
+            "private16 canonical request binds the explicit admission identity");
+    }
+
+    private static void verifyCanonicalPassivePoses() {
+        PcbRotation[] rotations = new PcbRotation[] {
+            PcbRotation.DEG_0, PcbRotation.DEG_90,
+            PcbRotation.DEG_180, PcbRotation.DEG_270
+        };
+        for (int packageIndex = 0; packageIndex < CANONICAL_PASSIVES.length; packageIndex++) {
+            final PhysicalPackage physical = CANONICAL_PASSIVES[packageIndex];
+            for (int rotationIndex = 0; rotationIndex < rotations.length; rotationIndex++) {
+                final PcbRotation rotation = rotations[rotationIndex];
+                Fixture explicit = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+                    "PASSIVE_" + packageIndex, passiveType(physical), physical, physical,
+                    rotation, PcbBoardSide.TOP);
+                if (rotation == PcbRotation.DEG_0 || rotation == PcbRotation.DEG_90) {
+                    accept(explicit, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+                        "explicit16 accepts canonical " + physical.getId() + " TOP" +
+                            rotation);
+                } else {
+                    rejectPose(explicit, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+                        "explicit16 rejects canonical " + physical.getId() + " TOP" +
+                            rotation);
+                }
+
+                Fixture legacy = fixture(PcbPassivePosePolicy.LEGACY,
+                    "LEGACY_PASSIVE_" + packageIndex, passiveType(physical), physical, physical,
+                    rotation, PcbBoardSide.TOP);
+                if (rotation == PcbRotation.DEG_0) {
+                    accept(legacy, MediumBoardNormalAdmission.Contract.RB56,
+                        "legacy accepts canonical " + physical.getId() + " TOP0");
+                } else {
+                    rejectPose(legacy, MediumBoardNormalAdmission.Contract.RB56,
+                        "legacy rejects turned canonical " + physical.getId());
+                }
+            }
+        }
+
+        for (PhysicalPackage physical : CANONICAL_PASSIVES) {
+            Fixture explicitBottom = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+                "BOTTOM_" + physical.getId(), passiveType(physical),
+                PhysicalPackages.RAISED_FACTORY_LINK,
+                PhysicalPackages.RAISED_FACTORY_LINK,
+                PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
+            rejectPose(explicitBottom, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+                "explicit16 rejects bottom-mounted passive geometry");
+            Fixture legacyBottom = fixture(PcbPassivePosePolicy.LEGACY,
+                "LEGACY_BOTTOM_" + physical.getId(), passiveType(physical),
+                PhysicalPackages.RAISED_FACTORY_LINK,
+                PhysicalPackages.RAISED_FACTORY_LINK,
+                PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
+            rejectPose(legacyBottom, MediumBoardNormalAdmission.Contract.RB56,
+                "legacy rejects bottom-mounted passive geometry");
+        }
+    }
+
+    private static void verifyForeignAndMixedPassives() {
+        Fixture foreignTop0 = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            "FOREIGN_PASSIVE_TOP0", "RESISTOR", PhysicalPackages.RAISED_FACTORY_LINK,
+            PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_0, PcbBoardSide.TOP);
+        accept(foreignTop0, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "foreign passive packages retain their original TOP0 pose");
+
+        Fixture foreignTop90 = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            "FOREIGN_PASSIVE_TOP90", "RESISTOR", PhysicalPackages.RAISED_FACTORY_LINK,
+            PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_90, PcbBoardSide.TOP);
+        rejectPose(foreignTop90, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "explicit16 does not rotate a foreign passive package");
+
+        Fixture foreignBottom = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            "FOREIGN_PASSIVE_BOTTOM", "RESISTOR", PhysicalPackages.RAISED_FACTORY_LINK,
+            PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_0, PcbBoardSide.BOTTOM);
+        rejectPose(foreignBottom, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "explicit16 rejects a bottom-mounted foreign passive package");
+
+        Fixture foreignOwner = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            "FOREIGN_PLACEMENT_OWNER", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            PhysicalPackages.RAISED_FACTORY_LINK, PcbRotation.DEG_0, PcbBoardSide.TOP);
+        rejectPose(foreignOwner, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "passive placement cannot substitute a foreign physical package");
+
+        Fixture[] allowedMixed = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            new String[] {"MIXED_CANONICAL", "MIXED_FOREIGN"},
+            new String[] {"RESISTOR", "RESISTOR"},
+            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
+                PhysicalPackages.RAISED_FACTORY_LINK},
+            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
+                PhysicalPackages.RAISED_FACTORY_LINK},
+            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_0},
+            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
+        accept(allowedMixed[0], MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "explicit16 permits a mixed canonical-quarter-turn and foreign-TOP0 owner");
+
+        Fixture[] disallowedMixed = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            new String[] {"MIXED_CANONICAL_BAD", "MIXED_FOREIGN_BAD"},
+            new String[] {"RESISTOR", "RESISTOR"},
+            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
+                PhysicalPackages.RAISED_FACTORY_LINK},
+            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
+                PhysicalPackages.RAISED_FACTORY_LINK},
+            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_90},
+            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
+        rejectPose(disallowedMixed[0], MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "explicit16 rejects a mixed pose set when its foreign passive is turned");
+
+        Fixture genericTop0 = fixture(PcbPassivePosePolicy.LEGACY,
+            "GENERIC_PASSIVE_TOP0", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
+        accept(genericTop0, MediumBoardNormalAdmission.Contract.MEDIUM,
+            "generic medium retains canonical passive TOP0");
+        Fixture genericTurned = fixture(PcbPassivePosePolicy.LEGACY,
+            "GENERIC_PASSIVE_TURNED", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_90, PcbBoardSide.TOP);
+        rejectPose(genericTurned, MediumBoardNormalAdmission.Contract.MEDIUM,
+            "generic medium retains passive TOP0 only");
+        rejectPose(foreignTop0, MediumBoardNormalAdmission.Contract.MEDIUM,
+            "generic medium rejects the explicit pose policy");
+
+        Fixture legacy = fixture(PcbPassivePosePolicy.LEGACY,
+            "CONTRACT_LEGACY", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
+        rejectPose(legacy, MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL,
+            "new RB56 contract rejects legacy constraints");
+        Fixture explicit = fixture(PcbPassivePosePolicy.ORTHOGONAL,
+            "CONTRACT_EXPLICIT", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
+            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
+        rejectPose(explicit, MediumBoardNormalAdmission.Contract.RB56,
+            "legacy RB56 contract rejects pose1 constraints");
+    }
+
+    private static void verifyDependencyCanonicalField() throws Exception {
+        TroubleshootBoard legacy = emptyDependencyBoard(PcbPassivePosePolicy.LEGACY);
+        TroubleshootBoard explicit = emptyDependencyBoard(PcbPassivePosePolicy.ORTHOGONAL);
+        String legacyCanonical = appendBoard(legacy);
+        String explicitCanonical = appendBoard(explicit);
+        String policyField = dependencyField("placement.passive-pose-policy", "1");
+        require(legacyCanonical.equals(expectedLegacyEmptyBoardCanonical(legacy)),
+            "pose0 appendBoard bytes retain the pre-policy canonical sequence exactly");
+        require(legacyCanonical.indexOf("placement.passive-pose-policy") < 0,
+            "pose0 leaves the dependency canonical unchanged by policy metadata");
+        require(explicitCanonical.contains(policyField),
+            "pose1 appends the explicit dependency policy field");
+        require(explicitCanonical.replace(policyField, "").equals(legacyCanonical),
+            "paired appendBoard canonical differs only by the pose1 field");
+    }
+
+    private static void verifyAdmissionCanonicalIdentity() throws Exception {
+        MediumBoardNormalAdmission legacy = admission(MediumBoardNormalAdmission.Contract.RB56);
+        MediumBoardNormalAdmission explicit = admission(
+            MediumBoardNormalAdmission.Contract.RB56_ORTHOGONAL);
+        String priorPhysicalContract = "board=RB56_CONTROL_BOARD;parts=40..60;terminals=2..7;" +
+            "additional-packages=ISOLATED_CONVERTER_7,OPTOCOUPLER_4,RADIAL_INDUCTOR_2;" +
+            "barrier=PRIMARY|SECONDARY|80-drawing-units;UAC=TOP/0;UFB=TOP/180;" +
+            "manufacturing-rating=NONE";
+        require("RB56_BOARD_NORMAL@1".equals(legacy.identity()),
+            "legacy admission retains its literal identity");
+        require("RB56_BOARD_NORMAL@2".equals(explicit.identity()),
+            "explicit pose admission has a separate literal identity");
+        require(legacy.canonical().contains(admissionField("rb56-physical-contract",
+                priorPhysicalContract)),
+            "legacy RB56 canonical retains the exact prior physical contract field");
+        String explicitWithoutPose = explicit.canonical().replace(
+            admissionField("rb56-passive-pose-policy",
+                MediumBoardNormalAdmission.RB56_PASSIVE_POSE_POLICY), "");
+        require(legacy.canonical().substring(MediumBoardNormalAdmission.RB56_IDENTITY.length())
+                .equals(explicitWithoutPose.substring(
+                    MediumBoardNormalAdmission.RB56_POSE_IDENTITY.length())),
+            "new admission preserves every legacy canonical field after its versioned identity");
+        require(explicit.canonical().contains(admissionField("rb56-passive-pose-policy",
+                "policy=1;passives=AXIAL_RESISTOR,AXIAL_DIODE," +
+                    "RADIAL_ELECTROLYTIC_CAPACITOR,RADIAL_CERAMIC_CAPACITOR;" +
+                    "allowed-poses=TOP/0,TOP/90")),
+            "new canonical admission declares only the bounded four-package pose policy");
+    }
+
+    private static void accept(Fixture fixture,
+            MediumBoardNormalAdmission.Contract contract, String why) {
+        PcbTwoLayerRules.requirePassivePoseAdmission(fixture.board, fixture.layout, contract);
+        require(true, why);
+    }
+
+    private static void rejectPose(final Fixture fixture,
+            final MediumBoardNormalAdmission.Contract contract, String why) {
+        reject(new Runnable() {
+            public void run() {
+                PcbTwoLayerRules.requirePassivePoseAdmission(
+                    fixture.board, fixture.layout, contract);
+            }
+        }, why);
+    }
+
+    private static Fixture fixture(int policyVersion, String id, String type,
+            PhysicalPackage boardPackage, PhysicalPackage placementPackage,
+            PcbRotation rotation, PcbBoardSide side) {
+        Fixture[] fixtures = fixture(policyVersion, new String[] {id}, new String[] {type},
+            new PhysicalPackage[] {boardPackage}, new PhysicalPackage[] {placementPackage},
+            new PcbRotation[] {rotation}, new PcbBoardSide[] {side});
+        return fixtures[0];
+    }
+
+    private static Fixture[] fixture(int policyVersion, String[] ids, String[] types,
+            PhysicalPackage[] boardPackages, PhysicalPackage[] placementPackages,
+            PcbRotation[] rotations, PcbBoardSide[] sides) {
+        if (ids.length != types.length || ids.length != boardPackages.length ||
+                ids.length != placementPackages.length || ids.length != rotations.length ||
+                ids.length != sides.length)
+            throw new IllegalArgumentException("Mismatched passive fixture inventory");
+        TroubleshootBoard board = new TroubleshootBoard("RB56_CONTROL_BOARD");
+        Vector<PcbPlacementConstraints.Part> declarations =
+            new Vector<PcbPlacementConstraints.Part>();
+        for (int index = 0; index < ids.length; index++) {
+            board.addComponent(new BoardComponent(ids[index], types[index], boardPackages[index]));
+            declarations.add(new PcbPlacementConstraints.Part(ids[index], "passives",
+                "Passive parts", "PRIMARY", PcbPlacementConstraints.Anchor.NONE, 20));
+        }
+        PcbPlacementConstraints constraints = constraints(policyVersion, declarations);
+        board.setPlacementConstraints(constraints);
+        PcbBoardLayout layout = new PcbBoardLayout(3200, 1000,
+            new Rectangle(100, 100, 2800, 700), new Rectangle(2950, 100, 200, 700));
+        for (int index = 0; index < ids.length; index++) {
+            PcbPackagePose pose = new PcbPackagePose(180 + index * 220, 180,
+                rotations[index], sides[index]);
+            layout.addComponent(PcbComponentPlacement.fromPhysicalGeometry(ids[index], pose,
+                placementPackages[index], placementPackages[index].getGeometry()));
+        }
+        return new Fixture[] {new Fixture(board, layout)};
+    }
+
+    private static String passiveType(PhysicalPackage physical) {
+        if (physical == PhysicalPackages.AXIAL_RESISTOR) return "RESISTOR";
+        if (physical == PhysicalPackages.AXIAL_DIODE) return "DIODE";
+        if (physical == PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR ||
+                physical == PhysicalPackages.RADIAL_CERAMIC_CAPACITOR) return "CAPACITOR";
+        throw new IllegalArgumentException("Unknown canonical passive package");
+    }
+
+    private static PcbPlacementConstraints constraints(int policyVersion,
+            Vector<PcbPlacementConstraints.Part> declarations) {
+        return new PcbPlacementConstraints(declarations,
+            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM,
+            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, 14, true,
+            PcbTraceWidthProfile.ROLE_WIDTHS, policyVersion);
+    }
+
+    private static TroubleshootBoard emptyDependencyBoard(int policyVersion) {
+        TroubleshootBoard board = new TroubleshootBoard("PASSIVE_POSE_CANONICAL_FIXTURE");
+        board.setPlacementConstraints(constraints(policyVersion,
+            new Vector<PcbPlacementConstraints.Part>()));
+        return board;
+    }
+
+    private static String appendBoard(TroubleshootBoard board) throws Exception {
+        Method method = GenerationDependencyContext.class.getDeclaredMethod("appendBoard",
+            StringBuilder.class, TroubleshootBoard.class, BoardPhysicalSpecifications.class);
+        method.setAccessible(true);
+        StringBuilder canonical = new StringBuilder();
+        method.invoke(null, canonical, board, new BoardPhysicalSpecifications());
+        return canonical.toString();
+    }
+
+    private static String expectedLegacyEmptyBoardCanonical(TroubleshootBoard board) {
+        StringBuilder expected = new StringBuilder();
+        emptyList(expected, "board.components");
+        emptyList(expected, "board.pads");
+        emptyList(expected, "board.nets");
+        dependencyField(expected, "routing.score", PcbRouteMetrics.SCORE_VERSION);
+        frame(expected, "single-copper-layer");
+        frame(expected, PcbCopperLayer.BOTTOM.name());
+        PcbPlacementConstraints placement = board.getPlacementConstraints();
+        dependencyField(expected, "physical.policy", placement.getPhysicalPolicyIdentity());
+        if (placement.placementDensityVersion != 1)
+            dependencyField(expected, "placement.density",
+                Integer.toString(placement.placementDensityVersion));
+        if (!placement.getTraceWidthProfile().isLegacyUniform())
+            dependencyField(expected, "physical.trace-width-profile",
+                placement.getTraceWidthProfile().canonical());
+        if (placement.requiresTwoLayerRouting)
+            dependencyField(expected, "placement.required-route",
+                MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER);
+        if (MediumBoardPhysicalPolicy.selected(placement))
+            dependencyField(expected, "physical.policy.contract",
+                MediumBoardPhysicalPolicy.canonical());
+        emptyList(expected, "board.power-inputs");
+        return expected.toString();
+    }
+
+    private static void emptyList(StringBuilder out, String key) {
+        out.append('F');
+        frame(out, key);
+        frame(out, "0");
+    }
+
+    private static void dependencyField(StringBuilder out, String key, String value) {
+        out.append('F');
+        frame(out, key);
+        frame(out, value);
+    }
+
+    private static String dependencyField(String key, String value) {
+        StringBuilder out = new StringBuilder();
+        dependencyField(out, key, value);
+        return out.toString();
+    }
+
+    private static void frame(StringBuilder out, String value) {
+        out.append('V').append(value.length()).append(':').append(value).append(';');
+    }
+
+    private static MediumBoardNormalAdmission admission(
+            MediumBoardNormalAdmission.Contract contract) throws Exception {
+        Constructor<MediumBoardNormalAdmission> constructor =
+            MediumBoardNormalAdmission.class.getDeclaredConstructor(
+                MediumBoardNormalAdmission.Contract.class, Long.TYPE, Long.TYPE,
+                String.class, String.class, String.class, String.class);
+        constructor.setAccessible(true);
+        return constructor.newInstance(contract, Long.valueOf(17L), Long.valueOf(-29L),
+            MediumBoardPhysicalPolicy.identity(), "receipt", "board", "layout");
+    }
+
+    private static String admissionField(String name, String value) {
+        return name.length() + ":" + name + "=" + value.length() + ":" + value + ";";
+    }
+
+    private static void reject(final Runnable action, String why) {
+        boolean rejected = false;
+        try {
+            action.run();
+        } catch (IllegalArgumentException expected) {
+            rejected = true;
+        }
+        require(rejected, why);
+    }
+
+    private static void require(boolean condition, String why) {
+        assertions++;
+        if (!condition) throw new AssertionError(why);
+    }
+
+    private static final class Fixture {
+        final TroubleshootBoard board;
+        final PcbBoardLayout layout;
+        Fixture(TroubleshootBoard board, PcbBoardLayout layout) {
+            this.board = board;
+            this.layout = layout;
+        }
+    }
+}

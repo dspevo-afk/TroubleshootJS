@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 18900,
+      "startTicks": "639280293437576046",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-policy-r1/run_native.ps1"
+    },
+    {
+      "pid": 26384,
+      "startTicks": "639280293439968157",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-pose-policy-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native policy phase; unique source copy"
+}

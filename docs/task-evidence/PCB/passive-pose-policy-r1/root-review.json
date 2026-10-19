@@ -1,0 +1,399 @@
+{
+  "status": "PASS",
+  "scope": "Root evidence review; trial acceptance remains exactly the frozen assessment",
+  "strictTrialStatus": "FAIL",
+  "nativeUnitStatus": "PASS",
+  "nativeRouteStatus": "PASS",
+  "completedRoutedCases": 28,
+  "firstUnreportedCase": null,
+  "archivedSourcesExact": 49,
+  "frozenGateOwnersExact": 26,
+  "main1475Exact": true,
+  "copyRestoredAndRetired": true,
+  "recordedDriversExited": 4,
+  "rootIntegratedSourceReview": "Constraints, actual template visits/sizing, identity/admission consumers, literal/pure fixtures and unchanged physical core reviewed before runtime",
+  "reviewLimits": "Leaf implementation/reader work is not an independent runtime or full-matrix review; owner/replay/markings/GWT/player NOT RUN for this native probe",
+  "observations": [
+    {
+      "seed": "-1017",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 3041,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "-1004",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 3099,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "-1022",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 6119,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "0",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 2423,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "17",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 6402,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "42",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 1,
+      "top90": [],
+      "elapsedMillis": 7997,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "1",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 1,
+      "top90": [],
+      "elapsedMillis": 2380,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "7",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 5118,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "5",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 5,
+      "top90": [],
+      "elapsedMillis": 5953,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "14",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 7440,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "2",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 2,
+      "top90": [],
+      "elapsedMillis": 8838,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "3",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 1,
+      "top90": [],
+      "elapsedMillis": 6288,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "4",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 6518,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "6",
+      "version": 15,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@1",
+      "selectedAttempt": 4,
+      "top90": [],
+      "elapsedMillis": 7731,
+      "exactNonTimingFields": 42
+    },
+    {
+      "seed": "-1017",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 2433,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1004",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 2891,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "-1022",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 6020,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "0",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 2536,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "17",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 3,
+      "top90": [],
+      "elapsedMillis": 5746,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "42",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 1,
+      "top90": [
+        "C5",
+        "CBIAS",
+        "CBULK",
+        "CFB",
+        "CFLT_B",
+        "CIN",
+        "COUT",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "DFREE",
+        "RDA",
+        "REN",
+        "RENAC",
+        "RPRIMARY",
+        "RREF_H",
+        "RREF_L"
+      ],
+      "elapsedMillis": 7942,
+      "metricDelta": {
+        "area": 514750,
+        "largestProtectedEmptyRectangleArea": 29800,
+        "copperManhattanLength": 7630,
+        "vias": 3
+      }
+    },
+    {
+      "seed": "1",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 1,
+      "top90": [],
+      "elapsedMillis": 2433,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "7",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 5582,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "5",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 5,
+      "top90": [],
+      "elapsedMillis": 5473,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "14",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 7117,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "2",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 2,
+      "top90": [],
+      "elapsedMillis": 8871,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "3",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 1,
+      "top90": [
+        "C5",
+        "CBIAS",
+        "CBULK",
+        "CFB",
+        "CIN",
+        "COUT",
+        "DB",
+        "RBLEED5",
+        "RENAC",
+        "RFB",
+        "RPRIMARY"
+      ],
+      "elapsedMillis": 5751,
+      "metricDelta": {
+        "area": 3852,
+        "largestProtectedEmptyRectangleArea": -46800,
+        "copperManhattanLength": 3720,
+        "vias": 1
+      }
+    },
+    {
+      "seed": "4",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 0,
+      "top90": [],
+      "elapsedMillis": 6599,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    },
+    {
+      "seed": "6",
+      "version": 16,
+      "completedPhysicalCore": true,
+      "issuedAdmissionIdentity": "RB56_BOARD_NORMAL@2",
+      "selectedAttempt": 4,
+      "top90": [],
+      "elapsedMillis": 7841,
+      "metricDelta": {
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    }
+  ]
+}

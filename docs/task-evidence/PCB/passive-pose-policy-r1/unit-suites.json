@@ -1,0 +1,34 @@
+[
+  [
+    "PcbPassivePoseFoundationContractTest",
+    "PCB passive pose foundation contracts "
+  ],
+  [
+    "PcbPassivePoseSourceContractTest",
+    "PCB passive pose source bindings "
+  ],
+  [
+    "PcbPassivePosePolicyContractTest",
+    "PCB passive pose policy contracts "
+  ],
+  [
+    "PcbPassivePoseAdmissionContractTest",
+    "PCB passive pose admission contracts "
+  ],
+  [
+    "PcbPassivePoseTrialSourceContractTest",
+    "PCB passive pose trial source contracts "
+  ],
+  [
+    "PcbPassivePoseRawContractTest",
+    "PCB passive pose raw42 contracts "
+  ],
+  [
+    "PcbPassivePoseRawContractTestGroup2",
+    "PCB passive pose raw-1022 contracts "
+  ],
+  [
+    "PcbPassivePoseRawContractTestGroup3",
+    "PCB passive pose raw4 contracts "
+  ]
+]

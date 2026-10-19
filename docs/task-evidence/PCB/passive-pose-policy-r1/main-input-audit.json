@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "acceptedMainExact": 1475,
+  "acceptedNativeBase": 1467,
+  "mechanicalSourcesReused": 4,
+  "excluded": "Git, caches, history, compiled web and private state"
+}
