@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "ownership": "Unique tsj-score-term OS-temp copy",
+  "verifiedExactFilesRemoved": 1466,
+  "symlinkOrReparseBoundariesCrossed": false,
+  "privateStateRemoved": true,
+  "rendererRecoverySnapshotsPreserved": true
+}

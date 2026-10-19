@@ -76,9 +76,17 @@ caps. Temporary observer/active test retired; accepted1466/full compiled identit
 restored exactly. Failed fixture attempts remain explicit; no scoring heuristic
 or final-board shrinkage is inferred.
 [Measurement and limits](task-evidence/PCB/pocket-decision-cause-r1/README.md).
-Next: scale stored physical silkscreen with the board while preserving readable
-provider annotations; fresh production build and visible zoom/viewport proof are
-required for that rendering change. Internal packing remains open.
+The no-route score decomposition for informed42/attempt1 now passes6824 native
+assertions/42.8164s with exact plan/6800-origin bindings and an independent reader.
+Both QA positions receive the same888 overlap reward; the gap-filling alternative
+loses mainly on estimated corridor cost. This does not establish routability or
+final shrinkage. Temporary copy/observer/test retired, main1475 remains exact.
+[Score terms and limits](task-evidence/PCB/placement-score-terms-r1/RESULTS.md).
+Physical silkscreen scaling has native7/JDK8GWT5 proof but remains unpublished:
+actual visible zoom/viewport acceptance is pending while this chat's browser
+panel is hidden. Next: resume that visible gate when available, and investigate
+pocket-position discrimination versus actual routing needs before a new packing
+policy. Internal packing remains open.
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

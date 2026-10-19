@@ -1,0 +1,104 @@
+{
+  "status": "FAILED_TERMINAL_ATTEMPT_PRESERVED",
+  "files": [
+    {
+      "file": "PcbPlacementScoreTermsContractTest.java",
+      "sha256": "19962f6719299695fa814b8a0c6ebadff4a048588766575d9fbd4d143998ea45"
+    },
+    {
+      "file": "README.md",
+      "sha256": "2d6bbdff3d0632d4a263299bc926106355a444f7258ed7035c3fed9a46cccc49"
+    },
+    {
+      "file": "check_process_cleanup.ps1",
+      "sha256": "ea20dff0e7c638caf8138b83abd377fcdf9a17315e8e751fdbd01ba063688973"
+    },
+    {
+      "file": "check_reader.py",
+      "sha256": "6d5375482047d1486db48ff9e77e080a414a0ec4a129a0d0ea13ed684df85365"
+    },
+    {
+      "file": "check_terms.py",
+      "sha256": "94aa0f4e61e31d1968fc2347614828fd3517ea86633fd0a5d00cd3046461f507"
+    },
+    {
+      "file": "copy-inputs.json",
+      "sha256": "1f07599d31460e508f3ee7031679d878842d861340fd0bb3d8b1dd5a3752ac2a"
+    },
+    {
+      "file": "extract_binding.py",
+      "sha256": "bd4888da0cdcd45df5961ad05d0e914c5c0e4e83e2f05bb57bb166ee46c802c1"
+    },
+    {
+      "file": "managed-worktree-failure.json",
+      "sha256": "958897d1b7cb6865dcb84a3fb7f7b03e3d687edd69d7b58869ccbba563e42201"
+    },
+    {
+      "file": "native-input-audit.json",
+      "sha256": "9e65f6f688d390b99beb20a0bb556b332ad024aa4b3e39c82eba69ff701a73e6"
+    },
+    {
+      "file": "native-inputs.json",
+      "sha256": "035afcfa8df918e3720b68c781a59f731435b5d43ac63226afb86f5ebb7464ec"
+    },
+    {
+      "file": "native-timing.json",
+      "sha256": "d1d9efbf4343dc44993f0edf8bc76513d07fedd1e93d003c6dc0c33ba496d5eb"
+    },
+    {
+      "file": "native.txt",
+      "sha256": "29229ea3cc91d6a6d243c0918a1c04877b2689ca937215b0586ea7e77fe58207"
+    },
+    {
+      "file": "phase_inputs.py",
+      "sha256": "0c6f490a0c1270c354e129976aaf5077953e986fdc27998d9b5f2ffc5c862de7"
+    },
+    {
+      "file": "plan-binding.json",
+      "sha256": "6347b0bd57ef6574da39e282dd5937d80d6a772fa515dc3175c746fa2dd5746c"
+    },
+    {
+      "file": "planner-instrumentation.java",
+      "sha256": "678232d88d7953cc519835ece25326c741a4fcabc3f3ede684550a8f34d45848"
+    },
+    {
+      "file": "prepare.py",
+      "sha256": "ad81451286a56c6c612d4d13aa2ebff2faf9e5a1ac84e8c519a0af32b2b3fb88"
+    },
+    {
+      "file": "process-cleanup.json",
+      "sha256": "669823730336e456255f7e9413b378e08885c36e7cdd9e462559efaab0436dbc"
+    },
+    {
+      "file": "process-launch.json",
+      "sha256": "621b98a060623711b3f47065fa85efa76b1122a240c50310338361454ebcf60c"
+    },
+    {
+      "file": "reader-canaries.json",
+      "sha256": "a02cb51be93575df563db049b1087ffe3acafd606de282356f35bbf4fe351c1e"
+    },
+    {
+      "file": "register.py",
+      "sha256": "c4d6d66b7e2da0938bfda33bd51aa72d479cede222b777e5469319ec5badc327"
+    },
+    {
+      "file": "retire_copy.py",
+      "sha256": "13d8fbd082f3a56c057ad27eaeebade5add7e66fbef7350eab59dbe584b03ed4"
+    },
+    {
+      "file": "run_focused.ps1",
+      "sha256": "47c2b9efff6c79fd6cb94320f68eab32d4329106c79cb99df81754add742f6ef"
+    },
+    {
+      "file": "source-review.md",
+      "sha256": "1d3126e92a5e05aa91db8fe312741510d3307e9939b279d06338c2d44185938e"
+    },
+    {
+      "file": "worker-notes.md",
+      "sha256": "884a0013f525c773aa59a046b1fef78d4db6339eabd122236408e8b0980b5dd4"
+    }
+  ],
+  "timingFromCompletedDriver": true,
+  "cleanupCheckedBeforePreservation": true,
+  "sanitization": "None; native log contains no private absolute path"
+}

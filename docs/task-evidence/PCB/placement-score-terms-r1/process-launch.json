@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 20580,
+      "startTicks": "639280007393633779",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/placement-score-terms-r1/run_focused.ps1"
+    },
+    {
+      "pid": 23808,
+      "startTicks": "639280007395985777",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/placement-score-terms-r1/run_focused.ps1"
+    }
+  ],
+  "ownership": "Captured before native work; isolated accepted source copy"
+}

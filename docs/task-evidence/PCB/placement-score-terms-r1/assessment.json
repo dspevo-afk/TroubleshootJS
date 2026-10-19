@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "root": "42",
+  "attempt": 1,
+  "scoreDeltaAlternativeMinusChosen": {
+    "wireDistance": 179.3181818181822,
+    "corridorPenalty": 3681.818181818182,
+    "wholeContentGrowth": -82.5825,
+    "groupGrowth": 256.5225,
+    "groupCenter": 32.39999999999998,
+    "hint": 5.400000000000006,
+    "baseScore": 4072.8763636363637,
+    "supportEndpointSpan": 0.0,
+    "vacancyDistanceCost": 67.5,
+    "vacancyOverlapReward": 0.0,
+    "effectiveScore": 4140.376363636364
+  },
+  "claim": "Finite existing-score decomposition only; prior raw-pocket causal status remains INCONCLUSIVE; no routing/final-shrinkage proof",
+  "nativeLogSha256": "276b732b16d3912221cf76e0fbac2615615253c4b158da94bb8d435577784f90"
+}

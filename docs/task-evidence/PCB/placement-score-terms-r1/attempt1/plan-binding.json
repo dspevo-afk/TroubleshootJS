@@ -1,0 +1,34 @@
+{
+  "status": "PINNED",
+  "priorLogSha256": "ec3c40456877334d5bcdb4db850bcb456d617fe1445dc4037cf61468d7fe6cbe",
+  "root": "42",
+  "layoutSeed": "5526715536693200536",
+  "selectedAttempt": 1,
+  "selectedPlanSha256": "d88e50e98d6c268d3bb3486f6c7c4f1377a4399d9ecf84dc9cfbe26b3a94b73b",
+  "chosen": {
+    "componentId": "QA",
+    "rawX": 1690,
+    "rawY": 1580,
+    "rawRotation": "DEG_0",
+    "rawMountingSide": "TOP",
+    "recordedX": 1690,
+    "recordedY": 1580,
+    "recordedRotation": "DEG_0",
+    "recordedMountingSide": "TOP",
+    "choiceFound": true,
+    "coordinatesMatch": true,
+    "poseMatches": true,
+    "comparable": true,
+    "chosenScore": 1808.5128484848483
+  },
+  "alternative": {
+    "componentId": "QA",
+    "recordedOriginSequence": 6297,
+    "x": 1390,
+    "y": 1550,
+    "rotation": "DEG_0",
+    "mountingSide": "TOP",
+    "effectiveScore": 5948.889212121212
+  },
+  "claim": "Existing observations; prior causal result remains INCONCLUSIVE"
+}

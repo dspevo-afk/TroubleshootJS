@@ -64,7 +64,9 @@ generation evidence.
 
 Both returned-plan fingerprints match the actual selected candidate, all raw
 chosen coordinates and poses match their observations, and neither trace cap is
-reached. The raw plans differ from their returned compacted plans as expected.
+reached. Root-1022's raw plan differs from its returned compacted plan; root42's
+raw, returned and selected fingerprints are identical. This text correction
+does not change the recorded measurement or its capped causal classification.
 Root42 contains an observed QA move at recorded origin6297 from the existing
 search: raw rectangle356400→290400, logged score1808.5128484848483→5948.889212121212,
 full placement validation passes. The declared caps still prevent causal

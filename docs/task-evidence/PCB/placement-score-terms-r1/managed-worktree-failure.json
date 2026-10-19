@@ -1,0 +1,12 @@
+{
+  "operationId": "48c19a04-a9d3-4e02-aa6c-ea226db682c9",
+  "requestedRef": "ffd02ec83ce04465447f31c2a0df568dad52a543",
+  "status": "FAIL",
+  "phase": "Git worktree checkout",
+  "reason": "Windows Filename too long in historical evidence paths; fatal could not reset index",
+  "usableWorktreeReturned": false,
+  "newWorktreeInSubsequentGitInventory": false,
+  "globalSettingsChanged": false,
+  "unrelatedWorktreesModified": false,
+  "fallback": "Unique OS-temp copy of pinned accepted1466 files"
+}
