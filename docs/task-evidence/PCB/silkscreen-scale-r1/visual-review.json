@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "scope": "Root visually inspected all five unedited actual-production JPG captures with view_image. Physical silkscreen projection/position and the declared player flow only; existing provider crowding and extreme-fit readability remain limitations.",
+  "captures": [
+    {
+      "file": "desktop-fit.jpg",
+      "sha256": "d91b5a03632179b9e73161ca9b5fd23459c399a73b714b68d6b5ae42d6f8dc6b",
+      "observations": "Entire board and scaled meter visible. Physical silk stays at small board-relative reference/title positions. No physical label jumps or enlarged screen-floor silk observed; tiny lettering requires zoom."
+    },
+    {
+      "file": "desktop-zoom.jpg",
+      "sha256": "816587ce3ed65d74c7dc06ccd26514651db601a17c36a35dbf44ead276cd9d0e",
+      "observations": "Physical reference/title markings enlarge with the PCB and retain their part-relative baselines. Normal whole-bench zoom crops the meter and board edges. Existing provider annotation sizes are a separate policy."
+    },
+    {
+      "file": "desktop-repaired.jpg",
+      "sha256": "34fe24b0bd8de1ce745cd75ab0a8de6b727ed8736e5466edb27947f5455e7802",
+      "observations": "Actual powered customer-retest PASS overlay after ordinary catalog acquisition, physical replacement and retest; unchanged board remains visible behind the overlay. This capture is flow evidence, not a label-legibility oracle."
+    },
+    {
+      "file": "narrow-fit.jpg",
+      "sha256": "799e4abb6883a098a3dc13e101d7a826649e072a17f183c2be5f12bcfa1726f4",
+      "observations": "319px fit contains the PCB and meter. Physical silk is proportionally tiny. Existing readable provider annotations crowd the dense right side at this fit; no general legibility or clutter removal claimed."
+    },
+    {
+      "file": "narrow-zoom.jpg",
+      "sha256": "f6016eeee71dd7cb1e142183dcf46c2184845781ca658644783b2db8a3a2f426",
+      "observations": "At actual narrow zoom, physical RFB/UFB/DFREE references enlarge in place with their footprints. Optocoupler provider text remains inside its body. Cropped board extent and bottom tray boundary remain natural."
+    }
+  ],
+  "followUps": [
+    "View popup retains an earlier Select a meter mode first hint after subsequent valid probe placement; actual probe rings and live reading updated. Unchanged input owner; no hint-fix claim."
+  ]
+}

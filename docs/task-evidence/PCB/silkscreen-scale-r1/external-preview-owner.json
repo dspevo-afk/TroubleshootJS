@@ -1,0 +1,7 @@
+{
+  "processId": 23632,
+  "processStartTicks": "639280216777238670",
+  "port": 8907,
+  "script": "scripts/preview.ps1",
+  "ownership": "Maintained start-preview state captured before actual player interaction"
+}

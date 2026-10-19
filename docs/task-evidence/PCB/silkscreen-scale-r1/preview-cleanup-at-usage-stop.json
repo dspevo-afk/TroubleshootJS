@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "pid": 832,
+  "startTicks": "639279991051638337",
+  "port": 8907,
+  "executable": "powershell.exe",
+  "terminationProven": true,
+  "commandAndParentRevalidated": true,
+  "scope": "Owned preview process only; no player cleanup7 or visual acceptance claim",
+  "sharedHttpSysPid4Untouched": true,
+  "browserTab13PreviouslyClosed": true,
+  "viewportPreviouslyReset": true
+}

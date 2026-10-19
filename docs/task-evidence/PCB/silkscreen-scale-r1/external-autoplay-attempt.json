@@ -1,0 +1,258 @@
+{
+  "status": "FAIL",
+  "reason": "Audio autoplay warnings before first real gesture; unrepaired intentional abort",
+  "logs": [
+    {
+      "type": "warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    },
+    {
+      "type": "warning",
+      "text": "The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio"
+    }
+  ],
+  "failedResponses": [],
+  "reports": [
+    {
+      "label": "desktop-cold-progress",
+      "recordedAt": "2026-10-19T15:48:42.773Z",
+      "report": null
+    },
+    {
+      "label": "desktop-cold-progress-qualified",
+      "recordedAt": "2026-10-19T15:49:39.736Z",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "4",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "RUNNING",
+        "phase": "STARTUP"
+      }
+    },
+    {
+      "label": "desktop-cold-terminal-check",
+      "recordedAt": "2026-10-19T15:50:02.698Z",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "4",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "RUNNING",
+        "phase": "STARTUP"
+      }
+    },
+    {
+      "label": "desktop-initial-external-cold-check",
+      "recordedAt": "2026-10-19T15:50:27.139Z",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "4",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "HOLD",
+        "phase": "HOLD",
+        "packages": 55,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 601,
+        "generationMillis": 60958,
+        "maxManualUnitMillis": 1474,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "7bc847ed538d47572c59da4ca6a6a5a91079f143e70ac6e3c7a690edba471ad6",
+        "diagnosticContextDigest": "f627a508e2d7073fac2498228e8e75a92e804cbcb03c9d791d97ee593e60f2db",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": true
+      }
+    },
+    {
+      "label": "desktop-initial-external-aborted",
+      "recordedAt": "2026-10-19T15:50:57.127Z",
+      "report": {
+        "protocol": "TSJ-RB56-QUALIFICATION-1",
+        "scope": "PRIVATE_PLAYER_SESSION",
+        "family": "RB56_CONTROL",
+        "seed": "4",
+        "sourceEpoch": "tsj-generation-dependencies-v16",
+        "planVersion": 1,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "forcedAfterPublish": false,
+        "normalCatalogEnabled": false,
+        "status": "FAIL",
+        "phase": "RESTORED",
+        "packages": 55,
+        "hypotheses": 5,
+        "solverSamples": 60,
+        "generationStages": 6,
+        "generationWork": 601,
+        "generationMillis": 60958,
+        "maxManualUnitMillis": 1474,
+        "physicalAdmission": "RB56_BOARD_NORMAL@1",
+        "normalPhysicalAdmission": true,
+        "fullProductionD01": true,
+        "coldProof": true,
+        "generationReceiptDigest": "7bc847ed538d47572c59da4ca6a6a5a91079f143e70ac6e3c7a690edba471ad6",
+        "diagnosticContextDigest": "f627a508e2d7073fac2498228e8e75a92e804cbcb03c9d791d97ee593e60f2db",
+        "diagnosticProgramDigest": "1a965eb98e7990d0d35c32608c79d1c02e770abd3c250ba924186bb9f0efc747",
+        "holdMillis": 360000,
+        "normalLabels": true,
+        "playerSessionInstalled": true,
+        "privatePersistence": true,
+        "failurePhase": "HOLD",
+        "jobOutcome": "PASS",
+        "jobStage": "PUBLISH",
+        "jobWork": 601,
+        "jobMillis": 61070,
+        "manualUnitMaxMillis": 1474,
+        "routingMillis": 16068,
+        "proofMillis": 37930,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 22336,
+          "PHYSICAL": 118,
+          "HYPOTHESES": 35502,
+          "SYMPTOM": 13,
+          "PUBLISH": 112
+        },
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 97,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 500,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "diagnosticWorkTimings": {
+          "REPLAY_INSTALL": {
+            "units": 5,
+            "millis": 870,
+            "maxMillis": 176
+          },
+          "CANDIDATE_HEALTHY_SETTLE": {
+            "units": 65,
+            "millis": 6677,
+            "maxMillis": 158
+          },
+          "CANDIDATE_SETTLE": {
+            "units": 45,
+            "millis": 4949,
+            "maxMillis": 179
+          },
+          "OBSERVATION_STEP:INPUT": {
+            "units": 5,
+            "millis": 333,
+            "maxMillis": 76
+          },
+          "OBSERVATION_STEP:WAIT": {
+            "units": 5,
+            "millis": 0,
+            "maxMillis": 0
+          },
+          "OBSERVATION_STEP:DC_VOLTAGE": {
+            "units": 60,
+            "millis": 636,
+            "maxMillis": 14
+          },
+          "OBSERVATION_STEP:POWER": {
+            "units": 5,
+            "millis": 225,
+            "maxMillis": 48
+          },
+          "OBSERVATION_STEP:SETTLE": {
+            "units": 5,
+            "millis": 349,
+            "maxMillis": 76
+          },
+          "POWER_OFF_SETTLE": {
+            "units": 150,
+            "millis": 7350,
+            "maxMillis": 152
+          },
+          "REMOVE_SETTLE": {
+            "units": 5,
+            "millis": 653,
+            "maxMillis": 136
+          },
+          "REPLACE_SETTLE": {
+            "units": 5,
+            "millis": 644,
+            "maxMillis": 133
+          },
+          "POWER_ON_SETTLE": {
+            "units": 5,
+            "millis": 362,
+            "maxMillis": 74
+          },
+          "REPAIR_STATUS_SETTLE": {
+            "units": 65,
+            "millis": 6316,
+            "maxMillis": 223
+          },
+          "CUSTOMER_RETEST": {
+            "units": 65,
+            "millis": 5843,
+            "maxMillis": 121
+          },
+          "CUSTOMER_RETEST_COMPLETION": {
+            "units": 5,
+            "millis": 73,
+            "maxMillis": 17
+          },
+          "EVIDENCE_RESTORE_PRIMARY": {
+            "units": 5,
+            "millis": 178,
+            "maxMillis": 37
+          }
+        },
+        "qualifiedPublication": true,
+        "ownerRestored": true,
+        "candidateDisposed": true,
+        "temporaryMeterClean": true,
+        "debugRestored": true,
+        "coordinatorReleased": true,
+        "ordinaryCustomerRetestPassed": false,
+        "cleanupPending": false,
+        "playerSessionReleased": true,
+        "playerBridgeReleased": true,
+        "wallMillis": 102322,
+        "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup"
+      }
+    }
+  ],
+  "inputPreparation": "Role query timed out while ticket modal hid underlying close control; no close input occurred; accepted ticket then clicked actual close button",
+  "terminationInput": "Real End qualification view"
+}

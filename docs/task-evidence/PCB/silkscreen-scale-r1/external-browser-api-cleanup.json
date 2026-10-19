@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "processId": 21212,
+  "exitCode": 0,
+  "signalCode": null,
+  "closeElapsedMillis": 183,
+  "operations": "Owned context close, connected browser close, public BrowserServer close; root process exit observed",
+  "sharedBrowserControlled": false
+}

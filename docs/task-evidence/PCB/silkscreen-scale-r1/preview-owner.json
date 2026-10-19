@@ -1,0 +1,9 @@
+{
+  "pid": 832,
+  "startTicks": "639279991051638337",
+  "executable": "powershell",
+  "port": 8907,
+  "script": "scripts/preview.ps1",
+  "stateFile": ".tools/preview/state.json",
+  "status": "VERIFIED_OWNED_RUNNING"
+}

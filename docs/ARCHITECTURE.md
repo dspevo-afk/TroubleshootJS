@@ -5462,13 +5462,22 @@ same installed-part drawing context, including lifted leads and face/occupancy,
 plus pad bounds. `Graphics.MeasuredText` captures real Canvas metrics/style/CTM;
 `PcbScreenLabelLayout` makes bounded view-space full-text placements with owner
 leaders. One cache is keyed by projection/face/view/obstacles/text/metrics/style.
-Reference/net/title/provider labels retain readable minima; no-slot labels retain
+Provider annotations retain readable minima; no-slot provider labels retain
 their full original text and an actionable zoom hint, while offscreen owners use
-natural clipping. This changes display annotations, not static physical realization,
-electrical graph, conductor targets or saved geometry. Affine text/leader coordinates
-are handled explicitly. [Finite current proof](task-evidence/PCB/compactness-r1/README.md)
-contains the exact before/after dimensions, legacy3 SHA match, actual via witness,
-fit/wheel full-text checks and real private1/private2 file reconstruction/retests.
+natural clipping. Physical reference/net/title `PcbSilkscreenLabel` markings now
+follow a separate path in the same renderer: top-face text draws at its stored
+projected baseline with the original logical font under fractional canvas scaling,
+without a screen-size floor or view-space relocation. A scoped board clip keeps
+ink on the PCB. Browser-measured glyph bearings/ascent/descent reserve conservative
+board-clipped obstacles for provider placement in the same base canvas frame;
+the existing provider CTM transforms those obstacles once. The drawing restores
+both canvas state and Graphics' cached font/color state. No physical label metadata,
+electrical graph, conductor target or saved geometry changes. Affine text/leader
+coordinates remain explicit. [Physical silk projection scope](task-evidence/PCB/silkscreen-scale-r1/proposal.json).
+The [earlier annotation evidence](task-evidence/PCB/compactness-r1/README.md)
+records its own legacy/current interpretation boundary, via witness, fit/wheel
+checks and real private1/private2 file reconstruction/retests; it does not certify
+the newer physical-silk rendering path.
 
 
 ## Saved private placement 3 functional grouping and terminal banks

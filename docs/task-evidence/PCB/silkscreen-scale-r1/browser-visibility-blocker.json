@@ -1,0 +1,13 @@
+{
+  "status": "VISUAL_GATE_PENDING_EXTERNAL_UI_STATE",
+  "browser": "Codex in-app browser2",
+  "tabId": "13",
+  "viewport": {"width":1280,"height":900},
+  "actualColdResult": {"seed":"4","packages":55,"generationMillis":71935,"generationWork":601,"maxManualUnitMillis":1966,"phase":"HOLD"},
+  "captureAttempts": 2,
+  "captureFailure": "Page.captureScreenshot timed out through both documented screenshot entry points; no usable image returned",
+  "appEvidence": "open_in_codex reports queued/current chat hidden. navigate_to_codex_page reports navigated=true, but opening the existing tab still reports queued and a second screenshot times out.",
+  "browserWarningsOrErrors": 0,
+  "request": "Asked user to open this chat and its browser panel and reply visible; pending. No repeated capture command until UI state changes.",
+  "claims": "Native7/GWT5/frozen-input gates pass; cold admission passes within unchanged limits. No visible player-flow, screenshot or legibility PASS is claimed. No production publication while this gate is unresolved."
+}

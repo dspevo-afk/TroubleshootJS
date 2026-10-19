@@ -1,0 +1,19 @@
+{
+  "drivers": [
+    {
+      "pid": 23300,
+      "startTicks": "639279988452611899",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/silkscreen-scale-r1/run_phase.ps1",
+      "phase": "native"
+    },
+    {
+      "pid": 23436,
+      "startTicks": "639279988455020721",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/silkscreen-scale-r1/run_phase.ps1",
+      "phase": "native"
+    }
+  ],
+  "ownership": "Captured before phase work"
+}

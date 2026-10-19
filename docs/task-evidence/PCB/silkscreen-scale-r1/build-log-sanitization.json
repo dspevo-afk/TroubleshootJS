@@ -1,0 +1,16 @@
+{
+  "status": "KNOWN_PRIVATE_PREFIXES_REDACTED",
+  "rawSha256": "dc22e4ab21be17e902edf08747467ecc914c758c0bc515eec3db28e6042ca0a8",
+  "sanitizedSha256": "b2e81c2c92732a1dfa5cfb0f9eed100477f8cd743006c0cf79c8d17cc1bf9285",
+  "substitutions": [
+    {
+      "prefixKind": "repo",
+      "replacementCount": 1
+    },
+    {
+      "prefixKind": "user-home",
+      "replacementCount": 0
+    }
+  ],
+  "scope": "Only known local path prefixes; compiler diagnostics and outcomes unchanged"
+}

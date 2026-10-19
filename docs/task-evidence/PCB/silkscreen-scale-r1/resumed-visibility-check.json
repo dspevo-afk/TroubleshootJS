@@ -1,0 +1,14 @@
+{
+  "status": "BLOCKED",
+  "phase": "Visible production input prerequisite",
+  "resumedOpenInCodexResult": "queued",
+  "nativeFallback": "Read-only app inventory only; no native input or activation",
+  "nativeWindowLabel": "ChatGPT",
+  "nativeControlConstraint": "Bundled Windows computer-use guidance forbids automating ChatGPT desktop app UI",
+  "browserAutomationProviders": ["Codex In-app Browser", "Codex MCP Apps"],
+  "externalBrowserAutomationAvailable": false,
+  "previewRestarted": false,
+  "newScreenshotAttempted": false,
+  "newPlayerFlowPass": false,
+  "mainRendererSourceChanged": false
+}

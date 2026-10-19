@@ -267,42 +267,15 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     private void drawRequiredLabels(Graphics graphics,
             Vector<Graphics.MeasuredText> deferredProviderText,
             Vector<Rectangle> renderedObstacles) {
+        Vector<Rectangle> silkscreenObstacles = drawPhysicalSilkscreen(graphics);
         Vector<PcbScreenLabelLayout.Label> labels =
             new Vector<PcbScreenLabelLayout.Label>();
         for (Graphics.MeasuredText text : deferredProviderText)
             labels.add(new PcbScreenLabelLayout.Label(text,
                 PcbScreenLabelLayout.Kind.PROVIDER));
-        if (viewingFace == PcbBoardSide.TOP) {
-            for (PcbSilkscreenLabel label : layout.getSilkscreenLabels()) {
-                graphics.setFont(new Font(WorkbenchVisualTheme.FONT,
-                    label.isBold() ? Font.BOLD : 0,
-                    Math.max(10, scaleInt(label.getFontSize()))));
-                graphics.setColor(label.getId().startsWith("net:") ?
-                    WorkbenchVisualTheme.SILK : WorkbenchVisualTheme.SILK_SECONDARY);
-                String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
-                int x=screenX(label.getBaselineX()), y=screenY(label.getBaselineY());
-                Point owner=label.getTargetPadId()==null ? null : getPadPoint(label.getTargetPadId());
-                if(owner==null&&label.getId().startsWith("component:")) {
-                    PcbComponentPlacement ownerComponent=layout.getComponent(
-                        label.getId().substring("component:".length()));
-                    if(ownerComponent!=null) {
-                        Rectangle body=screenRectForProvider(ownerComponent.getPhysicalGeometry()
-                            .placedAt(ownerComponent.getPose()).getBodyBounds());
-                        owner=new Point(body.x+body.width/2,body.y+body.height/2);
-                    }
-                }
-                if(owner==null) owner=new Point(x,y);
-                Graphics.MeasuredText measured=graphics.measureText(label.getId(),text,
-                    owner.x,owner.y,x,y);
-                PcbScreenLabelLayout.Kind kind=label.getId().startsWith("net:") ?
-                    PcbScreenLabelLayout.Kind.NET :
-                    (label.getId().equals("board-title") || label.getId().startsWith("title:") ?
-                        PcbScreenLabelLayout.Kind.TITLE : PcbScreenLabelLayout.Kind.REFERENCE);
-                labels.add(new PcbScreenLabelLayout.Label(measured,kind));
-            }
-        }
         if(labels.size()==0)return;
         Vector<Rectangle> obstacles=new Vector<Rectangle>(renderedObstacles);
+        obstacles.addAll(silkscreenObstacles);
         for(PcbPadPlacement pad:layout.getPads())
             obstacles.add(screenRectForProvider(pad.getPadBounds()));
         Graphics.MeasuredText frame=labels.elementAt(0).text;
@@ -334,6 +307,116 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             graphics.drawString("Some labels overlap in this view. Zoom in to separate them.",
                 hintArea.x+4,hintArea.y+14);
         }
+    }
+
+    /** Physical legend ink stays attached to the top copper face and follows board scale. */
+    private Vector<Rectangle> drawPhysicalSilkscreen(Graphics graphics) {
+        Vector<Rectangle> obstacles = new Vector<Rectangle>();
+        if (!shouldDrawPhysicalSilkscreen(viewingFace))
+            return obstacles;
+        Vector<PcbSilkscreenLabel> silkLabels = layout.getSilkscreenLabels();
+        if (silkLabels.isEmpty())
+            return obstacles;
+
+        Font previousFont = graphics.currentFont;
+        int previousFontSize = graphics.currentFontSize;
+        Color previousColor = graphics.lastColor;
+        com.google.gwt.canvas.dom.client.Context2d context = graphics.context;
+        context.save();
+        try {
+            Rectangle board = screenRectForProvider(layout.getBoardOutline());
+            graphics.clipRect(board.x, board.y, board.width, board.height);
+            context.setTextAlign("left");
+            context.setTextBaseline("alphabetic");
+            for (PcbSilkscreenLabel label : silkLabels) {
+                String text = getPowerInputLabel(label.getTargetPadId(), label.getText());
+                Font font = new Font(WorkbenchVisualTheme.FONT,
+                    label.isBold() ? Font.BOLD : 0, label.getFontSize());
+                graphics.setFont(font);
+                graphics.setColor(label.getId().startsWith("net:") ?
+                    WorkbenchVisualTheme.SILK : WorkbenchVisualTheme.SILK_SECONDARY);
+
+                // Measure in the existing canvas frame before applying the PCB's
+                // fractional scale. The obstacle is kept in that same frame so
+                // drawRequiredLabels transforms it exactly once with its frame.
+                Graphics.MeasuredText measured = graphics.measureText(label.getId(), text,
+                    0, 0, 0, 0);
+                SilkscreenProjection silk = projectSilkscreen(projection,
+                    label.getBaselineX(), label.getBaselineY(), label.getFontSize(),
+                    measured.left, measured.right, measured.ascent, measured.descent);
+                Rectangle ink = clipSilkscreenInk(silk.inkBounds, board);
+                if (ink != null)
+                    obstacles.add(ink);
+
+                context.save();
+                try {
+                    context.translate(silk.baselineX, silk.baselineY);
+                    context.scale(silk.scale, silk.scale);
+                    context.fillText(text, 0, 0);
+                } finally {
+                    context.restore();
+                }
+            }
+        } finally {
+            context.restore();
+            graphics.currentFont = previousFont;
+            graphics.currentFontSize = previousFontSize;
+            graphics.lastColor = previousColor;
+        }
+        return obstacles;
+    }
+
+    static final class SilkscreenProjection {
+        final double baselineX, baselineY, scale, projectedFontSize;
+        final Rectangle inkBounds;
+        SilkscreenProjection(double baselineX, double baselineY, double scale,
+                double projectedFontSize, Rectangle inkBounds) {
+            this.baselineX = baselineX;
+            this.baselineY = baselineY;
+            this.scale = scale;
+            this.projectedFontSize = projectedFontSize;
+            this.inkBounds = inkBounds;
+        }
+    }
+
+    static SilkscreenProjection projectSilkscreen(PcbViewport.Transform view,
+            double baselineX, double baselineY, int logicalFontSize,
+            double left, double right, double ascent, double descent) {
+        if (view == null || logicalFontSize <= 0 || !(view.scale > 0) ||
+                !finite(view.scale) || !finite(baselineX) || !finite(baselineY) ||
+                !finite(left) || !finite(right) || !finite(ascent) || !finite(descent))
+            throw new IllegalArgumentException("Invalid physical silkscreen projection");
+        double x = view.screenX(baselineX), y = view.screenY(baselineY);
+        double scale = view.scale;
+        double firstX = x - left * scale, secondX = x + right * scale;
+        double firstY = y - ascent * scale, secondY = y + descent * scale;
+        int minX = (int)Math.floor(Math.min(firstX, secondX)) - 1;
+        int maxX = (int)Math.ceil(Math.max(firstX, secondX)) + 1;
+        int minY = (int)Math.floor(Math.min(firstY, secondY)) - 1;
+        int maxY = (int)Math.ceil(Math.max(firstY, secondY)) + 1;
+        Rectangle ink = new Rectangle(minX, minY, Math.max(1, maxX - minX),
+            Math.max(1, maxY - minY));
+        return new SilkscreenProjection(x, y, scale, logicalFontSize * scale, ink);
+    }
+
+    static Rectangle clipSilkscreenInk(Rectangle ink, Rectangle board) {
+        if (ink == null || board == null || ink.width <= 0 || ink.height <= 0 ||
+                board.width <= 0 || board.height <= 0)
+            return null;
+        int left = Math.max(ink.x, board.x);
+        int top = Math.max(ink.y, board.y);
+        int right = Math.min(ink.x + ink.width, board.x + board.width);
+        int bottom = Math.min(ink.y + ink.height, board.y + board.height);
+        return right <= left || bottom <= top ? null :
+            new Rectangle(left, top, right - left, bottom - top);
+    }
+
+    static boolean shouldDrawPhysicalSilkscreen(PcbBoardSide face) {
+        return face == PcbBoardSide.TOP;
+    }
+
+    private static boolean finite(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value);
     }
 
     private String screenLabelKey(Vector<PcbScreenLabelLayout.Label> labels,

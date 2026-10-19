@@ -1,0 +1,8 @@
+{
+  "status": "NO_SOURCE_BLOCKER_FOUND",
+  "reviewer": "pcb_label_scale_cause read-only leaf",
+  "rendererSha256": "aca59f91fc318c27a59182affdb2d2e693ff15b6a42cdaf1579375bc885505cb",
+  "contractSha256": "4c0afe43724b0e8564f3e673f065c6f849f6a4539fcd59a9732ba4d154b464a5",
+  "scope": "Physical draw ordering, fractional Canvas scale/board clip, base-frame measured ink and once-only provider CTM/cache path, top/bottom policy, Graphics/canvas state restoration and unchanged probe/identity/privacy path",
+  "limits": "Source-only optional review, no files changed and no runtime/UI proof. Native fixtures and actual GWT build do not establish Canvas appearance or browser legibility; fresh visible proof remains required."
+}

@@ -1,0 +1,29 @@
+{
+  "status": "RETAINED",
+  "failures": [
+    {
+      "selector": "End qualification view role lookup while initial ticket modal active",
+      "timeoutMillis": 3000,
+      "input": "NOT DISPATCHED",
+      "resolution": "Accepted visible ticket before actual close"
+    },
+    {
+      "selector": "DC V text lookup while workbench zoom put physical meter offscreen",
+      "timeoutMillis": 3000,
+      "input": "NOT DISPATCHED",
+      "resolution": "Refit bench; real observed meter button click; DOM selected class and live reading verified"
+    },
+    {
+      "selector": "View label span at narrow width",
+      "timeoutMillis": 3000,
+      "input": "NOT DISPATCHED",
+      "resolution": "Used actual accessible Board view icon button after inspecting its DOM semantics"
+    }
+  ],
+  "negativeStates": [
+    "Initial no-mode probe attempt displayed Select a meter mode first",
+    "Unrepaired customer retest failed",
+    "Narrow restored14 retest with master power OFF failed; powered retest then passed"
+  ],
+  "limits": "These are retained input preparations/negative states; no locator force-click, controller injection, oracle or budget relaxation"
+}

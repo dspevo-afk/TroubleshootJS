@@ -445,6 +445,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbSavedDensityGeometryContractTest'; Marker = 'saved placement4 geometry contracts ' },
         @{ Name = 'PcbSavedLargeGeometryContractTest'; Marker = 'saved placement5 geometry contracts ' },
         @{ Name = 'PcbSingleGroupDensityContractTest'; Marker = 'focused single-group density contracts ' },
+        @{ Name = 'PcbSilkscreenScaleContractTest'; Marker = 'PCB silkscreen scale contracts: ' },
         @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
         @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },

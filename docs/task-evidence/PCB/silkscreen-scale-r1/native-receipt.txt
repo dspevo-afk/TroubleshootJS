@@ -1,0 +1,14 @@
+PASS: PCB silkscreen scale contracts: 23 assertions
+
+PASS: PcbScreenLabelLayoutContractTest: 273 assertions
+
+PASS: PCB role width owner identity contracts assertions=28
+
+PASS: U06 session save contracts assertions=34987
+
+A11_PROVIDER_REPORT {"protocol":"TSJ-A11-PROVIDERS-1","status":"PASS","scope":"provider-declarations","entries":9,"paired":7,"joins":2,"roleVariants":3,"plans":6,"parts":78,"negativeCases":20,"assertions":429,"generatorVersion":6,"solverEvidence":"separate-current-Task49-report"}
+PASS: A11 provider conformance
+
+PASS: A02GeometryContractTest 32 assertions
+
+PASS: U01 viewport contracts assertions=1277

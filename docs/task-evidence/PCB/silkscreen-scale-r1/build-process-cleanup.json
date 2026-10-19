@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "drivers": [
+    {
+      "pid": 3656,
+      "startTicks": "639279989141979942",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false
+    },
+    {
+      "pid": 9944,
+      "startTicks": "639279989147431116",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false
+    }
+  ],
+  "terminalCleanup": "Build script returned exit0",
+  "termination": "No termination requested"
+}

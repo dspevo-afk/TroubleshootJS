@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "qualificationCleanup": "Actual desktop and narrow Close session each report all7 flags true",
+  "browser": "Owned context/BrowserServer closed; root birth exited, profile processes0, profile directory retired",
+  "preview": "Maintained exact owned stop; positively released8907; recorded birth exited and state removed",
+  "rendererRecovery": "Exact task-only original2 snapshots verified and removed",
+  "privateStateRemoved": true,
+  "sharedBrowserToolsAndHttpSysUntouched": true,
+  "preservedUnrelatedEntries": 5
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "heldScripts": [
+    "4DF18FA1C197A01AE080D89574B33660.cache.js"
+  ],
+  "before": {
+    "hasBeenActive": true,
+    "isActive": true
+  },
+  "after": {
+    "hasBeenActive": true,
+    "isActive": true
+  },
+  "input": "Real mouse click at observed blank HTML point311,712",
+  "qualificationReportBeforeRelease": null,
+  "productionBytesChanged": false,
+  "readerOrLimitsChanged": false,
+  "releasedAt": "2026-10-19T16:00:09.167Z"
+}

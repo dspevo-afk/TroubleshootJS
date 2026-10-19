@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+      "sha256": "ba9715f9d47a8dccc1ae78754cc3116995e9a877862a0879a14e3e3c9c717143"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "57d7d714d981b4d6e2fe4b5de23e0279654481fc4623b85a3c1ec3b067f87a69"
+    }
+  ]
+}

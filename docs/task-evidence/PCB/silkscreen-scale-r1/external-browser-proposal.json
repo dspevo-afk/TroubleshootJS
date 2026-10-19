@@ -1,0 +1,13 @@
+{
+  "scope": "Fallback real visible production verification in an isolated installed Brave instance; no production or existing acceptance-reader change",
+  "reason": "IAB panel queued/hidden and its capture/input attempts timed out; native ChatGPT app control is forbidden by the applied skill",
+  "automation": "Bundled Playwright public BrowserServer connection and headed browser input; no ChatGPT/native app control or existing user browser profile",
+  "launch": "Existing Brave executable, headless false, chromiumSandbox true, automatically owned temporary profile; record process PID/birth/executable/profile before production navigation",
+  "canaries": "First prove owned blank-page connection and screenshot plus negative connection to a nonexistent path on that same task-owned server; failures remain failures, no production cold generation until transport works",
+  "desktop": "1280x720 CSS viewport, current15 informed root4; actual Fit bench/Zoom+/Zoom-, examination/measurement, unrepaired/repair/retest, OFF downloaded save15 and actual FileReader restore15, retest and Close cleanup7",
+  "narrow": "319x720 CSS viewport, fresh current15 informed root4 and unchanged actual saved14 input; actual fit/zoom, OFF restored one-part state, retest and Close cleanup7",
+  "evidence": "Read-only body provenance/report/DOM and warning/error observations; 2-5 raw JPG captures inspected and hashed; actual downloaded file hash; no injected controller actions counted as player input",
+  "limits": "Existing final1475/player-scope4 seals, exact compiled identity, 90s/640 steps/5s unit/360s hold and all acceptance assertions unchanged; no native/GWT rerun if audited consumed inputs stay exact",
+  "cleanup": "Close task context and public BrowserServer; verify recorded process birth exited and owned temporary profile retirement; maintained exact owned preview stop; preserve shared tools/browser/HTTP.sys",
+  "notClaimed": "No CDP-wrapper qualification, normal public-mode qualification, general legibility, all-seed, manufacturing or modest-host acceptance"
+}

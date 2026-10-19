@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "runs": [
+    {
+      "label": "desktop-current15-closed",
+      "coldMillis": 61032,
+      "coldWork": 601,
+      "restore": {
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 57697,
+        "work": 601,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "freshOwner": true,
+        "priorOwnerRetired": true
+      },
+      "wallMillis": 379462
+    },
+    {
+      "label": "narrow-saved14-closed",
+      "coldMillis": 62489,
+      "coldWork": 601,
+      "restore": {
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 59802,
+        "work": 601,
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000,
+        "freshOwner": true,
+        "priorOwnerRetired": true
+      },
+      "wallMillis": 239311
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "desktop-fit.jpg",
+      "sha256": "d91b5a03632179b9e73161ca9b5fd23459c399a73b714b68d6b5ae42d6f8dc6b"
+    },
+    {
+      "file": "desktop-repaired.jpg",
+      "sha256": "34fe24b0bd8de1ce745cd75ab0a8de6b727ed8736e5466edb27947f5455e7802"
+    },
+    {
+      "file": "desktop-zoom.jpg",
+      "sha256": "816587ce3ed65d74c7dc06ccd26514651db601a17c36a35dbf44ead276cd9d0e"
+    },
+    {
+      "file": "narrow-fit.jpg",
+      "sha256": "799e4abb6883a098a3dc13e101d7a826649e072a17f183c2be5f12bcfa1726f4"
+    },
+    {
+      "file": "narrow-zoom.jpg",
+      "sha256": "f6016eeee71dd7cb1e142183dcf46c2184845781ca658644783b2db8a3a2f426"
+    }
+  ],
+  "limits": "Renderer-only physical silk scale; two reference-host real-input private55-package flows with actual fit/zoom, new15/save15 and preserved actual14 file. Screenshots manually reviewed; no pixel-level or general legibility certification. Strict90s/640/5s and cleanup7 unchanged. Full native matrix, independent electrical oracles, unseen/all-seed/manufacturing/modest-host claims NOT RUN."
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "priorInputCount": 1466,
+  "unchangedPriorInputs": 1464,
+  "changedPaths": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java"
+  ],
+  "newSourceContractPaths": [
+    "tests/contracts/PcbSilkscreenScaleContractTest.java"
+  ],
+  "changedOwnerHashes": [
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "oldSha256": "57d7d714d981b4d6e2fe4b5de23e0279654481fc4623b85a3c1ec3b067f87a69",
+      "newSha256": "529880a2e548058e1353d718a7115589696eefbfe2e265a2f1466173867f7af6"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+      "oldSha256": "ba9715f9d47a8dccc1ae78754cc3116995e9a877862a0879a14e3e3c9c717143",
+      "newSha256": "aca59f91fc318c27a59182affdb2d2e693ff15b6a42cdaf1579375bc885505cb"
+    }
+  ],
+  "scope": "All remaining generation, graph, geometry, routing, replay, instrument/input and prior gate-owner bytes exact; this is an input-boundary audit, not new all-seed runtime proof"
+}

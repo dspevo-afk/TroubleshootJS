@@ -1,0 +1,10 @@
+{
+  "scope": "Change browser entry interaction timing only before another qualified run; no production, compiled bytes, reader, budget or warning-oracle change",
+  "observedFailures": "First and second qualified headed Brave loads each emit three AudioContext autoplay warnings before any document gesture; earlier-page interaction does not persist across navigation. Both failures and actual unrepaired-close cleanup remain retained",
+  "diagnosis": "BrowserContinuityFeedback.prepareAudio/startTone create/resume AudioContext; InstrumentController.prepareContinuityFeedbackForDeveloperVerification invokes it during qualification setup before ordinary player interaction. These production owners are unchanged by renderer work",
+  "entry": "Temporarily hold only the production GWT compiled-script request on this task-owned page. Observe the otherwise unchanged loading document and absent qualification report, click its blank viewport with real browser input, verify navigator.userActivation.hasBeenActive, then continue that exact original request",
+  "timing": "Release promptly after the real gesture. Qualification generation has not begun while its module is held. No generator/controller injection or fake event, measurement, timer, receipt or cleanup",
+  "evidence": "Record held request filenames/count, observed blank-document target, activation before/after and release; retain all warnings/errors. Empty browser warning/error arrays remain required by the sealed check_player.py",
+  "canaryFailure": "If compiled script is not actually held, qualification already began, blank target is not verified or real activation is absent, fail the entry fixture without crediting a qualified run",
+  "limits": "Existing 90s/640/5s/360s hold and final1475/player-scope4 unchanged; no further unchanged retry after repeated host failures"
+}

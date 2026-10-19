@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "path": "docs/task-evidence/PCB/silkscreen-scale-r1/check_player.py",
+      "sha256": "e7f49265cc424f6aef726ff227e7c4ecbceb6f98eebc17f24de5b3a2fa916843"
+    },
+    {
+      "path": "docs/task-evidence/PCB/silkscreen-scale-r1/preview-expected.json",
+      "sha256": "c18ad80df8b89d1a629d017497ea1ec11a33d1a445eb7cbcb58f74ec96c373bd"
+    },
+    {
+      "path": "docs/task-evidence/PCB/canvas-owner-fit-r1/repaired14-55.tsjsave",
+      "sha256": "453928609c7a09c533da3e7df64bd08190ac384b5982cdd712fde7e2a1bb2c71"
+    },
+    {
+      "path": "docs/task-evidence/PCB/silkscreen-scale-r1/player_scope.py",
+      "sha256": "4e376e4f86a24b5286bde0f27079ca5a4d15128ba43fce2408109a8d2c0faa33"
+    }
+  ],
+  "stage": "After initial production navigation/identity read; before interactive fit/zoom/repair/restore input. Cold generation source already covered by final1475 frozen inputs."
+}

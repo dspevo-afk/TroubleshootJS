@@ -1,0 +1,13 @@
+{
+  "status": "PREDECLARED_BEFORE_PRODUCTION_EDITS",
+  "baseCommit": "ffd02ec83ce04465447f31c2a0df568dad52a543",
+  "purpose": "Make physical PCB silkscreen scale and stay attached to the board rather than becoming minimum-size floating annotations at small zoom.",
+  "productionOwner": "PcbWorkbenchRenderer.drawRequiredLabels; use existing Graphics/context measurement and scoped canvas transforms. Keep physical label text, styles, color, baseline and identities. No generator, electrical graph, saved-layout or interpretation change.",
+  "silkscreen": "Draw stored top-face PcbSilkscreenLabel text directly at its projected physical baseline with the original logical font under fractional projection scaling. No10px/1px minimum font floor or screen-label relocation. Scope any canvas transformation/clip/state changes. Keep ink on the board; use actual measured glyph ink, not heuristic stored text width, when reserving annotation obstacles.",
+  "annotations": "Existing deferred provider legends retain their screen-size and screen-layout policy. Reserve physical silk ink as screen obstacles in the same base canvas frame; preserve cache invalidation under zoom/face/viewport changes. No added hidden netlist or fault information.",
+  "native": "Meaningful explicit projection/ink fixtures across overview, normal and inspection scales; existing screen-label/provider layout, A02 physical geometry, U01 viewport, relevant renderer identity/session contracts. Maintained native verifier with unchanged per-JVM and physical/search/work limits. Independent literal expectations, no goldens blessed from output.",
+  "productionBuild": "Actual final-source JDK8/GWT scripts/build.ps1 build. One expensive native/build phase at a time. No compiled/player proof reused across the renderer change.",
+  "visible": "Fresh actual production preview with real Fit bench/Zoom input on desktop1280 and narrow319. Inspect two to five raw screenshots of overview/inspection/saved layout, check annotations/probes and meaningful unrepaired/repaired behavior within existing90s/640/5s and hold360s gates. Preserve failures and cleanup proof.",
+  "unchangedBoundary": "Audit all prior1466 owners to identify exactly changed renderer/registry and added contract. Generation/model/replay/instrument owners must remain exact. Saved15 and explicit saved14 physical identities remain unchanged; source geometry reuse requires that audited unchanged boundary, not a new all-seed claim.",
+  "scopeLimits": "No electrical, geometry, packing, model-epoch, view-annotation redesign or general responsive/legibility/optimal/manufacturing/modest-host claim. Internal pockets remain open. No main/email; continue the indefinite PCB goal after accepted publication."
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "drivers": [
+    {
+      "pid": 23300,
+      "startTicks": "639279988452611899",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false
+    },
+    {
+      "pid": 23436,
+      "startTicks": "639279988455020721",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false
+    }
+  ],
+  "scratchCleanup": "Maintained verifier reports removed",
+  "termination": "No termination requested"
+}

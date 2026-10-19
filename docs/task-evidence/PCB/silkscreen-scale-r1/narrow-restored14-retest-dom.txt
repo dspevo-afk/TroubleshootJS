@@ -1,0 +1,63 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+
+Customer retest passed. The reported behavior is resolved.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Open controlled indicator
+Board Power: ON
+New control board
+End qualification view
+Customer retest passed
+
+Customer retest passed. The reported behavior is resolved.
+
+FUNCTION VERIFIED
+
+Ready to return to the customer.
+
+The live board passed the customer’s functional checks.
+
+You can keep using this board. Later changes do not alter the recorded retest result.
+
+Customer retest passed. The reported behavior is resolved.
+
+Close session
+Return to board
+
+Private qualification session. Normal catalog, HARD and replay remain unavailable.
+
+Interpretation / build

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "positive": "Fresh owned headed BrowserServer/about:blank page",
+  "negative": {
+    "status": "PASS",
+    "outcome": "Rejected nonexistent path on owned browser server",
+    "errorType": "Error"
+  },
+  "nativeVisibleCapture": "Observed non-black task-only blank Brave window",
+  "moduleFallback": "ES module entry failed; CommonJS documented package entry worked before launch",
+  "productionNavigationStarted": false
+}

@@ -1,0 +1,13 @@
+{
+  "names": [
+    "PcbSilkscreenScaleContractTest",
+    "PcbScreenLabelLayoutContractTest",
+    "A02GeometryContractTest",
+    "U01ViewportContractTest",
+    "A11ProviderConformanceTest",
+    "U06SessionSaveContractTest",
+    "PcbRoleWidthOwnerIdentityContractTest"
+  ],
+  "count": 7,
+  "scope": "New physical silk projection fixtures; existing provider layout/declarations, stored physical geometry, viewport, saved replay and real physical-owner identities. Full matrix/independent electrical oracles separate and not claimed."
+}

@@ -1,0 +1,28 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB silkscreen scale contracts: 23 assertions
+
+PASS: PcbScreenLabelLayoutContractTest: 273 assertions
+
+PASS: PCB role width owner identity contracts assertions=28
+
+PASS: U06 session save contracts assertions=34987
+
+A11_PROVIDER_REPORT {"protocol":"TSJ-A11-PROVIDERS-1","status":"PASS","scope":"provider-declarations","entries":9,"paired":7,"joins":2,"roleVariants":3,"plans":6,"parts":78,"negativeCases":20,"assertions":429,"generatorVersion":6,"solverEvidence":"separate-current-Task49-report"}
+PASS: A11 provider conformance
+
+PASS: A02GeometryContractTest 32 assertions
+
+PASS: U01 viewport contracts assertions=1277
+
+PASS: focused current contracts; 7 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

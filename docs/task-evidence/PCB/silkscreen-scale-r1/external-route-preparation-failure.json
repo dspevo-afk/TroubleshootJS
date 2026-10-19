@@ -1,0 +1,13 @@
+{
+  "status": "FAIL",
+  "phase": "Initial developer route prerequisite",
+  "reason": "Missing tsjChallenge=led predecessor; no qualification report or cold generation began",
+  "url": "http://127.0.0.1:8907/circuitjs.html?tsjDebug=true&tsjVerifyRb56=true&tsjRb56Bench=true&tsjRb56PlayerSession=true&tsjRb56Persistence=true&tsjRb56Session=true&tsjRb56Seed=4",
+  "browserLogs": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "productionSourceChanged": false
+}

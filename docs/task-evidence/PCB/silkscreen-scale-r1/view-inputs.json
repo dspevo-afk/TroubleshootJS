@@ -1,0 +1,479 @@
+[
+  {
+    "flow": "desktop",
+    "action": "Accept ticket and start",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:54:32.471Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "View",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:54:35.623Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Fit bench",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:54:47.127Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close board view controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:54:47.270Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "View",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:02.107Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Zoom +",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:06.129Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Zoom -",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:06.224Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Zoom + inspection",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:06.386Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Select U1 OUTPUT terminal",
+    "input": "real-visible-input",
+    "method": "Visible native select option",
+    "recordedAt": "2026-10-19T15:55:06.446Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Place red probe",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:12.469Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close board view controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:40.307Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "View",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:40.546Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Fit bench for meter input",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:40.687Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close board view controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:40.881Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "DC V on visible meter",
+    "input": "real-visible-input",
+    "method": "Real mouse click at observed meter button111,383",
+    "recordedAt": "2026-10-19T15:55:48.754Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "View",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:56.418Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Place red probe",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:55:56.647Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Select U1 RETURN terminal",
+    "input": "real-visible-input",
+    "method": "Visible native select option",
+    "recordedAt": "2026-10-19T15:56:20.646Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Place black probe",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:20.877Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close board view controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:21.062Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Toggle active DC V off",
+    "input": "real-visible-input",
+    "method": "Real visible meter button click",
+    "recordedAt": "2026-10-19T15:56:28.380Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Run customer retest",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:29.691Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Power OFF before service",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:37.245Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "View",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:37.620Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Select REN physical component",
+    "input": "real-visible-input",
+    "method": "Visible component selector",
+    "recordedAt": "2026-10-19T15:56:37.627Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close board view controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:46.864Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Component",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:51.301Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Shop",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:56:56.022Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Acquire catalog10k medium lead resistor",
+    "input": "real-visible-input",
+    "method": "Actual observed catalog card button",
+    "recordedAt": "2026-10-19T15:57:35.783Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close shop",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:39.007Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Component",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:39.241Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Remove component",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:42.319Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Parts tray",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:45.487Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Part 56 - 10000 Ohm +/-5%",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:49.006Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Install as 5 V control rail / REN",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:51.948Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close parts tray controls",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:57:59.834Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Power ON after physical repair",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:00.106Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Run customer retest",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:01.640Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Return to board",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:08.247Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Power OFF before saving",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:08.551Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Main menu",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:08.926Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Save session",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:18.875Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Load session",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:58:19.200Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Choose actual downloaded15 file",
+    "input": "real-visible-input",
+    "method": "Actual file chooser selection leading to FileReader",
+    "recordedAt": "2026-10-19T15:58:19.367Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Power ON restored board",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:59:37.187Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Retest restored15",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:59:38.751Z"
+  },
+  {
+    "flow": "desktop",
+    "action": "Close session",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T15:59:42.482Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Accept ticket and start",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:01:28.598Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Open board view",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:01:49.451Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Fit bench",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:08.078Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Close board view",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:02:08.264Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Open board view",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:02:08.574Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom +",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:08.818Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom -",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.054Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom +",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.313Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom + inspection",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.393Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom + inspection",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.541Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom + inspection",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.633Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Zoom + inspection",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:09.756Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Close board view",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:02:09.889Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Main menu",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:02:22.376Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Load session",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:02:28.819Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Choose preserved actual14 file",
+    "input": "real-visible-input",
+    "method": "Actual file chooser to FileReader",
+    "recordedAt": "2026-10-19T16:02:28.881Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Power ON restored14",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:03:46.353Z",
+    "actualOutcome": "Opened Bench power controls; master power remained OFF. The following unpowered retest FAIL and later actual master-button ON are retained."
+  },
+  {
+    "flow": "narrow",
+    "action": "Retest restored14",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:03:46.615Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Actual master power ON restored14",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:04:00.294Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Powered retest restored14",
+    "input": "real-visible-input",
+    "method": "Visible accessible button click",
+    "recordedAt": "2026-10-19T16:04:04.599Z"
+  },
+  {
+    "flow": "narrow",
+    "action": "Close session",
+    "input": "real-visible-input",
+    "method": "Visible browser element click",
+    "recordedAt": "2026-10-19T16:04:09.120Z"
+  }
+]

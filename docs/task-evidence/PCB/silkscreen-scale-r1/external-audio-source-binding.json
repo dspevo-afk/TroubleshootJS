@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/BrowserContinuityFeedback.java",
+      "sha256": "493d43fe99f2e5c6060e0601732d0bdfe0dfe4be84f7d494a0eeed6484da9441",
+      "exactAccepted1466Owner": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/InstrumentController.java",
+      "sha256": "e4b851b918ef263777badd47121ea7d2bd32dd221d1ba7e8290eb474bd705475",
+      "exactAccepted1466Owner": true
+    }
+  ],
+  "proposalMethodNameCorrection": "Actual developer perturbation method is InstrumentController.perturbContinuityFeedbackForDeveloperVerification, lines500-506; it calls continuityFeedback.prepare/setActive. Prior proposal used an inaccurate descriptive method name. No source edit or oracle change.",
+  "audioOwner": "BrowserContinuityFeedback.prepareAudio/startTone create/resume AudioContext; the loading-document gesture precedes all compiled module execution."
+}

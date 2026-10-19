@@ -1,4 +1,60 @@
-# Current checkpoint: supplied-plan route comparison complete; continuation active
+# Current checkpoint: physical silk rendering accepted; indefinite packing work continues
+
+2026-10-19. Published41cbae07797ad45a6588c92923fe9ca5f3a6dc12 (Record routed
+PCB pocket placement tradeoff) normally pushed/exact origin SHA verified on
+codex/q60-faulted-profile-counts. Candidate is the renderer/contract/registry,
+architecture/roadmap/checkpoint and silkscreen-scale-r1 evidence. No main/email.
+User revoked quota-window stop conditions; continue while execution is available
+until stopped. No new production packing heuristic or placement version accepted.
+
+Physical silk uses its stored baseline/logical font through fractional Canvas
+projection, with clipped measured ink reserving provider annotation space. Provider
+readable-label policy/target IDs, graph, generation, measurements, saved15/14 and
+geometry stay unchanged. Final rendereraca59f91...; new contract4c0afe43.... Root
+and optional read-only source review found no blocker. Final native7PASS60.1950475s
+and actual JDK8/GWT5PASS93.7667267s reused only after final1475 audit stays exact;
+full matrix/independent electrical oracles NOT RUN. Player-scope4 and all5 served/
+compiled identity fields exact. Sealed check_player.py PASS without modification.
+
+Actual headed isolated Brave desktop1280/root4 cold55PASS61032ms/601/max1451ms;
+real fit/zoom, live voltage probe controls, unrepaired retestFAIL, ordinary shop/
+tray REN repair and powered customerPASS. Actual downloaded15 FileReader restore
+PASS57697ms/601, OFF/one-part state, fresh owner/prior retired and fresh powered
+customerPASS. Narrow319 cold55PASS62489ms/601/max1492ms; real fit/zoom and unchanged
+actual14 FileReaderPASS59802ms/601, OFF/one-part, powered customerPASS. Initial
+narrow unpowered retestFAIL retained. Both actual Close session reports all7
+cleanup flags true, no pending work; wall379462/239311ms includes interactions/
+generation/restore/cleanup, cleanup not separately timed. Limits90s/640/5s and
+hold360s unchanged. Five raw JPGs inspected/hashed; physical silk tracks zoom.
+Existing narrow provider crowding and stale View no-mode hint remain limitations;
+no general legibility/packing/manufacturing/modest-host claim.
+
+Earlier IAB capture/menu attempts BLOCKED; cleanup7 NOT OBSERVED there. External
+fallback canaries PASS at public BrowserServer/headed sandbox-enabled boundary.
+Wrong initial predecessor URL FAIL (no qualification); two autoplay preparations
+FAIL and unrepaired closes cleanup7; all preserved. Cause diagnosed in unchanged
+audio owners. Prospective entry holds unchanged module request until real blank-
+document click/current activation, then releases it. Final logs/responses empty;
+no fake events/controllers, source/reader/oracle or budget relaxation. Input
+selector errors and source-method-name correction retained. No repeated unchanged
+third host retry. No ChatGPT desktop app control or shared browser-profile use.
+
+Task browser21212 birth/profile exited/retired; preview23632/birth639280216777238670/
+port8907 stopped by maintained helper with positive port release. Exact original2
+recovery snapshots/private states removed after containment/hash/reparse checks.
+No live task test process, tab/profile, copy or recovery snapshot remains. Shared
+browser/tools/HTTP.sys and original five unrelated untracked entries preserved.
+
+Route comparison41cbae remains a finite tradeoff, not a policy: QA-only translation
+area-3.114%, void-12.121%, quality-1.113%, copper+2.889%, vias+2; existing strict
+all-metric oracle still rejects it. Optional source study identifies flat12000
+courtyard-L penalty versus actual face/escape-aware routing; a cheap detour proxy
+has known limitations and is not implemented. Pose study finds no usable unused
+standard orientation under current declared mechanical contracts. Next: predeclare
+a bounded generic pocket-origin/edge-snapping measurement inside existing slots/
+caps, preserving accepted15/saved14. No subsequent trial or new milestone started.
+
+# Previous checkpoint: supplied-plan route comparison complete; continuation active
 
 2026-10-19. Published base0f24ffb56b7c71953762766c859ac8f0bf6a16b7 on
 codex/q60-faulted-profile-counts; candidate is the documentation-only route

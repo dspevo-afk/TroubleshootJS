@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "processId": 21212,
+  "startTicks": "639280216419296802",
+  "sameCreationStillRunning": false,
+  "taskProfileProcesses": 0,
+  "ownedProfileExists": false,
+  "profileRetiredBy": "Public BrowserServer cleanup",
+  "sharedBrowserStillRunning": true,
+  "privateOwnerRemoved": true,
+  "terminationByShell": false
+}

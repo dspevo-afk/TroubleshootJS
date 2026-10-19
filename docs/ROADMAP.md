@@ -82,11 +82,17 @@ Both QA positions receive the same888 overlap reward; the gap-filling alternativ
 loses mainly on estimated corridor cost. This does not establish routability or
 final shrinkage. Temporary copy/observer/test retired, main1475 remains exact.
 [Score terms and limits](task-evidence/PCB/placement-score-terms-r1/RESULTS.md).
-Physical silkscreen scaling has native7/JDK8GWT5 proof but remains unpublished:
-actual visible zoom/viewport acceptance is pending while this chat's browser
-panel is hidden. Next: resume that visible gate when available, and investigate
-pocket-position discrimination versus actual routing needs before a new packing
-policy. Internal packing remains open.
+Physical silkscreen now scales at its stored board-relative baseline without a
+screen-size floor or relocation; measured ink reserves provider annotation space.
+Final native7/JDK8GWT5 and actual headed desktop1280/new15-save15 plus narrow319/
+preserved14 FileReader/customer/Close7 gates pass at exact1475/served boundaries.
+Five inspected raw captures retain the known narrow provider crowding. Failed
+hidden-panel, predecessor and autoplay preparations remain explicit; final real
+document-gesture entry changes no production byte, reader or time/work limit.
+Owned browser/profile/preview/recovery resources are retired. No layout version,
+electrical/measurement change or general legibility claim. Internal packing stays
+open; next measure generic pocket origins and route-estimate discrimination.
+[Silkscreen acceptance and limits](task-evidence/PCB/silkscreen-scale-r1/README.md).
 Offline comparison of all126 recorded QA origins (16legal) keeps the same choice
 under a fixed residual-pocket-reduction/40 bonus. No new board or routes run.
 [Offline comparison and limits](task-evidence/PCB/pocket-position-metric-r1/README.md).
