@@ -1,0 +1,141 @@
+{
+  "status": "PASS",
+  "scope": "Descriptive already-routed alternatives only; no new routing or policy acceptance",
+  "phase": "FINALIZED_ROUTE_CANDIDATE",
+  "assessmentSha256": "d862447584c759b030530bf8d4c52eaf35f9e8adaf131824c59bcbc84bf76284",
+  "routesLogSha256": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+  "samePhaseComparisons": [
+    {
+      "seed": "5",
+      "baselineFinalizedWinner": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 5,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 9445744,
+        "copperManhattanLength": 38610,
+        "vias": 48,
+        "routeQualityMilli": 356092136
+      },
+      "trialFinalizedAlternative": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 2,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 8091624,
+        "copperManhattanLength": 49140,
+        "vias": 48,
+        "routeQualityMilli": 336104680
+      },
+      "samePhaseDeltas": {
+        "area": -1354120,
+        "copperManhattanLength": 10530,
+        "vias": 0,
+        "routeQualityMilli": -19987456
+      },
+      "trialSelected": false
+    },
+    {
+      "seed": "5",
+      "baselineFinalizedWinner": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 5,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 9445744,
+        "copperManhattanLength": 38610,
+        "vias": 48,
+        "routeQualityMilli": 356092136
+      },
+      "trialFinalizedAlternative": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 3,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 6107220,
+        "copperManhattanLength": 43060,
+        "vias": 48,
+        "routeQualityMilli": 286395681
+      },
+      "samePhaseDeltas": {
+        "area": -3338524,
+        "copperManhattanLength": 4450,
+        "vias": 0,
+        "routeQualityMilli": -69696455
+      },
+      "trialSelected": true
+    },
+    {
+      "seed": "2",
+      "baselineFinalizedWinner": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 2,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 9313352,
+        "copperManhattanLength": 51860,
+        "vias": 48,
+        "routeQualityMilli": 368394917
+      },
+      "trialFinalizedAlternative": {
+        "strategy": "P07_FULLER_TWO_LAYER",
+        "attempt": 2,
+        "phase": "FINALIZED_ROUTE_CANDIDATE",
+        "area": 9126701,
+        "copperManhattanLength": 48720,
+        "vias": 48,
+        "routeQualityMilli": 361643817
+      },
+      "samePhaseDeltas": {
+        "area": -186651,
+        "copperManhattanLength": -3140,
+        "vias": 0,
+        "routeQualityMilli": -6751100
+      },
+      "trialSelected": true
+    }
+  ],
+  "selectionChecks": [
+    {
+      "seed": "5",
+      "version": 15,
+      "selectedAttempt": 5,
+      "selectedAreaIsStrategyMinimum": true,
+      "minimumAreaTieCount": 1,
+      "finalizedArea": 9445744,
+      "postTrimArea": 9172744,
+      "borderAreaRemoved": 273000
+    },
+    {
+      "seed": "5",
+      "version": 22,
+      "selectedAttempt": 3,
+      "selectedAreaIsStrategyMinimum": true,
+      "minimumAreaTieCount": 1,
+      "finalizedArea": 6107220,
+      "postTrimArea": 6107220,
+      "borderAreaRemoved": 0
+    },
+    {
+      "seed": "2",
+      "version": 15,
+      "selectedAttempt": 2,
+      "selectedAreaIsStrategyMinimum": true,
+      "minimumAreaTieCount": 1,
+      "finalizedArea": 9313352,
+      "postTrimArea": 9178092,
+      "borderAreaRemoved": 135260
+    },
+    {
+      "seed": "2",
+      "version": 22,
+      "selectedAttempt": 2,
+      "selectedAreaIsStrategyMinimum": true,
+      "minimumAreaTieCount": 1,
+      "finalizedArea": 9126701,
+      "postTrimArea": 8860221,
+      "borderAreaRemoved": 266480
+    }
+  ],
+  "limits": [
+    "No protected-empty metric for unselected alternatives; this is not four-metric fitness",
+    "Candidate area/quality precede selected-only border trim",
+    "Rounded quality cannot resolve sub-milli tie differences; only minimum-area checks claimed",
+    "Two informed roots only; no individual-move, unseen-root, performance or production claim"
+  ]
+}

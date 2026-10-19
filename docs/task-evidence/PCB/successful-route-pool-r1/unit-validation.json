@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Finalized route pool observer contract only; paired routes and fitness are not evaluated.",
+  "baseCommit": "27521289793b21ddfe636d0f6975e962797ebab9",
+  "protocolSha256": "536fa0f92ff22f3c0c43505ee6b01a1bdf0c798161ec6051e9b2f858de4691f8",
+  "priorReaderSha256": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86",
+  "publishedInputsSha256": {
+    "native-inputs.json": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4",
+    "root-review.json": "c373edd3ae507af14a9a488518987cf3d2f9b840a23e497843f33dff7a862bb9",
+    "routes.txt": "dcca3fd2f61eae74b770857c56ac87082a03e491fac83a147c46f9f9cfe773d7",
+    "assess.py": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86"
+  },
+  "suiteManifestSha256": "06166a405f390342ec130cf14d352885ff4aa180ef357fdbde952550be80489f",
+  "phaseInputsSha256": {
+    "unit.txt": "b3ad80e74a48816d3dac5abe2542253a1b096ef5eb273bbf9a35b3636687f892",
+    "unit-receipt.txt": "e218b10fd80b8a5458eab9325840daa7c27d1ef95b59e87f539f6e2ae03a8b3c",
+    "unit-timing.json": "6b85ac8ea3296e6f5d101a5f9cd89bc6144f1f8a2d64c769d5f2330ad6026abc"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 1,
+    "suiteClasses": [
+      "PcbSuccessfulRoutePoolObserverContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB successful route pool observer contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

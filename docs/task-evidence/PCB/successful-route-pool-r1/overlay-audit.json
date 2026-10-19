@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "scope": "Exact rejected22 overlay for observation only; no production promotion",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "dc6487d3285bd3e350c0f2b7f68172ea9262ae232b4f5b1f675988624c71edd6",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "fa205f0eac1e6d67a7a43da4a0ecf247000409abbd6f9c1fccb53b46999cbe3f",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "7f613a9f8c1dd8e23bbec79a6678ade3e43a468dab01fe7d4580c5de80cd6845",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "53fda383ae1eda0a295e9268c4e8dd1d1a1465c07dccde3af00c72f6a11cbaf5",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "7079fd0f2d95945d308b911abc84a576ac2a66effddcda4ab3b9d55e32b1c8e1"
+  },
+  "unmodifiedExceptLaterDeclaredObserver": true
+}

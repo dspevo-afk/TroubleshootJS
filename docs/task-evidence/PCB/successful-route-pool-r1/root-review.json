@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Completed observation only; published22 remains rejected",
+  "baseCommit": "27521289793b21ddfe636d0f6975e962797ebab9",
+  "main1475Exact": true,
+  "prior22InputsExact": true,
+  "frozenGates": 26,
+  "sourceDeltas": 11,
+  "observerErasureExact22": true,
+  "syntheticReaderCases": 55,
+  "actualTransportCases": 12,
+  "unitSuites": 1,
+  "unitFixtures": 4,
+  "routeSuites": 2,
+  "selectedRowsExact42Fields": 4,
+  "successfulPoolEvents": 5,
+  "recordedDriverBirthsExited": 4,
+  "copyRestored1467AndRetired": true,
+  "productionPolicyFitnessChange": "NONE",
+  "GwtPlayerSolverFullMatrixAllSeed": "NOT_RUN"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "observerErasureExact22": true,
+  "observerBlocks": [
+    "// BEGIN COPY-ONLY successful-route-pool observer.",
+    "// BEGIN COPY-ONLY successful-route-pool observer."
+  ],
+  "sixOther22OverridesExact": true,
+  "verifierExactOutsideThreeRegistrations": true,
+  "generatorBeforeSha256": "0dfd1890ecedf90350237152caee42cabfa7abae412386250fa74b9e09098cf6",
+  "generatorAfterSha256": "6413beea3922757659a736807fe26dc0bcf91b02b25810f5c15eb85143902bcc",
+  "diffSha256": "a1342d5cfbde37ec5f3311c39c431a53efc0237ab19f47a0634850c08ee3559c"
+}

@@ -1,0 +1,32 @@
+{
+  "rootReviewed": true,
+  "diffSha256": "a1342d5cfbde37ec5f3311c39c431a53efc0237ab19f47a0634850c08ee3559c",
+  "copyCount": 1470,
+  "sourceDeltas": 11,
+  "gateOwners": 26,
+  "syntheticReaderCases": 55,
+  "hostTransportCases": 12,
+  "unitFixtures": 4,
+  "expectedUnitAssertions": 15,
+  "checks": [
+    "Full observer API/hook, recorder immutable scalar/string/bounds snapshots and lifecycle unit reviewed",
+    "Observer blocks erase archived22 byte-exact; six other22 overrides and physical helper unchanged",
+    "Three verifier registrations erase main core exact; root two wrappers fixed5then2 versions15then22",
+    "Fresh root55 synthetic cases equal released receipt; actual1/2manifest host12 PASS",
+    "New reader binds graph snapshots to actualselectedgraph, scores to placement records, all4 selected42fields/whitespace to published22 and callbacks to success order"
+  ],
+  "preparationCorrections": [
+    "Initial root erasure preflight assumed different marker labels; checker aligned to worker literal BEGIN/END tags and exact reconstruction passed before freeze",
+    "Root requested null no-op fixture replace vacuous check with null/extreme payload and empty-slot assertion",
+    "Root found equal-but-foreign graph and aggregate count gaps; reader fixed and added fresh negative/positive canaries before freeze",
+    "Root inputs adapted to reader receipt nested consumed hash schema; no protocol/source algorithm change"
+  ],
+  "limits": [
+    "Native/GWT/player NOT RUN at review",
+    "Four plumbing fixtures do not validate route physics; fresh real paired corpus owns actualdelivery/physicalfidelity",
+    "Source graph before captured at first callback, after captured afterhelper; unchanged physicalhelper separately proves full-run graph",
+    "Finalized candidate area/quality precede selected-only border trim",
+    "Static observer serial JVM scope only; no concurrency/cancellation responsiveness claim",
+    "No new policy, fitness exception, route/candidate cap or production change"
+  ]
+}

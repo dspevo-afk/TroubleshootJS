@@ -1,0 +1,3 @@
+* -text whitespace=cr-at-eol
+reader-notes.md -text whitespace=cr-at-eol,-blank-at-eof
+source-review.diff -text whitespace=cr-at-eol,-blank-at-eol

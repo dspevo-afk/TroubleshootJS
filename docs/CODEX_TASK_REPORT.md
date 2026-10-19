@@ -1,4 +1,74 @@
-# Current checkpoint: private22 rejected; successful route pool audit next
+# Current checkpoint: successful route pool measured; routed-local scope audit next
+
+2026-10-19. Base HEAD `27521289793b21ddfe636d0f6975e962797ebab9` on
+`codex/q60-faulted-profile-counts`, exact origin verified at scope start. Observation
+packet complete for normal branch publication. Indefinite continuation active;
+no main/email. Production/main1475/default15/general16 unchanged; original5 entries
+preserved. Published22 stays rejected; no new policy/fitness exception.
+
+Fresh unit1 PASS48.2908905s/exit0:15 assertions/4 plumbing fixtures. Fresh routes2
+PASS77.6597873s/exit0: seed5 then2 ×15,22; all4 selected rows exact42 non-time fields,
+whitespace exact,5 real successful finalized-candidate callbacks match source
+SUCCESS order and board graph. Root55 synthetic reader/12 actual1/2-manifest host
+canaries,26gates/11deltas/1470COPY inventory, erasure and integrated review pass.
+Two observer blocks erase exact22; six other overrides/physical helper unchanged.
+
+All comparison areas are before selected-only edge trim. Seed5 old15 winner5:
+area9445744/copper38610;22 candidate2:8091624/49140;22 winner3:6107220/43060.
+All48vias. Neither trial alternative preserves old copper; chosen3 already uses
+6080 less copper than2 and smaller area/lower existing quality. A different
+winner in this measured pool cannot remove the regression. Seed2 same-phase
+area9313352→9126701, copper51860→48720,48vias; final post-trim areas differ.
+No unselected protected-empty metric, no four-metric reassessment or new acceptance.
+
+All4 driver births exited without termination; COPY1470 restored1467/retired,
+private state removed; no native/browser/preview/profile active. First final
+native runs pass, no post-run source/oracle fix. Preparatory marker-name,
+null-fixture, graph-anchor and census corrections documented before freeze.
+First staged whitespace check flags frozen noteEOF/diff-context space; narrow
+two-file/rule publication attributes preserve all26 frozen gate bytes. Final
+staged check and repeated hash/receipt review pass; no native rerun for formatting.
+GWT/player/22 owner save-load/solver/repair/full matrix/unseen/all-seed/general
+performance/manufacturing NOT RUN. Static observer serial plumbing only.
+
+One read-only Luna/MAX leaf audits route-preserving local package/copper geometry
+after an existing success, preserving incumbent and route requests. No code/scope
+chosen yet. Next publish explicit packet/docs, verify remote SHA, then integrate
+that feasibility audit into a finite next scope.
+Evidence `docs/task-evidence/PCB/successful-route-pool-r1/RESULTS.md`.
+
+# Previous checkpoint: successful route pool preparation and freeze
+
+2026-10-19. HEAD `27521289793b21ddfe636d0f6975e962797ebab9` on
+`codex/q60-faulted-profile-counts`, exact origin verified. Rejected22 packet/docs
+published; no production/default15/general16 change. Indefinite continuation
+active; no main/email. All22 resources retired; original5 entries preserved.
+
+Observed22: seed2 area-3.46%/copper-6.05%; seed5 area-33.42%/copper+11.53%, causing
+frozen strict fitnessFAIL. Root/independent source audit explains seed5's third
+route5→3 through newly successful2, despite unchanged c2 rank6. Need measure each
+already-successful finalized layout before choosing policy. No acceptance change.
+
+New observation-only accepted1467 COPY has exact seven22 source/helper overlays.
+One Luna/MAX leaf owns generator callback and native unit/recorder; root owns
+registry/two corpus wrappers, harness/reader/lifecycle. Expected1470/8overrides/
+3adds/11deltas. Fresh actual selected PowerShell1/2-suite transport12 PASS. Scope
+fixed roots5,2 ×15,22; selected42fields must match published22 and success pool
+must exactly match actual routeOutcomes. No extra candidates/routes/caps.
+
+Only FINALIZED_ROUTE_CANDIDATE phase, before selected-only edge trim; actual22
+trim admits density15. Initial leaf accepted-source audit's incorrect22 skiptrim
+statement corrected against archived22 before implementation. Root source/fixture
+review and fresh55 synthetic reader canaries pass. Graph-anchor and aggregate-count
+gaps fixed before freeze, with new negative/positive cases. Null fixture now
+meaningfully checks no inspection; initial root erasure marker mismatch corrected.
+FinalCOPY1470/8overrides/3adds/11deltas/26gates frozen; actual native unit1 active.
+No native PASS claimed yet; GWT/player NOT RUN. One owned sourceCOPY; no browser/
+preview/profile. Main1475 exact. Next complete freshunit then paired routes only
+onPASS. Observer callbacks report candidates; no policy promotion.
+Evidence `docs/task-evidence/PCB/successful-route-pool-r1/source-audit.md`.
+
+# Previous checkpoint: private22 rejection ready for publication
 
 2026-10-19. Base HEAD `a3a0b851c1e5b80212b1d604a3962a8e77437893` on
 `codex/q60-faulted-profile-counts`, origin verified at scope start. Packet complete

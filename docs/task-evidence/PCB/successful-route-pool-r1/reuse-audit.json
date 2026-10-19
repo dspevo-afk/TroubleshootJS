@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "scope": "Scaffold-only preparation from reviewed22; no runtime proof reused",
+  "baseCommit": "27521289793b21ddfe636d0f6975e962797ebab9",
+  "prepareSourceSha256": "aeb6c23e9a68cbf833ec5bddee67afd4f15439b1dccf813a39398424e920b281",
+  "prior22SealSha256": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4"
+}

@@ -1,0 +1,247 @@
+{
+  "status": "PASS",
+  "scope": "In-memory synthetic parser canaries only; event payloads are not route measurements",
+  "canaryCount": 55,
+  "positiveCases": 4,
+  "rejectionCases": 51,
+  "fixtureCount": 4,
+  "nativeRuntimeEvidence": "NOT_RUN",
+  "consumedSha256": {
+    "assess.py": "0581d1ea602e82190fd278c9287465cb6399ed57eee899c023e131afe2e14c3a",
+    "check_assessment.py": "5379204a6ca9a87120ec49b76fa8c336953c263d39ecc4bbda14381fb7f1ab4e",
+    "protocol.json": "536fa0f92ff22f3c0c43505ee6b01a1bdf0c798161ec6051e9b2f858de4691f8",
+    "priorAssess.py": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86",
+    "publishedInputs": {
+      "native-inputs.json": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4",
+      "root-review.json": "c373edd3ae507af14a9a488518987cf3d2f9b840a23e497843f33dff7a862bb9",
+      "routes.txt": "dcca3fd2f61eae74b770857c56ac87082a03e491fac83a147c46f9f9cfe773d7",
+      "assess.py": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "06166a405f390342ec130cf14d352885ff4aa180ef357fdbde952550be80489f",
+      "routes-suites.json": "fe298e4e97a4c947569fba6a0aabc78c5aae9da500b5275d2727b6b3f09dd3fa"
+    }
+  },
+  "cases": [
+    {
+      "case": "valid unit phase",
+      "result": "PASS"
+    },
+    {
+      "case": "valid paired routes phase",
+      "result": "PASS"
+    },
+    {
+      "case": "paired routes aggregate census counts",
+      "result": "PASS"
+    },
+    {
+      "case": "missing whitespace report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing successful pool event",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicated successful pool event",
+      "result": "REJECTED"
+    },
+    {
+      "case": "reordered successful pool events",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown PCB report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong pool root",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong pool version",
+      "result": "REJECTED"
+    },
+    {
+      "case": "boolean route index",
+      "result": "REJECTED"
+    },
+    {
+      "case": "noninteger route quality",
+      "result": "REJECTED"
+    },
+    {
+      "case": "outline area mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "major side mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "invalid compact flag",
+      "result": "REJECTED"
+    },
+    {
+      "case": "invalid dense packing flag",
+      "result": "REJECTED"
+    },
+    {
+      "case": "placement score differs from pinned record",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong finalized pool phase",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source graph mutation",
+      "result": "REJECTED"
+    },
+    {
+      "case": "self-consistent graph differs from selected row",
+      "result": "REJECTED"
+    },
+    {
+      "case": "malformed geometry digest",
+      "result": "REJECTED"
+    },
+    {
+      "case": "empty immutable component fingerprint",
+      "result": "REJECTED"
+    },
+    {
+      "case": "nonpositive rectangle dimension",
+      "result": "REJECTED"
+    },
+    {
+      "case": "event field order changed",
+      "result": "REJECTED"
+    },
+    {
+      "case": "selected 42-field witness drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "selected elapsed case bound",
+      "result": "REJECTED"
+    },
+    {
+      "case": "pool event for failed route attempt",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route outcome sequence missing_selected_success",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route outcome sequence duplicate_success",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route outcome sequence duplicate_selected",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing suite PASS marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate suite PASS marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong fixture PASS marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero assertion count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing terminal marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate terminal marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing cleanup marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "cleanup before terminal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "cleanup included in child receipt",
+      "result": "REJECTED"
+    },
+    {
+      "case": "log receipt report mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "boolean elapsed time",
+      "result": "REJECTED"
+    },
+    {
+      "case": "negative elapsed time",
+      "result": "REJECTED"
+    },
+    {
+      "case": "phase timing cap",
+      "result": "REJECTED"
+    },
+    {
+      "case": "boolean exit code",
+      "result": "REJECTED"
+    },
+    {
+      "case": "boolean suite count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "integer cleanup flag",
+      "result": "REJECTED"
+    },
+    {
+      "case": "changed cleanup duration",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit report leakage",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate JSON object key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "nonstandard JSON number",
+      "result": "REJECTED"
+    },
+    {
+      "case": "suite manifest bytes differ from pin",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protocol bytes differ from pin",
+      "result": "REJECTED"
+    },
+    {
+      "case": "published route source differs from pin",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "fresh matching unit prerequisite",
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 25492,
+      "startTicks": "639280493510171372",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/successful-route-pool-r1/run_native.ps1"
+    },
+    {
+      "pid": 18348,
+      "startTicks": "639280493512712618",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/successful-route-pool-r1/run_native.ps1"
+    }
+  ],
+  "phase": "routes",
+  "ownership": "Captured before bounded native successful-route-pool phase; unique source copy"
+}

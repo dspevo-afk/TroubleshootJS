@@ -233,6 +233,17 @@ source review pass within their limits. COPY1476 restored1467/retired,4 births
 exited; main1475/default15/general16 unchanged, no production/GWT/player promotion.
 Next measure already-successful routed alternatives before changing policy.
 [Global descent rejection and limits](task-evidence/PCB/global-pocket-descent-trial-r1/RESULTS.md).
+Successful route-pool observation now reproduces four selected15/22 rows exactly
+and captures all five successful finalized candidates for informed5/2. Native
+unit15/4fixtures PASS48.291s, routes2 PASS77.660s;55 parser/12 actual host cases
+and root integrated review pass. Seed5's trial2/3 both use more copper than old5;
+chosen3 already has less copper, area and existing quality than trial2. No measured
+alternative-picker fix is available in this pool. Areas are preselection/post-route
+and remain distinct from later border-trim areas; unselected void is unmeasured.
+COPY1470 restored1467/retired,4 births exited; main1475/default15/general16 unchanged,
+22 stays rejected. No policy/fitness/GWT/player claim. Next assess local compaction
+after an existing routed success without extra route requests.
+[Successful-pool measurement and limits](task-evidence/PCB/successful-route-pool-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

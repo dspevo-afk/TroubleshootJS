@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "baseCommit": "27521289793b21ddfe636d0f6975e962797ebab9",
+  "scope": "COPY-only read-only finalized successful route pool; no policy/fitness exception or promotion",
+  "roots": [
+    "5",
+    "2"
+  ],
+  "versions": [
+    15,
+    22
+  ],
+  "phase": "FINALIZED_ROUTE_CANDIDATE",
+  "unitFixtureCount": 4,
+  "unitEvaluator": "finalizedRoutePool",
+  "unitPassPattern": "assertions=POSITIVE_INT fixtures=4 evaluator=finalizedRoutePool",
+  "routePassDetail": "roots=1 pairs=1 rows=2 evaluator=finalizedRoutePool",
+  "casePrefix": "PCB_GLOBAL_POCKET_CASE ",
+  "poolPrefix": "PCB_SUCCESSFUL_ROUTE_POOL ",
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "reportOrder": "WHITESPACE then all POOL events then CASE per seed/version; PASS after pair",
+  "eventFields": [
+    "caseLabel",
+    "routeIndex",
+    "seed",
+    "version",
+    "strategy",
+    "attempt",
+    "phase",
+    "placementCheapScore",
+    "routeQualityMilli",
+    "area",
+    "majorSide",
+    "preferCompact",
+    "preferDensePacking",
+    "rawOutline",
+    "occupiedBounds",
+    "copperManhattanLength",
+    "vias",
+    "traceCount",
+    "geometrySha256",
+    "componentGeometryFingerprint",
+    "traceGeometryFingerprint",
+    "sourceGraphBeforeSha256",
+    "sourceGraphAfterSha256"
+  ],
+  "rectangleFields": [
+    "x",
+    "y",
+    "width",
+    "height"
+  ],
+  "timingScope": "Native successful route pool observation; unchanged per-JVM/search/physical limits",
+  "maxPhaseElapsedSeconds": 36000,
+  "maxCaseMillis": 60000,
+  "maxFileBytes": 67108864,
+  "publishedInputs": {
+    "native-inputs.json": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4",
+    "root-review.json": "c373edd3ae507af14a9a488518987cf3d2f9b840a23e497843f33dff7a862bb9",
+    "routes.txt": "dcca3fd2f61eae74b770857c56ac87082a03e491fac83a147c46f9f9cfe773d7",
+    "assess.py": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86"
+  },
+  "suiteManifestSha256": {
+    "unit-suites.json": "06166a405f390342ec130cf14d352885ff4aa180ef357fdbde952550be80489f",
+    "routes-suites.json": "fe298e4e97a4c947569fba6a0aabc78c5aae9da500b5275d2727b6b3f09dd3fa"
+  },
+  "metricDefinitions": {
+    "area": "Finalized route candidate outline width*height before selected-only edge trim",
+    "copperManhattanLength": "Sum abs(dx)+abs(dy) of every trace path segment, overlaps counted; same helper as selected receipts",
+    "vias": "PcbBoardHole.Kind.VIA count",
+    "routeQualityMilli": "Math.round(existing computed route quality*1000) at finalized candidate comparison",
+    "geometrySha256": "PlayerSessionFingerprint.of(layout.geometryFingerprint()) at callbacktime"
+  },
+  "limits": [
+    "Two informed roots only; no unseen/allseed/performance/solver/manufacturing claim",
+    "Phase is before selected-only edge trim; compare winning copper/vias to final case but do not equate area/quality",
+    "Published22 remains rejected, no production GWT/player change"
+  ]
+}

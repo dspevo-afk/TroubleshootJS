@@ -1,0 +1,49 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1470,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "d64b374e0649b974bd99273d7a1dfda2dde4631b3217c3814264d0e4c476ae51",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "7f613a9f8c1dd8e23bbec79a6678ade3e43a468dab01fe7d4580c5de80cd6845",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "fa205f0eac1e6d67a7a43da4a0ecf247000409abbd6f9c1fccb53b46999cbe3f",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "53fda383ae1eda0a295e9268c4e8dd1d1a1465c07dccde3af00c72f6a11cbaf5",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "dc6487d3285bd3e350c0f2b7f68172ea9262ae232b4f5b1f675988624c71edd6",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "6413beea3922757659a736807fe26dc0bcf91b02b25810f5c15eb85143902bcc",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "7079fd0f2d95945d308b911abc84a576ac2a66effddcda4ab3b9d55e32b1c8e1"
+  },
+  "additions": {
+    "tests/contracts/PcbSuccessfulRoutePoolObserverContractTest.java": "1ea1f2bbbf91a8ea89ba2bc1c8c5f8d9ba2699641a3c6f1c849ed68e5e98838c",
+    "tests/contracts/PcbSuccessfulRoutePoolSeed2ContractTest.java": "d5dada329d4eb26c4f7a7fdf99044b5f83afd47ea58f1b9e9efc014ecbc3f54f",
+    "tests/contracts/PcbSuccessfulRoutePoolSeed5ContractTest.java": "c4a61bc48dba39c901964a758d482a70fe1c3fea48dad15e1fa44eefadcdc05a"
+  },
+  "gateOwners": {
+    "source-audit.md": "b102596d2a417cab0ff3dc4f7e0606cb53db7685dfa0424c79143a2bbf33d33e",
+    "reuse-audit.json": "22b0bbefcbb87e93f38cb6040e0511d1681bd31ed0727167eaa7ee308faaac35",
+    "overlay-audit.json": "2d44d49307bb743ae9ae0a1175b5ffa5006b8a18f2f2f867033da996c9165548",
+    "bootstrap-reuse.json": "d78cae2de1450bb08bc52664e86ed43b26358e9677bfe1494b7464b1ad0d1953",
+    "prepare.py": "1beb61453dbfbe8ca54cbd36774386b44a1bdbe0051348de4f898260ca15d824",
+    "bootstrap.py": "ee49562eeab5e1cc3ba870df7d66b43f42e61811302bb7f97501e5afeec7cc06",
+    "protocol.json": "536fa0f92ff22f3c0c43505ee6b01a1bdf0c798161ec6051e9b2f858de4691f8",
+    "unit-suites.json": "06166a405f390342ec130cf14d352885ff4aa180ef357fdbde952550be80489f",
+    "routes-suites.json": "fe298e4e97a4c947569fba6a0aabc78c5aae9da500b5275d2727b6b3f09dd3fa",
+    "inputs.py": "2daab295160628a3a27f47f185a0ae43298e84addd8cf4fef4b2676880b95d05",
+    "review_source.py": "48b726c9656a5c04ec53ed5a4131ff2f387737a340a6e62abc42bb2e20b4b13f",
+    "source-review.diff": "a1342d5cfbde37ec5f3311c39c431a53efc0237ab19f47a0634850c08ee3559c",
+    "source-review.json": "3a0d70fb076587182c7dd28045064e86805e997223e019fc2d674f2b7c436398",
+    "review-ack.json": "1f17c057b8b4c706f2758aea6cdfa0f541a43c7b2886cc750b4f5a96136b177d",
+    "run_native.ps1": "eb90f465b224ed6b494103100d4fffbd458e4948d293d8a9491a4751bdee51c1",
+    "check_process_cleanup.ps1": "9f4861012ee1966fb646c61352682321ca44367860b1ed5c110a552d383e6af9",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "retire_copy.py": "147eae36c117785bc4c71c51f028a6999dcd72a9450d45b3815d07cde71b9947",
+    "assess.py": "0581d1ea602e82190fd278c9287465cb6399ed57eee899c023e131afe2e14c3a",
+    "check_assessment.py": "5379204a6ca9a87120ec49b76fa8c336953c263d39ecc4bbda14381fb7f1ab4e",
+    "assessment-canary-results.json": "cc0b267a7945a03f74fbcf765d312a663ce898c3eff0b7290db31787969e1530",
+    "reader-notes.md": "0fce569e9313fa3623e4ffb5b68d1c714e7dfaea828fc018e454e07646fc1ef5",
+    "worker-notes.md": "a75ca8f9e75ac62be3e3664123a8d1d2913d692aa23ae8528b267b361d03b2cc",
+    "suite_transport.ps1": "aa359541e9f26592db748836baf942a520cd6d98e0a2fb89645ff2eab587e996",
+    "check_suite_transport.ps1": "f2cee50789bb8e03042dce7adce2ea60083d91cc149dc5886e123a9742a4db4d",
+    "suite-transport-canaries.json": "cc8d5d78d343df120f3f821d914f21e942abfef67e39b78b3227690e98cc673b"
+  },
+  "prior22SealSha256": "f3fd5759e6796e204cbf147ca969fa674cd490e351d6be2bfe1ecf9a463553f4"
+}
