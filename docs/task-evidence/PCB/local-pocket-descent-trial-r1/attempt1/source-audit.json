@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "scope": "Read-only accepted-source binding; no runtime claim",
+  "baseCommit": "91ffe9a3c0e444c28b1ad0ae51005071e7fe0c8a",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java": "be1d9aad55da71692214bb351db301d35c9cbee924b4dcf7efa14de2a9d63951",
+    "src/com/lushprojects/circuitjs1/client/PcbFootprint.java": "322596458d3ad616cff73e66170aa48c0d1d38bb514ec5428dee543472e296a9",
+    "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "57cf9db656fdee48b8b737c4a4d980c69f799dccc021cf370a32168a9a13e498",
+    "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "b0cecbaa71ede48acb490704d125985391c908a19570a0254934c937b65e81cf"
+  },
+  "scaffoldingReuse": {
+    "oldSealSha256": "ff43bd487094430c77c1bac333c5bc7fc89798791404faff736e3adc5116c3e6",
+    "scope": "Namespace-only native/corpus/transport/cleanup scaffolding; rejected source policies excluded",
+    "files": {
+      "prepare_cases.py": "3f34239b3d1973048b8e5cc333505169c50419dcbf5f76a332c3654b67489eda",
+      "run_native.ps1": "254d1dc91cb49e96622d6a79eeabf07fb1a69914a6bc4c179b0bf0f4d07b1366",
+      "check_process_cleanup.ps1": "39da3a6b39cef00e5f10f332efa2d591e5281752b718a3cf8dd6367891c28aef",
+      "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+      "suite_transport.ps1": "16c79dd693111ea1450562436d905c910c23304fcfd0bff59a924ed7ba4d62f6",
+      "check_suite_transport.ps1": "c2c7704505e6c0495136635e44151dc28e86138417cd9d0252a3e7340ab37943",
+      "retire_copy.py": "a5a3e1bf7a7566b116205c5ab8fa3895bf036b1c2dca73606af222eaef5dfd60"
+    }
+  }
+}

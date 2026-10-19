@@ -1,0 +1,139 @@
+{
+  "status": "PASS",
+  "scope": "Integrated native/fitness/source/cleanup review; no production promotion",
+  "baseCommit": "91ffe9a3c0e444c28b1ad0ae51005071e7fe0c8a",
+  "main1475Exact": true,
+  "frozenGates": 28,
+  "sourceDeltas": 15,
+  "failedAttempt1Artifacts": 50,
+  "attempt1CorrectionFixtureOnly": true,
+  "selectedAndGlobalScoreComparisonsRecomputed": true,
+  "independentSourceReview": "NO_BLOCKING_FINDING; coverage/responsiveness limits recorded",
+  "syntheticReaderCases": 45,
+  "actualTransportCases": 12,
+  "unitSuites": 3,
+  "routeSuites": 7,
+  "cases": 28,
+  "saved15ExactRows": 14,
+  "trial21AdmittedRows": 14,
+  "strictFitness": "FAIL",
+  "independentMetricDeltas": [
+    {
+      "seed": "-1017",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1004",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "-1022",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "0",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "17",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "42",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "1",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "7",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "5",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "14",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "2",
+      "area": 1066209,
+      "largestProtectedEmptyRectangleArea": 102600,
+      "copperManhattanLength": -1530,
+      "vias": 0
+    },
+    {
+      "seed": "3",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "4",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    },
+    {
+      "seed": "6",
+      "area": 0,
+      "largestProtectedEmptyRectangleArea": 0,
+      "copperManhattanLength": 0,
+      "vias": 0
+    }
+  ],
+  "violations": [
+    {
+      "seed": "2",
+      "metric": "area",
+      "baseline": 9178092,
+      "trial": 10244301,
+      "delta": 1066209
+    },
+    {
+      "seed": "2",
+      "metric": "largestProtectedEmptyRectangleArea",
+      "baseline": 1807000,
+      "trial": 1909600,
+      "delta": 102600
+    }
+  ],
+  "recordedDriverBirthsExited": 6,
+  "copyRestored1467AndRetired": true,
+  "productionBuildPlayerSolverAllSeed": "NOT_RUN"
+}

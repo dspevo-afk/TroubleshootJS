@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "baseCommit": "91ffe9a3c0e444c28b1ad0ae51005071e7fe0c8a",
+  "scope": "COPY-only private21/density15 candidate2 local passive pocket descent; default15/general16 unchanged",
+  "hypothesis": "One deterministic pass can move an already placed passive into an advisory free pocket and improve the existing local placement cost without rotating, resizing or rebuilding the source inventory",
+  "selection": "After candidate2 initial full placement validation, visit four existing passive package kinds in canonical component-ID order; exclude connectors, anchored demands and isolation-body packages; keep source pose/geometry/outline",
+  "origins": "Existing PcbVacancyTargets up to five center/corner origins in the largest40-unit-grid pocket, clipped by existing vacancyDomainBox, snapped through existing10-unit origin rule; keep current position as incumbent; ties retain incumbent",
+  "cost": "Existing linked-pad, Manhattan-corridor, whole-content and semantic-group score terms and weights; macro-hint term omitted for this local pass; require strict lower finite cost and full unchanged access/domain validation before accepting a move",
+  "budget": "Every attempted origin consumes the same plan evaluation counter; stop at existing60000 without rejecting the already legal incumbent; no separate local allowance or extra candidate/router request",
+  "unchanged": ["six placement candidates", "other candidate algorithms", "source inventory and poses", "source demand and outline sizing", "random concern order", "signed-long seeds", "physical validators", "routing recovery and caps", "current trace guards", "CHANNEL and GRID constants"],
+  "roots": ["-1017", "-1004", "-1022", "0", "17", "42", "1", "7", "5", "14", "2", "3", "4", "6"],
+  "requiredBeforeCorpus": ["root source review", "actual local-pass move and immutability/determinism fixtures", "budget/eligibility/access negative fixtures", "representative other-candidate raw plan parity", "strict reader synthetic canaries", "actual selected-PowerShell transport", "frozen source and gate identities", "fresh native unit PASS"],
+  "finiteAcceptance": "All14 explicit15 replays exact in42 non-time fields; all14 explicit21 physical admissions preserve source graph/intent; area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+  "rejection": "Preserve failures and exact sources; restore and retire COPY; no promotion or changed fitness limits",
+  "promotion": "Only after finite acceptance, separately qualify production/native/JDK8-GWT/visible player and replay behavior",
+  "limits": "Informed finite corpus; local score is advisory, not an electrical or route oracle; no all-seed, manufacturing or player claim from this native trial"
+}

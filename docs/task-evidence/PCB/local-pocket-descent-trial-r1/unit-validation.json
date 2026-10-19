@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Unit local-pocket, vacancy-target, and session-identity contracts only; routes and fitness are not evaluated.",
+  "proposalSha256": "70897df24fd634ec90286f5843fdf94a7a93fa1011c108488ecadf304518462e",
+  "protocolSha256": "ea0e15e0929a3d0f4ca724bd96dcbaf33e76c1587a893c118f845f3ac8d252d6",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "suiteManifestSha256": "75d850fe580f1240d0aa977138c2a539c8b6c99430ffaa1432bfa2b4f9984c47",
+  "phaseInputs": {
+    "unit.txt": "97ed6bad6984f710cb702c5692cfc4df3137b9b489d87ebb67b383c3cd2858ec",
+    "unit-receipt.txt": "f67756814f06d6edb88f90e9dc8d315b78aff3491bc98b581ec55c849c04b10a",
+    "unit-timing.json": "50049f080eb4eff9d9afafeab5f706b97219eda1a075ffc1bcff3be07d10003d",
+    "unit-suites.json": "75d850fe580f1240d0aa977138c2a539c8b6c99430ffaa1432bfa2b4f9984c47"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 3,
+    "suiteClasses": [
+      "PcbLocalPocketDescentContractTest",
+      "PcbVacancyTargetsContractTest",
+      "RelBSessionIdentityContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB local pocket descent contracts ",
+      "PCB vacancy targets contracts ",
+      "REL-B session identity contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

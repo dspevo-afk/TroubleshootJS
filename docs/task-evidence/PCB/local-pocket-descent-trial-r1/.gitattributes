@@ -1,0 +1,4 @@
+* -text whitespace=cr-at-eol
+# These frozen gate notes retain their original terminal blank line.
+reader-notes.md whitespace=cr-at-eol,-blank-at-eof
+attempt1/reader-notes.md whitespace=cr-at-eol,-blank-at-eof

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Exact preservation of failed first unit phase; not a native PASS",
+  "archiveManifestSha256": "be2d32c8726c19c91f950bdebdd4fe584e3cc5e1481dd95443855640a5e94acd",
+  "oldNativeSealSha256": "de6cb67a5cebf5a224ee8cb8edca0dcf5fb87800a5c69abfd97adc7c1a7b122f",
+  "artifactCount": 50,
+  "gateOwners": 26,
+  "sourceDeltas": 15,
+  "nativeStatus": "FAIL",
+  "metadataExitCode": 2,
+  "jvmExitCode": 1,
+  "elapsedSeconds": 48.4835479,
+  "compiler": "SUCCEEDED; real JDK8 warning and later JVM execution",
+  "failure": "Tie fixture lacks required connector; TopologyPlacementGraph rejects before tie helper call",
+  "firstSuite": "FAIL",
+  "otherUnitSuites": "NOT_RUN",
+  "corpus": "NOT_RUN",
+  "recordedDriverBirthsExited": 2,
+  "terminationAttempted": false,
+  "correctionBoundary": "Only new unit fixture may differ; final inputs enforce all other14 source deltas exact"
+}

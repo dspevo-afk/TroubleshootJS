@@ -1,0 +1,5 @@
+PASS: PCB local pocket descent contracts assertions=961 fixtures=10 evaluator=localPocketDescent
+
+PASS: PCB vacancy targets contracts assertions=74
+
+PASS: REL-B session identity contracts assertions=191 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false

@@ -1,0 +1,14 @@
+[
+  [
+    "PcbLocalPocketDescentContractTest",
+    "PCB local pocket descent contracts "
+  ],
+  [
+    "PcbVacancyTargetsContractTest",
+    "PCB vacancy targets contracts "
+  ],
+  [
+    "RelBSessionIdentityContractTest",
+    "REL-B session identity contracts "
+  ]
+]

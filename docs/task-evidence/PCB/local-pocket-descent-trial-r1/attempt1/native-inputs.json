@@ -1,0 +1,53 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1475,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "490a4e8d808a5886b049d06c11a5fb1609b74b1f5b734e3f91e1aa8052cc8b6f",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "5534541b3d218bde55a76cc092d478850a6a8c01db07c9bb5645f993d77fcc62",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "ea7bf03fd2ab9ee6f4c1a679507ffe74acf5e0719db500f02ab3b07436ef7a6e",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionReplay.java": "ad838031bfb46d8819b302f5a627237a4038bbdea4970b4c12cdf635f149fb2a",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "fe1771dc3d24b9914f0eafc920eced21c6782e007cdbbd11729bdcd4024a7e92",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "f0f89a654aedbe145c563f61fcbea7436a461448129f2d04cc1a73e4aa28dd5f",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "dca7b7d4b83670c54d4438d5155db5b19e19635ba8c2b04885473b7c630f660d"
+  },
+  "additions": {
+    "tests/contracts/PcbLocalPocketDescentContractTest.java": "a416e7f62216d045a512bc8d7aae77c490b6d945ad3a917b593b22b1af3d7af2",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTest.java": "88db02e8a4ccbe0ed2ef19384a9e253bd23ed3184f65245e7585562e5f391684",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup2.java": "04387670f81ee2709acd0c573a388c1634e4babebf503162a87eae843454001d",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup3.java": "35e5bccf9e39debf504a782abb3af55484348899df1be6da7d40af747bddf7d6",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup4.java": "a4d0b0615f51728ebaefe9040d0aa1ace4aa9992ef7972434b85378e09fd69c3",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup5.java": "4240bbedfef83f80ce8813c445c01562e66f9e85a9b30c8c85fbdd88f8d01805",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup6.java": "3066edeea97ba3bbb1df203cb931d67bbf6b467e381fdeac0779ab46aaf4674f",
+    "tests/contracts/PcbLocalPocketDescentTrialContractTestGroup7.java": "6eb0dd64f0d532bdf8f0bba134c4c25ef27b3c8cc97a7b9404fad4b57d94c23b"
+  },
+  "gateOwners": {
+    "proposal.json": "70897df24fd634ec90286f5843fdf94a7a93fa1011c108488ecadf304518462e",
+    "placement-audit.md": "4cca894fb00cd889ce31335a9e824738c695b1425b2190a4dc2f94f51667f9b6",
+    "source-audit.json": "64e9554877b12f0405d357943f2f579f93d6b7360dca211daf23e70c5f64bc4d",
+    "prepare.py": "9c2c6bb242a77fe443c8bf9ea3701904227dd16e739f07ddf4421e967c184f1f",
+    "prepare_cases.py": "c969c55a9ae95f4c042b26ec5b25a09d59b19a3920fe62a865d0ea7158f5de82",
+    "bootstrap.py": "aeaccac989ef8f425b868e952e7de7b18b70bc829b49f4d6dfbfac9a38fd28ef",
+    "protocol.json": "ea0e15e0929a3d0f4ca724bd96dcbaf33e76c1587a893c118f845f3ac8d252d6",
+    "unit-suites.json": "75d850fe580f1240d0aa977138c2a539c8b6c99430ffaa1432bfa2b4f9984c47",
+    "routes-suites.json": "230e64e7027a7bda092c37c398ec4e481e832b2fbce6764af5460a4f2b7dbb8d",
+    "inputs.py": "c7042dadba953501b47bbfb13df91933e6224b347f8541f901e58df2d60c638a",
+    "run_native.ps1": "89f8099ddce589b9f41a09e3eb953783db1d4b8082717a80e2b9d6cf625abd19",
+    "check_process_cleanup.ps1": "bfd871b63b89ba486ee8928a2d7adfd81edf3392752568ba23a93f2a61fa18ad",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "assess.py": "43202e54eb49fb60f10d7e5e783fe4abb26b8c692bad323cd7db04083b8d693c",
+    "check_assessment.py": "52819b852e058a6c09c348d87715b4e050fe40d25f50ef3f8a0eda1ff2c608f1",
+    "assessment-canary-results.json": "1a0ce00f6e8aa323d41607bca0e310225e60f63782a630df3086d4e64c039a21",
+    "reader-notes.md": "c9694be493124d849f26697b31d0e742a09e201f0075dc55a4363deabce9daa3",
+    "worker-notes.md": "099787b39742332b23a5a09b68e49907db661e0092c5b835a55d35cb00feb114",
+    "review_source.py": "97e4da887c2e7e4bfefc438f2a49c02bf5e6cc618db7084ed72fe14f7e3eee23",
+    "source-review.diff": "15b3aafe97a4cd633d7f13e959a845a3c38a74661cb20be0922b47156f813fa1",
+    "source-review.json": "e42cdcdda19b3ed3afeec9bac332dd30056244a1532e2ae8afedc1c2127b3d1f",
+    "review-ack.json": "8d9ed6463bf4d588d5cfa3e6bd330aa8e043e9be59a3f36aae10a80c853d867c",
+    "retire_copy.py": "ad87d642ffdf51d1b62220e2dcac05daf1e2336bc144495316a2ca796a941924",
+    "suite_transport.ps1": "7d81427b83a736d0b161ca8120ae88f67e05ba808b38121575ad4585a820865d",
+    "check_suite_transport.ps1": "74c6e9dff1c7f0e719f6791852a9948965eeda199f120180588790337b08b713",
+    "suite-transport-canaries.json": "44eebec348f72d79d820c42cafe098e544de0729e13ec76ba80c8e3f33d5ae2f"
+  },
+  "accepted15BaselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816"
+}

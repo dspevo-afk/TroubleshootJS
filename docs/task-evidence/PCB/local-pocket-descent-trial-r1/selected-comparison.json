@@ -1,0 +1,206 @@
+{
+  "status": "PASS",
+  "scope": "Offline comparison of final15/21 selected receipts; not local-move attribution",
+  "consumedSha256": {
+    "routes.txt": "7382adf25c907154c8068bc7289e36067f08c6bf928f8b63959447139d4a3909",
+    "assessment.json": "ff638a04ca125f50d47ff1583eec263a42b7a86eea4e4f793dfc83bb1f0ff190"
+  },
+  "ignoredMetadataFields": [
+    "density",
+    "elapsedMillis",
+    "sourcePlanSha256",
+    "version"
+  ],
+  "rows": [
+    {
+      "seed": "-1017",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 3,
+      "selectedAttempt21": 3,
+      "evaluations15": 30627,
+      "evaluations21": 30762
+    },
+    {
+      "seed": "-1004",
+      "geometryExact": true,
+      "changedFields": [
+        "rankedPlacementAttempts",
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 3,
+      "selectedAttempt21": 3,
+      "evaluations15": 35345,
+      "evaluations21": 35495
+    },
+    {
+      "seed": "-1022",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 0,
+      "selectedAttempt21": 0,
+      "evaluations15": 49728,
+      "evaluations21": 49923
+    },
+    {
+      "seed": "0",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 0,
+      "selectedAttempt21": 0,
+      "evaluations15": 34103,
+      "evaluations21": 34243
+    },
+    {
+      "seed": "17",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "routingExpansions",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 3,
+      "selectedAttempt21": 3,
+      "evaluations15": 42828,
+      "evaluations21": 42998
+    },
+    {
+      "seed": "42",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "routingOrders",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 1,
+      "selectedAttempt21": 1,
+      "evaluations15": 40913,
+      "evaluations21": 41088
+    },
+    {
+      "seed": "1",
+      "geometryExact": true,
+      "changedFields": [
+        "rankedPlacementAttempts",
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 1,
+      "selectedAttempt21": 1,
+      "evaluations15": 31645,
+      "evaluations21": 31780
+    },
+    {
+      "seed": "7",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 0,
+      "selectedAttempt21": 0,
+      "evaluations15": 43155,
+      "evaluations21": 43320
+    },
+    {
+      "seed": "5",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "routingExpansions",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 5,
+      "selectedAttempt21": 5,
+      "evaluations15": 44561,
+      "evaluations21": 44731
+    },
+    {
+      "seed": "14",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 0,
+      "selectedAttempt21": 0,
+      "evaluations15": 43390,
+      "evaluations21": 43565
+    },
+    {
+      "seed": "2",
+      "geometryExact": false,
+      "changedFields": [
+        "area",
+        "width",
+        "height",
+        "largestProtectedEmptyRectangleArea",
+        "copperManhattanLength",
+        "geometrySha256",
+        "selectedAttempt",
+        "rankedPlacementAttempts",
+        "acceptedPlanEvaluations",
+        "routingOrders",
+        "routingExpansions",
+        "selectedQualityMilli",
+        "statisticsCanonical",
+        "occupiedY",
+        "occupiedWidth",
+        "occupiedHeight",
+        "outlineY"
+      ],
+      "selectedAttempt15": 2,
+      "selectedAttempt21": 5,
+      "evaluations15": 47823,
+      "evaluations21": 47999
+    },
+    {
+      "seed": "3",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "routingOrders",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 1,
+      "selectedAttempt21": 1,
+      "evaluations15": 37473,
+      "evaluations21": 37633
+    },
+    {
+      "seed": "4",
+      "geometryExact": true,
+      "changedFields": [
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 0,
+      "selectedAttempt21": 0,
+      "evaluations15": 42141,
+      "evaluations21": 42316
+    },
+    {
+      "seed": "6",
+      "geometryExact": true,
+      "changedFields": [
+        "rankedPlacementAttempts",
+        "acceptedPlanEvaluations",
+        "statisticsCanonical"
+      ],
+      "selectedAttempt15": 4,
+      "selectedAttempt21": 4,
+      "evaluations15": 41933,
+      "evaluations21": 42094
+    }
+  ]
+}

@@ -1,0 +1,531 @@
+{
+  "status": "PASS",
+  "scope": "Existing generator global cheap-score receipts, not the local score or individual-move attribution",
+  "consumedSha256": {
+    "routes.txt": "7382adf25c907154c8068bc7289e36067f08c6bf928f8b63959447139d4a3909",
+    "assessment.json": "ff638a04ca125f50d47ff1583eec263a42b7a86eea4e4f793dfc83bb1f0ff190"
+  },
+  "otherFiveCandidateScoreRecordsExact": true,
+  "rows": [
+    {
+      "seed": "-1017",
+      "candidate": 2,
+      "rank15": 6,
+      "rank21": 6,
+      "before": {
+        "total": 1239735,
+        "electrical": 144580,
+        "region": 8935,
+        "connector": 2590,
+        "corridor": 1763,
+        "outline": 7371000,
+        "courtyard": 749848,
+        "demand": 2539199
+      },
+      "after": {
+        "total": 1311775,
+        "electrical": 152700,
+        "region": 9100,
+        "connector": 2870,
+        "corridor": 2158,
+        "outline": 7371000,
+        "courtyard": 749848,
+        "demand": 2539199
+      },
+      "deltas": {
+        "total": 72040,
+        "electrical": 8120,
+        "region": 165,
+        "connector": 280,
+        "corridor": 395,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "-1004",
+      "candidate": 2,
+      "rank15": 6,
+      "rank21": 5,
+      "before": {
+        "total": 1356296,
+        "electrical": 156260,
+        "region": 10675,
+        "connector": 2770,
+        "corridor": 2953,
+        "outline": 7900200,
+        "courtyard": 798304,
+        "demand": 2762392
+      },
+      "after": {
+        "total": 1325532,
+        "electrical": 152520,
+        "region": 10755,
+        "connector": 3100,
+        "corridor": 2691,
+        "outline": 7900200,
+        "courtyard": 798304,
+        "demand": 2762392
+      },
+      "deltas": {
+        "total": -30764,
+        "electrical": -3740,
+        "region": 80,
+        "connector": 330,
+        "corridor": -262,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "-1022",
+      "candidate": 2,
+      "rank15": 4,
+      "rank21": 4,
+      "before": {
+        "total": 1881200,
+        "electrical": 213790,
+        "region": 14645,
+        "connector": 4260,
+        "corridor": 5954,
+        "outline": 10502800,
+        "courtyard": 1061240,
+        "demand": 3729940
+      },
+      "after": {
+        "total": 1881200,
+        "electrical": 213790,
+        "region": 14645,
+        "connector": 4260,
+        "corridor": 5954,
+        "outline": 10502800,
+        "courtyard": 1061240,
+        "demand": 3729940
+      },
+      "deltas": {
+        "total": 0,
+        "electrical": 0,
+        "region": 0,
+        "connector": 0,
+        "corridor": 0,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "0",
+      "candidate": 2,
+      "rank15": 3,
+      "rank21": 3,
+      "before": {
+        "total": 1219312,
+        "electrical": 142780,
+        "region": 8295,
+        "connector": 2890,
+        "corridor": 1302,
+        "outline": 7516400,
+        "courtyard": 772384,
+        "demand": 2640792
+      },
+      "after": {
+        "total": 1236032,
+        "electrical": 144970,
+        "region": 8365,
+        "connector": 2890,
+        "corridor": 1212,
+        "outline": 7516400,
+        "courtyard": 772384,
+        "demand": 2640792
+      },
+      "deltas": {
+        "total": 16720,
+        "electrical": 2190,
+        "region": 70,
+        "connector": 0,
+        "corridor": -90,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "17",
+      "candidate": 2,
+      "rank15": 4,
+      "rank21": 4,
+      "before": {
+        "total": 1871029,
+        "electrical": 207690,
+        "region": 16800,
+        "connector": 6590,
+        "corridor": 7390,
+        "outline": 9678900,
+        "courtyard": 998648,
+        "demand": 3413134
+      },
+      "after": {
+        "total": 1913657,
+        "electrical": 213690,
+        "region": 16750,
+        "connector": 6590,
+        "corridor": 6959,
+        "outline": 9678900,
+        "courtyard": 998648,
+        "demand": 3413134
+      },
+      "deltas": {
+        "total": 42628,
+        "electrical": 6000,
+        "region": -50,
+        "connector": 0,
+        "corridor": -431,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "42",
+      "candidate": 2,
+      "rank15": 2,
+      "rank21": 2,
+      "before": {
+        "total": 1611984,
+        "electrical": 184100,
+        "region": 15705,
+        "connector": 4010,
+        "corridor": 3185,
+        "outline": 9639000,
+        "courtyard": 1000808,
+        "demand": 3445134
+      },
+      "after": {
+        "total": 1718268,
+        "electrical": 198100,
+        "region": 16400,
+        "connector": 4010,
+        "corridor": 2477,
+        "outline": 9639000,
+        "courtyard": 1000808,
+        "demand": 3445134
+      },
+      "deltas": {
+        "total": 106284,
+        "electrical": 14000,
+        "region": 695,
+        "connector": 0,
+        "corridor": -708,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "1",
+      "candidate": 2,
+      "rank15": 4,
+      "rank21": 5,
+      "before": {
+        "total": 1145756,
+        "electrical": 132640,
+        "region": 7930,
+        "connector": 3040,
+        "corridor": 1989,
+        "outline": 7467000,
+        "courtyard": 764248,
+        "demand": 2577599
+      },
+      "after": {
+        "total": 1151756,
+        "electrical": 133280,
+        "region": 8090,
+        "connector": 3260,
+        "corridor": 1899,
+        "outline": 7467000,
+        "courtyard": 764248,
+        "demand": 2577599
+      },
+      "deltas": {
+        "total": 6000,
+        "electrical": 640,
+        "region": 160,
+        "connector": 220,
+        "corridor": -90,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "7",
+      "candidate": 2,
+      "rank15": 2,
+      "rank21": 2,
+      "before": {
+        "total": 1694976,
+        "electrical": 193930,
+        "region": 12515,
+        "connector": 4230,
+        "corridor": 4535,
+        "outline": 9374000,
+        "courtyard": 976088,
+        "demand": 3326734
+      },
+      "after": {
+        "total": 1694976,
+        "electrical": 193930,
+        "region": 12515,
+        "connector": 4230,
+        "corridor": 4535,
+        "outline": 9374000,
+        "courtyard": 976088,
+        "demand": 3326734
+      },
+      "deltas": {
+        "total": 0,
+        "electrical": 0,
+        "region": 0,
+        "connector": 0,
+        "corridor": 0,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "5",
+      "candidate": 2,
+      "rank15": 6,
+      "rank21": 6,
+      "before": {
+        "total": 2042037,
+        "electrical": 227180,
+        "region": 14257,
+        "connector": 4280,
+        "corridor": 10652,
+        "outline": 9635600,
+        "courtyard": 999824,
+        "demand": 3431527
+      },
+      "after": {
+        "total": 2071377,
+        "electrical": 231300,
+        "region": 14837,
+        "connector": 4280,
+        "corridor": 10157,
+        "outline": 9635600,
+        "courtyard": 999824,
+        "demand": 3431527
+      },
+      "deltas": {
+        "total": 29340,
+        "electrical": 4120,
+        "region": 580,
+        "connector": 0,
+        "corridor": -495,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "14",
+      "candidate": 2,
+      "rank15": 4,
+      "rank21": 4,
+      "before": {
+        "total": 1808902,
+        "electrical": 207070,
+        "region": 14680,
+        "connector": 4000,
+        "corridor": 4630,
+        "outline": 9568000,
+        "courtyard": 1014008,
+        "demand": 3480334
+      },
+      "after": {
+        "total": 1903710,
+        "electrical": 213350,
+        "region": 14875,
+        "connector": 4000,
+        "corridor": 8279,
+        "outline": 9568000,
+        "courtyard": 1014008,
+        "demand": 3480334
+      },
+      "deltas": {
+        "total": 94808,
+        "electrical": 6280,
+        "region": 195,
+        "connector": 0,
+        "corridor": 3649,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "2",
+      "candidate": 2,
+      "rank15": 3,
+      "rank21": 4,
+      "before": {
+        "total": 2005671,
+        "electrical": 221390,
+        "region": 15765,
+        "connector": 4200,
+        "corridor": 10998,
+        "outline": 9746400,
+        "courtyard": 1023344,
+        "demand": 3546727
+      },
+      "after": {
+        "total": 2142319,
+        "electrical": 237290,
+        "region": 17350,
+        "connector": 4200,
+        "corridor": 11257,
+        "outline": 9746400,
+        "courtyard": 1023344,
+        "demand": 3546727
+      },
+      "deltas": {
+        "total": 136648,
+        "electrical": 15900,
+        "region": 1585,
+        "connector": 0,
+        "corridor": 259,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "3",
+      "candidate": 2,
+      "rank15": 3,
+      "rank21": 3,
+      "before": {
+        "total": 1595918,
+        "electrical": 179300,
+        "region": 12640,
+        "connector": 3780,
+        "corridor": 6240,
+        "outline": 9240000,
+        "courtyard": 952376,
+        "demand": 3206748
+      },
+      "after": {
+        "total": 1618902,
+        "electrical": 185320,
+        "region": 12775,
+        "connector": 3780,
+        "corridor": 4097,
+        "outline": 9240000,
+        "courtyard": 952376,
+        "demand": 3206748
+      },
+      "deltas": {
+        "total": 22984,
+        "electrical": 6020,
+        "region": 135,
+        "connector": 0,
+        "corridor": -2143,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "4",
+      "candidate": 2,
+      "rank15": 1,
+      "rank21": 1,
+      "before": {
+        "total": 1580761,
+        "electrical": 179440,
+        "region": 12465,
+        "connector": 3790,
+        "corridor": 4871,
+        "outline": 9723600,
+        "courtyard": 1005824,
+        "demand": 3461947
+      },
+      "after": {
+        "total": 1699193,
+        "electrical": 193570,
+        "region": 13120,
+        "connector": 4300,
+        "corridor": 4847,
+        "outline": 9723600,
+        "courtyard": 1005824,
+        "demand": 3461947
+      },
+      "deltas": {
+        "total": 118432,
+        "electrical": 14130,
+        "region": 655,
+        "connector": 510,
+        "corridor": -24,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    },
+    {
+      "seed": "6",
+      "candidate": 2,
+      "rank15": 2,
+      "rank21": 5,
+      "before": {
+        "total": 1751505,
+        "electrical": 200330,
+        "region": 14490,
+        "connector": 4250,
+        "corridor": 4274,
+        "outline": 9623600,
+        "courtyard": 1014008,
+        "demand": 3480334
+      },
+      "after": {
+        "total": 1973397,
+        "electrical": 222790,
+        "region": 17405,
+        "connector": 4250,
+        "corridor": 6820,
+        "outline": 9623600,
+        "courtyard": 1014008,
+        "demand": 3480334
+      },
+      "deltas": {
+        "total": 221892,
+        "electrical": 22460,
+        "region": 2915,
+        "connector": 0,
+        "corridor": 2546,
+        "outline": 0,
+        "courtyard": 0,
+        "demand": 0
+      }
+    }
+  ],
+  "root2Candidate2RouteOutcomes": [
+    {
+      "version": 15,
+      "candidate2Outcomes": [
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS"
+      ]
+    },
+    {
+      "version": 21,
+      "candidate2Outcomes": [
+        "P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET",
+        "P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:CTRL_RETURN:BRANCH_QUALITY_LIMIT"
+      ]
+    }
+  ]
+}

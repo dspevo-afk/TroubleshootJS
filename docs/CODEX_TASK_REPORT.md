@@ -1,4 +1,43 @@
-# Current checkpoint: private20 trace guard rejected; local placement next
+# Current checkpoint: private21 local passive descent rejected; scoring audit next
+
+2026-10-19. Base/published HEAD `91ffe9a3c0e444c28b1ad0ae51005071e7fe0c8a` on
+`codex/q60-faulted-profile-counts`; exact origin verified. Rejection packet is
+complete for normal branch publication. Indefinite continuation active; no
+main/email. Main1475/default15/general16 remain unchanged.
+
+COPY-only private21/density15 candidate2 single-pass local descent preserved
+source inventory/poses/outline, current score/physical checks,60000 plan cap and
+candidate/per-strategy routing budgets. Fresh unit3 PASS49.3722267s/exit0:
+961 local assertions/10named fixtures,74 vacancy and191 replay assertions. Fresh
+routes7 PASS200.9823333s/exit0:28 admissions, all14 saved15 rows exact42 non-time
+fields and all14 trial21 source identities. Strict fitness FAIL/assessor2:
+seed2 area+1066209(11.6169%), protected void+102600, copper-1530, vias0.
+Other13 selected geometries/four metrics exact; no area/void improvement.
+
+Seed2 winner switches2→5: modified2 rejects CTRL_RETURN:BRANCH_QUALITY_LIMIT;
+old2 succeeded. Existing global candidate2 cost worsens11/improves1/equal2;
+otherfive score records exact14. This is receipt-level cause/score mismatch,
+not individual-move attribution. All14 accepted-plan counts rise135–195.
+FinalCOPY1475/7overrides/8adds/28gates frozen `00dea91518cd61c95378edcf92f1aa5f28b517e887f78d9dd82f190ef69699c5`.
+Root45 reader/12 actual host canaries, source-erasure and integrated review PASS.
+Optional read-only source review finds no blocking defect; linked/package-positive,
+shared-channel rejection, tie-trial and bounded-cancellation-latency limits remain.
+
+Attempt1 FAIL48.4835479s/metadata2/JVM1: tie fixture omitted required connector;
+compile succeeded, no suite PASS. Fifty exact artifacts/26gates/15deltas retained.
+Fixture-only neutral connector preserves tie oracle; other14 source deltas exact.
+Final phases fresh, no reused PASS. All6 driver births exited without termination;
+COPY restored exact1467 and safely retired, private state removed. No active
+native/browser/preview/profile. Original5 entries/shared tools preserved.
+
+Elapsed phases include maintained cleanup, not separately timed; birth checks
+have separate receipts. Production/GWT/player/actual21 owner roundtrip/solver/
+repair/full matrix/unseen/all-seed/manufacturing/general performance NOT RUN.
+Next publish explicit packet/docs paths and verify remote SHA, then audit existing
+global electrical/corridor score ownership. No next policy/threshold chosen.
+Evidence `docs/task-evidence/PCB/local-pocket-descent-trial-r1/RESULTS.md`.
+
+# Previous checkpoint: private20 trace guard rejected; local placement next
 
 2026-10-19. Base/published predecessor `ca050e0445168249481b68dbb357f9e7b5553f9f`
 on `codex/q60-faulted-profile-counts`. Packet complete, ready for normal branch

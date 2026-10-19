@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "COPY-only explicit21; all14 explicit15 replay42 non-time fields exact; strict four-metric no-regression with an area/void improvement required",
+  "proposalSha256": "70897df24fd634ec90286f5843fdf94a7a93fa1011c108488ecadf304518462e",
+  "protocolSha256": "ea0e15e0929a3d0f4ca724bd96dcbaf33e76c1587a893c118f845f3ac8d252d6",
+  "baselineSha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+  "baselineSourceSha256": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+  "unitPrerequisiteSha256": "964358a414495d1431674823fc4d5e354cab5ff1df28a740d17acb66a279ddef",
+  "routesSuiteManifestSha256": "230e64e7027a7bda092c37c398ec4e481e832b2fbce6764af5460a4f2b7dbb8d",
+  "routePhaseInputs": {
+    "routes.txt": "7382adf25c907154c8068bc7289e36067f08c6bf928f8b63959447139d4a3909",
+    "routes-receipt.txt": "385623d88a51aca722fbf4667e527a2712415dda669c2c0e9471b1818c1cfc36",
+    "routes-timing.json": "0e7aab6c30bb57da83ce011f63d4ffe0d6177398c01de398f53ed88af610d7db",
+    "routes-suites.json": "230e64e7027a7bda092c37c398ec4e481e832b2fbce6764af5460a4f2b7dbb8d"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 7,
+      "suiteClasses": [
+        "PcbLocalPocketDescentTrialContractTest",
+        "PcbLocalPocketDescentTrialContractTestGroup2",
+        "PcbLocalPocketDescentTrialContractTestGroup3",
+        "PcbLocalPocketDescentTrialContractTestGroup4",
+        "PcbLocalPocketDescentTrialContractTestGroup5",
+        "PcbLocalPocketDescentTrialContractTestGroup6",
+        "PcbLocalPocketDescentTrialContractTestGroup7"
+      ],
+      "reportRows": 56,
+      "orderedMarkers": [
+        "PCB local pocket descent trial contracts ",
+        "PCB local pocket descent trial Group2 contracts ",
+        "PCB local pocket descent trial Group3 contracts ",
+        "PCB local pocket descent trial Group4 contracts ",
+        "PCB local pocket descent trial Group5 contracts ",
+        "PCB local pocket descent trial Group6 contracts ",
+        "PCB local pocket descent trial Group7 contracts "
+      ],
+      "census": {
+        "nativeAdmission": {
+          "status": "PASS",
+          "cases": 28,
+          "roots": 14,
+          "explicit15ExactRows": 14,
+          "explicit21AdmittedRows": 14
+        },
+        "strictFitness": {
+          "status": "FAIL",
+          "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+          "reasons": [
+            "one or more strict metrics increased",
+            "no area or protected-empty-rectangle decrease was observed"
+          ],
+          "violations": [
+            {
+              "seed": "2",
+              "metric": "area",
+              "baseline": 9178092,
+              "trial": 10244301,
+              "delta": 1066209
+            },
+            {
+              "seed": "2",
+              "metric": "largestProtectedEmptyRectangleArea",
+              "baseline": 1807000,
+              "trial": 1909600,
+              "delta": 102600
+            }
+          ],
+          "deltas": [
+            {
+              "seed": "-1017",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1004",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "-1022",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "0",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "17",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "42",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "1",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "7",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "5",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "14",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "2",
+              "area": 1066209,
+              "largestProtectedEmptyRectangleArea": 102600,
+              "copperManhattanLength": -1530,
+              "vias": 0
+            },
+            {
+              "seed": "3",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "4",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            },
+            {
+              "seed": "6",
+              "area": 0,
+              "largestProtectedEmptyRectangleArea": 0,
+              "copperManhattanLength": 0,
+              "vias": 0
+            }
+          ]
+        },
+        "routeCaseRows": 28,
+        "whitespaceRows": 28,
+        "orderedRootVersions": [
+          {
+            "seed": "-1017",
+            "version": 15
+          },
+          {
+            "seed": "-1017",
+            "version": 21
+          },
+          {
+            "seed": "-1004",
+            "version": 15
+          },
+          {
+            "seed": "-1004",
+            "version": 21
+          },
+          {
+            "seed": "-1022",
+            "version": 15
+          },
+          {
+            "seed": "-1022",
+            "version": 21
+          },
+          {
+            "seed": "0",
+            "version": 15
+          },
+          {
+            "seed": "0",
+            "version": 21
+          },
+          {
+            "seed": "17",
+            "version": 15
+          },
+          {
+            "seed": "17",
+            "version": 21
+          },
+          {
+            "seed": "42",
+            "version": 15
+          },
+          {
+            "seed": "42",
+            "version": 21
+          },
+          {
+            "seed": "1",
+            "version": 15
+          },
+          {
+            "seed": "1",
+            "version": 21
+          },
+          {
+            "seed": "7",
+            "version": 15
+          },
+          {
+            "seed": "7",
+            "version": 21
+          },
+          {
+            "seed": "5",
+            "version": 15
+          },
+          {
+            "seed": "5",
+            "version": 21
+          },
+          {
+            "seed": "14",
+            "version": 15
+          },
+          {
+            "seed": "14",
+            "version": 21
+          },
+          {
+            "seed": "2",
+            "version": 15
+          },
+          {
+            "seed": "2",
+            "version": 21
+          },
+          {
+            "seed": "3",
+            "version": 15
+          },
+          {
+            "seed": "3",
+            "version": 21
+          },
+          {
+            "seed": "4",
+            "version": 15
+          },
+          {
+            "seed": "4",
+            "version": 21
+          },
+          {
+            "seed": "6",
+            "version": 15
+          },
+          {
+            "seed": "6",
+            "version": 21
+          }
+        ]
+      }
+    }
+  },
+  "admission": {
+    "status": "PASS",
+    "cases": 28,
+    "roots": 14,
+    "explicit15ExactRows": 14,
+    "explicit21AdmittedRows": 14
+  },
+  "strictFitness": {
+    "status": "FAIL",
+    "requirements": "area, protected empty rectangle, copper length and vias never increase; at least one area or protected-empty-rectangle decrease",
+    "reasons": [
+      "one or more strict metrics increased",
+      "no area or protected-empty-rectangle decrease was observed"
+    ],
+    "violations": [
+      {
+        "seed": "2",
+        "metric": "area",
+        "baseline": 9178092,
+        "trial": 10244301,
+        "delta": 1066209
+      },
+      {
+        "seed": "2",
+        "metric": "largestProtectedEmptyRectangleArea",
+        "baseline": 1807000,
+        "trial": 1909600,
+        "delta": 102600
+      }
+    ],
+    "deltas": [
+      {
+        "seed": "-1017",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1004",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "-1022",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "0",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "17",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "42",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "1",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "7",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "5",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "14",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "2",
+        "area": 1066209,
+        "largestProtectedEmptyRectangleArea": 102600,
+        "copperManhattanLength": -1530,
+        "vias": 0
+      },
+      {
+        "seed": "3",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "4",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      },
+      {
+        "seed": "6",
+        "area": 0,
+        "largestProtectedEmptyRectangleArea": 0,
+        "copperManhattanLength": 0,
+        "vias": 0
+      }
+    ]
+  },
+  "caseCounts": {
+    "localPocketDescent": 28,
+    "whitespace": 28
+  },
+  "nativeRuntimeEvidence": "PASS",
+  "limits": [
+    "Fourteen fixed roots only; the result makes no unseen-root or all-seed claim.",
+    "All14 explicit15 route cases match all42 non-time saved fields; elapsedMillis is bounded separately.",
+    "Explicit21 native admission and four-metric fitness are reported separately.",
+    "Explicit21 player replay, solver, manufacturing and production promotion are NOT RUN."
+  ]
+}

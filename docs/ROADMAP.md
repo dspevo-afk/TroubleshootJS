@@ -208,6 +208,19 @@ restored1467/retired; all6 births exited; main1475/default15/general16 unchanged
 No production/GWT/player promotion. Next examine bounded local placement rather
 than repeating a guard change that leaves these selected boards exact.
 [Guard trial and limits](task-evidence/PCB/routed-trace-guard-trial-r1/README.md).
+Private21 candidate2 local passive descent is rejected. Fresh unit3 PASS49.372s
+(961 local/74 vacancy/191 identity assertions) and routes7 PASS200.982s admit all28
+boards and preserve all14 saved15 rows in42 non-time fields. Thirteen selected
+geometries remain exact; seed2 grows11.62% and protected void102600, despite less
+copper. Its modified candidate2 fails routing quality and larger candidate5 wins.
+The local rule worsens the existing global candidate2 score on11/14 seeds; the
+other five candidate score records stay exact. No area/void improvement occurs.
+First unit fixture failure is preserved50 artifacts/26 gates; final28 gates,
+45 reader/12 host canaries, root review and optional source review pass within
+their stated limits. COPY restored1467/retired, all6 driver births exited;
+main1475/default15/general16 unchanged. No production/GWT/player promotion.
+Next audit local/global scoring ownership before choosing another bounded policy.
+[Local descent rejection and limits](task-evidence/PCB/local-pocket-descent-trial-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
