@@ -90,6 +90,15 @@ policy. Internal packing remains open.
 Offline comparison of all126 recorded QA origins (16legal) keeps the same choice
 under a fixed residual-pocket-reduction/40 bonus. No new board or routes run.
 [Offline comparison and limits](task-evidence/PCB/pocket-position-metric-r1/README.md).
+Actual supplied-plan P07/finalization comparison now reproduces informed42's
+accepted geometry exactly. The single QA translation also routes: area shrinks
+3.114%, protected void12.121%, existing quality1.113%, but copper grows2.889% and
+vias45→47. Native1053 assertions/50.4115s, frozen1497 and independent reader pass;
+the original failed compile is retained. Temporary copy restored1466 and removed;
+main1475 stays exact. No packing policy is accepted from this tradeoff, which
+fails the earlier strict copper/via non-regression oracle. Next investigate the
+corridor estimate against actual route freedom, preserving all normal caps.
+[Route tradeoff and limits](task-evidence/PCB/qa-route-comparison-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

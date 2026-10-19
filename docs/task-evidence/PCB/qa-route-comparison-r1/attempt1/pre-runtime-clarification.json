@@ -1,0 +1,10 @@
+{
+  "status": "RECORDED_BEFORE_FIRST_NATIVE_RUN",
+  "owner": "PcbFunctionalGroupingContractTest.reportWhitespace",
+  "existingGuard": "For seed42 and version>=11, measured protected empty rectangle must be strictly less than327600",
+  "treatment": "Retain the existing helper and guard unchanged for both cases. If a translated P07 route succeeds but violates this metric guard, the native diagnostic FAILS; no fallback metric or relaxed threshold is used.",
+  "physicalClassification": "Input placement validation failures and metric/oracle failures are fixture FAIL; only normal typed P07/post-route pipeline rejection can be recorded as physical REJECTED.",
+  "historicalRanking": "Not executed; session rankedPlacementAttempts remains empty. candidateAttemptsSupplied[1] describes one supplied plan only.",
+  "routePhaseTiming": "Existing generator statistics.routeMillis covers P07 begin/slice time, excluding finalization. Root driver records whole native phase including compile/JVM/terminal cleanup; cleanup duration not separately measured.",
+  "oracleOrBudgetChange": false
+}

@@ -1,8 +1,58 @@
-# Current checkpoint: stopped at user usage boundary; silkscreen visual gate pending
+# Current checkpoint: supplied-plan route comparison complete; continuation active
 
-2026-10-19. Published61a5f9501be53849adf14a1dc224c5d924369316 (Record PCB pocket
-placement score tradeoffs) normally pushed and exact origin SHA verified on
-codex/q60-faulted-profile-counts. No main/email; indefinite PCB goal ACTIVE.
+2026-10-19. Published base0f24ffb56b7c71953762766c859ac8f0bf6a16b7 on
+codex/q60-faulted-profile-counts; candidate is the documentation-only route
+comparison packet/checkpoint. No main/email. User resumed indefinite work and
+explicitly revoked five-hour/weekly-window stop conditions. Continue while
+execution is available, until the user stops. No production packing policy accepted.
+
+qa-route-comparison-r1: one informed current15/density14 root42 attempt1
+(internal algorithm0), original then QA-only translated(-300,-30), exact accepted
+layout/routing seeds. Both one-plan P07/finalization physicalSUCCESS; original
+geometry/hash/scalars exactly accepted. Translation area5519502→5347620(-3.114%),
+protected void178200→156600(-12.121%), copper42230→43450(+2.889%), vias45→47,
+quality270256005→267247148(-1.113%). Orders3 each; expansions846167/975936 under
+unchanged1m cap. This is a finite tradeoff, not six-candidate/P05 historical replay
+or general improvement; it fails the earlier strict copper/via non-regression
+oracle. Prior raw-pocket causal sampling remains INCONCLUSIVE.
+
+Native1053 assertions PASS50.4114941s/exit0 including terminal cleanup (not
+separately timed); frozen1497/independent reader PASS, synthetic2positive/88negative
+reader checks PASS. Attempt1 compileFAIL35.285166s (missing common fixture in
+explicit compiler list), no routes; completed failure retained. Only repair adds
+that helper to compile-only list; no source fixture/budget/assertion relaxation.
+Root reviewed source/reader; leaf implementation did not run it. New diagnostic
+GWT/player/electrical/full matrix/general-population qualification NOT RUN.
+Owned copy restored accepted1466, exact inventory verified, then removed with
+private state. Driver creation identities exited; post-route-retirement main1475
+audit PASS. Source/fixture copies remain archived as diagnostic evidence only.
+
+Separate physical-silkscreen renderer remains unpublished/frozen1475: selected7
+nativePASS60.1950475s and actual JDK8/GWT5PASS93.7667267s. Actual visual gate BLOCKED
+by hidden IAB panel; captures/menu input timed out, cleanup7 NOT OBSERVED. One
+resumed visibility check still queued; no new capture/preview/cold generation.
+Native fallback was read-only inventory; skill prohibits ChatGPT-labeled desktop
+UI control. No visible-input or screenshot PASS. Historical owned preview832/
+birth639279991051638337/port8907 is stopped; shared HTTP.sys4 untouched. Owned
+renderer recovery2/private local-state remain; no live task test process or
+route copy remains. Architecture/renderer/registry/new contract and renderer
+evidence stay separate/unpublished. Original five unrelated untracked entries
+and shared tools/resources preserved.
+
+Next: cause-led generic corridor-estimate investigation, with prospective scope
+and independent expectations before any policy trial. A bounded read-only leaf
+is investigating that source question; no heuristic implementation or runtime
+assigned. If actual browser visibility changes, restart an owned preview and
+finish fresh desktop1280/narrow319 real input, save15/saved14 restore, customer
+retest, raw captures and Closeall7 under unchanged90s/640/5s/hold360s limits.
+
+# Previous checkpoint: indefinite continuation resumed; route comparison preparing
+
+2026-10-19. Published0f24ffb56b7c71953762766c859ac8f0bf6a16b7 (Record bounded
+pocket-position comparison and checkpoint) normally pushed and exact origin SHA
+verified on codex/q60-faulted-profile-counts. No main/email. User explicitly
+resumed indefinite continuation and revoked five-hour/weekly-window stop conditions;
+continue until the user stops. Prior pause is superseded.
 Prior raw-pocket measurement complete but both causal results INCONCLUSIVE under
 predeclared caps. Accepted15 geometry/routing remains unchanged. Main renderer
 candidate below differs from accepted production and remains unpublished.
@@ -24,7 +74,7 @@ timed; frozen1475 post-native audit PASS. Renderer/registry only2 prior owners
 change,1464 prior inputs exact; one new permanent contract. Actual JDK8/GWT5 build
 PASS93.7667267s/exit0, post-build1475 audit PASS; native/build driver creations
 verified exited. Compiled execution e3cb67d8b5c87ab1c25e8e794f5f7ed342b194c410e0e9679d9ddf23bd4497f6
-(fileCount1589). Preview832 birth639279991051638337/port8907 is task-owned/running,
+(fileCount1589). Historical preview832 birth639279991051638337/port8907 is stopped,
 state .tools/preview/state.json (historical launch record). IAB2 tab13 served all5 exact fields; cold current15
 root4 reached HOLD in71935ms/601work/max1966ms/55packages. Two screenshot attempts
 timed out; open_in_codex reports queued because this chat is hidden. Navigation
@@ -57,12 +107,27 @@ retains chosen QA across126 existing/16legal origins. Four literal/exhaustive
 geometry fixtures and sealed exact repeat5 PASS; no generator/native/routes run.
 Leaf read-only route feasibility study interrupted at user usage-stop condition;
 no completed result, file change, route experiment or new source copy is claimed.
-Goal continuation stops at that requested boundary. Next unstarted work: establish
-smallest actual route-owner comparison for original versus previously legal QA
-alternative, preserving candidate/work/physical limits; or restart preview/fresh
-actual desktop1280/narrow319 input once visible. Rendering stays unpublished until
-visual gate passes. No weakened90s/640/5s/hold360s. Only completed offline evidence
-and this checkpoint are eligible for the final normal docs-only publication.
+Latest user instruction resumes that source feasibility study and further work.
+One resumed open_in_codex visibility check still reports queued/hidden; no new
+capture, cold generation or preview was attempted. Next: smallest actual route-owner
+comparison for original versus previously legal QA alternative, preserving candidate/
+work/physical limits; or restart preview/fresh actual desktop1280/narrow319 input
+once visible. Rendering stays unpublished until visual gate passes. No weakened
+90s/640/5s/hold360s. Source feasibility completed read-only: selected P07@1 can run
+through a narrow generator-owned supplied-plan adapter and ordinary finalization,
+without replaying six-candidate ranking or P05 history. New qa-route-comparison-r1
+proposal precedes instrumentation. Accepted1466 copy prepared in owned tsj-qa-route
+OS-temp with private local-state; main1475 audit PASS. Leaf owns only copy generator
+adapter/common fixture/two wrapper cases; root owns registry/readers/runtime. One
+ORIGINAL then TRANSLATED JVM (existing60s each), exact accepted original geometry
+required first. Only QA input delta-300,-30; normal P07 caps and physical rules stay.
+Seed-copy typo corrected against immutable accepted row before instrumentation;
+exact routingSeed4493419427463069983 pinned. Reader synthetic2positive/82negative
+checks PASS, not route evidence. No route runtime/native result yet. Native desktop
+fallback made read-only inventory only: ChatGPT-labeled window is prohibited by
+that skill, and only IAB/MCPApps browser control is available. No app input or
+preview restart; resumed visibility receipt records BLOCKED. Next: root final
+source review, unique registration/freeze, ordered native route comparison.
 
 # Previous checkpoint: raw-pocket measurement complete; accepted15 restored
 

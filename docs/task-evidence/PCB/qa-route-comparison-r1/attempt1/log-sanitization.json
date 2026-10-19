@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "file": "native.txt",
+      "rawSha256": "ac0645b15b2c7ba525a54be1220f6eb0693e2ee258e8841e5eae0347a4bdfc41",
+      "sanitizedSha256": "76262ab45d01759a9733cd4128422a204080dade4c5f9f33c9fab58f46d98574",
+      "knownPrefixSubstitutions": 4
+    }
+  ],
+  "scope": "Known repository/owned-copy prefixes only; diagnostics and outcome retained"
+}

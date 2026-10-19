@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 50.4114941,
+  "suiteCount": 2,
+  "partition": "Original then translated; existing60000ms per JVM",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

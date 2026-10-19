@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "file": "native.txt",
+      "rawSha256": "200d6163ac1ce46247cd08c477bafbb969377a1f2ace7feadf4b58d05b3dfc05",
+      "sanitizedSha256": "200d6163ac1ce46247cd08c477bafbb969377a1f2ace7feadf4b58d05b3dfc05",
+      "knownPrefixSubstitutions": 0
+    },
+    {
+      "file": "native-receipt.txt",
+      "rawSha256": "5ce356d4bb0f2f0d610a37d9c953e31d1a9546e5e54cc21675dd38c5a5b38578",
+      "sanitizedSha256": "5ce356d4bb0f2f0d610a37d9c953e31d1a9546e5e54cc21675dd38c5a5b38578",
+      "knownPrefixSubstitutions": 0
+    }
+  ],
+  "scope": "Known repository/owned-copy prefixes only; diagnostics and outcome retained"
+}

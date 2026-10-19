@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_LIST_REPAIR",
+  "failedPhase": "javac production/contract compilation",
+  "failedElapsedSeconds": 35.285166,
+  "failedOriginalOrTranslatedRoutesExecuted": false,
+  "oldRegistrySha256": "e3e4338b8ef53017a49966a8c6f98ba415919ddc75dbfd7b2f50249a62b383f7",
+  "newRegistrySha256": "ab92579eb6a00ff861de7d4ccbde53bcdbc0e3325b2cc5c7a7ec6b605ad9e3a5",
+  "change": "One shared fixture added to existing explicit compile-only source list; two runtime suites unchanged",
+  "generatorOrFixtureChanged": false,
+  "budgetsOrAssertionsRelaxed": false,
+  "failedAttemptPreserved": "attempt1/"
+}

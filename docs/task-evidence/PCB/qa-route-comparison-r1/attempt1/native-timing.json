@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "elapsedSeconds": 35.285166,
+  "suiteCount": 2,
+  "partition": "Original then translated; existing60000ms per JVM",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "CORRECTED_BEFORE_INSTRUMENTATION_OR_RUNTIME",
+  "field": "routingSeed",
+  "incorrectPriorSummaryCopy": "4493419427469983",
+  "exactImmutableAcceptedValue": "4493419427463069983",
+  "fixtureSource": "accepted-case.json",
+  "rootOrAttemptSubstitution": false,
+  "claim": "Preparation metadata correction only; no route experiment ran"
+}

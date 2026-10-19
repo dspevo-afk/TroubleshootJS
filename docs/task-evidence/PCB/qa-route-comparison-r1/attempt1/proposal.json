@@ -1,0 +1,27 @@
+{
+  "status": "PREDECLARED_BEFORE_INSTRUMENTATION_AND_RUNTIME",
+  "baseCommit": "0f24ffb56b7c71953762766c859ac8f0bf6a16b7",
+  "scope": "Native-only supplied-plan P07 route and existing generator finalization comparison; no production heuristic",
+  "root": "42",
+  "version": 15,
+  "density": 14,
+  "requestedPlacementAttempt": 1,
+  "internalPlannerAlgorithm": 0,
+  "layoutSeed": "5526715536693200536",
+  "routingSeed": "4493419427463069983",
+  "originalPlanSha256": "d88e50e98d6c268d3bb3486f6c7c4f1377a4399d9ecf84dc9cfbe26b3a94b73b",
+  "variants": [
+    {"name": "ORIGINAL", "qaX": 1690, "qaY": 1580},
+    {"name": "TRANSLATED", "qaX": 1390, "qaY": 1550, "existingOriginSequence": 6297}
+  ],
+  "adapterOwnership": "Temporary package-private entry inside isolated SeededPcbLayoutGenerator initializes one supplied PlacementCandidate in a fresh medium Session at ordinary P07 stage; existing advance/finalization/selected-border-trim code remains authoritative",
+  "baselineGate": "ORIGINAL must reproduce exact accepted final geometry and area/void/copper/vias/source identity from accepted-case.json before TRANSLATED runs",
+  "translationGate": "Only QA whole footprint/pads translate dx=-300 dy=-30; same pose/package/IDs/net mapping; other53 footprints and all metadata exact; fresh placement validation before routing",
+  "routeLimits": {"policy": "FULLER_TWO_LAYER", "orderings": 3, "totalExpansions": 1000000, "branchExpansions": 100000, "gridCells": 250000, "workQuantum": 32768},
+  "nativePartition": "Two ordered suites, one ORIGINAL JVM then one TRANSLATED JVM, existing60000ms each; one maintained command/compile; first failure stops dependent execution",
+  "failureClassification": "Original rejection/mismatch or unexpected error is FAIL and blocks comparison. A correctly captured typed translated routing/physical rejection is a completed measurement with physical status REJECTED, never physical PASS. No production acceptance follows from either outcome.",
+  "historicalSelectionLimit": "Historical P05 attempts4,2,5 failed and P07 attempts4,3,1 succeeded; this adapter runs only P07 supplied attempt1. It does not replay six-candidate rank/order/selection or compare aggregate route work19/5301842 as per-route work.",
+  "unchanged": "No new origin search, source graph/electrical behavior, normal route limits, physical rules, default/replay/layout version, main renderer1475 or production job90s/640/5s limits change",
+  "requiredEvidence": "Frozen exact copy/adapter/tests/gate owners; exact original outputs; explicit translated outcome; independent reader; per-route work and elapsed; terminal cleanup; archive temporary source; restore1466 and verified delete owned copy; audit main1475",
+  "notRunByThisScope": "GWT/player flows, full native matrix, independent electrical oracles, new-seed/general/manufacturing/modest-host qualification, production heuristic adoption"
+}

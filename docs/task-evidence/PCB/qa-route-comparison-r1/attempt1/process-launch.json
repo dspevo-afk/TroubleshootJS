@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 5832,
+      "startTicks": "639280210178296728",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/qa-route-comparison-r1/run_focused.ps1"
+    },
+    {
+      "pid": 21420,
+      "startTicks": "639280210188703824",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/qa-route-comparison-r1/run_focused.ps1"
+    }
+  ],
+  "ownership": "Captured before native work; isolated accepted source copy"
+}

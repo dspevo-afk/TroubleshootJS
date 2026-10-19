@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "scope": "Independent finite measurement reader only",
+  "originalExactlyAccepted": true,
+  "cases": [
+    {
+      "variant": "ORIGINAL",
+      "physicalStatus": "SUCCESS",
+      "orderings": 3,
+      "expansions": 846167,
+      "routePhaseElapsedMillis": 2191,
+      "geometry": {
+        "parts": 54,
+        "pads": 131,
+        "area": 5519502,
+        "width": 3321,
+        "height": 1662,
+        "largestProtectedEmptyRectangleArea": 178200,
+        "copperManhattanLength": 42230,
+        "vias": 45,
+        "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+        "selectedQualityMilli": 270256005
+      },
+      "rejectionReason": null
+    },
+    {
+      "variant": "TRANSLATED",
+      "physicalStatus": "SUCCESS",
+      "orderings": 3,
+      "expansions": 975936,
+      "routePhaseElapsedMillis": 2417,
+      "geometry": {
+        "parts": 54,
+        "pads": 131,
+        "area": 5347620,
+        "width": 3301,
+        "height": 1620,
+        "largestProtectedEmptyRectangleArea": 156600,
+        "copperManhattanLength": 43450,
+        "vias": 47,
+        "geometrySha256": "bf8115f42645f8ba6b7b3cade02f17a0572fdc50abb0e173d569187dbd9d5bd1",
+        "selectedQualityMilli": 267247148
+      },
+      "rejectionReason": null
+    }
+  ],
+  "productionHeuristicAccepted": false,
+  "limits": "One supplied P07 plan per case; no historical six-candidate ranking/P05 replay, electrical/player/full-matrix/general qualification",
+  "translatedMinusOriginal": {
+    "area": -171882,
+    "largestProtectedEmptyRectangleArea": -21600,
+    "copperManhattanLength": 1220,
+    "vias": 2,
+    "selectedQualityMilli": -3008857
+  },
+  "nativeLogSha256": "200d6163ac1ce46247cd08c477bafbb969377a1f2ace7feadf4b58d05b3dfc05"
+}

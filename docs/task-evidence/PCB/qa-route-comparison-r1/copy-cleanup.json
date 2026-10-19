@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "verifiedExactFilesRemoved": 1466,
+  "ownership": "Unique tsj-qa-route OS-temp copy",
+  "symlinkOrReparseBoundariesCrossed": false,
+  "privateStateRemoved": true,
+  "rendererRecoverySnapshotsPreserved": true
+}

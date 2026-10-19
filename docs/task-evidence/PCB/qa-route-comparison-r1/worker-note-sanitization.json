@@ -1,0 +1,9 @@
+{
+  "rawSha256": "cdac81d4b80c9800287f9a664aa7f3439ef753cdfcdc5a0c2ec5c2a7ec18b7f8",
+  "sanitizedSha256": "dd96945152d9a4ce4d289860e2de8818bd0c3e29093d4ec4d698afc25fe6c7ab",
+  "changes": [
+    "Known private source-copy prefix replaced",
+    "Whole-native-phase versus per-JVM timing scope corrected"
+  ],
+  "productionOrFixtureChanged": false
+}

@@ -1,0 +1,132 @@
+{
+  "status": "FAILED_TERMINAL_ATTEMPT_PRESERVED",
+  "files": [
+    {
+      "file": "PcbQaRouteComparisonContractTest.java",
+      "sha256": "f345b0b4d6dc513440d83c00c4cd38a4ae8a697de499133415845fc46116bfb0"
+    },
+    {
+      "file": "PcbQaRouteOriginalContractTest.java",
+      "sha256": "8e2894aa5fa000c893ed1d182a63b65f56129b36ee878fc6e5048dead18f086b"
+    },
+    {
+      "file": "PcbQaRouteTranslatedContractTest.java",
+      "sha256": "067bec1e394d951204785753ded3e968e5a3fb817b69e80ca9c9b7762474f8b4"
+    },
+    {
+      "file": "README.md",
+      "sha256": "74d6cb90a764d7cae5dcd4b95c62c376d2c8383ee57b8a132af84b3deacb841c"
+    },
+    {
+      "file": "accepted-case.json",
+      "sha256": "1edff7fdcf34759f2b5370088c1d45d74ca40ad7a042ecbe449f11ee38e57a04"
+    },
+    {
+      "file": "check_process_cleanup.ps1",
+      "sha256": "ea20dff0e7c638caf8138b83abd377fcdf9a17315e8e751fdbd01ba063688973"
+    },
+    {
+      "file": "check_reader.py",
+      "sha256": "a18107bbc6dbb21435d1025e5176f1d56f21133af8ff0baf78b1805efafa449f"
+    },
+    {
+      "file": "check_routes.py",
+      "sha256": "8333a4a5856531621f13e18faa62429f59268077cdcb895a3608255ee6af6bc1"
+    },
+    {
+      "file": "copy-inputs.json",
+      "sha256": "1f07599d31460e508f3ee7031679d878842d861340fd0bb3d8b1dd5a3752ac2a"
+    },
+    {
+      "file": "generator-adapter.java",
+      "sha256": "85b9f70ede596d9bbdeefd35dd72c48ce52d11b9cbe53433eecffff60a19664b"
+    },
+    {
+      "file": "log-sanitization.json",
+      "sha256": "22e3001f384760085491715c02a8833c340ef938dbf69354545288454b1f9568"
+    },
+    {
+      "file": "native-input-audit.json",
+      "sha256": "332e2074ea09d03a484de46c74709062d7738cbf9669bf41be7fd237319407af"
+    },
+    {
+      "file": "native-inputs.json",
+      "sha256": "1d858fc2ecc276a7d512e45a6b3af82e59b34810f5893078dfad0c9b13d367fe"
+    },
+    {
+      "file": "native-timing.json",
+      "sha256": "8f7be6795cee7e47340bcbfbd09d52f5e27186fcb49578e8af2e6d4afe7427ff"
+    },
+    {
+      "file": "native.txt",
+      "sha256": "76262ab45d01759a9733cd4128422a204080dade4c5f9f33c9fab58f46d98574"
+    },
+    {
+      "file": "phase_inputs.py",
+      "sha256": "683d7b80421dcd0a0bbc7c847f2453a6f00aebdc48786113d396c324627da9ae"
+    },
+    {
+      "file": "pre-runtime-clarification.json",
+      "sha256": "2609a6397a6b0806f910b3cf7a5e0937eaad529ad53376e9ae08384293361634"
+    },
+    {
+      "file": "prepare.py",
+      "sha256": "935f5f581f3c82d22893ecf94bf45dd5592716571e1af20fc0a504bdef0da12c"
+    },
+    {
+      "file": "prepare_binding.py",
+      "sha256": "e8884a6a9db7cb6e031395ec34c42f9366a944ad66a978191916b8ae23979ff2"
+    },
+    {
+      "file": "process-cleanup.json",
+      "sha256": "741cf5c24c1c40f9753e6ad7d524e0b4f2a71c4f2ed72f6bfc31b7d2c619927f"
+    },
+    {
+      "file": "process-launch.json",
+      "sha256": "0fa6196b032416ddabe5d308ee764f3256b3f7f03d2e0d94498bf6557d9ed9d4"
+    },
+    {
+      "file": "proposal.json",
+      "sha256": "e31f525b2a3393c93d2a068e45ece4f53a918645c6d7578e3bfc24e0279f69b5"
+    },
+    {
+      "file": "reader-canaries.json",
+      "sha256": "f992023e17279698ba0cfd19b424a9dedc463122d85d41a08d5a5a32b3b4ee6c"
+    },
+    {
+      "file": "register.py",
+      "sha256": "bffe98389309ae1bf4b42ebac400a83bec05d28284c1fe7a2ab82697b8546ee2"
+    },
+    {
+      "file": "retire_copy.py",
+      "sha256": "fb654c8f741a2c5873e7d4f14cb010c42702578105751faf0fa4b93e55b73845"
+    },
+    {
+      "file": "run_focused.ps1",
+      "sha256": "680fa24963c54c8f126f13dcca344232883e99d7cd589e85a1dd464b29b344ac"
+    },
+    {
+      "file": "sanitize_logs.py",
+      "sha256": "f7538e72ca9b5ce045bafe0f52726dbad67ed151fe3be6a9a170a9182400c935"
+    },
+    {
+      "file": "seed-copy-correction.json",
+      "sha256": "73a3b684a2e9a5484504e8fa076e89042093fc3cd91992ecf88866a695c19029"
+    },
+    {
+      "file": "source-feasibility.md",
+      "sha256": "15e9a4274546a3f75d3f2204187fc42288fd416ee579252ab0c1c0d001a39696"
+    },
+    {
+      "file": "source-review.md",
+      "sha256": "0441f7014af4cd3bbb041c047ff6fba3b01b867ee181739ca935dadb20bc6689"
+    },
+    {
+      "file": "worker-notes.md",
+      "sha256": "dd96945152d9a4ce4d289860e2de8818bd0c3e29093d4ec4d698afc25fe6c7ab"
+    }
+  ],
+  "timingFromCompletedDriver": true,
+  "cleanupCheckedBeforePreservation": true,
+  "logSanitization": "Prior known-prefix sanitization receipt retained; no result/diagnostic changes"
+}
