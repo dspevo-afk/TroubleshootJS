@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "scope": "Root integrated diff, phase/fitness evidence and resource-integrity audit",
+  "nativeInputs": 1547,
+  "sourceDeltas": 32,
+  "gateOwners": 32,
+  "nativeUnitStatus": "PASS",
+  "nativeRouteStatus": "PASS",
+  "unitElapsedSeconds": 54.9272947,
+  "routesElapsedSeconds": 212.4367532,
+  "fullRouteRows": 28,
+  "oldRowsExact42NonTimeFields": 14,
+  "comparison": "COMPLETE",
+  "strictFitness": "FAIL",
+  "canaryCount": 72,
+  "recordedDriverBirthsExited": 8,
+  "preservedAttempts": [
+    {
+      "name": "attempt1",
+      "nativeStatus": "FAIL",
+      "elapsedSeconds": 51.6887205,
+      "archiveFiles": 71,
+      "outcome": "Native FAIL before loop; advisory fixture lacked required connector",
+      "gateOwnersExact": true,
+      "recordedDriverBirthsExited": 2
+    },
+    {
+      "name": "attempt2",
+      "nativeStatus": "PASS",
+      "elapsedSeconds": 54.1480115,
+      "archiveFiles": 73,
+      "outcome": "Native PASS; prerequisite reader FAIL on PASS-summary grammar; not reused",
+      "gateOwnersExact": true,
+      "recordedDriverBirthsExited": 2
+    }
+  ],
+  "finalPhaseDriverBirthsExited": 4,
+  "copyRetired": true,
+  "main1475Exact": true,
+  "productionPromotion": false,
+  "GwtAndPlayerValidation": "NOT RUN; private native diagnostic only",
+  "limits": "Finite informed source/physical regression scope; no independent runtime, all-seed, manufacturing, live replay/repair or player acceptance proof"
+}

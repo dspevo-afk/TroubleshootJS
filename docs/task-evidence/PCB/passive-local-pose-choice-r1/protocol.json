@@ -1,0 +1,275 @@
+{
+  "schema": "pcb-passive-local-pose-choice-v1",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "cases": [
+    [
+      "-1017",
+      15
+    ],
+    [
+      "-1017",
+      19
+    ],
+    [
+      "-1004",
+      15
+    ],
+    [
+      "-1004",
+      19
+    ],
+    [
+      "-1022",
+      15
+    ],
+    [
+      "-1022",
+      19
+    ],
+    [
+      "0",
+      15
+    ],
+    [
+      "0",
+      19
+    ],
+    [
+      "17",
+      15
+    ],
+    [
+      "17",
+      19
+    ],
+    [
+      "42",
+      15
+    ],
+    [
+      "42",
+      19
+    ],
+    [
+      "1",
+      15
+    ],
+    [
+      "1",
+      19
+    ],
+    [
+      "7",
+      15
+    ],
+    [
+      "7",
+      19
+    ],
+    [
+      "5",
+      15
+    ],
+    [
+      "5",
+      19
+    ],
+    [
+      "14",
+      15
+    ],
+    [
+      "14",
+      19
+    ],
+    [
+      "2",
+      15
+    ],
+    [
+      "2",
+      19
+    ],
+    [
+      "3",
+      15
+    ],
+    [
+      "3",
+      19
+    ],
+    [
+      "4",
+      15
+    ],
+    [
+      "4",
+      19
+    ],
+    [
+      "6",
+      15
+    ],
+    [
+      "6",
+      19
+    ]
+  ],
+  "admissionByVersion": {
+    "15": "RB56_BOARD_NORMAL@1",
+    "19": "RB56_BOARD_NORMAL@5"
+  },
+  "policyByVersion": {
+    "15": 0,
+    "19": 4
+  },
+  "density": 14,
+  "sourcePrefixes": {
+    "old": "PCB_PASSIVE_POSE_SOURCE_CASE ",
+    "trial16": "PCB_PASSIVE_POLICY_INPUT ",
+    "trial19": "PCB_LOCAL_POSE_INPUT "
+  },
+  "trialSourceFields": [
+    "seed",
+    "sourceCanonical15",
+    "sourcePlanSha25619",
+    "graph19",
+    "intent19",
+    "layoutSeed19",
+    "routingSeed19",
+    "eligibleIds",
+    "densityVersion19",
+    "passivePosePolicy19",
+    "admissionIdentity19"
+  ],
+  "rawPrefix": "PCB_LOCAL_POSE_RAW ",
+  "rawFields": [
+    "seed",
+    "attempt",
+    "geometry15",
+    "geometry19",
+    "evaluations15",
+    "evaluations19",
+    "demand15",
+    "demand19",
+    "courtyard15",
+    "courtyard19"
+  ],
+  "rawCases": [
+    [
+      "42",
+      0
+    ],
+    [
+      "42",
+      2
+    ],
+    [
+      "42",
+      3
+    ],
+    [
+      "42",
+      4
+    ],
+    [
+      "42",
+      5
+    ],
+    [
+      "-1022",
+      0
+    ],
+    [
+      "-1022",
+      2
+    ],
+    [
+      "-1022",
+      3
+    ],
+    [
+      "-1022",
+      4
+    ],
+    [
+      "-1022",
+      5
+    ],
+    [
+      "4",
+      0
+    ],
+    [
+      "4",
+      2
+    ],
+    [
+      "4",
+      3
+    ],
+    [
+      "4",
+      4
+    ],
+    [
+      "4",
+      5
+    ]
+  ],
+  "routePrefix": "PCB_LOCAL_POSE_ROUTE ",
+  "posePrefix": "PCB_LOCAL_POSE_POSES ",
+  "poseFields": [
+    "seed",
+    "issuedAdmissionIdentity",
+    "version",
+    "top0",
+    "top90"
+  ],
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "whitespaceFields": [
+    "seed",
+    "version",
+    "parts",
+    "gridUnits",
+    "sampledCells",
+    "packageAccessOccupiedCells",
+    "protectedFreeCells",
+    "protectedFreeFraction",
+    "largestProtectedEmptyRectangle",
+    "scope"
+  ],
+  "whitespaceScope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF",
+  "unitReportOrder": "trial19source14,raw15,old14,trial16source14; actual-loop/policy/admission emit PASS summary lines",
+  "loopPassDetail": "assertions=<positive integer <=1000000> fixtures=5 evaluator=mediumPlace; exact order and no extra text",
+  "priorPassDetail": "Retain source-sized18 policy geometries=7 sequence=63/63 visits=126 and bounded admission assertion-count parsing",
+  "routeReportOrder": "whitespace,pose,route per case; fixed14 roots each15 then19",
+  "timingScope": "Native local two-pose choice; unchanged per-JVM/search/physical limits",
+  "fitnessMetrics": [
+    "area",
+    "largestProtectedEmptyRectangleArea",
+    "copperManhattanLength",
+    "vias"
+  ],
+  "fitness": "Every trial19 metric <= paired15, at least one strict improvement overall, at least one selected canonical TOP90 overall; any missing/failure/no-op rejects",
+  "baselinesSha256": {
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790"
+  },
+  "limits": "Finite informed regressions only; no physical/player/repair/replay/manufacturing promotion from this diagnostic"
+}

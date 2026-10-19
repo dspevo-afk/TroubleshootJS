@@ -1,0 +1,82 @@
+{
+  "unit": [
+    [
+      "PcbLocalPoseChoiceContractTest",
+      "PCB local pose choice contracts "
+    ],
+    [
+      "PcbLocalPoseSourceContractTest",
+      "PCB local pose source contracts "
+    ],
+    [
+      "PcbLocalPoseRawContractTest",
+      "PCB local pose raw42 contracts "
+    ],
+    [
+      "PcbLocalPoseRawContractTestGroup2",
+      "PCB local pose rawneg1022 contracts "
+    ],
+    [
+      "PcbLocalPoseRawContractTestGroup3",
+      "PCB local pose raw4 contracts "
+    ]
+  ],
+  "routes": [
+    [
+      "PcbLocalPoseRouteContractTest",
+      "PCB local pose routeNeg1017 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup2",
+      "PCB local pose routeNeg1004 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup3",
+      "PCB local pose routeNeg1022 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup4",
+      "PCB local pose route0 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup5",
+      "PCB local pose route17 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup6",
+      "PCB local pose route42 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup7",
+      "PCB local pose route1 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup8",
+      "PCB local pose route7 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup9",
+      "PCB local pose route5 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup10",
+      "PCB local pose route14 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup11",
+      "PCB local pose route2 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup12",
+      "PCB local pose route3 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup13",
+      "PCB local pose route4 contracts "
+    ],
+    [
+      "PcbLocalPoseRouteContractTestGroup14",
+      "PCB local pose route6 contracts "
+    ]
+  ]
+}

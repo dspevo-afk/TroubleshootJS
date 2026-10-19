@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 9548,
+      "startTicks": "639280386626094177",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-local-pose-choice-r1/run_native.ps1"
+    },
+    {
+      "pid": 26168,
+      "startTicks": "639280386628542278",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/passive-local-pose-choice-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native local-pose phase; unique source copy"
+}

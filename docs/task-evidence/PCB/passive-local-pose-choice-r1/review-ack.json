@@ -1,0 +1,21 @@
+{
+  "rootReviewedDiffSha256": "46014493063b333b6de5687c3f5ec4c6479d4dffa351c77811f57e9e98980e99",
+  "actualSelectedFootprintFitsUnchanged": true,
+  "conservativeDemandLimitBasisRetained": true,
+  "legacyPoliciesAccountingPreserved": true,
+  "newPolicyReservesEveryPose": true,
+  "actualLoopFixturesUseSelectedImplementation": true,
+  "observerPrimitiveReadOnlyDefaultNullFinallyRestored": true,
+  "admissionNullGuardAndExplicitContractMembershipRestored": true,
+  "unknown9HelperOracleRetainedAlongsideNewUnknown5": true,
+  "scope": "Root inspected integrated core, mapping, pure contracts and actual-loop fixtures; exact adapters/registry/legacy planner reconstruction checked by review_source.py",
+  "runtimeEvidence": "Attempt1 native FAIL missing connector; corrected Java unit9 native PASS54.1480115s but reader FAIL; both archived; fresh reader-corrected freeze unit9/routes14 required",
+  "attempt1ArchiveSha256": "d295cb3eff3a8ba5ca4fdaa108c32ce846b9694dcbdca16629743a0d3f087b80",
+  "fixtureCorrection": "Only add standard unplaced connector with distinct nets to advisory board; actual topology constructor requires it; geometry/pose/score/work/fitness expectations unchanged",
+  "attempt2ArchiveSha256": "66e952958f47d5376f90b7373c39c9070c6617b37f5a7e54490ec45884bb89c6",
+  "priorMarkerParserByteExactExceptNewLoopGrammar": true,
+  "assessorOtherwiseByteExactFromAttempt2": true,
+  "all32JavaAndRegistryDeltasUnchangedFromAttempt2": true,
+  "readerCanaries": 72,
+  "summaryCorrection": "Restore prior policy/admission coverage/count parser, exact bounded loop summary grammar and13 additional negative canaries; no source/raw/physical/route/fitness oracle change"
+}

@@ -1,4 +1,46 @@
-# Current checkpoint: source-sized rotation rejected; local pose choice next
+# Current checkpoint: local pose choice rejected; minimum-area planning next
+
+2026-10-19. Base `7838523bb45fdc733c388eb631a1695fd23365ac` on
+`codex/q60-faulted-profile-counts`. This checkpoint records diagnostic19 for
+normal branch publication. Indefinite continuation remains active; no main/email.
+Production/default15, general16, accepted1475 and the original5 unrelated entries
+remain unchanged.
+
+Local passive pose choice19 is REJECTED. Fresh JDK8 unit9 PASS54.9272947s/exit0;
+routes14 PASS212.4367532s/exit0; full28 artifact fidelity PASS. All14 old15 rows
+reproduce42 non-time fields, and11 trial geometries/metrics remain exact.
+Strict14 fitness FAILs17/42/3: all three grow area, with other metric tradeoffs.
+All three select candidate1. No threshold, seed or numeric cap changed.
+
+The explicit native19/density14/pose4/@5 branch checks TOP0 then TOP90 at each
+existing eligible raw origin. It preserves source sizing, maximum-pose demand
+guard, actual-template fit/score and deterministic ties, counting every pose
+before fit. Legacy0..3 planner reconstructs exactly after removing only the new
+block/dispatch/two gates; the physical core is exact after6 wrapper migrations.
+Final1547 inputs,13 overrides/19 additions and32 gate owners are sealed. Actual
+mediumPlace fixtures pass162 assertions over5 cases. Reader72 synthetic canaries
+PASS; the prior summary parser is exact except the new bounded loop branch.
+Final unit reader verifies14+14+14 source bindings and15 raw comparisons.
+
+Attempt1 preserves71 artifacts: native FAIL51.6887205s (metadata exit2, driver/
+JVM exit1), missing advisory connector before loop execution. Only3 standard
+connector lines changed. Attempt2 preserves73 artifacts: native PASS54.1480115s
+but reader FAIL on summary grammar. The corrected reader restores prior coverage
+checks and adds13 canaries; final phases were run fresh. No native PASS was reused.
+
+Root diff/packet integrity PASS is separate from fitness FAIL. All8 recorded
+process births exited; COPY restored1547->1528->1510->1504->1467 and safely retired.
+Private state is gone; no native/GWT/browser/preview/profile remains. Shared tools
+and unrelated files are preserved. Times include maintained cleanup, not timed
+separately. GWT/player/live owner/replay/repair/full matrix/all-seed/manufacturing
+validation is NOT RUN for the rejected prototype.
+
+Next unstarted measurement: minimum-area-floor activation, after the bounded
+source ownership review now in progress. Publish this rejection normally, verify
+the exact remote SHA, then continue. Evidence:
+`docs/task-evidence/PCB/passive-local-pose-choice-r1/RESULTS.md`.
+
+# Previous checkpoint: source-sized rotation rejected; local pose choice next
 
 2026-10-19. Base/published HEAD e464dbfd0bffc052e7e233ec59e012e86c16f8c2 on
 codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation

@@ -1,0 +1,1211 @@
+--- scripts/verify-current-contracts.ps1
++++ scripts/verify-current-contracts.ps1
+@@ -431,0 +432,19 @@
++        @{ Name = 'PcbLocalPoseChoiceContractTest'; Marker = 'PCB local pose choice contracts ' },
++        @{ Name = 'PcbLocalPoseSourceContractTest'; Marker = 'PCB local pose source contracts ' },
++        @{ Name = 'PcbLocalPoseRawContractTest'; Marker = 'PCB local pose raw42 contracts ' },
++        @{ Name = 'PcbLocalPoseRawContractTestGroup2'; Marker = 'PCB local pose rawneg1022 contracts ' },
++        @{ Name = 'PcbLocalPoseRawContractTestGroup3'; Marker = 'PCB local pose raw4 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTest'; Marker = 'PCB local pose routeNeg1017 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup2'; Marker = 'PCB local pose routeNeg1004 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup3'; Marker = 'PCB local pose routeNeg1022 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup4'; Marker = 'PCB local pose route0 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup5'; Marker = 'PCB local pose route17 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup6'; Marker = 'PCB local pose route42 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup7'; Marker = 'PCB local pose route1 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup8'; Marker = 'PCB local pose route7 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup9'; Marker = 'PCB local pose route5 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup10'; Marker = 'PCB local pose route14 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup11'; Marker = 'PCB local pose route2 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup12'; Marker = 'PCB local pose route3 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup13'; Marker = 'PCB local pose route4 contracts ' },
++        @{ Name = 'PcbLocalPoseRouteContractTestGroup14'; Marker = 'PCB local pose route6 contracts ' },
+--- src/com/lushprojects/circuitjs1/client/GenerationRequest.java
++++ src/com/lushprojects/circuitjs1/client/GenerationRequest.java
+@@ -84,2 +84,4 @@
+-                    Rb56Placement.SOURCE_SIZED_VERSION18)
+-                throw new IllegalArgumentException("RB56 placement17/18 are available only through direct native plans");
++                    Rb56Placement.SOURCE_SIZED_VERSION18 ||
++                    requestedRb56PlacementInterpretationVersion ==
++                    Rb56Placement.LOCAL_POSE_CHOICE_VERSION19)
++                throw new IllegalArgumentException("RB56 placement17/18/19 are available only through direct native plans");
+@@ -264,2 +266,3 @@
+-                version == Rb56Placement.SOURCE_SIZED_VERSION18)
+-            throw new IllegalArgumentException("RB56 placement17/18 are available only through direct native plans");
++                version == Rb56Placement.SOURCE_SIZED_VERSION18 ||
++                version == Rb56Placement.LOCAL_POSE_CHOICE_VERSION19)
++            throw new IllegalArgumentException("RB56 placement17/18/19 are available only through direct native plans");
+--- src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
++++ src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java
+@@ -25,0 +26 @@
++    static final String RB56_LOCAL_POSE_CHOICE_IDENTITY = "RB56_BOARD_NORMAL@5";
+@@ -35,0 +37,5 @@
++    static final String RB56_LOCAL_POSE_CHOICE_POLICY =
++        "policy=4;passives=AXIAL_RESISTOR,AXIAL_DIODE,RADIAL_ELECTROLYTIC_CAPACITOR," +
++        "RADIAL_CERAMIC_CAPACITOR;allowed-poses=TOP/0,TOP/90;sizing=source-TOP/0;" +
++        "selection=candidate1,repeated-control,medium,nonanchor;" +
++        "origins=existing;pose-order=TOP/0,TOP/90;ties=first;work=count-before-fit";
+@@ -42 +48,2 @@
+-        RB56_SOURCE_SIZED(RB56_SOURCE_SIZED_IDENTITY, 40, 60, 7);
++        RB56_SOURCE_SIZED(RB56_SOURCE_SIZED_IDENTITY, 40, 60, 7),
++        RB56_LOCAL_POSE_CHOICE(RB56_LOCAL_POSE_CHOICE_IDENTITY, 40, 60, 7);
+@@ -50 +57,2 @@
+-            this == RB56_SIZING_CONTROL || this == RB56_SOURCE_SIZED; }
++            this == RB56_SIZING_CONTROL || this == RB56_SOURCE_SIZED ||
++            this == RB56_LOCAL_POSE_CHOICE; }
+@@ -60,0 +69,2 @@
++        if (poseVersion == PcbPassivePosePolicy.LOCAL_POSE_CHOICE)
++            return RB56_LOCAL_POSE_CHOICE_IDENTITY;
+@@ -77 +87,5 @@
+-        return RB56_SOURCE_SIZED_IDENTITY;
++        if (poseVersion == PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL)
++            return RB56_SOURCE_SIZED_IDENTITY;
++        if (poseVersion == PcbPassivePosePolicy.LOCAL_POSE_CHOICE)
++            return RB56_LOCAL_POSE_CHOICE_IDENTITY;
++        throw new IllegalArgumentException("Unknown RB56 passive-pose interpretation");
+@@ -92,0 +107 @@
++        if (RB56_LOCAL_POSE_CHOICE_IDENTITY.equals(identity)) return Contract.RB56_LOCAL_POSE_CHOICE;
+@@ -137,0 +153,2 @@
++            else if (contract == Contract.RB56_LOCAL_POSE_CHOICE)
++                field(value, "rb56-passive-pose-policy", RB56_LOCAL_POSE_CHOICE_POLICY);
+--- src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
++++ src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java
+@@ -10,0 +11 @@
++    static final int LOCAL_POSE_CHOICE = 4;
+@@ -16 +17 @@
+-            version == SOURCE_SIZED_ORTHOGONAL;
++            version == SOURCE_SIZED_ORTHOGONAL || version == LOCAL_POSE_CHOICE;
+@@ -70 +71 @@
+-        if (policyVersion == LEGACY || policyVersion == SIZING_ONLY || alternative == null ||
++        if (policyVersion == LEGACY || policyVersion == SIZING_ONLY || policyVersion == LOCAL_POSE_CHOICE || alternative == null ||
+--- src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
++++ src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java
+@@ -74 +74 @@
+-                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL;
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL || passivePosePolicyVersion == PcbPassivePosePolicy.LOCAL_POSE_CHOICE;
+@@ -138 +138,2 @@
+-                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL) &&
++                PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL || constraints.passivePosePolicyVersion ==
++                PcbPassivePosePolicy.LOCAL_POSE_CHOICE) &&
+@@ -644,0 +646,109 @@
++    private static final class LocalPoseSelection {
++        PcbFootprint best;
++        double bestScore=Double.POSITIVE_INFINITY;
++        final LocalPoseEvaluationObserver observer=localPoseEvaluationObserver;
++    }
++    interface LocalPoseEvaluationObserver {
++        void evaluated(int rawX,int rawY,int actualX,int actualY,PcbRotation rotation,
++                boolean fits,double score);
++    }
++    private static LocalPoseEvaluationObserver localPoseEvaluationObserver;
++    static void setLocalPoseEvaluationObserver(LocalPoseEvaluationObserver observer) {
++        localPoseEvaluationObserver=observer;
++    }
++    private static PcbFootprint mediumPlaceLocalPoseChoice(Item item,
++            Vector<PcbFootprint> placed,TopologyPlacementGraph topology,
++            TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
++            long seed,int algorithmCandidate,boolean useCompact,boolean scoreWholeContent,
++            boolean anchor,PcbPlacementConstraints.Anchor side,int preferredX,int baseX,int baseY,
++            int direction,RegionHint hint,Rectangle group,PcbSupportPairPlacement.Pair support,
++            Vector<Point> vacancies,Point vacancyPreference,Rectangle vacancyPocket,
++            int[] evaluations) {
++        LocalPoseSelection selection=new LocalPoseSelection();
++        PcbFootprint source=item.footprint,alternative=item.passivePoseAlternative;
++        int maxRing=anchor?24:20;
++        int margin=itemsMargin(item,constraints);
++        for(int ring=0;ring<=maxRing;ring++) {
++            int step=ring*MEDIUM_STEP;
++            int[] dx=anchor?new int[]{0,0,0,0,0}:new int[]{direction*step,-direction*step,0,0,
++                direction*step,-direction*step};
++            int[] dy=anchor?new int[]{0,step,-step,step*2,-step*2}:
++                new int[]{0,0,step,-step,step,-step};
++            int count=Math.min(dx.length,dy.length);
++            for(int index=0;index<count;index++) {
++                int x=anchor?preferredX:baseX+dx[index];
++                int y=baseY+dy[index];
++                if(ring==0 && index>0 && vacancies!=null && index<=vacancies.size()) {
++                    Point vacancy=vacancies.get(index-1);x=vacancy.x;y=vacancy.y;
++                }
++                if(anchor && side==PcbPlacementConstraints.Anchor.RIGHT)x=preferredX;
++                considerLocalPoseChoice(item,source,placed,topology,board,constraints,outline,
++                    algorithmCandidate,useCompact,scoreWholeContent,hint,group,support,
++                    vacancyPreference,vacancyPocket,margin,x,y,evaluations,selection);
++                considerLocalPoseChoice(item,alternative,placed,topology,board,constraints,outline,
++                    algorithmCandidate,useCompact,scoreWholeContent,hint,group,support,
++                    vacancyPreference,vacancyPocket,margin,x,y,evaluations,selection);
++            }
++        }
++        if(selection.best==null) {
++            int minX=mediumGridBound(source,outline,margin,false,false);
++            int maxX=mediumGridBound(source,outline,margin,false,true);
++            int minY=mediumGridBound(source,outline,margin,true,false);
++            int maxY=mediumGridBound(source,outline,margin,true,true);
++            int columns=Math.max(1,(maxX-minX)/MEDIUM_STEP+1);
++            int rows=Math.max(1,(maxY-minY)/MEDIUM_STEP+1);
++            long total=(long)columns*rows;
++            long hash=item.demand.componentId.hashCode()^(seed*0x9e3779b97f4a7c15L)^
++                (long)(algorithmCandidate+1)*0x632be59bd9b4e019L;
++            int start=(int)((hash^(hash>>>32))&0x7fffffffL);
++            if(total>0)start=(int)(start%total);
++            for(long visit=0;visit<total;visit++) {
++                int index=(int)((start+visit)%total);
++                int row=index/columns,col=index%columns;
++                if((row&1)!=0)col=columns-1-col;
++                int x=minX+col*MEDIUM_STEP,y=minY+row*MEDIUM_STEP;
++                considerLocalPoseChoice(item,source,placed,topology,board,constraints,outline,
++                    algorithmCandidate,useCompact,scoreWholeContent,hint,group,support,
++                    vacancyPreference,vacancyPocket,margin,x,y,evaluations,selection);
++                considerLocalPoseChoice(item,alternative,placed,topology,board,constraints,outline,
++                    algorithmCandidate,useCompact,scoreWholeContent,hint,group,support,
++                    vacancyPreference,vacancyPocket,margin,x,y,evaluations,selection);
++                if(selection.best!=null)break;
++            }
++        }
++        return selection.best;
++    }
++
++    private static void considerLocalPoseChoice(Item item,PcbFootprint template,
++            Vector<PcbFootprint> placed,TopologyPlacementGraph topology,
++            TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
++            int algorithmCandidate,boolean useCompact,boolean scoreWholeContent,
++            RegionHint hint,Rectangle group,PcbSupportPairPlacement.Pair support,
++            Point vacancyPreference,Rectangle vacancyPocket,int margin,int rawX,int rawY,
++            int[] evaluations,LocalPoseSelection selection) {
++        if(evaluations[0]>=MEDIUM_MAX_EVALUATIONS)
++            throw new Rejected("MEDIUM_PLACEMENT_BUDGET");
++        evaluations[0]++;
++        int x=mediumGridOrigin(template,rawX,outline,margin,false);
++        int y=mediumGridOrigin(template,rawY,outline,margin,true);
++        PcbFootprint trial=template.translated(x,y);
++        boolean fitsTrial=fits(trial,outline,placed,-1,constraints);
++        if(!fitsTrial) {
++            if(selection.observer!=null)selection.observer.evaluated(rawX,rawY,x,y,
++                template.getPlacement().getRotation(),false,Double.NaN);
++            return;
++        }
++        double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,
++            useCompact,scoreWholeContent,group);
++        if(support!=null)score+=support.endpointSpan(trial)*3.0;
++        if(vacancyPreference!=null)score+=(Math.abs((long)x-vacancyPreference.x)+
++            Math.abs((long)y-vacancyPreference.y))*.25;
++        if(vacancyPocket!=null)score-=vacancyOverlapArea(envelope(trial,item.demand.accessMargin),
++            vacancyPocket)/(double)MEDIUM_STEP;
++        if(selection.observer!=null)selection.observer.evaluated(rawX,rawY,x,y,
++            template.getPlacement().getRotation(),true,score);
++        if(score<selection.bestScore) {
++            selection.best=trial;
++            selection.bestScore=score;
++        }
++    }
+@@ -717,0 +828,6 @@
++        if (constraints.passivePosePolicyVersion == PcbPassivePosePolicy.LOCAL_POSE_CHOICE &&
++                passivePoseAlternative != null)
++            return mediumPlaceLocalPoseChoice(item,placed,topology,board,constraints,outline,
++                seed,algorithmCandidate,useCompact,scoreWholeContent,anchor,side,preferredX,
++                baseX,baseY,direction,hint,group,support,vacancies,vacancyPreference,
++                vacancyPocket,evaluations);
+--- src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
++++ src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java
+@@ -205 +205,2 @@
+-            contract == MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED;
++            contract == MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED ||
++            contract == MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE;
+--- src/com/lushprojects/circuitjs1/client/Rb56Placement.java
++++ src/com/lushprojects/circuitjs1/client/Rb56Placement.java
+@@ -12 +12,2 @@
+-        SIZING_CONTROL_VERSION17 = 17, SOURCE_SIZED_VERSION18 = 18;
++        SIZING_CONTROL_VERSION17 = 17, SOURCE_SIZED_VERSION18 = 18,
++        LOCAL_POSE_CHOICE_VERSION19 = 19;
+@@ -20 +21 @@
+-            version == SOURCE_SIZED_VERSION18;
++            version == SOURCE_SIZED_VERSION18 || version == LOCAL_POSE_CHOICE_VERSION19;
+@@ -32 +33,2 @@
+-            placementVersion == SOURCE_SIZED_VERSION18 ? 14 : placementVersion;
++            placementVersion == SOURCE_SIZED_VERSION18 ||
++            placementVersion == LOCAL_POSE_CHOICE_VERSION19 ? 14 : placementVersion;
+@@ -41 +43,3 @@
+-            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL : PcbPassivePosePolicy.LEGACY;
++            PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL :
++            placementVersion == LOCAL_POSE_CHOICE_VERSION19 ?
++                PcbPassivePosePolicy.LOCAL_POSE_CHOICE : PcbPassivePosePolicy.LEGACY;
+@@ -48 +52 @@
+-            placementVersion == SOURCE_SIZED_VERSION18 ?
++            placementVersion == SOURCE_SIZED_VERSION18 || placementVersion == LOCAL_POSE_CHOICE_VERSION19 ?
+@@ -97 +101,2 @@
+-            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 || placementVersion == SOURCE_SIZED_VERSION18,
++            placementVersion == REALISM_VERSION || placementVersion == DENSE_VERSION || placementVersion == LARGE_VERSION || placementVersion == SINGLE_GROUP_VERSION || placementVersion == GUARDED_VERSION || placementVersion == NARROW_VERSION || placementVersion == CONNECTED_VERSION || placementVersion == PIN_LOCAL_VERSION || placementVersion == VACANCY_VERSION || placementVersion == ROLE_WIDTHS_VERSION12 || placementVersion == NEAREST_VACANCY_VERSION13 || placementVersion == CURRENT_VERSION || placementVersion == CANVAS_OWNER_VERSION14 || placementVersion == PASSIVE_POSE_VERSION16 || placementVersion == SIZING_CONTROL_VERSION17 ||
++            placementVersion == SOURCE_SIZED_VERSION18 || placementVersion == LOCAL_POSE_CHOICE_VERSION19,
+--- tests/contracts/PcbLocalPoseChoiceContractTest.java
++++ tests/contracts/PcbLocalPoseChoiceContractTest.java
+@@ -0,0 +1,450 @@
++package com.lushprojects.circuitjs1.client;
++
++import java.lang.reflect.Constructor;
++import java.lang.reflect.InvocationTargetException;
++import java.lang.reflect.Method;
++import java.util.TreeMap;
++import java.util.Vector;
++
++/** Actual mediumPlace loop contracts for policy4's paired pose evaluation. */
++public final class PcbLocalPoseChoiceContractTest {
++    private static int assertions;
++    private static final int POLICY = PcbPassivePosePolicy.LOCAL_POSE_CHOICE;
++    private static final int RING_EVALUATIONS = 252;
++    private static final Rectangle LARGE_OUTLINE = new Rectangle(20, 20, 1800, 1800);
++    private static final int ACCESS_MARGIN = 16;
++
++    private PcbLocalPoseChoiceContractTest() { }
++
++    public static void main(String[] args) throws Exception {
++        advisoryOnlyNinetyFit();
++        hashedFallbackOnlyNinetyFit();
++        sourceWinsByWholeContentScore();
++        equalScoreKeepsFirstSourcePose();
++        budgetRejectsBeforeSecondPose();
++        System.out.println("PASS: PCB local pose choice contracts assertions=" +
++            assertions + " fixtures=5 evaluator=mediumPlace");
++    }
++
++    private static void advisoryOnlyNinetyFit() throws Exception {
++        Fixture fixture = advisoryFixture();
++        Vector<Point> vacancies=advisoryVacancies(fixture);
++        check(vacancies.size()>4 && vacancies.get(4).x==240 && vacancies.get(4).y==345,
++            "canonical source-envelope vacancy target supplies the expected raw slot");
++        final boolean[] sourceFailedAtSlot=new boolean[] {false};
++        final boolean[] alternativeFitAtSlot=new boolean[] {false};
++        final boolean[] alternativeScoredAtSlot=new boolean[] {false};
++        PcbPlacementPlanner.setLocalPoseEvaluationObserver(
++            new PcbPlacementPlanner.LocalPoseEvaluationObserver() {
++                public void evaluated(int rawX,int rawY,int actualX,int actualY,
++                        PcbRotation rotation,boolean fits,double score) {
++                    if(rawX!=240 || rawY!=345)return;
++                    if(rotation==PcbRotation.DEG_0 && actualX==240 && actualY==350 &&
++                            !fits && Double.isNaN(score))sourceFailedAtSlot[0]=true;
++                    if(rotation==PcbRotation.DEG_90 && actualX==240 && actualY==350 &&
++                            fits) {
++                        alternativeFitAtSlot[0]=true;
++                        alternativeScoredAtSlot[0]=!Double.isNaN(score) &&
++                            !Double.isInfinite(score);
++                    }
++                }
++            });
++        try {
++            PcbFootprint selected=place(fixture,false,0);
++            check(selected!=null,"advisory fixture returns a real mediumPlace choice");
++        } finally {
++            PcbPlacementPlanner.setLocalPoseEvaluationObserver(null);
++        }
++        check(sourceFailedAtSlot[0],
++            "actual mediumPlace loop evaluates TOP0 and records the advisory-slot fit failure");
++        check(alternativeFitAtSlot[0] && alternativeScoredAtSlot[0],
++            "actual mediumPlace loop fits and scores TOP90 at the same advisory raw slot");
++    }
++
++    private static void hashedFallbackOnlyNinetyFit() throws Exception {
++        Fixture fixture = fallbackFixture();
++        PcbFootprint selected = place(fixture, false, 0);
++        check(selected != null && selected.getPlacement().getRotation() ==
++                PcbRotation.DEG_90,
++            "hashed fallback finds the only fitting canonical TOP90 pose");
++        check(selected.getPlacement().getX()==60 && selected.getPlacement().getY()==5010,
++            "seeded fallback selects the literal first legal paired origin");
++        check(fixture.evaluations[0]==260,
++            "paired fallback visits the first hash escape after 252 ring pose checks");
++    }
++
++    private static void sourceWinsByWholeContentScore() throws Exception {
++        Fixture fixture = sourceWinFixture();
++        final double[] bestScores=new double[] {Double.POSITIVE_INFINITY,
++            Double.POSITIVE_INFINITY};
++        PcbPlacementPlanner.setLocalPoseEvaluationObserver(
++            new PcbPlacementPlanner.LocalPoseEvaluationObserver() {
++                public void evaluated(int rawX,int rawY,int actualX,int actualY,
++                        PcbRotation rotation,boolean fits,double score) {
++                    if(!fits || Double.isNaN(score) || Double.isInfinite(score))return;
++                    int index=rotation==PcbRotation.DEG_0?0:1;
++                    bestScores[index]=Math.min(bestScores[index],score);
++                }
++            });
++        PcbFootprint selected;
++        try {
++            selected=place(fixture,true,0);
++        } finally {
++            PcbPlacementPlanner.setLocalPoseEvaluationObserver(null);
++        }
++        check(selected != null && selected.getPlacement().getRotation() ==
++                PcbRotation.DEG_0,
++            "real whole-content score selects the source pose when it adds less area");
++        double selectedScore=actualScore(selected,fixture,true);
++        check(!Double.isNaN(bestScores[0]) && !Double.isInfinite(bestScores[0]) &&
++                !Double.isNaN(bestScores[1]) && !Double.isInfinite(bestScores[1]),
++            "actual evaluation trace contains legal finite scores for both poses");
++        check(bestScores[0]<bestScores[1],
++            "actual whole-content scores give TOP0 a lower legal score than TOP90");
++        PcbFootprint sourceAtDeclaredOrigin=fixture.source.translated(
++            clampedOrigin(fixture.source,930,fixture),
++            clampedOriginY(fixture.source,1100,fixture));
++        PcbFootprint alternativeAtDeclaredOrigin=fixture.alternative.translated(
++            clampedOrigin(fixture.alternative,930,fixture),
++            clampedOriginY(fixture.alternative,1100,fixture));
++        check(fits(sourceAtDeclaredOrigin,fixture) &&
++                fits(alternativeAtDeclaredOrigin,fixture),
++            "both poses fit at the declared source-win comparison origin");
++        check(actualScore(sourceAtDeclaredOrigin,fixture,true)<
++                actualScore(alternativeAtDeclaredOrigin,fixture,true),
++            "actual scores favor TOP0 at the declared raw origin (930,1100)");
++        check(selectedScore==bestScores[0],
++            "mediumPlace returns the TOP0 trial with the minimum observed actual score");
++        check(fixture.evaluations[0] == RING_EVALUATIONS,
++            "source score winner uses the unchanged paired ring origins");
++    }
++
++    private static void equalScoreKeepsFirstSourcePose() throws Exception {
++        Fixture fixture = remotePackageFixture();
++        PcbFootprint selected = place(fixture, false, 0);
++        // Independent literal first source ring slot for LARGE_OUTLINE is (930,890).
++        Point first=new Point(930,890);
++        check(selected != null && selected.getPlacement().getRotation() ==
++                PcbRotation.DEG_0,
++            "strict score comparison keeps TOP0 when both actual scores tie");
++        check(selected.getPlacement().getX()==first.x &&
++                selected.getPlacement().getY()==first.y,
++            "equal-score tie keeps TOP0 at the first ring origin");
++        check(actualScore(fixture.source.translated(first.x,first.y),fixture,false)==
++                actualScore(fixture.alternative.translated(first.x,first.y),fixture,false),
++            "actual mediumPlacementScore values tie at the expected first origin");
++        check(fixture.evaluations[0] == RING_EVALUATIONS,
++            "equal-score check evaluated TOP0 and TOP90 at every old ring origin");
++    }
++
++    private static void budgetRejectsBeforeSecondPose() throws Exception {
++        Fixture fixture = remotePackageFixture();
++        final Vector<PcbRotation> observed=new Vector<PcbRotation>();
++        PcbPlacementPlanner.setLocalPoseEvaluationObserver(
++            new PcbPlacementPlanner.LocalPoseEvaluationObserver() {
++                public void evaluated(int rawX,int rawY,int actualX,int actualY,
++                        PcbRotation rotation,boolean fits,double score) {
++                    observed.add(rotation);
++                }
++            });
++        try {
++            place(fixture, false, 59999);
++            throw new AssertionError("budget boundary accepted a partial pose pair");
++        } catch (PcbPlacementPlanner.Rejected rejected) {
++            check("MEDIUM_PLACEMENT_BUDGET".equals(rejected.reason),
++                "unavailable second pose rejects with the existing medium budget reason");
++        } finally {
++            PcbPlacementPlanner.setLocalPoseEvaluationObserver(null);
++        }
++        check(fixture.evaluations[0] == 60000,
++            "TOP0 consumes the final evaluation before TOP90 is rejected");
++        check(observed.size()==1 && observed.get(0)==PcbRotation.DEG_0,
++            "budget rejection observes exactly the final TOP0 evaluation and no TOP90 fit/score");
++    }
++
++    private static PcbFootprint place(Fixture fixture, boolean scoreWholeContent,
++            long initialCount) throws Exception {
++        fixture.evaluations[0] = (int)initialCount;
++        Method method = mediumPlaceMethod();
++        try {
++            return (PcbFootprint)method.invoke(null, fixture.item, fixture.placed,
++                fixture.topology, new TreeMap<String,Object>(), fixture.board,
++                fixture.constraints, fixture.outline, 0L, 0, Boolean.FALSE,
++                Boolean.FALSE, Boolean.FALSE, scoreWholeContent, Boolean.FALSE,
++                Boolean.TRUE, Boolean.FALSE, -1, fixture.evaluations);
++        } catch (InvocationTargetException failure) {
++            Throwable cause = failure.getCause();
++            if (cause instanceof RuntimeException) throw (RuntimeException)cause;
++            if (cause instanceof Error) throw (Error)cause;
++            throw failure;
++        }
++    }
++
++    private static boolean fits(PcbFootprint footprint,Fixture fixture) throws Exception {
++        Method method=PcbPlacementPlanner.class.getDeclaredMethod("fits",PcbFootprint.class,
++            Rectangle.class,Vector.class,Integer.TYPE,PcbPlacementConstraints.class);
++        method.setAccessible(true);
++        return ((Boolean)method.invoke(null,footprint,fixture.outline,fixture.placed,-1,
++            fixture.constraints)).booleanValue();
++    }
++
++    private static double actualScore(PcbFootprint footprint,Fixture fixture,
++            boolean scoreWholeContent) throws Exception {
++        Method method=PcbPlacementPlanner.class.getDeclaredMethod("mediumPlacementScore",
++            PcbFootprint.class,Class.forName(PcbPlacementPlanner.class.getName()+"$Item"),
++            Vector.class,TopologyPlacementGraph.class,TroubleshootBoard.class,
++            Class.forName(PcbPlacementPlanner.class.getName()+"$RegionHint"),
++            Rectangle.class,Boolean.TYPE,Boolean.TYPE,Rectangle.class);
++        method.setAccessible(true);
++        return ((Double)method.invoke(null,footprint,fixture.item,fixture.placed,
++            fixture.topology,fixture.board,null,fixture.outline,Boolean.FALSE,
++            Boolean.valueOf(scoreWholeContent),null)).doubleValue();
++    }
++
++    private static int clampedOrigin(PcbFootprint template,int x,Fixture fixture)
++            throws Exception {
++        return gridOrigin(template,x,fixture,false);
++    }
++
++    private static int clampedOriginY(PcbFootprint template,int y,Fixture fixture)
++            throws Exception {
++        return gridOrigin(template,y,fixture,true);
++    }
++
++    private static int gridOrigin(PcbFootprint template,int origin,Fixture fixture,
++            boolean vertical) throws Exception {
++        Method method=PcbPlacementPlanner.class.getDeclaredMethod("mediumGridOrigin",
++            PcbFootprint.class,Integer.TYPE,Rectangle.class,Integer.TYPE,Boolean.TYPE);
++        method.setAccessible(true);
++        return ((Integer)method.invoke(null,template,origin,fixture.outline,
++            fixture.constraints.get(template.getPlacement().getComponentId()).accessMargin,
++            Boolean.valueOf(vertical))).intValue();
++    }
++
++    private static Method mediumPlaceMethod() throws Exception {
++        Class<?> itemType = Class.forName(PcbPlacementPlanner.class.getName() + "$Item");
++        Method method = PcbPlacementPlanner.class.getDeclaredMethod("mediumPlace",
++            itemType, Vector.class, TopologyPlacementGraph.class, TreeMap.class,
++            TroubleshootBoard.class, PcbPlacementConstraints.class, Rectangle.class,
++            Long.TYPE, Integer.TYPE, Boolean.TYPE, Boolean.TYPE, Boolean.TYPE,
++            Boolean.TYPE, Boolean.TYPE, Boolean.TYPE, Boolean.TYPE, Integer.TYPE,
++            int[].class);
++        method.setAccessible(true);
++        return method;
++    }
++
++    private static Fixture remotePackageFixture() throws Exception {
++        BoardBuilder builder = new BoardBuilder("LOCAL_POSE_REMOTE_SCORE");
++        BoardComponent target = builder.component("R", "OTHER", PhysicalPackages.AXIAL_RESISTOR,
++            "PRIMARY", "candidate", ACCESS_MARGIN);
++        builder.terminals(target, "R-N1", "R-N2");
++        BoardComponent remote = builder.component("CTRL", "CONTROL",
++            PhysicalPackages.E04_DECISION_CONTROL_5, "SECONDARY", "remote");
++        builder.terminals(remote, "CTRL-N1", "CTRL-N2", "CTRL-N3", "CTRL-N4", "CTRL-N5");
++        BoardComponent connector = builder.component("J", "CONNECTOR",
++            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, "PRIMARY", "connector");
++        builder.terminals(connector, "J-N1", "J-N2");
++        Fixture fixture = builder.finish(new PcbPlacementConstraints.Barrier(
++            "PRIMARY", "SECONDARY", 80), LARGE_OUTLINE, "R");
++        fixture.placed.add(PcbFootprint.fromPhysicalPackage(remote,
++            new PcbPackagePose(790, 200, PcbRotation.DEG_0, PcbBoardSide.TOP),
++            remote.getPhysicalPackage().getGeometry()));
++        return fixture;
++    }
++
++    private static Fixture sourceWinFixture() throws Exception {
++        BoardBuilder builder=new BoardBuilder("LOCAL_POSE_SOURCE_SCORE");
++        BoardComponent target=builder.component("R","OTHER",PhysicalPackages.AXIAL_RESISTOR,
++            "PRIMARY","candidate");
++        builder.terminals(target,"R-N1","R-N2");
++        BoardComponent connector=builder.component("J","CONNECTOR",
++            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,"PRIMARY","connector");
++        builder.terminals(connector,"J-N1","J-N2");
++        Vector<BoardComponent> peers=new Vector<BoardComponent>();
++        int[] x=new int[] {60,1400};
++        for(int index=0;index<x.length;index++) {
++            String id="C"+index;
++            BoardComponent peer=builder.component(id,"OTHER",
++                PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,"SECONDARY","remote");
++            builder.terminals(peer,id+"-N1",id+"-N2");
++            peers.add(peer);
++        }
++        Fixture fixture=builder.finish(new PcbPlacementConstraints.Barrier(
++            "PRIMARY","SECONDARY",80),new Rectangle(20,20,1600,1800),"R");
++        for(int index=0;index<peers.size();index++)
++            fixture.placed.add(PcbFootprint.fromPhysicalPackage(peers.get(index),
++                new PcbPackagePose(x[index],800,PcbRotation.DEG_0,PcbBoardSide.TOP),
++                peers.get(index).getPhysicalPackage().getGeometry()));
++        checkPeerEnvelopesAreLegal(fixture);
++        return fixture;
++    }
++
++    private static Fixture fallbackFixture() throws Exception {
++        Rectangle outline = new Rectangle(0, 0, 220, 6000);
++        BoardBuilder builder = new BoardBuilder("LOCAL_POSE_HASHED_FALLBACK");
++        BoardComponent target = builder.component("R", "OTHER", PhysicalPackages.AXIAL_RESISTOR,
++            "PRIMARY", "candidate", ACCESS_MARGIN);
++        builder.terminals(target, "R-N1", "R-N2");
++        BoardComponent connector = builder.component("J", "CONNECTOR",
++            PhysicalPackages.THROUGH_HOLE_CONNECTOR_2, "PRIMARY", "connector", ACCESS_MARGIN);
++        builder.terminals(connector, "J-N1", "J-N2");
++        Vector<BoardComponent> caps = new Vector<BoardComponent>();
++        for (int index = 0; index < 16; index++) {
++            String id = "C" + index;
++            BoardComponent cap = builder.component(id, "OTHER",
++                PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR, "PRIMARY", "cap", ACCESS_MARGIN);
++            builder.terminals(cap, id + "-N1", id + "-N2");
++            caps.add(cap);
++        }
++        Fixture fixture = builder.finish(null, outline, "R");
++        for (int index = 0; index < caps.size(); index++)
++            fixture.placed.add(PcbFootprint.fromPhysicalPackage(caps.get(index),
++                new PcbPackagePose(30, 1800 + 200 * index, PcbRotation.DEG_0,
++                    PcbBoardSide.TOP), caps.get(index).getPhysicalPackage().getGeometry()));
++        checkPeerEnvelopesAreLegal(fixture);
++        return fixture;
++    }
++
++    private static Fixture advisoryFixture() throws Exception {
++        Rectangle outline=new Rectangle(20,20,500,780);
++        BoardBuilder builder=new BoardBuilder("LOCAL_POSE_ADVISORY");
++        BoardComponent target=builder.component("R","OTHER",PhysicalPackages.AXIAL_RESISTOR,
++            "PRIMARY","candidate");
++        builder.terminals(target,"R-N1","R-N2");
++        BoardComponent blocker=builder.component("B","OTHER",PhysicalPackages.AXIAL_RESISTOR,
++            "PRIMARY","blocker");
++        builder.terminals(blocker,"B-N1","B-N2");
++        Fixture fixture=builder.finish(null,outline,"R");
++        fixture.placed.add(PcbFootprint.fromPhysicalPackage(blocker,
++            new PcbPackagePose(355,500,PcbRotation.DEG_90,PcbBoardSide.TOP),
++            blocker.getPhysicalPackage().getGeometryVariant("SPAN_220").getGeometry()));
++        checkPeerEnvelopesAreLegal(fixture);
++        return fixture;
++    }
++
++    private static Vector<Point> advisoryVacancies(Fixture fixture) {
++        Rectangle allowed=PcbPlacementPlanner.vacancyDomainBox(fixture.source,fixture.placed,
++            fixture.constraints,fixture.outline);
++        check(allowed!=null,"advisory fixture has a real source-domain vacancy box");
++        Vector<Rectangle> obstacles=new Vector<Rectangle>();
++        for(PcbFootprint peer:fixture.placed)
++            obstacles.add(PcbPlacementPlanner.envelope(peer,
++                fixture.constraints.get(peer.getPlacement().getComponentId()).accessMargin));
++        return PcbVacancyTargets.targets(allowed,obstacles,
++            PcbPlacementPlanner.envelope(fixture.source,
++                fixture.constraints.get(fixture.source.getPlacement().getComponentId()).accessMargin),
++            new Point(fixture.source.getPlacement().getX(),
++                fixture.source.getPlacement().getY()));
++    }
++
++    private static final class Fixture {
++        final TroubleshootBoard board;
++        final PcbPlacementConstraints constraints;
++        final Object item;
++        final PcbFootprint source;
++        final PcbFootprint alternative;
++        final TopologyPlacementGraph topology;
++        final Vector<PcbFootprint> placed = new Vector<PcbFootprint>();
++        final Rectangle outline;
++        final int[] evaluations = new int[] {0};
++
++        Fixture(TroubleshootBoard board, PcbPlacementConstraints constraints,
++                Object item,PcbFootprint source,PcbFootprint alternative,
++                TopologyPlacementGraph topology, Rectangle outline) {
++            this.board = board;
++            this.constraints = constraints;
++            this.item = item;
++            this.source = source;
++            this.alternative = alternative;
++            this.topology = topology;
++            this.outline = outline;
++        }
++    }
++
++    private static final class BoardBuilder {
++        final TroubleshootBoard board;
++        final Vector<PcbPlacementConstraints.Part> declarations =
++            new Vector<PcbPlacementConstraints.Part>();
++        BoardBuilder(String id) { board = new TroubleshootBoard(id); }
++
++        BoardComponent component(String id, String type, PhysicalPackage physicalPackage,
++                String domain, String region) {
++            return component(id,type,physicalPackage,domain,region,20);
++        }
++
++        BoardComponent component(String id, String type, PhysicalPackage physicalPackage,
++                String domain, String region,int accessMargin) {
++            BoardComponent component = new BoardComponent(id, type, physicalPackage, id);
++            board.addComponent(component);
++            declarations.add(new PcbPlacementConstraints.Part(id, region, region, domain,
++                PcbPlacementConstraints.Anchor.NONE, accessMargin));
++            return component;
++        }
++
++        void terminals(BoardComponent component, String... netIds) {
++            Vector<String> terminalIds = component.getPhysicalPackage().getTerminalIds();
++            if (terminalIds.size() != netIds.length)
++                throw new IllegalArgumentException("Fixture terminal count differs from package");
++            for (int index = 0; index < terminalIds.size(); index++) {
++                String netId = netIds[index];
++                board.addNet(new BoardNet(netId));
++                String terminal = terminalIds.get(index);
++                board.addPad(new BoardPad(component.getId() + "." + terminal,
++                    component.getId(), terminal, netId));
++            }
++        }
++
++        Fixture finish(PcbPlacementConstraints.Barrier barrier, Rectangle outline,
++                String targetId) throws Exception {
++            Vector<PcbPlacementConstraints.Barrier> barriers =
++                new Vector<PcbPlacementConstraints.Barrier>();
++            if (barrier != null) barriers.add(barrier);
++            PcbPlacementConstraints constraints = new PcbPlacementConstraints(declarations,
++                barriers, PcbCopperLayer.BOTTOM, MediumBoardPhysicalPolicy.ID,
++                MediumBoardPhysicalPolicy.VERSION, 14, true,
++                PcbTraceWidthProfile.ROLE_WIDTHS, POLICY);
++            board.setPlacementConstraints(constraints);
++            BoardComponent target = board.getComponent(targetId);
++            PcbFootprint source = PcbFootprint.fromPhysicalPackage(target,
++                new PcbPackagePose(0, 0, PcbRotation.DEG_0, PcbBoardSide.TOP),
++                PhysicalPackages.AXIAL_RESISTOR.getGeometryVariant("SPAN_220").getGeometry());
++            PcbPlacementConstraints.Part demand = constraints.get(targetId);
++            Class<?> itemType = Class.forName(PcbPlacementPlanner.class.getName() + "$Item");
++            Constructor<?> constructor = itemType.getDeclaredConstructor(PcbFootprint.class,
++                PcbPlacementConstraints.Part.class, BoardComponent.class, Integer.TYPE,
++                Boolean.TYPE);
++            constructor.setAccessible(true);
++            Object item = constructor.newInstance(source, demand, target, POLICY, Boolean.TRUE);
++            PcbFootprint alternative=PcbPassivePosePolicy.alternativeFor(target,source,
++                POLICY,true);
++            TopologyPlacementGraph topology = new TopologyPlacementGraph(board);
++            return new Fixture(board,constraints,item,source,alternative,topology,outline);
++        }
++    }
++
++    private static void checkPeerEnvelopesAreLegal(Fixture fixture) {
++        for(int index=0;index<fixture.placed.size();index++) {
++            PcbFootprint peer=fixture.placed.get(index);
++            PcbPlacementConstraints.Part demand=fixture.constraints.get(
++                peer.getPlacement().getComponentId());
++            Rectangle envelope=PcbPlacementPlanner.envelope(peer,demand.accessMargin);
++            check(envelope.x>=fixture.outline.x+10 && envelope.y>=fixture.outline.y+10 &&
++                    envelope.x+envelope.width<=fixture.outline.x+fixture.outline.width-10 &&
++                    envelope.y+envelope.height<=fixture.outline.y+fixture.outline.height-10,
++                "fallback peer envelope lies inside the board outline");
++            for(int previous=0;previous<index;previous++) {
++                PcbFootprint other=fixture.placed.get(previous);
++                PcbPlacementConstraints.Part otherDemand=fixture.constraints.get(
++                    other.getPlacement().getComponentId());
++                check(!envelope.intersects(PcbPlacementPlanner.envelope(other,
++                        otherDemand.accessMargin)),
++                    "fallback peer envelopes do not overlap");
++            }
++        }
++    }
++
++    private static void check(boolean value, String message) {
++        assertions++;
++        if (!value) throw new AssertionError(message);
++    }
++}
+--- tests/contracts/PcbLocalPoseRawContractTest.java
++++ tests/contracts/PcbLocalPoseRawContractTest.java
+@@ -0,0 +1,30 @@
++package com.lushprojects.circuitjs1.client;
++/** Literal old raw baseline and control equality; no routing. */
++public final class PcbLocalPoseRawContractTest {
++    public static void main(String[] args) { run(42L,"PCB local pose raw42 contracts "); }
++    static void run(long seed,String marker) {
++        if(seed!=42L && seed!=-1022L && seed!=4L)throw new AssertionError("Fixed raw roots only");
++        Rb56Plan saved=PcbPassivePoseTrialSourceContractTest.bound(seed,15),control=PcbLocalPoseSourceContractTest.bound(seed);
++        TroubleshootBoard oldBoard=saved.board(),newBoard=control.board();
++        String oldGraph=PcbCanvasBoundaryContractTest.liveGraphSha256(oldBoard);
++        String newGraph=PcbCanvasBoundaryContractTest.liveGraphSha256(newBoard);
++        PcbLocalPoseSourceContractTest.check(oldGraph.equals(newGraph),"paired raw source graphs exact");
++        for(int attempt:new int[]{0,2,3,4,5}) {
++            PcbPlacementPlanner planner=new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry());
++            PcbPlacementPlanner.Plan a=planner.plan(oldBoard,oldBoard.getPlacementConstraints(),saved.layoutSeed,attempt);
++            PcbPlacementPlanner.Plan b=planner.plan(newBoard,newBoard.getPlacementConstraints(),control.layoutSeed,attempt);
++            String first=PlayerSessionFingerprint.of(a.materialize().geometryFingerprint());
++            String second=PlayerSessionFingerprint.of(b.materialize().geometryFingerprint());
++            PcbLocalPoseSourceContractTest.check(first.equals(second) && a.evaluations==b.evaluations &&
++                a.demandArea==b.demandArea && a.courtyardArea==b.courtyardArea && a.candidate==b.candidate,
++                "untouched candidate geometry/work/demand exact");
++            System.out.println("PCB_LOCAL_POSE_RAW {\"seed\":\""+seed+"\",\"attempt\":"+attempt+
++                ",\"geometry15\":\""+first+"\",\"geometry19\":\""+second+"\",\"evaluations15\":"+a.evaluations+
++                ",\"evaluations19\":"+b.evaluations+",\"demand15\":"+a.demandArea+",\"demand19\":"+b.demandArea+
++                ",\"courtyard15\":"+a.courtyardArea+",\"courtyard19\":"+b.courtyardArea+"}");
++        }
++        PcbLocalPoseSourceContractTest.check(oldGraph.equals(PcbCanvasBoundaryContractTest.liveGraphSha256(oldBoard)) &&
++            newGraph.equals(PcbCanvasBoundaryContractTest.liveGraphSha256(newBoard)),"raw generation leaves source graphs unchanged");
++        System.out.println("PASS: "+marker+"rows=5 routes=0");
++    }
++}
+--- tests/contracts/PcbLocalPoseRawContractTestGroup2.java
++++ tests/contracts/PcbLocalPoseRawContractTestGroup2.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRawContractTestGroup2 { public static void main(String[] args) { PcbLocalPoseRawContractTest.run(-1022L,"PCB local pose rawneg1022 contracts "); } }
+--- tests/contracts/PcbLocalPoseRawContractTestGroup3.java
++++ tests/contracts/PcbLocalPoseRawContractTestGroup3.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRawContractTestGroup3 { public static void main(String[] args) { PcbLocalPoseRawContractTest.run(4L,"PCB local pose raw4 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTest.java
++++ tests/contracts/PcbLocalPoseRouteContractTest.java
+@@ -0,0 +1,39 @@
++package com.lushprojects.circuitjs1.client;
++import java.util.TreeSet;
++/** Fixed14 normal generation pairs; actual unchanged physical and whitespace core. */
++public final class PcbLocalPoseRouteContractTest {
++    public static void main(String[] args) { run(-1017L,"PCB local pose routeNeg1017 contracts "); }
++    static void run(long seed,String marker) {
++        boolean fixed=false;for(long declared:PcbPassivePoseTrialSourceContractTest.SEEDS)if(declared==seed)fixed=true;
++        if(!fixed)throw new AssertionError("Fixed informed regression roots only");
++        for(int version:new int[]{15,19})observe(seed,version);
++        System.out.println("PASS: "+marker+"roots=1 rows=2");
++    }
++    private static void observe(long seed,int version) {
++        Rb56Plan plan=version==19?PcbLocalPoseSourceContractTest.bound(seed):PcbPassivePoseTrialSourceContractTest.bound(seed,15);
++        TroubleshootBoard board=plan.board();
++        PcbPostSelectionEdgeTrimContractTest.PosePolicyObservation observed=PcbPostSelectionEdgeTrimContractTest.routePosePolicy(seed,version,plan,board,
++            PcbPostSelectionEdgeTrimContractTest.sourceIntentShaForPosePolicy(plan),PcbCanvasBoundaryContractTest.sourcePlanSha256(plan),PcbCanvasBoundaryContractTest.liveGraphSha256(board));
++        String prefix="PCB_EDGE_TRIM_CASE ";
++        if(observed==null || observed.layout==null || !observed.json.startsWith(prefix))throw new AssertionError("Missing actual routed observation");
++        String expected=version==15?"RB56_BOARD_NORMAL@1":"RB56_BOARD_NORMAL@5";
++        if(!observed.admissionIdentity.equals(expected))throw new AssertionError("Wrong actual admission identity");
++        TreeSet<String> zero=new TreeSet<String>(),turned=new TreeSet<String>();
++        for(PcbComponentPlacement part:observed.layout.getComponents()) {
++            if(!PcbPassivePoseTrialSourceContractTest.passive(part.getPhysicalPackage()))continue;
++            if(part.getMountingSide()!=PcbBoardSide.TOP)throw new AssertionError("Foreign passive side");
++            if(part.getRotation()==PcbRotation.DEG_0)zero.add(part.getComponentId());
++            else if(version==19 && part.getRotation()==PcbRotation.DEG_90)turned.add(part.getComponentId());
++            else throw new AssertionError("Unsupported passive pose");
++        }
++        TreeSet<String> all=new TreeSet<String>(zero);all.addAll(turned);
++        if(!all.equals(PcbPassivePoseTrialSourceContractTest.eligible(board)))throw new AssertionError("Pose census lost IDs");
++        StringBuilder json=new StringBuilder("{");
++        PcbPassivePoseTrialSourceContractTest.field(json,"seed",Long.toString(seed));
++        PcbPassivePoseTrialSourceContractTest.field(json,"issuedAdmissionIdentity",observed.admissionIdentity);
++        json.append(",\"version\":").append(version).append(",\"top0\":").append(PcbPassivePoseTrialSourceContractTest.array(zero));
++        json.append(",\"top90\":").append(PcbPassivePoseTrialSourceContractTest.array(turned)).append('}');
++        System.out.println("PCB_LOCAL_POSE_POSES "+json);
++        System.out.println("PCB_LOCAL_POSE_ROUTE "+observed.json.substring(prefix.length()));
++    }
++}
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup10.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup10.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup10 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(14L,"PCB local pose route14 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup11.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup11.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup11 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(2L,"PCB local pose route2 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup12.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup12.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup12 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(3L,"PCB local pose route3 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup13.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup13.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup13 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(4L,"PCB local pose route4 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup14.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup14.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup14 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(6L,"PCB local pose route6 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup2.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup2.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup2 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(-1004L,"PCB local pose routeNeg1004 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup3.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup3.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup3 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(-1022L,"PCB local pose routeNeg1022 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup4.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup4.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup4 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(0L,"PCB local pose route0 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup5.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup5.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup5 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(17L,"PCB local pose route17 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup6.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup6.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup6 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(42L,"PCB local pose route42 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup7.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup7.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup7 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(1L,"PCB local pose route1 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup8.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup8.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup8 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(7L,"PCB local pose route7 contracts "); } }
+--- tests/contracts/PcbLocalPoseRouteContractTestGroup9.java
++++ tests/contracts/PcbLocalPoseRouteContractTestGroup9.java
+@@ -0,0 +1,2 @@
++package com.lushprojects.circuitjs1.client;
++public final class PcbLocalPoseRouteContractTestGroup9 { public static void main(String[] args) { PcbLocalPoseRouteContractTest.run(5L,"PCB local pose route5 contracts "); } }
+--- tests/contracts/PcbLocalPoseSourceContractTest.java
++++ tests/contracts/PcbLocalPoseSourceContractTest.java
+@@ -0,0 +1,66 @@
++package com.lushprojects.circuitjs1.client;
++/** Explicit native-only local-pose source; no routed outcome assumptions. */
++public final class PcbLocalPoseSourceContractTest {
++    private static int assertions;
++    public static void main(String[] args) {
++        check(Rb56Placement.CURRENT_VERSION==15 && SeededPcbLayoutGenerator.CURRENT_VERSION==16,
++            "default epochs unchanged");
++        for(long seed:PcbPassivePoseTrialSourceContractTest.SEEDS)emit(seed);
++        boolean rejected=false;
++        try { Rb56Plan.resolve(42L,20); } catch(IllegalArgumentException expected) { rejected=true; }
++        check(rejected,"unsupported interpretation20 rejects");
++        System.out.println("PASS: PCB local pose source contracts roots=14 assertions="+assertions);
++    }
++    static Rb56Plan bound(long seed) {
++        PcbPassivePoseSourceContractTest.Expected expected=PcbPassivePoseSourceContractTest.expected(seed);
++        Rb56Plan saved=PcbPassivePoseSourceContractTest.boundPlan(expected);
++        Rb56Plan control=Rb56Plan.resolve(seed,19);
++        String canonical=saved.canonical(),epoch="placement-interpretation=15;";
++        check(canonical.indexOf(epoch)>=0 && canonical.indexOf(epoch)==canonical.lastIndexOf(epoch),
++            "one declared saved15 epoch");
++        check(control.canonical().equals(canonical.replace(epoch,"placement-interpretation=19;")),
++            "control source differs only by explicit interpretation");
++        TroubleshootBoard board=control.board();
++        PcbCanvasBoundaryContractTest.verifyBoardAgainstPlan(control,board);
++        check(PcbCanvasBoundaryContractTest.liveGraphSha256(board).equals(expected.graph),"literal graph unchanged");
++        check(PcbPostSelectionEdgeTrimContractTest.sourceIntentShaForPosePolicy(control).equals(expected.intent),
++            "literal source intent unchanged");
++        check(Long.toString(control.layoutSeed).equals(expected.layoutSeed) &&
++            Long.toString(control.routingSeed).equals(expected.routingSeed),"exact signed-long seeds unchanged");
++        check(board.getComponentIds().size()==expected.parts && board.getPadIds().size()==expected.pads,
++            "literal population unchanged");
++        PcbPlacementConstraints constraints=board.getPlacementConstraints();
++        check(constraints.placementDensityVersion==14 && constraints.passivePosePolicyVersion==4 &&
++            constraints.requiresTwoLayerRouting,"separate density14 policy4 with P07 routing");
++        check(constraints.getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS &&
++            MediumBoardPhysicalPolicy.ID.equals(constraints.getPhysicalPolicyId()) &&
++            constraints.getPhysicalPolicyVersion()==MediumBoardPhysicalPolicy.VERSION,
++            "unchanged role widths and MEDIUM_BOARD physical policy");
++        check(MediumBoardNormalAdmission.rb56IdentityFor(constraints).equals("RB56_BOARD_NORMAL@5") &&
++            MediumBoardNormalAdmission.rb56IdentityForPlacement(19).equals("RB56_BOARD_NORMAL@5"),
++            "explicit trial identity5");
++        check(PcbPassivePoseTrialSourceContractTest.eligible(board).equals(
++            PcbPassivePoseTrialSourceContractTest.eligible(saved.board())),"passive inventory unchanged");
++        return control;
++    }
++    private static void emit(long seed) {
++        Rb56Plan saved=PcbPassivePoseTrialSourceContractTest.bound(seed,15),control=bound(seed);
++        TroubleshootBoard board=control.board();
++        StringBuilder json=new StringBuilder("{");
++        PcbPassivePoseTrialSourceContractTest.field(json,"seed",Long.toString(seed));
++        PcbPassivePoseTrialSourceContractTest.field(json,"sourceCanonical15",saved.canonical());
++        PcbPassivePoseTrialSourceContractTest.field(json,"sourcePlanSha25619",PcbCanvasBoundaryContractTest.sourcePlanSha256(control));
++        PcbPassivePoseTrialSourceContractTest.field(json,"graph19",PcbCanvasBoundaryContractTest.liveGraphSha256(board));
++        PcbPassivePoseTrialSourceContractTest.field(json,"intent19",PcbPostSelectionEdgeTrimContractTest.sourceIntentShaForPosePolicy(control));
++        PcbPassivePoseTrialSourceContractTest.field(json,"layoutSeed19",Long.toString(control.layoutSeed));
++        PcbPassivePoseTrialSourceContractTest.field(json,"routingSeed19",Long.toString(control.routingSeed));
++        json.append(",\"eligibleIds\":").append(PcbPassivePoseTrialSourceContractTest.array(
++            PcbPassivePoseTrialSourceContractTest.eligible(board)));
++        json.append(",\"densityVersion19\":").append(board.getPlacementConstraints().placementDensityVersion);
++        json.append(",\"passivePosePolicy19\":").append(board.getPlacementConstraints().passivePosePolicyVersion);
++        PcbPassivePoseTrialSourceContractTest.field(json,"admissionIdentity19",MediumBoardNormalAdmission.rb56IdentityFor(board.getPlacementConstraints()));
++        json.append('}');
++        System.out.println("PCB_LOCAL_POSE_INPUT "+json);
++    }
++    static void check(boolean value,String message) { assertions++;if(!value)throw new AssertionError(message); }
++}
+--- tests/contracts/PcbPassivePoseAdmissionContractTest.java
++++ tests/contracts/PcbPassivePoseAdmissionContractTest.java
+@@ -37,2 +37,4 @@
+-                Rb56Placement.supportsVersion(18) && !Rb56Placement.supportsVersion(19),
+-            "placement17 control and direct-native placement18 are explicit; 19 is unknown");
++                Rb56Placement.supportsVersion(18) &&
++                Rb56Placement.LOCAL_POSE_CHOICE_VERSION19 == 19 &&
++                Rb56Placement.supportsVersion(19) && !Rb56Placement.supportsVersion(20),
++            "direct-native placements17/18/19 are explicit; placement20 remains unknown");
+@@ -47,0 +50,3 @@
++        require(Rb56Placement.passivePosePolicyVersion(19) ==
++                PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            "direct-native version19 maps to local pose-choice policy4");
+@@ -51,2 +56,3 @@
+-                Rb56Placement.densityVersion(18) == 14,
+-            "current15 and explicit16/17/18 retain density14");
++                Rb56Placement.densityVersion(18) == 14 &&
++                Rb56Placement.densityVersion(19) == 14,
++            "current15 and explicit16/17/18/19 retain density14");
+@@ -64,0 +71,3 @@
++        require("RB56_BOARD_NORMAL@5".equals(
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(19)),
++            "placement19 selects the literal local-choice admission identity");
+@@ -80,0 +90,4 @@
++        require("RB56_BOARD_NORMAL@5".equals(MediumBoardNormalAdmission.rb56IdentityFor(
++                constraints(PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++                    new Vector<PcbPlacementConstraints.Part>()))),
++            "policy4 MEDIUM_BOARD constraints select admission identity @5");
+@@ -92,0 +106,3 @@
++        require(MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE ==
++                MediumBoardNormalAdmission.rb56ContractForPlacement(19),
++            "placement19 selects its distinct direct-native RB56 contract");
+@@ -101,0 +118,5 @@
++        require(MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE.minimumParts == 40 &&
++                MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE.maximumParts == 60 &&
++                MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE.maximumTerminals == 7 &&
++                MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE.isRb56(),
++            "local-choice admission retains the same RB56 mechanical bounds");
+@@ -116,0 +138,11 @@
++        Rb56Plan directNativeLocalChoice = Rb56Plan.resolve(42017L, 19);
++        require(directNativeLocalChoice.placementInterpretationVersion == 19,
++            "placement19 remains available through direct native plans");
++        PcbPlacementConstraints localChoiceConstraints =
++            Rb56Placement.create(directNativeLocalChoice);
++        require(localChoiceConstraints.placementDensityVersion == 14 &&
++                localChoiceConstraints.passivePosePolicyVersion ==
++                    PcbPassivePosePolicy.LOCAL_POSE_CHOICE &&
++                localChoiceConstraints.requiresTwoLayerRouting &&
++                localChoiceConstraints.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS,
++            "placement19 maps policy4, density14, two-layer routing, and role widths");
+@@ -119 +151 @@
+-                MediumBoardNormalAdmission.rb56IdentityForPlacement(19);
++                MediumBoardNormalAdmission.rb56IdentityForPlacement(20);
+@@ -121 +153 @@
+-        }, "unknown placement19 does not receive an admission identity");
++        }, "unknown placement20 does not receive an admission identity");
+@@ -135,0 +168,5 @@
++        reject(new Runnable() {
++            public void run() {
++                current.withRb56PlacementInterpretationVersion(19);
++            }
++        }, "direct-native placement19 cannot create a private replay request");
+@@ -137,0 +175 @@
++        rejectPrivateRequestConstruction(19);
+@@ -229,0 +268,14 @@
++                Fixture localChoice = fixture(PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++                    "LOCAL_CHOICE_" + packageIndex, passiveType(physical), physical,
++                    physical, rotation, PcbBoardSide.TOP);
++                if (rotation == PcbRotation.DEG_0 || rotation == PcbRotation.DEG_90) {
++                    accept(localChoice,
++                        MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++                        "placement19 admits canonical " + physical.getId() + " TOP" +
++                            rotation);
++                } else {
++                    rejectPose(localChoice,
++                        MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++                        "placement19 rejects canonical " + physical.getId() + " TOP" +
++                            rotation);
++                }
+@@ -320,0 +373,16 @@
++        Fixture localChoiceForeignTop0 = fixture(
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            "LOCAL_CHOICE_FOREIGN_PASSIVE_TOP0", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_0, PcbBoardSide.TOP);
++        accept(localChoiceForeignTop0,
++            MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++            "placement19 retains a foreign package at TOP0");
++        Fixture localChoiceForeignTop90 = fixture(
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            "LOCAL_CHOICE_FOREIGN_PASSIVE_TOP90", "RESISTOR",
++            PhysicalPackages.RAISED_FACTORY_LINK, PhysicalPackages.RAISED_FACTORY_LINK,
++            PcbRotation.DEG_90, PcbBoardSide.TOP);
++        rejectPose(localChoiceForeignTop90,
++            MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++            "placement19 does not rotate a foreign passive package");
+@@ -358,0 +427,13 @@
++        Fixture[] localChoiceAllowedMixed = fixture(
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            new String[] {"LOCAL_CHOICE_MIXED_CANONICAL", "LOCAL_CHOICE_MIXED_FOREIGN"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_0},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        accept(localChoiceAllowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++            "placement19 permits canonical TOP90 beside foreign TOP0");
+@@ -396,0 +478,14 @@
++        Fixture[] localChoiceDisallowedMixed = fixture(
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            new String[] {"LOCAL_CHOICE_MIXED_CANONICAL_BAD",
++                "LOCAL_CHOICE_MIXED_FOREIGN_BAD"},
++            new String[] {"RESISTOR", "RESISTOR"},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PhysicalPackage[] {PhysicalPackages.AXIAL_RESISTOR,
++                PhysicalPackages.RAISED_FACTORY_LINK},
++            new PcbRotation[] {PcbRotation.DEG_90, PcbRotation.DEG_90},
++            new PcbBoardSide[] {PcbBoardSide.TOP, PcbBoardSide.TOP});
++        rejectPose(localChoiceDisallowedMixed[0],
++            MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++            "placement19 rejects a turned foreign passive beside a canonical passive");
+@@ -452,0 +548,7 @@
++        Fixture localChoiceFixture = fixture(PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            "CONTRACT_LOCAL_CHOICE", "RESISTOR", PhysicalPackages.AXIAL_RESISTOR,
++            PhysicalPackages.AXIAL_RESISTOR, PcbRotation.DEG_0, PcbBoardSide.TOP);
++        rejectPose(localChoiceFixture, MediumBoardNormalAdmission.Contract.RB56_SOURCE_SIZED,
++            "policy3 admission@4 rejects policy4 constraints");
++        rejectPose(sourceSized, MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE,
++            "policy4 admission@5 rejects policy3 constraints");
+@@ -460,0 +563,2 @@
++        TroubleshootBoard localChoice = emptyDependencyBoard(
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE);
+@@ -464,0 +569 @@
++        String localChoiceCanonical = appendBoard(localChoice);
+@@ -467,0 +573 @@
++        String localChoiceField = dependencyField("placement.passive-pose-policy", "4");
+@@ -481,0 +588,3 @@
++        require(localChoiceCanonical.contains(localChoiceField) &&
++                localChoiceCanonical.replace(localChoiceField, "").equals(legacyCanonical),
++            "policy4 appends its own dependency namespace without changing prior fields");
+@@ -491,0 +601,2 @@
++        MediumBoardNormalAdmission localChoice = admission(
++            MediumBoardNormalAdmission.Contract.RB56_LOCAL_POSE_CHOICE);
+@@ -503,0 +615,2 @@
++        require("RB56_BOARD_NORMAL@5".equals(localChoice.identity()),
++            "placement19 admission has a separate literal identity");
+@@ -546,0 +660,17 @@
++        String localChoiceWithoutPolicy = localChoice.canonical().replace(
++            admissionField("rb56-passive-pose-policy",
++                MediumBoardNormalAdmission.RB56_LOCAL_POSE_CHOICE_POLICY), "");
++        require(legacy.canonical().substring(MediumBoardNormalAdmission.RB56_IDENTITY.length())
++                .equals(localChoiceWithoutPolicy.substring(
++                    MediumBoardNormalAdmission.RB56_LOCAL_POSE_CHOICE_IDENTITY.length())),
++            "placement19 preserves the prior RB56 admission fields after its identity");
++        require(localChoice.canonical().contains(admissionField("rb56-physical-contract",
++                priorPhysicalContract)),
++            "placement19 retains the RB56 40..60/2..7 physical bounds");
++        require(localChoice.canonical().contains(admissionField("rb56-passive-pose-policy",
++                "policy=4;passives=AXIAL_RESISTOR,AXIAL_DIODE," +
++                    "RADIAL_ELECTROLYTIC_CAPACITOR,RADIAL_CERAMIC_CAPACITOR;" +
++                    "allowed-poses=TOP/0,TOP/90;sizing=source-TOP/0;" +
++                    "selection=candidate1,repeated-control,medium,nonanchor;" +
++                    "origins=existing;pose-order=TOP/0,TOP/90;ties=first;work=count-before-fit")),
++            "placement19 canonical binds source sizing and strict per-origin TOP0-first choice");
+--- tests/contracts/PcbPassivePosePolicyContractTest.java
++++ tests/contracts/PcbPassivePosePolicyContractTest.java
+@@ -239,0 +240,11 @@
++        Object localChoiceItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE, Boolean.TRUE);
++        check(readRectangle(itemType, localChoiceItem, "alternateEnvelope").equals(turned) &&
++                readLong(itemType, localChoiceItem, "sizingDemandArea") == originalDemand &&
++                readInt(itemType, localChoiceItem, "sizingEnvelopeWidth") == original.width &&
++                readInt(itemType, localChoiceItem, "sizingEnvelopeHeight") == original.height &&
++                readLong(itemType, localChoiceItem, "guardDemandArea") == expectedDemand,
++            "policy4 uses source TOP0 sizing and keeps the max-pose demand guard " +
++                expected.variantKey);
++
+@@ -271,0 +283,9 @@
++
++        Object inactiveLocalChoiceItem = constructor.newInstance(source, demand,
++            component(expected.componentId, expected.physicalPackage),
++            PcbPassivePosePolicy.LOCAL_POSE_CHOICE, Boolean.FALSE);
++        check(readRectangle(itemType, inactiveLocalChoiceItem, "alternateEnvelope") == null &&
++                readLong(itemType, inactiveLocalChoiceItem, "sizingDemandArea") == originalDemand &&
++                readLong(itemType, inactiveLocalChoiceItem, "guardDemandArea") == originalDemand,
++            "inactive policy4 branch retains TOP0 sizing without an alternate " +
++                expected.variantKey);
+@@ -290 +310 @@
+-            "policy0/1/2/3 Item construction leaves source TOP0 geometry immutable " +
++            "policy0/1/2/3/4 Item construction leaves source TOP0 geometry immutable " +
+@@ -366 +386 @@
+-        for (long visit = 0; visit < 126; visit++)
++        for (long visit = 0; visit < 126; visit++) {
+@@ -369,0 +390,4 @@
++            check(PcbPassivePosePolicy.forVisit(source, alternative,
++                    PcbPassivePosePolicy.LOCAL_POSE_CHOICE, visit) == source,
++                "policy4 leaves visit scheduling to the per-origin loop ordinal=" + visit);
++        }
+@@ -396 +420,3 @@
+-                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, 125) == source,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, 125) == source &&
++                PcbPassivePosePolicy.forVisit(source, null,
++                    PcbPassivePosePolicy.LOCAL_POSE_CHOICE, 125) == source,
+@@ -403,2 +429,2 @@
+-            PcbPassivePosePolicy.forVisit(source, alternative, 4, 0);
+-        }}, "unknown visit policy4 rejected");
++            PcbPassivePosePolicy.forVisit(source, alternative, 5, 0);
++        }}, "unknown visit policy5 rejected");
+@@ -410 +436 @@
+-            "policy1, policy2, and policy3 visit selection leaves both templates immutable");
++            "policy1, policy2, policy3, and policy4 selection leaves both templates immutable");
+@@ -427 +453,3 @@
+-                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, false) == null,
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, false) == null &&
++                PcbPassivePosePolicy.alternativeFor(component, source,
++                    PcbPassivePosePolicy.LOCAL_POSE_CHOICE, false) == null,
+@@ -440,2 +468,4 @@
+-                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, true) == null,
+-            "unsupported package stays at its provider pose under policies1 and3");
++                    PcbPassivePosePolicy.SOURCE_SIZED_ORTHOGONAL, true) == null &&
++                PcbPassivePosePolicy.alternativeFor(other, otherSource,
++                    PcbPassivePosePolicy.LOCAL_POSE_CHOICE, true) == null,
++            "unsupported package stays at its provider pose under policies1,3,4");
+@@ -452,2 +482,2 @@
+-            PcbPassivePosePolicy.alternativeFor(component, source, 4, true);
+-        }}, "unknown helper policy4 rejected");
++            PcbPassivePosePolicy.alternativeFor(component, source, 5, true);
++        }}, "unknown helper policy5 rejected");
+@@ -493,0 +524,4 @@
++        PcbPlacementConstraints localChoice = constraints("MEDIUM_BOARD", 1, 14,
++            true, PcbPassivePosePolicy.LOCAL_POSE_CHOICE);
++        check(localChoice.passivePosePolicyVersion == PcbPassivePosePolicy.LOCAL_POSE_CHOICE,
++            "explicit policy4 accepted only in its supported context");
+@@ -497,0 +532 @@
++                PcbPassivePosePolicy.supportsVersion(4) &&
+@@ -499,5 +534,5 @@
+-                !PcbPassivePosePolicy.supportsVersion(4),
+-            "only policy versions0, 1, 2, and 3 are recognized");
+-        rejects(new Attempt() { public void run() {
+-            constraints("MEDIUM_BOARD", 1, 14, true, 4);
+-        }}, "constraint rejects unknown policy version4");
++                !PcbPassivePosePolicy.supportsVersion(9),
++            "policies0 through4 are recognized; unknown9 stays rejected");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, true, 9);
++        }}, "constraint rejects unknown policy version9");
+@@ -551,0 +587,9 @@
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 13, true, PcbPassivePosePolicy.LOCAL_POSE_CHOICE);
++        }}, "policy4 requires density14");
++        rejects(new Attempt() { public void run() {
++            constraints("OTHER_POLICY", 1, 14, true, PcbPassivePosePolicy.LOCAL_POSE_CHOICE);
++        }}, "policy4 requires MEDIUM_BOARD@1");
++        rejects(new Attempt() { public void run() {
++            constraints("MEDIUM_BOARD", 1, 14, false, PcbPassivePosePolicy.LOCAL_POSE_CHOICE);
++        }}, "policy4 requires two-layer routing");
+--- tests/contracts/PcbPassivePoseTrialSourceContractTest.java
++++ tests/contracts/PcbPassivePoseTrialSourceContractTest.java
+@@ -12,2 +12,2 @@
+-        try { Rb56Plan.resolve(42L, 19); } catch (IllegalArgumentException expected) { rejected=true; }
+-        check(rejected, "unknown RB56 interpretation19 rejects");
++        try { Rb56Plan.resolve(42L, 20); } catch (IllegalArgumentException expected) { rejected=true; }
++        check(rejected, "unknown RB56 interpretation20 rejects");
+--- tests/contracts/PcbPassiveSizingSourceContractTest.java
++++ tests/contracts/PcbPassiveSizingSourceContractTest.java
+@@ -10,2 +10,2 @@
+-        try { Rb56Plan.resolve(42L,19); } catch(IllegalArgumentException expected) { rejected=true; }
+-        check(rejected,"unsupported interpretation19 rejects");
++        try { Rb56Plan.resolve(42L,20); } catch(IllegalArgumentException expected) { rejected=true; }
++        check(rejected,"unsupported interpretation20 rejects");
+--- tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
++++ tests/contracts/PcbPostSelectionEdgeTrimContractTest.java
+@@ -148,2 +148,3 @@
+-                plan.placementInterpretationVersion != 18))
+-            throw new IllegalArgumentException("Only explicit15/16/17/18 source intent is supported");
++                plan.placementInterpretationVersion != 18 &&
++                plan.placementInterpretationVersion != 19))
++            throw new IllegalArgumentException("Only explicit15/16/17/18/19 source intent is supported");
+@@ -155 +156 @@
+-        if ((version != 15 && version != 16 && version != 17 && version != 18) || plan == null || board == null ||
++        if ((version != 15 && version != 16 && version != 17 && version != 18 && version != 19) || plan == null || board == null ||
+@@ -158 +159 @@
+-                board.getPlacementConstraints().passivePosePolicyVersion != (version == 15 ? 0 : version == 16 ? 1 : version == 17 ? 2 : 3) ||
++                board.getPlacementConstraints().passivePosePolicyVersion != (version == 15 ? 0 : version == 16 ? 1 : version == 17 ? 2 : version == 18 ? 3 : 4) ||
+@@ -162 +163 @@
+-            throw new IllegalArgumentException("Pose observation requires its exact bound15/16/17/18 source");
++            throw new IllegalArgumentException("Pose observation requires its exact bound15/16/17/18/19 source");
+@@ -164 +165 @@
+-            intent, source, graph, version == 15 ? "saved15" : version == 16 ? "pose16" : version == 17 ? "size17" : "pose18", System.nanoTime()));
++            intent, source, graph, version == 15 ? "saved15" : version == 16 ? "pose16" : version == 17 ? "size17" : version == 18 ? "pose18" : "local19", System.nanoTime()));
+--- tests/contracts/PcbSourceSizedPoseSourceContractTest.java
++++ tests/contracts/PcbSourceSizedPoseSourceContractTest.java
+@@ -10,2 +10,2 @@
+-        try { Rb56Plan.resolve(42L,19); } catch(IllegalArgumentException expected) { rejected=true; }
+-        check(rejected,"unsupported interpretation19 rejects");
++        try { Rb56Plan.resolve(42L,20); } catch(IllegalArgumentException expected) { rejected=true; }
++        check(rejected,"unsupported interpretation20 rejects");

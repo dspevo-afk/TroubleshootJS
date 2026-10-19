@@ -1,0 +1,197 @@
+{
+  "status": "FAIL",
+  "fidelity": {
+    "status": "PASS",
+    "saved15ExactCases": 14,
+    "saved15NonTimeFieldsExact": 42,
+    "trial19StructuredCases": 14,
+    "whitespaceCases": 28,
+    "poseCases": 28,
+    "limits": "Maintained route/pass markers establish physical and access core checks"
+  },
+  "strictFitness": {
+    "status": "FAIL",
+    "noMetricRegression": false,
+    "strictImprovement": true,
+    "actualCanonicalTop90": true,
+    "metricRegressions": [
+      {
+        "seed": "17",
+        "metrics": [
+          "area"
+        ]
+      },
+      {
+        "seed": "42",
+        "metrics": [
+          "area",
+          "largestProtectedEmptyRectangleArea",
+          "copperManhattanLength",
+          "vias"
+        ]
+      },
+      {
+        "seed": "3",
+        "metrics": [
+          "area",
+          "largestProtectedEmptyRectangleArea",
+          "vias"
+        ]
+      }
+    ],
+    "strictImprovements": [
+      {
+        "seed": "17",
+        "metrics": [
+          "largestProtectedEmptyRectangleArea",
+          "copperManhattanLength",
+          "vias"
+        ]
+      },
+      {
+        "seed": "3",
+        "metrics": [
+          "copperManhattanLength"
+        ]
+      }
+    ],
+    "selectedTop90Cases": [
+      "17",
+      "42",
+      "3"
+    ],
+    "metricDeltas": [
+      {
+        "seed": "-1017",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "-1004",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "-1022",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "0",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "17",
+        "delta": {
+          "area": 96657,
+          "largestProtectedEmptyRectangleArea": -192100,
+          "copperManhattanLength": -930,
+          "vias": -5
+        }
+      },
+      {
+        "seed": "42",
+        "delta": {
+          "area": 441198,
+          "largestProtectedEmptyRectangleArea": 38000,
+          "copperManhattanLength": 1360,
+          "vias": 3
+        }
+      },
+      {
+        "seed": "1",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "7",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "5",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "14",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "2",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "3",
+        "delta": {
+          "area": 120081,
+          "largestProtectedEmptyRectangleArea": 91800,
+          "copperManhattanLength": -1710,
+          "vias": 1
+        }
+      },
+      {
+        "seed": "4",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      },
+      {
+        "seed": "6",
+        "delta": {
+          "area": 0,
+          "largestProtectedEmptyRectangleArea": 0,
+          "copperManhattanLength": 0,
+          "vias": 0
+        }
+      }
+    ],
+    "failureReasons": [
+      "one or more trial19 metrics regress against paired15"
+    ]
+  },
+  "policyPromotion": false,
+  "limits": "Finite native-only diagnostic; no replay, repair, manufacturing, GWT, player, or production-promotion proof"
+}

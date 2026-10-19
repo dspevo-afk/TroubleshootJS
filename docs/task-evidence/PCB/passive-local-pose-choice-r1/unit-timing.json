@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 54.9272947,
+  "suiteCount": 9,
+  "phase": "unit",
+  "scope": "Native local two-pose choice; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

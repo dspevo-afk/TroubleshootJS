@@ -1,0 +1,29 @@
+{
+  "stage": "Pre-edit proposal; no new native observations",
+  "baseCommit": "7838523bb45fdc733c388eb631a1695fd23365ac",
+  "scope": "Direct-native local passive pose choice; no default/player promotion in this phase",
+  "interpretation": "RB56 placement19/density14/posePolicy4/RB56_BOARD_NORMAL@5. Preserve15..18 and policies0..3/admission@1..4; current15/general16/generic-medium unchanged. Live/private17/18/19 requests reject; direct plans only, no replay extension.",
+  "selection": "Existingcandidate1/repeated-control/medium/nonanchor gate and canonical4-package selected-geometry alternate only. Keep sourceTOP0 sizing and separate max guard from18. Retain existing ring/fallback origin sequence. For each retained origin, evaluate TOP0 first and TOP90 second ifeligible. Strict score comparison retains first encountered candidate, so TOP0 wins same-origin ties. Actual chosen templates own clamp/fit/access/finalvalidation; no neworigins/RNG/outlinecandidates/routecalls.",
+  "workAccounting": "Explicitly permit one additional pose evaluation per existing eligible origin, counted honestly, without raising any numeric budget. Count each attempted template before its fit/score; check budget before evaluating a next pose. If unavailable budget would omit a requested pose, reject by the existing budget contract rather than silently accepting a partial winner. Preserve old0..3 loop/selection/accounting behavior. Unchanged60000perplan,6plans,total360000accepted evaluations and3+3route caps; actual trial counters may increase.",
+  "gates": "Fresh unit9: actual ring/fallback positive/negative/tie/cap loop fixtures; policy/admission purefixtures; all14 old15/trial16/new19 source bindings;15 untouched raw0/2/3/4/5 comparisons on42/-1022/4. Full28 normal paired15/19 generations in14 bounded JVMs at unchanged60sperJVM. Old15 all42 non-time fields exact; all19 pass nativeadmission/physical/access/isolation/strictwhitespace/work/purity. Each19 area/protectedvoid/copper/vias <= paired15, >=one strict improvement and >=one actualselectedTOP90 overall. Missing/failure/no-op rejects; no seed/golden/cap/oracle fitting.",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "harness": "Source-derived maintained registry order; unit9/route14 manifests; all28 maintained whitespace,pose,route records in sequence, relative-outline grid coordinates. Freeze independent positive/negative readers and exact source/gates before new output. Preserve native/reader failures before correction, fresh affected phases for changed consumedinputs.",
+  "reuse": "Reconstruct exact accepted1467+policy1504+control1510+source-trial1528 from audited seals; no changed-policy runtime PASS reuse. Prior strict18 rejection remains exact.",
+  "limits": "Finite informed regression only. Actual-loop fixtures must exercise selected implementation rather than a reimplemented chooser. No manufacturing/all-seed/liveowner/replay/repair/player acceptance from this diagnostic. Future promotion requires further current-owner and final-source JDK8/GWT/visibleplayer gates.",
+  "resources": "Unique tsj-passive-local-pose owned OS-temp copy/private state; record native driver births, cleanup and exact restoration1547->1528->1510->1504->1467 before contained non-reparse retirement. Preserve original5 unrelated entries/shared tools. Normalbranch publication only; no main/email."
+}

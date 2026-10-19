@@ -1,0 +1,41 @@
+{
+  "rootReviewed": true,
+  "baseCopyCount": 1528,
+  "copyCount": 1547,
+  "overrides": [
+    "scripts/verify-current-contracts.ps1",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardNormalAdmission.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPassivePosePolicy.java",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+    "tests/contracts/PcbPassivePoseAdmissionContractTest.java",
+    "tests/contracts/PcbPassivePosePolicyContractTest.java",
+    "tests/contracts/PcbPassivePoseTrialSourceContractTest.java",
+    "tests/contracts/PcbPassiveSizingSourceContractTest.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java",
+    "tests/contracts/PcbSourceSizedPoseSourceContractTest.java"
+  ],
+  "additions": [
+    "tests/contracts/PcbLocalPoseChoiceContractTest.java",
+    "tests/contracts/PcbLocalPoseRawContractTest.java",
+    "tests/contracts/PcbLocalPoseRawContractTestGroup2.java",
+    "tests/contracts/PcbLocalPoseRawContractTestGroup3.java",
+    "tests/contracts/PcbLocalPoseRouteContractTest.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup10.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup11.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup12.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup13.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup14.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup2.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup3.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup4.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup5.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup6.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup7.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup8.java",
+    "tests/contracts/PcbLocalPoseRouteContractTestGroup9.java",
+    "tests/contracts/PcbLocalPoseSourceContractTest.java"
+  ]
+}

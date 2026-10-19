@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "reconstructionCounts": [
+    1467,
+    1504,
+    1510,
+    1528
+  ],
+  "priorStrictFitness": "FAIL; preserved, no changed-policy runtime PASS reuse"
+}

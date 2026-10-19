@@ -171,6 +171,16 @@ max demand preserves DEMAND_LIMIT. Copy restored1510/1504/1467 and retired;
 main1475/default15 unchanged. Next is local pose choice with honest evaluation
 counts and unchanged numeric caps and strict gates.
 [Source-sizing rejection and limits](task-evidence/PCB/passive-source-sizing-trial-r1/RESULTS.md).
+Local passive pose choice19 now retains TOP0 and checks TOP90 at each existing
+eligible origin, with honest per-pose counting and unchanged caps. Fresh unit9
+PASS54.9273s/routes14 PASS212.4368s and full28 artifact fidelity PASS, but strict14
+fitness FAILs17/42/3; all three grow area, with other metric tradeoffs. Eleven
+selected geometries remain exact15. Initial fixture and summary-reader failures
+are retained; corrected72-canary reader and fresh final phases pass. Copy restored
+1528/1510/1504/1467 and retired; all8 driver births exited; main1475/default15
+unchanged. No promotion or threshold change. Next audit the minimum-area sizing
+floor and its ownership before any further bounded compaction trial.
+[Local-pose rejection and limits](task-evidence/PCB/passive-local-pose-choice-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

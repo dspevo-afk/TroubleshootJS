@@ -1,0 +1,13 @@
+{
+  "rootReviewedDiffSha256": "e3f132a61aa8d11373fbd1a0aa1cdbb59809c6c516ad0a2a1bf8bf2aaca90705",
+  "actualSelectedFootprintFitsUnchanged": true,
+  "conservativeDemandLimitBasisRetained": true,
+  "legacyPoliciesAccountingPreserved": true,
+  "newPolicyReservesEveryPose": true,
+  "actualLoopFixturesUseSelectedImplementation": true,
+  "observerPrimitiveReadOnlyDefaultNullFinallyRestored": true,
+  "admissionNullGuardAndExplicitContractMembershipRestored": true,
+  "unknown9HelperOracleRetainedAlongsideNewUnknown5": true,
+  "scope": "Root inspected integrated core, mapping, pure contracts and actual-loop fixtures; exact adapters/registry/legacy planner reconstruction checked by review_source.py",
+  "runtimeEvidence": "NOT RUN; fresh unit9 and route14 phases required"
+}

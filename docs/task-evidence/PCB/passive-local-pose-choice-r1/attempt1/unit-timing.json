@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 51.6887205,
+  "suiteCount": 9,
+  "phase": "unit",
+  "scope": "Native local two-pose choice; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

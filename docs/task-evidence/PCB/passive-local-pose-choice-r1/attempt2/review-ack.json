@@ -1,0 +1,15 @@
+{
+  "rootReviewedDiffSha256": "46014493063b333b6de5687c3f5ec4c6479d4dffa351c77811f57e9e98980e99",
+  "actualSelectedFootprintFitsUnchanged": true,
+  "conservativeDemandLimitBasisRetained": true,
+  "legacyPoliciesAccountingPreserved": true,
+  "newPolicyReservesEveryPose": true,
+  "actualLoopFixturesUseSelectedImplementation": true,
+  "observerPrimitiveReadOnlyDefaultNullFinallyRestored": true,
+  "admissionNullGuardAndExplicitContractMembershipRestored": true,
+  "unknown9HelperOracleRetainedAlongsideNewUnknown5": true,
+  "scope": "Root inspected integrated core, mapping, pure contracts and actual-loop fixtures; exact adapters/registry/legacy planner reconstruction checked by review_source.py",
+  "runtimeEvidence": "Attempt1 unit FAIL at missing advisory connector before loop execution; fresh corrected-source unit9 and route14 required",
+  "attempt1ArchiveSha256": "d295cb3eff3a8ba5ca4fdaa108c32ce846b9694dcbdca16629743a0d3f087b80",
+  "fixtureCorrection": "Only add standard unplaced connector with distinct nets to advisory board; actual topology constructor requires it; geometry/pose/score/work/fitness expectations unchanged"
+}

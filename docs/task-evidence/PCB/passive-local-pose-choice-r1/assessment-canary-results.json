@@ -1,0 +1,481 @@
+{
+  "schema": "pcb-local-pose-choice-reader-canary-results-v1",
+  "status": "PASS",
+  "phase": "PRE_RUNTIME_SYNTHETIC_ONLY",
+  "baseCommit": "7838523bb45fdc733c388eb631a1695fd23365ac",
+  "canaryCount": 72,
+  "positiveCount": 4,
+  "negativeCount": 68,
+  "unitPhase": {
+    "suiteCount": 9,
+    "reportRows": 57,
+    "source19Roots": 14,
+    "rawRows": 15,
+    "source15Roots": 14,
+    "source16Roots": 14
+  },
+  "routePhase": {
+    "suiteCount": 14,
+    "cases": 28,
+    "whitespaceRows": 28,
+    "poseRows": 28,
+    "routeRows": 28
+  },
+  "strictPositive": {
+    "status": "PASS",
+    "metricImprovementRoots": 1,
+    "actualTop90Roots": 1
+  },
+  "canaries": [
+    {
+      "id": "unit-phase-loop-pass-marker-and-source19-raw15-source15-source16",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "routes-phase-all28-whitespace-pose-route-cases",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "complete-strict-improvement-with-actual-canonical-top90",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "whitespace-relative-grid-offgrid-origin",
+      "result": "PASS",
+      "expected": "PASS",
+      "observed": "PASS"
+    },
+    {
+      "id": "phase-duplicate-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-reordered-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-missing-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-unknown-report",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-failure-line",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-timeout",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-cleanup-missing",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-terminal-line-changed",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-log-receipt-pass-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "phase-marker-count-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-zero-assertions",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-overbound-assertions",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-missing-summary",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-wrong-fixture-count",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-wrong-evaluator",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-trailing-text",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-duplicate-detail",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "loop-reordered-detail",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "policy-wrong-geometries",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "policy-wrong-sequence",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "policy-wrong-visits",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "admission-count-overbound",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "admission-count-malformed",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-graph-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-digest-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-signed-long-overflow",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-population-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-density-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-policy-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-admission-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source19-addfield",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "trial16-canonical-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "trial16-graph-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "trial16-addfield",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-graph-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-seed-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-hash-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-parts-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-pads-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-addfield",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-layout-seed-overflow",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "source15-routing-seed-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw-old15-mutation",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw19-geometry-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw19-evaluations-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw19-demand-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "raw19-courtyard-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-old15-nontime-mutation",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "routes-missing-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "strict-area-regression-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-protected-void-regression-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-copper-regression-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-vias-regression-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-no-improvement-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "strict-no-top90-returns-fail",
+      "result": "PASS",
+      "expected": "FAIL",
+      "observed": "FAIL"
+    },
+    {
+      "id": "whitespace-missing-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-reordered-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-extra-case",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-typed-grid",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-free-fraction-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-area-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-relative-grid-drift",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-rectangle-coordinate-type",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-legacy-list",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "whitespace-population-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-status-failure",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "route-cap-exceeded",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "id": "pose-admission-mismatch",
+      "result": "PASS",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    }
+  ],
+  "consumedSha256": {
+    "assess.py": "485038f44a3583f922416f298ca9f7cb6a9c12b70b1555f0fc7311a4a6cf4e79",
+    "check_assessment.py": "467bcf45b2db537e57c07578502f7a935c68c58b6495603d808849b8f3a609b1",
+    "assessment-canaries.json": "5c2ccfbf1d0a46cea6a393d13f4102c468cf3783a74ee27bfefcf14ff8569ce4",
+    "proposal.json": "10850274f03ee80cf38d1e76e5422344b2e2c6ea6cbeecbb57bbb4549ab8449e",
+    "protocol.json": "243c8b4464840c247aec7609ee42f4297e37f9328c26f6be16e014b4cb6f02b6",
+    "unit-suites.json": "341e382135719d352c86be281d72c8b3368d5f4aaee9d0263e088a819ec2edb7",
+    "routes-suites.json": "09809a0e2317bab47b614105bba45eef42da5f186409e971bd2efdbb22e88956",
+    "accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "raw-baselines.json": "c896f2ee0cb553220f5e7a4814e6ae8b7aecc21a2f7c787803db42e8a76f1790",
+    "passive-pose-policy-r1/assess.py": "c9908a3d0439e64b01fa806f353fa7d6e024e8dc6050179a10bf8bef31ff1f26",
+    "passive-pose-policy-r1/unit.txt": "e58c5e72aea79e65efcb427a643310545742a5161d83072b54fccdb0397f9570"
+  },
+  "nativeRuntimeEvidence": "NOT RUN",
+  "limits": [
+    "Synthetic reader canaries do not establish native generation or routing behavior.",
+    "No runtime output, new source output, or control runtime output was read."
+  ]
+}
