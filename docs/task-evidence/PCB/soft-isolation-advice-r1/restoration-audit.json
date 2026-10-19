@@ -1,0 +1,18 @@
+{
+  "status": "PASS_REJECTION_AND_RESTORATION_AUDIT",
+  "candidate": "REJECTED_NOT_PROMOTED",
+  "nativeSeconds": 198.8035633,
+  "metricFailures": [
+    "-1022/trial15: regressed copperManhattanLength",
+    "7/trial15: regressed area",
+    "7/trial15: regressed largestProtectedEmptyRectangleArea",
+    "14/trial15: regressed area",
+    "14/trial15: regressed largestProtectedEmptyRectangleArea",
+    "14/trial15: regressed copperManhattanLength",
+    "4/trial15: regressed area",
+    "4/trial15: regressed largestProtectedEmptyRectangleArea",
+    "6/trial15: regressed copperManhattanLength"
+  ],
+  "production": "Exact published410bcd73 default14 restored; prior native/GWT/player proof reused only at exact audited boundary, not fresh execution",
+  "limits": "Trial native9 PASS but strict metric FAIL. Trial GWT/player gates NOT RUN. No additional shrinkage, unseen/all-seed or manufacturing claim."
+}

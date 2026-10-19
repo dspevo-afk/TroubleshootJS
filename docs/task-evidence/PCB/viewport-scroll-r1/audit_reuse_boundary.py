@@ -76,7 +76,7 @@ def main():
                   acceptedCommit='5ad170cdea01808bfe25341457b77e709c60fa17',
                   priorFrozenSupersetCount=len(prior['files']),
                   changedNonJvmSupersetPaths=changed,
-                  selection='Maintained selected56 compiles src/*.java, selected *.java contracts and fixed Java fixtures; the Node-only mjs fixture is not consumed. All other frozen inputs match byte-for-byte.',
+                  selection='Maintained verifier compiles src/*.java, every registered Java contract and fixed Java fixtures, then runs the selected56. The Node-only mjs fixture is not consumed. All other frozen inputs match byte-for-byte.',
                   selected56Reuse='PASS only at unchanged JVM input boundary; not fresh execution',
                   reconstructedAcceptedWebDigest=reconstructed,
                   candidateWebDigest=sha('\n'.join(new_records).encode('utf-8')),

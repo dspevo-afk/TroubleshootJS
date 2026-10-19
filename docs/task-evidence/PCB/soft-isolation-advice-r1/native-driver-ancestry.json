@@ -1,0 +1,18 @@
+{
+  "status": "OBSERVED_DRIVER_ANCESTRY",
+  "drivers": [
+    {
+      "pid": 23780,
+      "parentPid": 15884,
+      "creationTicks": "639279908120406336",
+      "role": "owned exec receipt driver"
+    },
+    {
+      "pid": 20028,
+      "parentPid": 23780,
+      "creationTicks": "639279908126625064",
+      "role": "external phase script host"
+    }
+  ],
+  "note": "Both matched because the outer exec command contains the child invocation. No termination requested."
+}

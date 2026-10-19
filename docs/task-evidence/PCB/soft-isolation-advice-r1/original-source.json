@@ -1,0 +1,32 @@
+{
+  "status": "FROZEN_BEFORE_TRIAL_EDITS",
+  "baseCommit": "410bcd73dc96d87d1d4428df7cc553216d05d691",
+  "taskTempName": "tsj-soft-isolation-f6f4facf64fa48d6a8b2a44c9ed7d0f6",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "snapshot": "PcbPlacementPlanner.java",
+      "sha256": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "snapshot": "Rb56Placement.java",
+      "sha256": "757004df24d516794880aee2bccc5675b85624f7a0d51e159f45b6e2ebf71eaf"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "snapshot": "PcbPlacementConstraints.java",
+      "sha256": "edf9a872e1eb71ad569622ece259056d6da3a189465f97316761082a23099f9e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "snapshot": "SeededPcbLayoutGenerator.java",
+      "sha256": "74f1fa4aed0bc48f8c4a0e80af802564a8511c0b6d407bdcb63dd360eb8696bb"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "snapshot": "verify-current-contracts.ps1",
+      "sha256": "9b6ad0000a75c92b19ffaeeb30f6564ce7085202cc87bb151a17ff9592401ef3"
+    }
+  ]
+}

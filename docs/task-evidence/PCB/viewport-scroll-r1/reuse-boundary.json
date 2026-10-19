@@ -5,7 +5,7 @@
   "changedNonJvmSupersetPaths": [
     "tests/contracts/u04_ui_contract.mjs"
   ],
-  "selection": "Maintained selected56 compiles src/*.java, selected *.java contracts and fixed Java fixtures; the Node-only mjs fixture is not consumed. All other frozen inputs match byte-for-byte.",
+  "selection": "Maintained verifier compiles src/*.java, every registered Java contract and fixed Java fixtures, then runs the selected56. The Node-only mjs fixture is not consumed. All other frozen inputs match byte-for-byte.",
   "selected56Reuse": "PASS only at unchanged JVM input boundary; not fresh execution",
   "reconstructedAcceptedWebDigest": "4111c91583c55ec34abb372b220ef1b4f6de3c7d02dfe098c152888aa8f48503",
   "candidateWebDigest": "0730f55f3a2e55a3795c415dfbc30b2772e0177a24bf3ee93bdec8abbf2df8a0",

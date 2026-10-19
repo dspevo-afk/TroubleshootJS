@@ -1,4 +1,43 @@
-# Current checkpoint: local toolbar/focus accepted; normal publication next
+# Current checkpoint: soft isolation advice rejected; accepted14 restored
+
+2026-10-19. HEAD410bcd73dc96d87d1d4428df7cc553216d05d691 normally pushed/verified
+on codex/q60-faulted-profile-counts. Toolbar fix accepted and production default/
+replay14/density13 remains. User indefinite PCB work active; no main/email.
+No active preview/tab/viewport override, build/native driver or owned temp now.
+Original five untracked entries and shared tools preserved.
+
+soft-isolation-advice-r1 native-only placement15/density14 candidate0 advisory
+courtyard-order trial REJECTED, never promoted. Strict14-case frozen baseline
+SHA825b828b679a5e87c1e96bab9335083530b12fd2713539ac6af4c7b5cc67cb04.
+Focused9 native PASS198.8035633s incl terminal cleanup; separate cleanupduration
+not measured. Literal34 and representative raw1-5(-1022/42/4) PASS8609assertions;
+all14 trial boards admitted and all14 accepted14 routes retained exact frozen
+geometry/metrics. Source graph/inventory/stream/probe/role/80isolation/work guards
+PASS. Frozen1460 consumed source/phase inputs PASS, synthetic assessor13 PASS.
+Full matrix/independent electrical oracles NOT RUN; no trial GWT/player proof.
+
+Strict metric assessor FAILexit1: nine per-case regressions. Trial shrinks-1022/6
+but area/void grow7/14/4; copper increases-1022/14/6. Nine geometries stay exact.
+No metric, seed, work/time limit or weight changed. Raw/native/patch/newcontracts
+and complete comparisons retained; publication records rejection, not success.
+Initial shell final-date exit0 was not assessor proof; unchanged idempotent reader
+rerun captured numeric exit1 without native rerun or oracle change.
+
+Five original owners byte-restored;5 task contracts archived/retired from active
+source. Restored1447 source/scripts/contracts/GWT inputs PASS, all5 full execution
+identity fields exact410 including web0730f55f3a2e55a3795c415dfbc30b2772e0177a24bf3ee93bdec8abbf2df8a0.
+Actual native/GWT/player proof reused only at exact restored410 boundary; not
+fresh execution. Trial temp5snapshots and empty directory removed after exact
+containment/reparse/hash checks; drivers23780/20028 exited, maintained cleanupPASS.
+Root rejection/restoration audit PASS; no source diff. UI evidence reuse wording
+corrected to ALL registered Java compilation then selected suites; same audited
+input set and no proof expansion. See packet README/result-integrity.json.
+
+Next: root final docs/evidence diff/cached checks, normal commit/push+remoteSHA
+verification; then read-only cause audit of placement ranking versus final routed
+crop/copper metrics on the five changed cases. No further implementation yet.
+
+# Previous checkpoint: local toolbar/focus accepted and published
 
 2026-10-19. BaseHEAD5ad170cdea01808bfe25341457b77e709c60fa17, established branch
 codex/q60-faulted-profile-counts. Current candidate UI CSSa28d0e49/JS e080b2d2;
@@ -34,8 +73,8 @@ removals withoutforce PASS after containment/reparse/inventory/hash checks. Shar
 toolchains/HTTP.sys PID4 and original five untracked entries preserved. Optional
 packing-map followup could not run due modelcapacity; no proof inferred.
 
-Next: root final diff/cached checks, explicit stage, normal commit/push and verify
-origin exactSHA. Then candidate0-only advisory spatial ordering of mixed-package
+Normal commit/push410bcd73dc96d87d1d4428df7cc553216d05d691 verified at origin.
+Next: candidate0-only advisory spatial ordering of mixed-package
 courtyards under strict14-case routed regression metrics; not implemented yet.
 
 # Previous checkpoint: private14 pushed; viewport cause audit starts

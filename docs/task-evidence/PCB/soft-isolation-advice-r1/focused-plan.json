@@ -1,0 +1,16 @@
+{
+  "status":"PREDECLARED_BEFORE_NATIVE_EXECUTION",
+  "names":[
+    "PcbSoftIsolationTargetContractTest",
+    "PcbSoftIsolationAdviceContractTest",
+    "PcbSoftIsolationRegressionContractTest",
+    "PcbSoftIsolationFreshContractTest",
+    "PcbSoftIsolationRecoveryContractTest",
+    "PcbCanvasOwnerFitContractTest",
+    "PcbCanvasOwnerRegressionContractTest",
+    "PcbCanvasOwnerFreshContractTest",
+    "PcbCanvasOwnerRecoveryContractTest"
+  ],
+  "scope":"Literal midpoint + representative raw1-5 plans on -1022/42/4; all14 routed trial15 and separately all14 accepted14 on final trial source. Each existing60s JVM bound unchanged. One serial maintained native phase; no build in parallel.",
+  "rawPlanClarification":"Raw exactness fixtures cover three informed representative roots, not all possible roots. Source gate restricts advice to candidate0. All14 routed14 outputs must remain exact frozen accepted14 geometry/metrics; all14 trial15 metrics meet strict nonregression+space-benefit gate. This clarification is before any trial metrics are observed."
+}

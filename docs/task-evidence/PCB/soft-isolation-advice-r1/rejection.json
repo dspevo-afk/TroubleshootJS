@@ -1,0 +1,30 @@
+{
+  "status": "REJECTED_BEFORE_PROMOTION",
+  "native": "PASS9 suites198.8035633s, terminal cleanup included; separate cleanup duration not measured",
+  "inputs": "PASS1460 exact",
+  "assessor": "FAIL exit1; nine per-case metric regressions, source/identity/physical cases PASS",
+  "archivedContracts": [
+    {
+      "file": "PcbSoftIsolationAdviceContractTest.java",
+      "sha256": "02206d2e3745b9f74bb3acb9ecf0b3055543120e8ff0d77266c899ba62ed80ca"
+    },
+    {
+      "file": "PcbSoftIsolationFreshContractTest.java",
+      "sha256": "3d400ba7e01815e4733e033cefb9a1cfd00944da4d4a4f8575e07ab2c57378bc"
+    },
+    {
+      "file": "PcbSoftIsolationRecoveryContractTest.java",
+      "sha256": "d228060299805b4dd868364a6feacf7039b45a59bba8259bdc961cb474720acb"
+    },
+    {
+      "file": "PcbSoftIsolationRegressionContractTest.java",
+      "sha256": "fdc89e63a4acc25ae59cc01040b29588e8b9e0f93490189f293dfdafa52c915a"
+    },
+    {
+      "file": "PcbSoftIsolationTargetContractTest.java",
+      "sha256": "72236cf8e0ca3ded9633c4a1cc5ac7bb67b597b24be5788a611b9d35a37972ea"
+    }
+  ],
+  "default": "Current/default/replay14 never promoted; trial15 has no player namespace",
+  "next": "Verify snapshots and byte-restore five owners; remove exact archived task-only active contract files; audit restored410 source/build boundary"
+}

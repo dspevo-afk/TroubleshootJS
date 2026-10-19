@@ -1,0 +1,33 @@
+{
+  "status": "PASS_FIVE_OWNER_BYTE_RESTORATION",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "before": "58d8aa1805e84d813727c3146f9bed858024570e158d649fd400719c6e137d83",
+      "restored": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "before": "1721992c343c83d073d559fe6ba9c5af1484c2476ea5a9e0222e79f050bd5348",
+      "restored": "757004df24d516794880aee2bccc5675b85624f7a0d51e159f45b6e2ebf71eaf"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "before": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a",
+      "restored": "edf9a872e1eb71ad569622ece259056d6da3a189465f97316761082a23099f9e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "before": "31c8409aa3ac36e5f640a1d5559c3c5fcba633f0648ecbd2ce03f3cf93953679",
+      "restored": "74f1fa4aed0bc48f8c4a0e80af802564a8511c0b6d407bdcb63dd360eb8696bb"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "before": "b47b68c485901b51ddddd1666572865661e63386435a6248d3fa8df05a190cc2",
+      "restored": "9b6ad0000a75c92b19ffaeeb30f6564ce7085202cc87bb151a17ff9592401ef3"
+    }
+  ],
+  "activeTrialContracts": "Archived hashes match; exact named active files to retire next",
+  "snapshotTempName": "tsj-soft-isolation-f6f4facf64fa48d6a8b2a44c9ed7d0f6",
+  "preserved": "Unrelated edits and five original untracked entries unchanged"
+}

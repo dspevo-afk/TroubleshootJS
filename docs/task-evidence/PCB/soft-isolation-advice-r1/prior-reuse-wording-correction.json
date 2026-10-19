@@ -1,0 +1,5 @@
+{
+  "status":"WORDING_CORRECTION_NO_PROOF_BOUNDARY_CHANGE",
+  "correction":"The maintained verifier compiles every registered Java contract before selecting runtime suites. Earlier selection text called them selected Java contracts. All registered Java files were already included in the exact1447 superset audit and unchanged; mjs is still excluded. Re-audit PASS before next production edits. No native acceptance or reused input set expanded.",
+  "observedOwner":"scripts/verify-current-contracts.ps1 lines545-553 loop all testClasses"
+}

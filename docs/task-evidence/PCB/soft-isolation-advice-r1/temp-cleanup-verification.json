@@ -1,0 +1,8 @@
+{
+  "status": "VERIFIED_FOR_EXACT_NONRECURSIVE_CLEANUP",
+  "taskTempName": "tsj-soft-isolation-f6f4facf64fa48d6a8b2a44c9ed7d0f6",
+  "fileCount": 5,
+  "noReparse": true,
+  "restoredOwnerHashesMatch": true,
+  "archive": "rejected-source retains exact candidate patch and frozen contract bytes"
+}

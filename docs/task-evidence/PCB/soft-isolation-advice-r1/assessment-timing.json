@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "elapsedSeconds": 0.083398,
+  "operation": "Strict complete-cohort metric assessment",
+  "note": "Prior shell printed Get-Date after assessment, so overall shell exit0 was not assessor exit proof. This idempotent reader rerun captures its numeric exit immediately; no native rerun or input/oracle change."
+}

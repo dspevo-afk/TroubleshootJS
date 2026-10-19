@@ -43,9 +43,15 @@ explicit; one unchanged same-fixture retry passes87.308s. No budget or oracle
 change, general timing or extra shrinkage claim. Native56 proof reused only at
 its audited unchanged JVM boundary. Full matrix/independent oracles NOT RUN.
 [Toolbar acceptance and limits](task-evidence/PCB/viewport-scroll-r1/README.md).
-Next: candidate0-only soft isolation-package boundary advice with strict routed
-regression metrics and unchanged physical/search/work limits. Finite reference-
-host scope; no all-seed, manufacturing or modest-host claim.
+The native-only candidate0 soft isolation-boundary trial is rejected: all14
+trial boards admit, raw1-5 representative plans and all14 current14 boards stay
+exact, but three board areas grow and three copper lengths increase. Strict
+metrics fail; no thresholds or seeds changed. Exact accepted source/compiled web
+is restored. Focused9 nativePASS198.8036s; trial GWT/player NOT RUN after rejection.
+[Rejected trial and restored boundary](task-evidence/PCB/soft-isolation-advice-r1/README.md).
+Next: cause audit of placement ranking versus final routed crop/copper metrics,
+under the unchanged physical/search/work limits. Finite reference-host scope;
+no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

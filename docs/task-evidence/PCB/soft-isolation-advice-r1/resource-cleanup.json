@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "remainingOwnedPids": [],
+  "taskTempRemains": false,
+  "activeTrialContracts": [],
+  "terminal": "Maintained native cleanup marker and exec exit0; no forced termination",
+  "resources": "No preview/browser/build launched for this native trial. Exact5 snapshot files and empty task-temp directory removed without force after verification;5 active contracts retired after archive hash checks.",
+  "preserved": "Original five untracked entries, shared toolchains and unrelated resources unchanged"
+}

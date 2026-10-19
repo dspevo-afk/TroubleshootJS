@@ -1,0 +1,54 @@
+{
+  "status": "SEALED_REJECTED_TRIAL_AND_RESTORATION",
+  "files": [
+    {
+      "file": "focused-native.txt",
+      "sha256": "c57d40295f8cb104d284117b63598ff40d5adcde220d4a1a02cd884519393002"
+    },
+    {
+      "file": "focused-receipt.json",
+      "sha256": "9411b6c9f6b039e6a6086bbe7e7412907e13b8a025e26d64cf7cf6eb52b85fdc"
+    },
+    {
+      "file": "focused-timing.json",
+      "sha256": "b5c35b94456b9a7c0e84d1621542710b45ff3787b1a0d7624f79bc2c2711f38a"
+    },
+    {
+      "file": "focused-inputs.json",
+      "sha256": "7f67b2b7b0936a1668127a3c057b1f3af1b03313fc0725c353efd1269e8a9f9b"
+    },
+    {
+      "file": "focused-input-audit.json",
+      "sha256": "b803aa8eb2c71e761f31031cd8fb4fb5fa89d1d24a0614be58aa28be520a8b90"
+    },
+    {
+      "file": "published14-baselines.json",
+      "sha256": "825b828b679a5e87c1e96bab9335083530b12fd2713539ac6af4c7b5cc67cb04"
+    },
+    {
+      "file": "focused-assessment.json",
+      "sha256": "c243c4d8d06670e7fb212b6923d3e14b2adc96c84b8ef8a731372ffe2e7ac3e0"
+    },
+    {
+      "file": "assessment-timing.json",
+      "sha256": "91a232d3d5af567bd409f10fda86026c892e3023ae42c2a6c66c40d5a640dd1a"
+    },
+    {
+      "file": "restoration-audit.json",
+      "sha256": "d419734b75ef4262aa9a504548ea61378ef30debdf6545a5afaa9e7d649459a4"
+    },
+    {
+      "file": "restored-provenance.json",
+      "sha256": "9c2df1158964e3c6a44c2f3e0be4c2c873810f42c3ad092e55ba4915f2359b68"
+    },
+    {
+      "file": "restored-accepted-input-audit.json",
+      "sha256": "7ddc080015ddf81c5fda205ada8b93c900eb1b2903f527458d5bc7e1990d51ce"
+    },
+    {
+      "file": "rejected-source/trial.patch",
+      "sha256": "31da6e7e4486bef227f4a1efa2226de02755508ca935b56c638ca7b54c048e68"
+    }
+  ],
+  "notes": "Raw native output privacy scan clear. This is preservation of a rejected experiment, not candidate acceptance."
+}
