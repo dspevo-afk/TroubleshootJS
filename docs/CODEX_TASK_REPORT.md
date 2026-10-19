@@ -1,4 +1,37 @@
-# Current checkpoint: soft isolation advice rejected; accepted14 restored
+# Current checkpoint: route availability cause resolved; accepted14 restored
+
+2026-10-19. BaseHEAD202aa5e685961a47c7884d136608dda93ef2ea87 on established
+branch; production14/density13 exact410bcd73. Indefinite PCB continuation active,
+no main/email. Original five untracked entries/shared tools preserved. No active
+native driver/build/preview/browser/viewport override or owned task temp.
+
+route-ranking-cause-r1 developer diagnostic paired informed roots-1022/7/14/4/6
+under exact archived rejected15 and accepted14. Focused3 native PASS111.1615523s
+including terminal cleanup (not separately timed), numeric exit0; unchanged
+60s/6x60000/3+3 limits. Frozen1467 source/phase inputs PASS; eight synthetic reader
+canaries PASS. All ten selected layouts and every archived deterministic metric/
+identity field exact. Physical/source/probe assertions13726; no solver behavior
+qualification. Full matrix/independent electrical/GWT/player NOT RUN.
+
+Same P05requests4/2/5 and P07requests4/3/0 in every pair. Modified0 becomes
+unroutable at7; at14 routes but loses existing area-first comparator; at4 grows
+while selected0 remains. At6 becomes routable but copper grows. At-1022 stays
+selected0 with space/copper tradeoff. No request/rank displacement in these pairs;
+trial15 remains rejected. Winner-only quality does not reveal all alternatives.
+
+Five original owners byte-restored;3 diagnostic active copies retired; exact
+accepted1447 inputs and all5 source/script/compiled-web identity fields PASS.
+Prior accepted GWT/player proof reused only at byte-exact boundary, not fresh.
+Verified snapshots/local private state removed, parent17840/child23032 exited;
+maintained cleanupPASS. Root actual source/export/checker review and final
+diagnostic/restoration audit PASS; docs/evidence only.
+
+Next: final diff/cached checks and normal publication of diagnostic, then
+accepted14 crop-margin measurement. Worker owns only new crop-margin diagnostic
+exporter; no production change, implementation acceptance or new shrinkage claim.
+
+# Previous checkpoint: soft isolation advice rejected; accepted14 restored
+
 
 2026-10-19. HEAD410bcd73dc96d87d1d4428df7cc553216d05d691 normally pushed/verified
 on codex/q60-faulted-profile-counts. Toolbar fix accepted and production default/

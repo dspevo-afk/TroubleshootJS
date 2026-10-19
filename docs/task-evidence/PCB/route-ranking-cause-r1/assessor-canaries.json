@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "canaryCount": 8,
+  "scope": "One synthetic exact case-set plus seven rejection canaries; not PCB runtime proof"
+}

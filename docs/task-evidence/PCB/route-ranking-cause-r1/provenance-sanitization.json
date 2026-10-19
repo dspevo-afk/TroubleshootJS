@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "rawSha256": "367dfb276cc03c344ab1720e8baaf17902aae8e79e3ada219dc2676ceec16fc8",
+  "publishedSha256": "0682f85655a9af99d0371f3d781df46f472186c56217926023f0db4a54f9f6b7",
+  "scope": "Removed four private absolute roots and fixed protocol string; all five execution identity fields preserved and exact accepted410"
+}

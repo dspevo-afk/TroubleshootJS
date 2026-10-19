@@ -1,0 +1,18 @@
+{
+  "session": 18106,
+  "drivers": [
+    {
+      "pid": 17840,
+      "startTicks": "639279918518839623",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/route-ranking-cause-r1/run_focused.ps1"
+    },
+    {
+      "pid": 23032,
+      "startTicks": "639279918521263711",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/route-ranking-cause-r1/run_focused.ps1"
+    }
+  ],
+  "discovery": "Initial command-line search also matched recorder and parent; exact observed parent/child identities selected without termination"
+}

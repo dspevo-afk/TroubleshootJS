@@ -1,0 +1,13 @@
+{
+  "status": "PREDECLARED_BEFORE_RUNTIME",
+  "baseCommit": "202aa5e685961a47c7884d136608dda93ef2ea87",
+  "purpose": "Reproduce five informed accepted14/rejected15 pairs and export existing chronological route outcomes and placement scores; diagnose availability, not tune generation.",
+  "roots": ["-1022", "7", "14", "4", "6"],
+  "partitions": [["-1022", "7"], ["14", "4"], ["6"]],
+  "versions": [14, 15],
+  "limits": "Existing 60s per JVM, six placement candidates, 60000 evaluations per candidate and three requests per router unchanged. One serial maintained verifier phase.",
+  "inputs": "Exact archived four-owner trial bytes, accepted default/replay14 unchanged; developer-only test exporter and three JVM partitions. No production telemetry or algorithm change.",
+  "oracle": "Every selected version14/15 geometry and existing deterministic metric/identity field must equal its archived record. Existing physical/source/probe checks retained. Statistics are observations, not selector acceptance or electrical solver qualification.",
+  "limitsOfInference": "Ranks precede prefix rewriting. Outcomes establish requested attempt success/rejection; only winner quality is available. This does not establish every successful alternative comparator tuple, all-seed behavior or manufacturing validity.",
+  "rollback": "Byte restore all five original owners; retire active diagnostic copies; audit exact accepted1447 inputs and compiled web. No GWT/player rerun for unshipped diagnostic source. Archive all evidence and failures."
+}

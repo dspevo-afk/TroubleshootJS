@@ -49,8 +49,14 @@ exact, but three board areas grow and three copper lengths increase. Strict
 metrics fail; no thresholds or seeds changed. Exact accepted source/compiled web
 is restored. Focused9 nativePASS198.8036s; trial GWT/player NOT RUN after rejection.
 [Rejected trial and restored boundary](task-evidence/PCB/soft-isolation-advice-r1/README.md).
-Next: cause audit of placement ranking versus final routed crop/copper metrics,
-under the unchanged physical/search/work limits. Finite reference-host scope;
+Developer-only route availability audit reproduces all ten selected layouts/metrics
+exactly across five affected14/15 pairs. Native3PASS111.1616s; all requested
+attempts stay the same. Modified0 routing rejection/selection causes the prior
+regressions, not rank displacement. Rejected15 remains rejected; accepted1447
+inputs/full compiled identity restored. No fresh GWT/player/full matrix claim.
+[Route cause and limits](task-evidence/PCB/route-ranking-cause-r1/README.md).
+Next: accepted14 crop-margin measurement under unchanged physical/search/work limits.
+Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 

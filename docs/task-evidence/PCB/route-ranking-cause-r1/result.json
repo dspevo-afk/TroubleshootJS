@@ -1,0 +1,8 @@
+{
+  "status": "PASS_DIAGNOSTIC_AND_RESTORATION",
+  "cases": 10,
+  "nativeSeconds": 111.1615523,
+  "finding": "Same requested attempts in every pair; changed candidate0 routing/selection causes trial regressions, not rank displacement",
+  "production": "Exact accepted14/density13 and full compiled web restored; rejected15 remains rejected",
+  "limits": "Finite informed roots; winner-only quality; no fresh GWT/player/full-matrix/electrical qualification; unchanged prior evidence reused only at exact audited execution boundary"
+}
