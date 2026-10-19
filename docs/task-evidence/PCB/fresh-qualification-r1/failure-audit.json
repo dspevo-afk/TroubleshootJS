@@ -1,0 +1,25 @@
+{
+  "cohort": [
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "cleanup": "PASS",
+  "nativeGate": "FAIL",
+  "review": "Root source/status/hash review plus optional read-only source review; graph proof gap retained explicitly",
+  "nativeLogSha256": "227ac9e826280d19952b4176d2b87bc6df78bf6445e0964d75790239beeb0512",
+  "status": "PASS_AUDIT_OF_FAILED_RUN",
+  "failure": "IllegalStateException: PCB board outline leaves workbench canvas",
+  "collectorSha256": "afcac91b7c2a5aed607781fe39ea1e9bdf1f960309fb7c5851cfe98c578d3571",
+  "measurements": "Not displayed or inspected; incomplete cohort not sealed",
+  "rejected": [
+    "4"
+  ],
+  "admitted": [
+    "2",
+    "3",
+    "6"
+  ],
+  "inputAudit": "PASS1442"
+}

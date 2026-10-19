@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic sealer/schema boundary only; no actual native or electrical proof and no real baseline values read",
+  "scratchCleanup": "Exact owned files and empty verified OS-temp directory removed",
+  "cases": [
+    {
+      "case": "complete synthetic baseline accepts exact signed-long strings",
+      "status": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "same frozen inputs are idempotent",
+      "status": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "missing root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "duplicate root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "unexpected root",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "full-field physical FAIL row",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: version",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: density",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: area",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: copperManhattanLength",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: geometrySha256",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: layoutSeed",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: routingSeed",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: twoLayerAttempts",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "invalid field: elapsedMillis",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "failed native operation",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "noninteger whitespace version",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "noninteger whitespace area",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "failed input audit",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "different production source",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "missing cleanup terminal",
+      "status": "PASS",
+      "actual": "REJECT"
+    },
+    {
+      "case": "refuse replacement of existing frozen output",
+      "status": "PASS",
+      "actual": "REJECT"
+    }
+  ]
+}

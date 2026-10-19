@@ -1,0 +1,13 @@
+{
+  "baselineCommit": "22df5e0d0c58de516f40ccc59fe71f1a33fb9305",
+  "purpose": "Add uninspected qualification data before the next cause-led packing proposal; previous ten roots now serve as regression cases",
+  "seeds": ["2", "3", "4", "6"],
+  "selectionRule": "First four positive signed-long seeds not in the existing ten-root PCB packing cohort; no selection or substitution based on outcome",
+  "baseline": "Exact accepted13/density12 ROLE source, native actual generation and physical admission. No production source change. Require every predeclared baseline route accepted; retain/report any failure without swapping seeds or blessing missing metrics.",
+  "collection": "Record actual geometry/area/protected-void/copper/vias, component/pad census, source-plan graph hash, seeds, chosen attempt, rank order, current owner counters and elapsed phase time. placementEvaluations is the maintained sum of accepted raw-plan evaluations and excludes discarded partial work; do not call it total attempted work.",
+  "blinding": "Keep baseline measurement values uninspected by root and workers until the next proposal's source is frozen and that proposal has passed the existing ten regression roots. Collection output is captured; inspect only schema/status/provenance and checksums beforehand. This is a workflow boundary, not a cryptographic access guarantee.",
+  "nextProposal": "Investigate existing demand-derived soft isolation-package boundary targeting, without new weights or hard allowed rectangles. Declare its source scope before edits. Do not design or tune it from these four baseline values.",
+  "qualification": "After proposal freeze and existing-ten acceptance, freshly generate all four proposed cases. All must physically admit, retain source graph/identities and fixed bounds, and must not regress area/void/copper/vias against frozen accepted13. At least one strict area/void improvement is required somewhere in the full fourteen; no case dropping or seed replacement. Full identity/native/GWT/player gates remain additional requirements.",
+  "limits": "Four additional finite native PCB cases, not allseed, normal advanced/HARD, solver/customer proof, modesthost, optimum or manufacturing release",
+  "publication": "Normal established branch only; no main/email. Preserve original five untracked entries and unrelated work."
+}

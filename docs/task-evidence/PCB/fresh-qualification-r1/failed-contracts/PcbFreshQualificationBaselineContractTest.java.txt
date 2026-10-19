@@ -1,0 +1,173 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.TreeSet;
+
+public final class PcbFreshQualificationBaselineContractTest {
+    private static final long[] SEEDS = { 2L, 3L, 4L, 6L };
+    private static int assertions;
+    private PcbFreshQualificationBaselineContractTest() { }
+
+    public static void main(String[] args) {
+        int accepted = 0;
+        StringBuilder failures = new StringBuilder();
+        for (long seed : SEEDS) {
+            long caseStart = System.nanoTime();
+            try { measure(seed, 13); accepted++; }
+            catch (AssertionError | RuntimeException failure) {
+                String reason = failure.toString();
+                System.out.println(prefix(13) + "{\"status\":\"FAIL\",\"seed\":\"" + seed +
+                    "\",\"version\":13,\"elapsedMillis\":" + millis(caseStart) + ",\"error\":" + quote(reason) + "}");
+                failures.append(seed).append(':').append(reason).append(';');
+            }
+        }
+        if (failures.length() != 0 || accepted != SEEDS.length)
+            throw new AssertionError("Fresh qualification baseline failures: " + failures);
+        System.out.println("PASS: PCB fresh qualification baseline contracts roots=4 assertions=" + assertions);
+    }
+
+    static void measure(long seed, int version) {
+        if (version != 13 && version != 14) throw new IllegalArgumentException("Only PCB versions13 and14 are supported");
+        long caseStart = System.nanoTime();
+        long start = System.nanoTime();
+        Rb56Plan plan = Rb56Plan.resolve(seed, version);
+        long resolve = millis(start);
+        check(plan.seed == seed && plan.placementInterpretationVersion == version, "resolved exact identity");
+        String source = sourceGraphSha256(seed, plan);
+        start = System.nanoTime();
+        TroubleshootBoard board = plan.board();
+        MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, plan.layoutSeed, plan.routingSeed);
+        long generate = millis(start);
+        check(route != null && route.accepted() && route.getFailure() == null,
+            "actual RB56 route accepted: " + (route == null ? "missing result" : route.toCanonical()));
+        PcbBoardLayout layout = route.getLayout();
+        String geometry = layout.geometryFingerprint();
+        long validationStart = System.nanoTime();
+        GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRb56Route(
+            board, route, plan.layoutSeed, plan.routingSeed);
+        admission.requireConstruction(board, layout);
+        layout.validateGeometry(board); layout.validateRoutingGeometry(board); layout.validateRouteQuality();
+        new PcbTwoLayerRules(board, layout).validate(layout); PcbTraceClearance.validate(layout.getTraces());
+        PcbPlacementConstraints constraints = board.getPlacementConstraints();
+        int density = constraints.placementDensityVersion;
+        check(constraints.requiresTwoLayerRouting, "P07 two-layer routing required");
+        check(density == (version == 13 ? 12 : 13), "version-to-density interpretation");
+        check(layout.matchesGenerationSeeds(plan.layoutSeed, plan.routingSeed), "exact plan seeds retained");
+        verifyIdentity(board, layout, plan); verifyRoleWidths(board, layout);
+        MediumBoardPhysicalPolicy.Statistics stats = route.getStatistics();
+        check(stats.placementCandidates == 6 && stats.oneFaceAttempts <= 3 &&
+            stats.twoLayerAttempts <= 3 && stats.routeAttempts <= 6, "six placements and 3+3 route caps");
+        Rectangle outline = layout.getBoardOutline();
+        check(outline != null && outline.width > 0 && outline.height > 0, "valid outline");
+        long area = (long) outline.width * outline.height, copper = copperManhattanLength(layout);
+        int vias = 0;
+        for (PcbBoardHole hole : layout.getHoles()) if (hole.kind == PcbBoardHole.Kind.VIA) vias++;
+        long whitespaceStart = System.nanoTime();
+        int voidArea = PcbFunctionalGroupingContractTest.reportWhitespace(board, layout, seed, version);
+        long whitespace = System.nanoTime() - whitespaceStart;
+        check(geometry.equals(layout.geometryFingerprint()), "geometry remains pure");
+        check(source.equals(sourceGraphSha256(seed, plan)), "source graph remains pure");
+        long validate = Math.max(0L, (System.nanoTime() - validationStart - whitespace) / 1000000L);
+        printCase(version, seed, plan, density, layout, stats, area, voidArea, copper, vias,
+            PlayerSessionFingerprint.of(geometry), source, millis(caseStart), resolve, generate,
+            validate, whitespace / 1000000L);
+    }
+
+    private static void verifyIdentity(TroubleshootBoard board, PcbBoardLayout layout, Rb56Plan plan) {
+        TreeSet<String> parts = new TreeSet<String>(), pads = new TreeSet<String>();
+        for (Rb56Plan.Part part : plan.parts()) {
+            parts.add(part.id);
+            for (String terminal : part.terminalIds()) pads.add(part.id + "." + terminal);
+        }
+        TreeSet<String> physicalParts = new TreeSet<String>(), physicalPads = new TreeSet<String>();
+        for (PcbComponentPlacement part : layout.getComponents()) physicalParts.add(part.getComponentId());
+        for (PcbPadPlacement pad : layout.getPads()) physicalPads.add(pad.getPadId());
+        check(parts.size() == plan.parts().size() && parts.equals(new TreeSet<String>(board.getComponentIds())) &&
+            parts.equals(physicalParts) && physicalParts.size() == layout.getComponents().size(),
+            "exact source/board/layout part inventory");
+        check(pads.equals(new TreeSet<String>(board.getPadIds())) && pads.equals(physicalPads) &&
+            physicalPads.size() == layout.getPads().size(), "exact source/board/layout pad identities");
+    }
+
+    private static void verifyRoleWidths(TroubleshootBoard board, PcbBoardLayout layout) {
+        PcbTraceWidthProfile profile = board.getPlacementConstraints().getTraceWidthProfile();
+        check(profile == PcbTraceWidthProfile.ROLE_WIDTHS && "ROLE_TRACE@1".equals(profile.getIdentity()) &&
+            profile.maximumWidth() == 13, "accepted ROLE_TRACE profile");
+        for (BoardNet.RoutingRole role : BoardNet.RoutingRole.values())
+            check(profile.widthFor(role) == literalWidth(role), "literal profile width " + role);
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            BoardNet net = board.getNet(trace.getNetId());
+            check(net != null && trace.getWidth() == literalWidth(net.getRoutingRole()), "literal routed role width");
+        }
+    }
+    private static int literalWidth(BoardNet.RoutingRole role) {
+        switch (role) {
+        case HIGH_CURRENT: return 13;
+        case SUPPLY:
+        case RETURN: return 11;
+        case CONTROL:
+        case SIGNAL: return 9;
+        default: throw new AssertionError("Unknown routing role " + role);
+        }
+    }
+    private static long copperManhattanLength(PcbBoardLayout layout) {
+        long length = 0;
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            int[] xs = trace.getXPoints(), ys = trace.getYPoints();
+            check(xs.length == ys.length && xs.length >= 2, "paired trace coordinates");
+            for (int i = 1; i < xs.length; i++)
+                length += Math.abs((long) xs[i] - xs[i - 1]) + Math.abs((long) ys[i] - ys[i - 1]);
+        }
+        return length;
+    }
+
+    private static String sourceGraphSha256(long seed, Rb56Plan plan) {
+        StringBuilder source = new StringBuilder().append(seed).append('|').append(plan.layoutSeed)
+            .append('|').append(plan.routingSeed).append('|').append(plan.topology()).append('|');
+        for (Rb56Plan.Part part : plan.parts()) source.append('[').append(part.canonical()).append(']');
+        return PlayerSessionFingerprint.of(source.toString());
+    }
+
+    private static void printCase(int version, long seed, Rb56Plan plan, int density, PcbBoardLayout layout,
+            MediumBoardPhysicalPolicy.Statistics stats, long area, int voidArea, long copper, int vias,
+            String geometrySha, String sourceSha, long elapsed, long resolve, long generate,
+            long validate, long whitespace) {
+        StringBuilder out = new StringBuilder("{\"status\":\"PASS\",\"seed\":\"").append(seed)
+            .append("\",\"version\":").append(version).append(",\"density\":").append(density)
+            .append(",\"layoutSeed\":\"").append(plan.layoutSeed).append("\",\"routingSeed\":\"")
+            .append(plan.routingSeed).append("\",\"parts\":").append(layout.getComponents().size())
+            .append(",\"pads\":").append(layout.getPads().size()).append(",\"area\":").append(area);
+        Rectangle r = layout.getBoardOutline();
+        out.append(",\"width\":").append(r.width).append(",\"height\":").append(r.height)
+            .append(",\"largestProtectedEmptyRectangleArea\":").append(voidArea)
+            .append(",\"copperManhattanLength\":").append(copper).append(",\"vias\":").append(vias);
+        field(out, "geometrySha256", geometrySha); field(out, "sourceGraphSha256", sourceSha);
+        out.append(",\"selectedAttempt\":").append(stats.selectedPlacementAttempt)
+            .append(",\"rankedPlacementAttempts\":").append(stats.rankedPlacementAttempts.toString())
+            .append(",\"acceptedPlanEvaluations\":").append(stats.placementEvaluations)
+            .append(",\"placementRejections\":").append(stats.placementRejections)
+            .append(",\"oneFaceAttempts\":").append(stats.oneFaceAttempts)
+            .append(",\"twoLayerAttempts\":").append(stats.twoLayerAttempts).append(",\"routeAttempts\":")
+            .append(stats.routeAttempts).append(",\"elapsedMillis\":").append(elapsed)
+            .append(",\"phaseMillis\":{\"resolve\":").append(resolve)
+            .append(",\"generate\":").append(generate).append(",\"validate\":").append(validate)
+            .append(",\"whitespace\":").append(whitespace).append('}');
+        field(out, "counterScope", "acceptedPlanEvaluations is the policy count of accepted raw-plan evaluations and excludes discarded partial work; placementRejections counts planner rejections; oneFaceAttempts and twoLayerAttempts count policy attempts in each routing tier; routeAttempts is the policy total across both tiers; phaseMillis uses System.nanoTime per resolve/generate/validate/whitespace phase; elapsedMillis is total case time.");
+        System.out.println(prefix(version) + out.append('}'));
+    }
+    private static String prefix(int version) {
+        return version == 13 ? "PCB_FRESH_BASELINE_CASE " : "PCB_FRESH_PROPOSAL_CASE ";
+    }
+    private static long millis(long start) { return (System.nanoTime() - start) / 1000000L; }
+    private static void field(StringBuilder out, String key, String value) {
+        out.append(",\"").append(key).append("\":\"").append(value).append('"');
+    }
+    private static String quote(String value) {
+        return "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"")
+            .replace("\r", "\\r").replace("\n", "\\n") + "\"";
+    }
+    private static void check(boolean condition, String message) {
+        assertions++;
+        if (!condition) throw new AssertionError(message);
+    }
+}

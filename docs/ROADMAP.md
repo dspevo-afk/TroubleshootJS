@@ -16,9 +16,12 @@ were rejected by strict finite metrics despite passing native physical/identity
 checks. Exact patches/failures remain; accepted13 source/full-web bytes are
 restored and audited. No experimental14 generator behavior is published.
 [Latest trial and limits](task-evidence/PCB/vacancy-dominance-r1/README.md).
-Former holdouts now inform design and are regression cases. Next is a fresh
-predeclared qualification cohort, then isolation-package boundary targeting that
-sets primary-region width. Keep physical isolation,6/3+3 and work/time limits.
+Former holdouts now inform design and are regression cases. Fresh predeclared
+roots2,3,4,6 exposed an accepted13 canvas failure at4; the other three admitted.
+The complete-baseline gate failed, no seed was substituted or baseline sealed,
+and geometry values remain uninspected. [Failure and review](task-evidence/PCB/fresh-qualification-r1/README.md).
+Next is a precise canvas-boundary fixture and cause investigation; the soft
+isolation-package boundary proposal is deferred. Keep isolation,6/3+3 and limits.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.
 
 **Previous task:** **Private13 connected vacancy preference accepted**

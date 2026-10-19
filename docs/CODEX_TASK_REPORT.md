@@ -1,4 +1,32 @@
-# Current checkpoint: vacancy dominance rejected; accepted13 restored
+# Current checkpoint: fresh cohort baseline failed; canvas cause investigation
+
+2026-10-19. HEAD22df5e0d0c58de516f40ccc59fe71f1a33fb9305 pushed and exact
+remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 remains
+production. User's indefinite PCB work continues; no main/email. Preserve the
+original five untracked entries and unrelated work.
+
+Scope: docs/task-evidence/PCB/fresh-qualification-r1/scope.json predeclared
+seeds2,3,4,6, the first four unused positive seeds. Native collection FAIL in
+74.0138399s including terminal cleanup, cleanup duration not separately measured.
+Roots2,3,6 admitted;4 threw PCB board outline leaves workbench canvas. All1,442
+consumed inputs exact. No seed substitution, baseline seal or geometry-value
+inspection. Accepted source/full-web digests match; production remains13.
+
+Optional source review found the immutable plan hash plus ID sets does not prove
+live board graph purity. Precursor collector archived, not accepted graph proof;
+its live registration/file removed and registry byte-restored. Sealer's missing
+per-case PASS check fixed;22 synthetic canaries pass, no actual sealing attempted.
+Original scope retained without blessing an incomplete cohort. Full qualification
+and soft isolation-boundary proposal held. Next: precise saved13 seed4 negative
+fixture with live graph mapping/purity checks, then investigate crop/canvas cause.
+
+Native/snapshot cleanup PASS; no preview/tab/download/viewport override remains.
+One bounded worker owns only new PcbCanvasBoundaryContractTest.java for the next
+scope, unvalidated and excluded from this evidence publication. Root owns its
+integration. GWT/player NOT RUN for this native-only evidence; no production
+behavior changed. No main/email; unrelated data remains preserved.
+
+# Previous checkpoint: vacancy dominance rejected; accepted13 restored
 
 2026-10-19. HEAD40b109a64323683a46a6307075fcf62e7c479d5e normally pushed and
 exact remote verified on origin/codex/q60-faulted-profile-counts. Accepted13 remains

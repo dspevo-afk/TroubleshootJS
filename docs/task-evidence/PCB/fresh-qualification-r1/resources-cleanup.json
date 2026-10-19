@@ -1,0 +1,9 @@
+{
+  "native": "Terminal FAIL with cleanup; no verifier resources remain",
+  "preview": "No preview/tab/viewport/download created",
+  "collector": "Exact frozen source archived; failing positive suite removed from live registry/contracts",
+  "registry": "Byte-exact pre-task snapshot restored",
+  "status": "PASS",
+  "measurements": "Remain uninspected; no seal created",
+  "snapshot": "Exact verified files and empty task-owned OS-temp directory removed"
+}
