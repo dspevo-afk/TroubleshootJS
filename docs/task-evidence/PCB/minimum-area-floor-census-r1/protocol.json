@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "baseCommit": "748e9c083f2bd4a4ace6289529fba94dc1aa6060",
+  "baselineRef": {
+    "path": "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json",
+    "sha256": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816"
+  },
+  "mainSealRef": {
+    "path": "docs/task-evidence/PCB/silkscreen-scale-r1/final-inputs.json",
+    "sha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a"
+  },
+  "sourcePins": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "a7f7dfca5c85c17380be868eda6175dee551172d7695bf6a2cf18012e844f732",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "335dc396b4f2f8fcaaa411179c579d55ac927153e86c29d1b9a1805ed7b76556"
+  },
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "limits": {
+    "floor": 5000000,
+    "maxArea": 64000000,
+    "largeHeadroom": 8000000,
+    "headroom": 1000000,
+    "smallPartCutoff": 40,
+    "additiveAllowance": 500000
+  },
+  "scope": "Offline retained successful raw candidate4/5 sizing arithmetic; no alternative/runtime/all-seed proof",
+  "acceptance": [
+    "Exact baseline, main1475 and source pins before arithmetic",
+    "All14 roots and six raw candidate score demands per root, no silently skipped errors",
+    "Exactly28 fallback sizing rows with current Java-double and independent rational-ceil agreement",
+    "Strict increase versus equality/no-op floor classified separately; no proposed lowered threshold",
+    "No changed source, native/GWT/player execution or changed routing/physical/work gates"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "status": "SOURCE_REVIEWED",
+  "scope": "Offline source-bound floor arithmetic only",
+  "consumedSha256": {
+    "protocol.json": "abe3c2ae81156a9b77689a17cadb65a2f5d31a5b77af7e537127b577ded2be51",
+    "source-audit.md": "2a17d524feee3573a6a0f5a4ed58d01030893b2ee05c86b947703f53b18f2ac9",
+    "measure.py": "ef5481e8d3322308948cf4d1489e86846594fa994b14852a86568bf44ae3cc7f",
+    "check_measure.py": "6a33da52d0aecbc2359c6b490223fce3eb00d0f8217e9bf26cc4be45e9506052"
+  },
+  "reviewedCorrections": [
+    "Score components accept source-permitted zero",
+    "All1475 sealed files actually hashed, not only four owner pins",
+    "Selected route need not be first in placement ranking",
+    "Medium minimum20 and required canonical rank/selected fields",
+    "Real binary64/rational disagreement rejects; grouped checks labeled accurately"
+  ],
+  "nativeOrPlayerProof": "NOT RUN",
+  "productionSourceChanged": false
+}

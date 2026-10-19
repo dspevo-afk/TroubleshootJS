@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Offline28-candidate floor census; no runtime alternative claimed",
+  "reviewedSha256": {
+    "protocol.json": "abe3c2ae81156a9b77689a17cadb65a2f5d31a5b77af7e537127b577ded2be51",
+    "source-audit.md": "2a17d524feee3573a6a0f5a4ed58d01030893b2ee05c86b947703f53b18f2ac9",
+    "measure.py": "ef5481e8d3322308948cf4d1489e86846594fa994b14852a86568bf44ae3cc7f",
+    "check_measure.py": "6a33da52d0aecbc2359c6b490223fce3eb00d0f8217e9bf26cc4be45e9506052",
+    "reader-review.json": "36dd7818a1585700901cfa7551633286b70b69e237ac7dcf527fe5548c7c0e36",
+    "run-results.json": "cf89219bc43227505b49b7f7dbbddb1a1826dd65091f743429b66151dce59df3",
+    "census.json": "e928c974fa9b0e2fd12503f440ecf2ca0b428a46f17c258e127ce3aae873022c",
+    "README.md": "734647a3dac26f8e7504406cff1d2c1e88f162d89064143dc3c3520881d89ed7"
+  },
+  "canaryGroups": 26,
+  "all1475Exact": true,
+  "originalNativeRowsExact": 14,
+  "aboveFloorNoop": 28,
+  "capsApplied": 0,
+  "native": "NOT RUN",
+  "GWT": "NOT RUN",
+  "player": "NOT RUN",
+  "productionSourceChanged": false,
+  "taskOwnedPersistentResources": 0,
+  "preservedUnrelatedEntries": 5
+}

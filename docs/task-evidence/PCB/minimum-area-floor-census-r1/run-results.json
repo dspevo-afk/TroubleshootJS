@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "phases": [
+    {
+      "command": "python -X utf8 -B docs/task-evidence/PCB/minimum-area-floor-census-r1/check_measure.py",
+      "exitCode": 0,
+      "elapsedSeconds": 0.7033376999897882,
+      "stdout": "PASS measure.py canaryGroups=26 sourceAudit=PASS sealFiles=1475 nativeVersion15Rows=14; no census file written\n",
+      "stderr": "",
+      "cleanup": "NOT APPLICABLE; no persistent resource"
+    },
+    {
+      "command": "python -X utf8 -B docs/task-evidence/PCB/minimum-area-floor-census-r1/measure.py",
+      "exitCode": 0,
+      "elapsedSeconds": 0.6614536999841221,
+      "stdout": "PASS source-bound offline census: roots=14 fallbackRows=28\n",
+      "stderr": "",
+      "cleanup": "NOT APPLICABLE; no persistent resource"
+    }
+  ],
+  "consumedSha256": {
+    "protocol.json": "abe3c2ae81156a9b77689a17cadb65a2f5d31a5b77af7e537127b577ded2be51",
+    "source-audit.md": "2a17d524feee3573a6a0f5a4ed58d01030893b2ee05c86b947703f53b18f2ac9",
+    "measure.py": "ef5481e8d3322308948cf4d1489e86846594fa994b14852a86568bf44ae3cc7f",
+    "check_measure.py": "6a33da52d0aecbc2359c6b490223fce3eb00d0f8217e9bf26cc4be45e9506052"
+  }
+}

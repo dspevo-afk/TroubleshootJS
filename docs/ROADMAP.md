@@ -181,6 +181,13 @@ are retained; corrected72-canary reader and fresh final phases pass. Copy restor
 unchanged. No promotion or threshold change. Next audit the minimum-area sizing
 floor and its ownership before any further bounded compaction trial.
 [Local-pose rejection and limits](task-evidence/PCB/passive-local-pose-choice-r1/RESULTS.md).
+The source-bound floor census now verifies all 1,475 accepted inputs and the
+original native provenance for all 14 saved rows. All 28 fallback targets exceed
+the five-million floor; neither area cap applies. The 26 reader-check groups and
+28-row offline measurement pass. No floor change or new runtime proof is claimed.
+Next measure the existing routed compactor's axis cuts and rejection causes;
+its whole-axis acceptance may hide useful cuts, but that remains unmeasured.
+[Floor census and limits](task-evidence/PCB/minimum-area-floor-census-r1/README.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

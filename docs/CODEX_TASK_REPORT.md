@@ -1,4 +1,34 @@
-# Current checkpoint: local pose choice rejected; minimum-area planning next
+# Current checkpoint: floor census complete; compactor cut diagnosis next
+
+2026-10-19. Base/published HEAD `748e9c083f2bd4a4ace6289529fba94dc1aa6060` on
+`codex/q60-faulted-profile-counts`; exact origin verified. Indefinite continuation
+active; no main/email. Production/default15/general16 and main1475 unchanged.
+
+Minimum-area floor census complete: 14 accepted15 roots, all six recorded scores
+each, 28 fallback candidate4/5 targets. Floor strict increases0, equality0,
+already-above28; neither cap applies. Candidate4 target range5,578,398..7,959,880;
+candidate5 range8,117,597..19,149,700. No lowered floor was chosen or executed.
+
+Fresh final Python gates pass26 synthetic check groups and the28-row census.
+Both verify all1475 accepted file hashes, four exact source owners and all14
+retained rows against the pinned original native log. Root review corrected
+manifest coverage, route-vs-placement rank semantics and zero-component grammar
+before final checks. Frozen consumed inputs and phase times are retained.
+This is offline reuse of audited observations; fresh native/GWT/player/alternative
+layout/repair/all-seed/manufacturing NOT RUN. No production source or gate changed.
+
+No source copy or persistent process was created. Original5 unrelated entries
+and shared tools remain preserved. Root reviewed integrated scope; next publish
+normally and verify exact remote SHA, then continue. Evidence:
+`docs/task-evidence/PCB/minimum-area-floor-census-r1/README.md`.
+
+Next unstarted runtime measurement: existing routed-compactor cut/cause receipts.
+Source audit confirms piecewise compression already exists and accepts all cuts
+for one axis atomically. One invalid cut can reject an axis by control flow;
+actual frequency/cause and salvageable legal cuts remain unproved. No proposed
+compaction behavior, numeric cap or physical oracle change is accepted yet.
+
+# Previous checkpoint: local pose choice rejected; minimum-area planning next
 
 2026-10-19. Base `7838523bb45fdc733c388eb631a1695fd23365ac` on
 `codex/q60-faulted-profile-counts`. This checkpoint records diagnostic19 for
