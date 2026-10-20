@@ -1,0 +1,11 @@
+{
+  "headless": false,
+  "executable": "brave.exe",
+  "startTicks": "639281110619307263",
+  "status": "PASS",
+  "uniqueProfileExists": true,
+  "limits": "Full executable/command/profile/ws endpoint remain private; no navigation until this actual root guard",
+  "commandContainsRecordedProfile": true,
+  "sandboxEnabled": true,
+  "pid": 11608
+}

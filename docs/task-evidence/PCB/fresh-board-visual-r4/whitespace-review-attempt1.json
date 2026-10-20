@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_REVIEW_ASSUMPTION",
+  "scope": "Root raw-text byte audit only; no application/native/build/player failure",
+  "reason": "Initial helper assumed3 blank meter-layout tab lines in every body. Pending multi-rail preparation view has0 because it displays the preparation UI without the meter",
+  "preservation": "Failure occurred before writing attributes or review artifacts; all raw bodies unchanged",
+  "correction": "Require exactly0 only for the explicitly observed pending-preparation body and3 for each actual meter view"
+}

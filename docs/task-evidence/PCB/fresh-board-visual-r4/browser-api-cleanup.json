@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "actualBrowserExitCode": 0,
+  "signal": null,
+  "currentProfileAbsent": true,
+  "elapsedSeconds": 0.171,
+  "limits": "Normal context/client/server API close; actual process exit observed; no manual profile deletion"
+}

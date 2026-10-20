@@ -1,0 +1,49 @@
+{
+  "limits": "Actual maintained stop exec returned0 before separate root6birth/state/profile/port checks; no termination/manual deletion; older blocked profiles/private/unrelated data retained",
+  "checks": [
+    {
+      "pid": 18240,
+      "startTicks": "639281110248678722",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 29572,
+      "startTicks": "639281110255524538",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 8708,
+      "startTicks": "639281115366313929",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 20024,
+      "startTicks": "639281115368589761",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26000,
+      "startTicks": "639281110291182063",
+      "executable": "powershell.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 11608,
+      "startTicks": "639281110619307263",
+      "executable": "brave.exe",
+      "recordedBirthExited": true
+    }
+  ],
+  "recordedBirths": 6,
+  "currentProfileAbsent": true,
+  "elapsedObservationSeconds": 0.7220734,
+  "status": "PASS",
+  "browserApiExit0": true,
+  "actualPreviewStopExecExitCode": 0,
+  "port8907Released": true,
+  "managedStateAbsent": true
+}

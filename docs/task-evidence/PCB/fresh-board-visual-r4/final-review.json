@@ -1,0 +1,329 @@
+{
+  "status": "PASS_ACCEPTED_FOR_NORMAL_DOCS_COMMIT_PUSH",
+  "baseCommit": "29c85f95fa2849d46bde4227a48ef2b62ab7420b",
+  "scope": "Finite first-results player evidence with retained failed observers; exact staged path/raw/canonical/privacy/diff review",
+  "preFinalReviewStagedPaths": 61,
+  "comparisons": {
+    "CRLF_NORMALIZATION_ONLY": 2,
+    "RAW_EXACT": 59
+  },
+  "files": {
+    "docs/CODEX_TASK_REPORT.md": {
+      "workingSha256": "1c8a5f0ca105dc263059c86d7dd2a7559e6b4363e677cb8a31aa04485f4e5720",
+      "indexSha256": "53145f063e17fd91eba35c1bff3d1ea1b56731ec3d520dd12db8ddfa3b625160",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/ROADMAP.md": {
+      "workingSha256": "e471a68fb2eca281584ca47fb6547f4cbc5f5e24851902eef19c1ffb52d08b25",
+      "indexSha256": "3d10feb9ee78eee020abbbd49e2e19185cfd87d984b9a9aeb240ca6fd4a3be14",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/task-evidence/PCB/empty-resistor-silk-r1/publication.json": {
+      "workingSha256": "071c63b98ffd67147e96c20b2de1d036017f0e2dc3a1dd33387eae44bd29dfdc",
+      "indexSha256": "071c63b98ffd67147e96c20b2de1d036017f0e2dc3a1dd33387eae44bd29dfdc",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/.gitattributes": {
+      "workingSha256": "6963d7038176d5cbe7ca4cd30dc405f7a25cfcc2a32707fae32d64d46355d951",
+      "indexSha256": "6963d7038176d5cbe7ca4cd30dc405f7a25cfcc2a32707fae32d64d46355d951",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/RESULTS.md": {
+      "workingSha256": "770d5cdaebfdb71926011e8cccd5fe8aee1bf48f78459b59f0e6de4ff7dcc265",
+      "indexSha256": "770d5cdaebfdb71926011e8cccd5fe8aee1bf48f78459b59f0e6de4ff7dcc265",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/backside-contact-scope.json": {
+      "workingSha256": "2ba339259f8302e66bc3c1d666522489c3bfe18e65b3cc152ea376198c9eebc7",
+      "indexSha256": "2ba339259f8302e66bc3c1d666522489c3bfe18e65b3cc152ea376198c9eebc7",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/browser-api-cleanup.json": {
+      "workingSha256": "cc7a24b4b94fcfe28424fe3b8e3fb3cd3f733281175be3542f1bebe30d9b44c8",
+      "indexSha256": "cc7a24b4b94fcfe28424fe3b8e3fb3cd3f733281175be3542f1bebe30d9b44c8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/browser-owner.json": {
+      "workingSha256": "d3b2c29f71abb77fcb00103086fb1b9bcd7db5300f01e104784a339f15214804",
+      "indexSha256": "d3b2c29f71abb77fcb00103086fb1b9bcd7db5300f01e104784a339f15214804",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/browser-preclose-owner.json": {
+      "workingSha256": "75b6ae32586e7756f8fa59ced1b874e293c37047bacfcb185d118385af685f9c",
+      "indexSha256": "75b6ae32586e7756f8fa59ced1b874e293c37047bacfcb185d118385af685f9c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-bottom.jpg": {
+      "workingSha256": "5fbb63353aceb575352f76602614aa615870205a808a0aa53576bfb0c1bc060d",
+      "indexSha256": "5fbb63353aceb575352f76602614aa615870205a808a0aa53576bfb0c1bc060d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-final-off-body.txt": {
+      "workingSha256": "db4727530454355bb9d358592e9791309a958d6267ba3985e49603e15c78cb59",
+      "indexSha256": "db4727530454355bb9d358592e9791309a958d6267ba3985e49603e15c78cb59",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-first-ticket-body.txt": {
+      "workingSha256": "2566709b99ca522b7273f506b3d4e969e16a3a01b9557aa26e19c221f7d8169f",
+      "indexSha256": "2566709b99ca522b7273f506b3d4e969e16a3a01b9557aa26e19c221f7d8169f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-fitted.jpg": {
+      "workingSha256": "75e806b9f52668106529b391b7ec4fdbe0af1902f0577aa806fad8420d9c42c8",
+      "indexSha256": "75e806b9f52668106529b391b7ec4fdbe0af1902f0577aa806fad8420d9c42c8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-identity.json": {
+      "workingSha256": "5ad8ea3f225a8b3b73cf49e0433cadb606a588bb75c6223c53a6b3d9a7fb4564",
+      "indexSha256": "5ad8ea3f225a8b3b73cf49e0433cadb606a588bb75c6223c53a6b3d9a7fb4564",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/composed-supplies-body.txt": {
+      "workingSha256": "2738a0704a0c4efe0b265797c07b450daf26fc8aae3de42085724a6871dbd7ba",
+      "indexSha256": "2738a0704a0c4efe0b265797c07b450daf26fc8aae3de42085724a6871dbd7ba",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/inputs.json": {
+      "workingSha256": "02c88c1b21dd398077faa0802493ac8ea6714e50d3a3beb067a24a2ab3334796",
+      "indexSha256": "02c88c1b21dd398077faa0802493ac8ea6714e50d3a3beb067a24a2ab3334796",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/inputs.py": {
+      "workingSha256": "3380d77b1893d4374444cd9b176017a7b9847a2a98108d4fb62153bbc968ee8f",
+      "indexSha256": "3380d77b1893d4374444cd9b176017a7b9847a2a98108d4fb62153bbc968ee8f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/launch_player.ps1": {
+      "workingSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "indexSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-detail.jpg": {
+      "workingSha256": "bac8b1443c09c576ed0df334690abee2d710595a55ee419b0c2abf8a3e592706",
+      "indexSha256": "bac8b1443c09c576ed0df334690abee2d710595a55ee419b0c2abf8a3e592706",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-final-board-off-body.txt": {
+      "workingSha256": "4d80eb089f9af8c9664b88495b5695aa233f788cf38217201b8392a88f0d140a",
+      "indexSha256": "4d80eb089f9af8c9664b88495b5695aa233f788cf38217201b8392a88f0d140a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-final-off-body.txt": {
+      "workingSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "indexSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-first-terminal-observation-body.txt": {
+      "workingSha256": "8f187b8441340cc7daf2132c02d27babebfc42b1038fe074b9d31b9ffa8f2880",
+      "indexSha256": "8f187b8441340cc7daf2132c02d27babebfc42b1038fe074b9d31b9ffa8f2880",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-first-ticket-body.txt": {
+      "workingSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "indexSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-fitted.jpg": {
+      "workingSha256": "4c1f3679863a2784292ca8bd32a44573f2dbd684c2651c807bbac48182cbf129",
+      "indexSha256": "4c1f3679863a2784292ca8bd32a44573f2dbd684c2651c807bbac48182cbf129",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-identity.json": {
+      "workingSha256": "0918787d803719b564320533b9d70a7fad2f69e4bcf4f2dd1e2814db1987464e",
+      "indexSha256": "0918787d803719b564320533b9d70a7fad2f69e4bcf4f2dd1e2814db1987464e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/multirail-supplies-body.txt": {
+      "workingSha256": "9885347c5d932ce2d43a2c37ea312239762ffb80f4c98e8ad068c0f028446ca0",
+      "indexSha256": "9885347c5d932ce2d43a2c37ea312239762ffb80f4c98e8ad068c0f028446ca0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/observe_player_host.ps1": {
+      "workingSha256": "ed1885d44669fc5bcc7782465c85522019b84799feb9985879984d00a295ddb4",
+      "indexSha256": "ed1885d44669fc5bcc7782465c85522019b84799feb9985879984d00a295ddb4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-assessment.json": {
+      "workingSha256": "7093ae217eb9e027e69dde3594d13aae4338d228cf4b39454aefd94ab88f3887",
+      "indexSha256": "7093ae217eb9e027e69dde3594d13aae4338d228cf4b39454aefd94ab88f3887",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-events.json": {
+      "workingSha256": "ee9dc7aba803f81181a307cb0a79942a8445a1bb0af25123ac82b3ea3d105406",
+      "indexSha256": "ee9dc7aba803f81181a307cb0a79942a8445a1bb0af25123ac82b3ea3d105406",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-expected-execution.json": {
+      "workingSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "indexSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-input-audit-after.txt": {
+      "workingSha256": "08462bda6616c79d75d0a53e10e6dbda76e495b5a31d4e4eba03842eb4fae97e",
+      "indexSha256": "08462bda6616c79d75d0a53e10e6dbda76e495b5a31d4e4eba03842eb4fae97e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-input-audit-before.txt": {
+      "workingSha256": "08462bda6616c79d75d0a53e10e6dbda76e495b5a31d4e4eba03842eb4fae97e",
+      "indexSha256": "08462bda6616c79d75d0a53e10e6dbda76e495b5a31d4e4eba03842eb4fae97e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-log-hashes.json": {
+      "workingSha256": "81e5395d514d812b82b94db8947e79b7415b2e850ce0acc802e80eca01b32f06",
+      "indexSha256": "81e5395d514d812b82b94db8947e79b7415b2e850ce0acc802e80eca01b32f06",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-served-after.json": {
+      "workingSha256": "d57d5a8ebb32e528868c5f4ab6106ea96e4dc8c9eeda5b2be82b5a43b96c93d4",
+      "indexSha256": "d57d5a8ebb32e528868c5f4ab6106ea96e4dc8c9eeda5b2be82b5a43b96c93d4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/player-served-before.json": {
+      "workingSha256": "d57d5a8ebb32e528868c5f4ab6106ea96e4dc8c9eeda5b2be82b5a43b96c93d4",
+      "indexSha256": "d57d5a8ebb32e528868c5f4ab6106ea96e4dc8c9eeda5b2be82b5a43b96c93d4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/post-player-provenance.json": {
+      "workingSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "indexSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-launcher-cleanup.json": {
+      "workingSha256": "7a29ade511117140847fea8f8f6d241a8f81b1f34595a41549904f7987960ab8",
+      "indexSha256": "7a29ade511117140847fea8f8f6d241a8f81b1f34595a41549904f7987960ab8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-owner-after.json": {
+      "workingSha256": "8e40137db2599812b2489bb702ed52efbcc8fc1b97687d9f95c793ec886d3be0",
+      "indexSha256": "8e40137db2599812b2489bb702ed52efbcc8fc1b97687d9f95c793ec886d3be0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-owner-before.json": {
+      "workingSha256": "e26d3d7ec45fa2d8b95824aad3e3d4a318bb0a15f42c3ac7f2cf575e03a42f82",
+      "indexSha256": "e26d3d7ec45fa2d8b95824aad3e3d4a318bb0a15f42c3ac7f2cf575e03a42f82",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-process-launch.json": {
+      "workingSha256": "b4bd55fea69d2f584e6c797eee760351f5cf825c4c189208732517345707b225",
+      "indexSha256": "b4bd55fea69d2f584e6c797eee760351f5cf825c4c189208732517345707b225",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-start-timing.json": {
+      "workingSha256": "1e4419b5849b3e80d2c35f5087e28700037ea9d0116974b506ad1784924b8496",
+      "indexSha256": "1e4419b5849b3e80d2c35f5087e28700037ea9d0116974b506ad1784924b8496",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-start.txt": {
+      "workingSha256": "cf0a70598c350265ed774ab6a11b2d281c169568033c312ef7b751db28fc7a60",
+      "indexSha256": "cf0a70598c350265ed774ab6a11b2d281c169568033c312ef7b751db28fc7a60",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-stop-process-launch.json": {
+      "workingSha256": "57a467016ea80d7066815b50d5c61fc15b6f4deea4997a1910a4b71667e7d7ed",
+      "indexSha256": "57a467016ea80d7066815b50d5c61fc15b6f4deea4997a1910a4b71667e7d7ed",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-stop-timing.json": {
+      "workingSha256": "e565e574938c750086c93e192ba1b4aab5c529d561f09a4110921c81793fb991",
+      "indexSha256": "e565e574938c750086c93e192ba1b4aab5c529d561f09a4110921c81793fb991",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/preview-stop.txt": {
+      "workingSha256": "61b5b23a3759c1d24b4e2900947618ac4cb3446c2f8445f96b0b3446d899bf6d",
+      "indexSha256": "61b5b23a3759c1d24b4e2900947618ac4cb3446c2f8445f96b0b3446d899bf6d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/process-resource-cleanup.json": {
+      "workingSha256": "f5777cba15a304facad52c6534d4c065b9ba51a0ec50c0b2b5e70e22eef0b555",
+      "indexSha256": "f5777cba15a304facad52c6534d4c065b9ba51a0ec50c0b2b5e70e22eef0b555",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/raw-body-whitespace-review.json": {
+      "workingSha256": "903c05a73b765e18a3eedf94f2dc2dac44772c6031417e1664cc4a3a0099c67c",
+      "indexSha256": "903c05a73b765e18a3eedf94f2dc2dac44772c6031417e1664cc4a3a0099c67c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-final-off-body.txt": {
+      "workingSha256": "0bd411240529cf5445ee7979d709f0fe85b183b7ef4ae9ffd5bc58e0389ca0c6",
+      "indexSha256": "0bd411240529cf5445ee7979d709f0fe85b183b7ef4ae9ffd5bc58e0389ca0c6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-first-ticket-body.txt": {
+      "workingSha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "indexSha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-fitted.jpg": {
+      "workingSha256": "102e034452a6f4defe28351d39995a40875daeef88ab2cdb7841ae490f472343",
+      "indexSha256": "102e034452a6f4defe28351d39995a40875daeef88ab2cdb7841ae490f472343",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-identity.json": {
+      "workingSha256": "a61273c3063e692e716192c06e23305b088b17dd20272cc50148fca772e9f8c9",
+      "indexSha256": "a61273c3063e692e716192c06e23305b088b17dd20272cc50148fca772e9f8c9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/rc-supplies-body.txt": {
+      "workingSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158",
+      "indexSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/reused-execution.json": {
+      "workingSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "indexSha256": "d48f50d27cbd31141a032c7976bda0eef996892e03fe2d1471a5adc2a440f05a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/review_player.py": {
+      "workingSha256": "127594066d219f4246012361d0636cad68cb4e58d915ab923046933c7d31aeb9",
+      "indexSha256": "127594066d219f4246012361d0636cad68cb4e58d915ab923046933c7d31aeb9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/scope.md": {
+      "workingSha256": "114f59e649e3631e39995f70cf936e5c88ec19f6c31cdb765c69b02fd9f52d39",
+      "indexSha256": "114f59e649e3631e39995f70cf936e5c88ec19f6c31cdb765c69b02fd9f52d39",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/startup-default-ticket-body.txt": {
+      "workingSha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "indexSha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/stop_player.ps1": {
+      "workingSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "indexSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/whitespace-review-attempt1.json": {
+      "workingSha256": "7b6ddd1ac0a2694d2fc07956a63d0cd58005a3426410725f097c93f83c585500",
+      "indexSha256": "7b6ddd1ac0a2694d2fc07956a63d0cd58005a3426410725f097c93f83c585500",
+      "comparison": "RAW_EXACT"
+    }
+  },
+  "privacy": {
+    "newTextFiles": 54,
+    "result": "PASS new text path/private-key/credential-pattern scan and tracked added-line scan"
+  },
+  "sourceBoundary": "All1482/24/gates5 unchanged; independent compiled/served6 exact before/after; prior accepted native/build reused, no new native/build/matrix run",
+  "player": "FirstRC/composed/multirail requests3/admissions3/untouchedFAIL3/finalallOFFtray0;26logged22PASS/4FAIL retained, pendingmulti firstrequest completed without retry;5raw images inspected/3pasted",
+  "failures": "Four observer/preparation failures and initial whitespace helper assumption retained; no native/build/productperformance failure inferred from them",
+  "review": "Hash-bound read-only bottom-contact source review, no paint change selected; separate multi-rail outlier source diagnosis pending, no compaction proof",
+  "resources": "All6 recorded births exited/currentprofile-state absent/8907released; older blockedprofiles/private/unrelated data retained",
+  "publication": "Normal docs branch commit/push/exact remote SHA next; no main/email",
+  "nextUnstarted": "Exact multi-rail isolated connector native diagnosis before any general production change",
+  "limits": "No all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/FileReader/full-matrix claim"
+}

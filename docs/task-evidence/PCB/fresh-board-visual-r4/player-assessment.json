@@ -1,0 +1,50 @@
+{
+  "status": "PASS_FINITE_SAMPLE_WITH_RETAINED_OBSERVER_FAILURES",
+  "baseCommit": "29c85f95fa2849d46bde4227a48ef2b62ab7420b",
+  "inputSealSha256": "02c88c1b21dd398077faa0802493ac8ea6714e50d3a3beb067a24a2ab3334796",
+  "identities": {
+    "rc": {
+      "replay": "tsj-alpha/6/EASY/RC_DELAY/5630627058468165895",
+      "build": "tsj-alpha/6 / F4CA0D0FF6F4318FEF7078DA7D7978B3"
+    },
+    "composed": {
+      "replay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-7472674895268110325",
+      "build": "tsj-alpha/6 / F4CA0D0FF6F4318FEF7078DA7D7978B3"
+    },
+    "multirail": {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5776064669694490064",
+      "build": "tsj-alpha/6 / F4CA0D0FF6F4318FEF7078DA7D7978B3"
+    }
+  },
+  "sample": "Exactly3 first normal New board requests/admissions/untouched customerFAILs; no requested seed/replay substitution, retry, part/probe/measurement/repair mutation or forced/controller/DOM input",
+  "startup": "QuickPlay automatically displayed an initial timing ticket before any sample request; retained startup-default-ticket-body.txt, not counted as a fresh sample",
+  "actions": "26 logged observations:22PASS/4FAIL retained. Initial wrong New board wait30.639s, hidden-duplicate Main menu strict violation0.009s, wrong View role wait30.009s; corrected only selectors. Multi-rail40.063s wait expired while same first request was at Candidate1/measurement checks; separate pending observation completed without a new request. No generation performance claim",
+  "images": {
+    "rc-fitted.jpg": {
+      "sha256": "102e034452a6f4defe28351d39995a40875daeef88ab2cdb7841ae490f472343",
+      "bytes": 116029
+    },
+    "composed-fitted.jpg": {
+      "sha256": "75e806b9f52668106529b391b7ec4fdbe0af1902f0577aa806fad8420d9c42c8",
+      "bytes": 126322
+    },
+    "composed-bottom.jpg": {
+      "sha256": "5fbb63353aceb575352f76602614aa615870205a808a0aa53576bfb0c1bc060d",
+      "bytes": 122012
+    },
+    "multirail-fitted.jpg": {
+      "sha256": "4c1f3679863a2784292ca8bd32a44573f2dbd684c2651c807bbac48182cbf129",
+      "bytes": 130465
+    },
+    "multirail-detail.jpg": {
+      "sha256": "bac8b1443c09c576ed0df334690abee2d710595a55ee419b0c2abf8a3e592706",
+      "bytes": 91752
+    }
+  },
+  "visual": "Root inspected all5 raw1280x900 views;3fitted boards pasted. Composed bottom golden exposed PTH annuli are separate from mounted-face metallic collars; no changed bottom paint selected. Multi-rail far-right isolated connector and broad green gap warrant exact replay diagnosis, not a demonstrated removable physical region",
+  "sourceBoundary": "Exact1482/24/gates5 and independent compiled/served6 before/after; accepted native10/strict44/actualJDK8GWT5 reused only at unchanged consumed inputs; no new native/build/matrix run",
+  "finalState": "RC12V, composed3x5V, multi12V/5V/5V/12V each independently disconnected; finalBoardOFF/tray0 each; final multi fitted",
+  "console": "1293=1291logs+2unattributed resource404; private raw/hash-bound, page/request/observed-response errors0; no clean-console attribution",
+  "cleanup": "All6 recorded births exited, browserAPI0/currentprofile absent, maintained stop2.0199258s/state absent/8907released; older blockedprofiles/private/unrelated data retained",
+  "limits": "Finite first3 results, preserved failed observers, no all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/FileReader/full-matrix claim; screenshots do not establish an electrically legal compaction"
+}

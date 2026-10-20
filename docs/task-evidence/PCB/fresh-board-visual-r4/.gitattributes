@@ -1,0 +1,15 @@
+* -text whitespace=cr-at-eol
+composed-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+composed-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+composed-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+composed-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+multirail-final-board-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+multirail-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+multirail-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+multirail-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+multirail-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+startup-default-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol

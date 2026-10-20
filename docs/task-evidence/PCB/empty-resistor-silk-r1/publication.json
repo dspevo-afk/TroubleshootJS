@@ -1,0 +1,21 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "29c85f95fa2849d46bde4227a48ef2b62ab7420b",
+  "message": "Show rounded assembly outlines for empty resistor slots",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "normalPushExitCode": 0,
+  "exactRemoteHeadVerified": true,
+  "acceptedPaths": 165,
+  "priorReviewedIndexBlobsExact": 164,
+  "finalReviewRawExact": true,
+  "working1482MatchesAcceptedCandidate": true,
+  "scope": "Guarded rounded top body guide for empty axial resistor slots; all3 spans and additive independent fixtures, actual pre-edit/final normal evidence",
+  "gates": "Native10/strict44census8/actualJDK8GWT5/final2replayplayer allPASS within recorded finite scope",
+  "resources": "Current12+baseline6 births exited/currentprofile-state absent/8907released; older blockedprofiles/private/unrelated artifacts retained",
+  "mainMerge": "NOT_DONE per user",
+  "email": "DISABLED by user; no notification attempted",
+  "nextUnstarted": "Fresh normal visual sampling before another production scope",
+  "receipt": "Created after verified publication; intended next coherent commit"
+}

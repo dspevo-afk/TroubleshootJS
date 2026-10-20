@@ -7,7 +7,15 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Empty axial resistor assembly outline accepted; publication pending**
+**Current task:** **Fresh normal PCB sample accepted; multi-rail outlier diagnosis next**
+
+First normal RC/composed/multi-rail requests3/admissions3/untouchedFAIL3, each
+all suppliesOFF/tray0. Exact1482/24/compiled6 reuse before/after; no new build/
+native run. Five raw views inspected, three fresh boards pasted. Four failed
+observers and a raw-text helper assumption retained; same pending multi-rail
+request completed without a retry. All6 task births exited/current profile-state
+absent/port released. Far-right connector gap warrants exact replay diagnosis;
+no seed-specific move or compaction claim. [Fresh evidence and limitations](task-evidence/PCB/fresh-board-visual-r4/RESULTS.md).
 
 Empty declared axial resistor slots now retain a thin unfilled rounded top body
 guide. All3 seeded spans and old chip policy/identity/geometry remain; native10

@@ -1,0 +1,8 @@
+{
+  "startTicks": "639281110619307263",
+  "sameRecordedBirthExecutableProfile": true,
+  "executable": "brave.exe",
+  "limits": "Revalidated current task browser before normal API close; no termination/manual deletion",
+  "pid": 11608,
+  "status": "PASS"
+}

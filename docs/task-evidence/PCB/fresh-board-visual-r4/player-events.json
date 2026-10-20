@@ -1,0 +1,136 @@
+[
+  {
+    "name": "Open actual unchanged accepted production build",
+    "status": "FAIL",
+    "elapsedSeconds": 30.639,
+    "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'New board', exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "name": "Open normal menu from automatic preview ticket before any sample request",
+    "status": "PASS",
+    "elapsedSeconds": 0.068
+  },
+  {
+    "name": "Request first fresh EASY Timing board through actual New board",
+    "status": "PASS",
+    "elapsedSeconds": 21.831
+  },
+  {
+    "name": "Accept first fresh Timing board ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.067
+  },
+  {
+    "name": "Observe untouched fresh Timing board customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 1.787
+  },
+  {
+    "name": "Fit first fresh Timing board for inspection",
+    "status": "PASS",
+    "elapsedSeconds": 0.11
+  },
+  {
+    "name": "Disconnect fresh Timing board sole12V supply",
+    "status": "PASS",
+    "elapsedSeconds": 0.054
+  },
+  {
+    "name": "Record first Timing board public identity and return to normal menu",
+    "status": "FAIL",
+    "elapsedSeconds": 0.009,
+    "error": "Error: locator.click: Error: strict mode violation: getByText('Main menu', { exact: true }) resolved to 2 elements:\n    1) <span class=\"tsj-button-label\">Main menu</span> aka getByRole('button', { name: 'Main menu' })\n    2) <button type=\"button\" class=\"tsj-product-button\">Main menu</button> aka getByLabel('Customer ticket').getByText('Main menu')\n\nCall log:\n\u001b[2m  - waiting for getByText('Main menu', { exact: true })\u001b[22m\n"
+  },
+  {
+    "name": "Record first Timing board identity using the actual visible menu button",
+    "status": "PASS",
+    "elapsedSeconds": 0.104
+  },
+  {
+    "name": "Request first fresh MEDIUM Two-channel controller through actual New board",
+    "status": "PASS",
+    "elapsedSeconds": 3.781
+  },
+  {
+    "name": "Accept first fresh Two-channel controller ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.068
+  },
+  {
+    "name": "Observe untouched fresh Two-channel customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 0.077
+  },
+  {
+    "name": "Fit first fresh Two-channel controller",
+    "status": "FAIL",
+    "elapsedSeconds": 30.009,
+    "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'View', exact: true })\u001b[22m\n"
+  },
+  {
+    "name": "Fit first Two-channel controller using visible View text control",
+    "status": "PASS",
+    "elapsedSeconds": 0.105
+  },
+  {
+    "name": "Disconnect all three fresh Two-channel5V supplies",
+    "status": "PASS",
+    "elapsedSeconds": 0.147
+  },
+  {
+    "name": "Inspect actual bottom copper on the first Two-channel board",
+    "status": "PASS",
+    "elapsedSeconds": 0.103
+  },
+  {
+    "name": "Record first Two-channel public identity and return to normal menu",
+    "status": "PASS",
+    "elapsedSeconds": 0.108
+  },
+  {
+    "name": "Request first fresh MEDIUM Multi-rail control board through actual New board",
+    "status": "FAIL",
+    "elapsedSeconds": 40.063,
+    "error": "TimeoutError: locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Accept ticket and start', exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "name": "Observe completion of the same pending first Multi-rail request without retry",
+    "status": "PASS",
+    "elapsedSeconds": 13.651
+  },
+  {
+    "name": "Accept first fresh Multi-rail ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.153
+  },
+  {
+    "name": "Observe untouched first Multi-rail customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 2.085
+  },
+  {
+    "name": "Fit first fresh Multi-rail board",
+    "status": "PASS",
+    "elapsedSeconds": 0.484
+  },
+  {
+    "name": "Disconnect every first Multi-rail supply independently",
+    "status": "PASS",
+    "elapsedSeconds": 1.066
+  },
+  {
+    "name": "Inspect Multi-rail component area with actual Zoom controls",
+    "status": "PASS",
+    "elapsedSeconds": 3.625
+  },
+  {
+    "name": "Record first Multi-rail public replay identity",
+    "status": "PASS",
+    "elapsedSeconds": 1.851
+  },
+  {
+    "name": "Leave the first Multi-rail board fitted with every supply off and tray0",
+    "status": "PASS",
+    "elapsedSeconds": 3.812
+  }
+]

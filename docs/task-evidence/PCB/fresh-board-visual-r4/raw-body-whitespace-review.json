@@ -1,0 +1,251 @@
+{
+  "status": "PASS_RAW_PRESERVED",
+  "scope": "Exact filenames only; raw text unchanged, each trailing line is literal09 blank meter layout. Pending preparation view has0tabs and gains no blank-at-eol attribute",
+  "bodyFiles": 15,
+  "attributedFiles": 14,
+  "tabOnlyLines": 42,
+  "files": {
+    "composed-final-off-body.txt": {
+      "sha256": "db4727530454355bb9d358592e9791309a958d6267ba3985e49603e15c78cb59",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "composed-first-ticket-body.txt": {
+      "sha256": "2566709b99ca522b7273f506b3d4e969e16a3a01b9557aa26e19c221f7d8169f",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    },
+    "composed-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "composed-supplies-body.txt": {
+      "sha256": "2738a0704a0c4efe0b265797c07b450daf26fc8aae3de42085724a6871dbd7ba",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "multirail-final-board-off-body.txt": {
+      "sha256": "4d80eb089f9af8c9664b88495b5695aa233f788cf38217201b8392a88f0d140a",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    },
+    "multirail-final-off-body.txt": {
+      "sha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "multirail-first-terminal-observation-body.txt": {
+      "sha256": "8f187b8441340cc7daf2132c02d27babebfc42b1038fe074b9d31b9ffa8f2880",
+      "tabOnlyLines": []
+    },
+    "multirail-first-ticket-body.txt": {
+      "sha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    },
+    "multirail-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "multirail-supplies-body.txt": {
+      "sha256": "9885347c5d932ce2d43a2c37ea312239762ffb80f4c98e8ad068c0f028446ca0",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "rc-final-off-body.txt": {
+      "sha256": "0bd411240529cf5445ee7979d709f0fe85b183b7ef4ae9ffd5bc58e0389ca0c6",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "rc-first-ticket-body.txt": {
+      "sha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    },
+    "rc-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "rc-supplies-body.txt": {
+      "sha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "startup-default-ticket-body.txt": {
+      "sha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    }
+  }
+}

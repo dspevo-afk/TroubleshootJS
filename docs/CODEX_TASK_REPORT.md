@@ -1,4 +1,48 @@
-# Current checkpoint: empty axial outline accepted; publication pending
+# Current checkpoint: fresh RC/composed/multi-rail sample accepted; outlier diagnosis next
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts,
+HEAD/exact origin29c85f95fa2849d46bde4227a48ef2b62ab7420b. Empty axial guide
+published165paths/164reviewedblobs+rawreview/1482accepted working sources exact.
+Receipt untracked/intended this coherent commit. Indefinite PCB realism/screenshots/
+optional leaves; no final/main/email. Original5/private baseline/cache/COPY/
+pointers and3blocked profiles preserved. No task OS process live;context4 and
+ar*/er*/fp*/rr* closed. Private raw browser logs/pointers retained.
+
+fresh-board-visual-r4 read-only first actual New board requests: EASY RC
+5630627058468165895, MEDIUM composed-7472674895268110325, MEDIUM multi-rail
+-5776064669694490064. All3 first requests admit/untouchedFAIL; exactpublic6/
+buildF4CA0D0FF6F4318FEF7078DA7D7978B3. Each actual supply disconnected (RC12V,
+composed3x5V,multi12V/5V/5V/12V), each finalOFF/tray0. No part/probe/measurement/
+repair/seed-substitution/controller/DOMmutation/forced input. Five raw1280x900
+views inspected,3fitted boards pasted. Exact1482/24/gates5+independentCLI/served6
+before/after. Prior native10/strict44/actualJDK8GWT5 reused only at unchanged
+boundary; no new native/build/matrix. ReaderPASS with explicit observer limits.
+
+26logged actions22PASS/4FAIL preserved: startup30.639s wrong Newboard lookup
+while automatic default ticket showed, hiddenMainmenu duplicate strict0.009s,
+wrongViewrole30.009s, multi first ticket wait40.063s expired while SAME request
+atCandidate1 measurements. Separate wait completed without another Newboard.
+No product performance proof. Automatic default ticket is separate, not sample.
+Raw whitespace helper initial3tabs assumption failed for pending preparation
+view (0tabs/no meter), before artifacts changed; retained. Final15body files,
+14exact filenameattributes/42literal09 lines unchanged. Console1293=1291log+
+2unattributed404/othererrors0/privatehash; no clean-console attribution.
+
+All6 recorded births exited/browserAPI0/profile absent; maintained stop2.0199258s/
+state absent/8907released. Hash-bound LunaMAX backside_contact_scope confirms
+intentional two-face goldPTH annuli vs mounted-face metallic collars; no new
+bottom paint selected. Second read-only LunaMAX fresh_multirail_outlier_scope
+is identifying likely owners/available diagnostics, no code edits or runs.
+
+Actual fitted multi-rail screenshot has far-right isolated two-terminal connector
+and broad green gap. Screenshot alone proves no removable legal region. Next:
+exact replay source/native diagnostic with graph/identity/copper/access/work
+constraints preserved, then general-rule scope only if warranted. Root staged
+raw/canonical/privacy/diff review, docs-only sample commit/normalpush/exactremote
+pending; no all-seed/new-size/manufacturing/performance/Edge/CDP/FileReader/
+full-matrix claim. Continue after publication.
+
+# Previous checkpoint: empty axial outline accepted; publication pending
 
 2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts,
 HEAD/exact origin891d6ce75ff97fd62adc98fc88b331230cf210f1. Indefinite PCB
