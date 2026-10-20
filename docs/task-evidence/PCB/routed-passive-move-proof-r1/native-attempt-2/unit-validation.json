@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Private move proof unit fixtures only; routes and fitness are not evaluated.",
+  "baseCommit": "a816fdf186e2c89316bdd57baf60393299795a02",
+  "protocolSha256": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+  "priorAssessSha256": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+  },
+  "suiteManifestSha256": "bdec52313bb9e597df0da9088a7ebc95ee5db3669209e3619561382d11646f0a",
+  "phaseInputsSha256": {
+    "unit.txt": "ae51fa15d05719d9a5d8349cf3933a06c568c5f57e210f15ae45984ea13b3a7e",
+    "unit-receipt.txt": "a0c9ce906bfd4d24ec3fea5e8daba85faf56fc28c1384b8491c4edd5465f6233",
+    "unit-timing.json": "c746f963cd8211193ba25eb0078b0fe1479e8876ae902cc021ced389f3dd543f"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 2,
+    "suiteClasses": [
+      "PcbRoutedPassiveLegCensusContractTest",
+      "PcbRoutedPassiveMoveProofContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed passive leg census contracts ",
+      "PCB routed passive move proof contracts "
+    ],
+    "moveProof": null
+  },
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveMoveProofContractTest": 4
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

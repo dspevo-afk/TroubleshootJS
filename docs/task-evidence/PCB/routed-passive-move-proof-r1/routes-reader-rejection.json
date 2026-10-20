@@ -1,0 +1,11 @@
+{
+  "status": "FAIL",
+  "phase": "routes",
+  "command": "python -X utf8 -B assess.py routes",
+  "exitCode": 2,
+  "outputSha256": "0b5f499bfd38296f1802050e97213f1dff5c41a695fce5805634b733acf47c69",
+  "routesLogSha256": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe",
+  "qualifiedRouteReceipt": "NOT_CREATED_FAILED_JVM",
+  "assessment": "NOT_CREATED",
+  "scope": "Actual strict CLI rejects missing qualified receipt after propagated physical rejection; root also checks failed log/timing directly"
+}

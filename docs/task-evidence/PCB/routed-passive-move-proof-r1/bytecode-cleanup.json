@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "Two generated reader bytecode files only; original5 entries untouched",
+  "preflightCorrection": "Initial helper expected absolute code filename and refused before mutation; verified exact packet-relative source names",
+  "files": [
+    {
+      "file": "__pycache__/assess.cpython-313.pyc",
+      "sha256": "a9c654c902ce51715d8163060642701eef6ce10a7d5305c75cac383e624cced0",
+      "outcome": "REMOVED_TASK_GENERATED_BYTECODE"
+    },
+    {
+      "file": "__pycache__/check_assessment.cpython-313.pyc",
+      "sha256": "d3e5616f4edd4c4bc532322836d2843e1d4aeed8c3b4c3e7dddd118b68ca4d42",
+      "outcome": "REMOVED_TASK_GENERATED_BYTECODE"
+    }
+  ]
+}

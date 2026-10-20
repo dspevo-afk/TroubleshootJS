@@ -1,0 +1,47 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:923: error: local variable mismatchRows is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(mismatchRows, moved, source, candidate); }
+                                              ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:923: error: local variable moved is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(mismatchRows, moved, source, candidate); }
+                                                            ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:923: error: local variable source is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(mismatchRows, moved, source, candidate); }
+                                                                   ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:923: error: local variable candidate is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(mismatchRows, moved, source, candidate); }
+                                                                           ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:933: error: local variable nonincidentRows is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(nonincidentRows, moved, source, candidate); }
+                                              ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:933: error: local variable moved is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(nonincidentRows, moved, source, candidate); }
+                                                               ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:933: error: local variable source is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(nonincidentRows, moved, source, candidate); }
+                                                                      ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:933: error: local variable candidate is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(nonincidentRows, moved, source, candidate); }
+                                                                              ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:943: error: local variable duplicateRows is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(duplicateRows, moved, source, candidate); }
+                                              ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:943: error: local variable moved is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(duplicateRows, moved, source, candidate); }
+                                                             ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:943: error: local variable source is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(duplicateRows, moved, source, candidate); }
+                                                                    ^
+[TASK_COPY]\tests\contracts\PcbRoutedPassiveMoveProofContractTest.java:943: error: local variable candidate is accessed from within inner class; needs to be declared final
+            public void run() { rewriteTraces(duplicateRows, moved, source, candidate); }
+                                                                            ^
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+12 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

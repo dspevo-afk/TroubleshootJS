@@ -257,6 +257,19 @@ COPY1469 restored1467/retired,4 births exited; main1475/default15/general16 exac
 Next construct and validate one generic first nonincreasing private candidate,
 including full conductor/contact correspondence, without another route call.
 [Endpoint census and limits](task-evidence/PCB/routed-passive-leg-census-r1/RESULTS.md).
+The first private endpoint-only move proof FAILs physical geometry. Fixed5/2,
+current15, generic first nonincreasing C5,(0,-10) at2 changes endpoint spans by
+-10 but moves its courtyard across unchanged CTRL_RETURN copper. Placement
+passes; full courtyard validation rejects and propagates. No substitute move,
+extra router call, acceptance or selected mutation. Seed5 selected42/whitespace
+stay exact; seed2 final fidelity/after-hash/pair/provenance are NOT REACHED.
+Final unit2 PASS43.437s(40/25assertions,6/4groups); routes1 FAIL55.849s/exit2.
+Reader36/host12 and root integrity/erasure PASS remain separate from failed proof.
+Bootstrap, first compile and intermediate null-label construction failures remain;
+final1470/29gates restored1467/retired,10 driver births exited, main1475 exact.
+Next census physical feasibility of all31 structurally eligible nonincreasing
+directions from the unchanged target before trying another routed compaction.
+[Rejected private move and limits](task-evidence/PCB/routed-passive-move-proof-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

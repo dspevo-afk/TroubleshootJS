@@ -1,0 +1,33 @@
+{
+  "integrityReviewStatus": "PASS",
+  "nativePrivateProofStatus": "FAIL",
+  "scope": "Reviewed failed first-canonical private construction; no admission or production change",
+  "baseCommit": "a816fdf186e2c89316bdd57baf60393299795a02",
+  "main1475Exact": true,
+  "publishedCensusInputsExact": true,
+  "frozenGates": 29,
+  "sourceDeltas": 6,
+  "acceptedAndPriorOwnerErasureExact": true,
+  "syntheticReaderCases": 36,
+  "actualTransportCases": 12,
+  "unitSuites": 2,
+  "unitFixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveMoveProofContractTest": 4
+  },
+  "routeSuitesFailed": 1,
+  "selectedRowsExact42Fields": 1,
+  "seed2SelectedFidelity": "NOT_COMPLETED_AFTER_PROPAGATED_FAILURE",
+  "privateConstructionsReachedGeometryValidator": 1,
+  "physicallyAdmittedPrivateMoves": 0,
+  "sourceAndCandidatePairProof": "NOT_REACHED",
+  "reachabilityOracleSha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+  "preservedNativeCompilationFailures": 1,
+  "preservedNativeConstructionFailures": 1,
+  "nativeFailureReaderRejections": 3,
+  "recordedDriverBirthsExited": 10,
+  "copyRestored1467AndRetired": true,
+  "boardShrinkage": "NOT_DEMONSTRATED",
+  "productionPolicyFitnessChange": "NONE",
+  "GwtPlayerSolverFullMatrixAllSeed": "NOT_RUN"
+}

@@ -1,0 +1,17 @@
+{
+  "rootReviewed": true,
+  "scope": "Integrated six-source-delta review, owner erasure, endpoint-only private construction, four literal new fixture groups, cancellation/ownership, composed strict reader and independent published-net oracle",
+  "diffSha256": "79434093a706264027a164b6d27917b69d54ce6616d0cb5d6a71ab484bf86079",
+  "syntheticReaderCases": 36,
+  "syntheticReaderPositiveCases": 4,
+  "syntheticReaderRejectedCases": 32,
+  "actualHostTransportCases": 12,
+  "nativeFixtureExecution": "NOT_RUN",
+  "nativeRoutesExecution": "NOT_RUN",
+  "independentFinalSourceReview": "NOT_RUN",
+  "reachabilityOracleSha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+  "readerNotesSha256": "dc24defa17dd639d2dabf1367017a0615f945382cc8e96fa1694c081c9a01049",
+  "workerNotesSha256": "50c28b55ac4dccc710c581498dafb1ae237868445dcc85d746a0da6d0e98aa21",
+  "preservedNativeCompilationFailures": 1,
+  "compatibilityCorrection": "Only six explicit final declarations; source1.7"
+}

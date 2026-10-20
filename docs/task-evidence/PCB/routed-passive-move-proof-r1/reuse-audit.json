@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "baseCommit": "a816fdf186e2c89316bdd57baf60393299795a02",
+  "scope": "Preparation only; accepted1467 source, no rejected overlay or native proof reuse",
+  "prepareSourceSha256": "9121abe0d8b590ff2931ace2b61d7c2a6b432181a341a573b2d15d0a5121afe3",
+  "priorCensusSealSha256": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+  "priorCensusRootReviewSha256": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d"
+}

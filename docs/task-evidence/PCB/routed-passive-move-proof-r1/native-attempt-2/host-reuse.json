@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Scaffold adaptation only; prior native/host runtime proof not reused",
+  "files": {
+    "run_native.ps1": "599d4a29476a3fc6b61079f6e2bd3c40b1e44c2129aec939d90df75ba02dd9fd",
+    "check_process_cleanup.ps1": "57ee36b2b7e6c6a4ab09f7d49683d7b30f31847ebf3a15b31c10744dfbd96360",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "suite_transport.ps1": "fa709c51f0b4b9eb9096e63dfdb60e6ba6034a856a2d0182bdcf7ea173245bd9",
+    "retire_copy.py": "86c75b297d9813575aae624212593740a1f415c623b0e249377f9125c900b235",
+    "check_suite_transport.ps1": "7496d54c1a8d71ebc5ee36876af7249b6f0b32350814436beab0d7f8b47e109a"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "canaryCount": 36,
+  "positiveCount": 4,
+  "negativeCount": 32,
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveMoveProofContractTest": 4
+  },
+  "consumedSha256": {
+    "assess.py": "428406c101377c32538c38aee94a50e9daf3bd55723953104ec77a453302d2f6",
+    "check_assessment.py": "93c7067f0a6bd4f938787d9ee7b0baf2ee9a9bf0d2ab927be5cabe6577bc1f30",
+    "protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+    "priorAssess.py": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+      "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+      "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "bdec52313bb9e597df0da9088a7ebc95ee5db3669209e3619561382d11646f0a",
+      "routes-suites.json": "d1561e10dbd6b37cc447faa0c4304cd44f9f8e1a8bdbc8b407833530534a14c3"
+    }
+  },
+  "results": [
+    {
+      "case": "valid unit phase with both fixture evaluators",
+      "result": "PASS"
+    },
+    {
+      "case": "valid routes phase with exact old census and new move rows",
+      "result": "PASS"
+    },
+    {
+      "case": "literal reachability hash from all 135 pad net IDs",
+      "expected": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+      "pairs": 9045,
+      "bytes": 175409,
+      "result": "PASS"
+    },
+    {
+      "case": "changed physical candidate geometry accepted",
+      "result": "PASS"
+    },
+    {
+      "case": "foreign but equal source graph pair",
+      "result": "REJECTED"
+    },
+    {
+      "case": "current census foreign net with matching foreign hashes",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong candidate component count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong candidate trace count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong derived move direction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "target callback filter drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "case and move report order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate geometry hash equals source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source versus candidate geometry mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "selected mutation is not strict false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move-proof label is not strict text",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "actual copper delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "analytic copper delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "pad pair count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "provenance hashes differ",
+      "result": "REJECTED"
+    },
+    {
+      "case": "reachability hashes are foreign to net oracle",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route source count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "validation flag is not strict true",
+      "result": "REJECTED"
+    },
+    {
+      "case": "private physical disposition drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "no-target nested field is not null",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move proof row omitted",
+      "result": "REJECTED"
+    },
+    {
+      "case": "routes report appears after suite PASS",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native failure marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native timing bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native exit status drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate summary JSON key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unexpected summary JSON key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protocol pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "published input pin drift",
+      "result": "REJECTED"
+    }
+  ]
+}

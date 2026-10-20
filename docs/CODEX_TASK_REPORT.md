@@ -1,4 +1,35 @@
-# Current checkpoint: accepted15 routed endpoint-leg census complete for publication
+# Current checkpoint: first private routed move rejected; evidence ready for publication
+
+2026-10-19 local. Base a816fdf186e2c89316bdd57baf60393299795a02,
+codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation;
+no main/email. Main1475/default15/general16/original5 entries unchanged.
+
+Fixed5 then2/current15, generic first canonical eligible nonincreasing direction,
+C5,(0,-10),analytic-10. Final unit2 PASS43.4368437s/exit0,40old/25new assertions,
+6/4groups. Routes1 FAIL55.8492576s/exit2: placement passes, full geometry rejects
+CTRL_RETURN interior segment3256,1094→3226,1094 across moved C5 courtyard
+Rect3171,1094,80,90. Exception propagates, no alternative move/acceptance or extra
+route. Seed5 NO_TARGET/selected42fields/whitespace exact; seed2 final selected,
+after-source hashes,9045-pair/provenance and explicit two-layer proof NOT REACHED.
+No candidate PASS payload/assessment, actual copper total or shrinkage claim.
+
+Root integrated source/erasure/integrity PASS is separate from native proof FAIL.
+Reader36(4positive32rejected)/actual PowerShell transport12 PASS; actual CLI
+rejects missing qualified receipt, direct reader rejects all3 native failures.
+Bootstrap failure6 artifacts, first compile42files+record, intermediate null-label
+49files+record preserved with corrected source/fresh gates. Final1470/6deltas/
+29gates restored exact1467/retired; private pointer removed;10 recorded driver
+births exited,no termination; maintained terminal cleanupPASS. No native/browser/
+preview/profile. GWT/player/solver/repair/fullmatrix/unseen/manufacturing NOT RUN.
+
+Next explicit stage/diff/raw-blob review, commit/normalpush/exact origin verify.
+Then bounded physical-feasibility census of all31 eligible nonincreasing moves,
+independent alternatives from original target, narrowly classified physical
+rejections, unknown errors/cancellation propagate, selected/work stay exact.
+No selected-layout compaction probe until a feasible move is established.
+Evidence: docs/task-evidence/PCB/routed-passive-move-proof-r1/RESULTS.md.
+
+# Previous checkpoint: accepted15 routed endpoint-leg census complete for publication
 
 2026-10-19 local. Base HEAD66f8d67476288e90fca797e4fb0957c13c550dd8 on
 codex/q60-faulted-profile-counts, exact origin verified at scope start. Indefinite

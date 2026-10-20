@@ -1,0 +1,95 @@
+{
+  "analysisStatus": "COMPLETE",
+  "nativeProofStatus": "FAIL",
+  "scope": "One first-canonical private candidate; no substitute move or admission",
+  "protocolSha256": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+  "routesLogSha256": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe",
+  "unit": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 43.4368437,
+    "suiteCount": 2,
+    "phase": "unit",
+    "scope": "Native single private passive move proof; unchanged per-JVM/search/physical limits",
+    "terminalCleanupIncluded": true,
+    "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+  },
+  "routes": {
+    "status": "FAIL",
+    "exitCode": 2,
+    "elapsedSeconds": 55.8492576,
+    "suiteCount": 1,
+    "phase": "routes",
+    "scope": "Native single private passive move proof; unchanged per-JVM/search/physical limits",
+    "terminalCleanupIncluded": true,
+    "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+  },
+  "expectedMoveFromPublishedCensus": {
+    "componentId": "C5",
+    "dx": 0,
+    "dy": -10,
+    "analyticCopperDelta": -10,
+    "actualCopperDelta": -10
+  },
+  "endpointAnalyticDeltas": [
+    -10,
+    10,
+    -10
+  ],
+  "endpointAnalyticTotal": -10,
+  "physicalRejection": {
+    "validator": "PcbBoardLayout.validateTraceCourtyards",
+    "componentId": "C5",
+    "netId": "CTRL_RETURN",
+    "unchangedInteriorSegment": [
+      [
+        3256,
+        1094
+      ],
+      [
+        3226,
+        1094
+      ]
+    ],
+    "movedCourtyard": [
+      3171,
+      1094,
+      80,
+      90
+    ],
+    "literalClosedEdgeOverlap": 25,
+    "exactException": "java.lang.IllegalStateException: PCB trace passes through component routing courtyard: CTRL_RETURN / C5 segment 3256,1094 -> 3226,1094 keepOut=Rect(3171,1094,80,90) startPad=U1.RETURN endPad=C5.2"
+  },
+  "completeMoveRows": [
+    {
+      "seed": "5",
+      "label": "seed5",
+      "version": 15,
+      "phase": "FINALIZED_ROUTE_CANDIDATE",
+      "status": "NO_TARGET",
+      "constructionCount": 0,
+      "newRouteRequests": 0,
+      "selectedMutation": false,
+      "move": null,
+      "source": null,
+      "candidate": null,
+      "proof": null,
+      "physicalFeasibility": "NOT_EVALUATED"
+    }
+  ],
+  "completeSelectedRows": 1,
+  "seed2FinalSelectedFidelity": "NOT_COMPLETED_AFTER_PROPAGATED_FAILURE",
+  "sourceAfterHashAndCandidateReachability": "NOT_REACHED",
+  "explicitTwoLayerValidation": "NOT_REACHED",
+  "actualCopperTotal": "NOT_REACHED",
+  "boardShrinkage": "NOT_DEMONSTRATED",
+  "policyChange": "NONE",
+  "limits": [
+    "One informed private geometry trial, not a production or fitness acceptance",
+    "No extra route call, alternative move, original mutation or selection change",
+    "Fixed outline/tray/holes; no area or protected-void shrinkage claim",
+    "Finalized Plan and absent generation seeds are not reconstructed or invented",
+    "Full validation/reachability/provenance errors and cancellation propagate",
+    "No GWT/player/solver/repair/full-matrix/unseen/all-seed/manufacturing/performance claim"
+  ]
+}

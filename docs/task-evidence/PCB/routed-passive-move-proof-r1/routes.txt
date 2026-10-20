@@ -1,0 +1,38 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PCB_WHITESPACE_CASE {"seed":"5","version":15,"parts":54,"gridUnits":10,"sampledCells":91512,"packageAccessOccupiedCells":28284,"protectedFreeCells":57987,"protectedFreeFraction":0.633654602675059,"largestProtectedEmptyRectangle":{"x":60,"y":100,"width":2150,"height":630,"area":1354500},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_ROUTED_LEG_CENSUS {"seed":"5","label":"seed5","version":15,"phase":"FINALIZED_ROUTE_CANDIDATE","status":"OBSERVATION_ONLY","physicalFeasibility":"NOT_EVALUATED","graphHashBefore":"e28aedf66937422e108a17e80da7a3f761bc31e0095b09cb95e5f7266689b146","graphHashAfter":"e28aedf66937422e108a17e80da7a3f761bc31e0095b09cb95e5f7266689b146","successfulCallbacks":[{"index":0,"strategy":"P07_FULLER_TWO_LAYER","attempt":5,"target":false,"geometryHashBefore":"ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39","geometryHashAfter":"ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39","parts":[]}],"aggregate":{"callbackCount":1,"targetCallbackCount":0,"partCount":0,"eligiblePartCount":0,"eligibleDirectionCount":0,"rejectedDirectionCount":0}}
+PCB_ROUTED_LEG_CASE {"status":"PASS","seed":"5","version":15,"density":14,"parts":54,"pads":131,"area":9172744,"width":4921,"height":1864,"largestProtectedEmptyRectangleArea":1354500,"copperManhattanLength":38610,"vias":48,"geometrySha256":"5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4","sourcePlanSha256":"3418e4324685d2f505eeaf3a771113a06ff05be5b9ba2a85a95a533f505dfc3e","liveBoardGraphSha256":"e28aedf66937422e108a17e80da7a3f761bc31e0095b09cb95e5f7266689b146","sourceIntentSha256":"fcbce1338aa8c3027900f388bda7202ebf4bbdf8d88be2e679af452aec1320d9","layoutSeed":"-7630701392004902526","routingSeed":"-9106650364266936003","selectedAttempt":5,"rankedPlacementAttempts":[5,3,0,4,1,2],"acceptedPlanEvaluations":44561,"placementRejections":0,"oneFaceAttempts":3,"twoLayerAttempts":3,"routeAttempts":6,"routingOrders":15,"routingExpansions":4190274,"selectedQualityMilli":345986514,"statisticsCanonical":"MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=44561;routes=6;routingWork=15/4190274;p05=3/0;p07=3/1;selectedAttempt=5;ranked=[5, 3, 0, 4, 1, 2];placementScores=[5{total=1614745;electrical=186250;region=13085;connector=4550;corridor=1937;outline=17431700;courtyard=999824;demand=3431527}, 3{total=1657242;electrical=186480;region=13425;connector=4130;corridor=6386;outline=5860800;courtyard=999824;demand=3431527}, 0{total=1759305;electrical=201070;region=13300;connector=4030;corridor=5161;outline=7003400;courtyard=999824;demand=3431527}, 4{total=1774933;electrical=204970;region=14820;connector=3800;corridor=3336;outline=8631400;courtyard=999824;demand=3431527}, 1{total=1867646;electrical=210650;region=14410;connector=4150;corridor=7468;outline=5860800;courtyard=999824;demand=3431527}, 2{total=2042037;electrical=227180;region=14257;connector=4280;corridor=10652;outline=9635600;courtyard=999824;demand=3431527}];selectedScore=1614745;selectedQualityMilli=345986514;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:NO_PATH, P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=SUCCESS]","fixedMarginFloor":50,"accessEnvelopeMargin":30,"requiredMargin":30,"legacyRequestedMargin":50,"requestedMargin":50,"actualMargin":30,"occupiedX":90,"occupiedY":70,"occupiedWidth":4861,"occupiedHeight":1804,"outlineX":60,"outlineY":40,"excludedWorkbenchChrome":"canvasDimensions,partsTray","elapsedMillis":6818}
+PCB_ROUTED_PASSIVE_MOVE_PROOF {"seed":"5","label":"seed5","version":15,"phase":"FINALIZED_ROUTE_CANDIDATE","status":"NO_TARGET","constructionCount":0,"newRouteRequests":0,"selectedMutation":false,"move":null,"source":null,"candidate":null,"proof":null,"physicalFeasibility":"NOT_EVALUATED"}
+
+Exception in thread "main" java.lang.IllegalStateException: PCB trace passes through component routing courtyard: CTRL_RETURN / C5 segment 3256,1094 -> 3226,1094 keepOut=Rect(3171,1094,80,90) startPad=U1.RETURN endPad=C5.2
+	at com.lushprojects.circuitjs1.client.PcbBoardLayout.validateTraceCourtyards(PcbBoardLayout.java:376)
+	at com.lushprojects.circuitjs1.client.PcbBoardLayout.validateRoutingGeometry(PcbBoardLayout.java:288)
+	at com.lushprojects.circuitjs1.client.PcbBoardLayout.validateGeometry(PcbBoardLayout.java:197)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveMoveProofContractTest.constructCandidate(PcbRoutedPassiveMoveProofContractTest.java:191)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveMoveProofContractTest.access$200(PcbRoutedPassiveMoveProofContractTest.java:16)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveMoveProofContractTest$Recorder.onCandidate(PcbRoutedPassiveMoveProofContractTest.java:79)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveLegCensusContractTest.dispatchMoveProofObserver(PcbRoutedPassiveLegCensusContractTest.java:42)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveLegCensusContractTest$Recorder.onSuccessfulRoute(PcbRoutedPassiveLegCensusContractTest.java:133)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.dispatchSuccessfulRouteObserver(SeededPcbLayoutGenerator.java:43)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.considerMediumLayout(SeededPcbLayoutGenerator.java:623)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMediumTwoLayerRoute(SeededPcbLayoutGenerator.java:418)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMedium(SeededPcbLayoutGenerator.java:249)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.access$200(SeededPcbLayoutGenerator.java:10)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$Session.advance(SeededPcbLayoutGenerator.java:198)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:126)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:119)
+	at com.lushprojects.circuitjs1.client.PcbPostSelectionEdgeTrimContractTest.routeAndObserve(PcbPostSelectionEdgeTrimContractTest.java:154)
+	at com.lushprojects.circuitjs1.client.PcbPostSelectionEdgeTrimContractTest.observeRoutedPassiveLegCensus(PcbPostSelectionEdgeTrimContractTest.java:36)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveLegCensusContractTest.observe(PcbRoutedPassiveLegCensusContractTest.java:74)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveMoveProofContractTest.observe(PcbRoutedPassiveMoveProofContractTest.java:51)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveMoveProofTrialContractTest.main(PcbRoutedPassiveMoveProofTrialContractTest.java:7)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbRoutedPassiveMoveProofTrialContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

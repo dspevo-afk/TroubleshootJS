@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 23864,
+      "startTicks": "639280533919150717",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-move-proof-r1/run_native.ps1"
+    },
+    {
+      "pid": 19924,
+      "startTicks": "639280533932320814",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-move-proof-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native private-passive-move phase; unique source copy"
+}

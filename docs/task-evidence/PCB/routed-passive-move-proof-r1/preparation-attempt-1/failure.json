@@ -1,0 +1,18 @@
+{
+  "status": "FAIL",
+  "phase": "Bootstrap verifier anchor preflight",
+  "reason": "Expected suiteDefinitions anchor absent; actual maintained insertion marker is PcbPostSelectionEdgeTrimContractTest",
+  "nativeExecution": "NOT_RUN",
+  "copyCountAtFailure": 1469,
+  "overrides": {
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "4a0eca5b23f88883f00d29c5fee4fec002a8b9777bf1393f447305454499bd10",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "5c687d27f226ca29e1c28703d4d5b868d8d6747d7ccb2e7624dfe6f8fc064dfd"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": "82fc9a924b20316561310aade933d9d37a27e79d7a6721a93c96074cc34e3aa8",
+    "tests/contracts/PcbRoutedPassiveMoveProofTrialContractTest.java": "e44f95ab910f4288baf25bd43e0a0bffa0f6088a33cbf1c7bc45d1c7b7a1a433"
+  },
+  "registryChanged": false,
+  "bootstrapSha256": "1ed8690eea3b3d1a5783c71ac2834df34f144433fb13c9e7fedaa88aad3ae73c",
+  "preservedDeltas": 4
+}
