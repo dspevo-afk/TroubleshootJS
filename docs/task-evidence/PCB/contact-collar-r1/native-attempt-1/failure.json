@@ -1,0 +1,17 @@
+{
+  "status": "FAIL_NATIVE",
+  "phase": "contracts",
+  "operationSeconds": 58.93794,
+  "driverExitCode": 2,
+  "childFailure": "PowerServicePartContractTest exit1 at reconnectLead",
+  "cause": "New fixture invoked another mutation before settling the ordinary solver after lead lift. finishMutation sets analyzeFlag; requireSafeMutation rejects unsettled runtime.",
+  "fixPlan": "Advance actual existing solver between lift/reconnect/removal and assert readiness/power, without weakening the production guard. Production candidate remains unchanged.",
+  "cleanup": "Recorded driver births exited; maintained verifier scratch removed",
+  "logSanitization": {
+    "scope": "Known worktree prefix only",
+    "rawSha256": "a2bd5095057c023f07178982be6f7c40d60715d948f6955ecf85f07f66691b30",
+    "publishedSha256": "a2bd5095057c023f07178982be6f7c40d60715d948f6955ecf85f07f66691b30"
+  },
+  "nativeAllSuites": "FAIL; no partial cohort PASS",
+  "buildPlayer": "NOT_RUN"
+}

@@ -1,0 +1,10 @@
+{
+  "script": "scripts/preview.ps1",
+  "pid": 26540,
+  "state": "Actual managed state/birth/exact command matched before production navigation",
+  "port": 8907,
+  "executable": "powershell.exe",
+  "status": "PASS",
+  "repository": "current worktree",
+  "startTicks": "639280784425041864"
+}

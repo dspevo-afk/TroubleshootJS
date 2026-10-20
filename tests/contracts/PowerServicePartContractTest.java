@@ -254,8 +254,21 @@ public final class PowerServicePartContractTest {
             ServiceComponentSlot slot = (ServiceComponentSlot)provider.getMutationSlot();
             PcbWorkbenchRenderer renderer = renderer(sim, f);
             renderGeometry(f, renderer, false);
+            contactLands(sim, f, renderer, f.original, true, -1);
             advance(sim, f);
+            String firstPad = "P." + f.original.getTerminal(0).getTerminalName();
+            check(sim.boardModificationController.liftLead("P", firstPad), "first actual physical lead lifts");
+            contactLands(sim, f, renderer, f.original, true, 0);
+            advance(sim, f);
+            check(sim.isChallengeInteractionEnabled() && sim.getBoardPowerController().isElectricallyUnpowered(),
+                "ordinary solver settles the lifted graph while source remains OFF before another mutation");
+            check(sim.boardModificationController.reconnectLead("P", firstPad), "same physical lead reconnects");
+            contactLands(sim, f, renderer, f.original, true, -1);
+            advance(sim, f);
+            check(sim.isChallengeInteractionEnabled() && sim.getBoardPowerController().isElectricallyUnpowered(),
+                "ordinary solver settles reconnected graph before removal");
             check(provider.removeInstalledPart() && slot.isEmpty() && !f.original.isInstalled(), "whole package removes through existing service owner");
+            contactLands(sim, f, renderer, f.original, false, -1);
             for (WireElm lead : f.leads) check(!sim.elmList.contains(lead), "all board attachments leave live graph");
             for (CircuitElm element : f.original.elements()) check(sim.elmList.contains(element), "loose part retains actual complete backing");
             renderGeometry(f, renderer, true);
@@ -302,10 +315,13 @@ public final class PowerServicePartContractTest {
                 advance(sim, f);
             }
             check(provider.install(candidate.getId()) && slot.getInstalledPart() == candidate, "catalog part installs through existing transaction");
+            contactLands(sim, f, renderer, candidate, true, -1);
+            contactLands(sim, f, renderer, f.original, false, -1);
             binding(f, candidate); advance(sim, f);
             for (WireElm lead : f.leads) check(sim.elmList.contains(lead), "all package attachments reconnect");
             check(provider.removeInstalledPart(), "replacement can return to inventory"); advance(sim, f);
             check(provider.install(f.original.getId()), "original exact bundle can be reinstalled"); binding(f, f.original); advance(sim, f);
+            contactLands(sim, f, renderer, f.original, true, -1);
             GeneratedRuntimeInvariant.verify(f.instance, sim.boardModificationController, sim.elmList);
         } finally {
             PhysicalMutationScope.clearFailureHookForDeveloperVerification();
@@ -349,6 +365,10 @@ public final class PowerServicePartContractTest {
             check(part.getTerminal(i).getTerminalName().equals(terminal.getTerminalId()) &&
                 terminal.getPoint().equals(expected),
                 "geometry preserves the actual normal terminal projection " + i);
+            if (loose)
+                check(context.getConnectedThroughHoleLand(i, PcbBoardSide.TOP) == null &&
+                    context.getConnectedThroughHoleLand(i, PcbBoardSide.BOTTOM) == null,
+                    "loose physical lead never paints a board contact");
         }
         check(part.getSpecification() == specification && part.getPlayerVisibleNameplate() == nameplate &&
             part.getRenderMetadata().getVisualSpecification() == specification,
@@ -360,6 +380,34 @@ public final class PowerServicePartContractTest {
                 "K".equals(geometry.getTerminal(1).getTerminalId()),
                 "fixed zener retains truthful player markings and normal axial A/K polarity");
         }
+    }
+
+    private static void contactLands(TestCirSim sim, Fixture f, PcbWorkbenchRenderer renderer,
+            PhysicalServicePart part, boolean mounted, int liftedTerminal) {
+        Vector<CircuitElm> live = new Vector<CircuitElm>(sim.elmList);
+        Vector<CircuitElm> canonical = new Vector<CircuitElm>(f.instance.getSimulationElements());
+        PcbBoardLayout layout = renderer.getLayoutForProvider();
+        String geometry = layout.geometryFingerprint();
+        PcbComponentPlacement placement = layout.getComponent("P");
+        check(placement.getMountingSide() == PcbBoardSide.TOP, "literal top-mounted ordinary fixture");
+        String firstPad = "P." + part.getTerminal(0).getTerminalName();
+        Object projectionToken = renderer.captureInstalledTargetIdentity("P", firstPad);
+        PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer, placement,
+            part, part.getPackage(), -1, false);
+        for (int i = 0; i < part.getTerminalCount(); i++) {
+            PcbPadPlacement expected = layout.getPad("P." + part.getTerminal(i).getTerminalName());
+            check(expected != null && expected.getAttachment() == PcbTerminalAttachment.PLATED_THROUGH_HOLE,
+                "fixture owns an actual named through-hole land");
+            PcbPadPlacement actual = context.getConnectedThroughHoleLand(i, PcbBoardSide.TOP);
+            check(actual == (mounted && i != liftedTerminal ? expected : null),
+                "physical per-lead contact follows actual lift/removal/replacement, not component aggregate");
+            check(context.getConnectedThroughHoleLand(i, PcbBoardSide.BOTTOM) == null,
+                "contact convention stays on the mounted face");
+        }
+        check(live.equals(sim.elmList) && canonical.equals(f.instance.getSimulationElements()) &&
+            geometry.equals(layout.geometryFingerprint()), "contact queries leave live graph, canonical graph and geometry exact");
+        check(renderer.captureInstalledTargetIdentity("P", firstPad) == projectionToken,
+            "read-only contact queries preserve the current installed probe projection identity");
     }
 
     private static void binding(Fixture f, PhysicalServicePart part) {

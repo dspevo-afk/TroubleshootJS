@@ -1,4 +1,50 @@
-# Current checkpoint: chip reference marks qualified; publication review
+# Current checkpoint: contact collars qualified; publication review
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+f3c95e25f3718317ace504dad1f3eb9fec594fd0. Reference marks, titles and normal
+compaction published. User authorizes indefinite ordinary random PCB realism and
+screenshots; no main merge/email. Original5/private baseline pointer/cache intact.
+
+Contact-collar-r1 adds a contained metallic contact convention for exact mounted
+current parts with explicit individual connected pad bindings, exposed PTH and
+viewed mounting face. Three render owners plus existing PowerServicePart native
+contract changed. No new target, geometry, copper, solver, fault-derived paint,
+mutation or save state. No solder material/quality/side or manufacturing claim.
+Layout17/public6 unchanged. Frozen1481/four gates, raw4 archives and three exact
+insertion-only canonical production boundaries pass; old probe/hit code unchanged.
+
+Native attempt1 FAIL58.93794s/driver2 preserved with source/gates/logs/cleanup:
+new test attempted reconnect before actual solver settled after lift. Production
+guard remained intact. Test-only real solver advances and settled/OFF assertions
+fix sequencing. Corrected native11 PASS62.2240499s; service577/endpoints320/
+serviceability1769/save34988/identity21/metadata3977/pose8605/viewport1277/
+bench235/lifted337/footprint46. Final actual JDK8/GWT5 OBF PASS90.7048032s.
+Framing5 canaries, actual optimized-Python refusal and all before/after source/
+gate/process checks pass. Narrow static and post-fix test review found no blocker;
+reviewer ran no gates. Direct covered-land negative not exercised by new test;
+unchanged canProbe exposure guard and that limit remain explicit.
+
+Actual headed normal Sensor0 per-lead lift/reconnect, empty U2 lands, original
+loose-chip removal/reinstall PASS. Known normal LED5577758334702827054: customer
+FAIL with real5V and connected-looking R1; OFF/isolated R1 OL; actual shop330Ohm
+replacement measures330Ohm and fresh powered customer PASS. Final repaired board
+OFF/original loose part/menu and both exact public6 identities pass. Five primary
+raw images plus one preserved immediate completion frame inspected; latest Sensor
+and repaired LED images pasted in chat. Served/expected/post-player five fields
+exact. Two existing favicon404 errors; no page errors/other recorded warnings/
+errors. FileReader/full unrelated matrix/private Close7/CDP/Edge/unseen/all-seed/
+new-size proof NOT RUN or claimed.
+
+Actual browser API/root exit0, new profile absent, native/build/browser/preview/
+launcher births exited, maintained stop PASS2.2302646s/8907 released. Old unused
+profile deletion remains rejected by automatic approval review as "blocked by
+policy"; untouched, no user retention approval inferred. Old baseline and small
+private audit metadata retained outside Git. Final application audit PASS.
+Next: root diff/privacy/staged-byte checks, normal commit/push/remote SHA, then
+next bounded PCB-realism investigation. No main merge/email.
+
+# Previous checkpoint: chip reference marks qualified; subsequently published at f3c95e25
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin

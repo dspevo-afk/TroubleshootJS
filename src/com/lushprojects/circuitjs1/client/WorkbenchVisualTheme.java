@@ -179,6 +179,15 @@ final class WorkbenchVisualTheme {
                 radius * 2 - 2, PLATING_LIGHT);
     }
 
+    /** Stylized modeled contact; all metal stays within the already exposed land. */
+    static void contactCollar(Graphics g, int x, int y, int landRadius) {
+        int radius = landRadius - 1;
+        if (radius < 1) return;
+        ellipse(g, x - radius, y - radius, radius * 2, radius * 2, METAL);
+        ellipse(g, x - radius * .75, y - radius * .8, radius * 1.4, radius * 1.4, METAL_LIGHT);
+        ellipse(g, x - radius * .35, y - radius * .35, radius * .7, radius * .7, METAL);
+    }
+
     /** Stripe follows the physical terminal axis, including rotations and reversals. */
     static void polarityStripe(Graphics g, Rectangle b, Point first, Point marked,
             int thickness, String color) {

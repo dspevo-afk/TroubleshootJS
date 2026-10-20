@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "Known worktree prefix only; native values/status/times unchanged",
+  "files": [
+    {
+      "file": "contracts.txt",
+      "rawSha256": "68b034376ad698779e38584dd33ea53a816ecc385005abffb0ca6fdacbaf5a68",
+      "publishedSha256": "68b034376ad698779e38584dd33ea53a816ecc385005abffb0ca6fdacbaf5a68",
+      "knownWorktreePrefixReplacements": 0
+    },
+    {
+      "file": "contracts-receipt.txt",
+      "rawSha256": "9be734cbfe55f84f85ae7e2239b6be13070890acf44cc9a40812c3f07c82a8c5",
+      "publishedSha256": "9be734cbfe55f84f85ae7e2239b6be13070890acf44cc9a40812c3f07c82a8c5",
+      "knownWorktreePrefixReplacements": 0
+    },
+    {
+      "file": "build.txt",
+      "rawSha256": "eab09e34232ae6f15b0018e4f9af4b16660644c02440e95c726b6c096250984d",
+      "publishedSha256": "cf84f67a587826337664357a82423c4fa1fd95d237eb5f063daba60ca848180b",
+      "knownWorktreePrefixReplacements": 1
+    }
+  ]
+}

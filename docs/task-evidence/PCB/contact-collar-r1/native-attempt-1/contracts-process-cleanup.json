@@ -1,0 +1,16 @@
+{
+  "checks": [
+    {
+      "startTicks": "639280779872107154",
+      "recordedBirthExited": true,
+      "pid": 6404
+    },
+    {
+      "startTicks": "639280779878748948",
+      "recordedBirthExited": true,
+      "pid": 16252
+    }
+  ],
+  "status": "PASS",
+  "phaseOutcome": "FAIL; fixture attempted reconnect while analyseFlag remained set"
+}

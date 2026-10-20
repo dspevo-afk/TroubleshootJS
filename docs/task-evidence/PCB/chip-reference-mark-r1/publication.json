@@ -1,0 +1,18 @@
+{
+  "status": "PUSH_VERIFIED",
+  "commit": "f3c95e25f3718317ace504dad1f3eb9fec594fd0",
+  "message": "Add chip orientation marks matching public pinouts",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q60-faulted-profile-counts",
+  "verification": "Normal push succeeded; ls-remote exact accepted SHA",
+  "stagedByteAudit": {
+    "status": "PASS",
+    "files": 77,
+    "rawEvidenceBlobs": 69,
+    "canonicalTextBlobs": 8
+  },
+  "mainMerge": "NOT_PERFORMED",
+  "email": "DISABLED_BY_USER",
+  "remaining": "Original5 and private baseline pointer/cache; documented old baseline/private task metadata and policy-blocked unused profile"
+}

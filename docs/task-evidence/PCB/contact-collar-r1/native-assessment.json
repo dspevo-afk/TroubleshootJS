@@ -1,0 +1,42 @@
+{
+  "nativeBuildQualification": "PASS",
+  "sourceCount": 1481,
+  "originalGates": 4,
+  "changedOwners": [
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+    "tests/contracts/PowerServicePartContractTest.java"
+  ],
+  "operationSeconds": {
+    "contracts": 62.2240499,
+    "build": 90.7048032
+  },
+  "qualificationCases": [
+    {
+      "case": "actual eleven receipt markers and separate driver footer",
+      "result": "PASS"
+    },
+    {
+      "case": "missing suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "duplicate suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "wrong driver count",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "failed operation",
+      "result": "PASS_REJECTED"
+    }
+  ],
+  "qualifierSha256": "fc67bb5822a2d6b761396ac38872672ac0ddc94ccdddd0094b32d56ebf6b5061",
+  "framing": "Eleven suite markers are checked in the actual receipt; the maintained driver footer is checked separately in its log",
+  "reusedBoundary": "All generation/layout/solver/identity/physical-geometry/graph/mutation/save owners unchanged; no fresh fixed44 claim",
+  "player": "Separate actual normal collar/lead/empty/repair evidence required",
+  "limits": "No full unrelated matrix, all-seed/manufacturing or fresh repair claim"
+}

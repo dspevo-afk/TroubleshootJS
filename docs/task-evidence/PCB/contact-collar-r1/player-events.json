@@ -1,0 +1,59 @@
+[
+  {
+    "action": "Normal exact Sensor0 preparation",
+    "outcome": "Customer ticket",
+    "observedUpperBoundMillis": 3116,
+    "timingLimit": "Not internal generationMillis certification"
+  },
+  {
+    "action": "Power OFF -> U1 context menu -> Lift lead INPUT",
+    "observed": "Inspect exact lifted first lead versus three connected leads"
+  },
+  {
+    "action": "U1 context -> Reconnect lead INPUT",
+    "observed": "Normal action accepted; original first lead restored"
+  },
+  {
+    "action": "Remove U2 while OFF -> open actual drawer",
+    "observed": "U2 five empty gold lands; original loose chip; U1 first contact restored"
+  },
+  {
+    "action": "Original U2 -> Install as Circuit / U2",
+    "observed": "Actual tray0/OFF; original chip returned, no functional repair claim"
+  },
+  {
+    "action": "Read actual Sensor identity",
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  },
+  {
+    "action": "Normal exact LED known regression preparation",
+    "seed": "5577758334702827054",
+    "outcome": "Customer ticket",
+    "observedUpperBoundMillis": 244,
+    "timingLimit": "Not internal generationMillis certification"
+  },
+  {
+    "action": "Run customer retest before repair",
+    "observed": "Customer retest did not pass. Continue troubleshooting."
+  },
+  {
+    "action": "DC V; red J1.1 black J1.2 using normal terminal buttons",
+    "observed": "5 V while customer retest fails"
+  },
+  {
+    "action": "Exit DC V, power OFF, lift R1.1, OHM probes on R1 terminals",
+    "observed": "OL on isolated R1; board remains OFF"
+  },
+  {
+    "action": "Shop330Ohm -> actual compatible R1 install -> OHM measurement",
+    "observed": "330 Ohm while OFF; original faulty part remains loose"
+  },
+  {
+    "action": "Exit OHM -> power ON -> Run customer retest",
+    "observed": "Customer retest passed. The reported behavior is resolved."
+  },
+  {
+    "action": "Read repaired-board pristine replay",
+    "observedReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "base": "f3c95e25f3718317ace504dad1f3eb9fec594fd0",
+  "scope": "Three exact insertion-only production changes. Existing pad/hole paint, probe/hit resolution, geometry and other style code remain unchanged after canonical newline normalization. New eligibility/paint effects validated separately.",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+      "baseCanonicalSha256": "26dd79ad8142e1cd6e7a8546a36552774eac77d287c1946c963777b60c729d63",
+      "candidateRawSha256": "7ddf815e48d640b5c23d7edeb35dee062bba9ffcfcbb6dde27a71c3605becac8",
+      "insertionSha256": "b29b97c7d8fc92234b63c4314bb90e6c615bede4a3ab03a0fd02d45ff1342ae5",
+      "insertedLines": 10,
+      "existingSourceCanonicalUnchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java",
+      "baseCanonicalSha256": "f633cee0e3e9f186b93590c390dd06a4512c41a5ac9d629291330364e9c15cd9",
+      "candidateRawSha256": "1b5ec447992d60eb1d6322dc8e04f6f3f969c28b626bed9a453f005d3e02cb29",
+      "insertionSha256": "9919eb9703ffa1ac25a0f21dca5c924edd55c1c6bd4292aa4c86540bc52cf613",
+      "insertedLines": 14,
+      "existingSourceCanonicalUnchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+      "baseCanonicalSha256": "4d1eba278bd53a26fb91284829589828a37f2a1b02f4312f967bc2b0ba5b81d1",
+      "candidateRawSha256": "cff7ae0f3da9e51a74411847a6fc352d8bc5e21b1f6add293128a09b3e5a8724",
+      "insertionSha256": "e956905766d01f6fb0be326a1ea7c2078c2e44f6744246f49b9a7ed8e98cc943",
+      "insertedLines": 9,
+      "existingSourceCanonicalUnchanged": true
+    }
+  ]
+}

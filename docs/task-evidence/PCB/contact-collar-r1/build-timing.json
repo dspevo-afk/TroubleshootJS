@@ -1,0 +1,9 @@
+{
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "exitCode": 0,
+  "phase": "build",
+  "status": "PASS",
+  "terminalCleanupIncluded": true,
+  "failure": null,
+  "elapsedSeconds": 90.7048032
+}

@@ -1,0 +1,16 @@
+{
+  "phase": "contracts",
+  "scope": "Captured parent/current births before maintained contact-collar phase",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "pid": 24052,
+      "startTicks": "639280781951483885"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 28352,
+      "startTicks": "639280781957040335"
+    }
+  ]
+}

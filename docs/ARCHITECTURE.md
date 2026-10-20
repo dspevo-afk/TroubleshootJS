@@ -5966,3 +5966,15 @@ allowed package poses, layout17/public6 and menu event ownership remain unchange
 Native literal/independent affine fixtures and actual normal mounted/removed U2
 input qualify this render boundary; broader unchanged generation proof remains
 its own frozen evidence. [Reference-mark evidence and limits](task-evidence/PCB/chip-reference-mark-r1/README.md).
+
+`PhysicalPartRenderContext.getConnectedThroughHoleLand` exposes only an existing
+modeled contact: exact current mounted slot/part, explicit component-pad binding,
+individual connected lead, exposed PTH land and viewed mounting face. The normal
+renderer adds a bounded `WorkbenchVisualTheme.contactCollar` inside that land
+after provider paint. Empty/lifted/removed/loose/stale/non-PTH/covered/opposite-face
+cases emit no collar. No solder material/quality/side state is inferred; no solver
+current, continuity result or hidden fault is read for appearance. This convention
+changes paint only. Existing land/drill, geometry, copper, probe/hit/identity and
+all generation/mutation/save ownership stay intact. Three insertion-only source
+boundaries, ordinary-solver lifecycle/token fixtures and actual normal Sensor/LED
+measurement/repair/retest qualify the effect. [Contact evidence and limits](task-evidence/PCB/contact-collar-r1/README.md).

@@ -412,6 +412,20 @@ final class PhysicalPartRenderContext {
         return getModifications().isLeadConnected(getComponentId(), padId);
     }
 
+    /** Existing modeled physical contact, independent of current or hidden part health. */
+    PcbPadPlacement getConnectedThroughHoleLand(int terminal, PcbBoardSide viewedSide) {
+        if (loose || isDeveloperCanary() || !isInstalledPartMounted() ||
+                placement.getMountingSide() != viewedSide)
+            return null;
+        String padId = getBoardPadId(terminal);
+        GeneratedComponentConnectionBinding binding = getInstance().getConnectionBindings().getOrNull(padId);
+        if (binding == null || !getComponentId().equals(binding.getComponentId()) || !isLeadConnected(terminal))
+            return null;
+        PcbPadPlacement pad = renderer.getLayoutForProvider().getPad(padId);
+        return pad != null && pad.getAttachment() == PcbTerminalAttachment.PLATED_THROUGH_HOLE &&
+            PcbCopperAccess.canProbe(pad, viewedSide) ? pad : null;
+    }
+
     boolean isIlluminated() {
         return placement != null && getInstance().getOperationalStates().isIlluminated(getComponentId());
     }

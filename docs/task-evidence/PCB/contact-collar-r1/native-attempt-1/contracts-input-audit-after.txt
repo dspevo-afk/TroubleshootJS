@@ -1,0 +1,1 @@
+PASS contact collar exact input audit phase=candidate sources=1481 gates=4

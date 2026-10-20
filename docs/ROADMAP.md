@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Chip reference marks qualified; publication review**
+**Current task:** **Physical contact collars qualified; publication review**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -26,13 +26,23 @@ Fit/Zoom/pan checks pass; five raw images were inspected and two posted in chat.
 Layout17/public6 remain. All new running resources exited; the earlier blocked
 unused directory remains separately documented. [Title evidence and limitations](task-evidence/PCB/normal-silkscreen-title-r1/README.md).
 
-Titles are published atbda25deb. Supported chips now have a first-terminal body
+Titles are published atbda25deb; reference marks atf3c95e25. Supported chips now
+have a first-terminal body
 dot matching the public View schematic diagram and named explanation. Eight
 maintained native suites, final JDK8/GWT5, independent literal/pose fixtures and
 actual normal Sensor0 U1/U2/removed-chip/reinstallation input pass. Five raw images
 were inspected; new resources are closed. No geometry/target/graph change or new
 commercial pin-number/all-seed/size claim. Original reader/selector preparation
 failures remain explicit. [Reference-mark evidence and limits](task-evidence/PCB/chip-reference-mark-r1/README.md).
+
+Modeled connected PTH leads now have bounded metallic collars; empty/lifted lands
+retain their existing paint. Current-part/per-lead/binding/exposure/mounted-face
+guards keep the effect tied to physical attachment. Corrected native11 and final
+JDK8/GWT5 pass; the first fixture sequencing failure remains. Actual Sensor0
+lift/reconnect/remove/reinstall and known normal LED5V/isolated OL/330Ohm replacement/
+fresh customer FAIL->PASS pass. Five primary views plus retained completion frame
+were inspected; two current board images posted. No geometry, targets, physics,
+save state or new size/manufacturing claim. [Contact evidence and limitations](task-evidence/PCB/contact-collar-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

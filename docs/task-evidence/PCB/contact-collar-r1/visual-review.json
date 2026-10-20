@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "primaryCaptures": [
+    {
+      "file": "sensor-connected.jpg",
+      "sha256": "0fc2d1fb63d81fff0c489a7523db823e6dd5878170fb02b2583b0976ca60f8ba",
+      "bytes": 118447,
+      "review": "Normal Sensor0 all modeled connected leads have metallic collars; body reference dots/title unchanged.",
+      "primary": true
+    },
+    {
+      "file": "sensor-input-lifted.jpg",
+      "sha256": "63216bc73adb8be589b44b2e7b4af52c09b6272441ab94fcbc20ac5f6fe659ba",
+      "bytes": 121172,
+      "review": "Only lifted U1 INPUT loses its collar; three other U1 contacts stay metallic and lifted component lead is visibly separate.",
+      "primary": true
+    },
+    {
+      "file": "sensor-u2-removed.jpg",
+      "sha256": "46d31ad0c14790add19f12bd3f7b4aed5c34c653b8fa550075d6bab66935a389",
+      "bytes": 109282,
+      "review": "U2 absent, all five bare gold lands visible; U1 first contact restored; original loose chip retains body dot. Drawer naturally crops board.",
+      "primary": true
+    },
+    {
+      "file": "led-unrepaired-supply.jpg",
+      "sha256": "e63d157b67752c14012a52b88d1c3c8f003268759620948cdf86f4dbd518b0a7",
+      "bytes": 123916,
+      "review": "Actual unrepaired customer FAIL and live5V; internally open R1 still looks physically connected, preserving fault privacy.",
+      "primary": true
+    },
+    {
+      "file": "led-repaired-board.jpg",
+      "sha256": "6c6518f25a53f0cbf23b19a8708a17a2f1695ce0580b99d4daea36ee70b853f6",
+      "bytes": 119923,
+      "review": "Settled actual repaired board with lit LED and both new R1 contact collars; original faulty resistor remains loose.",
+      "primary": true
+    }
+  ],
+  "additionalRetestConfirmation": [
+    {
+      "file": "led-retest-confirmation.jpg",
+      "sha256": "56d40d9ea254d5ca42a67482c62edc6a8ade1b18676369e95c2b75dc2eecf076",
+      "bytes": 112547,
+      "review": "Actual customer PASS completion panel, captured immediately after Return to board input before display settled. Retained confirmation, not unobstructed paint proof.",
+      "primary": false
+    }
+  ],
+  "actualRawImagesInspected": 6,
+  "limits": [
+    "Five primary acceptance views plus retained intermediate completion panel",
+    "Opposite-face skip covered by native fixtures/static gate; not freshly photographed",
+    "Direct covered-land negative not exercised by new native test; unchanged canProbe guard source explicit",
+    "No FileReader/full unrelated matrix/private CDP/Close7/Edge or manufacturing claim"
+  ]
+}

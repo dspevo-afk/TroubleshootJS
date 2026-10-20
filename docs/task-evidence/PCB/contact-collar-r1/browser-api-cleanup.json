@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "rootPid": 30596,
+  "rootExitObserved": true,
+  "rootExitCode": 0,
+  "operations": "Actual owned page, context, client and BrowserServer close",
+  "privateCloseGate": "NOT_CLAIMED"
+}

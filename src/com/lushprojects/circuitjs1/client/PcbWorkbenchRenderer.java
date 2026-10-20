@@ -237,6 +237,16 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         if (selected)
             drawSelection(graphics, geometry);
         renderer.drawInstalled(graphics, context, geometry, selected);
+        for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+            PcbPadPlacement land = context.getConnectedThroughHoleLand(terminal.getTerminalIndex(), viewingFace);
+            if (land == null) continue;
+            Rectangle bounds = screenRectForProvider(land.getPadBounds());
+            Point point = getPadPoint(land.getPadId());
+            int radius = Math.min(Math.min(point.x - bounds.x, bounds.x + bounds.width - point.x),
+                Math.min(point.y - bounds.y, bounds.y + bounds.height - point.y));
+            WorkbenchVisualTheme.contactCollar(graphics, point.x, point.y,
+                radius);
+        }
         return geometry;
     }
 
