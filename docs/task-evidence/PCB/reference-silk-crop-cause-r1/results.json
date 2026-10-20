@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "scope": "Temporary insertion-only diagnostic observers; no production fix, assertion change, or budget change.",
+  "repository": {
+    "branch": "codex/q60-faulted-profile-counts",
+    "head": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+    "finalInputsManifestSha256": "05b5f5f97187eb040c32932bb8f3a344898f530907bd8fa051f1eeac715515aa"
+  },
+  "instrumentationCompileRetry1": {
+    "status": "FAIL_INSTRUMENTATION_ONLY",
+    "detail": "The first test observer insertion landed inside a Java statement and failed compilation; its raw output and source overlay are preserved under attempt1-compile-failure/.",
+    "maintainedDriverExitCode": 2,
+    "operationElapsedSeconds": 2.4289852,
+    "postExitCaptureAndAuditSeconds": 0.337423,
+    "recordedBirthCleanup": "PASS_RECORDED_BIRTHS_EXITED"
+  },
+  "nativePhases": [
+    {
+      "phase": "accepted17 baseline with current mapped assertions",
+      "status": "PASS",
+      "maintainedDriverExitCode": 0,
+      "functionalContractOutput": "PASS: PCB functional grouping contracts roots=6 assertions=3059",
+      "operationElapsedSeconds": 63.9431797,
+      "postExitCaptureAndAuditSeconds": 0.4180824,
+      "receiptExists": true,
+      "receiptSha256": "1049d8de6a430cde980bc02a9429caa122ece6a44354ea196dc198095c2e5044",
+      "inputAuditBeforeAndAfter": "PASS, 1481 source inputs (2 exact observer overlays), 24 machinery inputs, 8 gates",
+      "recordedBirthCleanup": "PASS_RECORDED_BIRTHS_EXITED"
+    },
+    {
+      "phase": "exact pre-task18 candidate with the same observers and assertions",
+      "status": "FAIL_EXPECTED_NATIVE_CONTRACT_FAILURE",
+      "maintainedDriverExitCode": 2,
+      "functionalJvmFailureExitCode": 1,
+      "failure": "seed=17 version=12 area=5906824 exceeds accepted11 area=5814368 by the 1% limit",
+      "operationElapsedSeconds": 64.4015116,
+      "postExitCaptureAndAuditSeconds": 0.4152122,
+      "receiptExists": false,
+      "receiptNote": "The maintained driver failed before writing its receipt; no receipt was synthesized.",
+      "inputAuditBeforeAndAfter": "PASS, 1481 source inputs (2 exact observer overlays), 24 machinery inputs, 8 gates",
+      "recordedBirthCleanup": "PASS_RECORDED_BIRTHS_EXITED"
+    }
+  ],
+  "causeEvidence": {
+    "matchedCandidateRows": 17,
+    "rowsWithEqualPhysicalFingerprintAfterRemovingOnlyEpochAndAllLabelRecords": 17,
+    "normalization": "Diagnostic comparison only: strip layout epoch and every label record; retain and compare labels separately.",
+    "seed17": {
+      "version": 12,
+      "selectedAttemptBaselineToCandidate": [3, 1],
+      "routingWorkBaselineAndCandidate": "14/3726268",
+      "accepted17": {
+        "area": 5814368,
+        "copperLength": 43520,
+        "segments": 263,
+        "vias": 48,
+        "geometrySha256": "56f326a79a8d83636591c596991ae768a7d828a7f6d71892fd0415931b90992c"
+      },
+      "candidate18": {
+        "area": 5906824,
+        "copperLength": 43410,
+        "segments": 276,
+        "vias": 48,
+        "geometrySha256": "9ce090ae3f0352c7f10d858f3980bb61cee56a4926ed974889d9b0293ad3ca73"
+      },
+      "attempt3Candidate3Variation2": {
+        "sameNonLabelPhysicalFingerprint": true,
+        "occupiedBoundsBaseline": [94, 41, 3132, 1699],
+        "occupiedBoundsCandidate": [44, 24, 3182, 1716],
+        "edgeMarginBoth": 50,
+        "preCropNominalSizeBaseline": [3232, 1799],
+        "preCropNominalSizeCandidate": [3282, 1816],
+        "preCropNominalAreaBaseline": 5814368,
+        "preCropNominalAreaCandidate": 5960112,
+        "newLeftAndTopExtremaLabel": "component:D1",
+        "D1BoundsBaseline": [516, 1176, 18, 18],
+        "D1BoundsCandidate": [44, 24, 18, 18],
+        "selectedBaseline": true,
+        "selectedCandidate": false
+      },
+      "selectedCandidate1Variation2": {
+        "occupiedBoundsBaselineAndCandidate": [94, 76, 3181, 1654],
+        "edgeMarginBoth": 65,
+        "preCropNominalSizeBoth": [3311, 1784],
+        "nominalAreaBoth": 5906824,
+        "selectedBaseline": false,
+        "selectedCandidate": true
+      }
+    }
+  },
+  "accepted80IntersectionAudit": {
+    "status": "PASS",
+    "canonicalRows": 80,
+    "labelsChecked": 4544,
+    "placedConnectedLeadRectangles": 9371,
+    "positiveAreaIntersectionPairs": {
+      "boardTitle": 0,
+      "componentReference": 131,
+      "netLabel": 0
+    },
+    "intersectionRule": "Positive-area overlap of half-open integer rectangles."
+  },
+  "restoration": {
+    "byteExactAgainstPreTaskCopiesAndSealedFinalSource": true,
+    "generatorSha256": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2",
+    "functionalGroupingSha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+    "finalInputAudit": "PASS exact final clearance inputs sources=1481 owners=8 gates=8",
+    "auditedSourceInputs": 1481,
+    "auditedMachineryInputs": 24,
+    "auditedGates": 8,
+    "finalAuditOutputSha256": "723d32d78e225550660ba48c16a60decc531af99e1c64a26733bce965f717265",
+    "allActualPhaseProcessBirthsExited": true
+  },
+  "auditLimit": "One final-input audit was invoked during temporary source overlays and failed because those two files were intentionally not at their sealed final-source bytes. That was a wrong-context failure, not a negative canary or evidence of unrelated drift. The phase-specific overlay audits passed, and the full exact final-input audit passed after byte-exact restoration."
+}

@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "meaning": "Preserve this native failure; never convert it to PASS or alter its oracle.",
+    "knownFailure": "Root17 version12 outline area 5906824 exceeds accepted11 baseline 5814368 by 1 percent",
+    "expectedNativeStatus": "FAIL",
+    "expectedExitCode": 2,
+    "expectedJavaChildExitCode": 1,
+    "expectedMaintainedDriverExitCode": 2,
+    "exitCodeMeaning": "The actual Java contract child is expected to fail with 1; the maintained PowerShell driver catches failed contracts and returns 2. Capture and report both exact observed codes."
+  },
+  "baseline": {
+    "meaning": "Verify the accepted17 baseline against the unchanged current mapped assertions.",
+    "expectedNativeStatus": "PASS",
+    "expectedExitCode": 0,
+    "expectedJavaChildExitCode": 0,
+    "expectedMaintainedDriverExitCode": 0
+  },
+  "comparison": {
+    "labels": "Retain every label id/text/rectangle separately; identify changed labels at changed occupied extrema.",
+    "rows": "Group candidate rows under their root/version BEGIN row; match by candidate and variation mode.",
+    "legacyIntersections": "Recount label/placed connectedLead rectangle intersections across all 80 retained accepted17 canonical oracle rows by board-title, component-reference, and net-label.",
+    "physicalNormalizer": "For diagnostic comparison only, replace leading layout epoch and remove all L: label records; compare every other fingerprint byte."
+  },
+  "schema": 1,
+  "restoration": "Copy the exact two owned files from reference-lead-clearance-r1/final-source/; require final_inputs.py audit PASS for all1481 source inputs and24 machinery inputs."
+}

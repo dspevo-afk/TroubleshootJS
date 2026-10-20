@@ -1,0 +1,31 @@
+{
+  "scope": "Separate post-exec birth check; no termination attempted",
+  "status": "PASS_RECORDED_BIRTHS_EXITED",
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "startTicks": "639280969654674030",
+      "pid": 25392,
+      "role": "phase-parent"
+    },
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "startTicks": "639280969657024808",
+      "pid": 6744,
+      "role": "phase-driver"
+    },
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "startTicks": "639280969664131251",
+      "pid": 28212,
+      "role": "maintained-verifier"
+    }
+  ],
+  "elapsedSeconds": 0.0057914,
+  "phase": "baseline",
+  "actualMaintainedDriverExitCode": 2,
+  "launchSha256": "b99a9e5f67196893a1aeb426d84db861b7f30d7a798d020490fe3a1a2638479f"
+}

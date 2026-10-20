@@ -1,0 +1,6 @@
+{
+  "status": "PASS_REFUSED_OPTIMIZED_PYTHON",
+  "script": "inputs.py",
+  "limits": "Interpreter refusal only; not native or process execution proof",
+  "actualExitCode": 1
+}

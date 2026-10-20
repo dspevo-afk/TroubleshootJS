@@ -1,0 +1,22 @@
+{
+  "scope": "Separate root observation after actual exec exit0; no termination attempted",
+  "status": "PASS",
+  "phase": "baseline",
+  "elapsedSeconds": 0.0054073,
+  "actualExecExitCode": 0,
+  "launchSha256": "4f0d278e8bbbdef2f8fba3c8440e8d3bb74807490de82bdfc2c6ba8107b7a259",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280947374762581",
+      "pid": 10624,
+      "recordedBirthExited": true
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280947377901714",
+      "pid": 19276,
+      "recordedBirthExited": true
+    }
+  ]
+}

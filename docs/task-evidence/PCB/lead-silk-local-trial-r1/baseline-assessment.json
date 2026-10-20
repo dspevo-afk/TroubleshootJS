@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "phase": "baseline",
+  "cases": 44,
+  "leadLegendIntersectionPairs": 15,
+  "changedLegendCases": [],
+  "errors": [],
+  "elapsedSeconds": 72.702773,
+  "limits": "Bounded diagnostic corpus only; not final production acceptance/current epoch migration/build/player/all-seed proof"
+}

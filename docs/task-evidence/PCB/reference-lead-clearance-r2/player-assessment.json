@@ -1,0 +1,54 @@
+{
+  "status": "PASS_EXECUTED_PLAYER_BOUNDARY_WITH_LIMITS",
+  "candidateInputsSha256": "a90a9bfcb6271642550c6f06a51c23d32111f4d6f68449ff8630676bc2d1b0e2",
+  "fixedReplays": [
+    "tsj-alpha/6/EASY/RB15_CONTROL/13",
+    "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+    "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  ],
+  "firstFreshMediumReplay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2105106022359460505",
+  "actualFlow": [
+    "RB15 original retest FAIL; all2 suppliesOFF; original Part15 RLED remove/reinstall via actual target; fresh original-restored FAIL; tray0/allOFF",
+    "RB30 fixed0 admitted after initial30s NOT_READY wait, fitted/ordinary wheel zoom/Fit; D2 label clear below its body; original customer FAIL; all4 outputs disconnected before menu",
+    "First MEDIUM New board admitted via actual native difficulty dropdown/default Two-channel controller; exact public identity read; original FAIL; all3 outputs visibly disconnected",
+    "Known5V indicator originalFAIL, isolatedR1 lead1 actualOHM=OL; mode exit/remove originalPart2, shop330Ohm actualPart4 install as Circuit/R1, actualOFF OHM330Ohm; exit/connect5V/fresh customerPASS",
+    "Actual Save session download762bytes whileOFF, actual Load session click/filechooser/FileReader; restored notice/OFF/tray1, actualOHM330Ohm and fresh powered customerPASS; finalOFF/exact original public identity"
+  ],
+  "primaryImages": [
+    {
+      "path": "rb15-root13-fitted.jpg",
+      "sha256": "7506102f490851dac76f010232892a1b7f4f3a6f0551dfbed7b75243385efe69"
+    },
+    {
+      "path": "rb30-root0-fitted.jpg",
+      "sha256": "d0f8817b91e3525e8dc18d0d11a3e58894622d04fae4e71b455498b5707f167a"
+    },
+    {
+      "path": "rb30-lead-reference-inspection.jpg",
+      "sha256": "11f27dc91e1ee3f779a81336367bd6994f95d4b7726aab9b3a991258db4f76dd"
+    },
+    {
+      "path": "fresh-medium-first-board.jpg",
+      "sha256": "ba0054e9f8458af08bfa1077bad1cb91bf87cda56daf04476c5402a8a6a40bd9"
+    },
+    {
+      "path": "customer-repair-passed.jpg",
+      "sha256": "1402e3fe8dc002148082518bf408f7e06b60ca1164b3df8f21cc5856f2dc67e8"
+    }
+  ],
+  "imagesInspected": 5,
+  "postedBoardImages": 4,
+  "sourceServedProvenance": "First and second before + second final served six fields equal CLI expected; final CLI execution exact",
+  "automationLimits": [
+    "Exact button role for summary and exact Difficulty label/text lookups refused/timed out before dependent inputs; native dropdown/control DOM inspected for correction",
+    "First browser Node default30s reset during read-only menu preparation; durable first23 action/1051 console records retained only through last pre-reset flush; no first post-served/full-after-reset console claim",
+    "Second retest immediate oldFAIL text was prematurely labelled freshFAIL in event log; later actualPASS modal arrived without repeat retest or intervening circuit edit; blocked Supplies click was an automation selector failure against completion overlay",
+    "Second console473 records includes one unattributed404 error and472 logs; no page/request/observed-response errors; no clean-console/favicon attribution claim"
+  ],
+  "resources": "All17 r2 recorded births exited, second APIroot0/profile gone, maintained preview stop2.6286062s/state absent/8907 released; first reset directory cleanup automatic-policy BLOCKED and retained, older blocked profiles untouched",
+  "limits": [
+    "Actual headed sandboxed Brave/public manual input, not Edge/CDP-wrapper certification",
+    "Five raw primary frames, no pixel oracle/all-seed/manufacturing/new area reduction claim",
+    "Native/source evidence separately assessed; root final staged/publication review remains pending"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "FROZEN_BEFORE_JAVA_EDIT",
+  "branch": "codex/q60-faulted-profile-counts",
+  "head": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+  "files": {
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/scope.md": "9737d2e1187668bdac09fda1765d00e96f5be0eb3b16a213efbbd2e0266b15a4",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/input-snapshot.json": "b468be7d7760eee9937039615eb79ddac3f17b508056553d68f048c3dc218330",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/launch-plan.json": "7c1a48b662a668d9d8d31a2984602d756f84bb5f3a072139db8bd5767e201c63",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/assessment-plan.json": "84ed4d227afafd17ebb541f171de5107ae46206c32ceb8d59dbe2368c4cd4c98",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/observer-plan.json": "434cb0ded6a253741229dd5a719d6b91c998f9174da141148b11092ed5211a8f",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/input-audit-before.txt": "723d32d78e225550660ba48c16a60decc531af99e1c64a26733bce965f717265",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/accepted80-lead-intersections.json": "453da4d3af918c2e76f1d00c11d9719fdda3c87715768c60f9f3314a2e813ade",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/pre-task-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/pre-task-source/tests/contracts/PcbFunctionalGroupingContractTest.java": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/apply_observers.py": "a5c3e2bdb55f3316124b7edc03d8e8c7b989058f5049c80350f6daa7569b280b",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/audit_phase_inputs.py": "a1dd759338bfa03c84de3396967a64a47716931c9fe97dfa98e3fc8738e92720",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/run_phase.ps1": "7e2457a906b9a40974797d616e48b1bc074735f3bebb972675fa184690695db8",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/observe_phase_exit.ps1": "2a402365db9d3bbcdab0a7e6f569fee9e140b40f3bc672cfed5c6ec82e7d1dce",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/validate_ps_syntax.ps1": "86d90ce68d932b731cc34f1cb7f0b06ded704c18483e878d4dff85176f64bdc5",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/analyze_accepted80.py": "ef1aec734fa769dfb90fa01b3e6160e4708c430fac718df36db35afda46d1da5",
+    "docs/task-evidence/PCB/reference-silk-crop-cause-r1/analyze_phase_rows.py": "a282133e51ce11e349c4b386cc8b501effd5f2e8ba32b063f0cd25f5f106453e",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/final-inputs.json": "05b5f5f97187eb040c32932bb8f3a344898f530907bd8fa051f1eeac715515aa",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/final_inputs.py": "03b0d74492907dcc99a1f2ab2913eb9c2912a882af645d36a3fc4e7a4735d49f",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/baseline-receipt.txt": "f56bb21c12cdc584739b957ac730d1311e38dded5be88c45f58217aad94bc063",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/accepted-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "df12d945fb2a335dc694c39cf123b0e224612f6ef34be7f9f2c43b5106baf908",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/final-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2",
+    "docs/task-evidence/PCB/reference-lead-clearance-r1/final-source/tests/contracts/PcbFunctionalGroupingContractTest.java": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+    "scripts/verify-current-contracts.ps1": "b87cd0569c5a3f263aa08d9fb5ed07d201f2c37e2934be2c393015ab03c129d3"
+  }
+}

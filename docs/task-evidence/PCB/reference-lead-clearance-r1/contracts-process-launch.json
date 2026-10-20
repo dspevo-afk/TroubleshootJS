@@ -1,0 +1,16 @@
+{
+  "scope": "Actual parent/current births before maintained final clearance phase",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280955800799601",
+      "pid": 23308
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280955807185243",
+      "pid": 10636
+    }
+  ],
+  "phase": "contracts"
+}

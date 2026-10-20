@@ -1,0 +1,22 @@
+{
+  "status": "PASS_RESOURCE_OBSERVATION_ONLY",
+  "checks": [
+    {
+      "startTicks": "639280983189721054",
+      "pid": 21548,
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639280983192004146",
+      "pid": 29992,
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ],
+  "actualExecExitCode": 1,
+  "launchSha256": "f24f863f1ceb0711832193951bbe5db3abb71510a765245c9ef4f2d149c8c3a3",
+  "limits": "Actual compilation FAIL/maintained2; suites NOT RUN",
+  "phase": "fixtures",
+  "elapsedSeconds": 0.0060408
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "action": "Created headed sandboxed Brave page; no navigation yet",
+    "time": "2026-10-20T13:25:52.759Z"
+  },
+  {
+    "action": "Navigate final normal production URL",
+    "observed": "Served six identity fields equal independent expected CLI provenance",
+    "time": "2026-10-20T13:27:19.562Z"
+  },
+  {
+    "action": "Replay selector preparation",
+    "status": "FAIL_BEFORE_INPUT",
+    "detail": "getByRole(button, exact Open a saved replay code) timed out; no click occurred"
+  },
+  {
+    "action": "Open actual public replay summary",
+    "status": "PASS"
+  },
+  {
+    "action": "Prepare predeclared RB15 root13 via public replay",
+    "code": "tsj-alpha/6/EASY/RB15_CONTROL/13",
+    "time": "2026-10-20T13:28:34.157Z"
+  },
+  {
+    "action": "Accept actual RB15 ticket",
+    "complaint": "External load does not switch HIGH/LOW",
+    "status": "PASS"
+  },
+  {
+    "action": "Inspect/save actual RB15 root13 fitted board",
+    "image": "rb15-root13-fitted.jpg",
+    "observed": "D1 reference above its axial body; full board/tray visible; no board geometry edited",
+    "time": "2026-10-20T13:29:29.636Z"
+  },
+  {
+    "action": "Run fresh original-board RB15 customer retest",
+    "time": "2026-10-20T13:29:30.361Z"
+  },
+  {
+    "action": "Observe original RB15 customer retest",
+    "result": "Customer retest did not pass. Continue troubleshooting."
+  },
+  {
+    "action": "Disconnect both actual RB15 supplies before service",
+    "status": "PASS"
+  },
+  {
+    "action": "Remove original installed RB15 RLED with both supplies disconnected",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Reinstall same original Part15 as Power indicator/RLED and reconnect both supplies",
+    "status": "PASS"
+  },
+  {
+    "action": "Fresh customer retest after original-part restoration",
+    "observed": "FAIL_RETAINED"
+  },
+  {
+    "action": "RB15 all supplies disconnected before exit",
+    "status": "PASS",
+    "selectorLimit": "Exact text Main menu resolved header plus hidden ticket control; strict selector refused before click"
+  },
+  {
+    "action": "Prepare predeclared RB30 root0 via public replay",
+    "code": "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+    "time": "2026-10-20T13:31:30.629Z"
+  },
+  {
+    "action": "RB30 first ticket readiness wait",
+    "status": "NOT_READY",
+    "elapsedMs": 30010,
+    "message": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Accept ticket and start', { exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "action": "RB30 subsequent same-case readiness wait",
+    "status": "READY",
+    "elapsedMs": 16
+  },
+  {
+    "action": "Accept/inspect/save same RB30 root0 normal board",
+    "code": "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+    "image": "rb30-root0-fitted.jpg",
+    "status": "PASS",
+    "time": "2026-10-20T13:32:47.403Z"
+  },
+  {
+    "action": "Ordinary wheel zoom at RB30 D2/reference area",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Inspect/save RB30 D2 and surrounding reference ink at closer ordinary wheel zoom",
+    "image": "rb30-lead-reference-inspection.jpg",
+    "status": "PASS"
+  },
+  {
+    "action": "RB30 Fit bench and fresh original customer retest",
+    "time": "2026-10-20T13:34:07.063Z"
+  },
+  {
+    "action": "RB30 original retest FAIL; all four actual outputs disconnected before menu",
+    "status": "PASS"
+  },
+  {
+    "action": "Fresh Medium control preparation",
+    "status": "FAIL_BEFORE_INPUT",
+    "detail": "Difficulty is not an accessible label for a control; getByLabel lookup timed out after main menu opened"
+  }
+]

@@ -25,21 +25,121 @@ public final class PcbCompactnessContractTest {
         }
     }
 
-    /** Hash a saved layout-16 geometry body after the global layout epoch became 17. */
-    static String legacyGeometrySha256(PcbBoardLayout layout) {
+    /** Accepted-source physical oracle: only reference x/y and the epoch are masked. */
+    static String physicalGeometrySha256(PcbBoardLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
-        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 17)
-            throw new AssertionError("Legacy geometry oracle requires layout version 17");
-        String fingerprint = layout.geometryFingerprint();
-        String currentPrefix = "layout=17|";
-        if (!fingerprint.startsWith(currentPrefix))
-            throw new AssertionError("Expected actual layout=17 geometry fingerprint");
-        return PlayerSessionFingerprint.of(
-            "layout=16|" + fingerprint.substring(currentPrefix.length()));
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 18)
+            throw new AssertionError("Physical geometry oracle requires layout version 18");
+        String before = layout.geometryFingerprint();
+        Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
+        TreeSet<String> expectedReferences = new TreeSet<String>();
+        TreeSet<String> actualReferences = new TreeSet<String>();
+        for (PcbComponentPlacement component : layout.getComponents())
+            expectedReferences.add("component:" + component.getComponentId());
+        for (PcbSilkscreenLabel label : labels) {
+            if (label.getId().startsWith("component:")) actualReferences.add(label.getId());
+            for (PcbComponentPlacement component : layout.getComponents())
+                for (int index = 0; index < component.getPhysicalGeometry().getTerminals().size(); index++)
+                    if (label.getBounds().intersects(component.getLeadBounds(index)))
+                        throw new AssertionError("Silkscreen intersects connected lead: " +
+                            label.getId() + "/" + component.getComponentId() + "/" + index);
+        }
+        if (!actualReferences.equals(expectedReferences))
+            throw new AssertionError("Physical oracle requires every component reference exactly once");
+        String normalized = normalizeReferencePositions(before, labels);
+        if (!before.equals(layout.geometryFingerprint()))
+            throw new AssertionError("Physical oracle mutated its layout");
+        return PlayerSessionFingerprint.of(normalized);
+    }
+
+    static String normalizeReferencePositions(String fingerprint, Vector<PcbSilkscreenLabel> labels) {
+        String prefix = "layout=18|";
+        if (fingerprint == null || !fingerprint.startsWith(prefix))
+            throw new AssertionError("Expected actual layout=18 geometry fingerprint");
+        String normalized = "layout=<LAYOUT_EPOCH>|" + fingerprint.substring(prefix.length());
+        TreeSet<String> ids = new TreeSet<String>();
+        for (PcbSilkscreenLabel label : labels) {
+            String record = labelRecord(label);
+            if (!ids.add(label.getId()) || occurrences(fingerprint, record) != 1)
+                throw new AssertionError("Missing or duplicate exact label record: " + label.getId());
+            if (!label.getId().startsWith("component:")) continue;
+            Rectangle bounds = label.getBounds();
+            String replacement = "L:" + label.getId() + "@" + label.getText() +
+                ":<REF_X>,<REF_Y>," + bounds.width + "," + bounds.height + ";";
+            int offset = normalized.indexOf(record);
+            if (offset < 0) throw new AssertionError("Reference record already changed");
+            normalized = normalized.substring(0, offset) + replacement +
+                normalized.substring(offset + record.length());
+        }
+        return normalized;
+    }
+
+    private static String labelRecord(PcbSilkscreenLabel label) {
+        Rectangle b = label.getBounds();
+        return "L:" + label.getId() + "@" + label.getText() + ":" + b.x + "," + b.y +
+            "," + b.width + "," + b.height + ";";
+    }
+
+    private static int occurrences(String value, String token) {
+        int count = 0, offset = 0;
+        while ((offset = value.indexOf(token, offset)) >= 0) { count++; offset += token.length(); }
+        return count;
+    }
+
+    private static void verifyPhysicalOracleNormalization() {
+        PcbSilkscreenLabel reference = new PcbSilkscreenLabel("component:R1", "R1",
+            new Rectangle(10,20,18,18),14,true,null);
+        PcbSilkscreenLabel title = new PcbSilkscreenLabel("board-title", "PCB",
+            new Rectangle(2,3,27,18),14,true,null);
+        Vector<PcbSilkscreenLabel> labels = fixtureLabels(title, reference);
+        String raw = normalizationFixture(title, reference);
+        String expected = normalizeReferencePositions(raw, labels);
+        PcbSilkscreenLabel moved = new PcbSilkscreenLabel("component:R1", "R1",
+            new Rectangle(40,70,18,18),14,true,null);
+        require(expected.equals(normalizeReferencePositions(normalizationFixture(title,moved),
+            fixtureLabels(title,moved))), "only reference x/y may move without changing the physical oracle");
+        for (String[] change : new String[][] {{"body=20,30,40,50","body=21,30,40,50"},
+                {"P:R1.1@100,200","P:R1.1@101,200"}, {"T:net-a@1,2,3,4","T:net-b@1,2,3,4"}})
+            require(!expected.equals(normalizeReferencePositions(raw.replace(change[0],change[1]),labels)),
+                "body, pad and copper bytes remain independent oracle inputs");
+        for (PcbSilkscreenLabel changed : new PcbSilkscreenLabel[] {
+                new PcbSilkscreenLabel("component:R1","R2",new Rectangle(10,20,18,18),14,true,null),
+                new PcbSilkscreenLabel("component:R1","R1",new Rectangle(10,20,19,18),14,true,null),
+                new PcbSilkscreenLabel("component:R1","R1",new Rectangle(10,20,18,19),14,true,null)})
+            require(!expected.equals(normalizeReferencePositions(normalizationFixture(title,changed),
+                fixtureLabels(title,changed))), "reference text, width and height cannot be normalized away");
+        for (PcbSilkscreenLabel changed : new PcbSilkscreenLabel[] {
+                new PcbSilkscreenLabel("board-title","PCB",new Rectangle(3,3,27,18),14,true,null),
+                new PcbSilkscreenLabel("board-title","ALT",new Rectangle(2,3,27,18),14,true,null)})
+            require(!expected.equals(normalizeReferencePositions(normalizationFixture(changed,reference),
+                fixtureLabels(changed,reference))), "nonreference positions and text remain exact");
+        expectNormalizationFailure(raw.replace(labelRecord(reference),""), labels);
+        expectNormalizationFailure(raw + labelRecord(reference), labels);
+        expectNormalizationFailure(raw.replace("layout=18|","layout=17|"), labels);
+        Vector<PcbSilkscreenLabel> duplicate = fixtureLabels(title,reference); duplicate.add(reference);
+        expectNormalizationFailure(raw, duplicate);
+    }
+
+    private static Vector<PcbSilkscreenLabel> fixtureLabels(PcbSilkscreenLabel first,
+            PcbSilkscreenLabel second) {
+        Vector<PcbSilkscreenLabel> labels = new Vector<PcbSilkscreenLabel>();
+        labels.add(first); labels.add(second); return labels;
+    }
+
+    private static String normalizationFixture(PcbSilkscreenLabel title, PcbSilkscreenLabel reference) {
+        return "layout=18|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
+            labelRecord(reference) + "T:net-a@1,2,3,4;";
+    }
+
+    private static void expectNormalizationFailure(String raw, Vector<PcbSilkscreenLabel> labels) {
+        boolean refused = false;
+        try { normalizeReferencePositions(raw,labels); } catch (AssertionError expected) { refused = true; }
+        require(refused,"malformed, duplicate, missing or stale framing must fail the physical oracle");
     }
 
     public static void main(String[] args) {
         String mode = parseMode(args);
+        verifyPhysicalOracleNormalization();
         System.out.println("PCB_COMPACTNESS_CRITERIA {\"mode\":" + quote(mode) +
             ",\"rootSeeds\":[\"-1017\",\"-1004\",\"-1022\"]," +
             "\"packages\":[40,44,60],\"pads\":[96,104,143]," +
@@ -52,24 +152,24 @@ public final class PcbCompactnessContractTest {
             " scope=NO_DENSITY_ACCEPTANCE_THRESHOLD");
     }
 
-    /** Frozen before-source geometry: legacy saved interpretation must remain exact. */
+    /** Accepted-source physical geometry; only reference x/y and epoch may differ. */
     private static void verifyLegacyGeometry() {
         long[] seeds = new long[] {-1017L, -1004L, -1022L};
-        String[] expected = new String[] {"72ad2dc88c440746a5166e6dc488a6c31395e8c4bbbae94adb8c881a7bf442d0","075f0e7c369ef7753815c3d6f97cceaf8f7fe0feb6371afcfaaf15d6ffa22ee6","84724d29497f62e72e67648ed461263f6c9f8c1d875f0cabefd335458b9877de"};
+        String[] expected = new String[] {"27f9389815a080fc6d50890f868585b5e0ed7bd14f75644c041dff948d6d1f1a","582064e2986b77ff92348024814f01fc0581c8f2273bd37ca695a26a3008574d","17b1b0d0452d64332d636c46833b2be44348380303a8b66f539216ecac59f7d4"};
         for (int i=0; i<seeds.length; i++) {
             Rb56Plan plan=Rb56Plan.resolve(seeds[i],Rb56Placement.LEGACY_VERSION);
             MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(plan.board(),plan.layoutSeed,plan.routingSeed);
             require(result.accepted(),"legacy fixed saved-layout route remains accepted");
-            require(expected[i].equals(legacyGeometrySha256(result.getLayout())),
-                "legacy geometry including exact pads/copper/labels remains byte-exact for "+seeds[i]);
+            require(expected[i].equals(physicalGeometrySha256(result.getLayout())),
+                "legacy physical geometry/text/dimensions remain exact apart from reference x/y and epoch for "+seeds[i]);
             if (seeds[i] == -1022L) verifyMatchedViaCompaction(plan.board(), result.getLayout());
             boolean refused=false;
             try { Rb56Placement.create(plan,Rb56Placement.CURRENT_VERSION); }
             catch (IllegalArgumentException expectedMismatch) { refused=true; }
             require(refused,"plan and constraints cannot carry different placement interpretations");
         }
-        System.out.println("PASS: exact legacy RB56 geometry retained for three fixed saved-board interpretations");
+        System.out.println("PASS: exact legacy RB56 physical geometry retained (reference x/y and epoch excluded) for three fixed saved-board interpretations");
     }
 
     /** One already-routed golden board; no new routing search or synthetic copper. */
@@ -154,9 +254,9 @@ public final class PcbCompactnessContractTest {
 
         PcbBoardLayout layout = result.getLayout();
         if ("report".equals(mode)) {
-            if(root.seed==-1017L) require("84eff3d9cb6e087578873a79fc9e8db72271b6fa653c309a79cfcedbee9d9a25".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1017");
-            if(root.seed==-1004L) require("a05b554248d83dd2b8c1dc9e8fb8e7e05a70081323e6e0383a6e673f5276de61".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1004");
-            if(root.seed==-1022L) require("eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1022");
+            if(root.seed==-1017L) require("279e83fea450e4b4be6767a56bf2ba748bba5c6dd7817f60b07f48ff6906c378".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1017");
+            if(root.seed==-1004L) require("15bb054ccc9a57f1dc111800127901b90d829d36fec5886ea4212e3f38b8b328".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1004");
+            if(root.seed==-1022L) require("f42fbd62199a8b254964cd256f7e45ebf4b9b6d06eef3ad89911ed8ecb32f375".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1022");
         }
         layout.validateGeometry(board);
         new PcbTwoLayerRules(board, layout).validate(layout);

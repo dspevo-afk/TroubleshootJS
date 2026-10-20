@@ -1,0 +1,129 @@
+WARNING: The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: illegal start of expression
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                          ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: ';' expected
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: <identifier> expected
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                                                                  ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: not a statement
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                                                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: ';' expected
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                                                                           ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:375: error: ';' expected
+        Rb56Plan plan=    static PcbBoardLayout measure(long seed,int index,int version) {
+                                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: illegal start of expression
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: ';' expected
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                               ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: ';' expected
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: not a statement
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: ';' expected
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: <identifier> expected
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                                        ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: not a statement
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:571: error: ';' expected
+    static int reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version) {
+                                                                                                   ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: illegal start of expression
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: illegal start of expression
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: '.class' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: <identifier> expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                        ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: not a statement
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                                ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: not a statement
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:652: error: ';' expected
+    private static void mark(boolean[] blocked,int cols,int rows,Rectangle outline,Rectangle r,int step) {
+                                                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: illegal start of expression
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: illegal start of expression
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: ';' expected
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: ')' expected
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                                                               ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: illegal start of expression
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                                                                     ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: ';' expected
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                                                                                    ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: not a statement
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                                                                                     ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:657: error: ';' expected
+    private static void verifyRoleTraceWidths(TroubleshootBoard board,PcbBoardLayout layout) {
+                                                                                           ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: illegal start of expression
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: illegal start of expression
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: ';' expected
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: ')' expected
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: illegal start of expression
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+                                                                 ^
+<TASK_WORKTREE>\tests\contracts\PcbFunctionalGroupingContractTest.java:673: error: ';' expected
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+                                                                  ^
+40 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

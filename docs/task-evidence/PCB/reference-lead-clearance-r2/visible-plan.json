@@ -1,0 +1,20 @@
+{
+  "status": "FROZEN_BEFORE_PLAYER_LAUNCH",
+  "replays": [
+    "tsj-alpha/6/EASY/RB15_CONTROL/13",
+    "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+    "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  ],
+  "freshAdmission": "First admitted MEDIUM New board through public controls; retain actual code, failures and readiness waits; no seed substitution",
+  "inputBoundary": "Headed production/public replay, Fit/Zoom/wheel/pan, public part controls, actual probes/customer retest; no controller or DOM mutation",
+  "behavior": [
+    "Affected RB15 root13 initial/customer FAIL; power OFF before original-part service, restore same original, fresh customer failure retained",
+    "Affected RB30 public references/lead separation at useful zoom and fitted view, original-part service if access permits",
+    "Known normal LED5V original R1 isolation OL, normal shop330Ohm replacement, actual OFF OHM330Ohm and fresh powered customer FAIL->PASS",
+    "Current semantic save/reload via actual Download and ordinary file input if supported; audit restored public code/operations/retest without controller injection"
+  ],
+  "images": "Two to five primary raw useful screenshots, including compact fitted affected boards and meaningful close reference/repair states; inspect actual images and post useful board views",
+  "provenance": "Fresh final GWT success and exact1481 input audit before launch; CLI six execution fields vs served five digest/count fields before/after; finite console/events flushed privately after each action",
+  "lifecycle": "Record preview launcher/worker and browser PID+birth+exe+task profile/port before navigation; verify ownership before close, separate cleanup timing, root exits/profile absence/state absent/port released; old blocked profiles untouched",
+  "limits": "Visible manual public-input proof only; no CDP wrapper/all-seed/manufacturing/new area reduction claim"
+}

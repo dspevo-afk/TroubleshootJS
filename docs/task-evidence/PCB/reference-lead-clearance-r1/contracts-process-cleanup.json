@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "actualExecExitCode": 1,
+  "launchSha256": "067bd93efe348dd652c79ab881b730259c76404e0e1364eb99eb40377da39672",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "pid": 23308,
+      "recordedBirthExited": true,
+      "startTicks": "639280955800799601"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 10636,
+      "recordedBirthExited": true,
+      "startTicks": "639280955807185243"
+    }
+  ],
+  "elapsedSeconds": 0.0060239,
+  "phaseResult": "FAIL_RB56_V12_SEED17_AREA",
+  "scope": "Resource proof after actual exec1 only; native phase FAIL",
+  "phase": "contracts"
+}

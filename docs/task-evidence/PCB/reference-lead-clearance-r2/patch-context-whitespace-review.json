@@ -1,0 +1,44 @@
+{
+  "status": "PASS_REVIEW_OF_INTENTIONAL_RAW_PATCH_CONTEXT",
+  "initialStagedDiffCheckExitCode": 2,
+  "reports": [
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r1/silkscreen-fixtures.patch",
+      "line": 7,
+      "rawLineHex": "20",
+      "artifactSha256": "0930f8b05789d5b3542d65ee26df189f97cc82f987c86316a784d53416c55b99",
+      "classification": "Required single-space unified-patch blank context prefix, not source whitespace"
+    },
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r1/silkscreen-fixtures.patch",
+      "line": 186,
+      "rawLineHex": "20",
+      "artifactSha256": "0930f8b05789d5b3542d65ee26df189f97cc82f987c86316a784d53416c55b99",
+      "classification": "Required single-space unified-patch blank context prefix, not source whitespace"
+    },
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r2/attempt1-fixture-compilation/silkscreen-plan-fixtures.patch",
+      "line": 15,
+      "rawLineHex": "20",
+      "artifactSha256": "5ce168eefd3e8829ce7ff5eb35f48270153cefb9499fc94cf5e03124f2f5deb8",
+      "classification": "Required single-space unified-patch blank context prefix, not source whitespace"
+    },
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r2/silkscreen-plan-fixtures-transport-rejected.patch",
+      "line": 15,
+      "rawLineHex": "20",
+      "artifactSha256": "7df99f15d11ab7228fcd46e8a7d8a909dc60c560db3ba522982ca38d9272cdc5",
+      "classification": "Required single-space unified-patch blank context prefix, not source whitespace"
+    },
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r2/silkscreen-plan-fixtures.patch",
+      "line": 132,
+      "rawLineHex": "20",
+      "artifactSha256": "086c8cd8743181cc8e2c26826d0264ece984071bbc0609e39fd1a16729894516",
+      "classification": "Required single-space unified-patch blank context prefix, not source whitespace"
+    }
+  ],
+  "resolution": "Per-artifact whitespace metadata exempts only these four frozen patch transports from end-of-line whitespace warnings. Their required blank-context space bytes remain exact; production/docs/tests retain ordinary checks; no native/golden/budget change.",
+  "preparationLimit": "Initial metadata loop stopped after3 additions because substring membership also matched a longer path. Corrected to exact complete-line membership; no source/artifact bytes changed.",
+  "limits": "Does not certify source changes or replace staged-byte/hash review"
+}

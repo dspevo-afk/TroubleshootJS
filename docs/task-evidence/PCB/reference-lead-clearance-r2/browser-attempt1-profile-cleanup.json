@@ -1,0 +1,11 @@
+{
+  "limits": "Browser actual birth exited independently; native/build proof unaffected",
+  "commandExecution": "NOT RUN; rejection occurred before process creation",
+  "reason": "Automatic approval review: blocked by policy",
+  "profileName": "playwright_chromiumdev_profile-Rl8mqK",
+  "directoryRetained": true,
+  "status": "BLOCKED",
+  "retry": "No alternate deletion mechanism or retry",
+  "pid": 32328,
+  "action": "Delete exact interrupted browser profile"
+}

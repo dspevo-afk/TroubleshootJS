@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "nativeSuites": 12,
+  "canonicalRows": 80,
+  "mappedOldKeys": 44,
+  "literalOccurrences": 69,
+  "elapsedSeconds": 390.9318617,
+  "actualExecExitCode": 0,
+  "driversExited": 2,
+  "limits": "Accepted17 physical-only oracle export; not candidate18/native final/build/UI proof"
+}

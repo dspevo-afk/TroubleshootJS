@@ -1,0 +1,23 @@
+{
+  "status": "FROZEN_BEFORE_OBSERVER_AND_PRODUCTION_EDIT",
+  "gates": {
+    "scope.md": "f38c5d128854a31195306b31143348da9a0d6adf158dd7827c0be91495a32985",
+    "inputs.py": "d59dfe207920187282c5685c1cc044515d4cc523e73aaf1775adc0c3016f944a",
+    "run_phase.ps1": "ebf30a12cb5d2469a803428424422c2b91b9f8c129fbef6d1fef91a5603297af",
+    "assess.py": "201d9983383e39e22f82afd08e0107c88ce8860fbc698cd9bd0ca850915fd6d8"
+  },
+  "acceptedSha256": "eb5109ae100a21bbc85909806b73475fd24263e70ea21c8b896721063df6da3e",
+  "optimizedRefusals": [
+    {
+      "script": "inputs.py",
+      "actualExitCode": 1,
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "assess.py",
+      "actualExitCode": 1,
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure rectangle/timing framing and actual interpreter refusal only; no phase/native/OS proof"
+}

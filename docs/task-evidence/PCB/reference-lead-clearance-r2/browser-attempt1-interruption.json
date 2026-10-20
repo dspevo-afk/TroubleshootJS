@@ -1,0 +1,15 @@
+{
+  "startTicks": "639280995524539519",
+  "status": "AUTOMATION_KERNEL_RESET",
+  "pid": 32328,
+  "retainedImages": [
+    "rb15-root13-fitted.jpg",
+    "rb30-root0-fitted.jpg",
+    "rb30-lead-reference-inspection.jpg"
+  ],
+  "actualBrowserBirthAlive": false,
+  "phase": "player-menu-preparation",
+  "lastDurableLogsDirectoryName": "tsj-fixed-envelope-player-11VwwW",
+  "profilePresent": true,
+  "limits": "Second read-only locator call hit default30s tool timeout and reset Node kernel; first fresh MEDIUM New board was not clicked; no repair/save completion or first-browser post-served/complete-after-reset console claim"
+}

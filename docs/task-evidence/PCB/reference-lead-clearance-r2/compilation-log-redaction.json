@@ -1,0 +1,8 @@
+{
+  "artifact": "docs/task-evidence/PCB/reference-lead-clearance-r2/attempt1-fixture-compilation/fixtures.txt",
+  "rawSha256": "65131bd2cc9312a3896f4a926cde64804fc7fc9a14d2d21c0decc3f041adde39",
+  "publicSha256": "3373c9b6c630e3b1dd4ff4b3d3d6f9fa0b139347992ea2ad9da40ba8af8b44bf",
+  "exactTaskRootPrefixReplacements": 100,
+  "rawRetentionDirectoryName": "tsj-clearance-compilation-raw-24znmdod",
+  "limit": "Only exact task-root prefixes replaced; all compiler errors and phase results retained; original bytes retained privately"
+}

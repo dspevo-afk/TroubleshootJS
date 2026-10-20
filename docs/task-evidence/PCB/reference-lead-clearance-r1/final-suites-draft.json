@@ -1,0 +1,51 @@
+{
+  "status": "DRAFT_NOT_FROZEN_OR_EXECUTED",
+  "contracts": [
+    "PcbCompactnessContractTest",
+    "PcbSavedRealismGeometryContractTest",
+    "PcbSavedDensityGeometryContractTest",
+    "PcbSavedLargeGeometryContractTest",
+    "PcbSavedSingleGroupGeometryContractTest",
+    "PcbSavedGuardedGeometryContractTest",
+    "PcbSavedNarrowGeometryContractTest",
+    "PcbSavedConnectedGeometryContractTest",
+    "PcbSavedRoleWidthGeometryContractTest",
+    "PcbSavedRoleWidthHoldoutContractTest",
+    "PcbPocketPackingContractTest",
+    "PcbPocketHoldoutContractTest",
+    "PcbFunctionalGroupingContractTest",
+    "PcbSilkscreenScaleContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "A03IdentityContractTest",
+    "P03PlacementContractTest",
+    "PcbCompactionContractTest",
+    "MediumBoardFloorplanningContractTest",
+    "A10DependencyContractTest",
+    "U04SessionContractTest",
+    "U06SessionSaveContractTest",
+    "RelBSessionIdentityContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "ControlledIndicatorAssemblyContractTest",
+    "Rb30PhysicalMetadataContractTest",
+    "QuickPlayGateContractTest",
+    "QuickPlayContractTest",
+    "PcbLayerRoutingResumptionContractTest",
+    "MediumBoardNormalAdmissionContractTest",
+    "A02ReplayContractTest"
+  ],
+  "fixed44": "unchanged normal-packing-r2/routes-suites.json eight JVM groups; compare against old accepted44 and passing local trial44",
+  "matrix": {
+    "suite": "QuickPlayPhysicalMatrixContractTest",
+    "accepted": 220,
+    "exactReplays": 220,
+    "budgets": "unchanged maintained180000/600000ms"
+  },
+  "build": {
+    "script": "scripts/build.ps1",
+    "style": "OBF",
+    "target": "Compile",
+    "processTimeoutSeconds": 900,
+    "permutations": 5
+  },
+  "limits": "Old-source export/map acceptance and final-source gate freeze required before consumer edits; visible plan still pending"
+}

@@ -1,0 +1,52 @@
+{
+  "fixtures": [
+    "PcbCompactnessContractTest",
+    "PcbSilkscreenScaleContractTest"
+  ],
+  "contracts": [
+    "PcbSavedRealismGeometryContractTest",
+    "PcbSavedDensityGeometryContractTest",
+    "PcbSavedLargeGeometryContractTest",
+    "PcbSavedSingleGroupGeometryContractTest",
+    "PcbSavedGuardedGeometryContractTest",
+    "PcbSavedNarrowGeometryContractTest",
+    "PcbSavedConnectedGeometryContractTest",
+    "PcbSavedRoleWidthGeometryContractTest",
+    "PcbSavedRoleWidthHoldoutContractTest",
+    "PcbPocketPackingContractTest",
+    "PcbPocketHoldoutContractTest",
+    "PcbFunctionalGroupingContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "A03IdentityContractTest",
+    "P03PlacementContractTest",
+    "PcbCompactionContractTest",
+    "MediumBoardFloorplanningContractTest",
+    "A10DependencyContractTest",
+    "U04SessionContractTest",
+    "U06SessionSaveContractTest",
+    "RelBSessionIdentityContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "ControlledIndicatorAssemblyContractTest",
+    "Rb30PhysicalMetadataContractTest",
+    "QuickPlayGateContractTest",
+    "QuickPlayContractTest",
+    "PcbLayerRoutingResumptionContractTest",
+    "MediumBoardNormalAdmissionContractTest",
+    "A02ReplayContractTest",
+    "P04RoutingContractTest",
+    "P05RoutingContractTest"
+  ],
+  "census": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "matrix": [
+    "QuickPlayPhysicalMatrixContractTest"
+  ]
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Lead-silk trial rejected; published source restored**
+**Current task:** **Fixed-envelope reference clearance validated; publication review**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -95,6 +95,15 @@ Lead-aware model-label trial rejected: baseline44 confirms15 intersections;
 candidate44 admits all and clears them, but RB15 root13 grows height6. Exact
 published source1481 restored; raw trial/strict exit2 retained. No new production
 build/UI/size claim. [Trial and restoration](task-evidence/PCB/lead-silk-trial-r1/README.md).
+
+Fixed-envelope clearance final candidate: native33, paired44 (15->0 intersections,
+all physical/graph/metrics/work exact), active11 matrix220 admissions/220 exact
+replays and actual JDK8/GWT5 PASS. Five raw images inspected/four boards views posted;
+normal RB15 original-part service, fresh MEDIUM New board, actual indicator
+OL/330Ohm/customerFAIL->PASS and FileReader restore/retest PASS. All17 running births
+exited; one new reset-browser profile cleanup policy-blocked and retained. Earlier
+failed trials/fixture transport/compile/automation framing remain explicit. Root
+publication review pending; no main/email. [Scope, proof and limits](task-evidence/PCB/reference-lead-clearance-r2/RESULTS.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

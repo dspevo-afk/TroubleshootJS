@@ -1,0 +1,9 @@
+{
+  "terminalCleanupIncluded": true,
+  "phase": "fixtures",
+  "exitCode": 2,
+  "status": "FAIL",
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "elapsedSeconds": 2.411678,
+  "failure": null
+}

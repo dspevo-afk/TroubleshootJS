@@ -1,0 +1,10 @@
+{
+  "status": "FROZEN_BEFORE_SINGLE_BRACE_FIX",
+  "priorPreEditManifestSha256": "c50e4c057621c1c1372e7d5d1a874205df2501f86b3e77013740253468afe384",
+  "updatedPreEditManifestSha256": "8422eb79882b7cee68cb095833e98c5c5df2d83f013f553852e6c1e2af36455d",
+  "sourceChange": "Only add missing closing brace to new fixture helper",
+  "beforeSourceSha256": "4bfa9cca6cdf26e024c71c07a3a9ae126f95af6ae1da7c84c84515215b03b95f",
+  "plannedAfterSourceSha256": "f40bc077d5ca23e8a3c6c1015baebfe369940901f88e2a48b6a8871a4cf5ca51",
+  "unchangedProductionSha256": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+  "limits": "Original failed gates/source/manifests preserved; no assertion/oracle/budget change"
+}

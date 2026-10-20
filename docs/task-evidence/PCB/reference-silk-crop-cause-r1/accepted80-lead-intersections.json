@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "source": "retained accepted17 baseline receipt canonical oracle rows",
+  "canonicalOracleRows": 80,
+  "labelsChecked": 4544,
+  "placedConnectedLeadRectangles": 9371,
+  "intersectionPairsByLabelKind": {
+    "board-title": 0,
+    "component-reference": 131,
+    "net-label": 0
+  },
+  "labelsWithAtLeastOneLeadIntersectionByKind": {
+    "board-title": 0,
+    "component-reference": 131,
+    "net-label": 0
+  },
+  "oracleRowsWithAtLeastOneIntersectionByKind": {
+    "board-title": 0,
+    "component-reference": 80,
+    "net-label": 0
+  },
+  "intersectionRule": "positive-area overlap of half-open integer rectangles"
+}

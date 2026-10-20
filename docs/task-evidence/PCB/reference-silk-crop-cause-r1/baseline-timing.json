@@ -1,0 +1,15 @@
+{
+  "actualMaintainedDriverExitCode": 0,
+  "stdoutSha256": "0f6bb4eae6d6e472ff816e01734db1313f3078e60cab8f4e770ba499c437676e",
+  "maintainedVerifierOwnCleanupIncludedInOperation": true,
+  "receiptExists": true,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receiptSha256": "1049d8de6a430cde980bc02a9429caa122ece6a44354ea196dc198095c2e5044",
+  "failure": null,
+  "phase": "baseline",
+  "inputAuditAfterExitCode": 0,
+  "postExitCaptureAndInputAuditSeconds": 0.4180824,
+  "actualFunctionalJvmFailureExitCode": null,
+  "operationElapsedSeconds": 63.9431797,
+  "nativeStatus": "PASS"
+}

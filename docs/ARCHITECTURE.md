@@ -849,8 +849,8 @@ Candidate statistics report expansions, raw segments and moves rejected by
 other-net occupancy/clearance. Existing legality is unchanged; the bounded P05 scheduler below owns recovery limits.
 
 At the P03 qualification boundary the layout epoch was 11 and dependency
-interpretation was v7. The current layout epoch is 15 and the global dependency
-interpretation is v16. Dependency
+interpretation was v7. The current layout epoch is 18 and the global dependency
+interpretation is v17. Dependency
 capture includes placement demands, canonical domain barriers, typed net roles
 and the route score version, including the declared routing layer. Historical layout artifacts reject through the
 existing current-version boundary. Circuit topology, values, fault selection,
@@ -2605,7 +2605,20 @@ edge margins, the parallel multi-pad nets, and the absence of copper
 intersections with courtyards except legal endpoint escapes.
 
 Silkscreen reference and connector-net labels are generated as collision-aware
-layout objects rather than fixed renderer pixels. `J1.1` and `J1.2` retain
+layout objects rather than fixed renderer pixels. Before cropping or attaching a
+packing receipt, `SeededPcbLayoutGenerator` plans the original four-position ink on
+a transient `copyForCompaction`. The original physical candidate must be unsealed,
+ink-free and receipt-free. Connected-lead clearance is deferred only on that
+planning copy. A sorted generator-local vector repositions overlapping labels,
+reserving every other label and preserving the exact complete occupied envelope.
+Nearby grid nudges precede body-row alternatives and the bounded grid fallback.
+After validating the complete plan against bodies, pads, top copper and connected
+leads, the generator installs each immutable label once on the original candidate.
+The planning copy is discarded; it owns no new electrical state and introduces no
+layout move/remove API or post-receipt geometry edit. Text, style, dimensions and
+target identity remain unchanged. This prevents a clearance fallback from adding
+remote green space and reranking otherwise unchanged routed candidates.
+`J1.1` and `J1.2` retain
 stable pad identity while rendering a positive/negative connector cue and
 seed-dependent voltage text. The parts tray remains a separate workbench
 rectangle outside the board outline and all board components, pads, traces, and

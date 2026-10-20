@@ -1,0 +1,10 @@
+accepted-source/** -text
+baseline-source/** -text
+*-receipt.txt -text
+*.patch -text
+passing-generator18.java.txt -text
+final-accepted-source/** -text
+final-source/** -text
+oracle-attempt-1/** -text
+* -text whitespace=cr-at-eol
+silkscreen-fixtures.patch whitespace=-blank-at-eol,cr-at-eol

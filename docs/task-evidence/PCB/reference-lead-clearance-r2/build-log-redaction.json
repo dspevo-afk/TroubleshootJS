@@ -1,0 +1,7 @@
+{
+  "rawSha256": "dbecd01c8c3eb13348eb17db4b152d3dc7ff3a7db8c619f4c4acabb1a3ca8444",
+  "publicSha256": "0e2d16ed5468df609346df864e004882ce1f2e7f83bd791dc880a23b1e4cce69",
+  "exactTaskRootPrefixReplacements": 1,
+  "rawRetentionDirectoryName": "tsj-fixed-envelope-build-raw-ny2vp3uk",
+  "limits": "Only one exact personal task-root prefix in linker output replaced; all compiler/build fields retained; raw bytes private"
+}

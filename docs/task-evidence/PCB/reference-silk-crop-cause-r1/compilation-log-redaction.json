@@ -1,0 +1,8 @@
+{
+  "artifact": "docs/task-evidence/PCB/reference-silk-crop-cause-r1/attempt1-compile-failure/baseline.txt",
+  "rawSha256": "6bc4d9a0314c18b43d777a9dbb74cef64b76b32c3a5002ffe66cfe239e12495b",
+  "publicSha256": "8f19bf9f6c14462d20c5daf2b5e958819895624d4a4d7f1aa88f10aa74bae079",
+  "exactTaskRootPrefixReplacements": 40,
+  "rawRetentionDirectoryName": "tsj-clearance-compilation-raw-24znmdod",
+  "limit": "Only exact task-root prefixes replaced; all compiler errors and phase results retained; original bytes retained privately"
+}

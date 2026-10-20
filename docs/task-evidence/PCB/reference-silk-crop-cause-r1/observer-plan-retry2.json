@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "status": "FROZEN_BEFORE_RETRY_JAVA_EDIT",
+  "insertionOnlyObservers": true,
+  "baseline": {
+    "generatorSha256": "99d05c7f5a9cd059a519046b0003263c1d598442f098784e12503b3b11cfcef3",
+    "functionalGroupingSha256": "36089681967dd0b626792dc9ff609f22a183cb02e536e6842c24ada2661c55c2"
+  },
+  "candidate": {
+    "generatorSha256": "01b2dca29f09b312d156a93a4a9fd60b492bae113c3847f2f9338b7c8925318e",
+    "functionalGroupingSha256": "36089681967dd0b626792dc9ff609f22a183cb02e536e6842c24ada2661c55c2"
+  },
+  "testInsertion": "Immediately after the complete method-opening line; the next original statement begins Rb56Plan plan=.",
+  "sample": "System.out.println(\"SILKCROP_BEGIN;seed=\" + seed + \";index=\" + index +\\r\\n            \";version=\" + version);\\r\\n        Rb56Plan plan"
+}

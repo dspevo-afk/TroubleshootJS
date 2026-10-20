@@ -1,0 +1,9 @@
+{
+  "terminalCleanupIncluded": true,
+  "status": "PASS",
+  "phase": "matrix",
+  "exitCode": 0,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "elapsedSeconds": 219.0275692,
+  "failure": null
+}

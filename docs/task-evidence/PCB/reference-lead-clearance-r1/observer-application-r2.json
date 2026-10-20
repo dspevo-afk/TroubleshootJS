@@ -1,0 +1,18 @@
+{
+  "status": "PASS_INSERTION_ONLY",
+  "application": "git apply --unidiff-zero --whitespace=error-all oracle-observer-lf.patch",
+  "hunks": [
+    {
+      "afterOriginalLine": 36,
+      "addedLines": 1
+    },
+    {
+      "afterOriginalLine": 39,
+      "addedLines": 104
+    }
+  ],
+  "originalAssertionsAndReturn": "unchanged; original helper17/legacy16 and all old literals retained",
+  "priorAttempt": "oracle-attempt-1 actual compilation FAIL49errors, operation2.2890145s; actualexec1 followed by birth-exit cleanup",
+  "sourceSha256": "77a2a01ff46174a899ca37a6fd19c7222681abc100fda1fe2e5ab42bb023783e",
+  "limits": "Static reconstruction, not compilation/native proof"
+}

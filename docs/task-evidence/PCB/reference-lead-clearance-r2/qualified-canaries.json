@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "optimizedRefusals": [
+    {
+      "script": "final_inputs.py",
+      "scriptSha256": "144ac76d860cc88b774a836ad8dc39ba61b7c13e0878f80858a0bd79910a6541",
+      "actualExitCode": 1,
+      "stderrSha256": "190b943ef7dd3f57a722b41352819410bf7330dd5202963c2bbb264fe77fe894",
+      "status": "PASS_REFUSED_OPTIMIZED_INTERPRETER"
+    },
+    {
+      "script": "final_assess.py",
+      "scriptSha256": "6c02c090b46b03975c990d79d301392711cc80858c4f07df1dea775a9f86fa2e",
+      "actualExitCode": 1,
+      "stderrSha256": "bd4c9edfdcd49b94b9ea7957833d1e4db19b2ba2fadb6bad00f44b9247f88a33",
+      "status": "PASS_REFUSED_OPTIMIZED_INTERPRETER"
+    }
+  ],
+  "positiveTimingAndFiveRefusals": {
+    "scriptSha256": "6c02c090b46b03975c990d79d301392711cc80858c4f07df1dea775a9f86fa2e",
+    "actualExitCode": 0,
+    "stdout": "PASS final assessment timing canaries positive1 rejected5; pure framing only"
+  },
+  "limits": "Pure interpreter/timing framing only; not native/host path proof"
+}

@@ -1,0 +1,19 @@
+{
+  "patchCheckExitCode": 0,
+  "patchSha256": "5ce168eefd3e8829ce7ff5eb35f48270153cefb9499fc94cf5e03124f2f5deb8",
+  "optimizedRefusals": [
+    {
+      "script": "final_inputs.py",
+      "actualExitCode": 1,
+      "stderrSha256": "190b943ef7dd3f57a722b41352819410bf7330dd5202963c2bbb264fe77fe894",
+      "status": "PASS_REFUSED_OPTIMIZED_INTERPRETER"
+    },
+    {
+      "script": "final_assess.py",
+      "actualExitCode": 1,
+      "stderrSha256": "bd4c9edfdcd49b94b9ea7957833d1e4db19b2ba2fadb6bad00f44b9247f88a33",
+      "status": "PASS_REFUSED_OPTIMIZED_INTERPRETER"
+    }
+  ],
+  "limits": "Static patch transport and interpreter refusal; not native or OS lifecycle proof"
+}

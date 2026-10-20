@@ -1,0 +1,10 @@
+{
+  "status": "FAIL_FIXTURE_COMPILATION",
+  "actualExecExitCode": 1,
+  "maintainedExitCode": 2,
+  "operationSeconds": 2.411678,
+  "suiteStatus": "NOT RUN",
+  "cause": "Draft withoutSilkscreenRecords missed its closing brace; compiler stopped before suites",
+  "plannedCorrection": "One method-closing brace before expectedReferenceCandidates; no assertions/expectations/production code changes",
+  "priorFinalManifestSha256": "ed378da8ed336352fe11f713a791c9670250757bc58cfa27900ed3c305ddd581"
+}

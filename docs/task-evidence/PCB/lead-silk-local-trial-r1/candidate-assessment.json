@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "phase": "candidate",
+  "cases": 44,
+  "leadLegendIntersectionPairs": 0,
+  "changedLegendCases": [
+    [
+      "RELAY_OUTPUT",
+      "0"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "17"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "13"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "-9223372036854775808"
+    ],
+    [
+      "RB15_CONTROL",
+      "0"
+    ],
+    [
+      "RB15_CONTROL",
+      "17"
+    ],
+    [
+      "RB15_CONTROL",
+      "13"
+    ],
+    [
+      "RB15_CONTROL",
+      "-9223372036854775808"
+    ],
+    [
+      "RB30_CONTROL",
+      "0"
+    ],
+    [
+      "RB30_CONTROL",
+      "17"
+    ],
+    [
+      "RB30_CONTROL",
+      "13"
+    ],
+    [
+      "RB30_CONTROL",
+      "-9223372036854775808"
+    ]
+  ],
+  "errors": [],
+  "elapsedSeconds": 71.3216798,
+  "limits": "Bounded diagnostic corpus only; not final production acceptance/current epoch migration/build/player/all-seed proof"
+}

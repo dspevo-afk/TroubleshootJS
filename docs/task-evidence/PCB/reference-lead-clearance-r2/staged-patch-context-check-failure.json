@@ -1,0 +1,6 @@
+{
+  "actualExitCode": 2,
+  "stdoutAndStderrUtf8": "docs/task-evidence/PCB/reference-lead-clearance-r1/silkscreen-fixtures.patch:7: trailing whitespace.\n+ \ndocs/task-evidence/PCB/reference-lead-clearance-r1/silkscreen-fixtures.patch:186: trailing whitespace.\n+ \ndocs/task-evidence/PCB/reference-lead-clearance-r2/attempt1-fixture-compilation/silkscreen-plan-fixtures.patch:15: trailing whitespace.\n+ \ndocs/task-evidence/PCB/reference-lead-clearance-r2/silkscreen-plan-fixtures-transport-rejected.patch:15: trailing whitespace.\n+ \ndocs/task-evidence/PCB/reference-lead-clearance-r2/silkscreen-plan-fixtures.patch:132: trailing whitespace.\n+ \n",
+  "rawSha256": "e9eb92fb377937e298aa47d65ad168d82e83e3ee29c00afe2b308b7e9577769b",
+  "limits": "Exact raw output encoded as a JSON string to retain required trailing patch-context spaces"
+}

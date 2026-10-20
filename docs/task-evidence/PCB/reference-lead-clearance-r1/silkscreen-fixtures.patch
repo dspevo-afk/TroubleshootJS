@@ -1,0 +1,187 @@
+--- a/tests/contracts/PcbSilkscreenScaleContractTest.java
++++ b/tests/contracts/PcbSilkscreenScaleContractTest.java
+@@ -1,4 +1,6 @@
+ package com.lushprojects.circuitjs1.client;
++
++import java.util.Vector;
+ 
+ /** Literal physical-silkscreen projection and ink bounds contract. */
+ public final class PcbSilkscreenScaleContractTest {
+@@ -12,6 +14,7 @@
+         canvasFrameTransformsTheObstacleOnce();
+         boardClipBoundsTheObstacle();
+         physicalLabelIdentityAndFacePolicyStayStable();
++        referenceLeadClearanceFixtures();
+         emptyChipFootprintsUseOnlyTheDeclaredBody();
+         electrolyticMarkingsStayInsideTheCanFace();
+         ceramicMarkingsClearTheContactPads();
+@@ -91,6 +94,169 @@
+             "top face displays physical silkscreen");
+         check(!PcbWorkbenchRenderer.shouldDrawPhysicalSilkscreen(PcbBoardSide.BOTTOM),
+             "bottom face does not display top-face physical silkscreen");
++    }
++
++    private static void referenceLeadClearanceFixtures() {
++        PhysicalPackage pkg = PhysicalPackages.RAISED_FACTORY_LINK;
++        Rectangle localBody = new Rectangle(70,18,80,34);
++        Rectangle[] localLeads = {new Rectangle(27,27,51,6), new Rectangle(142,27,51,6)};
++        for (PcbRotation rotation : PcbRotation.values())
++            for (PcbBoardSide side : PcbBoardSide.values()) {
++                PcbPackagePose pose = new PcbPackagePose(1000,2000,rotation,side);
++                check(pkg.supportsPose(pose),"raised-link fixture declares this rotation and side");
++                PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
++                    "R1",pose,pkg,pkg.getGeometry());
++                Rectangle body = P01PhysicalPoseChecks.expectedRectangle(localBody,220,70,
++                    1000,2000,rotation,side);
++                rect(placement.getBodyBounds(),body.x,body.y,body.width,body.height,
++                    "reference fixture uses independently posed literal body geometry");
++                for (int lead = 0; lead < localLeads.length; lead++) {
++                    Rectangle expected = P01PhysicalPoseChecks.expectedRectangle(localLeads[lead],
++                        220,70,1000,2000,rotation,side);
++                    Rectangle actual = placement.getLeadBounds(lead);
++                    rect(actual,expected.x,expected.y,expected.width,expected.height,
++                        "reference fixture lead matches independent literal pose");
++                }
++                Vector<Rectangle> candidates = referenceCandidates(placement);
++                int[][] expected = expectedReferenceCandidates(
++                    rotation == PcbRotation.DEG_90 || rotation == PcbRotation.DEG_270);
++                check(candidates.size() == expected.length,
++                    "reference candidate count follows body orientation and bounded rows");
++                for (int index = 0; index < expected.length; index++)
++                    rect(candidates.get(index),expected[index][0],expected[index][1],18,18,
++                        "reference candidates retain literal canonical order");
++            }
++        verifyLeadEdge(PcbRotation.DEG_0,PcbBoardSide.TOP,0,localLeads[0],
++            new Rectangle(1045,2010,18,18),new Rectangle(1045,2009,18,18));
++        verifyLeadEdge(PcbRotation.DEG_0,PcbBoardSide.TOP,1,localLeads[1],
++            new Rectangle(1152,2010,18,18),new Rectangle(1152,2009,18,18));
++        verifyLeadEdge(PcbRotation.DEG_90,PcbBoardSide.TOP,0,localLeads[0],
++            new Rectangle(1020,2045,18,18),new Rectangle(1019,2045,18,18));
++        verifyLeadEdge(PcbRotation.DEG_90,PcbBoardSide.BOTTOM,0,localLeads[0],
++            new Rectangle(1020,2151,18,18),new Rectangle(1019,2151,18,18));
++    }
++
++    private static int[][] expectedReferenceCandidates(boolean vertical) {
++        if (vertical) return new int[][] {{1026,2044},{1026,2158},{992,2101},{1060,2101}};
++        return new int[][] {{1101,1992},{1091,1992},{1111,1992},{1081,1992},
++            {1121,1992},{1071,1992},{1131,1992},{1101,2060},{1091,2060},
++            {1111,2060},{1081,2060},{1121,2060},{1071,2060},{1131,2060},
++            {1044,2026},{1158,2026}};
++    }
++
++    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
++        try {
++            return (Vector<Rectangle>)generatorMethod("getReferenceCandidates",
++                PcbComponentPlacement.class,int.class,int.class).invoke(new SeededPcbLayoutGenerator(),
++                    placement,18,18);
++        } catch (java.lang.ReflectiveOperationException error) {
++            throw new AssertionError("reference candidate reflection failed",error);
++        }
++    }
++
++    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
++            Rectangle localLead, Rectangle overlap, Rectangle edge) {
++        ReferenceFixture fixture = referenceFixture(rotation,side);
++        Rectangle expectedLead = P01PhysicalPoseChecks.expectedRectangle(localLead,220,70,
++            1000,2000,rotation,side);
++        rect(fixture.placement.getLeadBounds(leadIndex),expectedLead.x,expectedLead.y,
++            expectedLead.width,expectedLead.height,"selected lead matches its independent literal pose");
++        check(overlap.intersects(expectedLead),"overlap fixture crosses the placed lead");
++        check(!overlap.intersects(fixture.placement.getBodyBounds()),
++            "lead overlap fixture clears the component body");
++        for (PcbPadPlacement pad : fixture.layout.getPads())
++            check(!overlap.intersects(pad.getPadBounds()),"lead overlap fixture clears every pad");
++        check(!edge.intersects(expectedLead),"edge fixture only touches the lead boundary");
++        check(!referenceLabelPositionFree(fixture,overlap),
++            "reference chooser rejects ink over a placed lead");
++        for (String id : new String[] {"board-title","component:R1","net:R1.1"})
++            rejectReferenceLabel(referenceFixture(rotation,side),overlap,id);
++        check(referenceLabelPositionFree(fixture,edge),
++            "reference chooser accepts ink exactly at the lead edge");
++    }
++
++    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
++        PhysicalPackage pkg = PhysicalPackages.RAISED_FACTORY_LINK;
++        PcbPackagePose pose = new PcbPackagePose(1000,2000,rotation,side);
++        check(pkg.supportsPose(pose),"clearance fixture pose is declared by the package");
++        PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry("R1",
++            pose,pkg,pkg.getGeometry());
++        Rectangle outline = new Rectangle(900,1900,500,600);
++        PcbBoardLayout layout = new PcbBoardLayout(2400,3000,outline,
++            new Rectangle(1800,2600,300,200));
++        layout.addComponent(placement);
++        TroubleshootBoard board = new TroubleshootBoard("lead-reference-fixture");
++        board.addComponent(new BoardComponent("R1","R1",pkg));
++        Vector<String> terminals = pkg.getTerminalIds();
++        for (int index = 0; index < terminals.size(); index++) {
++            String terminal = terminals.get(index), net = "N" + index, id = "R1." + terminal;
++            board.addNet(new BoardNet(net));
++            board.addPad(new BoardPad(id,"R1",terminal,net));
++            Point center = placement.getPadPoint(index);
++            layout.addPad(new PcbPadPlacement(id,center.x,center.y,0,0,0,
++                placement.getPadBounds(index),placement.getBoardPadProbeBounds(index),
++                PcbTerminalAttachment.PLATED_THROUGH_HOLE,side));
++        }
++        return new ReferenceFixture(board,layout,placement,outline);
++    }
++
++    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
++            Rectangle bounds) {
++        try {
++            return ((Boolean)generatorMethod("isLabelPositionFree",PcbBoardLayout.class,
++                TroubleshootBoard.class,Rectangle.class,Rectangle.class).invoke(
++                    new SeededPcbLayoutGenerator(),fixture.layout,fixture.board,fixture.outline,
++                    bounds)).booleanValue();
++        } catch (java.lang.ReflectiveOperationException error) {
++            throw new AssertionError("reference clearance reflection failed",error);
++        }
++    }
++
++    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
++            String id) {
++        try {
++            generatorMethod("addLabel",PcbBoardLayout.class,TroubleshootBoard.class,
++                Rectangle.class,String.class,String.class,Rectangle.class,int.class,
++                boolean.class,String.class).invoke(new SeededPcbLayoutGenerator(),fixture.layout,
++                    fixture.board,fixture.outline,id,
++                    "board-title".equals(id) ? "FIXTURE" : "net:R1.1".equals(id) ? "GND" : "R1",
++                    bounds,"net:R1.1".equals(id) ? 12 : 14,
++                    !"net:R1.1".equals(id),"net:R1.1".equals(id) ? "R1.1" : null);
++            throw new AssertionError("lead-overlap reference label was accepted");
++        } catch (java.lang.reflect.InvocationTargetException error) {
++            Throwable cause = error.getCause();
++            check(cause instanceof IllegalStateException,
++                "reflected rejection preserves IllegalStateException as its cause");
++            check(cause instanceof IllegalStateException &&
++                ("PCB silkscreen label position became occupied: " + id).equals(
++                    cause.getMessage()),"lead-overlap rejection has its precise error for " + id);
++            check(fixture.layout.getSilkscreenLabel(id) == null,
++                "rejected label leaves the layout unchanged: " + id);
++        } catch (java.lang.ReflectiveOperationException error) {
++            throw new AssertionError("reference rejection reflection failed",error);
++        }
++    }
++
++    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
++        try {
++            java.lang.reflect.Method method = SeededPcbLayoutGenerator.class.getDeclaredMethod(
++                name,parameters);
++            method.setAccessible(true);
++            return method;
++        } catch (NoSuchMethodException error) {
++            throw new AssertionError("missing private reference-label method: " + name,error);
++        }
++    }
++
++    private static final class ReferenceFixture {
++        final TroubleshootBoard board;
++        final PcbBoardLayout layout;
++        final PcbComponentPlacement placement;
++        final Rectangle outline;
++        ReferenceFixture(TroubleshootBoard board, PcbBoardLayout layout,
++                PcbComponentPlacement placement, Rectangle outline) {
++            this.board = board; this.layout = layout; this.placement = placement; this.outline = outline;
++        }
+     }
+ 
+     private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {

@@ -1,0 +1,114 @@
+{
+  "recordedBirths": 17,
+  "elapsedSeconds": 0.4125651,
+  "secondProfileAbsent": true,
+  "stateAbsent": true,
+  "checks": [
+    {
+      "pid": 10784,
+      "executable": "brave.exe",
+      "startTicks": "639281002992565284",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 12236,
+      "executable": "pwsh",
+      "startTicks": "639280993850419579",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 18136,
+      "executable": "pwsh",
+      "startTicks": "639280985513572945",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 18688,
+      "executable": "pwsh",
+      "startTicks": "639280991053546131",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 19644,
+      "executable": "pwsh",
+      "startTicks": "639280995193873645",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 21548,
+      "executable": "pwsh",
+      "startTicks": "639280983189721054",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 24748,
+      "executable": "pwsh",
+      "startTicks": "639280984667915747",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26584,
+      "executable": "pwsh",
+      "startTicks": "639280984678353253",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26604,
+      "executable": "pwsh",
+      "startTicks": "639280991063152008",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26964,
+      "executable": "pwsh",
+      "startTicks": "639280990216584915",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 28132,
+      "executable": "pwsh",
+      "startTicks": "639280993859203152",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 28232,
+      "executable": "powershell.exe",
+      "startTicks": "639280995240801716",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 29992,
+      "executable": "pwsh",
+      "startTicks": "639280983192004146",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31156,
+      "executable": "pwsh",
+      "startTicks": "639280995202619215",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32328,
+      "executable": "brave.exe",
+      "startTicks": "639280995524539519",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32480,
+      "executable": "pwsh",
+      "startTicks": "639280985504606591",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32532,
+      "executable": "pwsh",
+      "startTicks": "639280990207102177",
+      "recordedBirthExited": true
+    }
+  ],
+  "status": "PASS_CURRENT_RUNNING_RESOURCES_CLOSED",
+  "firstResetProfileCleanup": "BLOCKED_BY_POLICY_DIRECTORY_RETAINED",
+  "limits": "Root observation after actual stop exec0/browser API root0; first blocked directory and earlier blocked profiles retained without retry",
+  "port8907Released": true
+}

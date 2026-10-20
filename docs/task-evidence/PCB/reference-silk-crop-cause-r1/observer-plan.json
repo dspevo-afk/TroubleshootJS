@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "insertionOnlyObservers": true,
+  "baseline": {
+    "generatorSha256": "99d05c7f5a9cd059a519046b0003263c1d598442f098784e12503b3b11cfcef3",
+    "functionalGroupingSha256": "016e8b6260da7d1fd191215dfb0262dc96bba16200bdd9f9e1dd9556cc35d3e5"
+  },
+  "candidate": {
+    "generatorSha256": "01b2dca29f09b312d156a93a4a9fd60b492bae113c3847f2f9338b7c8925318e5",
+    "functionalGroupingSha256": "016e8b6260da7d1fd191215dfb0262dc96bba16200bdd9f9e1dd9556cc35d3e5"
+  },
+  "row": "candidate, variation, pre-crop occupied x/y/w/h, edgeMargin, complete geometryFingerprint",
+  "rootMarker": "SILKCROP_BEGIN;seed;index;version",
+  "analysisNormalization": "Diagnostic copy only: remove leading layout epoch and all L: records; retain labels separately."
+}

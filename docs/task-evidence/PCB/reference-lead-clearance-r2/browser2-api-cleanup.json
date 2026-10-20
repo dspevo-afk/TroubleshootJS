@@ -1,0 +1,8 @@
+{
+  "status": "PASS_API_CLOSE",
+  "elapsedMs": 136,
+  "pid": 10784,
+  "processExitCode": 0,
+  "profileAbsent": true,
+  "scope": "Owned second context/client/server close only; first reset profile retained after policy block; root birth/preview cleanup separate"
+}

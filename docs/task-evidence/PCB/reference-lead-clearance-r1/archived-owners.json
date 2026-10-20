@@ -1,0 +1,7 @@
+[
+  "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+  "tests/contracts/PcbNormalPackingCensusContractTest.java",
+  "tests/contracts/PcbCompactnessContractTest.java",
+  "tests/contracts/PcbFunctionalGroupingContractTest.java",
+  "tests/contracts/PcbPocketPackingContractTest.java"
+]

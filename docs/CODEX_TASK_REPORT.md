@@ -1,8 +1,74 @@
-# Current checkpoint: lead-silk trial rejected; exact published source restored
+# Current checkpoint: fixed-envelope clearance accepted; publication review
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin
-1f39ff70a940839c67634fe90aacd2f1fbf735ee. Indefinite ordinary PCB realism and
+f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b. Indefinite ordinary PCB realism,
+screenshots and optional agents authorized; no main/email. Three naming images
+previously posted, now four new board views posted. No stage/commit yet.
+
+Current GEN18 SHA44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464.
+Transient accepted17 original4 ink plan on copyForCompaction, strict lead-only
+pending reflow within EXACT old complete occupied envelope, final labels installed
+once; sealed/ink/receipt guards, no new layout API/RNG/physics/route/work change.
+Current8 consumers sealed; accepted17 independent old12 PASS390.9318617s,80canonical
+rows/44keys/69uses map independently; narrow helper masks only referenceXY+epoch,
+old area/work assertions retained. Static gate/production review PASS only; native
+proof separately fresh. Architecture current18/dependency17 and ownership updated.
+
+Actual r2 phases: fixtures2 PASS65.1944196s/601+12867 assertions; contracts31
+PASS438.6780756s (33unique total inclP04/P05); census44 PASS70.7076739s/15->0
+intersections/12 moved reference cases/all physical-graph-metric-work/nonref exact;
+active11 matrix PASS219.0275692s/220 admissions+220 exact replays; actual final
+JDK8-GWT5 OBF Compile PASS90.2436243s. All actualexec14570/17634/80002/6123/47952
+returned0 before separate root birth/input/strict assessment. Source1481/machinery24/
+gates8/prerequisites raw-byte audited. Frozen failed r1 candidate and initial r2
+transport128/fixture compilation2.411678s/actualroot1/maintained2 remain retained;
+root added only missing fixture brace under explicit gate revision. Canary identity
+gap corrected with actual source-bound optimized2/timing1+5 receipt, sealed before
+retry. Crop diagnostic accepted17 vs rejected18 proves D1 remote fallback enlarged
+attempt3/candidatewinner; exact prior source restored before current r2 edits.
+
+Actual headed sandboxed Brave final production: predeclared RB15/13 original
+Part15 RLED remove/reinstall, original customerFAIL, final2OFF/tray0; RB30/0
+fitted/wheel/Fit/D2 labels clear, originalFAIL, final4OFF; first public MEDIUM New
+board admits COMPOSED_CONTROLLED_INDICATOR/-2105106022359460505, originalFAIL,
+all3 outputs visibly disconnected. Known LED5577758334702827054: isolatedR1 OL,
+shop330Ohm actualPart4 install, OFF OHM330Ohm, powered customerPASS. Actual public
+Save session762bytes -> Load/FileChooser/FileReader restoresOFF/tray1/actual330Ohm;
+fresh powered customerPASS; finalOFF/exact public identity/tray1. Five primary raw
+frames inspected/four board images pasted. First/second before + second after
+served6 and final CLI execution provenance exact. Player assessment limits explicit.
+
+Automation failures retained: unsupported exact summary/difficulty lookups; first
+Node default30s reset in read-only menu prep, durable23actions/1051console through
+last pre-reset flush, first post-proof absent. Root birth32328 exited but profile
+Rl8mqK removal auto-review BLOCKED before command execution; retained/no retry.
+New browser10784 T21z8N API/root0/profilegone. Second27actions/473console (472logs,
+1unattributed404), no page/request/observed-response errors; no favicon/cleanconsole
+claim. Immediate oldFAIL text after repaired retest prematurely labelled freshFAIL;
+actualPASS modal followed without repeat/circuit edit, blocked Supplies click;
+correction and actual completion frame retained. Restored retest waited actualmodal.
+
+All17 r2 process births independently exited; managed stop2.6286062s/state absent/
+8907 released/currentprofile absent. No active browser/preview/native phase. Node
+kernel alive with lcFs/lcPath/lcOs/lcPw/lcRoot/lcPacket/lcPrivate2 (basename
+ tsj-fixed-envelope-player2-tUIp1s), closed lcBrowser2/lcContext2/lcServer2/lcPage2;
+logs/raw save private. First private logs tsj-fixed-envelope-player-11VwwW retained.
+Compiler/build raw failures/private copies preserved; only exact task-root prefixes
+sanitized publicly/raw+public hashes. Preserve Original5, normal-packing private
+baseline pointer/cache, old COPY/runtime pointer and all THREE blocked profiles.
+
+Next: root integrated/raw/privacy/diff check; explicit intended staging, staged
+byte/canonical review, descriptive commit/normal push/exact origin SHA. No main/email.
+Then continue bounded shared PCB realism/placement-spacing investigation; no next
+production change yet. Do not final/end merely because this milestone completes.
+
+# Previous checkpoint: lead-silk rejection published
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b, normal push/exact origin SHA verified.
+Indefinite ordinary PCB realism and
 screenshots authorized; no main/email. Naming production remains accepted;
 three current images pasted in chat. Current all1481 source inputs exactly
 restored to published1f39 after rejected lead-silk-trial-r1.
@@ -20,10 +86,13 @@ bound cleanup. No browser/preview/expensive phase. Actual timing fields exactint
 static boolFalse==0 parser gap disclosed, correct next gate. No leaf phase/UI run.
 
 Root final rejected-source/observer/physical-diff/restoration review complete.
-Next: stage/privacy/raw-byte review and normal docs/evidence commit/push for this
-rejected trial, including prior naming publication receipt. Then investigate
-static colliding ink relocation after final physical crop/selection within the
-existing outline; no next implementation. Earlier blocked profiles (including
+Staged41 paths reviewed: before review file38 raw exact/2 CRLF-only; diff checks
+PASS. Diagnostic publication receipt untracked for next coherent commit.
+Postselection movement would invalidate packing receipt hashes; avoid that broader
+seam. Next: investigate relocating only colliding component references BEFORE
+crop/metrics, within exact prior occupied-content envelope and preserving all
+its extrema, using existing shared chooser and lead geometry. Read-only review
+underway, no next production implementation. Earlier blocked profiles (including
 interrupted naming browser), private baseline COPY, Original5/private baseline
 pointer/cache and task private metadata/raw logs preserved. No main/email;
 continue afterward.

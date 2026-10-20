@@ -1,0 +1,133 @@
+diff --git a/tests/contracts/PcbSilkscreenScaleContractTest.java b/tests/contracts/PcbSilkscreenScaleContractTest.java
+--- a/tests/contracts/PcbSilkscreenScaleContractTest.java
++++ b/tests/contracts/PcbSilkscreenScaleContractTest.java
+@@ -134,6 +134,129 @@
+             new Rectangle(1020,2045,18,18),new Rectangle(1019,2045,18,18));
+         verifyLeadEdge(PcbRotation.DEG_90,PcbBoardSide.BOTTOM,0,localLeads[0],
+             new Rectangle(1020,2151,18,18),new Rectangle(1019,2151,18,18));
++        assertLegacyReferenceCandidates(referenceFixture(PcbRotation.DEG_0,PcbBoardSide.TOP).placement,
++            new int[][] {{1101,1992},{1101,2060},{1044,2026},{1158,2026}});
++        assertLegacyReferenceCandidates(referenceFixture(PcbRotation.DEG_90,PcbBoardSide.TOP).placement,
++            new int[][] {{1026,2044},{1026,2158},{992,2101},{1060,2101}});
++        referenceSilkscreenPlanningFixtures();
++    }
++
++    private static void assertLegacyReferenceCandidates(PcbComponentPlacement placement,
++            int[][] expected) {
++        try {
++            Vector<Rectangle> actual = (Vector<Rectangle>)generatorMethod("getReferenceCandidates",
++                PcbComponentPlacement.class,int.class,int.class,boolean.class).invoke(
++                    new SeededPcbLayoutGenerator(),placement,18,18,false);
++            check(actual.size() == expected.length,"legacy reference candidate count is preserved");
++            for (int index = 0; index < expected.length; index++)
++                rect(actual.get(index),expected[index][0],expected[index][1],18,18,
++                    "legacy four-candidate order remains literal");
++        } catch (java.lang.ReflectiveOperationException error) {
++            throw new AssertionError("legacy reference candidate reflection failed",error);
++        }
++    }
++
++    private static void referenceSilkscreenPlanningFixtures() {
++        ReferenceFixture actual = referenceFixture(PcbRotation.DEG_90,PcbBoardSide.TOP);
++        String originalFingerprint = actual.layout.geometryFingerprint();
++        check(actual.layout.getSilkscreenLabels().isEmpty(),"wrapper starts with no silkscreen ink");
++        ReferenceFixture planned = new ReferenceFixture(actual.board,
++            actual.layout.copyForCompaction(),actual.placement,actual.outline);
++        Throwable failure = invokeSilkscreen("placeInitialSilkscreen",planned);
++        check(failure == null,"legacy label planning succeeds on the physical-only copy");
++        check(actual.layout.getSilkscreenLabels().isEmpty() &&
++            originalFingerprint.equals(actual.layout.geometryFingerprint()),
++            "planning copy leaves the original layout byte-for-byte unchanged");
++        Vector<PcbSilkscreenLabel> oldLabels = planned.layout.getSilkscreenLabels();
++        check(oldLabels.size() == 2 && planned.layout.getSilkscreenLabel("net:R1.1") == null,
++            "fixture plans only its board title and one component reference");
++        PcbSilkscreenLabel oldTitle = planned.layout.getSilkscreenLabel("board-title");
++        PcbSilkscreenLabel oldReference = planned.layout.getSilkscreenLabel("component:R1");
++        rect(oldTitle.getBounds(),1005,1978,153,18,"old title occupies its literal family slot");
++        Rectangle oldBounds = oldReference.getBounds();
++        rect(oldBounds,1026,2044,18,18,"legacy vertical reference position is literal");
++        Rectangle independentLead = new Rectangle(1037,2027,6,51);
++        Rectangle independentBody = new Rectangle(1018,2070,34,80);
++        check(oldBounds.intersects(independentLead) && !oldBounds.intersects(independentBody),
++            "old reference overlaps the independently declared lead and clears the body");
++        for (PcbPadPlacement pad : planned.layout.getPads())
++            check(!oldBounds.intersects(pad.getPadBounds()),"old reference clears each physical pad");
++        rect(planned.layout.getOccupiedContentBounds(),1005,1978,153,237,
++            "planned ink preserves the independently unioned old content envelope");
++        String plannedFingerprint = planned.layout.geometryFingerprint();
++
++        failure = invokeSilkscreen("placeSilkscreen",actual);
++        check(failure == null,"wrapper reflows the lead-colliding reference");
++        PcbSilkscreenLabel moved = actual.layout.getSilkscreenLabel("component:R1");
++        rect(moved.getBounds(),1016,2044,18,18,"nearest clear reference nudge is literal");
++        check(!moved.getBounds().intersects(independentLead) &&
++            !moved.getBounds().intersects(independentBody),
++            "reflowed reference clears independent lead and body geometry");
++        for (PcbPadPlacement pad : actual.layout.getPads())
++            check(!moved.getBounds().intersects(pad.getPadBounds()),"reflowed reference clears each pad");
++        rect(actual.layout.getOccupiedContentBounds(),1005,1978,153,237,
++            "reflow preserves the exact planned occupied envelope");
++        check(plannedFingerprint.equals(planned.layout.geometryFingerprint()),
++            "final placement leaves the planning copy and its legacy label unchanged");
++        check(actual.layout.getSilkscreenLabels().size() == oldLabels.size() &&
++            actual.layout.getSilkscreenLabel("net:R1.1") == null,
++            "wrapper adds each planned fixture label exactly once");
++        for (PcbSilkscreenLabel before : oldLabels) {
++            PcbSilkscreenLabel after = actual.layout.getSilkscreenLabel(before.getId());
++            Rectangle oldRect = before.getBounds(), newRect = after.getBounds();
++            check(after != null && before.getId().equals(after.getId()) &&
++                before.getText().equals(after.getText()) && oldRect.width == newRect.width &&
++                oldRect.height == newRect.height && before.getFontSize() == after.getFontSize() &&
++                before.isBold() == after.isBold() &&
++                (before.getTargetPadId() == null ? after.getTargetPadId() == null :
++                    before.getTargetPadId().equals(after.getTargetPadId())),
++                "reflow preserves label identity, text, size, font, style and target");
++            if ("board-title".equals(before.getId()))
++                rect(newRect,oldRect.x,oldRect.y,oldRect.width,oldRect.height,
++                    "board title bounds remain unchanged");
++        }
++        check(withoutSilkscreenRecords(actual.layout.geometryFingerprint(),
++            actual.layout.getSilkscreenLabels()).equals(originalFingerprint),
++            "removing the exact unique label records preserves every other geometry byte");
++        rejectSilkscreenWrapper(actual,"populated wrapper rejects a second placement");
++        ReferenceFixture sealed = referenceFixture(PcbRotation.DEG_90,PcbBoardSide.TOP);
++        sealed.layout.seal();
++        rejectSilkscreenWrapper(sealed,"sealed empty layout rejects wrapper placement");
++    }
++
++    private static Throwable invokeSilkscreen(String name, ReferenceFixture fixture) {
++        try {
++            generatorMethod(name,PcbBoardLayout.class,TroubleshootBoard.class,Rectangle.class)
++                .invoke(new SeededPcbLayoutGenerator(),fixture.layout,fixture.board,fixture.outline);
++            return null;
++        } catch (java.lang.reflect.InvocationTargetException error) {
++            return error.getCause();
++        } catch (java.lang.ReflectiveOperationException error) {
++            throw new AssertionError("silkscreen wrapper reflection failed: " + name,error);
++        }
++    }
++
++    private static void rejectSilkscreenWrapper(ReferenceFixture fixture, String message) {
++        String before = fixture.layout.geometryFingerprint();
++        Throwable cause = invokeSilkscreen("placeSilkscreen",fixture);
++        check(cause instanceof IllegalStateException,message + " with IllegalStateException");
++        check(before.equals(fixture.layout.geometryFingerprint()),
++            "rejected wrapper call leaves the complete layout fingerprint unchanged");
++    }
++
++    private static String withoutSilkscreenRecords(String fingerprint,
++            Vector<PcbSilkscreenLabel> labels) {
++        String result = fingerprint;
++        for (PcbSilkscreenLabel label : labels) {
++            Rectangle bounds = label.getBounds();
++            String record = "L:" + label.getId() + "@" + label.getText() + ":" +
++                bounds.x + "," + bounds.y + "," + bounds.width + "," + bounds.height + ";";
++            int start = result.indexOf(record);
++            check(start >= 0 && result.indexOf(record,start + record.length()) < 0,
++                "each label has one exact, uniquely framed geometry record");
++            result = result.substring(0,start) + result.substring(start + record.length());
++        }
++        return result;
+     }
+ 
+     private static int[][] expectedReferenceCandidates(boolean vertical) {

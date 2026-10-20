@@ -1,0 +1,14 @@
+{
+  "childBudgetMilliseconds": 60000,
+  "runner": "Private PowerShell 7; Python invoked with -X utf8 -B; private JDK8 from task pointer",
+  "output": "Capture maintained verifier stdout in phase-<name>.txt and stderr in phase-<name>-stderr.txt; preserve receipt only if the verifier produces it.",
+  "maintainedCommand": "scripts/verify-current-contracts.ps1 -JavaHome <private JDK8> -PythonExe <private Python> -Suite @('PcbFunctionalGroupingContractTest') -ReceiptOutputPath <phase receipt>",
+  "schema": 1,
+  "phaseInputAudit": "Hash all current inputs with reference-lead-clearance-r1/final_inputs.py record(); compare all fields after masking exactly the two owned source entries, then require their exact expected phase bytes.",
+  "processIdentity": "Before each phase record parent/current PID, UTC creation ticks, executable name; immediately after launching the maintained verifier record its PID, UTC creation ticks, executable name; after actual exec return verify those exact births exited. No termination.",
+  "order": [
+    "baseline-accepted17",
+    "candidate-current18"
+  ],
+  "childBudgetSource": "Unchanged Invoke-VerifierBoundedProcess default for the focused suite; no override"
+}

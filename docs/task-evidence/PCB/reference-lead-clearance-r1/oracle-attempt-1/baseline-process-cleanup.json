@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "elapsedSeconds": 0.0056044,
+  "phaseResult": "FAIL_COMPILATION",
+  "launchSha256": "7f65f4a7be9ffdf933f2cae9aff0dd7b3701b13e068dd68349fd67c6dd5570ed",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "startTicks": "639280946724088451",
+      "pid": 7584
+    },
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "startTicks": "639280946726423517",
+      "pid": 32508
+    }
+  ],
+  "scope": "Resource proof only after actual exec exit1; not native PASS",
+  "phase": "baseline",
+  "actualExecExitCode": 1
+}

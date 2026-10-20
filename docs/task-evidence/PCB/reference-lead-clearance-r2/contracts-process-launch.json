@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "pid": 32480,
+      "startTicks": "639280985504606591"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 18136,
+      "startTicks": "639280985513572945"
+    }
+  ],
+  "scope": "Actual parent/current births before maintained final clearance phase",
+  "phase": "contracts"
+}

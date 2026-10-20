@@ -1,0 +1,8 @@
+{
+  "scope": "exact worktree prefix only",
+  "rawSha256": "06daeccd79143ced12c15c9671c1589a25b365ea294c734697656209007b69b4",
+  "redactedSha256": "55b9e28b4d97e6e787259afc6bbeb389420d293214d3445d32d2435531d86e57",
+  "rawBytes": 347,
+  "redactedBytes": 283,
+  "limits": "Retained refusal output only; optimized refusal rerun after final gate freeze"
+}

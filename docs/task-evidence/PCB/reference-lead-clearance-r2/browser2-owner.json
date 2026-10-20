@@ -1,0 +1,10 @@
+{
+  "pid": 10784,
+  "scope": "Independent live CIM/birth/executable/profile match before first navigation",
+  "startTicks": "639281002992565284",
+  "headed": true,
+  "status": "PASS",
+  "profileName": "playwright_chromiumdev_profile-T21z8N",
+  "executable": "brave.exe",
+  "sandboxEnabled": true
+}

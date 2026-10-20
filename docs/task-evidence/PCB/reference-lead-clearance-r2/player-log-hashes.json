@@ -1,0 +1,47 @@
+{
+  "logs": [
+    {
+      "attempt": "first",
+      "artifact": "events.json",
+      "bytes": 3563,
+      "sha256": "8e9558d73ff3b0e6aabbd952d792c1163fb0d21d3623cd2e3de8d19d913c9c1e",
+      "records": 23
+    },
+    {
+      "attempt": "first",
+      "artifact": "console.json",
+      "bytes": 73868,
+      "sha256": "27cad3fa74ab6102883446af2ed4ac753718675f5dfe03afd095d034a89a7aa5",
+      "records": 1051
+    },
+    {
+      "attempt": "first",
+      "artifact": "browser-errors.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "records": 0
+    },
+    {
+      "attempt": "second",
+      "artifact": "events.json",
+      "bytes": 4828,
+      "sha256": "4b0dcf1ff8e20c0bf00a7fe4dfff819bcbd2a7118cffe506a8818b3be326153b",
+      "records": 27
+    },
+    {
+      "attempt": "second",
+      "artifact": "console.json",
+      "bytes": 36281,
+      "sha256": "0adc989262728aa4dc83f0ac39fcb947f9eeb9585686cc7fe0f674b742f938f8",
+      "records": 473
+    },
+    {
+      "attempt": "second",
+      "artifact": "errors.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "records": 0
+    }
+  ],
+  "limits": "Finite raw console/error logs retained privately; only public-action event records copied. First logs end at last flush before kernel reset; no complete first post-reset console claim."
+}

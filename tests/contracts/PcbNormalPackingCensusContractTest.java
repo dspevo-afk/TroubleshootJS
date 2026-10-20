@@ -229,10 +229,85 @@ public final class PcbNormalPackingCensusContractTest {
         System.out.println("PCB_NORMAL_PACKING_CASE " + row.toString());
         printSilkscreenObservation(family, root, layout);
         printReferenceObservation(family, root, owner);
+        printLeadSilkscreenObservation(family, root, owner);
         return CaseResult.ACCEPTED;
     }
 
     /** Add public ink observations; preserve every existing full geometry/graph oracle. */
+    private static void printLeadSilkscreenObservation(String family, long root,
+            GeneratedBoardInstance owner) {
+        PcbBoardLayout layout = owner.getPcbLayout();
+        String full = layout.geometryFingerprint();
+        String graph = PcbCanvasBoundaryContractTest.liveGraphSha256(owner.getBoard());
+        String prefix = "layout=" + layout.getLayoutAlgorithmVersion() + "|";
+        require(full.startsWith(prefix), "lead/silk observation frames only actual layout epoch");
+        String normalized = "layout=#LEGEND_POLICY#|" + full.substring(prefix.length());
+        Vector<String> ids = owner.getBoard().getComponentIds();
+        java.util.Collections.sort(ids);
+        StringBuilder components = new StringBuilder("[");
+        for (int c = 0; c < ids.size(); c++) {
+            String id = ids.get(c);
+            PcbComponentPlacement placement = layout.getComponent(id);
+            if (c > 0) components.append(',');
+            components.append("{\"id\":").append(jsonQuote(id)).append(",\"leads\":[");
+            int terminals = placement.getPhysicalGeometry().getTerminals().size();
+            for (int i = 0; i < terminals; i++) {
+                if (i > 0) components.append(',');
+                appendLeadSilkRectangle(components, placement.getLeadBounds(i));
+            }
+            components.append("]}");
+        }
+        components.append(']');
+        Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
+        java.util.Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
+            public int compare(PcbSilkscreenLabel a, PcbSilkscreenLabel b) {
+                return a.getId().compareTo(b.getId());
+            }
+        });
+        StringBuilder ink = new StringBuilder("["), overlaps = new StringBuilder("[");
+        int pairCount = 0;
+        for (int l = 0; l < labels.size(); l++) {
+            PcbSilkscreenLabel label = labels.get(l);
+            Rectangle bounds = label.getBounds();
+            String record = "L:" + label.getId() + "@" + label.getText() + ":" +
+                bounds.x + "," + bounds.y + "," + bounds.width + "," + bounds.height + ";";
+            int offset = normalized.indexOf(record);
+            require(offset >= 0 && normalized.indexOf(record, offset + record.length()) < 0,
+                "normalize exactly one complete physical legend position");
+            normalized = normalized.substring(0, offset) + "L:" + label.getId() + "@" +
+                label.getText() + ":#LEGEND_POSITION#," + bounds.width + "," + bounds.height + ";" +
+                normalized.substring(offset + record.length());
+            if (l > 0) ink.append(',');
+            ink.append("{\"id\":").append(jsonQuote(label.getId())).append(",\"bounds\":");
+            appendLeadSilkRectangle(ink, bounds);
+            ink.append('}');
+            for (String id : ids) {
+                PcbComponentPlacement placement = layout.getComponent(id);
+                int terminals = placement.getPhysicalGeometry().getTerminals().size();
+                for (int i = 0; i < terminals; i++) {
+                    if (!bounds.intersects(placement.getLeadBounds(i))) continue;
+                    if (pairCount++ > 0) overlaps.append(',');
+                    overlaps.append("{\"label\":").append(jsonQuote(label.getId())).append(",\"component\":")
+                        .append(jsonQuote(id)).append(",\"terminal\":").append(i).append('}');
+                }
+            }
+        }
+        ink.append(']'); overlaps.append(']');
+        require(full.equals(layout.geometryFingerprint()) &&
+            graph.equals(PcbCanvasBoundaryContractTest.liveGraphSha256(owner.getBoard())),
+            "lead/silk observation preserves physical layout and live graph");
+        System.out.println("PCB_LEAD_SILK_CASE {\"family\":" + jsonQuote(family) +
+            ",\"root\":" + jsonQuote(Long.toString(root)) +
+            ",\"geometryApartFromLegendPositionAndEpochSha256\":" +
+            jsonQuote(PlayerSessionFingerprint.of(normalized)) + ",\"components\":" + components +
+            ",\"labels\":" + ink + ",\"overlaps\":" + overlaps + "}");
+    }
+
+    private static void appendLeadSilkRectangle(StringBuilder out, Rectangle bounds) {
+        out.append('[').append(bounds.x).append(',').append(bounds.y).append(',')
+            .append(bounds.width).append(',').append(bounds.height).append(']');
+    }
+
     private static void printReferenceObservation(String family, long root,
             GeneratedBoardInstance owner) {
         TroubleshootBoard board = owner.getBoard();

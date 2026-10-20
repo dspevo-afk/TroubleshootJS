@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "literalRectangles": 3,
+  "failedTimingFramesRejected": 4,
+  "limits": "Pure rectangle/timing framing only; not phase/native/OS proof"
+}

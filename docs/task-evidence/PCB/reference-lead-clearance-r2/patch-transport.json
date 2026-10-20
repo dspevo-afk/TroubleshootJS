@@ -1,0 +1,11 @@
+{
+  "originalSha256": "7df99f15d11ab7228fcd46e8a7d8a909dc60c560db3ba522982ca38d9272cdc5",
+  "originalCheckExitCode": 128,
+  "originalError": "error: corrupt patch at line 133",
+  "originalHunk": "@@ -133,7 +133,129 @@",
+  "correctedHunk": "@@ -133,7 +133,129 @@",
+  "change": "Mechanical hunk line counts/final LF only; added code and old context unchanged",
+  "correctedSha256": "5ce168eefd3e8829ce7ff5eb35f48270153cefb9499fc94cf5e03124f2f5deb8",
+  "correctedCheckExitCode": 0,
+  "correctedError": ""
+}

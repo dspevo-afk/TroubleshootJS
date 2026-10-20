@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "branch": "codex/q60-faulted-profile-counts",
+  "head": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+  "finalInputsManifestSha256": "05b5f5f97187eb040c32932bb8f3a344898f530907bd8fa051f1eeac715515aa",
+  "auditedSourceInputs": 1481,
+  "auditedMachineryInputs": 24,
+  "preTaskOwnedFiles": {
+    "generator18": {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sha256": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2"
+    },
+    "functionalGrouping": {
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3"
+    }
+  },
+  "accepted17Generator": {
+    "path": "accepted-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "sha256": "df12d945fb2a335dc694c39cf123b0e224612f6ef34be7f9f2c43b5106baf908"
+  },
+  "exactRawCopies": [
+    "pre-task-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "pre-task-source/tests/contracts/PcbFunctionalGroupingContractTest.java"
+  ],
+  "initialAudit": "PASS exact final clearance inputs sources=1481 owners=8 gates=8"
+}

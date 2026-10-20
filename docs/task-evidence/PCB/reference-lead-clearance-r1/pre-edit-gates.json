@@ -1,0 +1,32 @@
+{
+  "status": "FROZEN_BEFORE_ACCEPTED17_RESTORE_AND_COMPACTNESS_OBSERVER_EDIT",
+  "gates": {
+    "scope.md": "54d15847bc90f6f7d953d75f745cffde31ae3f9077a249f85b1f14becc5ad5cb",
+    "inputs.py": "fbe701de56bd20ae347b310983e60058ee287e59eb8db410fe98f1852e391ac0",
+    "run_oracle.ps1": "2ba3f8ffa0fbc8d7e22cee8df166e16bfc9b0e0a7e3e3f2796e43e2be572b125",
+    "observe_oracle_exit.ps1": "dd896ec14a2de6ac86b8f3fb557bc98a3ed5cfa8e68fef576434fd06265e5fda",
+    "oracle_reader.py": "6a75f3bc4dc46fe61428df59d1f36322b7ef159c931edafe9f1520c8d5afffbc",
+    "oracle-observer.patch": "42056e7884980de0b0e4ec7de46c3dee898ea5182dcc777f5846968698b8c672",
+    "oracle-observer-draft.md": "b8824c25b4c1e699850fac208bb2933786534f35087744b4c2260ef4232ad3f6",
+    "oracle-suites.json": "bcdd261251aff9a24c1082d9891363e2a219623a72d8467f3c5fec645fa8fb93"
+  },
+  "acceptedSha256": "eb5109ae100a21bbc85909806b73475fd24263e70ea21c8b896721063df6da3e",
+  "passingTrialInputsSha256": "c29f130fb90ce3461ffe3bf2da09196a91c07e69c43b668f3d164cb4f1615379",
+  "passingTrialGeneratorSha256": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2",
+  "passingTrialObserverSha256": "d27dc575ff767da34a3d0eab70755777e65602f72162e634daa23757cf4691e8",
+  "optimizedRefusals": [
+    {
+      "script": "inputs.py",
+      "actualExitCode": 1,
+      "stderrSha256": "06daeccd79143ced12c15c9671c1589a25b365ea294c734697656209007b69b4",
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "oracle_reader.py",
+      "actualExitCode": 2,
+      "stderrSha256": "eb14e0bb7ce67d1e331a21f0e37fe895d03c80a80d96a1bae4ad3774f5952228",
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure framing/normalization/timing/type/interpreter checks only; no native/OS/source-export proof"
+}

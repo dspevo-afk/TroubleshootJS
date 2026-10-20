@@ -1,0 +1,103 @@
+{
+  "status": "OBSERVATION_ONLY",
+  "case": "RB56 placement12 root17",
+  "accepted17LayoutSha256": "56f326a79a8d83636591c596991ae768a7d828a7f6d71892fd0415931b90992c",
+  "accepted17Area": 5814368,
+  "candidate18Area": 5906824,
+  "candidate18CopperLength": 43410,
+  "accepted17CopperLength": 43520,
+  "oldLeadLegendPairs": [
+    {
+      "label": {
+        "id": "component:D1",
+        "text": "D1",
+        "bounds": [
+          532,
+          1216,
+          18,
+          18
+        ],
+        "fontSize": 14,
+        "bold": true,
+        "targetPadId": null
+      },
+      "leadComponent": "D1",
+      "terminal": 0,
+      "lead": [
+        513,
+        1217,
+        48,
+        6
+      ],
+      "ownerBody": [
+        558,
+        1209,
+        86,
+        32
+      ]
+    },
+    {
+      "label": {
+        "id": "component:KA",
+        "text": "KA",
+        "bounds": [
+          1677,
+          1014,
+          18,
+          18
+        ],
+        "fontSize": 14,
+        "bold": true,
+        "targetPadId": null
+      },
+      "leadComponent": "KA",
+      "terminal": 3,
+      "lead": [
+        1683,
+        997,
+        6,
+        46
+      ],
+      "ownerBody": [
+        1626,
+        1040,
+        120,
+        100
+      ]
+    },
+    {
+      "label": {
+        "id": "component:KB",
+        "text": "KB",
+        "bounds": [
+          1667,
+          1634,
+          18,
+          18
+        ],
+        "fontSize": 14,
+        "bold": true,
+        "targetPadId": null
+      },
+      "leadComponent": "KB",
+      "terminal": 3,
+      "lead": [
+        1673,
+        1617,
+        6,
+        46
+      ],
+      "ownerBody": [
+        1616,
+        1660,
+        120,
+        100
+      ]
+    }
+  ],
+  "extractionPreparationFailures": [
+    "first body delimiter assumed semicolon instead of pipe",
+    "second list/map typo; corrected before observation"
+  ],
+  "limits": "Exact archived accepted canonical extraction only; does not yet identify changed candidate/label selection cause"
+}

@@ -1,0 +1,28 @@
+{
+  "phase": "candidate",
+  "childBudgetMilliseconds": 60000,
+  "drivers": [
+    {
+      "role": "phase-parent",
+      "pid": 25672,
+      "startTicks": "639280972133359280",
+      "executable": "pwsh"
+    },
+    {
+      "role": "phase-driver",
+      "pid": 29600,
+      "startTicks": "639280972135627731",
+      "executable": "pwsh"
+    },
+    {
+      "role": "maintained-verifier",
+      "pid": 28620,
+      "startTicks": "639280972142829815",
+      "executable": "pwsh"
+    }
+  ],
+  "functionalGroupingSha256": "36089681967dd0b626792dc9ff609f22a183cb02e536e6842c24ada2661c55c2",
+  "command": "scripts/verify-current-contracts.ps1 -Suite @('PcbFunctionalGroupingContractTest')",
+  "generatorSha256": "01b2dca29f09b312d156a93a4a9fd60b492bae113c3847f2f9338b7c8925318e",
+  "scope": "Parent/current/maintained verifier process births; no process termination"
+}

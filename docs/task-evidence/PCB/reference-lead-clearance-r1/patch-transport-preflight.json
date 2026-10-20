@@ -1,0 +1,9 @@
+{
+  "originalMutationAttemptExitCode": 128,
+  "originalCheckExitCode": 128,
+  "originalSha256": "42056e7884980de0b0e4ec7de46c3dee898ea5182dcc777f5846968698b8c672",
+  "lfSha256": "af1d6521ccdd02d3fccf50f2d777b23665139aaa5d1f642fc55caae22e71787f",
+  "change": "CRLF-to-LF only; exact line contents retained; original gate and rejected transport preserved",
+  "lfStrictCheckExitCode": 0,
+  "nativeExecution": "NOT_RUN"
+}

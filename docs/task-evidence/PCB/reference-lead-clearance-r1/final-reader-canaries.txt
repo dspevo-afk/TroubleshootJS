@@ -1,0 +1,1 @@
+PASS final assessment timing canaries positive1 rejected5; pure framing only

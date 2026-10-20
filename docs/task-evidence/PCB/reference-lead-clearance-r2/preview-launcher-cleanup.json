@@ -1,0 +1,20 @@
+{
+  "actualExecExitCode": 0,
+  "launchSha256": "fe3fb2aa8502afe32057da558d00786a05f3a27a2ac90fafe088196947b229d1",
+  "scope": "Root actual exec61289 exit0 observed before this two-birth check; preview worker remains running",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280995193873645",
+      "recordedBirthExited": true,
+      "pid": 19644
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280995202619215",
+      "recordedBirthExited": true,
+      "pid": 31156
+    }
+  ],
+  "status": "PASS"
+}

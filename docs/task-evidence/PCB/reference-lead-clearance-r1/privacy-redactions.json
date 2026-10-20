@@ -1,0 +1,14 @@
+{
+  "privateArchive": "tsj-reference-clearance-failures-5c4q0xl3",
+  "rows": [
+    {
+      "file": "oracle-attempt-1/baseline.txt",
+      "rawSha256": "da6afe614af7be31cb1cb7af2b1eb8bd4112657a614511d492c7f4e595887059",
+      "redactedSha256": "85a4e364ef1eeb7cb4f14313d6e876e23666bded5083beeae9ccf4e59c0ed4ec",
+      "rawBytes": 12391,
+      "redactedBytes": 9255,
+      "change": "exact worktree prefix only; all49 compilation errors and failure/cleanup retained"
+    }
+  ],
+  "limits": "Private raw bytes retained outside repo; no exception/content suppression"
+}

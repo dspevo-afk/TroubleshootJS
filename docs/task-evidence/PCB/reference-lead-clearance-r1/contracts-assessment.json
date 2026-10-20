@@ -1,0 +1,18 @@
+{
+  "status": "FAIL",
+  "phase": "contracts",
+  "actualExecExitCode": 1,
+  "maintainedExitCode": 2,
+  "elapsedSeconds": 75.3200032,
+  "suite": "PcbFunctionalGroupingContractTest",
+  "case": "RB56 placement12 root17",
+  "failedAssertion": "area*100 <= saved11Area*101",
+  "accepted17Area": 5814368,
+  "candidate18Area": 5906824,
+  "oldSelectedAttempt": 3,
+  "newSelectedAttempt": 1,
+  "sameRoutingWork": "14/3726268",
+  "driversExited": 2,
+  "next": "controlled insertion-only per-candidate crop diagnostic; no assertion/golden/budget relaxation",
+  "limits": "Native29 sequence aborted; two earlier suites passed but full29 FAIL; fixtures2 separate earlierPASS remains scoped only to that source"
+}

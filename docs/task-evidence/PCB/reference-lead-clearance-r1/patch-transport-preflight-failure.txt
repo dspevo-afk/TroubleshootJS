@@ -1,0 +1,211 @@
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:5: trailing whitespace.
+        emitReferenceOracle(layout, fingerprint);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:7: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:8: trailing whitespace.
+    /** Draft-only export of saved layout-17 reference-label positions. */
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:9: trailing whitespace.
+    private static void emitReferenceOracle(PcbBoardLayout layout, String fingerprint) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:10: trailing whitespace.
+        String currentPrefix = "layout=17|";
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:11: trailing whitespace.
+        if (layout == null || fingerprint == null || !fingerprint.startsWith(currentPrefix))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:12: trailing whitespace.
+            throw new AssertionError("Reference oracle requires an actual layout=17 fingerprint");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:13: trailing whitespace.
+        if (!fingerprint.equals(layout.geometryFingerprint()))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:14: trailing whitespace.
+            throw new AssertionError("Layout changed before reference-oracle observation");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:15: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:16: trailing whitespace.
+        String normalized = "layout=<LAYOUT_EPOCH>|" +
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:17: trailing whitespace.
+            fingerprint.substring(currentPrefix.length());
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:18: trailing whitespace.
+        String legacyLayout16Sha256 = PlayerSessionFingerprint.of(
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:19: trailing whitespace.
+            "layout=16|" + fingerprint.substring(currentPrefix.length()));
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:20: trailing whitespace.
+        Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:21: trailing whitespace.
+        Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:22: trailing whitespace.
+            public int compare(PcbSilkscreenLabel first, PcbSilkscreenLabel second) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:23: trailing whitespace.
+                return first.getId().compareTo(second.getId());
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:24: trailing whitespace.
+            }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:25: trailing whitespace.
+        });
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:26: trailing whitespace.
+        TreeSet<String> labelIds = new TreeSet<String>();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:27: trailing whitespace.
+        TreeSet<String> componentLabelIds = new TreeSet<String>();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:28: trailing whitespace.
+        TreeSet<String> expectedComponentLabelIds = new TreeSet<String>();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:29: trailing whitespace.
+        for (PcbComponentPlacement component : layout.getComponents())
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:30: trailing whitespace.
+            expectedComponentLabelIds.add("component:" + component.getComponentId());
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:31: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:32: trailing whitespace.
+        StringBuilder labelsJson = new StringBuilder("[");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:33: trailing whitespace.
+        StringBuilder referenceRecordsJson = new StringBuilder("[");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:34: trailing whitespace.
+        int referenceCount = 0;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:35: trailing whitespace.
+        for (int index = 0; index < labels.size(); index++) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:36: trailing whitespace.
+            PcbSilkscreenLabel label = labels.get(index);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:37: trailing whitespace.
+            String id = label.getId();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:38: trailing whitespace.
+            String text = label.getText();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:39: trailing whitespace.
+            if (!labelIds.add(id))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:40: trailing whitespace.
+                throw new AssertionError("Duplicate reference-oracle label ID: " + id);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:41: trailing whitespace.
+            Rectangle bounds = label.getBounds();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:42: trailing whitespace.
+            String record = "L:" + id + "@" + text + ":" + bounds.x + "," + bounds.y + "," +
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:43: trailing whitespace.
+                bounds.width + "," + bounds.height + ";";
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:44: trailing whitespace.
+            if (occurrences(fingerprint, record) != 1)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:45: trailing whitespace.
+                throw new AssertionError("Missing or duplicate uniquely framed label record: " + id);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:46: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:47: trailing whitespace.
+            String normalizedRecord = record;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:48: trailing whitespace.
+            if (id.startsWith("component:")) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:49: trailing whitespace.
+                if (!componentLabelIds.add(id))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:50: trailing whitespace.
+                    throw new AssertionError("Duplicate component reference label: " + id);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:51: trailing whitespace.
+                int offset = normalized.indexOf(record);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:52: trailing whitespace.
+                if (offset < 0 || occurrences(normalized, record) != 1)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:53: trailing whitespace.
+                    throw new AssertionError("Reference label record changed before normalization: " + id);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:54: trailing whitespace.
+                normalizedRecord = "L:" + id + "@" + text + ":<REF_X>,<REF_Y>," +
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:55: trailing whitespace.
+                    bounds.width + "," + bounds.height + ";";
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:56: trailing whitespace.
+                normalized = normalized.substring(0, offset) + normalizedRecord +
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:57: trailing whitespace.
+                    normalized.substring(offset + record.length());
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:58: trailing whitespace.
+                if (referenceCount++ > 0) referenceRecordsJson.append(',');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:59: trailing whitespace.
+                referenceRecordsJson.append("{\"id\":").append(quote(id))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:60: trailing whitespace.
+                    .append(",\"record\":").append(quote(record))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:61: trailing whitespace.
+                    .append(",\"normalizedRecord\":").append(quote(normalizedRecord)).append('}');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:62: trailing whitespace.
+            }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:63: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:64: trailing whitespace.
+            if (index > 0) labelsJson.append(',');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:65: trailing whitespace.
+            labelsJson.append("{\"id\":").append(quote(id))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:66: trailing whitespace.
+                .append(",\"text\":").append(quote(text))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:67: trailing whitespace.
+                .append(",\"bounds\":[").append(bounds.x).append(',').append(bounds.y)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:68: trailing whitespace.
+                .append(',').append(bounds.width).append(',').append(bounds.height).append(']')
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:69: trailing whitespace.
+                .append(",\"fontSize\":").append(label.getFontSize())
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:70: trailing whitespace.
+                .append(",\"bold\":").append(label.isBold())
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:71: trailing whitespace.
+                .append(",\"targetPadId\":").append(quoteOrNull(label.getTargetPadId()))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:72: trailing whitespace.
+                .append('}');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:73: trailing whitespace.
+        }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:74: trailing whitespace.
+        labelsJson.append(']');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:75: trailing whitespace.
+        referenceRecordsJson.append(']');
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:76: trailing whitespace.
+        if (!componentLabelIds.containsAll(expectedComponentLabelIds))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:77: trailing whitespace.
+            throw new AssertionError("Reference-oracle inventory is missing a placed component label");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:78: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:79: trailing whitespace.
+        String after = layout.geometryFingerprint();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:80: trailing whitespace.
+        if (!fingerprint.equals(after))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:81: trailing whitespace.
+            throw new AssertionError("Reference-oracle observation changed layout geometry");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:82: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:83: trailing whitespace.
+        System.out.println("PCB_REFERENCE_ORACLE {\"schema\":\"REFERENCE_LEAD_CLEARANCE_R1_DRAFT\","
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:84: trailing whitespace.
+            + "\"layoutVersion\":17,\"layoutUnchanged\":true,"
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:85: trailing whitespace.
+            + "\"graphSnapshot\":\"UNAVAILABLE_LAYOUT_ONLY_HELPER\","
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:86: trailing whitespace.
+            + "\"layoutFingerprint\":" + quote(fingerprint)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:87: trailing whitespace.
+            + ",\"layoutSha256\":" + quote(PlayerSessionFingerprint.of(fingerprint))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:88: trailing whitespace.
+            + ",\"legacyLayout16Sha256\":" + quote(legacyLayout16Sha256)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:89: trailing whitespace.
+            + ",\"normalizedLayoutFingerprint\":" + quote(normalized)
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:90: trailing whitespace.
+            + ",\"normalizedLayoutSha256\":" + quote(PlayerSessionFingerprint.of(normalized))
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:91: trailing whitespace.
+            + ",\"normalization\":" + quote("only leading layout=17| becomes layout=<LAYOUT_EPOCH>|; only x/y in exact L:component:*@text:x,y,width,height; records become <REF_X>,<REF_Y>; all other bytes retained")
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:92: trailing whitespace.
+            + ",\"referenceLabelCount\":" + referenceCount
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:93: trailing whitespace.
+            + ",\"referenceLabelRecords\":" + referenceRecordsJson
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:94: trailing whitespace.
+            + ",\"labelCount\":" + labels.size()
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:95: trailing whitespace.
+            + ",\"labels\":" + labelsJson + "}");
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:96: trailing whitespace.
+    }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:97: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:98: trailing whitespace.
+    private static int occurrences(String value, String token) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:99: trailing whitespace.
+        int count = 0;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:100: trailing whitespace.
+        int offset = 0;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:101: trailing whitespace.
+        while ((offset = value.indexOf(token, offset)) >= 0) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:102: trailing whitespace.
+            count++;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:103: trailing whitespace.
+            offset += token.length();
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:104: trailing whitespace.
+        }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:105: trailing whitespace.
+        return count;
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:106: trailing whitespace.
+    }
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:107: trailing whitespace.
+
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:108: trailing whitespace.
+    private static String quoteOrNull(String value) {
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:109: trailing whitespace.
+        return value == null ? "null" : quote(value);
+docs/task-evidence/PCB/reference-lead-clearance-r1/oracle-observer.patch:110: trailing whitespace.
+    }
+error: 105 lines add whitespace errors.

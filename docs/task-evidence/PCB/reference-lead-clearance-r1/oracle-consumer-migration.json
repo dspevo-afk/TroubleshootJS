@@ -1,0 +1,12 @@
+{
+  "status": "APPLIED_FROM_ACCEPTED_SOURCE_MAP",
+  "mapSha256": "9790cd0a8105c1f73c4f265db7ab51da06c2638c67593c459bfa50f2a65963d4",
+  "literalReplacements": {
+    "tests/contracts/PcbCompactnessContractTest.java": 6,
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": 43,
+    "tests/contracts/PcbPocketPackingContractTest.java": 20
+  },
+  "distinctOldKeys": 44,
+  "legacyHelper": "retired; no layout16 shim",
+  "limits": "Mechanical source migration/static canary definitions only; native proof pending"
+}

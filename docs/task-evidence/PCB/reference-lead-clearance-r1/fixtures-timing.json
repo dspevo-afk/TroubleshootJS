@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "phase": "fixtures",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "failure": null,
+  "exitCode": 0,
+  "elapsedSeconds": 64.4858085
+}

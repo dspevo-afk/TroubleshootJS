@@ -123,6 +123,14 @@ public final class A03IdentityContractTest {
                         packageChoice.getTokenValue() + "-changed")),
                 "choice." + packageKey, "package choice");
 
+        expectContractFailure(new Action() {
+            @Override public void run() {
+                replaceVersion(base, RealizationManifest.VersionPin.Concern.LAYOUT,
+                        new ChallengeDescriptor.VersionedId("pcb-layout", 17));
+            }
+        }, ChallengeContractException.Code.UNSUPPORTED_VERSION,
+                "version.owner", "17", "stale layout17 manifest pin was not rejected");
+
         final RealizationManifest.VersionPin routing = findVersion(base,
                 RealizationManifest.VersionPin.Concern.ROUTING);
         final int unsupportedRoutingVersion = routing.getOwnerVersionNumber() + 1;

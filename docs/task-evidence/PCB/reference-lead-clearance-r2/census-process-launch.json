@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "startTicks": "639280990207102177",
+      "pid": 32532,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639280990216584915",
+      "pid": 26964,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Actual parent/current births before maintained final clearance phase",
+  "phase": "census"
+}

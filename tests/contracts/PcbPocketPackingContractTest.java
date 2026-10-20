@@ -13,27 +13,27 @@ public final class PcbPocketPackingContractTest {
         long[] baselineAreas={4529785,4466664,6943752,4358809,5814368,6103992,4615974,6587808,9445744,8585034};
         long[] saved11Areas={4529785,4466664,6943752,4358809,5814368,6036952,4615974,6587808,9445744,8585034};
         String[] baselineHashes={
-            "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
-            "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
-            "1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
-            "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836",
-            "2e5a36d464418c7411b68055d408d17867012eaec011c8e21e5d5f4da7caee32",
-            "5b4de9612e851257a5d5cb3027fddca8ca8b1e254bfcb3ce75fcab8c2ec2a091",
-            "e512e825f8c14bf78bb8a13eb4d8cc38f6270f8ed50757cb57ad6b94bb2b33f9",
-            "fed3351826ce0f08014e484b01146a68a6cae799933331ae4f1c44a92815f718",
-            "ec8b179776a80fb23a5f2dce032a9ec429dccd1aafd0fe33e4ac47814f7f37b3",
-            "ab268c10c0f7b8d8be74f76f71c197b2cdf410c7dd044a943986604130f386cf"};
+            "8e31efab1c7d21c7490117686d9c830ca89abd7fcd0f4e702a535b5c2b6bf8f2",
+            "418d3d3606f0bb96f800efe4f064de9e9485dfefe9cd58d164296626943003c2",
+            "54e60afe24bedfbeeb472aaca800a3ed264983d83b7a1ea70d668c3bdd347fe3",
+            "293b1b1d72df8fce71b5f0d490d4fe7e42dd58c2de0569dc236da11c7e0a2374",
+            "eabf5849e40d8a7f5323e48106ca248d2147a884188ef86fcc13a4d65ddf2dcd",
+            "b7d7c6b05a9140bad55bee75cfb05844c46f43a9cc4110fc7949a60a68f9555f",
+            "cc618345b154fb6140d835c71dabd897acd8671f0a5288263170b3d2deff606d",
+            "7611f8a81e84e6ce20b173c5ef450b36a45834e4dc7132b6281a3cea997769d7",
+            "f9ce1319244193e25f28a6e5a36f554512dff21a9e6c5eca267bc0190b783165",
+            "4b68db53dfaeb5d77491e3d3f94fa8d9eca8473752f1b7a2ddc2cceb7332b9e2"};
         String[] saved11Hashes={
-            "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
-            "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
-            "1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
-            "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836",
-            "2e5a36d464418c7411b68055d408d17867012eaec011c8e21e5d5f4da7caee32",
-            "df2494c31141ac8c6ccb5065454ba70e2190d29d9690a195f518c1c268c5fb01",
-            "e512e825f8c14bf78bb8a13eb4d8cc38f6270f8ed50757cb57ad6b94bb2b33f9",
-            "fed3351826ce0f08014e484b01146a68a6cae799933331ae4f1c44a92815f718",
-            "ec8b179776a80fb23a5f2dce032a9ec429dccd1aafd0fe33e4ac47814f7f37b3",
-            "ab268c10c0f7b8d8be74f76f71c197b2cdf410c7dd044a943986604130f386cf"};
+            "8e31efab1c7d21c7490117686d9c830ca89abd7fcd0f4e702a535b5c2b6bf8f2",
+            "418d3d3606f0bb96f800efe4f064de9e9485dfefe9cd58d164296626943003c2",
+            "54e60afe24bedfbeeb472aaca800a3ed264983d83b7a1ea70d668c3bdd347fe3",
+            "293b1b1d72df8fce71b5f0d490d4fe7e42dd58c2de0569dc236da11c7e0a2374",
+            "eabf5849e40d8a7f5323e48106ca248d2147a884188ef86fcc13a4d65ddf2dcd",
+            "a4005331416d3c16399feaf7ff0f545d7b33a64ac48728eb72e1cb314b77d0fb",
+            "cc618345b154fb6140d835c71dabd897acd8671f0a5288263170b3d2deff606d",
+            "7611f8a81e84e6ce20b173c5ef450b36a45834e4dc7132b6281a3cea997769d7",
+            "f9ce1319244193e25f28a6e5a36f554512dff21a9e6c5eca267bc0190b783165",
+            "4b68db53dfaeb5d77491e3d3f94fa8d9eca8473752f1b7a2ddc2cceb7332b9e2"};
         int checks=0;
         for(int rootIndex=first;rootIndex<end;rootIndex++) {
             long seed=roots[rootIndex];
@@ -75,14 +75,14 @@ public final class PcbPocketPackingContractTest {
                 if(version==10) {
                     previousArea=area;
                     if(area!=baselineAreas[rootIndex] || !baselineHashes[rootIndex].equals(
-                            PcbCompactnessContractTest.legacyGeometrySha256(layout)))
-                        throw new AssertionError("published10 pocket baseline changed: "+seed);
+                            PcbCompactnessContractTest.physicalGeometrySha256(layout)))
+                        throw new AssertionError("published10 physical pocket baseline changed (reference x/y and epoch excluded): "+seed);
                 }
                 else {
                     if(area>previousArea)throw new AssertionError("pocket area regression: "+seed+" "+area+">"+previousArea);
                     if(area!=saved11Areas[rootIndex] || !saved11Hashes[rootIndex].equals(
-                            PcbCompactnessContractTest.legacyGeometrySha256(layout)))
-                        throw new AssertionError("published11 full geometry baseline changed: "+seed);
+                            PcbCompactnessContractTest.physicalGeometrySha256(layout)))
+                        throw new AssertionError("published11 physical baseline changed (reference x/y and epoch excluded): "+seed);
                 }
                 checks++;
             }

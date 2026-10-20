@@ -1,0 +1,14 @@
+{
+  "status": "PUSHED_EXACT_REMOTE_VERIFIED",
+  "commit": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+  "message": "Record rejected lead-aware silkscreen placement trial",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q60-faulted-profile-counts",
+  "remoteSha": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+  "scope": "Rejected diagnostic docs/evidence only; all1481 production/test source exact accepted1f39",
+  "stagedPaths": 41,
+  "staging": "Before review file:38 raw exact/2 CRLF-only; full staged41 and diff checks PASS",
+  "publication": "Normal push verified; no main/email",
+  "nextUnstartedScope": "Pre-crop colliding reference relocation preserving exact occupied-content envelope; read-only design review underway, no implementation"
+}

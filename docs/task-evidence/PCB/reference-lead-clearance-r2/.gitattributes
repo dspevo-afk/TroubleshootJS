@@ -1,0 +1,4 @@
+* -text whitespace=cr-at-eol
+attempt1-fixture-compilation/silkscreen-plan-fixtures.patch whitespace=-blank-at-eol,cr-at-eol
+silkscreen-plan-fixtures-transport-rejected.patch whitespace=-blank-at-eol,cr-at-eol
+silkscreen-plan-fixtures.patch whitespace=-blank-at-eol,cr-at-eol

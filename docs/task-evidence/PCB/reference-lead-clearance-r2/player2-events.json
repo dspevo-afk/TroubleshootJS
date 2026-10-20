@@ -1,0 +1,143 @@
+[
+  {
+    "action": "New browser normal menu ready",
+    "servedProvenance": "Six fields exact",
+    "status": "PASS"
+  },
+  {
+    "action": "Select MEDIUM using actual visible native difficulty dropdown",
+    "status": "PASS"
+  },
+  {
+    "action": "First fresh MEDIUM New board",
+    "family": "COMPOSED_CONTROLLED_INDICATOR (public default Two-channel controller)",
+    "status": "INPUT_SENT",
+    "time": "2026-10-20T13:39:25.035Z"
+  },
+  {
+    "action": "Read first actual fresh Medium public identity",
+    "code": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2105106022359460505",
+    "build": "tsj-alpha/6 / B4235671F2BA2AAE067B8BA695429634",
+    "status": "PASS"
+  },
+  {
+    "action": "Accept/inspect/save first fresh Medium board",
+    "image": "fresh-medium-first-board.jpg",
+    "status": "PASS"
+  },
+  {
+    "action": "Fresh Medium original customer retest",
+    "observed": "FAIL_RETAINED"
+  },
+  {
+    "action": "Fresh Medium FAIL retained, all3 outputs visibly disconnected; prepare exact known indicator repair replay",
+    "code": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Accept exact known indicator and run original customer retest",
+    "code": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Known indicator original customer FAIL; actual5V output disconnected before isolation",
+    "status": "PASS"
+  },
+  {
+    "action": "Isolate actual R1 lead1 while5V disconnected",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Actual physical OHM mode and public redR1.1/blackR1.2 probes on isolated original resistor",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Observe isolated original R1 actual meter result",
+    "reading": "OL",
+    "power": "OFF",
+    "status": "PASS"
+  },
+  {
+    "action": "Exit physical OHM mode, remove isolated original R1, open normal Shop",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Add actual shop330Ohm +/-5% replacement and inspect loose tray",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Install actual replacement Part4 as Circuit/R1; measure with real physical OHM and redR1.1/blackR1.2 whileOFF",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Observe installed replacement actual meter reading",
+    "reading": "330 Ohm",
+    "power": "OFF",
+    "status": "PASS"
+  },
+  {
+    "action": "Exit OHM, reconnect actual5V supply, run fresh repaired customer retest",
+    "status": "INPUT_SENT",
+    "time": "2026-10-20T13:43:43.413Z"
+  },
+  {
+    "action": "First repaired customer retest observation",
+    "result": "Customer retest did not pass. Continue troubleshooting.",
+    "status": "FAIL_RETAINED",
+    "note": "Replacement measured330Ohm whileOFF; investigate actual powered state before any repeat"
+  },
+  {
+    "action": "Powered-state inspection preparation",
+    "status": "BLOCKED_BY_ACTUAL_MODAL",
+    "detail": "Supplies click was intercepted by newly open tsj-ui-overlay; no supply input occurred. Immediate prior retest text may be stale; inspect modal before interpreting."
+  },
+  {
+    "action": "Actual repaired customer completion modal observed",
+    "result": "Customer retest passed. The reported behavior is resolved.",
+    "image": "customer-repair-passed.jpg",
+    "status": "PASS",
+    "correction": "The earlier immediate FAIL text was read before asynchronous completion; no repeat retest or intervening circuit mutation occurred. Supplies inspection was correctly blocked by the new completion modal."
+  },
+  {
+    "action": "Repaired board5V disconnected before current session save/menu",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Actual public Save session download",
+    "suggestedFilename": "troubleshootjs-session.tsjsave",
+    "bytes": 762,
+    "sha256": "4fca508485d4f9c1d04986928166fbb2046db90ea1527cd32ccb29b443d4c7f5",
+    "power": "OFF",
+    "status": "PASS"
+  },
+  {
+    "action": "Actual public Load session button and ordinary file chooser/FileReader restore",
+    "status": "INPUT_SENT"
+  },
+  {
+    "action": "Observe actual restored current session",
+    "notice": "Session restored. Transient behavior restarted; retest the board.",
+    "power": "OFF",
+    "looseParts": 1,
+    "status": "PASS"
+  },
+  {
+    "action": "Restored repair actual meter reading",
+    "reading": "330 Ohm",
+    "power": "OFF",
+    "status": "PASS"
+  },
+  {
+    "action": "Fresh powered customer retest after ordinary current-session FileReader restore",
+    "result": "Customer retest passed. The reported behavior is resolved.",
+    "status": "PASS"
+  },
+  {
+    "action": "Final restored session public identity and state",
+    "code": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "power": "OFF",
+    "looseParts": 1,
+    "instrument": "OFF",
+    "status": "PASS"
+  }
+]

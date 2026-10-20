@@ -20,61 +20,61 @@ public final class PcbFunctionalGroupingContractTest {
     private static final long[] SAVED12_AREA={4529785,4466664,6943752,4358809,5814368,6036952};
     private static final long[] SAVED12_LARGEST_VOID={555900,193200,729600,179200,416000,225500};
     private static final String[] SAVED12_GEOMETRY_SHA256={
-        "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
-        "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
-        "b9d98e2a5d1b255fd2fb1430688d90d37e89737051d59363f931d9a326fb6d71",
-        "070cefbdd7fa83cce066e628124c46a73848825bfa4b7fc92fb8879791008b7d",
-        "bb3de4b5418fb7e0a61663a95d9e12f56f1af945e8dedc1cd23acbe41e0e1d46",
-        "329c2e059928c206678c64aa4f22a2c509f4b93e22ebe26e34d2d103e269786f"
+        "336375553fed29d898602e94b0b36fe923358b407873ffa204ad302abcce0488",
+        "b326fa69d40439e6fd6fc42599731240726650a763fd5f1aabf292f75a8d73f5",
+        "f17fd40c1c76239df91b335b81ff1c7ab5e89bd50b1148d2b9b1bff2b81b831d",
+        "cc58e0d94ceba987204d0479d67348e543f711c5fb25a084269f14430e1023da",
+        "c10a7bba145424a7c644150a303b3095d2f4b90683ac5a187d447e31938a1d04",
+        "7b7dfd023a7e8817dcf05d2b66855740a06e23504c7cd3aad28c285ad1edcfc7"
     };
     private static final long[] ROLE_WIDTH_HOLDOUT_SEEDS={1L,7L,5L,14L};
     private static final long[] SAVED12_HOLDOUT_AREA={4615974,6397152,9445744,7347009};
     private static final long[] SAVED12_HOLDOUT_LARGEST_VOID={474000,965600,1367100,894600};
     private static final String[] SAVED12_HOLDOUT_GEOMETRY_SHA256={
-        "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
-        "cee6cb29ec208e7c5e1e9825cb323913dcc129fc0ec0732382b3e9c095fcb32c",
-        "ef429e8d8308ffd7c969b204ca0b37fc92d439f6694e5ef37518865521e9df39",
-        "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf"
+        "6b54a90b0e8063939490269acf5fe167e0c484fd5f652dcff741897a5458fd1c",
+        "9fb450fef633957637af6629e7bd1431387fafde7207f93555dd3cf3a4e6441a",
+        "9f2119e28ffc152e7a806dc2039f1b29505ec2eed687c9ec5479fb99c77da604",
+        "5098e46ebe4abb616eb038080c9ff72b6b673a706138a3bba457db955f6498a2"
     };
     private static final String[] SAVED8_GEOMETRY_SHA256={
-        "0f557eee2670d3ea4d963dc4cd4797d908b0af33e405db1f86e4528dfb0c1cba",
-        "d349957427274ae74726d07034409619d3a43e8e571b756622100dd2d7d2438d",
-        "1216897c60853a35008c3d2fd62965d6489ad997c2e3a62cb578b081dedd5be9",
-        "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
-        "2e5a36d464418c7411b68055d408d17867012eaec011c8e21e5d5f4da7caee32",
-        "3be6941e60168182fdd377ed938fe298b32d56037e3c3f30d4a22ee39fb79324"
+        "8e31efab1c7d21c7490117686d9c830ca89abd7fcd0f4e702a535b5c2b6bf8f2",
+        "418d3d3606f0bb96f800efe4f064de9e9485dfefe9cd58d164296626943003c2",
+        "54e60afe24bedfbeeb472aaca800a3ed264983d83b7a1ea70d668c3bdd347fe3",
+        "8db8979d6906393f50becfbdf6e33060954ea119583a3573dd3ea03509997ce8",
+        "eabf5849e40d8a7f5323e48106ca248d2147a884188ef86fcc13a4d65ddf2dcd",
+        "c9ecebfe6b0a78fde5aca7c54d301d513140e1992f6322b453518aa60c8e24d6"
     };
     private static final String[] SAVED6_GEOMETRY_SHA256={
-        "bb9e6ec7d38d1453288c3d1c69ba58711b54e89f6cf3d34c3948fbd8a2c6c60b",
-        "4f6d4aaaa43eb26ebc75e869294d7402718c69900f1566b8a714c8e2512c9d28",
-        "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
-        "58dbf1b3362e9921b821ec3084119e76b4c3a3e84b181dd618ba5dabce8417dd",
-        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
-        "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+        "cd5ed9bb0c4394567e2ef516c07cb97730d77cf19c33b89db599d7b6a8fdebac",
+        "2448279974c72e791cc8fe68ade790b21579ae0e41c41976ad9ff4a6003380ba",
+        "720ce26acd775570314c00eedf39d857ae8823ba729519bc57836aad6a936771",
+        "8db8979d6906393f50becfbdf6e33060954ea119583a3573dd3ea03509997ce8",
+        "7957d25b0fa55ace64c5a190f68979a9800dae79318a4680335348337a0d722f",
+        "4215c18b10349ff0049c19c43f40b78a710ea17de52d00a1a973bb0c7160eff7"
     };
     private static final String[] SAVED3_GEOMETRY_SHA256={
-        "3cf61944fa5f2002304a32b9061b71691c3e20f1942d7cb1e65a698f221938ef",
-        "e682dbd52e8478c1979814502a43713f6be0047517324e54ad0d746b110648a1",
-        "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16",
-        "cc397a2f30ca51618bf1dd966bd074ebc34f9025b662d08cd7264b53b13f1bf5",
-        "80492fd9cfbf32da38a233f23cf04595f2493c49bde9be1f22448a77cfb80bd8",
-        "69a337a3e3dced0cd519b71c6929fef8b11707834bbf580bc0c909351679d493"
+        "a8605d1444fc64edd9ac51256a1b34a53dc6407f047c91002f5230fedf774983",
+        "b7ed6e60f4f37d41613cf75fef1f3e628d9bd8532bbf781a293c5cee8a0cf2e3",
+        "f42fbd62199a8b254964cd256f7e45ebf4b9b6d06eef3ad89911ed8ecb32f375",
+        "8029cec29b575eae8420ae61fd12c600199a456a4a61ffa6a047def0c4599b3e",
+        "731af99e6f080316f56d610e8752e1150ef5c3621874f70dacb9be8ad11a66b7",
+        "d3c6d7a07c827b328fce46eec3a4b82caba77d0009c5c97cb4d22d60d935c551"
     };
     private static final String[] SAVED4_GEOMETRY_SHA256={
-        "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf",
-        "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573",
-        "eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16",
-        "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2",
-        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
-        "99ced1b9f1efd568aa178f99f7b35c703dda8c890b91cf83112ab0d4c0d65044"
+        "d94d232e813cd5ec92834a1eb4860608bf95b938d8c6f26ba86e37e6e14098a2",
+        "b798fa867ea89dff4995124bb27a9f1d4ab55fc8356158eae34f76a77a6d8e73",
+        "f42fbd62199a8b254964cd256f7e45ebf4b9b6d06eef3ad89911ed8ecb32f375",
+        "9a5b56f24e16e3547a870c61ab62557b92d51b761c0ab04e86b3cd867d48b0b6",
+        "7957d25b0fa55ace64c5a190f68979a9800dae79318a4680335348337a0d722f",
+        "31fd142158c473e0c6fbc0c8c7789585564f5e1b885bebc5e6c86731f41c34f5"
     };
     private static final String[] SAVED5_GEOMETRY_SHA256={
-        "811c741b4d669b573757ede79a36d6fb2d552106bb04f3c3000926295fd89fdf",
-        "fc91af896d33ec54d747f49a65c5b280760fc17c58069e58cede05316df4f573",
-        "27d29b461e8fa664fc73d0b0022d6bad41b11eb5d9191abd5d4bf1f40f49827e",
-        "5580137419342f8f512876bce1a43b8eeef10666f2f437d58a3c41a1e4bd11e2",
-        "d3bf299dab5253da1674c2e628ba68a1116f659951cf909fe077f4a568dd9772",
-        "5fb11869fc9eeb56461666e7dbfb53b97ae8a2cff868daebaaf7c1edb36dcd16"
+        "d94d232e813cd5ec92834a1eb4860608bf95b938d8c6f26ba86e37e6e14098a2",
+        "b798fa867ea89dff4995124bb27a9f1d4ab55fc8356158eae34f76a77a6d8e73",
+        "720ce26acd775570314c00eedf39d857ae8823ba729519bc57836aad6a936771",
+        "9a5b56f24e16e3547a870c61ab62557b92d51b761c0ab04e86b3cd867d48b0b6",
+        "7957d25b0fa55ace64c5a190f68979a9800dae79318a4680335348337a0d722f",
+        "4215c18b10349ff0049c19c43f40b78a710ea17de52d00a1a973bb0c7160eff7"
     };
     private static int checks;
     public static void main(String[] args) {
@@ -222,8 +222,8 @@ public final class PcbFunctionalGroupingContractTest {
                 String hash=PlayerSessionFingerprint.of(layout.geometryFingerprint());
                 check(area==SAVED12_AREA[index],"published12 representative area remains exact: "+ROOTS[index]);
                 check(SAVED12_GEOMETRY_SHA256[index].equals(
-                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                    "published12 representative geometry remains byte-exact: "+ROOTS[index]);
+                    PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                    "published12 representative physical geometry remains exact apart from reference x/y and epoch: "+ROOTS[index]);
             }
             catch(AssertionError failure) {
                 failures++;
@@ -343,8 +343,8 @@ public final class PcbFunctionalGroupingContractTest {
             check(largestVoid==SAVED12_HOLDOUT_LARGEST_VOID[index],
                 "published12 holdout protected void remains exact: "+seed);
             check(SAVED12_HOLDOUT_GEOMETRY_SHA256[index].equals(
-                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                "published12 holdout geometry remains byte-exact: "+seed);
+                PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                "published12 holdout physical geometry remains exact apart from reference x/y and epoch: "+seed);
             System.out.println("PCB_SAVED_ROLE_WIDTH_CASE {\"seed\":\""+seed+
                 "\",\"version\":12,\"density\":"+constraints.placementDensityVersion+
                 ",\"area\":"+area+",\"largestProtectedEmptyRectangleArea\":"+largestVoid+
@@ -451,8 +451,8 @@ public final class PcbFunctionalGroupingContractTest {
             }
         }
         if(version==3) check(SAVED3_GEOMETRY_SHA256[index].equals(
-            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-            "published saved3 geometry remains byte-exact: "+seed);
+            PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+            "published saved3 physical geometry remains exact apart from reference x/y and epoch: "+seed);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
         if(version==12)System.out.println("PCB_ROLE_WIDTH_MEASUREMENT {\"seed\":\""+seed+
             "\",\"version\":12,\"area\":"+((long)outline.width*outline.height)+
@@ -464,44 +464,44 @@ public final class PcbFunctionalGroupingContractTest {
         int largestProtectedVoid=0;
         if(version>=4) largestProtectedVoid=reportWhitespace(board,layout,seed,version);
         if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
-            PcbCompactnessContractTest.legacyGeometrySha256(layout)),"saved6 geometry stays byte-exact: "+seed);
+            PcbCompactnessContractTest.physicalGeometrySha256(layout)),"saved6 physical geometry stays exact apart from reference x/y and epoch: "+seed);
         if(version==7) {
-            String expected=index==2?"f4ea1023da1da851f16846ba6535d05742d4d7e6d30ff9ee878028b9cbc9158e":
+            String expected=index==2?"6f87d38854b9800fadc21b158ff193e9c18bf94646d91dd18d0455f19206b110":
                 SAVED6_GEOMETRY_SHA256[index];
-            check(expected.equals(PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                "saved7 geometry stays byte-exact: "+seed);
+            check(expected.equals(PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                "saved7 physical geometry stays exact apart from reference x/y and epoch: "+seed);
             check((long)outline.width*outline.height<=SAVED6_AREA[index],"no representative outline regression: "+seed);
             check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
                 "guarded selection keeps original placement and per-policy route caps");
         }
         if(version==8) check(SAVED8_GEOMETRY_SHA256[index].equals(
-            PcbCompactnessContractTest.legacyGeometrySha256(layout)),"saved8 geometry stays byte-exact: "+seed);
+            PcbCompactnessContractTest.physicalGeometrySha256(layout)),"saved8 physical geometry stays exact apart from reference x/y and epoch: "+seed);
         if(version==9) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED8_AREA[index],"no representative regression against accepted8: "+seed);
             if(index==3) check(area<SAVED8_AREA[index],"connected packing reduces the retained42 fixture");
             else check(SAVED8_GEOMETRY_SHA256[index].equals(
-                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                "other representative layouts remain exact accepted8: "+seed);
+                PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                "other representative physical layouts (reference x/y and epoch excluded) remain exact accepted8: "+seed);
         }
         if(version==10) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED9_AREA[index],"no representative regression against accepted9: "+seed);
             if(index==5)check(area<SAVED9_AREA[index],"local-support candidate reduces the declared54 fixture");
-            else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
+            else check((index==3 ? "293b1b1d72df8fce71b5f0d490d4fe7e42dd58c2de0569dc236da11c7e0a2374" :
                 SAVED8_GEOMETRY_SHA256[index]).equals(
-                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                "other representative layouts remain exact accepted9: "+seed);
+                    PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                "other representative physical layouts (reference x/y and epoch excluded) remain exact accepted9: "+seed);
         }
         if(version==11) {
             long area=(long)outline.width*outline.height;
             long baseline=index==5?6103992:SAVED9_AREA[index];
             check(area<=baseline,"no representative regression against accepted10: "+seed);
             if(index==5)check(area<baseline,"vacancy candidate reduces the declared54 fixture");
-            else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
+            else check((index==3 ? "293b1b1d72df8fce71b5f0d490d4fe7e42dd58c2de0569dc236da11c7e0a2374" :
                 SAVED8_GEOMETRY_SHA256[index]).equals(
-                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-                "other representative layouts remain exact accepted10: "+seed);
+                    PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+                "other representative physical layouts (reference x/y and epoch excluded) remain exact accepted10: "+seed);
         }
         if(version==12) {
             long area=(long)outline.width*outline.height;
@@ -543,14 +543,14 @@ public final class PcbFunctionalGroupingContractTest {
         }
         if(version==5 && (index==0 || index==1 || index==3))
             check(SAVED4_GEOMETRY_SHA256[index].equals(
-                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
+                PcbCompactnessContractTest.physicalGeometrySha256(layout)),
                 "published single-group40/44/42 geometry must not regress: "+seed);
         if(version==5) check(SAVED5_GEOMETRY_SHA256[index].equals(
-            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-            "published saved5 geometry remains byte-exact: "+seed);
+            PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+            "published saved5 physical geometry remains exact apart from reference x/y and epoch: "+seed);
         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
-            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
-            "published saved4 geometry remains byte-exact: "+seed);
+            PcbCompactnessContractTest.physicalGeometrySha256(layout)),
+            "published saved4 physical geometry remains exact apart from reference x/y and epoch: "+seed);
         String caseMarker=version==13?"PCB_NEAREST_VACANCY_REPORT":"PCB_GROUPING_CASE";
         System.out.println(caseMarker+" {\"seed\":\""+seed+"\",\"version\":"+version+
             ",\"accepted\":true,\"parts\":"+parts.size()+",\"pads\":"+pads.size()+

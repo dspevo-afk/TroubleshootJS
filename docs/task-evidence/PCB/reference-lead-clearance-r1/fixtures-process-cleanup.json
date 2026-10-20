@@ -1,0 +1,22 @@
+{
+  "elapsedSeconds": 0.0051927,
+  "phase": "fixtures",
+  "actualExecExitCode": 0,
+  "launchSha256": "69414b9929aa372bc25be6af59193d4e21809ac4490fe2eb4fe8c4adffc83c3b",
+  "status": "PASS",
+  "scope": "Separate root observation after actual exec exit0; no termination attempted",
+  "checks": [
+    {
+      "startTicks": "639280955019416338",
+      "executable": "pwsh",
+      "pid": 19844,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639280955021696481",
+      "executable": "pwsh",
+      "pid": 30492,
+      "recordedBirthExited": true
+    }
+  ]
+}

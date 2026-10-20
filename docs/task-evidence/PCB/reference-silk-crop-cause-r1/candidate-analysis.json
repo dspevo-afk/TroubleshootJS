@@ -1,0 +1,1706 @@
+{
+  "schema": 1,
+  "status": "PASS_ANALYSIS",
+  "normalization": "For comparison only, leading layout epoch replaced and every L: label record removed; full labels retained in changedLabels.",
+  "matchedCandidateRows": 17,
+  "sameNonLabelPhysicalRows": 17,
+  "roots": [
+    {
+      "seed": "-1022",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 0,
+      "candidateSelectedAttempt": 0,
+      "baselineRoutingWork": "10/4339166",
+      "candidateRoutingWork": "10/4339166",
+      "baselineMeasure": {
+        "seed": "-1022",
+        "version": 12,
+        "area": 6943752,
+        "copperLength": 45670,
+        "segments": 270,
+        "vias": 48,
+        "geometrySha256": "e8192884a7b31cc32273621d8af4a2a8b7a820e7709b7bf40f779cd00c990840"
+      },
+      "candidateMeasure": {
+        "seed": "-1022",
+        "version": 12,
+        "area": 6943752,
+        "copperLength": 45670,
+        "segments": 270,
+        "vias": 48,
+        "geometrySha256": "51b87709a0883b3eba07c29f64a3d9fec04ea2f7ff69123084a813f2e01d8546"
+      },
+      "candidateRows": [
+        {
+          "candidate": 0,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            41,
+            3572,
+            1791
+          ],
+          "candidateOccupied": [
+            94,
+            41,
+            3572,
+            1791
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            3672,
+            1891
+          ],
+          "candidatePreCropNominalSize": [
+            3672,
+            1891
+          ],
+          "baselinePreCropNominalArea": 6943752,
+          "candidatePreCropNominalArea": 6943752,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "489a5bd8ef23d886942dbd2626e2db3f77e091b6a701bae80bc880aecca01678",
+          "candidatePhysicalFingerprintSha256": "489a5bd8ef23d886942dbd2626e2db3f77e091b6a701bae80bc880aecca01678",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:CBULK",
+              "old": {
+                "text": "CBULK",
+                "bounds": [
+                  553,
+                  700,
+                  45,
+                  18
+                ]
+              },
+              "new": {
+                "text": "CBULK",
+                "bounds": [
+                  563,
+                  602,
+                  45,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2591,
+                  1504,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2571,
+                  1504,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  1931,
+                  1594,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  1911,
+                  1594,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": true,
+          "selectedInCandidate": true
+        },
+        {
+          "candidate": 4,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            151,
+            3981,
+            1924
+          ],
+          "candidateOccupied": [
+            94,
+            151,
+            3981,
+            1924
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            4111,
+            2054
+          ],
+          "candidatePreCropNominalSize": [
+            4111,
+            2054
+          ],
+          "baselinePreCropNominalArea": 8443994,
+          "candidatePreCropNominalArea": 8443994,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "15848760505dca97543aceaac10b039eafd317d788e75f2e110835fece0d73ee",
+          "candidatePhysicalFingerprintSha256": "15848760505dca97543aceaac10b039eafd317d788e75f2e110835fece0d73ee",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  3051,
+                  1724,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  3031,
+                  1724,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  2431,
+                  1804,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  2411,
+                  1804,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:RENAC",
+              "old": {
+                "text": "RENAC",
+                "bounds": [
+                  928,
+                  1260,
+                  45,
+                  18
+                ]
+              },
+              "new": {
+                "text": "RENAC",
+                "bounds": [
+                  908,
+                  1192,
+                  45,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        }
+      ]
+    },
+    {
+      "seed": "-1017",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 3,
+      "candidateSelectedAttempt": 3,
+      "baselineRoutingWork": "16/3119327",
+      "candidateRoutingWork": "16/3119327",
+      "baselineMeasure": {
+        "seed": "-1017",
+        "version": 12,
+        "area": 4529785,
+        "copperLength": 26660,
+        "segments": 173,
+        "vias": 28,
+        "geometrySha256": "deb494a7b7e3f28dd97b476794f7fe3813c44fb8bc5d347a3b27625e9ba88ba6"
+      },
+      "candidateMeasure": {
+        "seed": "-1017",
+        "version": 12,
+        "area": 4529785,
+        "copperLength": 26660,
+        "segments": 173,
+        "vias": 28,
+        "geometrySha256": "6a287f90a14043c3303824019296606a498d017a1bc84141020f12ca17256cbe"
+      },
+      "candidateRows": [
+        {
+          "candidate": 0,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            85,
+            36,
+            2370,
+            1704
+          ],
+          "candidateOccupied": [
+            85,
+            36,
+            2370,
+            1704
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            2500,
+            1834
+          ],
+          "candidatePreCropNominalSize": [
+            2500,
+            1834
+          ],
+          "baselinePreCropNominalArea": 4585000,
+          "candidatePreCropNominalArea": 4585000,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "749a2482eec520d01107aa2db3c0dca137df2aeb4adeae538683470522c2d5c6",
+          "candidatePhysicalFingerprintSha256": "749a2482eec520d01107aa2db3c0dca137df2aeb4adeae538683470522c2d5c6",
+          "changedLabelCount": 1,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2301,
+                  764,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2281,
+                  764,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 1,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            51,
+            3571,
+            1254
+          ],
+          "candidateOccupied": [
+            94,
+            51,
+            3571,
+            1254
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3701,
+            1384
+          ],
+          "candidatePreCropNominalSize": [
+            3701,
+            1384
+          ],
+          "baselinePreCropNominalArea": 5122184,
+          "candidatePreCropNominalArea": 5122184,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "09b06ace2b394b46c20d62b73e6c5929bed3bdebac39f809a5a36c38bd95f517",
+          "candidatePhysicalFingerprintSha256": "09b06ace2b394b46c20d62b73e6c5929bed3bdebac39f809a5a36c38bd95f517",
+          "changedLabelCount": 1,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  3511,
+                  134,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  3491,
+                  134,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 3,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            111,
+            2821,
+            1405
+          ],
+          "candidateOccupied": [
+            94,
+            111,
+            2821,
+            1405
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            2951,
+            1535
+          ],
+          "candidatePreCropNominalSize": [
+            2951,
+            1535
+          ],
+          "baselinePreCropNominalArea": 4529785,
+          "candidatePreCropNominalArea": 4529785,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "cae22f4bdfdcf63c587baf73180a15f7eb09376f07be203fff840e21f56d071a",
+          "candidatePhysicalFingerprintSha256": "cae22f4bdfdcf63c587baf73180a15f7eb09376f07be203fff840e21f56d071a",
+          "changedLabelCount": 1,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2761,
+                  674,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2741,
+                  674,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": true,
+          "selectedInCandidate": true
+        }
+      ]
+    },
+    {
+      "seed": "-1004",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 3,
+      "candidateSelectedAttempt": 3,
+      "baselineRoutingWork": "17/2595650",
+      "candidateRoutingWork": "17/2595650",
+      "baselineMeasure": {
+        "seed": "-1004",
+        "version": 12,
+        "area": 4466664,
+        "copperLength": 30720,
+        "segments": 189,
+        "vias": 26,
+        "geometrySha256": "83786638fcbbe723a4eab42bfe67915e24fcfa9b0e8b67bec7a5375a6448efb0"
+      },
+      "candidateMeasure": {
+        "seed": "-1004",
+        "version": 12,
+        "area": 4466664,
+        "copperLength": 30720,
+        "segments": 189,
+        "vias": 26,
+        "geometrySha256": "b5861ca15b9cdb2c19a3be6c3bfc6b1b341bc5b241ed44de2fa667c63e8cbedb"
+      },
+      "candidateRows": [
+        {
+          "candidate": 0,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            45,
+            101,
+            2480,
+            1854
+          ],
+          "candidateOccupied": [
+            45,
+            101,
+            2480,
+            1854
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            2610,
+            1984
+          ],
+          "candidatePreCropNominalSize": [
+            2610,
+            1984
+          ],
+          "baselinePreCropNominalArea": 5178240,
+          "candidatePreCropNominalArea": 5178240,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "f41705b3ea1488bcdcd4ac406054a60fd1016a5ff8f9ad3f30bb9db9694d0ff0",
+          "candidatePhysicalFingerprintSha256": "f41705b3ea1488bcdcd4ac406054a60fd1016a5ff8f9ad3f30bb9db9694d0ff0",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:CBULK",
+              "old": {
+                "text": "CBULK",
+                "bounds": [
+                  243,
+                  690,
+                  45,
+                  18
+                ]
+              },
+              "new": {
+                "text": "CBULK",
+                "bounds": [
+                  253,
+                  592,
+                  45,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2371,
+                  1224,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2351,
+                  1224,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:U2A",
+              "old": {
+                "text": "U2A",
+                "bounds": [
+                  1777,
+                  1488,
+                  27,
+                  18
+                ]
+              },
+              "new": {
+                "text": "U2A",
+                "bounds": [
+                  1757,
+                  1488,
+                  27,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 1,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            41,
+            3951,
+            1324
+          ],
+          "candidateOccupied": [
+            44,
+            24,
+            4001,
+            1341
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            4051,
+            1424
+          ],
+          "candidatePreCropNominalSize": [
+            4101,
+            1441
+          ],
+          "baselinePreCropNominalArea": 5768624,
+          "candidatePreCropNominalArea": 5909541,
+          "occupiedChanged": true,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "b54c5542e0fa442c41b797a12b698346ce24c345664c4386b7bfe4612699de37",
+          "candidatePhysicalFingerprintSha256": "b54c5542e0fa442c41b797a12b698346ce24c345664c4386b7bfe4612699de37",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:DA",
+              "old": {
+                "text": "DA",
+                "bounds": [
+                  3446,
+                  1006,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "DA",
+                "bounds": [
+                  44,
+                  24,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  3611,
+                  764,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  3591,
+                  764,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [
+            {
+              "side": "left",
+              "oldEdge": 94,
+              "newEdge": 44,
+              "direction": "expanded",
+              "oldEdgeLabels": [
+                "board-title"
+              ],
+              "newEdgeLabels": [
+                "component:DA"
+              ],
+              "movedLabelsAtNewEdge": [
+                "component:DA"
+              ]
+            },
+            {
+              "side": "top",
+              "oldEdge": 41,
+              "newEdge": 24,
+              "direction": "expanded",
+              "oldEdgeLabels": [
+                "board-title"
+              ],
+              "newEdgeLabels": [
+                "component:DA"
+              ],
+              "movedLabelsAtNewEdge": [
+                "component:DA"
+              ]
+            }
+          ],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 3,
+          "variation": 3,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            231,
+            2921,
+            1334
+          ],
+          "candidateOccupied": [
+            94,
+            231,
+            2921,
+            1334
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3051,
+            1464
+          ],
+          "candidatePreCropNominalSize": [
+            3051,
+            1464
+          ],
+          "baselinePreCropNominalArea": 4466664,
+          "candidatePreCropNominalArea": 4466664,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "040b44c855a72312d6ccedde75e3cf296b6e5840931ae63408dc87fa8601c84c",
+          "candidatePhysicalFingerprintSha256": "040b44c855a72312d6ccedde75e3cf296b6e5840931ae63408dc87fa8601c84c",
+          "changedLabelCount": 1,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2861,
+                  1024,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2841,
+                  1024,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": true,
+          "selectedInCandidate": true
+        }
+      ]
+    },
+    {
+      "seed": "0",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 0,
+      "candidateSelectedAttempt": 0,
+      "baselineRoutingWork": "16/3090218",
+      "candidateRoutingWork": "16/3090218",
+      "baselineMeasure": {
+        "seed": "0",
+        "version": 12,
+        "area": 4358809,
+        "copperLength": 30280,
+        "segments": 184,
+        "vias": 38,
+        "geometrySha256": "e18db1e30ac52b8877b1fff7c7c8e77483a24b311ba744024e6d94f23cd82e0d"
+      },
+      "candidateMeasure": {
+        "seed": "0",
+        "version": 12,
+        "area": 4358809,
+        "copperLength": 30280,
+        "segments": 184,
+        "vias": 38,
+        "geometrySha256": "f5cdb7c3cfc020533f0a00f51bbd34ea5014ebba4b6798b65602d17f06fefe0e"
+      },
+      "candidateRows": [
+        {
+          "candidate": 0,
+          "variation": 1,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            291,
+            2421,
+            1629
+          ],
+          "candidateOccupied": [
+            94,
+            291,
+            2421,
+            1629
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            2521,
+            1729
+          ],
+          "candidatePreCropNominalSize": [
+            2521,
+            1729
+          ],
+          "baselinePreCropNominalArea": 4358809,
+          "candidatePreCropNominalArea": 4358809,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "dbd7c6b3675fa174009035da5c8db84dabc161ed12661cf40f73685b90fad4be",
+          "candidatePhysicalFingerprintSha256": "dbd7c6b3675fa174009035da5c8db84dabc161ed12661cf40f73685b90fad4be",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:CBULK",
+              "old": {
+                "text": "CBULK",
+                "bounds": [
+                  263,
+                  820,
+                  45,
+                  18
+                ]
+              },
+              "new": {
+                "text": "CBULK",
+                "bounds": [
+                  273,
+                  722,
+                  45,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2331,
+                  744,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2311,
+                  744,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": true,
+          "selectedInCandidate": true
+        },
+        {
+          "candidate": 1,
+          "variation": 1,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            360,
+            3271,
+            1246
+          ],
+          "candidateOccupied": [
+            94,
+            360,
+            3271,
+            1246
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3401,
+            1376
+          ],
+          "candidatePreCropNominalSize": [
+            3401,
+            1376
+          ],
+          "baselinePreCropNominalArea": 4679776,
+          "candidatePreCropNominalArea": 4679776,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "045aebb18bb57df9125fc816c2146e38bea97a896fe0e3600e1fbcd9d063caf2",
+          "candidatePhysicalFingerprintSha256": "045aebb18bb57df9125fc816c2146e38bea97a896fe0e3600e1fbcd9d063caf2",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:CBULK",
+              "old": {
+                "text": "CBULK",
+                "bounds": [
+                  1253,
+                  1330,
+                  45,
+                  18
+                ]
+              },
+              "new": {
+                "text": "CBULK",
+                "bounds": [
+                  1263,
+                  1232,
+                  45,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  3211,
+                  904,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  3191,
+                  904,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 3,
+          "variation": 1,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            41,
+            2892,
+            1493
+          ],
+          "candidateOccupied": [
+            94,
+            41,
+            2892,
+            1493
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            2992,
+            1593
+          ],
+          "candidatePreCropNominalSize": [
+            2992,
+            1593
+          ],
+          "baselinePreCropNominalArea": 4766256,
+          "candidatePreCropNominalArea": 4766256,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "ad01948fa283f850c7eff26cfb0a0038749c5930b45f6fd1f08dab39101527a5",
+          "candidatePhysicalFingerprintSha256": "ad01948fa283f850c7eff26cfb0a0038749c5930b45f6fd1f08dab39101527a5",
+          "changedLabelCount": 1,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2801,
+                  674,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2781,
+                  674,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        }
+      ]
+    },
+    {
+      "seed": "17",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 3,
+      "candidateSelectedAttempt": 1,
+      "baselineRoutingWork": "14/3726268",
+      "candidateRoutingWork": "14/3726268",
+      "baselineMeasure": {
+        "seed": "17",
+        "version": 12,
+        "area": 5814368,
+        "copperLength": 43520,
+        "segments": 263,
+        "vias": 48,
+        "geometrySha256": "56f326a79a8d83636591c596991ae768a7d828a7f6d71892fd0415931b90992c"
+      },
+      "candidateMeasure": {
+        "seed": "17",
+        "version": 12,
+        "area": 5906824,
+        "copperLength": 43410,
+        "segments": 276,
+        "vias": 48,
+        "geometrySha256": "9ce090ae3f0352c7f10d858f3980bb61cee56a4926ed974889d9b0293ad3ca73"
+      },
+      "candidateRows": [
+        {
+          "candidate": 1,
+          "variation": 2,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            76,
+            3181,
+            1654
+          ],
+          "candidateOccupied": [
+            94,
+            76,
+            3181,
+            1654
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3311,
+            1784
+          ],
+          "candidatePreCropNominalSize": [
+            3311,
+            1784
+          ],
+          "baselinePreCropNominalArea": 5906824,
+          "candidatePreCropNominalArea": 5906824,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "3f0dac354e1ec1306796a697926f2a7c8a3f2947b8b06b70f43698b4b0082771",
+          "candidatePhysicalFingerprintSha256": "3f0dac354e1ec1306796a697926f2a7c8a3f2947b8b06b70f43698b4b0082771",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2631,
+                  1584,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2611,
+                  1584,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  2771,
+                  144,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  2751,
+                  144,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": true
+        },
+        {
+          "candidate": 3,
+          "variation": 2,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            41,
+            3132,
+            1699
+          ],
+          "candidateOccupied": [
+            44,
+            24,
+            3182,
+            1716
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            3232,
+            1799
+          ],
+          "candidatePreCropNominalSize": [
+            3282,
+            1816
+          ],
+          "baselinePreCropNominalArea": 5814368,
+          "candidatePreCropNominalArea": 5960112,
+          "occupiedChanged": true,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "7eed8a8cc4b122166e22cc0923b36d5931df3ee2dd5aa95eb8996ee5ec0c7822",
+          "candidatePhysicalFingerprintSha256": "7eed8a8cc4b122166e22cc0923b36d5931df3ee2dd5aa95eb8996ee5ec0c7822",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:D1",
+              "old": {
+                "text": "D1",
+                "bounds": [
+                  516,
+                  1176,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "D1",
+                "bounds": [
+                  44,
+                  24,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  1661,
+                  974,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  1641,
+                  974,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  1651,
+                  1594,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  1631,
+                  1594,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [
+            {
+              "side": "left",
+              "oldEdge": 94,
+              "newEdge": 44,
+              "direction": "expanded",
+              "oldEdgeLabels": [
+                "board-title"
+              ],
+              "newEdgeLabels": [
+                "component:D1"
+              ],
+              "movedLabelsAtNewEdge": [
+                "component:D1"
+              ]
+            },
+            {
+              "side": "top",
+              "oldEdge": 41,
+              "newEdge": 24,
+              "direction": "expanded",
+              "oldEdgeLabels": [
+                "board-title"
+              ],
+              "newEdgeLabels": [
+                "component:D1"
+              ],
+              "movedLabelsAtNewEdge": [
+                "component:D1"
+              ]
+            }
+          ],
+          "selectedInBaseline": true,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 4,
+          "variation": 2,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            24,
+            24,
+            3521,
+            2112
+          ],
+          "candidateOccupied": [
+            24,
+            24,
+            3521,
+            2112
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3651,
+            2242
+          ],
+          "candidatePreCropNominalSize": [
+            3651,
+            2242
+          ],
+          "baselinePreCropNominalArea": 8185542,
+          "candidatePreCropNominalArea": 8185542,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "304b20b4fc407045721206f19d8f915a6a4ae953c3360181540d74756a5c6a8a",
+          "candidatePhysicalFingerprintSha256": "304b20b4fc407045721206f19d8f915a6a4ae953c3360181540d74756a5c6a8a",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2821,
+                  1624,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2801,
+                  1624,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  2471,
+                  1274,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  2451,
+                  1274,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:U2A",
+              "old": {
+                "text": "U2A",
+                "bounds": [
+                  3207,
+                  928,
+                  27,
+                  18
+                ]
+              },
+              "new": {
+                "text": "U2A",
+                "bounds": [
+                  3187,
+                  928,
+                  27,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        }
+      ]
+    },
+    {
+      "seed": "42",
+      "baselinePresent": true,
+      "candidatePresent": true,
+      "baselineVersion": 12,
+      "candidateVersion": 12,
+      "baselineSelectedAttempt": 1,
+      "candidateSelectedAttempt": 1,
+      "baselineRoutingWork": "18/4915102",
+      "candidateRoutingWork": "18/4915102",
+      "baselineMeasure": {
+        "seed": "42",
+        "version": 12,
+        "area": 6036952,
+        "copperLength": 43440,
+        "segments": 259,
+        "vias": 48,
+        "geometrySha256": "ff238a5b1a920bb02b1519e165d45ab6e96d45f913522c208d4d4ae13e734995"
+      },
+      "candidateMeasure": {
+        "seed": "42",
+        "version": 12,
+        "area": 6036952,
+        "copperLength": 43440,
+        "segments": 259,
+        "vias": 48,
+        "geometrySha256": "9784130f596f9f5b904703e624896dd5e9e33ac78e8150369a44ebbbf20a24f4"
+      },
+      "candidateRows": [
+        {
+          "candidate": 1,
+          "variation": 0,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            24,
+            24,
+            3252,
+            1701
+          ],
+          "candidateOccupied": [
+            24,
+            24,
+            3252,
+            1701
+          ],
+          "baselineEdgeMargin": 50,
+          "candidateEdgeMargin": 50,
+          "baselinePreCropNominalSize": [
+            3352,
+            1801
+          ],
+          "candidatePreCropNominalSize": [
+            3352,
+            1801
+          ],
+          "baselinePreCropNominalArea": 6036952,
+          "candidatePreCropNominalArea": 6036952,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "73a76ab42eb29f29626f50035903e8824d88674203986bd13b43f49ea08ad1d8",
+          "candidatePhysicalFingerprintSha256": "73a76ab42eb29f29626f50035903e8824d88674203986bd13b43f49ea08ad1d8",
+          "changedLabelCount": 3,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2771,
+                  244,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2751,
+                  244,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  1931,
+                  144,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  1911,
+                  144,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:U2B",
+              "old": {
+                "text": "U2B",
+                "bounds": [
+                  2757,
+                  738,
+                  27,
+                  18
+                ]
+              },
+              "new": {
+                "text": "U2B",
+                "bounds": [
+                  2737,
+                  738,
+                  27,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": true,
+          "selectedInCandidate": true
+        },
+        {
+          "candidate": 3,
+          "variation": 0,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            24,
+            24,
+            3262,
+            1721
+          ],
+          "candidateOccupied": [
+            24,
+            24,
+            3262,
+            1721
+          ],
+          "baselineEdgeMargin": 64,
+          "candidateEdgeMargin": 64,
+          "baselinePreCropNominalSize": [
+            3390,
+            1849
+          ],
+          "candidatePreCropNominalSize": [
+            3390,
+            1849
+          ],
+          "baselinePreCropNominalArea": 6268110,
+          "candidatePreCropNominalArea": 6268110,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "a832bac047a9235f292be91dddeaf1d0b9bce0d4c1cec1dbe2356b30adbed00a",
+          "candidatePhysicalFingerprintSha256": "a832bac047a9235f292be91dddeaf1d0b9bce0d4c1cec1dbe2356b30adbed00a",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  3131,
+                  724,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  3111,
+                  724,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  3131,
+                  134,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  3111,
+                  134,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        },
+        {
+          "candidate": 4,
+          "variation": 0,
+          "ordinal": 0,
+          "baselinePresent": true,
+          "candidatePresent": true,
+          "baselineOccupied": [
+            94,
+            40,
+            3001,
+            1905
+          ],
+          "candidateOccupied": [
+            94,
+            40,
+            3001,
+            1905
+          ],
+          "baselineEdgeMargin": 65,
+          "candidateEdgeMargin": 65,
+          "baselinePreCropNominalSize": [
+            3131,
+            2035
+          ],
+          "candidatePreCropNominalSize": [
+            3131,
+            2035
+          ],
+          "baselinePreCropNominalArea": 6371585,
+          "candidatePreCropNominalArea": 6371585,
+          "occupiedChanged": false,
+          "edgeMarginChanged": false,
+          "sameNonLabelPhysicalFingerprint": true,
+          "baselinePhysicalFingerprintSha256": "baa236e295e1642f625d72f1050416eab8c7da2f8995256d1905ff7301745632",
+          "candidatePhysicalFingerprintSha256": "baa236e295e1642f625d72f1050416eab8c7da2f8995256d1905ff7301745632",
+          "changedLabelCount": 2,
+          "changedLabels": [
+            {
+              "id": "component:KA",
+              "old": {
+                "text": "KA",
+                "bounds": [
+                  2181,
+                  1414,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KA",
+                "bounds": [
+                  2161,
+                  1414,
+                  18,
+                  18
+                ]
+              }
+            },
+            {
+              "id": "component:KB",
+              "old": {
+                "text": "KB",
+                "bounds": [
+                  2611,
+                  1464,
+                  18,
+                  18
+                ]
+              },
+              "new": {
+                "text": "KB",
+                "bounds": [
+                  2591,
+                  1464,
+                  18,
+                  18
+                ]
+              }
+            }
+          ],
+          "changedExtrema": [],
+          "selectedInBaseline": false,
+          "selectedInCandidate": false
+        }
+      ]
+    }
+  ]
+}

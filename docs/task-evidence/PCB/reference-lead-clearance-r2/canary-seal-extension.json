@@ -1,0 +1,9 @@
+{
+  "status": "SEALED_BEFORE_RETRY_PHASE",
+  "reason": "Independent static review requested tested-script identity and frozen refusal evidence",
+  "priorPreEditManifestSha256": "8422eb79882b7cee68cb095833e98c5c5df2d83f013f553852e6c1e2af36455d",
+  "priorFinalManifestSha256": "f5e13c889deae8c9f169a3b171432a04d9b723988581ad39b3f144c1dec3c01d",
+  "newPreEditManifestSha256": "517c9d5884fda7db9af314ef24bdcb5b790762bd7224f01152fb7a0a90e01673",
+  "newFinalManifestSha256": "a90a9bfcb6271642550c6f06a51c23d32111f4d6f68449ff8630676bc2d1b0e2",
+  "sourceAndEightGatesUnchanged": true
+}

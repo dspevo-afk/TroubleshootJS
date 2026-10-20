@@ -1,0 +1,9 @@
+{
+  "scope": "Maintained preview launcher frozen before first player launch; no runtime resources started",
+  "files": {
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+    "visible-plan.json": "ef7551894784228fc78daa0e391b0773a0265c89ad1f1446e2da7ee011f14fd4",
+    "visible-plan-seal.json": "948485cb528c3fdbd320e33037bce4668228d5cdc33781ded6c158d06849075c"
+  },
+  "candidateInputsSha256": "a90a9bfcb6271642550c6f06a51c23d32111f4d6f68449ff8630676bc2d1b0e2"
+}

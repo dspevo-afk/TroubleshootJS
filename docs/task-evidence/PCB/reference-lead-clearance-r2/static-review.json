@@ -1,0 +1,15 @@
+{
+  "status": "PASS_STATIC_ONLY",
+  "reviewer": "reference_oracle_review",
+  "generatorSha256": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+  "scope": [
+    "strict census44 physical/graph/metrics/work/nonreference metadata comparison",
+    "unique native33 plan with P04/P05",
+    "input/process exact-int framing and source-bound canary seal",
+    "transient planning copy, immutable sorted pending labels, strict final install and exact envelope",
+    "accepted17 original4 candidate order comparison"
+  ],
+  "resolvedInterpretation": "Initial4 deliberately preserve accepted17; row-expanded16 belong only to rejected nearby18. No accepted17 behavior blocker.",
+  "nonblockingFollowup": "Fallback grid is finite/envelope-bounded but repeated obstacle scans may be costly if exhausted. Judge actual timings; no slowdown claim from static inspection.",
+  "limits": "No reviewer native/build/visible execution; root owns final acceptance"
+}

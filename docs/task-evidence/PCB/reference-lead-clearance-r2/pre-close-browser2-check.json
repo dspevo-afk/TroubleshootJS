@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "executable": "brave.exe",
+  "exactBirthCommandProfile": true,
+  "startTicks": "639281002992565284",
+  "pid": 10784,
+  "profileName": "playwright_chromiumdev_profile-T21z8N",
+  "scope": "Live independent root check immediately before API close"
+}

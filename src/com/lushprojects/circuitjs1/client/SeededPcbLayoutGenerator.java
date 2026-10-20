@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 17;
+    static final int CURRENT_VERSION = 18;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -1216,6 +1216,104 @@ class SeededPcbLayoutGenerator {
 
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline) {
+        if (layout.isSealed() || !layout.getSilkscreenLabels().isEmpty() ||
+                layout.getPackingProbeReceipt() != null)
+            throw new IllegalStateException("Silkscreen requires a fresh physical candidate");
+        // Plan the ordinary ink before checking leads so clearance cannot send a
+        // reference into remote planner space and change the winning board crop.
+        PcbBoardLayout planning = layout.copyForCompaction();
+        placeInitialSilkscreen(planning, board, outline);
+        Rectangle envelope = planning.getOccupiedContentBounds();
+        Rectangle physical = layout.getOccupiedContentBounds();
+        Vector<PcbSilkscreenLabel> labels = planning.getSilkscreenLabels();
+        Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
+            public int compare(PcbSilkscreenLabel first, PcbSilkscreenLabel second) {
+                return first.getId().compareTo(second.getId());
+            }
+        });
+        for (int index = 0; index < labels.size(); index++) {
+            PcbSilkscreenLabel label = labels.get(index);
+            if (!overlapsConnectedLead(layout, label.getBounds())) continue;
+            Rectangle selected = reflowLabel(layout, board, outline, physical,
+                envelope, labels, index);
+            labels.set(index, new PcbSilkscreenLabel(label.getId(), label.getText(),
+                selected, label.getFontSize(), label.isBold(), label.getTargetPadId()));
+        }
+        // Validate the entire plan before adding any ink to the actual owner.
+        for (int index = 0; index < labels.size(); index++)
+            if (!isPlannedLabelPositionFree(layout, board, outline, physical,
+                    envelope, labels, index, labels.get(index).getBounds()))
+                throw new IllegalStateException("Invalid fixed-envelope silkscreen plan");
+        for (PcbSilkscreenLabel label : labels)
+            addLabel(layout, board, outline, label.getId(), label.getText(),
+                label.getBounds(), label.getFontSize(), label.isBold(), label.getTargetPadId());
+        if (!envelope.equals(layout.getOccupiedContentBounds()))
+            throw new IllegalStateException("Silkscreen changed the planned content envelope");
+    }
+
+    private Rectangle reflowLabel(PcbBoardLayout layout, TroubleshootBoard board,
+            Rectangle outline, Rectangle physical, Rectangle envelope,
+            Vector<PcbSilkscreenLabel> labels, int index) {
+        PcbSilkscreenLabel label = labels.get(index);
+        Rectangle original = label.getBounds();
+        Vector<Rectangle> candidates = new Vector<Rectangle>();
+        candidates.add(original);
+        for (int distance = GRID; distance <= GRID * 4; distance += GRID) {
+            int[][] offsets = {{-distance,0},{distance,0},{0,-distance},{0,distance},
+                {-distance,-distance},{distance,-distance},
+                {-distance,distance},{distance,distance}};
+            for (int[] offset : offsets)
+                candidates.add(new Rectangle(original.x + offset[0], original.y + offset[1],
+                    original.width, original.height));
+        }
+        if (label.getId().startsWith("component:")) {
+            PcbComponentPlacement component = layout.getComponent(
+                label.getId().substring("component:".length()));
+            candidates.addAll(getReferenceCandidates(component, original.width, original.height));
+        }
+        for (Rectangle candidate : candidates)
+            if (isPlannedLabelPositionFree(layout, board, outline, physical,
+                    envelope, labels, index, candidate)) return candidate;
+        // Retain the existing grid alignment, bounded by the original content.
+        int firstX = outline.x + 4 +
+            (Math.max(0, envelope.x - outline.x - 4) + GRID - 1) / GRID * GRID;
+        int firstY = outline.y + 4 +
+            (Math.max(0, envelope.y - outline.y - 4) + GRID - 1) / GRID * GRID;
+        for (int y = firstY; y + original.height <= envelope.y + envelope.height; y += GRID)
+            for (int x = firstX; x + original.width <= envelope.x + envelope.width; x += GRID) {
+                Rectangle candidate = new Rectangle(x, y, original.width, original.height);
+                if (isPlannedLabelPositionFree(layout, board, outline, physical,
+                        envelope, labels, index, candidate)) return candidate;
+            }
+        throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,
+            "Unable to clear PCB silkscreen leads within the planned content envelope");
+    }
+
+    private boolean isPlannedLabelPositionFree(PcbBoardLayout layout, TroubleshootBoard board,
+            Rectangle outline, Rectangle physical, Rectangle envelope,
+            Vector<PcbSilkscreenLabel> labels, int index, Rectangle candidate) {
+        if (!isLabelPositionFree(layout, board, outline, candidate)) return false;
+        Rectangle occupied = physical.union(candidate);
+        for (int other = 0; other < labels.size(); other++) {
+            if (other == index) continue;
+            Rectangle bounds = labels.get(other).getBounds();
+            if (candidate.intersects(bounds)) return false;
+            occupied = occupied.union(bounds);
+        }
+        return envelope.equals(occupied);
+    }
+
+    private boolean overlapsConnectedLead(PcbBoardLayout layout, Rectangle bounds) {
+        for (PcbComponentPlacement component : layout.getComponents()) {
+            int terminalCount = component.getPhysicalGeometry().getTerminals().size();
+            for (int index = 0; index < terminalCount; index++)
+                if (bounds.intersects(component.getLeadBounds(index))) return true;
+        }
+        return false;
+    }
+
+    private void placeInitialSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
+            Rectangle outline) {
         String fallbackTitle;
         if (board.getId().equals("RB15_CONTROL_BOARD"))
             fallbackTitle = "TSJ CONTROL BOARD";
@@ -1245,9 +1343,9 @@ class SeededPcbLayoutGenerator {
         // with a body, scan the same bounded board envelope used for other
         // labels before rejecting this candidate.
         Rectangle titleBounds = chooseLabelPosition(layout, board, outline,
-            titleCandidates);
+            titleCandidates, false);
         addLabel(layout, board, outline, "board-title", title,
-            titleBounds, 14, true, null);
+            titleBounds, 14, true, null, false);
 
         Vector<String> componentIds = board.getComponentIds();
         Collections.sort(componentIds);
@@ -1256,10 +1354,10 @@ class SeededPcbLayoutGenerator {
             BoardComponent component = board.getComponent(componentId);
             String text = component.getDisplayName();
             int width = textWidth(component.getReferenceLabelCharacters(), 14);
-            Vector<Rectangle> candidates = getReferenceCandidates(placement, width, 18);
-            Rectangle selected = chooseLabelPosition(layout, board, outline, candidates);
+            Vector<Rectangle> candidates = getReferenceCandidates(placement, width, 18, false);
+            Rectangle selected = chooseLabelPosition(layout, board, outline, candidates, false);
             addLabel(layout, board, outline, "component:" + componentId, text, selected,
-                14, true, null);
+                14, true, null, false);
         }
 
         for (String powerInputId : board.getPowerInputIds()) {
@@ -1287,29 +1385,54 @@ class SeededPcbLayoutGenerator {
         int outerX = leftEdge ? pad.getX() - width - 22 : pad.getX() + 22;
         candidates.add(new Rectangle(outerX, pad.getY() - 23, width, 16));
         candidates.add(new Rectangle(outerX, pad.getY() + 8, width, 16));
-        Rectangle selected = chooseLabelPosition(layout, board, outline, candidates);
-        addLabel(layout, board, outline, "net:" + padId, text, selected, 12, false, padId);
+        Rectangle selected = chooseLabelPosition(layout, board, outline, candidates, false);
+        addLabel(layout, board, outline, "net:" + padId, text, selected, 12, false, padId, false);
     }
 
     private Vector<Rectangle> getReferenceCandidates(PcbComponentPlacement placement, int width,
             int height) {
+        return getReferenceCandidates(placement, width, height, true);
+    }
+
+    private Vector<Rectangle> getReferenceCandidates(PcbComponentPlacement placement, int width,
+            int height, boolean includeRowOffsets) {
         Rectangle bounds = placement.getBodyBounds();
         int centerX = bounds.x + bounds.width / 2;
         int centerY = bounds.y + bounds.height / 2;
         Vector<Rectangle> candidates = new Vector<Rectangle>();
-        candidates.add(new Rectangle(centerX - width / 2, bounds.y - height - 8, width, height));
-        candidates.add(new Rectangle(centerX - width / 2, bounds.y + bounds.height + 8,
-            width, height));
+        if (includeRowOffsets) {
+            addReferenceRowCandidates(candidates, bounds, centerX, bounds.y - height - 8,
+                width, height);
+            addReferenceRowCandidates(candidates, bounds, centerX, bounds.y + bounds.height + 8,
+                width, height);
+        } else {
+            candidates.add(new Rectangle(centerX - width / 2, bounds.y - height - 8, width, height));
+            candidates.add(new Rectangle(centerX - width / 2, bounds.y + bounds.height + 8,
+                width, height));
+        }
         candidates.add(new Rectangle(bounds.x - width - 8, centerY - height / 2, width, height));
         candidates.add(new Rectangle(bounds.x + bounds.width + 8, centerY - height / 2,
             width, height));
         return candidates;
     }
 
+    private void addReferenceRowCandidates(Vector<Rectangle> candidates, Rectangle body,
+            int centerX, int y, int width, int height) {
+        int centeredX = centerX - width / 2;
+        candidates.add(new Rectangle(centeredX, y, width, height));
+        for (int offset = GRID; offset <= body.width; offset += GRID) {
+            int left = centeredX - offset, right = centeredX + offset;
+            if (left >= body.x && left + width <= body.x + body.width)
+                candidates.add(new Rectangle(left, y, width, height));
+            if (right >= body.x && right + width <= body.x + body.width)
+                candidates.add(new Rectangle(right, y, width, height));
+        }
+    }
+
     private Rectangle chooseLabelPosition(PcbBoardLayout layout, TroubleshootBoard board,
-            Rectangle outline, Vector<Rectangle> candidates) {
+            Rectangle outline, Vector<Rectangle> candidates, boolean avoidLeads) {
         for (Rectangle candidate : candidates) {
-            if (isLabelPositionFree(layout, board, outline, candidate))
+            if (isLabelPositionFree(layout, board, outline, candidate, avoidLeads))
                 return candidate;
         }
         // A derived or conventional label position can be occupied by another
@@ -1336,7 +1459,7 @@ class SeededPcbLayoutGenerator {
                 for(int py=preferred.y;py+sample.height<=preferred.y+preferred.height;py+=GRID)
                     for(int px=preferred.x;px+sample.width<=preferred.x+preferred.width;px+=GRID) {
                         Rectangle fallback=new Rectangle(px,py,sample.width,sample.height);
-                        if(isLabelPositionFree(layout,board,outline,fallback))return fallback;
+                        if(isLabelPositionFree(layout,board,outline,fallback,avoidLeads))return fallback;
                     }
             }
             for (int y = outline.y + 4; y + sample.height <= outline.y + outline.height;
@@ -1347,7 +1470,7 @@ class SeededPcbLayoutGenerator {
                             x+sample.width<=preferred.x+preferred.width &&
                             y+sample.height<=preferred.y+preferred.height)continue;
                     Rectangle fallback = new Rectangle(x, y, sample.width, sample.height);
-                    if (isLabelPositionFree(layout, board, outline, fallback))
+                    if (isLabelPositionFree(layout, board, outline, fallback, avoidLeads))
                         return fallback;
                 }
             }
@@ -1358,6 +1481,11 @@ class SeededPcbLayoutGenerator {
 
     private boolean isLabelPositionFree(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline, Rectangle candidate) {
+        return isLabelPositionFree(layout, board, outline, candidate, true);
+    }
+
+    private boolean isLabelPositionFree(PcbBoardLayout layout, TroubleshootBoard board,
+            Rectangle outline, Rectangle candidate, boolean avoidLeads) {
         if (candidate.x < outline.x || candidate.y < outline.y ||
                 candidate.x + candidate.width > outline.x + outline.width ||
                 candidate.y + candidate.height > outline.y + outline.height)
@@ -1366,6 +1494,7 @@ class SeededPcbLayoutGenerator {
             if (candidate.intersects(component.getBodyBounds()))
                 return false;
         }
+        if (avoidLeads && overlapsConnectedLead(layout, candidate)) return false;
         for (PcbPadPlacement pad : layout.getPads()) {
             if (candidate.intersects(pad.getPadBounds()))
                 return false;
@@ -1390,7 +1519,13 @@ class SeededPcbLayoutGenerator {
     private void addLabel(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
             String id, String text, Rectangle bounds, int fontSize, boolean bold,
             String targetPadId) {
-        if (!isLabelPositionFree(layout, board, outline, bounds))
+        addLabel(layout, board, outline, id, text, bounds, fontSize, bold, targetPadId, true);
+    }
+
+    private void addLabel(PcbBoardLayout layout, TroubleshootBoard board, Rectangle outline,
+            String id, String text, Rectangle bounds, int fontSize, boolean bold,
+            String targetPadId, boolean avoidLeads) {
+        if (!isLabelPositionFree(layout, board, outline, bounds, avoidLeads))
             throw new IllegalStateException("PCB silkscreen label position became occupied: " + id);
         layout.addSilkscreenLabel(new PcbSilkscreenLabel(id, text, bounds, fontSize, bold,
             targetPadId));

@@ -1,0 +1,7 @@
+{
+  "scope": "Maintained stop-preview selected state/worker cleanup; root actual exit and independent state/port/birth checks follow",
+  "status": "PASS",
+  "elapsedSeconds": 2.6286062,
+  "phase": "preview-stop",
+  "exitCode": 0
+}

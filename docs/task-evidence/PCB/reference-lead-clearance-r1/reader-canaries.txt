@@ -1,0 +1,1 @@
+PASS reference oracle reader self-test normalization/framing/inventory/timing/-O

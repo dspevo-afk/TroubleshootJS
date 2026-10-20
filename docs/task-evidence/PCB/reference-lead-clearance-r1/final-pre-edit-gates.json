@@ -1,0 +1,39 @@
+{
+  "status": "FROZEN_BEFORE_FINAL_CONSUMER_EDITS",
+  "gates": {
+    "final-scope.md": "efd0414001906aa3bc6beb4683efc9b5c5983623d04aa6e997b97a556f025ea1",
+    "final_inputs.py": "03b0d74492907dcc99a1f2ab2913eb9c2912a882af645d36a3fc4e7a4735d49f",
+    "run_final.ps1": "7728a6a87961771828fc7c034c07a5e11cda1b2d851523527f30951e9f596ee4",
+    "observe_final_exit.ps1": "3898ba63e53aff3521cde215feae60b01c7262f8dd185463d5e7dcefd65bbc09",
+    "final_assess.py": "3d7692331d5171ce0dbdf265edb96644cd282ae78f2662ebdf2e09abc7d7592b",
+    "final-suites.json": "2a33ed9262563f6efbdf3092d340fc0102a96ae236eb896d33274d0c5704ae42",
+    "silkscreen-fixtures.patch": "0930f8b05789d5b3542d65ee26df189f97cc82f987c86316a784d53416c55b99",
+    "silkscreen-fixtures-draft.md": "1541cb40e57313017bd87ffbf74eba825a57cfac4bec9646e0467983eb8c5349"
+  },
+  "prerequisites": {
+    "accepted-inputs.json": "eb5109ae100a21bbc85909806b73475fd24263e70ea21c8b896721063df6da3e",
+    "baseline-inputs.json": "11b2d532e75f79544796ec80bccdf8fcfb42bc16329a64db1914abb0eeff3953",
+    "baseline-assessment.json": "cef95656d0d757694cb1176389e80295a6a180aa92f9e30a676076106202bafc",
+    "baseline-process-cleanup.json": "6abaa1be28bb874296460a1a1481c3b1f2ea9a060d1a847a3d09439490a2e162",
+    "baseline-receipt.txt": "f56bb21c12cdc584739b957ac730d1311e38dded5be88c45f58217aad94bc063",
+    "oracle-map.json": "9790cd0a8105c1f73c4f265db7ab51da06c2638c67593c459bfa50f2a65963d4",
+    "pre-edit-gates.json": "f2dc505734e41f81c492848b7cfb3957e350fec66256d9d1bca965ab490da1ef",
+    "passing-generator18.java.txt": "139d1567bdf4071c9a32410e1170eaafceb26ffd64f133340ffbc363c46379d2"
+  },
+  "passingTrialReceiptSha256": "03e34253d8952546669c921425ee8940a4e62cd1c13d63eaea0a26bba616dd14",
+  "optimizedRefusals": [
+    {
+      "script": "final_inputs.py",
+      "actualExitCode": 1,
+      "stderrSha256": "d07b74b52f4b6bb3e8287a85f41abad6b3d37c77b6e146b03be0ca7e0f713c0a",
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "final_assess.py",
+      "actualExitCode": 1,
+      "stderrSha256": "86f30769735e3739f0007566c539d4e97e28b477bd8ed0a4f97ea9a3687f8898",
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure positive/negative framing and interpreter qualification only; not native/build/player proof"
+}

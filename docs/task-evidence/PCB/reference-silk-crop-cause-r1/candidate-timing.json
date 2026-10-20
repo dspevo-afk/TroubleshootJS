@@ -1,0 +1,15 @@
+{
+  "receiptExists": false,
+  "maintainedVerifierOwnCleanupIncludedInOperation": true,
+  "nativeStatus": "FAIL",
+  "inputAuditAfterExitCode": 0,
+  "phase": "candidate",
+  "actualMaintainedDriverExitCode": 2,
+  "postExitCaptureAndInputAuditSeconds": 0.4152122,
+  "stdoutSha256": "f71538aaba0a66368b295a58b3daf882ff7cf17d10fa0261d42725c834c252a8",
+  "operationElapsedSeconds": 64.4015116,
+  "failure": null,
+  "actualFunctionalJvmFailureExitCode": 1,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receiptSha256": null
+}

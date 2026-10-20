@@ -1,0 +1,17 @@
+{
+  "status": "PASS_STATIC_DESIGN_ONLY",
+  "reviewer": "reference_oracle_review",
+  "scope": "existing copyForCompaction ownership at placeSilkscreen / finishRoutedPlan callers and pre-receipt boundary",
+  "result": "No current caller enters with ink or a packing receipt; transient planning copy is safe if these assumptions are guarded. Existing immutable geometry can be shared. No layout-level move/remove/excluded-bounds API required.",
+  "requirements": [
+    "Initial planning must preserve original4 candidate order and defer lead rejection",
+    "Reflow must reserve every other pending label and preserve exact complete occupied envelope",
+    "Final labels installed once via strict checker, all metadata preserved",
+    "PackingMetrics rasterizes labels; envelope equality alone cannot certify packing decisions"
+  ],
+  "limits": "No implementation/native/build proof; actual crop diagnostic and fresh source gates still required",
+  "affectedExistingReflectiveConsumers": [
+    "P04",
+    "P05"
+  ]
+}

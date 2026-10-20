@@ -1,0 +1,14 @@
+[
+  "PcbCompactnessContractTest",
+  "PcbSavedRealismGeometryContractTest",
+  "PcbSavedDensityGeometryContractTest",
+  "PcbSavedLargeGeometryContractTest",
+  "PcbSavedSingleGroupGeometryContractTest",
+  "PcbSavedGuardedGeometryContractTest",
+  "PcbSavedNarrowGeometryContractTest",
+  "PcbSavedConnectedGeometryContractTest",
+  "PcbSavedRoleWidthGeometryContractTest",
+  "PcbSavedRoleWidthHoldoutContractTest",
+  "PcbPocketPackingContractTest",
+  "PcbPocketHoldoutContractTest"
+]

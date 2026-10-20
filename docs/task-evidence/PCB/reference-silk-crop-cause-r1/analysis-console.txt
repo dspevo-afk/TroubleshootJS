@@ -1,0 +1,9 @@
+matchedCandidateRows=17 sameNonLabelPhysicalRows=17
+seed=-1022 selected=0->0 routingWork=10/4339166->10/4339166 area=6943752->6943752
+seed=-1017 selected=3->3 routingWork=16/3119327->16/3119327 area=4529785->4529785
+seed=-1004 selected=3->3 routingWork=17/2595650->17/2595650 area=4466664->4466664
+  candidate=1 variation=3 physicalSame=True occupied=[94, 41, 3951, 1324]->[44, 24, 4001, 1341] margin=50->50 changedLabels=2 extrema=[{"side":"left","oldEdge":94,"newEdge":44,"direction":"expanded","oldEdgeLabels":["board-title"],"newEdgeLabels":["component:DA"],"movedLabelsAtNewEdge":["component:DA"]},{"side":"top","oldEdge":41,"newEdge":24,"direction":"expanded","oldEdgeLabels":["board-title"],"newEdgeLabels":["component:DA"],"movedLabelsAtNewEdge":["component:DA"]}]
+seed=0 selected=0->0 routingWork=16/3090218->16/3090218 area=4358809->4358809
+seed=17 selected=3->1 routingWork=14/3726268->14/3726268 area=5814368->5906824
+  candidate=3 variation=2 physicalSame=True occupied=[94, 41, 3132, 1699]->[44, 24, 3182, 1716] margin=50->50 changedLabels=3 extrema=[{"side":"left","oldEdge":94,"newEdge":44,"direction":"expanded","oldEdgeLabels":["board-title"],"newEdgeLabels":["component:D1"],"movedLabelsAtNewEdge":["component:D1"]},{"side":"top","oldEdge":41,"newEdge":24,"direction":"expanded","oldEdgeLabels":["board-title"],"newEdgeLabels":["component:D1"],"movedLabelsAtNewEdge":["component:D1"]}]
+seed=42 selected=1->1 routingWork=18/4915102->18/4915102 area=6036952->6036952

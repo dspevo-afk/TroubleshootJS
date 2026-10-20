@@ -1,0 +1,110 @@
+diff --git a/tests/contracts/PcbCompactnessContractTest.java b/tests/contracts/PcbCompactnessContractTest.java
+--- a/tests/contracts/PcbCompactnessContractTest.java
++++ b/tests/contracts/PcbCompactnessContractTest.java
+@@ -36,0 +37 @@
++        emitReferenceOracle(layout, fingerprint);
+@@ -39,0 +41,104 @@
++
++    /** Draft-only export of saved layout-17 reference-label positions. */
++    private static void emitReferenceOracle(PcbBoardLayout layout, String fingerprint) {
++        String currentPrefix = "layout=17|";
++        if (layout == null || fingerprint == null || !fingerprint.startsWith(currentPrefix))
++            throw new AssertionError("Reference oracle requires an actual layout=17 fingerprint");
++        if (!fingerprint.equals(layout.geometryFingerprint()))
++            throw new AssertionError("Layout changed before reference-oracle observation");
++
++        String normalized = "layout=<LAYOUT_EPOCH>|" +
++            fingerprint.substring(currentPrefix.length());
++        String legacyLayout16Sha256 = PlayerSessionFingerprint.of(
++            "layout=16|" + fingerprint.substring(currentPrefix.length()));
++        Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
++        Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
++            public int compare(PcbSilkscreenLabel first, PcbSilkscreenLabel second) {
++                return first.getId().compareTo(second.getId());
++            }
++        });
++        TreeSet<String> labelIds = new TreeSet<String>();
++        TreeSet<String> componentLabelIds = new TreeSet<String>();
++        TreeSet<String> expectedComponentLabelIds = new TreeSet<String>();
++        for (PcbComponentPlacement component : layout.getComponents())
++            expectedComponentLabelIds.add("component:" + component.getComponentId());
++
++        StringBuilder labelsJson = new StringBuilder("[");
++        StringBuilder referenceRecordsJson = new StringBuilder("[");
++        int referenceCount = 0;
++        for (int index = 0; index < labels.size(); index++) {
++            PcbSilkscreenLabel label = labels.get(index);
++            String id = label.getId();
++            String text = label.getText();
++            if (!labelIds.add(id))
++                throw new AssertionError("Duplicate reference-oracle label ID: " + id);
++            Rectangle bounds = label.getBounds();
++            String record = "L:" + id + "@" + text + ":" + bounds.x + "," + bounds.y + "," +
++                bounds.width + "," + bounds.height + ";";
++            if (occurrences(fingerprint, record) != 1)
++                throw new AssertionError("Missing or duplicate uniquely framed label record: " + id);
++
++            String normalizedRecord = record;
++            if (id.startsWith("component:")) {
++                if (!componentLabelIds.add(id))
++                    throw new AssertionError("Duplicate component reference label: " + id);
++                int offset = normalized.indexOf(record);
++                if (offset < 0 || occurrences(normalized, record) != 1)
++                    throw new AssertionError("Reference label record changed before normalization: " + id);
++                normalizedRecord = "L:" + id + "@" + text + ":<REF_X>,<REF_Y>," +
++                    bounds.width + "," + bounds.height + ";";
++                normalized = normalized.substring(0, offset) + normalizedRecord +
++                    normalized.substring(offset + record.length());
++                if (referenceCount++ > 0) referenceRecordsJson.append(',');
++                referenceRecordsJson.append("{\"id\":").append(quote(id))
++                    .append(",\"record\":").append(quote(record))
++                    .append(",\"normalizedRecord\":").append(quote(normalizedRecord)).append('}');
++            }
++
++            if (index > 0) labelsJson.append(',');
++            labelsJson.append("{\"id\":").append(quote(id))
++                .append(",\"text\":").append(quote(text))
++                .append(",\"bounds\":[").append(bounds.x).append(',').append(bounds.y)
++                .append(',').append(bounds.width).append(',').append(bounds.height).append(']')
++                .append(",\"fontSize\":").append(label.getFontSize())
++                .append(",\"bold\":").append(label.isBold())
++                .append(",\"targetPadId\":").append(quoteOrNull(label.getTargetPadId()))
++                .append('}');
++        }
++        labelsJson.append(']');
++        referenceRecordsJson.append(']');
++        if (!componentLabelIds.containsAll(expectedComponentLabelIds))
++            throw new AssertionError("Reference-oracle inventory is missing a placed component label");
++
++        String after = layout.geometryFingerprint();
++        if (!fingerprint.equals(after))
++            throw new AssertionError("Reference-oracle observation changed layout geometry");
++
++        System.out.println("PCB_REFERENCE_ORACLE {\"schema\":\"REFERENCE_LEAD_CLEARANCE_R1_DRAFT\","
++            + "\"layoutVersion\":17,\"layoutUnchanged\":true,"
++            + "\"graphSnapshot\":\"UNAVAILABLE_LAYOUT_ONLY_HELPER\","
++            + "\"layoutFingerprint\":" + quote(fingerprint)
++            + ",\"layoutSha256\":" + quote(PlayerSessionFingerprint.of(fingerprint))
++            + ",\"legacyLayout16Sha256\":" + quote(legacyLayout16Sha256)
++            + ",\"normalizedLayoutFingerprint\":" + quote(normalized)
++            + ",\"normalizedLayoutSha256\":" + quote(PlayerSessionFingerprint.of(normalized))
++            + ",\"normalization\":" + quote("only leading layout=17| becomes layout=<LAYOUT_EPOCH>|; only x/y in exact L:component:*@text:x,y,width,height; records become <REF_X>,<REF_Y>; all other bytes retained")
++            + ",\"referenceLabelCount\":" + referenceCount
++            + ",\"referenceLabelRecords\":" + referenceRecordsJson
++            + ",\"labelCount\":" + labels.size()
++            + ",\"labels\":" + labelsJson + "}");
++    }
++
++    private static int occurrences(String value, String token) {
++        int count = 0;
++        int offset = 0;
++        while ((offset = value.indexOf(token, offset)) >= 0) {
++            count++;
++            offset += token.length();
++        }
++        return count;
++    }
++
++    private static String quoteOrNull(String value) {
++        return value == null ? "null" : quote(value);
++    }

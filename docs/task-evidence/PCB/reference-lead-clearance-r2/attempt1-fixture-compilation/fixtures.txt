@@ -1,0 +1,310 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: illegal start of expression
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: illegal start of expression
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: ';' expected
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: illegal start of expression
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: ';' expected
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                       ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: illegal start of expression
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                        ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: ';' expected
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                         ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: '.class' expected
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                                                               ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:261: error: ';' expected
+    private static int[][] expectedReferenceCandidates(boolean vertical) {
+                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: illegal start of expression
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: illegal start of expression
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: ';' expected
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+                         ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: illegal start of expression
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+                                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: lambda expressions are not supported in -source 1.7
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+                                                                                          ^
+  (use -source 8 or higher to enable lambda expressions)
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: -> expected
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+                                                                                         ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:269: error: not a statement
+    private static Vector<Rectangle> referenceCandidates(PcbComponentPlacement placement) {
+                                                        ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:277: error: ';' expected
+    }
+     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: illegal start of expression
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: ';' expected
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+           ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: illegal start of expression
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+                   ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: ';' expected
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: ';' expected
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+                                                                         ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: not a statement
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+                                                                          ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:279: error: ';' expected
+    private static void verifyLeadEdge(PcbRotation rotation, PcbBoardSide side, int leadIndex,
+                                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: ';' expected
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: not a statement
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: ';' expected
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                               ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: ';' expected
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: not a statement
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:280: error: ';' expected
+            Rectangle localLead, Rectangle overlap, Rectangle edge) {
+                                                                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: illegal start of expression
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: illegal start of expression
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: ';' expected
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                   ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: ')' expected
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                                                ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: illegal start of expression
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                                                         ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: ';' expected
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: not a statement
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                                                                        ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:300: error: ';' expected
+    private static ReferenceFixture referenceFixture(PcbRotation rotation, PcbBoardSide side) {
+                                                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:325: error: illegal start of expression
+    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:325: error: illegal start of expression
+    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:325: error: ';' expected
+    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:325: error: ')' expected
+    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
+                                                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:325: error: illegal start of expression
+    private static boolean referenceLabelPositionFree(ReferenceFixture fixture,
+                                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:326: error: ';' expected
+            Rectangle bounds) {
+                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:326: error: not a statement
+            Rectangle bounds) {
+                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:326: error: ';' expected
+            Rectangle bounds) {
+                            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: illegal start of expression
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: illegal start of expression
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: ';' expected
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: ')' expected
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: illegal start of expression
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                                                                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: ';' expected
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                                                                                ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: not a statement
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                                                                                 ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:337: error: ';' expected
+    private static void rejectReferenceLabel(ReferenceFixture fixture, Rectangle bounds,
+                                                                                       ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:338: error: ';' expected
+            String id) {
+                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: illegal start of expression
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: illegal start of expression
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: ';' expected
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                       ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: ';' expected
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                           ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: ';' expected
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: illegal start of type
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                               ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: illegal start of expression
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                                ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: ';' expected
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                                 ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: not a statement
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                                     ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:362: error: ';' expected
+    private static java.lang.reflect.Method generatorMethod(String name, Class<?>... parameters) {
+                                                                                               ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:373: error: illegal start of expression
+    private static final class ReferenceFixture {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:373: error: illegal start of expression
+    private static final class ReferenceFixture {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:373: error: ';' expected
+    private static final class ReferenceFixture {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:384: error: illegal start of expression
+    private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:384: error: illegal start of expression
+    private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:384: error: ';' expected
+    private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:384: error: ';' expected
+    private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {
+                                                                   ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: illegal start of expression
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: illegal start of expression
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: ';' expected
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: ')' expected
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: illegal start of expression
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                                                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: ';' expected
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                                                          ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: not a statement
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                                                           ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:453: error: ';' expected
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+                                                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: illegal start of expression
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: illegal start of expression
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: ';' expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: ')' expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: illegal start of expression
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                             ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: ';' expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                              ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: not a statement
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                                   ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: ';' expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                                    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: <identifier> expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                                            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: not a statement
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                                                 ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:465: error: ';' expected
+    private static void rect(Rectangle actual, int x, int y, int width, int height,
+                                                                      ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:466: error: ';' expected
+            String message) {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:466: error: not a statement
+            String message) {
+                   ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:466: error: ';' expected
+            String message) {
+                          ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:474: error: illegal start of expression
+    private static void electrolyticMarkingsStayInsideTheCanFace() {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:474: error: illegal start of expression
+    private static void electrolyticMarkingsStayInsideTheCanFace() {
+            ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:474: error: ';' expected
+    private static void electrolyticMarkingsStayInsideTheCanFace() {
+                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:474: error: ';' expected
+    private static void electrolyticMarkingsStayInsideTheCanFace() {
+                                                                  ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:523: error: illegal start of expression
+    private static void ceramicMarkingsClearTheContactPads() {
+    ^
+<TASK_WORKTREE>\tests\contracts\PcbSilkscreenScaleContractTest.java:523: error: illegal start of expression
+    private static void ceramicMarkingsClearTheContactPads() {
+            ^
+100 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

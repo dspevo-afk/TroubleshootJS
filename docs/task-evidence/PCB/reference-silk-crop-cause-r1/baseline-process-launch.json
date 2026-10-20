@@ -1,0 +1,28 @@
+{
+  "scope": "Parent/current/maintained verifier process births; no process termination",
+  "functionalGroupingSha256": "36089681967dd0b626792dc9ff609f22a183cb02e536e6842c24ada2661c55c2",
+  "childBudgetMilliseconds": 60000,
+  "generatorSha256": "99d05c7f5a9cd059a519046b0003263c1d598442f098784e12503b3b11cfcef3",
+  "command": "scripts/verify-current-contracts.ps1 -Suite @('PcbFunctionalGroupingContractTest')",
+  "phase": "baseline",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280971124063361",
+      "role": "phase-parent",
+      "pid": 21344
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280971126296983",
+      "role": "phase-driver",
+      "pid": 20676
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280971133131777",
+      "role": "maintained-verifier",
+      "pid": 9648
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "phase": "matrix",
+  "actualExecExitCode": 0,
+  "launchSha256": "8a7d58b0fc5a6e32b27900ee1679f24804dfa4e6688d75fd7b6461a790bce61c",
+  "checks": [
+    {
+      "pid": 18688,
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "startTicks": "639280991053546131"
+    },
+    {
+      "pid": 26604,
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "startTicks": "639280991063152008"
+    }
+  ],
+  "elapsedSeconds": 0.0049776,
+  "scope": "Separate root observation after actual exec exit0; no termination attempted",
+  "status": "PASS"
+}

@@ -1,0 +1,76 @@
+{
+  "status": "PASS_INTEGRATED_AND_STAGED_REVIEW_BEFORE_THIS_REPORT",
+  "baseCommit": "f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b",
+  "reviewedStagedPaths": 340,
+  "rawExactCount": 331,
+  "canonicalOnly": [
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "rawSha256": "b50c8dd8a91598db4e0b14247a48703b6101d32b7de93258e002b9108ce6046c",
+      "stagedSha256": "e0a9926cee7ce1bce8f809b10d0a862d0ca548ef4900a505a296f518cd30bca9",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "rawSha256": "8c3da7671da5a81b746baac136bdc64ef3d8de3e84aa7c7eecae323be7606324",
+      "stagedSha256": "74b118032f7cc4c6f433b1a9261e7072b3b9a1f0ca5ec0fdc91276704ed33c0d",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "rawSha256": "db336baf00e397542562f1e2ea6ad022ed719a48c0a20c2928e12e99f04627b3",
+      "stagedSha256": "8d5c33e16ea1bd4f53eb608b4011ed1c3610329cdbdc90fc97c6f8dc4bb06525",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/A03IdentityContractTest.java",
+      "rawSha256": "4fea1af26d393219312ad381af2a670519fa0b43ded64dcfc0d89d36f6d95850",
+      "stagedSha256": "a102cad476be623c93bb4379ead02357159a112bd0f02dba62f51ab7f40fffc8",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbCompactnessContractTest.java",
+      "rawSha256": "ead9cbbce71cbb11d87e65ef8ad3f4e5bcc083c74a3bea16a34096ba1fa6e8ea",
+      "stagedSha256": "3387bc94fbbd0b7ea1b398b2df4f4190e9ebd028176f5b1615c3be130fffe1ef",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "rawSha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "stagedSha256": "69c83f128425622bd0b0d87d02edb5c98803dd73c355047ccb5f6613722c08de",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+      "rawSha256": "ec4f39d51d9f1fdd7a7cf5948a3306daaf14981184ba71cd96432165c6e90341",
+      "stagedSha256": "fe9a4f31c7d5787d1d5fdfbee9e753bcf8228e3968e0e0e2f28844029bb98fc6",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbPocketPackingContractTest.java",
+      "rawSha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+      "stagedSha256": "29f77793a5cfdef95ba1c074b03ae332f0b3a29e5da16dfb677434a98c546d4c",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "rawSha256": "f40bc077d5ca23e8a3c6c1015baebfe369940901f88e2a48b6a8871a4cf5ca51",
+      "stagedSha256": "3e88ebda99d6885f33f6f98b6e36f41f662400abee69ea268410590f7485db45",
+      "change": "CRLF-to-LF only; native source tokens unchanged"
+    }
+  ],
+  "reviewScope": [
+    "Generator-only transient fixed-envelope plan plus current identity18",
+    "Owned helper/API retirement and independent accepted17 map69/44 migration",
+    "Literal silk/normalization/stale17 fixtures and additive observer",
+    "Native33/census44/matrix220+220/actualGWT5/player/FileReader evidence",
+    "Frozen raw/canonical index bytes, intended paths, privacy and cleanup limits"
+  ],
+  "knownLimits": [
+    "Four raw patch artifacts have required single-space blank context prefixes; exact per-artifact whitespace metadata justified and initial exit2 retained",
+    "One reset browser profile cleanup policy blocked; all17 running births exited",
+    "No all-seed/manufacturing/new board size/Edge-CDP-wrapper/clean-console claim"
+  ],
+  "preservedUnstaged": "Only original unrelated data/private baseline pointer/caches; verify final status after commit",
+  "publication": "NOT YET COMMITTED OR PUSHED; this report added after reviewing listed paths"
+}

@@ -1,0 +1,156 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:413: error: class, interface, or enum expected
+        emitReferenceOracle(layout, fingerprint);
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:416: error: class, interface, or enum expected
+    private static void emitReferenceOracle(PcbBoardLayout layout, String fingerprint) {
+                   ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:418: error: class, interface, or enum expected
+        if (layout == null || fingerprint == null || !fingerprint.startsWith(currentPrefix))
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:420: error: class, interface, or enum expected
+        if (!fingerprint.equals(layout.geometryFingerprint()))
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:423: error: class, interface, or enum expected
+        String normalized = "layout=<LAYOUT_EPOCH>|" +
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:425: error: class, interface, or enum expected
+        String legacyLayout16Sha256 = PlayerSessionFingerprint.of(
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:427: error: class, interface, or enum expected
+        Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:428: error: class, interface, or enum expected
+        Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:429: error: class, interface, or enum expected
+            public int compare(PcbSilkscreenLabel first, PcbSilkscreenLabel second) {
+                   ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:431: error: class, interface, or enum expected
+            }
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:433: error: class, interface, or enum expected
+        TreeSet<String> labelIds = new TreeSet<String>();
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:434: error: class, interface, or enum expected
+        TreeSet<String> componentLabelIds = new TreeSet<String>();
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:435: error: class, interface, or enum expected
+        TreeSet<String> expectedComponentLabelIds = new TreeSet<String>();
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:436: error: class, interface, or enum expected
+        for (PcbComponentPlacement component : layout.getComponents())
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:439: error: class, interface, or enum expected
+        StringBuilder labelsJson = new StringBuilder("[");
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:440: error: class, interface, or enum expected
+        StringBuilder referenceRecordsJson = new StringBuilder("[");
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:441: error: class, interface, or enum expected
+        int referenceCount = 0;
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:442: error: class, interface, or enum expected
+        for (int index = 0; index < labels.size(); index++) {
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:442: error: class, interface, or enum expected
+        for (int index = 0; index < labels.size(); index++) {
+                            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:442: error: class, interface, or enum expected
+        for (int index = 0; index < labels.size(); index++) {
+                                                   ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:444: error: class, interface, or enum expected
+            String id = label.getId();
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:445: error: class, interface, or enum expected
+            String text = label.getText();
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:446: error: class, interface, or enum expected
+            if (!labelIds.add(id))
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:448: error: class, interface, or enum expected
+            Rectangle bounds = label.getBounds();
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:449: error: class, interface, or enum expected
+            String record = "L:" + id + "@" + text + ":" + bounds.x + "," + bounds.y + "," +
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:451: error: class, interface, or enum expected
+            if (occurrences(fingerprint, record) != 1)
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:454: error: class, interface, or enum expected
+            String normalizedRecord = record;
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:455: error: class, interface, or enum expected
+            if (id.startsWith("component:")) {
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:458: error: class, interface, or enum expected
+                int offset = normalized.indexOf(record);
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:459: error: class, interface, or enum expected
+                if (offset < 0 || occurrences(normalized, record) != 1)
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:461: error: class, interface, or enum expected
+                normalizedRecord = "L:" + id + "@" + text + ":<REF_X>,<REF_Y>," +
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:463: error: class, interface, or enum expected
+                normalized = normalized.substring(0, offset) + normalizedRecord +
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:465: error: class, interface, or enum expected
+                if (referenceCount++ > 0) referenceRecordsJson.append(',');
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:466: error: class, interface, or enum expected
+                referenceRecordsJson.append("{\"id\":").append(quote(id))
+                ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:469: error: class, interface, or enum expected
+            }
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:472: error: class, interface, or enum expected
+            labelsJson.append("{\"id\":").append(quote(id))
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:480: error: class, interface, or enum expected
+        }
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:482: error: class, interface, or enum expected
+        referenceRecordsJson.append(']');
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:483: error: class, interface, or enum expected
+        if (!componentLabelIds.containsAll(expectedComponentLabelIds))
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:486: error: class, interface, or enum expected
+        String after = layout.geometryFingerprint();
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:487: error: class, interface, or enum expected
+        if (!fingerprint.equals(after))
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:490: error: class, interface, or enum expected
+        System.out.println("PCB_REFERENCE_ORACLE {\"schema\":\"REFERENCE_LEAD_CLEARANCE_R1_DRAFT\","
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:503: error: class, interface, or enum expected
+    }
+    ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:507: error: class, interface, or enum expected
+        int offset = 0;
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:508: error: class, interface, or enum expected
+        while ((offset = value.indexOf(token, offset)) >= 0) {
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:510: error: class, interface, or enum expected
+            offset += token.length();
+            ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:511: error: class, interface, or enum expected
+        }
+        ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:513: error: class, interface, or enum expected
+    }
+    ^
+<WORKTREE>\tests\contracts\PcbCompactnessContractTest.java:517: error: class, interface, or enum expected
+    }
+    ^
+49 errors
+1 warning
+
+CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

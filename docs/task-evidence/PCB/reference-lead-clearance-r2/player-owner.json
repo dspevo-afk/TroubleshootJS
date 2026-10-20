@@ -1,0 +1,19 @@
+{
+  "limits": "Live selected owner check before first player navigation; full identities private",
+  "browser": {
+    "sandboxEnabled": true,
+    "pid": 32328,
+    "executable": "brave.exe",
+    "profileName": "playwright_chromiumdev_profile-Rl8mqK",
+    "headed": true,
+    "startTicks": "639280995524539519"
+  },
+  "preview": {
+    "executable": "powershell.exe",
+    "rootAndScriptAndCommandExact": true,
+    "startTicks": "639280995240801716",
+    "pid": 28232,
+    "port": 8907
+  },
+  "status": "PASS"
+}

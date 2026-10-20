@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "<WORKTREE>\docs\task-evidence\PCB\reference-lead-clearance-r1\inputs.py", line 8, in <module>
+    raise RuntimeError("Reference oracle requires assertion-enabled Python")
+RuntimeError: Reference oracle requires assertion-enabled Python
