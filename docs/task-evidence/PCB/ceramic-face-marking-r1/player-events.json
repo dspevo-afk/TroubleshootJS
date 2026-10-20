@@ -1,0 +1,63 @@
+[
+  {
+    "step": "plain production navigation",
+    "result": "Only maintained corrected preview used; five served fields exact before player input"
+  },
+  {
+    "step": "RC0 initial customer retest",
+    "result": "FAIL; fitted C2 complete104 visible below both contact pads"
+  },
+  {
+    "step": "RC0 ceramic fitted and Zoom+2",
+    "result": "Complete104 clear below both pads and inside disc at both scales",
+    "captures": [
+      "rc0-ceramic-fitted.jpg",
+      "rc0-ceramic-inspection.jpg"
+    ]
+  },
+  {
+    "step": "RC0 ceramic lead1 lifted",
+    "result": "Supply1 OFF, public104 unchanged, full104 still clear and lifted conductor distinct",
+    "capture": "rc0-ceramic-lifted.jpg"
+  },
+  {
+    "step": "RC0 ceramic original removed/loose",
+    "result": "Original Part6 public104 in tray; empty two lands, physical loose104 complete and clear",
+    "capture": "rc0-ceramic-removed-loose.jpg"
+  },
+  {
+    "step": "RC0 original ceramic restored retest",
+    "result": "Original Part6 reinstalled, tray0; customer FAIL remains, no functional repair"
+  },
+  {
+    "step": "RC0 final original ceramic state",
+    "result": "C2 Installed/public104; board OFF/tray0"
+  },
+  {
+    "step": "RC0 public replay",
+    "replay": "tsj-alpha/6/EASY/RC_DELAY/0",
+    "result": "Exact predeclared identity observed"
+  },
+  {
+    "step": "RB30 initial retest and public C12",
+    "result": "Initial customer FAIL; public installed C12 marking is1 uF / 25 V; fitted full string omitted at small view"
+  },
+  {
+    "step": "RB30 C12 Zoom+2",
+    "result": "Complete long line omitted whole at small band; no pad-covered partial string"
+  },
+  {
+    "step": "RB30 closer C12 marking",
+    "result": "Four ordinary wheel-up inputs after Zoom+2; full1 uF / 25 V clear below both pads and inside disc; CIN22 uF / 25 V remains clear",
+    "capture": "multirail-c12-inspection.jpg"
+  },
+  {
+    "step": "RB30 final off state",
+    "result": "All3 supplies disconnected, board OFF/tray0; C12 Installed/public1 uF / 25 V unchanged"
+  },
+  {
+    "step": "RB30 public replay",
+    "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320",
+    "result": "Predeclared previous fresh identity, not a new entropy launch"
+  }
+]

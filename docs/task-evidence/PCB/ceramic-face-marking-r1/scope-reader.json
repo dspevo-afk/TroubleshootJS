@@ -1,0 +1,12 @@
+{
+  "status": "READ_ONLY",
+  "finding": "Ceramic full-body text overlaps post-provider contact collars; use existing projected body/pad rectangles without changing pad paint order",
+  "files": [
+    "StandardPhysicalPartRenderProviders.java",
+    "WorkbenchVisualTheme.java",
+    "PhysicalPackages.java",
+    "PhysicalPartRenderContext.java",
+    "PcbWorkbenchRenderer.java"
+  ],
+  "limits": "No source edits or test/UI runs by leaf; root defines scope and owns acceptance"
+}

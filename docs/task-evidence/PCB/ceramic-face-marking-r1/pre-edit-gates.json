@@ -1,0 +1,24 @@
+{
+  "status": "FROZEN_BEFORE_PRODUCTION_EDIT",
+  "baseCommit": "45ea2cc08d2aa8cefd9b673d99cfccc449c3293e",
+  "baselineSha256": "b81e11bf4f5df2dd8b417b3f7689b79e0605620f607195653c2f8eaa6d747434",
+  "gates": {
+    "scope.md": "ce1a0aefb13da43acae4eb60bbacedae210d14002b55a6ffe74172c8b0db98a0",
+    "inputs.py": "af09168d1843a009a6c181c97f9cf3c8fb2bdaf13c33dbb1939c05a0e8d35655",
+    "run_phase.ps1": "fcb54c40752d394d7acbd4afd553a567eb605483e48914785f72aa29348ee27e",
+    "qualify.py": "219f30be31baf42934fcb4ec0d33f12a61b1a3786f19958da8b15407c7776957"
+  },
+  "optimizedPythonRefusals": [
+    {
+      "script": "inputs.py",
+      "actualExitCode": 1,
+      "result": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "qualify.py",
+      "actualExitCode": 1,
+      "result": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure framing canaries and actual Python refusal, not OS/native/build/visible proof"
+}

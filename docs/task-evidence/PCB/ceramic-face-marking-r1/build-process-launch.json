@@ -1,0 +1,16 @@
+{
+  "phase": "build",
+  "drivers": [
+    {
+      "startTicks": "639280883396626109",
+      "pid": 26800,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639280883399587135",
+      "pid": 24100,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained ceramic face phase"
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Capacitor face marking accepted; publication pending**
+**Current task:** **Ceramic marking accepted; publication pending**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -66,13 +66,21 @@ probe-placement diagnostic frames inspected. Two failed native attempts remain;
 unused prototype exact accepted bytes, unqualified. Current resources closed.
 [Scope, failures and evidence](task-evidence/PCB/unique-public-references-r1/README.md).
 
-Corrected capacitor face paint is accepted: native9/silk11933, actual final
+Published45ea2cc0: corrected capacitor face paint; native9/silk11933, actual final
 JDK8/GWT5 and five actual RC/multi-rail views pass. Complete public lines clear
 pads/rim at useful zoom; original capacitor lift/remove/reinstall retains the
 initial complaint. Failed wider-band attempt is preserved. Current owned resources
 closed; prior fixed44 proof reused only at unchanged consumed owners. No new
 geometry/targets/graph/size or functional-repair claim.
 [Scope, evidence and limits](task-evidence/PCB/capacitor-face-marking-r1/README.md).
+
+Ceramic markings accepted: native9/silk12621, actual final JDK8/GWT5 and five
+actual RC/multi-rail views pass. Complete104 and1uF/25V clear contact regions;
+original ceramic lift/remove/loose/reinstall retains initial customer failure.
+Actual geometry/contact/targets/graph/generation remain unchanged. Raw-preview
+setup mistake retained and corrected before navigation; all8 recorded births
+exited/current resources closed. No new size/functional-repair/fullmatrix claim.
+[Scope, evidence and limits](task-evidence/PCB/ceramic-face-marking-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

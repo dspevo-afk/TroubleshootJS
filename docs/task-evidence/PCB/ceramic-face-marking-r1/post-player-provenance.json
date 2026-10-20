@@ -1,0 +1,8 @@
+{
+  "Protocol": "troubleshootjs-execution-provenance-v1",
+  "SourceDigest": "4cfaedd18eba372809b3e18b3d1ce7919b2ef67ed57c7e15fc04d31013ca63a4",
+  "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+  "WebDigest": "4901fcfc11e220692bf8388422cea234b03a7cd9b83958ef249902a5e0cf31c7",
+  "Digest": "a2fed29b9e1f02b5a374d0c82c06ffc98c396aa4b5513b9bc1efa725d21bb731",
+  "FileCount": 1591
+}

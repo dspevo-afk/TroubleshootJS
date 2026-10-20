@@ -213,6 +213,50 @@ final class WorkbenchVisualTheme {
         return new Rectangle(body.x + insetX, body.y + insetY, width, height);
     }
 
+    /** Keep ceramic ink inside its painted ellipse and clear of both contact pads. */
+    static Rectangle ceramicMarkingBounds(Rectangle body, Rectangle first, Rectangle second) {
+        if (body == null || first == null || second == null || body.width <= 2 ||
+                body.height <= 3 || first.width <= 0 || first.height <= 0 ||
+                second.width <= 0 || second.height <= 0) return null;
+        int ix = body.x + (int)Math.ceil(body.width / 4.0);
+        int iy = body.y + (int)Math.ceil(body.height / 10.0);
+        int right = body.x + body.width - (ix - body.x);
+        int bottom = body.y + body.height - (iy - body.y);
+        Rectangle a = new Rectangle(first.x - 1, first.y - 1, first.width + 2, first.height + 2);
+        Rectangle b = new Rectangle(second.x - 1, second.y - 1, second.width + 2, second.height + 2);
+        int topPad = Math.min(a.y, b.y), bottomPad = Math.max(a.y+a.height, b.y+b.height);
+        int leftPad = Math.min(a.x, b.x), rightPad = Math.max(a.x+a.width, b.x+b.width);
+        int gapX = Math.max(ix, Math.min(a.x+a.width, b.x+b.width));
+        int gapRight = Math.min(right, Math.max(a.x, b.x));
+        int gapY = Math.max(iy, Math.min(a.y+a.height, b.y+b.height));
+        int gapBottom = Math.min(bottom, Math.max(a.y, b.y));
+        Rectangle[] candidates = {
+            new Rectangle(ix, iy, right-ix, bottom-iy),
+            new Rectangle(ix, iy, right-ix, topPad-iy),
+            new Rectangle(ix, bottomPad, right-ix, bottom-bottomPad),
+            new Rectangle(ix, iy, leftPad-ix, bottom-iy),
+            new Rectangle(rightPad, iy, right-rightPad, bottom-iy),
+            new Rectangle(gapX, iy, gapRight-gapX, bottom-iy),
+            new Rectangle(ix, gapY, right-ix, gapBottom-gapY)
+        };
+        double radiusX = (body.width-2)/2.0, radiusY = (body.height-3)/2.0;
+        double centerX = body.x+1+radiusX, centerY = body.y+1+radiusY;
+        Rectangle best = null;
+        for (Rectangle candidate : candidates) {
+            if (candidate.width < 12 || candidate.height < 9 || candidate.x < ix || candidate.y < iy ||
+                    candidate.x+candidate.width > right || candidate.y+candidate.height > bottom ||
+                    candidate.intersects(a) || candidate.intersects(b)) continue;
+            double dx = Math.max(Math.abs(candidate.x-centerX),
+                Math.abs(candidate.x+candidate.width-centerX))/radiusX;
+            double dy = Math.max(Math.abs(candidate.y-centerY),
+                Math.abs(candidate.y+candidate.height-centerY))/radiusY;
+            if (dx*dx+dy*dy >= 1.0) continue;
+            if (best == null || candidate.width > best.width ||
+                    candidate.width == best.width && candidate.height > best.height) best = candidate;
+        }
+        return best;
+    }
+
     static void marking(Graphics g, String text, Rectangle b, int size, String color) {
         if (text == null || b.width < 12 || b.height < 9) return;
         Font previousFont = g.currentFont;

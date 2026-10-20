@@ -1,4 +1,46 @@
-# Current checkpoint: capacitor face marking accepted; publication pending
+# Current checkpoint: ceramic marking accepted; publication pending
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+45ea2cc08d2aa8cefd9b673d99cfccc449c3293e. Indefinite PCB realism/screenshots
+remain authorized; no main/email. Original5/private baseline pointer/cache,
+policy-blocked old unused profile and private baseline COPY preserved. Capacitor
+publication receipt included next commit. Three recent overview/close-up images
+already pasted in chat; current ceramic raw views ready.
+
+Ceramic-face-marking-r1 production2/test1 accepted. Existing shared installed/loose
+painter receives immutable render geometry; pure seven-region helper requires
+inner-ellipse containment and both pads+1px exclusion, ranks width then height.
+Existing full-string/font7 fitter unchanged; no geometry/contact/targets/identity/
+graph/fault/state/save/random/epoch change. All11933 prior assertions preserved.
+Fresh native9 PASS57.9260728s/silk12621; actual final JDK8/GWT5 PASS91.1813732s.
+Exact1481/gates4/machinery24 before/after and actual launch-bound driver cleanup
+PASS. Prior fixed44 physical proof reused only at unchanged consumed owners.
+
+Five actual raw views inspected: RC0 complete104 at fitted/Zoom+2, lead1 lifted,
+original Part6 loose/reinstalled; Installed104/tray0 restored and same-original
+customer FAIL remains. RB30 previous-fresh -5864181845794033320 public1uF/25V
+matches complete lower-disc ink at closer ordinary wheel zoom, clear of contacts.
+Both initial customer FAIL, final all supplies OFF/tray0. Five served provenance
+fields before/after exact. Onefavicon404; no page/request/other response errors.
+559 informational CircuitJS records counted publicly, finite full raw snapshot
+privately retained with hash/bytes; no new solver claim. No new entropy/functional
+repair/fresh fullmatrix/allseed/pixel/Edge/CDP/FileReader/size claim.
+
+Initial raw-preview command selection mistake retained: first state preflight
+NOT_READY, diagnosed before navigation, exact owned exe/birth/script/port validated
+before stopping raw process; exited/8907 released. Maintained start-preview then
+actual state/birth/cmd/HTTP200 PASS before production navigation. Raw owner/cleanup
+public, raw startup logs/metadata private. No source/gate/build rerun for setup.
+Current all8 recorded births exited, APIroot0/newprofile absent, managedstate absent/
+8907 released; maintained stop2.0238142s. Raw build privately retained; one public
+prefix redaction/hashes. Read-only static leaf no blocker, no phase/UI execution;
+optional not-every-region literal coverage noted. Root integrated review PASS.
+Next: exact root staged bytes/privacy/diff, normal branch commit/push. Read-only
+leaf inspecting conventional public RB30 references as a possible next scope;
+no new production edit/commitment. No main/email; then continue authorized work.
+
+# Previous checkpoint: capacitor face marking accepted before45ea2cc0 publication
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin

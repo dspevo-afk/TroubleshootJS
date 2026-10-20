@@ -1,0 +1,27 @@
+{
+  "nativeBuildQualification": "PASS",
+  "sourceCount": 1481,
+  "freshNativeSuites": 9,
+  "actualGwtPermutations": 5,
+  "sourceBoundaries": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+      "boundary": "Only ceramic geometry argument plumbing and original full-marking call change"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+      "boundary": "Insertion only; every existing line/assertion unchanged"
+    },
+    {
+      "path": "tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "boundary": "Insertion only; every existing line/assertion unchanged"
+    }
+  ],
+  "operationSeconds": {
+    "contracts": 57.9260728,
+    "build": 91.1813732
+  },
+  "reuse": "Prior fixed44 physical/graph/metric/work evidence bound; every non-paint/native-extension source and machinery input exact",
+  "player": "Fresh actual RC/multi-rail marking/service evidence still required separately",
+  "limits": "No fresh fixed44/full unrelated matrix, unseen/all-seed, pixel, manufacturing or new-size claim"
+}

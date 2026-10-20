@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "phase": "contracts",
+  "launchSha256": "e9c6231d3093b9e0d05008e70e9293255a21c5225ac3d496540fb33a087949be",
+  "checks": [
+    {
+      "pid": 31220,
+      "startTicks": "639280882677053440",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31168,
+      "startTicks": "639280882683426604",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ],
+  "scope": "Root actual recorded birth exits after maintained phase return; no process selected by name"
+}

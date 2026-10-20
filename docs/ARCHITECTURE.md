@@ -6013,3 +6013,13 @@ input changes. Independent rectangle/ellipse fixtures and actual RC/multi-rail
 inspection plus original-part removal/reinstallation qualify the paint boundary.
 The wider first attempt was rejected by actual pad overpainting despite native
 containment checks. [Evidence and limits](task-evidence/PCB/capacitor-face-marking-r1/README.md).
+
+The shared ceramic painter also receives its existing render geometry. A pure
+theme helper selects among seven fixed ink regions using the already painted
+inner ellipse and both immutable terminal pad rectangles with one screen pixel
+of clearance. It ranks valid regions by width, then height; the original full-
+string fitter and contact draw order remain unchanged. This affects ink only,
+including loose-part ink, without changing any package pose permissions or
+electrical/physical identity. Literal and synthetic rectangle fixtures plus
+actual RC/multi-rail installed/lifted/loose/original-restored views qualify the
+boundary. [Evidence and limits](task-evidence/PCB/ceramic-face-marking-r1/README.md).

@@ -1,0 +1,7 @@
+{
+  "status": "NOT_READY",
+  "operation": "First preview state preflight after launcher return",
+  "observed": "Managed state not created yet; no production navigation or player action",
+  "commandElapsedSeconds": 0.2157024,
+  "limits": "Includes static review write; not server startup duration or build failure"
+}

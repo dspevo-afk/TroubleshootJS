@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "rootExitCode": 0,
+  "newProfileAbsent": true,
+  "method": "Own context/browser/server API close after actual preclose identity check"
+}

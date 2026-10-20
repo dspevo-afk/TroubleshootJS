@@ -1,0 +1,8 @@
+{
+  "state": "BLANK; actual executable/birth/profile/sandbox checked before any production navigation",
+  "sandbox": true,
+  "pid": 21692,
+  "startTicks": "639280884423547232",
+  "executable": "brave.exe",
+  "profileName": "playwright_chromiumdev_profile-Vq0mq7"
+}

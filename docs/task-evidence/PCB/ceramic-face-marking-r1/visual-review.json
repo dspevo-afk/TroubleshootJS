@@ -1,0 +1,51 @@
+{
+  "status": "OBSERVED",
+  "primaryViews": [
+    "rc0-ceramic-fitted.jpg",
+    "rc0-ceramic-inspection.jpg",
+    "rc0-ceramic-lifted.jpg",
+    "rc0-ceramic-removed-loose.jpg",
+    "multirail-c12-inspection.jpg"
+  ],
+  "actualRawImagesInspected": 5,
+  "rawCaptures": [
+    {
+      "file": "rc0-ceramic-fitted.jpg",
+      "bytes": 128441,
+      "sha256": "8d403f86972c745bfa8d5d5d570d355431fa24ae5498948b7f9ac18a4ce60aae"
+    },
+    {
+      "file": "rc0-ceramic-inspection.jpg",
+      "bytes": 76130,
+      "sha256": "8a90ebc1d452133a41f65522ad104c4dd653c34005f5abff119f002b6dae191d"
+    },
+    {
+      "file": "rc0-ceramic-lifted.jpg",
+      "bytes": 79864,
+      "sha256": "d4572fb5689fb47c8197e1fdf2391c377a7def7ff8c535f13c7d15af25d1d0b7"
+    },
+    {
+      "file": "rc0-ceramic-removed-loose.jpg",
+      "bytes": 81154,
+      "sha256": "f2aac06057d00559f33b6774c68c350565b502f12a5d7c9e4cdbda89d800abd8"
+    },
+    {
+      "file": "multirail-c12-inspection.jpg",
+      "bytes": 77631,
+      "sha256": "f305da794772a55335b2cba4d4d88c10b28e305b884001fff28e948e6d0d59b9"
+    }
+  ],
+  "observations": [
+    "RC0 full104 clear of pads at fitted/Zoom+2, lead1 lifted and loose original in tray",
+    "Same original Part6 reinstall retains Installed104 and initial customer FAIL",
+    "RB30 C12 public1 uF / 25 V matches complete lower-disc ink at closer ordinary wheel zoom",
+    "Small long-line views omit the entire value under unchanged minimum font rule",
+    "Actual final RC0 and RB30 supplies OFF/tray0; both initial retests FAIL"
+  ],
+  "limits": [
+    "Actual read-only visual observations, no screenshot pixel oracle",
+    "Two exact predeclared replay cases; no new entropy launches",
+    "Same-original physical restoration, no functional repair",
+    "No fresh fixed44/full matrix, Edge/CDP/FileReader/all-seed/manufacturing/new-size claim"
+  ]
+}

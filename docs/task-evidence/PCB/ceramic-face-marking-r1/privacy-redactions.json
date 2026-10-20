@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "file": "build.txt",
+  "substitution": "One exact worktree prefix replaced by <WORKTREE>; all other bytes exact",
+  "rawSha256": "320cf17405a1a5f7447de1894fe4ddb08805e89c844402b96a145182609e72c9",
+  "publicSha256": "ef7dd33f341ef2af0937607a1790e99821660ea6a07662d3a04a6ed626f7583b",
+  "rawRetained": "Task-owned private OS-temp outside Git",
+  "browserLogs": "All error/warning records verbatim;559 informational CircuitJS records classified in bounded public summary; full raw finite snapshot retained privately with exact hash/bytes"
+}

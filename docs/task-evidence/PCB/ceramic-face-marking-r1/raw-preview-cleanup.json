@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "operation": "Close mistakenly selected raw preview only after exact current executable/birth/script/port command validation",
+  "pid": 29968,
+  "startTicks": "639280884911977550",
+  "executable": "pwsh.exe",
+  "recordedBirthExited": true,
+  "portReleased": true,
+  "state": "No production navigation or player input used raw preview; raw stdout/stderr and metadata retained privately",
+  "correction": "Use scripts/start-preview.ps1 for maintained state/stop ownership"
+}

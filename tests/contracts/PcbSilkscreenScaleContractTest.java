@@ -14,6 +14,7 @@ public final class PcbSilkscreenScaleContractTest {
         physicalLabelIdentityAndFacePolicyStayStable();
         emptyChipFootprintsUseOnlyTheDeclaredBody();
         electrolyticMarkingsStayInsideTheCanFace();
+        ceramicMarkingsClearTheContactPads();
         System.out.println("PASS: PCB silkscreen scale contracts: " + assertions + " assertions");
     }
 
@@ -229,6 +230,69 @@ public final class PcbSilkscreenScaleContractTest {
                     }
             }
         }
+    }
+
+    private static void ceramicMarkingsClearTheContactPads() {
+        PhysicalPackageGeometry ceramic = PhysicalPackages.RADIAL_CERAMIC_CAPACITOR.getGeometry();
+        rect(ceramic.getBodyBounds(),15,8,50,53,"literal ceramic physical body remains unchanged");
+        rect(ceramic.getTerminal(0).getPadBounds(),7,17,26,26,"literal first ceramic land");
+        rect(ceramic.getTerminal(1).getPadBounds(),47,17,26,26,"literal second ceramic land");
+        rect(WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(15,8,50,52),
+            new Rectangle(7,17,26,26),new Rectangle(47,17,26,26)),
+            28,44,24,10,"complete marking uses the wider clear lower disc area");
+        rect(WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(30,16,100,104),
+            new Rectangle(14,34,52,52),new Rectangle(94,34,52,52)),
+            55,87,50,22,"doubled screen projection retains contact clearance");
+        rect(WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(0,0,104,100),
+            new Rectangle(34,14,52,52),new Rectangle(34,94,52,52)),
+            26,67,52,23,"vertical contact arrangement retains a horizontal clear band");
+        check(WorkbenchVisualTheme.ceramicMarkingBounds(null,new Rectangle(1,1,2,2),
+                new Rectangle(4,1,2,2)) == null &&
+            WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(0,0,50,52),null,
+                new Rectangle(4,1,2,2)) == null &&
+            WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(0,0,8,8),
+                new Rectangle(1,1,2,2),new Rectangle(4,1,2,2)) == null &&
+            WorkbenchVisualTheme.ceramicMarkingBounds(new Rectangle(0,0,50,52),
+                new Rectangle(0,0,50,52),new Rectangle(0,0,50,52)) == null,
+            "missing, tiny or fully blocked ceramic faces omit the complete marking");
+        double[] scales = {.25,.5,1,1.25,1.5,2,3,4,7.5};
+        int painted = 0;
+        // These synthetic cardinal rectangles exercise ink fitting, not new allowed package poses.
+        for (PcbRotation rotation : PcbRotation.values())
+            for (PcbBoardSide side : PcbBoardSide.values())
+                for (double scale : scales) {
+                    PcbPackagePose pose = new PcbPackagePose(-170,230,rotation,side);
+                    PcbViewport.Transform view = new PcbViewport.Transform(scale,-21,17,0,false);
+                    Rectangle projected = view.project(pose.toBoardRectangle(ceramic.getBodyBounds(),90,90));
+                    Rectangle body = new Rectangle(projected.x,projected.y,
+                        projected.width/2*2,projected.height/2*2);
+                    Rectangle a = view.project(pose.toBoardRectangle(ceramic.getTerminal(0).getPadBounds(),90,90));
+                    Rectangle b = view.project(pose.toBoardRectangle(ceramic.getTerminal(1).getPadBounds(),90,90));
+                    Rectangle originalBody = new Rectangle(body), originalA = new Rectangle(a), originalB = new Rectangle(b);
+                    Rectangle marking = WorkbenchVisualTheme.ceramicMarkingBounds(body,a,b);
+                    rect(body,originalBody.x,originalBody.y,originalBody.width,originalBody.height,"body input is immutable");
+                    rect(a,originalA.x,originalA.y,originalA.width,originalA.height,"first pad input is immutable");
+                    rect(b,originalB.x,originalB.y,originalB.width,originalB.height,"second pad input is immutable");
+                    Rectangle reversed = WorkbenchVisualTheme.ceramicMarkingBounds(body,b,a);
+                    if (marking == null) {
+                        check(reversed == null,"omission is independent of terminal enumeration");
+                        continue;
+                    }
+                    painted++;
+                    rect(reversed,marking.x,marking.y,marking.width,marking.height,"terminal order cannot move printed ink");
+                    check(marking.width >= 12 && marking.height >= 9,"unchanged full-string fitter minimum");
+                    for (Rectangle pad : new Rectangle[] {a,b})
+                        check(marking.x+marking.width <= pad.x-1 || marking.x >= pad.x+pad.width+1 ||
+                            marking.y+marking.height <= pad.y-1 || marking.y >= pad.y+pad.height+1,
+                            "every chosen text band has an independent one-pixel pad exclusion");
+                    for (int x : new int[] {marking.x,marking.x+marking.width})
+                        for (int y : new int[] {marking.y,marking.y+marking.height}) {
+                            double dx = (x-(body.x+body.width/2.0))/((body.width-2)/2.0);
+                            double dy = (y-(body.y+(body.height-1)/2.0))/((body.height-3)/2.0);
+                            check(dx*dx+dy*dy < 1.0,"every corner stays strictly inside the already painted inner ellipse");
+                        }
+                }
+        check(painted >= 32,"representative fitted arrangements retain real printable bands");
     }
 
     private static void near(double actual, double expected, String message) {

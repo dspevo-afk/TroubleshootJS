@@ -712,7 +712,7 @@ final class StandardPhysicalPartRenderProviders {
             drawInstalledLead(graphics, context, geometry, 0);
             drawInstalledLead(graphics, context, geometry, 1);
             drawCeramicBody(graphics, context, specification, centerX, centerY,
-                body.width / 2, body.height / 2);
+                body.width / 2, body.height / 2, geometry);
             context.markBodyDrawn();
         }
 
@@ -724,7 +724,7 @@ final class StandardPhysicalPartRenderProviders {
             Rectangle body = geometry.getBodyBounds();
             drawLooseLeads(graphics, geometry, context);
             drawCeramicBody(graphics, context, specification, body.x + body.width / 2,
-                body.y + body.height / 2, body.width / 2, body.height / 2);
+                body.y + body.height / 2, body.width / 2, body.height / 2, geometry);
             drawPartLabel(graphics, context, context.getPart().getId().equals(
                 context.getRenderer().getSelectedPartForProvider()) ? "SELECTED" : "CERAMIC",
                 body.x, body.y - context.scale(8));
@@ -733,7 +733,7 @@ final class StandardPhysicalPartRenderProviders {
 
         private void drawCeramicBody(Graphics graphics, PhysicalPartRenderContext context,
                 CapacitorSpecification specification, int centerX, int centerY, int halfWidth,
-                int halfHeight) {
+                int halfHeight, PhysicalPartRenderGeometry geometry) {
             Rectangle body = new Rectangle(centerX - halfWidth, centerY - halfHeight,
                 halfWidth * 2, halfHeight * 2);
             WorkbenchVisualTheme.ellipse(graphics, body.x + 1, body.y + 2, body.width, body.height,
@@ -744,8 +744,11 @@ final class StandardPhysicalPartRenderProviders {
                 Math.max(1, body.width - 2), Math.max(1, body.height - 3), WorkbenchVisualTheme.CERAMIC);
             WorkbenchVisualTheme.ellipse(graphics, body.x + body.width * .2, body.y + body.height * .12,
                 body.width * .4, body.height * .2, "rgba(255,237,199,0.24)");
-            WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
-                body, Math.max(8, context.scale(10)), "#362919");
+            Rectangle markingBounds = WorkbenchVisualTheme.ceramicMarkingBounds(body,
+                geometry.getTerminal(0).getPadBounds(), geometry.getTerminal(1).getPadBounds());
+            if (markingBounds != null)
+                WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
+                    markingBounds, Math.max(8, context.scale(10)), "#362919");
         }
     }
 

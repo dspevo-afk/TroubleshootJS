@@ -1,0 +1,13 @@
+{
+  "status": "NO_STATIC_BLOCKER",
+  "reviewer": "Read-only leaf",
+  "sourceSha256": {
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java": "83b35462747b40ad52d1936b816447b926d0c234353400c1a6c1394854a0f070",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "257d27682f3c93caeb694859358be0c884b3d0172e0c8135682142c505d71b31",
+    "tests/contracts/PcbSilkscreenScaleContractTest.java": "acf56018d51150911e7d16c290981b8ce424a22889db5723ccdaffa9ed2c5fe0"
+  },
+  "review": "Shared installed/loose ceramic painter, seven fixed candidate regions, one-pixel contact exclusion and exact painted ellipse; original fitter/geometry/electrical state unchanged",
+  "tests": "Independent literal package/body/pad/double/vertical layouts, pad order, immutability, clearance and ellipse invariants; synthetic transforms do not enable package poses",
+  "limits": "No test/native/build/UI execution by reviewer; actual glyph fit and collar overpaint remain root visible gate",
+  "nonblockingFollowup": "Not every candidate region has a literal expected rectangle; synthetic fixtures check general safety invariants"
+}

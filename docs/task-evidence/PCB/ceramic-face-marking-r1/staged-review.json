@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "stagedBeforeReviewFile": 79,
+  "rawExact": 76,
+  "crlfOnlyCanonical": 3,
+  "canonicalPaths": [
+    "docs/ARCHITECTURE.md",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java"
+  ],
+  "scope": "Exact reviewed publication seal paths plus seal itself; no unrelated staged paths",
+  "review": "Root integrated production/test/doc/evidence diff inspected; staged bytes equal reviewed worktree bytes except CRLF-only normalization outside raw task packet",
+  "privacy": "No personal Windows user prefix or browser control endpoint in selected raw bytes; raw build/startup/finite console logs private with public hashes/counts",
+  "publicationSealSha256": "3a2a2d450f439a1dd17c1052ebbad4723f80caebc65100669f71aa3f509b841c",
+  "limits": "No new execution/pixel/all-seed claim from staging"
+}

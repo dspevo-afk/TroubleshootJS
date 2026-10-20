@@ -1,0 +1,31 @@
+PASS: PCB silkscreen scale contracts: 12621 assertions
+
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+SERVICE_COVERAGE NPN_LOW_SIDE_SWITCH parts=7
+SERVICE_COVERAGE NMOS_LOW_SIDE_SWITCH parts=6
+SERVICE_COVERAGE RELAY_OUTPUT parts=9
+SERVICE_COVERAGE SENSOR_CONTROL parts=9
+SERVICE_COVERAGE RB15_CONTROL parts=16
+SERVICE_COVERAGE COMPOSED_CONTROLLED_INDICATOR parts=15
+SERVICE_COVERAGE RB30_CONTROL parts=23
+SERVICE_COVERAGE RB56_CONTROL parts=42
+PASS: physical serviceability contracts assertions=1769
+
+PASS: U06 session save contracts assertions=34988
+
+PASS: power service-part contracts assertions=620 scope=ORDINARY_SOLVER_POST_CATALOG_TRANSACTION; Q60 admission/session restart NOT RUN
+
+Q30_FULL_OWNER seed=3 PASS components=38 copperEdges=325 copperJunctions=332
+Q30_FULL_OWNER seed=37 PASS components=39 copperEdges=378 copperJunctions=378
+PASS: Q30 physical metadata contracts 3977 assertions, resolvedSeeds=7 scaleFixtures=4 regressionRecipes=33/35/37
+
+PASS: P01 physical pose contracts assertions=8605 poses=44
+
+PASS: U01 viewport contracts assertions=1277
+
+PASS: bench instrument presentation contracts assertions=235

@@ -1,0 +1,33 @@
+{
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:8907/favicon.ico",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "pageErrors": [],
+  "failedResponses": [],
+  "failedRequests": [],
+  "informationalConsole": {
+    "count": 559,
+    "categories": {
+      "convergence": 133,
+      "unconnectedNode": 416,
+      "timestep": 10,
+      "other": 0
+    },
+    "scope": "Finite saved player-flow snapshot; all error/warning records retained verbatim, informational CircuitJS records counted here and full raw snapshot retained privately; no solver or privacy certification inferred"
+  },
+  "rawSnapshot": {
+    "sha256": "7e192e50ef14078e6dc0c53395b03f0c6047fc010f8f49f36a70efe1575746b5",
+    "bytes": 134173,
+    "retained": "Task-owned private OS-temp outside Git"
+  }
+}

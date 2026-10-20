@@ -1,0 +1,40 @@
+BENCH POWER
+
+
+Supply 1 (+12V): disconnected
+
+Connect Supply 1 (+12V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Supply 2 (+5V): disconnected
+
+Connect Supply 2 (+5V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Supply 3 (+12V): disconnected
+
+Connect Supply 3 (+12V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.
