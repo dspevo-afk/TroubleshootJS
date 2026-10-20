@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Ceramic marking accepted; publication pending**
+**Current task:** **Multi-rail public references accepted; publication review**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -74,13 +74,22 @@ closed; prior fixed44 proof reused only at unchanged consumed owners. No new
 geometry/targets/graph/size or functional-repair claim.
 [Scope, evidence and limits](task-evidence/PCB/capacitor-face-marking-r1/README.md).
 
-Ceramic markings accepted: native9/silk12621, actual final JDK8/GWT5 and five
+Publishede8d15114: ceramic markings; native9/silk12621, actual final JDK8/GWT5 and five
 actual RC/multi-rail views pass. Complete104 and1uF/25V clear contact regions;
 original ceramic lift/remove/loose/reinstall retains initial customer failure.
 Actual geometry/contact/targets/graph/generation remain unchanged. Raw-preview
 setup mistake retained and corrected before navigation; all8 recorded births
 exited/current resources closed. No new size/functional-repair/fullmatrix claim.
 [Scope, evidence and limits](task-evidence/PCB/ceramic-face-marking-r1/README.md).
+
+Multi-rail naming candidate accepted: public R/C/U/Q/D/LED/F/K numbering from
+existing declaration owner, exact old reservations/IDs/physical data retained.
+Fresh paired44 exact physical/graph/boxes/work, native13/service40 and actual
+JDK8/GWT5 pass. Five raw views inspected and three posted; original K1/K2
+restoration retains initial customer failure. Qualification framing mistakes and
+browser tool reset/first-console loss retained; all12 running births exited,
+first interrupted profile directory cleanup policy-blocked. No new size or repair
+claim. [Evidence, failures and limits](task-evidence/PCB/multirail-public-references-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

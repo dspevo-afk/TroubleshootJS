@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained multi-rail reference phase",
+  "phase": "build",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280909435806870",
+      "pid": 29976
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280909438593939",
+      "pid": 31560
+    }
+  ]
+}

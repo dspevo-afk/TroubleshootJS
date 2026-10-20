@@ -542,10 +542,34 @@ final class Rb30Plan {
         Vector<String> terminals = physicalPackage.getTerminalIds();
         if (terminals.size() != nets.length)
             throw new IllegalArgumentException("Q30 terminal count: " + id);
-        board.addComponent(new BoardComponent(id, type, physicalPackage));
+        board.addComponent(new BoardComponent(id, type, physicalPackage,
+            publicReference(board, type, id), id.length()));
         for (int index = 0; index < nets.length; index++)
             board.addPad(new BoardPad(id + "." + terminals.get(index), id,
                 terminals.get(index), nets[index]));
+    }
+
+    private static String publicReference(TroubleshootBoard board, String type, String id) {
+        String prefix = referencePrefix(type);
+        if (prefix == null) return id;
+        int ordinal = 1;
+        // Counting prior declarations is independent of HashMap iteration order.
+        for (String otherId : board.getComponentIds())
+            if (prefix.equals(referencePrefix(board.getComponent(otherId).getType()))) ordinal++;
+        return prefix + ordinal;
+    }
+
+    private static String referencePrefix(String type) {
+        if ("CONNECTOR".equals(type) || "OUTPUT_HEADER".equals(type)) return null;
+        if ("RESISTOR".equals(type)) return "R";
+        if ("CAPACITOR".equals(type)) return "C";
+        if ("REGULATOR".equals(type) || "SENSOR_CONTROL".equals(type)) return "U";
+        if ("BJT".equals(type) || "NMOS".equals(type)) return "Q";
+        if ("DIODE".equals(type)) return "D";
+        if ("LED".equals(type)) return "LED";
+        if ("FUSE".equals(type)) return "F";
+        if ("RELAY".equals(type)) return "K";
+        throw new IllegalArgumentException("Unsupported multi-rail reference category: " + type);
     }
 
     private static PcbPlacementConstraints placement(TroubleshootBoard board) {

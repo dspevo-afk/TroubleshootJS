@@ -253,7 +253,8 @@ public final class PcbNormalPackingCensusContractTest {
             if (componentCount++ > 0) components.append(',');
             components.append("{\"id\":").append(jsonQuote(id)).append(",\"type\":")
                 .append(jsonQuote(component.getType())).append(",\"name\":")
-                .append(jsonQuote(component.getDisplayName())).append('}');
+                .append(jsonQuote(component.getDisplayName())).append(",\"referenceLabelCharacters\":")
+                .append(component.getReferenceLabelCharacters()).append('}');
             Rectangle b = label.getBounds();
             String prefix = "L:" + label.getId() + "@";
             String suffix = ":" + b.x + "," + b.y + "," + b.width + "," + b.height + ";";

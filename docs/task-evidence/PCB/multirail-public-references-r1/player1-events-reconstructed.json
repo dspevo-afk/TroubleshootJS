@@ -1,0 +1,17 @@
+{
+  "status": "RECONSTRUCTED_FROM_RETAINED_ACTUAL_BODY_SELECTOR_IMAGES_AND_ROOT_INPUT_HISTORY",
+  "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320",
+  "steps": [
+    "Initial customer FAIL; public component/probe selectors use numbered references",
+    "All3 supplies individually disconnected before original K1 removal",
+    "Installed K1 marking and public lead names observed; original Part19 removed",
+    "Actual direct Install as Output A/K1 clicked; tray0, fresh customer FAIL remains",
+    "Generic physical Shop observed, no purchase; final board OFF/tray0"
+  ],
+  "retainedInputFailures": [
+    "Share summary initially hidden in main menu:5s timeout; opened actual menu",
+    "Exact button name View absent:5s timeout; read actual ARIA Board view",
+    "Second-board preparation hit30s tool timeout/kernel reset; final preparation state unobserved"
+  ],
+  "limits": "Original in-memory event/complete console buffers lost in tool reset. No first clean-console, post-served-first-tab or interrupted second-admission claim. Body/selector/raw image files remain."
+}

@@ -1,0 +1,114 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Customer retest did not pass. Continue troubleshooting.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: OFF
+Supplies
+View
+Ticket
+Parts tray
+Shop
+Close
+Local shop
+store.copperline.example/components
+
+ELECTRONIC COMPONENTS
+
+Copperline Supply Co.
+
+Parts Tray · 0 loose parts
+
+The right part starts with the specification.
+
+Browse the full catalog. Match the rating and lead spacing, add to your Parts Tray, then install on the board.
+
+All parts
+Diodes
+Resistors
+SENSOR_CONTROL parts
+Relays
+Capacitors
+Fuses
+Connectors
+OUTPUT_HEADER parts
+LEDs
+BJT parts
+REGULATOR parts
+Search components
+Clear search
+
+Supplies isolated. Charged parts may need more time to discharge before they can be added.
+
+Showing 168 of 168 components
+
+Diodes
+
+Generic silicon diode - Wide lead spacing
+Add to Parts Tray
+
+Diodes
+
+Generic silicon diode (reversed) - Wide lead spacing
+Add to Parts Tray
+
+Diodes
+
+Generic silicon diode - Narrow lead spacing
+Add to Parts Tray
+
+Diodes
+
+Generic silicon diode (reversed) - Narrow lead spacing
+Add to Parts Tray
+
+Resistors
+
+10 Ohm +/-5% - Narrow lead spacing
+Add to Parts Tray
+
+Resistors
+
+12 Ohm +/-5% - Narrow lead spacing
+Add 
+[remaining unchanged generic catalog omitted from public excerpt]

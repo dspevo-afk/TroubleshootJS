@@ -5968,6 +5968,19 @@ unchanged and outside this delivery's qualified behavior. Its directly attempted
 fixture exposed an existing connector pad-order failure before label placement;
 both failed attempts remain in the [reference evidence](task-evidence/PCB/unique-public-references-r1/scope.md).
 
+`Rb30Plan.part` assigns multi-rail public R/C/U/Q/D/LED/F/K references in its
+existing deterministic declaration order. It counts prior category members, so
+the result is independent of board HashMap traversal. Regulators and decision
+chips share U; BJT and NMOS drivers share Q. Connectors keep their declared names.
+The immutable `BoardComponent` name is also the resistor/relay service-label
+authority; operational IDs and physical nameplates remain unchanged. Each label
+retains its exact former ID-length reservation. Fresh paired44 proof retains
+graph, physical geometry, label boxes/style/targets, routing and deterministic
+work; only four RB30 cases' reference ink changes. The existing dependency key
+already records names and reservation. No model/layout/save epoch changes.
+The separate Rb56 plan is outside this naming change. See
+[multi-rail reference evidence and limits](task-evidence/PCB/multirail-public-references-r1/README.md).
+
 `ChipPinout` also owns the inert first-terminal reference rectangle for its four
 supported packages. It derives this ink from declared terminal0's connected body
 point and the package body; it has no live graph/fault input or commercial pin1

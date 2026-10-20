@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "startTicks": "639280905184527679",
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 29948
+    },
+    {
+      "startTicks": "639280905191101079",
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 24392
+    }
+  ],
+  "phase": "contracts",
+  "launchSha256": "9bc1ad4e473c480035fdd4c5ec301e0b49f4b70d08c3851bc2c612ca81176784",
+  "status": "PASS",
+  "scope": "Root actual OS birth checks after exec38863 returned exit0; no termination requested"
+}

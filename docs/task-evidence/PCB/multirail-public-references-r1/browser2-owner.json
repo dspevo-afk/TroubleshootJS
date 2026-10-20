@@ -1,0 +1,8 @@
+{
+  "sandbox": "chromiumSandbox true; actual command no --no-sandbox",
+  "state": "Actual birth/exe/profile checked while about:blank before navigation",
+  "profile": "New task-owned unique OS-temp profile",
+  "startTicks": "639280914205823151",
+  "pid": 7756,
+  "executable": "brave.exe"
+}

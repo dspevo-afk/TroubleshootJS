@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_RETAINED",
+  "operation": "git diff --cached --check",
+  "actualExitCode": 2,
+  "path": "first-shop-observation.txt",
+  "cause": "Raw body excerpt had literal tabs/trailing spaces but filename did not match existing *-body.txt raw-evidence rule",
+  "correction": "Renamed only that owned raw excerpt to first-shop-observation-body.txt without byte changes; existing attributes unchanged; no assertion/code/build changes"
+}

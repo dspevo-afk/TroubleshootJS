@@ -1,0 +1,10 @@
+PASS exact multi-rail reference cohort candidate cases=44
+
+Traceback (most recent call last):
+  File "<WORKTREE>\docs\task-evidence\PCB\multirail-public-references-r1\assess.py", line 254, in <module>
+    main()
+    ~~~~^^
+  File "<WORKTREE>\docs\task-evidence\PCB\multirail-public-references-r1\assess.py", line 241, in main
+    assert all(text("contracts-receipt.txt").count(marker) == 1 for marker in MARKERS)
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

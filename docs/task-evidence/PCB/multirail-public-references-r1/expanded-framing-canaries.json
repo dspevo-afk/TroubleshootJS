@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "positive": 1,
+  "rejectedNegativeFrames": [
+    "missing child",
+    "duplicate child",
+    "wrong target",
+    "failed child",
+    "wrong order",
+    "missing final marker",
+    "unexpected stderr",
+    "failed census",
+    "foreign seed plan"
+  ],
+  "limits": "Pure synthetic parser framing; no native/build/OS execution proof"
+}

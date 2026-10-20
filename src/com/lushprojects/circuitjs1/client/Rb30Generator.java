@@ -631,7 +631,7 @@ final class Rb30Generator {
             spec, original, lead(id, "1"), lead(id, "2"), slot);
         runtime.registerCapability(new ReplaceableResistorBoardCapability(
             "RB30_RESISTOR_SERVICE_" + id, replacement, inventory,
-            new ResistorReplacementCatalog(), id + " service resistor"));
+            new ResistorReplacementCatalog(), a.board.getComponent(id).getDisplayName() + " service resistor"));
     }
 
     private void installDiodeService(PhysicalBoardRuntime runtime, String id,

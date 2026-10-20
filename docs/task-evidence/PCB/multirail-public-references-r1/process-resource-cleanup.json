@@ -1,0 +1,94 @@
+{
+  "firstProfileCleanup": "BLOCKED by automatic approval review; directory retained, process exited",
+  "status": "RUNNING_RESOURCES_PASS_PROFILE_DIRECTORY_BLOCKED",
+  "newSecondProfileAbsent": true,
+  "limits": "Old blocked profile and first interrupted-browser profile retained. Task private metadata/logs and private baseline COPY remain outside Git.",
+  "managedStatePresent": false,
+  "checks": [
+    {
+      "pid": 30980,
+      "startTicks": "639280908627681068",
+      "role": "browser-owner.json",
+      "executable": "brave.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 7756,
+      "startTicks": "639280914205823151",
+      "role": "browser2-owner.json",
+      "executable": "brave.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26384,
+      "startTicks": "639280911429011957",
+      "role": "preview-owner.json",
+      "executable": "powershell.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 18856,
+      "startTicks": "639280911400191863",
+      "role": "preview-launch-owner.json",
+      "executable": "pwsh.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32264,
+      "startTicks": "639280901905801559",
+      "role": "baseline driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31792,
+      "startTicks": "639280901912830206",
+      "role": "baseline driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31484,
+      "startTicks": "639280903926151548",
+      "role": "candidate driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 30620,
+      "startTicks": "639280903933509251",
+      "role": "candidate driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 29948,
+      "startTicks": "639280905184527679",
+      "role": "contracts driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 24392,
+      "startTicks": "639280905191101079",
+      "role": "contracts driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 29976,
+      "startTicks": "639280909435806870",
+      "role": "build driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31560,
+      "startTicks": "639280909438593939",
+      "role": "build driver",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ],
+  "preview8907Listening": false
+}

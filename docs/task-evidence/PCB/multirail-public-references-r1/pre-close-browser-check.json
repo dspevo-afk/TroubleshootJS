@@ -1,0 +1,9 @@
+{
+  "actualProfileMatch": true,
+  "pid": 7756,
+  "status": "PASS",
+  "startTicks": "639280914205823151",
+  "actualExecutableMatch": true,
+  "scope": "Revalidated exact owner before API close",
+  "actualSandboxEnabled": true
+}

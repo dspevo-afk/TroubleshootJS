@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "pid": 29948,
+      "startTicks": "639280905184527679"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 24392,
+      "startTicks": "639280905191101079"
+    }
+  ],
+  "phase": "contracts",
+  "scope": "Captured parent/current births before maintained multi-rail reference phase"
+}

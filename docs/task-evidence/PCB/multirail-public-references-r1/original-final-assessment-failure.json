@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "actualExitCode": 1,
+  "assessorSha256": "f80870ca70b60fda0a55885f7e40dfd45077ff95bc962db9e26a3320822ceea4",
+  "reason": "Frozen final gate incorrectly requires each service marker once; unchanged maintained runner produces40 qualified children. Exact focused13 footer remains correct.",
+  "failure": "Original once-only MARKERS assertion; all earlier source/cohort/phase-success checks completed.",
+  "privacy": "Exact worktree prefix replaced by <WORKTREE> in traceback"
+}

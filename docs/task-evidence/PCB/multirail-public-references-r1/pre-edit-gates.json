@@ -1,0 +1,25 @@
+{
+  "status": "FROZEN_BEFORE_OBSERVER_AND_PRODUCTION_EDIT",
+  "baseCommit": "e8d151144e0bb66e24b7aa00f49fcee41620a922",
+  "sourceCount": 1481,
+  "gates": {
+    "scope.md": "05ba8f2bab87639a289b6f258f4f8d593bedf024c50a389fd1e1be47f4a46f6b",
+    "inputs.py": "9b5f8424fbf606712129bb05f84478eae43aad08df7acaeadb38ea674af0f71e",
+    "run_phase.ps1": "fb790a998d44b31ccf5e7c6ab63c7bf3d20411af3a5b05df3ee33f517525ed02",
+    "assess.py": "f80870ca70b60fda0a55885f7e40dfd45077ff95bc962db9e26a3320822ceea4"
+  },
+  "acceptedSealSha256": "ed80cde1d4571ef62dc0b5bff23b913616cd949c7c689fda5411c6a8766bcaec",
+  "optimizedPythonRefusals": [
+    {
+      "script": "inputs.py",
+      "actualExitCode": 1,
+      "result": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "assess.py",
+      "actualExitCode": 1,
+      "result": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure naming/timing canaries and actual Python refusal; no native/build/OS proof"
+}

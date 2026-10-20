@@ -188,6 +188,16 @@ public final class Rb30PhysicalMetadataContractTest {
                 check(candidate.backing.get(id) instanceof ResistorElm);
                 check(metadata.getNominalResistanceOhms() ==
                     ((ResistorElm) candidate.backing.get(id)).getResistance());
+                if ("REN".equals(id) || "RSA".equals(id) || "RDA".equals(id)) {
+                    ReplaceableResistorBoardCapability service =
+                        ReplaceableResistorBoardCapability.find(candidate.runtime,id);
+                    check(service != null,"existing service resistor retains its scoped capability");
+                    String publicLabel = component.getDisplayName() + " service resistor";
+                    check(publicLabel.equals(service.getPlayerComponentLabel()),"service uses the authoritative public reference");
+                    check((publicLabel + " replacement resistors").equals(service.getCatalogTitle()),"catalog reference matches the board");
+                    check(("Install new resistor in " + publicLabel).equals(service.getInstallNewLabel()),"replacement prompt matches the board");
+                    check(id.equals(service.getComponentId()),"public naming never changes the operational service ID");
+                }
                 if (id.startsWith("RPIN_")) {
                     String channel = id.substring("RPIN_".length());
                     check(metadata.getNominalResistanceOhms() == 1000.0);

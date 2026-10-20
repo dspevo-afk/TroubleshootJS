@@ -1,0 +1,6 @@
+{
+  "status": "PASS_REFUSED_OPTIMIZED_PYTHON",
+  "actualExitCode": 1,
+  "scriptSha256": "1ff5b06b574b6cd7d3111c8e766366d39836f7c74dcc3133faea3cf2b55c486f",
+  "limits": "Actual interpreter refusal only, no phase proof"
+}

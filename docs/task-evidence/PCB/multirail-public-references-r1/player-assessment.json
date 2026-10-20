@@ -1,0 +1,25 @@
+{
+  "status": "PASS_WITH_RETAINED_TOOL_AND_DIRECTORY_LIMITS",
+  "actualReplays": [
+    "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320",
+    "tsj-alpha/6/MEDIUM/RB30_CONTROL/0"
+  ],
+  "primaryImagesInspected": 5,
+  "behavior": "Initial FAIL both; all3/all4 outputs OFF before original K1/Part19 and K2/Part28 removals. Exact public direct targets Output A/K1 and Output B/K2 restore same originals; fresh customer FAIL remains; final OFF/tray0. No functional repair claim.",
+  "normalCatalogBoundary": "Actual Shop is generic physical catalog; changed capability-specific API titles are native-covered, not separately exposed in that actual flow. Separate workbench/modify title literal assertions not added.",
+  "provenance": "First before, second before and final after five served fields equal independent expected; root final execution provenance/source audit unchanged. First-tab after missing because tool reset.",
+  "console": "Second finite raw snapshot retained private with hashes;924 informational records, two unattributed resource404 console errors, no page/request/observed-response errors. First in-memory console lost; no first clean-console claim.",
+  "retainedFailures": [
+    "Original final assessor once-only marker assertion FAIL; exact40 supplemental correction",
+    "First supplemental incorrectly required empty stderr: FAIL; exact existing logger grammar correction",
+    "First browser tool30s reset; interrupted second preparation unobserved; first profile cleanup automatically rejected blocked by policy",
+    "Second actual0 ticket wait30s NOT_READY while UI preparing; later same exact0 admitted",
+    "Second output3 selector used one-channel +12V label:5s timeout; actual extra +5V/output4 read and disconnected before mutation"
+  ],
+  "cleanup": "All12 recorded births exited, managed state absent/8907 released, second profile absent. First interrupted profile directory BLOCKED by policy; old blocked directory/private baseline COPY preserved.",
+  "limits": [
+    "Two predeclared exact replays, no new entropy/all-seed/full unrelated matrix",
+    "No functional repair, new size, manufacturing, Edge/CDP/FileReader or pixel oracle claim",
+    "Relay/U2 existing reference boxes remain crowded; next bounded investigation"
+  ]
+}

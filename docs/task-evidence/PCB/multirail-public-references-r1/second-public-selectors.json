@@ -1,0 +1,498 @@
+{
+  "components": [
+    {
+      "value": "",
+      "text": "Select component"
+    },
+    {
+      "value": "C12",
+      "text": "C1"
+    },
+    {
+      "value": "C5",
+      "text": "C3"
+    },
+    {
+      "value": "CFLT_B",
+      "text": "C4"
+    },
+    {
+      "value": "CIN",
+      "text": "C2"
+    },
+    {
+      "value": "DA",
+      "text": "D2"
+    },
+    {
+      "value": "DB",
+      "text": "D3"
+    },
+    {
+      "value": "DREV",
+      "text": "D1"
+    },
+    {
+      "value": "F1",
+      "text": "F1"
+    },
+    {
+      "value": "J1",
+      "text": "J1"
+    },
+    {
+      "value": "JLOAD",
+      "text": "JLOAD"
+    },
+    {
+      "value": "JOA",
+      "text": "JOA"
+    },
+    {
+      "value": "JOB",
+      "text": "JOB"
+    },
+    {
+      "value": "JSA",
+      "text": "JSA"
+    },
+    {
+      "value": "JSB",
+      "text": "JSB"
+    },
+    {
+      "value": "KA",
+      "text": "K1"
+    },
+    {
+      "value": "KB",
+      "text": "K2"
+    },
+    {
+      "value": "LEDOUT_A",
+      "text": "LED1"
+    },
+    {
+      "value": "QA",
+      "text": "Q1"
+    },
+    {
+      "value": "QB",
+      "text": "Q2"
+    },
+    {
+      "value": "RBLEED5",
+      "text": "R2"
+    },
+    {
+      "value": "RDA",
+      "text": "R9"
+    },
+    {
+      "value": "RDB",
+      "text": "R11"
+    },
+    {
+      "value": "REN",
+      "text": "R1"
+    },
+    {
+      "value": "RLEDOUT_A",
+      "text": "R13"
+    },
+    {
+      "value": "RPDA",
+      "text": "R10"
+    },
+    {
+      "value": "RPDB",
+      "text": "R12"
+    },
+    {
+      "value": "RPIN_A",
+      "text": "R4"
+    },
+    {
+      "value": "RPIN_B",
+      "text": "R6"
+    },
+    {
+      "value": "RREF_H",
+      "text": "R7"
+    },
+    {
+      "value": "RREF_L",
+      "text": "R8"
+    },
+    {
+      "value": "RSA",
+      "text": "R3"
+    },
+    {
+      "value": "RSB",
+      "text": "R5"
+    },
+    {
+      "value": "U1",
+      "text": "U1"
+    },
+    {
+      "value": "U2A",
+      "text": "U2"
+    },
+    {
+      "value": "U2B",
+      "text": "U3"
+    }
+  ],
+  "probes": [
+    {
+      "value": "",
+      "text": "Probe terminal"
+    },
+    {
+      "value": "C12.1",
+      "text": "C1 terminal 1"
+    },
+    {
+      "value": "C12.2",
+      "text": "C1 terminal 2"
+    },
+    {
+      "value": "C5.1",
+      "text": "C3 terminal 1"
+    },
+    {
+      "value": "C5.2",
+      "text": "C3 terminal 2"
+    },
+    {
+      "value": "CFLT_B.1",
+      "text": "C4 terminal 1"
+    },
+    {
+      "value": "CFLT_B.2",
+      "text": "C4 terminal 2"
+    },
+    {
+      "value": "CIN.+",
+      "text": "C2 terminal +"
+    },
+    {
+      "value": "CIN.-",
+      "text": "C2 terminal -"
+    },
+    {
+      "value": "DA.A",
+      "text": "D2 terminal A"
+    },
+    {
+      "value": "DA.K",
+      "text": "D2 terminal K"
+    },
+    {
+      "value": "DB.A",
+      "text": "D3 terminal A"
+    },
+    {
+      "value": "DB.K",
+      "text": "D3 terminal K"
+    },
+    {
+      "value": "DREV.A",
+      "text": "D1 terminal A"
+    },
+    {
+      "value": "DREV.K",
+      "text": "D1 terminal K"
+    },
+    {
+      "value": "F1.1",
+      "text": "F1 terminal 1"
+    },
+    {
+      "value": "F1.2",
+      "text": "F1 terminal 2"
+    },
+    {
+      "value": "J1.1",
+      "text": "J1 terminal 1"
+    },
+    {
+      "value": "J1.2",
+      "text": "J1 terminal 2"
+    },
+    {
+      "value": "JLOAD.1",
+      "text": "JLOAD terminal 1"
+    },
+    {
+      "value": "JLOAD.2",
+      "text": "JLOAD terminal 2"
+    },
+    {
+      "value": "JOA.1",
+      "text": "JOA terminal 1"
+    },
+    {
+      "value": "JOA.2",
+      "text": "JOA terminal 2"
+    },
+    {
+      "value": "JOB.1",
+      "text": "JOB terminal 1"
+    },
+    {
+      "value": "JOB.2",
+      "text": "JOB terminal 2"
+    },
+    {
+      "value": "JSA.1",
+      "text": "JSA terminal 1"
+    },
+    {
+      "value": "JSA.2",
+      "text": "JSA terminal 2"
+    },
+    {
+      "value": "JSB.1",
+      "text": "JSB terminal 1"
+    },
+    {
+      "value": "JSB.2",
+      "text": "JSB terminal 2"
+    },
+    {
+      "value": "KA.A1",
+      "text": "K1 terminal A1"
+    },
+    {
+      "value": "KA.A2",
+      "text": "K1 terminal A2"
+    },
+    {
+      "value": "KA.COM",
+      "text": "K1 terminal COM"
+    },
+    {
+      "value": "KA.NC",
+      "text": "K1 terminal NC"
+    },
+    {
+      "value": "KA.NO",
+      "text": "K1 terminal NO"
+    },
+    {
+      "value": "KB.A1",
+      "text": "K2 terminal A1"
+    },
+    {
+      "value": "KB.A2",
+      "text": "K2 terminal A2"
+    },
+    {
+      "value": "KB.COM",
+      "text": "K2 terminal COM"
+    },
+    {
+      "value": "KB.NC",
+      "text": "K2 terminal NC"
+    },
+    {
+      "value": "KB.NO",
+      "text": "K2 terminal NO"
+    },
+    {
+      "value": "LEDOUT_A.A",
+      "text": "LED1 terminal A"
+    },
+    {
+      "value": "LEDOUT_A.K",
+      "text": "LED1 terminal K"
+    },
+    {
+      "value": "QA.B",
+      "text": "Q1 terminal B"
+    },
+    {
+      "value": "QA.C",
+      "text": "Q1 terminal C"
+    },
+    {
+      "value": "QA.E",
+      "text": "Q1 terminal E"
+    },
+    {
+      "value": "QB.B",
+      "text": "Q2 terminal B"
+    },
+    {
+      "value": "QB.C",
+      "text": "Q2 terminal C"
+    },
+    {
+      "value": "QB.E",
+      "text": "Q2 terminal E"
+    },
+    {
+      "value": "RBLEED5.1",
+      "text": "R2 terminal 1"
+    },
+    {
+      "value": "RBLEED5.2",
+      "text": "R2 terminal 2"
+    },
+    {
+      "value": "RDA.1",
+      "text": "R9 terminal 1"
+    },
+    {
+      "value": "RDA.2",
+      "text": "R9 terminal 2"
+    },
+    {
+      "value": "RDB.1",
+      "text": "R11 terminal 1"
+    },
+    {
+      "value": "RDB.2",
+      "text": "R11 terminal 2"
+    },
+    {
+      "value": "REN.1",
+      "text": "R1 terminal 1"
+    },
+    {
+      "value": "REN.2",
+      "text": "R1 terminal 2"
+    },
+    {
+      "value": "RLEDOUT_A.1",
+      "text": "R13 terminal 1"
+    },
+    {
+      "value": "RLEDOUT_A.2",
+      "text": "R13 terminal 2"
+    },
+    {
+      "value": "RPDA.1",
+      "text": "R10 terminal 1"
+    },
+    {
+      "value": "RPDA.2",
+      "text": "R10 terminal 2"
+    },
+    {
+      "value": "RPDB.1",
+      "text": "R12 terminal 1"
+    },
+    {
+      "value": "RPDB.2",
+      "text": "R12 terminal 2"
+    },
+    {
+      "value": "RPIN_A.1",
+      "text": "R4 terminal 1"
+    },
+    {
+      "value": "RPIN_A.2",
+      "text": "R4 terminal 2"
+    },
+    {
+      "value": "RPIN_B.1",
+      "text": "R6 terminal 1"
+    },
+    {
+      "value": "RPIN_B.2",
+      "text": "R6 terminal 2"
+    },
+    {
+      "value": "RREF_H.1",
+      "text": "R7 terminal 1"
+    },
+    {
+      "value": "RREF_H.2",
+      "text": "R7 terminal 2"
+    },
+    {
+      "value": "RREF_L.1",
+      "text": "R8 terminal 1"
+    },
+    {
+      "value": "RREF_L.2",
+      "text": "R8 terminal 2"
+    },
+    {
+      "value": "RSA.1",
+      "text": "R3 terminal 1"
+    },
+    {
+      "value": "RSA.2",
+      "text": "R3 terminal 2"
+    },
+    {
+      "value": "RSB.1",
+      "text": "R5 terminal 1"
+    },
+    {
+      "value": "RSB.2",
+      "text": "R5 terminal 2"
+    },
+    {
+      "value": "U1.INPUT",
+      "text": "U1 terminal INPUT"
+    },
+    {
+      "value": "U1.OUTPUT",
+      "text": "U1 terminal OUTPUT"
+    },
+    {
+      "value": "U1.RETURN",
+      "text": "U1 terminal RETURN"
+    },
+    {
+      "value": "U1.ENABLE",
+      "text": "U1 terminal ENABLE"
+    },
+    {
+      "value": "U2A.SENSOR",
+      "text": "U2 terminal SENSOR"
+    },
+    {
+      "value": "U2A.REFERENCE",
+      "text": "U2 terminal REFERENCE"
+    },
+    {
+      "value": "U2A.RAIL",
+      "text": "U2 terminal RAIL"
+    },
+    {
+      "value": "U2A.OUTPUT",
+      "text": "U2 terminal OUTPUT"
+    },
+    {
+      "value": "U2A.RETURN",
+      "text": "U2 terminal RETURN"
+    },
+    {
+      "value": "U2B.SENSOR",
+      "text": "U3 terminal SENSOR"
+    },
+    {
+      "value": "U2B.REFERENCE",
+      "text": "U3 terminal REFERENCE"
+    },
+    {
+      "value": "U2B.RAIL",
+      "text": "U3 terminal RAIL"
+    },
+    {
+      "value": "U2B.OUTPUT",
+      "text": "U3 terminal OUTPUT"
+    },
+    {
+      "value": "U2B.RETURN",
+      "text": "U3 terminal RETURN"
+    }
+  ]
+}

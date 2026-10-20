@@ -1,0 +1,56 @@
+[
+  {
+    "step": "plain production navigation",
+    "result": "Five served fields match independently computed preview provenance"
+  },
+  {
+    "step": "prepare exact signed-long seed",
+    "seed": "0"
+  },
+  {
+    "step": "seed0 first ticket wait",
+    "result": "NOT_READY after30000ms; no seed substitution, inspect actual state"
+  },
+  {
+    "step": "seed0 actual ticket accepted",
+    "result": "Ordinary exact0 admitted; no seed substitution"
+  },
+  {
+    "step": "second exact public identity",
+    "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/0"
+  },
+  {
+    "step": "second initial customer retest",
+    "result": "FAIL"
+  },
+  {
+    "step": "raw rendered capture",
+    "file": "second-numbered-two-channel-board.jpg",
+    "sha256": "5ea383235fa920c0b5412d2679eaeeb1af5058742888cddc9b7b710ea0df9674",
+    "bytes": 148661
+  },
+  {
+    "step": "second supply3 selector",
+    "result": "5s timeout using one-channel voltage label; no physical mutation; read actual two-channel outputs"
+  },
+  {
+    "step": "raw rendered capture",
+    "file": "second-chip-reference-inspection.jpg",
+    "sha256": "304abf9c1b4e0e12f5e143d7e1a47864bfacde2db44a119a7c9ee1d0933f4347",
+    "bytes": 111279
+  },
+  {
+    "step": "raw rendered capture",
+    "file": "second-k2-original-service.jpg",
+    "sha256": "0b2b3925be35e5eeffb2cad66a2e2dfdebaa55614d198697603fab4ac93342e0",
+    "bytes": 109979
+  },
+  {
+    "step": "second original relay reinstalled",
+    "result": "Original Part28 into Output B/K2; fresh retest requested"
+  },
+  {
+    "step": "second restored retest",
+    "result": "Fresh customer FAIL remains; same-original physical restoration only, no functional repair"
+  }
+]

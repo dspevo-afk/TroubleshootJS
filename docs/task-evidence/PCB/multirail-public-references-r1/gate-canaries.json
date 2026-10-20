@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "literal complete naming and successful timing framing",
+      "result": "PASS"
+    },
+    {
+      "case": "duplicate component",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "unknown component",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "failed timing",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "exit2",
+      "result": "PASS_REJECTED"
+    }
+  ],
+  "limits": "Pure literal naming/timing framing only; not real native/build/OS proof"
+}

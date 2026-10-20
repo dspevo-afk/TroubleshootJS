@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "actualExitCode": 1,
+  "operation": "assess_final_r2.py actual supplemental final assessment",
+  "failure": "AssertionError: unexpected child stderr at service line51; original source/cohort/phase gates completed first",
+  "cause": "Incorrectly required empty stderr although pinned maintained runner bridges exact CirSim.console to System.err.println",
+  "actualStderrLines": 3631,
+  "observedShapes": {
+    "node unconnected": 2369,
+    "converged after": 1258,
+    "timestep down": 2,
+    "timestep up": 2
+  },
+  "correction": "Allow only exact existing CircuitJS informational logger grammar, retaining all raw stderr; reject every other nonempty line. No product, phase, corpus, source or budget change."
+}

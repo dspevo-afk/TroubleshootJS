@@ -1,0 +1,9 @@
+{
+  "executable": "pwsh.exe",
+  "startTicks": "639280911400191863",
+  "state": "LAUNCHED; readiness not claimed",
+  "pid": 18856,
+  "script": "scripts/start-preview.ps1",
+  "output": "Task-owned private OS-temp stdout/stderr",
+  "port": 8907
+}

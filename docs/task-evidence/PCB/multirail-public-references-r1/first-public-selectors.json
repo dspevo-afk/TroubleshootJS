@@ -1,0 +1,362 @@
+{
+  "components": [
+    {
+      "value": "",
+      "text": "Select component"
+    },
+    {
+      "value": "C12",
+      "text": "C1"
+    },
+    {
+      "value": "C5",
+      "text": "C3"
+    },
+    {
+      "value": "CIN",
+      "text": "C2"
+    },
+    {
+      "value": "DA",
+      "text": "D2"
+    },
+    {
+      "value": "DREV",
+      "text": "D1"
+    },
+    {
+      "value": "F1",
+      "text": "F1"
+    },
+    {
+      "value": "J1",
+      "text": "J1"
+    },
+    {
+      "value": "JLOAD",
+      "text": "JLOAD"
+    },
+    {
+      "value": "JOA",
+      "text": "JOA"
+    },
+    {
+      "value": "JSA",
+      "text": "JSA"
+    },
+    {
+      "value": "KA",
+      "text": "K1"
+    },
+    {
+      "value": "LED1",
+      "text": "LED1"
+    },
+    {
+      "value": "LEDOUT_A",
+      "text": "LED2"
+    },
+    {
+      "value": "QA",
+      "text": "Q1"
+    },
+    {
+      "value": "RBLEED5",
+      "text": "R2"
+    },
+    {
+      "value": "RDA",
+      "text": "R7"
+    },
+    {
+      "value": "REN",
+      "text": "R1"
+    },
+    {
+      "value": "RLED",
+      "text": "R9"
+    },
+    {
+      "value": "RLEDOUT_A",
+      "text": "R10"
+    },
+    {
+      "value": "RPDA",
+      "text": "R8"
+    },
+    {
+      "value": "RPIN_A",
+      "text": "R4"
+    },
+    {
+      "value": "RREF_H",
+      "text": "R5"
+    },
+    {
+      "value": "RREF_L",
+      "text": "R6"
+    },
+    {
+      "value": "RSA",
+      "text": "R3"
+    },
+    {
+      "value": "U1",
+      "text": "U1"
+    },
+    {
+      "value": "U2A",
+      "text": "U2"
+    }
+  ],
+  "probes": [
+    {
+      "value": "",
+      "text": "Probe terminal"
+    },
+    {
+      "value": "C12.1",
+      "text": "C1 terminal 1"
+    },
+    {
+      "value": "C12.2",
+      "text": "C1 terminal 2"
+    },
+    {
+      "value": "C5.1",
+      "text": "C3 terminal 1"
+    },
+    {
+      "value": "C5.2",
+      "text": "C3 terminal 2"
+    },
+    {
+      "value": "CIN.+",
+      "text": "C2 terminal +"
+    },
+    {
+      "value": "CIN.-",
+      "text": "C2 terminal -"
+    },
+    {
+      "value": "DA.A",
+      "text": "D2 terminal A"
+    },
+    {
+      "value": "DA.K",
+      "text": "D2 terminal K"
+    },
+    {
+      "value": "DREV.A",
+      "text": "D1 terminal A"
+    },
+    {
+      "value": "DREV.K",
+      "text": "D1 terminal K"
+    },
+    {
+      "value": "F1.1",
+      "text": "F1 terminal 1"
+    },
+    {
+      "value": "F1.2",
+      "text": "F1 terminal 2"
+    },
+    {
+      "value": "J1.1",
+      "text": "J1 terminal 1"
+    },
+    {
+      "value": "J1.2",
+      "text": "J1 terminal 2"
+    },
+    {
+      "value": "JLOAD.1",
+      "text": "JLOAD terminal 1"
+    },
+    {
+      "value": "JLOAD.2",
+      "text": "JLOAD terminal 2"
+    },
+    {
+      "value": "JOA.1",
+      "text": "JOA terminal 1"
+    },
+    {
+      "value": "JOA.2",
+      "text": "JOA terminal 2"
+    },
+    {
+      "value": "JSA.1",
+      "text": "JSA terminal 1"
+    },
+    {
+      "value": "JSA.2",
+      "text": "JSA terminal 2"
+    },
+    {
+      "value": "KA.A1",
+      "text": "K1 terminal A1"
+    },
+    {
+      "value": "KA.A2",
+      "text": "K1 terminal A2"
+    },
+    {
+      "value": "KA.COM",
+      "text": "K1 terminal COM"
+    },
+    {
+      "value": "KA.NC",
+      "text": "K1 terminal NC"
+    },
+    {
+      "value": "KA.NO",
+      "text": "K1 terminal NO"
+    },
+    {
+      "value": "LED1.A",
+      "text": "LED1 terminal A"
+    },
+    {
+      "value": "LED1.K",
+      "text": "LED1 terminal K"
+    },
+    {
+      "value": "LEDOUT_A.A",
+      "text": "LED2 terminal A"
+    },
+    {
+      "value": "LEDOUT_A.K",
+      "text": "LED2 terminal K"
+    },
+    {
+      "value": "QA.B",
+      "text": "Q1 terminal B"
+    },
+    {
+      "value": "QA.C",
+      "text": "Q1 terminal C"
+    },
+    {
+      "value": "QA.E",
+      "text": "Q1 terminal E"
+    },
+    {
+      "value": "RBLEED5.1",
+      "text": "R2 terminal 1"
+    },
+    {
+      "value": "RBLEED5.2",
+      "text": "R2 terminal 2"
+    },
+    {
+      "value": "RDA.1",
+      "text": "R7 terminal 1"
+    },
+    {
+      "value": "RDA.2",
+      "text": "R7 terminal 2"
+    },
+    {
+      "value": "REN.1",
+      "text": "R1 terminal 1"
+    },
+    {
+      "value": "REN.2",
+      "text": "R1 terminal 2"
+    },
+    {
+      "value": "RLED.1",
+      "text": "R9 terminal 1"
+    },
+    {
+      "value": "RLED.2",
+      "text": "R9 terminal 2"
+    },
+    {
+      "value": "RLEDOUT_A.1",
+      "text": "R10 terminal 1"
+    },
+    {
+      "value": "RLEDOUT_A.2",
+      "text": "R10 terminal 2"
+    },
+    {
+      "value": "RPDA.1",
+      "text": "R8 terminal 1"
+    },
+    {
+      "value": "RPDA.2",
+      "text": "R8 terminal 2"
+    },
+    {
+      "value": "RPIN_A.1",
+      "text": "R4 terminal 1"
+    },
+    {
+      "value": "RPIN_A.2",
+      "text": "R4 terminal 2"
+    },
+    {
+      "value": "RREF_H.1",
+      "text": "R5 terminal 1"
+    },
+    {
+      "value": "RREF_H.2",
+      "text": "R5 terminal 2"
+    },
+    {
+      "value": "RREF_L.1",
+      "text": "R6 terminal 1"
+    },
+    {
+      "value": "RREF_L.2",
+      "text": "R6 terminal 2"
+    },
+    {
+      "value": "RSA.1",
+      "text": "R3 terminal 1"
+    },
+    {
+      "value": "RSA.2",
+      "text": "R3 terminal 2"
+    },
+    {
+      "value": "U1.INPUT",
+      "text": "U1 terminal INPUT"
+    },
+    {
+      "value": "U1.OUTPUT",
+      "text": "U1 terminal OUTPUT"
+    },
+    {
+      "value": "U1.RETURN",
+      "text": "U1 terminal RETURN"
+    },
+    {
+      "value": "U1.ENABLE",
+      "text": "U1 terminal ENABLE"
+    },
+    {
+      "value": "U2A.SENSOR",
+      "text": "U2 terminal SENSOR"
+    },
+    {
+      "value": "U2A.REFERENCE",
+      "text": "U2 terminal REFERENCE"
+    },
+    {
+      "value": "U2A.RAIL",
+      "text": "U2 terminal RAIL"
+    },
+    {
+      "value": "U2A.OUTPUT",
+      "text": "U2 terminal OUTPUT"
+    },
+    {
+      "value": "U2A.RETURN",
+      "text": "U2 terminal RETURN"
+    }
+  ]
+}

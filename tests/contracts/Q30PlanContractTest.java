@@ -1,11 +1,23 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /** Independent structural, scale and shared-domain canary for Q30. */
 public final class Q30PlanContractTest {
     private static int assertions;
+
+    // Independent fixed declaration contract, filtered only by physical component presence.
+    private static final String[] REFERENCE_DECLARATIONS = {
+        "J1","F1","DREV","C12","U1","CIN","C5","REN","RBLEED5",
+        "U2A","RSA","RPIN_A","CFLT_A","U2B","RSB","RPIN_B","CFLT_B",
+        "RREF_H","RREF_L","RFB_A","RFB_B","RREF_HA","RREF_LA","RREF_HB","RREF_LB",
+        "RDA","RPDA","QA","DA","KA","RDB","RPDB","QB","DB","KB",
+        "RLED","LED1","RLED12","LED12","RLEDOUT_A","LEDOUT_A","RLEDOUT_B","LEDOUT_B",
+        "JSA","JOA","JSB","JOB","JLOAD"
+    };
 
     private Q30PlanContractTest() { }
 
@@ -134,6 +146,7 @@ public final class Q30PlanContractTest {
 
     private static void verifyBoard(Rb30Plan plan) {
         TroubleshootBoard board = plan.board();
+        verifyPublicReferences(board);
         int channels = plan.channelCount;
         check(board.getComponentIds().size() == plan.physicalPackageCount());
         check(plan.physicalPackageCount() >= 20 &&
@@ -345,6 +358,36 @@ public final class Q30PlanContractTest {
             rejected = true;
         }
         check(rejected);
+    }
+
+    private static void verifyPublicReferences(TroubleshootBoard board) {
+        Set<String> ids = new HashSet<String>(), names = new HashSet<String>();
+        Map<String,Integer> counts = new HashMap<String,Integer>();
+        for (String id : REFERENCE_DECLARATIONS) {
+            BoardComponent component = board.getComponent(id);
+            if (component == null) continue;
+            check(ids.add(id),"literal reference fixture declares each component once");
+            String expected = id;
+            if (!id.startsWith("J")) {
+                String prefix = id.startsWith("LED") ? "LED" : id.substring(0,1);
+                Integer prior = counts.get(prefix);
+                int ordinal = prior == null ? 1 : prior.intValue()+1;
+                counts.put(prefix,Integer.valueOf(ordinal));
+                expected = prefix + ordinal;
+            }
+            check(expected.equals(component.getDisplayName()),"literal public reference for " + id);
+            check(names.add(component.getDisplayName()),"public references are unique across the whole board");
+            check(component.getReferenceLabelCharacters() == id.length(),"old reference reservation retained for " + id);
+            check(expected.length() <= id.length(),"numbering fits the existing physical reservation");
+        }
+        check(ids.size() == board.getComponentIds().size(),"literal reference fixture covers the complete plan inventory");
+        check("D1".equals(board.getComponent("DREV").getDisplayName()),"literal protection diode reference");
+        check("U1".equals(board.getComponent("U1").getDisplayName()) &&
+            "U2".equals(board.getComponent("U2A").getDisplayName()),"regulator and decision chips share the U counter");
+        check("K1".equals(board.getComponent("KA").getDisplayName()),"literal channel A relay reference");
+        if (board.getComponent("KB") != null)
+            check("K2".equals(board.getComponent("KB").getDisplayName()) &&
+                "U3".equals(board.getComponent("U2B").getDisplayName()),"literal second-channel references");
     }
 
     private static void check(boolean condition) {

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "pid": 7756,
+  "rootExitCode": 0,
+  "profileAbsent": true,
+  "method": "Verified owner then context/browser/server API close; no shell deletion"
+}

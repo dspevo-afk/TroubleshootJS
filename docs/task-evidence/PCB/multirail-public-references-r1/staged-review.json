@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "stagedBeforeReviewFile": 130,
+  "rawExact": 127,
+  "crlfOnlyCanonical": 3,
+  "canonicalPaths": [
+    "docs/ARCHITECTURE.md",
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md"
+  ],
+  "scope": "Exact reviewed publication seal paths plus seal itself; no unrelated staging",
+  "privacy": "Selected text bytes checked for personal Windows prefix/browser-control endpoint; finite raw logs remain private",
+  "publicationSealSha256": "fd9f45f4e0b48f9a81820fb8e3de70449862cfe0c870adeaf9d572a002006647",
+  "review": "Root integrated production/test/doc/evidence diff and raw-byte seal inspected; no passing execution inferred from staging",
+  "limits": "Known profile-directory cleanup blocked; first console snapshot lost; all12 recorded births exited",
+  "retainedWhitespaceFailure": "Raw excerpt renamed to existing body-evidence filename rule, bytes unchanged; first exit2 retained"
+}

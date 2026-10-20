@@ -1,0 +1,6 @@
+{
+  "operation": "Maintained stop-preview after actual UI; cleanup separate from phase/build timing",
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 1.9997241
+}

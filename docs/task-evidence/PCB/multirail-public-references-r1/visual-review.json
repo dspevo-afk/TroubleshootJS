@@ -1,0 +1,36 @@
+{
+  "status": "ROOT_INSPECTED_FIVE_RAW_VIEWS",
+  "images": [
+    {
+      "file": "first-k1-original-service.jpg",
+      "sha256": "0a5601956d3539ecb97f9a24adfddf58d29eac67f45f8860836446863936c4af",
+      "bytes": 100716
+    },
+    {
+      "file": "first-numbered-board.jpg",
+      "sha256": "f82bfa5e613f6c7c53535f99e4584abdb0610c3dbdaa8e7393c3c5920dba1104",
+      "bytes": 147787
+    },
+    {
+      "file": "second-chip-reference-inspection.jpg",
+      "sha256": "304abf9c1b4e0e12f5e143d7e1a47864bfacde2db44a119a7c9ee1d0933f4347",
+      "bytes": 111279
+    },
+    {
+      "file": "second-k2-original-service.jpg",
+      "sha256": "0b2b3925be35e5eeffb2cad66a2e2dfdebaa55614d198697603fab4ac93342e0",
+      "bytes": 109979
+    },
+    {
+      "file": "second-numbered-two-channel-board.jpg",
+      "sha256": "5ea383235fa920c0b5412d2679eaeeb1af5058742888cddc9b7b710ea0df9674",
+      "bytes": 148661
+    }
+  ],
+  "observations": [
+    "First whole board has conventional numbered public references; two-channel seed0 shows K1/K2 and U1/U2/U3",
+    "Close view confirms U3 above its body and existing first-terminal dots; relay labels and U2 remain in their unchanged crowded former boxes",
+    "Actual empty K1/K2 slots and tray menus use Output A/K1 and Output B/K2; original physical specifications unchanged"
+  ],
+  "limits": "Actual visual inspection; no pixel oracle or optimal silkscreen/packing/manufacturing claim. Two exact replays, not fresh entropy samples."
+}

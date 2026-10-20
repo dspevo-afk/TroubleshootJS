@@ -1,0 +1,29 @@
+{
+  "status": "FINITE_SECOND_BROWSER_OBSERVATION",
+  "errorsAndWarnings": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageerror": [],
+  "requestfailed": [],
+  "responseErrors": [],
+  "informationalCount": 924,
+  "informationalTypes": {
+    "log": 924
+  },
+  "informationalMessages": {
+    "unconnected node": 705,
+    "convergence": 215,
+    "timestep": 4
+  },
+  "rawFiniteSnapshotSha256": "065bf112a859ba46ebf54bcd5c847cc7eecc80f1782535c7f50c6ada6dba184a",
+  "rawFiniteSnapshotBytes": 71770,
+  "rawRetained": "Task-owned private OS-temp outside Git",
+  "firstBrowserLimit": "First console snapshot lost in tool-kernel reset; no first clean-console claim"
+}

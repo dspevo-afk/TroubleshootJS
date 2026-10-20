@@ -1,0 +1,6 @@
+{
+  "status": "PASS_REFUSED_OPTIMIZED_PYTHON",
+  "actualExitCode": 1,
+  "script": "assess_final_r2.py",
+  "limits": "Actual interpreter refusal only, no phase proof"
+}

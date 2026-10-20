@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "file": "build.txt",
+  "substitution": "One exact worktree prefix replaced by <WORKTREE>; all other bytes exact",
+  "rawSha256": "204fdf6c2bf0a7a706492ef9d2252d2b230a5c357477fb4cac4299a46b36c520",
+  "publicSha256": "6b95bf641d21045cfac0c37acdd4a5330725e75c65630ef3bcee651de74c8ce8",
+  "rawRetained": "Task-owned private OS-temp outside Git",
+  "browserLogs": "Second finite snapshot private with exact hash/bytes and all error/warning records public. First in-memory snapshot lost in tool reset; no complete first-console claim."
+}

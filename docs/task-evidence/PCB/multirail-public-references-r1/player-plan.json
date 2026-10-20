@@ -1,0 +1,15 @@
+{
+  "status": "PREDECLARED_BEFORE_UI",
+  "cases": [
+    {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320",
+      "origin": "Previously fresh public board; one relay"
+    },
+    {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+      "origin": "Exact admitted seed0 in current baseline44; two relays"
+    }
+  ],
+  "flow": "Public menu/probe/reference/catalog/direct install labels, all supplies OFF removal/original restoration, actual customer retest; no functional repair claim without actual diagnosis/mutation/PASS",
+  "limits": "No seed substitution or new entropy claim"
+}

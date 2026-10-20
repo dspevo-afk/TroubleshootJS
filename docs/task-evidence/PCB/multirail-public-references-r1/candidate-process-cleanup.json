@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "phase": "candidate",
+  "launchSha256": "5675748b0d0a79ebaf4c8025e579fd72da422781f4a46886c1466e454c33f877",
+  "checks": [
+    {
+      "pid": 31484,
+      "startTicks": "639280903926151548",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 30620,
+      "startTicks": "639280903933509251",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ],
+  "scope": "Root actual recorded birth exits after maintained phase returned exit0"
+}

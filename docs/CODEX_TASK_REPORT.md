@@ -1,4 +1,47 @@
-# Current checkpoint: ceramic marking accepted; publication pending
+# Current checkpoint: multi-rail public references accepted before publication
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+e8d151144e0bb66e24b7aa00f49fcee41620a922. Indefinite ordinary PCB realism and
+screenshots remain authorized; no main/email. Naming candidate source3/observer1/
+native3 complete; immutable BoardComponent authority, exact old label reservation,
+connector/operational/physical/electrical/random/epoch data retained. Architecture
+updated. Prior ceramic publication receipt included next commit.
+
+Fresh paired44 baseline73.0917384s/candidate72.5299841s PASS: only four RB30
+reference inks change; all graph/physical/normalized geometry/boxes/capacity/
+routes/metrics/work exact. Maintained native13 PASS387.7190205s, including40
+actual bounded solver service children. Final JDK8/GWT5 PASS88.9096422s.
+Exact1481/original gates4/machinery24 and raw source archives audited. Original
+assessor one-count FAIL and supplemental empty-stderr FAIL retained; corrected
+separate sealed exact40/logger-grammar assessor retains all other final gates.
+Original four gates unchanged; no phase rerun/budget change. Static source/parser
+reviews no blocker; native workbench/modify titles not separately literal-tested.
+
+Five actual raw views inspected; three pasted in chat. Exact previous-fresh
+RB30 -5864181845794033320 and exact0 two-channel variant. All3/all4 outputs OFF
+before original K1/Part19 and K2/Part28 removal/reinstall through public A/K1,B/K2
+targets; original-restored customer FAIL remains, final OFF/tray0. Actual Shop
+is generic; capability API titles covered natively, not separately displayed.
+First-tab console/events/post-provenance lost in30s tool reset during subsequent
+preparation; body/selector/images retained. New browser admits same exact0 after
+initial30s NOT_READY; no substitution. Three input-selector timeouts corrected
+from actual menus/ARIA/supply controls before dependent mutation. Second before/
+final after served fields and root final source/execution provenance exact.
+Second924 info/two unattributed404 console errors retained/counts, finite raw
+private; no first clean-console/favicon/functional-repair claim.
+
+All12 recorded births exited/state absent/8907 released; second browser root0/
+profile absent; maintained stop1.9997241s. First interrupted profile deletion
+BLOCKED by automatic review, no alternate attempt. Earlier blocked profile,
+private baseline COPY, Original5/private pointer/cache preserved; task private
+metadata/raw logs retained. No current browser/preview/expensive phase.
+Next: final explicit staging/raw-canonical-byte/privacy audit, normal branch
+commit/push/exact remote SHA. Then generic reference-ink readability investigation
+for existing relay/U2 crowded boxes (read-only leaf underway, no next production
+implementation). No main/email; continue afterward.
+
+# Previous checkpoint: ceramic marking accepted beforee8d15114 publication
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin

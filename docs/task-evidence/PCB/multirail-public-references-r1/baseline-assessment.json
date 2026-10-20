@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "phase": "baseline",
+  "cases": 44,
+  "families": 11,
+  "elapsedSeconds": 73.0917384,
+  "oracle": "Exact physical/graph/normalized geometry/boxes/capacity/routes/metrics/work; only4 RB30 public reference texts and full ink hashes vary",
+  "limits": "Fixed informed corpus; no unseen/all-seed/manufacturing/performance or new-size proof"
+}

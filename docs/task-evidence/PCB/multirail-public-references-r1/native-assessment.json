@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "pairedCases": 44,
+  "focusedSuites": 13,
+  "qualifiedServiceChildren": 40,
+  "actualJdk8GwtPermutations": 5,
+  "operationSeconds": {
+    "baseline": 73.0917384,
+    "candidate": 72.5299841,
+    "contracts": 387.7190205,
+    "build": 88.9096422
+  },
+  "correction": "Original four gates unchanged; all original final checks retained except erroneous once-only service count, replaced by exact ordered40 qualified blocks and census",
+  "player": "Separate fresh actual normal reference/service evidence required",
+  "limits": "No new execution from parser; reuse only exact audited phase inputs; no full unrelated matrix/all-seed/manufacturing/new-size proof"
+}

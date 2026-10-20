@@ -1,0 +1,4100 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+Q30_CASE_PLAN {"schema":1,"seed":"7","canonical":"rb30-plan@4;seed=7;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-1194938301906846876;routing=8563653456340676275;physicalPolicy=MEDIUM_BOARD@1;fault=RELAY_B_COIL_OPEN;packages=37;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O1_B5_N","channelCount":2,"activeChannels":["A","B"],"packageCount":37,"referenceArrangement":"SHARED_HYSTERETIC","support":{"C12":true,"S5":false,"S12":false,"filters":3,"outputIndicators":1,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_B_COIL_OPEN","owner":"KB"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":37,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":5,"customerRetestWorkUnits":5,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"13","canonical":"rb30-plan@4;seed=13;topology=RB30_CH1_SEPARATE_DIRECT_A_NMOS;support=C12:false,S5:false,S12:true,filters:1,outputIndicators:0,bleeder5:false;layout=-8526998057890890386;routing=7912193663056532433;physicalPolicy=MEDIUM_BOARD@1;fault=DRIVE_A_OPEN;packages=23;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH1_SEPARATE_DIRECT_A_NMOS_C12_N_S5_N_S12_Y_F1_O0_B5_N","channelCount":1,"activeChannels":["A"],"packageCount":23,"referenceArrangement":"SEPARATE_DIRECT","support":{"C12":false,"S5":false,"S12":true,"filters":1,"outputIndicators":0,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_A_COIL_OPEN","owner":"KA"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":17,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":3,"customerRetestWorkUnits":3,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"4","canonical":"rb30-plan@4;seed=4;topology=RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS;support=C12:true,S5:false,S12:false,filters:1,outputIndicators:2,bleeder5:false;layout=-7967780441668740599;routing=4321422998255155060;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=34;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH2_SHARED_DIRECT_A_BJT_B_NMOS_C12_Y_S5_N_S12_N_F1_O2_B5_N","channelCount":2,"activeChannels":["A","B"],"packageCount":34,"referenceArrangement":"SHARED_DIRECT","support":{"C12":true,"S5":false,"S12":false,"filters":1,"outputIndicators":2,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_B_COIL_OPEN","owner":"KB"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":37,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":5,"customerRetestWorkUnits":5,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"14","canonical":"rb30-plan@4;seed=14;topology=RB30_CH1_SEPARATE_DIRECT_A_NMOS;support=C12:false,S5:false,S12:false,filters:1,outputIndicators:1,bleeder5:true;layout=-4066299183252158013;routing=8455461874929798594;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=24;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH1_SEPARATE_DIRECT_A_NMOS_C12_N_S5_N_S12_N_F1_O1_B5_Y","channelCount":1,"activeChannels":["A"],"packageCount":24,"referenceArrangement":"SEPARATE_DIRECT","support":{"C12":false,"S5":false,"S12":false,"filters":1,"outputIndicators":1,"bleeder5":true},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_A_COIL_OPEN","owner":"KA"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":17,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":3,"customerRetestWorkUnits":3,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"43","canonical":"rb30-plan@4;seed=43;topology=RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT;support=C12:true,S5:false,S12:false,filters:3,outputIndicators:3,bleeder5:false;layout=-1512077175122950681;routing=-7965146064256394114;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=39;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH2_SHARED_HYSTERETIC_A_BJT_B_BJT_C12_Y_S5_N_S12_N_F3_O3_B5_N","channelCount":2,"activeChannels":["A","B"],"packageCount":39,"referenceArrangement":"SHARED_HYSTERETIC","support":{"C12":true,"S5":false,"S12":false,"filters":3,"outputIndicators":3,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_B_COIL_OPEN","owner":"KB"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":37,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":5,"customerRetestWorkUnits":5,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"3","canonical":"rb30-plan@4;seed=3;topology=RB30_CH2_SEPARATE_DIRECT_A_NMOS_B_BJT;support=C12:false,S5:false,S12:false,filters:1,outputIndicators:3,bleeder5:true;layout=7415793985178074592;routing=-6737138315424505881;physicalPolicy=MEDIUM_BOARD@1;fault=SENSOR_A_OPEN;packages=38;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH2_SEPARATE_DIRECT_A_NMOS_B_BJT_C12_N_S5_N_S12_N_F1_O3_B5_Y","channelCount":2,"activeChannels":["A","B"],"packageCount":38,"referenceArrangement":"SEPARATE_DIRECT","support":{"C12":false,"S5":false,"S12":false,"filters":1,"outputIndicators":3,"bleeder5":true},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_B_COIL_OPEN","owner":"KB"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":37,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":5,"customerRetestWorkUnits":5,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"10","canonical":"rb30-plan@4;seed=10;topology=RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS;support=C12:false,S5:false,S12:false,filters:3,outputIndicators:1,bleeder5:false;layout=-5437028946546985473;routing=6161596101315970262;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=36;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=2;sensors=2-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN),RPIN_B:1000ohm(B_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH2_SEPARATE_DIRECT_A_BJT_B_NMOS_C12_N_S5_N_S12_N_F3_O1_B5_N","channelCount":2,"activeChannels":["A","B"],"packageCount":36,"referenceArrangement":"SEPARATE_DIRECT","support":{"C12":false,"S5":false,"S12":false,"filters":3,"outputIndicators":1,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_B_COIL_OPEN","owner":"KB"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":37,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":5,"customerRetestWorkUnits":5,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+Q30_CASE_PLAN {"schema":1,"seed":"64","canonical":"rb30-plan@4;seed=64;topology=RB30_CH1_SHARED_DIRECT_A_NMOS;support=C12:false,S5:false,S12:false,filters:0,outputIndicators:1,bleeder5:false;layout=-7619673160888504460;routing=-2032842263090610941;physicalPolicy=MEDIUM_BOARD@1;fault=DREV_OPEN;packages=22;main=12V;regulator=5V-E02;coil=5V-E03;load=isolated-12V-180ohm-per-channel;channels=1;sensors=1-E04-decisions;sensorPullDowns=RPIN_A:1000ohm(A_RAW,CTRL_RETURN);loadReference=isolated","planEpoch":4,"topology":"RB30_CH1_SHARED_DIRECT_A_NMOS_C12_N_S5_N_S12_N_F0_O1_B5_N","channelCount":1,"activeChannels":["A"],"packageCount":22,"referenceArrangement":"SHARED_DIRECT","support":{"C12":false,"S5":false,"S12":false,"filters":0,"outputIndicators":1,"bleeder5":false},"faults":[{"id":"DREV_OPEN","owner":"DREV"},{"id":"REN_OPEN","owner":"REN"},{"id":"SENSOR_A_OPEN","owner":"RSA"},{"id":"DRIVE_A_OPEN","owner":"RDA"},{"id":"RELAY_A_COIL_OPEN","owner":"KA"}],"diagnosticProviderDeveloper":"rb30-control-diagnostic@2","diagnosticProviderNormal":"rb30-control-diagnostic@4","diagnosticTemplate":"RB30_CHANNEL_INPUT_SWEEP_V1","diagnosticSamplesPerHypothesis":17,"temporalContract":"RB30_CHANNEL_FUNCTION@3","sampleSeconds":0.03,"profileWorkUnits":3,"customerRetestWorkUnits":3,"maxJobMillis":90000,"maxJobSteps":640,"activeOperationMillis":5000}
+PASS: PCB silkscreen scale contracts: 12621 assertions
+
+PASS: PcbScreenLabelLayoutContractTest: 273 assertions
+
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6
+
+PASS: U06 session save contracts assertions=34988
+
+PASS: PlayerSessionFingerprintContractTest assertions=119
+
+PASS: RB56 model-identity contracts assertions=123
+
+PASS: E05 isolation geometry contracts assertions=145
+
+PASS: Q30 plan contracts 10944 assertions, topologies=11, oneChannelSeeds=7, twoChannelSeeds=10, structuralPackageBand=20..40
+
+PASS: Q30 relay services seed=0 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=1 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=-9223372036854775808 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9223372036854775807 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay services seed=9007199254740993 ids=RB30_RELAY_SERVICE_KA,RB30_RELAY_SERVICE_KB
+PASS: Q30 relay service contracts 140 assertions
+
+Q30_FUSED12_SAMPLE seed=7 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.993892910298243 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.05622660467257 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=7 simulatedSeconds=0.2 upstreamVolts=0.9219169895889704
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.993892910298243 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.0562266046722355 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=7 simulatedSeconds=0.2 upstreamVolts=0.9219169895889505
+PASS: Q30 service flow seed=7 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=e7d799df
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10806
+PASS: Q30 service flow contracts 279 assertions seed=7 fault=RELAY_B_COIL_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 57 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 57 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=7 phase=powered-before-service c12=true volts=11.999809101653838 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=11.999999999530784 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=11.99999999952503 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=7 fault=DREV_OPEN target=DREV fingerprintHash=e7d799df
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9559
+PASS: Q30 service flow contracts 261 assertions seed=7 fault=DREV_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 40 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=7 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.999998157857735 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=11.817986110778465 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.999997928123825 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=11.812568295619803 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=7 fault=REN_OPEN target=REN fingerprintHash=e7d799df
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9413
+PASS: Q30 service flow contracts 261 assertions seed=7 fault=REN_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=7 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.993892911608494 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.056227073358966 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.99389291160849 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.056227073359529 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=7 fault=SENSOR_A_OPEN target=RSA fingerprintHash=e7d799df
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9405
+PASS: Q30 service flow contracts 261 assertions seed=7 fault=SENSOR_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=7 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.993892911608492 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.056227073358822 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=immediately-after-source-disconnect c12=true volts=11.99389291160849 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=7 phase=after-100ms-local-relay-window c12=true volts=4.05622707335863 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=7 fault=DRIVE_A_OPEN target=RDA fingerprintHash=e7d799df
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9630
+PASS: Q30 service flow contracts 261 assertions seed=7 fault=DRIVE_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=13 phase=powered-before-service c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999662262714041 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.3371953431489048 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=13 simulatedSeconds=0.2 upstreamVolts=0.8721166332815182
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999662262714041 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.3371953395118097 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=13 simulatedSeconds=0.2 upstreamVolts=0.8721166332815317
+PASS: Q30 service flow seed=13 fault=RELAY_A_COIL_OPEN target=KA fingerprintHash=e8402ae0
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4835
+PASS: Q30 service flow contracts 240 assertions seed=13 fault=RELAY_A_COIL_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 34 unconnected
+node 37 unconnected
+node 40 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 34 unconnected
+node 37 unconnected
+node 40 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=13 phase=powered-before-service c12=false volts=11.999662230974526 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999999999999998 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=13 fault=DREV_OPEN target=DREV fingerprintHash=e8402ae0
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4307
+PASS: Q30 service flow contracts 222 assertions seed=13 fault=DREV_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 4 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=13 phase=powered-before-service c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999850830993765 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=7.756432666528326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999850830993763 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=7.756432710901655 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=13 fault=REN_OPEN target=REN fingerprintHash=e8402ae0
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4242
+PASS: Q30 service flow contracts 222 assertions seed=13 fault=REN_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=13 phase=powered-before-service c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.33650940668395 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.99966223097453 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.336509429201532 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=13 fault=SENSOR_A_OPEN target=RSA fingerprintHash=e8402ae0
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4187
+PASS: Q30 service flow contracts 222 assertions seed=13 fault=SENSOR_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=13 phase=powered-before-service c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999662230974529 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.336509432844748 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=immediately-after-source-disconnect c12=false volts=11.999662230974527 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=13 phase=after-100ms-local-relay-window c12=false volts=3.3365094606581023 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=13 fault=DRIVE_A_OPEN target=RDA fingerprintHash=e8402ae0
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4185
+PASS: Q30 service flow contracts 222 assertions seed=13 fault=DRIVE_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=4 phase=powered-before-service c12=true volts=11.999809068442936 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.99389291027144 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=4.936946398848573 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=4 simulatedSeconds=0.30000000000000004 upstreamVolts=0.8131764611428874
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.99389291027144 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=4.93694639884903 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=4 simulatedSeconds=0.30000000000000004 upstreamVolts=0.813176461142882
+PASS: Q30 service flow seed=4 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=75f76f16
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11063
+PASS: Q30 service flow contracts 273 assertions seed=4 fault=RELAY_B_COIL_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+node 55 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+node 55 unconnected
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 49 unconnected
+node 52 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=4 phase=powered-before-service c12=true volts=11.999809068442934 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.999999999999998 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=11.999999999535449 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=11.999999999521513 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=4 fault=DREV_OPEN target=DREV fingerprintHash=75f76f16
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10240
+PASS: Q30 service flow contracts 255 assertions seed=4 fault=DREV_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 7 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 40 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=4 phase=powered-before-service c12=true volts=11.999809068442936 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.99999815785756 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=11.81798610641463 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.999997928123802 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=11.812568295069683 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=4 fault=REN_OPEN target=REN fingerprintHash=75f76f16
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10720
+PASS: Q30 service flow contracts 255 assertions seed=4 fault=REN_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=4 phase=powered-before-service c12=true volts=11.999809068442936 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.993816923600656 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=6.148446441725191 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.993816923600654 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=6.148446441725184 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=4 fault=SENSOR_A_OPEN target=RSA fingerprintHash=75f76f16
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9603
+PASS: Q30 service flow contracts 255 assertions seed=4 fault=SENSOR_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=4 phase=powered-before-service c12=true volts=11.999809068442936 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.993816923600658 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=6.1484464417248335 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=immediately-after-source-disconnect c12=true volts=11.993816923600654 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=4 phase=after-100ms-local-relay-window c12=true volts=6.1484464417255795 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=4 fault=DRIVE_A_OPEN target=RDA fingerprintHash=75f76f16
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10445
+PASS: Q30 service flow contracts 255 assertions seed=4 fault=DRIVE_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=14 phase=powered-before-service c12=false volts=11.99980157004326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999801601853077 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.410741806554785 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=14 simulatedSeconds=0.30000000000000004 upstreamVolts=0.8139788451034513
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999801601853077 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.410741806554785 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=14 simulatedSeconds=0.30000000000000004 upstreamVolts=0.8139788451034513
+PASS: Q30 service flow seed=14 fault=RELAY_A_COIL_OPEN target=KA fingerprintHash=562dad88
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=5423
+PASS: Q30 service flow contracts 243 assertions seed=14 fault=RELAY_A_COIL_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+node 41 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 35 unconnected
+node 38 unconnected
+node 41 unconnected
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 35 unconnected
+node 38 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=14 phase=powered-before-service c12=false volts=11.999801570043262 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=14 fault=DREV_OPEN target=DREV fingerprintHash=562dad88
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4735
+PASS: Q30 service flow contracts 225 assertions seed=14 fault=DREV_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 4 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=14 phase=powered-before-service c12=false volts=11.99980157004326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999997827746812 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=11.547533237656827 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999997189334543 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=11.534889296605904 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=14 fault=REN_OPEN target=REN fingerprintHash=562dad88
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4674
+PASS: Q30 service flow contracts 225 assertions seed=14 fault=REN_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 12 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=14 phase=powered-before-service c12=false volts=11.99980157004326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999801570043259 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.409832273556667 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999801570043262 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.409832232233251 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=14 fault=SENSOR_A_OPEN target=RSA fingerprintHash=562dad88
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4504
+PASS: Q30 service flow contracts 225 assertions seed=14 fault=SENSOR_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 24 unconnected
+node 26 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=14 phase=powered-before-service c12=false volts=11.99980157004326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.99980157004326 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.409832272052372 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=immediately-after-source-disconnect c12=false volts=11.999801570043262 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=14 phase=after-100ms-local-relay-window c12=false volts=5.409832312920783 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=14 fault=DRIVE_A_OPEN target=RDA fingerprintHash=562dad88
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4517
+PASS: Q30 service flow contracts 225 assertions seed=14 fault=DRIVE_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 29 unconnected
+node 32 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=43 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.993892910298245 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056226604672281 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=43 simulatedSeconds=0.2 upstreamVolts=0.9219169895889355
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.993892910298243 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056226604672189 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=43 simulatedSeconds=0.2 upstreamVolts=0.9219169895889543
+PASS: Q30 service flow seed=43 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=32ecdaff
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=12369
+PASS: Q30 service flow contracts 284 assertions seed=43 fault=RELAY_B_COIL_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 57 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 57 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 23 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 51 unconnected
+node 54 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=43 phase=powered-before-service c12=true volts=11.999809101653838 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=11.999999999524391 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=11.9999999995417 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=43 fault=DREV_OPEN target=DREV fingerprintHash=32ecdaff
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11346
+PASS: Q30 service flow contracts 266 assertions seed=43 fault=DREV_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 9 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 40 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=43 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.999998157857735 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=11.817986110778465 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.999997928123825 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=11.812568295619803 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=43 fault=REN_OPEN target=REN fingerprintHash=32ecdaff
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11157
+PASS: Q30 service flow contracts 266 assertions seed=43 fault=REN_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 17 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=43 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.993892911608494 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056227073337395 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.99389291160849 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056227073337321 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=43 fault=SENSOR_A_OPEN target=RSA fingerprintHash=32ecdaff
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11494
+PASS: Q30 service flow contracts 266 assertions seed=43 fault=SENSOR_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=43 phase=powered-before-service c12=true volts=11.999809101653844 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.993892911608494 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056227073337178 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=immediately-after-source-disconnect c12=true volts=11.99389291160849 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=43 phase=after-100ms-local-relay-window c12=true volts=4.056227073337022 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=43 fault=DRIVE_A_OPEN target=RDA fingerprintHash=32ecdaff
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11179
+PASS: Q30 service flow contracts 266 assertions seed=43 fault=DRIVE_A_OPEN
+
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 17 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 37 unconnected
+node 40 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=3 phase=powered-before-service c12=false volts=11.999764072348581 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993771995073564 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=3.1084934385338334 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=3 simulatedSeconds=0.2 upstreamVolts=0.8656888379558864
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993771995073566 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=3.108493441137129 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=3 simulatedSeconds=0.2 upstreamVolts=0.8656888379558956
+PASS: Q30 service flow seed=3 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=d3964c9c
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10765
+PASS: Q30 service flow contracts 282 assertions seed=3 fault=RELAY_B_COIL_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+node 59 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+node 59 unconnected
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 53 unconnected
+node 56 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=3 phase=powered-before-service c12=false volts=11.999764072348583 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.999999999999998 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=3 fault=DREV_OPEN target=DREV fingerprintHash=d3964c9c
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9580
+PASS: Q30 service flow contracts 264 assertions seed=3 fault=DREV_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 4 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=3 phase=powered-before-service c12=false volts=11.999764072348581 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.999998157666067 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=11.555616520576166 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.999997860177727 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=11.548271481959457 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=3 fault=REN_OPEN target=REN fingerprintHash=d3964c9c
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9266
+PASS: Q30 service flow contracts 264 assertions seed=3 fault=REN_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 9 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=3 phase=powered-before-service c12=false volts=11.999764072348581 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993847950797852 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=4.2273712314521 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993847950797852 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=4.22737122433163 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=3 fault=SENSOR_A_OPEN target=RSA fingerprintHash=d3964c9c
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9503
+PASS: Q30 service flow contracts 264 assertions seed=3 fault=SENSOR_A_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 27 unconnected
+node 29 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=3 phase=powered-before-service c12=false volts=11.999764072348581 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993847950797852 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=4.227371222083067 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=immediately-after-source-disconnect c12=false volts=11.993847950797852 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=3 phase=after-100ms-local-relay-window c12=false volts=4.227371253751715 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=3 fault=DRIVE_A_OPEN target=RDA fingerprintHash=d3964c9c
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=9282
+PASS: Q30 service flow contracts 264 assertions seed=3 fault=DRIVE_A_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 39 unconnected
+node 42 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=10 phase=powered-before-service c12=false volts=11.99977157170378 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993855470542432 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.286296329197226 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=10 simulatedSeconds=0.2 upstreamVolts=0.8751437560368514
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993855470542432 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.286296323875797 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=10 simulatedSeconds=0.2 upstreamVolts=0.875143756036806
+PASS: Q30 service flow seed=10 fault=RELAY_B_COIL_OPEN target=KB fingerprintHash=cfa2de53
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=11252
+PASS: Q30 service flow contracts 277 assertions seed=10 fault=RELAY_B_COIL_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 58 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 58 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 52 unconnected
+node 55 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=10 phase=powered-before-service c12=false volts=11.999771571703782 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.999999999999998 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=10 fault=DREV_OPEN target=DREV fingerprintHash=cfa2de53
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10388
+PASS: Q30 service flow contracts 259 assertions seed=10 fault=DREV_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 4 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 4 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 16 unconnected
+node 20 unconnected
+converged after 19 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=10 phase=powered-before-service c12=false volts=11.99977157170378 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.99999815769283 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=11.555617260192067 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.99999786018113 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=11.548271497163288 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=10 fault=REN_OPEN target=REN fingerprintHash=cfa2de53
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10019
+PASS: Q30 service flow contracts 259 assertions seed=10 fault=REN_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+converged after 20 iterations, timeStep = 5.0E-6
+timestep down to 2.5E-6 at 0.1508650000000805
+timestep down to 1.25E-6 at 0.1508650000000805
+converged after 13 iterations, timeStep = 1.25E-6
+converged after 3 iterations, timeStep = 1.25E-6
+converged after 12 iterations, timeStep = 1.25E-6
+converged after 2 iterations, timeStep = 1.25E-6
+converged after 2 iterations, timeStep = 1.25E-6
+converged after 2 iterations, timeStep = 1.25E-6
+timestep up = 2.5E-6 at 0.15087250000008054
+converged after 2 iterations, timeStep = 2.5E-6
+converged after 2 iterations, timeStep = 2.5E-6
+converged after 2 iterations, timeStep = 2.5E-6
+timestep up = 5.0E-6 at 0.1508800000000805
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 20 unconnected
+node 11 unconnected
+node 20 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 21 unconnected
+node 23 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=10 phase=powered-before-service c12=false volts=11.99977157170378 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993779484230778 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.27081650779365 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993779484230776 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.270816462346366 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=10 fault=SENSOR_A_OPEN target=RSA fingerprintHash=cfa2de53
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10081
+PASS: Q30 service flow contracts 259 assertions seed=10 fault=SENSOR_A_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 26 unconnected
+node 28 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=10 phase=powered-before-service c12=false volts=11.99977157170378 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993779484230778 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.27081645655724 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=immediately-after-source-disconnect c12=false volts=11.993779484230778 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=10 phase=after-100ms-local-relay-window c12=false volts=3.2708164556404373 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=10 fault=DRIVE_A_OPEN target=RDA fingerprintHash=cfa2de53
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=10207
+PASS: Q30 service flow contracts 259 assertions seed=10 fault=DRIVE_A_OPEN
+
+node 11 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+node 11 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 11 unconnected
+converged after 18 iterations, timeStep = 5.0E-6
+node 11 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 10 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 11 unconnected
+node 38 unconnected
+node 41 unconnected
+converged after 20 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=64 phase=powered-before-service c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.99980910119164 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.626167195701621 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=64 simulatedSeconds=0.30000000000000004 upstreamVolts=0.8158443262523198
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999809101191637 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.626167163554024 storage=OBSERVATION_REQUIRED
+Q30_RESIDUAL_GUARD seed=64 simulatedSeconds=0.30000000000000004 upstreamVolts=0.8158443262523187
+PASS: Q30 service flow seed=64 fault=RELAY_A_COIL_OPEN target=KA fingerprintHash=bb753327
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4767
+PASS: Q30 service flow contracts 239 assertions seed=64 fault=RELAY_A_COIL_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 12 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 34 unconnected
+node 37 unconnected
+node 40 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 11 unconnected
+node 34 unconnected
+node 37 unconnected
+node 40 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 34 unconnected
+node 37 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=64 phase=powered-before-service c12=false volts=11.99980906938188 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999999999999998 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=12.0 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=0.0 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=64 fault=DREV_OPEN target=DREV fingerprintHash=bb753327
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=4077
+PASS: Q30 service flow contracts 221 assertions seed=64 fault=DREV_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 4 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 4 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 25 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 13 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=64 phase=powered-before-service c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999997827938195 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=11.547537601380878 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999997189392152 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=11.534890222544686 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=64 fault=REN_OPEN target=REN fingerprintHash=bb753327
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=3999
+PASS: Q30 service flow contracts 221 assertions seed=64 fault=REN_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+converged after 10 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 17 unconnected
+node 8 unconnected
+node 17 unconnected
+node 18 unconnected
+node 20 unconnected
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 13 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 18 unconnected
+node 20 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=64 phase=powered-before-service c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.99980906938188 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.62524735035473 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.625247309653478 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=64 fault=SENSOR_A_OPEN target=RSA fingerprintHash=bb753327
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=3910
+PASS: Q30 service flow contracts 221 assertions seed=64 fault=SENSOR_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 23 unconnected
+node 25 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+Q30_FUSED12_SAMPLE seed=64 phase=powered-before-service c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.99980906938188 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.62524735035473 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=immediately-after-source-disconnect c12=false volts=11.999809069381879 storage=OBSERVATION_REQUIRED
+Q30_FUSED12_SAMPLE seed=64 phase=after-100ms-local-relay-window c12=false volts=5.625247309653478 storage=OBSERVATION_REQUIRED
+PASS: Q30 service flow seed=64 fault=DRIVE_A_OPEN target=RDA fingerprintHash=bb753327
+Q30_CASE_TIME operation=route-replay-and-service elapsedMillis=3848
+PASS: Q30 service flow contracts 221 assertions seed=64 fault=DRIVE_A_OPEN
+
+node 8 unconnected
+converged after 27 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 16 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 8 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 21 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 15 iterations, timeStep = 5.0E-6
+converged after 6 iterations, timeStep = 5.0E-6
+node 8 unconnected
+node 28 unconnected
+node 31 unconnected
+converged after 14 iterations, timeStep = 5.0E-6
+converged after 11 iterations, timeStep = 5.0E-6
+
+PASS: Q30 service flow census attempted=40 passed=40 failed=0 failedCases=none seeds=7,13,4,14,43,3,10,64 faults=5 order=RELAY_<channel>_COIL_OPEN,DREV_OPEN,REN_OPEN,SENSOR_A_OPEN,DRIVE_A_OPEN childBudgetMs=60000
+Q30_FULL_OWNER seed=3 PASS components=38 copperEdges=325 copperJunctions=332
+Q30_FULL_OWNER seed=37 PASS components=39 copperEdges=378 copperJunctions=378
+PASS: Q30 physical metadata contracts 4187 assertions, resolvedSeeds=7 scaleFixtures=4 regressionRecipes=33/35/37
+
+PASS: D01 diagnostic contracts assertions=169
+
+PASS: A02ReplayContractTest assertions=148
+
+PASS: focused current contracts; 13 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

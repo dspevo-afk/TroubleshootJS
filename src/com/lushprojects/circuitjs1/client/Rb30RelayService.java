@@ -118,10 +118,15 @@ final class Rb30RelayService implements PhysicalBoardRuntimeCapability,
         return e03.getMutationInventory();
     }
     public String getCatalogTitle() {
-        return componentId + " relay replacement catalog";
+        return publicReference() + " relay replacement catalog";
     }
     public String getInstallNewLabel() {
-        return "Install new " + componentId + " relay";
+        return "Install new " + publicReference() + " relay";
+    }
+
+    private String publicReference() {
+        return e03.getMutationSlot().getPhysicalSlot().getRuntime().getBoard()
+            .getComponent(componentId).getDisplayName();
     }
     public boolean showOccupiedMessageWhenPowered() {
         return e03.showOccupiedMessageWhenPowered();
@@ -202,12 +207,12 @@ final class Rb30RelayService implements PhysicalBoardRuntimeCapability,
 
         public WorkbenchCapabilityMetadata getMetadata() {
             return new WorkbenchCapabilityMetadata(workbenchId,
-                componentId + " relay workbench", "SLOT_OPERATIONS");
+                publicReference() + " relay workbench", "SLOT_OPERATIONS");
         }
 
         public String getOperationLabel(WorkbenchOperation operation) {
             if (operation == null)
-                return "Modify " + componentId + " relay";
+                return "Modify " + publicReference() + " relay";
             return delegate.getOperationLabel(toE03Operation(operation));
         }
 

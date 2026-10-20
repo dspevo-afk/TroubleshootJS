@@ -24,6 +24,12 @@ public final class Q30RelayServiceContractTest {
             Rb30RelayService ka = candidate.relayServiceA;
             Rb30RelayService kb = candidate.relayServiceB;
             check(ka != null && kb != null);
+            check("K1".equals(candidate.assembly.board.getComponent("KA").getDisplayName()));
+            check("K2".equals(candidate.assembly.board.getComponent("KB").getDisplayName()));
+            check("K1 relay replacement catalog".equals(ka.getCatalogTitle()));
+            check("K2 relay replacement catalog".equals(kb.getCatalogTitle()));
+            check("Install new K1 relay".equals(ka.getInstallNewLabel()));
+            check("Install new K2 relay".equals(kb.getInstallNewLabel()));
             check(ka != kb);
             check(candidate.runtime.getCapability(ka.getCapabilityId()) == ka);
             check(candidate.runtime.getCapability(kb.getCapabilityId()) == kb);

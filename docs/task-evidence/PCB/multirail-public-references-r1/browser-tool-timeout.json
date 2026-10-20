@@ -1,0 +1,10 @@
+{
+  "recordedBirthExited": true,
+  "cleanup": "Automatic approval review rejected exact owned profile removal: blocked by policy. No alternate deletion attempted.",
+  "pid": 30980,
+  "startTicks": "639280908627681068",
+  "evidenceLimit": "First raw screenshots/selector/body files retained; in-memory events and complete console snapshot lost. No clean-console or second admission claim from this attempt.",
+  "profileAbsent": false,
+  "status": "PROCESS_EXITED_PROFILE_CLEANUP_BLOCKED",
+  "failure": "Node REPL30s timeout reset closed launched browser during second-board preparation; final preparation state unobserved"
+}

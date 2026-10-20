@@ -1,0 +1,11 @@
+{
+  "script": "scripts/preview.ps1",
+  "port": 8907,
+  "repository": "current worktree",
+  "listener": "HTTP.sys HttpListener; no direct worker TCP-PID or wrapper certification claim",
+  "pid": 26384,
+  "executable": "powershell.exe",
+  "startTicks": "639280911429011957",
+  "status": "PASS",
+  "state": "Actual managed state/birth/exact command and HTTP200 before production navigation; served candidate checked separately"
+}
