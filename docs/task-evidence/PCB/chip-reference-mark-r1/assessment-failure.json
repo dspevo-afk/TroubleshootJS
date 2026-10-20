@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_OFFLINE_ASSESSMENT",
+  "owner": "assess.py main footer assertion",
+  "cause": "The raw suite receipt contains eight actual suite markers but omits the maintained driver footer. The frozen assessor incorrectly searched this receipt for 8 Java suites.",
+  "failure": "AssertionError at assert 8 Java suites in native",
+  "nativeBuildOutcome": "Both operations exit0 and retain exact pre/post source audits; failure is the offline reader framing",
+  "recovery": "Preserve assess.py, four original gates and all native artifacts. Supplemental qualify.py checks each suite marker in the actual receipt and exact eight-suite footer in the actual driver log, with positive/negative framing canaries."
+}

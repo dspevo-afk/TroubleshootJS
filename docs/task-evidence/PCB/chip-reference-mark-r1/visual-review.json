@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "method": "All five raw actual headed captures inspected",
+  "captures": [
+    {
+      "file": "sensor-0-fit.jpg",
+      "sha256": "dfd05106bcaa480651396504485a5e2951d96bc2883e8fa00e95d7ed240267f1",
+      "bytes": 135115,
+      "review": "Initial Fit with open View menu; menu occludes U1/title, U2 dot remains visible. Preserved as this initial state, not unobstructed proof."
+    },
+    {
+      "file": "sensor-0-overview.jpg",
+      "sha256": "5774e4c56c910fbb03b29fbba6b72aa6484cedab978b566f9c7f900febb07877",
+      "bytes": 119121,
+      "review": "Unobstructed normal Sensor0. Both chips show dots beside first leads, correct family title, no individual pin annotations or new overlap."
+    },
+    {
+      "file": "u1-pinout.jpg",
+      "sha256": "8885b96fc2cfcf38513e92ff945175e0a171340d1a8d4d27ec7eaef93419de8c",
+      "bytes": 133723,
+      "review": "Actual right-click -> View schematic. INPUT dot and ordered INPUT/OUTPUT/RETURN/ENABLE labels fit."
+    },
+    {
+      "file": "u2-pinout.jpg",
+      "sha256": "539219d4a0a11084d741775d5b153645334ac8c781bc4c53887195baea93c5c7",
+      "bytes": 136542,
+      "review": "Actual right-click -> View schematic. SENSOR dot and all five semantic names fit; no commercial pin numbering."
+    },
+    {
+      "file": "removed-u2-tray.jpg",
+      "sha256": "d599305a5d5950c146388ec11a97afee0c6c51bb1304d7ef450b75c93c565b06",
+      "bytes": 109719,
+      "review": "Actual powered-off removal; U2 body absent from board and same physical chip in tray shows its first-lead dot. Drawer crops lower board naturally."
+    }
+  ],
+  "limits": [
+    "Initial View menu and open tray occlude/crop portions of board as shown",
+    "Finite Sensor0 player example; native generic pose/metadata coverage separate",
+    "No full functional repair/customer-retest/FileReader or private CDP/Close7 qualification"
+  ]
+}

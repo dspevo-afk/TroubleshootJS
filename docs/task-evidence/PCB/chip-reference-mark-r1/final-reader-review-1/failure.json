@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_OFFLINE_CHECK",
+  "cause": "The final main-menu ARIA snapshot excludes hidden board-power controls. The first reader incorrectly required Board Power: OFF inside that menu snapshot.",
+  "actualEvidence": "Unmodified live-page body text after original U2 reinstallation was captured before Main menu; it includes tray0/OFF. The original events require this, and the final UI call also observed OFF before browser close. Final menu ARIA proves the menu separately.",
+  "correction": "Check actual preserved pre-menu body for tray0/OFF, the event, and final-menu Start a service job plus Resume current board. Do not fabricate a visible power control inside the menu.",
+  "sourceNativeChange": false
+}

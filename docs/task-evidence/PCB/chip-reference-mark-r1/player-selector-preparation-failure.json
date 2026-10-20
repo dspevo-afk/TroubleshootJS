@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_PREPARATION",
+  "cause": "Prepare board exact button was requested before opening exact-seed disclosure; actual initial menu uses NEW BOARD",
+  "timeoutMillis": 20000,
+  "productionMutations": 0,
+  "recovery": "Read actual menu and open Enter an exact seed disclosure"
+}

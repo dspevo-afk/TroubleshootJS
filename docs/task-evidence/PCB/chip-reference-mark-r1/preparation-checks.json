@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "pythonAst": "All current Python helpers parse",
+  "powershellParser": "Original run_phase.ps1 parsed before baseline freeze; four frozen gate hashes remain exact",
+  "optimizedPythonNegative": {
+    "exitCode": 1,
+    "result": "REJECTED_WITH_EXPLICIT_STARTUP_GUARD"
+  },
+  "nativeTransport": "Existing maintained explicit eight-suite command; actual eight markers/final driver footer and positive/negative framing checks separate"
+}

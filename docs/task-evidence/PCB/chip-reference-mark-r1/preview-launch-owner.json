@@ -1,0 +1,8 @@
+{
+  "pid": 16092,
+  "output": "Redirected to unique private OS-temp files before launch",
+  "state": "LAUNCHED; readiness not claimed",
+  "port": 8907,
+  "startTicks": "639280765759189476",
+  "executable": "pwsh.exe"
+}

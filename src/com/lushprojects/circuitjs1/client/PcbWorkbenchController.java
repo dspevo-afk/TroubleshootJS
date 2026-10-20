@@ -775,12 +775,14 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         content.add(styledLabel(title + " — Pinout schematic", "tsj-component-title"));
         content.add(new Label("Package top view. Match the pin arrangement; board orientation may differ."));
         PhysicalPackageGeometry geometry = ChipPinout.geometry(physicalPackage);
+        content.add(new Label("Dot marks " + geometry.getTerminal(0).getTerminalId() +
+            ", the first listed terminal."));
         Canvas diagram = Canvas.createIfSupported();
         if (diagram != null) {
             diagram.setCoordinateSpaceWidth(440); diagram.setCoordinateSpaceHeight(350);
             diagram.setStyleName("tsj-chip-pinout-diagram");
             diagram.getElement().setAttribute("role", "img");
-            diagram.getElement().setAttribute("aria-label", "Package outline and named pins; pin list follows");
+            diagram.getElement().setAttribute("aria-label", "Package outline, first-terminal dot and named pins; pin list follows");
             content.add(diagram);
             drawChipPinout(diagram.getContext2d(), geometry);
         }
@@ -816,6 +818,12 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         g.setFillStyle("#f5f1df"); g.fillRect(0, 0, 440, 350);
         g.setFillStyle("#293739");
         g.fillRect(ox + body.x * scale, oy + body.y * scale, body.width * scale, body.height * scale);
+        Rectangle mark = ChipPinout.referenceMark(geometry);
+        g.setFillStyle(WorkbenchVisualTheme.SILK_SECONDARY);
+        g.beginPath();
+        g.arc(ox + (mark.x + mark.width / 2.0) * scale, oy + (mark.y + mark.height / 2.0) * scale,
+            mark.width * scale / 2, 0, Math.PI * 2);
+        g.fill();
         g.setStrokeStyle("#466368"); g.setLineWidth(2); g.setFont("13px sans-serif");
         for (PhysicalPackageGeometry.Terminal terminal : geometry.getTerminals()) {
             Point pad = terminal.getPadCenter(), start = terminal.getConnectedLead().getBodyPoint();

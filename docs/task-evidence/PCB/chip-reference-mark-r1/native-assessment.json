@@ -1,0 +1,43 @@
+{
+  "nativeBuildQualification": "PASS",
+  "sourceCount": 1481,
+  "originalGates": 4,
+  "changedOwners": [
+    "src/com/lushprojects/circuitjs1/client/ChipPinout.java",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchController.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java",
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+    "tests/contracts/BenchInstrumentPresentationContractTest.java"
+  ],
+  "operationSeconds": {
+    "contracts": 53.1264137,
+    "build": 89.0483438
+  },
+  "qualificationCases": [
+    {
+      "case": "actual eight receipt markers and separate driver footer",
+      "result": "PASS"
+    },
+    {
+      "case": "missing suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "duplicate suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "wrong driver count",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "failed operation",
+      "result": "PASS_REJECTED"
+    }
+  ],
+  "qualifierSha256": "d77fe19f37486ee4b58a283dd4bad00a4152dfdf9400aa4e4f866b878774a00d",
+  "priorAssessment": "FAIL retained: driver footer was sought in raw suite receipt; corrected framing reads actual driver log separately",
+  "reusedBoundary": "All generation/layout/solver/identity/physical-geometry/graph/mutation/save owners unchanged; no fresh fixed44 claim",
+  "player": "Separate actual normal context-menu and dot/pinout evidence required",
+  "limits": "No full unrelated matrix, all-seed/manufacturing or fresh repair claim"
+}

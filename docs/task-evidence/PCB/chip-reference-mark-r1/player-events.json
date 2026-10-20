@@ -1,0 +1,36 @@
+[
+  {
+    "action": "Prepare exact seed through normal UI",
+    "family": "SENSOR_CONTROL",
+    "seed": "0",
+    "outcome": "Customer ticket",
+    "observedUpperBoundMillis": 51745,
+    "timingLimit": "Includes observation idle; not generationMillis certification"
+  },
+  {
+    "action": "Right-click U1 body",
+    "observed": "Context menu with View schematic; pinout not opened automatically"
+  },
+  {
+    "action": "Right-click U2 -> View schematic",
+    "observed": "Dot marks SENSOR; ordered public pins SENSOR, REFERENCE, RAIL, OUTPUT, RETURN"
+  },
+  {
+    "action": "Power OFF, wait for settled menu, remove U2 through normal control",
+    "observed": "Awaiting parts tray state",
+    "note": "Immediate first right-click after power transition showed no menu; repeated after settled state"
+  },
+  {
+    "action": "Removed U2 physical tray dot and View schematic; reinstall same original chip",
+    "observed": "Loose dot visible near first lead; public SENSOR explanation; install through actual compatible-target menu",
+    "functionalRepairClaim": false
+  },
+  {
+    "action": "Verify settled reinstallation",
+    "observed": "Parts tray0 and board remains OFF"
+  },
+  {
+    "action": "Read actual public replay after physical round trip",
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  }
+]

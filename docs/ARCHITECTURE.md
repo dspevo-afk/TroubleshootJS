@@ -5953,3 +5953,16 @@ in24 cases. Full geometry fingerprints intentionally reflect that text, while
 font/bold equality is proved at unchanged source owners/call sites and inspected
 in the actual player. Layout17/public6 remain; no physical algorithm changed.
 See [title evidence and limits](task-evidence/PCB/normal-silkscreen-title-r1/README.md).
+
+`ChipPinout` also owns the inert first-terminal reference rectangle for its four
+supported packages. It derives this ink from declared terminal0's connected body
+point and the package body; it has no live graph/fault input or commercial pin1
+interpretation. `PhysicalPartRenderContext.getPackageDetailBounds` projects local
+detail through the existing installed package pose or loose rigid pose, then the
+same viewport as the body. `MultiTerminalRenderer` draws the dot only on supported
+mounted/loose chips. The public pinout canvas uses the identical local rectangle
+and names its first listed semantic terminal. Selection/probe/copper/geometry,
+allowed package poses, layout17/public6 and menu event ownership remain unchanged.
+Native literal/independent affine fixtures and actual normal mounted/removed U2
+input qualify this render boundary; broader unchanged generation proof remains
+its own frozen evidence. [Reference-mark evidence and limits](task-evidence/PCB/chip-reference-mark-r1/README.md).

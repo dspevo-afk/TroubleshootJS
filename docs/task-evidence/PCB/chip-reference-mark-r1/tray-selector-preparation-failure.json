@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_PREPARATION",
+  "action": "Open parts controls after removal",
+  "cause": "Exact Parts tray locator did not match actual accessible Parts Tray capitalization",
+  "timeoutMillis": 5000,
+  "recovery": "Read actual ARIA snapshot, then use observed Show or hide parts tray button",
+  "applicationOutcome": "Original U2 removed, loose dot and public pinout inspected, same original U2 reinstalled, tray0/OFF verified"
+}

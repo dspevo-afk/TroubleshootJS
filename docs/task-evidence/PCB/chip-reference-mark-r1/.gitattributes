@@ -1,0 +1,3 @@
+* -text whitespace=cr-at-eol
+*-dom.txt whitespace=-blank-at-eol,cr-at-eol
+reinstalled-off-body.txt whitespace=-blank-at-eol,cr-at-eol

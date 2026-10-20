@@ -1,4 +1,45 @@
-# Current checkpoint: normal titles qualified; publication review
+# Current checkpoint: chip reference marks qualified; publication review
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+bda25debed8c83a838198d3b8709af161963314a. Titles and normal compaction are pushed.
+User authorizes indefinite ordinary random-board realism and screenshots; no main
+merge/email. Original5/private baseline pointer/cache preserved.
+
+Chip-reference-mark-r1 adds inert ink beside first listed semantic terminal0 to
+four supported package bodies and their public View schematic diagrams. Four
+render/public-data owners plus one existing native bench test changed. Existing
+installed/loose poses and viewports project the shared local rectangle; no new
+pose/graph/geometry/target/save state or commercial pin1 claim. Layout17/public6
+remain. Frozen1481/four gates and exact five raw changed-owner archives pass.
+
+Eight maintained native suites PASS53.1264137s: bench235, P01pose8605,
+viewport1277, lifted337, Q30metadata3977, footprint/save/identity. Final actual
+JDK8/GWT5 OBF PASS89.0483438s. Independent literal/affine/nearest-lead/loose/copy
+fixtures pass. Narrow read-only review found no production blocker. Original
+offline receipt/footer mistake is retained with unchanged four gates/native data;
+supplemental framing5 canaries and actual optimized-Python refusal PASS.
+
+Actual headed sandboxed normal Sensor0 U1/U2 right-click -> View schematic PASS,
+with matching INPUT/SENSOR dots and readable named pins. Powered-off original U2
+removal, loose dot/pinout and reinstallation PASS; settled tray0/OFF then Main menu
+and public replay6 exact. Five raw images inspected; timing/sensor overviews and
+pinout pasted in chat. All five served/expected/post-player identity fields match.
+Two existing favicon404 errors; no page errors/other recorded warnings/errors.
+Metadata/selector/hidden-power final-reader preparation failures remain explicit.
+The corrected final reader checks actual settled body/event and menu separately.
+No fresh functional repair/retest/FileReader/full matrix/private Close7/CDP/Edge
+qualification or all-seed/manufacturing/new shrinkage claim.
+
+Actual owned browser API close/root exit0; new profile absent; recorded browser,
+preview/launcher/native/build births exited. Maintained stop PASS2.3356375s,
+8907 released. Earlier unused old profile deletion remains rejected by automatic
+approval review as "blocked by policy"; untouched, no retention approval inferred.
+Old baseline and small private task metadata retained outside Git. Application
+final audit PASS. Next: root diff/privacy/staged-byte review, normal commit/push,
+then next bounded PCB-realism investigation. No main merge/email.
+
+# Previous checkpoint: normal titles qualified; publication review
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, base HEAD/verified origin

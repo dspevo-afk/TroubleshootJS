@@ -161,6 +161,17 @@ final class PhysicalPartRenderContext {
             placement.getPose()).getBodyBounds());
     }
 
+    /** Project nonconductive package detail through the same pose as its body. */
+    Rectangle getPackageDetailBounds(Rectangle localBounds) {
+        if (loose)
+            return renderer.screenWorkbenchRectForProvider(getLoosePose().transformRectangle(localBounds));
+        if (placement == null)
+            throw new IllegalStateException("Installed package detail has no placement");
+        PhysicalPackageGeometry geometry = installedPhysicalGeometry();
+        return renderer.screenRectForProvider(placement.getPose().toBoardRectangle(localBounds,
+            geometry.getWidth(), geometry.getHeight()));
+    }
+
     Point getInstalledLeadBodyPoint(int terminal) {
         if (placement == null)
             return new Point(0, 0);

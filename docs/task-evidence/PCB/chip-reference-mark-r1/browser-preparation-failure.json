@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_PREPARATION",
+  "operation": "Create private metadata directory",
+  "cause": "Existing pcbFs binding is promises API; mkdtempSync is unavailable",
+  "productionActions": 0,
+  "recovery": "Use explicit node:fs/promises mkdtemp before browser launch"
+}

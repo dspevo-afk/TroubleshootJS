@@ -1,0 +1,32 @@
+{
+  "status": "PASS_AFTER_PRIVACY_PREFLIGHT_FAILURE",
+  "cause": "Root privacy check caught personal absolute provenance roots before any staging",
+  "scope": "Retain exact six protocol/digest/count values; omit only four private location fields. Exact originals retained in task-owned private OS-temp audit directory.",
+  "files": [
+    {
+      "file": "preview-expected.json",
+      "rawSha256": "4ebea6ed53074450742c9eb0c28dc3832b94b5b527a2e1963d6d08c0c9222164",
+      "publishedSha256": "652dbd1b3c6aad609656559cfa4f4af839b9ab5e77f5fde71d62c4b905034343",
+      "removedPrivateFields": [
+        "RepositoryRoot",
+        "ScriptRoot",
+        "SourceRoot",
+        "WebRoot"
+      ],
+      "sixPublicFieldsUnchanged": true
+    },
+    {
+      "file": "post-player-provenance.json",
+      "rawSha256": "4ebea6ed53074450742c9eb0c28dc3832b94b5b527a2e1963d6d08c0c9222164",
+      "publishedSha256": "652dbd1b3c6aad609656559cfa4f4af839b9ab5e77f5fde71d62c4b905034343",
+      "removedPrivateFields": [
+        "RepositoryRoot",
+        "ScriptRoot",
+        "SourceRoot",
+        "WebRoot"
+      ],
+      "sixPublicFieldsUnchanged": true
+    }
+  ],
+  "nativeSourcesGatesChanged": false
+}

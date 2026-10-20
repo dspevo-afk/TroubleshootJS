@@ -1,0 +1,17 @@
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6
+
+PASS: architecture footprint contracts assertions=46 routedPackages=4 deterministicRepeats=4 familyRegressions=6
+
+PASS: U06 session save contracts assertions=34988
+
+Q30_FULL_OWNER seed=3 PASS components=38 copperEdges=325 copperJunctions=332
+Q30_FULL_OWNER seed=37 PASS components=39 copperEdges=378 copperJunctions=378
+PASS: Q30 physical metadata contracts 3977 assertions, resolvedSeeds=7 scaleFixtures=4 regressionRecipes=33/35/37
+
+PASS: P01 physical pose contracts assertions=8605 poses=44
+
+PASS: U01 viewport contracts assertions=1277
+
+PASS: bench instrument presentation contracts assertions=235
+
+PASS: lifted lead appearance contracts assertions=337 poses=80

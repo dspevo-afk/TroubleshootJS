@@ -1,0 +1,27 @@
+{
+  "applicationQualification": "PASS",
+  "sourceCount": 1481,
+  "originalGateCount": 4,
+  "operationSeconds": {
+    "contracts": 53.1264137,
+    "build": 89.0483438
+  },
+  "actualJdk8GwtPermutations": 5,
+  "maintainedNativeSuites": 8,
+  "benchAssertions": 235,
+  "offlineFramingCanaries": 5,
+  "player": "PASS; normal Sensor0 mounted U1/U2 right-click menus, public diagrams, powered-off original U2 removal/loose diagram/reinstallation and OFF/menu",
+  "publicReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0",
+  "rawCapturesInspected": 5,
+  "provenance": "PASS; served/expected/post-player five fields exact",
+  "newTaskResourceCleanup": "PASS; owned births exited, new profile absent, maintained stop released8907",
+  "preparationFailures": "Retained: promises-vs-sync metadata API, early exact-seed control lookup, tray ARIA capitalization, initial offline receipt/footer framing and hidden-power-control final-menu oracle",
+  "limits": [
+    "Two existing favicon404 console errors; no page errors or other recorded warnings/errors",
+    "No fresh functional repair/retest/FileReader/full matrix/private Close7/CDP/Edge qualification",
+    "Generic pose fixtures are transform checks, not expansion of allowed package poses",
+    "Earlier unused profile deletion remains policy-blocked and untouched; old baseline/private audit metadata retained",
+    "No new compaction, all-seed/manufacturing or commercial pin-number claim"
+  ],
+  "publication": "Pending root diff/staged-byte audit and normal commit/push; no main/email"
+}

@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "scope": "Exact known worktree prefix only; native values/status/timings unchanged",
+  "files": [
+    {
+      "file": "contracts.txt",
+      "rawSha256": "84f22611419a3336b55706018d843c43e53cdd6c842c1f3eb514560c723b3288",
+      "sanitizedSha256": "84f22611419a3336b55706018d843c43e53cdd6c842c1f3eb514560c723b3288",
+      "replacements": [
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "contracts-receipt.txt",
+      "rawSha256": "baf0297fd2be18db67140031e1aba3277f4e2a185f7587666ba69b70dd65f545",
+      "sanitizedSha256": "baf0297fd2be18db67140031e1aba3277f4e2a185f7587666ba69b70dd65f545",
+      "replacements": [
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "build.txt",
+      "rawSha256": "3820dbd73d3b75f8c079e57769ff0802db167f8ab6135a269b4eb59883d87181",
+      "sanitizedSha256": "4cf2149a978fcd2a97c52d49dcd9b4b8ffa837f9196ad8f1380f3c5039b92414",
+      "replacements": [
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

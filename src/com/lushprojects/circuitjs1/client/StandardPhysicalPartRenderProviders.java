@@ -808,6 +808,7 @@ final class StandardPhysicalPartRenderProviders {
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
                 drawInstalledLead(graphics, context, geometry, terminal.getTerminalIndex());
             drawPackageBody(graphics, context, geometry.getBodyBounds());
+            drawReferenceMark(graphics, context);
             graphics.setFont(new Font(WorkbenchVisualTheme.FONT, 0, Math.max(10, context.scale(10))));
             graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
@@ -827,6 +828,7 @@ final class StandardPhysicalPartRenderProviders {
                 PhysicalPartRenderGeometry geometry, boolean selected) {
             drawLooseLeads(graphics, geometry, context);
             drawPackageBody(graphics, context, geometry.getBodyBounds());
+            drawReferenceMark(graphics, context);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
                 Rectangle pad = terminal.getPadBounds();
                 WorkbenchVisualTheme.ellipse(graphics, pad.x, pad.y, pad.width, pad.height,
@@ -839,6 +841,13 @@ final class StandardPhysicalPartRenderProviders {
                         point.y - context.scale(7));
             }
             context.markBodyDrawn();
+        }
+
+        private void drawReferenceMark(Graphics graphics, PhysicalPartRenderContext context) {
+            if (!ChipPinout.supports(context.getPhysicalPackage())) return;
+            Rectangle mark = context.getPackageDetailBounds(ChipPinout.referenceMark(context.getPhysicalGeometry()));
+            WorkbenchVisualTheme.ellipse(graphics, mark.x, mark.y, mark.width, mark.height,
+                WorkbenchVisualTheme.SILK_SECONDARY);
         }
 
         protected void drawPackageBody(Graphics graphics, PhysicalPartRenderContext context, Rectangle bounds) {

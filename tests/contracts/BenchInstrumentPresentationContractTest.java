@@ -17,6 +17,10 @@ public final class BenchInstrumentPresentationContractTest {
         pins(PhysicalPackages.ISOLATED_CONVERTER_7,
             new String[]{"IN+","IN-","PRE_L+","OUT-","EN","FB","BIAS"},
             new int[]{30,30,390,390,30,30,30}, new int[]{50,100,110,210,150,200,250});
+        reference(PhysicalPackages.TO220_REGULATOR_4, "INPUT", new Rectangle(45,83,10,10));
+        reference(PhysicalPackages.E04_DECISION_CONTROL_5, "SENSOR", new Rectangle(32,83,10,10));
+        reference(PhysicalPackages.OPTOCOUPLER_4, "A", new Rectangle(97,45,10,10));
+        reference(PhysicalPackages.ISOLATED_CONVERTER_7, "IN+", new Rectangle(97,45,10,10));
         for (PhysicalPackage p : new PhysicalPackage[]{PhysicalPackages.AXIAL_RESISTOR,
                 PhysicalPackages.RELAY_SPDT,PhysicalPackages.THROUGH_HOLE_CONNECTOR_2,
                 PhysicalPackages.TO92_NPN,PhysicalPackages.E05_ISOLATION_TRANSFORMER_4}) {
@@ -51,6 +55,54 @@ public final class BenchInstrumentPresentationContractTest {
             check(pin.getTerminalId().equals(names[i]) && pad.x==xs[i] && pad.y==ys[i],
                 "public name is associated with its declared physical lead");
         }
+    }
+    private static void reference(PhysicalPackage p,String firstName,Rectangle expected) {
+        PhysicalPackageGeometry g=ChipPinout.geometry(p);
+        Rectangle mark=ChipPinout.referenceMark(g);
+        rect(mark,expected,"literal first-terminal body mark");
+        check(g.getTerminal(0).getTerminalId().equals(firstName),"reference names declared terminal0");
+        contained(mark,g.getBodyBounds(),"reference ink stays inside inert body");
+        Point center=new Point(mark.x+mark.width/2,mark.y+mark.height/2);
+        Point first=g.getTerminal(0).getConnectedLead().getBodyPoint();
+        for(int i=1;i<g.getTerminals().size();i++)
+            check(distance(center,first)<distance(center,g.getTerminal(i).getConnectedLead().getBodyPoint()),
+                "reference is nearest its named lead, not vector sorting or a screen corner");
+        for(PcbRotation rotation:PcbRotation.values()) for(PcbBoardSide mount:PcbBoardSide.values()) {
+            PcbPackagePose pose=new PcbPackagePose(700,900,rotation,mount);
+            Rectangle projected=pose.toBoardRectangle(mark,g.getWidth(),g.getHeight());
+            Rectangle oracle=P01PhysicalPoseChecks.expectedRectangle(expected,g.getWidth(),g.getHeight(),
+                700,900,rotation,mount);
+            rect(projected,oracle,"reference follows independent affine pose oracle");
+            contained(projected,g.placedAt(pose).getBodyBounds(),"posed reference remains inside body");
+            for(PcbBoardSide view:PcbBoardSide.values()) {
+                PcbViewport.Transform camera=new PcbViewport.Transform(2,7,11,2000,view==PcbBoardSide.BOTTOM);
+                int x=7+2*(view==PcbBoardSide.TOP?oracle.x:2000-oracle.x-oracle.width);
+                rect(camera.project(projected),new Rectangle(x,11+2*oracle.y,oracle.width*2,oracle.height*2),
+                    "view reflection preserves reference orientation");
+            }
+        }
+        // These four canonical packages have no tray quarter-turn or polarity reversal.
+        LoosePartPose loose=LoosePartPose.forCell(p,null,new Rectangle(100,200,500,250));
+        check(!loose.isPolarityMirrored() && loose.getQuarterTurn()==LoosePartPose.QuarterTurn.NONE,
+            "canonical public chip tray pose is truthful");
+        double scale=loose.getScale();Point translation=loose.getTranslation();
+        int x=(int)Math.floor(expected.x*scale+translation.x);
+        int y=(int)Math.floor(expected.y*scale+translation.y);
+        int right=(int)Math.ceil((expected.x+expected.width)*scale+translation.x);
+        int bottom=(int)Math.ceil((expected.y+expected.height)*scale+translation.y);
+        rect(loose.transformRectangle(mark),new Rectangle(x,y,right-x,bottom-y),
+            "loose reference uses existing rigid tray pose and outward bounds");
+        contained(loose.transformRectangle(mark),loose.getBodyBounds(),"tray reference stays on body");
+        mark.x=-999;mark.width=999;
+        rect(ChipPinout.referenceMark(g),expected,"returned ink rectangle owns no mutable package state");
+        check(g.getTerminal(0).getTerminalId().equals(firstName),"reference does not mutate terminal order");
+    }
+    private static long distance(Point a,Point b) {long x=a.x-b.x,y=a.y-b.y;return x*x+y*y;}
+    private static void rect(Rectangle a,Rectangle b,String reason) {
+        check(a.x==b.x && a.y==b.y && a.width==b.width && a.height==b.height,reason);
+    }
+    private static void contained(Rectangle a,Rectangle b,String reason) {
+        check(a.x>=b.x && a.y>=b.y && a.x+a.width<=b.x+b.width && a.y+a.height<=b.y+b.height,reason);
     }
     private static void check(boolean value,String reason) {checks++;if(!value)throw new AssertionError(reason);}
 }
