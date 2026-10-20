@@ -1,0 +1,12 @@
+{
+  "status": "NO_CONCRETE_STATIC_BLOCKER_IN_CORRECTED_SCOPE",
+  "productionHashes": {
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "74b14351bdfb8a68ffa81dc366fadabcbe01854b5a41a02fa2d85ede682990f7",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java": "433617b29f71c2814dbbdcb4406e90f7591983c95df0e4de438b169a00bbc562"
+  },
+  "root": "Exact three-owner integrated diff and frozen source boundary reviewed; original79 assertions retained; central-disk and face inequalities independent of helper rounding",
+  "leaf": "Read-only corrected review received: centered ceil(width/3),ceil(3height/8); existing complete string/fitter/font/context restore unchanged; shared installed/loose body; no geometry/graph/state owner change. No leaf runs or UI proof.",
+  "caveat": "Narrow band more often omits text below existing font7 minimum. Fresh corrected glyph/overpaint/scale/lifecycle inspection remains required. Attempt1 visible failure is not resolved by static/native review.",
+  "native": "Fresh corrected9 PASS57.3448751s; silk11933",
+  "build": "Currently running; not accepted here"
+}

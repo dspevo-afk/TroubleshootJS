@@ -1,0 +1,10 @@
+{
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "message": "Give composed PCB components unique public references",
+  "email": "Disabled by user",
+  "verification": "Exact ls-remote branch SHA equals local accepted HEAD",
+  "sha": "1ce06e70182d77bad5c628bd834eb4aa9b59743e",
+  "status": "VERIFIED_PUSH",
+  "mainMerge": false
+}

@@ -202,6 +202,17 @@ final class WorkbenchVisualTheme {
                 Math.max(1, b.width - 2), t);
     }
 
+    /** Central text band stays inside the electrolytic can's existing inner ellipse. */
+    static Rectangle electrolyticMarkingBounds(Rectangle body) {
+        if (body == null || body.width <= 0 || body.height <= 0) return null;
+        int insetX = (int)Math.ceil(body.width / 3.0);
+        int insetY = (int)Math.ceil(body.height * 3.0 / 8.0);
+        int width = body.width - insetX * 2;
+        int height = body.height - insetY * 2;
+        if (width < 12 || height < 9) return null;
+        return new Rectangle(body.x + insetX, body.y + insetY, width, height);
+    }
+
     static void marking(Graphics g, String text, Rectangle b, int size, String color) {
         if (text == null || b.width < 12 || b.height < 9) return;
         Font previousFont = g.currentFont;

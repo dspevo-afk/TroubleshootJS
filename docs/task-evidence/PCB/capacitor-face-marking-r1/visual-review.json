@@ -1,0 +1,50 @@
+{
+  "status": "OBSERVED",
+  "primaryViews": [
+    "rc0-fitted.jpg",
+    "rc0-inspection-zoom2.jpg",
+    "rc0-lifted-inspection.jpg",
+    "rc0-removed-loose.jpg",
+    "multirail-cin-inspection.jpg"
+  ],
+  "actualRawImagesInspected": 5,
+  "rawCaptures": [
+    {
+      "file": "rc0-fitted.jpg",
+      "bytes": 128472,
+      "sha256": "538556d7c7897542862108ed6cec7161e349364dcbd43988d555f6be645bc0a4"
+    },
+    {
+      "file": "rc0-inspection-zoom2.jpg",
+      "bytes": 76045,
+      "sha256": "38fdc41aec455ecb04f9e325141f5cf8ddd6582d4132cdd96c1f902171c49242"
+    },
+    {
+      "file": "rc0-lifted-inspection.jpg",
+      "bytes": 80797,
+      "sha256": "860aa0ec8782c6d374a78773dd4193f0f698ec5b02efa4fb9e4d09059d224f17"
+    },
+    {
+      "file": "rc0-removed-loose.jpg",
+      "bytes": 80487,
+      "sha256": "e4305e9096bc468b250f0467285dfaba00f0d2a310da29e7f54c1f6664d106ef"
+    },
+    {
+      "file": "multirail-cin-inspection.jpg",
+      "bytes": 72026,
+      "sha256": "87b4092f591a2143c9877233ab1bf4a4b60aa8389f18585c3236985341e26458"
+    }
+  ],
+  "observations": [
+    "RC0 installed and lifted full 33 uF 16 V clear of pads and rim at Zoom+2",
+    "RC0 removed original in tray; small loose marking omitted under unchanged complete-string minimum font policy",
+    "RC0 exact original reinstall; Installed and public value retained; customer FAIL remains",
+    "RB30 full 22 uF / 25 V clear at closer ordinary wheel zoom; fitted and Zoom+2 small views omit full string"
+  ],
+  "limits": [
+    "Read-only visual observations, no screenshot pixel oracle",
+    "Exact public RC0 and previous fresh RB30 replay, not new entropy samples",
+    "No functional repair; same-original physical restoration retains initial complaint",
+    "No fresh fixed44/full matrix, Edge/CDP/FileReader/all-seed/manufacturing/new-size claim"
+  ]
+}

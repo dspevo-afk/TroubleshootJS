@@ -1,0 +1,19 @@
+{
+  "playerObservationAudit": "PASS",
+  "actualReplays": [
+    "tsj-alpha/6/EASY/RC_DELAY/0",
+    "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320"
+  ],
+  "primaryImagesInspected": 5,
+  "behavior": "RC0 initial FAIL; all supply OFF, capacitor lift/remove/loose/original reinstall; same-original retest FAIL; RB30 initial FAIL and final all3 OFF/tray0",
+  "glyphObservations": "Complete RC0 and RB30 public lines clear of pads and rim at useful inspection zoom; fitted/small loose ink omitted whole by existing minimum font rule",
+  "retainedInputFailure": "5s locator timeout treated Share pristine challenge SUMMARY as a button; actual tag observed then ordinary text click succeeded",
+  "cleanup": "Actual all7 recorded births exited, new profile gone, maintained stop2.0229082s, state absent and8907 released",
+  "limits": [
+    "Read-only visual observations, no screenshot pixel oracle",
+    "Exact public RC0 and previous fresh RB30 replay, not new entropy samples",
+    "No functional repair; same-original physical restoration retains initial complaint",
+    "No fresh fixed44/full matrix, Edge/CDP/FileReader/all-seed/manufacturing/new-size claim"
+  ],
+  "publication": "Pending root staged audit and normal push; no main/email"
+}

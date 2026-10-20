@@ -1,0 +1,20 @@
+- dialog "Bench power":
+  - rowgroup:
+    - row "BENCH POWER":
+      - cell "BENCH POWER"
+    - 'row "Supply 1 (+5V): 5 V, 227.262 μA"':
+      - 'cell "Supply 1 (+5V): 5 V, 227.262 μA"'
+    - row "Disconnect Supply 1 (+5V)":
+      - cell "Disconnect Supply 1 (+5V)":
+        - button "Disconnect Supply 1 (+5V)"
+    - 'row "Limit: 250 mA"':
+      - 'cell "Limit: 250 mA"':
+        - combobox "Supply 1 (+5V) current limit":
+          - 'option "Limit: 1 mA"'
+          - 'option "Limit: 10 mA"'
+          - 'option "Limit: 25 mA"'
+          - 'option "Limit: 100 mA"'
+          - 'option "Limit: 250 mA" [selected]'
+          - 'option "Limit: 500 mA"'
+    - row "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.":
+      - cell "Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage."

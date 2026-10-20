@@ -1,0 +1,10 @@
+{
+  "status": "NOT_ACCEPTED_VISIBLE_OCCLUSION",
+  "native9": "PASS56.9444192s",
+  "actualJdk8Gwt5": "PASS92.8516146s",
+  "visual": "RC0 two actual views inspected; lead-pad paint obscures marking ends at Zoom+2; Q30 NOT RUN",
+  "functional": "Initial customer FAIL, supply independently OFF, tray0; no cap removal/reinstallation or repair",
+  "staticReview": "Read-only leaf found no bounded math/ownership blocker; explicitly no glyph/UI proof. That review is not final acceptance for a corrected candidate.",
+  "cleanup": "PASS current7 birth checks/profile/port/state; maintained stop2.0490637s",
+  "next": "Narrow central text band inside existing metal disk; preserve attempted source/gates/logs/images and require fresh native/build/UI"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "FAIL_VISIBLE_OCCLUSION",
+  "actualRawImagesInspected": 2,
+  "rawCaptures": [
+    {
+      "file": "rc0-fitted.jpg",
+      "bytes": 128820,
+      "sha256": "fc216a41efc212d8527c8c8712047f02a3f81926e03eea300a5c79498dcbc2fa"
+    },
+    {
+      "file": "rc0-inspection-zoom2.jpg",
+      "bytes": 76784,
+      "sha256": "7fd343ea1ba863c3dbbfe9e187d403061e0522250810f8cfd919c036927a0703"
+    }
+  ],
+  "finding": "RC0 marking is inside can face, but existing overpainted pad circles obscure its ends at Zoom+2. Candidate not accepted.",
+  "functional": "Initial customer FAIL recorded; supply independently disconnected; no part removal or repair; Q30 NOT RUN",
+  "automation": "One disabled aggregate-power click timeout retained; actual independent supply control used after reobservation",
+  "limits": "Native/build PASS retained separately; no final visual/functional/physical repair acceptance"
+}

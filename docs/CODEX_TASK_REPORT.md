@@ -1,4 +1,71 @@
-# Current checkpoint: unique composed references accepted; publication review pending
+# Current checkpoint: capacitor face marking accepted; publication pending
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+1ce06e70182d77bad5c628bd834eb4aa9b59743e. Indefinite PCB realism/screenshots
+remain authorized; no main/email. Original5/private baseline pointer/cache,
+old policy-blocked unused browser directory and private baseline COPY preserved.
+
+Capacitor-face-marking-r1 corrected production2/test1 accepted. Shared electrolytic
+nameplate call uses a central metal-disk band; full-string/font7 policy unchanged.
+No geometry/targets/contact/polarity/graph/generation/save/epoch change. Original79
+assertions retained. Fresh native9 PASS57.3448751s/silk11933; actual final JDK8/GWT5
+PASS90.252173s; exact1481/gates4/machinery24 and actual launch cleanup PASS.
+Prior fixed44 physical proof reused only at unchanged consumed-owner boundary.
+
+Actual production RC0 full33uF16V at Zoom+2, lifted +, removed/loose/original
+reinstalled; same-original customer FAIL persists. Previous fresh multi-rail
+-5864181845794033320 replay full22uF/25V at closer ordinary wheel zoom. Small fitted/
+loose strings omitted whole under unchanged font rule. Five raw images inspected;
+initial customer FAIL on both, final OFF/tray0. Five served provenance fields
+before/after exact. Onefavicon404, no other recorded errors. One5s SUMMARY-as-button
+locator timeout retained and corrected through observed ordinary text input.
+Attempt1 wider-band native/build PASS rejected by actual pad overpainting; all
+failed source/gates/logs/UI/cleanup preserved. Initial draft narrowed before edits;
+unchanged PowerServicePart suite has no capacitor fixtures. Corrected static leaf
+has no blocker but no test/UI execution; root integrated review PASS.
+
+Current all7 recorded births exited, APIroot0/newprofile absent, managedstate absent/
+8907 released; maintained stop2.0229082s. Raw build privately retained with one
+public prefix redaction/hashes. Private browser metadata/logs retained outside Git.
+Three recent generated-board/close-up screenshots pasted inline. No new entropy,
+functional repair, fresh fullmatrix/allseed/pixel/Edge/CDP/FileReader/size claim.
+Next: exact staged-byte/privacy/diff check, normal branch commit/push; then bounded
+ceramic marking investigation (read-only leaf active, no new production edits).
+Prior unique-reference publication receipt included with this commit. No main/email.
+
+# Previous checkpoint: composed references published at1ce06e70
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+1ce06e70182d77bad5c628bd834eb4aa9b59743e, Give composed PCB components unique
+public references. Normal push/exact remote SHA verified; no main/email.
+User authorizes indefinite ordinary PCB realism/screenshots until stopped.
+Original5/private baseline pointer/cache preserved. Publication receipt untracked,
+include in next coherent commit. All194 staged paths reviewed:184 raw exact and
+10 CRLF-only canonical matches; no unrelated staged path. No tracked source dirt.
+
+Unique-reference milestone complete within scope: final44 exact physical/graph/
+route/box/work, focused15, JDK8/GWT5 and actual public component/probe/supporting
+R2 service/direct R4 replacement+original measurement/customer FAIL->PASS checks
+pass. Five primary raw images plus three retained diagnostic frames inspected.
+Two native failed attempts/dormant prototype failure and incorrect initial
+board-land probe placements retained; no invalid component proof used. New
+numbered overview and repaired board pasted in chat. Prior three fresh boards
+were already pasted. Current browser/preview/native/build resources exited;
+profile gone,8907 released. Old unused profile automatic-review blocked/untouched;
+baseline COPY/private raw log/metadata retained outside Git.
+
+Next bounded visual issue observed in fresh-board-visual-r1 multi-rail inspection:
+CIN capacitance/voltage text touches circular body rim at Zoom+2. Reopened actual
+stored image; root inspecting visual only, read-only scope leaf tracing existing
+renderer/nameplate/projection owners and focused native contracts. No new
+production edit, revised scope, source seal or gate claim yet. Preserve exact
+active geometry/targets/graph/physical state/fault privacy and paint-only ownership
+if feasible. Next: reader finding, define/freeze small cap-marking scope and its
+validation; no unrelated milestone or obsolete-prototype repair.
+
+# Previous checkpoint: unique composed references published at1ce06e70
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin

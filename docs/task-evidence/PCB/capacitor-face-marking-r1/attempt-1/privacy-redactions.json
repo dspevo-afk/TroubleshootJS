@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "file": "build.txt",
+  "substitution": "One exact worktree prefix replaced by <WORKTREE>; all other bytes exact",
+  "rawSha256": "49df4af902b4990e7eb91e92a1b2c8500242008cc1b638338073e90b31878ea4",
+  "publicSha256": "e009d4a21dc568aedb48e1ac571be9c7ad7ee0d446104fc1900be817083909ff",
+  "rawRetained": "Task-owned private OS-temp outside Git"
+}

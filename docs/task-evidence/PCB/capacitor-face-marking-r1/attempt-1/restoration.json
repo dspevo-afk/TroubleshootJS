@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "restoredExactAccepted": [
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+    "tests/contracts/PcbSilkscreenScaleContractTest.java"
+  ],
+  "purpose": "Revised scope baseline before corrected production source; all replacement bytes checked before any write"
+}

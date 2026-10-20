@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "pid": 22836,
+  "startTicks": "639280871001801465",
+  "profileName": "playwright_chromiumdev_profile-twbJhX",
+  "executable": "brave.exe",
+  "action": "Revalidated actual birth/executable/profile/sandbox before own API close"
+}

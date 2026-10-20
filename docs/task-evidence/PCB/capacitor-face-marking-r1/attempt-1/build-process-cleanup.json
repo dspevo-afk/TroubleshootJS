@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 3692,
+      "startTicks": "639280862344432331"
+    },
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 28476,
+      "startTicks": "639280862347182403"
+    }
+  ],
+  "phase": "build",
+  "writer": "Root actual Get-Process birth query after phase driver completed; no termination",
+  "launchSha256": "4f445d6dfe124fb42f1f781c3f2a6d807e1473d590b8110b4b604f13a01b136f",
+  "status": "PASS"
+}

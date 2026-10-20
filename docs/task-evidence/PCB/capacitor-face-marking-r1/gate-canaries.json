@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "synthetic complete framing",
+      "result": "PASS"
+    },
+    {
+      "case": "missing suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "duplicate suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "wrong footer",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "exit2",
+      "result": "PASS_REJECTED"
+    }
+  ],
+  "limits": "Pure synthetic framing cases; no native/build/OS execution inferred"
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Unique composed references accepted; publication review pending**
+**Current task:** **Capacitor face marking accepted; publication pending**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -59,12 +59,20 @@ Three new board screenshots pasted in chat. Composed sample duplicates public
 component marks; bounded ownership investigation next. Current resources closed.
 [Fresh visual evidence and limits](task-evidence/PCB/fresh-board-visual-r1/README.md).
 
-Unique composed references: final paired44 physical/graph/box/work equality,
+Published1ce06e70: unique composed references; final paired44 physical/graph/box/work equality,
 focused15, actual JDK8/GWT5 and headed public names/supporting-service/direct
 measurements/customer FAIL->PASS pass. Five primary raw views plus three retained
 probe-placement diagnostic frames inspected. Two failed native attempts remain;
 unused prototype exact accepted bytes, unqualified. Current resources closed.
 [Scope, failures and evidence](task-evidence/PCB/unique-public-references-r1/README.md).
+
+Corrected capacitor face paint is accepted: native9/silk11933, actual final
+JDK8/GWT5 and five actual RC/multi-rail views pass. Complete public lines clear
+pads/rim at useful zoom; original capacitor lift/remove/reinstall retains the
+initial complaint. Failed wider-band attempt is preserved. Current owned resources
+closed; prior fixed44 proof reused only at unchanged consumed owners. No new
+geometry/targets/graph/size or functional-repair claim.
+[Scope, evidence and limits](task-evidence/PCB/capacitor-face-marking-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

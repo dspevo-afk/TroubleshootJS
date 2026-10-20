@@ -6003,3 +6003,13 @@ paint. No new geometry, graph/fault input, target, pin numbering, generation or
 saved state is introduced. Native literal/transaction fixtures and actual normal
 removal/face/reinstallation/repair views qualify this presentation boundary.
 [Footprint evidence and limits](task-evidence/PCB/empty-chip-silk-r1/README.md).
+
+The shared installed/loose electrolytic provider passes the unchanged public
+nameplate string to `WorkbenchVisualTheme.marking` within a centered can-face
+band. Symmetric integer insets keep this band inside the existing metal disk;
+the original complete-string fitter retains its minimum-font omission policy.
+No package geometry, contact paint, target, graph, physical state or generation
+input changes. Independent rectangle/ellipse fixtures and actual RC/multi-rail
+inspection plus original-part removal/reinstallation qualify the paint boundary.
+The wider first attempt was rejected by actual pad overpainting despite native
+containment checks. [Evidence and limits](task-evidence/PCB/capacitor-face-marking-r1/README.md).

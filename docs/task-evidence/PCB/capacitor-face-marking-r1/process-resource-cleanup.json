@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "role": "browser-owner.json",
+      "pid": 22836,
+      "startTicks": "639280871001801465",
+      "executable": "brave.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "preview-owner.json",
+      "pid": 27896,
+      "startTicks": "639280871855254169",
+      "executable": "powershell.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "preview-launch-owner.json",
+      "pid": 31600,
+      "startTicks": "639280871826732693",
+      "executable": "pwsh.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "contracts driver",
+      "pid": 32304,
+      "startTicks": "639280869160850310",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "contracts driver",
+      "pid": 6740,
+      "startTicks": "639280869169423722",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "build driver",
+      "pid": 6592,
+      "startTicks": "639280870471301114",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "role": "build driver",
+      "pid": 30648,
+      "startTicks": "639280870478366028",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ],
+  "newProfileAbsent": true,
+  "managedStatePresent": false,
+  "preview8907Listening": false,
+  "limits": "Old policy-blocked unused profile and private metadata/baseline COPY retained separately"
+}

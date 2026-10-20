@@ -680,8 +680,10 @@ final class StandardPhysicalPartRenderProviders {
             int inset = Math.max(2, Math.min(b.width, b.height) / 4);
             WorkbenchVisualTheme.ellipse(graphics, b.x + inset, b.y + inset,
                 b.width - inset * 2, b.height - inset * 2, WorkbenchVisualTheme.METAL);
-            WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
-                b, Math.max(8, context.scale(10)), WorkbenchVisualTheme.SILK);
+            Rectangle markingBounds = WorkbenchVisualTheme.electrolyticMarkingBounds(b);
+            if (markingBounds != null)
+                WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),
+                    markingBounds, Math.max(8, context.scale(10)), WorkbenchVisualTheme.SILK);
         }
     }
 

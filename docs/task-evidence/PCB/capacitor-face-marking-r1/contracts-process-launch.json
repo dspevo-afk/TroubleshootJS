@@ -1,0 +1,16 @@
+{
+  "phase": "contracts",
+  "scope": "Captured parent/current births before maintained capacitor face phase",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639280869160850310",
+      "pid": 32304
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280869169423722",
+      "pid": 6740
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "event": "Predeclared exact normal launch",
+    "family": "RC_DELAY",
+    "profile": "EASY",
+    "seed": "0"
+  },
+  {
+    "event": "RC0 customer ticket visible",
+    "wallUpperBoundMs": 17655
+  },
+  {
+    "event": "RC0 initial customer retest",
+    "status": "FAIL",
+    "observed": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+  },
+  {
+    "event": "RC0 power-off automation attempted before enabled",
+    "status": "AUTOMATION_TIMEOUT",
+    "detail": "Board Power ON remained disabled during 5s ordinary click wait after retest result text; no force click or mutation used. Reobserve settled controls."
+  },
+  {
+    "event": "RC0 supply-control observation",
+    "detail": "Aggregate Board Power button disabled; actual Bench power exposes Disconnect Supply 1 (+5V). The prior timeout did not indicate a failed electrical retest cleanup."
+  },
+  {
+    "event": "Rendered candidate not accepted",
+    "status": "FAIL_VISIBLE_OCCLUSION",
+    "detail": "RC0 Zoom+2 complete marking reaches beneath drawn lead-pad circles at both ends despite ellipse/rim containment. Native/build PASS does not establish visible complete marking. Narrow central paint band before retry; Q30 UI NOT RUN."
+  },
+  {
+    "event": "Actual RC0 public replay",
+    "observedReplay": "tsj-alpha/6/EASY/RC_DELAY/0"
+  }
+]

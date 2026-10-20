@@ -1,0 +1,63 @@
+[
+  {
+    "step": "plain production navigation",
+    "result": "five served fields exact before player input"
+  },
+  {
+    "step": "RC0 initial customer retest",
+    "result": "FAIL; controller immediate after power-up"
+  },
+  {
+    "step": "RC0 fit and Zoom+2",
+    "result": "Fit marking omitted; Zoom+2 complete 33 uF 16 V clear of both contact pads and rim",
+    "captures": [
+      "rc0-fitted.jpg",
+      "rc0-inspection-zoom2.jpg"
+    ]
+  },
+  {
+    "step": "RC0 OFF capacitor lift",
+    "result": "Supply1 disconnected; C1 Lead Lifted +; public marking unchanged 33 uF 16 V"
+  },
+  {
+    "step": "RC0 original capacitor removal",
+    "result": "C1 empty two original lands, tray Part1 public 33 uF 16 V; loose band omits small complete string under minimum font rule",
+    "capture": "rc0-removed-loose.jpg"
+  },
+  {
+    "step": "RC0 original reinstalled and powered retest",
+    "result": "Tray0; original C1 33 uF 16 V restored; customer FAIL remains, not a functional repair"
+  },
+  {
+    "step": "RC0 restored public state",
+    "result": "C1 Installed; 33 uF 16 V; board OFF; tray0"
+  },
+  {
+    "step": "RC0 public replay",
+    "replay": "tsj-alpha/6/EASY/RC_DELAY/0",
+    "result": "Exact admitted identity observed",
+    "retainedInputFailure": "5s timeout treating SUMMARY as button; observed tag and used ordinary text click"
+  },
+  {
+    "step": "RB30 fitted observation",
+    "result": "Actual installed CIN small view omits nameplate; ordinary fit image inspected live, no retained primary"
+  },
+  {
+    "step": "RB30 initial customer retest and Zoom+2",
+    "result": "FAIL; CIN full string omitted at small inspection band, no partial string"
+  },
+  {
+    "step": "RB30 closer ordinary wheel inspection",
+    "result": "Four wheel-up inputs after Zoom+2; complete CIN 22 uF / 25 V clear of both pads/rim, polarity retained",
+    "capture": "multirail-cin-inspection.jpg"
+  },
+  {
+    "step": "RB30 final state",
+    "result": "All three supplies disconnected, board OFF/tray0, CIN Installed and unchanged 22 uF / 25 V"
+  },
+  {
+    "step": "RB30 public replay",
+    "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320",
+    "result": "Predeclared previous fresh identity replay, not a new entropy sample"
+  }
+]

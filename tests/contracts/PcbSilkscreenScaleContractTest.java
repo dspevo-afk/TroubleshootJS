@@ -13,6 +13,7 @@ public final class PcbSilkscreenScaleContractTest {
         boardClipBoundsTheObstacle();
         physicalLabelIdentityAndFacePolicyStayStable();
         emptyChipFootprintsUseOnlyTheDeclaredBody();
+        electrolyticMarkingsStayInsideTheCanFace();
         System.out.println("PASS: PCB silkscreen scale contracts: " + assertions + " assertions");
     }
 
@@ -179,6 +180,55 @@ public final class PcbSilkscreenScaleContractTest {
             message + " (expected " + x + "," + y + "," + width + "," + height +
             "; got " + (actual == null ? "null" : actual.x + "," + actual.y + "," +
                 actual.width + "," + actual.height) + ")");
+    }
+
+    private static void electrolyticMarkingsStayInsideTheCanFace() {
+        rect(WorkbenchVisualTheme.electrolyticMarkingBounds(new Rectangle(100,200,80,80)),
+            127,230,26,20,"literal round can uses a centered narrow text band");
+        rect(WorkbenchVisualTheme.electrolyticMarkingBounds(new Rectangle(100,200,81,79)),
+            127,230,27,19,"odd projected dimensions retain the original exact center");
+        rect(WorkbenchVisualTheme.electrolyticMarkingBounds(new Rectangle(-30,-80,40,40)),
+            -16,-65,12,10,"panned negative screen coordinates retain the same inset");
+        check(WorkbenchVisualTheme.electrolyticMarkingBounds(null) == null &&
+                WorkbenchVisualTheme.electrolyticMarkingBounds(new Rectangle(0,0,0,40)) == null &&
+                WorkbenchVisualTheme.electrolyticMarkingBounds(new Rectangle(0,0,35,35)) == null,
+            "missing, empty and undersized bands omit ink rather than crop a marking");
+        for (int width = 1; width <= 256; width++) {
+            int[] heights = {width, width+1, Math.max(1,width-1), width*2, Math.max(1,width/2)};
+            for (int height : heights) {
+                Rectangle body = new Rectangle(-31,47,width,height);
+                Rectangle marking = WorkbenchVisualTheme.electrolyticMarkingBounds(body);
+                check(body.x == -31 && body.y == 47 && body.width == width && body.height == height,
+                    "text fitting never changes the caller's physical body rectangle");
+                if (marking == null) continue;
+                check(marking.width >= 12 && marking.height >= 9 &&
+                        marking.x >= body.x && marking.y >= body.y &&
+                        marking.x + marking.width <= body.x + body.width &&
+                        marking.y + marking.height <= body.y + body.height,
+                    "returned band preserves the existing full-text fitter minimum and body containment");
+                check(marking.x * 2 + marking.width == body.x * 2 + body.width &&
+                        marking.y * 2 + marking.height == body.y * 2 + body.height,
+                    "symmetric integer insets retain the exact projected center");
+                // Independent ellipse equation, using the renderer's unchanged drawn rim.
+                int rim = Math.max(1, Math.min(body.width, body.height)/10);
+                double radiusX = (body.width - rim*2)/2.0;
+                double radiusY = (body.height - rim*2)/2.0;
+                int diskInset = Math.max(2, Math.min(body.width, body.height)/4);
+                double diskRadiusX = (body.width - diskInset*2)/2.0;
+                double diskRadiusY = (body.height - diskInset*2)/2.0;
+                for (int x : new int[] {marking.x,marking.x+marking.width})
+                    for (int y : new int[] {marking.y,marking.y+marking.height}) {
+                        double dx = (x-body.x-body.width/2.0)/radiusX;
+                        double dy = (y-body.y-body.height/2.0)/radiusY;
+                        check(dx*dx+dy*dy < 1.0,
+                            "every text-band corner lies strictly inside the can face, clear of the rim");
+                        double diskX = (x-body.x-body.width/2.0)/diskRadiusX;
+                        double diskY = (y-body.y-body.height/2.0)/diskRadiusY;
+                        check(diskX*diskX+diskY*diskY < 1.0,
+                            "the complete text band also fits within the existing central metal disk");
+                    }
+            }
+        }
     }
 
     private static void near(double actual, double expected, String message) {
