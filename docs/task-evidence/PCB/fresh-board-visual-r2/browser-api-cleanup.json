@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "pid": 29048,
+  "actualExitCode": 0,
+  "profilePresent": false,
+  "method": "API context/client/server close after root selected birth/exe/profile revalidation; no manual profile deletion"
+}

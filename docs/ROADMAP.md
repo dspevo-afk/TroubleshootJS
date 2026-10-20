@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Connector housing accepted; fresh board visual review next**
+**Current task:** **Fresh first-result board review complete; reference scope next**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -1081,7 +1081,7 @@ This is a self-contained replacement roadmap, not an amendment to apply over the
 The 72 prior catalog identities remain traceable as feature/history labels, with one corrective node R00, for **73 catalog nodes**. At the Edition 3.0 baseline, eleven entries were delivered/completed, including A08, and 62 were unstarted. Current completion is recorded on the cards and in the checkpoint above. Their old implementation details are not protected. Product requirements have not been deleted to reduce the apparent task count.
 
 
-Connector housing paint accepted: shared input/output installed/loose plastic
+Published924b4fd2 connector housing paint: shared input/output installed/loose plastic
 divider clears modeled pads/leads/probes inside unchanged body geometry.
 Fresh native9/silk13092, current18 census44 exact physical/graph/labels/work and
 whitespace, actual JDK8/GWT5, normal connector service/loose/bottom and actual
@@ -1089,7 +1089,12 @@ isolatedOL/Shop330Ohm/measured330Ohm/customerPASS pass. Five primary views inspe
 three posted; all12 births exited/current resources closed. Tooling/preparation
 limits and stale existing feedback retained. No new geometry/target/graph/size/
 epoch/save or full-matrix claim. [Evidence and limitations](task-evidence/PCB/connector-housing-r1/README.md).
-Next read-only fresh New board sample before defining another realism change.
+Fresh first-result New board sample complete: Sensor/MOSFET/Timing all admit;
+all3 untouched customerFAIL, five inspected raw views/three fresh boards posted,
+all boardsOFF/tray0. Exact1481/24/compiled6 reuse plus served/CLI before/after;
+no new build/native/matrix or size claim. All6 births exited/current resources
+closed. Public semantic resistor names remain; declaration/service/oracle scope
+review next. [Fresh sample and limitations](task-evidence/PCB/fresh-board-visual-r2/README.md).
 ## Navigation
 
 1. [Product direction and current-only policy](#policy)

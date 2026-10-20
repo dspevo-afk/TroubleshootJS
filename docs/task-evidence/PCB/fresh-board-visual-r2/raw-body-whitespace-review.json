@@ -1,0 +1,181 @@
+{
+  "status": "INSPECTED_BEFORE_STAGING",
+  "literalTabLines": [
+    {
+      "file": "nmos-final-off-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e"
+    },
+    {
+      "file": "nmos-final-off-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e"
+    },
+    {
+      "file": "nmos-final-off-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e"
+    },
+    {
+      "file": "nmos-original-fail-observed-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "nmos-original-fail-observed-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "nmos-original-fail-observed-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "nmos-supplies-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "8f2e69ca5611bffa656cb0bb0f25159b66063f5af15f37d95084cf2408137b4a"
+    },
+    {
+      "file": "nmos-supplies-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "8f2e69ca5611bffa656cb0bb0f25159b66063f5af15f37d95084cf2408137b4a"
+    },
+    {
+      "file": "nmos-supplies-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "8f2e69ca5611bffa656cb0bb0f25159b66063f5af15f37d95084cf2408137b4a"
+    },
+    {
+      "file": "rc-final-off-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "file": "rc-final-off-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "file": "rc-final-off-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "file": "rc-original-fail-observed-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "rc-original-fail-observed-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "rc-original-fail-observed-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "file": "rc-supplies-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158"
+    },
+    {
+      "file": "rc-supplies-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158"
+    },
+    {
+      "file": "rc-supplies-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158"
+    },
+    {
+      "file": "sensor-final-off-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "2e32c75d43c4e0d8b6f72b1fb77113ad817e02afbd13c05faa7a064ecd2fd75e"
+    },
+    {
+      "file": "sensor-final-off-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "2e32c75d43c4e0d8b6f72b1fb77113ad817e02afbd13c05faa7a064ecd2fd75e"
+    },
+    {
+      "file": "sensor-final-off-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "2e32c75d43c4e0d8b6f72b1fb77113ad817e02afbd13c05faa7a064ecd2fd75e"
+    },
+    {
+      "file": "sensor-original-fail-observed-body.txt",
+      "line": 37,
+      "bytesHex": "09",
+      "fileSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b"
+    },
+    {
+      "file": "sensor-original-fail-observed-body.txt",
+      "line": 38,
+      "bytesHex": "09",
+      "fileSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b"
+    },
+    {
+      "file": "sensor-original-fail-observed-body.txt",
+      "line": 43,
+      "bytesHex": "09",
+      "fileSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b"
+    },
+    {
+      "file": "sensor-retest-click-body.txt",
+      "line": 34,
+      "bytesHex": "09",
+      "fileSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d"
+    },
+    {
+      "file": "sensor-retest-click-body.txt",
+      "line": 35,
+      "bytesHex": "09",
+      "fileSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d"
+    },
+    {
+      "file": "sensor-retest-click-body.txt",
+      "line": 40,
+      "bytesHex": "09",
+      "fileSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d"
+    }
+  ],
+  "exactFiles": [
+    "nmos-final-off-body.txt",
+    "nmos-original-fail-observed-body.txt",
+    "nmos-supplies-body.txt",
+    "rc-final-off-body.txt",
+    "rc-original-fail-observed-body.txt",
+    "rc-supplies-body.txt",
+    "sensor-final-off-body.txt",
+    "sensor-original-fail-observed-body.txt",
+    "sensor-retest-click-body.txt"
+  ],
+  "reason": "Verbatim raw page layout tabs preserved; exact per-artifact whitespace attributes only; no body/source/test/gate/oracle changed",
+  "attributeBeforeSha256": "f06202a408fef9b9ea69bb6b1cb8160dbb0378c5bb67a444d510d231813824c8",
+  "attributeAfterSha256": "fd729d44c77532b4e610c7bfee72c26f4edb083e88b7ac32320ed2e592f14304"
+}

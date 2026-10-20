@@ -1,0 +1,12 @@
+* -text whitespace=cr-at-eol
+
+# Preserve literal body.innerText meter-layout tab-only lines.
+nmos-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+nmos-original-fail-observed-body.txt whitespace=-blank-at-eol,cr-at-eol
+nmos-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-original-fail-observed-body.txt whitespace=-blank-at-eol,cr-at-eol
+rc-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+sensor-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+sensor-original-fail-observed-body.txt whitespace=-blank-at-eol,cr-at-eol
+sensor-retest-click-body.txt whitespace=-blank-at-eol,cr-at-eol

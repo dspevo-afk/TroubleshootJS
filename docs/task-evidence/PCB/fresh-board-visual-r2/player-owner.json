@@ -1,0 +1,20 @@
+{
+  "preview": {
+    "pid": 23608,
+    "http200": true,
+    "rootScriptCommandExact": true,
+    "executable": "powershell.exe",
+    "startTicks": "639281044043408865",
+    "port": 8907
+  },
+  "browser": {
+    "pid": 29048,
+    "sandboxEnabled": true,
+    "executable": "brave.exe",
+    "headed": true,
+    "startTicks": "639281044435404168",
+    "profileName": "playwright_chromiumdev_profile-Jp4EpJ"
+  },
+  "status": "PASS",
+  "limits": "Actual selected normalized executable/unique profile and worker birth/command before navigation; full identities private"
+}

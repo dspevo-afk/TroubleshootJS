@@ -1,0 +1,17 @@
+{
+  "privateBasename": "tsj-fresh-boards2-zqbMij",
+  "files": {
+    "events.json": {
+      "sha256": "9048187a9023dacaeeda0c4738402a92a45a971bd1aba141784ffa8709283cf5",
+      "bytes": 3631
+    },
+    "console.json": {
+      "sha256": "d84cc6976f7ad33eaf2aea3d6b0482d2cbf1c5876b78363e1f27ad02f53e133d",
+      "bytes": 21357
+    },
+    "errors.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    }
+  }
+}

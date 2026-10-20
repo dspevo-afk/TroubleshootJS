@@ -1,0 +1,338 @@
+{
+  "status": "READY_TO_COMMIT_READ_ONLY_SAMPLE",
+  "baseCommit": "924b4fd2570d289a0575cd810c908a237fcdfe89",
+  "paths": 54,
+  "rawExact": 52,
+  "canonicalOnly": 2,
+  "rows": [
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "stagedSha256": "4789b54121da44dee8c69b96e6e459890b8a47e85189734aebc61b4ce34b83c6",
+      "worktreeSha256": "c537385579dc6cd6ff814d861526cc767ee9a84b286c2eb1ced65c76996ffb2f",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "stagedSha256": "2bf9983635c994e9743bd199a587bfbae9852c979a0c307066851021c70685dc",
+      "worktreeSha256": "5be167c640cda7a618fa96720e20f32fecee7868f6310edea7bd39f25872f37f",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/publication.json",
+      "stagedSha256": "15cada7b1cbadd01c0876b055d881d2b7990799e642e4e1248dedbc8fbb3cbe3",
+      "worktreeSha256": "15cada7b1cbadd01c0876b055d881d2b7990799e642e4e1248dedbc8fbb3cbe3",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/.gitattributes",
+      "stagedSha256": "fd729d44c77532b4e610c7bfee72c26f4edb083e88b7ac32320ed2e592f14304",
+      "worktreeSha256": "fd729d44c77532b4e610c7bfee72c26f4edb083e88b7ac32320ed2e592f14304",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/README.md",
+      "stagedSha256": "3579d74f2b3bacc77ba4c60a5b3a52d033424cc4ef9aaa96f7f14440f5f93376",
+      "worktreeSha256": "3579d74f2b3bacc77ba4c60a5b3a52d033424cc4ef9aaa96f7f14440f5f93376",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/browser-api-cleanup.json",
+      "stagedSha256": "983768616e400dc1a47f83aa8e0b69efb3dba4d2a238f17cf3de29131fbc81c9",
+      "worktreeSha256": "983768616e400dc1a47f83aa8e0b69efb3dba4d2a238f17cf3de29131fbc81c9",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/browser-logs.json",
+      "stagedSha256": "b9eb71b1e449251419859eee5fdbe316af56a222d6540c218d1582f9b52bc43b",
+      "worktreeSha256": "b9eb71b1e449251419859eee5fdbe316af56a222d6540c218d1582f9b52bc43b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/final-input-audit.txt",
+      "stagedSha256": "41c4cb9941d63cb43a1e1646a0101631459fddbd2fe0f5015d8da2acec46a1f4",
+      "worktreeSha256": "41c4cb9941d63cb43a1e1646a0101631459fddbd2fe0f5015d8da2acec46a1f4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/final-menu-body.txt",
+      "stagedSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "worktreeSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/initial-menu-body.txt",
+      "stagedSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "worktreeSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/inputs.json",
+      "stagedSha256": "41d3a97663417f4be4ef556a5e673c6154b36e06fdc38db288512e3f32f5632b",
+      "worktreeSha256": "41d3a97663417f4be4ef556a5e673c6154b36e06fdc38db288512e3f32f5632b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/inputs.py",
+      "stagedSha256": "9d792e366a03f657a5ad71efd5e4ca2a9e8c7d4fada9154a763c296ee470dc90",
+      "worktreeSha256": "9d792e366a03f657a5ad71efd5e4ca2a9e8c7d4fada9154a763c296ee470dc90",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/launch_player.ps1",
+      "stagedSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "worktreeSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-final-off-body.txt",
+      "stagedSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "worktreeSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-fitted.jpg",
+      "stagedSha256": "9ad1c4d6906522e44ee1603c014b4f7f940e726b5cee0df0bdd9da5074e101cd",
+      "worktreeSha256": "9ad1c4d6906522e44ee1603c014b4f7f940e726b5cee0df0bdd9da5074e101cd",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-identity.json",
+      "stagedSha256": "469c122e5da457a976b604d1ee8fa04eb86b386773802cf89c03b98951de6c72",
+      "worktreeSha256": "469c122e5da457a976b604d1ee8fa04eb86b386773802cf89c03b98951de6c72",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-original-fail-observed-body.txt",
+      "stagedSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "worktreeSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-preparing-body.txt",
+      "stagedSha256": "51329dae1c7642d8576728a93dd8cc762ffbf45118cebd47a36574e42d85f1ee",
+      "worktreeSha256": "51329dae1c7642d8576728a93dd8cc762ffbf45118cebd47a36574e42d85f1ee",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/nmos-supplies-body.txt",
+      "stagedSha256": "8f2e69ca5611bffa656cb0bb0f25159b66063f5af15f37d95084cf2408137b4a",
+      "worktreeSha256": "8f2e69ca5611bffa656cb0bb0f25159b66063f5af15f37d95084cf2408137b4a",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/player-assessment.json",
+      "stagedSha256": "222008871ba044867316451b46f6e03b3eed08ae3004765c067a8f09e9bdcbb1",
+      "worktreeSha256": "222008871ba044867316451b46f6e03b3eed08ae3004765c067a8f09e9bdcbb1",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/player-events.json",
+      "stagedSha256": "9048187a9023dacaeeda0c4738402a92a45a971bd1aba141784ffa8709283cf5",
+      "worktreeSha256": "9048187a9023dacaeeda0c4738402a92a45a971bd1aba141784ffa8709283cf5",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/player-owner.json",
+      "stagedSha256": "78c11ec5a0bb2654b538986d088a84fe08859d570f66c7d6f6e6971beffe5d6f",
+      "worktreeSha256": "78c11ec5a0bb2654b538986d088a84fe08859d570f66c7d6f6e6971beffe5d6f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/player-served-after.json",
+      "stagedSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "worktreeSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/player-served-before.json",
+      "stagedSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "worktreeSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/post-player-provenance.json",
+      "stagedSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "worktreeSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/pre-close-owner-check.json",
+      "stagedSha256": "0b0c4f45f7f314e78c76140ca4ebf87c03e9e95dc0f5d72e354ef2fbf2601f53",
+      "worktreeSha256": "0b0c4f45f7f314e78c76140ca4ebf87c03e9e95dc0f5d72e354ef2fbf2601f53",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-launcher-cleanup.json",
+      "stagedSha256": "08cf6f1261d5730987d1c42f562d02ad8f41020bb6a5b5ed8a0a655a9a454e47",
+      "worktreeSha256": "08cf6f1261d5730987d1c42f562d02ad8f41020bb6a5b5ed8a0a655a9a454e47",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-process-launch.json",
+      "stagedSha256": "2a11681b09d3a1ab7d06f1823da6c3710fd584560c5d9feaee54f874212e8d56",
+      "worktreeSha256": "2a11681b09d3a1ab7d06f1823da6c3710fd584560c5d9feaee54f874212e8d56",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-start-timing.json",
+      "stagedSha256": "c2b7a0f7c498cfecbc627d5b5cf0f9dea767c1b2ab7753623f4843a7543780c8",
+      "worktreeSha256": "c2b7a0f7c498cfecbc627d5b5cf0f9dea767c1b2ab7753623f4843a7543780c8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-start.txt",
+      "stagedSha256": "a4391d6265ad5e1e19bb026383c04fc62b089dad0cf83dec8e497b070cdf98da",
+      "worktreeSha256": "a4391d6265ad5e1e19bb026383c04fc62b089dad0cf83dec8e497b070cdf98da",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-stop-process-launch.json",
+      "stagedSha256": "6df329572f1a0e0efe97af2f2fa9dd346c54945b14ca38c7ff4e1be93b342fe6",
+      "worktreeSha256": "6df329572f1a0e0efe97af2f2fa9dd346c54945b14ca38c7ff4e1be93b342fe6",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-stop-timing.json",
+      "stagedSha256": "2a7f6866568ae4d8e3c049e96bcc2a0cee05d82a8cbffcc10beb0760068aa07e",
+      "worktreeSha256": "2a7f6866568ae4d8e3c049e96bcc2a0cee05d82a8cbffcc10beb0760068aa07e",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/preview-stop.txt",
+      "stagedSha256": "e629c6c8eb1737cf1f875d72cca83c59e1805f8f62c5b6e3778a6943c6c22074",
+      "worktreeSha256": "e629c6c8eb1737cf1f875d72cca83c59e1805f8f62c5b6e3778a6943c6c22074",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/private-log-hashes.json",
+      "stagedSha256": "1af39845b23ba6cf167ceb79bc6754284cd615aedbb53e5ff2ba3055f5aa6a90",
+      "worktreeSha256": "1af39845b23ba6cf167ceb79bc6754284cd615aedbb53e5ff2ba3055f5aa6a90",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/process-resource-cleanup.json",
+      "stagedSha256": "5f5fc18edabd07e084375a3d497cbd6dd0f17ea373a8081b60ae90a9636ea29b",
+      "worktreeSha256": "5f5fc18edabd07e084375a3d497cbd6dd0f17ea373a8081b60ae90a9636ea29b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/raw-body-whitespace-review.json",
+      "stagedSha256": "892da8bac218231f5a37539426764375b3fc46818edbd783b4d82ead9ec5f9b8",
+      "worktreeSha256": "892da8bac218231f5a37539426764375b3fc46818edbd783b4d82ead9ec5f9b8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-capacitor-inspection.jpg",
+      "stagedSha256": "e2c51ec8235b75cbde93cbe0206970e917b732280a79767536097e4b78dd0784",
+      "worktreeSha256": "e2c51ec8235b75cbde93cbe0206970e917b732280a79767536097e4b78dd0784",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-final-off-body.txt",
+      "stagedSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "worktreeSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-fitted.jpg",
+      "stagedSha256": "24443f87be97fb26071ae3afde322c65f3bcda6087e3b93d80a354ca717f3dc4",
+      "worktreeSha256": "24443f87be97fb26071ae3afde322c65f3bcda6087e3b93d80a354ca717f3dc4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-identity.json",
+      "stagedSha256": "4a4587f531e1d95488d8759976dfcedc2d77d7edb92d1562748b5d132eec0a20",
+      "worktreeSha256": "4a4587f531e1d95488d8759976dfcedc2d77d7edb92d1562748b5d132eec0a20",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-original-fail-observed-body.txt",
+      "stagedSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "worktreeSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-preparing-body.txt",
+      "stagedSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "worktreeSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/rc-supplies-body.txt",
+      "stagedSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158",
+      "worktreeSha256": "6e7acfcadf70c0771301b5b7a0d84b22b93b902e1cb12b75f205015c843f2158",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/reference-scope-reader.json",
+      "stagedSha256": "0393cfd9961b5206fa39a56abd5d94f4d957a0adb0912a4020ef69f7a77bdad4",
+      "worktreeSha256": "0393cfd9961b5206fa39a56abd5d94f4d957a0adb0912a4020ef69f7a77bdad4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/reused-execution.json",
+      "stagedSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "worktreeSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/scope.md",
+      "stagedSha256": "87098fdc49b19ff33c5c6a16f8ad12bf0160bf09a9039873cbf3e4bf231095bb",
+      "worktreeSha256": "87098fdc49b19ff33c5c6a16f8ad12bf0160bf09a9039873cbf3e4bf231095bb",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-final-off-body.txt",
+      "stagedSha256": "2e32c75d43c4e0d8b6f72b1fb77113ad817e02afbd13c05faa7a064ecd2fd75e",
+      "worktreeSha256": "2e32c75d43c4e0d8b6f72b1fb77113ad817e02afbd13c05faa7a064ecd2fd75e",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-fitted.jpg",
+      "stagedSha256": "6ebae93b917b18bc0974521a1d2f45883de486fd63c2b1db680d0207416c8546",
+      "worktreeSha256": "6ebae93b917b18bc0974521a1d2f45883de486fd63c2b1db680d0207416c8546",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-identity.json",
+      "stagedSha256": "0d657d8df34843e53219568721bf2289562ace24934c05c81f2d710b19907e66",
+      "worktreeSha256": "0d657d8df34843e53219568721bf2289562ace24934c05c81f2d710b19907e66",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-inspection.jpg",
+      "stagedSha256": "6eff3e8adcba7d9506195a023497dd20d0908bec324454c135e695a5b6019312",
+      "worktreeSha256": "6eff3e8adcba7d9506195a023497dd20d0908bec324454c135e695a5b6019312",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-original-fail-observed-body.txt",
+      "stagedSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "worktreeSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-preparing-body.txt",
+      "stagedSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "worktreeSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/sensor-retest-click-body.txt",
+      "stagedSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "worktreeSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/fresh-board-visual-r2/stop_player.ps1",
+      "stagedSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "worktreeSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "comparison": "RAW_EXACT"
+    }
+  ],
+  "rootReview": "Complete current docs/input/start-stop/evidence review; exact1481/machinery24/compiled6 before-after reuse; actual3 first normal entropy results/initial customerFAIL/all boardsOFF/tray0; five raw views inspected/three posted; selected process ownership/all6 exited; raw tab-only artifacts preserved with exact attributes; no blocker",
+  "privacy": "Packet and added docs contain no new personal absolute path/token; finite raw console/full process identities private/hash-bound; unrelated Original5/private baseline/cache not staged",
+  "scope": "No application/test/script/machinery/build edit. Reuse does not claim new native/build/matrix or repair/measurement/save proof. Read-only declaration review identifies presentation option, no next implementation selected.",
+  "publication": "Pending normal branch commit/push/exact remote SHA; no main/email",
+  "next": "Root scope public reference numbering before edits"
+}

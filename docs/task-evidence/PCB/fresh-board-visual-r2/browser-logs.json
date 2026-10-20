@@ -1,0 +1,15 @@
+{
+  "entries": 310,
+  "types": {
+    "error": 1,
+    "log": 309
+  },
+  "nonLog": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageRequestResponseErrors": [],
+  "limits": "Complete finite console private/hash-bound; no clean-console or resource attribution claim"
+}

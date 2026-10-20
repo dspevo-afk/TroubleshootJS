@@ -1,0 +1,30 @@
+{
+  "owners": [
+    "BoardComponent defaults displayName=ID and ID width",
+    "TroubleshootBoard.addComponent stores declaration",
+    "SeededPcbLayoutGenerator prints displayName with separate width reservation",
+    "SensorControlGenerator",
+    "NmosLowSideSwitchGenerator",
+    "NpnLowSideSwitchGenerator",
+    "RelayOutputGenerator",
+    "Rb15Plan"
+  ],
+  "observed": "Fresh Sensor RFB/RFB_HYST/RBIAS/RREF_LOW/RREF and NMOS RLOAD/RPD remain public semantic IDs",
+  "tests": [
+    "A02GeometryContractTest explicit name+width",
+    "E05IsolationGeometryContractTest freshness",
+    "ControlledIndicatorAssemblyContractTest naming+uniqueness",
+    "Q30PlanContractTest naming+width",
+    "Normal packing census names/reservations"
+  ],
+  "establishedPatterns": [
+    "Rb30Plan explicit marks retains semantic IDs/original widths",
+    "PhysicalConstructionMaterializer composed marks"
+  ],
+  "reviewer": "Fresh Luna MAX explorer legacy_reference_scope",
+  "limits": "Presentation option, not a demonstrated contract defect; read-only no edits/native/build/browser run by explorer; no next implementation scope selected",
+  "baseCommit": "924b4fd2570d289a0575cd810c908a237fcdfe89",
+  "status": "READ_ONLY_SCOPE_OPTION",
+  "risks": "Do not globally alter constructors used by fixtures/custom boards; keep semantic graph/pad IDs and independent reservation; GenerationDependencyContext already fingerprints names/reservations; exact epoch/save claims require root scope review",
+  "suggestion": "Explicit deterministic board-local declaration-time resistor numbering for remaining eligible recipes; preserve IDs and original width; update relevant service-caption fallbacks to public component name"
+}

@@ -1,0 +1,50 @@
+{
+  "status": "PASS_READ_ONLY_FIRST_RESULTS",
+  "baseCommit": "924b4fd2570d289a0575cd810c908a237fcdfe89",
+  "firstActualNewBoards": {
+    "sensor": {
+      "replay": "tsj-alpha/6/EASY/SENSOR_CONTROL/-3395796212705839809",
+      "build": "tsj-alpha/6 / 4CEACC9B41462FD291500A71C2C6A89D"
+    },
+    "nmos": {
+      "replay": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/-3928309337809318024",
+      "build": "tsj-alpha/6 / 4CEACC9B41462FD291500A71C2C6A89D"
+    },
+    "rc": {
+      "replay": "tsj-alpha/6/EASY/RC_DELAY/4404859972899574139",
+      "build": "tsj-alpha/6 / 4CEACC9B41462FD291500A71C2C6A89D"
+    }
+  },
+  "actions": 20,
+  "failuresOrSubstitutions": 0,
+  "observed": "Five1280x900 raw primary JPEGs inspected, three fitted images posted in chat; installed input/output dividers and chip/cap markings clear at useful view; public semantic resistor marks remain on Sensor/MOSFET",
+  "power": "Sensor legacy Board Power button OFF (no separate supply toolbar); MOSFET both5V outputs disconnected; Timing actual sole12V output disconnected/BoardOFF; each tray0, no component mutation",
+  "customer": "Actual normal untouched customerFAIL observed in all3; no repair/measurement/save claim",
+  "sourceReuse": "All1481 accepted inputs,24 machinery and independent compiled6 exact before/after; no production change, no new native/build/matrix run; accepted connector evidence reused only at this exact boundary",
+  "images": {
+    "sensor-fitted.jpg": {
+      "sha256": "6ebae93b917b18bc0974521a1d2f45883de486fd63c2b1db680d0207416c8546",
+      "bytes": 125755
+    },
+    "sensor-inspection.jpg": {
+      "sha256": "6eff3e8adcba7d9506195a023497dd20d0908bec324454c135e695a5b6019312",
+      "bytes": 88032
+    },
+    "nmos-fitted.jpg": {
+      "sha256": "9ad1c4d6906522e44ee1603c014b4f7f940e726b5cee0df0bdd9da5074e101cd",
+      "bytes": 127887
+    },
+    "rc-fitted.jpg": {
+      "sha256": "24443f87be97fb26071ae3afde322c65f3bcda6087e3b93d80a354ca717f3dc4",
+      "bytes": 124612
+    },
+    "rc-capacitor-inspection.jpg": {
+      "sha256": "e2c51ec8235b75cbde93cbe0206970e917b732280a79767536097e4b78dd0784",
+      "bytes": 95177
+    }
+  },
+  "console": "310 entries=309 informational log+1 unattributed resource404; no page/request/observed-response errors, raw private/hash-bound; no clean-console claim",
+  "cleanup": "All6 recorded births exited; API browser0/current profile absent; maintained stop2.0650201s/state absent/8907 released; older blocked profiles preserved",
+  "next": "Scope-only review of conventional resistor references for remaining eligible legacy recipes; no production edit selected by this sample",
+  "limits": "First admitted result per selected family only; no all-seed/new-size/manufacturing/performance/Edge/CDP/FileReader/full-matrix claim"
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "label": "Open unchanged accepted production preview for fresh sample",
+    "started": "2026-10-20T14:48:15.570Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:48:16.059Z"
+  },
+  {
+    "label": "First actual New board: EASY SENSOR_CONTROL",
+    "started": "2026-10-20T14:48:33.129Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:48:33.166Z"
+  },
+  {
+    "label": "Accept first fresh Sensor control ticket",
+    "started": "2026-10-20T14:48:33.168Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:48:36.303Z"
+  },
+  {
+    "label": "Run untouched fresh Sensor customer retest",
+    "started": "2026-10-20T14:48:36.350Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:48:36.394Z"
+  },
+  {
+    "label": "Turn untouched Sensor board power off",
+    "started": "2026-10-20T14:49:45.349Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:49:45.391Z"
+  },
+  {
+    "label": "Inspect Sensor packages with ordinary wheel zoom",
+    "started": "2026-10-20T14:49:45.393Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:49:45.434Z"
+  },
+  {
+    "label": "Read fresh Sensor public identity",
+    "started": "2026-10-20T14:49:45.483Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:49:45.587Z"
+  },
+  {
+    "label": "First actual New board: EASY NMOS_LOW_SIDE_SWITCH",
+    "started": "2026-10-20T14:50:03.521Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:03.561Z"
+  },
+  {
+    "label": "Accept first fresh MOSFET driver ticket",
+    "started": "2026-10-20T14:50:03.564Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:04.917Z"
+  },
+  {
+    "label": "Run untouched fresh MOSFET customer retest",
+    "started": "2026-10-20T14:50:04.974Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:05.016Z"
+  },
+  {
+    "label": "Inspect fresh MOSFET supply outputs",
+    "started": "2026-10-20T14:50:19.145Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:19.178Z"
+  },
+  {
+    "label": "Disconnect both fresh MOSFET supply outputs",
+    "started": "2026-10-20T14:50:39.939Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:40.011Z"
+  },
+  {
+    "label": "Read fresh MOSFET public identity",
+    "started": "2026-10-20T14:50:40.014Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:40.107Z"
+  },
+  {
+    "label": "First actual New board: EASY RC_DELAY",
+    "started": "2026-10-20T14:50:53.966Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:50:54.006Z"
+  },
+  {
+    "label": "Accept first fresh Timing board ticket",
+    "started": "2026-10-20T14:50:54.009Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:51:16.482Z"
+  },
+  {
+    "label": "Run untouched fresh Timing customer retest",
+    "started": "2026-10-20T14:51:16.536Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:51:18.244Z"
+  },
+  {
+    "label": "Inspect fresh Timing supply before leaving",
+    "started": "2026-10-20T14:51:42.141Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:51:42.180Z"
+  },
+  {
+    "label": "Disconnect Timing supply and inspect capacitor face with ordinary wheel",
+    "started": "2026-10-20T14:52:13.697Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:52:13.809Z"
+  },
+  {
+    "label": "Read fresh Timing public identity",
+    "started": "2026-10-20T14:52:13.893Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:52:13.985Z"
+  },
+  {
+    "label": "Close the root-revalidated fresh-sample browser through its API",
+    "started": "2026-10-20T14:54:01.292Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:54:01.413Z"
+  }
+]

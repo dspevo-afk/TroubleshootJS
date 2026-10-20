@@ -1,7 +1,48 @@
-# Current checkpoint: connector housing accepted; publication review
+# Current checkpoint: fresh first-result boards accepted; publication review
+
+2026-10-20 local. q30-multirail-qualification / codex/q60-faulted-profile-counts,
+HEAD/exact origin924b4fd2570d289a0575cd810c908a237fcdfe89. Indefinite ordinary PCB
+realism/screenshots/optional leaves; no final at a milestone, no main/email.
+Connector publication receipt untracked/intended next coherent commit; Original5
+and private baseline/cache/COPY/pointers and all3 policy-blocked profiles preserved.
+
+fresh-board-visual-r2 READ-ONLY: first actual EASY New board Sensor root
+-3395796212705839809, MOSFET-3928309337809318024, Timing4404859972899574139.
+All3 first results admitted, untouched customerFAIL, exact public6/build
+4CEACC9B41462FD291500A71C2C6A89D. Sensor normal Board PowerOFF/no separate supply
+menu; MOSFET both5V outputs disconnected; Timing sole12V disconnected/OFF; all
+tray0 before leaving. No part/probe/measurement/repair/save mutation or claim.
+Five actual raw JPEGs inspected, three fresh fitted images pasted in chat.
+
+All1481 accepted source/24machinery/four new gates exact before/after. Independent
+compiled6 and served before/after equal connector's actual final post-player proof.
+Accepted native/build evidence reused ONLY at that unchanged consumed boundary;
+no new build/native/matrix run.20 actual actions allPASS, no retry/substitution/
+timeout. Console310=309logs+1unattributed404; page/request/observed-response errors0.
+All6 births exited, browserAPI0/current profile absent, maintained stop2.0650201s,
+state absent/8907 released. No active browser/preview/native/build. fv* Node
+bindings persist closed; privatebasename tsj-fresh-boards2-zqbMij. ch* also closed.
+Raw body tab-only layout bytes preserved via exact per-artifact attributes.
+
+Observed public semantic resistor marks on Sensor/NMOS. Fresh read-only Luna
+legacy_reference_scope: declarations own names, BoardComponent defaultsID/width,
+layout prints name with independent reservation. Potential explicit board-local
+numbering across Sensor/NMOS/NPN/Relay/RB15, preserving semantic IDs/original width;
+service captions must match. RB30/composed precedent and existing dependency name/
+width fingerprinting identified. Presentation option, no contract defect claimed;
+no edits/tests/build/UI by leaf. Root has NOT selected/implemented next scope.
+
+Next root actual diff/privacy/staged-byte checks and documentation-only normal
+commit/push/exact remote SHA; no main/email. Then inspect necessary declaration/
+capability/oracle owners and define a bounded conventional-reference scope before
+editing. Continue authorized work. Do not re-run unchanged expensive gates merely
+for this read-only publication; preserve unrelated artifacts/private resources.
+
+# Previous checkpoint: connector housing published; fresh-board visual review
 
 2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
-HEAD/exact origin2c987e45553a3a9346296f59e027e911222fcf6c; next candidate uncommitted.
+HEAD/exact verified origin924b4fd2570d289a0575cd810c908a237fcdfe89;
+Add molded dividers to PCB connector housings; normal branch push verified.
 Indefinite ordinary PCB realism/screenshots/optional leaves authorized; no final
 at a milestone, no main/email. Root owns integrated acceptance/publication.
 
@@ -25,7 +66,10 @@ public6 identities/build4CEACC9B41462FD291500A71C2C6A89D. Five primary JPEGs +3
 diagnostics inspected; fittedRB30/closeup/LED images pasted. Served before/after
 six fields exact final independent CLI. All12 recorded births exited; current
 browserAPI0/profile absent, maintained previewstop1.8466316s/state absent/8907 free.
-No active browser/preview/native/build. Node ch* bindings persist with closed
+Connector resources closed; fresh-board-visual-r2 now owns preview8907 and
+browser29048/profileJp4EpJ; actual owners validated before navigation. New fv*
+Node bindings active, privatebasename tsj-fresh-boards2-zqbMij. No native/build.
+Node ch* bindings persist with closed
 chPage/chContext/chBrowser/chServer; privatebasename tsj-connector-player-B81KRS.
 
 Failures/limits retained: owner slash-string mismatch corrected before nav; body
@@ -43,8 +87,10 @@ mistake retained/corrected before mutation; final staged/unstaged checks PASS.
 Preserve all3 policy-blocked old profile directories, Original5 + private baseline/
 cache/COPY/pointers; never stage those. Old r2 publication receipt intended here.
 
-Next: root actual/staged-byte/privacy/diff checks, normal commit/push/exact remote
-SHA; no main/email. Then bounded READ-ONLY actual fresh New board visual sample
+Publication accepted: root123 staged paths, initial122=117raw exact/5CRLF-only,
+final review artifactraw exact, final diff/privacy checks pass. Publication receipt
+untracked for next coherent commit; no main/email. Next bounded READ-ONLY actual
+fresh New board visual sample
 across ordinary families, using accepted exact compiled inputs only after auditing
 consumed boundary, to find a concrete next PCB realism issue. No new production
 scope selected yet; stale panel feedback is nonblocking outside this paint scope.

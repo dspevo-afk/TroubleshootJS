@@ -1,0 +1,20 @@
+{
+  "launchSha256": "2a11681b09d3a1ab7d06f1823da6c3710fd584560c5d9feaee54f874212e8d56",
+  "status": "PASS",
+  "actualExecExitCode": 0,
+  "scope": "After actual exec61653 exit0; worker/browser remain owned and active",
+  "checks": [
+    {
+      "startTicks": "639281043886596403",
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 26512
+    },
+    {
+      "startTicks": "639281044009701012",
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 22116
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "birthObservationSeconds": 0.0051693,
+  "limits": "Fresh sample resources only, after actual stop exec exit0; earlier blocked profiles/private data untouched",
+  "port8907Released": true,
+  "currentProfileAbsent": true,
+  "recordedBirths": 6,
+  "checks": [
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 26512,
+      "startTicks": "639281043886596403"
+    },
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 22116,
+      "startTicks": "639281044009701012"
+    },
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 11992,
+      "startTicks": "639281048502691891"
+    },
+    {
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "pid": 28872,
+      "startTicks": "639281048505006438"
+    },
+    {
+      "executable": "brave.exe",
+      "recordedBirthExited": true,
+      "pid": 29048,
+      "startTicks": "639281044435404168"
+    },
+    {
+      "executable": "powershell.exe",
+      "recordedBirthExited": true,
+      "pid": 23608,
+      "startTicks": "639281044043408865"
+    }
+  ],
+  "status": "PASS",
+  "previewStateAbsent": true,
+  "actualStopExecExitCode": 0
+}
