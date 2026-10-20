@@ -1,0 +1,13 @@
+{
+  "status": "PASS_PRESERVED_REJECTION_AND_OWNED_CLEANUP_REVIEW",
+  "candidateDecision": "FAIL_SOURCE_REVIEW_CANDIDATE_NOT_ACCEPTED",
+  "candidateSealSha256": "07e55e0517f4c75ef5f1d110c95f2e61347b31691a1df28b59a338eea5e76c3b",
+  "earlierNativeBuildGates": "PASS for frozen rejected owner only, do not certify paint clearance",
+  "playerGate": "NOT RUN; initial45s observer failed, later ticket observed, aborted before case input",
+  "wrapperBirthsSeparatelyObservedExited": 10,
+  "totalCurrentBirthsIncludingBrowserPreview": 12,
+  "sourceOnlyOwnDeltaRestored": true,
+  "sourceBlockerSha256": "e0903e00c4fc56719b5db4932aa97045038ab38445cd3e89f11478eb4fe8f011",
+  "currentR2Source": "Separate in-progress candidate, not consumed by this preserved earlier attempt",
+  "limits": "Frozen archives/logs/identities/cleanup audited; do not reexecute obsolete helper against current R2 source, overwrite R1 or reuse R1 PASS for corrected production."
+}

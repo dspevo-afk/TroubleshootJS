@@ -1,0 +1,10 @@
+{
+  "browserPresentAtRecovery": false,
+  "tool": "node_repl.js",
+  "reportedError": "js execution timed out; kernel reset, rerun your request",
+  "recordedBrowserBirthExact": false,
+  "limits": "Actual tool failure, not a successful player step. Last flushed events and raw artifacts preserved; in-flight step may not have completed or flushed. No New board retry authorized by this observer failure.",
+  "status": "FAIL_OBSERVER_TOOL_TIMEOUT_KERNEL_RESET",
+  "reportedWallSeconds": 30.3,
+  "operation": "npn-first-generated-identity"
+}

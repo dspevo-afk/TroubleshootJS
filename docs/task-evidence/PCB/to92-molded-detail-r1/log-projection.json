@@ -1,0 +1,10 @@
+{
+  "status": "PASS_EXACT_OWNED_ROOT_ONLY_PROJECTION",
+  "file": "build.txt",
+  "privateRawSha256": "b08798ac66d0f6d6a5c74e210df7a2dea104c56f0883efcfa03f933e7b6c5a99",
+  "privateRawBytes": 1250,
+  "publicProjectionSha256": "3ab12fec844622c7f9d8b0833adde9ad16ab2edfc26b6e3a157c6ada061dd06c",
+  "publicBytes": 1186,
+  "replacements": 1,
+  "scope": "Raw earlier-candidate build gate passed before projection; full raw retained private. Candidate rejected by source review, no final production acceptance."
+}

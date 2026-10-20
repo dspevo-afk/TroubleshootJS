@@ -1,0 +1,13 @@
+{
+  "status": "PASS_EXPLICIT_STAGED_PATHS_RAW_BYTES_AND_WHITESPACE",
+  "pathsCheckedBeforeThisReceipt": 251,
+  "onlyNormalizedExistingDocs": [
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md"
+  ],
+  "testedProductionOwnerRawExact": true,
+  "allNewPacketRawExact": true,
+  "cachedDiffCheck": "PASS",
+  "cleanupLimit": "Old failed partial profile cleanup BLOCKED and preserved; staged records do not call it PASS. No deletion retry.",
+  "limits": "This receipt staged and raw-byte checked separately; commit/normalpush/exactremote remain."
+}

@@ -1,0 +1,9 @@
+{
+  "status": "FAIL_SOURCE_REVIEW_CANDIDATE_NOT_ACCEPTED",
+  "candidateSha256": "b83a6aa81d1a62ddc1f057044943d945d0c0508049f8d941d166cf35139f0fe4",
+  "finding": "New horizontal plastic highlight at integer y=68 in body(28,26,64,56), x44..76, intersects three 8x8 component-lead probe bounds around roots(44,70),(60,70),(76,70). Source leaf reported unrounded y68.8; Java integer operations make actual y68. Root still rejects intersection. Geometry/state hashes unchanged does not certify paint clearance.",
+  "reviewer": "package_realism_scope",
+  "reviewScope": "Read-only final paint source review; no execution by leaf. Root preserved all passing native/build phases as earlier candidate, not final acceptance.",
+  "playerStatus": "Initial ticket wait timed out45000ms; public body observed separately. No required NPN/NMOS or repair player action completed. Abort for source correction, then new sealed final-source gates.",
+  "decision": "Move inner molded-edge detail clear of all lead-root probe bounds, source review before rerun; do not publish current production candidate."
+}

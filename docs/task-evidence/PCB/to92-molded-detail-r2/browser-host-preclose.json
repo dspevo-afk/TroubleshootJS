@@ -1,0 +1,11 @@
+{
+  "sandboxEnabled": true,
+  "pid": 23992,
+  "scope": "Original retry browser before normal owned API close; fourth old blocked profile remains untouched",
+  "startTicks": "639281283538981905",
+  "resolvedExecutableMatch": true,
+  "headless": false,
+  "executable": "brave.exe",
+  "status": "PASS",
+  "profileArgumentMatched": true
+}

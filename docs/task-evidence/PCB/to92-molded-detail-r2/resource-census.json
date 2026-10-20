@@ -1,0 +1,248 @@
+{
+  "limits": "R1 recorded12, R2 native6 plus failed-partial player6 plus accepted-retry player6 =30 unique births. Failed partial browser exit code unknown and profile retained after automatic approval rejection. Current retry APIclose0/profileabsent/stateabsent/portreleased. Three older blocked profiles and current partial profile untouched; no broad termination/deletion. Only explicitly recorded births, not every transient OS process.",
+  "checks": [
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/contracts-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281265252043125",
+      "recordedBirthExited": true,
+      "pid": 19056
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/contracts-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281265254356317",
+      "recordedBirthExited": true,
+      "pid": 32488
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/census-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281265878853435",
+      "recordedBirthExited": true,
+      "pid": 31868
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/census-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281265888362577",
+      "recordedBirthExited": true,
+      "pid": 21736
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/build-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281266848232139",
+      "recordedBirthExited": true,
+      "pid": 26036
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/build-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281266862448008",
+      "recordedBirthExited": true,
+      "pid": 21320
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/preview-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281268002942956",
+      "recordedBirthExited": true,
+      "pid": 28508
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/preview-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281268016628821",
+      "recordedBirthExited": true,
+      "pid": 30600
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/preview-stop-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281270640860109",
+      "recordedBirthExited": true,
+      "pid": 31116
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/preview-stop-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281270643140507",
+      "recordedBirthExited": true,
+      "pid": 29268
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/browser-host-before.json",
+      "kind": "browser-host-before.json",
+      "executable": "brave.exe",
+      "startTicks": "639281268345931410",
+      "recordedBirthExited": true,
+      "pid": 20744
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r1/preview-owner-before.json",
+      "kind": "preview-owner-before.json",
+      "executable": "powershell.exe",
+      "startTicks": "639281268051914405",
+      "recordedBirthExited": true,
+      "pid": 28592
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/contracts-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281274683599901",
+      "recordedBirthExited": true,
+      "pid": 23828
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/contracts-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281274690378419",
+      "recordedBirthExited": true,
+      "pid": 26924
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/census-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281275476528364",
+      "recordedBirthExited": true,
+      "pid": 28508
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/census-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281275486150797",
+      "recordedBirthExited": true,
+      "pid": 26780
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/build-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281276311118758",
+      "recordedBirthExited": true,
+      "pid": 32332
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/build-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281276325694690",
+      "recordedBirthExited": true,
+      "pid": 30956
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/preview-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281283303194077",
+      "recordedBirthExited": true,
+      "pid": 24756
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/preview-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281283309882071",
+      "recordedBirthExited": true,
+      "pid": 22880
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/preview-stop-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281290338216537",
+      "recordedBirthExited": true,
+      "pid": 26328
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/preview-stop-process-launch.json",
+      "kind": "recorded-driver",
+      "executable": "pwsh",
+      "startTicks": "639281290340401350",
+      "recordedBirthExited": true,
+      "pid": 23000
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/browser-host-before.json",
+      "kind": "browser-host-before.json",
+      "executable": "brave.exe",
+      "startTicks": "639281283538981905",
+      "recordedBirthExited": true,
+      "pid": 23992
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/preview-owner-before.json",
+      "kind": "preview-owner-before.json",
+      "executable": "powershell.exe",
+      "startTicks": "639281283345673589",
+      "recordedBirthExited": true,
+      "pid": 8196
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/preview-process-launch.json",
+      "kind": "failed-partial-driver",
+      "executable": "pwsh",
+      "startTicks": "639281277670245902",
+      "recordedBirthExited": true,
+      "pid": 29636
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/preview-process-launch.json",
+      "kind": "failed-partial-driver",
+      "executable": "pwsh",
+      "startTicks": "639281277684009581",
+      "recordedBirthExited": true,
+      "pid": 30668
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/preview-stop-process-launch.json",
+      "kind": "failed-partial-driver",
+      "executable": "pwsh",
+      "startTicks": "639281281524013404",
+      "recordedBirthExited": true,
+      "pid": 6388
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/preview-stop-process-launch.json",
+      "kind": "failed-partial-driver",
+      "executable": "pwsh",
+      "startTicks": "639281281526334139",
+      "recordedBirthExited": true,
+      "pid": 13028
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/browser-host-before.json",
+      "kind": "failed-partial-browser-host-before.json",
+      "executable": "brave.exe",
+      "startTicks": "639281277914795842",
+      "recordedBirthExited": true,
+      "pid": 17256
+    },
+    {
+      "source": "docs/task-evidence/PCB/to92-molded-detail-r2/player-attempt-1/preview-owner-before.json",
+      "kind": "failed-partial-preview-owner-before.json",
+      "executable": "powershell.exe",
+      "startTicks": "639281277719481930",
+      "recordedBirthExited": true,
+      "pid": 25296
+    }
+  ],
+  "uniqueRecordedBirths": 30,
+  "status": "PASS_RECORDED_PROCESS_EXITS_WITH_PROFILE_CLEANUP_BLOCKED",
+  "knownBlockedCleanupActions": 4
+}

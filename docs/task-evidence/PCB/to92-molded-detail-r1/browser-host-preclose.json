@@ -1,0 +1,11 @@
+{
+  "headless": false,
+  "sandboxEnabled": true,
+  "status": "PASS",
+  "startTicks": "639281268345931410",
+  "pid": 20744,
+  "profileArgumentMatched": true,
+  "resolvedExecutableMatch": true,
+  "scope": "Original recorded browser before API close of rejected candidate; not player acceptance",
+  "executable": "brave.exe"
+}

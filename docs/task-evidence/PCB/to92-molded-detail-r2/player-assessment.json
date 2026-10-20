@@ -1,0 +1,37 @@
+{
+  "status": "PASS_FINAL_PRODUCTION_TO92_MOLDED_PLAYER",
+  "inputSealSha256": "fdcb279e22f15f4cbd601045dc927c43732a36d267a71223d61d7ddf0a12d756",
+  "events": 28,
+  "resolvedObserverFailures": [],
+  "publicIdentities": {
+    "npn": {
+      "replay": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/380469407799690561",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    },
+    "nmos": {
+      "replay": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/6806229627414984633",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    },
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    }
+  },
+  "images": [
+    "npn-generated-fitted.jpg",
+    "npn-installed-edge.jpg",
+    "npn-original-loose.jpg",
+    "nmos-installed-edge.jpg",
+    "nmos-bottom.jpg"
+  ],
+  "bodyCount": 27,
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "bebc5938ba611e3d9b67aaa48c8f1a5e707b499b6e0c1c7f838401ac58e3c5a8",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "c0483949d8323583560b5d46410184b43e7f77d3b1f24ab978eaf860d2553edb",
+    "Digest": "4c7cd8fabf621caf4bf85052006386b49e95ed55aa0245bdaf68a6271dfd63c2",
+    "FileCount": 1592
+  },
+  "limits": "Actual finite normal UI and raw screenshot evidence, root visual review, fresh PASS modal awaited from hidden state. Untouched FAIL banner has no separate public freshness token. No all-seed/manufacturing/optimality/performance/Edge/CDP/FileReader/full-matrix claim; accepted strict reader control reused only after unchanged-input audit; fresh comparison/canaries run."
+}

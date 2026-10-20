@@ -1,0 +1,51 @@
+{
+  "status": "FAILED_PARTIAL_PLAYER_PRESERVED_RETRY_AUTHORIZED_BY_TASK",
+  "archive": "player-attempt-1",
+  "files": {
+    "player-events.json": "7cb87daf2db35ec7e874554c11d271d605f3c41c86995efd09300fad9c488c6d",
+    "player-artifacts.json": "5daa552acf9fb0506c7733d1cf9b7d8219537177910b558be7d7620e5cd3a1eb",
+    "bootstrap-first-public.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "initial-ticket-public.txt": "2566709b99ca522b7273f506b3d4e969e16a3a01b9557aa26e19c221f7d8169f",
+    "initial-menu-public.txt": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+    "npn-ticket-public.txt": "f72b2596bcdbf175fb8f6a3abd316112e2b70e06d3186537c70a9c0bd38a7752",
+    "browser-host-before.json": "306e33a7ccf55a92d02b70dd6b7bab5299caa9bcbda388ad238badc73db05198",
+    "served-execution-before.json": "bbecec2e3b024d148349242a48ccce2c45a6de41f50725da235ac801e7f3e087",
+    "player-input-audit-before.txt": "60d9ea10c1770fd9bdc0378f6cb00648e685fe8d518e16ed852a044cebe3fd9d",
+    "player-input-audit-after.txt": "60d9ea10c1770fd9bdc0378f6cb00648e685fe8d518e16ed852a044cebe3fd9d",
+    "player-expected-execution.json": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01",
+    "post-player-provenance.json": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01",
+    "preview-owner-before.json": "4674fdceb641a6cd9cbeb26a3ae3f2c5dddb56ef5b06778b4129849ff287901a",
+    "preview-owner-after.json": "513c6011bece0cf3ead4c1a9d14efb4b6c045531830ae732b76dd1ffdc988c04",
+    "preview-process-cleanup.json": "51314a784a3059f4be1172fa475b01a7becc19cdf3e43d8a4d740694e647b13a",
+    "preview-process-launch.json": "6bd269a1f436128d4822e6690e68f895969599c51351eb582b016ca41f967ba9",
+    "preview-start-timing.json": "ec19d8d181ee6c3134a6474745ef9fc046ea2376b0d25456333e9ecf7ef28990",
+    "preview-start.txt": "611ec8d126ef1f6a1c456922c72219399fe01048b7105f850652476b4be5f699",
+    "preview-stop-process-cleanup.json": "f4721b70fb47a2a1bcafeadc673864f414d6aa8b66ade008c2b20583571941e6",
+    "preview-stop-process-launch.json": "f1f85ea3f73b29ef8377cbf060bd321c50d02f641fd9c23d6a7c2cfeb5500c11",
+    "preview-stop-timing.json": "cddfd896cf1a4e6225681e198640301a06f7c05731667497b0f269acc868df29",
+    "preview-stop.txt": "3dffdacb0c63bfa4eaa47887d0808eefd54d50233b0d3dda7c0c31a277f5b36c",
+    "player-observer-kernel-reset.json": "bb12167072dfd6c2adb2d59b949cb10d84eda65e6025b0f33ba15166302934e5",
+    "profile-cleanup-blocked.json": "5d10ebfa73a1615727450bdd878c90f3bc18b91f3bb203b740d1ce3beb8472da",
+    "player-resource-cleanup.json": "56d06e20ccbb884716056bba96d355ed67d6d86e525198e4d1aeab02e7908d4a"
+  },
+  "privateEvidence": {
+    "action-error-4.txt": {
+      "sha256": "e01a6bb890d1e8a1ea4d317acc56fd745be22d258259d25ee25f582687a6db01",
+      "bytes": 700
+    },
+    "browser.json": {
+      "sha256": "20de05757f2a87146c2f77f78e97c7d4c1d036fbb38ca279554997bb253a41e1",
+      "bytes": 2341
+    },
+    "runtime.json": {
+      "sha256": "0eb9459f67f5245ee903136a60275bfd8ce0a629124251f0bc078ac616f6dec2",
+      "bytes": 37584
+    }
+  },
+  "cause": "Root selected HTML summary Share pristine challenge as role button. Locator timeout30000; Node tool also timed out30.3s and reset kernel, browser process died. Native DOM source war/tsj-workbench-ui.js identity() uses details/summary.",
+  "sourceUiSha256": "e080b2d2e989ff088c37590d038eae24c315ac3b311fe9b1a7e8a8a346ce02ec",
+  "lostBoard": "One actual first NPN New board admitted; public replay/build identity not captured before lost browser. No seed reconstructed or substituted, no screenshot/repair accepted. Fresh ordinary request in next run must be described as first in accepted retry, not first ever.",
+  "resourceLimit": "Original browser birth exited; exit status unavailable/no APIclose. Preview stopped0/state absent/port8909 released. Leftover newly recorded browser profile remains after automatic approval blocked deletion; no retry. Fourth blocked profile including three older profiles.",
+  "nativeReuse": "Final89512645 source,1482 inputs/24 machinery,7 gate helpers/8 player helpers and all accepted phase assessments unchanged, audited now. Reuse exact native/build gates; only runtime input selector/observer timeout policy corrected.",
+  "retryPlan": "Fresh owned browser/preview under unchanged frozen helpers. Use observed summary text; set Playwright default action timeout10000 with tool timeout40000, explicit generation wait45000/tool55000, initial bootstrap observed without assuming ticket timing. Preserve every error and do not reroll based on layout."
+}

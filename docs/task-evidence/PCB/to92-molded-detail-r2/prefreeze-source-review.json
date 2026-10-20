@@ -1,0 +1,10 @@
+{
+  "status": "FAIL_PREFREEZE_SOURCE_REVIEW_CORRECTED_BEFORE_GATES",
+  "reviewer": "package_realism_scope",
+  "oldOwnerSha256": "7c24c930c39285bb62353749cd98766c6b7f7a7e83ef8af1185d93818c726eac",
+  "oldOwnerBytes": 59306,
+  "newOwnerSha256": "89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856",
+  "finding": "At24px body height, inset seam y+14 coincides with installed9px NPN/NMOS marking baseline y+14;24..27px collide or crowd. No source gate/build/player R2 executed or final candidate seal made. Full old raw owner private/hash-bound.",
+  "correction": "Only new detail guard24 becomes32 on both dimensions; inset max5,min/6 and linewidth min/48 remain. At32px current pose line offset20 vs9px marking baseline18, plus clear lead/probe bounds. Existing outer case/marking paint unaffected.",
+  "next": "Final actual source review, then freeze and execute fresh final gates."
+}

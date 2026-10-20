@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 31868,
+      "executable": "pwsh",
+      "startTicks": "639281265878853435"
+    },
+    {
+      "pid": 21736,
+      "executable": "pwsh",
+      "startTicks": "639281265888362577"
+    }
+  ],
+  "scope": "Captured before maintained final-source TO92 molded phase; actual tool exit precedes root observation",
+  "phase": "census"
+}

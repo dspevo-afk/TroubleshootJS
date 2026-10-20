@@ -1,0 +1,12 @@
+{
+  "headless": false,
+  "oldBlockedProfileDistinct": true,
+  "attempt": "accepted-retry-pending",
+  "executable": "brave.exe",
+  "resolvedExecutableMatched": true,
+  "privateLaunchMetadataSha256": "19dad1bf3b35bd50c5f13bd154330dc6d6677e13783be31c12c193854821488f",
+  "pid": 23992,
+  "sandboxEnabled": true,
+  "profileArgumentMatched": true,
+  "startTicks": "639281283538981905"
+}

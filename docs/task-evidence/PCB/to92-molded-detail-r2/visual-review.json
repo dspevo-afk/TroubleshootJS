@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "images": {
+    "npn-generated-fitted.jpg": {
+      "sha256": "cc8351342d3a3255a2e1bce6721296ffc068922fa064d12dc7928be997c836fb",
+      "judgment": "PASS",
+      "notes": "First ordinary NPN board in accepted retry, fitted top view with MM-90 beside it. Existing board space remains; no packing gain. Q1 inset plastic line is visible below NPN and within the case. Board OFF, tray empty."
+    },
+    "npn-installed-edge.jpg": {
+      "sha256": "f3183c9e3d233bae2476c8093ad9318ad3bd5dd5dfa81992eb9e2989dcb25934",
+      "judgment": "PASS",
+      "notes": "Actual Space3x loupe: NPN marking legible, inset line below it, original D-shaped case unchanged, leads/pads/BCE visible. Exact hidden probe-rectangle clearance is source-reviewed, not inferred from pixels."
+    },
+    "npn-original-loose.jpg": {
+      "sha256": "392a492684489841fc9386a6ec982c3f15222a65f733cbe4f0dbb5a14117fd33",
+      "judgment": "PASS",
+      "notes": "Actual original Part5 removed and selected in physical tray, Q1 slot empty. Inset line visible on same loose generic case, leads visible, Board OFF/tray1."
+    },
+    "nmos-installed-edge.jpg": {
+      "sha256": "17b5220840f24945e04bd2b021224405040c314f2b00572932fe98e71b080787",
+      "judgment": "PASS",
+      "notes": "Actual Space3x loupe on separately generated NMOS board: NMOS marking legible, inset line inside case below it, leads/pads/GDS visible. Current allowed0/top pose only; no player rotation claim."
+    },
+    "nmos-bottom.jpg": {
+      "sha256": "02af09242ec23a125a3c89b8d31715cd27c63f2cd0516e69fb4cc31ac2a4c398",
+      "judgment": "PASS",
+      "notes": "Actual bottom-copper control, fitted view: copper and pads visible, no front transistor case/line/marking ghost. Board OFF/tray0. All5 primary JPEGs were directly inspected; exact32px guard is source analysis, not a rendered threshold test."
+    }
+  }
+}

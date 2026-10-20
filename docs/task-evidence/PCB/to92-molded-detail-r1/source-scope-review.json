@@ -1,0 +1,15 @@
+{
+  "status": "PASS_SOURCE_SCOPE_HASH_BOUND",
+  "baseCommit": "41b678b5034deda1a451c0175aa92aaf41d35efd",
+  "leaf": "package_realism_scope",
+  "sourceSha256": {
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "26fc6ce825935cd59e84eb887498d4746965d3ce7bf8108dfdb5064d33750c88",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "e9a3077cc2334480ac9481a8cb37da0e19395a3c2e03555bacc1e8d4fe245b8a",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPackageGeometry.java": "4bcb22f342dfdfc744dd85b4313f48b08037937b0b46e64b5bd7b068b70d75f9",
+    "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java": "a2d94b7548b040c90933b6e5dc8278f5f7e648faec8fe65b08a9cbe595572ac3",
+    "src/com/lushprojects/circuitjs1/client/PhysicalPartRenderContext.java": "1b5ec447992d60eb1d6322dc8e04f6f3f969c28b626bed9a453f005d3e02cb29"
+  },
+  "scope": "Read-only leaf recommendation and root actual hash check. No execution/writes/spawn/publication by leaf. Shared drawTransistorBody called for NPN/NMOS installed/loose; reverse-face body skip remains. Root selects nonconductive flat-edge detail inside original clip, not backup optocoupler refinement.",
+  "limits": "Source-only, no visible/native acceptance yet"
+}

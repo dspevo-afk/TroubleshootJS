@@ -1,0 +1,28 @@
+{
+  "browser": {
+    "startTicks": "639281283538981905",
+    "apiClose": true,
+    "profileAbsent": true,
+    "processExitCode": 0,
+    "pid": 23992,
+    "signal": null,
+    "recordedBirthExited": true
+  },
+  "status": "PASS",
+  "limits": "Three older blocked profiles plus this old failed-attempt profile preserved. No broad kill/deletion or retry of rejected action.",
+  "oldFailedAttempt": {
+    "cleanupStatus": "BLOCKED_AUTOMATIC_APPROVAL_REVIEW",
+    "profileRetained": true,
+    "deletionRetried": false,
+    "record": "player-attempt-1/profile-cleanup-blocked.json"
+  },
+  "scope": "Fresh accepted retry resources only. Native/build drivers separate. Earlier failed attempt profile cleanup remains BLOCKED, not PASS.",
+  "preview": {
+    "stateAbsent": true,
+    "portReleased": true,
+    "port": 8909,
+    "pid": 8196,
+    "startTicks": "639281283345673589",
+    "recordedBirthExited": true
+  }
+}

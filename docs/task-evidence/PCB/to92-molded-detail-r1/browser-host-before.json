@@ -1,0 +1,10 @@
+{
+  "sandboxEnabled": true,
+  "headless": false,
+  "profileArgumentMatched": true,
+  "pid": 20744,
+  "privateLaunchMetadataSha256": "60287f41784dccec2890b52b4b29271bd1848d5456e7131c5755f052fe117e9e",
+  "startTicks": "639281268345931410",
+  "resolvedExecutableMatched": true,
+  "executable": "brave.exe"
+}

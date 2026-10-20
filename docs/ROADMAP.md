@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Electrolytic lid paint refinement validated; publication next**
+**Current task:** **TO92 detail validated; publication review with prior cleanup limit**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -53,8 +53,41 @@ actual JDK8/GWT5 and normal generated RC installed/loupe/loose/restored/undersid
 plus LED OL→Shop330→actual330→freshPASS→finalOFF pass. Five images inspected and
 three pasted; all12 current births exited/profile/state absent/port released.
 Failed V1 reader pin, initial UI wait and preclose slash observer are preserved
-and resolved. One unattributed console404 disclosed. Publication review next;
-no further packing/epoch/budget change. [Results and limits](task-evidence/PCB/capacitor-lid-detail-r1/RESULTS.md).
+and resolved. One unattributed console404 disclosed. Published41b678b5 with
+normalpush/exact origin,139 reviewed blobs/source1482+24 and fresh execution6
+verified; no further packing/epoch/budget change. Next bounded package detail
+is under source review. [Results and limits](task-evidence/PCB/capacitor-lid-detail-r1/RESULTS.md).
+
+The next bounded task adds a plastic flat-edge highlight through the existing
+shared NPN/NMOS installed/loose painter. Seventeen paint lines use transformed
+lead-root orientation and remain inside the existing silhouette; geometry,
+metadata, markings, solver and generation remain. Baseline/final seven-helper
+source seals are frozen; actual5 contracts and paired44/220 exact nonclock pass,
+fresh reader canaries and actual final JDK8/GWT5 build passed for that attempt.
+Final read-only source review then found the line crossing three lead-root
+probe regions; root rejected the candidate. All12 current births exited/profile/
+state absent/port released and only the own17-line production delta restored
+to exact published baseline. Initial45s ticket wait also failed; no case/player
+acceptance. R2 inset correction needs new scope/seal/source review/final gates.
+No detail promotion or new size claim. R2 moves the line inward (native y61,
+stroke1; probes start66), with extra loose-rounding inset and unchanged package
+geometry. Published baseline frozen before edit; final source review precedes
+new final-source gates/player acceptance. A preseal24px label collision was
+also caught and corrected by suppressing only the added detail below32px;
+old raw source/finding preserved, no R2 gate had run.
+Exact revised17-line source now has finite independent source-PASS; final
+seven-helper/review/source seal frozen, fresh contracts running. R2 census/
+build/visible player acceptance still pending; no earlier R1 PASS reused for
+corrected production. Final5 contracts,8 census/44cases220 protected pairs exact,
+fresh canaries and actual JDK8/GWT5 PASS. Accepted normal NPN/NMOS retry views,
+original NPN physical restoration/loose tray/underside and LED OL→Shop330→actual
+330→freshPASS→finalOFF PASS; five rawimages inspected/three pasted. All30 unique
+recorded births exited, fresh retry APIclose0/profile/state absent/portreleased.
+An earlier selector error caused Node reset/failed player attempt; its profile
+cleanup was automatically blocked, retained with unknown exit code and no retry.
+Code acceptance does not mark that cleanup PASS. Root publication review next;
+no packing/epoch/budget change. [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).
+[Scope and finite acceptance](task-evidence/PCB/to92-molded-detail-r1/scope.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

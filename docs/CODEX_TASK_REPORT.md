@@ -1,9 +1,159 @@
-# Current checkpoint: capacitor lid final gates/player/cleanup pass; publication next
+# Current checkpoint: TO92 code/player validated; prior profile cleanup BLOCKED
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact origin7fd882552405561dc156ebf240be475b2c2ee2d6,55 reviewed published
-paths, normal push0/exact remote/source1482+machinery24 verified. Prior private
-planner was not promoted. Its publication receipt is intended next commit.
+HEAD/exact prior origin41b678b5034deda1a451c0175aa92aaf41d35efd. Continue
+indefinite PCB realism/screenshots/optional leaves; no main/email/milestone stop.
+Preserve seven unrelated groups/private data and FOUR known blocked profile
+cleanup actions (three older, R2 partial17256). Never retry their deletion by
+another tool/shell/wording. No recorded current task process is live.
+
+Delivered candidate only17 paint additions in shared drawTransistorBody,
+rendererSHA89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856.
+Guard32, insetmin5/min6, linewidthmin1/min48, oldrect+innerellipse clips; NPN/
+NMOS installed/loose, same geometry/metadata/markings/state/graph/RNG/epochs.
+Independent final source PASS exacthash, root actual5contracts52.6443533s,
+8census70.9249323s/44cases220protected pairs exact86clocks/canaries PASS,
+actual JDK8/GWT5 build90.8380682s. Durations include terminal cleanup, not
+separately timed. Final1482/24/7gate/8player inputs and source-review seal bound.
+
+Accepted retry normal NPNseed380469407799690561/NMOSseed6806229627414984633,
+build347032FDADA50729040B5D58ADBC4063; originalFAIL/allactualsuppliesOFF, NPN
+fit/loupe/lift/remove/loose/samePart5restore, NMOSloupe/bottom omission PASS.
+KnownLED5577758334702827054 originalFAIL/isolatedOL/Shop330/actualOFF330/
+fresh hidden→visible FUNCTION VERIFIED/finalOFF PASS.28events/0retryfailures,
+five rawimages inspected/three pasted. Before/after servedCLI6+actual owner
+match; fresh browser23992 APIclose0/profileabsent, maintained stop0/stateabsent/
+port8909released. Resource census30 unique recorded births exited (R1=12,
+R2native6+failedplayer6+acceptedplayer6); not every transient OS process.
+
+R1probecollision rejected despite earlier gates; R2preseal24px label collision
+fixedguard32 before any gate. R2firstplayer rolebutton-vsSUMMARY error30s/Node
+kernelreset killed17256, no publicidentity/image/repair accepted;25files rawexact
+archived player-attempt-1. Its profile remains after automatic review blocked
+cleanup before processcreation; no delete/validation executed or retry. Exit
+code unknown/noAPIclose. Native/build reused only after unchanged1482/24/7/8
+audit. One unattributed console404 disclosed; no captured pageerror/requestfailed.
+
+See R1/R2 RESULTS, current player-assessment/resource-census and archive/history.
+Root integrated source/evidence/privacy review PASS with prior cleanup BLOCKED
+explicitly retained. Explicit staged-blob/whitespace/commit/normalpush/exactorigin
+are next; code acceptance does not mark old failed profile cleanup PASS.
+Capacitor publication/execution receipts intended in this coherent commit.
+No packinggain/allseed/manufacturing/performance/fullmatrix claim. Next unstarted:
+read-only review of optocoupler body illustration through existing owner.
+
+# Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact origin41b678b5034deda1a451c0175aa92aaf41d35efd. Continue indefinite
+PCB realism/screenshots/optional leaves; no main/email/final milestone stop.
+Preserve seven unrelated groups/private resources/three older blocked profiles
+PLUS current R2 partial-run profile after a new automatic approval rejection;
+never retry any of those deletions through another tool/wording/mechanism.
+Capacitor publication/execution receipts and rejected TO92R1 packet intended
+in this coherent commit. All12 R1 births exited. R2 partial browser17256 died
+on Node kernel reset; preview25296 stopped0/state absent/port8909 released.
+Partial-run leftover profile remains BLOCKED, browser exit status unknown.
+Fresh retry sandboxed browser23992 and managed port8909 preview LIVE; distinct
+new profile confirmed, native birth/executable/profile recorded. Startup0/two
+launch drivers exited; beforehost/CLI observer RUNNING, no navigation yet.
+
+R2 packet to92-molded-detail-r2: published1482/24/raw owner/scope/helpers2 frozen
+BEFORE edit; one renderer17 additions, shared NPN/NMOS installed/loose inset
+plastic edge, guard32/mininset5/linewidthmin1. Active renderer SHA
+89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856 (canonicalLF).
+Read-only Luna/MAX final source PASS binds exact current diff/hash: native
+liney61 width1 vsprobe66/lead67; min32px lineoffset20 vsmarkbaseline18, nested
+positive ellipse/oldrect clips and balanced canvas. Current package0/TOP and
+loose0; other cardinal branches source-only. Geometry/markings/metadata/probes/
+state/solver/generation/epoch/budget unchanged. No architecture owner change.
+
+Final candidate/seven gate helpers and source-review hash frozen. Unchanged
+accepted reader/control/sourcepins/baseline reuse audited; fresh comparison
+reruns all reader canaries. Actual R2 contracts5 PASS52.6443533s; census8
+PASS70.9249323s, paired44/220 all protected data exact/86 clocks/canaries PASS;
+actual JDK8/GWT5 PASS90.8380682s. All six native drivers separately exited after
+actualexit0/qualifier. Durations include terminal cleanup, not separately timed.
+Eight player helpers frozen to final source/gates; maintained previewstart0 and
+two launch drivers exited. Independent beforehost/CLI6 PASS actualexit0, served
+DOM before6 saved on navigation. One ordinary NPN request admitted, but root
+wrongly sought HTML summary Share pristine challenge as rolebutton;30000ms
+locator error flushed then Node tool30.3s timeout/kernel reset killed browser.
+No public identity/image/repair captured. Entire25 output files reversibly
+archived under R2/player-attempt-1 with exact hashes; player-attempt-history
+records failure and source/helper/native reuse audit. Browser profile delete
+command was rejected BEFORE process creation, no validation/delete executed.
+Only benign stop-driver/absence checks rerun; profile preserved, no retry.
+Final1482/24/7gate/8player inputs and phase assessments unchanged/audited; reuse
+source/native/build proof. Fresh browser/preview retry uses actual summary text,
+10s action timeout vs40s tool (generation45s/tool55s), no seed recovery/reroll.
+Next first boards IN ACCEPTED RETRY, normal NPN/NMOS views/mutation/face and
+LED OL→330→freshPASS/finalOFF,
+2-5 inspected rawimages/servedCLI6/current owned cleanup before publication.
+R1 source/probe collision rejected despite earlier native/build PASS; initial
+ticket45s timeout preserved, no player acceptance. R2 preseal24px marking collision
+also preserved (raw private/hash-bound), fixed guard32 BEFORE any R2 gate. See
+R1 RESULTS and R2 prefreeze/final-source-review. Root owns acceptance/publication.
+
+# Previous checkpoint: TO92 R2 baseline/edit prepared; source review before gates
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact origin41b678b5034deda1a451c0175aa92aaf41d35efd. User indefinite
+realism/screenshots/optional leaves, no main/email/final milestone stop. Preserve
+seven unrelated groups/private resources/three older blocked profiles. Prior
+capacitor publication and postpublication execution receipts intended nextcommit.
+
+to92-molded-detail-r1 scope/helpers2/full1482+24/rawowner frozen BEFORE edit.
+Read-only Luna/MAX package_realism_scope released without writes/execution; six
+consumed source hashes independently matched. One existing drawTransistorBody
+adds17 paint lines: plastic flat-edge highlight from transformed lead-root/body,
+inside existing rectangular and new innerellipse clip, >=24px, balanced canvas.
+Shared NPN/NMOS installed/loose, existing silhouette/markings/probes/metadata/
+state/solver/RNG/epoch/budgets untouched. CanonicalLF final owner/seven helpers
+frozen. Exact published strict reader/control/notes/sourcepins/baseline audited
+for reuse; fresh census comparison reruns its positive/five negative canaries.
+
+Actual final5 contracts PASS through maintained JDK8, actualexit0 then separate
+two driver-birth checks/qualifier PASS. Census8 actualexit0/cleanup/qualifier PASS,
+paired44/220 every nonclock datum exact,83 validated clock differences and fresh
+positive/five negative canaries PASS. Four native drivers separately exited.
+Actual final JDK8/GWT5 build actualexit0/drivercleanup/qualifier PASS. All six
+native drivers exited. Eight player helpers frozen to final gates; maintained
+preview start actualexit0 and two launch drivers exited. Port8908 preview and
+headed sandboxed Brave20744 were launched with recorded private metadata/birth/
+executable/profile; both are now closed normally with separate absence proof.
+Beforehost/CLI6 actualexit0. Initial ticket observer timed out45s, ticket later
+visible; raw body/failure preserved, no case/player mutation or acceptance.
+Optional leaf final source review found new seam crosses three component-lead
+probe bounds: current integer y68,x44..76 versus roots y70 with8x8 probes.
+Root rejects V1 despite native/build passes. source-review-blocker.json records
+both actual integer math and leaf unrounded68.8. Do not publish this candidate.
+Abort-time served6 equals before/after independent CLI6/owner. Browser APIclose0,
+maintained stop0; all12 births exited/profile/state absent/port8908 released.
+Full diagnostics private/hash-bound, exact owned-root-only public build projection.
+Final V1source/player audits passed BEFORE restoring own17 lines to exact HEAD
+bytes. No production/test/script delta remains. V1 packet RESULTS/sourceblocker/
+production-restoration preserve rejection; player qualifier NOT RUN. Read-only
+leaf reviewed correction math and recommended minimum5px inset for loose
+rounding. R2 scope+helpers2/full1482+24/raw publishedowner frozen BEFORE edit;
+First R2 source7c24... reviewed before any final seal/gate; small24..27px
+marking-baseline collision found, full raw private/hash-bound and public
+prefreeze-source-review.json retained. New detail guard32 clears small labels;
+actual owner SHA89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856,
+still17 additions. Inset max(5,min/6), linewidth max(1,min/48), same nested clip.
+Native y61/stroke1 versus probe min66/lead min67; at32px lineoffset20 vsbaseline18.
+Read-only leaf actual final R2 diff review RUNNING; final seal/gates NOT RUN. Eight
+player helpers prepared on port8909, not frozen. No current task process live.
+No size/manufacturing/allseed/performance/fullmatrix claim. Root owns remaining
+implementation integration/evidence/diff/index/commit/normalpush/exactorigin.
+
+# Previous checkpoint: capacitor lid published; next package scope under source review
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact origin41b678b5034deda1a451c0175aa92aaf41d35efd,139 reviewed published
+paths, normal push0/exact remote/source1482+machinery24 verified. Fresh actual
+execution6 equals accepted player build. Prior private planner not promoted.
+Capacitor publication/postpublication receipts intended next coherent commit.
 User indefinite PCB realism/screenshots/optional leaves; no final/main/email.
 Preserve seven unrelated groups/private resources/three older blocked profiles.
 No current task process live. All12 recorded births exited, owned browser
@@ -39,9 +189,11 @@ Raw build log private/hash-bound, one exact owned-root public projection after
 raw qualification. Existing IAB capture limitation/Brave fallback retained.
 Contracts53.7821928s/census70.9829503s/build89.7699933s include terminal cleanup,
 not separately timed. No performance/manufacturing/all-seed/size/full-matrix claim.
-Root final diff/privacy/index review, explicit commit/normalpush/exactorigin next.
-See capacitor-lid-detail-r1/RESULTS.md. Continue authorized realism work after
-publication; next inspect another existing package renderer for bounded detail.
+Root final diff/privacy/index and published139 blobs reviewed; normalpush/exact
+origin verified. See capacitor-lid-detail-r1/RESULTS.md. Optional Luna/MAX leaf
+package_realism_scope is read-only, no execution/writes/spawn/publication. Root
+selects next small refinement from existing package rendering owners; no new
+scope/code/gates frozen or started yet. Continue authorized realism work.
 
 # Previous checkpoint: same-cap second sweep NO_GO; publication next
 

@@ -982,6 +982,23 @@ final class StandardPhysicalPartRenderProviders {
             Math.max(1, b.width - 2), Math.max(1, b.height - 2), WorkbenchVisualTheme.BODY);
         WorkbenchVisualTheme.ellipse(graphics, b.x + b.width * .18, b.y + b.height * .1,
             b.width * .56, b.height * .2, WorkbenchVisualTheme.BODY_LIGHT);
+        if (b.width >= 32 && b.height >= 32) {
+            graphics.context.save();
+            WorkbenchVisualTheme.ellipsePath(graphics, b.x + 1, b.y + 1,
+                b.width - 2, b.height - 2);
+            graphics.context.clip();
+            int inset = Math.max(5, Math.min(b.width, b.height) / 6);
+            graphics.setLineWidth(Math.max(1, Math.min(b.width, b.height) / 48));
+            graphics.setColor(WorkbenchVisualTheme.BODY_LIGHT);
+            if (Math.abs(dx) > Math.abs(dy)) {
+                int edge = b.x + (dx < 0 ? b.width / 5 + inset : b.width * 4 / 5 - inset);
+                graphics.drawLine(edge, b.y + b.height / 4, edge, b.y + b.height * 3 / 4);
+            } else {
+                int edge = b.y + (dy < 0 ? b.height / 5 + inset : b.height * 4 / 5 - inset);
+                graphics.drawLine(b.x + b.width / 4, edge, b.x + b.width * 3 / 4, edge);
+            }
+            graphics.context.restore();
+        }
         graphics.context.restore();
     }
 

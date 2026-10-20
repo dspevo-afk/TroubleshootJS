@@ -1,0 +1,11 @@
+{
+  "privateOwnerMetadataSha256": "20de05757f2a87146c2f77f78e97c7d4c1d036fbb38ca279554997bb253a41e1",
+  "limits": "Do not retry by another tool, shell, wording or mechanism. Preserve this fourth blocked profile plus three older blocked profiles. The rejected command performed no validation, deletion or receipt write.",
+  "pid": 17256,
+  "deletionRetried": false,
+  "startTicks": "639281277914795842",
+  "status": "BLOCKED_AUTOMATIC_APPROVAL_REVIEW",
+  "profileAbsent": false,
+  "result": "Entire command rejected before CreateProcess: blocked by policy; no further reason supplied",
+  "action": "Remove newly recorded task-owned leftover browser profile after kernel reset"
+}

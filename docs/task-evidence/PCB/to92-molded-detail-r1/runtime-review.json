@@ -1,0 +1,18 @@
+{
+  "status": "PARTIAL_PLAYER_ABORTED_FOR_SOURCE_REVIEW",
+  "privateRuntimeSha256": "e7dfaf6744334ac6882e3b80070b517e122f923d8aafd3de8723210f5054c809",
+  "privateRuntimeBytes": 86432,
+  "entries": 931,
+  "counts": {
+    "console:error": 1,
+    "console:log": 930
+  },
+  "errors": [
+    {
+      "kind": "console",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "limits": "Initial ticket wait45s failed then ticket was observed. No case/player input, image or repair acceptance. Any unattributed console404 remains unattributed."
+}

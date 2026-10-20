@@ -1,0 +1,10 @@
+{
+  "status": "PASS_EXACT_OWNED_ROOT_ONLY_PROJECTION",
+  "file": "build.txt",
+  "privateRawSha256": "f98b1950ae0e6582e115896db7f8e9a4138006cbeda99f4ddd8bb40fa87648d8",
+  "privateRawBytes": 1250,
+  "publicProjectionSha256": "bd4e5d4e0b595f44d147b4ce437981fedebc1a1b2193fa6921e55d20a4464fbf",
+  "publicBytes": 1186,
+  "replacements": 1,
+  "scope": "Only exact owned worktree path in Linking into projected after raw final build qualification. Full original retained private. Native/build inputs unchanged."
+}

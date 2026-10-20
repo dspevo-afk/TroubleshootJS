@@ -1,0 +1,21 @@
+{
+  "preview": {
+    "port": 8909,
+    "portReleased": true,
+    "recordedBirthExited": true,
+    "pid": 25296,
+    "startTicks": "639281277719481930",
+    "stateAbsent": true
+  },
+  "browser": {
+    "apiClose": false,
+    "recordedBirthExited": true,
+    "processExitCode": "UNKNOWN_AFTER_KERNEL_RESET",
+    "cleanupBlocked": true,
+    "pid": 17256,
+    "startTicks": "639281277914795842",
+    "profileAbsent": false
+  },
+  "limits": "All recorded processes exited, but browser profile remains after kernel reset and automatic approval rejection. No profile deletion executed/retried. Partial player failed, fresh final run needed. Native/build source gates remain separate.",
+  "status": "BLOCKED_PROFILE_CLEANUP_PARTIAL_PLAYER_FAILED"
+}

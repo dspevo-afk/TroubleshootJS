@@ -1,0 +1,18 @@
+{
+  "status": "PASS_FINITE_RETRY_PLAYER_WITH_DISCLOSED_RESOURCE_ERROR",
+  "privateRuntimeSha256": "012a911c3de11cd730800ae54ed682826244363efbd66ba12528f22f43fc7499",
+  "privateRuntimeBytes": 52512,
+  "entries": 577,
+  "counts": {
+    "console:error": 1,
+    "console:log": 576
+  },
+  "errors": [
+    {
+      "kind": "console",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "limits": "One console resource404 without URL attribution in captured event; no captured pageerror/requestfailed/responseError. Required retry events, five inspected primary images and fresh repair PASS completed. Not an error-free-console claim. Earlier failed player attempt and blocked old profile remain separate and unmasked."
+}

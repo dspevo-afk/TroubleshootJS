@@ -1,0 +1,166 @@
+{
+  "bodies": [
+    {
+      "file": "bootstrap-first-public.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "file": "initial-ticket-public.txt",
+      "sha256": "63b2d16bfdeb8c6ed5d3bed1219e2133568e2c8cac0d48748a1e3c0b299bfcf0",
+      "bytes": 879
+    },
+    {
+      "file": "initial-menu-public.txt",
+      "sha256": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+      "bytes": 1323
+    },
+    {
+      "file": "npn-ticket-public.txt",
+      "sha256": "f72b2596bcdbf175fb8f6a3abd316112e2b70e06d3186537c70a9c0bd38a7752",
+      "bytes": 795
+    },
+    {
+      "file": "npn-ticket-identity-public.txt",
+      "sha256": "135085e0be242afdc75be7624b2b75fda48a610e0f1647309d1ed1dc16d8949e",
+      "bytes": 1087
+    },
+    {
+      "file": "npn-original-supplies-public.txt",
+      "sha256": "f93efbb6437f9bbd8d979851c5dcd3329db682e207cae5b26d881760bb8bb48d",
+      "bytes": 873
+    },
+    {
+      "file": "npn-original-off-public.txt",
+      "sha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "bytes": 865
+    },
+    {
+      "file": "npn-installed-loupe-public.txt",
+      "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "bytes": 491
+    },
+    {
+      "file": "npn-installed-component-public.txt",
+      "sha256": "6e7d7d4341855948f378702a0036f8ed5bcf96c7994e6b69a5e3f0e3ffd932c7",
+      "bytes": 668
+    },
+    {
+      "file": "npn-original-lifted-public.txt",
+      "sha256": "2e42457bee2df9e96838ba38ec1ca91e0a4ad0da4423621bab90d4c4417918bd",
+      "bytes": 693
+    },
+    {
+      "file": "npn-original-removed-public.txt",
+      "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "bytes": 491
+    },
+    {
+      "file": "npn-original-loose-public.txt",
+      "sha256": "b9367e8c2b3275ddbf0c3776d3ce35aaf64afceb275f06671768cc65ae311196",
+      "bytes": 711
+    },
+    {
+      "file": "npn-original-restored-public.txt",
+      "sha256": "700ffee632a6e842e20fca17bc5ad403db1b303809a4824a01270f13232face8",
+      "bytes": 664
+    },
+    {
+      "file": "nmos-ticket-public.txt",
+      "sha256": "4477e4857aa4dd4f2aa3ed62b703ba9dfd34dfbb52b8378bccef1b483b948d04",
+      "bytes": 793
+    },
+    {
+      "file": "nmos-ticket-identity-public.txt",
+      "sha256": "aa7faf867e96653ac3ac025345d5da9603bd6692618ec17647608b2b99cae866",
+      "bytes": 1085
+    },
+    {
+      "file": "nmos-original-off-public.txt",
+      "sha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "bytes": 865
+    },
+    {
+      "file": "nmos-installed-loupe-public.txt",
+      "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "bytes": 491
+    },
+    {
+      "file": "nmos-bottom-public.txt",
+      "sha256": "5e8cbe2016a7bed24a1f5353af6ae08a1d83306e0569cb7584c0d8c26d1b4db0",
+      "bytes": 983
+    },
+    {
+      "file": "led-ticket-identity-public.txt",
+      "sha256": "85e37a3a523be4f4fb5b62984ed9a1b7f3adc05499ebdf2b1b43d77ca1458e4f",
+      "bytes": 1042
+    },
+    {
+      "file": "led-original-off-public.txt",
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "bytes": 729
+    },
+    {
+      "file": "led-isolated-ol-public.txt",
+      "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "bytes": 870
+    },
+    {
+      "file": "led-purchased-tray-public.txt",
+      "sha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "bytes": 647
+    },
+    {
+      "file": "led-shop-installed-public.txt",
+      "sha256": "f63ede8e168f8cb3c52f92a9e3785ff25bce838e5432c68df8528e7095b741a4",
+      "bytes": 624
+    },
+    {
+      "file": "led-off-330-public.txt",
+      "sha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "bytes": 892
+    },
+    {
+      "file": "led-fresh-pass-public.txt",
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "bytes": 885
+    },
+    {
+      "file": "led-final-supplies-off-public.txt",
+      "sha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "bytes": 670
+    },
+    {
+      "file": "led-final-off-public.txt",
+      "sha256": "2c92d9bed563faaccf42b633ca33166a794b2f91df8da72fe7fb5c2402dd0ad9",
+      "bytes": 422
+    }
+  ],
+  "images": [
+    {
+      "file": "npn-generated-fitted.jpg",
+      "sha256": "cc8351342d3a3255a2e1bce6721296ffc068922fa064d12dc7928be997c836fb",
+      "bytes": 126033
+    },
+    {
+      "file": "npn-installed-edge.jpg",
+      "sha256": "f3183c9e3d233bae2476c8093ad9318ad3bd5dd5dfa81992eb9e2989dcb25934",
+      "bytes": 103099
+    },
+    {
+      "file": "npn-original-loose.jpg",
+      "sha256": "392a492684489841fc9386a6ec982c3f15222a65f733cbe4f0dbb5a14117fd33",
+      "bytes": 119340
+    },
+    {
+      "file": "nmos-installed-edge.jpg",
+      "sha256": "17b5220840f24945e04bd2b021224405040c314f2b00572932fe98e71b080787",
+      "bytes": 101722
+    },
+    {
+      "file": "nmos-bottom.jpg",
+      "sha256": "02af09242ec23a125a3c89b8d31715cd27c63f2cd0516e69fb4cc31ac2a4c398",
+      "bytes": 124822
+    }
+  ]
+}

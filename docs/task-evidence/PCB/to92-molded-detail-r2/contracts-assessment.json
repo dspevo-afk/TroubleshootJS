@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "phase": "contracts",
+  "elapsedSeconds": 52.6443533,
+  "inputSealSha256": "31d21012275f9b48e6387a99596eb50baaeebe8ba32233325898c5dfd4361425",
+  "scope": "Actual named finite final-source phase with separate root birth observation; other phases/player/publication separate",
+  "suites": [
+    "A02GeometryContractTest",
+    "A03IdentityContractTest",
+    "P01PhysicalPoseContractTest",
+    "Task43PhysicalEndpointContractTest",
+    "VisualWorkbenchContractTest"
+  ],
+  "receiptSha256": "c8239ed2d207868f9d5b6f0c4339f5b138e8110533b3a728db96f1071dbea05f"
+}

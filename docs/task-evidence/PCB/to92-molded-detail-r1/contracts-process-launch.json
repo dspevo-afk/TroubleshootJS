@@ -1,0 +1,16 @@
+{
+  "phase": "contracts",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281265252043125",
+      "pid": 19056
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281265254356317",
+      "pid": 32488
+    }
+  ],
+  "scope": "Captured before maintained final-source TO92 molded phase; actual tool exit precedes root observation"
+}

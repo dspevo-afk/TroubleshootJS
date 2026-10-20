@@ -1,0 +1,20 @@
+{
+  "status": "PASS_CLEANUP_OF_SOURCE_REJECTED_CANDIDATE",
+  "limits": "Cleanup only. No NPN/NMOS/repair player gate accepted. Older blocked profiles preserved.",
+  "browser": {
+    "apiClose": true,
+    "pid": 20744,
+    "recordedBirthExited": true,
+    "startTicks": "639281268345931410",
+    "profileAbsent": true,
+    "processExitCode": 0
+  },
+  "preview": {
+    "port": 8908,
+    "pid": 28592,
+    "portReleased": true,
+    "recordedBirthExited": true,
+    "stateAbsent": true,
+    "startTicks": "639281268051914405"
+  }
+}

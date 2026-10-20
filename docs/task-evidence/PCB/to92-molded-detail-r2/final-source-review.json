@@ -1,0 +1,30 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "reviewer": "package_realism_scope",
+  "baseCommit": "41b678b5034deda1a451c0175aa92aaf41d35efd",
+  "owner": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+  "ownerSha256": "89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856",
+  "additions": 17,
+  "deletions": 0,
+  "nativeGeometry": {
+    "body": [
+      28,
+      26,
+      64,
+      56
+    ],
+    "centerLeadRoot": [
+      60,
+      70
+    ],
+    "lineY": 61,
+    "lineWidth": 1,
+    "probeMinY": 66,
+    "leadBoundsMinY": 67
+  },
+  "minimumDetailHeight": 32,
+  "minimumHeightLineOffset": 20,
+  "minimumHeightMarkingBaselineOffset": 18,
+  "findings": "Revised guard32 and insetmax5,min/6 keep line clear of current lead/probe regions and installed marking. New ellipse path at least30x30, nested old flat-face rectangle, balanced Canvas save/restore. Existing four callers/NPN and NMOS strings/geometry/probes/metadata unchanged. Current package0/TOP and loose0 only; other cardinal branches source-only.",
+  "limits": "Read-only leaf, no edits or gate/build/player execution. Root owns exact hash and final-source runtime acceptance. Earlier blockers remain in R1 and R2 prefreeze records."
+}

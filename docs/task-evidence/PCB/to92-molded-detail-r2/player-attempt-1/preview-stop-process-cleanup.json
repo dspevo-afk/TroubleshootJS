@@ -1,0 +1,22 @@
+{
+  "launchSha256": "f1f85ea3f73b29ef8377cbf060bd321c50d02f641fd9c23d6a7c2cfeb5500c11",
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281281524013404",
+      "pid": 6388,
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281281526334139",
+      "pid": 13028,
+      "executable": "pwsh"
+    }
+  ],
+  "status": "PASS",
+  "actualExecExitCode": 0,
+  "scope": "Root driver births after actual tool exec completion; managed preview worker proof separate",
+  "elapsedSeconds": 0.0049539,
+  "phase": "preview-stop"
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "name": "browser-open-final-production",
+    "status": "FAIL",
+    "startedUtc": "2026-10-20T21:01:15.416Z",
+    "elapsedMillis": 45504,
+    "error": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Accept ticket and start', exact: true }) to be visible\u001b[22m\n",
+    "privateErrorSha256": "3ef2061f32055cbb6fbd1ce96473c2e4b8e4df32995c98f4cdf8b9b7f7e662af"
+  },
+  {
+    "name": "abort-served-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:03:53.798Z",
+    "elapsedMillis": 44,
+    "details": {
+      "projection": {
+        "Protocol": "troubleshootjs-execution-provenance-v1",
+        "SourceDigest": "661302bab99b39b10d352d09effdc75d354db3e5f1cca613169858a4390221b8",
+        "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+        "WebDigest": "6e44acf6e9f95f044428de5d47a933ace1854506b253d350f9cb4b588808effe",
+        "Digest": "0223ad78fb0f12cfc89bed1975b749b790bcd97b392b8ad3fa519ccfd8bba30a",
+        "FileCount": 1592
+      },
+      "scope": "After initial timeout and source rejection; no normal case input performed, not a successful player gate"
+    }
+  },
+  {
+    "name": "browser-owned-api-close-rejected-candidate",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:04:23.541Z",
+    "elapsedMillis": 121,
+    "details": {
+      "apiClose": true,
+      "browserExit": {
+        "code": 0,
+        "signal": null,
+        "utc": "2026-10-20T21:04:23.645Z"
+      },
+      "profileAbsent": true,
+      "scope": "Cleanup only; candidate rejected in source review"
+    }
+  }
+]

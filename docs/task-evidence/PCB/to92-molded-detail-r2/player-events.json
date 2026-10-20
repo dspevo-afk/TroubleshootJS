@@ -1,0 +1,350 @@
+[
+  {
+    "name": "browser-open-final-production",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:26:53.277Z",
+    "elapsedMillis": 531,
+    "details": {
+      "file": "bootstrap-first-public.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  {
+    "name": "bootstrap-ticket-and-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:27:19.067Z",
+    "elapsedMillis": 542,
+    "details": {
+      "file": "initial-menu-public.txt",
+      "sha256": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+      "bytes": 1323
+    }
+  },
+  {
+    "name": "npn-new-board-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:27:26.241Z",
+    "elapsedMillis": 482,
+    "details": {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinaryNewBoardClicks": 1,
+      "scope": "First request in fresh retry; earlier admitted partial-run board lost before public identity, preserved separately"
+    }
+  },
+  {
+    "name": "npn-ticket-admitted",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:27:26.738Z",
+    "elapsedMillis": 1160,
+    "details": {
+      "file": "npn-ticket-public.txt",
+      "sha256": "f72b2596bcdbf175fb8f6a3abd316112e2b70e06d3186537c70a9c0bd38a7752",
+      "bytes": 795
+    }
+  },
+  {
+    "name": "npn-first-generated-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:27:35.524Z",
+    "elapsedMillis": 115,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/380469407799690561",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    }
+  },
+  {
+    "name": "npn-original-customer-check",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:27:49.987Z",
+    "elapsedMillis": 186,
+    "details": {
+      "file": "npn-original-supplies-public.txt",
+      "sha256": "f93efbb6437f9bbd8d979851c5dcd3329db682e207cae5b26d881760bb8bb48d",
+      "bytes": 873
+    }
+  },
+  {
+    "name": "npn-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:28:03.314Z",
+    "elapsedMillis": 124,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+9V)",
+        "Disconnect Supply 2 (+5V)"
+      ],
+      "boardOff": true,
+      "originalCustomerFail": true
+    }
+  },
+  {
+    "name": "npn-fit-board",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:28:03.451Z",
+    "elapsedMillis": 188,
+    "details": {
+      "file": "npn-generated-fitted.jpg",
+      "sha256": "cc8351342d3a3255a2e1bce6721296ffc068922fa064d12dc7928be997c836fb",
+      "bytes": 126033
+    }
+  },
+  {
+    "name": "npn-installed-edge-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:28:17.096Z",
+    "elapsedMillis": 313,
+    "details": {
+      "image": {
+        "file": "npn-installed-edge.jpg",
+        "sha256": "f3183c9e3d233bae2476c8093ad9318ad3bd5dd5dfa81992eb9e2989dcb25934",
+        "bytes": 103099
+      },
+      "observedBodyCenter": [
+        620,
+        508
+      ],
+      "normalSpaceLoupe": true,
+      "boardOff": true
+    }
+  },
+  {
+    "name": "npn-lift-and-remove-original",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:29:43.788Z",
+    "elapsedMillis": 135,
+    "details": {
+      "file": "npn-original-removed-public.txt",
+      "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "bytes": 491
+    }
+  },
+  {
+    "name": "npn-loose",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:29:57.372Z",
+    "elapsedMillis": 413,
+    "details": {
+      "part": "Part 5 - Generic NPN transistor",
+      "image": {
+        "file": "npn-original-loose.jpg",
+        "sha256": "392a492684489841fc9386a6ec982c3f15222a65f733cbe4f0dbb5a14117fd33",
+        "bytes": 119340
+      },
+      "boardOff": true
+    }
+  },
+  {
+    "name": "npn-original-restored",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:30:21.644Z",
+    "elapsedMillis": 229,
+    "details": {
+      "sameOriginalPart": "Part 5 - Generic NPN transistor",
+      "state": "Installed",
+      "allLeadsAttached": true,
+      "boardOff": true
+    }
+  },
+  {
+    "name": "nmos-new-board-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:30:36.094Z",
+    "elapsedMillis": 46,
+    "details": {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinaryNewBoardClicks": 1
+    }
+  },
+  {
+    "name": "nmos-ticket-admitted",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:30:36.160Z",
+    "elapsedMillis": 972,
+    "details": {
+      "file": "nmos-ticket-public.txt",
+      "sha256": "4477e4857aa4dd4f2aa3ed62b703ba9dfd34dfbb52b8378bccef1b483b948d04",
+      "bytes": 793
+    }
+  },
+  {
+    "name": "nmos-first-generated-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:30:37.144Z",
+    "elapsedMillis": 79,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/6806229627414984633",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    }
+  },
+  {
+    "name": "nmos-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:31:14.753Z",
+    "elapsedMillis": 401,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+9V)",
+        "Disconnect Supply 2 (+5V)"
+      ],
+      "originalCustomerFail": true,
+      "boardOff": true
+    }
+  },
+  {
+    "name": "nmos-installed-edge-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:31:36.059Z",
+    "elapsedMillis": 276,
+    "details": {
+      "image": {
+        "file": "nmos-installed-edge.jpg",
+        "sha256": "17b5220840f24945e04bd2b021224405040c314f2b00572932fe98e71b080787",
+        "bytes": 101722
+      },
+      "observedBodyCenter": [
+        960,
+        460
+      ],
+      "normalSpaceLoupe": true,
+      "boardOff": true
+    }
+  },
+  {
+    "name": "nmos-bottom-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:31:36.348Z",
+    "elapsedMillis": 226,
+    "details": {
+      "image": {
+        "file": "nmos-bottom.jpg",
+        "sha256": "02af09242ec23a125a3c89b8d31715cd27c63f2cd0516e69fb4cc31ac2a4c398",
+        "bytes": 124822
+      },
+      "boardOff": true,
+      "normalFaceControl": true
+    }
+  },
+  {
+    "name": "led-open-known-replay",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:32:40.347Z",
+    "elapsedMillis": 530,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 347032FDADA50729040B5D58ADBC4063"
+    }
+  },
+  {
+    "name": "led-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:33:03.394Z",
+    "elapsedMillis": 351,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+5V)"
+      ],
+      "originalCustomerFail": true,
+      "boardOff": true
+    }
+  },
+  {
+    "name": "led-isolated-ol",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:33:25.036Z",
+    "elapsedMillis": 258,
+    "details": {
+      "physicalReading": "OL",
+      "boardOff": true,
+      "exitedModeBeforeMutation": true
+    }
+  },
+  {
+    "name": "led-remove-and-shop",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:33:25.308Z",
+    "elapsedMillis": 252,
+    "details": {
+      "file": "led-purchased-tray-public.txt",
+      "sha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "bytes": 647
+    }
+  },
+  {
+    "name": "led-shop-installed",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:34:10.347Z",
+    "elapsedMillis": 111,
+    "details": {
+      "part": "Part 4 - 330 Ohm +/-5%",
+      "target": "Circuit / R1",
+      "boardOff": true
+    }
+  },
+  {
+    "name": "led-off-330",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:34:10.472Z",
+    "elapsedMillis": 287,
+    "details": {
+      "physicalReading": "330 Ohm",
+      "boardOff": true,
+      "exitedModeBeforePower": true
+    }
+  },
+  {
+    "name": "led-fresh-customer-pass",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:34:25.551Z",
+    "elapsedMillis": 170,
+    "details": {
+      "newlyVisibleCustomerPass": true,
+      "physicalOff330VerifiedBeforePower": true
+    }
+  },
+  {
+    "name": "led-final-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:35:14.288Z",
+    "elapsedMillis": 222,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+5V)"
+      ],
+      "boardOff": true,
+      "originalFaultyPartLoose": true
+    }
+  },
+  {
+    "name": "served-final-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:35:14.523Z",
+    "elapsedMillis": 10,
+    "details": {
+      "Protocol": "troubleshootjs-execution-provenance-v1",
+      "SourceDigest": "bebc5938ba611e3d9b67aaa48c8f1a5e707b499b6e0c1c7f838401ac58e3c5a8",
+      "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+      "WebDigest": "c0483949d8323583560b5d46410184b43e7f77d3b1f24ab978eaf860d2553edb",
+      "Digest": "4c7cd8fabf621caf4bf85052006386b49e95ed55aa0245bdaf68a6271dfd63c2",
+      "FileCount": 1592
+    }
+  },
+  {
+    "name": "browser-owned-api-close",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:37:13.263Z",
+    "elapsedMillis": 121,
+    "details": {
+      "apiClose": true,
+      "browserExit": {
+        "code": 0,
+        "signal": null,
+        "utc": "2026-10-20T21:37:13.365Z"
+      },
+      "profileAbsent": true,
+      "scope": "Fresh retry profile only; earlier blocked profile untouched"
+    }
+  }
+]

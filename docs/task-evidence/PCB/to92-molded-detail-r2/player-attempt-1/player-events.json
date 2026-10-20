@@ -1,0 +1,54 @@
+[
+  {
+    "name": "browser-open-final-production",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:17:23.123Z",
+    "elapsedMillis": 525,
+    "details": {
+      "file": "bootstrap-first-public.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  {
+    "name": "bootstrap-ticket-and-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:18:04.179Z",
+    "elapsedMillis": 150,
+    "details": {
+      "file": "initial-menu-public.txt",
+      "sha256": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+      "bytes": 1323
+    }
+  },
+  {
+    "name": "npn-new-board-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:18:10.383Z",
+    "elapsedMillis": 44,
+    "details": {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "ordinaryNewBoardClicks": 1
+    }
+  },
+  {
+    "name": "npn-ticket-admitted",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T21:18:10.440Z",
+    "elapsedMillis": 1181,
+    "details": {
+      "file": "npn-ticket-public.txt",
+      "sha256": "f72b2596bcdbf175fb8f6a3abd316112e2b70e06d3186537c70a9c0bd38a7752",
+      "bytes": 795
+    }
+  },
+  {
+    "name": "npn-first-generated-identity",
+    "status": "FAIL",
+    "startedUtc": "2026-10-20T21:18:16.879Z",
+    "elapsedMillis": 30015,
+    "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Share pristine challenge', exact: true })\u001b[22m\n",
+    "privateErrorSha256": "e01a6bb890d1e8a1ea4d317acc56fd745be22d258259d25ee25f582687a6db01"
+  }
+]

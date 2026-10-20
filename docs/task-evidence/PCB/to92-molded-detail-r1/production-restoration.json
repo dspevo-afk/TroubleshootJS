@@ -1,0 +1,8 @@
+{
+  "status": "PASS_ONLY_OWN_REJECTED_PAINT_DELTA_RESTORED",
+  "baseCommit": "41b678b5034deda1a451c0175aa92aaf41d35efd",
+  "owner": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+  "rejectedRawSha256": "b83a6aa81d1a62ddc1f057044943d945d0c0508049f8d941d166cf35139f0fe4",
+  "restoredPublishedSha256": "26fc6ce825935cd59e84eb887498d4746965d3ce7bf8108dfdb5064d33750c88",
+  "scope": "Verified current source equals own frozen17-line rejected candidate, raw archived; restored only that owner to exact current HEAD bytes after owned resource cleanup. No unrelated file changed."
+}

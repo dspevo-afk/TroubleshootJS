@@ -1,0 +1,7 @@
+{
+  "status": "RESOLVED_TOOLING_IMPORT_FAILURE",
+  "initialImport": "import('playwright')",
+  "reportedError": "The requested module './index.js' does not provide an export named 'default'",
+  "resolution": "Bundled playwright package declares require ./index.js; Node createRequire used that existing entry point, chromium/launchServer available and actual accepted retry completed.",
+  "changes": "No package installation, dependency/global/security/app change. Tooling only; original failed player remains failed."
+}

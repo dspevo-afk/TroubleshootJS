@@ -1,0 +1,22 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "41b678b5034deda1a451c0175aa92aaf41d35efd",
+  "message": "Add scored metal lid detail to electrolytic capacitors",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "verifiedExactRemoteRef": "41b678b5034deda1a451c0175aa92aaf41d35efd\trefs/heads/codex/q60-faulted-profile-counts",
+  "reviewedPublishedPaths": 139,
+  "publishedPacketRawExact": true,
+  "productionOwnerRawExactlyTested": true,
+  "existingTwoMarkdownDocsOnlyGitCrlfToLf": true,
+  "compilerInputsBound": 1482,
+  "productionPaintOwnersChanged": 1,
+  "machineryInputsUnchanged": 24,
+  "gates": "Five maintained contracts, paired44/220 nonclock exact, actual JDK8/GWT5, actual normal player and fresh repair PASS, twelve current births cleanup",
+  "resources": "No current task browser/preview/native live; profile/state absent/port8907 released. Older blocked profiles preserved.",
+  "preserved": "Seven unrelated worktree groups and private evidence; no main merge/email",
+  "nextUnstarted": "Source review of remaining component/package illustration through existing owners",
+  "limits": "Finite paint/normal-player evidence. No packing gain/all-seed/full-matrix/manufacturing/performance claim. V1 reader pin, initial ticket observer and path spelling failure retained, unattributed resource404 disclosed."
+}

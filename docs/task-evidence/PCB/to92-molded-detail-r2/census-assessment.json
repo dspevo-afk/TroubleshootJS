@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "phase": "census",
+  "elapsedSeconds": 70.9249323,
+  "inputSealSha256": "31d21012275f9b48e6387a99596eb50baaeebe8ba32233325898c5dfd4361425",
+  "scope": "Actual named finite final-source phase with separate root birth observation; other phases/player/publication separate",
+  "suites": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "receiptSha256": "e6194601188b138d55fa27eff4fd4e2bfd98a73ca64ed3316527a0ced9992c88",
+  "pairedComparisonSha256": "d5ba2e5cf2de6888295a5bcc9045d2bf1433f43ef3cb6a4b943cafe332188f07"
+}

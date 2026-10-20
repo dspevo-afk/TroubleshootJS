@@ -1,0 +1,19 @@
+{
+  "scope": "Actual final production TO92 NPN/NMOS molded edge installed/loose/face and normal repair smoke check",
+  "candidate": "candidate-inputs.json",
+  "port": 8909,
+  "viewport": [1280, 900],
+  "browser": "Existing documented built-in Browser capture/Edge limitation; established headed sandboxed installed Brave fallback",
+  "generatedFamilies": {"npn": "NPN_LOW_SIDE_SWITCH", "nmos": "NMOS_LOW_SIDE_SWITCH"},
+  "profile": "EASY",
+  "ledReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+  "checks": [
+    "First ordinary New board NPN and NMOS admissions, public replay/build identity without seed substitution, original customer check and actual supplies OFF",
+    "NPN fitted and actual Space loupe flat-edge detail; lead lift/removal, physical loose tray and restoration of the same original with unchanged identity/marking/state",
+    "NMOS installed Space loupe and reverse-face omission; derive observed flat edge from actual package orientation",
+    "Known LED original FAIL, OFF isolated OL, actual Shop330 replacement, physical OFF330, mode exit, fresh hidden-to-visible customer PASS, final supplies OFF",
+    "Raw normal body privacy and two-to-five inspected screenshots; served/CLI execution6, actual process/profile/port ownership and normal cleanup"
+  ],
+  "primaryImages": ["npn-generated-fitted.jpg", "npn-installed-edge.jpg", "npn-original-loose.jpg", "nmos-installed-edge.jpg", "nmos-bottom.jpg"],
+  "limits": "Finite normal input/render/repair observations. No new packing/manufacturing/all-seed/performance/full-matrix/Edge/CDP/FileReader claim. Preserve failures."
+}
