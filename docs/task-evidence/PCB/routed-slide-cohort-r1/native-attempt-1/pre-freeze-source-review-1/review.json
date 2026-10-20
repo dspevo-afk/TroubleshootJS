@@ -1,0 +1,15 @@
+{
+  "status": "CHANGES_REQUIRED_PRE_FREEZE",
+  "nativeExecution": "NOT_RUN",
+  "files": {
+    "source/tests/contracts/PcbRoutedSlideCompactionContractTest.java": "ef0aba431ae8a07e4f4fb255a065fe24c6aad8ef560d6da3a48c594afafac4d9",
+    "source/tests/contracts/PcbRoutedSlideDescentContractTest.java": "4b8dfedd2b6a536a67f5fb818b305471d0146ab16d86c3dc16369e6244b02c2a",
+    "source/tests/contracts/PcbRoutedSlideCohortContractTest.java": "d0bc3fb8dadeb8d4df472f88f97355d947f783cdaba44b3f62301d96744e09ae",
+    "worker-notes.md": "a5a416935c933d2d938387555fc40cd16516fcb9ed73601067a1dc41ed65504d"
+  },
+  "findings": [
+    "Generic frame should invoke existing placement validator after exact frame/region checks",
+    "Literal observer fixture must restore prior owner in finally even when an assertion fails; assert the exact fixed-root failure boundary"
+  ],
+  "scope": "No search/metric/budget/oracle or runtime outcome change"
+}

@@ -1,0 +1,425 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "All14 informed accepted15 regression roots with exactly the published bounded generic private descent; no production change",
+  "baseCommit": "1202f18e48bcd3401aa117c3d5fd3b25bc0c21c9",
+  "protocolSha256": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+  "priorAssessSha256": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/native-inputs.json": "8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/root-review.json": "57bc9be9f5a2faaffef94fed0e9640d3639173f65a558906e27f017e5445f1c6",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/routes.txt": "d39a3033b90f87842d85298fcb66eafb6969d8e1556d9b6d21e2dc0948495dc2",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/assessment.json": "9afda2b35062f4cec8f3028469be031f65336a195d6357645ff250d73ea2922c",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/descent-analysis.json": "9b73b3ffa5cce112bc8b84da0d4ebc7e08bc0fff6d6957bf7a3867cc51f410ff"
+  },
+  "unitPrerequisiteSha256": "c363a66616f68c002c1d1b4c4ae6673870d2a1202f1345b4ef7f5b4a1cd096ed",
+  "routesSuiteManifestSha256": "88bdaf9bed95d9a092d59b42bdb3f53d93063457a514c067be983e56671db147",
+  "routePhaseInputsSha256": {
+    "routes.txt": "666231f0e66328f96554bd4edb8e1a69f99f3f0e4552487bfd35911327dc8313",
+    "routes-receipt.txt": "b09749eb1b0bc1a38ae72b17e4e8732735a2185af593398d59cad13407ca3f06",
+    "routes-timing.json": "1de03b0bc43c679ef0e51820d441a92e6519fb5edd4a8b35470bd672242d47e9"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 7,
+      "suiteClasses": [
+        "PcbRoutedSlideCohortTrialContractTest",
+        "PcbRoutedSlideCohortTrialContractTestGroup2",
+        "PcbRoutedSlideCohortTrialContractTestGroup3",
+        "PcbRoutedSlideCohortTrialContractTestGroup4",
+        "PcbRoutedSlideCohortTrialContractTestGroup5",
+        "PcbRoutedSlideCohortTrialContractTestGroup6",
+        "PcbRoutedSlideCohortTrialContractTestGroup7"
+      ],
+      "reportRows": 42,
+      "orderedMarkers": [
+        "PCB routed slide cohort trial contracts ",
+        "PCB routed slide cohort Group2 contracts ",
+        "PCB routed slide cohort Group3 contracts ",
+        "PCB routed slide cohort Group4 contracts ",
+        "PCB routed slide cohort Group5 contracts ",
+        "PCB routed slide cohort Group6 contracts ",
+        "PCB routed slide cohort Group7 contracts "
+      ],
+      "cohort": {
+        "status": "PASS",
+        "scope": "All14 informed accepted15 regression roots with exactly the published bounded generic private descent; no production change",
+        "roots": 14,
+        "rows": 14,
+        "oldBaselineReports": 28,
+        "cohortSummaries": [
+          {
+            "seed": "-1017",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 19,
+              "validatedMoves": 10,
+              "rejectedMoves": 9,
+              "compactions": 10
+            }
+          },
+          {
+            "seed": "-1004",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 22,
+              "validatedMoves": 13,
+              "rejectedMoves": 9,
+              "compactions": 13
+            }
+          },
+          {
+            "seed": "-1022",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 31,
+              "validatedMoves": 18,
+              "rejectedMoves": 13,
+              "compactions": 18
+            }
+          },
+          {
+            "seed": "0",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 16,
+              "validatedMoves": 10,
+              "rejectedMoves": 6,
+              "compactions": 10
+            }
+          },
+          {
+            "seed": "17",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 21,
+              "validatedMoves": 11,
+              "rejectedMoves": 10,
+              "compactions": 11
+            }
+          },
+          {
+            "seed": "42",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 23,
+              "validatedMoves": 11,
+              "rejectedMoves": 12,
+              "compactions": 11
+            }
+          },
+          {
+            "seed": "1",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 15,
+              "validatedMoves": 8,
+              "rejectedMoves": 7,
+              "compactions": 8
+            }
+          },
+          {
+            "seed": "7",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 24,
+              "validatedMoves": 13,
+              "rejectedMoves": 11,
+              "compactions": 13
+            }
+          },
+          {
+            "seed": "5",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 2,
+              "acceptedSteps": 1,
+              "evaluatedMoves": 35,
+              "validatedMoves": 18,
+              "rejectedMoves": 17,
+              "compactions": 18
+            }
+          },
+          {
+            "seed": "14",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 28,
+              "validatedMoves": 14,
+              "rejectedMoves": 14,
+              "compactions": 14
+            }
+          },
+          {
+            "seed": "2",
+            "status": "STEP_CAP",
+            "aggregate": {
+              "steps": 4,
+              "acceptedSteps": 4,
+              "evaluatedMoves": 50,
+              "validatedMoves": 32,
+              "rejectedMoves": 18,
+              "compactions": 32
+            }
+          },
+          {
+            "seed": "3",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 26,
+              "validatedMoves": 15,
+              "rejectedMoves": 11,
+              "compactions": 15
+            }
+          },
+          {
+            "seed": "4",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 28,
+              "validatedMoves": 14,
+              "rejectedMoves": 14,
+              "compactions": 14
+            }
+          },
+          {
+            "seed": "6",
+            "status": "NO_STRICT_IMPROVEMENT",
+            "aggregate": {
+              "steps": 1,
+              "acceptedSteps": 0,
+              "evaluatedMoves": 34,
+              "validatedMoves": 25,
+              "rejectedMoves": 9,
+              "compactions": 25
+            }
+          }
+        ],
+        "routeReports": 42,
+        "observationDisposition": "PASS; bounded informed14 cohort observation only",
+        "fitnessDisposition": "NOT_EVALUATED"
+      }
+    }
+  },
+  "cohortObservation": {
+    "status": "PASS",
+    "scope": "All14 informed accepted15 regression roots with exactly the published bounded generic private descent; no production change",
+    "roots": 14,
+    "rows": 14,
+    "oldBaselineReports": 28,
+    "cohortSummaries": [
+      {
+        "seed": "-1017",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 19,
+          "validatedMoves": 10,
+          "rejectedMoves": 9,
+          "compactions": 10
+        }
+      },
+      {
+        "seed": "-1004",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 22,
+          "validatedMoves": 13,
+          "rejectedMoves": 9,
+          "compactions": 13
+        }
+      },
+      {
+        "seed": "-1022",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 31,
+          "validatedMoves": 18,
+          "rejectedMoves": 13,
+          "compactions": 18
+        }
+      },
+      {
+        "seed": "0",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 16,
+          "validatedMoves": 10,
+          "rejectedMoves": 6,
+          "compactions": 10
+        }
+      },
+      {
+        "seed": "17",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 21,
+          "validatedMoves": 11,
+          "rejectedMoves": 10,
+          "compactions": 11
+        }
+      },
+      {
+        "seed": "42",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 23,
+          "validatedMoves": 11,
+          "rejectedMoves": 12,
+          "compactions": 11
+        }
+      },
+      {
+        "seed": "1",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 15,
+          "validatedMoves": 8,
+          "rejectedMoves": 7,
+          "compactions": 8
+        }
+      },
+      {
+        "seed": "7",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 24,
+          "validatedMoves": 13,
+          "rejectedMoves": 11,
+          "compactions": 13
+        }
+      },
+      {
+        "seed": "5",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 2,
+          "acceptedSteps": 1,
+          "evaluatedMoves": 35,
+          "validatedMoves": 18,
+          "rejectedMoves": 17,
+          "compactions": 18
+        }
+      },
+      {
+        "seed": "14",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 28,
+          "validatedMoves": 14,
+          "rejectedMoves": 14,
+          "compactions": 14
+        }
+      },
+      {
+        "seed": "2",
+        "status": "STEP_CAP",
+        "aggregate": {
+          "steps": 4,
+          "acceptedSteps": 4,
+          "evaluatedMoves": 50,
+          "validatedMoves": 32,
+          "rejectedMoves": 18,
+          "compactions": 32
+        }
+      },
+      {
+        "seed": "3",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 26,
+          "validatedMoves": 15,
+          "rejectedMoves": 11,
+          "compactions": 15
+        }
+      },
+      {
+        "seed": "4",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 28,
+          "validatedMoves": 14,
+          "rejectedMoves": 14,
+          "compactions": 14
+        }
+      },
+      {
+        "seed": "6",
+        "status": "NO_STRICT_IMPROVEMENT",
+        "aggregate": {
+          "steps": 1,
+          "acceptedSteps": 0,
+          "evaluatedMoves": 34,
+          "validatedMoves": 25,
+          "rejectedMoves": 9,
+          "compactions": 25
+        }
+      }
+    ],
+    "routeReports": 42,
+    "observationDisposition": "PASS; bounded informed14 cohort observation only",
+    "fitnessDisposition": "NOT_EVALUATED"
+  },
+  "observationDisposition": "PASS; bounded informed14 cohort observation only",
+  "fitnessDisposition": "NOT_EVALUATED",
+  "policyDisposition": "NO_POLICY_OR_ACCEPTANCE_CHANGE",
+  "productionChange": "NONE",
+  "limits": [
+    "All14 roots are informed regressions, not unseen; bounded private qualification, no optimum/manufacturing/general performance claim",
+    "Shared search/caps/validators/metrics unchanged; original selected results are immutable; no extra route or policy/version change",
+    "Full current census derives move order/affected trace counts/net-pair hashes; full native paths and physical proof remain native responsibilities",
+    "Seven fixed two-root JVMs retain60second budget; any timeout/missing proof/cleanup is FAIL or incomplete, never PASS",
+    "No production/GWT/player/solver/repair/fullmatrix/unseen claim"
+  ]
+}

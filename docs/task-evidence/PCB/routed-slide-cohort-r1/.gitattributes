@@ -1,0 +1,3 @@
+* -text whitespace=cr-at-eol
+/source-review.diff -whitespace
+/native-attempt-1/source-review.diff -whitespace

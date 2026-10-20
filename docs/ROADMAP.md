@@ -308,6 +308,21 @@ are independently derived from all current pads. Reader80/host12/rootreviewPASS;
 no production/GWT/player/solver/fullmatrix/unseen/manufacturing claim. Next apply
 the same4step/128proposal generic private search to all14 informed regressions.
 [Cumulative private reductions and limits](task-evidence/PCB/routed-slide-descent-r1/RESULTS.md).
+The identical bounded search now completes all14 informed regression roots: only5
+and2 retain the same small gains; other12stay unchanged.372attempts/212physical
+admissions/160rejections produce5strict updates. All14selected42fields/whitespace
+and matched5/2complete non-time chains stay exact. Final native5unit PASS50.224s/
+7route PASS155.460s; original93reader cases plus14actual-format framing cases pass.
+Frozen reader initially rejected correct seven-pair markers; a separately reviewed
+post-native framing-only adapter fixes that check, with originalexit2/native/source
+bytes preserved. Unit fixture failure60files retained. COPY1481→1467 retired and
+all6birthsEXITED; main1475/default15/general16 unchanged. No fresh GWT/player or
+production promotion. User agrees diminishingreturns here and directs pre-routing
+placement plus persistent normal-random behavior, with actual new-board screenshots.
+Normal11-family requests do not use privateRB56density rules; both shared procedural
+and ControlledIndicator layout paths need appropriate coverage, without bypassing
+existing advanced release gates. Next is that coherent production scope.
+[Informed14 results and limits](task-evidence/PCB/routed-slide-cohort-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

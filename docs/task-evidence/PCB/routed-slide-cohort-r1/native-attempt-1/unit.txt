@@ -1,0 +1,25 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB routed passive leg census contracts assertions=40 fixtures=6 evaluator=endpointLegCensus
+
+PASS: PCB routed passive feasibility census contracts assertions=41 fixtures=6 evaluator=physicalFeasibilityCensus
+
+PASS: PCB routed slide compaction contracts assertions=36 fixtures=5 evaluator=selectedRoutedSlideCompaction
+
+PASS: PCB routed slide descent contracts assertions=25 fixtures=6 evaluator=selectedRoutedSlideDescent
+
+
+Exception in thread "main" com.lushprojects.circuitjs1.client.PcbPlacementPlanner$Rejected: ENVELOPE_ACCESS_OR_DOMAIN
+	at com.lushprojects.circuitjs1.client.PcbPlacementPlanner.validate(PcbPlacementPlanner.java:1044)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest.verifyInformedSelectedFrameForDescent(PcbRoutedSlideCompactionContractTest.java:1273)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCohortContractTest.genericFrameAndMetadata(PcbRoutedSlideCohortContractTest.java:33)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCohortContractTest.main(PcbRoutedSlideCohortContractTest.java:20)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbRoutedSlideCohortContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

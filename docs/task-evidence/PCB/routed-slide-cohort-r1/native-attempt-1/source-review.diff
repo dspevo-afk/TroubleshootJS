@@ -1,0 +1,492 @@
+--- published-descent/scripts/verify-current-contracts.ps1
++++ private-cohort/scripts/verify-current-contracts.ps1
+@@ -412,2 +412,10 @@
+         @{ Name = 'PcbRoutedSlideDescentTrialContractTest'; Marker = 'PCB routed slide descent trial contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortContractTest'; Marker = 'PCB routed slide cohort contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTest'; Marker = 'PCB routed slide cohort trial contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup2'; Marker = 'PCB routed slide cohort Group2 contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup3'; Marker = 'PCB routed slide cohort Group3 contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup4'; Marker = 'PCB routed slide cohort Group4 contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup5'; Marker = 'PCB routed slide cohort Group5 contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup6'; Marker = 'PCB routed slide cohort Group6 contracts ' },
++        @{ Name = 'PcbRoutedSlideCohortTrialContractTestGroup7'; Marker = 'PCB routed slide cohort Group7 contracts ' },
+         @{ Name = 'PcbPostSelectionEdgeTrimContractTest'; Marker = 'PCB post-selection edge trim ' },
+--- published-descent/tests/contracts/PcbRoutedSlideCohortContractTest.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortContractTest.java
+@@ -0,0 +1,251 @@
++package com.lushprojects.circuitjs1.client;
++
++import java.util.Vector;
++
++/**
++ * Unit contracts for the generic informed14 selected-frame adapter and its
++ * observer-owned cohort entrypoint.  The fixture uses package-backed literal
++ * geometry and never starts the seeded router.
++ */
++public final class PcbRoutedSlideCohortContractTest {
++    private static final int VERSION = 15;
++    private static final long PLACEMENT_SEED = 1357913579L;
++    private static final long ROUTING_SEED = -2468024680L;
++    private static int assertions;
++    private static int fixtures;
++
++    private PcbRoutedSlideCohortContractTest() { }
++
++    public static void main(String[] args) {
++        genericFrameAndMetadata();
++        genericFrameRejectionAndImmutability();
++        cohortObserverCleanup();
++        check(fixtures == 3, "exactly three named routed-slide cohort fixture groups");
++        System.out.println("PASS: PCB routed slide cohort contracts assertions=" +
++            assertions + " fixtures=" + fixtures +
++            " evaluator=selectedRoutedSlideCohort");
++    }
++
++    private static void genericFrameAndMetadata() {
++        Fixture fixture = literalFixture();
++        String geometryBefore = fixture.layout.geometryFingerprint();
++        String componentBefore = fixture.plan.footprints.get(0).geometryFingerprint();
++        PcbRoutedSlideCompactionContractTest.verifyInformedSelectedFrameForDescent(
++            14L, fixture.board, fixture.layout, fixture.plan, fixture.attempt,
++            PLACEMENT_SEED, ROUTING_SEED);
++        check(sameRect(fixture.plan.outline, fixture.layout.getBoardOutline()),
++            "generic frame verifier accepts the actual selected outline");
++        check(fixture.plan.candidate == fixture.attempt &&
++                fixture.plan.courtyardArea == 123456L &&
++                fixture.plan.demandArea == 789012L && fixture.plan.evaluations == 37,
++            "generic frame verifier retains selected plan metadata independently");
++        check(fixture.layout.getComponents().size() == 2 &&
++                fixture.layout.getPads().size() == 4 &&
++                fixture.layout.getRegions().size() == 1,
++            "generic frame verifier accepts complete literal component pad region inventory");
++        check(fixture.layout.getGenerationPlacementAttempts() == 6 &&
++                fixture.layout.getGenerationRoutingAttempts() == 2 &&
++                fixture.layout.getGenerationRoutingExpansions() == 7 &&
++                fixture.layout.getGenerationRoutingMillis() == 19L,
++            "generic frame verifier retains the assigned generation receipt");
++        check(geometryBefore.equals(fixture.layout.geometryFingerprint()) &&
++                componentBefore.equals(fixture.plan.footprints.get(0).geometryFingerprint()),
++            "generic frame verification leaves literal source geometry unchanged");
++        fixture("genericFrameAndMetadata");
++    }
++
++    private static void genericFrameRejectionAndImmutability() {
++        Fixture fixture = literalFixture();
++        String layoutBefore = fixture.layout.geometryFingerprint();
++        String planBefore = fixture.plan.footprints.get(0).geometryFingerprint();
++        check(rejects(fixture, wrongOutline(fixture.plan)),
++            "generic frame verifier rejects an outline mutation");
++        check(rejects(fixture, wrongCoordinates(fixture.plan)),
++            "generic frame verifier rejects a component and pad coordinate mutation");
++        check(rejects(fixture, wrongCandidate(fixture.plan)),
++            "generic frame verifier rejects selected-attempt metadata drift");
++        check(rejects(fixture, wrongRegion(fixture.plan)),
++            "generic frame verifier rejects source-declared region metadata drift");
++        check(rejectsWithSeeds(fixture, fixture.plan, PLACEMENT_SEED + 1L,
++                ROUTING_SEED),
++            "generic frame verifier rejects a source generation-owner mismatch");
++        check(layoutBefore.equals(fixture.layout.geometryFingerprint()) &&
++                planBefore.equals(fixture.plan.footprints.get(0).geometryFingerprint()),
++            "generic frame rejection paths leave the source owners immutable");
++        fixture("genericFrameRejectionAndImmutability");
++    }
++
++    private static void cohortObserverCleanup() {
++        final int[] callbacks = new int[] {0};
++        SeededPcbLayoutGenerator.SelectedSlideObserver sentinel =
++            new SeededPcbLayoutGenerator.SelectedSlideObserver() {
++                public void onSelected(TroubleshootBoard board, PcbBoardLayout layout,
++                        PcbPlacementPlanner.Plan plan, String route, int attempt) {
++                    callbacks[0]++;
++                }
++            };
++        SeededPcbLayoutGenerator.SelectedSlideObserver previous =
++            SeededPcbLayoutGenerator.setSelectedSlideObserver(sentinel);
++        boolean rejected = false;
++        try {
++            try {
++                PcbRoutedSlideDescentContractTest.observeInformedCohort(
++                    987654321L, "invalid-cohort-root");
++            } catch (AssertionError expected) {
++                rejected = "fixed routed-leg census root".equals(expected.getMessage());
++            }
++            check(rejected,
++                "informed cohort entrypoint propagates the fixed-root rejection before generation");
++            SeededPcbLayoutGenerator.SelectedSlideObserver restored =
++                SeededPcbLayoutGenerator.setSelectedSlideObserver(null);
++            check(restored == sentinel && callbacks[0] == 0,
++                "informed cohort entrypoint restores the previous observer without inspection");
++        } finally {
++            SeededPcbLayoutGenerator.setSelectedSlideObserver(previous);
++        }
++        fixture("cohortObserverCleanup");
++    }
++
++    private static boolean rejects(Fixture fixture, PcbPlacementPlanner.Plan plan) {
++        return rejectsWithSeeds(fixture, plan, PLACEMENT_SEED, ROUTING_SEED);
++    }
++
++    private static boolean rejectsWithSeeds(Fixture fixture,
++            PcbPlacementPlanner.Plan plan, long placementSeed, long routingSeed) {
++        try {
++            PcbRoutedSlideCompactionContractTest.verifyInformedSelectedFrameForDescent(
++                14L, fixture.board, fixture.layout, plan, fixture.attempt,
++                placementSeed, routingSeed);
++            return false;
++        } catch (AssertionError expected) {
++            return true;
++        }
++    }
++
++    private static PcbPlacementPlanner.Plan wrongOutline(
++            PcbPlacementPlanner.Plan source) {
++        return new PcbPlacementPlanner.Plan(
++            new Rectangle(source.outline.x, source.outline.y,
++                source.outline.width + 1, source.outline.height),
++            source.footprints, source.regions, source.courtyardArea,
++            source.demandArea, source.candidate, source.evaluations);
++    }
++
++    private static PcbPlacementPlanner.Plan wrongCoordinates(
++            PcbPlacementPlanner.Plan source) {
++        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
++        footprints.add(PcbRoutedSlideCompactionContractTest
++            .literalLedFootprintForCohort("COHORT_A", 121, 100));
++        footprints.add(source.footprints.get(1));
++        return new PcbPlacementPlanner.Plan(source.outline, footprints,
++            source.regions, source.courtyardArea, source.demandArea,
++            source.candidate, source.evaluations);
++    }
++
++    private static PcbPlacementPlanner.Plan wrongCandidate(
++            PcbPlacementPlanner.Plan source) {
++        return new PcbPlacementPlanner.Plan(source.outline, source.footprints,
++            source.regions, source.courtyardArea, source.demandArea,
++            source.candidate + 1, source.evaluations);
++    }
++
++    private static PcbPlacementPlanner.Plan wrongRegion(
++            PcbPlacementPlanner.Plan source) {
++        Vector<PcbLayoutRegion> regions = new Vector<PcbLayoutRegion>();
++        Vector<String> members = new Vector<String>();
++        members.add("COHORT_A");
++        members.add("COHORT_B");
++        regions.add(new PcbLayoutRegion("cohort-region", "Wrong source region", members));
++        return new PcbPlacementPlanner.Plan(source.outline, source.footprints,
++            regions, source.courtyardArea, source.demandArea, source.candidate,
++            source.evaluations);
++    }
++
++    private static Fixture literalFixture() {
++        TroubleshootBoard board = new TroubleshootBoard("COHORT_FRAME_FIXTURE");
++        board.addNet(new BoardNet("COHORT_A_NET", BoardNet.RoutingRole.SIGNAL));
++        board.addNet(new BoardNet("COHORT_A_RETURN", BoardNet.RoutingRole.SIGNAL));
++        board.addNet(new BoardNet("COHORT_B_NET", BoardNet.RoutingRole.SIGNAL));
++        board.addNet(new BoardNet("COHORT_B_RETURN", BoardNet.RoutingRole.SIGNAL));
++        board.addComponent(new BoardComponent("COHORT_A", "LED",
++            PhysicalPackages.THROUGH_HOLE_LED));
++        board.addComponent(new BoardComponent("COHORT_B", "LED",
++            PhysicalPackages.THROUGH_HOLE_LED));
++        board.addPad(new BoardPad("COHORT_A.A", "COHORT_A", "A", "COHORT_A_NET"));
++        board.addPad(new BoardPad("COHORT_A.K", "COHORT_A", "K", "COHORT_A_RETURN"));
++        board.addPad(new BoardPad("COHORT_B.A", "COHORT_B", "A", "COHORT_B_NET"));
++        board.addPad(new BoardPad("COHORT_B.K", "COHORT_B", "K", "COHORT_B_RETURN"));
++        Vector<PcbPlacementConstraints.Part> demands =
++            new Vector<PcbPlacementConstraints.Part>();
++        demands.add(new PcbPlacementConstraints.Part("COHORT_A", "cohort-region",
++            "Cohort region", "fixture", PcbPlacementConstraints.Anchor.NONE, 20));
++        demands.add(new PcbPlacementConstraints.Part("COHORT_B", "cohort-region",
++            "Cohort region", "fixture", PcbPlacementConstraints.Anchor.NONE, 20));
++        board.setPlacementConstraints(new PcbPlacementConstraints(demands,
++            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.TOP,
++            "COHORT_P07", 1, 14, true));
++
++        PcbFootprint first = PcbRoutedSlideCompactionContractTest
++            .literalLedFootprintForCohort("COHORT_A", 120, 100);
++        PcbFootprint second = PcbRoutedSlideCompactionContractTest
++            .literalLedFootprintForCohort("COHORT_B", 300, 220);
++        Rectangle outline = new Rectangle(40, 40, 420, 300);
++        PcbBoardLayout layout = new PcbBoardLayout(600, 500, outline,
++            new Rectangle(480, 40, 100, 300),
++            SeededPcbLayoutGenerator.CURRENT_VERSION);
++        addFootprint(layout, first);
++        addFootprint(layout, second);
++        Vector<String> members = new Vector<String>();
++        members.add("COHORT_A");
++        members.add("COHORT_B");
++        layout.addRegion(new PcbLayoutRegion("cohort-region", "Cohort region", members));
++        layout.setGenerationStatistics(6, 2, 7, 19L,
++            PLACEMENT_SEED, ROUTING_SEED);
++        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
++        footprints.add(first);
++        footprints.add(second);
++        Vector<PcbLayoutRegion> regions = new Vector<PcbLayoutRegion>();
++        regions.add(new PcbLayoutRegion("cohort-region", "Cohort region", members));
++        PcbPlacementPlanner.Plan plan = new PcbPlacementPlanner.Plan(outline,
++            footprints, regions, 123456L, 789012L, 2, 37);
++        return new Fixture(board, layout, plan, 2);
++    }
++
++    private static void addFootprint(PcbBoardLayout layout, PcbFootprint footprint) {
++        layout.addComponent(footprint.getPlacement());
++        for (PcbPadPlacement pad : footprint.getPads())
++            layout.addPad(pad);
++    }
++
++    private static boolean sameRect(Rectangle first, Rectangle second) {
++        return first != null && second != null && first.x == second.x &&
++            first.y == second.y && first.width == second.width &&
++            first.height == second.height;
++    }
++
++    private static final class Fixture {
++        final TroubleshootBoard board;
++        final PcbBoardLayout layout;
++        final PcbPlacementPlanner.Plan plan;
++        final int attempt;
++
++        Fixture(TroubleshootBoard board, PcbBoardLayout layout,
++                PcbPlacementPlanner.Plan plan, int attempt) {
++            this.board = board;
++            this.layout = layout;
++            this.plan = plan;
++            this.attempt = attempt;
++        }
++    }
++
++    private static void check(boolean condition, String message) {
++        assertions++;
++        if (!condition) throw new AssertionError(message);
++    }
++
++    private static void fixture(String name) {
++        if (name == null || name.length() == 0)
++            throw new AssertionError("Named fixture required");
++        fixtures++;
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTest.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTest.java
+@@ -0,0 +1,16 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTest {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{-1017L,-1004L},"PCB routed slide cohort trial contracts ");
++    }
++    static void runSeeds(long[] seeds,String marker) {
++        if(seeds.length!=2 || seeds[0]==seeds[1])
++            throw new IllegalArgumentException("Two distinct informed roots per JVM");
++        for(long seed:seeds)
++            PcbRoutedSlideDescentContractTest.observeInformedCohort(seed,"seed"+seed);
++        System.out.println("PASS: "+marker+
++            "roots=2 rows=2 evaluator=selectedRoutedSlideCohort");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup2.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup2.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup2 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{-1022L,0L},"PCB routed slide cohort Group2 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup3.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup3.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup3 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{17L,42L},"PCB routed slide cohort Group3 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup4.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup4.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup4 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{1L,7L},"PCB routed slide cohort Group4 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup5.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup5.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup5 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{5L,14L},"PCB routed slide cohort Group5 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup6.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup6.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup6 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{2L,3L},"PCB routed slide cohort Group6 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup7.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup7.java
+@@ -0,0 +1,8 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Fixed informed pair; maintained child budget remains unchanged. */
++public final class PcbRoutedSlideCohortTrialContractTestGroup7 {
++    public static void main(String[] args) {
++        PcbRoutedSlideCohortTrialContractTest.runSeeds(new long[]{4L,6L},"PCB routed slide cohort Group7 contracts ");
++    }
++}
+--- published-descent/tests/contracts/PcbRoutedSlideCompactionContractTest.java
++++ private-cohort/tests/contracts/PcbRoutedSlideCompactionContractTest.java
+@@ -1230,2 +1230,75 @@
+ 
++    // BEGIN COPY-ONLY informed routed slide frame adapter.
++    /**
++     * Generic selected-frame admission for the informed cohort.  The
++     * published two-root helper above intentionally keeps its literal frame
++     * guards; this adapter checks only source-declared metadata and the
++     * generation receipt that every informed root actually owns.
++     */
++    static void verifyInformedSelectedFrameForDescent(long seed,
++            TroubleshootBoard board, PcbBoardLayout layout,
++            PcbPlacementPlanner.Plan plan, int attempt,
++            long expectedPlacementSeed, long expectedRoutingSeed) {
++        require(board != null && layout != null && plan != null,
++            "informed selected frame is complete");
++        PcbPlacementConstraints constraints = board.getPlacementConstraints();
++        require(constraints != null && constraints.placementDensityVersion == 14,
++            "informed selected frame retains density14");
++        require(constraints.requiresTwoLayerRouting,
++            "informed selected frame retains the P07 two-layer contract");
++        require(layout.getLayoutAlgorithmVersion() ==
++                SeededPcbLayoutGenerator.CURRENT_VERSION,
++            "informed selected frame retains the current layout algorithm");
++        require(layout.matchesGenerationSeeds(expectedPlacementSeed,
++                expectedRoutingSeed),
++            "informed selected frame retains assigned generation seeds: " + seed);
++        require(layout.getGenerationPlacementAttempts() == 6,
++            "informed selected frame retains six assigned placement attempts");
++        require(layout.getGenerationRoutingAttempts() > 0 &&
++                layout.getGenerationRoutingAttempts() <=
++                    SupportedEnvelope.MAX_ROUTE_ATTEMPTS,
++            "informed selected frame retains bounded assigned routing-order work");
++        require(layout.getGenerationRoutingExpansions() >= 0 &&
++                layout.getGenerationRoutingMillis() >= 0L,
++            "informed selected frame retains assigned routing statistics");
++        require(attempt >= 0 && attempt < 6 && plan.candidate == attempt,
++            "informed selected frame binds selected attempt to source plan candidate");
++        require(plan.courtyardArea >= 0L && plan.demandArea >= 0L &&
++                plan.evaluations > 0,
++            "informed selected frame retains complete plan metadata");
++
++        layout.validateAgainst(board);
++        verifySelectedRegions(board, plan);
++        verifyReframedPlanForDescent(plan, layout);
++        PcbPlacementPlanner.validate(board, constraints, plan.outline, plan.footprints);
++        TreeSet<String> boardComponentIds =
++            new TreeSet<String>(board.getComponentIds());
++        TreeSet<String> boardPadIds = new TreeSet<String>(board.getPadIds());
++        TreeSet<String> layoutComponentIds = new TreeSet<String>();
++        TreeSet<String> layoutPadIds = new TreeSet<String>();
++        for (PcbComponentPlacement component : layout.getComponents()) {
++            GenerationWorkScope.check();
++            require(layoutComponentIds.add(component.getComponentId()) &&
++                    board.getComponent(component.getComponentId()) != null,
++                "informed selected frame has complete component inventory");
++        }
++        for (PcbPadPlacement pad : layout.getPads()) {
++            GenerationWorkScope.check();
++            require(layoutPadIds.add(pad.getPadId()) &&
++                    board.getPad(pad.getPadId()) != null,
++                "informed selected frame has complete pad inventory");
++        }
++        require(layoutComponentIds.equals(boardComponentIds) &&
++                layoutPadIds.equals(boardPadIds),
++            "informed selected frame covers every source component and pad");
++    }
++
++    /** Package-backed fixture construction remains owned by the existing
++     * compaction probe; the cohort unit consumes this narrow adapter only. */
++    static PcbFootprint literalLedFootprintForCohort(String componentId,
++            int x, int y) {
++        return literalLedFootprint(componentId, x, y);
++    }
++    // END COPY-ONLY informed routed slide frame adapter.
++
+     static void verifySourceUnchangedForDescent(
+--- published-descent/tests/contracts/PcbRoutedSlideDescentContractTest.java
++++ private-cohort/tests/contracts/PcbRoutedSlideDescentContractTest.java
+@@ -14,2 +14,4 @@
+         "PCB_ROUTED_SLIDE_DESCENT_CASE ";
++    private static final String COHORT_SUMMARY_PREFIX =
++        "PCB_ROUTED_SLIDE_COHORT_CASE ";
+     private static final String SOURCE_GENERATION_METADATA = "ACCEPTED_SELECTED";
+@@ -39,5 +41,15 @@
+     static void observe(long seed, String label) {
++        observe(seed, label, false);
++    }
++
++    /** The cohort wrapper uses the same accepted15 witness and shared driver,
++     * with only the generic initial-frame admission and summary prefix changed. */
++    static void observeInformedCohort(long seed, String label) {
++        observe(seed, label, true);
++    }
++
++    private static void observe(long seed, String label, boolean informedCohort) {
+         require(label != null && label.length() > 0,
+             "selected-slide descent label is present");
+-        Recorder recorder = new Recorder(seed, label);
++        Recorder recorder = new Recorder(seed, label, informedCohort);
+         SeededPcbLayoutGenerator.SelectedSlideObserver previous =
+@@ -46,3 +58,3 @@
+         try {
+-            if (seed != 5L && seed != 2L)
++            if (!informedCohort && seed != 5L && seed != 2L)
+                 throw new IllegalArgumentException(
+@@ -72,2 +84,3 @@
+         final String label;
++        final boolean informedCohort;
+         int callbacks;
+@@ -80,5 +93,6 @@
+ 
+-        Recorder(long seed, String label) {
++        Recorder(long seed, String label, boolean informedCohort) {
+             this.seed = seed;
+             this.label = label;
++            this.informedCohort = informedCohort;
+         }
+@@ -95,4 +109,12 @@
+                     "selected descent route is P07");
+-                PcbRoutedSlideCompactionContractTest.verifySelectedFrameForDescent(
+-                    seed, board, layout, plan, attempt);
++                if (informedCohort) {
++                    Rb56Plan descriptor = Rb56Plan.resolve(seed, VERSION);
++                    PcbRoutedSlideCompactionContractTest
++                        .verifyInformedSelectedFrameForDescent(seed, board, layout,
++                            plan, attempt, descriptor.layoutSeed,
++                            descriptor.routingSeed);
++                } else {
++                    PcbRoutedSlideCompactionContractTest.verifySelectedFrameForDescent(
++                        seed, board, layout, plan, attempt);
++                }
+                 selectedRoute = route;
+@@ -110,3 +132,4 @@
+             StringBuilder json = new StringBuilder(300000);
+-            json.append(SUMMARY_PREFIX).append('{');
++            json.append(informedCohort ? COHORT_SUMMARY_PREFIX : SUMMARY_PREFIX)
++                .append('{');
+             json.append("\"seed\":"); stringField(json, Long.toString(seed));

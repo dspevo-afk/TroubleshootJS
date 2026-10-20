@@ -1,0 +1,9 @@
+PASS: PCB routed passive leg census contracts assertions=40 fixtures=6 evaluator=endpointLegCensus
+
+PASS: PCB routed passive feasibility census contracts assertions=41 fixtures=6 evaluator=physicalFeasibilityCensus
+
+PASS: PCB routed slide compaction contracts assertions=36 fixtures=5 evaluator=selectedRoutedSlideCompaction
+
+PASS: PCB routed slide descent contracts assertions=25 fixtures=6 evaluator=selectedRoutedSlideDescent
+
+PASS: PCB routed slide cohort contracts assertions=15 fixtures=3 evaluator=selectedRoutedSlideCohort

@@ -1,0 +1,10 @@
+{
+  "rootReviewed": true,
+  "diffSha256": "f8a483f10f8f004558afe8fab3bb9e263b1f87d1925c5c51bf6bd3c622787a33",
+  "protocolSha256": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+  "syntheticReaderCases": 93,
+  "sourceReview": "Integrated generic current frame/metadata and actual new-unit cleanup; exact inverse18deltas and3byte-identical shared search kernels; failed literal fixture outline corrected and exact residual diff independently checked",
+  "readerReview": "Pinned parent validators reused;14selected/whitespace baseline anchors, full source/current census chain, strict types/proofs/prefix caps, exact matched5/2 exceptdeclared measuredtimes/nullprofiles",
+  "optionalScopeReview": "Read-only algorithm/API; not independent final-source review",
+  "nativeExecution": "Attempt1 unit FAIL49.3413003s exit2 preserved60 files; routes NOT_RUN; fresh final-source phases pending"
+}

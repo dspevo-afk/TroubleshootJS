@@ -1,0 +1,1069 @@
+{
+  "analysisStatus": "COMPLETE",
+  "integrityDisposition": "PASS; strict reader and artifact replay passed",
+  "scope": "All14 informed accepted15 regression roots with exactly the published bounded generic private descent; no production change",
+  "assessmentSha256": "b0debbf5f3fc6dff8b8d04fb986c3b3957fd64652ac0d4f3d7fe234c0f31e1ac",
+  "unitValidationSha256": "c363a66616f68c002c1d1b4c4ae6673870d2a1202f1345b4ef7f5b4a1cd096ed",
+  "routesLogSha256": "666231f0e66328f96554bd4edb8e1a69f99f3f0e4552487bfd35911327dc8313",
+  "roots": [
+    {
+      "seed": "-1017",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 4529785,
+        "copperLength": 26660,
+        "vias": 28,
+        "largestProtectedEmptyRectangleArea": 555900,
+        "geometrySha256": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+        "stableIdentitySha256": "4c0545753bdaa8c2ff7ba4bf582a12872844127a83b39c98757947a57eca3dc9",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 4529785,
+        "copperLength": 26660,
+        "vias": 28,
+        "largestProtectedEmptyRectangleArea": 555900,
+        "geometrySha256": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+        "stableIdentitySha256": "4c0545753bdaa8c2ff7ba4bf582a12872844127a83b39c98757947a57eca3dc9",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 4529785,
+        "copperLength": 26660,
+        "vias": 28,
+        "largestProtectedEmptyRectangleArea": 555900,
+        "geometrySha256": "bbc6400da7b54a2f27c2bf107c9f79c92e683be1b221313423d5a7853f74a421",
+        "stableIdentitySha256": "4c0545753bdaa8c2ff7ba4bf582a12872844127a83b39c98757947a57eca3dc9",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 19,
+        "validatedMoves": 10,
+        "rejectedMoves": 9,
+        "compactions": 10
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1150
+    },
+    {
+      "seed": "-1004",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 4466664,
+        "copperLength": 30720,
+        "vias": 26,
+        "largestProtectedEmptyRectangleArea": 193200,
+        "geometrySha256": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+        "stableIdentitySha256": "65b5a95f520565992dcd4cc33ff08cec008fe54eb01d7508c08a663f3050b84a",
+        "labelIdentitySha256": "2985b2f52a499f21c573d3abb40a5ca2c5dcac635bbfa1202d72f494a8f76927",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 4466664,
+        "copperLength": 30720,
+        "vias": 26,
+        "largestProtectedEmptyRectangleArea": 193200,
+        "geometrySha256": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+        "stableIdentitySha256": "65b5a95f520565992dcd4cc33ff08cec008fe54eb01d7508c08a663f3050b84a",
+        "labelIdentitySha256": "2985b2f52a499f21c573d3abb40a5ca2c5dcac635bbfa1202d72f494a8f76927",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 4466664,
+        "copperLength": 30720,
+        "vias": 26,
+        "largestProtectedEmptyRectangleArea": 193200,
+        "geometrySha256": "34c2c451db413de0bbafa88ed37d8b61c2b03460003715f0810b39c6af30a877",
+        "stableIdentitySha256": "65b5a95f520565992dcd4cc33ff08cec008fe54eb01d7508c08a663f3050b84a",
+        "labelIdentitySha256": "2985b2f52a499f21c573d3abb40a5ca2c5dcac635bbfa1202d72f494a8f76927",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 22,
+        "validatedMoves": 13,
+        "rejectedMoves": 9,
+        "compactions": 13
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1035
+    },
+    {
+      "seed": "-1022",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 6722832,
+        "copperLength": 45670,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 714400,
+        "geometrySha256": "0eb6b0649a9eb307e40fa0989c52c8436f2088a23109f4fcf72f574ee2af6b44",
+        "stableIdentitySha256": "ba2348bdf72019cec9fa0e4f698f53435d00fdf1cd5bbeb074a84fac4a184dcc",
+        "labelIdentitySha256": "ac855a4c235a404713cc983d0863fe1d98a57da31f3d54b8c87cababb20ecfc8",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 6722832,
+        "copperLength": 45670,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 714400,
+        "geometrySha256": "0eb6b0649a9eb307e40fa0989c52c8436f2088a23109f4fcf72f574ee2af6b44",
+        "stableIdentitySha256": "ba2348bdf72019cec9fa0e4f698f53435d00fdf1cd5bbeb074a84fac4a184dcc",
+        "labelIdentitySha256": "ac855a4c235a404713cc983d0863fe1d98a57da31f3d54b8c87cababb20ecfc8",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 6722832,
+        "copperLength": 45670,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 714400,
+        "geometrySha256": "0eb6b0649a9eb307e40fa0989c52c8436f2088a23109f4fcf72f574ee2af6b44",
+        "stableIdentitySha256": "ba2348bdf72019cec9fa0e4f698f53435d00fdf1cd5bbeb074a84fac4a184dcc",
+        "labelIdentitySha256": "ac855a4c235a404713cc983d0863fe1d98a57da31f3d54b8c87cababb20ecfc8",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 31,
+        "validatedMoves": 18,
+        "rejectedMoves": 13,
+        "compactions": 18
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 2267
+    },
+    {
+      "seed": "0",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 4274209,
+        "copperLength": 30280,
+        "vias": 38,
+        "largestProtectedEmptyRectangleArea": 170100,
+        "geometrySha256": "31da2ebace590dcc36ec3b32d3ab3da0ec9a23d415a5876cdedfd0e8f9851a98",
+        "stableIdentitySha256": "16b257c7264af587fe8f3383df7173675c06566dba9f21a34fa7a68c9550174a",
+        "labelIdentitySha256": "ce527cce577b302bde1629b699a205008f7535c2f2779011e79a7e30d3d3f404",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 4274209,
+        "copperLength": 30280,
+        "vias": 38,
+        "largestProtectedEmptyRectangleArea": 170100,
+        "geometrySha256": "31da2ebace590dcc36ec3b32d3ab3da0ec9a23d415a5876cdedfd0e8f9851a98",
+        "stableIdentitySha256": "16b257c7264af587fe8f3383df7173675c06566dba9f21a34fa7a68c9550174a",
+        "labelIdentitySha256": "ce527cce577b302bde1629b699a205008f7535c2f2779011e79a7e30d3d3f404",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 4274209,
+        "copperLength": 30280,
+        "vias": 38,
+        "largestProtectedEmptyRectangleArea": 170100,
+        "geometrySha256": "31da2ebace590dcc36ec3b32d3ab3da0ec9a23d415a5876cdedfd0e8f9851a98",
+        "stableIdentitySha256": "16b257c7264af587fe8f3383df7173675c06566dba9f21a34fa7a68c9550174a",
+        "labelIdentitySha256": "ce527cce577b302bde1629b699a205008f7535c2f2779011e79a7e30d3d3f404",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 16,
+        "validatedMoves": 10,
+        "rejectedMoves": 6,
+        "compactions": 10
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 783
+    },
+    {
+      "seed": "17",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 5714148,
+        "copperLength": 43520,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 410800,
+        "geometrySha256": "3fec748fff15f61458d4a4023838dcdd03a76bc95d64ca74cc96dab672134d35",
+        "stableIdentitySha256": "596b05e2a3fd46504889c459ae2d041ee5672067836f42fee033d43ca4e87058",
+        "labelIdentitySha256": "cf595cb3e7c6490816815f4008d3aa041d35f55a20ed3e524f136677efbc039b",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 5714148,
+        "copperLength": 43520,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 410800,
+        "geometrySha256": "3fec748fff15f61458d4a4023838dcdd03a76bc95d64ca74cc96dab672134d35",
+        "stableIdentitySha256": "596b05e2a3fd46504889c459ae2d041ee5672067836f42fee033d43ca4e87058",
+        "labelIdentitySha256": "cf595cb3e7c6490816815f4008d3aa041d35f55a20ed3e524f136677efbc039b",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 5714148,
+        "copperLength": 43520,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 410800,
+        "geometrySha256": "3fec748fff15f61458d4a4023838dcdd03a76bc95d64ca74cc96dab672134d35",
+        "stableIdentitySha256": "596b05e2a3fd46504889c459ae2d041ee5672067836f42fee033d43ca4e87058",
+        "labelIdentitySha256": "cf595cb3e7c6490816815f4008d3aa041d35f55a20ed3e524f136677efbc039b",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 21,
+        "validatedMoves": 11,
+        "rejectedMoves": 10,
+        "compactions": 11
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1424
+    },
+    {
+      "seed": "42",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 5519502,
+        "copperLength": 42230,
+        "vias": 45,
+        "largestProtectedEmptyRectangleArea": 178200,
+        "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+        "stableIdentitySha256": "642b0bc3722e5fa0c3cbe1d14174d1c492a83aa36c4ec455890e69e85dcb8466",
+        "labelIdentitySha256": "4ad566bf8eeee0e5fb62177f6e0a95612c420f61a448cf278fe0edf8cae35036",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 5519502,
+        "copperLength": 42230,
+        "vias": 45,
+        "largestProtectedEmptyRectangleArea": 178200,
+        "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+        "stableIdentitySha256": "642b0bc3722e5fa0c3cbe1d14174d1c492a83aa36c4ec455890e69e85dcb8466",
+        "labelIdentitySha256": "4ad566bf8eeee0e5fb62177f6e0a95612c420f61a448cf278fe0edf8cae35036",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 5519502,
+        "copperLength": 42230,
+        "vias": 45,
+        "largestProtectedEmptyRectangleArea": 178200,
+        "geometrySha256": "df556b8d89f1f91e15912f99af9238cd99368ce19e1929e1707b09c97758598a",
+        "stableIdentitySha256": "642b0bc3722e5fa0c3cbe1d14174d1c492a83aa36c4ec455890e69e85dcb8466",
+        "labelIdentitySha256": "4ad566bf8eeee0e5fb62177f6e0a95612c420f61a448cf278fe0edf8cae35036",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 23,
+        "validatedMoves": 11,
+        "rejectedMoves": 12,
+        "compactions": 11
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1138
+    },
+    {
+      "seed": "1",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 4615974,
+        "copperLength": 27660,
+        "vias": 29,
+        "largestProtectedEmptyRectangleArea": 474000,
+        "geometrySha256": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+        "stableIdentitySha256": "2f9280993e11e5d0ca7db04f60b5f643ae1538d14833d19a887484145f77c8db",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 4615974,
+        "copperLength": 27660,
+        "vias": 29,
+        "largestProtectedEmptyRectangleArea": 474000,
+        "geometrySha256": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+        "stableIdentitySha256": "2f9280993e11e5d0ca7db04f60b5f643ae1538d14833d19a887484145f77c8db",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 4615974,
+        "copperLength": 27660,
+        "vias": 29,
+        "largestProtectedEmptyRectangleArea": 474000,
+        "geometrySha256": "e4330356464842d79fb41458ccf48da740147ef6e9d7d88ff93aa44929c15c5e",
+        "stableIdentitySha256": "2f9280993e11e5d0ca7db04f60b5f643ae1538d14833d19a887484145f77c8db",
+        "labelIdentitySha256": "d3019197e4a44e0c73188e390f84df1f52dce6d938b407e886f4d80de5d8cad3",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 15,
+        "validatedMoves": 8,
+        "rejectedMoves": 7,
+        "compactions": 8
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 783
+    },
+    {
+      "seed": "7",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 6289992,
+        "copperLength": 43600,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 945000,
+        "geometrySha256": "4cc70ca2deb50d2ed2ce16fd0ad303cfe9c08d944455b8ebd56e66ad3204a209",
+        "stableIdentitySha256": "04dd59a5ca111ca93e1958edc44d1f1d73a02e235ac55f94fb4cf478503e4c65",
+        "labelIdentitySha256": "33381479956a13834cc4b99f8683587329e3bf01061b867a204b82d437d12522",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 6289992,
+        "copperLength": 43600,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 945000,
+        "geometrySha256": "e093cdf850cd5caa0ec387f7dcf4f63aff5a05a1333d8c14abe4ae9426f4f21e",
+        "stableIdentitySha256": "04dd59a5ca111ca93e1958edc44d1f1d73a02e235ac55f94fb4cf478503e4c65",
+        "labelIdentitySha256": "33381479956a13834cc4b99f8683587329e3bf01061b867a204b82d437d12522",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 6289992,
+        "copperLength": 43600,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 945000,
+        "geometrySha256": "4cc70ca2deb50d2ed2ce16fd0ad303cfe9c08d944455b8ebd56e66ad3204a209",
+        "stableIdentitySha256": "04dd59a5ca111ca93e1958edc44d1f1d73a02e235ac55f94fb4cf478503e4c65",
+        "labelIdentitySha256": "33381479956a13834cc4b99f8683587329e3bf01061b867a204b82d437d12522",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 24,
+        "validatedMoves": 13,
+        "rejectedMoves": 11,
+        "compactions": 13
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1413
+    },
+    {
+      "seed": "5",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 9154104,
+        "copperLength": 38590,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "ca4c524d94532476942b6ae58863d88c6a9b6f3d5f44e9f8652ed02a9fa8f07a",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaReduction": 18640,
+      "areaReductionPercent": 0.203210729526519,
+      "copperReduction": 20,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 2,
+        "acceptedSteps": 1,
+        "evaluatedMoves": 35,
+        "validatedMoves": 18,
+        "rejectedMoves": 17,
+        "compactions": 18
+      },
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "acceptedRowIndex": 9,
+          "move": {
+            "componentId": "REN",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 10,
+          "sourceMetrics": {
+            "area": 9172744,
+            "copperLength": 38610,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "controlMetrics": {
+            "area": 9172744,
+            "copperLength": 38610,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9154104,
+            "copperLength": 38590,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "ca4c524d94532476942b6ae58863d88c6a9b6f3d5f44e9f8652ed02a9fa8f07a",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        }
+      ],
+      "callbackElapsedMillis": 2274
+    },
+    {
+      "seed": "14",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 7347009,
+        "copperLength": 42220,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 894600,
+        "geometrySha256": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+        "stableIdentitySha256": "025dd25b4947349acd13ca2a32100842b9b53dc5ca3aa5e7664863adb9492e21",
+        "labelIdentitySha256": "b65538c40b70e47ee5230f2d69f95f23bd26268d2b412b952ab7ddbeb58436c0",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 7347009,
+        "copperLength": 42220,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 894600,
+        "geometrySha256": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+        "stableIdentitySha256": "025dd25b4947349acd13ca2a32100842b9b53dc5ca3aa5e7664863adb9492e21",
+        "labelIdentitySha256": "b65538c40b70e47ee5230f2d69f95f23bd26268d2b412b952ab7ddbeb58436c0",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 7347009,
+        "copperLength": 42220,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 894600,
+        "geometrySha256": "20852e1a3e7f746c0a628f2e8ebf16e8cacf3bd685558740eb4c26326e9ecdaf",
+        "stableIdentitySha256": "025dd25b4947349acd13ca2a32100842b9b53dc5ca3aa5e7664863adb9492e21",
+        "labelIdentitySha256": "b65538c40b70e47ee5230f2d69f95f23bd26268d2b412b952ab7ddbeb58436c0",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 28,
+        "validatedMoves": 14,
+        "rejectedMoves": 14,
+        "compactions": 14
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1297
+    },
+    {
+      "seed": "2",
+      "termination": "STEP_CAP",
+      "initialMetrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "b27b55af515947451e3df5647e0883ae336f8b656f538eeda05c4d3e4010f0a3",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 9102412,
+        "copperLength": 51730,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1781000,
+        "geometrySha256": "7fa62f6ca914b9039a94c44fc510585fa1749a575271098d4bcd877efd7c8f36",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaReduction": 75680,
+      "areaReductionPercent": 0.8245722531436818,
+      "copperReduction": 130,
+      "viasReduction": 0,
+      "protectedVoidReduction": 26000,
+      "aggregate": {
+        "steps": 4,
+        "acceptedSteps": 4,
+        "evaluatedMoves": 50,
+        "validatedMoves": 32,
+        "rejectedMoves": 18,
+        "compactions": 32
+      },
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "acceptedRowIndex": 7,
+          "move": {
+            "componentId": "D3",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 8,
+          "sourceMetrics": {
+            "area": 9178092,
+            "copperLength": 51860,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1807000,
+            "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "controlMetrics": {
+            "area": 9178092,
+            "copperLength": 51860,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1807000,
+            "geometrySha256": "b27b55af515947451e3df5647e0883ae336f8b656f538eeda05c4d3e4010f0a3",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 2,
+          "acceptedRowIndex": 7,
+          "move": {
+            "componentId": "D4",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 8,
+          "sourceMetrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 3,
+          "acceptedRowIndex": 16,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "analyticCopperDelta": -20,
+          "actualCopperDelta": -20,
+          "candidateCopperDelta": -20,
+          "attemptedRows": 17,
+          "sourceMetrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 4,
+          "acceptedRowIndex": 16,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "analyticCopperDelta": -20,
+          "actualCopperDelta": -20,
+          "candidateCopperDelta": -20,
+          "attemptedRows": 17,
+          "sourceMetrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9102412,
+            "copperLength": 51730,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1781000,
+            "geometrySha256": "7fa62f6ca914b9039a94c44fc510585fa1749a575271098d4bcd877efd7c8f36",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        }
+      ],
+      "callbackElapsedMillis": 3646
+    },
+    {
+      "seed": "3",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 5557320,
+        "copperLength": 41650,
+        "vias": 47,
+        "largestProtectedEmptyRectangleArea": 277200,
+        "geometrySha256": "2fc86efd776d27026c44cad9214ba3dbe7e22dfc311f45824323571637b110bd",
+        "stableIdentitySha256": "f3d3013653b3e34259aac7ba52e0f5d6f82f6e1cf8a8bb96322fb9aaa1e926f2",
+        "labelIdentitySha256": "439f4cc3e0100ba95df4ffdde81cb799f337f6ce38376f23d8b024a9449a23d4",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 5557320,
+        "copperLength": 41650,
+        "vias": 47,
+        "largestProtectedEmptyRectangleArea": 277200,
+        "geometrySha256": "2fc86efd776d27026c44cad9214ba3dbe7e22dfc311f45824323571637b110bd",
+        "stableIdentitySha256": "f3d3013653b3e34259aac7ba52e0f5d6f82f6e1cf8a8bb96322fb9aaa1e926f2",
+        "labelIdentitySha256": "439f4cc3e0100ba95df4ffdde81cb799f337f6ce38376f23d8b024a9449a23d4",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 5557320,
+        "copperLength": 41650,
+        "vias": 47,
+        "largestProtectedEmptyRectangleArea": 277200,
+        "geometrySha256": "2fc86efd776d27026c44cad9214ba3dbe7e22dfc311f45824323571637b110bd",
+        "stableIdentitySha256": "f3d3013653b3e34259aac7ba52e0f5d6f82f6e1cf8a8bb96322fb9aaa1e926f2",
+        "labelIdentitySha256": "439f4cc3e0100ba95df4ffdde81cb799f337f6ce38376f23d8b024a9449a23d4",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 26,
+        "validatedMoves": 15,
+        "rejectedMoves": 11,
+        "compactions": 15
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1144
+    },
+    {
+      "seed": "4",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 7257411,
+        "copperLength": 43230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1098000,
+        "geometrySha256": "7e469d1fc6f86e76bbe1f5a7361a8328d2b247f75e3c36f64b2e7b13192b7185",
+        "stableIdentitySha256": "5f0b77c42149e5b41f8c6d504921efa3622d4cc4f721627d2243f37523157417",
+        "labelIdentitySha256": "af5a8ea94b23bde92f9c84840a607a1cf2c80e70a670f9ad7f32862385f65364",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 7257411,
+        "copperLength": 43230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1098000,
+        "geometrySha256": "a23efb50ee4de19371c3cf42562db1be7fe94cf14c60c6f13a9640391db41739",
+        "stableIdentitySha256": "5f0b77c42149e5b41f8c6d504921efa3622d4cc4f721627d2243f37523157417",
+        "labelIdentitySha256": "af5a8ea94b23bde92f9c84840a607a1cf2c80e70a670f9ad7f32862385f65364",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 7257411,
+        "copperLength": 43230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1098000,
+        "geometrySha256": "7e469d1fc6f86e76bbe1f5a7361a8328d2b247f75e3c36f64b2e7b13192b7185",
+        "stableIdentitySha256": "5f0b77c42149e5b41f8c6d504921efa3622d4cc4f721627d2243f37523157417",
+        "labelIdentitySha256": "af5a8ea94b23bde92f9c84840a607a1cf2c80e70a670f9ad7f32862385f65364",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 28,
+        "validatedMoves": 14,
+        "rejectedMoves": 14,
+        "compactions": 14
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1822
+    },
+    {
+      "seed": "6",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 7724022,
+        "copperLength": 46230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1062000,
+        "geometrySha256": "dd36b2e7cb2b5854bdca371783ac4948edb436d725dea513e5dbd66fb3922b3b",
+        "stableIdentitySha256": "ae4939ef62170070aef7a531664b454c4dcb1f1ff09c6c80f7c04fd15dd1f646",
+        "labelIdentitySha256": "df1334af6bd94e611090a2e16dcd6b1842022be683c7764a8fe46d27a014d84f",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 7724022,
+        "copperLength": 46230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1062000,
+        "geometrySha256": "a62c33e5ba8afeda2fd956b041d9d16f03a389f8003e700adb57eae222267729",
+        "stableIdentitySha256": "ae4939ef62170070aef7a531664b454c4dcb1f1ff09c6c80f7c04fd15dd1f646",
+        "labelIdentitySha256": "df1334af6bd94e611090a2e16dcd6b1842022be683c7764a8fe46d27a014d84f",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 7724022,
+        "copperLength": 46230,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1062000,
+        "geometrySha256": "dd36b2e7cb2b5854bdca371783ac4948edb436d725dea513e5dbd66fb3922b3b",
+        "stableIdentitySha256": "ae4939ef62170070aef7a531664b454c4dcb1f1ff09c6c80f7c04fd15dd1f646",
+        "labelIdentitySha256": "df1334af6bd94e611090a2e16dcd6b1842022be683c7764a8fe46d27a014d84f",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "areaReduction": 0,
+      "areaReductionPercent": 0.0,
+      "copperReduction": 0,
+      "viasReduction": 0,
+      "protectedVoidReduction": 0,
+      "aggregate": {
+        "steps": 1,
+        "acceptedSteps": 0,
+        "evaluatedMoves": 34,
+        "validatedMoves": 25,
+        "rejectedMoves": 9,
+        "compactions": 25
+      },
+      "acceptedSequence": [],
+      "callbackElapsedMillis": 1946
+    }
+  ],
+  "measurementDisposition": "MEASURED_PRIVATE_CHAINS",
+  "productionChange": "NONE",
+  "fitnessDisposition": "NOT_EVALUATED",
+  "boardShrinkageAcceptance": "NOT_CLAIMED",
+  "limits": [
+    "All14 roots are informed regressions, not unseen; bounded private qualification, no optimum/manufacturing/general performance claim",
+    "Shared search/caps/validators/metrics unchanged; original selected results are immutable; no extra route or policy/version change",
+    "Full current census derives move order/affected trace counts/net-pair hashes; full native paths and physical proof remain native responsibilities",
+    "Seven fixed two-root JVMs retain60second budget; any timeout/missing proof/cleanup is FAIL or incomplete, never PASS",
+    "No production/GWT/player/solver/repair/fullmatrix/unseen claim"
+  ]
+}

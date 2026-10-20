@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 30492,
+      "startTicks": "639280629695486963",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-cohort-r1/run_native.ps1"
+    },
+    {
+      "pid": 30384,
+      "startTicks": "639280629698183858",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-cohort-r1/run_native.ps1"
+    }
+  ],
+  "phase": "routes",
+  "ownership": "Captured before bounded native private-slide-cohort phase; unique source copy"
+}

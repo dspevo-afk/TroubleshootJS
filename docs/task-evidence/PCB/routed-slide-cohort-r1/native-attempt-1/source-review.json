@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "acceptedOwnerErasureExact": true,
+  "publishedDescentReversalExact": true,
+  "sourceDeltasFromMain": 18,
+  "changedFromPublished": [
+    "scripts/verify-current-contracts.ps1",
+    "tests/contracts/PcbRoutedSlideCohortContractTest.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTest.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup2.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup3.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup4.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup5.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup6.java",
+    "tests/contracts/PcbRoutedSlideCohortTrialContractTestGroup7.java",
+    "tests/contracts/PcbRoutedSlideCompactionContractTest.java",
+    "tests/contracts/PcbRoutedSlideDescentContractTest.java"
+  ],
+  "registeredCopyRows": 14,
+  "newRowsBeyondPublished": 8,
+  "unchangedKernels": {
+    "private static DescentRun runDescent(": "5c2e2a6a6aad44bfe98c595e408f2be1ec4883b8f72dfe059209091576a4cce1",
+    "private static boolean strictDescentImprovement(": "b4f24b646d3328710de64e49de9ec8f38e8cb025b317565c2deab7e028098a9e",
+    "private static final class RuntimeBackend": "18871e3b31b9273e7b1a1f43fcb915915fe76ba340699561ea0895674aa71ed6"
+  },
+  "diffSha256": "6afc9ff175bc9fb0375542d12bea4175da468a2f8ab295ae7fff449cf88b0608"
+}

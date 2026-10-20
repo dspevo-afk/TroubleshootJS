@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "scope": "Reuse exact completed native source/runtime boundary after separate receipt framing checker correction",
+  "nativeInputSealSha256": "41b02c6816de6c651cd941a6394d9fea934248ddec772fc8ee0986ba3fa8d7e8",
+  "main1475Exact": true,
+  "copy1481Exact": true,
+  "sourceOverridesAndAdditionsExact18": true,
+  "originalFrozenGateOwnersExact28": true,
+  "unchangedNativeOwners": [
+    "Java sources18deltas plusaccepted1467",
+    "maintained verifier and selectedJDK8",
+    "run_native.ps1 and suite_transport.ps1",
+    "unit/routes suites and14roots7partitions",
+    "protocol search/metric/physical/time bounds"
+  ],
+  "phaseInputsSha256": {
+    "unit.txt": "38b8638135190f71b5e3e2a02463c4ff24d375a0f4df0fa82885924ebffcb4b9",
+    "unit-receipt.txt": "a961f5d8ad786e830bd9eeb9c557271acca25cc666f81882cf802d9ca2e784d4",
+    "unit-timing.json": "cebb3313da6dae3747db113ba0061047bb26a7e99ad905098790d6af901f93b8",
+    "unit-process-launch.json": "9b737b34047d4f6b70a85b43159a5f0ba964f51fc31d67c73deb88a503eae4f6",
+    "unit-process-cleanup.json": "e94175e25fbf4152db60c93a6955afa301991dcc46c73cad152f101e82cb67a7",
+    "unit-log-sanitization.json": "2d26bba07ab2f2bd37e6ded36ca97e67b75c788ae1b6c1d46e532d6dc1167db2",
+    "routes.txt": "666231f0e66328f96554bd4edb8e1a69f99f3f0e4552487bfd35911327dc8313",
+    "routes-receipt.txt": "b09749eb1b0bc1a38ae72b17e4e8732735a2185af593398d59cad13407ca3f06",
+    "routes-timing.json": "1de03b0bc43c679ef0e51820d441a92e6519fb5edd4a8b35470bd672242d47e9",
+    "routes-process-launch.json": "05d7a3cfd827aaaf6fb6ef1e90847c63c0845c3457f14e2e9c03c4da493130fb",
+    "routes-process-cleanup.json": "ec0fdb64272b9682c86ba766f371b9359d8ef6b3c218161860a5e3ff4b76937c",
+    "routes-log-sanitization.json": "0bd398d105ea33de08f66c813e84aeabc3150f0b0dd00d54fb99e70a4cfcd5af"
+  },
+  "unitValidationSha256": "c363a66616f68c002c1d1b4c4ae6673870d2a1202f1345b4ef7f5b4a1cd096ed",
+  "readerFramingRejectionSha256": "4659865ce5e82d08541ac2baba4dfc1a1660949cdab56878efaba876f6de8441",
+  "changedConsumedInputs": "Separate postnative offline framing adapter only; originalfrozenreader retained and rejects actual7pair format",
+  "reuseLimit": "Native electrical/geometry/search outputs only; corrected framing reader must pass fresh canaries and full exact receipt replay before qualification. No new GWT/player or pre-outcome checker pass claimed."
+}

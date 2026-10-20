@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "acceptedBaseCount": 1467,
+  "publishedCopyCount": 1473,
+  "plannedCopyCount": 1481,
+  "publishedSealSha256": "8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5",
+  "roots": [
+    "-1017",
+    "-1004",
+    "-1022",
+    "0",
+    "17",
+    "42",
+    "1",
+    "7",
+    "5",
+    "14",
+    "2",
+    "3",
+    "4",
+    "6"
+  ],
+  "partitions": [
+    [
+      "-1017",
+      "-1004"
+    ],
+    [
+      "-1022",
+      "0"
+    ],
+    [
+      "17",
+      "42"
+    ],
+    [
+      "1",
+      "7"
+    ],
+    [
+      "5",
+      "14"
+    ],
+    [
+      "2",
+      "3"
+    ],
+    [
+      "4",
+      "6"
+    ]
+  ],
+  "newUnit": "PcbRoutedSlideCohortContractTest",
+  "nativeExecution": "NOT_RUN"
+}

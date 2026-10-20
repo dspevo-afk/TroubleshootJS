@@ -1,0 +1,535 @@
+{
+  "integrityReviewStatus": "PASS",
+  "nativeCohortStatus": "PASS",
+  "measurementDisposition": "MEASURED_PRIVATE_CHAINS",
+  "baseCommit": "1202f18e48bcd3401aa117c3d5fd3b25bc0c21c9",
+  "main1475Exact": true,
+  "sourceDeltas": 18,
+  "frozenGates": 28,
+  "acceptedAndPublishedOwnerErasureExact": true,
+  "nativeFailureAttemptPreserved": true,
+  "nativeReuseAuditStatus": "PASS",
+  "nativeReuseAuditSha256": "8c34d71a023231ed6f17c51b583097b6bb2966b096d0f52bdd7d7ca23e6e0e55",
+  "postNativeReceiptFramingAdapter": true,
+  "originalFrozenRouteReaderExit2Preserved": true,
+  "readerFramingRejectionSha256": "4659865ce5e82d08541ac2baba4dfc1a1660949cdab56878efaba876f6de8441",
+  "syntheticReaderCases": 93,
+  "receiptOrderReaderCases": 107,
+  "receiptOrderFreshCases": 14,
+  "receiptOrderAdapterSha256": "0bc65f9791e03e27fce74b925a2696567ddf0a5d2595b35ad02059e80e308ae1",
+  "actualTransportCases": 12,
+  "unitSuites": 5,
+  "unitFixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5,
+    "PcbRoutedSlideDescentContractTest": 6,
+    "PcbRoutedSlideCohortContractTest": 3
+  },
+  "routeSuites": 7,
+  "selectedRowsExact42Fields": 14,
+  "routeReportsExact": 42,
+  "roots": [
+    {
+      "seed": "-1017",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 19,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "-1004",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 22,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "-1022",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 31,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "0",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 16,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "17",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 21,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "42",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 23,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "1",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 15,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "7",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 24,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "5",
+      "acceptedSteps": 1,
+      "evaluatedMoves": 35,
+      "areaReduction": 18640,
+      "copperReduction": 20,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "acceptedRowIndex": 9,
+          "move": {
+            "componentId": "REN",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 10,
+          "sourceMetrics": {
+            "area": 9172744,
+            "copperLength": 38610,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "controlMetrics": {
+            "area": 9172744,
+            "copperLength": 38610,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9154104,
+            "copperLength": 38590,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "ca4c524d94532476942b6ae58863d88c6a9b6f3d5f44e9f8652ed02a9fa8f07a",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        }
+      ]
+    },
+    {
+      "seed": "14",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 28,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "2",
+      "acceptedSteps": 4,
+      "evaluatedMoves": 50,
+      "areaReduction": 75680,
+      "copperReduction": 130,
+      "termination": "STEP_CAP",
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "acceptedRowIndex": 7,
+          "move": {
+            "componentId": "D3",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 8,
+          "sourceMetrics": {
+            "area": 9178092,
+            "copperLength": 51860,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1807000,
+            "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "controlMetrics": {
+            "area": 9178092,
+            "copperLength": 51860,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1807000,
+            "geometrySha256": "b27b55af515947451e3df5647e0883ae336f8b656f538eeda05c4d3e4010f0a3",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 2,
+          "acceptedRowIndex": 7,
+          "move": {
+            "componentId": "D4",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "analyticCopperDelta": 0,
+          "actualCopperDelta": 0,
+          "candidateCopperDelta": 0,
+          "attemptedRows": 8,
+          "sourceMetrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 3,
+          "acceptedRowIndex": 16,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "analyticCopperDelta": -20,
+          "actualCopperDelta": -20,
+          "candidateCopperDelta": -20,
+          "attemptedRows": 17,
+          "sourceMetrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        },
+        {
+          "step": 4,
+          "acceptedRowIndex": 16,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "analyticCopperDelta": -20,
+          "actualCopperDelta": -20,
+          "candidateCopperDelta": -20,
+          "attemptedRows": 17,
+          "sourceMetrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "controlMetrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9102412,
+            "copperLength": 51730,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1781000,
+            "geometrySha256": "7fa62f6ca914b9039a94c44fc510585fa1749a575271098d4bcd877efd7c8f36",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "guardComparisons": {
+            "currentSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "currentControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialSource": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "initialControl": {
+              "area": true,
+              "copperLength": true,
+              "vias": true,
+              "largestProtectedEmptyRectangleArea": true
+            },
+            "allFour": true
+          }
+        }
+      ]
+    },
+    {
+      "seed": "3",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 26,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "4",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 28,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    },
+    {
+      "seed": "6",
+      "acceptedSteps": 0,
+      "evaluatedMoves": 34,
+      "areaReduction": 0,
+      "copperReduction": 0,
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "acceptedSequence": []
+    }
+  ],
+  "recordedDriverBirthsExited": 6,
+  "finalDriverBirthsExited": 4,
+  "failedAttemptDriverBirthsExited": 2,
+  "copyRestored1481AndRetired": true,
+  "productionPolicyChange": "NONE",
+  "GwtPlayerSolverFullMatrixUnseen": "NOT_RUN",
+  "limits": [
+    "All14 roots are informed regressions, not unseen; bounded private qualification, no optimum/manufacturing/general performance claim",
+    "Shared search/caps/validators/metrics unchanged; original selected results are immutable; no extra route or policy/version change",
+    "Full current census derives move order/affected trace counts/net-pair hashes; full native paths and physical proof remain native responsibilities",
+    "Seven fixed two-root JVMs retain60second budget; any timeout/missing proof/cleanup is FAIL or incomplete, never PASS",
+    "No production/GWT/player/solver/repair/fullmatrix/unseen claim"
+  ]
+}

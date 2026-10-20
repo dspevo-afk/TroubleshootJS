@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "canaryCount": 107,
+  "positiveCount": 10,
+  "negativeCount": 97,
+  "originalCanaryCount": 93,
+  "originalCanaryReceiptSha256": "b57ff3f2bc29709b9832bbe5c308109cdc7f93a4e7ccd9bce429b249ee4acd5c",
+  "freshCanaryCount": 14,
+  "freshPositiveCount": 1,
+  "freshNegativeCount": 13,
+  "adapterSource": {
+    "frozenAssessSha256": "4e4da013ea0d489f73d8806d8016e6548fe47fb65e323e7c8ba021ccdfd94a0c",
+    "adaptedAssessSha256": "0bc65f9791e03e27fce74b925a2696567ddf0a5d2595b35ad02059e80e308ae1",
+    "oldFramingBlockSha256": "955034166f57c5ac428814c88750caceacfd1e871b276eeb170a79515a2e5262",
+    "newFramingBlockSha256": "5aed5c31a1bde06b125458e50a6685059ba72726509197181abfbd6b2b34778c",
+    "replacementCount": 1,
+    "framingRule": "seven ordered two-root pairs; six reports after the prior suite and before its matching PASS in both logs"
+  },
+  "consumedSha256": {
+    "assess.py": "4e4da013ea0d489f73d8806d8016e6548fe47fb65e323e7c8ba021ccdfd94a0c",
+    "check_assessment.py": "9655c945ea31385836ea6a0c1605b9bed6de9d6bab181a03a1780a9e72b04558",
+    "receipt_order_reader.py": "e9c8c61b9d1c020978ec1a6d8208b1adbf6dbed70293909a6c88a63e614dffa4",
+    "check_receipt_order_reader.py": "8b214f365b9aa8e20ce47e86337227dbcfcd216b661add749d8cb217f39cacbf",
+    "protocol.json": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+    "routes.txt": "666231f0e66328f96554bd4edb8e1a69f99f3f0e4552487bfd35911327dc8313",
+    "routes-receipt.txt": "b09749eb1b0bc1a38ae72b17e4e8732735a2185af593398d59cad13407ca3f06",
+    "routes-timing.json": "1de03b0bc43c679ef0e51820d441a92e6519fb5edd4a8b35470bd672242d47e9",
+    "routes-suites.json": "88bdaf9bed95d9a092d59b42bdb3f53d93063457a514c067be983e56671db147",
+    "assessment-canary-results.json": "b57ff3f2bc29709b9832bbe5c308109cdc7f93a4e7ccd9bce429b249ee4acd5c"
+  },
+  "caseCounts": {
+    "roots": 14,
+    "partitions": 7,
+    "reports": 42,
+    "suitePasses": 7,
+    "originalCanaries": 93,
+    "freshCanaries": 14
+  },
+  "coverage": [
+    "actual final route log and child receipt with all seven two-root pairs",
+    "six-report pair boundaries, report crossing, and all-before-all rejection",
+    "suite premature, moved, reordered, missing, terminal, and receipt mismatch",
+    "frozen 93-case reader corpus replayed without modification"
+  ],
+  "results": [
+    {
+      "case": "frozen reader 93-case replay",
+      "result": "PASS",
+      "canaryCount": 93,
+      "positiveCount": 9,
+      "negativeCount": 84
+    },
+    {
+      "case": "valid actual seven-pair route framing",
+      "result": "PASS",
+      "phase": "routes",
+      "reportRows": 42,
+      "orderedMarkers": [
+        "PCB routed slide cohort trial contracts ",
+        "PCB routed slide cohort Group2 contracts ",
+        "PCB routed slide cohort Group3 contracts ",
+        "PCB routed slide cohort Group4 contracts ",
+        "PCB routed slide cohort Group5 contracts ",
+        "PCB routed slide cohort Group6 contracts ",
+        "PCB routed slide cohort Group7 contracts "
+      ]
+    },
+    {
+      "case": "reports crossing pair boundary 1",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "reports crossing pair boundary 2",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "reports crossing pair boundary 3",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "reports crossing pair boundary 4",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "reports crossing pair boundary 5",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "reports crossing pair boundary 6",
+      "result": "REJECTED",
+      "reason": "terminal pair report order or root changed"
+    },
+    {
+      "case": "all reports before all suite PASS markers",
+      "result": "REJECTED",
+      "reason": "terminal pair does not contain six reports"
+    },
+    {
+      "case": "suite PASS moved before its reports",
+      "result": "REJECTED",
+      "reason": "terminal pair does not contain six reports"
+    },
+    {
+      "case": "suite PASS moved to a later partition",
+      "result": "REJECTED",
+      "reason": "routes PASS detail/order differs from sealed contract"
+    },
+    {
+      "case": "suite PASS markers reordered",
+      "result": "REJECTED",
+      "reason": "routes PASS detail/order differs from sealed contract"
+    },
+    {
+      "case": "suite PASS marker missing",
+      "result": "REJECTED",
+      "reason": "suite PASS lines differ between terminal log and child receipt"
+    },
+    {
+      "case": "terminal marker mismatch",
+      "result": "REJECTED",
+      "reason": "native terminal PASS or cleanup boundary is missing/duplicated"
+    },
+    {
+      "case": "child receipt report mismatch",
+      "result": "REJECTED",
+      "reason": "native report lines differ between terminal log and child receipt"
+    }
+  ],
+  "notes": [
+    "Post-native framing repair only; frozen assess.py, protocol, Java, and native receipts remain unchanged.",
+    "The adapter replaces exactly one pinned textual block and leaves all report, source, physics, matched-root, and proof validation unchanged.",
+    "No unit-validation.json or assessment.json was written by this canary checker; root controls final artifact release."
+  ]
+}

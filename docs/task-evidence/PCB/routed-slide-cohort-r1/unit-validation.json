@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Informed14 routed slide cohort unit fixtures only; native routes and fitness are not evaluated.",
+  "baseCommit": "1202f18e48bcd3401aa117c3d5fd3b25bc0c21c9",
+  "protocolSha256": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+  "priorAssessSha256": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/native-inputs.json": "8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/root-review.json": "57bc9be9f5a2faaffef94fed0e9640d3639173f65a558906e27f017e5445f1c6",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/routes.txt": "d39a3033b90f87842d85298fcb66eafb6969d8e1556d9b6d21e2dc0948495dc2",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/assessment.json": "9afda2b35062f4cec8f3028469be031f65336a195d6357645ff250d73ea2922c",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "docs/task-evidence/PCB/routed-slide-descent-r1/descent-analysis.json": "9b73b3ffa5cce112bc8b84da0d4ebc7e08bc0fff6d6957bf7a3867cc51f410ff"
+  },
+  "suiteManifestSha256": "ff50bb2927192cc3f03d73ba4a535b5da04732c2b3c6d029aa36ad2289d987eb",
+  "phaseInputsSha256": {
+    "unit.txt": "38b8638135190f71b5e3e2a02463c4ff24d375a0f4df0fa82885924ebffcb4b9",
+    "unit-receipt.txt": "a961f5d8ad786e830bd9eeb9c557271acca25cc666f81882cf802d9ca2e784d4",
+    "unit-timing.json": "cebb3313da6dae3747db113ba0061047bb26a7e99ad905098790d6af901f93b8"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 5,
+    "suiteClasses": [
+      "PcbRoutedPassiveLegCensusContractTest",
+      "PcbRoutedPassiveFeasibilityCensusContractTest",
+      "PcbRoutedSlideCompactionContractTest",
+      "PcbRoutedSlideDescentContractTest",
+      "PcbRoutedSlideCohortContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed passive leg census contracts ",
+      "PCB routed passive feasibility census contracts ",
+      "PCB routed slide compaction contracts ",
+      "PCB routed slide descent contracts ",
+      "PCB routed slide cohort contracts "
+    ],
+    "cohort": null
+  },
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5,
+    "PcbRoutedSlideDescentContractTest": 6,
+    "PcbRoutedSlideCohortContractTest": 3
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

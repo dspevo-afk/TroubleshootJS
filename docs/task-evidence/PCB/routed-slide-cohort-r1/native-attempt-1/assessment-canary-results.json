@@ -1,0 +1,476 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "canaryCount": 93,
+  "positiveCount": 9,
+  "negativeCount": 84,
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5,
+    "PcbRoutedSlideDescentContractTest": 6,
+    "PcbRoutedSlideCohortContractTest": 3
+  },
+  "consumedSha256": {
+    "assess.py": "4e4da013ea0d489f73d8806d8016e6548fe47fb65e323e7c8ba021ccdfd94a0c",
+    "check_assessment.py": "9655c945ea31385836ea6a0c1605b9bed6de9d6bab181a03a1780a9e72b04558",
+    "protocol.json": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+    "priorAssess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+      "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/native-inputs.json": "8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/root-review.json": "57bc9be9f5a2faaffef94fed0e9640d3639173f65a558906e27f017e5445f1c6",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/routes.txt": "d39a3033b90f87842d85298fcb66eafb6969d8e1556d9b6d21e2dc0948495dc2",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/assessment.json": "9afda2b35062f4cec8f3028469be031f65336a195d6357645ff250d73ea2922c",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/descent-analysis.json": "9b73b3ffa5cce112bc8b84da0d4ebc7e08bc0fff6d6957bf7a3867cc51f410ff"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "ff50bb2927192cc3f03d73ba4a535b5da04732c2b3c6d029aa36ad2289d987eb",
+      "routes-suites.json": "88bdaf9bed95d9a092d59b42bdb3f53d93063457a514c067be983e56671db147"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "sourceHashes": {
+    "protocol": "f65e822905cb8b525305b4025d404d8dababde09c41ef992c2778462a85b686d",
+    "priorReader": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+      "docs/task-evidence/PCB/post-selection-edge-trim-r1/final-native.txt": "db538fe4cca9aff18e33a974a6afa53ecb2fc244c7827c65201cc5408b65330d",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/native-inputs.json": "8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/root-review.json": "57bc9be9f5a2faaffef94fed0e9640d3639173f65a558906e27f017e5445f1c6",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/routes.txt": "d39a3033b90f87842d85298fcb66eafb6969d8e1556d9b6d21e2dc0948495dc2",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/assessment.json": "9afda2b35062f4cec8f3028469be031f65336a195d6357645ff250d73ea2922c",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+      "docs/task-evidence/PCB/routed-slide-descent-r1/descent-analysis.json": "9b73b3ffa5cce112bc8b84da0d4ebc7e08bc0fff6d6957bf7a3867cc51f410ff"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "ff50bb2927192cc3f03d73ba4a535b5da04732c2b3c6d029aa36ad2289d987eb",
+      "routes-suites.json": "88bdaf9bed95d9a092d59b42bdb3f53d93063457a514c067be983e56671db147"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "caseCounts": {
+    "roots": 14,
+    "oldBaselineReports": 28,
+    "cohortSummaries": 14,
+    "unitSuites": 5,
+    "routeSuites": 7
+  },
+  "coverage": [
+    "sealed all14 protocol, accepted15 baseline, whitespace, prior reader, owner, and suite pins",
+    "independent published seed2 9045-pair/175409-byte pad-net oracle",
+    "generic current census parts, directions, trace bounds, affected traces, and source chaining",
+    "full14 report order, matched roots5/2 non-time comparison, timing-only variation, and caps",
+    "control/compaction flags, metrics, identity, physical/final proof, counters, and termination",
+    "seven route PASS markers, terminal cleanup, failure/exit/timing, duplicate keys, and unit prerequisite"
+  ],
+  "independentOracle": {
+    "source": "sealed parent seed2 target callback pad/net facts",
+    "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+    "padPairCount": 9045,
+    "canonicalUtf8Bytes": 175409
+  },
+  "results": [
+    {
+      "case": "valid complete fourteen-root cohort",
+      "result": "PASS"
+    },
+    {
+      "case": "valid independent first-strict cohort fixture",
+      "result": "PASS"
+    },
+    {
+      "case": "valid four-step cap cohort fixture",
+      "result": "PASS"
+    },
+    {
+      "case": "valid control and compaction true flags",
+      "result": "PASS"
+    },
+    {
+      "case": "valid compacted false and matched timing",
+      "result": "PASS"
+    },
+    {
+      "case": "valid evaluation cap fixture",
+      "result": "PASS"
+    },
+    {
+      "case": "independent published seed2 oracle",
+      "result": "PASS",
+      "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+      "padPairCount": 9045,
+      "canonicalUtf8Bytes": 175409
+    },
+    {
+      "case": "valid five-suite unit phase",
+      "result": "PASS"
+    },
+    {
+      "case": "valid seven-suite route phase",
+      "result": "PASS"
+    },
+    {
+      "case": "summary status drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary version float",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary selected route drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary limits drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary aggregate drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary elapsed float",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary selected attempt drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary noncanonical signed seed",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source graph drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source geometry drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source copper drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source pad count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source trace count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source route count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source pair count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source reachability drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source provenance drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source metrics generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source metric area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "initial control compacted type",
+      "result": "REJECTED"
+    },
+    {
+      "case": "control proof flag false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "control identity drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "control immutable false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row duplicate",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row missing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move component drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate geometry source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate affected trace drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected row has compaction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "validated row lacks compaction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "old disposition alias",
+      "result": "REJECTED"
+    },
+    {
+      "case": "embedded proof count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "embedded proof flag false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof hash drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof identity false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "compaction immutable false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "strict improvement mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero compaction area",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero compaction copper",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protected void exceeds area",
+      "result": "REJECTED"
+    },
+    {
+      "case": "compaction geometry source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float proof count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float physical timing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "negative physical timing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing total below floor",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing total over case bound",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing unrun stage nonnull",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural geometry drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural part reorder",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural pad net drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural direction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural trace index range",
+      "result": "REJECTED"
+    },
+    {
+      "case": "later source transition drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "later source generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "extra step after terminal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "evaluation cap overrun",
+      "result": "REJECTED"
+    },
+    {
+      "case": "matched non-time source drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "matched timing null presence",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing final root report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "extra cohort report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "report partition reorder",
+      "result": "REJECTED"
+    },
+    {
+      "case": "accepted15 leg baseline drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "current15 whitespace drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate root partition",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown cohort prefix",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit PASS after terminal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native failure marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native phase timing bound",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native phase exit status",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit suite order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route PASS marker missing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route receipt report drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route report after suite PASS",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route native failure marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "noncanonical signed seed helper",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "cohort protocol pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "prior reader pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate JSON key",
+      "result": "REJECTED"
+    }
+  ],
+  "notes": [
+    "Pure offline canaries only; native, GWT, browser, solver, and runtime cohort execution were not run.",
+    "Positive non-5/2 cases use explicit synthetic complete censuses bound to each sealed baseline shape; this fixture path cannot bypass the pinned CLI contract.",
+    "Roots 5 and 2 use the published parent summaries for normal replay; only the six declared timing paths may vary and null stage presence remains exact.",
+    "The reader validates endpoint incidents and independent pad/net reachability; complete native trace paths and physical compactor ownership remain native proof responsibilities."
+  ]
+}

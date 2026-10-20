@@ -1,0 +1,56 @@
+{
+  "files": {
+    "tests/contracts/PcbRoutedSlideCompactionContractTest.java": [
+      {
+        "kind": "erase",
+        "begin": "// BEGIN COPY-ONLY informed routed slide frame adapter.",
+        "end": "// END COPY-ONLY informed routed slide frame adapter.",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "        verifySelectedFrame(seed, board, layout, plan, attempt);\n    }\n\n\n    static void verifySourceUnchangedForDescent(\n            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source) {\n        requireSourceUnchanged(source);\n",
+        "new": "        verifySelectedFrame(seed, board, layout, plan, attempt);\n    }\n\n    static void verifySourceUnchangedForDescent(\n            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source) {\n        requireSourceUnchanged(source);\n",
+        "count": 1
+      }
+    ],
+    "tests/contracts/PcbRoutedSlideDescentContractTest.java": [
+      {
+        "kind": "replace",
+        "old": "            require(summary != null && result != null,\n                \"descent summary has a completed shared driver result\");\n            StringBuilder json = new StringBuilder(300000);\n            json.append(informedCohort ? COHORT_SUMMARY_PREFIX : SUMMARY_PREFIX)\n                .append('{');\n            json.append(\"\\\"seed\\\":\"); stringField(json, Long.toString(seed));\n            json.append(\",\\\"label\\\":\"); stringField(json, label);\n            json.append(\",\\\"version\\\":\").append(VERSION);\n",
+        "new": "            require(summary != null && result != null,\n                \"descent summary has a completed shared driver result\");\n            StringBuilder json = new StringBuilder(300000);\n            json.append(SUMMARY_PREFIX).append('{');\n            json.append(\"\\\"seed\\\":\"); stringField(json, Long.toString(seed));\n            json.append(\",\\\"label\\\":\"); stringField(json, label);\n            json.append(\",\\\"version\\\":\").append(VERSION);\n",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "                    \"selected descent callback has a complete source frame\");\n                require(\"P07_FULLER_TWO_LAYER\".equals(route),\n                    \"selected descent route is P07\");\n                if (informedCohort) {\n                    Rb56Plan descriptor = Rb56Plan.resolve(seed, VERSION);\n                    PcbRoutedSlideCompactionContractTest\n                        .verifyInformedSelectedFrameForDescent(seed, board, layout,\n                            plan, attempt, descriptor.layoutSeed,\n                            descriptor.routingSeed);\n                } else {\n                    PcbRoutedSlideCompactionContractTest.verifySelectedFrameForDescent(\n                        seed, board, layout, plan, attempt);\n                }\n                selectedRoute = route;\n                selectedAttempt = attempt;\n                result = runDescent(new RuntimeBackend(seed, board, layout, plan));\n",
+        "new": "                    \"selected descent callback has a complete source frame\");\n                require(\"P07_FULLER_TWO_LAYER\".equals(route),\n                    \"selected descent route is P07\");\n                PcbRoutedSlideCompactionContractTest.verifySelectedFrameForDescent(\n                    seed, board, layout, plan, attempt);\n                selectedRoute = route;\n                selectedAttempt = attempt;\n                result = runDescent(new RuntimeBackend(seed, board, layout, plan));\n",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "        DescentRun result;\n        String summary;\n\n        Recorder(long seed, String label, boolean informedCohort) {\n            this.seed = seed;\n            this.label = label;\n            this.informedCohort = informedCohort;\n        }\n\n        public void onSelected(TroubleshootBoard board, PcbBoardLayout layout,\n",
+        "new": "        DescentRun result;\n        String summary;\n\n        Recorder(long seed, String label) {\n            this.seed = seed;\n            this.label = label;\n        }\n\n        public void onSelected(TroubleshootBoard board, PcbBoardLayout layout,\n",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "            implements SeededPcbLayoutGenerator.SelectedSlideObserver {\n        final long seed;\n        final String label;\n        final boolean informedCohort;\n        int callbacks;\n        long startedNanos;\n        long finishedNanos;\n",
+        "new": "            implements SeededPcbLayoutGenerator.SelectedSlideObserver {\n        final long seed;\n        final String label;\n        int callbacks;\n        long startedNanos;\n        long finishedNanos;\n",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "\n    /** The root wrapper calls this once for each fixed informed root. */\n    static void observe(long seed, String label) {\n        observe(seed, label, false);\n    }\n\n    /** The cohort wrapper uses the same accepted15 witness and shared driver,\n     * with only the generic initial-frame admission and summary prefix changed. */\n    static void observeInformedCohort(long seed, String label) {\n        observe(seed, label, true);\n    }\n\n    private static void observe(long seed, String label, boolean informedCohort) {\n        require(label != null && label.length() > 0,\n            \"selected-slide descent label is present\");\n        Recorder recorder = new Recorder(seed, label, informedCohort);\n        SeededPcbLayoutGenerator.SelectedSlideObserver previous =\n            SeededPcbLayoutGenerator.setSelectedSlideObserver(recorder);\n        String selectedReceipt;\n        try {\n            if (!informedCohort && seed != 5L && seed != 2L)\n                throw new IllegalArgumentException(\n                    \"Unexpected selected descent root: \" + seed);\n            selectedReceipt =\n",
+        "new": "\n    /** The root wrapper calls this once for each fixed informed root. */\n    static void observe(long seed, String label) {\n        require(label != null && label.length() > 0,\n            \"selected-slide descent label is present\");\n        Recorder recorder = new Recorder(seed, label);\n        SeededPcbLayoutGenerator.SelectedSlideObserver previous =\n            SeededPcbLayoutGenerator.setSelectedSlideObserver(recorder);\n        String selectedReceipt;\n        try {\n            if (seed != 5L && seed != 2L)\n                throw new IllegalArgumentException(\n                    \"Unexpected selected descent root: \" + seed);\n            selectedReceipt =\n",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "    private static final String PHASE = \"SELECTED_AFTER_EDGE_TRIM\";\n    private static final String SUMMARY_PREFIX =\n        \"PCB_ROUTED_SLIDE_DESCENT_CASE \";\n    private static final String COHORT_SUMMARY_PREFIX =\n        \"PCB_ROUTED_SLIDE_COHORT_CASE \";\n    private static final String SOURCE_GENERATION_METADATA = \"ACCEPTED_SELECTED\";\n    private static final String PRIVATE_GENERATION_METADATA =\n        \"UNASSIGNED_PRIVATE_CANDIDATE\";\n",
+        "new": "    private static final String PHASE = \"SELECTED_AFTER_EDGE_TRIM\";\n    private static final String SUMMARY_PREFIX =\n        \"PCB_ROUTED_SLIDE_DESCENT_CASE \";\n    private static final String SOURCE_GENERATION_METADATA = \"ACCEPTED_SELECTED\";\n    private static final String PRIVATE_GENERATION_METADATA =\n        \"UNASSIGNED_PRIVATE_CANDIDATE\";\n",
+        "count": 1
+      }
+    ]
+  }
+}

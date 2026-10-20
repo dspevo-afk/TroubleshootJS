@@ -1,4 +1,37 @@
-# Current checkpoint: cumulative generic private reductions complete; publication next
+# Current checkpoint: informed14 complete; publish then persistent normal placement scope
+
+2026-10-19 local. Base/verified origin1202f18e48bcd3401aa117c3d5fd3b25bc0c21c9,
+codex/q60-faulted-profile-counts. Main1475/default15/general16 and original5
+untracked unchanged. Indefinite continuation/no main/email. User explicitly wants
+persistent normal-random generator improvements, agrees routed tiny-move search
+has diminishing returns, and requests a few screenshots after the next built change.
+
+Current private cohort complete: SAME4step/128proposal search,14informedroots,
+7two-root JVMs with unchanged60s budgets. Final5unit PASS50.2238882s/exit0,
+40/41/36/25/15assertions6/6/5/6/3groups;7routes PASS155.4595492s/exit0.372proposals,
+212physicaladmissions/160rejections/18rounds/5updates. Only5(-0.20321%area,copper-20)
+and2(-0.82457%,copper-130/void-26000) shrink;48vias unchanged. Other12same. All5
+area-reducing outputs passstrictguards;207otheradmitted resultsfailarea(3alsovoid).
+All14 original selected42fields/whitespace exact,5/2full non-time chains exact.
+
+Source18deltas/28gates/inverses/3sharedkernels rootPASS; actualPowerShell12transport
+and originalreader93syntheticPASS. Originalfrozenreader rejects correct7pairformat
+exit2; originalsource/gates/native retained. Separatepostnative framing-onlyadapter
+root107replay(93synthetic+14actual-formatcases)PASS; allotherAST/physics/metrics exact.
+Native reuseboundary1481COPY/1475mainPASS; actualfullreceipts qualified. Attempt1unit
+FAIL49.3413003s/exit2 preserved60files (literalLEDoutline undersized), fixtureonly
+fix thenfresh5unitPASS. Root integrated reviewPASS. COPY1481→1467 restored/retired,
+privatepointer removed;6driverbirthsEXITED; no native/browser/preview/profileactive.
+No current experiment promotion/GWT/player/solver/repair/fullmatrix/unseen claim.
+
+Next explicitstage/diff/rawblob checks, commit/normalpush/exactoriginSHA; then
+pre-routing placement with persistent normal-Newboard behavior and built screenshots.
+Verified normalpath exposes11families:10sharedprocedural,ControlledIndicatorseparate.
+Private15trim/v13vacancy absentnormal; RB56catalog disabled. KeepadvancedU05/REL-B
+releaseholds; no implicitwaiver. Rootownsnewscope/integration; read-onlyagentfindings
+available. Evidence docs/task-evidence/PCB/routed-slide-cohort-r1/RESULTS.md.
+
+# Previous checkpoint: cumulative generic private reductions complete; publication next
 
 2026-10-19 local. Base/verified origin80303258be31da72e238455a05068c2015ee84d4,
 codex/q60-faulted-profile-counts. Indefinite continuation, no main/email. Accepted

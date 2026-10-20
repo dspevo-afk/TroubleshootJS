@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "Root post-native receipt-framing repair acceptance only",
+  "nativeCodeAndProtocolChanged": false,
+  "repairSource": {
+    "frozenAssessSha256": "4e4da013ea0d489f73d8806d8016e6548fe47fb65e323e7c8ba021ccdfd94a0c",
+    "adaptedAssessSha256": "0bc65f9791e03e27fce74b925a2696567ddf0a5d2595b35ad02059e80e308ae1",
+    "oldFramingBlockSha256": "955034166f57c5ac428814c88750caceacfd1e871b276eeb170a79515a2e5262",
+    "newFramingBlockSha256": "5aed5c31a1bde06b125458e50a6685059ba72726509197181abfbd6b2b34778c",
+    "replacementCount": 1,
+    "framingRule": "seven ordered two-root pairs; six reports after the prior suite and before its matching PASS in both logs"
+  },
+  "allOtherTopLevelAstExact": true,
+  "pureCases": 107,
+  "originalSyntheticCases": 93,
+  "actualFramingCases": 14,
+  "unexpectedCanaryExceptionsPropagate": true,
+  "nativeReuseAuditSha256": "8c34d71a023231ed6f17c51b583097b6bb2966b096d0f52bdd7d7ca23e6e0e55",
+  "originalFramingRejectionSha256": "4659865ce5e82d08541ac2baba4dfc1a1660949cdab56878efaba876f6de8441",
+  "assessmentSha256": "b0debbf5f3fc6dff8b8d04fb986c3b3957fd64652ac0d4f3d7fe234c0f31e1ac",
+  "reviewedFiles": {
+    "receipt_order_reader.py": "e9c8c61b9d1c020978ec1a6d8208b1adbf6dbed70293909a6c88a63e614dffa4",
+    "check_receipt_order_reader.py": "8b214f365b9aa8e20ce47e86337227dbcfcd216b661add749d8cb217f39cacbf",
+    "receipt-order-canary-results.json": "adcec420f92e06e3186919a0c0ed3326f3167f72f2c03b1f9d8a301f38761b19",
+    "receipt-order-notes.md": "68ceca4bd2e825acac37243572b81ad4fce1a46fbac21d4022ec55750e30a5c5",
+    "analyze.py": "7aad5876ee1900bd54484507b5abd81f98fbf0a3a770a846f84cafaf4305da86",
+    "review_packet.py": "ee28c08c334100b0ab76a66161e33aaa5cf29ac9e8c49a0954b7ce45cd821bdd"
+  },
+  "limit": "Post-outcome framing correction disclosed; no Java/physics/metrics/seed/budget/source/route outcome changed; original checker failure remains preserved"
+}

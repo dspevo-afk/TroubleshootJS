@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files": {
+    "run_native.ps1": "40f533386c37d915a45e9f3f0e161e2996d4e516f389b00ec19b618df4a410f8",
+    "check_process_cleanup.ps1": "1f8d64d42b2f2ee18f828835a75601c50b8594e959fa319f758bd3cd6fbe0df9",
+    "sanitize.py": "c4d4addf29ad7433f2bf3b947bef85e4d1ef9df658dfb140518aa2fd90881704",
+    "retire_copy.py": "f16d8354fb0c8fb3a1274671ecf945bd084507f1565ee99c85234e3f772e5308",
+    "suite_transport.ps1": "414a52d3902670197d8c8212475fb451f48443bffe7a84eeb40e1f1c2edd1eb0",
+    "check_suite_transport.ps1": "df5a0fa2cf77876c3589a09540df9bb41d3e11749df2763ea754ef898d2abdef"
+  },
+  "scope": "Adapted source only; fresh selected PowerShell5unit/7route transport and maintained native required;60second child unchanged"
+}

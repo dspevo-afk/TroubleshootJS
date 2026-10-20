@@ -1,0 +1,7 @@
+{
+  "status": "REJECTED_AS_REQUIRED",
+  "exitCode": 2,
+  "stdout": "",
+  "stderr": "FAIL offline reader: sealed input is unavailable\n",
+  "qualifiedUnitArtifactWritten": false
+}
