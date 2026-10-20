@@ -1,0 +1,20 @@
+{
+  "status": "CHANGES_REQUIRED_PRE_FREEZE",
+  "nativeExecution": "NOT_RUN",
+  "files": {
+    "assess.py": "78d08f35b5c90027707ad01d59e22c4b10fc275d0585f02b9751c733ffa7b9a7",
+    "assessment-canary-results.json": "99b42c97c7c620ee5c1b3824db6ea35e59ae001570c6bc487c27f31b4fb712ac",
+    "check_assessment.py": "5dbc574bd08276e8de8af0c12221481724c890f8d55f6ff89965f03a8119e9c1",
+    "reader-notes.md": "333a572cbb98dedc93ed8d8cd701ae4ba53ec9056e75ef8d2378e1d540bd2444",
+    "worker-notes.md": "4041d4e264b89e4239296985b7b89e7eb6ad95c9552a3cb805b133a07d88c54e",
+    "source/tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java": "ae0251cc855a423c8c633ad7d9116f9f4608b8fc2300a829f971f8080f2cc622"
+  },
+  "issues": [
+    "Protocol omitted explicit enums; producer and reader chose incompatible names",
+    "Dead original strict construction/proof helpers retained",
+    "Generic courtyard fixture did not reproduce required actual C5 case",
+    "Cancellation self-throw fixture did not exercise checkpoint boundary",
+    "Wallclock timing should use monotonic callback scope"
+  ],
+  "rootOwnsEnumOmission": true
+}

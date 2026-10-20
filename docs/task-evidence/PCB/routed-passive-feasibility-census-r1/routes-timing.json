@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 62.2305117,
+  "suiteCount": 1,
+  "phase": "routes",
+  "scope": "Native routed passive physical census; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files": {
+    "run_native.ps1": "daf837ed7f1d8d3a0ed290d472589410efa8cde29e37683e7cd6a990de4ae92e",
+    "check_process_cleanup.ps1": "8cf4774af2107fa8b707edcf11a24349e922d0e0736b2ae90da8d65fb7136535",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "retire_copy.py": "f46c741b4f9c741442087789d04ec38524fb182b2a8d85e56a394410401288b5",
+    "suite_transport.ps1": "54f6c840ced4c7391642115c4a8adcd6c37491a0f9ddccb5435f20dfc92c6e88",
+    "check_suite_transport.ps1": "c83a0244c5fce1c7b01617c47f2125b80d4223ee44865fc5667a0466015097f7"
+  },
+  "scope": "Source scaffold adaptation only; fresh transport/native proof required"
+}

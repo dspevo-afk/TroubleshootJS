@@ -1,0 +1,74 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1470,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "073e34d4762c7e049164d812ff6f6179f9294acef08d6c961faadca8dffa7e41",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "5c687d27f226ca29e1c28703d4d5b868d8d6747d7ccb2e7624dfe6f8fc064dfd",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "4a0eca5b23f88883f00d29c5fee4fec002a8b9777bf1393f447305454499bd10"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java": "bce8fea648d97d2814dc480f049190228ef318624ee5e7d5329a263552096b4e",
+    "tests/contracts/PcbRoutedPassiveFeasibilityTrialContractTest.java": "25748e47476539e0eb8f8ce4cd4f4ed7ef93dc06056ba7afb97a2a17c258b24b",
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": "9a8d1008e6f38a245e4e63108c02bcd58c0de58a08ff793a3e4ae6594281204a"
+  },
+  "gateOwners": {
+    "source-audit.md": "5091775e31f8a3faa8bab88e5e381953f90c288d1ee4e7e0b9bf9c4d3a1a5b67",
+    "construction-audit.md": "7e5d0b00b6dccff6f16845299333fa4e41c0e0f7ded52d2c86fcc8dbf7d1ecc7",
+    "reuse-audit.json": "9336c375f73ac0bde4637dd95195b14669fbba624e43c4ecd228019af7f69745",
+    "bootstrap-audit.json": "37108ff3f1df9076b1eaf7805bee1a4600e1a66ba8cd8056cc3de3cd31cba1b4",
+    "host-reuse.json": "6925fa7c4a0216161800b72db18b26f51eb5672408f0e3f4eb09a55dfc080674",
+    "prepare.py": "36bbb0431c5569111464f4dfd16ceba29be6148e4bbc8fd7f9308ac9c79de36a",
+    "bootstrap.py": "4ae125bfa31dae62bc19cb05c1f45edbafe90bd7d5539978facfbc2260497f5a",
+    "bootstrap_host.py": "f9a751b5f73b62bda0238b3a392967b767aed76057415375da94ddb2f60375f0",
+    "declare_protocol.py": "fed8f5beb044091106391d907e100c4ade2c8c250c47e03408056b03052abc18",
+    "protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "unit-suites.json": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+    "routes-suites.json": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808",
+    "inputs.py": "bc922164e88b7aa5b958fdeda308965c9dda612dd312a528c3d6e89c21630091",
+    "review_source.py": "3ac355ffa8e63a3d3fd3b8daaadc2a127237e1a242838bade213f34e8e0d7443",
+    "source-review.diff": "2643326fe14cb39c52b7f4c4831f1eabd26e7108bdb30c1e24b949357842849c",
+    "source-review.json": "6eae2fcf0dfb06adf6d42ea9c25856b1c3710a02b74a01094c4a09aca508f93b",
+    "review-ack.json": "8e64b2237dcc8685748a5d8b631ace3109351b439a9712c1570e51dfe0e1346b",
+    "run_native.ps1": "df0bda30f68f5f656f3c60f51071c4cc27081205cc7fed3aa0a48be09ddb11f4",
+    "check_process_cleanup.ps1": "36fd79c4bfb5ea73bef50865e8f5d48363070f4d97fda4d2c9f0f7cb87154aaf",
+    "sanitize.py": "c4d4addf29ad7433f2bf3b947bef85e4d1ef9df658dfb140518aa2fd90881704",
+    "retire_copy.py": "e49d0169afdf88d84f2d1ffaf1386992437f25e9fbc7b214878f9568cd596178",
+    "assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+    "check_assessment.py": "9ba2e4ce5cf799cbd876490444e64e164e029bd2535473daf0c5ab369830bd64",
+    "assessment-canary-results.json": "a6f2866f7dd2bb535c3b976ae451f527966455f07cd864ac5d649b76876fb326",
+    "reader-notes.md": "9043f6087294b9a2f661f1c405f690b15f123b9c391e740d28fe28dbe6e89c18",
+    "worker-notes.md": "cc8da2aee2b7ba244a8c91f9efa70102d6db266c872e730ae94646e8e837ca2d",
+    "suite_transport.ps1": "6589db54cca1c73ca83022ae80ad401e672757df787bda0687764ec39c5e8f2f",
+    "check_suite_transport.ps1": "38b654232757b144737e191d1277b6db84c0f7eb653c4ab8eb15c05249ec0b5c",
+    "suite-transport-canaries.json": "00cbf2620a6ae5c5318a48ea9e8e681407b98757607da3c007664e16c41bbb1e"
+  },
+  "publishedCensusSealSha256": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+  "publishedProofSealSha256": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+  "preparationFailureArtifacts": {
+    "preparation-attempt-1/declare_protocol.py": "8417756adca5eae370c04b8669b59d9887ca85d0d2660b74f0a47aeb7fed0977",
+    "preparation-attempt-1/failure.json": "debf27b2a2599ed832ed8a5f8f3973838c5f740be150063ef2864a7b86a73292"
+  },
+  "protocolRevisionArtifacts": {
+    "protocol-revision-1/declare_protocol.py": "8725958e02dac8461c9cffa9b82d9d4e558360d8a795ccaa7703b6ac32fa0034",
+    "protocol-revision-1/protocol.json": "358bc41550715dbd81d3c36a9ea368ed8e9377c1bdb727e98ef11ade46cc3ca6",
+    "protocol-revision-1/revision.json": "0130759f87a8c273a0155cefae649a4cab17aac3ed7951cd0b1fe1edb4c9d27f",
+    "protocol-revision-2/declare_protocol.py": "5bb1e34ddc72440f82dbab7dff8bc91dd56d3c5ac7d1821a058f544e87104f80",
+    "protocol-revision-2/protocol.json": "fe580517a9c104ef9b22b3961826e4d6ca49c82b509a88a7bf8484baa07239e1",
+    "protocol-revision-2/revision.json": "ba53accb9c74e6bd370424dadc2ef794436d7fdd469680c2a5290f0f2056a5ed"
+  },
+  "preFreezeReviewArtifacts": {
+    "pre-freeze-review-1/assess.py": "78d08f35b5c90027707ad01d59e22c4b10fc275d0585f02b9751c733ffa7b9a7",
+    "pre-freeze-review-1/assessment-canary-results.json": "99b42c97c7c620ee5c1b3824db6ea35e59ae001570c6bc487c27f31b4fb712ac",
+    "pre-freeze-review-1/check_assessment.py": "5dbc574bd08276e8de8af0c12221481724c890f8d55f6ff89965f03a8119e9c1",
+    "pre-freeze-review-1/reader-notes.md": "333a572cbb98dedc93ed8d8cd701ae4ba53ec9056e75ef8d2378e1d540bd2444",
+    "pre-freeze-review-1/review.json": "ce4e9ccfba3b472d9fd7112eba41c21483a85c8f438d0aa96ae04ad75b8218fa",
+    "pre-freeze-review-1/worker-notes.md": "4041d4e264b89e4239296985b7b89e7eb6ad95c9552a3cb805b133a07d88c54e",
+    "pre-freeze-review-1/source/tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java": "ae0251cc855a423c8c633ad7d9116f9f4608b8fc2300a829f971f8080f2cc622",
+    "pre-freeze-review-2/assess.py": "d0d3d40b1b6b0700c5c3e02c56a3d9f0cb2e552dd2dd69e6f918b4249f582216",
+    "pre-freeze-review-2/assessment-canary-results.json": "5518c9bb2da4509a6d765c3666d35a4354e0ce2dcea7d400fbe415c906f1c9ce",
+    "pre-freeze-review-2/check_assessment.py": "195d32a0175661c52107f0a5db3b70ca3ac25317366bf3796af194cc2f5d546f",
+    "pre-freeze-review-2/reader-notes.md": "1548554f20628acc7e5e1ea32f146b6e7a4d283e234bd9b5583986699cb93719",
+    "pre-freeze-review-2/review.json": "cecbe99078a996d59a312ff8d49661b4fe5f3d12f890955d152f16c3a28837dc"
+  }
+}

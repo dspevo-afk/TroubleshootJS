@@ -1,0 +1,19 @@
+{
+  "rootReviewed": true,
+  "scope": "Integrated6source deltas, canonical31 independent alternatives, stage-local physical exceptions,6literal groups, cached source graph and net oracle, strict parser/independent duration oracle",
+  "diffSha256": "2013ed9a719d63665b63a06eb3787da5153b23755dfda9b9ceaf5a481ca4c5eb",
+  "syntheticReaderCases": 77,
+  "syntheticReaderPositiveCases": 8,
+  "syntheticReaderRejectedCases": 69,
+  "actualHostTransportCases": 12,
+  "nativeFixtureExecution": "ATTEMPT1_FAIL_REGION_LABEL_SETUP; FRESH_FINAL_SOURCE_NOT_RUN",
+  "nativeRoutesExecution": "NOT_RUN",
+  "independentFinalSourceReview": "NOT_RUN",
+  "optionalCatalogReview": "Seven owner pins and exception/stage/domain boundary catalog only; corrected dynamic-domain interpretation and static drill-pair exclusion",
+  "finalProtocolSha256": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+  "readerNotesSha256": "9043f6087294b9a2f661f1c405f690b15f123b9c391e740d28fe28dbe6e89c18",
+  "workerNotesSha256": "648aecf78898e9beea08caf9eb03d130ca1fb0e493f87e6ce0a2d15ca38e1e88",
+  "reachabilityOracleSha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+  "preFreezeReviewCorrectionsPreserved": true,
+  "nativeUnitFailurePreserved": true
+}

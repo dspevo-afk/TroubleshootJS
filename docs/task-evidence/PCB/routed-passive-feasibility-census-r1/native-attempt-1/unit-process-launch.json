@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 25868,
+      "startTicks": "639280556845893360",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/run_native.ps1"
+    },
+    {
+      "pid": 24336,
+      "startTicks": "639280556857844322",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native private-passive-feasibility phase; unique source copy"
+}

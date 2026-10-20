@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "baseCopyCount": 1467,
+  "mainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "rejectedTrials16through22Included": false
+}

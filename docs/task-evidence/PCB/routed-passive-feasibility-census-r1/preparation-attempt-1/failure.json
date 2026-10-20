@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "phase": "Protocol declaration before artifact write",
+  "cause": "Prior census reportOrder is a description string, not array; no protocol output created",
+  "scriptSha256": "8417756adca5eae370c04b8669b59d9887ca85d0d2660b74f0a47aeb7fed0977",
+  "copyChanged": false,
+  "nativeExecution": "NOT_RUN"
+}

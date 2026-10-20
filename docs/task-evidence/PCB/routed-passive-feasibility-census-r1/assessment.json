@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "Independent physical census of all31 nonincreasing structural directions; no selection or production change",
+  "baseCommit": "8ddbd8af545a8e66bf9bf52985b2486a0a734481",
+  "protocolSha256": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+  "priorAssessSha256": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/native-inputs.json": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/root-review.json": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/routes.txt": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe"
+  },
+  "unitPrerequisiteSha256": "ecda9bd646906ae6024fedbe51b3ddd2268b0b4ee047ea4ba6656cc8b81e17e9",
+  "routesSuiteManifestSha256": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808",
+  "routePhaseInputsSha256": {
+    "routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+    "routes-receipt.txt": "5b9af93367bdf974c82c3d79819518ef04f127f7b779c128ef51398afb0b1ffb",
+    "routes-timing.json": "feb9c434a5758bb15e1f3d600b70ede88eaf9021b1e24d94bea059218f61ba96"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 1,
+      "suiteClasses": [
+        "PcbRoutedPassiveFeasibilityTrialContractTest"
+      ],
+      "reportRows": 8,
+      "orderedMarkers": [
+        "PCB routed passive feasibility census trial contracts "
+      ],
+      "feasibility": {
+        "status": "PASS",
+        "scope": "Independent physical census of all31 nonincreasing structural directions; no selection or production change",
+        "roots": 2,
+        "rows": 2,
+        "census": {
+          "status": "PASS",
+          "roots": 2,
+          "rows": 2,
+          "selectedCaseRows": 2,
+          "whitespaceRows": 2
+        },
+        "feasibility": {
+          "status": "PASS",
+          "roots": 2,
+          "rows": 2,
+          "statuses": [
+            {
+              "seed": "5",
+              "status": "NO_TARGET"
+            },
+            {
+              "seed": "2",
+              "status": "CENSUS_COMPLETE"
+            }
+          ],
+          "aggregate": {
+            "structuralDirections": 31,
+            "constructionCount": 31,
+            "physicallyValidated": 21,
+            "physicallyRejected": 10,
+            "placementRejected": 3,
+            "geometryRejected": 7,
+            "twoLayerRejected": 0
+          }
+        },
+        "observationDisposition": "PASS; independent physical census only",
+        "fitnessDisposition": "NOT_EVALUATED"
+      }
+    }
+  },
+  "observationDisposition": "PASS; independent physical census only",
+  "fitnessDisposition": "NOT_EVALUATED",
+  "policyDisposition": "NO_POLICY_OR_ACCEPTANCE_CHANGE",
+  "productionChange": "NONE",
+  "limits": [
+    "Informed two-root private census; no policy/fitness/production or board shrinkage acceptance",
+    "No extra route call, original mutation, candidate chaining, alternate-move selection or version change",
+    "Full physical/net/provenance proof only for validated rows; rejected rows have null proof",
+    "Fixed outline/tray/holes and unassigned private generation metadata",
+    "Finite known physical rejection catalog; all unknown errors/cancellation/budgets abort",
+    "No GWT/player/solver/repair/full-matrix/unseen/all-seed/manufacturing/performance claim"
+  ]
+}

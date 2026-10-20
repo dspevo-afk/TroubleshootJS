@@ -1,4 +1,40 @@
-# Current checkpoint: first private routed move rejected; evidence ready for publication
+# Current checkpoint: independent physical census complete; publication next
+
+2026-10-19 local. Base8ddbd8af545a8e66bf9bf52985b2486a0a734481,
+codex/q60-faulted-profile-counts, origin/upstream verified. Indefinite continuation;
+no main/email. Main1475/default15/general16/original5 unchanged. No native,
+browser/preview/profile or source COPY remains; private pointer removed.
+
+Fixed informed5then2/current15/density14/P07@2 only. All31 canonical nonincreasing
+10-unit moves independently from original:21full physical PASS/10rejected
+(3placement,7geometry),9legal negative copper/12equal. First legal COUT,(0,+10),
+delta0. First C5 exact courtyard rejection reproduced. No extra route, selection,
+chaining or policy/version change. Fixed outline/area; shrinkage NOT DEMONSTRATED.
+Every complete row has9045independent pairs+145route provenance, all physical
+validators+explicit2layer. Selected42fields/whitespace/source/work exact2rows.
+
+Fresh unit2 PASS43.9795094s/exit0,40/41assertions6/6groups; routes1
+PASS62.2305117s/exit0. Reader77(8positive69rejected), actual PowerShell12 and
+root integrated29gates/6deltas/accepted-owner erasure PASS. Final source
+d5fe5319cac1553ac6f4661ac7ee7f67fbf7a83a195c0fdee8015cfd1494f24b;
+protocol6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30.
+COPY1470→1467 exact restored/retired,6recorded driver births exited/no termination.
+Optional7owner catalog review; independent final-source review NOT RUN.
+
+Initial native unit FAIL41.9823765s/exit2 conflicting public region labels,
+42exact frozen files+record retained, readerrejects/no qualified receipt.
+Root corrected only2fixture labels consistently, same geometry/message/oracles/
+budgets, fresh seal+unit+routes. Declarationfailure2,protocol revisions6,
+pre-freeze review12 preserved. Alias count guard refused manifest selection
+before mutation; corrected13aliases byte-verified. GWT/player/solver/repair/full
+matrix/unseen/manufacturing/performance NOT RUN. No production rebuild claim.
+
+Next explicit stage/diff/raw-blob checks, normal commit/push/origin SHA verify;
+then matched selected-layout compaction probe from a generic independently legal
+slide, all physical/identity/area/copper/via/protected-void gates retained.
+Evidence: docs/task-evidence/PCB/routed-passive-feasibility-census-r1/RESULTS.md.
+
+# Previous checkpoint: first private routed move rejected; evidence ready for publication
 
 2026-10-19 local. Base a816fdf186e2c89316bdd57baf60393299795a02,
 codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation;

@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "acceptedGeneratorErasureExact": true,
+  "acceptedPhysicalWitnessErasureExact": true,
+  "verifierCoreExact": true,
+  "priorCensusBridgeErasureExact": true,
+  "generatorWitnessExactPriorCensus": true,
+  "bridgeInsideGeometryBracket": true,
+  "registeredNewSuites": [
+    "PcbRoutedPassiveLegCensusContractTest",
+    "PcbRoutedPassiveFeasibilityCensusContractTest",
+    "PcbRoutedPassiveFeasibilityTrialContractTest"
+  ],
+  "diffSha256": "2643326fe14cb39c52b7f4c4831f1eabd26e7108bdb30c1e24b949357842849c"
+}

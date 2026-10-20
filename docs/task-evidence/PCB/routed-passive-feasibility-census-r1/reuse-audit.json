@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "baseCommit": "8ddbd8af545a8e66bf9bf52985b2486a0a734481",
+  "priorProofSealSha256": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+  "priorProofReviewSha256": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+  "priorGatesExact": 29,
+  "priorSourcesExact": 6,
+  "reuseBoundary": "Reviewed source/helpers and negative evidence only; no native runtime or successful move proof reused"
+}

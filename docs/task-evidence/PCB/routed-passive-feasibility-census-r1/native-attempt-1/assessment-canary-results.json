@@ -1,0 +1,410 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "canaryCount": 77,
+  "positiveCount": 8,
+  "negativeCount": 69,
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6
+  },
+  "consumedSha256": {
+    "assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+    "check_assessment.py": "9ba2e4ce5cf799cbd876490444e64e164e029bd2535473daf0c5ab369830bd64",
+    "protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "priorAssess.py": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+      "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+      "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/native-inputs.json": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/root-review.json": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/routes.txt": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+      "routes-suites.json": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "sourceHashes": {
+    "protocol": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "priorReader": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+      "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+      "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+      "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/native-inputs.json": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/root-review.json": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+      "docs/task-evidence/PCB/routed-passive-move-proof-r1/routes.txt": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+      "routes-suites.json": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "caseCounts": {
+    "roots": 2,
+    "oldCensusReports": 6,
+    "feasibilityRows": 31,
+    "routeReports": 8,
+    "unitSuites": 2,
+    "routeSuites": 1
+  },
+  "coverage": [
+    "sealed protocol and published-input pins",
+    "composed old census boundary and exact report order",
+    "31 canonical moves, source/candidate metrics, and stage taxonomy",
+    "independent 135-pad reachability and foreign-partition rejection",
+    "proof, timing, terminal, prerequisite, schema, and pin failures"
+  ],
+  "independentOracle": {
+    "source": "published seed2 target callback pad/net facts",
+    "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+    "padPairCount": 9045,
+    "canonicalUtf8Bytes": 175409
+  },
+  "results": [
+    {
+      "case": "valid unit phase with both evaluators",
+      "result": "PASS"
+    },
+    {
+      "case": "valid all-rejected route census",
+      "result": "PASS"
+    },
+    {
+      "case": "valid mixed rejected and validated rows",
+      "result": "PASS"
+    },
+    {
+      "case": "independent pad-net oracle",
+      "result": "PASS",
+      "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+      "pairCount": 9045,
+      "canonicalUtf8Bytes": 175409
+    },
+    {
+      "case": "geometry outer call may report nested two-layer reason",
+      "result": "PASS"
+    },
+    {
+      "case": "explicit later two-layer call semantics",
+      "result": "PASS"
+    },
+    {
+      "case": "placement rejection stage semantics",
+      "result": "PASS"
+    },
+    {
+      "case": "independent nonordered integer stage durations",
+      "result": "PASS"
+    },
+    {
+      "case": "foreign equal source graph pair",
+      "result": "REJECTED"
+    },
+    {
+      "case": "changed foreign net with matching source and proof hashes",
+      "result": "REJECTED"
+    },
+    {
+      "case": "first C5 courtyard rejection stage drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "first C5 courtyard rejection reason drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "first C5 courtyard rejection message drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "forbidden removed drill-land reason",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong canonical component move",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong canonical move direction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "analytic copper delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "actual copper delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "31-row order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing structural direction row",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate structural direction row",
+      "result": "REJECTED"
+    },
+    {
+      "case": "target callback filter drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "old census report order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "routes report after suite PASS",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source geometry pair drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate geometry equals source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source copper drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate copper metric drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate component count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate pad count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate trace count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate affected trace count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate moved pad count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "private generation metadata drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source trace count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source route source count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source pair count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source reachability hash drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source provenance is not a digest",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source check boolean is not strict true",
+      "result": "REJECTED"
+    },
+    {
+      "case": "geometry stage flag is inconsistent",
+      "result": "REJECTED"
+    },
+    {
+      "case": "two-layer stage without geometry",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown rejection classification",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown rejection stage",
+      "result": "REJECTED"
+    },
+    {
+      "case": "old validated disposition alias",
+      "result": "REJECTED"
+    },
+    {
+      "case": "root5 nonzero callback elapsed",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float stage duration",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float proof pair count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "placement reason/message mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "bare geometry rejection prefix",
+      "result": "REJECTED"
+    },
+    {
+      "case": "validated row with null proof",
+      "result": "REJECTED"
+    },
+    {
+      "case": "validated row with false proof flag",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected row with nonnull proof",
+      "result": "REJECTED"
+    },
+    {
+      "case": "proof pair count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "proof reachability hashes are foreign",
+      "result": "REJECTED"
+    },
+    {
+      "case": "proof provenance hashes differ",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong geometry rejection prefix",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong two-layer rejection message",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row timing field present before stage",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row timing total below floor",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row timing exceeds case limit",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary elapsed below row totals",
+      "result": "REJECTED"
+    },
+    {
+      "case": "aggregate classification drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "construction count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "new route request drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "selected mutation strict false drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary version drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate summary JSON key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unexpected summary JSON key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native failure marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native timing bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native exit status drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protocol pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "published input pin drift",
+      "result": "REJECTED"
+    }
+  ],
+  "notes": [
+    "Pure offline canaries; no native feasibility trial was executed by this checker.",
+    "Synthetic candidate facts exercise reader schema and proof gates only.",
+    "Physical feasibility and native source/provenance comparisons remain native evidence."
+  ]
+}

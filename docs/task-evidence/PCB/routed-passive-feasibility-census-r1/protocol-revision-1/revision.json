@@ -1,0 +1,10 @@
+{
+  "status": "REVIEWED_PRE_FREEZE_TIGHTENING",
+  "nativeExecution": "NOT_RUN",
+  "priorProtocolSha256": "358bc41550715dbd81d3c36a9ea368ed8e9377c1bdb727e98ef11ade46cc3ca6",
+  "priorDeclarationSha256": "8725958e02dac8461c9cffa9b82d9d4e558360d8a795ccaa7703b6ac32fa0034",
+  "change": "Exclude unchanged hole-pair overlap from physical outcomes; make outer-call stage semantics explicit",
+  "review": "Optional leaf catalog review corrected fixed-domain assumption after constructor audit; no other catalog blocker",
+  "dynamicDomainBoundary": "Derived from placed footprint domain extents; drill-domain and verified-net via-domain remain physical",
+  "staticDrillPair": "Unchanged hole pair overlap must abort"
+}

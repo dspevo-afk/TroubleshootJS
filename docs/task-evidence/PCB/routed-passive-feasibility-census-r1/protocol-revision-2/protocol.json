@@ -1,0 +1,447 @@
+{
+  "schema": 1,
+  "baseCommit": "8ddbd8af545a8e66bf9bf52985b2486a0a734481",
+  "scope": "Independent physical census of all31 nonincreasing structural directions; no selection or production change",
+  "roots": [
+    "5",
+    "2"
+  ],
+  "version": 15,
+  "density": 14,
+  "phase": "FINALIZED_ROUTE_CANDIDATE",
+  "targetStrategy": "P07_FULLER_TWO_LAYER",
+  "targetAttempt": 2,
+  "constructionLimitPerTargetCallback": 31,
+  "sourceRule": "Every candidate starts from the identical original target, never another candidate",
+  "summaryPrefix": "PCB_ROUTED_PASSIVE_FEASIBILITY_CENSUS ",
+  "reportOrder": [
+    "PCB_WHITESPACE_CASE ",
+    "PCB_ROUTED_LEG_CENSUS ",
+    "PCB_ROUTED_LEG_CASE ",
+    "PCB_ROUTED_PASSIVE_FEASIBILITY_CENSUS "
+  ],
+  "summaryFields": [
+    "seed",
+    "label",
+    "version",
+    "phase",
+    "status",
+    "newRouteRequests",
+    "selectedMutation",
+    "constructionCount",
+    "source",
+    "rows",
+    "aggregate",
+    "elapsedMillis"
+  ],
+  "sourceFields": [
+    "liveGraphBefore",
+    "liveGraphAfter",
+    "geometryBefore",
+    "geometryAfter",
+    "copperLength",
+    "area",
+    "componentCount",
+    "padCount",
+    "traceCount",
+    "traceProvenanceHash",
+    "sourceRouteSourceCount",
+    "reachabilityHash",
+    "padPairCount"
+  ],
+  "rowFields": [
+    "move",
+    "candidate",
+    "disposition",
+    "stage",
+    "reason",
+    "message",
+    "checks",
+    "proof",
+    "timing"
+  ],
+  "moveFields": [
+    "componentId",
+    "dx",
+    "dy",
+    "analyticCopperDelta",
+    "actualCopperDelta"
+  ],
+  "candidateFields": [
+    "geometryHash",
+    "componentCount",
+    "padCount",
+    "traceCount",
+    "affectedTraceCount",
+    "movedPadCount",
+    "copperLength",
+    "area",
+    "generationMetadata"
+  ],
+  "checkFields": [
+    "traceEndpointOnlyVerified",
+    "unrelatedGeometryVerified",
+    "sourceImmutable",
+    "placementValidated",
+    "geometryValidated",
+    "twoLayerValidated"
+  ],
+  "proofFields": [
+    "placementValidated",
+    "geometryValidated",
+    "twoLayerValidated",
+    "padPairCount",
+    "sourceReachabilityHash",
+    "candidateReachabilityHash",
+    "sourceRouteSourceCount",
+    "candidateRouteSourceCount",
+    "sourceTraceProvenanceHash",
+    "candidateTraceProvenanceHash",
+    "traceEndpointOnlyVerified",
+    "unrelatedGeometryVerified",
+    "conductorReachabilityVerified",
+    "traceProvenanceVerified"
+  ],
+  "timingFields": [
+    "constructionMillis",
+    "placementMillis",
+    "geometryMillis",
+    "twoLayerMillis",
+    "proofMillis",
+    "totalMillis"
+  ],
+  "aggregateFields": [
+    "structuralDirections",
+    "constructionCount",
+    "physicallyValidated",
+    "physicallyRejected",
+    "placementRejected",
+    "geometryRejected",
+    "twoLayerRejected"
+  ],
+  "expectedMoves": [
+    {
+      "componentId": "C5",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -10,
+      "actualCopperDelta": -10
+    },
+    {
+      "componentId": "CBIAS",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "CFB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "COUT",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "COUT",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "D3",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D3",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DA",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DFREE",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": -10,
+      "actualCopperDelta": -10
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RDA",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "REN",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RENAC",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RFB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLED12",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLEDOUT_B",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RLEDOUT_B",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "ROUT",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "ROUT",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RPRIMARY",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RPRIMARY",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RREF_LB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RSA",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RSB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RSB",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RSENSE",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    }
+  ],
+  "expectedSource": {
+    "area": 9313352,
+    "copperLength": 51860,
+    "traceCount": 145,
+    "geometryHash": "e5242445527c50145b0848e79efb045518ef56e0a3f559ddeeb9ba798efd6c6e",
+    "componentCount": 56,
+    "padCount": 135,
+    "sourceRouteSourceCount": 145,
+    "padPairCount": 9045,
+    "reachabilityHash": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7"
+  },
+  "expectedFirstRejection": {
+    "stage": "GEOMETRY",
+    "reason": "TRACE_COMPONENT_COURTYARD",
+    "message": "PCB trace passes through component routing courtyard: CTRL_RETURN / C5 segment 3256,1094 -> 3226,1094 keepOut=Rect(3171,1094,80,90) startPad=U1.RETURN endPad=C5.2"
+  },
+  "placementReasons": [
+    "ENVELOPE_ACCESS_OR_DOMAIN",
+    "STRANDED_ESCAPE",
+    "DOMAIN_CORRIDOR",
+    "DISCONNECTED_ESCAPE_CHANNEL"
+  ],
+  "geometryPrefixReasons": {
+    "COMPONENT_BODY_OVERLAP": "PCB component bodies overlap: ",
+    "COMPONENT_COURTYARD_OVERLAP": "PCB component routing courtyards overlap: ",
+    "PAD_OVERLAP": "PCB pads overlap: ",
+    "TRACE_OUTSIDE_BOARD": "PCB trace leaves board: ",
+    "TRACE_COMPONENT_COURTYARD": "PCB trace passes through component routing courtyard: ",
+    "TRACE_SELF_OVERLAP": "PCB trace has repeated or overlapping segments: ",
+    "TRACE_SELF_INTERSECTION": "PCB trace self-intersects: ",
+    "LABEL_COMPONENT_OVERLAP": "Silkscreen label overlaps component: ",
+    "LABEL_PAD_OVERLAP": "Silkscreen label overlaps pad: ",
+    "LABEL_COPPER_OVERLAP": "Silkscreen label overlaps copper: ",
+    "LABEL_LABEL_OVERLAP": "PCB silkscreen labels overlap: ",
+    "FOREIGN_NET_CONTACT": "Unrelated PCB conductors share copper: ",
+    "FOREIGN_COPPER_CLEARANCE": "PCB traces violate copper clearance: ",
+    "PHYSICAL_NET_DISCONNECTED": "PCB net is electrically disconnected: "
+  },
+  "twoLayerExactReasons": {
+    "INSULATING_BODY_BARRIER": "Insulating body crosses an unrelated barrier",
+    "INSULATING_SPAN": "Package body crosses outside its declared insulating span",
+    "LAND_DOMAIN_BARRIER": "Component land crosses a physical domain barrier",
+    "LEAD_DOMAIN_BARRIER": "Component lead crosses a physical domain barrier",
+    "COPPER_DOMAIN_BARRIER": "P07 copper crosses a physical domain barrier",
+    "DRILL_DOMAIN_BARRIER": "Drill or land crosses a physical domain barrier",
+    "VIA_DOMAIN_OR_NET": "P07 via crosses a domain barrier or has an unknown net",
+    "VIA_PACKAGE_COURTYARD": "P07 via drills through a package courtyard",
+    "VIA_PAD_CLEARANCE": "P07 via overlaps a component pad or its clearance",
+    "VIA_COPPER_CLEARANCE": "P07 via violates foreign copper clearance"
+  },
+  "qualityReasons": {
+    "ROUTE_QUALITY_BENDS": "PCB trace has excessive bends: ",
+    "ROUTE_QUALITY_DETOUR": "PCB trace has excessive detour: "
+  },
+  "rejectionRule": "Only at the actual named validator call; unknown errors, budgets, malformed construction, proof mismatches and cancellation propagate",
+  "stageSemantics": "Outer actual validator invocation: GEOMETRY includes nested two-layer and quality checks, leaving geometryValidated false on rejection; TWO_LAYER is only the explicit later call after geometry completed",
+  "unitFixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6
+  },
+  "unitEvaluators": {
+    "PcbRoutedPassiveLegCensusContractTest": "endpointLegCensus",
+    "PcbRoutedPassiveFeasibilityCensusContractTest": "physicalFeasibilityCensus"
+  },
+  "routePassDetail": "roots=2 rows=2 evaluator=physicalFeasibilityCensus",
+  "timingScope": "Native routed passive physical census; unchanged per-JVM/search/physical limits",
+  "maxPhaseElapsedSeconds": 36000,
+  "maxCaseMillis": 60000,
+  "maxFileBytes": 67108864,
+  "publishedInputs": {
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/native-inputs.json": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/root-review.json": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/routes.txt": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe"
+  },
+  "priorCensusReader": {
+    "path": "docs/task-evidence/PCB/routed-passive-leg-census-r1/assess.py",
+    "sha256": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229"
+  },
+  "classificationOwnerSha256": {
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+  },
+  "suiteManifestSha256": {
+    "unit-suites.json": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+    "routes-suites.json": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808"
+  },
+  "limits": [
+    "Informed two-root private census; no policy/fitness/production or board shrinkage acceptance",
+    "No extra route call, original mutation, candidate chaining, alternate-move selection or version change",
+    "Full physical/net/provenance proof only for validated rows; rejected rows have null proof",
+    "Fixed outline/tray/holes and unassigned private generation metadata",
+    "Finite known physical rejection catalog; all unknown errors/cancellation/budgets abort",
+    "No GWT/player/solver/repair/full-matrix/unseen/all-seed/manufacturing/performance claim"
+  ]
+}

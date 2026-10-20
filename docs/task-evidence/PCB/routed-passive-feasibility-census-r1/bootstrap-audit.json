@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Accepted15 observation adapters plus test-only all-nonincreasing census bridge",
+  "priorCensusSealSha256": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+  "priorCensusSourceSha256": "6c74d1f473e97f42a24d566cfe852d866f7f9d2d69d37ceb11ff5963825f6e60",
+  "overrides": [
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java",
+    "scripts/verify-current-contracts.ps1"
+  ],
+  "addedRootSources": [
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java",
+    "tests/contracts/PcbRoutedPassiveFeasibilityTrialContractTest.java"
+  ],
+  "plannedWorkerSource": "tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java",
+  "bridgeSelection": "All canonical target part/directions eligible with analyticCopperDelta<=0, independent original source",
+  "constructionLimitPerTargetCallback": 31,
+  "defaultBridge": "NULL; no inspection",
+  "dispatchBoundary": "Inside original census geometry hash bracket; before winner selection",
+  "nativeExecution": "NOT_RUN"
+}

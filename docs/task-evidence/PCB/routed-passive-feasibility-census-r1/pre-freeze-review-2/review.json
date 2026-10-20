@@ -1,0 +1,20 @@
+{
+  "status": "CHANGES_REQUIRED_PRE_FREEZE",
+  "nativeExecution": "NOT_RUN",
+  "files": {
+    "assess.py": "d0d3d40b1b6b0700c5c3e02c56a3d9f0cb2e552dd2dd69e6f918b4249f582216",
+    "check_assessment.py": "195d32a0175661c52107f0a5db3b70ca3ac25317366bf3796af194cc2f5d546f",
+    "reader-notes.md": "1548554f20628acc7e5e1ea32f146b6e7a4d283e234bd9b5583986699cb93719",
+    "assessment-canary-results.json": "5518c9bb2da4509a6d765c3666d35a4354e0ce2dcea7d400fbe415c906f1c9ce"
+  },
+  "cause": "Reader incorrectly ordered independent stage durations as cumulative timestamps; actual producer emits separate durations",
+  "independentTimingOracle": {
+    "constructionMillis": 7,
+    "placementMillis": 3,
+    "geometryMillis": 11,
+    "twoLayerMillis": 1,
+    "proofMillis": 5,
+    "totalMillis": 27
+  },
+  "additionalStrictness": "Integer proof counts/durations, exact placement message, nonempty physical prefix suffix"
+}

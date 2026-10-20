@@ -1,0 +1,7 @@
+{
+  "status": "REVIEWED_PRE_FREEZE_SCHEMA_CLARIFICATION",
+  "nativeExecution": "NOT_RUN",
+  "priorProtocolSha256": "fe580517a9c104ef9b22b3961826e4d6ca49c82b509a88a7bf8484baa07239e1",
+  "priorDeclarationSha256": "5bb1e34ddc72440f82dbab7dff8bc91dd56d3c5ac7d1821a058f544e87104f80",
+  "change": "Explicit outcome enums, null validated reason and monotonic callback-only summary timing; no numeric budget or physical oracle change"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Private physical-feasibility census unit fixtures only; native routes and fitness are not evaluated.",
+  "baseCommit": "8ddbd8af545a8e66bf9bf52985b2486a0a734481",
+  "protocolSha256": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+  "priorAssessSha256": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/native-inputs.json": "c3567e48821637702bd1f88ffc05a09ab34f8f0dde0f13553e5f5885acf1da05",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/root-review.json": "45eed3d73435073eb3eeb7126e7be04374e1fce0354843bf2b364da8c1a5631d",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "docs/task-evidence/PCB/routed-passive-leg-census-r1/routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/native-inputs.json": "31e18fc232029db9f0f2b70cb13360a416f4eab97d9ff318a9d980ada102482a",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/root-review.json": "12d5847a66312cfb1afd92d8e1625437da4c6e4076348948c7f11e9600025bfb",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/protocol.json": "6bdde6eed11b1b441e8440843d0130eecf70079043017472c1e8cf7ce214568d",
+    "docs/task-evidence/PCB/routed-passive-move-proof-r1/routes.txt": "8baa2c846408214a6d150a4646802f86dc8e4c2cdd18957fcc3f135f738b0ffe"
+  },
+  "suiteManifestSha256": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+  "phaseInputsSha256": {
+    "unit.txt": "a4d86fe6a9948ec4cf38cb186b191c4a1aa5d9332882fd020260f091d39d23a4",
+    "unit-receipt.txt": "bea77d933302e28e325b70077f3d92336d66a418f89b6683f326dc23bd8e271f",
+    "unit-timing.json": "c8feb7a8dc97f6300e77ba224caddf180625cc2b96f4b09c2eaf4ef4ba8f7428"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 2,
+    "suiteClasses": [
+      "PcbRoutedPassiveLegCensusContractTest",
+      "PcbRoutedPassiveFeasibilityCensusContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed passive leg census contracts ",
+      "PCB routed passive feasibility census contracts "
+    ],
+    "feasibility": null
+  },
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

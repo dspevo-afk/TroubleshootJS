@@ -1,0 +1,642 @@
+{
+  "analysisStatus": "COMPLETE",
+  "censusAssessmentStatus": "PASS",
+  "scope": "31 independent informed endpoint-only alternatives; no selection or compaction",
+  "assessmentSha256": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+  "routesLogSha256": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+  "sourceGeometrySha256": "e5242445527c50145b0848e79efb045518ef56e0a3f559ddeeb9ba798efd6c6e",
+  "sourceArea": 9313352,
+  "sourceCopper": 51860,
+  "constructionCount": 31,
+  "physicallyValidated": 21,
+  "physicallyRejected": 10,
+  "validatedMoves": [
+    {
+      "componentId": "COUT",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "D3",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D3",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DA",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DFREE",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": -10,
+      "actualCopperDelta": -10
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "REN",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RENAC",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RFB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLED12",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLEDOUT_B",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "ROUT",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RPRIMARY",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RREF_LB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RSB",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RSENSE",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    }
+  ],
+  "firstCanonicalValidatedMove": {
+    "componentId": "COUT",
+    "dx": 0,
+    "dy": 10,
+    "analyticCopperDelta": 0,
+    "actualCopperDelta": 0
+  },
+  "rejectionCounts": [
+    {
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "count": 2
+    },
+    {
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "count": 3
+    },
+    {
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "count": 2
+    },
+    {
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "count": 3
+    }
+  ],
+  "outcomes": [
+    {
+      "move": {
+        "componentId": "C5",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -10,
+        "actualCopperDelta": -10
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "candidateGeometrySha256": "bf20b12aec84e4465f69ee6e1c04275ea154be0316682827cc95dcfb9f7291a3",
+      "totalMillis": 38
+    },
+    {
+      "move": {
+        "componentId": "CBIAS",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "candidateGeometrySha256": "508d5464b216fb9d6504236bf379f1fb8b4d0903132bf8607d2c6368dc263087",
+      "totalMillis": 15
+    },
+    {
+      "move": {
+        "componentId": "CFB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "candidateGeometrySha256": "526acfab7d88d6fbdf3a19d1a57d01ec5da3ea2d79231bf266086964e0be5b59",
+      "totalMillis": 20
+    },
+    {
+      "move": {
+        "componentId": "COUT",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "candidateGeometrySha256": "2ed032b3bd106e203f3d52154e361c544ceb75c050de365f34251df1e12c3375",
+      "totalMillis": 27
+    },
+    {
+      "move": {
+        "componentId": "COUT",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "39e7c166b45e10a8a3671bd89919eb7beca976357c30be190b788150f53ea733",
+      "totalMillis": 69
+    },
+    {
+      "move": {
+        "componentId": "D1",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "aedd75ee4f22b9c0149fc2170129cb327fb224616d4247cdef872de20eae47a0",
+      "totalMillis": 41
+    },
+    {
+      "move": {
+        "componentId": "D3",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "74ab4a71373c43dfc4c44a549473cd5dc1dd000964379d0c025a7c5a21476550",
+      "totalMillis": 41
+    },
+    {
+      "move": {
+        "componentId": "D3",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "fe126ee77bea002fe594faec04a96db331b392d944355f3e8a7f6141747e765f",
+      "totalMillis": 45
+    },
+    {
+      "move": {
+        "componentId": "D4",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "6ebe08d436a7a27feee4fabd79c8bc9123cfd3c4023872491b75dd5d6fa71b8d",
+      "totalMillis": 49
+    },
+    {
+      "move": {
+        "componentId": "D4",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "17d44db1cdc66af4b47bd23ae216221e9cc684bb848a08bc06213f1c8267f69f",
+      "totalMillis": 48
+    },
+    {
+      "move": {
+        "componentId": "DA",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "b5c8480b23525f8b52204787fe766975cda3a1d834bf981d23ad0e3564dec0e1",
+      "totalMillis": 45
+    },
+    {
+      "move": {
+        "componentId": "DB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "0c367e6aa1d24461dc39cb270907da61b97e98c87361f1abd11ec8d556d208fe",
+      "totalMillis": 42
+    },
+    {
+      "move": {
+        "componentId": "DFREE",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": -10,
+        "actualCopperDelta": -10
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "ad7125c9193aa9aee26f6564ddc747184be8302e808f7796e8f36fcc7562c091",
+      "totalMillis": 47
+    },
+    {
+      "move": {
+        "componentId": "DZ1",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "8ec2eaa2420f3f44f56a1c00647b79cdaac9b949a092794ae358907475bcba6d",
+      "totalMillis": 50
+    },
+    {
+      "move": {
+        "componentId": "DZ1",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "d53844c99a44fe28963bea387e71181124aa4577e3460191165b89aad1fba34d",
+      "totalMillis": 43
+    },
+    {
+      "move": {
+        "componentId": "RDA",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "candidateGeometrySha256": "c71774fc7eb74d292c8da5ee30a5d2d533e49a3070bafe21f76d717f69380471",
+      "totalMillis": 17
+    },
+    {
+      "move": {
+        "componentId": "REN",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "584f3ad80089f646cf78f5d1033faad06c0bd2a786ff01a3fb80c9cf53ec3bb8",
+      "totalMillis": 45
+    },
+    {
+      "move": {
+        "componentId": "RENAC",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "f46113de41e81cb389864e5cab9cba8b1f7b9623c5804c1c4f3c4096d710f9a4",
+      "totalMillis": 48
+    },
+    {
+      "move": {
+        "componentId": "RFB",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "ccf9be4be8e566ba132c390b4017731e16c8c426019441e9efb0c7be37d18d0e",
+      "totalMillis": 42
+    },
+    {
+      "move": {
+        "componentId": "RLED12",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "25273ca936c35fdfe6ce2b44420e8cdffcb520752a010a480a245bfc2ebd820b",
+      "totalMillis": 41
+    },
+    {
+      "move": {
+        "componentId": "RLEDOUT_B",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "candidateGeometrySha256": "917aa7c8a910bd3e58b238d7f4901f5d500d5912d56d4248c6c5ed75304579d9",
+      "totalMillis": 20
+    },
+    {
+      "move": {
+        "componentId": "RLEDOUT_B",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "943d8755e39a4ede6cc6c4a8f56c0b7dfdff7eb071e579cb54a9dcf6ceaf7e6e",
+      "totalMillis": 42
+    },
+    {
+      "move": {
+        "componentId": "ROUT",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "candidateGeometrySha256": "e70d5f7b1ec21e00e1b43a7c16bdce6ff0cd8905350c0ada2f92c666d4bde24e",
+      "totalMillis": 22
+    },
+    {
+      "move": {
+        "componentId": "ROUT",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "24e4eb69d3548096d1ccc722311cf6c90316b636aaedcc69f48882cf97623bdc",
+      "totalMillis": 44
+    },
+    {
+      "move": {
+        "componentId": "RPRIMARY",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "78092d90dbb62f2f7c12e2e2562cdc537d83e3a38ecef188de1e6fa5800e4819",
+      "totalMillis": 47
+    },
+    {
+      "move": {
+        "componentId": "RPRIMARY",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "candidateGeometrySha256": "a933792cac46f11bf5fb43dbc01c695b1123d1d8e5c651e957714040416d2456",
+      "totalMillis": 18
+    },
+    {
+      "move": {
+        "componentId": "RREF_LB",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "6752a8378305287564a37b92d161572d3d197c835857db84b787a10898201add",
+      "totalMillis": 41
+    },
+    {
+      "move": {
+        "componentId": "RSA",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "candidateGeometrySha256": "60cdeefb490096d0d82db6b85514e0c6c571e6d168ebf8b41a6ed21e60d75465",
+      "totalMillis": 17
+    },
+    {
+      "move": {
+        "componentId": "RSB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "candidateGeometrySha256": "75f4e096e915810effb92aeaecfce8e2d51eb6a1dfeb985ee398bf8dfc6b84bb",
+      "totalMillis": 15
+    },
+    {
+      "move": {
+        "componentId": "RSB",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "25a11ebf4008ea171d57a6ba62667ec55578a0c251cff3a179295a73cd63a9ba",
+      "totalMillis": 36
+    },
+    {
+      "move": {
+        "componentId": "RSENSE",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "stage": "COMPLETE",
+      "reason": null,
+      "candidateGeometrySha256": "397f7cf5a5e7cec1be0cc2c4b0d437c278fa11672919a49b533bebf166de2dde",
+      "totalMillis": 39
+    }
+  ],
+  "sourceReachabilityHash": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+  "fixedAreaForEveryCandidate": true,
+  "boardShrinkage": "NOT_DEMONSTRATED",
+  "selectedMutation": false,
+  "newRouteRequests": 0,
+  "productionPolicyFitnessChange": "NONE",
+  "limits": [
+    "Informed two-root private census; no policy/fitness/production or board shrinkage acceptance",
+    "No extra route call, original mutation, candidate chaining, alternate-move selection or version change",
+    "Full physical/net/provenance proof only for validated rows; rejected rows have null proof",
+    "Fixed outline/tray/holes and unassigned private generation metadata",
+    "Finite known physical rejection catalog; all unknown errors/cancellation/budgets abort",
+    "No GWT/player/solver/repair/full-matrix/unseen/all-seed/manufacturing/performance claim",
+    "Rejection applies to this endpoint-only and fixed-label transform, not every possible routing/label arrangement"
+  ]
+}

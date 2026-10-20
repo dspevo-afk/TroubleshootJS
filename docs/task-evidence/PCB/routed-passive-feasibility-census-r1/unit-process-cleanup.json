@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "phase": "unit",
+  "drivers": [
+    {
+      "pid": 17736,
+      "startTicks": "639280559773752105",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false,
+      "outcome": "EXITED"
+    },
+    {
+      "pid": 11720,
+      "startTicks": "639280559800622299",
+      "executable": "pwsh",
+      "sameCreationStillRunning": false,
+      "outcome": "EXITED"
+    }
+  ],
+  "verificationElapsedSeconds": 0.053264,
+  "terminationAttempted": false,
+  "scope": "Recorded driver births only; maintained terminal receipt owns bounded child cleanup"
+}

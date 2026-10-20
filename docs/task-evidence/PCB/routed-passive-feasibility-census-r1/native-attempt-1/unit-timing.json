@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 41.9823765,
+  "suiteCount": 2,
+  "phase": "unit",
+  "scope": "Native routed passive physical census; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

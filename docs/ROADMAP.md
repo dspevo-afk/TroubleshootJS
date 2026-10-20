@@ -270,6 +270,18 @@ final1470/29gates restored1467/retired,10 driver births exited, main1475 exact.
 Next census physical feasibility of all31 structurally eligible nonincreasing
 directions from the unchanged target before trying another routed compaction.
 [Rejected private move and limits](task-evidence/PCB/routed-passive-move-proof-r1/RESULTS.md).
+The complete independent physical census now validates21of31 nonincreasing
+endpoint-only slides on informed2/current15/P07@2:9reduce copper,12keep it equal.
+Ten reject actual placement/courtyard/foreign-contact/via rules; first C5 exact
+rejection is reproduced, first legal is COUT,(0,+10),delta0. Seed5 remains no
+callback. Fresh unit2 PASS43.980s(40/41assertions,6/6groups),routes1 PASS62.231s;
+selected42fields/whitespace/source/work exact. Every valid row passes full
+physical/explicit2layer/9045pair/provenance proof; no extra route or selection.
+Reader77/host12/root integrated review PASS; initial fixture label failure42files+
+record remains. COPY1470 restored1467/retired,6births exited, main1475 unchanged.
+Fixed area means no shrinkage claim. Next matched selected-layout compaction after
+a generic legal move, with all area/copper/via/void and physical gates unchanged.
+[Physical feasibility and limits](task-evidence/PCB/routed-passive-feasibility-census-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

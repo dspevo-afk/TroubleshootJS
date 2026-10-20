@@ -1,0 +1,20 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB routed passive leg census contracts assertions=40 fixtures=6 evaluator=endpointLegCensus
+
+
+Exception in thread "main" java.lang.IllegalArgumentException: Conflicting public region label
+	at com.lushprojects.circuitjs1.client.PcbPlacementConstraints.validate(PcbPlacementConstraints.java:216)
+	at com.lushprojects.circuitjs1.client.TroubleshootBoard.setPlacementConstraints(TroubleshootBoard.java:25)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveFeasibilityCensusContractTest$LiteralCourtyardFixture.<init>(PcbRoutedPassiveFeasibilityCensusContractTest.java:1680)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveFeasibilityCensusContractTest.courtyardRegression(PcbRoutedPassiveFeasibilityCensusContractTest.java:1521)
+	at com.lushprojects.circuitjs1.client.PcbRoutedPassiveFeasibilityCensusContractTest.main(PcbRoutedPassiveFeasibilityCensusContractTest.java:75)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbRoutedPassiveFeasibilityCensusContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

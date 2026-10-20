@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "scope": "Real selected PowerShell suite transport only; no Java fixture proof",
+  "powerShellVersion": "7.6.5",
+  "caseCount": 12,
+  "actualManifests": 2,
+  "negativeCases": 10,
+  "consumedSha256": {
+    "suite_transport.ps1": "6589db54cca1c73ca83022ae80ad401e672757df787bda0687764ec39c5e8f2f",
+    "check_suite_transport.ps1": "38b654232757b144737e191d1277b6db84c0f7eb653c4ab8eb15c05249ec0b5c",
+    "unit-suites.json": "718f18342482b23a4731abd6d919f0c4ab44a789c9af348c0be6ef6df373bc47",
+    "routes-suites.json": "d8bc074e52d22f07463a7398b8bae6e36d33f6469d37fd63705814b03c247808"
+  },
+  "cases": [
+    {
+      "case": "Actual unit two-row nested manifest",
+      "result": "PASS"
+    },
+    {
+      "case": "Actual route one-row nested manifest",
+      "result": "PASS"
+    },
+    {
+      "case": "Flat pair",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Empty list",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Short pair",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Long pair",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Malformed class name",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Boolean class name",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Boolean marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Duplicate class",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Duplicate marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "Multiline marker",
+      "result": "REJECTED"
+    }
+  ]
+}
