@@ -1,0 +1,49 @@
+{
+  "recordedBirths": 6,
+  "managedStateAbsent": true,
+  "browserApiExit0": true,
+  "limits": "Actual maintained stop returned0 before separate root checks; normal browser API0, no termination or manual profile deletion. Older blocked profiles/private/unrelated data preserved",
+  "port8907Released": true,
+  "actualPreviewStopExecExitCode": 0,
+  "elapsedObservationSeconds": 0.4017775,
+  "currentProfileAbsent": true,
+  "checks": [
+    {
+      "startTicks": "639281158516819942",
+      "recordedBirthExited": true,
+      "pid": 26348,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281158529067758",
+      "recordedBirthExited": true,
+      "pid": 18704,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281169153873734",
+      "recordedBirthExited": true,
+      "pid": 20964,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281169156232666",
+      "recordedBirthExited": true,
+      "pid": 23880,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281158564375003",
+      "recordedBirthExited": true,
+      "pid": 8204,
+      "executable": "powershell.exe"
+    },
+    {
+      "startTicks": "639281159116107460",
+      "recordedBirthExited": true,
+      "pid": 8924,
+      "executable": "brave.exe"
+    }
+  ],
+  "status": "PASS"
+}

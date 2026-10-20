@@ -1,0 +1,70 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+Board Power: ON
+Supplies
+View
+Ticket
+Parts tray
+TroubleshootJS · Desktop alpha
+
+THE ELECTRONICS REPAIR GAME
+
+Troubleshoot!
+
+A customer. A faulty board. A bench full of possibilities.
+
+Examine
+Measure
+Isolate
+Repair
+Retest
+Your session
+
+Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).
+
+Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.
+
+Save session
+Load session
+Session history
+Start a service job
+Difficulty
+EASY
+MEDIUM
+HARD — unavailable
+PSYCHOTIC — unavailable
+Board family
+Indicator board
+Protected indicator
+Dual indicator
+Timing board
+BJT output driver
+MOSFET output driver
+Relay output board
+Sensor control board
+Procedural control board
+NEW BOARD
+
+Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.
+
+Enter an exact seed
+Open a saved replay code
+Return to a challenge
+
+Paste a current replay to reconstruct its initial board. Repairs and tray contents are not saved.
+
+Open current replay
+Prepare replay
+Resume current board
+Resources
+Settings
+About this alpha
+Share pristine challenge

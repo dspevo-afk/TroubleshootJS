@@ -1,0 +1,87 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Added to the real Parts Tray. Select the loose part on the workbench to install it.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+330 Ohm
+Board Power: OFF
+Supplies
+View
+BOARD VIEW
+
+
+Fit bench
+
+
+Zoom +
+Zoom -
+View bottom copper
+
+
+Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top.
+
+
+Top side / top copper
+
+
+Select component
+J1
+LED1
+R1
+
+
+Probe terminal
+J1 terminal 1
+J1 terminal 2
+LED1 terminal A
+LED1 terminal K
+R1 terminal 1
+R1 terminal 2
+
+
+Place red probe
+Place black probe
+
+
+Ticket
+Parts tray
+▲ PARTS TRAY · 1 part

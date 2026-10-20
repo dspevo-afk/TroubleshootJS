@@ -1,0 +1,12 @@
+{
+  "status": "PASS_SOURCE_REVIEW_ONLY",
+  "baseCommit": "3028ceb0e90e23b2c2ac0e35eaf493609985bffa",
+  "reviewer": "Luna MAX read-only production reviewer",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a"
+  },
+  "scope": "Receipt immutable states/disposition and strict agreement; owner captures already-computed tuples; unchanged direct metric/admission/layoutcopy/statistics/canonical seams; no new loops/RNG/selection/budget/geometry/graph/save/player behavior",
+  "blockers": [],
+  "limits": "No fixture/execution/build/runtime/visual review. Root fixture corrections do not alter reviewed production inputs."
+}

@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained packing metric evidence phase",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281141221645593",
+      "pid": 30108
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281141227309605",
+      "pid": 13872
+    }
+  ],
+  "phase": "contracts"
+}

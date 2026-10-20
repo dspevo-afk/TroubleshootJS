@@ -1,0 +1,141 @@
+{
+  "status": "PASS_RAW_BODIES_PRESERVED",
+  "files": {
+    "led-all-off-body.txt": {
+      "sha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "bytes": 739,
+      "tabs": 3
+    },
+    "led-customer-passed-body.txt": {
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "bytes": 885,
+      "tabs": 3
+    },
+    "led-final-off-body.txt": {
+      "sha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "bytes": 670,
+      "tabs": 3
+    },
+    "led-first-ticket-body.txt": {
+      "sha256": "9964a0314fc44b3a55dbcbc97ac025253654630fcbf0d4f30f42b6467de1c37e",
+      "bytes": 750,
+      "tabs": 3
+    },
+    "led-isolated-original-ohm-body.txt": {
+      "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "bytes": 870,
+      "tabs": 3
+    },
+    "led-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "bytes": 480,
+      "tabs": 3
+    },
+    "led-original-installed-off-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "bytes": 671,
+      "tabs": 3
+    },
+    "led-original-lifted-off-body.txt": {
+      "sha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "bytes": 696,
+      "tabs": 3
+    },
+    "led-original-removed-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "bytes": 480,
+      "tabs": 3
+    },
+    "led-original-tray-body.txt": {
+      "sha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "bytes": 595,
+      "tabs": 3
+    },
+    "led-r1-selected-body.txt": {
+      "sha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "bytes": 490,
+      "tabs": 3
+    },
+    "led-repaired-board-body.txt": {
+      "sha256": "3f4deca1a5fc0bfcd6cc412c27ec2106f2a3594599385b3221aa69ee83ba2434",
+      "bytes": 421,
+      "tabs": 3
+    },
+    "led-replacement-330-ohm-body.txt": {
+      "sha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "bytes": 892,
+      "tabs": 3
+    },
+    "led-replacement-install-options-body.txt": {
+      "sha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "bytes": 743,
+      "tabs": 3
+    },
+    "led-replacement-installed-body.txt": {
+      "sha256": "f63ede8e168f8cb3c52f92a9e3785ff25bce838e5432c68df8528e7095b741a4",
+      "bytes": 624,
+      "tabs": 3
+    },
+    "led-replacement-tray-body.txt": {
+      "sha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "bytes": 647,
+      "tabs": 3
+    },
+    "led-shop-body.txt": {
+      "sha256": "99a18f3e6c205fc6d0b0fde595e801b82037d3d2481d6d673e29bddc4bb66a82",
+      "bytes": 4434,
+      "tabs": 3
+    },
+    "led-shop-filtered-body.txt": {
+      "sha256": "cf8e4c60692bb64cf3b5aef3e85cdceced67b25ffa839b69decb92d4b91b2ad1",
+      "bytes": 1164,
+      "tabs": 3
+    },
+    "led-shop-replacement-added-body.txt": {
+      "sha256": "d90d7c50fcbe236e643b5c6102b10ac65fa40a302eb53ea5d3597b42ceae0b26",
+      "bytes": 1278,
+      "tabs": 3
+    },
+    "multirail-final-off-body.txt": {
+      "sha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "bytes": 1141,
+      "tabs": 3
+    },
+    "multirail-first-pending-body.txt": {
+      "sha256": "3430ccf470eeac307f7acd8c411d8377ead9bca62193ec7204bbfea5496b9704",
+      "bytes": 609,
+      "tabs": 0
+    },
+    "multirail-first-ticket-body.txt": {
+      "sha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "bytes": 871,
+      "tabs": 3
+    },
+    "multirail-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "bytes": 480,
+      "tabs": 3
+    },
+    "multirail-replay-menu-body.txt": {
+      "sha256": "2b801fd4b89d78ff006793b8f0e93f2cc57e2f0f266144cdfa165501699a1095",
+      "bytes": 1480,
+      "tabs": 0
+    },
+    "multirail-supplies-body.txt": {
+      "sha256": "9885347c5d932ce2d43a2c37ea312239762ffb80f4c98e8ad068c0f028446ca0",
+      "bytes": 1160,
+      "tabs": 3
+    },
+    "startup-default-ticket-body.txt": {
+      "sha256": "4477e4857aa4dd4f2aa3ed62b703ba9dfd34dfbb52b8378bccef1b483b948d04",
+      "bytes": 793,
+      "tabs": 3
+    },
+    "wrong-query-menu-body.txt": {
+      "sha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "bytes": 1218,
+      "tabs": 0
+    }
+  },
+  "limits": "All27 raw bodies preserved including menu/pending bodies without meter; exact filename attributes allow intentional meter tab-only lines. No generic whitespace removal or body edits. Final staged raw bytes checked separately."
+}

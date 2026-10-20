@@ -1,0 +1,25 @@
+{
+  "status": "PASS_ONLY_PACKING_CLOCK_REPLAY_DIFFERENCE",
+  "elapsedSeconds": 55.3388284,
+  "roots": {
+    "10": {
+      "geometrySha256": "ad7a34a40ad305acd1326353d08daeabe53080a27105df0c1a0270d14167d8ac",
+      "packingMillis": [
+        618,
+        631
+      ],
+      "fullCanonicalEqual": false,
+      "onlyNamespacedPackingClockMayDiffer": true
+    },
+    "0": {
+      "geometrySha256": "047fd663d75cae551e66a6b909bf0f01978bf454f777db9847f59a5817d198f9",
+      "packingMillis": [
+        246,
+        301
+      ],
+      "fullCanonicalEqual": false,
+      "onlyNamespacedPackingClockMayDiffer": true
+    }
+  },
+  "limits": "Actual task-only same-owner observations, four accepted routes. No production/test oracle change; existing failed contract remains FAIL."
+}

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_FINITE_EXACT_PATH_PROJECTION",
+  "files": {
+    "contracts-attempt1/contracts.txt": {
+      "privateRawSha256": "660704e0e71f71108802557481a39c5756f0eab1d2ab622b32b4a9f73cd9fd23",
+      "privateRawBytes": 2762,
+      "publicSha256": "07927a961667011a1a38a3da9397e747a1427115a2ccd962453f8b0249791e9c",
+      "publicBytes": 2442,
+      "exactOwnedWorktreePrefixSubstitutions": 5
+    },
+    "final-r2/build.txt": {
+      "privateRawSha256": "98cffe2226119934bf39de796bba055cd35a1eaf6682a1fd17ca615835208576",
+      "privateRawBytes": 1250,
+      "publicSha256": "0455760a8527003db0aacd351428e5eb9c4ee80fa28b8cfedd82b57c61e397bf",
+      "publicBytes": 1186,
+      "exactOwnedWorktreePrefixSubstitutions": 1
+    }
+  },
+  "limits": "Original complete raw logs retained privately/hash-bound. Only the exact actual owned worktree absolute prefix becomes [WORKTREE], preserving failures/compiler line numbers/build markers/all remaining bytes. No broad redaction or producer-source/gate mutation."
+}

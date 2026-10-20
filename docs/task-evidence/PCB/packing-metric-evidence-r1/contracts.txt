@@ -1,0 +1,52 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6
+
+PCB_WHITESPACE_CASE {"seed":"123","version":1,"parts":1,"gridUnits":10,"sampledCells":900,"packageAccessOccupiedCells":266,"protectedFreeCells":634,"protectedFreeFraction":0.7044444444444444,"largestProtectedEmptyRectangle":{"x":0,"y":0,"width":80,"height":300,"area":24000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"124","version":1,"parts":1,"gridUnits":10,"sampledCells":900,"packageAccessOccupiedCells":266,"protectedFreeCells":403,"protectedFreeFraction":0.4477777777777778,"largestProtectedEmptyRectangle":{"x":70,"y":0,"width":230,"height":60,"area":13800},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"125","version":1,"parts":2,"gridUnits":10,"sampledCells":1200,"packageAccessOccupiedCells":513,"protectedFreeCells":487,"protectedFreeFraction":0.4058333333333333,"largestProtectedEmptyRectangle":{"x":170,"y":0,"width":100,"height":200,"area":20000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"126","version":1,"parts":2,"gridUnits":10,"sampledCells":1200,"packageAccessOccupiedCells":513,"protectedFreeCells":687,"protectedFreeFraction":0.5725,"largestProtectedEmptyRectangle":{"x":170,"y":0,"width":300,"height":200,"area":60000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PASS: PCB packing metrics contracts assertions=36 fixtures=8
+
+PASS: PCB packing probe receipt contracts assertions=67 fixtures=5
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+SERVICE_COVERAGE NPN_LOW_SIDE_SWITCH parts=7
+SERVICE_COVERAGE NMOS_LOW_SIDE_SWITCH parts=6
+SERVICE_COVERAGE RELAY_OUTPUT parts=9
+SERVICE_COVERAGE SENSOR_CONTROL parts=9
+SERVICE_COVERAGE RB15_CONTROL parts=16
+SERVICE_COVERAGE COMPOSED_CONTROLLED_INDICATOR parts=15
+SERVICE_COVERAGE RB30_CONTROL parts=23
+SERVICE_COVERAGE RB56_CONTROL parts=42
+PASS: physical serviceability contracts assertions=2115
+
+PASS: U06 session save contracts assertions=34988
+
+PASS: PlayerSessionFingerprintContractTest assertions=119
+
+Q30_FULL_OWNER seed=3 PASS components=38 copperEdges=325 copperJunctions=332
+Q30_FULL_OWNER seed=37 PASS components=39 copperEdges=378 copperJunctions=378
+PASS: Q30 physical metadata contracts 4187 assertions, resolvedSeeds=7 scaleFixtures=4 regressionRecipes=33/35/37
+
+Q30_SEED10_ROUTING MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=27388;routes=6;routingWork=13/4155642;p05=3/0;p07=3/3;selectedAttempt=0;ranked=[3, 0, 4, 2, 5, 1];placementScores=[3{total=1130513;electrical=128210;region=9135;connector=6420;corridor=1531;outline=8532000;courtyard=628772;demand=2241511}, 0{total=1190089;electrical=133000;region=10205;connector=5930;corridor=3190;outline=8570100;courtyard=620372;demand=2219111}, 4{total=1271265;electrical=142980;region=10020;connector=6970;corridor=2857;outline=8385000;courtyard=625172;demand=2231911}, 2{total=1272875;electrical=142520;region=9175;connector=8260;corridor=2926;outline=8465100;courtyard=631172;demand=2247911}, 5{total=1280788;electrical=144870;region=9205;connector=7940;corridor=2186;outline=8289800;courtyard=622772;demand=2225511}, 1{total=1325365;electrical=148700;region=10910;connector=8550;corridor=2477;outline=8245000;courtyard=625172;demand=2231911}];selectedScore=1059923;selectedQualityMilli=157296819;routeOutcomes=[P05_ONE_FACE@3=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@0=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@3=SUCCESS, P07_FULLER_TWO_LAYER@0=SUCCESS, P07_FULLER_TWO_LAYER@4=SUCCESS];packingProbe=normal-packing@2;attempts=1;orderings=1;expansions=341210;millis=454;route=P07_FULLER_TWO_LAYER;disposition=SELECTED;baseline=563a04f390cd20c583a49346a606cdab16ebf4e6a08b2f51ef37e562c0fc8cc6;selected=ad7a34a40ad305acd1326353d08daeabe53080a27105df0c1a0270d14167d8ac;failure=null
+
+Exception in thread "main" java.lang.AssertionError: seed 10 replays exact geometry and bounded work without changing plan identity
+	at com.lushprojects.circuitjs1.client.MediumBoardPhysicalPolicyContractTest.check(MediumBoardPhysicalPolicyContractTest.java:466)
+	at com.lushprojects.circuitjs1.client.MediumBoardPhysicalPolicyContractTest.frozenSeed10Routing(MediumBoardPhysicalPolicyContractTest.java:190)
+	at com.lushprojects.circuitjs1.client.MediumBoardPhysicalPolicyContractTest.main(MediumBoardPhysicalPolicyContractTest.java:37)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: MediumBoardPhysicalPolicyContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

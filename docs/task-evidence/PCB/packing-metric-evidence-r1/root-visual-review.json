@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "images": {
+    "multirail-fitted.jpg": "d5b340bbb87d48b1d4647f8d5717025692e0650cd5f1052ba86b9790c4e57f3f",
+    "multirail-detail.jpg": "46cf0b9a91d2ba2858c26818610a86a291ade417030364312d27093e759be650",
+    "led-original-fault.jpg": "2deab911595019b2176761e6411156cd0fd3423c83711e79c50f962acc50c1fd",
+    "led-isolated-ol.jpg": "f86d75f13b2db246c6e5cc3ce83522b82ecd0dafeef8be02458110060b6a209b",
+    "led-repaired.jpg": "1cb991d9579d3ab3c5febe22886a816f300ef31ae5910ec1d93259bbd18737a7"
+  },
+  "scope": "Root inspected all five raw1280x900 JPEGs: actual fitted multi-rail38-part board and closer components/labels; original LED complaint, OFF isolated lifted-lead R1 with real OL and probe targets, repaired litLED after fresh customerPASS. No schematic/debug metric values exposed. Existing large right-side multi-rail green gap remains, as expected for diagnostic-only change; no size-improvement claim. Prior RC/composed verified images and current multi-rail fit pasted in chat.",
+  "limits": "Actual production visible input and raw screenshots only; no all-seed/manufacturing/performance/Edge/CDP/FileReader claim"
+}

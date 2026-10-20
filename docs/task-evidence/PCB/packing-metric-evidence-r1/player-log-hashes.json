@@ -1,0 +1,22 @@
+{
+  "consoleEntries": 1139,
+  "consoleTypes": {
+    "error": 2,
+    "log": 1137
+  },
+  "errors": {
+    "page": [],
+    "request": [],
+    "response": []
+  },
+  "consoleErrorMessages": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "privateRawSha256": "3aabeea90a07a95b0732a27d34fd323e6012353023ec7d3fdbd9e7982b886894",
+  "privateRawBytes": 87515,
+  "limits": "Full runtime logs remain private/hash-bound; console resource errors are retained without unsupported attribution. Four failed observers remain actual FAIL events, not product passes.",
+  "runtimeAfterCloseSameAsBefore": true,
+  "finalPrivateRawSha256": "3aabeea90a07a95b0732a27d34fd323e6012353023ec7d3fdbd9e7982b886894",
+  "finalPrivateRawBytes": 87515
+}

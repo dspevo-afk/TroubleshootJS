@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_PREPARATION",
+  "operation": "First browser ownership setup",
+  "error": "pmFs.existsSync is not a function",
+  "cause": "Preserved fs4 module was fs/promises, not synchronous fs; root explicitly imports node:fs before retry",
+  "browserOrProfileLaunched": false,
+  "limits": "Failure before pointer/temp/browser creation or navigation; no player operation certified"
+}

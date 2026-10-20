@@ -1,0 +1,79 @@
+# Final scope R3 (active final-r2 gate directory): truthful packing evidence and exact replay work
+
+Preserve original baseline, three-owner candidates, failed compile operation
+31.8284128s/exit2 and second failed contracts operation63.3723582s/exit2. Both
+wrappers actually exited1 before separate root checks found their two births
+exited. Corrected receipt fixture67 and earlier selected suites pass in the
+second operation; the full contracts phase remains FAIL.
+
+The unchanged MediumBoardPhysicalPolicyContractTest compares full canonical
+receipts across independently measured routes, including System.currentTimeMillis
+packing observations. Before changing that oracle, the actual task-owned witness
+ran all four root10/root0 routes. Geometry/work/all other canonical bytes match;
+root10 millis618vs631 and root0 millis246vs301. Its native operation55.3388284s
+passed and root confirmed both births exited. Original assertions and failures
+remain. This is concrete evidence for excluding exactly elapsed packing time
+from all three deterministic work comparisons, not a changed product decision.
+
+R2 adds root ownership of tests/contracts/MediumBoardPhysicalPolicyContractTest.java
+to the original three source owners. Freeze its unchanged bytes and all four
+owners before editing. Change only three canonical comparisons to a strict test
+helper that requires exactly one namespaced normal-packing@2 nonnegative millis
+field and replaces only that numeric observation. Preserve original assertion
+messages and every geometry/plan/ID/work/budget/selection assertion. Add literal
+positive timing equality, malformed/missing/duplicate/negative clock rejection,
+and separate work/route/hash/disposition differences that must remain unequal.
+No production canonical, receipt, geometry, generation, comparator, budget,
+epoch or save change. The two already-reviewed production owners stay exact.
+
+Fresh final contracts12, census8/44, target1 and actual JDK8/GWT5 run serially
+under the same maintained wrappers, actual exec before root cleanup and reader.
+Keep all inherited full census and exact target comparisons; no oracle, metric,
+work or row exclusion beyond the explicit existing clock observation. No other
+production/test/machinery changes are permitted by the 1482/24 source seals.
+
+Reuse the already PASS actual target metric observation only after auditing
+every consumed production source, machinery, task exporter and frozen helper
+byte unchanged. The fourth test file is not compiled/consumed by that task-only
+native class. Its actual tuple remains baseline7520448/29840/34/2270400 versus
+candidate5016608/28220/41/659600, rejecting only viaNonincreasing. Do not rerun
+the historical three-owner live-source reader after intentionally changing the
+fourth test; its original raw seal/results stay preserved. Final production UI
+verification and publication remain required. No new shrink/all-seed/performance
+or manufacturing claim; no main/email; continue general work after publication.
+
+R3 before-edit addendum: the R2 attempt passed the corrected seed10 and root0
+statistics comparisons, then failed a third unchanged root0 result comparison.
+The existing pre-edit witness already binds this exact pair and proves its only
+difference is packing millis. Root missed this third assertion in the first
+fixture edit. Preserve the complete R2 source/helpers/input seals/operation
+75.7002402s/exit2/actualwrapperexit1/root2birthcleanup in oracle-r2-attempt1.
+Apply the same strict helper to that third comparison only; no new exclusion,
+production change, assertion removal, budget increase or unrelated fixture edit.
+Freeze baseline from the exact attempted R2 candidate before the final one-line
+comparison correction. Fresh final full12 and all other gates remain required.
+
+R4 before-edit addendum: preserve complete R3 final12PASS79.2459195s, census44
+PASS70.4789638s and targetFAIL46.9802888s/actualwrapper1/root2birthcleanup in
+oracle-r3-attempt1. Actual failed target JSON proves only packingmillis480vs410
+differs in full cold/warm receipt. No admission/geometry success inferred from
+that failed row. Fifth owned source is Q30NormalCorpusContractTest.java. Apply
+the same strict clock-only comparison while retaining unmodified raw cold/warm
+canonical JSON, phase counts, graph/layout identity, disjointness, population,
+normal admission, cleanup and every original assertion. Its legitimate rejected
+route branch may have no optional packing receipt: compare that entire receipt
+unchanged. Reject malformed/duplicate/missing clock when packing is present. Add
+literal timing and nonclock rejection canaries, using Java7-compatible captures.
+
+Root corrects a previous mistaken consumption assumption: maintained verifier
+compiles ALL declared test definitions, even when execution selects one suite.
+Therefore changed test files ARE compiler inputs to the task adapter. Prior
+metric observation remains valid for its exact frozen candidate, but is NOT
+reused as final after later test edits. All final contracts12/census44/target1/
+task-diagnostic1/build5 are fresh after all five owner bytes are frozen. Existing
+R2/R3 reuse statements remain historical attempted scope and are superseded here;
+no old result is silently relabeled. Final target reader excludes only observed
+namespaced numeric clock between cold/warm, preserving all raw canonical fields.
+The final diagnostic uses a fresh private adapter directory and fresh invalid/
+valid host canaries. Production two-file source review remains raw-exact and
+source-only. No budgets, compiler inputs, assertions or failure record omitted.

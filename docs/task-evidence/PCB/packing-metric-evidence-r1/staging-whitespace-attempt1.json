@@ -1,0 +1,14 @@
+{
+  "status": "FAIL_STAGED_DIFF_CHECK_PRESERVED",
+  "gitDiffCachedCheckExitCode": 2,
+  "actualToolExecExitCode": 1,
+  "file": "diagnostic-source-diff.txt",
+  "lines": [
+    4,
+    19,
+    43
+  ],
+  "cause": "Three raw unified-diff blank context lines carry required single space; final blank context line is at EOF. Source delta is frozen evidence and must remain byte-exact, not whitespace-normalized.",
+  "correction": "One exact filename attribute permits blank-at-eol and blank-at-eof for this raw unified diff only, preserving CR-at-eol and every source/body/test check. Original attributes/review copied before fix; all other paths keep their attributes.",
+  "limits": "No producer source, test assertion, oracle, budget, raw diff byte or frozen helper changed; final staged acceptance separate."
+}

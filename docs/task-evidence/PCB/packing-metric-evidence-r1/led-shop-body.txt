@@ -1,0 +1,456 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Customer retest did not pass. Continue troubleshooting.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: OFF
+Supplies
+View
+Ticket
+Parts tray
+Shop
+Close
+Local shop
+store.copperline.example/components
+
+ELECTRONIC COMPONENTS
+
+Copperline Supply Co.
+
+Parts Tray · 1 loose part
+
+The right part starts with the specification.
+
+Browse the full catalog. Match the rating and lead spacing, add to your Parts Tray, then install on the board.
+
+All parts
+Resistors
+LEDs
+Connectors
+Search components
+Clear search
+
+Supplies isolated. Charged parts may need more time to discharge before they can be added.
+
+Showing 76 of 76 components
+
+Resistors
+
+10 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+12 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+15 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+18 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+22 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+27 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+33 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+39 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+47 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+56 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+68 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+82 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+100 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+120 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+150 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+180 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+220 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+270 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+330 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+390 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+470 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+560 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+680 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+820 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1200 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1500 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1800 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+2200 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+2700 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+3300 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+3900 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+4700 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+5600 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+6800 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+8200 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+10000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+12000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+15000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+18000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+22000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+27000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+33000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+39000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+47000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+56000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+68000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+82000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+100000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+120000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+150000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+180000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+220000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+270000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+330000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+390000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+470000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+560000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+680000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+820000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1000000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1200000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1500000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+1800000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+2200000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+2700000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+3300000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+3900000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+4700000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+5600000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+6800000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+8200000 Ohm +/-5%
+Add to Parts Tray
+
+Resistors
+
+10000000 Ohm +/-5%
+Add to Parts Tray
+
+LEDs
+
+Generic red LED
+Add to Parts Tray
+
+LEDs
+
+Generic red LED (reversed)
+Add to Parts Tray
+
+Connectors
+
+2-pin terminal connector
+Add to Parts Tray
+▲ PARTS TRAY · 1 part

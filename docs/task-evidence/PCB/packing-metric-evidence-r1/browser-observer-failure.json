@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_OBSERVER_PREPARATION",
+  "actualInitialWaitSeconds": 40.5037807,
+  "realFailure": "TimeoutError: locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Main menu', exact: true }) to be visible\u001b[22m\n",
+  "secondaryObserverError": "pmFs.writeFileSync is not a function",
+  "cause": "First URL incorrectly used quickplay=1, opening ordinary menu; Main menu role is unavailable there. Initial helper closure retained the fs/promises binding. Root uses maintained tsjQuickPlay=true URL and stable global task object for observers.",
+  "limits": "No new-board or replay request submitted, no product outcome claimed; initial menu body and failed event retained"
+}

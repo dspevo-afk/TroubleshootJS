@@ -1,0 +1,42 @@
+{
+  "status": "PASS_FINITE_FINAL_PLAYER",
+  "candidateSha256": "8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c",
+  "identities": {
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 3D0F8C840550406A4F04ABFB25711B41"
+    },
+    "multirail": {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5776064669694490064",
+      "build": "tsj-alpha/6 / 3D0F8C840550406A4F04ABFB25711B41"
+    }
+  },
+  "events": 27,
+  "failedObservers": 4,
+  "images": {
+    "multirail-fitted.jpg": {
+      "sha256": "d5b340bbb87d48b1d4647f8d5717025692e0650cd5f1052ba86b9790c4e57f3f",
+      "bytes": 152377
+    },
+    "multirail-detail.jpg": {
+      "sha256": "46cf0b9a91d2ba2858c26818610a86a291ade417030364312d27093e759be650",
+      "bytes": 115346
+    },
+    "led-original-fault.jpg": {
+      "sha256": "2deab911595019b2176761e6411156cd0fd3423c83711e79c50f962acc50c1fd",
+      "bytes": 146364
+    },
+    "led-isolated-ol.jpg": {
+      "sha256": "f86d75f13b2db246c6e5cc3ce83522b82ecd0dafeef8be02458110060b6a209b",
+      "bytes": 146833
+    },
+    "led-repaired.jpg": {
+      "sha256": "1cb991d9579d3ab3c5febe22886a816f300ef31ae5910ec1d93259bbd18737a7",
+      "bytes": 138775
+    }
+  },
+  "publicBodies": 27,
+  "diagnosticPrivacyTokensAbsent": true,
+  "sourceAndServedProvenanceBeforeAfterExact": true,
+  "limits": "Finite two actual replays/known LED diagnosis-to-freshPASS and finalOFF only; source/gates/native44 separately bound. Console details and every failed observer retained; no all-seed/new-size/manufacturing/performance/Edge/CDP/FileReader/full-matrix claim"
+}

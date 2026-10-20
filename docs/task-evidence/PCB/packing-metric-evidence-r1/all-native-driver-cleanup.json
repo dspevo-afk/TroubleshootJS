@@ -1,0 +1,190 @@
+{
+  "checks": [
+    {
+      "startTicks": "639281141221645593",
+      "recordedBirthExited": true,
+      "source": "contracts-attempt1/contracts-process-launch.json",
+      "pid": 30108,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281141227309605",
+      "recordedBirthExited": true,
+      "source": "contracts-attempt1/contracts-process-launch.json",
+      "pid": 13872,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281142322717239",
+      "recordedBirthExited": true,
+      "source": "contracts-process-launch.json",
+      "pid": 18164,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281142329193329",
+      "recordedBirthExited": true,
+      "source": "contracts-process-launch.json",
+      "pid": 20744,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281146445058467",
+      "recordedBirthExited": true,
+      "source": "oracle-r2-attempt1/contracts-process-launch.json",
+      "pid": 30264,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281146451288417",
+      "recordedBirthExited": true,
+      "source": "oracle-r2-attempt1/contracts-process-launch.json",
+      "pid": 28088,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281147893644317",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/contracts-process-launch.json",
+      "pid": 21956,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281147899507389",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/contracts-process-launch.json",
+      "pid": 2412,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281148855570892",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/census-process-launch.json",
+      "pid": 21164,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281148864887060",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/census-process-launch.json",
+      "pid": 19392,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281149799423933",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/target-process-launch.json",
+      "pid": 30420,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281149808327361",
+      "recordedBirthExited": true,
+      "source": "oracle-r3-attempt1/target-process-launch.json",
+      "pid": 29656,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281143374076883",
+      "recordedBirthExited": true,
+      "source": "diagnostic-attempt1/process-launch.json",
+      "pid": 25636,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281143376498114",
+      "recordedBirthExited": true,
+      "source": "diagnostic-attempt1/process-launch.json",
+      "pid": 17944,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281144888976565",
+      "recordedBirthExited": true,
+      "source": "clock-witness/process-launch.json",
+      "pid": 18088,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281144896225293",
+      "recordedBirthExited": true,
+      "source": "clock-witness/process-launch.json",
+      "pid": 30308,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281153459496242",
+      "recordedBirthExited": true,
+      "source": "final-r2/target-process-launch.json",
+      "pid": 30328,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281153470825241",
+      "recordedBirthExited": true,
+      "source": "final-r2/target-process-launch.json",
+      "pid": 24420,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281154043503954",
+      "recordedBirthExited": true,
+      "source": "final-r2/contracts-process-launch.json",
+      "pid": 24748,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281154052896933",
+      "recordedBirthExited": true,
+      "source": "final-r2/contracts-process-launch.json",
+      "pid": 28116,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281155651360494",
+      "recordedBirthExited": true,
+      "source": "final-r2/census-process-launch.json",
+      "pid": 31388,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281155660307009",
+      "recordedBirthExited": true,
+      "source": "final-r2/census-process-launch.json",
+      "pid": 29600,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281156949415905",
+      "recordedBirthExited": true,
+      "source": "final-r2/build-process-launch.json",
+      "pid": 16636,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281156958207519",
+      "recordedBirthExited": true,
+      "source": "final-r2/build-process-launch.json",
+      "pid": 30856,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281154993680496",
+      "recordedBirthExited": true,
+      "source": "diagnostic-final-r4/process-launch.json",
+      "pid": 24000,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281155002492437",
+      "recordedBirthExited": true,
+      "source": "diagnostic-final-r4/process-launch.json",
+      "pid": 31464,
+      "executable": "pwsh"
+    }
+  ],
+  "operations": 13,
+  "status": "PASS_RECORDED_NATIVE_DRIVER_BIRTHS_EXITED",
+  "limits": "Present recheck only, supplements every earlier root cleanup receipt after actual exit; four failed operations retain FAIL. Includes original and final diagnostic adapters. No termination; private adapter/rawlogs and all unrelated/older blocked resources retained",
+  "recordedBirths": 26
+}

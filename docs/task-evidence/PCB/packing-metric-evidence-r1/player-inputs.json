@@ -1,0 +1,17 @@
+{
+  "candidateSha256": "8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c",
+  "gates": {
+    "player-plan.json": "429747f5646f1817ba580cab3e123857c34871c63c82dbf4f50e604718880f20",
+    "player_inputs.py": "e24ba9a8b240fdccb1a3e254ce758847771efa5bfb873d8990010af0f2d63b9b",
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+    "stop_player.ps1": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+    "observe_player_host.ps1": "fedac9a3485ac70371688c738c339f6facb1aea3a321205f3f42890d713038b6",
+    "review_player.py": "095af1019dfdb636a4248538a28c4f14f8842c1c282591d97ab561b4bfc7d239"
+  },
+  "finalGates": {
+    "contracts": "f245ec560cf4876cfbf945cab40922958e9aa69d4b9b51dfb8ec4217f7bc1cb2",
+    "census": "02ef0126771e2132e45bdb97559444f2caf4e350079d12ac1304c09eac0be31a",
+    "target": "fdfd602d64e831b112e46783ca3a8d7e2f0d21df90f78f7c1298aa7ab7d945df",
+    "build": "daf7525bcd6f3097f5bee56a55ca559957e6e19dc524f6b6f15fcf32d4e0a3bd"
+  }
+}

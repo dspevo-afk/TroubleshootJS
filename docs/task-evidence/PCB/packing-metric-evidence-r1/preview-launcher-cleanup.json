@@ -1,0 +1,19 @@
+{
+  "actualExecExitCode": 0,
+  "status": "PASS",
+  "limits": "Actual preview-start exec79492 completed0 before separate root driver birth checks; worker separately owned",
+  "checks": [
+    {
+      "pid": 26348,
+      "recordedBirthExited": true,
+      "startTicks": "639281158516819942",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 18704,
+      "recordedBirthExited": true,
+      "startTicks": "639281158529067758",
+      "executable": "pwsh"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS_ROOT_FINAL_FIVE_OWNER_SOURCE_REVIEW",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+    "tests/contracts/PcbPackingProbeReceiptContractTest.java": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851",
+    "tests/contracts/Q30NormalCorpusContractTest.java": "eaf85bbc593261744a8238a9f57598dc486b5802af03a849fb312b366b0a5337"
+  },
+  "productionReviewReusedSourceOnlyExact": true,
+  "q30WorkerHandoffSha256": "0f9ca125a571cddd92717a3e4072fcf212d5844a380fd6e72e4950590126a0c1",
+  "scope": "Root reviewed integrated five-owner diff and all affected comparison/canonical/cleanup seams. Original literals/assertion messages retained. Q30 raw cold/warm JSON and all plan/graph/geometry/normal admission/disjointness/population/phase/work/budget/cleanup checks remain. Narrow test-only clock comparator handles true no-packing route rejection unchanged and rejects malformed packing. Root caught and fixed worker Matcher.find double-find invalidating match state before start/end access; source-only handoff preserved, never executed. Root also rejects present packing with missing namespace and adds two corresponding malformed/duplicate canaries. Production is byte-exact to independent source-only review. All final native/diagnostic/build/player gates will run fresh: previous reuse assumption about tests not compiled was incorrect; maintained verifier compiles ALL definitions. Historical attempts/statuses/raw seals remain. No production algorithm/selection/canonical/geometry/graph/IDs/RNG/budget/epoch/save changes.",
+  "limits": "Root final source review; independent reviewer covered only production two-file seams; Q30 leaf performed edits/source inspection only, no execution. No prior gate relabeled as final."
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS_ROOT_FINAL_SOURCE_REVIEW",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+    "tests/contracts/PcbPackingProbeReceiptContractTest.java": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851"
+  },
+  "scope": "All four source diffs reviewed. Two production owners remain exact to independent source-only review. Both test files preserve every original string literal and assertion message. Original receipt fixtures retain all31 old runtime assertions; corrected result67. Policy fixture changes exactly three independent route canonical comparisons to one strict test-only namespaced numeric clock replacement; no production canonical/selection/geometry/graph/RNG/budget/epoch/save mutation. Added literal time-equality, eight changed nonclock fields and four malformed-clock rejects; no reflection and no weakened geometry/work/selection assertion. Actual pre-edit four-route witness proves only clock difference. Two compiler-capture qualifiers and third initially missed canonical comparison fixes recorded in preserved attempts.",
+  "limits": "Root integrated source review, independent reviewer covered only production two-file seam. Final native/build/player gates separate; all failures retained."
+}

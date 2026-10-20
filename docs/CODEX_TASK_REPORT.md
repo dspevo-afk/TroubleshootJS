@@ -1,4 +1,52 @@
-# Current checkpoint: selected fresh multi-rail gap diagnosis accepted; publication pending
+# Current checkpoint: packing metric evidence accepted; publication handoff
+
+2026-10-20, q30-multirail-qualification / codex/q60-faulted-profile-counts.
+Base HEAD/exact prior origin3028ceb0e90e23b2c2ac0e35eaf493609985bffa; final
+candidate8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c.
+Indefinite PCB realism/screenshots/optional LunaMAX leaves; no final/main/email.
+Original5/private baseline/cache/COPY/pointers/three blocked profiles preserved.
+
+Two production owners capture immutable already-computed metric states/tuples.
+Selection/canonical/geometry/graph/IDs/RNG/budgets/layout18/packing2/save/UI remain.
+Actual fresh proposal7520448/29840/34/2270400 →5016608/28220/41/659600: only
+viasNonincreasing fails, so33.29% smaller proposal stays KEPT. No new shrink claim.
+Independent source-only production reviewPASS/raw-exact; root five-owner source
+reviewPASS, all original assertion literals retained. Test-only clock comparisons
+preserve every other field/raw JSON/geometry/work/graph/admission/cleanup oracle.
+
+Final R4 five-owner source1482/machinery24/gates6 frozen, active final-r2 directory.
+ALL final gates fresh: contracts12 PASS79.7657581s (receipt67/metrics36/policy72);
+paired44 PASS73.7464536s; exact target4092 PASS48.1923962s; task diagnostic376
+PASS48.450187s; actual JDK8/GWT5 PASS90.8122666s. Actual exec exits precede root
+birth cleanup/qualification. Full rows remain exact except explicit clock fields.
+Four earlier failed native operations, actual four-route clock witness, root
+missed comparison and pre-execution worker fixes remain in RESULTS/attempts.
+R2/R3 test-nonconsumption assumption was wrong: verifier compiles ALL definitions.
+R4 supersedes it and re-executes every final gate; no old result relabeled final.
+
+Actual build3D0F8C840550406A4F04ABFB25711B41; CLI/served6 match before/after.
+Multi-rail same request admits, original complaint observed, all4OFF/tray0.
+LED original complaint, OFF isolatedOL, actual ShopPart4/330 install/OFF330, fresh
+awaited customerPASS, finalOFF/tray1 (faulty originalPart2). Five raw1280x900
+images inspected; RC/composed/currentmulti-rail pasted. Public27 bodies preserve
+raw whitespace/diagnostic privacy. Events27=23PASS/4FAIL observers; preparation
+errors and1139console (1137log+2unattributed404) retained, other errors0. Original
+FAIL has no independent freshness token; freshPASS has new-modal evidence.
+
+No task process live: native26+player6 recorded births exited, browser API0/current
+profile absent, maintained stop2.1630361s/state absent/8907 released. Private
+adapters/raw canaries/runtime/path-bearing logs remain hash-bound. Only exact
+owned root prefixes in compile5/GWTlink1 logs projected; all other bytes/failures
+retained. No manual deletion or retry of older blocked resources.
+
+Root final raw/canonical/privacy/staged/diff review then normal commit/push/exact
+origin verification next; include prior publicationreceipt. Results detail limits:
+no allseed/manufacturing/performance/Edge/CDP/FileReader/fullmatrix claim. Next
+unstarted authorized scope is bounded packing-only P07 incumbent via-cap
+experiment, layout19/packing3 current migrations if activated; ordinary P07
+policy/admission remain. Continue after publication, no main/email.
+
+# Previous checkpoint: selected fresh multi-rail gap diagnosis accepted; publication pending
 
 2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts,
 HEAD/exact origin030678bba7d861d0a0a7c3fd44317e589d6c320e. Prior freshsample

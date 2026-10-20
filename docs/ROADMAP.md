@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Fresh multi-rail gap diagnosis accepted; packing decision evidence next**
+**Current task:** **Actual packing metric evidence accepted; bounded via-cap experiment next**
+
+The fresh multi-rail proposal is 33.29% smaller but adds seven vias (34→41).
+The existing rule keeps the incumbent. Immutable observations now explain the
+packing decision while preserving selection, canonical output, graph, geometry,
+RNG and budgets. Fresh final checks pass: 12 contracts, paired 44-board census,
+exact target (4092 assertions), actual-owner diagnostic (376), and JDK8/GWT5.
+Two production replays verify original complaints, all supplies OFF, and LED
+isolated OL → Shop330 → actual330 → fresh customerPASS → finalOFF. Five raw
+images were inspected; RC, composed and current multi-rail boards were pasted.
+All 32 recorded driver/player births exited; current profile/state are absent
+and port released. Failed attempts and the corrected compiler-input assumption
+remain explicit. This milestone adds decision evidence; the next experiment is
+a bounded packing-only incumbent via cap, with layout19/packing3 interpretation
+if activated. [Results and limits](task-evidence/PCB/packing-metric-evidence-r1/RESULTS.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

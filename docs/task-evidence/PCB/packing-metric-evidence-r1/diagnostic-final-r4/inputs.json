@@ -1,0 +1,21 @@
+{
+  "baseCommit": "3028ceb0e90e23b2c2ac0e35eaf493609985bffa",
+  "candidateSealSha256": "8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c",
+  "gates": {
+    "diagnostic-scope-r4.md": "827a647d0b1257bd9e5f67301652f50ba00d05b87a06c9c896d6e2e3538d2718",
+    "diagnostic_inputs_r4.py": "0b556e4dab6590c8ba6973c74d7a71e6152efe3849659cb07b6288c0f1743e2b",
+    "qualify_diagnostic_r4.py": "12e851ec74dc35d4e1df8ed07afeb0f2684177f2ea46abdf333943ce8f41a60c",
+    "make_export_adapter.py": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+    "diagnostic-final-adapter-manifest.json": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+    "diagnostic-final-adapter-diff.txt": "54e2e893509e2f4484feeb2e194d914e5b11b4a26045a745c929271643d32212",
+    "run_diagnostic_r4.ps1": "3dbf93a1ca0636b208916d0595504a7eeaf47dc88759785a646de412148fe1be",
+    "record_diagnostic_exit_r4.ps1": "eea87db3777c5df0aed65877b8d8330a4260448bfd24210f77794a402da123f1",
+    "diagnostic-source/FreshRb30GapDiagnostic.java": "d146738b3524edc5b8b5da166b84ca6b221614155fc2a8900124517f5f7102dd",
+    "root-final-source-review-r4.json": "5fd9ae840ee16e839c363870177fe3ed3e9086458e011869b6bd9300b76d50e4"
+  },
+  "sourceInputs": 1482,
+  "machinery": 24,
+  "previousAssessmentSha256": "926ef1e036131bf0ad48061574c99aefac0e01e9a41016bb1c05e08b0cfd1987",
+  "adapterSha256": "19af62225c5b3b4242343c81ebfa34a707df572eb1db80af5038d5ffdaa1dbec",
+  "seed": "-5776064669694490064"
+}

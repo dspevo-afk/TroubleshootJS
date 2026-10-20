@@ -1,0 +1,43 @@
+--- accepted-selected-exporter
++++ metric-observation-exporter
+@@ -103,7 +103,7 @@
+ 
+         StringBuilder json = new StringBuilder(120000);
+         json.append('{');
+-        field(json, "schema", "fresh-rb30-gap@1");
++        field(json, "schema", "packing-metric-evidence@1");
+         field(json, "seed", Long.toString(seed));
+         field(json, "boardId", board.getId());
+         field(json, "planCanonical", plan.canonical());
+@@ -214,7 +214,7 @@
+             "all serialization and metrics preserve logical RB30 identity");
+         check(geometryBefore.equals(layout.geometryFingerprint()),
+             "all serialization and metrics preserve selected layout geometry");
+-        System.out.println("PCB_FRESH_RB30_GAP " + json.toString());
++        System.out.println("PCB_PACKING_METRIC_EVIDENCE " + json.toString());
+     }
+ 
+     private static Vector<PcbFootprint> orderedFootprints(TroubleshootBoard board,
+@@ -667,6 +667,22 @@
+         field(out, "baselineGeometry", packing.baselineGeometry);
+         field(out, "selectedGeometry", packing.selectedGeometry);
+         field(out, "canonical", packing.toCanonical());
++        out.append(",\"metricEvidence\":{");
++        PcbPackingProbeReceipt.MetricEvidence evidence = packing.metricEvidence;
++        field(out, "state", evidence.state.name());
++        nullableField(out, "unavailableReason", evidence.unavailableReason);
++        out.append(",\"baseline\":"); appendObservedMetrics(out, evidence.baseline);
++        out.append(",\"candidate\":"); appendObservedMetrics(out, evidence.candidate);
++        out.append("}}");
++    }
++
++    private static void appendObservedMetrics(StringBuilder out, PcbPackingMetrics metrics) {
++        if (metrics == null) { out.append("null"); return; }
++        out.append('{');
++        out.append("\"area\":").append(metrics.area);
++        out.append(",\"copper\":").append(metrics.copper);
++        out.append(",\"vias\":").append(metrics.vias);
++        out.append(",\"protectedVoid\":").append(metrics.protectedVoid);
+         out.append('}');
+     }
+ 

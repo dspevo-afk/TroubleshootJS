@@ -1,0 +1,11 @@
+{
+  "status": "PASS_FAILURE_CAUSE_ONLY_PACKING_CLOCK",
+  "packingMillis": [
+    480,
+    410
+  ],
+  "allOtherFullCanonicalBytesExact": true,
+  "originalContractStatus": "FAIL",
+  "originalOperationSeconds": 46.9802888,
+  "limits": "Failed native row stopped before admission/geometry checks; it is not a PASS or electrical proof. Separate accepted selected export supplies prior geometry evidence."
+}

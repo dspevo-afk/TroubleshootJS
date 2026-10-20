@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "normalContextClientServerClose": true,
+  "actualProcessExitCode": 0,
+  "signal": null,
+  "elapsedSeconds": 0.12098959999904037,
+  "currentProfileAbsent": true,
+  "limits": "Normal API close after root same-birth/executable/profile guard; no termination/manual profile deletion. Separate root process/state/port checks remain."
+}

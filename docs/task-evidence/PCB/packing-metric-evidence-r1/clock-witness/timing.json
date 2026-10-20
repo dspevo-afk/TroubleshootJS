@@ -1,0 +1,9 @@
+{
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "phase": "clock-witness",
+  "terminalCleanupIncluded": true,
+  "failure": null,
+  "elapsedSeconds": 55.3388284,
+  "status": "PASS",
+  "exitCode": 0
+}

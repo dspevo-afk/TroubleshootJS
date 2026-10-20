@@ -1,0 +1,13 @@
+{
+  "candidateSealSha256": "02403c039fa09367f4da7b65f0ea8271ef462612ad75eea81825897f99a00019",
+  "gates": {
+    "clock-scope.md": "c3bdc4c212483bb8e4d5e023ccd6cd867c1d979633a12a166ebe33d46f0b21f3",
+    "clock_inputs.py": "efa852fd4b496bc99b9b48100519fa42d0971756613f8926a0b3970512c1d031",
+    "run_clock.ps1": "137d59f6538f2d5dc986bba3db860e97fc5ef6cfc47c073f675d052dca51406f",
+    "clock_exit.ps1": "ba1ca9c57648b6567f7e2ae24bd80d519d6ddb84e02daa94a2ceeee64bb1ff82",
+    "qualify_clock.py": "61f9ed402ecf03bdeecbefae9e4e9047353048a3a4e6230050d13ccb3311a1fc",
+    "clock-source/FreshRb30GapDiagnostic.java": "72bd1369785e90615f1516d2dcc9a0be14eedaf56487b84d106c725308996b6d"
+  },
+  "failedOperationSha256": "b738d58c209000a7a8f05b9e0cd8689194c20707cfad8ce983b4b5c628f05803",
+  "adapterSha256": "19af62225c5b3b4242343c81ebfa34a707df572eb1db80af5038d5ffdaa1dbec"
+}

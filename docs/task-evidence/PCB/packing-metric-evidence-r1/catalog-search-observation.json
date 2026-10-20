@@ -1,0 +1,11 @@
+{
+  "textboxRoleCount": 0,
+  "searchboxRoleCount": 1,
+  "visibleNativeInputs": [
+    {
+      "type": "search",
+      "ariaLabel": null,
+      "placeholder": "Type or specification, e.g. 330"
+    }
+  ]
+}

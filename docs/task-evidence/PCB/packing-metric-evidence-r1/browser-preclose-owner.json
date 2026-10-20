@@ -1,0 +1,8 @@
+{
+  "pid": 8924,
+  "executable": "brave.exe",
+  "startTicks": "639281159116107460",
+  "status": "PASS",
+  "normalApiCloseAuthorizedByTask": true,
+  "sameBirthExecutableAndRecordedTaskProfile": true
+}

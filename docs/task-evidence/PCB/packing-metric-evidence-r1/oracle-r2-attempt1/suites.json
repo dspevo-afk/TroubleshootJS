@@ -1,0 +1,29 @@
+{
+  "contracts": [
+    "PcbPackingProbeReceiptContractTest",
+    "PcbPackingMetricsContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "MediumBoardPhysicalPolicyContractTest",
+    "MediumBoardNormalAdmissionContractTest",
+    "P01PhysicalPoseContractTest",
+    "A10GenerationContractTest",
+    "A10DependencyContractTest",
+    "U06SessionSaveContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "Rb30PhysicalMetadataContractTest",
+    "PhysicalServiceabilityContractTest"
+  ],
+  "census": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "target": [
+    "Q30NormalCorpusContractTest"
+  ]
+}

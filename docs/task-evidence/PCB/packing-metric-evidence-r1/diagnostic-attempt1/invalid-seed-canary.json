@@ -1,0 +1,8 @@
+{
+  "limits": "Actual selected generated PowerShell adapter parameter binding, before JDK/compiler/native work; raw stderr private/hash-bound",
+  "privateLogBytes": 197,
+  "actualAdapterExitCode": 1,
+  "elapsedSeconds": 0.3459548,
+  "privateLogSha256": "db1cf130d4b9c0100c786686ec1481a4e6886b67ec49c26208af48848555195f",
+  "status": "PASS_REJECTED_INVALID_SEED"
+}

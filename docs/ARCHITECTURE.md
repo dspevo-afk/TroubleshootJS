@@ -5942,8 +5942,25 @@ the largest protected empty rectangle. Free cells are not proof of routability o
 manufacturability. `PcbPackingProbeReceipt` binds actual work, route policy,
 disposition and incumbent/selected geometry hashes. Layout and medium admission
 retain that immutable generation history; it does not define electrical identity
-or substitute for the live CircuitJS graph. Unsupported metric grids currently
-share the skipped `NO_HEADROOM` disposition, a reporting limitation.
+or substitute for the live CircuitJS graph. The receipt also owns immutable
+package-only metric evidence captured from the already-computed baseline and
+candidate objects at the real packing decision. Explicit NOT_MEASURED,
+BASELINE_UNAVAILABLE, BASELINE_ONLY, CANDIDATE_UNAVAILABLE and COMPARED states
+distinguish skips, route rejection, unavailable grids and actual comparison.
+Bounded reasons and state/disposition/strict-metric consistency are validated.
+These diagnostic fields are omitted from the unchanged normal-packing@2
+canonical, graph/geometry/save/session identities, player UI and scoring.
+Unsupported metric grids retain the NO_HEADROOM disposition with a distinct
+diagnostic state; there is no repeated production measurement or routing loop.
+
+The maintained medium-policy and Q30 corpus replay checks retain full raw
+canonical observations while comparing every deterministic receipt field and
+treating the single namespaced nonnegative packing wall clock as an observation.
+Literal canaries preserve
+work, route, hash and selection differences and reject malformed clocks; Q30
+route rejections with no optional packing receipt compare entirely unchanged.
+The actual verifier compiles all declared test definitions regardless selected
+execution, so changing another test is a compiler-input change for native gates.
 
 The informed44 comparison retains all admissions/source graphs, with nine area
 gains and no protected metric regressions at its frozen candidate. Final15 native

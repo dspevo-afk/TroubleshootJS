@@ -1,0 +1,1269 @@
+{
+  "status": "PASS_ROOT_RAW_CANONICAL_PRIVACY_REVIEW_READY_TO_STAGE",
+  "baseCommit": "3028ceb0e90e23b2c2ac0e35eaf493609985bffa",
+  "candidateSealSha256": "8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c",
+  "reviewedPaths": 314,
+  "acceptedPathsIncludingThisReview": 315,
+  "paths": {
+    "docs/ARCHITECTURE.md": {
+      "rawSha256": "baffd92f82b0c6ff5adcd5c9dba4348c8b6dd3459db0624267b8877590b1c3e1",
+      "indexBlobExpected": "c2a1574ef3f3a32bd0d69acad854ecbc4b0263c3"
+    },
+    "docs/CODEX_TASK_REPORT.md": {
+      "rawSha256": "1ae54b3e0684a450fe88f8d67e125a71940faf1870f39dd76bd2c86422810ce4",
+      "indexBlobExpected": "7ce08a11ac40d87fb977ea12117060a14a3a04a3"
+    },
+    "docs/ROADMAP.md": {
+      "rawSha256": "1c5555fdf898431927c7fe6ed7336ceee577deef39698b95b956aff88538942b",
+      "indexBlobExpected": "dad93cf1b6342399bf7ead27bd95fe2fbfc84cd3"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/publication.json": {
+      "rawSha256": "8a20244a5b707702209133a8be33e014a24684afbed08b5d4f0ef74385dab333",
+      "indexBlobExpected": "f72d00571c167188df12eafc1349848041a3c2cd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/.gitattributes": {
+      "rawSha256": "2ddd0d3e46c2f53d1ac3bfe1b4329176f57fca3f3ca434deb09146a56a7e85fb",
+      "indexBlobExpected": "888122f98a1dbd18117b8e2a6a98d15d4f6935fd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/RESULTS.md": {
+      "rawSha256": "b1fb73b04d61cae9dd1aca4fa6dddf8b4a5fa490f1505debf04507fe03299ce3",
+      "indexBlobExpected": "d180ffeef57795dce902f8a9f156f8b37bf5870d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/accepted-inputs.json": {
+      "rawSha256": "c38165c72621070a5f5fef7050ae9c9d55a7f435a0823a8a6a9aa7a7335a56a0",
+      "indexBlobExpected": "472b520241a8725cd2b24a84ea6323479f4624eb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/all-native-driver-cleanup.json": {
+      "rawSha256": "678125c8b5106dae9038c4334b618f71e24d71f1f99237aa18841f6273222e93",
+      "indexBlobExpected": "14cf08a0a0c035711a67676f1d1ef1ffdd181fb9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/baseline-inputs.json": {
+      "rawSha256": "2c174185dfd4b1379c8b3dfdbac86e4556c537969c1241769e928b6bfa2439db",
+      "indexBlobExpected": "8767022d963efde13f198ef57a4a1c70d9ea01a2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/baseline-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f1454914f6edbad5a846e02218c8f50f27176d613bdfb32e74b633fd468d98f6",
+      "indexBlobExpected": "265b1b8c31f41e00ffd6499f466aba6468f3507d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/baseline-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+      "indexBlobExpected": "a81b9b82b455eeb3ba5e39c0918371589c64db49"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/baseline-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "7fc46433db40636ea5832163ca82be4e5bc7f952e56669c51c5af20e70c749d8",
+      "indexBlobExpected": "d30a85816bd2bd753939e8cda4f70adef8bac8c8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/browser-api-cleanup.json": {
+      "rawSha256": "8e908978cf1ae166cbb6508d71dfb3f47601999927f7ee89bd79f2f7fa09e8b0",
+      "indexBlobExpected": "164d21576e11f063d6fdec05e38f9ddf90f3430d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/browser-observer-failure.json": {
+      "rawSha256": "182278ddec763e384486f1359f544f410e47657be8e212851ea9ee62e46f87f3",
+      "indexBlobExpected": "f9c1f1ce485182bc4a7b175d9461692d998cebb2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/browser-owner.json": {
+      "rawSha256": "5453cf7562ca70d76663d449d797f918489f7f9903facca5b388c9e16f9f7760",
+      "indexBlobExpected": "b8edfed75db3b6184c19444c3f6d3059dfb6592f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/browser-preclose-owner.json": {
+      "rawSha256": "dbdf30f24feea3fa1f7d517f9858782ec5c1132a62edbd5c57e0c63609d29d92",
+      "indexBlobExpected": "c71f71b89d099a9dcfa879fae3e7eae6b987df77"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/browser-preparation-failure.json": {
+      "rawSha256": "37fed66a7ca241b8b5ff40bb5a74c4d7e57e2ad2819aaf75d119fd029b2ebd38",
+      "indexBlobExpected": "cbea0ca036dc6f12496ea5af85a0ed998ada4e9b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/candidate-inputs.json": {
+      "rawSha256": "02403c039fa09367f4da7b65f0ea8271ef462612ad75eea81825897f99a00019",
+      "indexBlobExpected": "e9488b2d39623bcc1cb56cd6cb7e7b84bc25685e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/candidate-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/candidate-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/candidate-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/catalog-filtered-buttons.json": {
+      "rawSha256": "51fbbfafcd8d02d432886261eda8ea2e2f9293efb984c98e33cef607ab5d6a9e",
+      "indexBlobExpected": "5337ffb0e6f3f6807a0d8d0fd0d64ed61781d89c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/catalog-search-observation.json": {
+      "rawSha256": "079ea3b38100f6fb1c4add94dffc9b07421d2a2a723fda3c944f792439c8f547",
+      "indexBlobExpected": "c38d290029da5d650c77740f1f553a01eb2abad9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-scope.md": {
+      "rawSha256": "c3bdc4c212483bb8e4d5e023ccd6cd867c1d979633a12a166ebe33d46f0b21f3",
+      "indexBlobExpected": "e89e6b24a3a2c373a5438e06a1e6c085a733bd89"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-source/FreshRb30GapDiagnostic.java": {
+      "rawSha256": "72bd1369785e90615f1516d2dcc9a0be14eedaf56487b84d106c725308996b6d",
+      "indexBlobExpected": "2b63e9dc519d8e10bfb85b96e7b94105b6c5afbb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/assessment.json": {
+      "rawSha256": "bbc8cde214f8e755c612e80c27fbbb21d3c282be9ebd1236569f54a8937e966b",
+      "indexBlobExpected": "a6fbbcf4cfa2ba7aa5a79dd143e0c1fc8804e359"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/input-audit-after.txt": {
+      "rawSha256": "40917409f5c74daa4bdb35f6d80759a90b80cfbe4b29660e47e072856b3d521b",
+      "indexBlobExpected": "03b4e512a699dbda202185de9a0407a2777908bc"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/input-audit-before.txt": {
+      "rawSha256": "40917409f5c74daa4bdb35f6d80759a90b80cfbe4b29660e47e072856b3d521b",
+      "indexBlobExpected": "03b4e512a699dbda202185de9a0407a2777908bc"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/inputs.json": {
+      "rawSha256": "6760ccb146316ae35de7bf8cca93baa91ef0ad08bd735610540d188c93d65002",
+      "indexBlobExpected": "f40a9e529dd4ba1dc8f044f678aae291c5c0be83"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/native.txt": {
+      "rawSha256": "99ff9478d7cf3b7e95807fa02cc9debedc7fdb6eb892cbafd8b63a3e4ef0baf0",
+      "indexBlobExpected": "515113f86349d3706fb275a8eea2d4c99302adce"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/process-cleanup.json": {
+      "rawSha256": "07024256a821dbaac599024af5cbbcb60e2709903859ddc1c2646e77f1220134",
+      "indexBlobExpected": "f34116e06d951571f3af221aae77573df679f0fb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/process-launch.json": {
+      "rawSha256": "dc9cd165545fb75d2db63df79aff02046f73e4db69704e9eae2c003f8cd04582",
+      "indexBlobExpected": "a999c1f6ade5db0f25665da2348f3e321eff1589"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/receipt.txt": {
+      "rawSha256": "9a3971f53c8684de12a8fae8588d9d1a054f978b8873a0299f37db0b8f5638c9",
+      "indexBlobExpected": "2f753c41b0438a67772fd9fb187462e405466fbb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/clock-scope.md": {
+      "rawSha256": "c3bdc4c212483bb8e4d5e023ccd6cd867c1d979633a12a166ebe33d46f0b21f3",
+      "indexBlobExpected": "e89e6b24a3a2c373a5438e06a1e6c085a733bd89"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/clock-source/FreshRb30GapDiagnostic.java": {
+      "rawSha256": "72bd1369785e90615f1516d2dcc9a0be14eedaf56487b84d106c725308996b6d",
+      "indexBlobExpected": "2b63e9dc519d8e10bfb85b96e7b94105b6c5afbb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/clock_exit.ps1": {
+      "rawSha256": "ba1ca9c57648b6567f7e2ae24bd80d519d6ddb84e02daa94a2ceeee64bb1ff82",
+      "indexBlobExpected": "7a5be951b27b81b0c31eac032b29f45ec8f769f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/clock_inputs.py": {
+      "rawSha256": "efa852fd4b496bc99b9b48100519fa42d0971756613f8926a0b3970512c1d031",
+      "indexBlobExpected": "027e8617fdeccf0dd5d3415fa6da5bde801bedc5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/qualify_clock.py": {
+      "rawSha256": "61f9ed402ecf03bdeecbefae9e4e9047353048a3a4e6230050d13ccb3311a1fc",
+      "indexBlobExpected": "53c04d9ecb38463f11e91e67fa038fed8abb963d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/source/run_clock.ps1": {
+      "rawSha256": "137d59f6538f2d5dc986bba3db860e97fc5ef6cfc47c073f675d052dca51406f",
+      "indexBlobExpected": "8eb739a72a0493b3460fab779f3ff5efccc1df01"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock-witness/timing.json": {
+      "rawSha256": "8cf064406b1a7af1ebd26e453bf8c1e6815b9765c1b2f2c398dd83af79b313ab",
+      "indexBlobExpected": "b0303dd81b4631cfc3296e548c4f8a76446d6a3a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock_exit.ps1": {
+      "rawSha256": "ba1ca9c57648b6567f7e2ae24bd80d519d6ddb84e02daa94a2ceeee64bb1ff82",
+      "indexBlobExpected": "7a5be951b27b81b0c31eac032b29f45ec8f769f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/clock_inputs.py": {
+      "rawSha256": "efa852fd4b496bc99b9b48100519fa42d0971756613f8926a0b3970512c1d031",
+      "indexBlobExpected": "027e8617fdeccf0dd5d3415fa6da5bde801bedc5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/candidate-inputs.json": {
+      "rawSha256": "80732647ff61aefc8c47c782f62b0678fa4381bba3fff69044e6662254558ab6",
+      "indexBlobExpected": "10645b97ed10548303ecf078873d2d09a36d9398"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/candidate-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "3ee8bf76d08f5a56699e8c7688b59c430655b26be52049ad28398210a655835e",
+      "indexBlobExpected": "df37447e50f3b7f6164abd7d8ab84fcdf403c0e2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts-process-cleanup.json": {
+      "rawSha256": "1fa9232307a878567806d5f86d6aeffc6e3b803c7dbb00dbe55a77ed96166a6f",
+      "indexBlobExpected": "c9c23d17f5b8edfcbd8a19a277683b681eb5cc2f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts-process-launch.json": {
+      "rawSha256": "05d95f5f8f4c28f6bf67948c06d0f61f2028512a7e9b90a41b0e3b02449bc5ef",
+      "indexBlobExpected": "05b2937393542c8cffd3e3d864f12af1eaff9870"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts-timing.json": {
+      "rawSha256": "3d554a44f3db195ad8c7ca75cd4d23eaf16f60b89ec51a4b21ecce682c1b5c3f",
+      "indexBlobExpected": "8122ed9ee456c1c19205f67fef9a4a8aae8bb68c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-attempt1/contracts.txt": {
+      "rawSha256": "07927a961667011a1a38a3da9397e747a1427115a2ccd962453f8b0249791e9c",
+      "indexBlobExpected": "5b593bd02b0e8b14ddceb901973b26ad517ba30b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-process-cleanup.json": {
+      "rawSha256": "7cf99c77455c90df5c5233759121d2b2875bb795bae015b18e89a4e4666d0cfd",
+      "indexBlobExpected": "608360a4c205b7fb5726444a460b4d40090e8c32"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-process-launch.json": {
+      "rawSha256": "b1ee19c1ec1b4b9232b090acf64c74eaccc609ef32d91bd224db8eff0bbdbb19",
+      "indexBlobExpected": "ddd4a0593cfbf0aeee7ce58befc260d97f5ebe1d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts-timing.json": {
+      "rawSha256": "34b66e2d86094ab3c70958f57a90be9e369cb8777e3a431dfc72bd73177cf687",
+      "indexBlobExpected": "57af830675a08e7e7c586a82c4fac0b3de6d3f36"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/contracts.txt": {
+      "rawSha256": "b738d58c209000a7a8f05b9e0cd8689194c20707cfad8ce983b4b5c628f05803",
+      "indexBlobExpected": "d09ed2e3b17bd806556bb19ee71ce07b23a75142"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-adapter-diff.txt": {
+      "rawSha256": "9e87873f100fe100071d8854e864913a6259755005ee42845734ffbecc71c9bd",
+      "indexBlobExpected": "66b9462cd978c01c3f041170009b50c91ac8c390"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-adapter-manifest.json": {
+      "rawSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexBlobExpected": "3d5680c0599fe69ed36e4a528d2e6b111b63f090"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/assessment.json": {
+      "rawSha256": "170c14053cfdb3aaba25fd3c20705c34faa5e694211c9b5994f5ca84d7083576",
+      "indexBlobExpected": "aea4678c376a36f979d1580eb35947a630eff556"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/input-audit-after.txt": {
+      "rawSha256": "5c42984de48a1f6b10ccc521eff1419b868422e8129a2ccb060b6fecccf4e4f7",
+      "indexBlobExpected": "83cd5b4273e4bb58db7f8ed45da9bda2a7e6d424"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/input-audit-before.txt": {
+      "rawSha256": "5c42984de48a1f6b10ccc521eff1419b868422e8129a2ccb060b6fecccf4e4f7",
+      "indexBlobExpected": "83cd5b4273e4bb58db7f8ed45da9bda2a7e6d424"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/inputs.json": {
+      "rawSha256": "97f02577953d57c7bb98fd4264a70e622dceaac4e4e5107f2ab52d48c9516ea6",
+      "indexBlobExpected": "c9696f705eb8e6f1837dd192ce216630d0f74d7a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/invalid-seed-canary.json": {
+      "rawSha256": "a1fa0cbed3f84947324b5b1d796f29e3fd3af0f4f94c38d147239ad8d773fc3c",
+      "indexBlobExpected": "79a42e363a92a53564eae6054c23c78bdf9ae76f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/native.txt": {
+      "rawSha256": "bc63459ca755b084daba4a9a0603543a68dd79c858e948f977b8c48eb7661263",
+      "indexBlobExpected": "8995d66fdb0bfc0bd0448aad300c6ba247c185e3"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/process-cleanup.json": {
+      "rawSha256": "201d721761e03757aeac5c609a5d671fe3ad10ad6791094e7a5415f11963976f",
+      "indexBlobExpected": "525de1747f1602ed3601a32405343f4c74141a02"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/process-launch.json": {
+      "rawSha256": "d101c020a9926a001e016845a624db7dac12070a93ee71a10c5edb9c173d1d17",
+      "indexBlobExpected": "20a19cb23746b3f463e0a615104b1d5b4389ffd3"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/receipt.txt": {
+      "rawSha256": "0f7c8540f69332388959d5f003fdf8feb9c2964e0bdff201f100bdd697f1aea2",
+      "indexBlobExpected": "ed97510a95dbb82506e67b59d4aea26462177142"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/diagnostic-adapter-diff.txt": {
+      "rawSha256": "9e87873f100fe100071d8854e864913a6259755005ee42845734ffbecc71c9bd",
+      "indexBlobExpected": "66b9462cd978c01c3f041170009b50c91ac8c390"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/diagnostic-adapter-manifest.json": {
+      "rawSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexBlobExpected": "3d5680c0599fe69ed36e4a528d2e6b111b63f090"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/diagnostic-scope.md": {
+      "rawSha256": "8249216adf3b35cafaf9fd0888996d45d5579bf712c8e898036a508f0fefd453",
+      "indexBlobExpected": "620c70dda75e5e94036120d8ab41895b6f48a1d8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/diagnostic-source/FreshRb30GapDiagnostic.java": {
+      "rawSha256": "d146738b3524edc5b8b5da166b84ca6b221614155fc2a8900124517f5f7102dd",
+      "indexBlobExpected": "75cb3d15076c54bb19bbc9708f89bc8a2af15c8b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/diagnostic_inputs.py": {
+      "rawSha256": "9ea41eb2e8b7aa1ed40b8c5b05c13d8629ff90ae0ac8562d055468b2645c208c",
+      "indexBlobExpected": "907d64c513bf3db15eade4d040b03d40d7a9a13d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/integration-review.json": {
+      "rawSha256": "ef20ec8e438fc0a42defb5ffc377d059417e427a6f6ffb21a3c3c3d0494d6ee5",
+      "indexBlobExpected": "08ac0d8206d7f16e0d19bd018283cb6d04bb53f2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/make_export_adapter.py": {
+      "rawSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "indexBlobExpected": "b357d379af22ca1df3d5d85810a5e8ea36e65183"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/qualify_diagnostic.py": {
+      "rawSha256": "de7837350a9dfcb84b154a8e41d11b32150a535175a1e59c4a6ad255a2703d72",
+      "indexBlobExpected": "df4312bb1c107e03e149b0329396422935cb8a5a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/record_diagnostic_exit.ps1": {
+      "rawSha256": "c67a3387d348596c5b3a13b8857a3aedcf7eb80975f91b66e8d51520ac879255",
+      "indexBlobExpected": "38a4fae64f0fe33e2796f1c728462e3f13122e33"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/source/run_diagnostic.ps1": {
+      "rawSha256": "67e555ae72c41bf47f34e38b3b6f4c3e720c2bee1fa7ead72a8cd30184a41cab",
+      "indexBlobExpected": "31a9a78504de31c1d88c9daf63e0a434beaa9b6d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-attempt1/timing.json": {
+      "rawSha256": "f27b295facfb036d3227fbcd3d6fffd99a70efd9f0698d1c6099ad193be5a8cf",
+      "indexBlobExpected": "c999c6b83007d3942beb7cbcd105355de54da05c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-adapter-diff.txt": {
+      "rawSha256": "54e2e893509e2f4484feeb2e194d914e5b11b4a26045a745c929271643d32212",
+      "indexBlobExpected": "f5fae89245525d15d7d25f7f67c50ef9bf54bc4b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-adapter-manifest.json": {
+      "rawSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexBlobExpected": "3d5680c0599fe69ed36e4a528d2e6b111b63f090"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/assessment.json": {
+      "rawSha256": "593ac3c33b86634d94d415a65094de406d0da9037d347ee694132ea38e9f2259",
+      "indexBlobExpected": "0e4539b21aafbedb0ceeff3362a1e8847702a282"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/input-audit-after.txt": {
+      "rawSha256": "5c42984de48a1f6b10ccc521eff1419b868422e8129a2ccb060b6fecccf4e4f7",
+      "indexBlobExpected": "83cd5b4273e4bb58db7f8ed45da9bda2a7e6d424"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/input-audit-before.txt": {
+      "rawSha256": "5c42984de48a1f6b10ccc521eff1419b868422e8129a2ccb060b6fecccf4e4f7",
+      "indexBlobExpected": "83cd5b4273e4bb58db7f8ed45da9bda2a7e6d424"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/inputs.json": {
+      "rawSha256": "2cb55a31fe3afe03718e993bce31503aed05ec7c21cbc93228a1105ec7b988ac",
+      "indexBlobExpected": "7b179d0c2645c5ad76f5c48da065c2ca661968bf"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/invalid-seed-canary.json": {
+      "rawSha256": "b9ee4b837f2bb134cc03afbc4e4c6d5896fd8c0188e47bc33ac775e47772cfaa",
+      "indexBlobExpected": "8a819a635da697f819fc45b280e75cba2579fc1e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/native.txt": {
+      "rawSha256": "845c17a3189f2edc31b9e364582d11c5477e72193ee7454bd7b26f8023dd8562",
+      "indexBlobExpected": "448b08d4bf0ef7ce07f60acb18fcfe68f5851ba3"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/process-cleanup.json": {
+      "rawSha256": "a9f8bc6871acf4051caf977ed873e5dc5164d9a1921ab5e9d681e7e1adf1e9c8",
+      "indexBlobExpected": "f8798039e6d13785d837f2d6d5b16f372b36fe81"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/process-launch.json": {
+      "rawSha256": "d09bc20641cfa1cad943472d1c45af248f9e62cd0f1cba637770a9aba375a684",
+      "indexBlobExpected": "7a485b0847c4636b3ab4b7e3bacf37f39dfa513b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/receipt.txt": {
+      "rawSha256": "2d6c2d3ec859d75f190023bb943235455d2e4404e62f42a73fdc17505450cd04",
+      "indexBlobExpected": "2073525246ef52460d0ea4e69fd853325d657000"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/diagnostic-final-adapter-diff.txt": {
+      "rawSha256": "54e2e893509e2f4484feeb2e194d914e5b11b4a26045a745c929271643d32212",
+      "indexBlobExpected": "f5fae89245525d15d7d25f7f67c50ef9bf54bc4b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/diagnostic-final-adapter-manifest.json": {
+      "rawSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexBlobExpected": "3d5680c0599fe69ed36e4a528d2e6b111b63f090"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/diagnostic-scope-r4.md": {
+      "rawSha256": "827a647d0b1257bd9e5f67301652f50ba00d05b87a06c9c896d6e2e3538d2718",
+      "indexBlobExpected": "41f6cda46c6ee7d9bdab9c8bfb1953f56b7bb803"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/diagnostic-source/FreshRb30GapDiagnostic.java": {
+      "rawSha256": "d146738b3524edc5b8b5da166b84ca6b221614155fc2a8900124517f5f7102dd",
+      "indexBlobExpected": "75cb3d15076c54bb19bbc9708f89bc8a2af15c8b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/diagnostic_inputs_r4.py": {
+      "rawSha256": "0b556e4dab6590c8ba6973c74d7a71e6152efe3849659cb07b6288c0f1743e2b",
+      "indexBlobExpected": "af2c6ea93c60c6d661dc9a82328dce411551e236"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/make_export_adapter.py": {
+      "rawSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "indexBlobExpected": "b357d379af22ca1df3d5d85810a5e8ea36e65183"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/qualify_diagnostic_r4.py": {
+      "rawSha256": "12e851ec74dc35d4e1df8ed07afeb0f2684177f2ea46abdf333943ce8f41a60c",
+      "indexBlobExpected": "51c6f18168d043ccceafbae13392cd19880ceb74"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/record_diagnostic_exit_r4.ps1": {
+      "rawSha256": "eea87db3777c5df0aed65877b8d8330a4260448bfd24210f77794a402da123f1",
+      "indexBlobExpected": "b690b1818fec78bade5b8af53999ca0f32e20e95"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/root-final-source-review-r4.json": {
+      "rawSha256": "5fd9ae840ee16e839c363870177fe3ed3e9086458e011869b6bd9300b76d50e4",
+      "indexBlobExpected": "b8e1af76715f7041fd8b251039f31378d27c33a8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/source/run_diagnostic_r4.ps1": {
+      "rawSha256": "3dbf93a1ca0636b208916d0595504a7eeaf47dc88759785a646de412148fe1be",
+      "indexBlobExpected": "3de8998c17a41e4cd431b0118113aa2f20c4039d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-final-r4/timing.json": {
+      "rawSha256": "cf5f351d4278a4066ae5288dc859152d49c99ba3547bf00f362a9c848313befa",
+      "indexBlobExpected": "7a558d9c26dd1d81879b600a18da16da1df13b5f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-scope-r4.md": {
+      "rawSha256": "827a647d0b1257bd9e5f67301652f50ba00d05b87a06c9c896d6e2e3538d2718",
+      "indexBlobExpected": "41f6cda46c6ee7d9bdab9c8bfb1953f56b7bb803"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-scope.md": {
+      "rawSha256": "8249216adf3b35cafaf9fd0888996d45d5579bf712c8e898036a508f0fefd453",
+      "indexBlobExpected": "620c70dda75e5e94036120d8ab41895b6f48a1d8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-source-diff.txt": {
+      "rawSha256": "c4aa0598cc6bac3553c8bbd4674805080aa9ac46fe31902e217dfd7fa5671ff3",
+      "indexBlobExpected": "11f79f08c636a693f3143291a9223e083cdc1bf1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic-source/FreshRb30GapDiagnostic.java": {
+      "rawSha256": "d146738b3524edc5b8b5da166b84ca6b221614155fc2a8900124517f5f7102dd",
+      "indexBlobExpected": "75cb3d15076c54bb19bbc9708f89bc8a2af15c8b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic_inputs.py": {
+      "rawSha256": "9ea41eb2e8b7aa1ed40b8c5b05c13d8629ff90ae0ac8562d055468b2645c208c",
+      "indexBlobExpected": "907d64c513bf3db15eade4d040b03d40d7a9a13d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/diagnostic_inputs_r4.py": {
+      "rawSha256": "0b556e4dab6590c8ba6973c74d7a71e6152efe3849659cb07b6288c0f1743e2b",
+      "indexBlobExpected": "af2c6ea93c60c6d661dc9a82328dce411551e236"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-inputs.json": {
+      "rawSha256": "776132c71abb42229dbac7000df9861f6dc5b2b05ad6051999bc37883c2428ad",
+      "indexBlobExpected": "a453789d52a46a5027d49e7975673e438f9c3866"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851",
+      "indexBlobExpected": "1df2cd0020444f67ae7a51872f40e86d5798f24c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/baseline-source/tests/contracts/Q30NormalCorpusContractTest.java": {
+      "rawSha256": "0cb8206403488bf23d1d34473a19d41cca936c3ca350a999b8bd10141b76f509",
+      "indexBlobExpected": "9327522556203ea23a0f9d5fd8b36ec35e6af2e3"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-assessment.json": {
+      "rawSha256": "daf7525bcd6f3097f5bee56a55ca559957e6e19dc524f6b6f15fcf32d4e0a3bd",
+      "indexBlobExpected": "07c383fff9ef38398582f34b141be70b339f9bf8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-process-cleanup.json": {
+      "rawSha256": "d20621e4838bc55debc09ae3142b5e5fc518ff59e09620ff86d48b5d7f86a03a",
+      "indexBlobExpected": "13264775fd66611e9ecfa90def34bd04db1f6df2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-process-launch.json": {
+      "rawSha256": "e9931f2cb17ec92d816e82e8dd8c491e1288d519bc309e43c0e736eae658ec9d",
+      "indexBlobExpected": "a4f5879c8ffce0f00566e46b4e9d234504e604ff"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build-timing.json": {
+      "rawSha256": "5fe6f31fcb605ca301e3e4a7cb800faaf49bb44e636c593871ca3c1192e83e07",
+      "indexBlobExpected": "4d218342a8811020dba3b69225141090a98f9bc5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/build.txt": {
+      "rawSha256": "0455760a8527003db0aacd351428e5eb9c4ee80fa28b8cfedd82b57c61e397bf",
+      "indexBlobExpected": "ff5f52fb87b1615c6f533c32a9bcbe2fc0f0e9bf"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-inputs.json": {
+      "rawSha256": "8e40473961d518168796b1f7d44757045a08403746b4409d267f16f36cd9d83c",
+      "indexBlobExpected": "b80fc50d8ae60f669f33062488975507544c0fde"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851",
+      "indexBlobExpected": "1df2cd0020444f67ae7a51872f40e86d5798f24c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/candidate-source/tests/contracts/Q30NormalCorpusContractTest.java": {
+      "rawSha256": "eaf85bbc593261744a8238a9f57598dc486b5802af03a849fb312b366b0a5337",
+      "indexBlobExpected": "7ca7b40b0b468dbf47ab4920b8da7c3fbc04ac84"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-assessment.json": {
+      "rawSha256": "02ef0126771e2132e45bdb97559444f2caf4e350079d12ac1304c09eac0be31a",
+      "indexBlobExpected": "a734c8cd1915ca4fd76538cfaa591b0357584f22"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-comparison.json": {
+      "rawSha256": "c1838ccef821a3624bc237641c02a057ce52fbb96c29dc6165792d093d39e9cd",
+      "indexBlobExpected": "7fad70fc90073f07c74ce34dee6b54ae4660a0b6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-process-cleanup.json": {
+      "rawSha256": "df404e4b9c26932b8cfc7924e78e16d50749cc8da0e5e37773cea76b911c8607",
+      "indexBlobExpected": "c82783f9579a2cf5d15a3950307822cbc78cdcf7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-process-launch.json": {
+      "rawSha256": "a444eb762a592deb32f7d033275dc3f7cf7e10bc9e77f4e08aae168cca6870b7",
+      "indexBlobExpected": "3c0dfaabc6c8cd9438fab511bdc9ee01c025d68e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-receipt.txt": {
+      "rawSha256": "e7bf2da7239d5d534b273adc399d60b2ba99a306863c1b773264202d81576578",
+      "indexBlobExpected": "c928b8db94804275b35921c111b57f9d1a3927de"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census-timing.json": {
+      "rawSha256": "94ae8b432ace7a084fa957dbb3bb6e6493ec375dc8951cc171ad2c5de1a77f24",
+      "indexBlobExpected": "24b3212dce9404ad84b8a39865d7a520e5a0ce2c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/census.txt": {
+      "rawSha256": "d6236c4c107f2e54a3fd88c6509de47adad2cec4b4e560c115fbe7b6839de3f3",
+      "indexBlobExpected": "b14b967348dcb4cda1f19622898a550a14379474"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-assessment.json": {
+      "rawSha256": "f245ec560cf4876cfbf945cab40922958e9aa69d4b9b51dfb8ec4217f7bc1cb2",
+      "indexBlobExpected": "a11831cd23c9c4c0baca03767dc8ab956007d487"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-process-cleanup.json": {
+      "rawSha256": "e36fad949b0be9df59558aa9548aa7371fbd6ec2ba8f25e9c051a4a47252383e",
+      "indexBlobExpected": "df8009e72e713178f577f911acd1047964208519"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-process-launch.json": {
+      "rawSha256": "9ad203423f03f2e0546084eba7ebe1229f146dff667dd3c862ab77396ec9bbf8",
+      "indexBlobExpected": "9dfc3a21e9e0a1701f82aaaf8574c458b01f132a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-receipt.txt": {
+      "rawSha256": "6afe2b201d2da866a580c46bdd9930cd58a9a783f81beb34924282ece121db97",
+      "indexBlobExpected": "467d4acbfacf1b492f9da71aa39ae7fa70704896"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts-timing.json": {
+      "rawSha256": "33779b9b777451e02432e39efab5664c813063cb9137ada0fedfd280cf05d364",
+      "indexBlobExpected": "5922a042acb6641f845020978e59104dfd8380c8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/contracts.txt": {
+      "rawSha256": "d93d09c6e7b02a58ce0db7d507a039d8f8dba9005eb40b0ad2323c9dd9efae3e",
+      "indexBlobExpected": "3f8d42119cab03254e8e84590b0b0aca8d552425"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/inputs.py": {
+      "rawSha256": "b4667e5c6acd68bd242670ac45143d611b393f81dffae41b086ae0e32ce9290a",
+      "indexBlobExpected": "15a434d7b2ea63814c98dcefbab829005e25cc45"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/qualify.py": {
+      "rawSha256": "0ab1d2f0afb93b834bedf4aadec0bdbc73f463a5966e824d986bfa7a0f8068fb",
+      "indexBlobExpected": "3e6fe51dae3c3d6bf305d769f6d30fccf18d8870"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/record_exit.ps1": {
+      "rawSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexBlobExpected": "faa4f10f581e59e3dd9040aab3f7624965286dfd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/run_phase.ps1": {
+      "rawSha256": "605f65557a34735bc17e31cd0e8925a522750abc36795731dc73ac43b0b4d493",
+      "indexBlobExpected": "edbf24a818ad2f0d12b8d635da56e1414f72bd91"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/scope.md": {
+      "rawSha256": "d124b68ade01e1dc963a88e6bbf44806dc7915a90ee46840455087195eaaba45",
+      "indexBlobExpected": "d89fb8a1f26bd14dff77e3f7b2e3a68ad3eca345"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/suites.json": {
+      "rawSha256": "254e3e7c9a9e9b282cac026881d0fa27e5ecc6449569dbdc485471958f8e567b",
+      "indexBlobExpected": "602429def4274a9ccc7d8936ba3bdba221ffc3aa"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-assessment.json": {
+      "rawSha256": "fdfd602d64e831b112e46783ca3a8d7e2f0d21df90f78f7c1298aa7ab7d945df",
+      "indexBlobExpected": "06ef5bb65cb1b6353de6958f25d5867d9f1ef0ba"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-process-cleanup.json": {
+      "rawSha256": "c2225a5715f930ad6a5677e6d188c8acde1df84ab76133851c1cb30e87cb6675",
+      "indexBlobExpected": "c2ac6e30faefed7310b3b8f9a5bb75de8800752c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-process-launch.json": {
+      "rawSha256": "49031f6106ad5058183a2c7d5930bdd4150ff75a8af1acc4a503f8cc187696e5",
+      "indexBlobExpected": "22d5bbc94c670afac2550b1c17e812995bf97a3c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-receipt.txt": {
+      "rawSha256": "d82c380bd88e6c6bcbf40ff3c4cc22b0d6f34004162dcbff0499b5393fb8fbf7",
+      "indexBlobExpected": "ec5b6feb2708530e1631b2abefc0c67e1dc1cda8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target-timing.json": {
+      "rawSha256": "ba389cf02636b4a017c78ff1888c20a41733d7024df62d062c01db6d2b546ea4",
+      "indexBlobExpected": "05f5310928b1513cadaa2ce2c694c30a3cf8fc1b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-r2/target.txt": {
+      "rawSha256": "1f08eac6e9b3a8b7578f1082a31284171284bd079660d4452f2cd6b537ba9b32",
+      "indexBlobExpected": "d4349fb580024923cedf3aff609f23729f73fb37"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/final-review-attempt1.json": {
+      "rawSha256": "d634b865f488499a7c0ac63fece39f6b1fb1e687676917acbe6893084692986f",
+      "indexBlobExpected": "a8e1b28704ac36039f5c6ba91a8d5102a7f35000"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/gitattributes-before-staging-fix.txt": {
+      "rawSha256": "984488e2653a3043c0569d5a5bbbce3eb627bc9bd847e1c4a41b03d3a10f4bd5",
+      "indexBlobExpected": "60d8d8bbf5dc3d38fc3c7a80941effa0b04be255"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/inputs.py": {
+      "rawSha256": "54a0f63711c05828472465b69461b034aa09edd7a97548d4c83a0826c57006f2",
+      "indexBlobExpected": "96a2320c80c696fb07e6cc4a3f36d004e294e13c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/integration-review.json": {
+      "rawSha256": "ef20ec8e438fc0a42defb5ffc377d059417e427a6f6ffb21a3c3c3d0494d6ee5",
+      "indexBlobExpected": "08ac0d8206d7f16e0d19bd018283cb6d04bb53f2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/launch_player.ps1": {
+      "rawSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "indexBlobExpected": "edb8ee2fec8757c4ba57b31c6221796c0fcf70b0"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-all-off-body.txt": {
+      "rawSha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "indexBlobExpected": "7894fd65029669acff09c40dbe80dbd72098eb04"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-customer-passed-body.txt": {
+      "rawSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "indexBlobExpected": "183e137a0794e528d9ba356894ea7184addfb709"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-final-off-body.txt": {
+      "rawSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "indexBlobExpected": "3b1dadf24faee6f1e6e3a3d72c601b06530738e2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-first-ticket-body.txt": {
+      "rawSha256": "9964a0314fc44b3a55dbcbc97ac025253654630fcbf0d4f30f42b6467de1c37e",
+      "indexBlobExpected": "f934ac81e315caaa61937095c463461ddf1c0b9f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-isolated-ol.jpg": {
+      "rawSha256": "f86d75f13b2db246c6e5cc3ce83522b82ecd0dafeef8be02458110060b6a209b",
+      "indexBlobExpected": "028b7f17c26e5818f0bd5fc7dd95e55c11e17391"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-isolated-original-ohm-body.txt": {
+      "rawSha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "indexBlobExpected": "11151cb43030b923168e9dd974677878e7e3efe9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-fail-body.txt": {
+      "rawSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexBlobExpected": "2621e52d9eb9b2062c7e676b03573acc4884fb3f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-fault.jpg": {
+      "rawSha256": "2deab911595019b2176761e6411156cd0fd3423c83711e79c50f962acc50c1fd",
+      "indexBlobExpected": "43d4ad5d62e2abbbd5c92d1c31a573531221620e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-installed-off-body.txt": {
+      "rawSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "indexBlobExpected": "20c0207a179a388906789da7af2ace79b3bf8e79"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-lifted-off-body.txt": {
+      "rawSha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "indexBlobExpected": "41051a92ededc5808707c76ce83dd7e2d3bec073"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-removed-body.txt": {
+      "rawSha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "indexBlobExpected": "fb0f60aa8d6c2b63939b65012c062d517a4d3bd3"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-original-tray-body.txt": {
+      "rawSha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "indexBlobExpected": "4adceceec94131b812fef2a2fe35b17aa9a741df"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-public-identity.json": {
+      "rawSha256": "9533362da00eb0cfd3b37347ba36ef328266da270c2b37e727decc2d97293be3",
+      "indexBlobExpected": "17cd0e00f909753a5795a15f2fd95bd63331598f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-r1-selected-body.txt": {
+      "rawSha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "indexBlobExpected": "b596b8f89f1afd18a09e9626ad5a7ba3adf30bee"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-repaired-board-body.txt": {
+      "rawSha256": "3f4deca1a5fc0bfcd6cc412c27ec2106f2a3594599385b3221aa69ee83ba2434",
+      "indexBlobExpected": "110b988641b5fdb566ab1aec7dfe9b67ed51d8bd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-repaired.jpg": {
+      "rawSha256": "1cb991d9579d3ab3c5febe22886a816f300ef31ae5910ec1d93259bbd18737a7",
+      "indexBlobExpected": "537683accff9d984f3f27c3daf94197e7aa34748"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-replacement-330-ohm-body.txt": {
+      "rawSha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "indexBlobExpected": "c5e01c3077a2d930975aa3f387fa1142a42d4ca5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-replacement-install-options-body.txt": {
+      "rawSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "indexBlobExpected": "dbefc11c9d84fa6ad74112067ba9efeb980539ba"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-replacement-installed-body.txt": {
+      "rawSha256": "f63ede8e168f8cb3c52f92a9e3785ff25bce838e5432c68df8528e7095b741a4",
+      "indexBlobExpected": "d35fc765be1786eb843d2fad3dce36b003350df6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-replacement-tray-body.txt": {
+      "rawSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "indexBlobExpected": "6b527f0e63a2d4b0eb8cbe49f366c75882689003"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-shop-body.txt": {
+      "rawSha256": "99a18f3e6c205fc6d0b0fde595e801b82037d3d2481d6d673e29bddc4bb66a82",
+      "indexBlobExpected": "800811c8e8e8f21bf3e025e1872b1875c09b7b4b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-shop-filtered-body.txt": {
+      "rawSha256": "cf8e4c60692bb64cf3b5aef3e85cdceced67b25ffa839b69decb92d4b91b2ad1",
+      "indexBlobExpected": "0bde194f0cdaeb6e570d81e00bd730ffe1380cba"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/led-shop-replacement-added-body.txt": {
+      "rawSha256": "d90d7c50fcbe236e643b5c6102b10ac65fa40a302eb53ea5d3597b42ceae0b26",
+      "indexBlobExpected": "e2a774388fe8f4570666368c2612b245dcf44593"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/log-path-projection.json": {
+      "rawSha256": "b2fe95f8cba6e6e6482d98bfd796167207430b15a2a245d3d4ea5a09bcf36848",
+      "indexBlobExpected": "e8a91ba673cc3a16c848506953a7df5d622fafd1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/make_export_adapter.py": {
+      "rawSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "indexBlobExpected": "b357d379af22ca1df3d5d85810a5e8ea36e65183"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-detail.jpg": {
+      "rawSha256": "46cf0b9a91d2ba2858c26818610a86a291ade417030364312d27093e759be650",
+      "indexBlobExpected": "f62aa403fdd562597e02c2993da4e1f43a7aa4f8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-disconnected-supplies.json": {
+      "rawSha256": "8b1065c71fc567dce0fb02910bef2a090e8d71e4ccc4aad458f909b2d76d1dca",
+      "indexBlobExpected": "0e9ad57700fd73ccca59775a44cfdaeab66998f5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-final-off-body.txt": {
+      "rawSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "indexBlobExpected": "08c52f1c7179cef46e8d0051a7965c4f6d5f4830"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-first-pending-body.txt": {
+      "rawSha256": "3430ccf470eeac307f7acd8c411d8377ead9bca62193ec7204bbfea5496b9704",
+      "indexBlobExpected": "cf29f35f823d2c228856c42c118497a44a7d0bc2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-first-ticket-body.txt": {
+      "rawSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "indexBlobExpected": "e49d0538a333682e509741ba4c997d0e33c1e1db"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-fitted.jpg": {
+      "rawSha256": "d5b340bbb87d48b1d4647f8d5717025692e0650cd5f1052ba86b9790c4e57f3f",
+      "indexBlobExpected": "27def92952b9e0f4947e401388b4f2cf94c98da7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-original-fail-body.txt": {
+      "rawSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexBlobExpected": "2621e52d9eb9b2062c7e676b03573acc4884fb3f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-public-identity.json": {
+      "rawSha256": "c93074dad0c3c7659e7d356aa38d0b93997e0b0f2031b3c4d867ea48ba399b1b",
+      "indexBlobExpected": "ce3e078dd612dba473d9d7eeba3130502a161f63"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-replay-menu-body.txt": {
+      "rawSha256": "2b801fd4b89d78ff006793b8f0e93f2cc57e2f0f266144cdfa165501699a1095",
+      "indexBlobExpected": "44ceb28f3b1d2cb2505a7e6a9d0f68a807e895eb"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/multirail-supplies-body.txt": {
+      "rawSha256": "9885347c5d932ce2d43a2c37ea312239762ffb80f4c98e8ad068c0f028446ca0",
+      "indexBlobExpected": "9c2c2af37bef733b5862c8b97516308bcdc65223"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/observe_player_host.ps1": {
+      "rawSha256": "fedac9a3485ac70371688c738c339f6facb1aea3a321205f3f42890d713038b6",
+      "indexBlobExpected": "72d6ea73804c649b4f0c903d735709d1c6a19658"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/baseline-inputs.json": {
+      "rawSha256": "6215dd440ebd8b0239cfd3a8a7a6f7cdcc1b9e4b52382c153be232f29d6de2e6",
+      "indexBlobExpected": "26e552706b8123afc7ef5f4072bdd8698dcf1df4"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/baseline-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/baseline-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/baseline-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "997da57af57d86ab19f61fb1657522db282ee4b2a0903a437499c80b798f1ddb",
+      "indexBlobExpected": "3d8aa6bea0cc7ae17822d990c6414039b32f323e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/baseline-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/candidate-inputs.json": {
+      "rawSha256": "ab40b8eb7d1f0b596330ba0fea3129dc93c1a51fe5d874fa41d9b55d37c6c9ef",
+      "indexBlobExpected": "37e422a050aaa3b444a3bde792b7f0d3ad985ab9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/candidate-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "0a1708b80f80d532f9e196bcce724f9da61650400321702acf922f9e4beb6b53",
+      "indexBlobExpected": "105ca9abe9db0e18fe8d6a8ad430a993056ba4ec"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/candidate-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts-process-cleanup.json": {
+      "rawSha256": "7f44e2b0facb2ff7ca601b7f33b8eda3fa12da69954b0199a2fff5c4a28ea60c",
+      "indexBlobExpected": "a373608f79bce21ff2a26719dd445ece34f458a6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts-process-launch.json": {
+      "rawSha256": "feaef7e2cdb7099edf86285627cc2c39dfa56e3639c5e6056d6f0f8a11389b89",
+      "indexBlobExpected": "05858968005649a63e7ab3254d0d1cbd049267b1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts-timing.json": {
+      "rawSha256": "6996301ecbd9c7ef9765bf1394097b8db315179c4f6232859be0277b2efec10d",
+      "indexBlobExpected": "03b2c3128b5c0bfc0e600331f358f85d886f3786"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/contracts.txt": {
+      "rawSha256": "cc7132e764e3f041670a1180d14480ba13db4f4e296b7fc437da4df0940f77e8",
+      "indexBlobExpected": "ee1e46e8d75c1d9760b8a0811072b2776a41635d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/inputs.py": {
+      "rawSha256": "b3119e08fad6514165268c417878df3c874255511c44c0d6bc8b919b62c27c23",
+      "indexBlobExpected": "0fca4509583374b20a604ce6bcd5ccae66224288"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/qualify.py": {
+      "rawSha256": "eb4f1a8b84cafde287669c9caeee35cf57efedb8261f0972121fcb78836ee9c2",
+      "indexBlobExpected": "155956ce15508d1a62f9153c371fce72bce89fe1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/record_exit.ps1": {
+      "rawSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexBlobExpected": "faa4f10f581e59e3dd9040aab3f7624965286dfd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/run_phase.ps1": {
+      "rawSha256": "605f65557a34735bc17e31cd0e8925a522750abc36795731dc73ac43b0b4d493",
+      "indexBlobExpected": "edbf24a818ad2f0d12b8d635da56e1414f72bd91"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/scope.md": {
+      "rawSha256": "525e67012b6c66c6e16fa7a87d2f70065b95fc3b803b15752302e198e4eaa1f1",
+      "indexBlobExpected": "e120fd6693f8077c65b1bcc15080d58e905d1c35"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r2-attempt1/suites.json": {
+      "rawSha256": "254e3e7c9a9e9b282cac026881d0fa27e5ecc6449569dbdc485471958f8e567b",
+      "indexBlobExpected": "602429def4274a9ccc7d8936ba3bdba221ffc3aa"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/baseline-inputs.json": {
+      "rawSha256": "319f95db837ae92d7f2b270b60f8bc73affa896686bcef9a3d4a9a845e9b96d0",
+      "indexBlobExpected": "f971896b34bc7278ed19b041459bf6af1e6f2ac6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/baseline-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/baseline-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/baseline-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "0a1708b80f80d532f9e196bcce724f9da61650400321702acf922f9e4beb6b53",
+      "indexBlobExpected": "105ca9abe9db0e18fe8d6a8ad430a993056ba4ec"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/baseline-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/candidate-inputs.json": {
+      "rawSha256": "59621fa1b158473bb294c12228efcc06d5fd744b1ec1c37a5e7e0d4dbf3130b6",
+      "indexBlobExpected": "7a666a52e777e2256313b914d675fd8fb65c5fa9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/candidate-source/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/candidate-source/tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851",
+      "indexBlobExpected": "1df2cd0020444f67ae7a51872f40e86d5798f24c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/candidate-source/tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-assessment.json": {
+      "rawSha256": "e2fae960071cf9d0dc266552c1b6423cbc6733cb2cca9b3a2affc4e596022319",
+      "indexBlobExpected": "07ae63b4af6e63af967dae9f60f6d5f054706aa8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-comparison.json": {
+      "rawSha256": "c1838ccef821a3624bc237641c02a057ce52fbb96c29dc6165792d093d39e9cd",
+      "indexBlobExpected": "7fad70fc90073f07c74ce34dee6b54ae4660a0b6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-process-cleanup.json": {
+      "rawSha256": "db04129e19e7e740c50cc457e8fa2e76b78cb4436c5a94939b742d753c8ab0ae",
+      "indexBlobExpected": "2c5a78537a109f90c8383a0b41508df320486454"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-process-launch.json": {
+      "rawSha256": "af163faa43da1c090268fb7ec387e4dda8c65bb2e75b989f8afd961cf14361ea",
+      "indexBlobExpected": "0c45f5f4e43d47aacf37083def0a676b42a00f3b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-receipt.txt": {
+      "rawSha256": "78ec86b455c2412fce7053785c4e88f241b7d6b0c15dc12372b90e25730cee85",
+      "indexBlobExpected": "3378b28f802509bf2a4551022ea7f7d1db5a709c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census-timing.json": {
+      "rawSha256": "262de0856c651acaa6729985ae354af56fd3ac1c76bd0976ff7ab69c305d0f25",
+      "indexBlobExpected": "1558da802bada8f2b9e1d69d9a205bec5fcc877e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/census.txt": {
+      "rawSha256": "584ef26e53a040a305c2d46b0cecf103ac75322b391a6c18aa9211fb6ea4640f",
+      "indexBlobExpected": "b65c84b5688e8515a035d550952c278d952b69c7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-assessment.json": {
+      "rawSha256": "59d53c1f087ead518dfcd6a364862ee30f23fe86890affdccbb7146e8f7ab9a3",
+      "indexBlobExpected": "80f11c9f94940dd095ae867a3771ebe06be9a7dd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-process-cleanup.json": {
+      "rawSha256": "192aa4491beaa39f477c745581966cd148dfd510ff94678926c0e58b91c8f738",
+      "indexBlobExpected": "76297c6eedbea88d56b73cd83ed3cc7afe8da77e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-process-launch.json": {
+      "rawSha256": "6e7aef9e06443239e9bf50974f53ae0a1f12b58074ee067ec8c3475f4e8f09e9",
+      "indexBlobExpected": "8f7f63c3e50c9c4b3741fec54f53ea14ac2bbdc2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-receipt.txt": {
+      "rawSha256": "036b3c7cc3b984fc980522bf0c34c0d3cdf1aae5d6f3cee0be443cf6e8c0b69a",
+      "indexBlobExpected": "c18021c21fb5ed6fa06138f5549dd5f9d57a9144"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts-timing.json": {
+      "rawSha256": "6efcf41c0ac5a3aebfbaf0bc3a15a274f239b7dd1805f52701e2435c991adb49",
+      "indexBlobExpected": "de883018061ae5cb035c649502fee6bd1ba0475f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/contracts.txt": {
+      "rawSha256": "5b4b55e2b90b16f43d819b77e4e514e3d006eb6d94c32f9e1241478139ab009a",
+      "indexBlobExpected": "d3fe9064b4dfbbcc83ec7818f4434d68198c236b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/inputs.py": {
+      "rawSha256": "b0e2bfedd2bbbbcd97e334e5defa8490771107c1d9c0b1b3d7ea8e0ec7373c47",
+      "indexBlobExpected": "62314c11d21602783085c69ea90df51d40e6aafc"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/qualify.py": {
+      "rawSha256": "eb4f1a8b84cafde287669c9caeee35cf57efedb8261f0972121fcb78836ee9c2",
+      "indexBlobExpected": "155956ce15508d1a62f9153c371fce72bce89fe1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/record_exit.ps1": {
+      "rawSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexBlobExpected": "faa4f10f581e59e3dd9040aab3f7624965286dfd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/run_phase.ps1": {
+      "rawSha256": "605f65557a34735bc17e31cd0e8925a522750abc36795731dc73ac43b0b4d493",
+      "indexBlobExpected": "edbf24a818ad2f0d12b8d635da56e1414f72bd91"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/scope.md": {
+      "rawSha256": "a7ce076245efe835c540551007e42b13c7626107b61030c078854c4d0172ebd3",
+      "indexBlobExpected": "c76ca223f3f1b3c04f870a14f2a96139da05855f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/suites.json": {
+      "rawSha256": "254e3e7c9a9e9b282cac026881d0fa27e5ecc6449569dbdc485471958f8e567b",
+      "indexBlobExpected": "602429def4274a9ccc7d8936ba3bdba221ffc3aa"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-input-audit-after.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-input-audit-before.txt": {
+      "rawSha256": "a19ea1574abb3df35a4a57cfca5421c1ed8f94dfa469b6288df868510cc00b4b",
+      "indexBlobExpected": "bde38805b3a179ff8dca197ce2a1e2251b76bbd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-process-cleanup.json": {
+      "rawSha256": "c4a6a3b250c4cc6dddf673b806a716150fa142b0d3fccbb759fb39a5cd3026fe",
+      "indexBlobExpected": "bb5ace4f4ac1d31ee9fb0102d64f5d0e14fd08e5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-process-launch.json": {
+      "rawSha256": "fefdb8b81feba785dd776c67c7d71ada2c47f3c3cbe3fcdb6f779c1dd35f9614",
+      "indexBlobExpected": "14a73a4ef009bd3a280809627ddca76f4eb74381"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-receipt.txt": {
+      "rawSha256": "a36063b265d710172405828ff040f1b39b937c1d3ea3d0d1943dde4cc4a92ca4",
+      "indexBlobExpected": "33503d7accc5bd1a495f0da301d7a1d04b42ea4a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target-timing.json": {
+      "rawSha256": "aa2f806c6f26c905a8d8d670007f81ff68d192dcd8039b2c946f4ac15cf2ae7d",
+      "indexBlobExpected": "0c8d461b0587ee2b0de4beb4573a8726ac6c9ac7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/oracle-r3-attempt1/target.txt": {
+      "rawSha256": "f251f63c08639e4c073bc9ba1421fa73f72729d8e635cc0c704277a8179409ca",
+      "indexBlobExpected": "234077d4900cb303d217d512cc8ab841d1e4a7d0"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-assessment.json": {
+      "rawSha256": "f28ebda818f017eb26449210f2f4d66f08aa02648c751dcaac05e0635393baa4",
+      "indexBlobExpected": "71054c4c248bc4d971638b0024db2b36d84ea857"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-events.json": {
+      "rawSha256": "f1820b2d24fc8d2887db943045c0e14bb8567e07312f70ef3db84c8e71d139e6",
+      "indexBlobExpected": "1fcfe69a24439501b6e8317ce4792648765b640b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-expected-execution.json": {
+      "rawSha256": "df3941d3d4f6bd6b3384070b298d99654fccdf886ab8c01798efe85e29089b60",
+      "indexBlobExpected": "ccb74e7661ba6dddc40d2763eda0da309956a8c5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-input-audit-after.txt": {
+      "rawSha256": "8c136d8a3d289308fec49f132025aafd32eb673baf4cc9e505861b73d31e2b31",
+      "indexBlobExpected": "9195bbff5648967e419aae07f5c5b083987b551d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-input-audit-before.txt": {
+      "rawSha256": "8c136d8a3d289308fec49f132025aafd32eb673baf4cc9e505861b73d31e2b31",
+      "indexBlobExpected": "9195bbff5648967e419aae07f5c5b083987b551d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-inputs.json": {
+      "rawSha256": "8867813e43fd6dbd011c793cca1fb575afe4208aa5cc5208bc68e6565c75c39b",
+      "indexBlobExpected": "bdc13c4b793bc07c91a68424891d7a79d6db6e0a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-log-hashes.json": {
+      "rawSha256": "39b99b55fb19ffb3d4fd18d50e42c7902265bc325f08ca0765f26e8b4afeefbe",
+      "indexBlobExpected": "90fc2bcfc44e7a0eda931f133bb30ab659b8ba45"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-plan.json": {
+      "rawSha256": "429747f5646f1817ba580cab3e123857c34871c63c82dbf4f50e604718880f20",
+      "indexBlobExpected": "682a85f441a8fc4bedd4869a0d474892cf79235c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-served-after.json": {
+      "rawSha256": "3d78dc75c3d19359c598d34eae3df95dacf4d5cbda6f2746fc36c85c89ada649",
+      "indexBlobExpected": "3b4e3d99a5569826eea89632eff05cc75b1986f7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player-served-before.json": {
+      "rawSha256": "3d78dc75c3d19359c598d34eae3df95dacf4d5cbda6f2746fc36c85c89ada649",
+      "indexBlobExpected": "3b4e3d99a5569826eea89632eff05cc75b1986f7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/player_inputs.py": {
+      "rawSha256": "e24ba9a8b240fdccb1a3e254ce758847771efa5bfb873d8990010af0f2d63b9b",
+      "indexBlobExpected": "fe9008f087760d1d29be38cacc1f6ea7b18c2275"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/post-player-provenance.json": {
+      "rawSha256": "df3941d3d4f6bd6b3384070b298d99654fccdf886ab8c01798efe85e29089b60",
+      "indexBlobExpected": "ccb74e7661ba6dddc40d2763eda0da309956a8c5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/pre-edit-canaries.json": {
+      "rawSha256": "9a7914e93987cef9c2ea4729453f2f92ea8c261e828d426a272759f225aba599",
+      "indexBlobExpected": "57cd8269fa80283ebff129563f981373edf398f5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-launcher-cleanup.json": {
+      "rawSha256": "959f4c8d22cb938f86e6cdb974583e8d0111f05e4e688699c304a177854ca8a4",
+      "indexBlobExpected": "e84e23d5f63210b99865b39fc72ef60bd85c3055"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-owner-after.json": {
+      "rawSha256": "f61acad50e3414799e9087a026b59636f249282f00fa555729a3c3ae7e98798e",
+      "indexBlobExpected": "ce853f0d9c14f68c316e510510b72f30c7ebb0cc"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-owner-before.json": {
+      "rawSha256": "f1b8999f388b480c1507affbb7c9f4fb06fe2885ec1be71a8180c939b60eca3c",
+      "indexBlobExpected": "fa985016b938608bb039aa9e87c6f229260bd6c2"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-process-launch.json": {
+      "rawSha256": "1a2bdc850f76e033c39601028bc7b571898893b3f8e9946b7230c0b10d8a7b07",
+      "indexBlobExpected": "74c50dde577290e1e846f1c71069aae8e9d071a5"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-start-timing.json": {
+      "rawSha256": "b2107fda3bd8de085d2e8545017c486ad0a8fa9b89ba00c81e906f5205ef6853",
+      "indexBlobExpected": "aae8d68c51b5cde2c020e9d6a59c7bd60e899d3d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-start.txt": {
+      "rawSha256": "84f03f62c0d4df9edcd7bb12127f21cbfdca6c446f13b69e9b693ac7956fb90c",
+      "indexBlobExpected": "f0c422ea82556fb1435966115a8155f1b9d8d9ce"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-stop-process-launch.json": {
+      "rawSha256": "35eacdce1b92f70da4791a404308ee5ca7ab088f28994705f16670713e95dbaf",
+      "indexBlobExpected": "1c9c3e8142004be99689b73b1022b9bc2e81b31f"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-stop-timing.json": {
+      "rawSha256": "2c7e5f42f2200c70c3dca40efb04761e16eab1ea7f7882220da7363ae5ebdad4",
+      "indexBlobExpected": "0ecd3ef82f05f9809c894c9a5bbe570a6d886f54"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/preview-stop.txt": {
+      "rawSha256": "4139ea21715a4feab91e57307e02959174535975841e7ffed544cf1d6de528b6",
+      "indexBlobExpected": "9defad1d151d7967debf08b6c54a593cba8b8b6e"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/process-resource-cleanup.json": {
+      "rawSha256": "19edd4c285c4aa1db7e55fadd970bfc501fe40d4655d97b4d73b4c4bb38e1a93",
+      "indexBlobExpected": "0248de3c389ce004c8df5704ee537cdc1d0b1209"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/production-review.json": {
+      "rawSha256": "a8275be1572870afedea3cf9aec106b8b153af18433a2ba99f015878a591d714",
+      "indexBlobExpected": "ff7586079f293efe7a2f66080f4a23b2d372cb1b"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/q30-worker-handoff.java": {
+      "rawSha256": "0f9ca125a571cddd92717a3e4072fcf212d5844a380fd6e72e4950590126a0c1",
+      "indexBlobExpected": "bca53348faaec15dbbbb7aa8cdb090d74ca08e07"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/qualify.py": {
+      "rawSha256": "d2d3dfeaca127ed635f386bc829f129edd58c16e032370b8d6ffbd51e7878355",
+      "indexBlobExpected": "c548657e1ed7bc41a5fd07741adf117e6a53b67c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/qualify_clock.py": {
+      "rawSha256": "61f9ed402ecf03bdeecbefae9e4e9047353048a3a4e6230050d13ccb3311a1fc",
+      "indexBlobExpected": "53c04d9ecb38463f11e91e67fa038fed8abb963d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/qualify_diagnostic.py": {
+      "rawSha256": "de7837350a9dfcb84b154a8e41d11b32150a535175a1e59c4a6ad255a2703d72",
+      "indexBlobExpected": "df4312bb1c107e03e149b0329396422935cb8a5a"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/qualify_diagnostic_r4.py": {
+      "rawSha256": "12e851ec74dc35d4e1df8ed07afeb0f2684177f2ea46abdf333943ce8f41a60c",
+      "indexBlobExpected": "51c6f18168d043ccceafbae13392cd19880ceb74"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/raw-body-whitespace-review.json": {
+      "rawSha256": "ca4f061ff260426c1eeae5b8b997420e05a8643b7bb96040f7ebbb6b9b4dc599",
+      "indexBlobExpected": "7fc273687fdfca80bc43470e83bf16ebbcb77fd6"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/record_diagnostic_exit.ps1": {
+      "rawSha256": "c67a3387d348596c5b3a13b8857a3aedcf7eb80975f91b66e8d51520ac879255",
+      "indexBlobExpected": "38a4fae64f0fe33e2796f1c728462e3f13122e33"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/record_diagnostic_exit_r4.ps1": {
+      "rawSha256": "eea87db3777c5df0aed65877b8d8330a4260448bfd24210f77794a402da123f1",
+      "indexBlobExpected": "b690b1818fec78bade5b8af53999ca0f32e20e95"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/record_exit.ps1": {
+      "rawSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexBlobExpected": "faa4f10f581e59e3dd9040aab3f7624965286dfd"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/review_player.py": {
+      "rawSha256": "095af1019dfdb636a4248538a28c4f14f8842c1c282591d97ab561b4bfc7d239",
+      "indexBlobExpected": "6f1bc0d80a52fbf143c3ba241cb4d1989880047c"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/root-final-source-review-r4.json": {
+      "rawSha256": "5fd9ae840ee16e839c363870177fe3ed3e9086458e011869b6bd9300b76d50e4",
+      "indexBlobExpected": "b8e1af76715f7041fd8b251039f31378d27c33a8"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/root-final-source-review.json": {
+      "rawSha256": "740c4f95e01d1413bf686abe0896d6d20d3c9d0a72ab59b8bae2e5cb1093631b",
+      "indexBlobExpected": "d0c96602a6fa40431a563a5bf044ee5460f3f347"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/root-visual-review.json": {
+      "rawSha256": "9093c9a0909f261297cb934fc0f4e56d981b19a0f036cc963f2e6923a8a68b5e",
+      "indexBlobExpected": "a5b7e940f87fb511993226b2881930d0dcb8dcf1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/run_clock.ps1": {
+      "rawSha256": "137d59f6538f2d5dc986bba3db860e97fc5ef6cfc47c073f675d052dca51406f",
+      "indexBlobExpected": "8eb739a72a0493b3460fab779f3ff5efccc1df01"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/run_diagnostic.ps1": {
+      "rawSha256": "67e555ae72c41bf47f34e38b3b6f4c3e720c2bee1fa7ead72a8cd30184a41cab",
+      "indexBlobExpected": "31a9a78504de31c1d88c9daf63e0a434beaa9b6d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/run_diagnostic_r4.ps1": {
+      "rawSha256": "3dbf93a1ca0636b208916d0595504a7eeaf47dc88759785a646de412148fe1be",
+      "indexBlobExpected": "3de8998c17a41e4cd431b0118113aa2f20c4039d"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/run_phase.ps1": {
+      "rawSha256": "c4723d83aa4d52e73e628478719420e293f93406db0fe0eead68bdd70dc02f6d",
+      "indexBlobExpected": "830a13ff94bd167c23544628ceebfef48b815e52"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/scope.md": {
+      "rawSha256": "407af1582e668367d4f6ff4f571fafd56e41ce8434a3f135d354b2c727b0b279",
+      "indexBlobExpected": "df3b891840a83c62019a8d913cb9df0eb4354645"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/staging-whitespace-attempt1.json": {
+      "rawSha256": "ac50a5ec67bba025673c030a900d80ba145b0f0e983560a51949bfb983a7725c",
+      "indexBlobExpected": "7bded5cbea814b4c1b91005e5f432323cfe7e605"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/startup-default-ticket-body.txt": {
+      "rawSha256": "4477e4857aa4dd4f2aa3ed62b703ba9dfd34dfbb52b8378bccef1b483b948d04",
+      "indexBlobExpected": "985541b2e0bc0663894d44a87cc3929b07a232ad"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/stop_player.ps1": {
+      "rawSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "indexBlobExpected": "aa1e40de3be7ca13b133395406d90d131fd55ce1"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/suites.json": {
+      "rawSha256": "254e3e7c9a9e9b282cac026881d0fa27e5ecc6449569dbdc485471958f8e567b",
+      "indexBlobExpected": "602429def4274a9ccc7d8936ba3bdba221ffc3aa"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/target-clock-diagnosis.json": {
+      "rawSha256": "9f2067a78ad34d6da7a674686d8d8936f0a8d8c693f39060fee2560ea911b49e",
+      "indexBlobExpected": "4b53ed5d18617b5b0ed90fb16feb500df399dbd7"
+    },
+    "docs/task-evidence/PCB/packing-metric-evidence-r1/wrong-query-menu-body.txt": {
+      "rawSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "indexBlobExpected": "1d69eac1c3850c865e99de6ab74edbf81a04c908"
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "f10c85a1164558e87a6aed06dabeb860c45349747023df5b517ec34ee04fc379",
+      "indexBlobExpected": "6f8714fa258fe646e4f140b37008cf76f0f528f9"
+    },
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "cf1ab467c5f1a724d7dd3b278e7949b7fa47345bc056b307746dc741ca7a2c6a",
+      "indexBlobExpected": "177e728e3e2697439159e0963733a7c57d52440d"
+    },
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "4d2aeddb476ddebdd88e4ef93abef783596d6b7867a8f5e6fbafaed749806851",
+      "indexBlobExpected": "b63bfcae11061ada60feeb3aeec1b6ba92d7adbd"
+    },
+    "tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "99510d5af57163250683b47e839f0b45aaa61630a14bc1dfd961e27b83681b45",
+      "indexBlobExpected": "e6757115f54e4e8ba5a8f04e813e8e6761e8efda"
+    },
+    "tests/contracts/Q30NormalCorpusContractTest.java": {
+      "rawSha256": "eaf85bbc593261744a8238a9f57598dc486b5802af03a849fb312b366b0a5337",
+      "indexBlobExpected": "7ca7b40b0b468dbf47ab4920b8da7c3fbc04ac84"
+    }
+  },
+  "scope": "Root actual five-source and three-doc diff/integrated review, exact independent production-source review reuse, fresh final12/44/target/diagnostic/GWT/player results and limitations reviewed. Complete intended evidence roster reviewed; native failures/clock witness/reader scope revisions/worker handoff/preparation and four observer failures retained. Only six exact owned path occurrences projected, private raw hashes verified. Every source input remains frozen; current process/profile/state/port cleanup passes.",
+  "privacy": "No personal absolute paths/ws endpoints/tokens in packet or added tracked lines; unrelated artifacts are excluded, not cleaned. All27 raw bodies/images preserved with exact filename whitespace attrs.",
+  "publication": "Stage explicit paths only, inspect exact index blobs/raw review, cached diff/check; normal branch commit/push/exact remote next. No main/email. Self review blob/raw verified separately before commit.",
+  "stagingAttempt1": "FAIL exact raw unified-diff context whitespace retained; prior review/attributes/failure receipt preserved. Narrow exact-filename attribute fixes lint without changing raw source diff or producer/test/oracle/budget. Final staged exactness/checks required."
+}

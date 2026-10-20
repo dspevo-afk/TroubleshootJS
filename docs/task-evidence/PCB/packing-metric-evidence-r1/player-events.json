@@ -1,0 +1,141 @@
+[
+  {
+    "label": "Open final production QuickPlay",
+    "status": "FAIL",
+    "elapsedSeconds": 40.5037807,
+    "error": "TimeoutError: locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Main menu', exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "label": "Open maintained final QuickPlay URL",
+    "status": "PASS",
+    "elapsedSeconds": 2.076446200000122
+  },
+  {
+    "label": "Open menu for exact multi-rail replay",
+    "status": "PASS",
+    "elapsedSeconds": 0.10658100000023842
+  },
+  {
+    "label": "Prepare exact multi-rail replay and await its ticket",
+    "status": "FAIL",
+    "elapsedSeconds": 40.05133630000055,
+    "error": "TimeoutError: locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Accept ticket and start', { exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "label": "Await the same pending multi-rail request without retry",
+    "status": "PASS",
+    "elapsedSeconds": 7.4926409000009295
+  },
+  {
+    "label": "Read the exact multi-rail public replay identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.14191739999875427
+  },
+  {
+    "label": "Accept multi-rail ticket and run untouched customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 2.031120899999514
+  },
+  {
+    "label": "Fit the unchanged multi-rail board in the normal bench",
+    "status": "PASS",
+    "elapsedSeconds": 0.1754372000005096
+  },
+  {
+    "label": "Inspect a closer normal multi-rail view",
+    "status": "PASS",
+    "elapsedSeconds": 0.20739179999940097
+  },
+  {
+    "label": "Disconnect all four actual multi-rail supplies",
+    "status": "PASS",
+    "elapsedSeconds": 1.4623119000010192
+  },
+  {
+    "label": "Prepare the known LED replay through saved replay controls",
+    "status": "PASS",
+    "elapsedSeconds": 2.8196902000010016
+  },
+  {
+    "label": "Read LED public replay and accept the original customer ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.12314089999906719
+  },
+  {
+    "label": "Run LED untouched customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 0.06195360000059009
+  },
+  {
+    "label": "Fit the LED board and select its public R1 component",
+    "status": "PASS",
+    "elapsedSeconds": 0.10445969999954105
+  },
+  {
+    "label": "Disconnect LED supply and isolate original resistor lead",
+    "status": "PASS",
+    "elapsedSeconds": 0.19536480000056328
+  },
+  {
+    "label": "Measure actual OFF isolated original resistor with public probes",
+    "status": "PASS",
+    "elapsedSeconds": 0.16540599999949335
+  },
+  {
+    "label": "Exit OHM and remove the isolated original resistor",
+    "status": "PASS",
+    "elapsedSeconds": 0.20163460000045597
+  },
+  {
+    "label": "Open the actual parts shop",
+    "status": "PASS",
+    "elapsedSeconds": 0.040815500000491736
+  },
+  {
+    "label": "Buy the actual 330 Ohm shop replacement",
+    "status": "FAIL",
+    "elapsedSeconds": 0.0029502000007778405,
+    "error": "Error: Expected one visible catalog search"
+  },
+  {
+    "label": "Buy 330 Ohm using the observed native searchbox",
+    "status": "FAIL",
+    "elapsedSeconds": 30.015304899999872,
+    "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Add to Parts Tray', exact: true })\u001b[22m\n"
+  },
+  {
+    "label": "Add the observed exact 330 Ohm catalog item",
+    "status": "PASS",
+    "elapsedSeconds": 0.10639770000055432
+  },
+  {
+    "label": "Select actual tray Part 4 for installation",
+    "status": "PASS",
+    "elapsedSeconds": 0.02764049999974668
+  },
+  {
+    "label": "Install actual Part 4 into public Circuit / R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.07637659999914467
+  },
+  {
+    "label": "Measure the installed replacement OFF as actual 330 Ohm",
+    "status": "PASS",
+    "elapsedSeconds": 0.21354450000077485
+  },
+  {
+    "label": "Reconnect 5V and await a fresh successful customer retest",
+    "status": "PASS",
+    "elapsedSeconds": 0.1700534000005573
+  },
+  {
+    "label": "Return from fresh PASS and capture repaired normal board",
+    "status": "PASS",
+    "elapsedSeconds": 0.15037800000049173
+  },
+  {
+    "label": "Leave repaired LED board with supply disconnected and faulty original in tray",
+    "status": "PASS",
+    "elapsedSeconds": 0.10722740000113845
+  }
+]

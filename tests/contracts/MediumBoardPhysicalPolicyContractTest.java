@@ -1,6 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** Focused provider-policy and deterministic medium-generator receipt checks. */
 public final class MediumBoardPhysicalPolicyContractTest {
@@ -34,6 +36,7 @@ public final class MediumBoardPhysicalPolicyContractTest {
     private MediumBoardPhysicalPolicyContractTest() { }
 
     public static void main(String[] args) {
+        verifyPackingClockComparison();
         frozenSeed10Routing();
         frozenRepresentativeRootRouting();
         Rb30Plan firstPlan = Rb30Plan.resolve(0L);
@@ -49,7 +52,8 @@ public final class MediumBoardPhysicalPolicyContractTest {
         MediumBoardPhysicalPolicy.Result second = new SeededPcbLayoutGenerator()
             .generateWithPolicyResult(secondPlan.board(), secondPlan.layoutSeed,
                 secondPlan.routingSeed, NOOP);
-        check(first.getStatistics().toCanonical().equals(second.getStatistics().toCanonical()),
+        check(withoutPackingWallClock(first.getStatistics().toCanonical()).equals(
+            withoutPackingWallClock(second.getStatistics().toCanonical())),
             "medium policy work receipt is deterministic");
         check(first.getStatistics().placementCandidates ==
             MediumBoardPhysicalPolicy.PLACEMENT_CANDIDATES,
@@ -84,7 +88,8 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "medium receipt exposes selected placement score");
         check(receipt.indexOf("placementEvaluations=") >= 0,
             "medium receipt canonical includes planner evaluations");
-        check(first.toCanonical().equals(second.toCanonical()),
+        check(withoutPackingWallClock(first.toCanonical()).equals(
+            withoutPackingWallClock(second.toCanonical())),
             "medium policy result identity is deterministic");
         if (first.accepted()) {
             check(first.getStatistics().selectedPlacementScore >= 0,
@@ -187,9 +192,61 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "seed 10 preserves every original package and electrical endpoint");
         MediumBoardPhysicalPolicy.Result replay = new SeededPcbLayoutGenerator()
             .generateWithPolicyResult(plan.board(), plan.layoutSeed, plan.routingSeed, NOOP);
-        check(first.toCanonical().equals(replay.toCanonical()) &&
+        check(withoutPackingWallClock(first.toCanonical()).equals(
+            withoutPackingWallClock(replay.toCanonical())) &&
             first.getLayout().geometryFingerprint().equals(replay.getLayout().geometryFingerprint()),
             "seed 10 replays exact geometry and bounded work without changing plan identity");
+    }
+
+    /** Elapsed time is an observation; every deterministic receipt byte remains. */
+    private static String withoutPackingWallClock(String canonical) {
+        String namespace = "normal-packing@2";
+        if (canonical.indexOf(namespace) < 0 ||
+                canonical.indexOf(namespace) != canonical.lastIndexOf(namespace))
+            throw new IllegalArgumentException("Expected exactly one packing receipt");
+        Matcher clock = Pattern.compile("normal-packing@2;attempts=[01];orderings=[0-9]+;" +
+            "expansions=[0-9]+;millis=([0-9]+);route=").matcher(canonical);
+        if (!clock.find())
+            throw new IllegalArgumentException("Missing nonnegative packing clock");
+        int start = clock.start(1), end = clock.end(1);
+        return canonical.substring(0, start) + "[wall-clock]" + canonical.substring(end);
+    }
+
+    private static void verifyPackingClockComparison() {
+        final String receipt = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
+            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=417;" +
+            "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;selected=aaaa;failure=null";
+        String expected = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
+            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
+            "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;selected=aaaa;failure=null";
+        check(withoutPackingWallClock(receipt).equals(expected) &&
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=603;")).equals(expected),
+            "literal independent packing times preserve every other canonical byte");
+        String[][] differences = {
+            { "attempts=1;", "attempts=0;" },
+            { "orderings=1;", "orderings=2;" },
+            { "expansions=7;", "expansions=8;" },
+            { "route=P07_FULLER_TWO_LAYER;", "route=P05_ONE_FACE;" },
+            { "disposition=KEPT;", "disposition=SELECTED;" },
+            { "baseline=aaaa;", "baseline=bbbb;" },
+            { "selected=aaaa;", "selected=bbbb;" },
+            { "failure=null", "failure=REJECTED" }
+        };
+        for (String[] difference : differences)
+            check(!withoutPackingWallClock(receipt.replace(difference[0], difference[1])).equals(expected),
+                "clock comparison retains changed " + difference[0]);
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock("MEDIUM_BOARD@1;outcome=SUCCESS");
+        } }, "missing packing receipt accepted by clock comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt + ";packingProbe=" + receipt);
+        } }, "duplicate packing receipts accepted by clock comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=-1;"));
+        } }, "negative packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=unknown;"));
+        } }, "nonnumeric packing clock accepted by comparison");
     }
 
     /** Exact representative Q30 roots from the epoch-4 qualification plan. */

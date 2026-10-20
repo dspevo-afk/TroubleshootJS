@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "startTicks": "639281148855570892",
+      "pid": 21164,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281148864887060",
+      "pid": 19392,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained packing metric evidence phase",
+  "phase": "census"
+}

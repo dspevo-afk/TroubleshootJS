@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "positive": 1,
+  "rejected": 6,
+  "limits": "Pure timing reader framing only, no native/host execution"
+}

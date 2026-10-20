@@ -1,0 +1,202 @@
+[
+  {
+    "text": "Reset",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Main menu",
+    "ariaLabel": "Main menu",
+    "title": "Main menu"
+  },
+  {
+    "text": "Shop",
+    "ariaLabel": "Shop",
+    "title": "Shop"
+  },
+  {
+    "text": "Resources",
+    "ariaLabel": "Resources",
+    "title": "Resources"
+  },
+  {
+    "text": "Settings",
+    "ariaLabel": "Settings",
+    "title": "Settings"
+  },
+  {
+    "text": "Run customer retest",
+    "ariaLabel": "Run customer retest",
+    "title": "Run customer retest"
+  },
+  {
+    "text": "TSJ MM-90",
+    "ariaLabel": "Move multimeter: drag, or use arrow keys. Home resets its position.",
+    "title": "Move multimeter: drag, or use arrow keys. Home resets its position."
+  },
+  {
+    "text": "HOLD",
+    "ariaLabel": "Hold / not implemented",
+    "title": "Hold / not implemented"
+  },
+  {
+    "text": "RANGE",
+    "ariaLabel": "Manual range / not implemented",
+    "title": "Manual range / not implemented"
+  },
+  {
+    "text": "MIN/MAX",
+    "ariaLabel": "Minimum / maximum / not implemented",
+    "title": "Minimum / maximum / not implemented"
+  },
+  {
+    "text": "LIGHT",
+    "ariaLabel": "Toggle meter backlight",
+    "title": "Toggle meter backlight"
+  },
+  {
+    "text": "OFF",
+    "ariaLabel": "Turn multimeter off",
+    "title": "Turn multimeter off"
+  },
+  {
+    "text": "V~",
+    "ariaLabel": "AC voltage RMS",
+    "title": "AC voltage RMS"
+  },
+  {
+    "text": "A",
+    "ariaLabel": "Current / not implemented",
+    "title": "Current / not implemented"
+  },
+  {
+    "text": "mA",
+    "ariaLabel": "Milliamps / not implemented",
+    "title": "Milliamps / not implemented"
+  },
+  {
+    "text": "µA",
+    "ariaLabel": "Microamps / not implemented",
+    "title": "Microamps / not implemented"
+  },
+  {
+    "text": "CAP",
+    "ariaLabel": "Capacitance / not implemented",
+    "title": "Capacitance / not implemented"
+  },
+  {
+    "text": "Hz",
+    "ariaLabel": "Oscilloscope / frequency",
+    "title": "Oscilloscope / frequency"
+  },
+  {
+    "text": "%",
+    "ariaLabel": "Duty cycle / not implemented",
+    "title": "Duty cycle / not implemented"
+  },
+  {
+    "text": "°C/°F",
+    "ariaLabel": "Temperature / not implemented",
+    "title": "Temperature / not implemented"
+  },
+  {
+    "text": "DC V",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "OHM",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "CONT",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "DIODE",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Board Power: OFF",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Supplies",
+    "ariaLabel": "Bench power",
+    "title": "Bench power"
+  },
+  {
+    "text": "View",
+    "ariaLabel": "Board view",
+    "title": "Board view"
+  },
+  {
+    "text": "Ticket",
+    "ariaLabel": "Service ticket",
+    "title": "Service ticket"
+  },
+  {
+    "text": "Parts tray",
+    "ariaLabel": "Parts Tray",
+    "title": "Parts Tray"
+  },
+  {
+    "text": "Close",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "All parts",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Resistors",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "LEDs",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Connectors",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Clear search",
+    "ariaLabel": null,
+    "title": null
+  },
+  {
+    "text": "Add to Parts Tray",
+    "ariaLabel": "Add to Parts Tray: Resistors, 330 Ohm +/-5%",
+    "title": null
+  },
+  {
+    "text": "Add to Parts Tray",
+    "ariaLabel": "Add to Parts Tray: Resistors, 3300 Ohm +/-5%",
+    "title": null
+  },
+  {
+    "text": "Add to Parts Tray",
+    "ariaLabel": "Add to Parts Tray: Resistors, 33000 Ohm +/-5%",
+    "title": null
+  },
+  {
+    "text": "Add to Parts Tray",
+    "ariaLabel": "Add to Parts Tray: Resistors, 330000 Ohm +/-5%",
+    "title": null
+  },
+  {
+    "text": "Add to Parts Tray",
+    "ariaLabel": "Add to Parts Tray: Resistors, 3300000 Ohm +/-5%",
+    "title": null
+  }
+]

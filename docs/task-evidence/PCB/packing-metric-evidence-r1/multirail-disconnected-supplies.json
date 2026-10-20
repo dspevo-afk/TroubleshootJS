@@ -1,0 +1,18 @@
+[
+  {
+    "label": "Supply 1 (+12V)",
+    "disconnectedObserved": true
+  },
+  {
+    "label": "Supply 2 (+5V)",
+    "disconnectedObserved": true
+  },
+  {
+    "label": "Supply 3 (+5V)",
+    "disconnectedObserved": true
+  },
+  {
+    "label": "Supply 4 (+12V)",
+    "disconnectedObserved": true
+  }
+]

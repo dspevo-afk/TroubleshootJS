@@ -1,0 +1,9 @@
+{
+  "phase": "packing-metric-diagnostic",
+  "exitCode": 0,
+  "failure": null,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "elapsedSeconds": 44.6279217,
+  "status": "PASS",
+  "terminalCleanupIncluded": true
+}

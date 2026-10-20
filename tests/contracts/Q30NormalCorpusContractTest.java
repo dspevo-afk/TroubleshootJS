@@ -6,6 +6,8 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** One predeclared Q30 corpus row through actual normal physical admission. */
 public final class Q30NormalCorpusContractTest {
@@ -22,6 +24,7 @@ public final class Q30NormalCorpusContractTest {
     private Q30NormalCorpusContractTest() { }
 
     public static void main(String[] args) {
+        verifyPackingClockComparison();
         long seed = parseSeed(args);
         CirSim sim = new CirSim();
         sim.gridSize = 16;
@@ -73,8 +76,8 @@ public final class Q30NormalCorpusContractTest {
             row.warmRouteNanos = row.warmRoute.totalNanos;
             if (row.warmRoute.result == null)
                 throw new AssertionError("exact replay route returned no complete receipt");
-            check(row.coldRoute.result.toCanonical().equals(
-                    row.warmRoute.result.toCanonical()),
+            check(withoutPackingWallClock(row.coldRoute.result.toCanonical()).equals(
+                    withoutPackingWallClock(row.warmRoute.result.toCanonical())),
                 "exact route replay changed its complete medium-policy receipt");
             check(row.coldRoute.placementAdvances == row.warmRoute.placementAdvances &&
                     row.coldRoute.routingAdvances == row.warmRoute.routingAdvances,
@@ -611,6 +614,105 @@ public final class Q30NormalCorpusContractTest {
     private static String appendFailure(String first, String next) {
         if (first == null || first.length() == 0) return next;
         return first + "; " + next;
+    }
+
+    /** Elapsed time is an observation; every other deterministic receipt byte remains. */
+    private static String withoutPackingWallClock(String canonical) {
+        final String namespace = "normal-packing@2";
+        if (canonical == null)
+            throw new IllegalArgumentException("Missing medium-policy receipt");
+        int namespaceStart = canonical.indexOf(namespace);
+        if (namespaceStart < 0) {
+            if (canonical.indexOf(";packingProbe=") >= 0)
+                throw new IllegalArgumentException("Malformed packing receipt");
+            return canonical;
+        }
+        if (namespaceStart != canonical.lastIndexOf(namespace) ||
+                countOccurrences(canonical, "millis=") != 1)
+            throw new IllegalArgumentException("Expected exactly one packing receipt clock");
+        Matcher clock = Pattern.compile("normal-packing@2;attempts=[01];orderings=[0-9]+;" +
+            "expansions=[0-9]+;millis=([0-9]+);route=").matcher(canonical);
+        if (!clock.find())
+            throw new IllegalArgumentException("Missing or duplicate nonnegative packing clock");
+        int start = clock.start(1);
+        int end = clock.end(1);
+        if (clock.find())
+            throw new IllegalArgumentException("Duplicate packing clock");
+        return canonical.substring(0, start) + "[wall-clock]" + canonical.substring(end);
+    }
+
+    private static int countOccurrences(String value, String token) {
+        int count = 0;
+        int offset = 0;
+        while ((offset = value.indexOf(token, offset)) >= 0) {
+            count++;
+            offset += token.length();
+        }
+        return count;
+    }
+
+    private static void verifyPackingClockComparison() {
+        final String receipt = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
+            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=417;" +
+            "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;" +
+            "selected=aaaa;failure=null";
+        final String expected = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
+            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
+            "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;" +
+            "selected=aaaa;failure=null";
+        check(withoutPackingWallClock(receipt).equals(expected) &&
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=603;"))
+                .equals(expected),
+            "literal independent packing times preserve every other canonical byte");
+
+        final String rejection =
+            "MEDIUM_BOARD@1;outcome=REJECTED;selected=null;failure=TOTAL_SEARCH_WORK_BUDGET";
+        check(withoutPackingWallClock(rejection).equals(rejection),
+            "clock comparison changed a legitimate no-packing rejection receipt");
+
+        String[][] differences = {
+            { "expansions=7;", "expansions=8;" },
+            { "route=P07_FULLER_TWO_LAYER;", "route=P05_ONE_FACE;" },
+            { "selected=aaaa;", "selected=bbbb;" },
+            { "baseline=aaaa;", "baseline=bbbb;" },
+            { "disposition=KEPT;", "disposition=SELECTED;" }
+        };
+        for (String[] difference : differences)
+            check(!withoutPackingWallClock(receipt.replace(difference[0], difference[1]))
+                    .equals(expected),
+                "clock comparison retains changed " + difference[0]);
+
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", ""));
+        } }, "missing packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=;"));
+        } }, "malformed packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=417;millis=603;"));
+        } }, "duplicate packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=-1;"));
+        } }, "negative packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("millis=417;", "millis=unknown;"));
+        } }, "nonnumeric packing clock accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt + ";packingProbe=" + receipt);
+        } }, "duplicate packing namespaces accepted by comparison");
+        checkThrows(new Runnable() { public void run() {
+            withoutPackingWallClock(receipt.replace("normal-packing@2", "malformed-packing"));
+        } }, "packing receipt without its namespace accepted by comparison");
+    }
+
+    private static void checkThrows(Runnable action, String message) {
+        assertions++;
+        try {
+            action.run();
+        } catch (IllegalArgumentException expected) {
+            return;
+        }
+        throw new AssertionError("Q30 corpus assertion " + assertions + ": " + message);
     }
 
     private static void check(boolean condition, String message) {

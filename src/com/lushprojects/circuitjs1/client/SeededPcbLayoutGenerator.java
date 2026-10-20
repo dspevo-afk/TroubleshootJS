@@ -130,6 +130,7 @@ class SeededPcbLayoutGenerator {
         private long packingInitialMillis;
         private boolean packingActive;
         private PcbPackingProbeReceipt packingProbeReceipt;
+        private PcbPackingProbeReceipt.MetricEvidence packingMetricEvidence;
         private double bestScore=Double.POSITIVE_INFINITY;
         private long bestArea=Long.MAX_VALUE;
         private int attempt,viableCandidates;
@@ -245,6 +246,7 @@ class SeededPcbLayoutGenerator {
         if (constraints.placementPackingVersion !=
                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION) return false;
         GenerationWorkScope.check();
+        session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence.notMeasured();
         if (session.bestLayout == null || session.bestPlan == null)
             throw new IllegalStateException("Packing probe has no selected source");
         session.packingRoutePolicy = session.mediumPolicy ? session.mediumSelectedRoute :
@@ -277,9 +279,13 @@ class SeededPcbLayoutGenerator {
             session.packingBaselineMetrics = PcbPackingMetrics.measure(
                 session.board, session.packingBaseline);
         } catch (PcbPackingMetrics.Unavailable unsupportedGrid) {
+            session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence
+                .baselineUnavailable(unsupportedGrid.getMessage());
             keepWithoutPackingRoute(session, "NO_HEADROOM");
             return false;
         }
+        session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence
+            .baselineOnly(session.packingBaselineMetrics);
         session.packingInitialOrders = session.statistics.routes;
         session.packingInitialExpansions = session.statistics.expansions;
         session.packingInitialMillis = session.statistics.routeMillis;
@@ -306,7 +312,7 @@ class SeededPcbLayoutGenerator {
     private void keepWithoutPackingRoute(Session session, String disposition) {
         session.packingProbeReceipt = new PcbPackingProbeReceipt(0, 0, 0, 0,
             session.packingRoutePolicy, disposition, session.packingBaselineHash,
-            session.packingBaselineHash);
+            session.packingBaselineHash, session.packingMetricEvidence);
         session.bestLayout.setPackingProbeReceipt(session.packingProbeReceipt);
     }
 
@@ -344,8 +350,12 @@ class SeededPcbLayoutGenerator {
             try {
                 metrics = PcbPackingMetrics.measure(session.board, candidate);
             } catch (PcbPackingMetrics.Unavailable unsupportedGrid) {
+                session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence
+                    .candidateUnavailable(session.packingBaselineMetrics, unsupportedGrid.getMessage());
                 return finishPackingProbe(session, "KEPT");
             }
+            session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence
+                .compared(session.packingBaselineMetrics, metrics);
             if (PcbPackingMetrics.strictlyImproves(session.packingBaselineMetrics, metrics)) {
                 session.bestLayout = candidate;
                 session.bestPlan = routedCandidate.plan;
@@ -380,7 +390,8 @@ class SeededPcbLayoutGenerator {
             session.statistics.expansions - session.packingInitialExpansions,
             session.statistics.routeMillis - session.packingInitialMillis,
             session.packingRoutePolicy, disposition, session.packingBaselineHash,
-            PlayerSessionFingerprint.of(session.bestLayout.geometryFingerprint()));
+            PlayerSessionFingerprint.of(session.bestLayout.geometryFingerprint()),
+            session.packingMetricEvidence);
         session.bestLayout.setPackingProbeReceipt(session.packingProbeReceipt);
         session.packingActive = false;
         session.packingRoute = null;
