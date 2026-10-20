@@ -1,0 +1,30 @@
+{
+  "status": "NO_GO_SOURCE_ONLY",
+  "baseCommit": "01e306eb94ca8218f227c75198d18989fc6fd5f5",
+  "reviewer": "Optional read-only Luna/MAX leaf package_realism_scope; root owns decision",
+  "scope": "Identify a useful optocoupler artwork refinement reachable on normal generated boards before editing",
+  "normalProducer": "Rb56Plan.declarePower declares UFB as OPTOCOUPLER_4; Rb56PhysicalAssembly assigns its specification. No other normal generated-family producer found.",
+  "normalExclusion": "PlayerFamilyCatalog.currentRegistration registers Rb56PlayerFamilyCapability with normalPlayerEnabled=false. GenerationCoordinator rejects disabled families before normal execution/publication; Rb56QualificationVerifier.requireHeldCatalog asserts disabled registration.",
+  "physicalAdmissionIsSeparate": "MediumBoardNormalAdmission allows OPTOCOUPLER_4 under RB56_BOARD_NORMAL; that physical contract does not enable its normal-player catalog entry.",
+  "existingPaint": "Shared installed/loose MultiTerminalRenderer draws leads, body/marking, then transformed reference dot. OptocouplerRenderer already has rounded body, upper highlight, lower shadow, OPTO text and pin-one dot.",
+  "detailConflict": "Local body (90,25,160,140); left/right lead roots have centered 8x8 probe bounds. A center groove would cross the centered OPTO marking; edge detail risks lead/probe overlap.",
+  "decision": "No production change. Do not enable RB56 for an artwork task. Review normal-player ambiguity instead of duplicating existing paint.",
+  "limits": "Source inspection only. No optocoupler player run, image inspection, native/build gate, electrical, manufacturing, all-seed or performance claim.",
+  "consumedSources": {
+    "StandardPhysicalPartRenderProviders.java": "89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856",
+    "WorkbenchVisualTheme.java": "a2d94b7548b040c90933b6e5dc8278f5f7e648faec8fe65b08a9cbe595572ac3",
+    "PhysicalPackages.java": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+    "ChipPinout.java": "dbeab675c84294c9dbe6da81f7c5209c568872ff3171c5c77a361e58cc491cad",
+    "PhysicalPackageGeometry.java": "4bcb22f342dfdfc744dd85b4313f48b08037937b0b46e64b5bd7b068b70d75f9",
+    "PhysicalPartRenderContext.java": "1b5ec447992d60eb1d6322dc8e04f6f3f969c28b626bed9a453f005d3e02cb29",
+    "PcbPhysicalTransform.java": "f35036fc36a8f098725b8a39e068fd1c02b0403e86160c4a36e6dd766f8e3c2d",
+    "PlayerFamilyCatalog.java": "b104e12c5ab0931a927ea6004cca7378213c3d4143f171ebe1c86a33ebcd6a29",
+    "GenerationCoordinator.java": "d85d6d3c3319ccf5e5c0f07dbb6cd49082406fa87ecd64e1677c44a1a5b9a0af",
+    "Rb56Plan.java": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+    "Rb56PhysicalAssembly.java": "e314b24fe0808d26498ed0ae68f22a05e5815da9e8024ddcf3727edc2e6cedd5",
+    "Rb56PlayerFamilyCapability.java": "3d54cd35bfe2f889b6df75fc93de163a9cfac6b9f9f40ec0d401cb158580de7a",
+    "Rb56QualificationVerifier.java": "400599dfdd24370e04c06fae8cd939fc11d2fe2cbd7831f9ade449cecaa732f0",
+    "MediumBoardNormalAdmission.java": "f1051e4ae0cb2bd7bcb7517fcd0be4c8ea7136f47a6ac4d0e180cc69a7b309bc",
+    "Rb56Placement.java": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+  }
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **TO92 detail validated; publication review with prior cleanup limit**
+**Current task:** **TO92 published; artwork source NO_GO; exact NPN envelope review**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -85,8 +85,17 @@ original NPN physical restoration/loose tray/underside and LED OL→Shop330→ac
 recorded births exited, fresh retry APIclose0/profile/state absent/portreleased.
 An earlier selector error caused Node reset/failed player attempt; its profile
 cleanup was automatically blocked, retained with unknown exit code and no retry.
-Code acceptance does not mark that cleanup PASS. Root publication review next;
-no packing/epoch/budget change. [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).
+Code acceptance does not mark that cleanup PASS. Published01e306eb, normalpush0/
+exactorigin/252reviewed blobs/source1482+24 and fresh execution6 verified; no
+packing/epoch/budget change. Optocoupler source review is NO_GO: its only found
+producer RB56 remains disabled for normal play, and its painter already has the
+proposed bevel/highlight details. Source1482/machinery24/gate7/player8 and15
+consumed source hashes audit exact, actualexit0; no new build/native/browser
+needed for this documentation-only decision. Additional source review finds
+existing normal diode/LED cathode markings and relay labels adequate. Next:
+diagnose the exact accepted NPN board's sparse envelope before any planner edit.
+[Source decision and limits](task-evidence/PCB/optocoupler-source-review-r1/README.md).
+[Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).
 [Scope and finite acceptance](task-evidence/PCB/to92-molded-detail-r1/scope.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span

@@ -1,7 +1,7 @@
-# Current checkpoint: TO92 code/player validated; prior profile cleanup BLOCKED
+# Current checkpoint: TO92 published; optocoupler source NO_GO; prior cleanup BLOCKED
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact prior origin41b678b5034deda1a451c0175aa92aaf41d35efd. Continue
+HEAD/exact origin01e306eb94ca8218f227c75198d18989fc6fd5f5. Continue
 indefinite PCB realism/screenshots/optional leaves; no main/email/milestone stop.
 Preserve seven unrelated groups/private data and FOUR known blocked profile
 cleanup actions (three older, R2 partial17256). Never retry their deletion by
@@ -35,12 +35,25 @@ code unknown/noAPIclose. Native/build reused only after unchanged1482/24/7/8
 audit. One unattributed console404 disclosed; no captured pageerror/requestfailed.
 
 See R1/R2 RESULTS, current player-assessment/resource-census and archive/history.
-Root integrated source/evidence/privacy review PASS with prior cleanup BLOCKED
-explicitly retained. Explicit staged-blob/whitespace/commit/normalpush/exactorigin
-are next; code acceptance does not mark old failed profile cleanup PASS.
-Capacitor publication/execution receipts intended in this coherent commit.
-No packinggain/allseed/manufacturing/performance/fullmatrix claim. Next unstarted:
-read-only review of optocoupler body illustration through existing owner.
+Root integrated source/evidence/privacy and252 explicit staged/committed blobs
+PASS, normalpush0/exactremote/source1482+24 and fresh postpublication execution6
+verified. Only two existing docs normalizedCRLF→LF; tested owner/packets rawexact.
+Code publication does not mark prior failed profile cleanup PASS. R2 publication/
+postpublication receipts included in this documentation commit. Capacitor receipts
+now committed. No production/test/script delta; source remains89512645...
+No packinggain/allseed/manufacturing/performance/fullmatrix claim. Optocoupler
+source review is NO_GO: only found producer RB56 is disabled for normal play;
+physical-admission allowance does not enable it. Existing painter already has
+bevel/highlights/OPTO/reference dot; no useful artwork change selected. Optional
+read-only leaf made no files/executions. Root audit actualexit0 confirms all
+1482/24/7gate/8player and15 reviewed source hashes unchanged, with prior final
+assessments exact. No new build/native/browser needed for this docs-only task.
+See optocoupler-source-review-r1/README.md, source-review.json/input-audit.json.
+Additional source-only leaf review finds existing diode/LED reversal-derived
+cathode stripes/K labels and relay A1/A2/COM/NC/NO/SPDT adequate; no paint change.
+No tests/browser acceptance follows from that finding. Next exact NPN replay
+380469407799690561 sparse-envelope diagnosis through existing exporter, before
+any new planner scope/edit; root owns choice and acceptance.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 
