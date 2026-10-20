@@ -7,7 +7,14 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Legacy resistor references accepted; fresh normal-family visual sampling next**
+**Current task:** **First Protected/Dual/Relay sample accepted; empty resistor footprint feasibility next**
+
+Read-only first actual New board Protected/Dual/Relay results all admit and
+show untouched customerFAIL; every supply disconnected/tray0. Exact1482/24/
+compiled6 reuse audit passes before/after, no new native/build run. Four raw
+images inspected and three posted. Actual zoom/source review confirms existing
+TO-92 flat face, so no replacement paint selected. All6 task births exited,
+current profile/state absent/port released. [First-result evidence and limits](task-evidence/PCB/fresh-board-visual-r3/RESULTS.md).
 
 Sensor/NMOS/NPN/normal Relay/RB15 now declare conventional R marks and matching
 primary service captions through an explicit board-local factory. Stable IDs,

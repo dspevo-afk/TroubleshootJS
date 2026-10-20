@@ -1,0 +1,52 @@
+{
+  "status": "PASS_READ_ONLY_FIRST_RESULTS",
+  "baseCommit": "4934d4a05e743e88039fdacdc45a054e18961eeb",
+  "identities": {
+    "protected": {
+      "replay": "tsj-alpha/6/EASY/DIODE_PROTECTED_INDICATOR/-3095773799014904360",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    },
+    "dual": {
+      "replay": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/5196087953877956905",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    },
+    "relay": {
+      "replay": "tsj-alpha/6/EASY/RELAY_OUTPUT/838360342305795577",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    }
+  },
+  "admittedFirstResults": 3,
+  "retriesOrSubstitutions": 0,
+  "actions": 17,
+  "sourceReuse": "All1482 accepted source/24 machinery/gates5 and independent compiled6/served6 exact before/after; accepted prior native/build evidence reused only at this boundary; no new native/build/matrix run",
+  "player": "Each first normal EASY New board admitted, untouched customerFAIL, all outputs disconnected/BoardOFF/tray0 before leaving; no part/probe/measurement/repair/save mutation",
+  "visual": "Four raw1280x900 primary JPEGs inspected, three fitted images pasted in chat; fresh Relay uses conventional R1/R2 marks",
+  "images": {
+    "protected-fitted.jpg": {
+      "sha256": "6e25263366ec83a0d294e8d2b07847664eb64c144383eea5dc672a9b8d009493",
+      "bytes": 112928
+    },
+    "dual-fitted.jpg": {
+      "sha256": "1c0425ceb4c51f3304b957934de076049fd858d1938f1fd72332a45042ef18e2",
+      "bytes": 107169
+    },
+    "relay-fitted.jpg": {
+      "sha256": "b1f342da56522ea64a60266b56fd07d26e9214503a2555ee16d78ec6b96a177a",
+      "bytes": 112022
+    },
+    "relay-transistor-inspection.jpg": {
+      "sha256": "2b8f3ab55ce65c1e58235d359d5bc1bee4e44a88b4015a6056efd0fd65c9c89d",
+      "bytes": 78060
+    }
+  },
+  "postedInChat": [
+    "protected-fitted.jpg",
+    "dual-fitted.jpg",
+    "relay-fitted.jpg"
+  ],
+  "observation": "Initial fitted transistor body looked oval; actual wheel close-up shows existing flat lower face. Separate read-only source owner review confirms it; no paint defect/fix claimed.",
+  "console": "279 entries=278log+1unattributed resource404; raw private/hash-bound, page/request/observed-response errors0; no clean-console attribution",
+  "cleanup": "All6 recorded births exited; API browser0/current profile absent; maintained stop2.0978425s/state absent/8907 released; older blocked profiles/private resources retained",
+  "next": "Read-only source feasibility for inert empty axial resistor assembly outlines; actual normal removal baseline required before any production scope selection",
+  "limits": "Three first normal family results only; no all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/newFileReader/full-matrix claim"
+}

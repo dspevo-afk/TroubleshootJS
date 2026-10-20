@@ -1,4 +1,45 @@
-# Current checkpoint: legacy resistor references accepted; publication pending
+# Current checkpoint: first Protected/Dual/Relay sample accepted; publication pending
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
+HEAD/exact origin4934d4a05e743e88039fdacdc45a054e18961eeb; normal reference
+publication196 paths verified, receipt untracked/intended next coherent commit.
+Indefinite PCB realism/screenshots/optional leaves; no final/main/email.
+Original5/private baseline/cache/COPY/pointers and3 blocked profiles preserved.
+
+fresh-board-visual-r3 READ-ONLY: first actual EASY New board Protected root
+-3095773799014904360, Dual5196087953877956905, Relay838360342305795577.
+All3 first results admit, untouched customerFAIL, exact public6/build
+47CB6E7FB2C6397086F05F5DFA2345EB. Protected12V/Dual5V/Relay5V+5V+12V all
+independently disconnected; each finalBoardOFF/tray0, no part/probe/measurement/
+repair/save mutation.17 logged actions allPASS, no timeout/retry/substitution.
+Four raw1280x900 primary views inspected, three fitted images pasted in chat.
+Fresh Relay R1/R2 confirms declaration policy in an actual new random result.
+
+All1482 consumed accepted sources/24 machinery/gates5 exact before/after;
+independent compiled6 and served6 equal prior actual final post-player proof.
+Accepted fixture2115/contracts15/census44/GWT5 reused ONLY at unchanged boundary;
+no new native/build/full-matrix run. Root reader PASS. Console279=278logs+1
+unattributed404; raw private/hash-bound; page/request/observed-response errors0,
+no clean-console attribution. All6 recorded births exited, browserAPI0/current
+profile absent, maintained stop2.0978425s/state absent/8907 released. fp*/rr*
+Node bindings persist closed; old logs/pointers retained. No task OS process live.
+
+Actual wheel close-up disproved initial oval-body concern: existing flat face
+visible. Read-only Luna MAX to92_shape_scope confirms transformed terminal1 root
+orients shared clipped painter; hit rectangles separate. No edits/execution by
+reviewer, no replacement shape selected. Source-hash-bound rejection recorded.
+Raw body09 lines30/files10 retained via exact artifact attributes; packet privacy
+scan47 text files PASS. Root staged/raw/canonical/final diff/publication pending.
+
+Fresh read-only Luna MAX passive_footprint_scope owns NO files, investigating
+whether empty axial resistor assembly outlines already exist and safe ownership/
+fixture seams if absent. No production implementation selected; actual normal
+powerOFF removal baseline required before any change. Next finish sample's
+explicit docs/evidence commit/push/exact SHA, then evaluate source result and
+bound that baseline. No new-size/all-seed/manufacturing/performance/Edge/CDP/
+newFileReader/unrelated full-matrix claim. Continue authorized work.
+
+# Previous checkpoint: legacy references accepted before publication
 
 2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
 Accepted candidate based on HEAD/exact origin79baf499dd8c14a1ed5e8aa049611026b2077e22;

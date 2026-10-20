@@ -1,0 +1,22 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "4934d4a05e743e88039fdacdc45a054e18961eeb",
+  "message": "Use conventional resistor marks on normal PCBs",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "normalPushExitCode": 0,
+  "exactRemoteHeadVerified": true,
+  "acceptedPaths": 196,
+  "publishedByteComparison": {
+    "priorReviewedIndexBlobsExact": 195,
+    "finalReviewRawExact": true,
+    "workingInputs1482Unchanged": true
+  },
+  "validation": "Fixture2115,contracts15,census44,actual final JDK8/GWT5 and actual player service/OL/330Ohm/customerPASS; retained failures/limits explicit in RESULTS.md",
+  "resources": "All16 recorded births exited/current profile/state absent/8907 released; prior blocked profiles/private resources and unrelated artifacts retained",
+  "mainMerge": "NOT_DONE per user",
+  "email": "DISABLED by user; no notification attempted",
+  "nextUnstarted": "First normal New board Protected/Dual/Relay read-only visual sampling",
+  "receipt": "Created after verified publication; intended next coherent commit"
+}

@@ -1,0 +1,55 @@
+{
+  "currentProfileAbsent": true,
+  "port8907Released": true,
+  "status": "PASS",
+  "browserApiExit0": true,
+  "limits": "All recorded drivers/worker/browser exited; no termination/manual deletion; three older policy-blocked profiles and private logs/pointers preserved",
+  "elapsedObservationSeconds": 0.4914577,
+  "managedStateAbsent": true,
+  "recordedBirths": 6,
+  "actualPreviewStopExecExitCode": 0,
+  "checks": [
+    {
+      "kind": "preview-process-launch.json",
+      "pid": 6920,
+      "startTicks": "639281083029866313",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "kind": "preview-process-launch.json",
+      "pid": 14816,
+      "startTicks": "639281083032945333",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "kind": "preview-stop-process-launch.json",
+      "pid": 17208,
+      "startTicks": "639281085855452230",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "kind": "preview-stop-process-launch.json",
+      "pid": 23828,
+      "startTicks": "639281085857798819",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "kind": "preview-owner-before.json",
+      "pid": 23964,
+      "startTicks": "639281083068276349",
+      "executable": "powershell.exe",
+      "recordedBirthExited": true
+    },
+    {
+      "kind": "browser-owner.json",
+      "pid": 32388,
+      "startTicks": "639281083220483583",
+      "executable": "brave.exe",
+      "recordedBirthExited": true
+    }
+  ]
+}

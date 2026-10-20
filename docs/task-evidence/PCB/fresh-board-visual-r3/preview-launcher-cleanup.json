@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "actualExecExitCode": 0,
+  "scope": "Root after actual exec22391 exit0; no termination",
+  "launchSha256": "156fb5b264dbcccce931b843734d4a60c6a7e89e0c1fc0de538cce064ee5c1e1",
+  "checks": [
+    {
+      "pid": 6920,
+      "startTicks": "639281083029866313",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 14816,
+      "startTicks": "639281083032945333",
+      "executable": "pwsh",
+      "recordedBirthExited": true
+    }
+  ]
+}

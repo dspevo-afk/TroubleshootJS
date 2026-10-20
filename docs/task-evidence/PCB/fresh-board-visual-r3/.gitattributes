@@ -1,0 +1,11 @@
+* -text whitespace=cr-at-eol
+dual-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+dual-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+dual-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+protected-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+protected-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+protected-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+relay-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+relay-first-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+relay-original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+relay-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol

@@ -1,0 +1,11 @@
+{
+  "rootDecision": "Reject proposed replacement silhouette; current source already expresses the feature.",
+  "source": "NPN/NMOS providers pass transformed terminal1 lead root to shared drawTransistorBody; clipped body/gloss ellipses leave flat chord toward collector/drain. Context projects installed/loose poses; existing hit/body/selection rectangles separate from paint.",
+  "limits": "Read-only source inspection, no reviewer test/build/browser execution, no production edit or new manufacturing/pose qualification claim",
+  "observed": "Actual higher-zoom Q1 body has a flat face; initial fitted oval concern was not a defect.",
+  "reviewer": "Luna MAX read-only to92_shape_scope",
+  "evidenceImage": "relay-transistor-inspection.jpg",
+  "contextSha256": "1b5ec447992d60eb1d6322dc8e04f6f3f969c28b626bed9a453f005d3e02cb29",
+  "rendererSha256": "ab6e747785d5bcedbfeb55e611b4426b88a1e0d02fe7fbe23c7aaed819fb2ba4",
+  "status": "NO_CHANGE_WARRANTED"
+}

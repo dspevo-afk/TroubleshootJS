@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Open accepted plain production preview",
+    "status": "PASS",
+    "elapsedSeconds": 0.612
+  },
+  {
+    "name": "First actual EASY Protected New board request",
+    "status": "PASS",
+    "elapsedSeconds": 0.051
+  },
+  {
+    "name": "Accept first Protected ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.109
+  },
+  {
+    "name": "Untouched first Protected customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.067
+  },
+  {
+    "name": "Disconnect Protected supply before leaving",
+    "status": "PASS",
+    "elapsedSeconds": 0.074
+  },
+  {
+    "name": "Record first Protected signed-long public identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.098
+  },
+  {
+    "name": "First actual EASY Dual indicator New board request",
+    "status": "PASS",
+    "elapsedSeconds": 0.047
+  },
+  {
+    "name": "Accept first Dual indicator ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.06
+  },
+  {
+    "name": "Untouched first Dual indicator customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.064
+  },
+  {
+    "name": "Disconnect Dual indicator supply before leaving",
+    "status": "PASS",
+    "elapsedSeconds": 0.059
+  },
+  {
+    "name": "Record first Dual signed-long public identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.081
+  },
+  {
+    "name": "First actual EASY Relay New board request",
+    "status": "PASS",
+    "elapsedSeconds": 0.045
+  },
+  {
+    "name": "Accept first Relay ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.241
+  },
+  {
+    "name": "Untouched first Relay customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.449
+  },
+  {
+    "name": "Disconnect all three Relay supplies",
+    "status": "PASS",
+    "elapsedSeconds": 0.657
+  },
+  {
+    "name": "Inspect Relay transistor with real wheel zoom",
+    "status": "PASS",
+    "elapsedSeconds": 0.061
+  },
+  {
+    "name": "Record first Relay signed-long public identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.412
+  }
+]

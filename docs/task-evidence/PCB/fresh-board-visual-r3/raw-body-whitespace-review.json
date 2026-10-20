@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "scope": "Exact raw body files only;09 meter layout lines preserved unchanged; no source-wide whitespace suppression",
+  "files": {
+    "dual-final-off-body.txt": {
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "dual-first-ticket-body.txt": {
+      "sha256": "a912d8b8a6baa0792da7d31535e29ebe854ec7ed418c411ef857e3d365f03766",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "dual-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "protected-final-off-body.txt": {
+      "sha256": "0bd411240529cf5445ee7979d709f0fe85b183b7ef4ae9ffd5bc58e0389ca0c6",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "protected-first-ticket-body.txt": {
+      "sha256": "bdd0891a19c375971caa264344445dceecfa461bbaf00ebd264dacd3a3c67e3e",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "protected-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "relay-final-off-body.txt": {
+      "sha256": "62349aed893589dbb2621cdb9282efef34d7e3244eb2f86c93b436f63a905c80",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "relay-first-ticket-body.txt": {
+      "sha256": "63b2d16bfdeb8c6ed5d3bed1219e2133568e2c8cac0d48748a1e3c0b299bfcf0",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "relay-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "relay-supplies-body.txt": {
+      "sha256": "592d5f29a805769b4b018c2f692dae44eec89d34188729a2e960862112323a06",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    }
+  },
+  "lineCount": 30
+}
