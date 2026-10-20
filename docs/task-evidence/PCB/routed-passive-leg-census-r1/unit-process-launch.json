@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 5044,
+      "startTicks": "639280513087781931",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-leg-census-r1/run_native.ps1"
+    },
+    {
+      "pid": 3736,
+      "startTicks": "639280513090143530",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-passive-leg-census-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native routed-passive-leg phase; unique source copy"
+}

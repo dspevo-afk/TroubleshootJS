@@ -1,0 +1,1 @@
+PASS: PCB routed passive leg census contracts assertions=40 fixtures=6 evaluator=endpointLegCensus

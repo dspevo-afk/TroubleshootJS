@@ -1,0 +1,492 @@
+{
+  "status": "PASS",
+  "scope": "Descriptive structural endpoint advisory only",
+  "phase": "FINALIZED_ROUTE_CANDIDATE",
+  "assessmentSha256": "8204aed98bb802a4bf1b00ee456fb01c20ef98ef8e7d955c1b1541d0fa774e33",
+  "routesLogSha256": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+  "cases": [
+    {
+      "seed": "5",
+      "version": 15,
+      "aggregate": {
+        "callbackCount": 1,
+        "targetCallbackCount": 0,
+        "partCount": 0,
+        "eligiblePartCount": 0,
+        "eligibleDirectionCount": 0,
+        "rejectedDirectionCount": 0
+      },
+      "packageCounts": {},
+      "directionReasonCounts": {},
+      "structurallyEligibleDirections": [],
+      "negativeAnalyticDeltaDirections": 0,
+      "zeroAnalyticDeltaDirections": 0,
+      "positiveAnalyticDeltaDirections": 0
+    },
+    {
+      "seed": "2",
+      "version": 15,
+      "aggregate": {
+        "callbackCount": 1,
+        "targetCallbackCount": 1,
+        "partCount": 56,
+        "eligiblePartCount": 36,
+        "eligibleDirectionCount": 46,
+        "rejectedDirectionCount": 178
+      },
+      "packageCounts": {
+        "AXIAL_DIODE": 8,
+        "AXIAL_FUSE": 1,
+        "AXIAL_RESISTOR": 21,
+        "E04_DECISION_CONTROL_5": 2,
+        "ISOLATED_CONVERTER_7": 1,
+        "OPTOCOUPLER_4": 1,
+        "RADIAL_CERAMIC_CAPACITOR": 4,
+        "RADIAL_ELECTROLYTIC_CAPACITOR": 3,
+        "RADIAL_INDUCTOR_2": 1,
+        "RELAY_SPDT": 2,
+        "THROUGH_HOLE_CONNECTOR_2": 4,
+        "THROUGH_HOLE_LED": 3,
+        "THROUGH_HOLE_OUTPUT_HEADER_2": 2,
+        "TO220_REGULATOR_4": 1,
+        "TO92_NMOS": 2
+      },
+      "directionReasonCounts": {
+        "COLLAPSE": 3,
+        "ELIGIBLE": 46,
+        "NON_PARALLEL_SHIFT": 95,
+        "PART_INELIGIBLE": 80
+      },
+      "structurallyEligibleDirections": [
+        {
+          "componentId": "C5",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -10
+        },
+        {
+          "componentId": "C5",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 10
+        },
+        {
+          "componentId": "CBIAS",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "CBIAS",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "CFB",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "CFB",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "CFLT_A",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "COUT",
+          "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "COUT",
+          "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "D1",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "D1",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "D3",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "D3",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "D4",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "D4",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "DA",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "DA",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "DB",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "DB",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "DFREE",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": -10
+        },
+        {
+          "componentId": "DFREE",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 10
+        },
+        {
+          "componentId": "DZ1",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "DZ1",
+          "packageId": "AXIAL_DIODE",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RDA",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RDA",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "REN",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RENAC",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RENAC",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RFB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RFB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RLED12",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RLED12",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RLEDOUT_B",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RLEDOUT_B",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "ROUT",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "ROUT",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RPRIMARY",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RPRIMARY",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RREF_LB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": -10,
+          "dy": 0,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RREF_LB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 10,
+          "dy": 0,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RSA",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 20
+        },
+        {
+          "componentId": "RSA",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RSB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RSB",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 0
+        },
+        {
+          "componentId": "RSENSE",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": -10,
+          "analyticCopperDelta": -20
+        },
+        {
+          "componentId": "RSENSE",
+          "packageId": "AXIAL_RESISTOR",
+          "strategy": "P07_FULLER_TWO_LAYER",
+          "attempt": 2,
+          "dx": 0,
+          "dy": 10,
+          "analyticCopperDelta": 20
+        }
+      ],
+      "negativeAnalyticDeltaDirections": 14,
+      "zeroAnalyticDeltaDirections": 17,
+      "positiveAnalyticDeltaDirections": 15
+    }
+  ],
+  "physicalFeasibility": "NOT_EVALUATED",
+  "actualMoves": 0,
+  "newRouteRequests": 0,
+  "policyChange": "NONE",
+  "limits": [
+    "Structural endpoint facts only; no package/pad/trace/hole is moved",
+    "All geometry/contact/access/domain/clearance/routability feasibility and shrinkage remain NOT_EVALUATED",
+    "Two informed accepted15 roots only; no unseen/allseed/solver/manufacturing/performance claim",
+    "Analytic copperDelta is sum(new end-leg Manhattan length minus old length), not a physical routed candidate",
+    "Source graph before firstcallback and afterhelper; same-callback geometry hashes bracket readonlyanalysis"
+  ]
+}

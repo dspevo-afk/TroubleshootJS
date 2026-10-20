@@ -244,6 +244,19 @@ COPY1470 restored1467/retired,4 births exited; main1475/default15/general16 unch
 22 stays rejected. No policy/fitness/GWT/player claim. Next assess local compaction
 after an existing routed success without extra route requests.
 [Successful-pool measurement and limits](task-evidence/PCB/successful-route-pool-r1/RESULTS.md).
+Read-only endpoint-leg census now reproduces informed5/2's accepted15 selected
+layouts,42 non-time fields and whitespace exactly. Native unit1 PASS44.866s
+(40 assertions/6 groups),routes1 PASS60.708s;42 synthetic reader/12 actual host
+cases and root integrated review pass. Existing seed2 P07@2 has56 components,
+36 eligible passive packages and46 structural10-unit directions:14 analytic
+copper reductions,17 zero changes,15 increases. The31 nonincreasing directions
+span23 components; physical feasibility and actual shrinkage remain unmeasured.
+Seed5's successful5 is explicitly non-target; failed2 stays failed. No package,
+trace, hole, route request, selector, interpretation or production policy changes.
+COPY1469 restored1467/retired,4 births exited; main1475/default15/general16 exact.
+Next construct and validate one generic first nonincreasing private candidate,
+including full conductor/contact correspondence, without another route call.
+[Endpoint census and limits](task-evidence/PCB/routed-passive-leg-census-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

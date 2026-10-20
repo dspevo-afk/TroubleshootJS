@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "scope": "Accepted15 read-only routed passive endpoint-leg census; no move/reroute/policy/fitness change",
+  "roots": [
+    "5",
+    "2"
+  ],
+  "versions": [
+    15
+  ],
+  "density": 14,
+  "phase": "FINALIZED_ROUTE_CANDIDATE",
+  "unitFixtureCount": 6,
+  "evaluator": "endpointLegCensus",
+  "routePassDetail": "roots=2 rows=2 evaluator=endpointLegCensus",
+  "summaryPrefix": "PCB_ROUTED_LEG_CENSUS ",
+  "casePrefix": "PCB_ROUTED_LEG_CASE ",
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "reportOrder": "WHITESPACE then one CENSUS then one CASE per seed; terminal suite PASS after bothseeds",
+  "summaryFields": [
+    "seed",
+    "label",
+    "version",
+    "phase",
+    "status",
+    "physicalFeasibility",
+    "graphHashBefore",
+    "graphHashAfter",
+    "successfulCallbacks",
+    "aggregate"
+  ],
+  "callbackFields": [
+    "index",
+    "strategy",
+    "attempt",
+    "target",
+    "geometryHashBefore",
+    "geometryHashAfter",
+    "parts"
+  ],
+  "partFields": [
+    "componentId",
+    "packageId",
+    "eligiblePackage",
+    "eligibilityReason",
+    "knownExtraCenterlineContact",
+    "extraCenterlineContactCount",
+    "pads",
+    "directions"
+  ],
+  "padFields": [
+    "padId",
+    "netId",
+    "x",
+    "y",
+    "incidents"
+  ],
+  "incidentFields": [
+    "traceIndex",
+    "traceSourceId",
+    "traceNetId",
+    "layer",
+    "width",
+    "endRole",
+    "endpointX",
+    "endpointY",
+    "neighborX",
+    "neighborY"
+  ],
+  "directionFields": [
+    "dx",
+    "dy",
+    "eligible",
+    "reason",
+    "copperDelta"
+  ],
+  "aggregateFields": [
+    "callbackCount",
+    "targetCallbackCount",
+    "partCount",
+    "eligiblePartCount",
+    "eligibleDirectionCount",
+    "rejectedDirectionCount"
+  ],
+  "directions": [
+    [
+      -10,
+      0
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      0,
+      -10
+    ],
+    [
+      0,
+      10
+    ]
+  ],
+  "eligibilityReasons": [
+    "MISSING_PLACEMENT_CONSTRAINT",
+    "UNSUPPORTED_PACKAGE",
+    "ANCHOR_NOT_NONE",
+    "CONNECTOR",
+    "ISOLATION_BODY",
+    "ELIGIBLE"
+  ],
+  "directionReasons": [
+    "PART_INELIGIBLE",
+    "TERMINAL_COUNT_NOT_TWO",
+    "EXTRA_CENTERLINE_CONTACT",
+    "MISSING_EXPLICIT_ENDPOINT",
+    "MISSING_TRACE_SOURCE_ID",
+    "TRACE_NET_MISMATCH",
+    "ENDPOINT_COORDINATE_MISMATCH",
+    "ZERO_LENGTH_LEG",
+    "SAME_TRACE_BOTH_TERMINALS",
+    "NON_PARALLEL_SHIFT",
+    "COLLAPSE",
+    "REVERSE",
+    "ELIGIBLE"
+  ],
+  "passivePackageIds": [
+    "AXIAL_RESISTOR",
+    "AXIAL_DIODE",
+    "RADIAL_ELECTROLYTIC_CAPACITOR",
+    "RADIAL_CERAMIC_CAPACITOR"
+  ],
+  "targetStrategy": "P07_FULLER_TWO_LAYER",
+  "targetAttempt": 2,
+  "timingScope": "Native routed passive leg census; unchanged per-JVM/search/physical limits",
+  "maxPhaseElapsedSeconds": 36000,
+  "maxCaseMillis": 60000,
+  "maxFileBytes": 67108864,
+  "publishedInputs": {
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/root-review.json": "086c30422719fdfd80010b9888408800124ec40be30191a98554df18f87551f6",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+  },
+  "pureReaderSupport": {
+    "path": "docs/task-evidence/PCB/global-pocket-descent-trial-r1/assess.py",
+    "sha256": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86"
+  },
+  "suiteManifestSha256": {
+    "unit-suites.json": "5b928a7dd699dedb6411a9e44de4ec61c30864371417ccd9bb22cb4d0791f968",
+    "routes-suites.json": "9d2cd9c7324b5c2c745be009e4622e5b55e3346652dba48a539aa0c483f4ecd1"
+  },
+  "limits": [
+    "Structural endpoint facts only; no package/pad/trace/hole is moved",
+    "All geometry/contact/access/domain/clearance/routability feasibility and shrinkage remain NOT_EVALUATED",
+    "Two informed accepted15 roots only; no unseen/allseed/solver/manufacturing/performance claim",
+    "Analytic copperDelta is sum(new end-leg Manhattan length minus old length), not a physical routed candidate",
+    "Source graph before firstcallback and afterhelper; same-callback geometry hashes bracket readonlyanalysis"
+  ]
+}

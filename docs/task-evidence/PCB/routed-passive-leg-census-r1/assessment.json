@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "Accepted15 read-only routed passive endpoint-leg census; no move/reroute/policy/fitness change",
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "protocolSha256": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+  "priorAssessSha256": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/root-review.json": "086c30422719fdfd80010b9888408800124ec40be30191a98554df18f87551f6",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+  },
+  "unitPrerequisiteSha256": "b945c7f9d31fe111adee69e17fe9ddd8f7a375ec62e0f8ab21339e53c4abd83b",
+  "routesSuiteManifestSha256": "9d2cd9c7324b5c2c745be009e4622e5b55e3346652dba48a539aa0c483f4ecd1",
+  "routePhaseInputsSha256": {
+    "routes.txt": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+    "routes-receipt.txt": "2e7f571c438187b4e9265f45f4f58e267307c6e9f811427424bc595e2fed6ce1",
+    "routes-timing.json": "f0d39302105ab06a9a999115ac6615c7bb46115fe5a19a163f11db2b1c74cb6b"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 1,
+      "suiteClasses": [
+        "PcbRoutedPassiveLegCensusTrialContractTest"
+      ],
+      "reportRows": 6,
+      "orderedMarkers": [
+        "PCB routed passive leg census trial contracts "
+      ],
+      "census": {
+        "status": "PASS",
+        "scope": "Accepted15 read-only routed passive endpoint-leg census; no move/reroute/policy/fitness change",
+        "roots": 2,
+        "rows": 2,
+        "selectedCaseRows": 2,
+        "whitespaceRows": 2,
+        "successfulCallbacks": 2,
+        "cases": [
+          {
+            "seed": "5",
+            "callbackCount": 1,
+            "targetCallbackCount": 0,
+            "partCount": 0,
+            "eligiblePartCount": 0,
+            "eligibleDirectionCount": 0,
+            "rejectedDirectionCount": 0
+          },
+          {
+            "seed": "2",
+            "callbackCount": 1,
+            "targetCallbackCount": 1,
+            "partCount": 56,
+            "eligiblePartCount": 36,
+            "eligibleDirectionCount": 46,
+            "rejectedDirectionCount": 178
+          }
+        ],
+        "observationDisposition": "PASS0; read-only endpoint-leg census only",
+        "physicalFeasibility": "NOT_EVALUATED",
+        "fitnessDisposition": "NOT_EVALUATED"
+      }
+    }
+  },
+  "observationDisposition": "PASS0; read-only endpoint-leg census only",
+  "fitnessDisposition": "NOT_EVALUATED",
+  "policyDisposition": "NO_POLICY_OR_ACCEPTANCE_CHANGE",
+  "productionChange": "NONE",
+  "limits": [
+    "Structural endpoint facts only; no package/pad/trace/hole is moved",
+    "All geometry/contact/access/domain/clearance/routability feasibility and shrinkage remain NOT_EVALUATED",
+    "Two informed accepted15 roots only; no unseen/allseed/solver/manufacturing/performance claim",
+    "Analytic copperDelta is sum(new end-leg Manhattan length minus old length), not a physical routed candidate",
+    "Source graph before firstcallback and afterhelper; same-callback geometry hashes bracket readonlyanalysis"
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "fixtureCount": 6,
+  "canaryCount": 42,
+  "positiveCount": 12,
+  "negativeCount": 30,
+  "readerFixtureCount": 9,
+  "consumedSha256": {
+    "assess.py": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+    "check_assessment.py": "7ced556428f8412593b2658d2a1a0b36aec954075b7e4a5038a895ec016a1940",
+    "protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "priorAssess.py": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+      "docs/task-evidence/PCB/successful-route-pool-r1/root-review.json": "086c30422719fdfd80010b9888408800124ec40be30191a98554df18f87551f6",
+      "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "5b928a7dd699dedb6411a9e44de4ec61c30864371417ccd9bb22cb4d0791f968",
+      "routes-suites.json": "9d2cd9c7324b5c2c745be009e4622e5b55e3346652dba48a539aa0c483f4ecd1"
+    }
+  },
+  "results": [
+    {
+      "case": "valid unit phase",
+      "result": "PASS"
+    },
+    {
+      "case": "valid routes phase with both roots",
+      "result": "PASS"
+    },
+    {
+      "case": "positive aggregate census counts",
+      "result": "PASS"
+    },
+    {
+      "case": "valid signed copper deltas -20 0 +20",
+      "result": "PASS",
+      "expectedReasons": [
+        "ELIGIBLE",
+        "ELIGIBLE",
+        "NON_PARALLEL_SHIFT",
+        "NON_PARALLEL_SHIFT"
+      ],
+      "expectedDeltas": [
+        -20,
+        20,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "valid zero copper deltas",
+      "result": "PASS",
+      "expectedReasons": [
+        "ELIGIBLE",
+        "ELIGIBLE",
+        "NON_PARALLEL_SHIFT",
+        "NON_PARALLEL_SHIFT"
+      ],
+      "expectedDeltas": [
+        0,
+        0,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported null trace source",
+      "result": "PASS",
+      "expectedReasons": [
+        "MISSING_TRACE_SOURCE_ID",
+        "MISSING_TRACE_SOURCE_ID",
+        "MISSING_TRACE_SOURCE_ID",
+        "MISSING_TRACE_SOURCE_ID"
+      ],
+      "expectedDeltas": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported missing explicit endpoint",
+      "result": "PASS",
+      "expectedReasons": [
+        "MISSING_EXPLICIT_ENDPOINT",
+        "MISSING_EXPLICIT_ENDPOINT",
+        "MISSING_EXPLICIT_ENDPOINT",
+        "MISSING_EXPLICIT_ENDPOINT"
+      ],
+      "expectedDeltas": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported trace net mismatch",
+      "result": "PASS",
+      "expectedReasons": [
+        "TRACE_NET_MISMATCH",
+        "TRACE_NET_MISMATCH",
+        "TRACE_NET_MISMATCH",
+        "TRACE_NET_MISMATCH"
+      ],
+      "expectedDeltas": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported extra centerline contact",
+      "result": "PASS",
+      "expectedReasons": [
+        "EXTRA_CENTERLINE_CONTACT",
+        "EXTRA_CENTERLINE_CONTACT",
+        "EXTRA_CENTERLINE_CONTACT",
+        "EXTRA_CENTERLINE_CONTACT"
+      ],
+      "expectedDeltas": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported same trace terminals",
+      "result": "PASS",
+      "expectedReasons": [
+        "SAME_TRACE_BOTH_TERMINALS",
+        "SAME_TRACE_BOTH_TERMINALS",
+        "SAME_TRACE_BOTH_TERMINALS",
+        "SAME_TRACE_BOTH_TERMINALS"
+      ],
+      "expectedDeltas": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported collapse",
+      "result": "PASS",
+      "expectedReasons": [
+        "COLLAPSE",
+        "ELIGIBLE",
+        "NON_PARALLEL_SHIFT",
+        "NON_PARALLEL_SHIFT"
+      ],
+      "expectedDeltas": [
+        null,
+        0,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "reported reverse",
+      "result": "PASS",
+      "expectedReasons": [
+        "ELIGIBLE",
+        "REVERSE",
+        "NON_PARALLEL_SHIFT",
+        "NON_PARALLEL_SHIFT"
+      ],
+      "expectedDeltas": [
+        20,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "case": "duplicate summary key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unexpected summary key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "wrong typed target boolean",
+      "result": "REJECTED"
+    },
+    {
+      "case": "foreign but equal graph anchor",
+      "result": "REJECTED"
+    },
+    {
+      "case": "selected 42-field drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "successful callback sequence drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "target callback filter drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "package eligibility drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "target package marked unsupported",
+      "result": "REJECTED"
+    },
+    {
+      "case": "traceNetId drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "traceIndex bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing trace source identity",
+      "result": "REJECTED"
+    },
+    {
+      "case": "endpoint coordinate drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero length leg",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing explicit endpoint",
+      "result": "REJECTED"
+    },
+    {
+      "case": "terminal count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "traceIndex same-trace drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "nonparallel direction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "collapse direction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "reverse direction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "copper delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "known extra-contact drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "aggregate drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "suite marker drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "receipt report mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "routes PASS before reports",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protocol pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "published input pin drift",
+      "result": "REJECTED"
+    }
+  ]
+}

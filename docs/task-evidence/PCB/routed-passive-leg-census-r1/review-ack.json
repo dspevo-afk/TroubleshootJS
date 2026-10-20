@@ -1,0 +1,15 @@
+{
+  "rootReviewed": true,
+  "scope": "Integrated static5-source-delta review, accepted owner erasure, readonly snapshots, six literal native fixture groups and independent reader semantics",
+  "diffSha256": "86faf1682a0d080f9e74883815459e3d6edcbf6e6544c66d02957618850ab654",
+  "syntheticReaderCases": 42,
+  "syntheticReaderPositiveCases": 12,
+  "syntheticReaderRejectedCases": 30,
+  "literalReaderFixtures": 9,
+  "actualHostTransportCases": 12,
+  "nativeFixtureExecution": "NOT_RUN",
+  "nativeRoutesExecution": "NOT_RUN",
+  "independentFinalSourceReview": "NOT_RUN",
+  "readerNotesSha256": "672fb8002618d8f81357f995cd84ce7b38b89eaa1d544674abb25ddb09139114",
+  "workerNotesSha256": "29f229e0404f00173b46e3ec8582e0c2f09ad8a997111a82a6435c4a2996afe4"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Read-only structural census; no physical move or policy change",
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "main1475Exact": true,
+  "publishedPoolInputsExact": true,
+  "frozenGates": 28,
+  "sourceDeltas": 5,
+  "acceptedGeneratorWitnessRegistryErasureExact": true,
+  "syntheticReaderCases": 42,
+  "actualTransportCases": 12,
+  "unitSuites": 1,
+  "unitFixtures": 6,
+  "routeSuites": 1,
+  "selectedRowsExact42Fields": 2,
+  "successfulCallbacks": 2,
+  "recordedDriverBirthsExited": 4,
+  "copyRestored1467AndRetired": true,
+  "physicalFeasibility": "NOT_EVALUATED",
+  "productionPolicyFitnessChange": "NONE",
+  "GwtPlayerSolverFullMatrixAllSeed": "NOT_RUN"
+}

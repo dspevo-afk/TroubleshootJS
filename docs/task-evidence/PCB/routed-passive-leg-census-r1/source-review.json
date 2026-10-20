@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "acceptedGeneratorErasureExact": true,
+  "acceptedPhysicalWitnessErasureExact": true,
+  "verifierCoreExact": true,
+  "registeredNewSuites": [
+    "PcbRoutedPassiveLegCensusContractTest",
+    "PcbRoutedPassiveLegCensusTrialContractTest"
+  ],
+  "diffSha256": "86faf1682a0d080f9e74883815459e3d6edcbf6e6544c66d02957618850ab654"
+}

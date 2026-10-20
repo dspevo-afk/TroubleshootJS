@@ -1,4 +1,37 @@
-# Current checkpoint: successful route pool measured; routed-local scope audit next
+# Current checkpoint: accepted15 routed endpoint-leg census complete for publication
+
+2026-10-19 local. Base HEAD66f8d67476288e90fca797e4fb0957c13c550dd8 on
+codex/q60-faulted-profile-counts, exact origin verified at scope start. Indefinite
+continuation active; no main/email. Production/main1475/default15/general16 exact;
+original5 entries preserved. No physical move or new interpretation/policy.
+
+Fresh native unit1 PASS44.8656682s/exit0:40 assertions/6 fixture groups. Routes1
+PASS60.7079556s/exit0: informed5 then2, version15 only,2 actual success callbacks;
+all42 non-time selected fields/whitespace/source graphs/work/geometry exact.
+Seed5 success5 is non-target, failed2 remains failed. Seed2 P07@2 reports56 parts,
+36 eligible passive packages,46 structural directions:14 negative/17 zero/15
+positive analytic copper deltas.31 nonincreasing directions span23 parts. No
+geometry/contact/clearance/domain/access/routability or shrinkage proof inferred.
+
+Root fresh reader42(12positive/30rejected/9 literal fixtures),actual singleton
+PowerShell transport12, accepted owner erasure and integrated review PASS.
+Frozen1469/3overrides/2adds/28gates exact; restored1467/retired, private pointer
+removed,4 recorded driver births exited without termination. No native/browser/
+preview/profile active. Native phases include maintained terminal cleanup;
+recorded-driver verification is separately measured. GWT/player/solver/repair/
+full matrix/unseen/all-seed/manufacturing/general performance NOT RUN.
+
+Pre-freeze insertion/parser/eligibility/fixture/canary corrections and the root
+checker CLI overwrite refusal remain explicit in source-audit/RESULTS. No source
+or oracle changed after native execution. Root integrated source/reader review;
+separate implementation/reader leaves, no independent final-source review claim.
+One read-only leaf now audits exact APIs for a generic first-nonincreasing private
+candidate and full conductor correspondence; no implementation selected yet.
+Next publish explicit evidence/docs, verify remote SHA, then finish that finite
+construction scope without another route request or live-selected mutation.
+Evidence: docs/task-evidence/PCB/routed-passive-leg-census-r1/RESULTS.md.
+
+# Previous checkpoint: successful route pool complete for publication
 
 2026-10-19. Base HEAD `27521289793b21ddfe636d0f6975e962797ebab9` on
 `codex/q60-faulted-profile-counts`, exact origin verified at scope start. Observation

@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Known prefixes only; no status/assertion/timing changes",
+  "files": [
+    {
+      "file": "routes.txt",
+      "rawSha256": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+      "sanitizedSha256": "ea6076b1189b44ada29a7638e5892990cd7271117594a875d28a485f2012f22e",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "routes-receipt.txt",
+      "rawSha256": "2e7f571c438187b4e9265f45f4f58e267307c6e9f811427424bc595e2fed6ce1",
+      "sanitizedSha256": "2e7f571c438187b4e9265f45f4f58e267307c6e9f811427424bc595e2fed6ce1",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

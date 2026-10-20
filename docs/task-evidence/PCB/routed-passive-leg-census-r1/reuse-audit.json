@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "scope": "Accepted1467 preparation only; no rejected22 overlay or runtime proof reused",
+  "prepareSourceSha256": "1beb61453dbfbe8ca54cbd36774386b44a1bdbe0051348de4f898260ca15d824",
+  "priorObservationSealSha256": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8"
+}

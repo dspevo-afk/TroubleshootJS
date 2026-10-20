@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "scope": "Read-only accepted owner binding; no geometry/routability/benefit claim",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "a7f7dfca5c85c17380be868eda6175dee551172d7695bf6a2cf18012e844f732",
+    "src/com/lushprojects/circuitjs1/client/PcbFootprint.java": "322596458d3ad616cff73e66170aa48c0d1d38bb514ec5428dee543472e296a9",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceGeometry.java": "efeeea0152f6b1f1f0c7f27a0d2be28df1b3b1bb8b4d9d2fc4f1109e21ee8e3e",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+    "src/com/lushprojects/circuitjs1/client/PcbComponentPlacement.java": "3f3225e9652c022cb454a77f7dd62d795b6263e387b7e8e98da24add45a171cc",
+    "src/com/lushprojects/circuitjs1/client/PcbPadPlacement.java": "bfe7f77b9ca77250a1b08ff35a1a7cd5c469ac6e13deb26011814a7cce2b27b7",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "f67641475c2034ba8681df9c10c66a55fea4415db01d5d850cdf28d65d47d58a",
+    "src/com/lushprojects/circuitjs1/client/GenerationWorkScope.java": "8d1ecdc2d8463d4fe1ab738950c94e2eda4ce3d4a1b25b63031203c32e6cf632",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+  }
+}

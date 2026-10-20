@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "scope": "Exact two proven read-only callback blocks inserted into accepted15; no22 overlay",
+  "priorObserverSourceSha256": "6413beea3922757659a736807fe26dc0bcf91b02b25810f5c15eb85143902bcc",
+  "acceptedGeneratorSha256": "3f84567092370ca1e5b07a8dd84db30b8956af54c0238941c6dcecfd6b1922ab",
+  "acceptedPhysicalWitnessSha256": "2de7932b48d479a8df1ffbb39b929ee88e438214224f8a16ccc8d5180b957f36",
+  "overrides": [
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java",
+    "scripts/verify-current-contracts.ps1"
+  ],
+  "addedRootWrapper": "tests/contracts/PcbRoutedPassiveLegCensusTrialContractTest.java"
+}

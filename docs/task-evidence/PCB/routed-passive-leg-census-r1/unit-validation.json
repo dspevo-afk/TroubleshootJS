@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Endpoint-leg census unit fixtures only; routes and fitness are not evaluated.",
+  "baseCommit": "66f8d67476288e90fca797e4fb0957c13c550dd8",
+  "protocolSha256": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+  "priorAssessSha256": "0a45548e3091f6bccbf34d6ceab9fe1be1cb5c802796ae7aaa5d63ddbdca5e86",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/successful-route-pool-r1/native-inputs.json": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8",
+    "docs/task-evidence/PCB/successful-route-pool-r1/root-review.json": "086c30422719fdfd80010b9888408800124ec40be30191a98554df18f87551f6",
+    "docs/task-evidence/PCB/successful-route-pool-r1/routes.txt": "c75c440c15780f4cf222ad882a19e2cad6d55fcedf10c993bd66fad6e209b63f"
+  },
+  "suiteManifestSha256": "5b928a7dd699dedb6411a9e44de4ec61c30864371417ccd9bb22cb4d0791f968",
+  "phaseInputsSha256": {
+    "unit.txt": "9184714d9a766b45ce544c3b6f2a963bb91054893439f1cc2c807bc1eef86d0c",
+    "unit-receipt.txt": "a582a934d68280064c78b69cbc4e7a030b99ffbe0dbd15d120bc6b2a978ee44e",
+    "unit-timing.json": "5f54344be5fa89c47897edab961450f721c530604e341f8507f662a49f078bcc"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 1,
+    "suiteClasses": [
+      "PcbRoutedPassiveLegCensusContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed passive leg census contracts "
+    ],
+    "census": null
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

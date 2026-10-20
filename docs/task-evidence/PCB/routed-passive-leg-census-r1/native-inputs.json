@@ -1,0 +1,45 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1469,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "1d64ed36ad5e090afc3946090c4e1b2d5efe5111b5009ccf238c1a38d412d8d6",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "5c687d27f226ca29e1c28703d4d5b868d8d6747d7ccb2e7624dfe6f8fc064dfd",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "4a0eca5b23f88883f00d29c5fee4fec002a8b9777bf1393f447305454499bd10"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": "6c74d1f473e97f42a24d566cfe852d866f7f9d2d69d37ceb11ff5963825f6e60",
+    "tests/contracts/PcbRoutedPassiveLegCensusTrialContractTest.java": "bdb5bbae9494f3e9c43904d3771802358906a1a7f89ac47609ba6b4586c6c559"
+  },
+  "gateOwners": {
+    "source-audit.md": "8dd573daa4865efbdd73c72413e761ed301236d79f7b009a308e109d83230301",
+    "source-audit.json": "d98102362be2344703d8ce18f1c15283937a723813dae33a67d6019c82941653",
+    "reuse-audit.json": "f617492cdc7c1cb757fd202427417180350a7148120959ecfeabe67e1b46b68a",
+    "bootstrap-audit.json": "3b10ab94790d88c7b3d415deae5d70d9377ea82c23acc0d898139fada50745c2",
+    "host-reuse.json": "5014e3bd8a3c0959ddb99fe45856be040e3da06436bff1ebb4f788f1e2584cdf",
+    "prepare.py": "9121abe0d8b590ff2931ace2b61d7c2a6b432181a341a573b2d15d0a5121afe3",
+    "bootstrap.py": "a034170de3f71083779a874a4f3df3acd4696862f9662899b933e49a64052437",
+    "bootstrap_host.py": "8f1268a0a48a8f40c31d3d8614b297201f0fb6717552685937eb3bca0742c736",
+    "protocol.json": "82212f6b7df2ecfdc3301a21908775ebdc6d63dac47539f2635693cd703236fd",
+    "unit-suites.json": "5b928a7dd699dedb6411a9e44de4ec61c30864371417ccd9bb22cb4d0791f968",
+    "routes-suites.json": "9d2cd9c7324b5c2c745be009e4622e5b55e3346652dba48a539aa0c483f4ecd1",
+    "inputs.py": "c6f9f22d83fe30c8f24d203a7a6332975edd63f3c490bfd87ca913b2d70ed801",
+    "review_source.py": "76127054d1196b805c0ac8d1dbb7f1dd96282612f6ac2b80579eac3176866340",
+    "source-review.diff": "86faf1682a0d080f9e74883815459e3d6edcbf6e6544c66d02957618850ab654",
+    "source-review.json": "1e9b039dd5ee407bda1378778260e56672405196e0156bbd98d17ea670530998",
+    "review-ack.json": "2b7b58f1847c9468cf43e25d66c3cd3acd70655ff1462b1dd7b5c0fa2a0f3be9",
+    "run_native.ps1": "599d4a29476a3fc6b61079f6e2bd3c40b1e44c2129aec939d90df75ba02dd9fd",
+    "check_process_cleanup.ps1": "57ee36b2b7e6c6a4ab09f7d49683d7b30f31847ebf3a15b31c10744dfbd96360",
+    "sanitize.py": "413a06196808cafbdba52c57d9784730c9c9e6c3ab229be806acee457d0e1fe1",
+    "retire_copy.py": "86c75b297d9813575aae624212593740a1f415c623b0e249377f9125c900b235",
+    "assess.py": "f9b79e21875864aecde86e41d1b49d955d6f9201585cebebf462ffd87fb82229",
+    "check_assessment.py": "7ced556428f8412593b2658d2a1a0b36aec954075b7e4a5038a895ec016a1940",
+    "assessment-canary-results.json": "f0f0189569ecea61afaabadff8ec0a9634e63a4864df12e81912eab60c714381",
+    "reader-notes.md": "672fb8002618d8f81357f995cd84ce7b38b89eaa1d544674abb25ddb09139114",
+    "worker-notes.md": "29f229e0404f00173b46e3ec8582e0c2f09ad8a997111a82a6435c4a2996afe4",
+    "suite_transport.ps1": "fa709c51f0b4b9eb9096e63dfdb60e6ba6034a856a2d0182bdcf7ea173245bd9",
+    "check_suite_transport.ps1": "7496d54c1a8d71ebc5ee36876af7249b6f0b32350814436beab0d7f8b47e109a",
+    "suite-transport-canaries.json": "d46544aec2b76e802f49ad9e5924ba136dfcbbe5ff87a4e4ac7c7f6ff2c56528"
+  },
+  "publishedPoolSealSha256": "6b1a003c2a76bad4488d04e69b82ab86b87fa4e2284ed7545c698cc94f778ea8"
+}
