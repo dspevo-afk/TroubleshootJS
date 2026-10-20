@@ -1,0 +1,24 @@
+{
+  "baseCommit": "030678bba7d861d0a0a7c3fd44317e589d6c320e",
+  "phaseAInputSealSha256": "c38165c72621070a5f5fef7050ae9c9d55a7f435a0823a8a6a9aa7a7335a56a0",
+  "phaseAAssessmentSha256": "98d7aa01c9bad93215ec8e1e744f20ebe4e4d828b8d0f8c842c7d49f208abd52",
+  "phaseAReceiptSha256": "f856061f02d1feb524bc76b3b950c3b4d110bffbe5e03d5aec16b464df0e8b49",
+  "gates": {
+    "export-scope.md": "471c11fa8edb3c46ffcca2141ccb6c0e3c7c799d566b4e5ff3c2fd8c6a8eeaa5",
+    "make_export_adapter.py": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+    "export-adapter-manifest.json": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+    "export-adapter-diff.txt": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+    "run_export.ps1": "75b59db9e0e146e11a351b2bc7ff8a225016319e211bf6d3e3fb88b620db6405",
+    "export_inputs.py": "1b89ff87d86055c9ed743686a6b730deec52e267a575199d647d06fe5ca57555",
+    "qualify_export.py": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+    "record_export_exit.ps1": "63ccd39a22a79b1382bc91e86feb38054e2eb8a2da798967f9101e0a2f7b7896",
+    "kept-path-reader.json": "c4afc58f5ec4abfb7280bc67c535641e4d2fc55827f6fae0265f7ec1dd1a5d63",
+    "export-integration-review.json": "24e5b1b9dcd0588b629527b0991648ca239e9b0c9bb3e63845a9a1af4fc6981f",
+    "export-source/FreshRb30GapDiagnostic.java": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+    "export-source/NOTES.md": "9d94ee25c5ba0bb0f326dab9f54bfa740238e387334e3dc1bf4bfdde94f16fb6"
+  },
+  "sourceInputs": 1482,
+  "machinery": 24,
+  "adapterSha256": "19af62225c5b3b4242343c81ebfa34a707df572eb1db80af5038d5ffdaa1dbec",
+  "seed": "-5776064669694490064"
+}

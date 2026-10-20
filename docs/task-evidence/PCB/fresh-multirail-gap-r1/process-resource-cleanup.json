@@ -1,0 +1,78 @@
+{
+  "actualNativeExecExitCodes": [
+    0,
+    0
+  ],
+  "privateScratch": "Retained task-owned generated adapter and raw invalid-seed stderr for hash-bound evidence; no live process",
+  "status": "PASS",
+  "limits": "Separate root recorded-birth absence after actual execs0; original reader failure remains failed despite nativeexit0; no termination/profile deletion, unrelated/private/older blocked resources preserved",
+  "managedStateAbsent": true,
+  "recheckedBoundPlayerBirths": 6,
+  "currentNativeBirths": 4,
+  "port8907Released": true,
+  "playerChecks": [
+    {
+      "startTicks": "639281110248678722",
+      "executable": "pwsh",
+      "pid": 18240,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281110255524538",
+      "executable": "pwsh",
+      "pid": 29572,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281115366313929",
+      "executable": "pwsh",
+      "pid": 8708,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281115368589761",
+      "executable": "pwsh",
+      "pid": 20024,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281110291182063",
+      "executable": "powershell.exe",
+      "pid": 26000,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281110619307263",
+      "executable": "brave.exe",
+      "pid": 11608,
+      "recordedBirthExited": true
+    }
+  ],
+  "combinedRecordedBirths": 10,
+  "checks": [
+    {
+      "startTicks": "639281119971475687",
+      "executable": "pwsh",
+      "pid": 15160,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281119977374378",
+      "executable": "pwsh",
+      "pid": 9484,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281126911027245",
+      "executable": "pwsh",
+      "pid": 27756,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281126918357173",
+      "executable": "pwsh",
+      "pid": 11776,
+      "recordedBirthExited": true
+    }
+  ]
+}

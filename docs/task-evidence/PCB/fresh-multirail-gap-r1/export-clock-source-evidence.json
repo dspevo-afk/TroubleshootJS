@@ -1,0 +1,13 @@
+{
+  "status": "SOURCE_JUSTIFIES_ONLY_WALL_CLOCK_COMPARISON_REVISION",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f1454914f6edbad5a846e02218c8f50f27176d613bdfb32e74b633fd468d98f6"
+  },
+  "origin": "SeededPcbLayoutGenerator318-324 sums System.currentTimeMillis deltas;378-383 saves statistics.routeMillis minus packingInitialMillis. PcbPackingProbeReceipt67-77 serializes raw millis",
+  "observed": {
+    "maintainedPhaseA": 557,
+    "independentExport": 448
+  },
+  "unchanged": "Raw receipts and original frozen attempt helpers/native oracles/budgets retained; no numerical work/geometry/graph/metric exclusion"
+}

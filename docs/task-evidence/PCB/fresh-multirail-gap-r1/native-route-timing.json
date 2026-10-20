@@ -1,0 +1,9 @@
+{
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "exitCode": 0,
+  "phase": "native-route",
+  "elapsedSeconds": 48.7557044,
+  "terminalCleanupIncluded": true,
+  "failure": null,
+  "status": "PASS"
+}

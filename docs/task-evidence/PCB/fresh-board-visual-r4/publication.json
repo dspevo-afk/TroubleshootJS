@@ -1,0 +1,20 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "030678bba7d861d0a0a7c3fd44317e589d6c320e",
+  "message": "Record fresh timing composed and multi-rail boards",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "normalPushExitCode": 0,
+  "exactRemoteHeadVerified": true,
+  "acceptedPaths": 62,
+  "priorReviewedIndexBlobsExact": 61,
+  "finalReviewRawExact": true,
+  "working1482Unchanged": true,
+  "scope": "Read-only firstRC/composed/multi-rail sample;4failedobservers+rawtextassumption retained; actual first requests3/admissions3/untouchedFAIL3/finalOFFtray0",
+  "resources": "All6 recorded births exited/currentprofile-state absent/8907released; older blockedprofiles/private/unrelated artifacts retained",
+  "mainMerge": "NOT_DONE per user",
+  "email": "DISABLED by user; no notification attempted",
+  "nextUnstarted": "Exact multi-rail isolated connector native diagnosis before selecting general production change",
+  "receipt": "Created after verified publication; intended next coherent commit"
+}

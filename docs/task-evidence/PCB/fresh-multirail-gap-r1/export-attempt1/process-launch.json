@@ -1,0 +1,16 @@
+{
+  "phase": "selected-geometry-export",
+  "scope": "Actual task-owned native adapter, two births captured before invalid/valid seed invocations",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281126911027245",
+      "pid": 27756
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281126918357173",
+      "pid": 11776
+    }
+  ]
+}

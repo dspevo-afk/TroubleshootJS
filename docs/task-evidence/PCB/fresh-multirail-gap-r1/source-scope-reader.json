@@ -1,0 +1,28 @@
+{
+  "status": "SOURCE_HYPOTHESIS_ONLY_NO_PRODUCTION_CHANGE",
+  "reviewer": "LunaMAX read-only fresh_multirail_outlier_scope; no edits/native/tests/build/player run by reviewer",
+  "reviewBaseCommit": "29c85f95fa2849d46bde4227a48ef2b62ab7420b",
+  "currentDocsOnlyHead": "030678bba7d861d0a0a7c3fd44317e589d6c320e",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/Rb30Plan.java": "36911c1855d37009ca8b8d45fc55811bb3126e2286f0b921d81cedfe2884bd73",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "09820735d1d380cc05e0010829370c5466a18c3446d3f7c233575a2a3fe3c896",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "373f6f4d3b5f3dc109238d5f0cb87346b0d9bb86514c1da5354af62d4f76c6b0",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "e8be50e4bd21d2b88e44b0bc7d01a389297393e074d006d14b873d5704abdd90",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+    "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "724e4d6822eaeb3178efdfbaa30340ff12f0bdb1821734666b1a49df47ca5a8e",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "3e2b7ec248933446ed0c057bdddcd0dca7f5a831479df86dbc366dfbd4702803",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f1454914f6edbad5a846e02218c8f50f27176d613bdfb32e74b633fd468d98f6",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+    "tests/contracts/Q30NormalCorpusContractTest.java": "0cb8206403488bf23d1d34473a19d41cca936c3ca350a999b8bd10141b76f509",
+    "tests/contracts/Q30PlanContractTest.java": "6d4a81ddf7ce7ab5eab67f378a0c9e9e723c70106381fb7d7c40d39cb757e0f0",
+    "tests/contracts/PcbOccupancyDiagnosticContractTest.java": "e4aa58aa016dd342cf5ae5d110b9b7ad8e6fa5e645f3b87a92521980861693e8",
+    "scripts/verify-current-contracts.ps1": "b87cd0569c5a3f263aa08d9fb5ed07d201f2c37e2934be2c393015ab03c129d3"
+  },
+  "hypothesis": "Rb30Plan480-501/575-602 declares JLOAD RIGHT, J1/JSA/JSB LEFT, JOA/JOB unanchored, barriers empty. Far-right screenshot package is plausibly JLOAD, identity not yet established",
+  "owners": "PcbPlacementPlanner253-394/710-820 puts right anchor on inner-right edge; compactConnectedVacancies407-433 skips anchors. RB30 density1/packing2 initial path skips tight compactor; post-route beginPackingProbe243-386 may retain incumbent under strict area/copper/via/protectedVoid criteria",
+  "limits": "Access envelope/shared free channel, both-face traces/vias and final occupied-content bounds are invisible in screenshot. No barrier corridor in RB30. No legal removable-region proof or seed-specific move selected",
+  "next": "Run maintained Q30NormalCorpusContractTest with exactly one canonical signed-long seed first; inspect existing full cold/warm packingProbe receipt. Detailed occupancy exporter is currently RB56-only; any later task-owned RB30 exporter must be separately frozen before running"
+}

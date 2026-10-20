@@ -1,0 +1,17 @@
+{
+  "status": "FAIL_FULL_ROUTE_CANONICAL_COMPARISON",
+  "phase": "Root export qualification attempt1 after actual exportexec0 and separate2birthcleanup",
+  "failedAssertion": "qualify_export.py line29 full route canonical equality against independent maintained cold/warm receipt",
+  "qualifierSha256": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+  "deltas": [
+    {
+      "operation": "replace",
+      "maintained": "normal-packing@2;attempts=1;orderings=1;expansions=282606;millis=557;route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=3c92cfef422",
+      "export": "normal-packing@2;attempts=1;orderings=1;expansions=282606;millis=448;route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=3c92cfef422"
+    }
+  ],
+  "selectedGeometrySha256": "3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3",
+  "nativePackingCanonical": "normal-packing@2;attempts=1;orderings=1;expansions=282606;millis=557;route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3;selected=3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3",
+  "exportPackingCanonical": "normal-packing@2;attempts=1;orderings=1;expansions=282606;millis=448;route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3;selected=3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3",
+  "limits": "No accepted export assessment written; nativeactual exit0 is not complete diagnostic acceptance. Frozen source/raw native receipts retained; cause and next scope must be assessed before any correction"
+}

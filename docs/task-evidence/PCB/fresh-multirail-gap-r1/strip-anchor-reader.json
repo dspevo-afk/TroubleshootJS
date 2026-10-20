@@ -1,0 +1,18 @@
+{
+  "status": "EXISTING_STRIP_PROPOSAL_CONFIRMED_NO_NEW_COMPACTION_SELECTED",
+  "reviewer": "LunaMAX read-only fresh_multirail_outlier_scope follow-up; no execution/edits",
+  "files": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "373f6f4d3b5f3dc109238d5f0cb87346b0d9bb86514c1da5354af62d4f76c6b0",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "e8be50e4bd21d2b88e44b0bc7d01a389297393e074d006d14b873d5704abdd90",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "09820735d1d380cc05e0010829370c5466a18c3446d3f7c233575a2a3fe3c896",
+    "src/com/lushprojects/circuitjs1/client/Rb30Plan.java": "36911c1855d37009ca8b8d45fc55811bb3126e2286f0b921d81cedfe2884bd73",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "3e2b7ec248933446ed0c057bdddcd0dca7f5a831479df86dbc366dfbd4702803",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "724e4d6822eaeb3178efdfbaa30340ff12f0bdb1821734666b1a49df47ca5a8e",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "f1454914f6edbad5a846e02218c8f50f27176d613bdfb32e74b633fd468d98f6"
+  },
+  "finding": "PcbPlacementCompactor147-184 pre-route strips move all later full-access footprints and shrink outline by same amount, so RIGHT anchor/edge can move inward together. validate1093-1159 rechecks bounds/overlap/domain/escapes/access. compact12-20 strips before and after connected-vacancy phase; latter alone skips anchors420-467",
+  "currentPath": "RB30density1 doesnot tight-compact initial6plans. Existing beginPackingProbe243-298 already compacts selected plan then reroutes; it can propose moving RIGHT anchor. Separate trace/via guarded compactRouted is not active for this density1/P07 path",
+  "limits": "No source guard forces the observed1306span to remain. Candidate ordering/probe-on-selected-only limits search but doesnot identify exact KEPT metric. Currentreceipt exposes no candidate tuple; do not repeat already-existing strip compaction as a claimed new fix",
+  "next": "Separately scope bounded immutable metric-decision evidence at actual packing owner before selecting a compaction algorithm change; preserve IDs/edge/access/copper/admission/strictmetrics/budgets and no hidden player UI disclosure"
+}

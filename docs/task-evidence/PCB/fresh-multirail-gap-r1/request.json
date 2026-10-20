@@ -1,0 +1,8 @@
+{
+  "seed": "-5776064669694490064",
+  "suite": ["Q30NormalCorpusContractTest"],
+  "phase": "native-route",
+  "entry": "Maintained scripts/verify-current-contracts.ps1 -Q30CorpusSeeds as exact Int64",
+  "childBudgetMillis": 60000,
+  "limits": "One exact fresh seed, existing cold/warm route/normal physical admission/structural contracts; existing proofPhase remains NOT_RUN_BY_NORMAL_CORPUS_CONTRACT; no budget change or detailed geometry export in this phase"
+}

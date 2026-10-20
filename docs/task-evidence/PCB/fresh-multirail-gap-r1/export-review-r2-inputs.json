@@ -1,0 +1,23 @@
+{
+  "status": "FROZEN_BEFORE_REVISED_REVIEW",
+  "files": {
+    "export-review-r2-scope.md": "b1e97ecc49bc7f166334857e5de068c30b7b12d37266a128ec2363e26153f0bd",
+    "export-clock-source-evidence.json": "7619eb37b183b4be5c1b328b1a2f62279e9413a50fee1798f6636427fab8695b",
+    "qualify_export_r2.py": "63d565a879d57750b9f62d08ec546ca51a313314fbb3f61cc3969b43addb2443",
+    "inputs.json": "c38165c72621070a5f5fef7050ae9c9d55a7f435a0823a8a6a9aa7a7335a56a0",
+    "native-route-assessment.json": "98d7aa01c9bad93215ec8e1e744f20ebe4e4d828b8d0f8c842c7d49f208abd52",
+    "native-route-receipt.txt": "f856061f02d1feb524bc76b3b950c3b4d110bffbe5e03d5aec16b464df0e8b49",
+    "export-adapter-manifest.json": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+    "export-attempt1/inputs.json": "27e9d9732601056795eb660f12a591fba44d6f6ef9337f03046262e90d0ab122",
+    "export-attempt1/qualification-attempt1.json": "7938e0efd38da9d2a7071a2d5228ff22fcad9ca331e9e34c95ee8b7aa78f3bc7",
+    "export-attempt1/native.txt": "37111c7a58dcaaa6f7301ab2c4bee9924f60ca2e94606af7e6be2d31c0c94bc2",
+    "export-attempt1/receipt.txt": "e0559f632925215f9c911af74ff05b516f37504fa81160762389012a1df9cbd8",
+    "export-attempt1/timing.json": "03c02b55a033ce233b45521c68cedc79e41d05aab74679303dc8e184d0f35344",
+    "export-attempt1/invalid-seed-canary.json": "b692099d39fcad7cfbc75695a8b1f3b172b838f652401dfe50818302e637794c",
+    "export-attempt1/process-launch.json": "287e00877e908536715f5204af66ea903777a77de7afc3adda72a8e4ee8eaede",
+    "export-attempt1/process-cleanup.json": "b13774f93ab69de78cbb78193a2af14b6ae1f0ab932e8bb27f08a98bd1a5ed8f",
+    "export-attempt1/input-audit-before.txt": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45",
+    "export-attempt1/input-audit-after.txt": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45"
+  },
+  "scope": "Reader-only revision, actual attempted native bytes and original failed12helper archive unchanged; one namespaced raw wallclock field only"
+}

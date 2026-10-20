@@ -1,0 +1,21 @@
+{
+  "status": "PASS_LOCAL_RASTER_ONLY",
+  "renderer": "Installed PyMuPDF SVG rasterizer",
+  "images": {
+    "selected-whole-board.png": {
+      "sha256": "acc87276e24d81de9f158e61017d1aca86f7ec15442a9cb5233f5856f73ee371",
+      "bytes": 75099,
+      "width": 1400,
+      "height": 800,
+      "svgSha256": "be83a5cd5d5218c9e0faff5755d0e3ab4e5e01cc082956b8172c8e1e423ac22d"
+    },
+    "selected-gap-detail.png": {
+      "sha256": "b961c5c9e4a88d44e57ccdff28f568621245d42f7ee433420b9c209b2f29bbf9",
+      "bytes": 45504,
+      "width": 1400,
+      "height": 800,
+      "svgSha256": "db53a17c2c5dc831aa6f03a9cea9650c8db10b97c0c496e1e12469971ff818cc"
+    }
+  },
+  "limits": "Native selected-geometry overlays, not production screenshots or player-input evidence; root visual inspection separate"
+}

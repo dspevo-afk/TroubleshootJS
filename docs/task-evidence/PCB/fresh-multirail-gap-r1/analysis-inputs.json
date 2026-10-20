@@ -1,0 +1,9 @@
+{
+  "status": "SEALED_BEFORE_LOCAL_ANALYSIS",
+  "files": {
+    "analyze_geometry.py": "f7a4286ce995829ae38fdd913f4cc146aa51d8768df9d6937da376be92d1ec5f",
+    "export-attempt1/assessment-r2.json": "926ef1e036131bf0ad48061574c99aefac0e01e9a41016bb1c05e08b0cfd1987",
+    "export-review-r2-inputs.json": "1728035efcbfbabf1c622bf1fad5ef8eed97393c12e1f285f6d1d3c6f3b7ff04"
+  },
+  "limits": "Read-only selected export/local developer SVGs; no new native/UI/compaction proof"
+}

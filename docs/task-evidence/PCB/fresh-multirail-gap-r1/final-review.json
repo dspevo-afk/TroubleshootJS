@@ -1,0 +1,374 @@
+{
+  "status": "PASS_ACCEPTED_FOR_NORMAL_DIAGNOSTIC_COMMIT_PUSH",
+  "baseCommit": "030678bba7d861d0a0a7c3fd44317e589d6c320e",
+  "preFinalReviewStagedPaths": 70,
+  "comparisons": {
+    "CRLF_NORMALIZATION_ONLY": 2,
+    "RAW_EXACT": 68
+  },
+  "files": {
+    "docs/CODEX_TASK_REPORT.md": {
+      "workingSha256": "c36db5f1c4d6dfd8d295527130edfb6b0eb0638eefbf34327e4643ae8ea7917d",
+      "indexSha256": "566bbcbf518716ed7aae78693c4839fd183d7e2635751082e8b45a9d4082d453",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/ROADMAP.md": {
+      "workingSha256": "a6241a145eff9d97f0e0c0632eab76d6a5261d52bdcbac177849d4b0fb2fac33",
+      "indexSha256": "85052f9eed2835ad645b39e9210b780dff2c3c1bce1996407857ac92368104d3",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r4/publication.json": {
+      "workingSha256": "6842956906a5c605405aba0f908df2c3a599b0f54d3011496cd92aedf059c52e",
+      "indexSha256": "6842956906a5c605405aba0f908df2c3a599b0f54d3011496cd92aedf059c52e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/.gitattributes": {
+      "workingSha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d",
+      "indexSha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/RESULTS.md": {
+      "workingSha256": "dd76fdfbf325393095e805bbebc998a007362384a7817c65c72096f986d79e7a",
+      "indexSha256": "dd76fdfbf325393095e805bbebc998a007362384a7817c65c72096f986d79e7a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/analysis-inputs.json": {
+      "workingSha256": "d19ecf8884eccd600c151acb57b342bcae6fbc3c45dff4b10732e571a632e186",
+      "indexSha256": "d19ecf8884eccd600c151acb57b342bcae6fbc3c45dff4b10732e571a632e186",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/analyze_geometry.py": {
+      "workingSha256": "f7a4286ce995829ae38fdd913f4cc146aa51d8768df9d6937da376be92d1ec5f",
+      "indexSha256": "f7a4286ce995829ae38fdd913f4cc146aa51d8768df9d6937da376be92d1ec5f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-adapter-diff.txt": {
+      "workingSha256": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+      "indexSha256": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-adapter-manifest.json": {
+      "workingSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/assessment-r2.json": {
+      "workingSha256": "926ef1e036131bf0ad48061574c99aefac0e01e9a41016bb1c05e08b0cfd1987",
+      "indexSha256": "926ef1e036131bf0ad48061574c99aefac0e01e9a41016bb1c05e08b0cfd1987",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/input-audit-after.txt": {
+      "workingSha256": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45",
+      "indexSha256": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/input-audit-before.txt": {
+      "workingSha256": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45",
+      "indexSha256": "fb2ec064487a509bf6473a6fd46c21306babfd7a69d29d2172c2145d2ecf9f45",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/inputs.json": {
+      "workingSha256": "27e9d9732601056795eb660f12a591fba44d6f6ef9337f03046262e90d0ab122",
+      "indexSha256": "27e9d9732601056795eb660f12a591fba44d6f6ef9337f03046262e90d0ab122",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/invalid-seed-canary.json": {
+      "workingSha256": "b692099d39fcad7cfbc75695a8b1f3b172b838f652401dfe50818302e637794c",
+      "indexSha256": "b692099d39fcad7cfbc75695a8b1f3b172b838f652401dfe50818302e637794c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/native.txt": {
+      "workingSha256": "37111c7a58dcaaa6f7301ab2c4bee9924f60ca2e94606af7e6be2d31c0c94bc2",
+      "indexSha256": "37111c7a58dcaaa6f7301ab2c4bee9924f60ca2e94606af7e6be2d31c0c94bc2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/process-cleanup.json": {
+      "workingSha256": "b13774f93ab69de78cbb78193a2af14b6ae1f0ab932e8bb27f08a98bd1a5ed8f",
+      "indexSha256": "b13774f93ab69de78cbb78193a2af14b6ae1f0ab932e8bb27f08a98bd1a5ed8f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/process-launch.json": {
+      "workingSha256": "287e00877e908536715f5204af66ea903777a77de7afc3adda72a8e4ee8eaede",
+      "indexSha256": "287e00877e908536715f5204af66ea903777a77de7afc3adda72a8e4ee8eaede",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/qualification-attempt1.json": {
+      "workingSha256": "7938e0efd38da9d2a7071a2d5228ff22fcad9ca331e9e34c95ee8b7aa78f3bc7",
+      "indexSha256": "7938e0efd38da9d2a7071a2d5228ff22fcad9ca331e9e34c95ee8b7aa78f3bc7",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/receipt.txt": {
+      "workingSha256": "e0559f632925215f9c911af74ff05b516f37504fa81160762389012a1df9cbd8",
+      "indexSha256": "e0559f632925215f9c911af74ff05b516f37504fa81160762389012a1df9cbd8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-adapter-diff.txt": {
+      "workingSha256": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+      "indexSha256": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-adapter-manifest.json": {
+      "workingSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "indexSha256": "eca0af7054e11f5e7bf681f7efd1e21f126c99f40dcfce2bf92b4834abceec3f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-integration-review.json": {
+      "workingSha256": "24e5b1b9dcd0588b629527b0991648ca239e9b0c9bb3e63845a9a1af4fc6981f",
+      "indexSha256": "24e5b1b9dcd0588b629527b0991648ca239e9b0c9bb3e63845a9a1af4fc6981f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-scope.md": {
+      "workingSha256": "471c11fa8edb3c46ffcca2141ccb6c0e3c7c799d566b4e5ff3c2fd8c6a8eeaa5",
+      "indexSha256": "471c11fa8edb3c46ffcca2141ccb6c0e3c7c799d566b4e5ff3c2fd8c6a8eeaa5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-source/FreshRb30GapDiagnostic.java": {
+      "workingSha256": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+      "indexSha256": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export-source/NOTES.md": {
+      "workingSha256": "9d94ee25c5ba0bb0f326dab9f54bfa740238e387334e3dc1bf4bfdde94f16fb6",
+      "indexSha256": "9d94ee25c5ba0bb0f326dab9f54bfa740238e387334e3dc1bf4bfdde94f16fb6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/export_inputs.py": {
+      "workingSha256": "1b89ff87d86055c9ed743686a6b730deec52e267a575199d647d06fe5ca57555",
+      "indexSha256": "1b89ff87d86055c9ed743686a6b730deec52e267a575199d647d06fe5ca57555",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/kept-path-reader.json": {
+      "workingSha256": "c4afc58f5ec4abfb7280bc67c535641e4d2fc55827f6fae0265f7ec1dd1a5d63",
+      "indexSha256": "c4afc58f5ec4abfb7280bc67c535641e4d2fc55827f6fae0265f7ec1dd1a5d63",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/make_export_adapter.py": {
+      "workingSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "indexSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/qualify_export.py": {
+      "workingSha256": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+      "indexSha256": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/record_export_exit.ps1": {
+      "workingSha256": "63ccd39a22a79b1382bc91e86feb38054e2eb8a2da798967f9101e0a2f7b7896",
+      "indexSha256": "63ccd39a22a79b1382bc91e86feb38054e2eb8a2da798967f9101e0a2f7b7896",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/source/run_export.ps1": {
+      "workingSha256": "75b59db9e0e146e11a351b2bc7ff8a225016319e211bf6d3e3fb88b620db6405",
+      "indexSha256": "75b59db9e0e146e11a351b2bc7ff8a225016319e211bf6d3e3fb88b620db6405",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-attempt1/timing.json": {
+      "workingSha256": "03c02b55a033ce233b45521c68cedc79e41d05aab74679303dc8e184d0f35344",
+      "indexSha256": "03c02b55a033ce233b45521c68cedc79e41d05aab74679303dc8e184d0f35344",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-clock-source-evidence.json": {
+      "workingSha256": "7619eb37b183b4be5c1b328b1a2f62279e9413a50fee1798f6636427fab8695b",
+      "indexSha256": "7619eb37b183b4be5c1b328b1a2f62279e9413a50fee1798f6636427fab8695b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-integration-review.json": {
+      "workingSha256": "24e5b1b9dcd0588b629527b0991648ca239e9b0c9bb3e63845a9a1af4fc6981f",
+      "indexSha256": "24e5b1b9dcd0588b629527b0991648ca239e9b0c9bb3e63845a9a1af4fc6981f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-review-r2-inputs.json": {
+      "workingSha256": "1728035efcbfbabf1c622bf1fad5ef8eed97393c12e1f285f6d1d3c6f3b7ff04",
+      "indexSha256": "1728035efcbfbabf1c622bf1fad5ef8eed97393c12e1f285f6d1d3c6f3b7ff04",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-review-r2-scope.md": {
+      "workingSha256": "b1e97ecc49bc7f166334857e5de068c30b7b12d37266a128ec2363e26153f0bd",
+      "indexSha256": "b1e97ecc49bc7f166334857e5de068c30b7b12d37266a128ec2363e26153f0bd",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-scope.md": {
+      "workingSha256": "471c11fa8edb3c46ffcca2141ccb6c0e3c7c799d566b4e5ff3c2fd8c6a8eeaa5",
+      "indexSha256": "471c11fa8edb3c46ffcca2141ccb6c0e3c7c799d566b4e5ff3c2fd8c6a8eeaa5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-source/FreshRb30GapDiagnostic.java": {
+      "workingSha256": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+      "indexSha256": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export-source/NOTES.md": {
+      "workingSha256": "9d94ee25c5ba0bb0f326dab9f54bfa740238e387334e3dc1bf4bfdde94f16fb6",
+      "indexSha256": "9d94ee25c5ba0bb0f326dab9f54bfa740238e387334e3dc1bf4bfdde94f16fb6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/export_inputs.py": {
+      "workingSha256": "1b89ff87d86055c9ed743686a6b730deec52e267a575199d647d06fe5ca57555",
+      "indexSha256": "1b89ff87d86055c9ed743686a6b730deec52e267a575199d647d06fe5ca57555",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/geometry-analysis.json": {
+      "workingSha256": "39515946c78da62b3106f8e76c0fb8e5df11adc72cf07f7260ead34507760723",
+      "indexSha256": "39515946c78da62b3106f8e76c0fb8e5df11adc72cf07f7260ead34507760723",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/inputs.json": {
+      "workingSha256": "c38165c72621070a5f5fef7050ae9c9d55a7f435a0823a8a6a9aa7a7335a56a0",
+      "indexSha256": "c38165c72621070a5f5fef7050ae9c9d55a7f435a0823a8a6a9aa7a7335a56a0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/inputs.py": {
+      "workingSha256": "460e2a4617645b434caeae065b6a1c9cd7458681783e1c936d28c353113833b1",
+      "indexSha256": "460e2a4617645b434caeae065b6a1c9cd7458681783e1c936d28c353113833b1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/kept-path-reader.json": {
+      "workingSha256": "c4afc58f5ec4abfb7280bc67c535641e4d2fc55827f6fae0265f7ec1dd1a5d63",
+      "indexSha256": "c4afc58f5ec4abfb7280bc67c535641e4d2fc55827f6fae0265f7ec1dd1a5d63",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/local-render.json": {
+      "workingSha256": "cdf8dd40c272f61657853298239fd142b84a49033b12b8804799c712a22f02f0",
+      "indexSha256": "cdf8dd40c272f61657853298239fd142b84a49033b12b8804799c712a22f02f0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/make_export_adapter.py": {
+      "workingSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "indexSha256": "e7bbbdb7900fdbc9c2e0977b81eae104d4ee49d47965f8b9beb1a3b398e0fd91",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-assessment.json": {
+      "workingSha256": "98d7aa01c9bad93215ec8e1e744f20ebe4e4d828b8d0f8c842c7d49f208abd52",
+      "indexSha256": "98d7aa01c9bad93215ec8e1e744f20ebe4e4d828b8d0f8c842c7d49f208abd52",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-input-audit-after.txt": {
+      "workingSha256": "166c178cab306a331505c30a58ecdb3c5fa4e2a2b62337c39e4f90db7a8b024c",
+      "indexSha256": "166c178cab306a331505c30a58ecdb3c5fa4e2a2b62337c39e4f90db7a8b024c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-input-audit-before.txt": {
+      "workingSha256": "166c178cab306a331505c30a58ecdb3c5fa4e2a2b62337c39e4f90db7a8b024c",
+      "indexSha256": "166c178cab306a331505c30a58ecdb3c5fa4e2a2b62337c39e4f90db7a8b024c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-process-cleanup.json": {
+      "workingSha256": "4c04890b030921bc294888dd7873197f6900147175d9dcec634bea7842097025",
+      "indexSha256": "4c04890b030921bc294888dd7873197f6900147175d9dcec634bea7842097025",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-process-launch.json": {
+      "workingSha256": "1991da9e14ba92eebd6d9ce1cf91d9bedfb6bd43b1d60ea8924e8080677d558d",
+      "indexSha256": "1991da9e14ba92eebd6d9ce1cf91d9bedfb6bd43b1d60ea8924e8080677d558d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-receipt.txt": {
+      "workingSha256": "f856061f02d1feb524bc76b3b950c3b4d110bffbe5e03d5aec16b464df0e8b49",
+      "indexSha256": "f856061f02d1feb524bc76b3b950c3b4d110bffbe5e03d5aec16b464df0e8b49",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-timing.json": {
+      "workingSha256": "56a7f72bc8285cb99c1262f0450ac1e68d71819eb8ad5f0ac8f3980a833ac5b0",
+      "indexSha256": "56a7f72bc8285cb99c1262f0450ac1e68d71819eb8ad5f0ac8f3980a833ac5b0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route.txt": {
+      "workingSha256": "5a0e5e4ac08d659a61cea5f47e87a0dc1697a70067fd6559a81803e84e3a1bfe",
+      "indexSha256": "5a0e5e4ac08d659a61cea5f47e87a0dc1697a70067fd6559a81803e84e3a1bfe",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/process-resource-cleanup.json": {
+      "workingSha256": "26219f6177de6da3f3ed27a7ceee47935f5a955e93975cac63feb46f8185b3de",
+      "indexSha256": "26219f6177de6da3f3ed27a7ceee47935f5a955e93975cac63feb46f8185b3de",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/qualify.py": {
+      "workingSha256": "8e2df3ea5ea80e5ef56d07d5f13205e2fc4174527bea1bc375742e2e4a3a3635",
+      "indexSha256": "8e2df3ea5ea80e5ef56d07d5f13205e2fc4174527bea1bc375742e2e4a3a3635",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/qualify_export.py": {
+      "workingSha256": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+      "indexSha256": "7895a4044b7faecbcf00f126414c644fe6f151dcaea0c7a7896c3775790073e6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/qualify_export_r2.py": {
+      "workingSha256": "63d565a879d57750b9f62d08ec546ca51a313314fbb3f61cc3969b43addb2443",
+      "indexSha256": "63d565a879d57750b9f62d08ec546ca51a313314fbb3f61cc3969b43addb2443",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/record_exit.ps1": {
+      "workingSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/record_export_exit.ps1": {
+      "workingSha256": "63ccd39a22a79b1382bc91e86feb38054e2eb8a2da798967f9101e0a2f7b7896",
+      "indexSha256": "63ccd39a22a79b1382bc91e86feb38054e2eb8a2da798967f9101e0a2f7b7896",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/request.json": {
+      "workingSha256": "c84f54ce6726cff607ae8e295bfe80ee48b9027420db633f84e3c08ad0a39693",
+      "indexSha256": "c84f54ce6726cff607ae8e295bfe80ee48b9027420db633f84e3c08ad0a39693",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/run_export.ps1": {
+      "workingSha256": "75b59db9e0e146e11a351b2bc7ff8a225016319e211bf6d3e3fb88b620db6405",
+      "indexSha256": "75b59db9e0e146e11a351b2bc7ff8a225016319e211bf6d3e3fb88b620db6405",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/run_native.ps1": {
+      "workingSha256": "2092808c2c134e8d3289c84d618e4b73c41de4e2108e92573b7c951d4f9fb365",
+      "indexSha256": "2092808c2c134e8d3289c84d618e4b73c41de4e2108e92573b7c951d4f9fb365",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/scope.md": {
+      "workingSha256": "2ca6bd34d81017a4dac034cdf52af41c53c84a66da8a7aadeb6066fc27408fec",
+      "indexSha256": "2ca6bd34d81017a4dac034cdf52af41c53c84a66da8a7aadeb6066fc27408fec",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/selected-gap-detail.png": {
+      "workingSha256": "b961c5c9e4a88d44e57ccdff28f568621245d42f7ee433420b9c209b2f29bbf9",
+      "indexSha256": "b961c5c9e4a88d44e57ccdff28f568621245d42f7ee433420b9c209b2f29bbf9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/selected-gap-detail.svg": {
+      "workingSha256": "db53a17c2c5dc831aa6f03a9cea9650c8db10b97c0c496e1e12469971ff818cc",
+      "indexSha256": "db53a17c2c5dc831aa6f03a9cea9650c8db10b97c0c496e1e12469971ff818cc",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/selected-whole-board.png": {
+      "workingSha256": "acc87276e24d81de9f158e61017d1aca86f7ec15442a9cb5233f5856f73ee371",
+      "indexSha256": "acc87276e24d81de9f158e61017d1aca86f7ec15442a9cb5233f5856f73ee371",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/selected-whole-board.svg": {
+      "workingSha256": "be83a5cd5d5218c9e0faff5755d0e3ab4e5e01cc082956b8172c8e1e423ac22d",
+      "indexSha256": "be83a5cd5d5218c9e0faff5755d0e3ab4e5e01cc082956b8172c8e1e423ac22d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/source-scope-reader.json": {
+      "workingSha256": "6740ce477bfe4040520198e1367c3fdbf84a61a091c54f840555e468d47bc223",
+      "indexSha256": "6740ce477bfe4040520198e1367c3fdbf84a61a091c54f840555e468d47bc223",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/strip-anchor-reader.json": {
+      "workingSha256": "e55467e304d8a56027b6bebb957f91528d6c3f62bd7983486cb4d6e0e77f07ae",
+      "indexSha256": "e55467e304d8a56027b6bebb957f91528d6c3f62bd7983486cb4d6e0e77f07ae",
+      "comparison": "RAW_EXACT"
+    }
+  },
+  "privacy": {
+    "newTextFiles": 66,
+    "result": "PASS new text path/private-key/credential-pattern scan plus tracked added-line scan; native developer export kept outside normal player UI"
+  },
+  "sourceBoundary": "All1482/24 unchanged; phaseA7gates and phaseB12helpers raw archives exact, actual generated adapter19af6222... bound; no production/script/testscontracts edit",
+  "gates": "Maintained exact-seed native4078/48.7557044s PASS; taskadapter invalidbinding childexit1/0.3778585s, validnative376/44.6067695s actualexec0 then rootbirthcleanup. No new GWT/player; unchanged source/build sample evidence reused",
+  "qualification": "Original strict fullcanonical readerFAILED only557vs448 raw packingwallclock. Explicit source-backed readerR2 frozen, all raw execution+original12helpers unchanged, only namespaced packingmillis excluded from crossJVM comparisons; every other byte/work/hash/metric/ID and all native oracles/budgets retained",
+  "diagnosis": "JLOADRIGHT,1306layoutunit packageaccess span crossed by2actualcoppersegments; selectedSHA exact to independentnative,38parts92pads26nets4powerinputs and independently reconstructed tasklogicalsnapshot. Candidate metric-rejection dimension unresolved",
+  "visual": "Root inspected2localdeveloper geometry PNGs; not player screenshots/input evidence; prior actual5fresh sample images unchanged",
+  "resources": "Currentnative4+boundplayer6 recorded births exited/stateabsent/8907released; privateadapter/rawinvalidstderr retained for hashproof, no process live; older blockedprofiles/private/unrelated data preserved",
+  "publication": "Normal branch commit/push/exact remote SHA next; no main/email",
+  "nextUnstarted": "Bounded immutable baseline/candidate packing metric-decision evidence at actual owner; existing pre-route strip algorithm already handles RIGHTanchor+edge, no duplicate compaction fix selected",
+  "limits": "Finite exact diagnostic seed only, tasklogicalsnapshot notCircuitJSstate; no legalremoval/newsize/manufacturing/performance/allseed/fullmatrix/Edge/CDP/FileReader claim"
+}

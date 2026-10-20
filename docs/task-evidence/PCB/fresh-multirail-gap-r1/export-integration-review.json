@@ -1,0 +1,15 @@
+{
+  "status": "PASS_SOURCE_PREFLIGHT_NOT_EXECUTED",
+  "scope": "Root read complete task-owned exporter and actual generated five-substitution adapter diff; relevant existing API signatures/getter defensive-copy behavior checked",
+  "workerHandoffSha256": "eb4f3014d946b21a70b349f57a639476b562f6868efa1889ff232b88a189a577",
+  "finalSourceSha256": "5dc511dd1edf1c621f8edc12e454d79cb42d4402a81706f6863b1fd8aacb5489",
+  "rootIntegration": "Adds explicit external power-input declarations for independent reconstruction of task logical snapshot; repeats identity comparisons after all serialization/metric reads. No production/test/script checkout changes",
+  "adapter": "Generated19af62225c5b3b4242343c81ebfa34a707df572eb1db80af5038d5ffdaa1dbec from maintainedB87 with exactly5guarded substitutions; actual PowerShell syntax parsed, raw diff inspected, no runtime/host proof yet",
+  "rawDiff": {
+    "sha256": "2223237441190d140be3257979b701e6b5c8619538acdce64935d85b815cc61f",
+    "singleSpaceContextLines": [],
+    "bytes": "20",
+    "scope": "Only exact unified-diff blank context lines; basename attribute preserves same raw diff and its frozen-source copy"
+  },
+  "limits": "No compile/native/player proof by worker; root source-only preflight. Actual invalid-seed binding and positive exact export still required. Logical declaration snapshot must not be described as CircuitJS solver fingerprint"
+}

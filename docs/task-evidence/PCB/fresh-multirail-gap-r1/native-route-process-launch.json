@@ -1,0 +1,17 @@
+{
+  "drivers": [
+    {
+      "pid": 15160,
+      "startTicks": "639281119971475687",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 9484,
+      "startTicks": "639281119977374378",
+      "executable": "pwsh"
+    }
+  ],
+  "seed": "-5776064669694490064",
+  "phase": "native-route",
+  "scope": "Recorded driver births before maintained exact-seed native probe"
+}

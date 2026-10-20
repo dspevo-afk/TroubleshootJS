@@ -7,7 +7,25 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Fresh normal PCB sample accepted; multi-rail outlier diagnosis next**
+**Current task:** **Fresh multi-rail gap diagnosis accepted; packing decision evidence next**
+
+Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
+has two coppersegments. Maintained exact native4078 and selectedexport376 pass
+within revisedscope: initial fullcanonical reader failed solely cross-JVM wall
+packingmillis557vs448; source-backed reader revision retains all other bytes,
+physical hashes/work/IDs/oracles/budgets.38parts/92pads/26nets/4supplies validated;
+two developer geometry overlays inspected. Existing stripcompactor already can
+move rightanchor+edge, so no duplicate algorithm selected. Candidate metric tuple
+is absent from current receipt; bounded actual-owner decision evidence next.
+All4native+6boundplayer births exited/state absent/portreleased. No production
+change/newsize claim. [Results, failed reader and limitations](task-evidence/PCB/fresh-multirail-gap-r1/RESULTS.md).
+
+Exact fresh multi-rail seed-5776064669694490064 passes maintained native cold/
+warm route/normal admission4078assertions. Selectedattempt5/P07, packingattempt1
+KEPT with identical baseline/selected geometry; strict rejected metric reason
+is not exposed by the current receipt. Source hypothesis points to right anchor,
+not yet established outlier identity. No production change; task-only selected
+geometry exporter preparation next. [Frozen diagnostic scope](task-evidence/PCB/fresh-multirail-gap-r1/scope.md).
 
 First normal RC/composed/multi-rail requests3/admissions3/untouchedFAIL3, each
 all suppliesOFF/tray0. Exact1482/24/compiled6 reuse before/after; no new build/

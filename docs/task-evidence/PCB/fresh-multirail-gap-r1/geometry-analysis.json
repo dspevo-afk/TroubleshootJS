@@ -1,0 +1,89 @@
+{
+  "status": "PASS_FINITE_SELECTED_GEOMETRY_ANALYSIS",
+  "seed": "-5776064669694490064",
+  "geometrySha256": "3c92cfef42211be4fdc2a81b22889d203bbdd3d7b29fdbbb4bc1961682856df3",
+  "outline": [
+    70,
+    50,
+    4192,
+    1794
+  ],
+  "outlier": {
+    "componentId": "JLOAD",
+    "publicReference": "JLOAD",
+    "anchor": "RIGHT",
+    "bounds": [
+      4106,
+      1109,
+      100,
+      130
+    ],
+    "access": [
+      4056,
+      1063,
+      176,
+      202
+    ],
+    "routingCourtyard": [
+      4100,
+      1103,
+      112,
+      142
+    ]
+  },
+  "horizontalBand": {
+    "left": 2750,
+    "right": 4056,
+    "width": 1306,
+    "basis": "Maximum right edge of every other declared package access envelope to JLOAD access left edge; not a free-copper or routable vacancy metric"
+  },
+  "crossingCenterlineSegments": [
+    {
+      "net": "LOAD12",
+      "layer": "BOTTOM",
+      "sourceId": "p07/LOAD12/28/0",
+      "first": [
+        2126,
+        1149
+      ],
+      "second": [
+        4116,
+        1149
+      ]
+    },
+    {
+      "net": "LOAD_RETURN",
+      "layer": "BOTTOM",
+      "sourceId": "p07/LOAD_RETURN/19/0",
+      "first": [
+        2706,
+        1239
+      ],
+      "second": [
+        4116,
+        1239
+      ]
+    }
+  ],
+  "outlierDeclaredNets": {
+    "LOAD12": [
+      "JLOAD.1",
+      "KA.COM",
+      "KB.COM"
+    ],
+    "LOAD_RETURN": [
+      "JLOAD.2",
+      "JOA.2",
+      "JOB.2",
+      "LEDOUT_A.K"
+    ]
+  },
+  "packingMetrics": {
+    "available": true,
+    "area": 7520448,
+    "copper": 29840,
+    "vias": 34,
+    "protectedVoid": 2270400
+  },
+  "limits": "Selected accepted layout only. No discarded candidate metrics/reason, manufacturing clearance or legal compaction proof; diagnostic SVG/PNG is not production-player input evidence"
+}

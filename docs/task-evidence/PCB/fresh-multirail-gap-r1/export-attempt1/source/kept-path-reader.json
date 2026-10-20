@@ -1,0 +1,15 @@
+{
+  "status": "SOURCE_NARROWS_KEPT_WITH_METRIC_REASON_UNRESOLVED",
+  "reviewer": "LunaMAX read-only follow-up fresh_multirail_outlier_scope; no new execution/edits",
+  "files": {
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/native-route-assessment.json": "98d7aa01c9bad93215ec8e1e744f20ebe4e4d828b8d0f8c842c7d49f208abd52",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "4a1376fa3c0bfb5ac3c30d3e8bc37baa7d01b62794247d51dbac0bac66d54e61",
+    "tests/contracts/PcbPackingMetricsContractTest.java": "ca7dec4acb81aca327743a6e1afcff26fdf5468c8db1ff794ae16c8c13c8936a",
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/scope.md": "2ca6bd34d81017a4dac034cdf52af41c53c84a66da8a7aadeb6066fc27408fec",
+    "docs/task-evidence/PCB/fresh-multirail-gap-r1/source-scope-reader.json": "6740ce477bfe4040520198e1367c3fdbf84a61a091c54f840555e468d47bc223"
+  },
+  "finding": "SeededPcbLayoutGenerator313-370 makes attempted probe route/placement/envelope/routequality failures ROUTE_REJECTED. KEPT at343-363 instead means candidate PcbPackingMetrics.Unavailable or strictlyImproves=false. No discarded candidate metrics/reason in current immutable receipt/statistics API",
+  "strictPredicates": "Require candidate.area<baseline.area and candidate.copper<=baseline.copper and candidate.vias<=baseline.vias and candidate.protectedVoid<=baseline.protectedVoid",
+  "allowedNext": "Task-only exporter may measure and validate selected accepted geometry, comparing actual full route/ID/pad/graph and SHA to independent native receipt",
+  "limits": "No package API exposes discarded candidate layout/metrics. Manual session-orchestration reconstruction/reflection/instrumentation outside current scope. Any exact metric-reason owner change must be separately scoped; equal baseline/selected hashes do not prove cause. Normal routing includes retained expected P05 budget rejections; this finding narrows the attempted P07 packing probe only"
+}
