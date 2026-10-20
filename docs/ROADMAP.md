@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Multi-rail public references accepted; publication review**
+**Current task:** **Lead-silk trial rejected; published source restored**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -82,7 +82,7 @@ setup mistake retained and corrected before navigation; all8 recorded births
 exited/current resources closed. No new size/functional-repair/fullmatrix claim.
 [Scope, evidence and limits](task-evidence/PCB/ceramic-face-marking-r1/README.md).
 
-Multi-rail naming candidate accepted: public R/C/U/Q/D/LED/F/K numbering from
+Published1f39ff70: public R/C/U/Q/D/LED/F/K numbering from
 existing declaration owner, exact old reservations/IDs/physical data retained.
 Fresh paired44 exact physical/graph/boxes/work, native13/service40 and actual
 JDK8/GWT5 pass. Five raw views inspected and three posted; original K1/K2
@@ -90,6 +90,11 @@ restoration retains initial customer failure. Qualification framing mistakes and
 browser tool reset/first-console loss retained; all12 running births exited,
 first interrupted profile directory cleanup policy-blocked. No new size or repair
 claim. [Evidence, failures and limits](task-evidence/PCB/multirail-public-references-r1/README.md).
+
+Lead-aware model-label trial rejected: baseline44 confirms15 intersections;
+candidate44 admits all and clears them, but RB15 root13 grows height6. Exact
+published source1481 restored; raw trial/strict exit2 retained. No new production
+build/UI/size claim. [Trial and restoration](task-evidence/PCB/lead-silk-trial-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

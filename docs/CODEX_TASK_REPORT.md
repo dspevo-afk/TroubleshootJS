@@ -1,8 +1,39 @@
-# Current checkpoint: multi-rail public references accepted before publication
+# Current checkpoint: lead-silk trial rejected; exact published source restored
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin
-e8d151144e0bb66e24b7aa00f49fcee41620a922. Indefinite ordinary PCB realism and
+1f39ff70a940839c67634fe90aacd2f1fbf735ee. Indefinite ordinary PCB realism and
+screenshots authorized; no main/email. Naming production remains accepted;
+three current images pasted in chat. Current all1481 source inputs exactly
+restored to published1f39 after rejected lead-silk-trial-r1.
+
+Frozen4 gates/raw accepted2/observer-only baseline1/candidate2/machinery24 and
+unchanged8-suite transport. Baseline44 PASS71.3002772s, exact prior44 and15
+lead/legend pairs. Candidate native44 PASS70.7776438s, all44 admitted/zero
+intersections, but strict assessment FAIL exit2: RB15 root13 grows height1469
+->1475, area+8292. Other43 physical cases unchanged;12 label cases move.
+No acceptance relaxation. Candidate epoch18/four-line shared lead check and
+insertion-only observer retained raw; only owned accepted2 restored after
+candidate audit. No candidate build/UI/final epoch-consumer migration claim.
+All4 trial driver births exited, actual exec58248/26401 exit0 then root launch-
+bound cleanup. No browser/preview/expensive phase. Actual timing fields exactint0;
+static boolFalse==0 parser gap disclosed, correct next gate. No leaf phase/UI run.
+
+Root final rejected-source/observer/physical-diff/restoration review complete.
+Next: stage/privacy/raw-byte review and normal docs/evidence commit/push for this
+rejected trial, including prior naming publication receipt. Then investigate
+static colliding ink relocation after final physical crop/selection within the
+existing outline; no next implementation. Earlier blocked profiles (including
+interrupted naming browser), private baseline COPY, Original5/private baseline
+pointer/cache and task private metadata/raw logs preserved. No main/email;
+continue afterward.
+
+# Previous checkpoint: multi-rail references published
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+1f39ff70a940839c67634fe90aacd2f1fbf735ee, normal push/exact origin SHA verified.
+Indefinite ordinary PCB realism and
 screenshots remain authorized; no main/email. Naming candidate source3/observer1/
 native3 complete; immutable BoardComponent authority, exact old label reservation,
 connector/operational/physical/electrical/random/epoch data retained. Architecture
@@ -36,10 +67,14 @@ profile absent; maintained stop1.9997241s. First interrupted profile deletion
 BLOCKED by automatic review, no alternate attempt. Earlier blocked profile,
 private baseline COPY, Original5/private pointer/cache preserved; task private
 metadata/raw logs retained. No current browser/preview/expensive phase.
-Next: final explicit staging/raw-canonical-byte/privacy audit, normal branch
-commit/push/exact remote SHA. Then generic reference-ink readability investigation
-for existing relay/U2 crowded boxes (read-only leaf underway, no next production
-implementation). No main/email; continue afterward.
+Staged131 paths inspected:128 raw exact/3 CRLF-only; staged and unstaged
+diff checks pass. Raw Shop excerpt filename initially missed existing body rule:
+exit2 retained, bytes unchanged under correct body filename; attributes unchanged.
+Publication receipt untracked for next coherent commit. Next: generic board-anchored
+reference ink clearance for existing relay/U2 lead-stem collisions. Read-only
+owner investigation underway; no next production implementation. No main/email;
+continue afterward.
+
 
 # Previous checkpoint: ceramic marking accepted beforee8d15114 publication
 

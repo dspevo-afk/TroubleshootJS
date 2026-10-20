@@ -1,0 +1,23 @@
+{
+  "status": "FROZEN_BEFORE_OBSERVER_AND_PRODUCTION_EDIT",
+  "gates": {
+    "scope.md": "a733edbe7811c7856de46cf7c471746e085ea8a3e92ae7f52bb242f38fa3d796",
+    "inputs.py": "d59dfe207920187282c5685c1cc044515d4cc523e73aaf1775adc0c3016f944a",
+    "run_phase.ps1": "ebf30a12cb5d2469a803428424422c2b91b9f8c129fbef6d1fef91a5603297af",
+    "assess.py": "6a2953a681c033e58dfce1d2645336aa8c43aef45f55432f51f0ffa9d7906d62"
+  },
+  "acceptedSha256": "86a24f8c0f67ea9c5abc486656352ec999d37a790fdd42beb87cfa77bb27c458",
+  "optimizedRefusals": [
+    {
+      "script": "inputs.py",
+      "actualExitCode": 1,
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    },
+    {
+      "script": "assess.py",
+      "actualExitCode": 1,
+      "status": "PASS_REFUSED_OPTIMIZED_PYTHON"
+    }
+  ],
+  "limits": "Pure canaries and actual interpreter refusal only; no phase/native/OS proof"
+}

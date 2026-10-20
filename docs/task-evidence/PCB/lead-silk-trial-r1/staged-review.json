@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "stagedBeforeReviewFile": 40,
+  "rawExact": 38,
+  "crlfOnlyCanonical": 2,
+  "canonicalPaths": [
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md"
+  ],
+  "publicationSealSha256": "0ea728a742b1c794360112b5e7a24f13ea86a0f599627228a6d0a53081476769",
+  "review": "Exact rejected source/observer scope, failed physical gate and current1481 restoration reviewed; no production staged",
+  "privacy": "No personal Windows prefix or browser endpoint in selected bytes; unrelated files not staged"
+}

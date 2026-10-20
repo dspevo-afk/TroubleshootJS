@@ -1,0 +1,20 @@
+{
+  "launchSha256": "fa65186f3913e1e11981282a7b9f7c6a2a53320875b972264b917a2ef6cf1539",
+  "phase": "baseline",
+  "scope": "Actual root OS birth checks after exec58248 returned exit0",
+  "status": "PASS",
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "pid": 30800,
+      "startTicks": "639280923465827891",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25756,
+      "startTicks": "639280923471737636",
+      "executable": "pwsh"
+    }
+  ]
+}

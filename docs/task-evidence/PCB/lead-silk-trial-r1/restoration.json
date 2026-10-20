@@ -1,0 +1,11 @@
+{
+  "status": "RESTORED_EXACT_PUBLISHED_SOURCE1481",
+  "baseCommit": "1f39ff70a940839c67634fe90aacd2f1fbf735ee",
+  "restoredOwnedPaths": [
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbNormalPackingCensusContractTest.java"
+  ],
+  "candidateRawPreserved": true,
+  "actualTimingTypeAudit": "Both actual phase exitCode fields exact int0; static bool0 parsing gap disclosed, not present in these records",
+  "limits": "No broad clean/reset; unrelated docs/publication/Original5/pointer/cache/profiles preserved"
+}

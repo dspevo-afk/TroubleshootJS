@@ -1,0 +1,37 @@
+{
+  "status": "REJECTED_AS_PREDECLARED",
+  "case": [
+    "RB15_CONTROL",
+    "13"
+  ],
+  "differences": {
+    "geometrySha256": {
+      "baseline": "becd948e597bd5275a0b07d3c3f9204a750a5845a767a314a71689fe3d6d6cec",
+      "candidate": "12343e03467f98d7004e0ea5f6cff49173f2231f3ecb17d2d3eccd5969805341"
+    },
+    "layoutAlgorithmVersion": {
+      "baseline": 17,
+      "candidate": 18
+    },
+    "outline": {
+      "baseline": {
+        "x": 50,
+        "y": 50,
+        "width": 1382,
+        "height": 1469,
+        "area": 2030158
+      },
+      "candidate": {
+        "x": 50,
+        "y": 50,
+        "width": 1382,
+        "height": 1475,
+        "area": 2038450
+      }
+    }
+  },
+  "all44Admitted": true,
+  "candidateIntersectionPairs": 0,
+  "baselineIntersectionPairs": 15,
+  "limits": "Strict physical identity stop condition; no final current epoch/native/build/player acceptance"
+}

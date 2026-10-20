@@ -1,0 +1,16 @@
+{
+  "phase": "candidate",
+  "scope": "Captured parent/current actual births before maintained trial census",
+  "drivers": [
+    {
+      "startTicks": "639280924380077121",
+      "pid": 23008,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639280924385887380",
+      "pid": 32756,
+      "executable": "pwsh"
+    }
+  ]
+}

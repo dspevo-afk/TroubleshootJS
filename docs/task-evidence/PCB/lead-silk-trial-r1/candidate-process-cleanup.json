@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 23008,
+      "startTicks": "639280924380077121"
+    },
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 32756,
+      "startTicks": "639280924385887380"
+    }
+  ],
+  "phase": "candidate",
+  "scope": "Actual root OS birth checks after exec26401 returned exit0",
+  "status": "PASS",
+  "launchSha256": "2be3fbfba7233764bd5dab287f51a92993b92420215ed084dc8db6e511464a2e"
+}
