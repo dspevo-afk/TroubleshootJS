@@ -1,0 +1,19 @@
+{
+  "status": "PASS_VERIFIED_READ_ONLY_DIAGNOSTIC_PUBLICATION",
+  "sha": "a73eeaeb3edd9898a29156b761d20021c3c6db18",
+  "message": "Diagnose retained envelope on the generated NPN board",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "verifiedExactRemoteRef": "a73eeaeb3edd9898a29156b761d20021c3c6db18\trefs/heads/codex/q60-faulted-profile-counts",
+  "reviewedCommittedBlobsVerified": 42,
+  "packetRawExact": true,
+  "existingTwoDocsOnlyGitCrlfToLf": true,
+  "postpublicationInputAudit": "PASS actualexit0 source1482/machinery24/gate7/player8 unchanged at a73eeaeb",
+  "recordedDriverBirthsExited": 4,
+  "noPersistentProcessesLaunched": true,
+  "result": "Exact NPN selected628530/4300/0/80000; existing P05 proposal628530/3730/0/80000 retained because area tied",
+  "limits": "No production change or new size/player/GWT/electrical/full-matrix claim. Four prior blocked profile actions and seven unrelated groups preserved; private raw data/adapter retained; no main merge/email.",
+  "nextUnstarted": "Bounded task-only same-cap second-sweep experiment for this exact NPN, with passive accepted-move evidence; separate production scope only on strict gain"
+}

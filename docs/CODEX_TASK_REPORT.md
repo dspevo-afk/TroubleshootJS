@@ -1,11 +1,11 @@
-# Current checkpoint: exact NPN sparse diagnosis accepted; source relocation review
+# Current checkpoint: NPN private probe NO_GO; cross-family evidence review next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact origince6f3fef9ac86b3157f0ecac08ab53350022134d. Continue indefinite
+HEAD/exact origina73eeaeb3edd9898a29156b761d20021c3c6db18. Continue indefinite
 PCB realism/screenshots/optional leaves; no main/email/milestone stop. Preserve
 seven unrelated groups/private data and FOUR blocked profile-cleanup actions
 (three older, TO92R2 partial17256). Never retry their removal by another path.
-No current task browser/preview/listener or recorded driver is live.
+No current task browser/preview/listener/native phase or recorded driver is live.
 
 Published TO92 detail01e306eb:17 shared installed/loose paint lines, renderer
 89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856. Final5
@@ -20,7 +20,7 @@ publishedce6f3fef with normalpush0/exactorigin and fresh1482/24/7/8 audit PASS.
 Optocoupler only found producer RB56 is held; existing diode/LED polarity and
 relay labels already adequate. No artwork change from source review.
 
-Current npn-sparse-diagnostic-r1 is read-only, source1482/machinery24 unchanged.
+Published npn-sparse-diagnostic-r1 is read-only, source1482/machinery24 unchanged.
 Exact public replay380469407799690561 constructed once, ordinary small/bottom
 THT packing3; no developer fixed coordinates/reroll. Baseline13 published
 artifacts/two helpers frozen before adaptation; final eight export artifacts
@@ -40,8 +40,40 @@ projection gaps before copper. Corner free rectangle320x250 is no legal-cut or
 packability proof. See RESULTS/assessment/envelope-analysis/root-review. No
 production/test/script/RNG/epoch/predicate/cap edit or new GWT/browser/electrical/
 allseed/size proof. Exact source/build/player evidence reuse boundary audited.
-Next: source-backed bounded generic relocation hypothesis from measured data;
-no planner experiment selected yet. Root owns diff/staging/normal publication.
+Diagnosis publisheda73eeaeb; normalpush0/exactorigin/42reviewed committed blobs
+and fresh unchanged1482/24/7/8 audit PASS. Publication receipt intended nextcommit.
+
+Current npn-pocket-probe-r1 freezes baseline source1482/24/twohelpers and final
+11helpers/anchor-review/privateowner+adapter before execution. Only private
+PcbPlacementPlanner changes: accepted same-cap max2 sweeps/no-change stop,
+passive aggregate and accepted-move coordinates/envelopes; privateownerSHA
+b16d507aeddb9b72a52c3d7206e00f577741397bf0a1f6b541e2a394146644da.
+Four guarded owner/three adapter substitutions; actual diff reviewed. All
+production/tests/scripts remain unchanged. Source leaf justifies this finite
+repeat by NPN570 copper headroom versus prior composed copper regression.
+
+Prefreeze observer correction: inherited anchor-margin check used opposite
+edge. Planner inward +x/left and -x/right demand literal30, not816. Corrected
+current horizontal NPN reader only; prior reader unchanged. Actual2 positive/
+2 negative literal controls PASS and four generated helpers reproduce exactly.
+Corrected source-only finding/hash pinned in final seal; no native gate had run.
+Actual selected PowerShell syntax and missing-owner host binding canary PASS,
+actualexit0,0.3943648s. Cold/repeat actualJDK8/private exports PASS161, actual
+exits0,42.2000588/42.3427842s. Each exit precedes separate driver observation;
+all six recorded births exited. All nonclock rows/work/moves exact, only validated
+packing wall clock normalizes. Literal anchor/move/cap/nonclock controls and
+independent physical/graph/metrics readers PASS. Root integrated/privacy review
+PASS, private native bytes still exact, raw logs copied privately.
+
+Second sweep actually moves LED1 and reduces enclosing-envelope proxy. Routed
+proposal618310/3650/0/84000 reduces area1.63%/copper15.12%, but void grows5%.
+Original628530/4300/0/80000/full geometry retained. NO_GO, no promotion. Source
+review confirms the sampler corner clips to312 wide inside the movable inset10
+domain; RB320/RPD340 do not fit there. Conservative40-grid/five targets are not
+a demonstrated bug or another justified experiment. See probe RESULTS/assessment/
+root-review/anchor-oracle-review. No GWT/browser/electrical/allseed/size proof.
+Next review current finite cross-family corpus for a useful remaining pattern;
+root owns final diff/staging/normal publication, then continued authorized work.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 

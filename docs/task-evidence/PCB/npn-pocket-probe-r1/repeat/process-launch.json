@@ -1,0 +1,16 @@
+{
+  "scope": "Task-only private planner substitution; root observes actual tool exit separately",
+  "phase": "repeat",
+  "drivers": [
+    {
+      "pid": 26116,
+      "executable": "pwsh",
+      "startTicks": "639281315940008292"
+    },
+    {
+      "pid": 29872,
+      "executable": "pwsh",
+      "startTicks": "639281315942384085"
+    }
+  ]
+}

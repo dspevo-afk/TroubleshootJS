@@ -1,0 +1,16 @@
+{
+  "phase": "canary",
+  "drivers": [
+    {
+      "startTicks": "639281314830749544",
+      "executable": "pwsh",
+      "pid": 8348
+    },
+    {
+      "startTicks": "639281314833089799",
+      "executable": "pwsh",
+      "pid": 5392
+    }
+  ],
+  "scope": "Task-only private planner substitution; root observes actual tool exit separately"
+}

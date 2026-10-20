@@ -1,0 +1,32 @@
+{
+  "status": "PASS_PREFREEZE_OBSERVER_ORACLE_CORRECTION",
+  "sourceOnlyFinding": "Inherited anchor oracle selected opposite edge; +x is inward from left, -x inward from right",
+  "source": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+  "sourceSha256": "373f6f4d3b5f3dc109238d5f0cb87346b0d9bb86514c1da5354af62d4f76c6b0",
+  "preCorrectionNpnReaderSha256": "d17b3a64c34a2b257898e40ff912c1876273ca8d4c32085ef9ea8881d0b15f22",
+  "correctedReaderSha256": "1d94c6c489570284e6e6a5a656a6acdd2ce42b4233d262f3d7f53c3209a757ac",
+  "literalControls": {
+    "J1": {
+      "direction": [
+        1,
+        0
+      ],
+      "expectedMargin": 30,
+      "positive": "PASS",
+      "negativeTranslation": "PASS"
+    },
+    "J2": {
+      "direction": [
+        -1,
+        0
+      ],
+      "expectedMargin": 30,
+      "positive": "PASS",
+      "negativeTranslation": "PASS"
+    }
+  },
+  "oppositeSideMargin": 816,
+  "correctEdgeMargin": 30,
+  "generatedHelpersReproduceCurrentBytes": true,
+  "limits": "Before final seal/native execution; no prior reader modified, no production oracle/budget/geometry change; current NPN horizontal anchors only"
+}

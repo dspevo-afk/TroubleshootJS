@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "startTicks": "639281314961809508",
+      "executable": "pwsh",
+      "pid": 31652
+    },
+    {
+      "startTicks": "639281314964139301",
+      "executable": "pwsh",
+      "pid": 28104
+    }
+  ],
+  "scope": "Task-only private planner substitution; root observes actual tool exit separately",
+  "phase": "cold"
+}

@@ -1,0 +1,269 @@
+{
+  "status": "PASS_BOUNDED_TASK_ONLY_EXPERIMENT",
+  "decision": "NO_GO_NO_STRICT_ROUTED_GAIN",
+  "interpretation": "TASK_ONLY_SECOND_SWEEP_NOT_CURRENT_PRODUCTION_REPLAY",
+  "inputSealSha256": "6df0d5cc60aeed43c4ed90553ff4d41b5952e8289bd79e9b8865cec15159b658",
+  "canaryElapsedSeconds": 0.3943648,
+  "publishedIncumbent": {
+    "area": 628530,
+    "copper": 4300,
+    "vias": 0,
+    "protectedVoid": 80000
+  },
+  "actualExperimentalSelected": {
+    "area": 628530,
+    "copper": 4300,
+    "vias": 0,
+    "protectedVoid": 80000
+  },
+  "strictPredicates": {
+    "areaStrictlySmaller": false,
+    "copperNonincreasing": true,
+    "viasNonincreasing": true,
+    "protectedVoidNonincreasing": true
+  },
+  "selectedGeometryEqualsPublished": true,
+  "secondSweepExecuted": true,
+  "anchorCanaries": {
+    "J1": {
+      "direction": [
+        1,
+        0
+      ],
+      "expectedMargin": 30,
+      "positive": "PASS",
+      "negativeTranslation": "PASS"
+    },
+    "J2": {
+      "direction": [
+        -1,
+        0
+      ],
+      "expectedMargin": 30,
+      "positive": "PASS",
+      "negativeTranslation": "PASS"
+    }
+  },
+  "acceptedMoveCanaries": {
+    "negativeMoveCap": "PASS",
+    "negativeMoveAnchor": "PASS"
+  },
+  "readerCanaries": {
+    "positiveClockOnly": "PASS",
+    "negativeNonclockCoordinate": "PASS",
+    "negativeOriginalCap": "PASS"
+  },
+  "results": {
+    "cold": {
+      "acceptedMoves": [
+        {
+          "schema": "pocket-accepted-move@1",
+          "sweep": 1,
+          "componentId": "RLOAD",
+          "fromX": 310,
+          "fromY": 110,
+          "toX": 280,
+          "toY": 150,
+          "accessEnvelope": [
+            230,
+            115,
+            320,
+            120
+          ],
+          "areaEnd": 520442,
+          "wireEnd": 13344.0,
+          "evaluation": 63
+        },
+        {
+          "schema": "pocket-accepted-move@1",
+          "sweep": 2,
+          "componentId": "LED1",
+          "fromX": 600,
+          "fromY": 90,
+          "toX": 570,
+          "toY": 100,
+          "accessEnvelope": [
+            551,
+            64,
+            123,
+            171
+          ],
+          "areaEnd": 510822,
+          "wireEnd": 12864.0,
+          "evaluation": 73
+        }
+      ],
+      "elapsedSeconds": 42.2000588,
+      "receiptSha256": "a72b49c572304315b4b05b2ba86ad71b817ff925c768f873383bacd715145abf",
+      "sweepInvocations": 1,
+      "sweeps": [
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 1,
+          "evaluationStart": 45,
+          "evaluationEnd": 68,
+          "acceptedMoves": 1,
+          "areaStart": 520442,
+          "areaEnd": 520442,
+          "wireStart": 13353.0,
+          "wireEnd": 13344.0
+        },
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 2,
+          "evaluationStart": 68,
+          "evaluationEnd": 90,
+          "acceptedMoves": 1,
+          "areaStart": 520442,
+          "areaEnd": 510822,
+          "wireStart": 13344.0,
+          "wireEnd": 12864.0
+        }
+      ],
+      "selectedGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 628530,
+        "copper": 4300,
+        "vias": 0,
+        "protectedVoid": 80000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=91269;millis=41;route=P05_ONE_FACE;disposition=KEPT;baseline=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5;selected=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "attempts": 1,
+        "orderings": 5,
+        "expansions": 91269,
+        "millis": 41,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "selectedGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 628530,
+            "copper": 4300,
+            "vias": 0,
+            "protectedVoid": 80000
+          },
+          "candidate": {
+            "area": 618310,
+            "copper": 3650,
+            "vias": 0,
+            "protectedVoid": 84000
+          },
+          "unavailableReason": null
+        }
+      }
+    },
+    "repeat": {
+      "acceptedMoves": [
+        {
+          "schema": "pocket-accepted-move@1",
+          "sweep": 1,
+          "componentId": "RLOAD",
+          "fromX": 310,
+          "fromY": 110,
+          "toX": 280,
+          "toY": 150,
+          "accessEnvelope": [
+            230,
+            115,
+            320,
+            120
+          ],
+          "areaEnd": 520442,
+          "wireEnd": 13344.0,
+          "evaluation": 63
+        },
+        {
+          "schema": "pocket-accepted-move@1",
+          "sweep": 2,
+          "componentId": "LED1",
+          "fromX": 600,
+          "fromY": 90,
+          "toX": 570,
+          "toY": 100,
+          "accessEnvelope": [
+            551,
+            64,
+            123,
+            171
+          ],
+          "areaEnd": 510822,
+          "wireEnd": 12864.0,
+          "evaluation": 73
+        }
+      ],
+      "elapsedSeconds": 42.3427842,
+      "receiptSha256": "f717c21fa157591f313046847f1be536e9a1fd75c08eef68cb36ae42c3715858",
+      "sweepInvocations": 1,
+      "sweeps": [
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 1,
+          "evaluationStart": 45,
+          "evaluationEnd": 68,
+          "acceptedMoves": 1,
+          "areaStart": 520442,
+          "areaEnd": 520442,
+          "wireStart": 13353.0,
+          "wireEnd": 13344.0
+        },
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 2,
+          "evaluationStart": 68,
+          "evaluationEnd": 90,
+          "acceptedMoves": 1,
+          "areaStart": 520442,
+          "areaEnd": 510822,
+          "wireStart": 13344.0,
+          "wireEnd": 12864.0
+        }
+      ],
+      "selectedGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 628530,
+        "copper": 4300,
+        "vias": 0,
+        "protectedVoid": 80000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=91269;millis=35;route=P05_ONE_FACE;disposition=KEPT;baseline=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5;selected=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "attempts": 1,
+        "orderings": 5,
+        "expansions": 91269,
+        "millis": 35,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "selectedGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 628530,
+            "copper": 4300,
+            "vias": 0,
+            "protectedVoid": 80000
+          },
+          "candidate": {
+            "area": 618310,
+            "copper": 3650,
+            "vias": 0,
+            "protectedVoid": 84000
+          },
+          "unavailableReason": null
+        }
+      }
+    }
+  },
+  "limits": "Two finite fresh-JVM experimental substitutions; no production, epoch, budget, oracle, solver, preview or player change. No rejected proposal reconstructed, optimum/all-seed/manufacturing/electrical/performance or promotion claim."
+}

@@ -1,0 +1,24 @@
+{
+  "anchorOracleReviewSha256": "a5a3f950b52edad2f9eed84b48b172b7806f34c42b5d8cf864ba335b5bdc8497",
+  "baselineSealSha256": "cc0494fb64614c14ce86e7ba18f520eb051c9f9df0cf5384f19556d1b7e81cc1",
+  "baseCommit": "a73eeaeb3edd9898a29156b761d20021c3c6db18",
+  "gates": {
+    "scope.md": "37e83b5184c1e51bedfdca263fa2ab78b108d45b02094a05473f4941741f9ef6",
+    "make_experiment.py": "576be9849748ed704b06642199d5deb8585e163dac14ad761e47a18b1ef9d62e",
+    "private-input-manifest.json": "0ed9d021062ef5716558ea96eacb6dc0fe93bcaf4f1b9a5a24c5f9a2fad30f66",
+    "owner-diff.txt": "0ba62115b223beb53f607c0d77085cf174b34ce5cb364f7174d392485078f799",
+    "adapter-diff.txt": "1ed6a4d1eae183d7b2a8ffb1afe30fca93c3ba517219eda0e41de22e2cc54f6a",
+    "run_experiment.ps1": "aaf96968a7ea6b0ed083326594e3bc9e9114ca1998f3ea44426bbc8f7f4fdfce",
+    "record_exit.ps1": "3874f58ea98a020b57298a638844c9cefcc1b02d4d6f74d2434741f548b79927",
+    "experiment_inputs.py": "9ef2463a58e96ce7c3322bf53c006f3350a6d8ae7f7463578af7de345952740e",
+    "qualify_experiment.py": "1d94c6c489570284e6e6a5a656a6acdd2ce42b4233d262f3d7f53c3209a757ac",
+    "reader-scope.md": "e9fc778cca3efaf4c6d710ed2c63be72f7f834f18369b4086067f97d78868167",
+    "prepare_helpers.py": "f0f8720e0e556e12db415666f612a94da630060c502a16b3c9d1be18feacfd73"
+  },
+  "reusedReadOnlyValidatorSha256": "562ce41af6c88c83cd77e4e60d4120222e4f578eb305b8f3202d6216bbc9e7ff",
+  "reusedExporterSha256": "14c472a9b8a28d648a8be17d4a4ae0d6b66ecac3e286fb475808d98f71d20b36",
+  "privateOwnerSha256": "b16d507aeddb9b72a52c3d7206e00f577741397bf0a1f6b541e2a394146644da",
+  "privateAdapterSha256": "658f614af1a4b0063ba8a969c5baa29bf7c5047b13124a1cb539d0f9ded3c59f",
+  "request": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/380469407799690561",
+  "interpretation": "TASK_ONLY_SECOND_SWEEP_NOT_CURRENT_PRODUCTION_REPLAY"
+}

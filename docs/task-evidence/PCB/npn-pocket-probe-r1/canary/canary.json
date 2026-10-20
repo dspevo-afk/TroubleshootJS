@@ -1,0 +1,6 @@
+{
+  "privateLogBytes": 389,
+  "privateLogSha256": "40727c719d588943629eb0fa6ad324d7c9aa73b12e12af50db0c5ab0c832120d",
+  "actualAdapterExitCode": 1,
+  "status": "PASS_REJECTED_MISSING_PRIVATE_OWNER_AT_BINDING"
+}

@@ -1,0 +1,27 @@
+{
+  "status": "PASS_BOUNDED_NO_GO_ROOT_REVIEW",
+  "actualCanaryExecExitCode": 0,
+  "actualColdExecExitCode": 0,
+  "actualRepeatExecExitCode": 0,
+  "readerActualExecExitCode": 0,
+  "recordedDriverBirthsExited": 6,
+  "privateInputsStillExact": true,
+  "logProjections": [
+    {
+      "phase": "cold",
+      "privateRawSha256": "d862a1e92bfdfa4bfca851742f9cb997d3d5a3a5b123b8d8368d317cd9ac1400",
+      "publicSha256": "d862a1e92bfdfa4bfca851742f9cb997d3d5a3a5b123b8d8368d317cd9ac1400",
+      "replacements": []
+    },
+    {
+      "phase": "repeat",
+      "privateRawSha256": "2aacb79edb7bc774c09f75340d203a3d9546e70d56026a9e98084b14e4843955",
+      "publicSha256": "2aacb79edb7bc774c09f75340d203a3d9546e70d56026a9e98084b14e4843955",
+      "replacements": []
+    }
+  ],
+  "assessmentSha256": "32afe58892478eed2cd0df8c117bc8509153bf102054842a0c538afc3a00fb3e",
+  "inputSealSha256": "6df0d5cc60aeed43c4ed90553ff4d41b5952e8289bd79e9b8865cec15159b658",
+  "anchorOracleReviewSha256": "a5a3f950b52edad2f9eed84b48b172b7806f34c42b5d8cf864ba335b5bdc8497",
+  "limits": "No source promotion/current native process/browser/preview; four earlier blocked profile actions preserved, private raw data/native inputs retained; no GWT/player/electrical/full-matrix/all-seed proof"
+}

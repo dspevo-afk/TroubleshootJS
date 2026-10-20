@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Exact NPN envelope diagnosis accepted; generic relocation source review**
+**Current task:** **NPN same-cap private probe NO_GO; finite cross-family review next**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -101,7 +101,19 @@ vias0/void80000; existing P05 proposal retains area/void/vias and reduces copper
 to3730, so strict area gate correctly keeps incumbent. Final envelope bounds
 are set by J1/J2 across x and LED1/RPD across y; corner void is not a removable
 strip proof. No planner edit/new size claim. Next source-backed generic
-relocation hypothesis before any new experiment.
+relocation hypothesis before any new experiment. Diagnosis publisheda73eeaeb,
+normalpush/exactorigin/42blobs/fresh unchanged input audit PASS. Its NPN570
+copper headroom supports one finite private same-cap second sweep. Baseline/
+final11helpers/private owner+adapter frozen; preseal reversed anchor-edge
+observer corrected with literal30-unit positive/negative controls, prior reader
+preserved. Actual host rejection/cold+repeatJDK8 PASS161/all six driver exits,
+strict reader/nonclock/move/cap/anchor controls PASS. Extra sweep makes a real
+move and proposal618310/3650/0/84000 versus628530/4300/0/80000: smaller area and
+copper, but5% more protected void. NO_GO; original full geometry retained.
+No production planner edit/promotion. Sampler corner is not a legal target;
+source review demonstrates no further vacancy-search bug. Next current finite
+cross-family corpus review before another experiment.
+[Private NPN decision and limits](task-evidence/PCB/npn-pocket-probe-r1/RESULTS.md).
 [Exact NPN diagnosis and limits](task-evidence/PCB/npn-sparse-diagnostic-r1/RESULTS.md).
 [Source decision and limits](task-evidence/PCB/optocoupler-source-review-r1/README.md).
 [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).
