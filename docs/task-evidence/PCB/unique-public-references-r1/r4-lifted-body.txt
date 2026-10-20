@@ -1,0 +1,78 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Customer retest did not pass. Continue troubleshooting.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: OFF
+Supplies
+View
+Ticket
+Component
+R4
+
+
+Type: resistor
+
+
+Markings: Color bands
+
+
+Color bands: BROWN, BLACK, RED, GOLD
+
+
+State: Lead Lifted
+
+
+Lead 1: R4.1
+
+
+Lead 2: R4.2
+
+
+
+Reconnect lead 1
+Lift lead 2
+Remove component
+Restore component
+Parts tray
+▲ PARTS TRAY · 0 parts

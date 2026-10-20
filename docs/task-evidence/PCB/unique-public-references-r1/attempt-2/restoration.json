@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "restoredAcceptedBeforeWrites": [
+    "src/com/lushprojects/circuitjs1/client/BoardComponent.java",
+    "src/com/lushprojects/circuitjs1/client/ControlledIndicatorPcbLayoutFactory.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "src/com/lushprojects/circuitjs1/client/ServiceableBoardConstruction.java",
+    "tests/contracts/ControlledIndicatorAssemblyContractTest.java",
+    "tests/contracts/D01DiagnosticContractTest.java",
+    "tests/contracts/E05IsolationGeometryContractTest.java",
+    "tests/contracts/Rb56ModelIdentityContractTest.java"
+  ],
+  "observer": "Unchanged baseline observer retained"
+}

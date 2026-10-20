@@ -1,0 +1,6 @@
+{
+  "elapsedSeconds": 2.1275924,
+  "status": "PASS",
+  "exitCode": 0,
+  "operation": "Maintained stop-preview.ps1; separate from native/build/player phases"
+}

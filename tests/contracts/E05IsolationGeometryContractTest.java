@@ -30,6 +30,7 @@ public final class E05IsolationGeometryContractTest {
         singleFaceRoutingAndFinalPublicationGate();
         canonicalOwnersBindDeclarations();
         defaultsAndProductionWhitelistStayFixed();
+        referenceReservationBindsFreshness();
         System.out.println("PASS: E05 isolation geometry contracts assertions=" + checks);
     }
 
@@ -377,6 +378,33 @@ public final class E05IsolationGeometryContractTest {
         check("PRIMARY".equals(routed.board.getPlacementConstraints().domainForPad(routed.board,"T1.P2")) &&
             "SECONDARY".equals(routed.board.getPlacementConstraints().domainForPad(routed.board,"T1.S2")),
             "compaction cannot join returns or retarget pads");
+    }
+
+    private static void referenceReservationBindsFreshness() throws Exception {
+        check(new BoardComponent("R1","RESISTOR",PhysicalPackages.AXIAL_RESISTOR).getReferenceLabelCharacters() == 2,
+            "existing constructor reserves exactly its actual public marking");
+        check(new BoardComponent("R1","RESISTOR",PhysicalPackages.AXIAL_RESISTOR,"R1",5)
+                .getReferenceLabelCharacters() == 5,
+            "explicit immutable reservation can exceed printed reference width");
+        boolean rejected = false;
+        try { new BoardComponent("R1","RESISTOR",PhysicalPackages.AXIAL_RESISTOR,"R123",3); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        check(rejected,"reserved box cannot be smaller than the printed marking");
+        String baseline = generationBoard(referenceBoard(2));
+        check(baseline.equals(generationBoard(referenceBoard(2))),
+            "equal reference reservations keep the same actual metadata key");
+        check(!baseline.equals(generationBoard(referenceBoard(5))),
+            "capacity-only change invalidates the actual prepared-layout dependency key");
+    }
+
+    private static TroubleshootBoard referenceBoard(int capacity) {
+        TroubleshootBoard board = new TroubleshootBoard("reference-reservation-fixture");
+        board.addComponent(new BoardComponent("R1","RESISTOR",PhysicalPackages.AXIAL_RESISTOR,"R1",capacity));
+        board.addNet(new BoardNet("A")); board.addNet(new BoardNet("B"));
+        board.addPad(new BoardPad("R1.1","R1","1","A"));
+        board.addPad(new BoardPad("R1.2","R1","2","B"));
+        board.validate();
+        return board;
     }
 
     private static String generationBoard(TroubleshootBoard board) throws Exception {

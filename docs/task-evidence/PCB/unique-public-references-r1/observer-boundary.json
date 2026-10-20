@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "baseCommit": "4a0e3dda904fa04b7e8351deb68bb5a878e28b78",
+  "path": "tests/contracts/PcbNormalPackingCensusContractTest.java",
+  "candidateRawSha256": "bc975fa3e53c49faef10950616cdaddde8bb1f00f9bc102671139b7e3f191c67",
+  "existingFullGeometryGraphTitleAndAllAssertionsUnchanged": true,
+  "scope": "Insertion-only actual getter inventory, unique complete-record text normalization and read-only before/after checks; no production edit"
+}

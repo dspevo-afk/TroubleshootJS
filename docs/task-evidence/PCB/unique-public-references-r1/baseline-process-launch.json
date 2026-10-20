@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained reference phase",
+  "drivers": [
+    {
+      "pid": 22860,
+      "startTicks": "639280841216664842",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 32024,
+      "startTicks": "639280841229684437",
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "baseline"
+}

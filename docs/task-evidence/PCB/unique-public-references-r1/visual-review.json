@@ -1,0 +1,62 @@
+{
+  "status": "OBSERVED",
+  "actualRawImagesInspected": 8,
+  "primaryViews": [
+    "composed-unique-overview.jpg",
+    "supporting-r2-service.jpg",
+    "r4-replacement-target.jpg",
+    "removed-original-direct-open.jpg",
+    "composed-repaired-overview.jpg"
+  ],
+  "additionalDiagnosticViews": "Three raw probe-placement/tray observations retained; initial board-land OL views are explicitly not component-resistance proof.",
+  "rawCaptures": [
+    {
+      "file": "composed-unique-overview.jpg",
+      "bytes": 133654,
+      "sha256": "3506bbb32792c711a1f7a2efff88d270c434a1dbf49bd2e7e9ed3308296c3fa3"
+    },
+    {
+      "file": "supporting-r2-service.jpg",
+      "bytes": 150398,
+      "sha256": "94d7517fccadadb0b88c32b3a268740e8318ba2eb18b34781fe2f977b8dd6843"
+    },
+    {
+      "file": "r4-isolated-open.jpg",
+      "bytes": 138953,
+      "sha256": "077d52819f2aa6d137a88582dad1d5ac300a01a11f43ce02e5122df5666d5434"
+    },
+    {
+      "file": "r4-replacement-target.jpg",
+      "bytes": 154406,
+      "sha256": "0ae9da6d01577e13700d010832b470e72f584f406aa44a01b470e3c8558943bf"
+    },
+    {
+      "file": "replacement-probe-observation.jpg",
+      "bytes": 140313,
+      "sha256": "cc522a2df698410e893864b1ef73b0fcdaa115bb089948f0d9bdccfcf2952362"
+    },
+    {
+      "file": "removed-original-tray-observation.jpg",
+      "bytes": 130102,
+      "sha256": "538ff713340e299d5c838963ddf69b283158cd8f341861dc2dc0d61d515d9c63"
+    },
+    {
+      "file": "removed-original-direct-open.jpg",
+      "bytes": 129538,
+      "sha256": "da3454d50e51c66fc782eeeb48d40197e150de8b22483000cb1ea8b2b818c8d5"
+    },
+    {
+      "file": "composed-repaired-overview.jpg",
+      "bytes": 134669,
+      "sha256": "602a819cd7a9f5292f639762e74d67088e0d561d3cb039e1c1e4676708b37e1d"
+    }
+  ],
+  "findings": [
+    "Unique R1-R7/Q1-Q2/LED1-LED3 markings agree with actual component and terminal menus.",
+    "Supporting R2 original removal/tray/install target Channel A / R2/restoration retain its name.",
+    "New 1000 Ohm narrow resistor targets Channel B / R4; original Part9 remains loose.",
+    "Direct replacement lifted-lead measurement reads 1 kOhm. Removed original direct loose-lead contacts visibly read OL. Initial land-based OL readings rejected as isolated component proof.",
+    "Customer retest FAIL before repair and actual PASS after verified replacement/reconnection. Final repaired view shows all three LEDs lit."
+  ],
+  "limits": "Five primary raw views plus three retained diagnostic frames; finite exact replay of prior fresh sample. No pixel oracle, full unrelated matrix, fresh FileReader, Edge/CDP wrapper, unseen/all-seed/manufacturing or new size/performance claim."
+}

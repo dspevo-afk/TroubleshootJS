@@ -1,0 +1,16 @@
+{
+  "status": "FROZEN_BEFORE_OBSERVER",
+  "sourceCount": 1481,
+  "gates": {
+    "scope.md": "f220ca9600d2ddd2cae4b1fa7422aefc822efdab2b0da3f2757df9b25351d196",
+    "inputs.py": "c7abe2f0065b09a013aedde487916953583506e6015de6b8744b8c6a27325780",
+    "run_phase.ps1": "13a9ca95c862d53262c15b52f74637f13b1eb65b367fac915aea0c5064c4de7a",
+    "assess.py": "a9a1218e03efe0354ff5a03f495cc81f5f7381fdc11a119871d3a540b32a3b41"
+  },
+  "acceptedSealSha256": "6f7bbcccd150960587b17bc1e5fca7a178592f61a889e78284be8e0cbc33645c",
+  "transport": {
+    "suite_transport.ps1": "f20fbcec194eebe5696cc98e5c46b94bb31d725e21c5ef110a28cf2e3ea31ce1",
+    "routes-suites.json": "4c9760b9999a35451c1255d6c83c13f94f6279dc76c5acd4994faac21a7dc1d3"
+  },
+  "scope": "Five production owners, Controlled/E05/census test owners; no source edit yet"
+}

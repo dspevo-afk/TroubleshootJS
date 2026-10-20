@@ -1,0 +1,102 @@
+[
+  {
+    "event": "Exact public replay through normal UI",
+    "difficulty": "MEDIUM",
+    "family": "COMPOSED_CONTROLLED_INDICATOR",
+    "seed": "-1531998593498751668",
+    "purpose": "Same prior fresh New board sample; no controller calls"
+  },
+  {
+    "event": "Customer ticket visible",
+    "wallUpperBoundMs": 5419
+  },
+  {
+    "event": "Actual public component/probe menu observed",
+    "references": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "Q1",
+      "Q2",
+      "LED1",
+      "LED2",
+      "LED3",
+      "J1",
+      "J2",
+      "J3"
+    ],
+    "observation": "Distinct names and matching terminal labels visible"
+  },
+  {
+    "event": "Unrepaired customer retest",
+    "actualStatus": "FAIL"
+  },
+  {
+    "event": "Supporting R2 removed with power OFF",
+    "actualLooseLabel": "Part 4 - Color bands",
+    "actualInstallTarget": "Install as Channel A / R2",
+    "trayParts": 1
+  },
+  {
+    "event": "Original supporting R2 reinstalled",
+    "power": "OFF",
+    "trayEmpty": true
+  },
+  {
+    "event": "Isolated channel B driver measurement",
+    "reference": "R4",
+    "power": "OFF",
+    "lead1": "Lifted",
+    "visibleNameplate": "BROWN, BLACK, RED, GOLD",
+    "expectedNominalOhms": 1000,
+    "actualReading": "OL",
+    "input": "OHM and actual named terminal probe controls",
+    "status": "NOT_COMPONENT_PROOF",
+    "limitation": "Both probes initially on board lands; superseded by direct component-lead tests."
+  },
+  {
+    "event": "Replacement selected from public shop",
+    "part": "Part 16 - 1000 Ohm +/-5%",
+    "package": "Narrow lead spacing",
+    "actualInstallTarget": "Install as Channel B / R4",
+    "oldPartRetained": "Part 9 - Color bands"
+  },
+  {
+    "event": "Probe-placement correction required",
+    "reference": "R4",
+    "actualReading": "OL on both old and new isolated trials",
+    "limitation": "Named terminal controls target persistent board lands. These OL readings alone do not certify the lifted component resistance; reobserve and use its visible lifted lead."
+  },
+  {
+    "event": "Corrected replacement isolated measurement",
+    "reference": "R4",
+    "power": "OFF",
+    "lead1": "Lifted",
+    "red": "Actual visible lifted lead via mouse",
+    "black": "Connected terminal2 board land",
+    "actualReading": "1 kOhm"
+  },
+  {
+    "event": "Removed original independently measured",
+    "part": "Part 9 - Color bands",
+    "power": "OFF",
+    "input": "Actual left/right mouse clicks on its two visible loose leads in physical tray",
+    "actualReading": "OL",
+    "proof": "removed-original-direct-open.jpg visibly binds both probe dots to the loose resistor"
+  },
+  {
+    "event": "Repaired customer retest",
+    "actualStatus": "PASS",
+    "text": "Customer retest passed. The reported behavior is resolved.",
+    "repair": "Part16 1000 Ohm narrow installed as Channel B / R4; lead1 reconnected; original Part9 retained; supporting original R2 restored"
+  },
+  {
+    "event": "Actual public replay observed after repair and OFF",
+    "observedReplay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-1531998593498751668",
+    "interpretation": "tsj-alpha/6 / EF13581703C1D1B379B472C08DE56227"
+  }
+]

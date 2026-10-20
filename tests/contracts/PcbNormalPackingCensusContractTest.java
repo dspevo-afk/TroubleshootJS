@@ -228,7 +228,73 @@ public final class PcbNormalPackingCensusContractTest {
             .append('}');
         System.out.println("PCB_NORMAL_PACKING_CASE " + row.toString());
         printSilkscreenObservation(family, root, layout);
+        printReferenceObservation(family, root, owner);
         return CaseResult.ACCEPTED;
+    }
+
+    /** Add public ink observations; preserve every existing full geometry/graph oracle. */
+    private static void printReferenceObservation(String family, long root,
+            GeneratedBoardInstance owner) {
+        TroubleshootBoard board = owner.getBoard();
+        PcbBoardLayout layout = owner.getPcbLayout();
+        String full = layout.geometryFingerprint();
+        String graph = PcbCanvasBoundaryContractTest.liveGraphSha256(board);
+        String physical = PhysicalBoardFingerprint.of(owner);
+        String normalized = full;
+        Vector<String> ids = board.getComponentIds();
+        java.util.Collections.sort(ids);
+        StringBuilder components = new StringBuilder("[");
+        int componentCount = 0;
+        for (String id : ids) {
+            BoardComponent component = board.getComponent(id);
+            PcbSilkscreenLabel label = layout.getSilkscreenLabel("component:" + id);
+            require(component != null && label != null && component.getDisplayName().equals(label.getText()),
+                "reference observation binds actual component and physical label");
+            if (componentCount++ > 0) components.append(',');
+            components.append("{\"id\":").append(jsonQuote(id)).append(",\"type\":")
+                .append(jsonQuote(component.getType())).append(",\"name\":")
+                .append(jsonQuote(component.getDisplayName())).append('}');
+            Rectangle b = label.getBounds();
+            String prefix = "L:" + label.getId() + "@";
+            String suffix = ":" + b.x + "," + b.y + "," + b.width + "," + b.height + ";";
+            String record = prefix + label.getText() + suffix;
+            int offset = normalized.indexOf(record);
+            require(offset >= 0 && normalized.indexOf(record, offset + record.length()) < 0,
+                "normalize only one complete uniquely framed component-label record");
+            normalized = normalized.substring(0, offset) + prefix + "#PUBLIC_REFERENCE#" + suffix +
+                normalized.substring(offset + record.length());
+        }
+        components.append(']');
+        Vector<PcbSilkscreenLabel> labels = new Vector<PcbSilkscreenLabel>(layout.getSilkscreenLabels());
+        java.util.Collections.sort(labels, new java.util.Comparator<PcbSilkscreenLabel>() {
+            public int compare(PcbSilkscreenLabel first, PcbSilkscreenLabel second) {
+                return first.getId().compareTo(second.getId());
+            }
+        });
+        StringBuilder ink = new StringBuilder("[");
+        int labelCount = 0;
+        for (PcbSilkscreenLabel label : labels) {
+            if (labelCount++ > 0) ink.append(',');
+            Rectangle b = label.getBounds();
+            require(label.getBaselineX() == b.x && label.getBaselineY() == b.y + b.height - 3,
+                "reference observation retains the immutable physical baseline");
+            ink.append("{\"id\":").append(jsonQuote(label.getId())).append(",\"text\":")
+                .append(jsonQuote(label.getText())).append(",\"bounds\":[")
+                .append(b.x).append(',').append(b.y).append(',').append(b.width).append(',').append(b.height)
+                .append("],\"fontSize\":").append(label.getFontSize()).append(",\"bold\":")
+                .append(label.isBold()).append(",\"targetPadId\":").append(jsonQuote(label.getTargetPadId())).append('}');
+        }
+        ink.append(']');
+        require(componentCount == board.getComponentIds().size() && labelCount == layout.getSilkscreenLabels().size(),
+            "reference observer emits the complete actual component and label inventories");
+        require(full.equals(layout.geometryFingerprint()) && physical.equals(PhysicalBoardFingerprint.of(owner)) &&
+                graph.equals(PcbCanvasBoundaryContractTest.liveGraphSha256(board)),
+            "reference observer preserves full layout, physical identity and live graph");
+        System.out.println("PCB_NORMAL_REFERENCE_CASE {\"family\":" + jsonQuote(family) +
+            ",\"root\":" + jsonQuote(Long.toString(root)) + ",\"components\":" + components +
+            ",\"labels\":" + ink + ",\"labelCount\":" + labelCount +
+            ",\"physicalBoardSha256\":" + jsonQuote(PlayerSessionFingerprint.of(physical)) +
+            ",\"geometryApartFromReferenceTextSha256\":" + jsonQuote(PlayerSessionFingerprint.of(normalized)) + "}");
     }
 
     /** Observe one text field separately without mutating authoritative geometry. */

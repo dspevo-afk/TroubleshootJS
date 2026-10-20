@@ -1,0 +1,21 @@
+{
+  "review": "Root integrated static review; read-only leaf service-owner review also received",
+  "status": "NO_CONCRETE_BLOCKER_IN_REVIEWED_SCOPE",
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/BoardComponent.java": "31b1c1d46515055df9e6e80bcd60270bb2311e55ec84f086ee9da3181e3ce544",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "beed78fad34f7bc7e2dad08d1280ded01bc654dc61fb58ac3f1e60e43d872d47",
+    "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java": "47d4fee3b9d912693095ba95ac788d802b41ecb897c18b9c71905b46ce63c91a",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "df12d945fb2a335dc694c39cf123b0e224612f6ef34be7f9f2c43b5106baf908",
+    "src/com/lushprojects/circuitjs1/client/ServiceableBoardConstruction.java": "2ab3255ccd45131e6558117e93489ffa6540434da6bad6a2ac406e23dca63cba"
+  },
+  "findings": [
+    "Canonical public-type numbering uses sorted full IDs, with no seed/net/value/fault input; unique connector markings retained.",
+    "Existing display name is authoritative; both original mutable and later supporting resistor service constructors consume it. Keys, slots, inventories, catalogs, targets and mutation ownership unchanged.",
+    "Noncomposed normal census names equal their IDs; generic service labels preserve null/fallback construction in those families.",
+    "Reserved character capacity retains original component-label boxes; exact paired44 gate still required. It is captured by generation dependency epoch17; model epoch6 retained.",
+    "Only new dormant prototype fixture removed after documented pre-label failure; unused prototype production bytes restored to accepted hash. All pre-existing test assertions retained.",
+    "Service fixture now requires all seven capabilities rather than its incomplete original four; every name/title/install prompt and actual component label checked."
+  ],
+  "independentReview": "Static only; no independent runs or final acceptance inferred. Initial dormant coverage gap prompted attempted fixture; failure remains preserved.",
+  "remaining": "Final paired44/GWT5/actual composed UI/root publication review required"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "rootExitObserved": true,
+  "rootExitCode": 0,
+  "newProfileAbsent": true,
+  "action": "Own context/client/server APIs closed; no process termination or manual profile deletion"
+}

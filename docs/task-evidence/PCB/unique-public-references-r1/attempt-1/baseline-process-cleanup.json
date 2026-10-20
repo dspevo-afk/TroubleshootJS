@@ -1,0 +1,20 @@
+{
+  "launchSha256": "773bce7296668d5f7b5670f1a5e4b7b6211330cb45e546988432e54857f159b2",
+  "status": "PASS",
+  "writer": "Root actual Get-Process birth query after phase driver completed; no termination",
+  "checks": [
+    {
+      "pid": 27232,
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "startTicks": "639280830975497444"
+    },
+    {
+      "pid": 9044,
+      "executable": "pwsh",
+      "recordedBirthExited": true,
+      "startTicks": "639280830982305254"
+    }
+  ],
+  "phase": "baseline"
+}

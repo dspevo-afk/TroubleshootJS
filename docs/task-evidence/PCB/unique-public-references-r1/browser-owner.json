@@ -1,0 +1,9 @@
+{
+  "profileName": "playwright_chromiumdev_profile-2Um5Mm",
+  "startTicks": "639280844679094040",
+  "pid": 23844,
+  "executable": "brave.exe",
+  "sandbox": true,
+  "preparationFailure": "Initial textual executable comparison rejected slash spelling; canonical paths equal, exact profile argument matched, --no-sandbox absent. No navigation occurred before corrected check.",
+  "state": "BLANK; actual canonical executable/birth/profile checked before production navigation"
+}

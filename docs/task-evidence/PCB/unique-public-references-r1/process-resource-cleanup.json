@@ -1,0 +1,87 @@
+{
+  "preview8907Listening": false,
+  "priorDirectory": "Earlier unused browser profile remains separately automatic-review blocked and untouched",
+  "checks": [
+    {
+      "executable": "brave.exe",
+      "startTicks": "639280844679094040",
+      "pid": 23844,
+      "recordedBirthExited": true,
+      "role": "browser-owner.json"
+    },
+    {
+      "executable": "powershell.exe",
+      "startTicks": "639280845673337157",
+      "pid": 22120,
+      "recordedBirthExited": true,
+      "role": "preview-owner.json"
+    },
+    {
+      "executable": "pwsh.exe",
+      "startTicks": "639280845644884568",
+      "pid": 5104,
+      "recordedBirthExited": true,
+      "role": "preview-launch-owner.json"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280841216664842",
+      "pid": 22860,
+      "recordedBirthExited": true,
+      "role": "baseline driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280841229684437",
+      "pid": 32024,
+      "recordedBirthExited": true,
+      "role": "baseline driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280843257681333",
+      "pid": 18924,
+      "recordedBirthExited": true,
+      "role": "candidate driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280843260400542",
+      "pid": 22872,
+      "recordedBirthExited": true,
+      "role": "candidate driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280842249995570",
+      "pid": 32148,
+      "recordedBirthExited": true,
+      "role": "contracts driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280842260764093",
+      "pid": 28560,
+      "recordedBirthExited": true,
+      "role": "contracts driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280844229774987",
+      "pid": 21852,
+      "recordedBirthExited": true,
+      "role": "build driver"
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639280844236710362",
+      "pid": 22048,
+      "recordedBirthExited": true,
+      "role": "build driver"
+    }
+  ],
+  "newProfileAbsent": true,
+  "retained": "Task-owned private metadata/build logs and prior baseline COPY; no current running browser/preview/native/build process",
+  "managedStatePresent": false,
+  "status": "PASS"
+}

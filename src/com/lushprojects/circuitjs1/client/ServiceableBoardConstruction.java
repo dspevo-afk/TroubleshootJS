@@ -464,11 +464,13 @@ final class ServiceableBoardConstruction {
         String id = slot.getComponentId();
         if (part instanceof PhysicalResistorPart) {
             PhysicalResistorPart resistor = (PhysicalResistorPart)part;
+            String reference = runtime.getBoard().getComponent(id).getDisplayName();
             PhysicalPartInventory<PhysicalResistorPart> inventory = new PhysicalPartInventory<PhysicalResistorPart>(
                 runtime, id + "_REPLACEMENTS", PhysicalResistorPart.class); inventory.add(resistor);
             runtime.registerCapability(new ReplaceableResistorBoardCapability(key(runtime, ReplaceableResistorBoardCapability.ID, id),
                 new ReplaceableComponentSlot(id, resistor.getSpecification(), resistor, wires[0], wires[1], slot),
-                inventory, ResistorReplacementCatalog.forSpecification(resistor.getSpecification())));
+                inventory, ResistorReplacementCatalog.forSpecification(resistor.getSpecification()),
+                id.equals(reference) ? null : reference));
         } else if (part instanceof PhysicalLedPart) {
             PhysicalLedPart led = (PhysicalLedPart)part;
             PhysicalPartInventory<PhysicalLedPart> inventory = new PhysicalPartInventory<PhysicalLedPart>(

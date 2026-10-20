@@ -1,0 +1,46 @@
+{
+  "gates": {
+    "scope.md": "e645f3c1dda83b7518ecfaea06321e35a11e3528c5445e4d56153985216f6cba",
+    "inputs.py": "cea76a75183a259d0f8fff6dd5a4979c86effba195db5b02d3fd73b53cc9e261",
+    "run_phase.ps1": "8bf9ad587f8ec33a269250228cd30b09b11072d3e1b1581453bef666993fe514",
+    "assess.py": "a21565d262b05b873c14195697a1e4318131b93ae6b2b758eb8d07fa535640d1"
+  },
+  "machinery": {
+    ".classpath": "bfda0a704bbbced25c21544807e5233fe7644ef0ff86db4db827f6a3a9af041e",
+    ".settings/org.eclipse.wst.common.project.facet.core.xml": "b0bf75464681d07c98bd69bfbb8d265645634ef6873378ef5c761f81b2e45808",
+    "scripts/Task43PCandidateIdentity.ps1": "addc4353d80cfc447378cec500ced888dfb0b58eadb6cc81d97542bf9b4163c9",
+    "scripts/Task43PPublicActionEvidence.ps1": "ee17344a5cc4344a245bbb89da1cb4a97b474b755c821e11846126416c2c475e",
+    "scripts/Task43PRuntimeEvidence.ps1": "06e08bd5f100a99614cbbcbf497fc778f3c1b3b38a23af382f55d2de0530fa0c",
+    "scripts/VerifierIsolation.psm1": "aafe38893e5fc185a5b543b8c76a383ce7494fe76783fbf4e0330fded4dd298f",
+    "scripts/a01.py": "294c5d0f0fae804e58d6c5298e546bc11f2c330b9272b7252c734dbd6ae4b9a3",
+    "scripts/build.ps1": "424f91d0be7d8452b85c050a2312b1e61e7541b124200074496dc64ca13af45c",
+    "scripts/collect-a01.mjs": "25b0fc3f1f06812a1b2fb9292e9a93735523e26da34b0a603e561111c332abba",
+    "scripts/dev.ps1": "a6a0546c8fb5bcd2883a7df4ea3b188368b5c2d1d384858800228989411c1a8f",
+    "scripts/preview.ps1": "52c170f0212753e63154cfad13254b4fe9494978eb05b56948a408ce549f5e0f",
+    "scripts/start-preview.ps1": "21c5d364d31215eaf5573b420db8ab3db212092d4c6ada5c895be998280ac306",
+    "scripts/stop-preview.ps1": "fef6c5ab82d01ae36d69292ad30e0f05a67d1832a15db33cc2f4367c200937f8",
+    "scripts/verify-a03-browser.ps1": "fd7fe171dec5996747625836be13df556e9ca3f1cda8c60d75260c20e66785ca",
+    "scripts/verify-browser.ps1": "ba7a4ff814fec83e261f3ffbf07cbffc5f3c809bf80c5216cd7cefed61a42ad6",
+    "scripts/verify-current-contracts.ps1": "b87cd0569c5a3f263aa08d9fb5ed07d201f2c37e2934be2c393015ab03c129d3",
+    "scripts/verify-e01-e03-evidence.ps1": "3569e741441b226719723d34ef204cde002f46e5673ce1b62eeadbc6c89c29eb",
+    "scripts/verify-gate-b.ps1": "3fb602563fd93fd83e991006566f280f4c9dde281eb1b7660f2e0632a268ce5a",
+    "scripts/verify-q15-evidence.ps1": "8961060d7eb80689b49b6d0315bbfe25a6f9fdc5b0f26830a0b99825b6a34608",
+    "scripts/verify-renderer-boundary.ps1": "63e6416de2284effcb15b2498061d7aa16f8decd4ac698654dc1d4bd8f3331d4",
+    "scripts/verify-task43p-candidate-identity.ps1": "31993e475bdd3ceb29e71bc48653b4e03ea6d56f7c6d90f342674cf238d3c401",
+    "scripts/verify-task43p-source-experiments.ps1": "a06e6f6782e5cb0f22723a6387dc77ae8327b22463003a7d66976417e323a298",
+    "src/com/lushprojects/circuitjs1/circuitjs1.gwt.xml": "ffebbaa4fbfec412035814816f62f86beab5a6c833de7f6314f5b6962b0ab476",
+    "war/WEB-INF/web.xml": "d926488b56364c11d1898dfd61cb3ea3b3895c0a05cae671e721938794381b73"
+  },
+  "transport": {
+    "suite_transport.ps1": "f20fbcec194eebe5696cc98e5c46b94bb31d725e21c5ef110a28cf2e3ea31ce1",
+    "routes-suites.json": "4c9760b9999a35451c1255d6c83c13f94f6279dc76c5acd4994faac21a7dc1d3"
+  },
+  "acceptedSealSha256": "6f7bbcccd150960587b17bc1e5fca7a178592f61a889e78284be8e0cbc33645c",
+  "actualHead": "4a0e3dda904fa04b7e8351deb68bb5a878e28b78",
+  "branch": "codex/q60-faulted-profile-counts",
+  "status": "FROZEN_BEFORE_ATTEMPT3_PRODUCTION",
+  "sourceCount": 1481,
+  "scope": "Five active production plus four native owners and unchanged observer; dormant factory exact accepted bytes",
+  "priorAttempt": "attempt-2",
+  "baseline": "Fresh observer-only required under revised gates"
+}

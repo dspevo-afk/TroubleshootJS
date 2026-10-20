@@ -1,0 +1,25 @@
+R4
+
+
+Type: resistor
+
+
+Value: 1000 Ohm +/-5%
+
+
+Color bands: BROWN, BLACK, RED, GOLD
+
+
+State: Installed
+
+
+Lead 1: R4.1
+
+
+Lead 2: R4.2
+
+
+
+Lift lead 1
+Lift lead 2
+Remove component

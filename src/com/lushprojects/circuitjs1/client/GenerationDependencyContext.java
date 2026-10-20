@@ -23,7 +23,7 @@ final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
     // E02's regulation/current-limit law and E04's mapped control topology
     // change the meaning of an otherwise similar serial proof value.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v16";
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v17";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v6";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
@@ -242,6 +242,8 @@ final class GenerationDependencyContext {
             require(component != null, "Missing board component: " + componentId);
             appendField(out, "component." + componentId + ".type", component.getType());
             appendField(out, "component." + componentId + ".display", component.getDisplayName());
+            appendField(out, "component." + componentId + ".reference-characters",
+                Integer.toString(component.getReferenceLabelCharacters()));
             appendStringList(out, "component." + componentId + ".pads",
                 sorted(component.getPadIds()), false);
         }

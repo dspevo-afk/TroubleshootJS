@@ -1,0 +1,110 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row "Reset":
+      - cell "Reset":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row:
+              - cell
+    - row "Workbench navigation Workbench meter and oscilloscope":
+      - cell "Workbench navigation Workbench meter and oscilloscope":
+        - banner:
+          - strong: TroubleshootJS
+          - text: ELECTRONICS WORKBENCH ALPHA
+        - navigation "Workbench navigation":
+          - button "Main menu"
+          - button "Shop"
+          - button "Resources"
+          - button "Settings"
+          - button "Run customer retest"
+        - status: Added to the real Parts Tray. Select the loose part on the workbench to install it.
+        - group "Workbench meter and oscilloscope":
+          - rowgroup:
+            - 'row "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+              - 'cell "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+                - 'button "Move multimeter: drag, or use arrow keys. Home resets its position."': TSJ MM-90
+                - text: DIGITAL MULTIMETER
+                - button "Hold / not implemented" [disabled]: HOLD
+                - button "Manual range / not implemented" [disabled]: RANGE
+                - button "Minimum / maximum / not implemented" [disabled]: MIN/MAX
+                - button "Toggle meter backlight": LIGHT
+                - slider "Meter and oscilloscope function selector"
+                - button "Turn multimeter off" [pressed]: "OFF"
+                - button "AC voltage RMS": V~
+                - button "Current / not implemented" [disabled]: A
+                - button "Milliamps / not implemented" [disabled]: mA
+                - button "Microamps / not implemented" [disabled]: µA
+                - button "Capacitance / not implemented" [disabled]: CAP
+                - button "Oscilloscope / frequency": Hz
+                - button "Duty cycle / not implemented" [disabled]: "%"
+                - button "Temperature / not implemented" [disabled]: °C/°F
+                - text: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+                - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell
+                    - row "OHM":
+                      - cell
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V"
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - 'row "Board Power: OFF"':
+      - 'cell "Board Power: OFF"':
+        - 'button "Board Power: OFF"'
+    - row "Bench power":
+      - cell "Bench power":
+        - button "Bench power": Supplies
+    - row "Board view":
+      - cell "Board view":
+        - button "Board view": View
+    - row "Service ticket":
+      - cell "Service ticket":
+        - button "Service ticket": Ticket
+    - row "Parts Tray Parts Tray":
+      - cell "Parts Tray Parts Tray":
+        - button "Parts Tray": Parts tray
+        - dialog "Parts Tray":
+          - rowgroup:
+            - row "Parts Tray":
+              - cell "Parts Tray"
+            - row "Hover at the bottom edge for the physical tray. Scroll sideways for more parts.":
+              - cell "Hover at the bottom edge for the physical tray. Scroll sideways for more parts."
+            - row "Part 9 - Color bands":
+              - cell "Part 9 - Color bands":
+                - button "Part 9 - Color bands"
+            - row "Part 16 - 1000 Ohm +/-5%":
+              - cell "Part 16 - 1000 Ohm +/-5%":
+                - button "Part 16 - 1000 Ohm +/-5%"
+            - 'row "Selected: Part 16 - 1000 Ohm +/-5%"':
+              - 'cell "Selected: Part 16 - 1000 Ohm +/-5%"'
+            - 'row "State: Loose"':
+              - 'cell "State: Loose"'
+            - row "Compatible targets:":
+              - cell "Compatible targets:"
+            - row "Install as Channel B / R4":
+              - cell "Install as Channel B / R4":
+                - button "Install as Channel B / R4"
+- region "Physical parts tray":
+  - button "Show or hide parts tray": ▲ PARTS TRAY · 2 parts

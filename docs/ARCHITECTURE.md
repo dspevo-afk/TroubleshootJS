@@ -5954,6 +5954,20 @@ font/bold equality is proved at unchanged source owners/call sites and inspected
 in the actual player. Layout17/public6 remain; no physical algorithm changed.
 See [title evidence and limits](task-evidence/PCB/normal-silkscreen-title-r1/README.md).
 
+For controlled-indicator composition, `PhysicalConstructionMaterializer` assigns
+public R/Q/LED references in canonical full-component-ID declaration order.
+Connector markings remain declared. `BoardComponent` owns the one display name;
+both initial mutable-resistor construction and generic supporting-resistor service
+completion use it for their public service labels. Full logical, physical, slot,
+part and repair identities remain the qualified IDs. The immutable reference
+character reservation retains prior local-designator label widths in the live
+seeded layout owner, while printed text uses the unique name. The generation
+dependency key records this reservation at internal epoch17; the CircuitJS model
+epoch remains6. The unused authored `ControlledIndicatorPcbLayoutFactory` is
+unchanged and outside this delivery's qualified behavior. Its directly attempted
+fixture exposed an existing connector pad-order failure before label placement;
+both failed attempts remain in the [reference evidence](task-evidence/PCB/unique-public-references-r1/scope.md).
+
 `ChipPinout` also owns the inert first-terminal reference rectangle for its four
 supported packages. It derives this ink from declared terminal0's connected body
 point and the package body; it has no live graph/fault input or commercial pin1

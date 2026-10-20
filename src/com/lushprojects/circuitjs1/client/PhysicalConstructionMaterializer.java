@@ -31,9 +31,17 @@ final class PhysicalConstructionMaterializer {
         if (plan.isControlledIndicator()) board.setSilkscreenTitle("TSJ CTRL IND");
         addEnvelopeNets(spec, board);
 
-        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
+        Map<String, Integer> referenceCounts = new TreeMap<String, Integer>();
+        Set<String> publicReferences = new HashSet<String>();
+        for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts()) {
+            String reference = plan.isControlledIndicator() ?
+                controlledReference(part, referenceCounts) : part.getDesignator();
+            if (plan.isControlledIndicator() && !publicReferences.add(reference))
+                throw new IllegalStateException("Duplicate public component reference: " + reference);
             board.addComponent(new BoardComponent(part.getComponentId(), part.getPublicType(),
-                part.getPhysicalPackage(), part.getDesignator()));
+                part.getPhysicalPackage(), reference,
+                Math.max(reference.length(), part.getDesignator().length())));
+        }
 
         for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
             for (PhysicalConstructionTerminalDeclaration terminal : part.getTerminals())
@@ -56,6 +64,22 @@ final class PhysicalConstructionMaterializer {
                 input.getNominalVoltage()));
         specifications.seal();
         return new PhysicalConstructionMetadata(plan, spec, board, specifications, declarations);
+    }
+
+    /** Public category and canonical declaration order alone determine the printed number. */
+    private static String controlledReference(PhysicalConstructionPartDeclaration part,
+            Map<String, Integer> counts) {
+        String type = part.getPublicType();
+        if ("CONNECTOR".equals(type)) return part.getDesignator();
+        String prefix;
+        if ("RESISTOR".equals(type)) prefix = "R";
+        else if ("LED".equals(type)) prefix = "LED";
+        else if ("NPN_TRANSISTOR".equals(type) || "NMOS_TRANSISTOR".equals(type)) prefix = "Q";
+        else throw new IllegalArgumentException("Unmapped public reference category: " + type);
+        Integer previous = counts.get(prefix);
+        int number = previous == null ? 1 : previous.intValue() + 1;
+        counts.put(prefix, Integer.valueOf(number));
+        return prefix + number;
     }
 
     private static PcbPlacementConstraints controlledIndicatorPlacement(
@@ -287,9 +311,10 @@ final class PhysicalConstructionMaterializer {
             secondAttachment, slot);
         ResistorReplacementCatalog catalog = new ResistorReplacementCatalog();
         String capabilityId = part.getComponentId() + "/capability/replaceable-resistor";
+        String playerReference = runtime.getBoard().getComponent(part.getComponentId()).getDisplayName();
         runtime.registerCapability(new ReplaceableResistorBoardCapability(capabilityId,
             componentSlot, inventory, catalog,
-            part.getComponentId().equals(part.getDesignator()) ? null : part.getDesignator()));
+            part.getComponentId().equals(playerReference) ? null : playerReference));
 
         PhysicalBoardSlot repairSlot = runtime.getSlot(part.getRepairComponentId());
         if (repairSlot == null || runtime.getWorkbenchPartsProvider(part.getRepairComponentId()) == null)

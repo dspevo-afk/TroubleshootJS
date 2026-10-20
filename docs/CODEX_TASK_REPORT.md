@@ -1,10 +1,58 @@
-# Current checkpoint: fresh normal visual review complete; evidence publication
+# Current checkpoint: unique composed references accepted; publication review pending
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin
-1df6582b331d452da6fc622ab5760fcaa87795da. User authorizes indefinite ordinary
+4a0e3dda904fa04b7e8351deb68bb5a878e28b78. User authorizes indefinite ordinary
 random PCB realism/screenshots; no main merge/email. Original5/private baseline
-pointer/cache preserved. Empty-chip publication receipt included next commit.
+pointer/cache preserved. Fresh-visual publication receipt included next commit.
+
+Unique-public-references-r1: canonical composed R1-R7/Q1-Q2/LED1-LED3 and declared
+connectors, one BoardComponent public name for PCB/menu and seven resistor service
+capabilities. Full IDs exact; immutable character capacity preserves seeded boxes.
+Dependency epoch17/model6; layout17/public6/geometry3 retained. Five production,
+four native owners and additive unchanged baseline census observer. Dormant
+prototype remains exact accepted bytes; existing pad-order failure is unqualified.
+
+Final source-audited observer baseline44 PASS70.680148s, candidate44
+PASS70.5837039s, focused15 PASS82.0888115s, actual JDK8/GWT5 OBF
+PASS94.7384236s. All physical/graph/route/area/whitespace/work/boxes exact; only
+four composed reference-text/full-ink hashes differ. No oracle/limit/seed weakened.
+Raw1481/four gates/24 machinery/transport and before/after audits retained.
+Attempt1 service mismatch FAIL71.0189281s and attempt2 dormant fixture
+FAIL71.2564866s (each driver2/child1) retained with exact sources and actual
+exited-birth cleanup. Each revised scope got a fresh observer-only baseline.
+Initial LF restoration and executable slash-spelling preflight failures retained.
+
+Actual headed plain final production replay of prior fresh sample
+-1531998593498751668: actual public6 identity,15 unique component/probe names,
+supporting R2 removal/public Channel A/R2 target/original reinstall, R4 shop1000Ohm
+narrow replacement/public Channel B/R4 target. Initial named terminal OL trials
+were on board lands, explicitly rejected as component proof. Correct direct
+replacement lifted-lead reading1kOhm and removed original loose-lead readingOL.
+Actual customer FAIL->PASS after reconnection; all3 LEDs lit, finalOFF/tray1/menu.
+Five primary images plus three retained probe diagnostic frames inspected; new
+board image pasted in chat. Player audit PASS. One favicon404, no other recorded
+errors. Extra root worker-PID listener check misclassified HTTP.sys PID4; first
+menu navigation preceded correction, but no player action preceded independent
+served-byte identity match. Actual birth/command checked; no wrapper certification.
+
+Pre/post compiled source/script/web/execution/count exact. All11 current recorded
+process births exited, API root0/profile gone, maintained stop PASS2.1275924s,
+managed state absent/8907 released. No active task browser/preview/native/build
+resources. Old unused profile remains automatic-review blocked/untouched; baseline
+COPY/private raw log/metadata retained outside Git. Public build log one exact
+worktree prefix redacted with raw/public hashes. Root/leaf static scope recorded;
+leaf no runs. No fresh unrelated matrix/FileReader/Edge/CDP/unseen/manufacturing/
+new size claim. Next: root final diff/privacy/staged bytes, normal commit/push/
+exact origin SHA; then next bounded observed PCB realism issue. No main/email.
+
+# Previous checkpoint: fresh visual evidence published at4a0e3dda
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+4a0e3dda904fa04b7e8351deb68bb5a878e28b78. User authorizes indefinite ordinary
+random PCB realism/screenshots; no main merge/email. Original5/private baseline
+pointer/cache preserved. Empty-chip publication receipt committed; fresh-visual publication receipt pending next commit.
 
 Read-only fresh-board-visual-r1 reuses the accepted final JDK8/GWT5 build only
 after exact1481 and source/script/web/execution/count equality before/after.
@@ -18,7 +66,9 @@ No new production/native/build/measurement/repair/FileReader/full-matrix claim.
 
 Concrete next question: composed sample repeats LED1 three times, Q1 twice and
 RPD/RLOAD; trace unique public references without changing stable full IDs.
-Bounded read-only leaf ownership investigation running; no next production edit.
+Ownership reader confirms local names feed BoardComponent displayName and resistor
+capability labels separately. Both must use one resolved public reference. Full
+component/slot/electrical IDs already distinct. No next production edit.
 Multi-rail overview markings need zoom; capacitor nameplate touching rim at zoom
 is a nonblocking follow-up. Exact Difficulty label selector timed out; fresh menu
 observation recovered via accessible combobox role. Failure retained. Two existing
@@ -28,9 +78,11 @@ body/menu and served identity preserved. Final observation audit PASS.
 Browser API/root0, new profile absent, browser/preview/launcher births exited.
 Maintained stop PASS2.5573939s,8907 released. Old unused profile deletion remains
 blocked by automatic approval review; untouched, no retention approval inferred.
-Baseline COPY/small private metadata retained outside Git. Next: root docs/privacy/
-staged-byte audit, normal evidence commit/push/remote verification, then resolve
-bounded duplicate-reference scope from reader findings. No main merge/email.
+Baseline COPY/small private metadata retained outside Git. Root docs/privacy and staged32 raw/canonical audit PASS; normal evidence commit/
+push/exact origin SHA verified. Next: define/freeze composed-only numeric public
+reference scope and independent paired physical/electrical validation before edits.
+Preserve connectors and all full IDs. Reader checking the existing census seam.
+No main merge/email.
 
 # Previous checkpoint: empty-chip footprint published at1df6582b
 

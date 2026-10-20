@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "reuse": "Prior18 inventory/framing/cleanup-schema cases reused only after exact assess.py hash audit; pure checks do not prove OS execution",
+  "priorReceiptSha256": "856002b0f08ecf4ea9b97b47a79354e9bcad9148652ada636484cf34f3838749",
+  "priorCases": {
+    "status": "PASS",
+    "cases": [
+      {
+        "case": "positive complete typed inventory",
+        "result": "PASS"
+      },
+      {
+        "case": "null digest",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "empty digest",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "non SHA",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "truncated component",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "duplicate component",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "missing component label",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "wrong reference text",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "wrong style type",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "duplicate label ID",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "positive phase/launch cleanup schema only; no OS-process proof",
+        "result": "PASS"
+      },
+      {
+        "case": "wrong phase",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "stale launch hash",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "wrong process birth",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "nonexited birth",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "missing birth",
+        "result": "PASS_REJECTED"
+      },
+      {
+        "case": "inputs.py actual optimized interpreter refusal",
+        "result": "PASS_REJECTED",
+        "exitCode": 1
+      },
+      {
+        "case": "assess.py actual optimized interpreter refusal",
+        "result": "PASS_REJECTED",
+        "exitCode": 1
+      }
+    ],
+    "scope": "Pure inventory/receipt framing fixtures plus actual -O refusal. No native/build/OS lifecycle proof inferred; synthetic private fixtures kept separate from real phase receipts."
+  },
+  "freshOptimizedRefusals": [
+    {
+      "gate": "inputs.py",
+      "result": "PASS_REJECTED_OPTIMIZED",
+      "exitCode": 1
+    },
+    {
+      "gate": "assess.py",
+      "result": "PASS_REJECTED_OPTIMIZED",
+      "exitCode": 1
+    }
+  ],
+  "attempt3Reuse": "Exact assessor bytes audited again; input owner allowlist narrowed only; original18 pure cases not OS proof"
+}

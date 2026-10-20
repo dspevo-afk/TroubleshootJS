@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 23700,
+      "executable": "pwsh",
+      "startTicks": "639280834053484732"
+    },
+    {
+      "pid": 1544,
+      "executable": "pwsh",
+      "startTicks": "639280834063912813"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained reference phase",
+  "phase": "candidate"
+}

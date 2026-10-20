@@ -1,0 +1,14 @@
+{
+  "preparationFailure": "Extra root TCP-owner check incorrectly expected worker PID; selected HttpListener uses HTTP.sys PID4. First menu navigation occurred after that failed extra check; no player action occurred before separate served-provenance match. This does not certify listener wrappers.",
+  "repository": "current worktree",
+  "pid": 22120,
+  "port": 8907,
+  "status": "PASS",
+  "executable": "powershell.exe",
+  "startTicks": "639280845673337157",
+  "state": "Actual managed state/birth/exact command checked; served candidate separately matched before player input",
+  "observedTcpOwnerIds": [
+    4
+  ],
+  "script": "scripts/preview.ps1"
+}

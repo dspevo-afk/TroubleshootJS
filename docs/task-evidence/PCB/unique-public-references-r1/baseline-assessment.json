@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "phase": "baseline",
+  "cases": 44,
+  "families": 11,
+  "elapsedSeconds": 70.680148,
+  "physicalOracle": "Exact graph, physical identity, routing recovery, geometry, whitespace and deterministic work; only composed reference text may vary",
+  "limits": "Fixed informed corpus; no unseen/all-seed/manufacturing/performance proof"
+}

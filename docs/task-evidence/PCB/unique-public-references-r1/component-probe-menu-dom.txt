@@ -1,0 +1,184 @@
+- iframe
+- iframe
+- table:
+  - rowgroup:
+    - row "Reset":
+      - cell "Reset":
+        - table:
+          - rowgroup:
+            - row "Reset":
+              - cell "Reset":
+                - button "Reset"
+            - row:
+              - cell
+    - row "Workbench navigation Workbench meter and oscilloscope":
+      - cell "Workbench navigation Workbench meter and oscilloscope":
+        - banner:
+          - strong: TroubleshootJS
+          - text: ELECTRONICS WORKBENCH ALPHA
+        - navigation "Workbench navigation":
+          - button "Main menu"
+          - button "Shop"
+          - button "Resources"
+          - button "Settings"
+          - button "Run customer retest"
+        - group "Workbench meter and oscilloscope":
+          - rowgroup:
+            - 'row "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+              - 'cell "Move multimeter: drag, or use arrow keys. Home resets its position. DIGITAL MULTIMETER Hold / not implemented Manual range / not implemented Minimum / maximum / not implemented Toggle meter backlight Off Turn multimeter off AC voltage RMS Current / not implemented Milliamps / not implemented Microamps / not implemented Capacitance / not implemented Oscilloscope / frequency Duty cycle / not implemented Temperature / not implemented ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"':
+                - 'button "Move multimeter: drag, or use arrow keys. Home resets its position."': TSJ MM-90
+                - text: DIGITAL MULTIMETER
+                - button "Hold / not implemented" [disabled]: HOLD
+                - button "Manual range / not implemented" [disabled]: RANGE
+                - button "Minimum / maximum / not implemented" [disabled]: MIN/MAX
+                - button "Toggle meter backlight": LIGHT
+                - slider "Meter and oscilloscope function selector"
+                - button "Turn multimeter off" [pressed]: "OFF"
+                - button "AC voltage RMS": V~
+                - button "Current / not implemented" [disabled]: A
+                - button "Milliamps / not implemented" [disabled]: mA
+                - button "Microamps / not implemented" [disabled]: µA
+                - button "Capacitance / not implemented" [disabled]: CAP
+                - button "Oscilloscope / frequency": Hz
+                - button "Duty cycle / not implemented" [disabled]: "%"
+                - button "Temperature / not implemented" [disabled]: °C/°F
+                - text: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+                - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+            - row "DC V OHM CONT DIODE":
+              - cell "DC V OHM CONT DIODE":
+                - table:
+                  - rowgroup:
+                    - row "DC V":
+                      - cell "DC V":
+                        - button "DC V"
+                      - cell
+                    - row "OHM":
+                      - cell
+                      - cell "OHM":
+                        - button "OHM"
+                    - row "CONT DIODE":
+                      - cell "CONT":
+                        - button "CONT"
+                      - cell "DIODE":
+                        - button "DIODE"
+            - row "--- V":
+              - cell "--- V"
+            - row:
+              - cell
+            - row:
+              - cell
+            - row:
+              - cell
+    - 'row "Board Power: ON"':
+      - 'cell "Board Power: ON"':
+        - 'button "Board Power: ON"'
+    - row "Bench power":
+      - cell "Bench power":
+        - button "Bench power": Supplies
+    - row "Board view Board view":
+      - cell "Board view Board view":
+        - button "Board view": View
+        - dialog "Board view":
+          - rowgroup:
+            - row "BOARD VIEW":
+              - cell "BOARD VIEW"
+            - row "Fit bench":
+              - cell "Fit bench":
+                - table:
+                  - rowgroup:
+                    - row "Fit bench":
+                      - cell "Fit bench":
+                        - button "Fit bench"
+            - row "Zoom + Zoom - View bottom copper":
+              - cell "Zoom + Zoom - View bottom copper":
+                - table:
+                  - rowgroup:
+                    - row "Zoom +":
+                      - cell "Zoom +":
+                        - button "Zoom +"
+                    - row "Zoom -":
+                      - cell "Zoom -":
+                        - button "Zoom -"
+                    - row "View bottom copper":
+                      - cell "View bottom copper":
+                        - button "View bottom copper"
+            - 'row "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."':
+              - 'cell "Wheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top."'
+            - row "Top side / top copper":
+              - cell "Top side / top copper"
+            - row "Select component":
+              - cell "Select component":
+                - combobox "Select component":
+                  - option "Select component" [selected]
+                  - option "J2"
+                  - option "Q1"
+                  - option "R1"
+                  - option "R2"
+                  - option "LED1"
+                  - option "R3"
+                  - option "J3"
+                  - option "Q2"
+                  - option "R4"
+                  - option "R5"
+                  - option "LED2"
+                  - option "R6"
+                  - option "J1"
+                  - option "LED3"
+                  - option "R7"
+            - row "Probe terminal":
+              - cell "Probe terminal":
+                - combobox "Probe terminal":
+                  - option "Probe terminal" [selected]
+                  - option "J2 terminal 1"
+                  - option "J2 terminal 2"
+                  - option "Q1 terminal B"
+                  - option "Q1 terminal C"
+                  - option "Q1 terminal E"
+                  - option "R1 terminal 1"
+                  - option "R1 terminal 2"
+                  - option "R2 terminal 1"
+                  - option "R2 terminal 2"
+                  - option "LED1 terminal A"
+                  - option "LED1 terminal K"
+                  - option "R3 terminal 1"
+                  - option "R3 terminal 2"
+                  - option "J3 terminal 1"
+                  - option "J3 terminal 2"
+                  - option "Q2 terminal G"
+                  - option "Q2 terminal D"
+                  - option "Q2 terminal S"
+                  - option "R4 terminal 1"
+                  - option "R4 terminal 2"
+                  - option "R5 terminal 1"
+                  - option "R5 terminal 2"
+                  - option "LED2 terminal A"
+                  - option "LED2 terminal K"
+                  - option "R6 terminal 1"
+                  - option "R6 terminal 2"
+                  - option "J1 terminal 1"
+                  - option "J1 terminal 2"
+                  - option "LED3 terminal A"
+                  - option "LED3 terminal K"
+                  - option "R7 terminal 1"
+                  - option "R7 terminal 2"
+            - row "Place red probe Place black probe":
+              - cell "Place red probe Place black probe":
+                - table:
+                  - rowgroup:
+                    - row "Place red probe":
+                      - cell "Place red probe":
+                        - button "Place red probe"
+                    - row "Place black probe":
+                      - cell "Place black probe":
+                        - button "Place black probe"
+            - row:
+              - cell:
+                - status
+    - row "Service ticket":
+      - cell "Service ticket":
+        - button "Service ticket": Ticket
+    - row "Parts Tray":
+      - cell "Parts Tray":
+        - button "Parts Tray": Parts tray
+- region "Physical parts tray":
+  - button "Show or hide parts tray": ▲ PARTS TRAY · 0 parts

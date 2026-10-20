@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "stagedBeforeReviewFile": 193,
+  "rawExact": 183,
+  "crlfOnlyCanonical": 10,
+  "canonicalPaths": [
+    "docs/ARCHITECTURE.md",
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md",
+    "src/com/lushprojects/circuitjs1/client/BoardComponent.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java",
+    "src/com/lushprojects/circuitjs1/client/ServiceableBoardConstruction.java",
+    "tests/contracts/ControlledIndicatorAssemblyContractTest.java",
+    "tests/contracts/D01DiagnosticContractTest.java",
+    "tests/contracts/Rb56ModelIdentityContractTest.java"
+  ],
+  "scope": "Exact sealed paths plus seal itself; no unrelated staged paths",
+  "review": "Production/test integrated diff and archived/log/visual gates reviewed; staged bytes match reviewed worktree bytes, allowing CRLF normalization only outside raw archive rules",
+  "privacy": "Escaped and unescaped personal Windows user prefixes and browser endpoints absent in all task packet bytes",
+  "sourceInputSealSha256": "fb32a9b8f098380c19e199fb89d9e2b64f0d2dccbd33a37d9d2c64bec4a3b4a2",
+  "limits": "No new test run or all-seed/pixel oracle inferred from staging"
+}

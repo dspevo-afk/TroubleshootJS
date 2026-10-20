@@ -1253,8 +1253,9 @@ class SeededPcbLayoutGenerator {
         Collections.sort(componentIds);
         for (String componentId : componentIds) {
             PcbComponentPlacement placement = layout.getComponent(componentId);
-            String text = board.getComponent(componentId).getDisplayName();
-            int width = textWidth(text, 14);
+            BoardComponent component = board.getComponent(componentId);
+            String text = component.getDisplayName();
+            int width = textWidth(component.getReferenceLabelCharacters(), 14);
             Vector<Rectangle> candidates = getReferenceCandidates(placement, width, 18);
             Rectangle selected = chooseLabelPosition(layout, board, outline, candidates);
             addLabel(layout, board, outline, "component:" + componentId, text, selected,
@@ -1396,7 +1397,11 @@ class SeededPcbLayoutGenerator {
     }
 
     private static int textWidth(String text, int fontSize) {
-        return Math.max(18, text.length() * (fontSize <= 12 ? 8 : 9));
+        return textWidth(text.length(), fontSize);
+    }
+
+    private static int textWidth(int characters, int fontSize) {
+        return Math.max(18, characters * (fontSize <= 12 ? 8 : 9));
     }
 
     private static Rectangle traceStroke(int firstX,int firstY,int secondX,int secondY,int width) {

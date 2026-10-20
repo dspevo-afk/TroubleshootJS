@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "restoredExactly": [
+    "src/com/lushprojects/circuitjs1/client/BoardComponent.java",
+    "src/com/lushprojects/circuitjs1/client/ControlledIndicatorPcbLayoutFactory.java",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+    "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/ControlledIndicatorAssemblyContractTest.java",
+    "tests/contracts/D01DiagnosticContractTest.java",
+    "tests/contracts/E05IsolationGeometryContractTest.java",
+    "tests/contracts/Rb56ModelIdentityContractTest.java"
+  ],
+  "observer": "Exact baseline observer retained",
+  "preparationFailure": "Initial raw git-LF hash did not match accepted Windows bytes; stopped before any write. All replacement bytes now prevalidated against accepted hashes before writing.",
+  "purpose": "Fresh revised-gate baseline; no unrelated paths touched"
+}

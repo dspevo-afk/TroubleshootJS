@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "pairedCases": 44,
+  "focusedSuites": 15,
+  "actualJdk8GwtPermutations": 5,
+  "operationSeconds": {
+    "baseline": 70.680148,
+    "candidate": 70.5837039,
+    "contracts": 82.0888115,
+    "build": 94.7384236
+  },
+  "player": "Separate fresh actual composed-reference/service/repair evidence still required",
+  "limits": "No full unrelated matrix, FileReader, unseen/all-seed or physical size change claim"
+}

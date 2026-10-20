@@ -50,6 +50,7 @@ public final class ControlledIndicatorAssemblyContractTest {
         require(preflight.getDecision() == PortCompatibilityPreflight.Decision.COMPATIBLE,
                 "typed controlled relations preflight");
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
+        verifyReferenceMetadata(plan);
         require(plan.isControlledIndicator() && plan.getChannels().size() == 2,
                 "controlled route resolves its stable channel set");
         ComposedBlockContribution support =
@@ -142,6 +143,81 @@ public final class ControlledIndicatorAssemblyContractTest {
                     plan.getChannels().get(1).getDriverKey()).getProviderTypeId());
     }
 
+    private static void verifyReferenceMetadata(BoundedAssemblyPlan plan) {
+        PhysicalConstructionMetadata metadata = PhysicalConstructionMaterializer.describe(plan);
+        TroubleshootBoard board = metadata.getBoard();
+        java.util.Set<String> expected = new java.util.TreeSet<String>(java.util.Arrays.asList(
+            "R1","R2","R3","R4","R5","R6","R7","Q1","Q2","LED1","LED2","LED3","J1","J2","J3"));
+        java.util.Set<String> actual = new java.util.TreeSet<String>();
+        for (PhysicalConstructionPartDeclaration part : metadata.getDeclarations().getBoardParts()) {
+            BoardComponent component = board.getComponent(part.getComponentId());
+            require(component != null && component.getId().equals(part.getComponentId()) &&
+                    component.getPhysicalPackage() == part.getPhysicalPackage(),
+                "public marking preserves the exact declared component and package identity");
+            require(actual.add(component.getDisplayName()), "every printed composed reference is unique");
+            require(component.getReferenceLabelCharacters() ==
+                    Math.max(part.getDesignator().length(),component.getDisplayName().length()),
+                "printed number retains the original local reference reservation");
+        }
+        require(actual.equals(expected), "literal fifteen-part reference population is complete");
+        for (int index = 0; index < plan.getChannels().size(); index++) {
+            ControlledIndicatorChannel channel = plan.getChannels().get(index);
+            ComposedBlockContribution driver = plan.getBlocks().get(channel.getDriverKey());
+            String driveResistor = driver.getResistor("RB") == null ? "RG" : "RB";
+            reference(board,plan,channel.getDriverKey(),"Q1","Q"+(index+1));
+            reference(board,plan,channel.getLoadKey(),"LED1","LED"+(index+1));
+            reference(board,plan,channel.getDriverKey(),driveResistor,"R"+(index*3+1));
+            reference(board,plan,channel.getDriverKey(),"RPD","R"+(index*3+2));
+            reference(board,plan,channel.getLoadKey(),"RLOAD","R"+(index*3+3));
+        }
+        reference(board,plan,plan.getSupportBlockKey(),"LED1","LED3");
+        reference(board,plan,plan.getSupportBlockKey(),"RSUP","R7");
+    }
+
+    private static void reference(TroubleshootBoard board, BoundedAssemblyPlan plan,
+            String owner, String local, String expected) {
+        String id = plan.idFor(owner,EntityKind.COMPONENT,local);
+        require(expected.equals(board.getComponent(id).getDisplayName()),
+            "literal public reference follows the named channel/support part: "+expected);
+    }
+
+    private static String referenceCanonical(BoundedAssemblyPlan plan) {
+        TroubleshootBoard board = PhysicalConstructionMaterializer.describe(plan).getBoard();
+        java.util.Vector<String> ids = board.getComponentIds();
+        Collections.sort(ids);
+        StringBuilder out = new StringBuilder();
+        for (String id : ids) {
+            BoardComponent component = board.getComponent(id);
+            out.append(id).append('@').append(component.getDisplayName()).append(':')
+                .append(component.getReferenceLabelCharacters()).append(';');
+        }
+        return out.toString();
+    }
+
+    private static void verifyPlayerReferences(GeneratedBoardInstance owner) {
+        TroubleshootBoard board = owner.getBoard();
+        java.util.Set<String> references = new java.util.HashSet<String>();
+        for (String id : board.getComponentIds()) {
+            String name = board.getComponent(id).getDisplayName();
+            require(references.add(name), "actual player board has globally unique public references");
+            PcbSilkscreenLabel label = owner.getPcbLayout().getSilkscreenLabel("component:"+id);
+            require(label != null && name.equals(label.getText()),
+                "actual printed reference uses its unchanged full component label key");
+        }
+        int services = 0;
+        for (PhysicalBoardRuntimeCapability capability : owner.getPhysicalBoardRuntime().getCapabilities()) {
+            if (!(capability instanceof ReplaceableResistorBoardCapability)) continue;
+            ReplaceableResistorBoardCapability service = (ReplaceableResistorBoardCapability)capability;
+            String name = board.getComponent(service.getComponentId()).getDisplayName();
+            require(name.equals(service.getPlayerComponentLabel()) &&
+                    (name+" replacement resistors").equals(service.getCatalogTitle()) &&
+                    ("Install new resistor in "+name).equals(service.getInstallNewLabel()),
+                "part-service titles and install prompts match the one public board reference");
+            services++;
+        }
+        require(services == 7, "all four mutable and three supporting resistors retain named service capabilities");
+    }
+
     private static void verifyProceduralPlayerGeometry() {
         CirSim sim = new CirSim();
         sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7; CircuitElm.sim = sim;
@@ -156,6 +232,7 @@ public final class ControlledIndicatorAssemblyContractTest {
                 DifficultyProfile.MEDIUM.name()).generation().resolve(new GenerationRequest.PlanCache())
                 .construct().instance;
             PcbBoardLayout layout = board.getPcbLayout();
+            verifyPlayerReferences(board);
             layout.validateGeometry(board.getBoard());
             geometries.add(layout.geometryFingerprint());
             faults.add(board.getChallengeDefinition().getFault().getId());
@@ -294,6 +371,9 @@ public final class ControlledIndicatorAssemblyContractTest {
         require(first.getSemanticSignature().equals(second.getSemanticSignature()) &&
                 first.getSemanticSignature().equals(replay.getSemanticSignature()),
                 "reordered and canonical replay preserve current semantics");
+        require(referenceCanonical(first).equals(referenceCanonical(second)) &&
+                referenceCanonical(first).equals(referenceCanonical(replay)),
+            "reordered inputs and exact replay retain all public references and reserved boxes");
         for (ControlledIndicatorChannel channel : first.getChannels()) {
             String key = channel.getLoadKey();
             require(first.getBlocks().get(key).getResolvedValueRecipe()
