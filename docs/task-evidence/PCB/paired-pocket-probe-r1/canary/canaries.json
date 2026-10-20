@@ -1,0 +1,18 @@
+{
+  "checks": [
+    {
+      "privateLogBytes": 428,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "seed",
+      "privateLogSha256": "c80c7bc82dac058ea4f0cdc4efc079cf34a4c962c9cfc8ac9f68ceaf78166a7c",
+      "actualAdapterExitCode": 1
+    },
+    {
+      "privateLogBytes": 392,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "owner",
+      "privateLogSha256": "cd3677c206048dbd431eabbb6d962228fc61ee26ea88403cd593df1e4dff97f4",
+      "actualAdapterExitCode": 1
+    }
+  ]
+}

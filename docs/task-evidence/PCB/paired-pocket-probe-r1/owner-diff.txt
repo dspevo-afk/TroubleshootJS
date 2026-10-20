@@ -1,0 +1,232 @@
+--- published/owner-diff.txt
++++ private-experiment/owner-diff.txt
+@@ -480,6 +480,229 @@
+                 wire = bestWire;
+             }
+         }
++        int taskPairEvaluationStart = evaluations;
++        long taskPairAreaStart = area;
++        double taskPairWireStart = wire;
++        String taskInvocationGroup = "compactConnectedVacancies/candidate-" +
++            input.candidate + "/evaluation-" + taskPairEvaluationStart;
++        class TaskPairCandidate {
++            final String componentA, componentB, netId;
++            TaskPairCandidate(String a, String b, String net) {
++                componentA = a; componentB = b; netId = net;
++            }
++        }
++        TreeMap<String, TaskPairCandidate> taskPairByComponents =
++            new TreeMap<String, TaskPairCandidate>();
++        Vector<String> taskNetIds = board.getNetIds();
++        Collections.sort(taskNetIds);
++        for (String taskNetId : taskNetIds) {
++            GenerationWorkScope.check();
++            BoardNet taskNet = board.getNet(taskNetId);
++            if (taskNet == null) continue;
++            Vector<String> taskPadIds = taskNet.getPadIds();
++            Collections.sort(taskPadIds);
++            if (taskPadIds.size() != 2) continue;
++            BoardPad taskFirstPad = board.getPad(taskPadIds.get(0));
++            BoardPad taskSecondPad = board.getPad(taskPadIds.get(1));
++            String taskFirstComponent = taskFirstPad.getComponentId();
++            String taskSecondComponent = taskSecondPad.getComponentId();
++            if (taskFirstComponent.equals(taskSecondComponent)) continue;
++            String taskComponentA, taskComponentB;
++            BoardPad taskPadA, taskPadB;
++            if (taskFirstComponent.compareTo(taskSecondComponent) < 0) {
++                taskComponentA = taskFirstComponent;
++                taskComponentB = taskSecondComponent;
++                taskPadA = taskFirstPad;
++                taskPadB = taskSecondPad;
++            } else {
++                taskComponentA = taskSecondComponent;
++                taskComponentB = taskFirstComponent;
++                taskPadA = taskSecondPad;
++                taskPadB = taskFirstPad;
++            }
++            boolean taskGraphPair = false;
++            for (TopologyPlacementGraph.PadLink link :
++                    topology.getLinksFor(taskComponentA)) {
++                if (taskNetId.equals(link.getNetId()) &&
++                        taskPadA.getId().equals(link.getPadId()) &&
++                        taskComponentB.equals(link.getOtherComponentId()) &&
++                        taskPadB.getId().equals(link.getOtherPadId())) {
++                    taskGraphPair = true;
++                    break;
++                }
++            }
++            if (!taskGraphPair) continue;
++            BoardComponent taskBoardA = board.getComponent(taskComponentA);
++            BoardComponent taskBoardB = board.getComponent(taskComponentB);
++            if (taskBoardA == null || taskBoardB == null ||
++                    taskBoardA.getPhysicalPackage().getTerminalIds().size() != 2 ||
++                    taskBoardB.getPhysicalPackage().getTerminalIds().size() != 2)
++                continue;
++            PcbPlacementConstraints.Part taskDemandA =
++                constraints.get(taskComponentA);
++            PcbPlacementConstraints.Part taskDemandB =
++                constraints.get(taskComponentB);
++            if (taskDemandA == null || taskDemandB == null ||
++                    !taskDemandA.regionId.equals(taskDemandB.regionId) ||
++                    !taskDemandA.domainId.equals(taskDemandB.domainId) ||
++                    taskDemandA.anchor != PcbPlacementConstraints.Anchor.NONE ||
++                    taskDemandB.anchor != PcbPlacementConstraints.Anchor.NONE ||
++                    !taskDemandA.terminalDomain(taskPadA.getTerminalId()).equals(
++                        taskDemandB.terminalDomain(taskPadB.getTerminalId())))
++                continue;
++            PcbFootprint taskFootprintA =
++                findPlacedFootprint(placed, taskComponentA);
++            PcbFootprint taskFootprintB =
++                findPlacedFootprint(placed, taskComponentB);
++            if (taskFootprintA == null || taskFootprintB == null ||
++                    taskFootprintA.getPlacement().getPhysicalGeometry()
++                        .getIsolationBody() != null ||
++                    taskFootprintB.getPlacement().getPhysicalGeometry()
++                        .getIsolationBody() != null)
++                continue;
++            String taskPairKey = taskComponentA +
++                Character.toString((char)0) + taskComponentB;
++            TaskPairCandidate priorPair = taskPairByComponents.get(taskPairKey);
++            if (priorPair == null || taskNetId.compareTo(priorPair.netId) < 0)
++                taskPairByComponents.put(taskPairKey, new TaskPairCandidate(
++                    taskComponentA, taskComponentB, taskNetId));
++        }
++        Vector<TaskPairCandidate> taskDisjointPairs =
++            new Vector<TaskPairCandidate>();
++        java.util.HashSet<String> taskUsedPairComponents =
++            new java.util.HashSet<String>();
++        for (TaskPairCandidate pair : taskPairByComponents.values()) {
++            if (taskUsedPairComponents.contains(pair.componentA) ||
++                    taskUsedPairComponents.contains(pair.componentB))
++                continue;
++            taskDisjointPairs.add(pair);
++            taskUsedPairComponents.add(pair.componentA);
++            taskUsedPairComponents.add(pair.componentB);
++        }
++        int taskTargetsEvaluated = 0;
++        int taskAcceptedMoves = 0;
++        for (TaskPairCandidate pair : taskDisjointPairs) {
++            GenerationWorkScope.check();
++            if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
++            int indexA = -1, indexB = -1;
++            for (int i = 0; i < placed.size(); i++) {
++                String componentId = placed.get(i).getPlacement().getComponentId();
++                if (pair.componentA.equals(componentId)) indexA = i;
++                if (pair.componentB.equals(componentId)) indexB = i;
++            }
++            if (indexA < 0 || indexB < 0)
++                throw new IllegalArgumentException("Missing paired pocket placement");
++            PcbFootprint sourceA = placed.get(indexA);
++            PcbFootprint sourceB = placed.get(indexB);
++            PcbPlacementConstraints.Part demandA =
++                constraints.get(pair.componentA);
++            PcbPlacementConstraints.Part demandB =
++                constraints.get(pair.componentB);
++            PcbComponentPlacement poseA = sourceA.getPlacement();
++            PcbComponentPlacement poseB = sourceB.getPlacement();
++            Rectangle allowed = vacancyDomainBox(sourceA, placed, constraints,
++                input.outline);
++            if (allowed == null) continue;
++            Vector<Rectangle> obstacles = new Vector<Rectangle>();
++            for (int i = 0; i < placed.size(); i++) {
++                if (i == indexA || i == indexB) continue;
++                PcbFootprint peer = placed.get(i);
++                obstacles.add(envelope(peer, constraints.get(
++                    peer.getPlacement().getComponentId()).accessMargin));
++            }
++            Rectangle pairEnvelope = union(envelope(sourceA, demandA.accessMargin),
++                envelope(sourceB, demandB.accessMargin));
++            Vector<Point> targets = PcbVacancyTargets.targets(allowed, obstacles,
++                pairEnvelope, new Point(poseA.getX(), poseA.getY()));
++            PcbFootprint bestA = sourceA, bestB = sourceB;
++            long bestArea = area;
++            double bestWire = wire;
++            int bestDx = 0, bestDy = 0, bestEvaluation = -1;
++            java.util.HashSet<String> visited = new java.util.HashSet<String>();
++            int targetLimit = Math.min(5, targets.size());
++            for (int targetIndex = 0; targetIndex < targetLimit; targetIndex++) {
++                GenerationWorkScope.check();
++                if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
++                Point target = targets.get(targetIndex);
++                int targetAx = pocketGridOrigin(target.x, poseA.getX());
++                int targetAy = pocketGridOrigin(target.y, poseA.getY());
++                int dx = PcbCoordinateSystem.boardDisplacement(targetAx,
++                    poseA.getX());
++                int dy = PcbCoordinateSystem.boardDisplacement(targetAy,
++                    poseA.getY());
++                if (dx == 0 && dy == 0 ||
++                        !visited.add(dx + "," + dy))
++                    continue;
++                int targetBx = PcbCoordinateSystem.checkedAddBoardCoordinate(
++                    poseB.getX(), dx);
++                int targetBy = PcbCoordinateSystem.checkedAddBoardCoordinate(
++                    poseB.getY(), dy);
++                evaluations++;
++                taskTargetsEvaluated++;
++                PcbFootprint trialA = sourceA.translated(targetAx, targetAy);
++                PcbFootprint trialB = sourceB.translated(targetBx, targetBy);
++                Vector<PcbFootprint> candidate = new Vector<PcbFootprint>(placed);
++                candidate.set(indexA, trialA);
++                candidate.set(indexB, trialB);
++                if (!fits(trialA, input.outline, candidate, indexA, constraints) ||
++                        !fits(trialB, input.outline, candidate, indexB, constraints))
++                    continue;
++                long candidateArea = occupiedEnvelopeArea(candidate, constraints);
++                double candidateWire = totalWireDemand(candidate, topology);
++                if (candidateArea > area || candidateWire > wire ||
++                        candidateArea == area && candidateWire == wire ||
++                        candidateArea > bestArea ||
++                        candidateArea == bestArea && candidateWire >= bestWire)
++                    continue;
++                try {
++                    validate(board, constraints, input.outline, candidate);
++                } catch (Rejected insufficientAccess) {
++                    continue;
++                }
++                bestA = trialA;
++                bestB = trialB;
++                bestArea = candidateArea;
++                bestWire = candidateWire;
++                bestDx = dx;
++                bestDy = dy;
++                bestEvaluation = evaluations;
++            }
++            if (bestA != sourceA && bestB != sourceB) {
++                placed.set(indexA, bestA);
++                placed.set(indexB, bestB);
++                area = bestArea;
++                wire = bestWire;
++                taskAcceptedMoves++;
++                String jsonNetId = pair.netId.replace("\\", "\\\\")
++                    .replace("\"", "\\\"");
++                String jsonComponentA = pair.componentA.replace("\\", "\\\\")
++                    .replace("\"", "\\\"");
++                String jsonComponentB = pair.componentB.replace("\\", "\\\\")
++                    .replace("\"", "\\\"");
++                System.out.println("PCB_POCKET_PAIR_MOVE_OBSERVATION {\"schema\":\"pocket-paired-move@1\",\"invocationGroup\":\"" +
++                    taskInvocationGroup + "\",\"netId\":\"" + jsonNetId +
++                    "\",\"componentA\":\"" + jsonComponentA +
++                    "\",\"componentB\":\"" + jsonComponentB +
++                    "\",\"fromA\":[" + poseA.getX() + "," + poseA.getY() +
++                    "],\"fromB\":[" + poseB.getX() + "," + poseB.getY() +
++                    "],\"toA\":[" + bestA.getPlacement().getX() + "," +
++                    bestA.getPlacement().getY() + "],\"toB\":[" +
++                    bestB.getPlacement().getX() + "," +
++                    bestB.getPlacement().getY() + "],\"dx\":" + bestDx +
++                    ",\"dy\":" + bestDy + ",\"evaluation\":" +
++                    bestEvaluation + "}");
++            }
++        }
++        System.out.println("PCB_POCKET_PAIR_SWEEP_OBSERVATION {\"schema\":\"pocket-paired-move@1\",\"invocationGroup\":\"" +
++            taskInvocationGroup + "\",\"evaluationStart\":" +
++            taskPairEvaluationStart + ",\"evaluationEnd\":" + evaluations +
++            ",\"eligiblePairs\":" + taskPairByComponents.size() +
++            ",\"disjointPairs\":" + taskDisjointPairs.size() +
++            ",\"targetsEvaluated\":" + taskTargetsEvaluated +
++            ",\"acceptedMoves\":" + taskAcceptedMoves +
++            ",\"areaStart\":" + taskPairAreaStart + ",\"areaEnd\":" + area +
++            ",\"wireStart\":" + taskPairWireStart + ",\"wireEnd\":" +
++            wire + "}");
+         if (evaluations == input.evaluations) return input;
+         return new Plan(input.outline, placed, input.regions, input.courtyardArea,
+             input.demandArea, input.candidate, evaluations);

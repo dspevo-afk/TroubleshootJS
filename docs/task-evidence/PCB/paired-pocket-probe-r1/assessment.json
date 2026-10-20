@@ -1,0 +1,318 @@
+{
+  "status": "PASS_FINITE_PRIVATE_PAIRED_EXPERIMENT",
+  "decision": "GO_REQUIRES_SEPARATE_IMPLEMENTATION_SCOPE",
+  "inputSealSha256": "bf1c265288e6f01f3ae7b058d35b48be6e08dd9b86191f2758665ed5aad91a40",
+  "baselineMetrics": {
+    "available": true,
+    "unavailable": false,
+    "gridStep": 10,
+    "area": 494426,
+    "copper": 3050,
+    "vias": 0,
+    "protectedVoid": 96000,
+    "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+  },
+  "selectedMetrics": {
+    "available": true,
+    "unavailable": false,
+    "gridStep": 10,
+    "area": 443466,
+    "copper": 2750,
+    "vias": 0,
+    "protectedVoid": 63000,
+    "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+  },
+  "strictPredicates": {
+    "areaStrictlySmaller": true,
+    "copperNonincreasing": true,
+    "viasNonincreasing": true,
+    "protectedVoidNonincreasing": true
+  },
+  "baselineGeometryRetained": false,
+  "independentlyEnumeratedEligiblePairs": 2,
+  "independentlyEnumeratedDisjointPairs": [
+    [
+      "LED1",
+      "R1",
+      "BRANCH1_NODE"
+    ],
+    [
+      "LED2",
+      "R2",
+      "BRANCH2_NODE"
+    ]
+  ],
+  "readerControls": {
+    "literalRigidMove": "PASS",
+    "unequalDisplacement": "PASS",
+    "originalCap": "PASS",
+    "fiveTargetBound": "PASS",
+    "duplicateMember": "PASS",
+    "literalAnchorEdge": "PASS",
+    "public identity": "PASS",
+    "pad net membership": "PASS",
+    "independent copper": "PASS",
+    "independent protected void": "PASS",
+    "clockOnly": "PASS",
+    "nonclock": "PASS"
+  },
+  "canaryElapsedSeconds": 0.7420606,
+  "results": {
+    "baseline": {
+      "elapsedSeconds": 43.1380181,
+      "receiptSha256": "f06d11206bcf739744103c133a18676ea275720d1ef2a22a5519af07e0327c32",
+      "metrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 494426,
+        "copper": 3050,
+        "vias": 0,
+        "protectedVoid": 96000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0;route=P05_ONE_FACE;disposition=NO_CHANGE;baseline=9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9;selected=9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+        "attempts": 0,
+        "orderings": 0,
+        "expansions": 0,
+        "millis": 0,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "NO_CHANGE",
+        "baselineGeometrySha256": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+        "selectedGeometrySha256": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+        "metricEvidence": {
+          "state": "NOT_MEASURED",
+          "baseline": null,
+          "candidate": null,
+          "unavailableReason": null
+        }
+      },
+      "pairGroups": [],
+      "pairMoves": []
+    },
+    "cold": {
+      "elapsedSeconds": 42.7587486,
+      "receiptSha256": "5e5158b2b3011662acb59eda68960a77fe8c9402631f8f9ccc622a3ec5890e15",
+      "metrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 443466,
+        "copper": 2750,
+        "vias": 0,
+        "protectedVoid": 63000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=4;expansions=132841;millis=33;route=P05_ONE_FACE;disposition=SELECTED;baseline=9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9;selected=a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+        "attempts": 1,
+        "orderings": 4,
+        "expansions": 132841,
+        "millis": 33,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "SELECTED",
+        "baselineGeometrySha256": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+        "selectedGeometrySha256": "a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 494426,
+            "copper": 3050,
+            "vias": 0,
+            "protectedVoid": 96000
+          },
+          "candidate": {
+            "area": 443466,
+            "copper": 2750,
+            "vias": 0,
+            "protectedVoid": 63000
+          },
+          "unavailableReason": null
+        }
+      },
+      "pairGroups": [
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "evaluationStart": 56,
+          "evaluationEnd": 66,
+          "eligiblePairs": 2,
+          "disjointPairs": 2,
+          "targetsEvaluated": 10,
+          "acceptedMoves": 2,
+          "areaStart": 383286,
+          "areaEnd": 339636,
+          "wireStart": 8034.0,
+          "wireEnd": 7954.0
+        }
+      ],
+      "pairMoves": [
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "netId": "BRANCH1_NODE",
+          "componentA": "LED1",
+          "componentB": "R1",
+          "fromA": [
+            300,
+            280
+          ],
+          "fromB": [
+            290,
+            110
+          ],
+          "toA": [
+            310,
+            240
+          ],
+          "toB": [
+            300,
+            70
+          ],
+          "dx": 10,
+          "dy": -40,
+          "evaluation": 59
+        },
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "netId": "BRANCH2_NODE",
+          "componentA": "LED2",
+          "componentB": "R2",
+          "fromA": [
+            620,
+            70
+          ],
+          "fromB": [
+            780,
+            110
+          ],
+          "toA": [
+            610,
+            70
+          ],
+          "toB": [
+            770,
+            110
+          ],
+          "dx": -10,
+          "dy": 0,
+          "evaluation": 63
+        }
+      ]
+    },
+    "repeat": {
+      "elapsedSeconds": 43.8260429,
+      "receiptSha256": "7e5cd322968a7d335194f610917da0bb7c82d48aa148a2b0f168b852f0f9c317",
+      "metrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 443466,
+        "copper": 2750,
+        "vias": 0,
+        "protectedVoid": 63000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=4;expansions=132841;millis=34;route=P05_ONE_FACE;disposition=SELECTED;baseline=9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9;selected=a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+        "attempts": 1,
+        "orderings": 4,
+        "expansions": 132841,
+        "millis": 34,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "SELECTED",
+        "baselineGeometrySha256": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+        "selectedGeometrySha256": "a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 494426,
+            "copper": 3050,
+            "vias": 0,
+            "protectedVoid": 96000
+          },
+          "candidate": {
+            "area": 443466,
+            "copper": 2750,
+            "vias": 0,
+            "protectedVoid": 63000
+          },
+          "unavailableReason": null
+        }
+      },
+      "pairGroups": [
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "evaluationStart": 56,
+          "evaluationEnd": 66,
+          "eligiblePairs": 2,
+          "disjointPairs": 2,
+          "targetsEvaluated": 10,
+          "acceptedMoves": 2,
+          "areaStart": 383286,
+          "areaEnd": 339636,
+          "wireStart": 8034.0,
+          "wireEnd": 7954.0
+        }
+      ],
+      "pairMoves": [
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "netId": "BRANCH1_NODE",
+          "componentA": "LED1",
+          "componentB": "R1",
+          "fromA": [
+            300,
+            280
+          ],
+          "fromB": [
+            290,
+            110
+          ],
+          "toA": [
+            310,
+            240
+          ],
+          "toB": [
+            300,
+            70
+          ],
+          "dx": 10,
+          "dy": -40,
+          "evaluation": 59
+        },
+        {
+          "schema": "pocket-paired-move@1",
+          "invocationGroup": "compactConnectedVacancies/candidate-5/evaluation-56",
+          "netId": "BRANCH2_NODE",
+          "componentA": "LED2",
+          "componentB": "R2",
+          "fromA": [
+            620,
+            70
+          ],
+          "fromB": [
+            780,
+            110
+          ],
+          "toA": [
+            610,
+            70
+          ],
+          "toB": [
+            770,
+            110
+          ],
+          "dx": -10,
+          "dy": 0,
+          "evaluation": 63
+        }
+      ]
+    }
+  },
+  "limits": "Exact small-board request only. Task-only private planner; no production/build/player/all-seed/optimality or medium initial-planning proof. Existing Java validators and independent sampler retained; this reader adapts only the old validator expected request. No isolation geometry is exported; the private source exclusion and existing full physical validators retain that check."
+}

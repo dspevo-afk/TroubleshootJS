@@ -1,0 +1,93 @@
+{
+  "status": "PASS_ROOT_REVIEW_FINITE_PRIVATE_EXPERIMENT",
+  "baseCommit": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+  "scopeSha256": "a1f5981166bae008c7190c330d0d3e23b4b3d2462f16d676f7801f28f96b21e0",
+  "inputSealSha256": "bf1c265288e6f01f3ae7b058d35b48be6e08dd9b86191f2758665ed5aad91a40",
+  "assessmentSha256": "104b1c477dc1b506a411db03c65c6f384071d56f6b60ec6beb3baae685270390",
+  "privateOwnerSha256": "810c5f6468a2bbca48e98ec7e854891504d4d07815e7096a3a01f325f50e9346",
+  "reviewedFactoryChanges": {
+    "ownerGuardedSubstitutions": 1,
+    "adapterGuardedSubstitutions": 4,
+    "ownerAddedLines": 223
+  },
+  "exporterDelta": "Only family/comment/usage/exact MIN seed guard; constructonce/validators/oracles/cleanup retained",
+  "rootSourceReview": "Canonical sorted disjoint pairs; topology/terminal/domain/anchor/isolation guards; common10 displacement; simultaneous replacement before both fits/fullvalidate; originalcounter/proxy gates, passive observations; published planner unchanged",
+  "actualPhases": {
+    "canary": {
+      "actualToolExitCode": 0,
+      "elapsedSeconds": 0.7420606,
+      "phase": "canary",
+      "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+      "status": "PASS",
+      "terminalCleanupIncluded": true,
+      "exitCode": 0,
+      "failure": null
+    },
+    "baseline": {
+      "actualToolExitCode": 0,
+      "elapsedSeconds": 43.1380181,
+      "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+      "phase": "baseline",
+      "terminalCleanupIncluded": true,
+      "exitCode": 0,
+      "status": "PASS",
+      "failure": null
+    },
+    "cold": {
+      "actualToolExitCode": 0,
+      "failure": null,
+      "status": "PASS",
+      "terminalCleanupIncluded": true,
+      "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+      "exitCode": 0,
+      "elapsedSeconds": 42.7587486,
+      "phase": "cold"
+    },
+    "repeat": {
+      "actualToolExitCode": 0,
+      "elapsedSeconds": 43.8260429,
+      "exitCode": 0,
+      "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+      "terminalCleanupIncluded": true,
+      "phase": "repeat",
+      "failure": null,
+      "status": "PASS"
+    }
+  },
+  "recordedBirthsExited": 8,
+  "rawArtifacts": {
+    "baseline/native.txt": {
+      "sha256": "60bb5dd98d973e97dff82fb0ddb3901ab68454ce2ec6f89278b2706969a0acd3",
+      "bytes": 18085,
+      "privateCopyExact": true
+    },
+    "baseline/receipt.txt": {
+      "sha256": "f06d11206bcf739744103c133a18676ea275720d1ef2a22a5519af07e0327c32",
+      "bytes": 17388,
+      "privateCopyExact": true
+    },
+    "cold/native.txt": {
+      "sha256": "07413459cb89df5650710624d3f09ac0a3527ca94d73363c3ea266b130fc25ae",
+      "bytes": 19109,
+      "privateCopyExact": true
+    },
+    "cold/receipt.txt": {
+      "sha256": "5e5158b2b3011662acb59eda68960a77fe8c9402631f8f9ccc622a3ec5890e15",
+      "bytes": 18412,
+      "privateCopyExact": true
+    },
+    "repeat/native.txt": {
+      "sha256": "b7262410b7e947dbfb12c13bf1ad58c3fc3c7c872266d3aead53068efa536fe1",
+      "bytes": 19109,
+      "privateCopyExact": true
+    },
+    "repeat/receipt.txt": {
+      "sha256": "7e5cd322968a7d335194f610917da0bb7c82d48aa148a2b0f168b852f0f9c317",
+      "bytes": 18412,
+      "privateCopyExact": true
+    }
+  },
+  "privacy": "PASS_SANITIZED_PUBLIC_FILES_RAW_NATIVE_NO_PERSONAL_PATHS_PRIVATE_EXACT_COPIES",
+  "decision": "GO_REQUIRES_SEPARATE_IMPLEMENTATION_SCOPE",
+  "limits": "Finite exact private Dual request. No production/GWT/browser/new screenshot/electrical/allseed/mediuminitial proof. Native terminal cleanup included in operation time; separate root driver observation timed independently. Four blocked old profiles preserved; no removal attempt."
+}

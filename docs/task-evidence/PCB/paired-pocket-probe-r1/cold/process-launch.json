@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 26728,
+      "executable": "pwsh",
+      "startTicks": "639281338891035313"
+    },
+    {
+      "pid": 30772,
+      "executable": "pwsh",
+      "startTicks": "639281338893411594"
+    }
+  ],
+  "scope": "Task-only native probe; root separately observes actual tool exit",
+  "phase": "cold"
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Cross-family survey/captures accepted; generic paired-move feasibility next**
+**Current task:** **Private paired translation GO; isolated shared-generator integration next**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -126,6 +126,16 @@ unattributed console404 and late missing-metadata negative disclosed. No new
 size/production/GWT/electrical/allseed claim. Source-only paired-translation
 feasibility is credible for a separate private scope; no experiment selected.
 [Survey, fresh screenshots and limits](task-evidence/PCB/cross-family-whitespace-review-r1/RESULTS.md).
+
+The separate private Dual/min-long paired-translation experiment is GO for a
+production implementation scope: exact baseline494426/3050/0/96000, actual
+routed443466/2750/0/63000. Both generic branch pairs move together;10 targets
+share the original60000 ceiling and one existing P05 optional route. Actual JDK8
+baseline/cold/repeat PASS115, nonclock/identity/independent metrics/reader controls
+exact, early host binding negatives and all8 recorded birth exits PASS. Production
+is unchanged; isolate future pair search after incumbent selection and introduce
+a distinct packing interpretation. No new build/player/allseed/optimum claim.
+[Finite private GO and integration boundary](task-evidence/PCB/paired-pocket-probe-r1/RESULTS.md).
 [Exact NPN diagnosis and limits](task-evidence/PCB/npn-sparse-diagnostic-r1/RESULTS.md).
 [Source decision and limits](task-evidence/PCB/optocoupler-source-review-r1/README.md).
 [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).

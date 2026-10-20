@@ -1,0 +1,28 @@
+{
+  "baseCommit": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+  "baselineSha256": "12afb4069cd82ec1693be38358a6d9ca513dd8b774a37f0443674b2a84d15f55",
+  "helpers": {
+    "scope.md": "a1f5981166bae008c7190c330d0d3e23b4b3d2462f16d676f7801f28f96b21e0",
+    "inputs.py": "892bdd06f99af6b812df8787188b8adaaeaa8dd8143cd05b12aa4cc354e4bf2a",
+    "make_experiment.py": "d7a3c8da87a706327364d48622a41468a51318ff24c1292c733d89cda64826a6",
+    "export-source/SparseNormalBoardDiagnostic.java": "55658de039f165c621f8062a3b938b8d4e8d16adf1d3009c8dfa975fdf327eef",
+    "exporter-notes.md": "453f9930662a3d426f6c54787dfc55559b3ff676151de2e93669761c37951c3a",
+    "integration-boundary.md": "5cd2e86cc89e9c76528dddf41e4fa4b5d9382029f2e5e68b84fefd623fc87a5f",
+    "private-input-manifest.json": "075d8facecb8b702c6077bff04a29e5fd1c414bf28a0b982a3768c3c9a589de2",
+    "owner-diff.txt": "f7e8b6025133cd50136f13b3ca44583594bfc707b1a734c6f6f9660fd39a4835",
+    "adapter-diff.txt": "eadeb16facb4c24e486aeaebfcea7b9273671745db7effe43fe6feed4d2c4ed6",
+    "run_experiment.ps1": "96b951d72b572b84e8644bcf10f0b2be3760d48aacabf691482e53856d45c47b",
+    "record_exit.ps1": "8ec79f08594ff80628e5c65f3aa7ef8030404d3dd8855b88fd521d10678a88f7",
+    "qualify_experiment.py": "c72d95db5b9f71b80070ef3db835030a064eaacbe802591f2e1261d7b1bb6dcc"
+  },
+  "privateInputs": {
+    "PcbPlacementPlanner.java": "810c5f6468a2bbca48e98ec7e854891504d4d07815e7096a3a01f325f50e9346",
+    "baseline-adapter.ps1": "a079fd62c07d9790a73884ae8f284e60ff60e7122e4b92711033a64d502c4247",
+    "experiment-adapter.ps1": "56c900bfd29e7be366ef1911df396fdb9ee21ce37b0d20ae4802a394d3e32757",
+    "private-input-manifest.json": "075d8facecb8b702c6077bff04a29e5fd1c414bf28a0b982a3768c3c9a589de2",
+    "owner-diff.txt": "f7e8b6025133cd50136f13b3ca44583594bfc707b1a734c6f6f9660fd39a4835",
+    "adapter-diff.txt": "eadeb16facb4c24e486aeaebfcea7b9273671745db7effe43fe6feed4d2c4ed6"
+  },
+  "request": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808",
+  "interpretation": "TASK_ONLY_GENERIC_PAIRED_TRANSLATION_NOT_CURRENT_PRODUCTION"
+}

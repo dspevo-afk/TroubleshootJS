@@ -1,0 +1,53 @@
+{
+  "status": "GENERATED_TASK_ONLY_PAIRED_POCKET_EXPERIMENT",
+  "baseCommit": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+  "taskIdentity": {
+    "family": "PARALLEL_DUAL_INDICATOR",
+    "profile": "EASY",
+    "publicSeed": "-9223372036854775808",
+    "replayId": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808"
+  },
+  "publishedOwner": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+  "publishedOwnerSha256": "373f6f4d3b5f3dc109238d5f0cb87346b0d9bb86514c1da5354af62d4f76c6b0",
+  "privateOwnerSha256": "810c5f6468a2bbca48e98ec7e854891504d4d07815e7096a3a01f325f50e9346",
+  "baselineAdapterSha256": "a079fd62c07d9790a73884ae8f284e60ff60e7122e4b92711033a64d502c4247",
+  "experimentAdapterSha256": "56c900bfd29e7be366ef1911df396fdb9ee21ce37b0d20ae4802a394d3e32757",
+  "exporterSha256": "55658de039f165c621f8062a3b938b8d4e8d16adf1d3009c8dfa975fdf327eef",
+  "publishedNpnAdapterSha256": "c333569940e56f845bf6632fe33eac8c029d4a4972c7d426637e9a94276d32e4",
+  "publishedNpnExporterSha256": "14c472a9b8a28d648a8be17d4a4ae0d6b66ecac3e286fb475808d98f71d20b36",
+  "ownerChanges": [
+    {
+      "label": "one canonical disjoint two-part translation pass after the incumbent single-part sweep",
+      "replacements": 1,
+      "oldSha256": "27e7f235bb928f43f307583beaa1971b19ef18006e4e1a68afa256c44bfcedb3",
+      "newSha256": "8a6f91d1dc49f803e06b25fc28dd5a86345afec78e483be5cf02b1590a933e17"
+    }
+  ],
+  "adapterChanges": [
+    {
+      "label": "restrict baseline exporter binding to the one Dual family",
+      "replacements": 1,
+      "oldSha256": "16d2b3053ee07bc73cf2f3f31a59a7ab703c7a68c2761880a9069fde39302113",
+      "newSha256": "9beb4c60735833be52f2bbc71f3d2aa897e7b2c66bc7108817326269dc5ba7d4"
+    },
+    {
+      "label": "require the private paired planner source input",
+      "replacements": 1,
+      "oldSha256": "49cd303a2f813c7f1d82a673604216307eef71e7a02a0450b473c0bb609ba7d0",
+      "newSha256": "8e8a202fce481cf8f28084531b3c3c87c2dd90eb65081ab0187f9b12ac69ea4f"
+    },
+    {
+      "label": "exclude only the checked-in planner from this native compile",
+      "replacements": 1,
+      "oldSha256": "0d70150d7abe5f3b332dbb6cff26353ca0451e0d8ee72f041fda10d35350d555",
+      "newSha256": "aa8e8d61fec1f2a74774cd76b0bd98bfd476e1e0d3a2a74cc5594c1b63bd1266"
+    },
+    {
+      "label": "compile the one task-owned paired planner source",
+      "replacements": 1,
+      "oldSha256": "3aeaa583e858040682f04a376153c1a6459c3d5b5c2165a960bcf3bc92e21153",
+      "newSha256": "f50e2d9cd8ac5bd36ffc5a0d5a03ab97e90b39502efa19195301aaa20a3ca433"
+    }
+  ],
+  "limits": "Task-only generic disjoint linked-pair translation after the existing one-part vacancy pass. It uses exact two-pad topology, at most five existing vacancy targets per canonical disjoint pair and the original shared 60000 placement-evaluation ceiling. Both translated footprints are installed in the candidate vector before fit and full validation. It preserves the existing area/wire strict-progress ordering, full validators, normal route request, routing limits and four-metric selector. The paired observer is passive. No published source or production interpretation changes."
+}

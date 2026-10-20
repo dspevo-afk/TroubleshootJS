@@ -1,0 +1,29 @@
+{
+  "status": "PASS_VERIFIED_NORMAL_PUBLICATION",
+  "sha": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+  "message": "Review whitespace across generated PCB families and capture boards",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "exactRemoteSha": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+  "reviewedCommittedBlobCount": 80,
+  "privateReviewedBlobManifestSha256": "d68dda4eaf8ea69e959b84241d9154c573649c2cf52a91931a8b934d13be22ca",
+  "postpublicationUnchangedInputAudit": {
+    "status": "PASS_UNCHANGED_INPUT_AUDIT",
+    "observedHead": "c29b81bbe87aa192761b35a6ee3c9ebdb037ba43",
+    "sourceReviewSha256": "67fb3f25e8eff249de6e3bec27e0cec85e9d58c4f37ef78d6c96b1a47af8c8d0",
+    "auditHelperSha256": "aaacfa5858f2657e89f4b28c2de778ae81868481c38000aec781f257b77327d9",
+    "compilerInputs": 1482,
+    "allCompilerInputsDigest": "6017b1c0307444354974cb4c67639a3e7c9e9456826fb16cc6ba0e5f3bd91539",
+    "machineryInputs": 24,
+    "gateHelpers": 7,
+    "playerHelpers": 8,
+    "reviewedSourceHashes": 15,
+    "priorPublicationSha256": "1ffc531840f3a74e234a22df51d41766c6d6ee4b4b24217ba3366126af63b5b9",
+    "priorPostpublicationExecutionSha256": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01",
+    "limit": "Input identity audit only; no native/build/browser rerun or profile cleanup"
+  },
+  "noMainMerge": true,
+  "email": "DISABLED_BY_USER"
+}

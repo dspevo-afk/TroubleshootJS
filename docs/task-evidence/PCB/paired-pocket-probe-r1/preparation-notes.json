@@ -1,0 +1,13 @@
+{
+  "status": "DOCUMENTATION_COUNT_CORRECTED_BEFORE_WRITES",
+  "operation": "root RESULTS/checkpoint preparation",
+  "actualExecExitCode": 1,
+  "cause": "Literal expected helper count13 disagreed with sealed map12; assertion stopped before RESULTS or report writes",
+  "correction": "Use audited sealed count12; no helper, source, assertion, native result or seal changed",
+  "nativeGateImpact": "NONE",
+  "privacyScanPreparation": {
+    "actualExecExitCode": 1,
+    "cause": "Scanning entire historical task report encountered an already committed historical path; assertion stopped before staging",
+    "correction": "Scan every new packet/publication byte plus added diff lines of existing documents; preserve old history"
+  }
+}

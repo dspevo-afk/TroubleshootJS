@@ -1,0 +1,26 @@
+--- published/adapter-diff.txt
++++ private-experiment/adapter-diff.txt
+@@ -2,7 +2,8 @@
+ param(
+     [Parameter(Mandatory=$true)][string]$TaskRepositoryRoot,
+     [Parameter(Mandatory=$true)][string]$TaskExportSource,
+-    [Parameter(Mandatory=$true)][ValidateSet('NPN_LOW_SIDE_SWITCH')][string]$TaskExportFamily,
++    [Parameter(Mandatory=$true)][ValidateScript({Test-Path -LiteralPath $_ -PathType Leaf})][string]$TaskPlannerSource,
++    [Parameter(Mandatory=$true)][ValidateSet('PARALLEL_DUAL_INDICATOR')][string]$TaskExportFamily,
+     [Parameter(Mandatory=$true)][ValidateScript({
+         $taskSeedValue=[long]::Parse($_,[Globalization.CultureInfo]::InvariantCulture)
+         $taskSeedValue.ToString([Globalization.CultureInfo]::InvariantCulture) -ceq $_
+@@ -389,11 +390,12 @@
+         Write-Host 'NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.'
+     }
+     $sourcePaths = @(Get-ChildItem -LiteralPath $clientSource -Filter '*.java' |
+-        Where-Object { $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' -and
++        Where-Object { $_.Name -ne 'PcbPlacementPlanner.java' -and $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' -and
+             (-not $needsQ30NativeLoggerBridge -or $_.Name -ne 'CirSim.java') -and
+             (-not $needsE06NativeBridge -or $_.Name -ne 'ChipElm.java') } |
+         Sort-Object Name | ForEach-Object { $_.FullName })
+     $sourcePaths += $stub
++    $sourcePaths += (Resolve-Path -LiteralPath $TaskPlannerSource).Path
+     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
+     if ($needsE06NativeBridge) { $sourcePaths += $nativeChipShim }
+     $testDefinitions = @(
