@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "overrides": [
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java",
+    "scripts/verify-current-contracts.ps1",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java"
+  ],
+  "addedRootSources": [
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java",
+    "tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java",
+    "tests/contracts/PcbRoutedSlideCompactionTrialContractTest.java"
+  ],
+  "plannedWorkerSource": "tests/contracts/PcbRoutedSlideCompactionContractTest.java",
+  "bridgeBoundary": "After selected trim and generation statistics; before result completion",
+  "defaultObserver": "NULL; no inspection",
+  "nativeExecution": "NOT_RUN",
+  "quietWhitespace": "Existing full sampler; only diagnostic wrapper output suppressed with finally restoration"
+}

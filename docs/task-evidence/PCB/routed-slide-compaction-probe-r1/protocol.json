@@ -1,0 +1,518 @@
+{
+  "schema": 1,
+  "baseCommit": "39edb4823ec9658b7f60f63c9b5fc7eb71de5db6",
+  "scope": "All31 independent selected-frame seed2 slides with matched unchanged compactor; seed5 control only; no selection or production change",
+  "roots": [
+    "5",
+    "2"
+  ],
+  "version": 15,
+  "density": 14,
+  "phase": "SELECTED_AFTER_EDGE_TRIM",
+  "summaryPrefix": "PCB_ROUTED_SLIDE_COMPACTION_CASE ",
+  "reportOrder": [
+    "PCB_WHITESPACE_CASE ",
+    "PCB_ROUTED_LEG_CASE ",
+    "PCB_ROUTED_SLIDE_COMPACTION_CASE "
+  ],
+  "summaryFields": [
+    "seed",
+    "label",
+    "version",
+    "phase",
+    "status",
+    "selectedAttempt",
+    "selectedRoute",
+    "newRouteRequests",
+    "selectedMutation",
+    "source",
+    "sourceMetrics",
+    "control",
+    "rows",
+    "aggregate",
+    "elapsedMillis"
+  ],
+  "summaryStatuses": {
+    "5": "CONTROL_ONLY",
+    "2": "PROBE_COMPLETE"
+  },
+  "sourceFields": [
+    "liveGraphBefore",
+    "liveGraphAfter",
+    "geometryBefore",
+    "geometryAfter",
+    "copperLength",
+    "area",
+    "componentCount",
+    "padCount",
+    "traceCount",
+    "traceProvenanceHash",
+    "sourceRouteSourceCount",
+    "reachabilityHash",
+    "padPairCount"
+  ],
+  "metricsFields": [
+    "area",
+    "copperLength",
+    "vias",
+    "largestProtectedEmptyRectangleArea",
+    "geometrySha256",
+    "stableIdentitySha256",
+    "labelIdentitySha256",
+    "generationMetadata"
+  ],
+  "sourceGenerationMetadata": "ACCEPTED_SELECTED",
+  "privateGenerationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE",
+  "controlFields": [
+    "compacted",
+    "metrics",
+    "proof",
+    "sourceImmutable"
+  ],
+  "rowFields": [
+    "feasibility",
+    "compaction"
+  ],
+  "compactionFields": [
+    "compacted",
+    "metrics",
+    "proof",
+    "sourceImmutable",
+    "strictImprovement"
+  ],
+  "aggregateFields": [
+    "structuralDirections",
+    "validatedMoves",
+    "rejectedMoves",
+    "compactions",
+    "areaReductions",
+    "strictImprovements"
+  ],
+  "proofFields": [
+    "placementValidated",
+    "geometryValidated",
+    "routingValidated",
+    "routeQualityValidated",
+    "traceClearanceValidated",
+    "twoLayerValidated",
+    "padPairCount",
+    "sourceReachabilityHash",
+    "candidateReachabilityHash",
+    "sourceRouteSourceCount",
+    "candidateRouteSourceCount",
+    "sourceTraceProvenanceHash",
+    "candidateTraceProvenanceHash",
+    "stableIdentityVerified",
+    "labelIdentityVerified",
+    "conductorReachabilityVerified",
+    "traceProvenanceVerified",
+    "sourceImmutable"
+  ],
+  "feasibilityProofFields": [
+    "placementValidated",
+    "geometryValidated",
+    "twoLayerValidated",
+    "padPairCount",
+    "sourceReachabilityHash",
+    "candidateReachabilityHash",
+    "sourceRouteSourceCount",
+    "candidateRouteSourceCount",
+    "sourceTraceProvenanceHash",
+    "candidateTraceProvenanceHash",
+    "traceEndpointOnlyVerified",
+    "unrelatedGeometryVerified",
+    "conductorReachabilityVerified",
+    "traceProvenanceVerified"
+  ],
+  "expectedMoves": [
+    {
+      "componentId": "C5",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -10,
+      "actualCopperDelta": -10
+    },
+    {
+      "componentId": "CBIAS",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "CFB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "COUT",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "COUT",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "D3",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D3",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "D4",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DA",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "DFREE",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": -10,
+      "actualCopperDelta": -10
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "DZ1",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RDA",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "REN",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RENAC",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RFB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLED12",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RLEDOUT_B",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RLEDOUT_B",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "ROUT",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "ROUT",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RPRIMARY",
+      "dx": -10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RPRIMARY",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RREF_LB",
+      "dx": 10,
+      "dy": 0,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RSA",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    },
+    {
+      "componentId": "RSB",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RSB",
+      "dx": 0,
+      "dy": 10,
+      "analyticCopperDelta": 0,
+      "actualCopperDelta": 0
+    },
+    {
+      "componentId": "RSENSE",
+      "dx": 0,
+      "dy": -10,
+      "analyticCopperDelta": -20,
+      "actualCopperDelta": -20
+    }
+  ],
+  "selectedBaselines": {
+    "5": {
+      "status": "PASS",
+      "seed": "5",
+      "version": 15,
+      "density": 14,
+      "parts": 54,
+      "pads": 131,
+      "area": 9172744,
+      "width": 4921,
+      "height": 1864,
+      "largestProtectedEmptyRectangleArea": 1354500,
+      "copperManhattanLength": 38610,
+      "vias": 48,
+      "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+      "sourcePlanSha256": "3418e4324685d2f505eeaf3a771113a06ff05be5b9ba2a85a95a533f505dfc3e",
+      "liveBoardGraphSha256": "e28aedf66937422e108a17e80da7a3f761bc31e0095b09cb95e5f7266689b146",
+      "sourceIntentSha256": "fcbce1338aa8c3027900f388bda7202ebf4bbdf8d88be2e679af452aec1320d9",
+      "layoutSeed": "-7630701392004902526",
+      "routingSeed": "-9106650364266936003",
+      "selectedAttempt": 5,
+      "rankedPlacementAttempts": [
+        5,
+        3,
+        0,
+        4,
+        1,
+        2
+      ],
+      "acceptedPlanEvaluations": 44561,
+      "placementRejections": 0,
+      "oneFaceAttempts": 3,
+      "twoLayerAttempts": 3,
+      "routeAttempts": 6,
+      "routingOrders": 15,
+      "routingExpansions": 4190274,
+      "selectedQualityMilli": 345986514,
+      "statisticsCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=44561;routes=6;routingWork=15/4190274;p05=3/0;p07=3/1;selectedAttempt=5;ranked=[5, 3, 0, 4, 1, 2];placementScores=[5{total=1614745;electrical=186250;region=13085;connector=4550;corridor=1937;outline=17431700;courtyard=999824;demand=3431527}, 3{total=1657242;electrical=186480;region=13425;connector=4130;corridor=6386;outline=5860800;courtyard=999824;demand=3431527}, 0{total=1759305;electrical=201070;region=13300;connector=4030;corridor=5161;outline=7003400;courtyard=999824;demand=3431527}, 4{total=1774933;electrical=204970;region=14820;connector=3800;corridor=3336;outline=8631400;courtyard=999824;demand=3431527}, 1{total=1867646;electrical=210650;region=14410;connector=4150;corridor=7468;outline=5860800;courtyard=999824;demand=3431527}, 2{total=2042037;electrical=227180;region=14257;connector=4280;corridor=10652;outline=9635600;courtyard=999824;demand=3431527}];selectedScore=1614745;selectedQualityMilli=345986514;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:NO_PATH, P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:B_COIL_LOW:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@5=SUCCESS]",
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 30,
+      "requiredMargin": 30,
+      "legacyRequestedMargin": 50,
+      "requestedMargin": 50,
+      "actualMargin": 30,
+      "occupiedX": 90,
+      "occupiedY": 70,
+      "occupiedWidth": 4861,
+      "occupiedHeight": 1804,
+      "outlineX": 60,
+      "outlineY": 40,
+      "excludedWorkbenchChrome": "canvasDimensions,partsTray",
+      "elapsedMillis": 5295
+    },
+    "2": {
+      "status": "PASS",
+      "seed": "2",
+      "version": 15,
+      "density": 14,
+      "parts": 56,
+      "pads": 135,
+      "area": 9178092,
+      "width": 4851,
+      "height": 1892,
+      "largestProtectedEmptyRectangleArea": 1807000,
+      "copperManhattanLength": 51860,
+      "vias": 48,
+      "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+      "sourcePlanSha256": "d6ff81412f4e255dabe0a917185c77b0bc74135f24d3d22a3de6c526895a6423",
+      "liveBoardGraphSha256": "7acc7e848809f5ee35dbdeacc5c77e4536eadfe1dc6ed3b8747cbf4ce51f7c19",
+      "sourceIntentSha256": "f1310b3c8412636bc7caa7733dddc8cc0fabb47f4063c2d6f52689966a0cac66",
+      "layoutSeed": "8999105239954772123",
+      "routingSeed": "-7578323945011786438",
+      "selectedAttempt": 2,
+      "rankedPlacementAttempts": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "acceptedPlanEvaluations": 47823,
+      "placementRejections": 0,
+      "oneFaceAttempts": 3,
+      "twoLayerAttempts": 3,
+      "routeAttempts": 6,
+      "routingOrders": 20,
+      "routingExpansions": 5834054,
+      "selectedQualityMilli": 363387991,
+      "statisticsCanonical": "MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=47823;routes=6;routingWork=20/5834054;p05=3/0;p07=3/1;selectedAttempt=2;ranked=[0, 1, 2, 3, 4, 5];placementScores=[0{total=1764475;electrical=199660;region=15655;connector=3830;corridor=5818;outline=7210200;courtyard=1023344;demand=3546727}, 1{total=1985289;electrical=222600;region=15700;connector=5390;corridor=8229;outline=6032300;courtyard=1023344;demand=3546727}, 2{total=2005671;electrical=221390;region=15765;connector=4200;corridor=10998;outline=9746400;courtyard=1023344;demand=3546727}, 3{total=2028237;electrical=227570;region=14925;connector=4940;corridor=8978;outline=6032300;courtyard=1023344;demand=3546727}, 4{total=2263085;electrical=243440;region=19965;connector=5990;corridor=15543;outline=8680000;courtyard=1023344;demand=3546727}, 5{total=2291479;electrical=263530;region=16770;connector=5660;corridor=4933;outline=18434000;courtyard=1023344;demand=3546727}];selectedScore=2005671;selectedQualityMilli=363387991;routeOutcomes=[P05_ONE_FACE@4=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@2=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P05_ONE_FACE@5=REJECTED:TOTAL_SEARCH_WORK_BUDGET, P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:PRE_L:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:LOAD12:TOTAL_SEARCH_LIMIT]",
+      "fixedMarginFloor": 50,
+      "accessEnvelopeMargin": 35,
+      "requiredMargin": 35,
+      "legacyRequestedMargin": 50,
+      "requestedMargin": 50,
+      "actualMargin": 40,
+      "occupiedX": 110,
+      "occupiedY": 68,
+      "occupiedWidth": 4771,
+      "occupiedHeight": 1812,
+      "outlineX": 70,
+      "outlineY": 28,
+      "excludedWorkbenchChrome": "canvasDimensions,partsTray",
+      "elapsedMillis": 8774
+    }
+  },
+  "physicalRowContract": {
+    "readerPath": "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py",
+    "readerSha256": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+    "protocolPath": "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json",
+    "protocolSha256": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "adapter": "Use pinned _validate_row with selected source facts and published original structural source summary; do not apply preselection summary/source/first-message checks"
+  },
+  "improvementRule": "Area strictly below BOTH original source and no-slide compacted control; copper/vias/largest protected empty rectangle no greater than either",
+  "areaReductionRule": "Area strictly below both source and control, irrespective of other metrics",
+  "compactedRule": "Unchanged compactRouted returned a different layout owner before private normalization; no per-axis causal claim",
+  "sourceRule": "All31 moves and control independently start from identical selected source; moves rederived canonically and compared to published cohort",
+  "labelRule": "Every legal moved candidate validates with rigid original labels before compaction; control and compaction inputs are fresh unlabeled private copies, output always fresh before same generator silkscreen owner; semantic inventory and styles/targets identical",
+  "proofRule": "All physical validators including explicit2layer/traceclearance, source-net independent pad pairs, complete stable route provenance and identity on source/control/every compacted result; unknown/compactor/proof/cancel/budget errors propagate",
+  "quietWhitespaceRule": "Original full GRID10 sampler; wrapper suppresses only its stdout with finally-restored flag; published selected whitespace reports remain unchanged",
+  "unitFixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5
+  },
+  "unitEvaluators": {
+    "PcbRoutedPassiveLegCensusContractTest": "endpointLegCensus",
+    "PcbRoutedPassiveFeasibilityCensusContractTest": "physicalFeasibilityCensus",
+    "PcbRoutedSlideCompactionContractTest": "selectedRoutedSlideCompaction"
+  },
+  "unitFixtureNames": [
+    "selectedPlanFrameAndMetadata",
+    "freshPrivateLayoutAndStableIdentity",
+    "strictImprovementComparator",
+    "selectedObserverOwnershipAndFailureCleanup",
+    "quietWhitespaceOwnerCleanup"
+  ],
+  "routePassDetail": "roots=2 rows=2 evaluator=selectedRoutedSlideCompaction",
+  "timingScope": "Native selected routed slide compaction probe; unchanged per-JVM/search/physical limits",
+  "maxPhaseElapsedSeconds": 36000,
+  "maxCaseMillis": 60000,
+  "maxFileBytes": 67108864,
+  "publishedInputs": {
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/native-inputs.json": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/root-review.json": "6dd3da2733a2708549a9c36b31a541872b460336dc10d8fdb499b1ff8643b1d3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assessment.json": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/feasibility-analysis.json": "3be27e5cccef6241f405667eb1a8c3c372b3768fe735a10eb8a35ee12fa3858f",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a"
+  },
+  "classificationOwnerSha256": {
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+    "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+    "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+  },
+  "suiteManifestSha256": {
+    "unit-suites.json": "bd6116a36c02756dd793c981ded3960558ab90952b17c0c644146403549cd37d",
+    "routes-suites.json": "f3efdcf7da52c8a18849cd7f1421e490a80eb1c81b55926d558bce6f27094fef"
+  },
+  "limits": [
+    "Informed selected two-root private diagnostic only; no global optimum, policy or board shrinkage acceptance",
+    "No extra route, selected mutation, chaining or winner selection; source outline retained for each slide before compaction",
+    "All31 reported; full post-compaction proof only for physically admitted moves; rejected rows have null compaction",
+    "No per-axis compactor cause inferred from no cut; labels regenerated equally through existing owner",
+    "No GWT/player/solver/repair/full matrix/unseen/manufacturing/general timing claim"
+  ]
+}

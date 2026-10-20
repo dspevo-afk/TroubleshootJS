@@ -1,0 +1,10 @@
+{
+  "status": "CHANGES_REQUIRED_PRE_FREEZE",
+  "nativeExecution": "NOT_RUN",
+  "files": {
+    "PcbRoutedSlideCompactionContractTest.java": "24f8547931dfa74a86270de391c55f4f960f194a7b7fc3df61268d51b32948b6",
+    "worker-notes.md": "794c6b6f6baffc8d9fed52973aa6bee18fec592937b64f5d642746513a819637"
+  },
+  "cause": "Quiet sampler unit positive unnecessarily generated a full seed5 board, adding unreported route work; replace with a package-backed literal sampler fixture and independently expected GRID10 area54000",
+  "change": "No native outcome, protocol, routing/physical/time budget or comparator change"
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "Root-owned selected observer/plan/relabel and quiet sampler erasure only; worker source not yet reviewed",
+  "priorGeneratorErasureExact": true,
+  "originalWhitespaceSamplerErasureExact": true,
+  "hookAfterSelectedTrimAndGenerationStatistics": true,
+  "nativeExecution": "NOT_RUN",
+  "consumedSha256": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "917eda8045e158327e524c9d4fc6aa4d9960792b83377126a4c182e985bee282",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "f1c02588b5a72b1300dd3e0be4adf7f669e78760def1b4c73e43546722a99544"
+  }
+}

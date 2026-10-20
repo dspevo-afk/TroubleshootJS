@@ -1,0 +1,42 @@
+{
+  "initialCachedWhitespaceStatus": "FAIL",
+  "cause": "Nine required blank context prefixes inside3hash-pinned unified diff artifacts, not trailing source whitespace",
+  "diffFiles": [
+    {
+      "file": "source-review.diff",
+      "sha256": "54db3dfed2a54d8bf1f378750677e43f16af1686bbcf7ad80525b4c644d12b58",
+      "literalBlankContextLines": [
+        60,
+        88,
+        139
+      ]
+    },
+    {
+      "file": "native-attempt-1/source-review.diff",
+      "sha256": "2e2c6eeca145cb6ae9b5b0d9b9866c4a96663f6814425655dc13a4a1adafd107",
+      "literalBlankContextLines": [
+        60,
+        88,
+        139
+      ]
+    },
+    {
+      "file": "native-attempt-2/source-review.diff",
+      "sha256": "309523bc56b14d6c3d44c8c8ca750a62ef259b06e915454de6800cccab086c94",
+      "literalBlankContextLines": [
+        60,
+        88,
+        139
+      ]
+    }
+  ],
+  "actualSourceWhitespaceStatus": "PASS",
+  "actualSourceFilesChecked": 76,
+  "scopeOfAttributeException": [
+    "source-review.diff",
+    "native-attempt-1/source-review.diff",
+    "native-attempt-2/source-review.diff"
+  ],
+  "evidenceBytesChanged": false,
+  "attributeGuard": "InitialLF-onlycheck refused existingCRLF beforemutation; normalizedtextverified and originalnewlinepreserved"
+}

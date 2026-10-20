@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "phase": "unit",
+  "scope": "Selected-frame routed slide compaction unit fixtures only; native routes and fitness are not evaluated.",
+  "baseCommit": "39edb4823ec9658b7f60f63c9b5fc7eb71de5db6",
+  "protocolSha256": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+  "physicalReaderSha256": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/native-inputs.json": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/root-review.json": "6dd3da2733a2708549a9c36b31a541872b460336dc10d8fdb499b1ff8643b1d3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assessment.json": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/feasibility-analysis.json": "3be27e5cccef6241f405667eb1a8c3c372b3768fe735a10eb8a35ee12fa3858f",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a"
+  },
+  "suiteManifestSha256": "bd6116a36c02756dd793c981ded3960558ab90952b17c0c644146403549cd37d",
+  "phaseInputsSha256": {
+    "unit.txt": "eae1e2498ce7ec051f559e4c7391f4840d9a9aa544c7c407b40d24d8b57814a4",
+    "unit-receipt.txt": "5252a49abea27cfcd086c86065c63569dc26c3b75870d4d05dfeabf7a39e2e89",
+    "unit-timing.json": "81b32425636f4f8dd42c37fad0d07015b041bfdfe54b6ef53d2bf90d9652c807"
+  },
+  "phaseEvidence": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 3,
+    "suiteClasses": [
+      "PcbRoutedPassiveLegCensusContractTest",
+      "PcbRoutedPassiveFeasibilityCensusContractTest",
+      "PcbRoutedSlideCompactionContractTest"
+    ],
+    "reportRows": 0,
+    "orderedMarkers": [
+      "PCB routed passive leg census contracts ",
+      "PCB routed passive feasibility census contracts ",
+      "PCB routed slide compaction contracts "
+    ],
+    "slideCompaction": null
+  },
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

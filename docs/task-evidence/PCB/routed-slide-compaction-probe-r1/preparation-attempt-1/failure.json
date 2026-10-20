@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "phase": "Bootstrap preflight before mutation",
+  "cause": "Generator anchor assumed CRLF while pinned generator is LF",
+  "copyCount": 1469,
+  "copyChanged": false,
+  "nativeExecution": "NOT_RUN",
+  "scriptSha256": "f963e33564d88cd8d647c57a02704e788690cae77337169076c65b2bf6eaa995"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 47.852415,
+  "suiteCount": 3,
+  "phase": "unit",
+  "scope": "Native selected routed slide compaction probe; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

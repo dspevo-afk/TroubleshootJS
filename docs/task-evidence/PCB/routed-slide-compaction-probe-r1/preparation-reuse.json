@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "sourcePrepareSha256": "36bbb0431c5569111464f4dfd16ceba29be6148e4bbc8fd7f9308ac9c79de36a",
+  "sourcePacket": "routed-passive-feasibility-census-r1",
+  "adaptation": "Owned temp prefix only; accepted1475/1467 source boundary unchanged"
+}

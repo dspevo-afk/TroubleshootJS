@@ -1,4 +1,43 @@
-# Current checkpoint: independent physical census complete; publication next
+# Current checkpoint: four selected-frame compaction improvements; publication next
+
+2026-10-19 local. Base39edb4823ec9658b7f60f63c9b5fc7eb71de5db6,
+codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation;
+no main/email. Main1475/default15/general16/original5 unchanged. No native/source
+COPY/browser/preview/profile remains; private state removed.
+
+Fixed5then2/current15/density14 actualselected/trimmed source:5control only,
+2all31independent nonincreasing10unit moves.21physicalvalid/10rejected; all21
+compact independently.4strict results (D3+,D4+,RFB+,RPRIMARY-), each area
+9178092→9159172(-18920/0.206143%), copper51860→51820–51840,48vias same, protectedvoid
+1807000→1800500. Two no-slide controls retain allmetrics. No chaining/winner/
+selected/route/policy/version change. Actual full18validators/identity/semantic
+labels/netpairs/provenance proof forcontrols+alllegal outputs. Source5 native8515
+pairs (no offlinehashoracle),source2 independently9045/hash9a1081…4d46b7. Original
+selected42fields/whitespace/source/work exact. Small private result, not promotion.
+
+FINALunit3 PASS47.852415s/exit0,40/41/36assertions6/6/5groups; routes1
+PASS63.1973658s/exit0. Reader70(6positive64negative)/actualPowerShell12/root31gate/
+8delta erasure/retiredpacket reviewPASS. Finalprobe4ba4eea264b55520004d4e94f9c3307fa4f254e1a73770602bde1d87ba308241;
+protocol88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb.
+COPY1471→1467 restored/retired;10driverbirths EXITED/no termination. Optional
+read-onlyscope/API review; independent final-source reviewNOTRUN.
+
+A1unitFAIL46.8271318s retiredfixturelayoutalgorithm15 (interpretation15different),
+46files+record47; fixed2constructors toalgorithm16. A2unitPASS46.2526834s retained
+pre-fix; routesFAIL51.5802251s unsupported4region guard BEFOREcapture/control/seed2,
+53files+record54. Replaced guess with complete source-declaredregionIDs/labels/
+exactlyonce memberships and3unitcases. Bothfailedphases readerrejects; cleanup/
+inputauditPASS, no failedqualifiedreceipts. No budget/metric/protocol relaxation.
+Other pre-freeze2+3+5+3artifacts retained. No reused pre-fix PASS forfinalsource.
+
+Next explicitdiff/stage/rawblob checks, commit/normalpush/exactoriginSHAverify.
+Then bounded repeated generic legal slide+compaction; no cumulative gain assumed.
+GWT/player/solver/repair/fullmatrix/unseen/manufacturing NOTRUN; unchangedproduction.
+Read-onlyfuturemetricfinding: quality usesuniquecopper while scalar sums overlap;
+rejected22qualityimproves2/5 by3.19%/17.22%, no policy/oraclechange.
+Evidence: docs/task-evidence/PCB/routed-slide-compaction-probe-r1/RESULTS.md.
+
+# Previous checkpoint: independent physical census complete; publication next
 
 2026-10-19 local. Base8ddbd8af545a8e66bf9bf52985b2486a0a734481,
 codex/q60-faulted-profile-counts, origin/upstream verified. Indefinite continuation;

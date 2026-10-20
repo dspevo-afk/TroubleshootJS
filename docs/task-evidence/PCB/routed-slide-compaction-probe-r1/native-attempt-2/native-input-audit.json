@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "copyCount": 1471,
+  "sourceDeltas": 8,
+  "gateOwners": 31,
+  "publishedInputsExact": true,
+  "classificationOwnersExact": 7,
+  "preparationFailurePreserved": true
+}

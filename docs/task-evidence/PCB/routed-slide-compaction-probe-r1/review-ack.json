@@ -1,0 +1,21 @@
+{
+  "rootReviewed": true,
+  "scope": "Integrated8source deltas, selected-frame plan/lifecycle, freshowners/recovery/labels/full18proof, independent5unitgroups, strict70reader and all31cohort",
+  "diffSha256": "54db3dfed2a54d8bf1f378750677e43f16af1686bbcf7ad80525b4c644d12b58",
+  "protocolSha256": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+  "syntheticReaderCases": 70,
+  "syntheticReaderPositiveCases": 6,
+  "syntheticReaderRejectedCases": 64,
+  "actualHostTransportCases": 12,
+  "unitExecution": "ATTEMPT2_UNIT_PASS_PREFIX; FINAL_REGION_ORACLE_SOURCE_NOT_RUN",
+  "routesExecution": "ATTEMPT2_FAIL_UNSUPPORTED_REGION_COUNT; FINAL_SOURCE_NOT_RUN",
+  "independentFinalSourceReview": "NOT_RUN",
+  "optionalScopeReview": "Read-only API/owner/label/control/comparator scope only",
+  "workerNotesSha256": "29268d4466faf33b9c5f0f29f25b5053965e2cee5bd8ec9dc71f7768b810a838",
+  "readerNotesSha256": "0c04b284cf65c96969fef0d117c003234070a3cb8c659443a7285942b1dbe876",
+  "preFreezeCorrectionsPreserved": true,
+  "unitNoRouterFixture": true,
+  "nativeUnitFailurePreserved": true,
+  "nativeRuntimeFailurePreserved": true,
+  "regionOracle": "Complete source-declared IDs/labels/exactly-once component membership; no guessed count"
+}

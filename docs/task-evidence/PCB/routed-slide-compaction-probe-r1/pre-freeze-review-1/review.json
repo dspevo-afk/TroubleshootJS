@@ -1,0 +1,18 @@
+{
+  "status": "CHANGES_REQUIRED_PRE_FREEZE",
+  "nativeExecution": "NOT_RUN",
+  "files": {
+    "assess.py": "9d4d34f20d6acad01559f05e7b8349c9ebc235952d6f2035f930eb9e7a461e30",
+    "check_assessment.py": "b95ca3e1e785e2978c96ef2f6b996fc206f739804e025d793fac4fc30f895cd9",
+    "assessment-canary-results.json": "31fcabc3175cf8f3a93aeb17d2b7dc26840d21f9623645535978cc5f460118e4",
+    "reader-notes.md": "947d83de403d574bb7e59501a5bd0a7606a371f7bc6d58a068e55b18eb8a1f73"
+  },
+  "existingCanaries": 65,
+  "existingPureReplay": "PASS",
+  "rootIndependentMutations": {
+    "floatingVersion15.0": "ACCEPTED_UNEXPECTEDLY",
+    "zeroPrivateArea0": "ACCEPTED_UNEXPECTEDLY",
+    "reorderedAggregate": "REJECTED_CORRECTLY"
+  },
+  "requiredCorrection": "Strict integer runtime summary version and positive area; reject impossible zero-copper or void-greater-than-area metrics; preserve independent positive fixtures/budgets/comparator"
+}

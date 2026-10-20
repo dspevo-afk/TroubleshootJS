@@ -1,0 +1,8 @@
+{
+  "status": "REVIEWED_PRE_FREEZE_PROOF_SEMANTICS_CORRECTION",
+  "nativeExecution": "NOT_RUN",
+  "priorProtocolSha256": "d44a7615dd9597eb658dec722d16f6f10a4b8dc39cf8c1c6de28edebb3e6a0d0",
+  "priorDeclarationSha256": "a2c4ef1f249e39d8928a319ce8acd2d2f3d48258833892be086db76925937259",
+  "cause": "Full compactor output changes unrelated/interior geometry, so reused endpoint-only/unrelated-geometry flags would misstate its proof; retain old16flags only within pre-compaction feasibility rows",
+  "change": "New final-result18field proof for actual validator/net/provenance/stable/label/source checks; no budget or fitness change"
+}

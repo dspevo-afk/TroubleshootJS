@@ -1,0 +1,707 @@
+{
+  "analysisStatus": "COMPLETE",
+  "scope": "All31 independent selected-frame seed2 slides with matched unchanged compactor; seed5 control only; no selection or production change",
+  "assessmentSha256": "1b565131398e2df611457ebbee3a89ab20cdd210959f64602218b79252ba335b",
+  "routesLogSha256": "e19b55230786618773216b781a5f0277e02daa29487ecd8601484a2e10567c03",
+  "sourceAndControl": [
+    {
+      "seed": "5",
+      "source": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "control": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      }
+    },
+    {
+      "seed": "2",
+      "source": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "control": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "b27b55af515947451e3df5647e0883ae336f8b656f538eeda05c4d3e4010f0a3",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      }
+    }
+  ],
+  "independentMoves": 31,
+  "physicallyValidated": 21,
+  "physicallyRejected": 10,
+  "areaBelowSourceAndControl": 4,
+  "strictImprovements": 4,
+  "measurementDisposition": "USEFUL_PRIVATE_RESULTS",
+  "rejectionCounts": [
+    {
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "count": 2
+    },
+    {
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "count": 3
+    },
+    {
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "count": 2
+    },
+    {
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "count": 3
+    }
+  ],
+  "outcomes": [
+    {
+      "move": {
+        "componentId": "C5",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -10,
+        "actualCopperDelta": -10
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "CBIAS",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "CFB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "COUT",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "COUT",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "af4894089dbddf8f8c274f689280eea3793d22325f4f6d6afcddf25d6bd563bc",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "D1",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "15e6c5d68800cc45476ea1edbeaf5507ccf4fe9d238d95cc39b36956006688c5",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "D3",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "6398565c2c4314dae76759035a7404a870836bde451527932f35e72b6e2a74fb",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "D3",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": true,
+      "metrics": {
+        "area": 9159172,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1800500,
+        "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": true,
+      "strictImprovement": true
+    },
+    {
+      "move": {
+        "componentId": "D4",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "bb83df59ff10bf36799d3beaa15ab070c2e65546c393b6a84b7285bfb7b189fd",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "D4",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": true,
+      "metrics": {
+        "area": 9159172,
+        "copperLength": 51830,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1800500,
+        "geometrySha256": "f515f5366e5febca8498c3054ad35a053f244c00093291baff30bef0ab903eb8",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": true,
+      "strictImprovement": true
+    },
+    {
+      "move": {
+        "componentId": "DA",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "dcc7aaa02a8435bbd9f79a26cbfab1d8a839e5e554605ebeae6bab2fc8ea0d32",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "DB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "a5ea4c2b5876133c208f97223fbcc6154f85981e8600bd9cfa63796d22d3164e",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "DFREE",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": -10,
+        "actualCopperDelta": -10
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51850,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "b5449b733d5cd0c90b85f934bfa07593f8f50067baf78a424790ebb8446a5094",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "DZ1",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "f724e1e343580ec0fba71f13ec3474435abbecee80afb24a5eb1c46980e7a2ae",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "DZ1",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "ca4f8e9d3ca52a2ccc3d8d8088243f4816825babd2bdc9bd0670ee6ec3c3cabb",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RDA",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "REN",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "a349e320cfa605c2ce231dbdd1f8f5203a5778f825610683a75eda3ad7eb00af",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RENAC",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "6734c5301b41d77f2e1d0d063c893156f7960423bfc542712531d372aee93417",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RFB",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": true,
+      "metrics": {
+        "area": 9159172,
+        "copperLength": 51820,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1800500,
+        "geometrySha256": "5b4e5b8d3747e11177f132eb2543f4aa2c4c079dbd1da32dba100803833e19d8",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": true,
+      "strictImprovement": true
+    },
+    {
+      "move": {
+        "componentId": "RLED12",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "13e323c2891b136e28bf31978264e42774f2a6a48ed4e458c231760a483f2df8",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RLEDOUT_B",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "FOREIGN_NET_CONTACT",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "RLEDOUT_B",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "384e937c4caaebc60f25554b9ede7c2c0105f8134be9ae2126057b4d094c5327",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "ROUT",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "ROUT",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "42ae29c2803b60acd9a1456aefc4c4405cd0c25378fdfb4bddb1c4531008f722",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RPRIMARY",
+        "dx": -10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": true,
+      "metrics": {
+        "area": 9159172,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1800500,
+        "geometrySha256": "c20b3e5cd89ff9b99803185f58659ab8df32592d06c7b731b37f0029ae251c65",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": true,
+      "strictImprovement": true
+    },
+    {
+      "move": {
+        "componentId": "RPRIMARY",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "TRACE_COMPONENT_COURTYARD",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "RREF_LB",
+        "dx": 10,
+        "dy": 0,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "ff6c23ce53c38b7c6bb1b7e11d6aa968044f4ec5ef3d5f4baadbefca2d91c190",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RSA",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "GEOMETRY",
+      "reason": "VIA_PACKAGE_COURTYARD",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "RSB",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_REJECTED",
+      "stage": "PLACEMENT",
+      "reason": "ENVELOPE_ACCESS_OR_DOMAIN",
+      "compaction": null
+    },
+    {
+      "move": {
+        "componentId": "RSB",
+        "dx": 0,
+        "dy": 10,
+        "analyticCopperDelta": 0,
+        "actualCopperDelta": 0
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "8e735e236464e864947fd7a6f70ec7058ec40dbb797f27f5634c84c232cbdc1a",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    },
+    {
+      "move": {
+        "componentId": "RSENSE",
+        "dx": 0,
+        "dy": -10,
+        "analyticCopperDelta": -20,
+        "actualCopperDelta": -20
+      },
+      "disposition": "PHYSICAL_VALIDATED",
+      "compacted": false,
+      "metrics": {
+        "area": 9178092,
+        "copperLength": 51840,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "e7e56689782a7ce2ab2866b56bf8225acdd6b9c79becce21ade7e86b5935280e",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaBelowBoth": false,
+      "strictImprovement": false
+    }
+  ],
+  "winnerSelected": false,
+  "productionChange": "NONE",
+  "boardShrinkageAcceptance": "NOT_CLAIMED",
+  "limits": [
+    "Informed selected two-root private diagnostic only; no global optimum, policy or board shrinkage acceptance",
+    "No extra route, selected mutation, chaining or winner selection; source outline retained for each slide before compaction",
+    "All31 reported; full post-compaction proof only for physically admitted moves; rejected rows have null compaction",
+    "No per-axis compactor cause inferred from no cut; labels regenerated equally through existing owner",
+    "No GWT/player/solver/repair/full matrix/unseen/manufacturing/general timing claim"
+  ]
+}

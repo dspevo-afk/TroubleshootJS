@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "publishedSealSha256": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+  "baseCommit": "39edb4823ec9658b7f60f63c9b5fc7eb71de5db6",
+  "reusedSourceSha256": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "5c687d27f226ca29e1c28703d4d5b868d8d6747d7ccb2e7624dfe6f8fc064dfd",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "4a0eca5b23f88883f00d29c5fee4fec002a8b9777bf1393f447305454499bd10",
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": "9a8d1008e6f38a245e4e63108c02bcd58c0de58a08ff793a3e4ae6594281204a",
+    "tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java": "d5fe5319cac1553ac6f4661ac7ee7f67fbf7a83a195c0fdee8015cfd1494f24b"
+  },
+  "runtimeEvidenceReuse": "NONE; fresh unit/native required"
+}

@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "assessmentStatus": "PASS",
+  "scope": "All31 independent selected-frame seed2 slides with matched unchanged compactor; seed5 control only; no selection or production change",
+  "baseCommit": "39edb4823ec9658b7f60f63c9b5fc7eb71de5db6",
+  "protocolSha256": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+  "physicalReaderSha256": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+  "publishedInputsSha256": {
+    "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/native-inputs.json": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/root-review.json": "6dd3da2733a2708549a9c36b31a541872b460336dc10d8fdb499b1ff8643b1d3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assessment.json": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/feasibility-analysis.json": "3be27e5cccef6241f405667eb1a8c3c372b3768fe735a10eb8a35ee12fa3858f",
+    "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a"
+  },
+  "unitPrerequisiteSha256": "4502e080b540c10722fffd96c8df56caff79d36c2746945c2e2a2698bb2f9574",
+  "routesSuiteManifestSha256": "f3efdcf7da52c8a18849cd7f1421e490a80eb1c81b55926d558bce6f27094fef",
+  "routePhaseInputsSha256": {
+    "routes.txt": "e19b55230786618773216b781a5f0277e02daa29487ecd8601484a2e10567c03",
+    "routes-receipt.txt": "607494308684ace204bb21917adfbcddbe861796ea6e525580e443286cd9533f",
+    "routes-timing.json": "f4c25a708d0e33a6e4b96a2e805c148cef216a231298e05ebd4aaec2cf2be437"
+  },
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "routes",
+    "evidence": {
+      "status": "PASS",
+      "phase": "routes",
+      "suiteCount": 1,
+      "suiteClasses": [
+        "PcbRoutedSlideCompactionTrialContractTest"
+      ],
+      "reportRows": 6,
+      "orderedMarkers": [
+        "PCB routed slide compaction trial contracts "
+      ],
+      "slideCompaction": {
+        "status": "PASS",
+        "scope": "All31 independent selected-frame seed2 slides with matched unchanged compactor; seed5 control only; no selection or production change",
+        "roots": 2,
+        "rows": 2,
+        "oldBaselineReports": 4,
+        "slideSummaries": [
+          {
+            "seed": "5",
+            "status": "CONTROL_ONLY",
+            "aggregate": {
+              "structuralDirections": 0,
+              "validatedMoves": 0,
+              "rejectedMoves": 0,
+              "compactions": 0,
+              "areaReductions": 0,
+              "strictImprovements": 0
+            }
+          },
+          {
+            "seed": "2",
+            "status": "PROBE_COMPLETE",
+            "aggregate": {
+              "structuralDirections": 31,
+              "validatedMoves": 21,
+              "rejectedMoves": 10,
+              "compactions": 21,
+              "areaReductions": 4,
+              "strictImprovements": 4
+            }
+          }
+        ],
+        "routeReports": 6,
+        "observationDisposition": "PASS; selected-frame compaction observation only",
+        "fitnessDisposition": "NOT_EVALUATED"
+      }
+    }
+  },
+  "observationDisposition": "PASS; selected-frame compaction observation only",
+  "fitnessDisposition": "NOT_EVALUATED",
+  "policyDisposition": "NO_POLICY_OR_ACCEPTANCE_CHANGE",
+  "productionChange": "NONE",
+  "limits": [
+    "Informed selected two-root private diagnostic only; no global optimum, policy or board shrinkage acceptance",
+    "No extra route, selected mutation, chaining or winner selection; source outline retained for each slide before compaction",
+    "All31 reported; full post-compaction proof only for physically admitted moves; rejected rows have null compaction",
+    "No per-axis compactor cause inferred from no cut; labels regenerated equally through existing owner",
+    "No GWT/player/solver/repair/full matrix/unseen/manufacturing/general timing claim"
+  ]
+}

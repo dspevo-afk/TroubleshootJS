@@ -282,6 +282,19 @@ record remains. COPY1470 restored1467/retired,6births exited, main1475 unchanged
 Fixed area means no shrinkage claim. Next matched selected-layout compaction after
 a generic legal move, with all area/copper/via/void and physical gates unchanged.
 [Physical feasibility and limits](task-evidence/PCB/routed-passive-feasibility-census-r1/RESULTS.md).
+The selected-frame matched slide+compaction probe now demonstrates4independent
+strict improvements on informed2/current15: each area9178092→9159172(-0.20614%),
+copper sum51860→51820–51840,48vias unchanged, protectedvoid1807000→1800500.
+All31canonical moves independently revalidated:21legal/10rejected; two no-slide
+controls retain originalmetrics. No selected mutation/winner/policy acceptance.
+Finalunit3 PASS47.852s(40/41/36assertions6/6/5groups),routes1 PASS63.197s;
+selected42fields/whitespace/source/work exact, every result full18physical/pair/
+provenance/identityproof. Reader70/host12/rootreviewPASS. Fixture-version and
+unsupported4region guard failures47/54files retained; final1471COPY restored1467/
+retired,10driverbirths exited; main1475/default15/general16 unchanged. NoGWT/player/
+solver/repair/fullmatrix/unseen claim. Next bounded repeated generic slides and
+compaction to measure whether these small independent cuts can accumulate.
+[Selected compaction measurement and limits](task-evidence/PCB/routed-slide-compaction-probe-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

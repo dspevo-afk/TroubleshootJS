@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "acceptedOwnerErasureExact": true,
+  "priorLegAndPhysicalErasureExact": true,
+  "sourceDeltas": 8,
+  "registeredNewSuites": [
+    "PcbRoutedPassiveLegCensusContractTest",
+    "PcbRoutedPassiveFeasibilityCensusContractTest",
+    "PcbRoutedSlideCompactionContractTest",
+    "PcbRoutedSlideCompactionTrialContractTest"
+  ],
+  "selectedHookAfterTrimAndGenerationStatistics": true,
+  "diffSha256": "2e2c6eeca145cb6ae9b5b0d9b9866c4a96663f6814425655dc13a4a1adafd107"
+}

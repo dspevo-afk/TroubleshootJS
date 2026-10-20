@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 46.8271318,
+  "suiteCount": 3,
+  "phase": "unit",
+  "scope": "Native selected routed slide compaction probe; unchanged per-JVM/search/physical limits",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

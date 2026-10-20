@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 19864,
+      "startTicks": "639280586377873075",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/run_native.ps1"
+    },
+    {
+      "pid": 26020,
+      "startTicks": "639280586400958267",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "ownership": "Captured before bounded native private-slide-compaction phase; unique source copy"
+}

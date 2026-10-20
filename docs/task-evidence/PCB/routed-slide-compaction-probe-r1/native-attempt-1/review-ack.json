@@ -1,0 +1,18 @@
+{
+  "rootReviewed": true,
+  "scope": "Integrated8source deltas, selected-frame plan/lifecycle, freshowners/recovery/labels/full18proof, independent5unitgroups, strict70reader and all31cohort",
+  "diffSha256": "2e2c6eeca145cb6ae9b5b0d9b9866c4a96663f6814425655dc13a4a1adafd107",
+  "protocolSha256": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+  "syntheticReaderCases": 70,
+  "syntheticReaderPositiveCases": 6,
+  "syntheticReaderRejectedCases": 64,
+  "actualHostTransportCases": 12,
+  "unitExecution": "NOT_RUN",
+  "routesExecution": "NOT_RUN",
+  "independentFinalSourceReview": "NOT_RUN",
+  "optionalScopeReview": "Read-only API/owner/label/control/comparator scope only",
+  "workerNotesSha256": "e6b7606583a0f6a2512896fa425914db059bd0ba2605b6479b25b0ef327298bd",
+  "readerNotesSha256": "0c04b284cf65c96969fef0d117c003234070a3cb8c659443a7285942b1dbe876",
+  "preFreezeCorrectionsPreserved": true,
+  "unitNoRouterFixture": true
+}

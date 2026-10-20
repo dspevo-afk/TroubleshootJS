@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "files": {
+    "run_native.ps1": "df0bda30f68f5f656f3c60f51071c4cc27081205cc7fed3aa0a48be09ddb11f4",
+    "check_process_cleanup.ps1": "36fd79c4bfb5ea73bef50865e8f5d48363070f4d97fda4d2c9f0f7cb87154aaf",
+    "sanitize.py": "c4d4addf29ad7433f2bf3b947bef85e4d1ef9df658dfb140518aa2fd90881704",
+    "retire_copy.py": "e49d0169afdf88d84f2d1ffaf1386992437f25e9fbc7b214878f9568cd596178",
+    "suite_transport.ps1": "6589db54cca1c73ca83022ae80ad401e672757df787bda0687764ec39c5e8f2f",
+    "check_suite_transport.ps1": "38b654232757b144737e191d1277b6db84c0f7eb653c4ab8eb15c05249ec0b5c"
+  },
+  "scope": "Adapted host source only; fresh real selected PowerShell3unit/1route canaries and fresh native phases required"
+}

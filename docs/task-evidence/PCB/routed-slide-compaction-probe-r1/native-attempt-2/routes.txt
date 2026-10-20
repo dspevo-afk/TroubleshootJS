@@ -1,0 +1,29 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.AssertionError: seed5 selected plan retains its literal frame and metadata
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest.require(PcbRoutedSlideCompactionContractTest.java:1089)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest.verifySelectedFrame(PcbRoutedSlideCompactionContractTest.java:639)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest.access$100(PcbRoutedSlideCompactionContractTest.java:14)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest$Recorder.onSelected(PcbRoutedSlideCompactionContractTest.java:102)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.dispatchSelectedSlide(SeededPcbLayoutGenerator.java:44)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.finishMediumSuccess(SeededPcbLayoutGenerator.java:856)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMediumRouting(SeededPcbLayoutGenerator.java:423)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.advanceMedium(SeededPcbLayoutGenerator.java:288)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.access$200(SeededPcbLayoutGenerator.java:10)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$Session.advance(SeededPcbLayoutGenerator.java:228)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:156)
+	at com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator.generateWithPolicyResult(SeededPcbLayoutGenerator.java:149)
+	at com.lushprojects.circuitjs1.client.PcbPostSelectionEdgeTrimContractTest.routeAndObserve(PcbPostSelectionEdgeTrimContractTest.java:154)
+	at com.lushprojects.circuitjs1.client.PcbPostSelectionEdgeTrimContractTest.observeRoutedPassiveLegCensus(PcbPostSelectionEdgeTrimContractTest.java:36)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionContractTest.observe(PcbRoutedSlideCompactionContractTest.java:50)
+	at com.lushprojects.circuitjs1.client.PcbRoutedSlideCompactionTrialContractTest.main(PcbRoutedSlideCompactionTrialContractTest.java:7)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbRoutedSlideCompactionTrialContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.
