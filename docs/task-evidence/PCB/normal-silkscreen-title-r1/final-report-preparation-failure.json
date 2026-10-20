@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "phase": "Root final report-writing command preparation",
+  "exitCode": 1,
+  "cause": "An unfinished three-line inline report command had an extra closing parenthesis. The preceding source1481/four-gate audit and actual44/13-canary qualification had passed.",
+  "correction": "Use saved check_final.py and syntax-check it before execution. No source, native, browser or original gate bytes changed."
+}

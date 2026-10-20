@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checks": [
+    "Python AST for inputs.py/assess.py",
+    "Exact observer erasure reproduces accepted collector except canonical newlines",
+    "PowerShell parser for run_phase.ps1",
+    "Actual selected suite transport returns eight scalar suite names",
+    "Actual selected suite transport rejects malformed injected suite name"
+  ],
+  "selectedTransportSha256": "f20fbcec194eebe5696cc98e5c46b94bb31d725e21c5ef110a28cf2e3ea31ce1",
+  "host": "Maintained configured PowerShell7; same selected suite transport as qualified r2",
+  "scope": "Static/real selected function canaries only; native phase recorded separately"
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "operations": [
+    "OFF/Main menu through real input",
+    "Close owned tab/context/client/BrowserServer"
+  ],
+  "elapsedMillis": 128,
+  "pid": 22936,
+  "rootExitObserved": true,
+  "scope": "Owned browser API lifecycle only; no private Close7 gate claim"
+}

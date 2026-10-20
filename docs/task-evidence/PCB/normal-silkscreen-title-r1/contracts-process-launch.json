@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained title phase",
+  "drivers": [
+    {
+      "pid": 24300,
+      "startTicks": "639280736240095457",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 30660,
+      "startTicks": "639280736242523242",
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "contracts"
+}

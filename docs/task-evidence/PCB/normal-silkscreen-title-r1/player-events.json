@@ -1,0 +1,62 @@
+[
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Normal exact seed controls",
+    "started": 1792477686286
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "ticketObservedUpperBoundMs": 17828
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Accept ticket; Board view/Fit bench; close view",
+    "capture": "rc-delay-13.jpg"
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Real Board view/Zoom +; close view",
+    "capture": "rc-delay-13-zoom.jpg"
+  },
+  {
+    "input": "Actual Share pristine challenge",
+    "observedReplay": "tsj-alpha/6/EASY/RC_DELAY/13"
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Normal exact seed controls",
+    "started": 1792477853510
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "ticketObservedUpperBoundMs": 5382
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Accept ticket; Board view/Fit bench; close view",
+    "capture": "sensor-control-0.jpg"
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Real Board view/Zoom +; close view",
+    "capture": "sensor-control-0-zoom.jpg"
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Real middle-drag downward to inspect zoomed title; no controller calls",
+    "capture": "sensor-title-zoom.jpg"
+  },
+  {
+    "input": "Actual Share pristine challenge",
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  }
+]

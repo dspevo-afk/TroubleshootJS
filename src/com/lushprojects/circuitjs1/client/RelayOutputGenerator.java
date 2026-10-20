@@ -23,6 +23,7 @@ final class RelayOutputGenerator {
         String loadSupply = plan == null ? "CONTACT_SUPPLY" : "CTRL_SUPPLY";
         String loadReturn = plan == null ? "CONTACT_RETURN" : "CTRL_RETURN";
         Assembly a = new Assembly(plan == null ? new TroubleshootBoard("RELAY_OUTPUT_BOARD") : plan.board());
+        if (plan == null) a.board.setSilkscreenTitle("TSJ RELAY OUTPUT");
         a.net("CTRL_SUPPLY", BoardNet.RoutingRole.SUPPLY);
         a.net("CMD", BoardNet.RoutingRole.CONTROL);
         a.net("DRIVE", BoardNet.RoutingRole.CONTROL);

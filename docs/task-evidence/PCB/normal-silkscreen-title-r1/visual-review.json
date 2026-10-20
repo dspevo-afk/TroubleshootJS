@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "method": "Root inspected all five unedited actual headed-browser captures; visual check, no pixel oracle",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "captures": [
+    {
+      "file": "rc-delay-13.jpg",
+      "sha256": "e9e9bd13c1c931f31291a5b9bad4562389bfd1ec7e54de1ecc2eb19642e2ca1c",
+      "bytes": 131219,
+      "observations": "Actual Fit view: TSJ RC DELAY readable, clear of C2 and other packages; same board/meter footprint as accepted compaction."
+    },
+    {
+      "file": "rc-delay-13-zoom.jpg",
+      "sha256": "d25421ad099b411468e075cb2ee33e1c374f89fe48c9cdf52c33404f425ee22d",
+      "bytes": 97397,
+      "observations": "Real Zoom+: title enlarges with the PCB and remains clear; outer meter and right PCB naturally crop."
+    },
+    {
+      "file": "sensor-control-0.jpg",
+      "sha256": "1ba4eb5ab696abd4b1b8b69a8516d46c7e4d738413309d3d4a255527e1a783fa",
+      "bytes": 127365,
+      "observations": "Actual Fit view: TSJ SENSOR CTRL fits above U1; both chips keep compact markings and no per-pin text. Remaining green pockets remain visible."
+    },
+    {
+      "file": "sensor-control-0-zoom.jpg",
+      "sha256": "ca67e645473be29db921d24d4a3c6f4adf28bdca98665346277fd4e89b76fd85",
+      "bytes": 96665,
+      "observations": "Real Zoom+ crops the top title beyond the viewport; preserved as observed view, not used to claim title ink fit."
+    },
+    {
+      "file": "sensor-title-zoom.jpg",
+      "sha256": "6cc2c510e4b5d87fb9f51ab2fa3edd310c41762734a1ff0047c5b0f0b6c68e47",
+      "bytes": 85587,
+      "observations": "Real middle-drag reveals zoomed TSJ SENSOR CTRL; readable title stays above U1 without overlap. Some outer bench/board naturally crop."
+    }
+  ],
+  "limits": [
+    "Fixed informed seeds; remaining empty green area remains",
+    "Whole-bench zoom naturally crops outer board/meter and can require pan",
+    "No new packing improvement or manufacturing/whole-product legibility claim"
+  ]
+}

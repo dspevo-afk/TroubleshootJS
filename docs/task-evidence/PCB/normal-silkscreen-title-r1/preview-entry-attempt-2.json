@@ -1,0 +1,9 @@
+{
+  "status": "ENTRY_WRAPPER_FAIL",
+  "exitCode": 1,
+  "operation": "Original shell command around managed start-preview, tool session18459",
+  "observation": "Maintained launcher printed ready for PID32068, wrote real state and exited. Outer entry command remained open. Independent exact server birth/state/command plus actual served/source/scripts/web identity passed before normal browser navigation.",
+  "completion": "After actual stop-preview succeeded and retired32068, original command resumed and its late Get-Process ownership probe failed because32068 was gone.",
+  "cause": "Likely inherited output-pipe lifetime; inference, not fully diagnosed. No wrapper qualification or successful outer-command exit claimed.",
+  "applicationEvidence": "Real production menu, RC13/Sensor0 jobs, five raw screenshots and public replay identities independently verified; maintained stop positively released8907."
+}

@@ -438,6 +438,7 @@ final class SensorControlGenerator {
 
     private TroubleshootBoard createBoard(boolean hasFeedback) {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
+        board.setSilkscreenTitle("TSJ SENSOR CTRL");
         board.addNet(new BoardNet("CONTROL_RAIL"));
         board.addNet(new BoardNet("CONTROL_RETURN"));
         board.addNet(new BoardNet("RAW_INPUT"));

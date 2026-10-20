@@ -1,0 +1,23 @@
+{
+  "terminationAttempted": false,
+  "phase": "contracts",
+  "drivers": [
+    {
+      "startTicks": "639280736240095457",
+      "pid": 24300,
+      "executable": "pwsh",
+      "sameBirthStillRunning": false,
+      "outcome": "ABSENT"
+    },
+    {
+      "startTicks": "639280736242523242",
+      "pid": 30660,
+      "executable": "pwsh",
+      "sameBirthStillRunning": false,
+      "outcome": "ABSENT"
+    }
+  ],
+  "scope": "Recorded driver births only; maintained native runner owns child-job terminal cleanup",
+  "status": "PASS",
+  "verificationElapsedSeconds": 0.0008409
+}

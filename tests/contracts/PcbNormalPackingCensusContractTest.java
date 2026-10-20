@@ -227,7 +227,29 @@ public final class PcbNormalPackingCensusContractTest {
             .append(",\"whitespace\":").append(whitespace)
             .append('}');
         System.out.println("PCB_NORMAL_PACKING_CASE " + row.toString());
+        printSilkscreenObservation(family, root, layout);
         return CaseResult.ACCEPTED;
+    }
+
+    /** Observe one text field separately without mutating authoritative geometry. */
+    private static void printSilkscreenObservation(String family, long root,
+            PcbBoardLayout layout) {
+        PcbSilkscreenLabel title = layout.getSilkscreenLabel("board-title");
+        require(title != null, "normal board has a physical title label");
+        String geometry = layout.geometryFingerprint();
+        String field = "L:board-title@" + title.getText() + ":";
+        int offset = geometry.indexOf(field);
+        require(offset >= 0 && geometry.indexOf(field, offset + field.length()) < 0,
+            "exactly one board-title field is observed");
+        String normalized = geometry.substring(0, offset) + "L:board-title@#PUBLIC_TITLE#:" +
+            geometry.substring(offset + field.length());
+        Rectangle bounds = title.getBounds();
+        System.out.println("PCB_NORMAL_SILK_CASE {\"family\":" + jsonQuote(family) +
+            ",\"root\":" + jsonQuote(Long.toString(root)) +
+            ",\"title\":" + jsonQuote(title.getText()) +
+            ",\"bounds\":[" + bounds.x + "," + bounds.y + "," + bounds.width + "," + bounds.height +
+            "],\"geometryApartFromTitleSha256\":" +
+            jsonQuote(PlayerSessionFingerprint.of(normalized)) + "}");
     }
 
     private static void printRejected(String family, DifficultyProfile profile, long root,

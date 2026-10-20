@@ -387,6 +387,7 @@ final class NpnLowSideSwitchGenerator {
 
     private TroubleshootBoard createBoard() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
+        board.setSilkscreenTitle("TSJ NPN SWITCH");
         board.addNet(new BoardNet("LOAD_SUPPLY"));
         board.addNet(new BoardNet("CONTROL_INPUT"));
         board.addNet(new BoardNet("BASE"));

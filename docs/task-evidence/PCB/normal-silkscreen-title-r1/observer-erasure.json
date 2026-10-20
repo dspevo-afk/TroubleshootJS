@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "collector": "tests/contracts/PcbNormalPackingCensusContractTest.java",
+  "acceptedRawSha256": "4b89b89ca7fc5d15488cf81e0cdb1b5fad96bdffde5083d6d9f91b7885b63596",
+  "observedRawSha256": "4a33df5d02bc5f340327757c26104d5b2fd3de99881be66bec6bbc0f22dddb34",
+  "comparison": "Removing exactly one observation call and its side-effect-free formatting helper reproduces accepted source, with canonical newline comparison only",
+  "scope": "Additional stdout observations/assertions only; no production source changed"
+}

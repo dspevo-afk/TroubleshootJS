@@ -1,0 +1,9 @@
+[
+  {
+    "status": "SELECTOR_PREPARATION_FAIL",
+    "operation": "View control after successful Accept ticket",
+    "timeoutMs": 5000,
+    "cause": "Visible text View has actual ARIA button name Board view",
+    "recovery": "Fresh DOM inspection; use actual Board view role name; no production source change"
+  }
+]

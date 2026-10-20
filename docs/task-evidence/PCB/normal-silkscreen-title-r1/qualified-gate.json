@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "positiveQualification": "Actual44 comparison and13 offline canaries PASS (1positive/12negative)",
+  "optimizedPythonNegative": "Actual selected Python -O exits nonzero with explicit unsupported-mode RuntimeError before reading evidence",
+  "qualifierSha256": "237bc1017097662a8ee0c12ad878d6b7dddf5448e2a7ced712baf3a02cd8cac0",
+  "originalGatesUnchanged": true,
+  "source1481UnchangedAfterNative": true,
+  "limits": "Supplemental offline qualification; actual GWT/player evidence separate"
+}

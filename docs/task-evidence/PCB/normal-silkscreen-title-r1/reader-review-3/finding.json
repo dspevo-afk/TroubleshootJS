@@ -1,0 +1,8 @@
+{
+  "status": "REVIEW_FINDINGS",
+  "sourceKeySet": "Add explicit baseline/candidate key-set/count equality, though actual record() candidate equality already binds current1481 inventory",
+  "optimizedPythonClaim": "Actual selected Python -O already exits nonzero because explicit negative-canary failure raises independently of assert. Original reviewer statement that qualify.py can print PASS under-O is not reproduced.",
+  "actualOptimizedExit": 1,
+  "actualOptimizedReason": "AssertionError: negative qualification accepted: changed routingRecovery",
+  "correction": "Add an explicit non-assert __debug__ guard for immediate clear refusal, plus inventory negative canary. Original four gates/native data unchanged."
+}

@@ -229,6 +229,7 @@ final class RcDelayGenerator {
 
     private TroubleshootBoard createBoard() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID);
+        board.setSilkscreenTitle("TSJ RC DELAY");
         board.addNet(new BoardNet("VIN")); board.addNet(new BoardNet("RC_OUT"));
         board.addNet(new BoardNet("GND"));
         board.addComponent(new BoardComponent("J1", "CONNECTOR",

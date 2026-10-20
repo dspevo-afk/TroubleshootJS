@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "phase": "baseline",
+  "cases": 44,
+  "families": 11,
+  "correctedTitleFamilies": [],
+  "physicalEquality": "PASS; exact accepted r2 geometry",
+  "elapsedSeconds": 70.7290019,
+  "limits": "Fixed informed corpus; no all-seed/manufacturing/Edge wrapper proof"
+}

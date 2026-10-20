@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "Known worktree/JDK prefixes only; native values/status/timing unchanged",
+  "files": [
+    {
+      "file": "contracts.txt",
+      "rawSha256": "9f046c08fd128ba5f8fab13f18cd2325985a7d462a336dfe534e603a3babb828",
+      "sanitizedSha256": "9f046c08fd128ba5f8fab13f18cd2325985a7d462a336dfe534e603a3babb828",
+      "replacements": [
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "contracts-receipt.txt",
+      "rawSha256": "679c3a713a72a231e8f44b47f269c6a8c19797345561fbf832aa80ef7df750b7",
+      "sanitizedSha256": "679c3a713a72a231e8f44b47f269c6a8c19797345561fbf832aa80ef7df750b7",
+      "replacements": [
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

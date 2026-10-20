@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "file": "build.txt",
+  "rawSha256": "91858e553abd8a1d4cd23730413765a5893efea67d58a8e6055f9ec4be8031da",
+  "sanitizedSha256": "50d1801bbcc6aa16fc9beeaa0bfc321f0b7841d2c6ce17c75d4db2aded909849",
+  "replacements": [
+    {
+      "prefixKind": "[WORKTREE]",
+      "count": 1
+    },
+    {
+      "prefixKind": "[JDK8]",
+      "count": 0
+    }
+  ],
+  "scope": "Known worktree/JDK prefixes only; operation/status/permutation/timing unchanged"
+}

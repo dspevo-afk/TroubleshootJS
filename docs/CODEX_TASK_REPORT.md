@@ -1,51 +1,43 @@
-# Current checkpoint: normal packing r2 qualified; publication review
+# Current checkpoint: normal titles qualified; publication review
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, base HEAD/verified origin
-2a73b949a02de718bd968c2920ba6045d7406c5a. User authorizes indefinite ordinary
-random-board realism work; no main merge/email. Original5 untouched.
+438ac2e2aba6e433a192c29807f24ef283b2c404. User authorizes indefinite ordinary
+random-board realism work; no main merge/email. Original5 and private baseline
+pointer/cache untouched. Published compaction retains44 admissions, improves9
+areas with no copper/via/void regressions, and passes the active11 physical matrix
+220 admissions/220 replays; its full evidence remains in normal-packing-r2.
 
-Shared normal packing2/layout17/public replay6 retains the original fully routed
-incumbent and tests one bounded alternative. All44 informed admissions/source
-graphs remain; nine areas shrink1.78-40.28%, with zero area/copper/via/protected-
-void regressions. Exact post-route plan/layout pairing preserves router-grid
-coordinates, and metrics preserve declared transistor terminal order. Every
-failure is retained; no baseline, seed, budget or original body hash was blessed.
+Current normal-silkscreen-title-r1 corrects six generic family titles through
+existing board metadata and reserves the original title slot. Frozen1481 inputs/
+four original gates: baseline44 PASS70.7290019s, candidate44 PASS70.9237971s;
+all graphs, numeric geometry, other ink, title bounds, metrics and deterministic
+work remain exact. Exactly24 full fingerprints change only board-title text.
+Focused5 maintained suites PASS71.6660038s; actual final-source JDK8/GWT5 OBF
+PASS89.439425s. Layout17/public6 unchanged. Supplemental reader13 canaries and
+actual optimized-Python refusal PASS; static exact owner erasure proves unchanged
+font/bold call sites, separately from actual visual inspection. Initial incomplete
+reader, mixed-ending proof preparation and inventory findings remain recorded.
 
-Fresh four native units PASS43.0372179s (53/21/36/31 assertions); fixed44 census
-PASS71.1484421s; final15 maintained suites PASS107.1047354s; active11 physical
-matrix PASS217.5185021s,220 admissions/220 exact replays; actual final-source
-JDK8/GWT5 OBF build PASS91.1765667s. Reader80/transport12 and qualified final
-reader8 canaries pass. All source pre/post audits and recorded driver births
-pass. Full all-contract matrix/independent seed/value/role oracles NOT RUN.
+Actual headed sandboxed normal player RC13/Sensor0 Fit/Zoom/middle-pan PASS;
+five raw screenshots inspected, two overview images posted in chat. Both exact
+public replay6 identities and all five served/expected/post-player provenance
+fields match. Final OFF/Main menu, actual browser API close, maintained preview
+stop, new-profile removal and recorded process-birth exits PASS. One existing
+favicon404 remains; no private zero-warning/Close7/CDP/Edge wrapper claim.
+Direct preview state assumption, managed outer entry exit1 after verified stop,
+wrong View selector and report-preparation failures are preserved separately.
+Fresh repair/retest/FileReader and full matrix/independent oracles NOT RUN for
+this title-only change; prior actual r2 repair proof belongs to its frozen inputs.
 
-Actual headed normal player: RC13, Sensor0 and RB30 Long.MIN screenshots posted
-in chat; five raw images inspected. Right-click chip menu/View schematic works.
-Ordinary random LED seed5577758334702827054 failed unrepaired customer retest;
-live5V/isolated R1 OL, matching330ohm replacement, repaired retest PASS. Actual
-download/FileReader restore retained OFF/repair/removed part; restored330ohm and
-fresh powered customer retest PASS. Final OFF/Main menu, owned browser API close
-and maintained preview stop PASS. Actual served/current src/scripts/war digests
-remain exact. Two existing favicon.ico404 console errors retained; private
-Close7/zero-warning/CDP wrapper gates not claimed. Small-board generic silk title,
-remaining green pockets and tiny Fit overview silk remain visible follow-ups.
-
-Tested implementation seal1481/39deltas/14gates remains immutable (SHA7edd32d8...).
-Final source-consumer review migrated the unselected Edge browser wrapper from
-ten/replay5/heldQ30 to eleven/replay6/current HARD rejection. Wrapper syntax and
-catalog PASS; actual wrapper execution NOT RUN (Edge unavailable). Publication
-overlay audit requires exactly this one Python edit,1480 other inputs/14 gates
-unchanged,39 tested deltas and390 archived native files exact. Production native,
-GWT and actual player evidence is reused only at unchanged consumed inputs.
-
-All recorded task process births exited; preview8907 closed. Unused browser
-profile directory remains after automatic approval review rejected deletion as
-"blocked by policy"; process users0, no alternate deletion tried or user approval
-inferred. Directory cleanup BLOCKED, separately from process/application PASS.
-Old1475 baseline COPY and three tiny browser-canary temp directories retained as
-continuing-task audit resources; private pointers excluded from Git. Next: finish
-explicit staged/raw-blob audit, normal branch commit/push and verify remote SHA;
-then continue the next bounded PCB-realism change. No main/email.
+Final application audit PASS; root diff/staged-byte/privacy review and normal
+commit/push remain. Old unused browser profile deletion was rejected by automatic
+approval review as "blocked by policy"; no alternate deletion or user approval
+inferred. Its directory cleanup remains BLOCKED; all task process users exited.
+Old baseline COPY and small private browser/preview/staging metadata are retained
+outside Git for continuing audits. New task resources are closed. Next scope is a
+read-only chip orientation/reference-mark investigation; no next production edits.
+See normal-silkscreen-title-r1/README.md for exact gates and limits.
 
 # Previous checkpoint: r2 comparison before final gates
 

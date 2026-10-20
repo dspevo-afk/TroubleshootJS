@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "phase": "First supplemental style-qualification execution",
+  "exitCode": 1,
+  "cause": "Root assumed published text can reconstruct baseline working bytes using wholly LF or wholly CRLF. Relay source has mixed line endings.",
+  "correction": "For six metadata owners erase the exact inserted raw line and require the frozen baseline raw SHA, then independently compare canonical text to published Git. For shared generator use the exact original r2 source archive. No native/production/gate bytes change."
+}

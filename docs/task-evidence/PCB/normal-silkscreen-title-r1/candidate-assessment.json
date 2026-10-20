@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "phase": "candidate",
+  "cases": 44,
+  "families": 11,
+  "correctedTitleFamilies": [
+    "RC_DELAY",
+    "NPN_LOW_SIDE_SWITCH",
+    "NMOS_LOW_SIDE_SWITCH",
+    "RELAY_OUTPUT",
+    "SENSOR_CONTROL",
+    "COMPOSED_CONTROLLED_INDICATOR"
+  ],
+  "physicalEquality": "PASS; exact full geometry apart from title text",
+  "elapsedSeconds": 70.9237971,
+  "limits": "Fixed informed corpus; no all-seed/manufacturing/Edge wrapper proof"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "ACCEPTANCE_INCOMPLETE",
+  "phase": "Post-native bounded independent source review",
+  "nativeBaseline": "PASS70.7290019s fixed44 exact accepted geometry",
+  "nativeCandidate": "PASS70.9237971s fixed44; original partial assessment PASS",
+  "readerSha256": "27e2e12c3c773781b8cfcb2483385a791cb844dd140a0f1b5354ef3ae6ffe81a",
+  "findings": [
+    "Original comparison omitted deterministic routingRecovery canonical field",
+    "Full geometry fingerprint includes label text/bounds but not font/bold properties; static style-owner proof required for broader style claim"
+  ],
+  "resolution": "Separate qualify.py adds full recovery equality and exact source-erasure style proof plus positive/negative canaries. Original reader, four native gates, native source1481 and all outputs unchanged. Visible ink-fit remains required.",
+  "nativeRerun": "Not needed for purely additional offline checks over existing immutable native observations and unchanged style owner/callsite bytes"
+}

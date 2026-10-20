@@ -1,0 +1,11 @@
+{
+  "retiredStartTicks": "639280740625278488",
+  "retiredPid": 26316,
+  "correction": "Use maintained start-preview.ps1 and its real state before normal page navigation",
+  "productionNavigationStarted": false,
+  "cause": "Direct preview.ps1 is the server and does not create managed launcher state; root incorrectly assumed state.json existed",
+  "status": "PREPARATION_FAIL",
+  "retirement": "Exact retained process handle/birth/executable/command revalidated, Kill and WaitForExit succeeded",
+  "exitCode": 1,
+  "phase": "First preview ownership audit before production navigation"
+}

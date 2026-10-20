@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "file": "preview-launch-2.txt",
+  "rawSha256": "9834b974a8f3caad447f5cf6510f53573e5db656495598a45e4789ebb637089a",
+  "sanitizedSha256": "9834b974a8f3caad447f5cf6510f53573e5db656495598a45e4789ebb637089a",
+  "replacements": [
+    {
+      "prefixKind": "[WORKTREE]",
+      "count": 0
+    },
+    {
+      "prefixKind": "[JDK8]",
+      "count": 0
+    }
+  ],
+  "scope": "Known worktree/JDK prefixes only; operation/status/permutation/timing unchanged"
+}

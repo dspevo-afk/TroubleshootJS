@@ -1,0 +1,22 @@
+{
+  "drivers": [
+    {
+      "outcome": "ABSENT",
+      "pid": 26012,
+      "sameBirthStillRunning": false,
+      "executable": "pwsh",
+      "startTicks": "639280738124422848"
+    },
+    {
+      "outcome": "ABSENT",
+      "pid": 22944,
+      "sameBirthStillRunning": false,
+      "executable": "pwsh",
+      "startTicks": "639280738126756902"
+    }
+  ],
+  "status": "PASS",
+  "terminationAttempted": false,
+  "phase": "build",
+  "scope": "Recorded build driver births only; maintained compiler owns job/child cleanup"
+}

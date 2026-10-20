@@ -1,0 +1,30 @@
+{
+  "applicationQualification": "PASS",
+  "candidateInputSha256": "aa8bb7c63e347f9491c891f36f0fab6a10eba5e18eeacf2435fc2c61f8245ab1",
+  "sourceCount": 1481,
+  "originalGateCount": 4,
+  "pairedCases": 44,
+  "geometryApartFromTitle": "PASS",
+  "fullFingerprintChanges": 24,
+  "styleProof": "PASS; static unchanged owners/call sites plus five inspected actual captures",
+  "supplementalReaderCanaries": 13,
+  "operationSeconds": {
+    "baseline": 70.7290019,
+    "candidate": 70.9237971,
+    "contracts": 71.6660038,
+    "build": 89.439425
+  },
+  "actualProductionBuild": "PASS; JDK8/GWT five OBF permutations and link",
+  "normalPlayer": "PASS; real RC13/Sensor0 Fit/Zoom/middle-pan and exact public replays",
+  "productionProvenance": "PASS; five served/expected/post-player fields exact",
+  "newTaskProcessProfileListenerCleanup": "PASS",
+  "preparationFailures": "Retained; direct-preview state assumption, managed outer entry exit1 after stop, wrong View selector and report/reader preparation failures",
+  "olderDirectoryCleanup": "BLOCKED_BY_AUTOMATIC_APPROVAL_REVIEW; unused old profile untouched",
+  "limits": [
+    "Fixed informed corpus; no all-seed/manufacturing/new compaction gain claim",
+    "One existing favicon404; no private zero-warning/Close7/CDP/Edge qualification",
+    "Fresh RC/Sensor repair/retest/FileReader and full contract matrix NOT_RUN",
+    "Small private task audit metadata and baseline COPY retained outside Git"
+  ],
+  "publication": "Pending explicit diff/staged-byte audit, normal commit/push; no main/email"
+}

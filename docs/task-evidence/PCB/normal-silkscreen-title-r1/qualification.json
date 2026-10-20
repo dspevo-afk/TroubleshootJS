@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "cases": 44,
+  "routingRecovery": "PASS; full deterministic canonical equality",
+  "geometry": "PASS; full fingerprint apart from exactly board-title text, including all label bounds/text",
+  "styles": {
+    "status": "PASS",
+    "changedSourceOwners": [
+      "src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java",
+      "src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java",
+      "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java",
+      "src/com/lushprojects/circuitjs1/client/RcDelayGenerator.java",
+      "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java",
+      "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java"
+    ],
+    "proof": "Seven exact erasures restore published code. All label font/bold/baseline arguments, style models and renderer owners remain unchanged.",
+    "limit": "Static source proof; actual glyph ink fit is a separate visible-player check"
+  },
+  "qualificationCases": [
+    {
+      "name": "actual complete paired44 and static style owners",
+      "expected": "PASS",
+      "result": "PASS"
+    },
+    {
+      "name": "changed routingRecovery",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed whitespace",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed graphAfter",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "missing deterministic recovery receipt",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed title",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed bounds",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed geometryApartFromTitleSha256",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed title style: titleBounds, 13, true, null);",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed title style: titleBounds, 14, false, null);",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicate observed family/root",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "missing observed family/root",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "candidate-only unqualified source path",
+      "expected": "REJECT",
+      "result": "PASS"
+    }
+  ],
+  "caseCount": 13,
+  "nativeEvidence": "Reused; source1481 and original four gates unchanged after native runs",
+  "originalReader": "assess.py retained unchanged; two additional acceptance requirements supplied here",
+  "limits": "Font/bold source proof is static; production glyph ink-fit and final build remain separate"
+}

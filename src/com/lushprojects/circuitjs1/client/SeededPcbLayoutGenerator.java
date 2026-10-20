@@ -1216,17 +1216,20 @@ class SeededPcbLayoutGenerator {
 
     private void placeSilkscreen(PcbBoardLayout layout, TroubleshootBoard board,
             Rectangle outline) {
+        String fallbackTitle;
+        if (board.getId().equals("RB15_CONTROL_BOARD"))
+            fallbackTitle = "TSJ CONTROL BOARD";
+        else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
+            fallbackTitle = "TSJ DIODE INDICATOR";
+        else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
+            fallbackTitle = "TSJ PARALLEL INDICATORS";
+        else
+            fallbackTitle = "TSJ LED INDICATOR";
         String title = board.getSilkscreenTitle();
-        if (title == null) {
-            if (board.getId().equals("RB15_CONTROL_BOARD"))
-                title = "TSJ CONTROL BOARD";
-            else if (board.getId().equals("DIODE_PROTECTED_INDICATOR"))
-                title = "TSJ DIODE INDICATOR";
-            else if (board.getId().equals("PARALLEL_DUAL_INDICATOR"))
-                title = "TSJ PARALLEL INDICATORS";
-            else
-                title = "TSJ LED INDICATOR";
-        }
+        if (title == null) title = fallbackTitle;
+        // A public title uses the existing family header slot. Shorter ink must
+        // not move other labels, change cropping, or alter packing occupancy.
+        int titleWidth = Math.max(textWidth(title, 14), textWidth(fallbackTitle, 14));
         int componentLeft = outline.x + outline.width;
         int componentTop = outline.y + outline.height;
         for (PcbComponentPlacement component : layout.getComponents()) {
@@ -1236,7 +1239,7 @@ class SeededPcbLayoutGenerator {
         int titleY = Math.max(outline.y + 15, componentTop - 34);
         Vector<Rectangle> titleCandidates = new Vector<Rectangle>();
         titleCandidates.add(new Rectangle(componentLeft, titleY,
-            textWidth(title, 14), 18));
+            titleWidth, 18));
         // The leftmost component and the topmost component can be different
         // placements.  If their independently derived title corner collides
         // with a body, scan the same bounded board envelope used for other

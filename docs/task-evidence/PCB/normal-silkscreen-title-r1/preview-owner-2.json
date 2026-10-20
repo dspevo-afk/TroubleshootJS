@@ -1,0 +1,10 @@
+{
+  "executable": "powershell",
+  "stateBirthRevalidated": true,
+  "pid": 32068,
+  "startTicks": "639280742210394717",
+  "entryWrapper": "Original shell pipe still held after actual launcher exit; independently revalidated actual managed server",
+  "recordedBeforeNavigation": true,
+  "port": 8907,
+  "maintainedScript": "scripts/start-preview.ps1 -> scripts/preview.ps1"
+}

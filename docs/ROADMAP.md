@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Normal-player pocket refinement qualified; publication review**
+**Current task:** **Normal-board titles qualified; publication review**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -18,6 +18,13 @@ pass. All running task resources exited; one unused browser profile remains
 after automatic approval review blocked deletion. A separately reviewed browser
 test consumer is migrated to active11/replay6; its Edge execution is NOT RUN.
 [Current implementation, evidence reuse boundary and retained failures](task-evidence/PCB/normal-packing-r2/RESULTS.md).
+
+Compaction is published at438ac2e2. Six normal generic LED titles now have accurate
+public family markings in the same physical slots. Paired44 geometry/graph/metric/
+work equality, five maintained native suites, actual JDK8/GWT5 and headed RC/Sensor
+Fit/Zoom/pan checks pass; five raw images were inspected and two posted in chat.
+Layout17/public6 remain. All new running resources exited; the earlier blocked
+unused directory remains separately documented. [Title evidence and limitations](task-evidence/PCB/normal-silkscreen-title-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

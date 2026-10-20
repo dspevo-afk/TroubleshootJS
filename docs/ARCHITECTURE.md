@@ -5941,3 +5941,15 @@ browser-test-only consumer migration is outside native/GWT/player inputs;
 seal and production provenance. It does not certify the unexecuted Edge wrapper.
 Failures, finite-corpus limits and blocked profile-directory cleanup are recorded
 in [normal packing r2](task-evidence/PCB/normal-packing-r2/RESULTS.md) and the task report.
+
+Normal RC, Sensor, Relay, NPN, NMOS and composed Controlled Indicator now declare
+their public physical title through existing `TroubleshootBoard` metadata at the
+actual construction owner. Relay's RB15 branch retains its own title. Shared
+silkscreen placement reserves at least the existing fallback title rectangle,
+so shorter ink does not change cropping, other label positions or occupancy.
+There is no draw-time label override. The paired44 proof retains exact numeric
+geometry, graph, metrics and deterministic work; only the board-title text changes
+in24 cases. Full geometry fingerprints intentionally reflect that text, while
+font/bold equality is proved at unchanged source owners/call sites and inspected
+in the actual player. Layout17/public6 remain; no physical algorithm changed.
+See [title evidence and limits](task-evidence/PCB/normal-silkscreen-title-r1/README.md).

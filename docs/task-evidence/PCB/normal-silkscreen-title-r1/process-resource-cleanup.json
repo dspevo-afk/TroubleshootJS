@@ -1,0 +1,30 @@
+{
+  "previewAcceptsConnections": false,
+  "status": "PASS",
+  "drivers": [
+    {
+      "outcome": "ABSENT",
+      "pid": 22936,
+      "sameBirthStillRunning": false,
+      "owner": "browser-owner.json",
+      "startTicks": "639280741104672530"
+    },
+    {
+      "outcome": "ABSENT",
+      "pid": 26316,
+      "sameBirthStillRunning": false,
+      "owner": "preview-owner.json",
+      "startTicks": "639280740625278488"
+    },
+    {
+      "outcome": "ABSENT",
+      "pid": 32068,
+      "sameBirthStillRunning": false,
+      "owner": "preview-owner-2.json",
+      "startTicks": "639280742210394717"
+    }
+  ],
+  "entryCommand18459": "Completed exit1 after actual maintained stop; late ownership probe found retired process",
+  "scope": "New title task process/profile/listener only; older policy-blocked profile remains untouched",
+  "newBrowserProfileExists": false
+}

@@ -1,0 +1,8 @@
+{
+  "maintainedScript": "scripts/preview.ps1",
+  "pid": 26316,
+  "startTicks": "639280740625278488",
+  "recordedAtLaunch": true,
+  "port": 8907,
+  "executable": "powershell"
+}

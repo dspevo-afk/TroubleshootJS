@@ -28,6 +28,7 @@ final class PhysicalConstructionMaterializer {
         validateDeclarations(plan, spec, declarations);
 
         TroubleshootBoard board = new TroubleshootBoard(declarations.getBoardFamilyId());
+        if (plan.isControlledIndicator()) board.setSilkscreenTitle("TSJ CTRL IND");
         addEnvelopeNets(spec, board);
 
         for (PhysicalConstructionPartDeclaration part : declarations.getBoardParts())
