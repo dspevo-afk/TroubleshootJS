@@ -1,0 +1,9 @@
+{
+  "elapsedSeconds": 45.3492581,
+  "failure": null,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "phase": "packing-metric-diagnostic",
+  "exitCode": 0,
+  "terminalCleanupIncluded": true,
+  "status": "PASS"
+}

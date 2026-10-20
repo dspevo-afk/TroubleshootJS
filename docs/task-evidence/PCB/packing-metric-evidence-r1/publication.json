@@ -1,0 +1,23 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "076674ffe402dffee7238352533fc117cb4b1d82",
+  "message": "Record packing metrics and correct replay timing checks",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "normalPushActualExecExitCode": 0,
+  "exactRemoteHeadVerified": true,
+  "acceptedPaths": 315,
+  "priorReviewedIndexBlobsExact": 314,
+  "finalReviewRawExact": true,
+  "working1482Exact": true,
+  "scope": "Actual immutable already-computed packing decision metrics and strict elapsed-observation-only replay test correction; no generation/selection/geometry/graph/identity/budget/epoch/save/UI change",
+  "gates": "Fresh final12 contracts, paired44 census, exact target4092, task diagnostic376, actual final JDK8/GWT5 and two real visible player flows pass; five raw screenshots inspected",
+  "finding": "Fresh proposal area7520448->5016608/copper29840->28220/protectedVoid2270400->659600 improves; vias34->41 alone rejects, original layout KEPT",
+  "limits": "All native/observer/preparation/staging failures and incorrect earlier compiler-input consumption assumption retained; all final gates re-executed at exact five-owner source. Finite cases only, no new shrink/manufacturing/performance/allseed/fullmatrix claim",
+  "resources": "All26 native-driver+6player recorded births exited; current profile/state absent/8907 released; private adapters/rawlogs and unrelated/older blocked resources preserved",
+  "mainMerge": "NOT_DONE per user",
+  "email": "DISABLED by user; no notification attempted",
+  "nextUnstarted": "Bounded packing-only P07 incumbent via cap experiment; correct layout19/packing3 interpretation/current consumer migrations if activated",
+  "receipt": "Created after actual verified publication; intended next coherent commit"
+}

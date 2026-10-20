@@ -1,0 +1,7 @@
+{
+  "failure": null,
+  "phase": "preview-stop",
+  "elapsedSeconds": 2.1157007,
+  "status": "PASS",
+  "limits": "Maintained stop only; separate root recorded-birth/state/port absence still required"
+}

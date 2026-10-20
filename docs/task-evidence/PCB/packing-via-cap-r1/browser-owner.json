@@ -1,0 +1,11 @@
+{
+  "privateLaunchSha256": "ae5136f55d45ef3c572e697b2806b385f5e7b352b28e93829b0f94c42800e709",
+  "pid": 15544,
+  "status": "PASS",
+  "startTicks": "639281198933686789",
+  "profileCommandExact": true,
+  "sandboxed": true,
+  "limits": "Native birth/executable/profile and absence of no-sandbox/headless observed before page navigation; full command/profile/ws private",
+  "headed": true,
+  "executable": "brave.exe"
+}

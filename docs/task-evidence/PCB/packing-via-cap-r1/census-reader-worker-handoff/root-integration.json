@@ -1,0 +1,7 @@
+{
+  "status": "SOURCE_ONLY_PREEXECUTION_FIX",
+  "reason": "Negative canaries would vacuously reject because currentfixtureepoch18, while reader requires19. Establish positively accepted19frame then mutate one named condition pernegative.",
+  "originalWorkerExecuted": false,
+  "rootExecutedBeforeFix": false,
+  "integratedReaderSha256": "a6578bd52b96a52419cc6a4cd1cedcb60678658d9a3a0336f694b003b1f31121"
+}

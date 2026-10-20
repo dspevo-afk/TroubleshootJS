@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "startTicks": "639281197078876311",
+      "pid": 17272,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281197087367027",
+      "pid": 17672,
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "build",
+  "scope": "Captured parent/current births before maintained packing via-cap final phase"
+}

@@ -1,0 +1,36 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Preparing and checking the board…
+
+Preparing board...
+Cancel board preparation
+Board Power: OFF
+Preparing board
+
+Preparing and checking the board…
+
+CIRCUIT CHECK
+Candidate 1 of 4: Build and test healthy circuit
+16%
+
+0s elapsed / 2 work units completed
+
+Resolve
+Build & test
+PCB
+Measurements
+Ticket
+Ready
+
+Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait. Switching away pauses preparation until you return.
+
+Cancel preparation

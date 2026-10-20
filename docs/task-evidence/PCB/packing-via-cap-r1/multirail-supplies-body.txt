@@ -1,0 +1,103 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Customer retest did not pass. Continue troubleshooting.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: ON
+Supplies
+BENCH POWER
+
+
+Supply 1 (+12V): 11.998 V, 41.975 mA
+
+Disconnect Supply 1 (+12V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Supply 2 (+5V): 5 V, 5 mA
+
+Disconnect Supply 2 (+5V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Supply 3 (+5V): 5 V, 5 mA
+
+Disconnect Supply 3 (+5V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Supply 4 (+12V): 11.997 V, 66.574 mA
+
+Disconnect Supply 4 (+12V)
+
+Limit: 1 mA
+Limit: 10 mA
+Limit: 25 mA
+Limit: 100 mA
+Limit: 250 mA
+Limit: 500 mA
+
+
+Each output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.
+View
+Ticket
+Parts tray
+▲ PARTS TRAY · 0 parts

@@ -126,10 +126,10 @@ public final class A03IdentityContractTest {
         expectContractFailure(new Action() {
             @Override public void run() {
                 replaceVersion(base, RealizationManifest.VersionPin.Concern.LAYOUT,
-                        new ChallengeDescriptor.VersionedId("pcb-layout", 17));
+                        new ChallengeDescriptor.VersionedId("pcb-layout", 18));
             }
         }, ChallengeContractException.Code.UNSUPPORTED_VERSION,
-                "version.owner", "17", "stale layout17 manifest pin was not rejected");
+                "version.owner", "18", "stale layout18 manifest pin was not rejected");
 
         final RealizationManifest.VersionPin routing = findVersion(base,
                 RealizationManifest.VersionPin.Concern.ROUTING);

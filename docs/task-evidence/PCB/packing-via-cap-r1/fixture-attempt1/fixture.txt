@@ -1,0 +1,24 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+
+Exception in thread "main" java.lang.AssertionError: one-via cap rejects without publishing partial copper or mutating input
+	at com.lushprojects.circuitjs1.client.P07TwoLayerContractTest.require(P07TwoLayerContractTest.java:5)
+	at com.lushprojects.circuitjs1.client.P07TwoLayerContractTest.viaCapBounds(P07TwoLayerContractTest.java:424)
+	at com.lushprojects.circuitjs1.client.P07TwoLayerContractTest.main(P07TwoLayerContractTest.java:32)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: P07TwoLayerContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

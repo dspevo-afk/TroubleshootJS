@@ -29,6 +29,7 @@ public final class P07TwoLayerContractTest {
                 }
             }
         }
+        viaCapBounds();
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
     }
@@ -366,6 +367,12 @@ public final class P07TwoLayerContractTest {
         catch(IllegalStateException expected) { rejected=true; }
         require(rejected,why);
     }
+    private static void rejectIllegalArgument(Runnable action,String why) {
+        boolean rejected=false;
+        try { action.run(); }
+        catch(IllegalArgumentException expected) { rejected=true; }
+        require(rejected,why);
+    }
     private static PcbBoardLayout copy(P06FactoryLinkFixtures.Fixture fixture,PcbBoardLayout routed,
             boolean holes,boolean bottom) {
         PcbBoardLayout result=fixture.layout.copyForRouting();
@@ -373,6 +380,108 @@ public final class P07TwoLayerContractTest {
             if(bottom || trace.getLayer()!=PcbCopperLayer.BOTTOM) result.addTrace(trace);
         if(holes) for(PcbBoardHole hole:routed.getHoles()) result.addHole(hole);
         return result;
+    }
+    private static void viaCapBounds() {
+        final PcbLayerRoutingPrototype.Policy policy=PcbLayerRoutingPrototype.Policy.RESTRICTED_TWO_LAYER;
+        final BoundaryCrossingFixture ordinaryFixture=new BoundaryCrossingFixture();
+        final PcbLayerRoutingPrototype.Result ordinary=PcbLayerRoutingPrototype.route(
+            ordinaryFixture.board,ordinaryFixture.layout,policy,P06FactoryLinkFixtures.OBSERVER);
+        System.out.println("P07_VIA_CAP ordinary outcome="+ordinary.outcome+
+            " accepted="+ordinary.accepted()+" expansions="+ordinary.expansions+" vias="+ordinary.vias);
+        require(ordinary.accepted() && ordinary.vias==2,
+            "ordinary restricted route establishes the constrained two-via witness");
+        ordinary.layout.validateRoutingGeometry(ordinaryFixture.board);
+        new PcbTwoLayerRules(ordinaryFixture.board,ordinary.layout).validate(ordinary.layout);
+
+        final BoundaryCrossingFixture f=new BoundaryCrossingFixture();
+        final String original=f.layout.geometryFingerprint();
+        final String originalGraph=f.layout.captureConductorGraph(f.board).toCanonical();
+        final PcbLayerRoutingPrototype.Result capped=PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,2);
+        require(capped.accepted() && capped.vias==2 && capped.vias<=2,
+            "explicit two-via cap accepts the constrained boundary crossing");
+        capped.layout.validateRoutingGeometry(f.board);
+        new PcbTwoLayerRules(f.board,capped.layout).validate(capped.layout);
+        PcbConductorGraph.Snapshot copper=capped.layout.captureConductorGraph(f.board).pristine();
+        require(copper.padsConnected("L.1","R.1") && copper.padsConnected("A.1","B.1") &&
+            !copper.padsConnected("L.1","A.1"),
+            "capped crossing connects each endpoint pair without a cross-net short");
+
+        final PcbLayerRoutingPrototype.Result repeat=PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,2);
+        require(repeat.accepted() && capped.layout.geometryFingerprint().equals(repeat.layout.geometryFingerprint()) &&
+            capped.expansions==repeat.expansions && capped.vias==repeat.vias,
+            "repeated capped route is deterministic in geometry and work");
+        require(original.equals(f.layout.geometryFingerprint()) &&
+            originalGraph.equals(f.layout.captureConductorGraph(f.board).toCanonical()),
+            "capped route preserves the input placement and conductor graph");
+
+        final PcbLayerRoutingPrototype.Result cappedOne=PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,1);
+        System.out.println("P07_VIA_CAP boundary cap=1 outcome="+cappedOne.outcome+
+            " accepted="+cappedOne.accepted()+" expansions="+cappedOne.expansions+
+            " vias="+cappedOne.vias);
+        require(!cappedOne.accepted() && cappedOne.layout==null && f.layout.getTraces().isEmpty() &&
+            f.layout.getHoles().isEmpty() && original.equals(f.layout.geometryFingerprint()) &&
+            originalGraph.equals(f.layout.captureConductorGraph(f.board).toCanonical()),
+            "one-via cap rejects the constrained crossing without partial copper or input mutation");
+
+        final PcbLayerRoutingPrototype.Result ordinaryAfter=PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER);
+        require(ordinaryAfter.accepted() && ordinary.layout.geometryFingerprint().equals(
+            ordinaryAfter.layout.geometryFingerprint()) && ordinary.expansions==ordinaryAfter.expansions &&
+            ordinary.vias==ordinaryAfter.vias,
+            "ordinary route after capped failure retains geometry and work without cap leakage");
+        rejectIllegalArgument(new Runnable(){public void run(){PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,-1);}},
+            "negative explicit via cap is rejected");
+        rejectIllegalArgument(new Runnable(){public void run(){PcbLayerRoutingPrototype.route(
+            f.board,f.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,policy.vias+1);}},
+            "via cap above policy maximum is rejected");
+        require(original.equals(f.layout.geometryFingerprint()) &&
+            originalGraph.equals(f.layout.captureConductorGraph(f.board).toCanonical()),
+            "invalid via caps leave the input placement and graph unchanged");
+    }
+    /** Alternating endpoint pairs occupy opposite routing-grid boundaries, leaving no planar detour. */
+    private static final class BoundaryCrossingFixture {
+        final TroubleshootBoard board=new TroubleshootBoard("P07_VIA_CAP_BOUNDARY");
+        final PcbBoardLayout layout=new PcbBoardLayout(900,650,
+            new Rectangle(100,100,420,400),new Rectangle(650,120,200,400));
+        BoundaryCrossingFixture() {
+            board.addNet(new BoardNet("OVER")); board.addNet(new BoardNet("UNDER"));
+            // The interior grid is 110..510 by 110..490: alternating pairs join
+            // opposite boundaries, so one primary-face detour cannot bypass the crossing.
+            addPoint("L","OVER",110,300,PcbRotation.DEG_180);
+            addPoint("R","OVER",510,300,PcbRotation.DEG_0);
+            addPoint("A","UNDER",310,110,PcbRotation.DEG_0);
+            addPoint("B","UNDER",310,490,PcbRotation.DEG_0);
+            java.util.Vector<PcbPlacementConstraints.Part> demands=
+                new java.util.Vector<PcbPlacementConstraints.Part>();
+            for(String id:board.getComponentIds()) demands.add(new PcbPlacementConstraints.Part(
+                id,"boundary","Via-cap boundary","boundary",PcbPlacementConstraints.Anchor.NONE,16));
+            board.setPlacementConstraints(new PcbPlacementConstraints(demands,
+                new java.util.Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.TOP));
+            board.validate(); layout.validateAgainst(board);
+            String[] ids={"L.1","R.1","A.1","B.1"};
+            int[][] points={{110,300},{510,300},{310,110},{310,490}};
+            for(int i=0;i<ids.length;i++) require(layout.getPad(ids[i]).getX()==points[i][0] &&
+                layout.getPad(ids[i]).getY()==points[i][1],"literal alternating boundary pad coordinates");
+        }
+        private void addPoint(String id,String net,int x,int y,PcbRotation rotation) {
+            PhysicalPackage physical=P06FactoryLinkFixtures.TEST_POINT;
+            BoardComponent component=new BoardComponent(id,"STRUCTURAL",physical);
+            board.addComponent(component); board.addPad(new BoardPad(id+".1",id,"1",net));
+            int padOffsetX=rotation==PcbRotation.DEG_180?10:30;
+            PcbPackagePose pose=new PcbPackagePose(x-padOffsetX,y-10,rotation,PcbBoardSide.BOTTOM);
+            PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,physical.getGeometry());
+            layout.addComponent(footprint.getPlacement());
+            for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
+        }
     }
     private static void negatives() {
         final P06FactoryLinkFixtures.Fixture f=new P06FactoryLinkFixtures.Fixture(true,0,0,true);

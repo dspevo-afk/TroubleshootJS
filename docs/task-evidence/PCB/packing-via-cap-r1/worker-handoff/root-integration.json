@@ -1,0 +1,6 @@
+{
+  "status": "SOURCE_ONLY_PREEXECUTION_FIX",
+  "workerRawSha256": "d94e21cc5125ac0d0111512d730cafb15a5b50d7ddcd7676d95bc0224970b702",
+  "integratedRawSha256": "4bc3ba16f3c1e2e4acb525db58acbf48ffe31590953b135db76d52f9b412366c",
+  "change": "Two calls corrected to existing rejectIllegalArgument helper. Actual PcbConductorGraph.toCanonical API exists at line198; no graph-oracle change. No test run before correction."
+}

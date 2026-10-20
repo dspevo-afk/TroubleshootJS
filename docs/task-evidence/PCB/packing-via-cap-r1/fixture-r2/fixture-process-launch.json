@@ -1,0 +1,15 @@
+{
+  "phase": "fixture",
+  "drivers": [
+    {
+      "pid": 32604,
+      "startTicks": "639281186596908869",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 8012,
+      "startTicks": "639281186599211306",
+      "executable": "pwsh"
+    }
+  ]
+}

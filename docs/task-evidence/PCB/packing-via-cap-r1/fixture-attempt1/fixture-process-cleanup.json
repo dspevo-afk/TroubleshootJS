@@ -1,0 +1,22 @@
+{
+  "status": "PASS_CLEANUP_OF_FAILED_PHASE",
+  "launchSha256": "574a31ffb6c8a41f4e6aae9b4a9322b5217a38932257f879acb706ce90ce9b21",
+  "actualExecExitCode": 1,
+  "elapsedSeconds": 0.0047911,
+  "scope": "Separate root observation after actual tool exec exit; no termination attempted",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281183991258184",
+      "recordedBirthExited": true,
+      "pid": 28648
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281183993517639",
+      "recordedBirthExited": true,
+      "pid": 19952
+    }
+  ],
+  "phase": "fixture"
+}

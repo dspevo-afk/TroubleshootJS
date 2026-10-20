@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 18;
+    static final int CURRENT_VERSION = 19;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -296,7 +296,8 @@ class SeededPcbLayoutGenerator {
                 session.packingRoute = PcbLayerRoutingPrototype.begin(session.board,
                     session.packingPlan.materialize(),
                     PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, session.observer,
-                    Math.min(PcbLayerRoutingPrototype.MAX_EXPANSIONS, remainingExpansions));
+                    Math.min(PcbLayerRoutingPrototype.MAX_EXPANSIONS, remainingExpansions),
+                    session.packingBaselineMetrics.vias);
             } finally {
                 session.statistics.routeMillis += System.currentTimeMillis() - started;
             }

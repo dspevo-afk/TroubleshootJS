@@ -1,0 +1,53 @@
+{
+  "status": "PASS_INTEGRATED_SOURCE_REVIEW",
+  "base": "076674ffe402dffee7238352533fc117cb4b1d82",
+  "candidateSealSha256": "19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89",
+  "owners": {
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": {
+      "rawSha256": "5927d17160a70d3e816e7b44477f6a98c5abba274fa49787e591c10aa57548a5",
+      "gitBlob": "149edf888842bc6d43b07e7baac43e98e2b7546c"
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": {
+      "rawSha256": "c7d2f17a3e4b2a892beae7856b5d00dce9af66f7d50d2c3f802ec74d8116cf68",
+      "gitBlob": "2bfc75605760c10e8b74646067a7a7adff0b553b"
+    },
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": {
+      "rawSha256": "e1ef75f6b00098d8d5a9a9965622a81463426eb470a8b50f6c0c8f9ae16ff97d",
+      "gitBlob": "e165e2ba6eaf536e097511fe80b05a0755843462"
+    },
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": {
+      "rawSha256": "6f3af5412696b6dbf3e14593edf195151825483a9a034b7dadbb9043b854980f",
+      "gitBlob": "2d90b56c4f39a11f604f2e09394d111e303574da"
+    },
+    "tests/contracts/A03IdentityContractTest.java": {
+      "rawSha256": "480b01830262b6eb84f642263d3ef562907b99ac7d2f55a4a97361bc76799ac3",
+      "gitBlob": "f508af57b16e3e5f067491b2a300c2e302c3f64b"
+    },
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": {
+      "rawSha256": "c36b2cd5da02136212eab3d0305a65e491c7927bacbaf06c762fc474d2c53be7",
+      "gitBlob": "22f4f039fa6782a7c420b040c52b9015550c8ce9"
+    },
+    "tests/contracts/P07TwoLayerContractTest.java": {
+      "rawSha256": "ebe2a5ad8baea07d45de3b14f5ccd0552ffcd3735331a2f4f95a6dcc15bd6d18",
+      "gitBlob": "e1028b2460f967f54a217dbe536e26eaadd695ce"
+    },
+    "tests/contracts/PcbCompactnessContractTest.java": {
+      "rawSha256": "796d538ca6115261c12d52f38cb644a03a47c5110d7addd92bfaeab690f4b49d",
+      "gitBlob": "d0c96530427fe78f1ad3ca4425d157779f0a728c"
+    },
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": {
+      "rawSha256": "fbb0d83ba1854f390e9188e6fba446628ac60ee6e478af0a2e6633545b4d520d",
+      "gitBlob": "c6383fbc6b05d4321b0e6ac1e9b997b68239e164"
+    },
+    "tests/contracts/PcbPackingProbeReceiptContractTest.java": {
+      "rawSha256": "0f06a05d67d41e33acb679dd766185511a11a7964fb9037110c8f2db905623c4",
+      "gitBlob": "772869a62f8edb1d3a66c93a12977b80fa1c7607"
+    },
+    "tests/contracts/Q30NormalCorpusContractTest.java": {
+      "rawSha256": "28aafe8d0bfe962fc19faa4b649f311ce4027c3c46e91d8631c23aa27cee66dd",
+      "gitBlob": "05b374457ce51e0366b04085c08a8f679bdbc4bd"
+    }
+  },
+  "scope": "Root reviewed complete final eleven-owner diff. Four production changes limited to immutable local via cap and packing-only caller plus current interpretation. Seven tests add independent physical boundary cap fixtures or migrate current/stale literals; strict physical/graph/oracle budgets remain. Independent production review consumed unchanged four blobs. All final native/build/player gates have this exact1482/24 source; source snapshots retained.",
+  "limits": "Independent leaf review was source-only production4. Root owns seven tests, readers, integration, visual evidence and final index/publication. Failures and finite coverage documented in RESULTS."
+}

@@ -1,0 +1,217 @@
+[
+  {
+    "name": "Open actual production Quick Play preview",
+    "startedUtc": "2026-10-20T19:05:22.123Z",
+    "status": "PASS",
+    "elapsedSeconds": 1.4931497999988497
+  },
+  {
+    "name": "Open replay menu from initial ticket",
+    "startedUtc": "2026-10-20T19:05:37.475Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.11453579999879003
+  },
+  {
+    "name": "Prepare exact multi-rail replay",
+    "startedUtc": "2026-10-20T19:05:48.440Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.06757540000230074
+  },
+  {
+    "name": "Await exact multi-rail ticket",
+    "startedUtc": "2026-10-20T19:05:54.259Z",
+    "status": "FAIL",
+    "error": "locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Accept ticket and start', exact: true }) to be visible\u001b[22m\n",
+    "elapsedSeconds": 40.01250549999997
+  },
+  {
+    "name": "Await completion of the same pending multi-rail request",
+    "startedUtc": "2026-10-20T19:06:46.043Z",
+    "status": "PASS",
+    "elapsedSeconds": 10.566662000000477
+  },
+  {
+    "name": "Accept multi-rail ticket and record public replay",
+    "startedUtc": "2026-10-20T19:07:19.153Z",
+    "status": "FAIL",
+    "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('summary:visible').filter({ hasText: 'Share pristine challenge' })\u001b[22m\n",
+    "elapsedSeconds": 30.084908700000494
+  },
+  {
+    "name": "Record multi-rail public replay from visible main menu",
+    "startedUtc": "2026-10-20T19:08:13.699Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.28843470000103116
+  },
+  {
+    "name": "Observe fresh original multi-rail customer failure",
+    "startedUtc": "2026-10-20T19:08:13.988Z",
+    "status": "FAIL",
+    "error": "locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Return to board', { exact: true }) to be visible\u001b[22m\n",
+    "elapsedSeconds": 41.86922470000014
+  },
+  {
+    "name": "Record actual original failure banner and switch off all multi-rail supplies",
+    "startedUtc": "2026-10-20T19:09:21.621Z",
+    "status": "FAIL",
+    "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Supplies', exact: true })\u001b[22m\n",
+    "elapsedSeconds": 30.01343180000037
+  },
+  {
+    "name": "Open actual bench supply panel",
+    "startedUtc": "2026-10-20T19:10:00.559Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.09814200000092387
+  },
+  {
+    "name": "Disconnect every actual multi-rail supply",
+    "startedUtc": "2026-10-20T19:10:09.320Z",
+    "status": "PASS",
+    "elapsedSeconds": 1.620555300001055
+  },
+  {
+    "name": "Fit the smaller multi-rail board and capture the actual preview",
+    "startedUtc": "2026-10-20T19:10:23.341Z",
+    "status": "PASS",
+    "elapsedSeconds": 1.9790926000028848
+  },
+  {
+    "name": "Request the first normal randomly generated RC board",
+    "startedUtc": "2026-10-20T19:11:03.542Z",
+    "status": "FAIL",
+    "error": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Board family', { exact: true })\u001b[22m\n",
+    "elapsedSeconds": 30.00598119999841
+  },
+  {
+    "name": "Request the first normal RC board using the observed family select",
+    "startedUtc": "2026-10-20T19:11:53.583Z",
+    "status": "PASS",
+    "elapsedSeconds": 2.033367399998009
+  },
+  {
+    "name": "Await the first generated RC ticket",
+    "startedUtc": "2026-10-20T19:11:55.618Z",
+    "status": "PASS",
+    "elapsedSeconds": 22.013797899998725
+  },
+  {
+    "name": "Record first generated RC identity and accept its ticket",
+    "startedUtc": "2026-10-20T19:12:34.668Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.13031489999964832
+  },
+  {
+    "name": "Observe the original random RC retest banner",
+    "startedUtc": "2026-10-20T19:12:34.799Z",
+    "status": "PASS",
+    "elapsedSeconds": 1.7420793000012635
+  },
+  {
+    "name": "Switch off and capture the first generated RC board",
+    "startedUtc": "2026-10-20T19:12:47.136Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.24081149999797344
+  },
+  {
+    "name": "Request the first normal randomly generated composed board",
+    "startedUtc": "2026-10-20T19:13:26.190Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.03603770000115037
+  },
+  {
+    "name": "Await the first generated composed ticket",
+    "startedUtc": "2026-10-20T19:13:26.227Z",
+    "status": "PASS",
+    "elapsedSeconds": 4.002825800001621
+  },
+  {
+    "name": "Record first generated composed identity and accept its ticket",
+    "startedUtc": "2026-10-20T19:13:41.525Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.13041789999976755
+  },
+  {
+    "name": "Observe original composed failure and capture allOFF board",
+    "startedUtc": "2026-10-20T19:13:41.656Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.3884248999990523
+  },
+  {
+    "name": "Prepare known LED repair replay",
+    "startedUtc": "2026-10-20T19:14:09.127Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.14160319999977947
+  },
+  {
+    "name": "Await known LED ticket and record public identity",
+    "startedUtc": "2026-10-20T19:14:09.270Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.32210879999771713
+  },
+  {
+    "name": "Observe original LED failure banner",
+    "startedUtc": "2026-10-20T19:14:09.593Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.06370630000159144
+  },
+  {
+    "name": "Disconnect LED supply before physical service",
+    "startedUtc": "2026-10-20T19:14:17.614Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.10568010000139474
+  },
+  {
+    "name": "Lift R1 lead 1 while all supplies are OFF",
+    "startedUtc": "2026-10-20T19:14:44.823Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.0442483000010252
+  },
+  {
+    "name": "Measure isolated original R1 with actual OHM and public probes",
+    "startedUtc": "2026-10-20T19:14:52.886Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.2773327000029385
+  },
+  {
+    "name": "Exit OHM and remove original R1 while OFF",
+    "startedUtc": "2026-10-20T19:15:09.335Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.1163555999994278
+  },
+  {
+    "name": "Find a real 330 Ohm replacement in the shop",
+    "startedUtc": "2026-10-20T19:15:09.452Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.0540519999973476
+  },
+  {
+    "name": "Add catalog 330 Ohm replacement and open Parts tray",
+    "startedUtc": "2026-10-20T19:15:15.684Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.09538190000131726
+  },
+  {
+    "name": "Install actual catalog resistor into Circuit R1 while OFF",
+    "startedUtc": "2026-10-20T19:15:28.984Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.07869280000030994
+  },
+  {
+    "name": "Measure actual replacement with OHM and public probes",
+    "startedUtc": "2026-10-20T19:15:29.063Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.19433509999886156
+  },
+  {
+    "name": "Exit OHM, reconnect 5V and run fresh customer retest",
+    "startedUtc": "2026-10-20T19:15:46.273Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.25272010000050066
+  },
+  {
+    "name": "Return from fresh PASS and leave repaired LED board allOFF",
+    "startedUtc": "2026-10-20T19:15:59.481Z",
+    "status": "PASS",
+    "elapsedSeconds": 0.1651089999973774
+  }
+]

@@ -1,4 +1,58 @@
-# Current checkpoint: packing metric evidence accepted; publication handoff
+# Current checkpoint: packing3 accepted; explicit commit/push next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/prior exactorigin076674ffe402dffee7238352533fc117cb4b1d82; source candidate
+19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89.
+Indefinite PCB realism/screenshots/optionalLunaMAX leaves; no final/main/email.
+Preserve sevenunrelated groups/privateadapters/logs/olderthree blockedprofiles.
+No task process live. Prior publicationreceipt intended with currentcommit.
+
+packing-via-cap-r1: fourproduction+seventest deltas only. Immutable request-local
+P07 cap0..policy.vias; bothsearchguards/finalinvariant. Only existing optional
+packing candidate gets alreadymeasured incumbent count. Ordinary policy/cost/
+heuristic/order/RNG/budgets/strict comparator remain. Layout19/packing3/current
+consumers/stale negatives migrated; otherpublic/model epochs remain.
+Actualtarget7520448/29840/34/2270400→5016608/29120/34/508800 SELECTED;33.29%
+smaller, all fourpredicates pass, original38part/92pad/26net/4supply declarations
+exact. Baseline1482+24/raw11 beforeedits; finalsource exact throughout.
+
+ActualR3fixture11955 PASS41.975783s; diagnostic376 GO45.3492581s; final20contracts
+PASS130.2611091s; matrix11/220admissions+220replays PASS221.8508191s; paired44/
+8suites PASS70.4136722s (fourmetricsexact/220fullrowpairs); target4092 ACCEPTED
+PASS50.3287553s; actualJDK8/GWT5 PASS91.9643051s. Actualexec then separatebirth
+cleanup/qualification. Sixroothelpers frozen beforefinals, two census-only files
+separate8helperseal beforecensus; ALL declaredJava tests compiled every invocation.
+Independent fourproduction source-only reviewPASS/consumedblobs exact; root all11
+source/tests/readers/currentstage/visual/privacy review owns acceptance.
+
+Actualbuild3CFF2F2CCF419ECA909C78CF33A99D3A; CLI/served6 beforeafter exact.
+Multi-rail exacttarget plus firstNewboard RCroot-9187226374781659024/composedroot
+7141843758046216173 alladmit/originalFAIL/allactualsuppliesOFF/tray0. KnownLED
+originalFAIL/OFFlead1lift/actualOHM-OL/removePart2/ShopPart4-330/install/actualOFF
+330/exitOHM/connect5V/newawaitedcustomerPASS/return/finalOFF/tray1. Five raw1280x900
+images inspected; threeboards pasted. Thirtypublicbodies raw/privacychecked.
+35events=30PASS/5FAIL observers retained. Console1307=1305log+2unattributed404,
+page/request/observedresponse0; fullruntimeprivate/hashbound/sameafterclose.
+FAILbanner lacks independentfreshnesstoken; newPASSmodal awaited explicitly.
+
+NativeFAIL41.8987565s false2viaminimum assumption; R2FAIL41.5862121s primaryBOTTOM
+boundarypositive/unloggedoutcome. Fullsource/helpers/results retained, R3TOP+
+literalpadcoords pass. Root prematurecleanup unobserved0 guardfailure, undefined
+helper preexecutionfix, rawnewlinepreparationfailure, filenameprefixcleanup error,
+and vacuousreadernegativeepochsetup caught preexecution/raw retained. Reader
+2positive/8negative and pinnedbaselineframingPASS. R2targetNOTRUN/NO_GOrestoreNA.
+Initial staging shellargumentfailed before anyindexchange; structuredargv staging
+corrected and cached whitespacecheckPASS; receipt retained.
+
+All24recordednative/playerbirthsexited; browserAPI0/currentprofileabsent; maintained
+stop2.1157007s/stateabsent/8907released. Exact ownedroot-only logprojection preserves
+changed originals privately; rawbodies/diff whitespace attributes scopedbyfilename.
+Next root finalprivacy/stageddiffchecks/explicitcommit/normalpush/exactorigin; no
+main/email. Then actual-owner sparse-layout diagnosis, choose bounded nextchange.
+Finitecasesonly; no allseed/manufacturing/optimal/performance/Edge/CDP/newFileReader/
+fullsuite claim. Continue authorized work; RESULTS records complete evidence.
+
+# Previous checkpoint: packing metric evidence accepted; publication handoff
 
 2026-10-20, q30-multirail-qualification / codex/q60-faulted-profile-counts.
 Base HEAD/exact prior origin3028ceb0e90e23b2c2ac0e35eaf493609985bffa; final

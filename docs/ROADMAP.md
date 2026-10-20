@@ -7,21 +7,25 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Actual packing metric evidence accepted; bounded via-cap experiment next**
+**Current task:** **General packing3 via cap accepted; publication review**
 
-The fresh multi-rail proposal is 33.29% smaller but adds seven vias (34→41).
-The existing rule keeps the incumbent. Immutable observations now explain the
-packing decision while preserving selection, canonical output, graph, geometry,
-RNG and budgets. Fresh final checks pass: 12 contracts, paired 44-board census,
-exact target (4092 assertions), actual-owner diagnostic (376), and JDK8/GWT5.
-Two production replays verify original complaints, all supplies OFF, and LED
-isolated OL → Shop330 → actual330 → fresh customerPASS → finalOFF. Five raw
-images were inspected; RC, composed and current multi-rail boards were pasted.
-All 32 recorded driver/player births exited; current profile/state are absent
-and port released. Failed attempts and the corrected compiler-input assumption
-remain explicit. This milestone adds decision evidence; the next experiment is
-a bounded packing-only incumbent via cap, with layout19/packing3 interpretation
-if activated. [Results and limits](task-evidence/PCB/packing-metric-evidence-r1/RESULTS.md).
+The shared generator's optional P07 compaction route now uses the incumbent's
+already-measured via allowance. The actual multi-rail replay selects33.29% less
+board area, copper29840→29120, vias34→34 and protected void2270400→508800, with
+original logical declarations intact. Ordinary policies/costs/orderings/RNG and
+search budgets remain; layout19/packing3 identify the interpretation.
+
+Fresh final20contracts, paired44 (all four metrics exact), active11matrix220
+admissions/220exactreplays, exacttarget4092 and actualJDK8/GWT5 pass. Actual final
+production multi-rail, first randomRC/composed and LED OFF/isolatedOL→Shop330→
+actual330→fresh customerPASS→finalOFF pass. Five rawimages inspected; three board
+shots pasted. All24recorded births exited, currentprofile/state absent/portreleased.
+Two failed native fixtures, five failed UI observers and root integration/procedure
+errors remain explicit. Publication still requires the final staged review, commit
+and verified normal push; no main/email. [Results and limitations](task-evidence/PCB/packing-via-cap-r1/RESULTS.md).
+
+Next unstarted: actual-owner diagnosis of remaining sparse generated layouts,
+then another bounded general PCB improvement selected from measured geometry.
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

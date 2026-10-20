@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "phase": "matrix",
+  "elapsedSeconds": 221.8508191,
+  "sourceSealSha256": "19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89",
+  "limits": "Actual named finite final-source phase only; remaining native/build/player/publication gates separate",
+  "families": 11,
+  "accepted": 220,
+  "exactReplays": 220
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "elapsedSeconds": 0.11378140000253915,
+  "exit": {
+    "code": 0,
+    "signal": null,
+    "utc": "2026-10-20T19:16:47.035Z"
+  },
+  "handleExitCode": 0,
+  "currentProfileAbsent": true,
+  "limits": "Normal context/client/server API close; no manual profile deletion or process termination"
+}

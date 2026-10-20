@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "images": {
+    "multirail-fitted.jpg": "17382b09f23e24b138a0e4a4b97c54845eac6732d96d21d22990881dc3862d75",
+    "rc-generated-fitted.jpg": "dab7e30bd14d05c5d769dbb46164dced728b82e8dbf1cb7b85a352a90c7492bd",
+    "composed-generated-fitted.jpg": "007311ce9f0218343e087e7ac9d6dee8899b8df6abc41c90b9d406ddf2fdbb9d",
+    "led-isolated-ol.jpg": "f86d75f13b2db246c6e5cc3ce83522b82ecd0dafeef8be02458110060b6a209b",
+    "led-repaired.jpg": "ba3e5e342d1b311e38e5933933a10b59a674c3198cc41ac94a249122bcd311fd"
+  },
+  "scope": "Root inspected all five raw1280x900 JPEGs via view_image: fitted smaller multirail, firstRC, firstcomposed; actualOFF isolatedOL/liftedlead; freshFUNCTIONVERIFIEDmodal. Labels/components visible and normal public UI; no screenshot editing. Native metrics independently prove area improvement, Fit image is not dimensional proof.",
+  "limits": "Five finite frames only; no allseed/manufacturing or electrical proof from pixels."
+}

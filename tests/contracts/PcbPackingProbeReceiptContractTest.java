@@ -50,8 +50,8 @@ public final class PcbPackingProbeReceiptContractTest {
         check(noHeadroom.millis == 0L &&
                 noHeadroom.disposition.equals("NO_HEADROOM"),
             "zero-attempt no-headroom receipt has no routing time");
-        check(noChange.toCanonical().startsWith("normal-packing@2") &&
-                noHeadroom.toCanonical().startsWith("normal-packing@2"),
+        check(noChange.toCanonical().startsWith("normal-packing@3") &&
+                noHeadroom.toCanonical().startsWith("normal-packing@3"),
             "probe canonical receipts carry the r2 identity prefix");
     }
 
@@ -229,17 +229,17 @@ public final class PcbPackingProbeReceiptContractTest {
         Vector<String> routes = new Vector<String>();
         MediumBoardPhysicalPolicy.Statistics legacy = statistics(routes, null);
         check(legacy.packingProbe == null &&
-                legacy.toCanonical().indexOf("normal-packing@2") < 0,
+                legacy.toCanonical().indexOf("normal-packing@3") < 0,
             "legacy statistics retain a null optional probe and old canonical body");
         PcbPackingProbeReceipt probe = new PcbPackingProbeReceipt(0, 0, 0, 0L,
             MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER, "NO_CHANGE", BASELINE, BASELINE,
             PcbPackingProbeReceipt.MetricEvidence.notMeasured());
         MediumBoardPhysicalPolicy.Statistics current = statistics(routes, probe);
         check(current.packingProbe == probe &&
-                current.toCanonical().indexOf("packingProbe=normal-packing@2") >= 0,
+                current.toCanonical().indexOf("packingProbe=normal-packing@3") >= 0,
             "receipt statistics append the probe canonical only when present");
         String expectedProbeCanonical =
-            "normal-packing@2;attempts=0;orderings=0;expansions=0;millis=0" +
+            "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0" +
             ";route=P07_FULLER_TWO_LAYER;disposition=NO_CHANGE;baseline=" +
             BASELINE + ";selected=" + BASELINE;
         String expectedLegacyCanonical =

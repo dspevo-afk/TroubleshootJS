@@ -1,0 +1,15 @@
+{
+  "privateRuntimeSha256": "748b60a043892c0aee9c9b6709f6a5c7713342b9291f48ec287d4f6f78613f95",
+  "privateRuntimeAfterCloseSha256": "748b60a043892c0aee9c9b6709f6a5c7713342b9291f48ec287d4f6f78613f95",
+  "consoleEntries": 1307,
+  "consoleTypes": {
+    "error": 2,
+    "log": 1305
+  },
+  "errors": {
+    "page": [],
+    "request": [],
+    "response": []
+  },
+  "limits": "Full runtime remains private/hash-bound; all observed console entries/errors retained"
+}

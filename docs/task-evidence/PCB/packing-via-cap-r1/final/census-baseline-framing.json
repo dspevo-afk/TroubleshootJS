@@ -1,0 +1,12 @@
+{
+  "status": "PASS_BASELINE_FRAMING_ONLY",
+  "sha256": "e7bf2da7239d5d534b273adc399d60b2ba99a306863c1b773264202d81576578",
+  "rowCounts": {
+    "PCB_NORMAL_PACKING_CASE": 44,
+    "PCB_WHITESPACE_CASE": 44,
+    "PCB_NORMAL_SILK_CASE": 44,
+    "PCB_NORMAL_REFERENCE_CASE": 44,
+    "PCB_LEAD_SILK_CASE": 44
+  },
+  "limits": "Existing baseline parse and pinned raw body only, not current native census evidence."
+}

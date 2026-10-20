@@ -1,0 +1,10 @@
+{
+  "status": "FAIL_PREMATURE_ROOT_OBSERVATION",
+  "call": "record_fixture_exit.ps1 -Phase fixture -ActualExecExitCode 0",
+  "actualExecWasStillRunning": true,
+  "result": "Guard rejected recorded driver remains alive; no cleanup receipt created, no qualification run. Supplied exit0 was unobserved/invalid and is not evidence.",
+  "actualTerminalExecExitCode": 1,
+  "operationExitCode": 2,
+  "subsequentSeparateRootCleanup": "fixture-process-cleanup.json",
+  "limit": "Root procedural mistake retained separately; actual failure result not relabeled PASS."
+}

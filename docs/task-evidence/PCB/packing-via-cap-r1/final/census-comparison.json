@@ -1,0 +1,4620 @@
+{
+  "baseline": {
+    "file": "census-receipt.txt",
+    "sha256": "e7bf2da7239d5d534b273adc399d60b2ba99a306863c1b773264202d81576578"
+  },
+  "cases": 44,
+  "current": {
+    "file": "census-receipt.txt",
+    "sha256": "766fe39ad1e23ae18e08b7de1244a325826a5e42a9c5a5cba5cbe87b0d582510"
+  },
+  "limits": [
+    "Finite paired 44-board census only; exact target seed is outside this corpus.",
+    "Graph preservation uses the maintained before/after graph SHA-256 oracle; receipt does not expose individual net/pad ID lists.",
+    "Independent GRID10 free-cell/fraction values are recorded but not gated because geometry changes alter the sampled domain.",
+    "No production build, player-flow, electrical repair, all-seed, or manufacturing claim."
+  ],
+  "metrics": [
+    {
+      "baseline": {
+        "area": 225545,
+        "copper": 920,
+        "protectedVoid": 28500,
+        "vias": 0
+      },
+      "current": {
+        "area": 225545,
+        "copper": 920,
+        "protectedVoid": 28500,
+        "vias": 0
+      },
+      "family": "LED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 256386,
+        "copper": 1400,
+        "protectedVoid": 39600,
+        "vias": 0
+      },
+      "current": {
+        "area": 256386,
+        "copper": 1400,
+        "protectedVoid": 39600,
+        "vias": 0
+      },
+      "family": "LED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 212065,
+        "copper": 1180,
+        "protectedVoid": 23200,
+        "vias": 0
+      },
+      "current": {
+        "area": 212065,
+        "copper": 1180,
+        "protectedVoid": 23200,
+        "vias": 0
+      },
+      "family": "LED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 227535,
+        "copper": 860,
+        "protectedVoid": 29500,
+        "vias": 0
+      },
+      "current": {
+        "area": 227535,
+        "copper": 860,
+        "protectedVoid": 29500,
+        "vias": 0
+      },
+      "family": "LED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 300080,
+        "copper": 1730,
+        "protectedVoid": 26400,
+        "vias": 0
+      },
+      "current": {
+        "area": 300080,
+        "copper": 1730,
+        "protectedVoid": 26400,
+        "vias": 0
+      },
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 285285,
+        "copper": 1270,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "current": {
+        "area": 285285,
+        "copper": 1270,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 391986,
+        "copper": 2530,
+        "protectedVoid": 59500,
+        "vias": 0
+      },
+      "current": {
+        "area": 391986,
+        "copper": 2530,
+        "protectedVoid": 59500,
+        "vias": 0
+      },
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 313325,
+        "copper": 2050,
+        "protectedVoid": 38400,
+        "vias": 0
+      },
+      "current": {
+        "area": 313325,
+        "copper": 2050,
+        "protectedVoid": 38400,
+        "vias": 0
+      },
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 378976,
+        "copper": 2000,
+        "protectedVoid": 63000,
+        "vias": 0
+      },
+      "current": {
+        "area": 378976,
+        "copper": 2000,
+        "protectedVoid": 63000,
+        "vias": 0
+      },
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 557796,
+        "copper": 2920,
+        "protectedVoid": 94500,
+        "vias": 0
+      },
+      "current": {
+        "area": 557796,
+        "copper": 2920,
+        "protectedVoid": 94500,
+        "vias": 0
+      },
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 300846,
+        "copper": 2220,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "current": {
+        "area": 300846,
+        "copper": 2220,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 494426,
+        "copper": 3050,
+        "protectedVoid": 96000,
+        "vias": 0
+      },
+      "current": {
+        "area": 494426,
+        "copper": 3050,
+        "protectedVoid": 96000,
+        "vias": 0
+      },
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 389910,
+        "copper": 3120,
+        "protectedVoid": 74800,
+        "vias": 0
+      },
+      "current": {
+        "area": 389910,
+        "copper": 3120,
+        "protectedVoid": 74800,
+        "vias": 0
+      },
+      "family": "RC_DELAY",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 513380,
+        "copper": 3640,
+        "protectedVoid": 47300,
+        "vias": 0
+      },
+      "current": {
+        "area": 513380,
+        "copper": 3640,
+        "protectedVoid": 47300,
+        "vias": 0
+      },
+      "family": "RC_DELAY",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 368400,
+        "copper": 2860,
+        "protectedVoid": 20000,
+        "vias": 0
+      },
+      "current": {
+        "area": 368400,
+        "copper": 2860,
+        "protectedVoid": 20000,
+        "vias": 0
+      },
+      "family": "RC_DELAY",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 457796,
+        "copper": 2960,
+        "protectedVoid": 35200,
+        "vias": 0
+      },
+      "current": {
+        "area": 457796,
+        "copper": 2960,
+        "protectedVoid": 35200,
+        "vias": 0
+      },
+      "family": "RC_DELAY",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 482811,
+        "copper": 4250,
+        "protectedVoid": 33200,
+        "vias": 0
+      },
+      "current": {
+        "area": 482811,
+        "copper": 4250,
+        "protectedVoid": 33200,
+        "vias": 0
+      },
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 535101,
+        "copper": 4570,
+        "protectedVoid": 59400,
+        "vias": 0
+      },
+      "current": {
+        "area": 535101,
+        "copper": 4570,
+        "protectedVoid": 59400,
+        "vias": 0
+      },
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 418535,
+        "copper": 3450,
+        "protectedVoid": 24400,
+        "vias": 0
+      },
+      "current": {
+        "area": 418535,
+        "copper": 3450,
+        "protectedVoid": 24400,
+        "vias": 0
+      },
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 526806,
+        "copper": 4150,
+        "protectedVoid": 60800,
+        "vias": 0
+      },
+      "current": {
+        "area": 526806,
+        "copper": 4150,
+        "protectedVoid": 60800,
+        "vias": 0
+      },
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 442540,
+        "copper": 2440,
+        "protectedVoid": 49400,
+        "vias": 0
+      },
+      "current": {
+        "area": 442540,
+        "copper": 2440,
+        "protectedVoid": 49400,
+        "vias": 0
+      },
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 439292,
+        "copper": 3060,
+        "protectedVoid": 37400,
+        "vias": 0
+      },
+      "current": {
+        "area": 439292,
+        "copper": 3060,
+        "protectedVoid": 37400,
+        "vias": 0
+      },
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 437710,
+        "copper": 3520,
+        "protectedVoid": 46000,
+        "vias": 0
+      },
+      "current": {
+        "area": 437710,
+        "copper": 3520,
+        "protectedVoid": 46000,
+        "vias": 0
+      },
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 413316,
+        "copper": 3110,
+        "protectedVoid": 40600,
+        "vias": 0
+      },
+      "current": {
+        "area": 413316,
+        "copper": 3110,
+        "protectedVoid": 40600,
+        "vias": 0
+      },
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 960752,
+        "copper": 8020,
+        "protectedVoid": 67600,
+        "vias": 0
+      },
+      "current": {
+        "area": 960752,
+        "copper": 8020,
+        "protectedVoid": 67600,
+        "vias": 0
+      },
+      "family": "RELAY_OUTPUT",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 922610,
+        "copper": 8220,
+        "protectedVoid": 50500,
+        "vias": 0
+      },
+      "current": {
+        "area": 922610,
+        "copper": 8220,
+        "protectedVoid": 50500,
+        "vias": 0
+      },
+      "family": "RELAY_OUTPUT",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 828440,
+        "copper": 7330,
+        "protectedVoid": 44400,
+        "vias": 0
+      },
+      "current": {
+        "area": 828440,
+        "copper": 7330,
+        "protectedVoid": 44400,
+        "vias": 0
+      },
+      "family": "RELAY_OUTPUT",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1029672,
+        "copper": 6800,
+        "protectedVoid": 107800,
+        "vias": 0
+      },
+      "current": {
+        "area": 1029672,
+        "copper": 6800,
+        "protectedVoid": 107800,
+        "vias": 0
+      },
+      "family": "RELAY_OUTPUT",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 937728,
+        "copper": 7520,
+        "protectedVoid": 105000,
+        "vias": 0
+      },
+      "current": {
+        "area": 937728,
+        "copper": 7520,
+        "protectedVoid": 105000,
+        "vias": 0
+      },
+      "family": "SENSOR_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 878204,
+        "copper": 7550,
+        "protectedVoid": 42900,
+        "vias": 0
+      },
+      "current": {
+        "area": 878204,
+        "copper": 7550,
+        "protectedVoid": 42900,
+        "vias": 0
+      },
+      "family": "SENSOR_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 945414,
+        "copper": 7500,
+        "protectedVoid": 73500,
+        "vias": 0
+      },
+      "current": {
+        "area": 945414,
+        "copper": 7500,
+        "protectedVoid": 73500,
+        "vias": 0
+      },
+      "family": "SENSOR_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1163370,
+        "copper": 8200,
+        "protectedVoid": 113400,
+        "vias": 0
+      },
+      "current": {
+        "area": 1163370,
+        "copper": 8200,
+        "protectedVoid": 113400,
+        "vias": 0
+      },
+      "family": "SENSOR_CONTROL",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 2081292,
+        "copper": 12670,
+        "protectedVoid": 179400,
+        "vias": 0
+      },
+      "current": {
+        "area": 2081292,
+        "copper": 12670,
+        "protectedVoid": 179400,
+        "vias": 0
+      },
+      "family": "RB15_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 1904788,
+        "copper": 13050,
+        "protectedVoid": 147900,
+        "vias": 0
+      },
+      "current": {
+        "area": 1904788,
+        "copper": 13050,
+        "protectedVoid": 147900,
+        "vias": 0
+      },
+      "family": "RB15_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 2030158,
+        "copper": 13800,
+        "protectedVoid": 215000,
+        "vias": 0
+      },
+      "current": {
+        "area": 2030158,
+        "copper": 13800,
+        "protectedVoid": 215000,
+        "vias": 0
+      },
+      "family": "RB15_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 2104968,
+        "copper": 11830,
+        "protectedVoid": 300900,
+        "vias": 0
+      },
+      "current": {
+        "area": 2104968,
+        "copper": 11830,
+        "protectedVoid": 300900,
+        "vias": 0
+      },
+      "family": "RB15_CONTROL",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 1528665,
+        "copper": 12000,
+        "protectedVoid": 158000,
+        "vias": 0
+      },
+      "current": {
+        "area": 1528665,
+        "copper": 12000,
+        "protectedVoid": 158000,
+        "vias": 0
+      },
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 1570752,
+        "copper": 9670,
+        "protectedVoid": 235600,
+        "vias": 0
+      },
+      "current": {
+        "area": 1570752,
+        "copper": 9670,
+        "protectedVoid": 235600,
+        "vias": 0
+      },
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 1844970,
+        "copper": 12310,
+        "protectedVoid": 156000,
+        "vias": 0
+      },
+      "current": {
+        "area": 1844970,
+        "copper": 12310,
+        "protectedVoid": 156000,
+        "vias": 0
+      },
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1611412,
+        "copper": 11080,
+        "protectedVoid": 110500,
+        "vias": 0
+      },
+      "current": {
+        "area": 1611412,
+        "copper": 11080,
+        "protectedVoid": 110500,
+        "vias": 0
+      },
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 4684888,
+        "copper": 24880,
+        "protectedVoid": 724200,
+        "vias": 27
+      },
+      "current": {
+        "area": 4684888,
+        "copper": 24880,
+        "protectedVoid": 724200,
+        "vias": 27
+      },
+      "family": "RB30_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 4085248,
+        "copper": 17750,
+        "protectedVoid": 440700,
+        "vias": 22
+      },
+      "current": {
+        "area": 4085248,
+        "copper": 17750,
+        "protectedVoid": 440700,
+        "vias": 22
+      },
+      "family": "RB30_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 2780388,
+        "copper": 15520,
+        "protectedVoid": 207200,
+        "vias": 15
+      },
+      "current": {
+        "area": 2780388,
+        "copper": 15520,
+        "protectedVoid": 207200,
+        "vias": 15
+      },
+      "family": "RB30_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 4050350,
+        "copper": 28620,
+        "protectedVoid": 498200,
+        "vias": 28
+      },
+      "current": {
+        "area": 4050350,
+        "copper": 28620,
+        "protectedVoid": 498200,
+        "vias": 28
+      },
+      "family": "RB30_CONTROL",
+      "root": "-9223372036854775808"
+    }
+  ],
+  "rowComparisons": [
+    {
+      "baselineSha256": "802b2beda91e98a96ecae0b21ab0f90e4b5378d1a2306ae5d604089eb914ef42",
+      "changedFields": [
+        {
+          "baseline": 751,
+          "current": 716,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 79,
+          "current": 82,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "990d75643099fd18044517c811bb6fba26be723d4a03fe655c84bcb67e484e42",
+          "current": "f2070d3d2df30cc5201699d772cd7fe60f7ef2d8c66e5296fc12a20b60bc7b42",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "fe467039c7724ec55d8b562cf4e165a5807ba23029dc70442de16e91cef303c2",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "829b8088b5dbc38cd5047a4d5bd251f039edf0eab887847e8273433dbde6f788",
+      "changedFields": [],
+      "currentSha256": "829b8088b5dbc38cd5047a4d5bd251f039edf0eab887847e8273433dbde6f788",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "fac339a68232a9f988427cff4c2f04c370c36f5b061c8d137205bc6aba43d887",
+      "changedFields": [
+        {
+          "baseline": "2b51d40f6a892dc26bf95f9e66e12aa39b63726e89bc72aff3bbd5a8ae268a65",
+          "current": "a38f2a28bd8d3549bcc26faad09313db3d4152a5287b4c3db9ce89cebf8b5103",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "3c7f936006db1819817cb27e08d3d34d84f560a281fd41a4b39f890a3121dcf8",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "dae716ec4252bd51660ddb183433ab700cebbd8a55225f39f45f424420358995",
+      "changedFields": [
+        {
+          "baseline": "957aa134a5691f2857d5e2baf16e04ab6a0bfc6172b8acd5acdd25bf8660dc12",
+          "current": "b01870d9dee95e30bec4f8e5c37fa025f63c92d4a9ea3fe29f0883c326a9ed6f",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "7970f0cdf4488c403a146fa4565a4d03be34cbb5334fb666416dfaf2864cc504",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "520ed29d1fdd000b30e51a25b162b06bdc5b7d6a774a4498097be8344b45c0db",
+      "changedFields": [],
+      "currentSha256": "520ed29d1fdd000b30e51a25b162b06bdc5b7d6a774a4498097be8344b45c0db",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "cfc3e2e0d49c1528623c2180dcda739e95a218d8c176662e0727fbc535f419ec",
+      "changedFields": [
+        {
+          "baseline": 39,
+          "current": 37,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 13,
+          "current": 26,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "876d9132bcceb65cc6baf37857addf2d03cec2787938c81765649867479440c9",
+          "current": "eb105f0fb05f63ed78fe987a522799932308327a3f0c867fb5a00a3d5f65bd0a",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "a841846563b7e46d0aa6aa54c0989db0c7ad99a38661b3c6a128a92a2982590d",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "8f156362df0fc5bfe953a1fbfdc5008df9828f4a9dfee978cf3d2278440e5208",
+      "changedFields": [],
+      "currentSha256": "8f156362df0fc5bfe953a1fbfdc5008df9828f4a9dfee978cf3d2278440e5208",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "38ef889ae56f236ce1db2969ca7da380e513a008f673fb441aec823127d1f84c",
+      "changedFields": [
+        {
+          "baseline": "04ac5cbdfea6500ddae2035886a311f85144632cb9a6906483d4a89c74a807fa",
+          "current": "c4a6dcdacedabdcf8d33296df766be4f48de65565abad9d388a82010a07a5707",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "e5593fa3b3848642cf82db58f22518d0e6513e3b3bd218c9eae314394493e9d8",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "9644bbbf7a3a873f8a0e496dbd5c9fba964ee4c4a41e84ade89ba6e08c33de72",
+      "changedFields": [
+        {
+          "baseline": "8f1da6756e94596df16447c2a0d1cc8ccf64a72f00fc654f0a71593965076786",
+          "current": "38616e223776efea56882b8a75e69d0007e07a219348249a6a51505bdf341802",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "0ea0f4066b047ed69694dc0ebe5e126ee3c7edc85ee8fd631a0fd3af2f16163f",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "f9886348541de8a7a510c58947072151eed1bc7b211d39c38f058f4d0358ec00",
+      "changedFields": [],
+      "currentSha256": "f9886348541de8a7a510c58947072151eed1bc7b211d39c38f058f4d0358ec00",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "37771375a113ae0a9c91a44ed4aa57c1bff8d052ca57dd91fd5bfb687c2045e1",
+      "changedFields": [
+        {
+          "baseline": 1,
+          "current": 7,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "656911ad7f6a396d2f4638b567c7bcb6008ea6e3156b99d2f8dff6d0e13f4963",
+          "current": "d25e165097d817acd39d4e5b320e881bc9d13cb48c4df72df2b24d996dacb8c5",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "97f2c8bf56f322933d67c82ce6f61754ef66d65a8ac10d756562a545d355ce72",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "62e4cfe9fc4a37364648e1da90c1df3f24154f60dd04e792a2681ea435287f92",
+      "changedFields": [],
+      "currentSha256": "62e4cfe9fc4a37364648e1da90c1df3f24154f60dd04e792a2681ea435287f92",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "f63b9e95c66a8c768a5d707f57fe5aaa46d2aa6f9194eeed3f1bb7c0e99fdcc2",
+      "changedFields": [
+        {
+          "baseline": "5fb835d29c6a47593c9c96622208890334eca8912449f6875bb15223d7c84716",
+          "current": "7006d5afd6c38ca2817a6366873bfabf1e569f8922298341e75111f8d0a52401",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "5fff56fd84ba0e52f5986eaa5c2a85e8f5076071e09a7f12f5099917e575abbe",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "982fb7e060a182a8e1c6c3811c88b74c088754f0d66cb7ddeb1a7de49732e17e",
+      "changedFields": [
+        {
+          "baseline": "bcbd77e510236f1ac2812c375987311adebd26f3e882c2e95625d436190c3956",
+          "current": "5e1801b283b0b907c9d009caa38fdf35daf30856594dc3d7b50fb2a8cf1faa99",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "a7ed2c14ef49b7a9f8e5d11eaa02f1fb03581de6d97d469cd7a4aa5030023371",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "e1a96809a0efc418c0c98737252cc407b7c9aa47b4ed68051e30804490576ad1",
+      "changedFields": [],
+      "currentSha256": "e1a96809a0efc418c0c98737252cc407b7c9aa47b4ed68051e30804490576ad1",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "12cf1ee7a6095007f372536964c080fcc903f0c3c85835e4b207b09967fa2bab",
+      "changedFields": [
+        {
+          "baseline": 0,
+          "current": 10,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "e50bf9171aa7d602b060ea621b8edbc79f8f235dd198fc7949bc2b1225177888",
+          "current": "28847ff2324a81ef5dfe4aba2081d1963545820818f9145ed28229f5f8031423",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9415f01fb2141e6b16fec1cd9243cf016291a767b220d9f4ef585821161593e0",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "dbe0c749df9e99a0880f23fee9544d9ff7b8bf277e2df6f3a4501672cd19f9e5",
+      "changedFields": [],
+      "currentSha256": "dbe0c749df9e99a0880f23fee9544d9ff7b8bf277e2df6f3a4501672cd19f9e5",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "8f00087334e5b6d1f14d4cea9d1c3907b9897b5d249e3ad7049af5b5f98e364b",
+      "changedFields": [
+        {
+          "baseline": "3b30b6ca15feada134501dda8fec1a63ed562d856d06203a904e92835226bc98",
+          "current": "acf98be09b140c1baa9df2a3a6562f17f96216c8280aa2f9254480771e54b468",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "54b036a56868155b9e1944febd50419ec35bad585470cd6cc6a94eef6c4838ad",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a693bbffbcfb7f9017ab4013450cca7660839f9e7ca2cfe5037d5b7b3307671b",
+      "changedFields": [
+        {
+          "baseline": "e940592596a51f6b805bf19c4288c93094f8b6f1a4c9ff293b8580c3b343ce38",
+          "current": "ddc84f08b1975ea101e5507969c3985798009c8b0b3e7dc2857a1bcca4618895",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "6904d8f1ed7b500db0477bd4f8b0c6bb96d8837e3540a79f1208b8187bbd4e9e",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "1a813165c9e7ab145b446819f8a44a926c83d194763ad789976ec4cf4f866e12",
+      "changedFields": [],
+      "currentSha256": "1a813165c9e7ab145b446819f8a44a926c83d194763ad789976ec4cf4f866e12",
+      "key": {
+        "family": "LED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "dbc33c0e263c59b9345b41d69761f00b16b3e9279f92ef67869a2621e355a4fc",
+      "changedFields": [
+        {
+          "baseline": 21,
+          "current": 12,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "856bec9b6dbeff0085e8fb5fcfa18ae4649e63e9181953fb743e3ceb73740029",
+          "current": "ab548e1abfbb5cddb55b446fee1bc42b9589bd06cf48bb647fd5a44202baf1d1",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9dba852250baee5100865d5c80b67b7a6a713c3fedb2d8cd7c911998b4433c52",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "67edcd163295e97d7640c53f129041579310d7cf180140daf7c976bbe938243e",
+      "changedFields": [],
+      "currentSha256": "67edcd163295e97d7640c53f129041579310d7cf180140daf7c976bbe938243e",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "5c87f9bc3a8f8689baa06bb6629038b52a2c19c7720135d67ca31fdf6e9167c8",
+      "changedFields": [
+        {
+          "baseline": "0bd96508119897b43bf8b8bf7563e9bd941959eddb8358ed0ee2adc92227e7b6",
+          "current": "c32f5d3d94a20bb7a2d599db11916ae26fbc203865ef6d17824bdd30024539fc",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "782cee92bf234bfb6ee716c893a3183bc6b501d62a85b93701c38cfbbd99376a",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "dd5f4e3007693c0214f20ae903ac2e22504d65c000b27b2a1415370246081011",
+      "changedFields": [
+        {
+          "baseline": "efd11d83efcbffa646316a36449ef8b059f2aaafdd7808a45dbab600c562e6db",
+          "current": "25290163b1cadc2ffb74d2845c7bd98df39a0ba34534490a8196eeff488e9ba3",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "2b5850cd6643a60cce0ef8cab1ec728626a07cf72ca4f5ac27eb2da40321eeaf",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "18a44f6857fbc551a13f28cb7a61ab356d49a84f7c66d259e75824ec3876b240",
+      "changedFields": [],
+      "currentSha256": "18a44f6857fbc551a13f28cb7a61ab356d49a84f7c66d259e75824ec3876b240",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a1bafddef3216b9cadd67e9f9aa58f6c1c1cafd7ba3905e546752ecfac39c9f1",
+      "changedFields": [
+        {
+          "baseline": "c4076ac4781d432072feef2ca53391e0bce469d63048ee1752359b7224dc4392",
+          "current": "e379a87a3609d0825677e9f055a6d7fa5308d304d99a787328dd324a217f2636",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "b5894394174515ccfcd7fe0872020b85e4cfebe7c529bd45a36dfb214843ea6c",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "d9028bbd4360b3300003bc14ac987d389ac2bb86367700e192c66554243c7f09",
+      "changedFields": [],
+      "currentSha256": "d9028bbd4360b3300003bc14ac987d389ac2bb86367700e192c66554243c7f09",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "af6c9403388288476027ce480bed99b37c1082324dd16bffb9e4e92d8554525e",
+      "changedFields": [
+        {
+          "baseline": "093ea0b8bc516e9d196c1b82d26bdb2f18f44328c6c2a60fa736ecb54a300abe",
+          "current": "9ea7a4f6a89e58ec339b80782f0992af8518a43dacc0e7b6dda5fe5a33189773",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "802eae614836e8ad8bfed29061af6d396429aad734115578587dc81a748141a1",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "db3a51d0c4c736e567378e3cb6a8bb03cc4794c17c587cddf360a33ea5260aa7",
+      "changedFields": [
+        {
+          "baseline": "03f678ac47c94402d324d3b05c81ef07576c0f3ec1a3d01f8a9ddf7aedbbd7dc",
+          "current": "f957e462458c87fc0dcbf73397dfad466ab0283879b57620479af6d4fddbe531",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "6517eb1dc0227276b29a2d07bf564c7ee9f55191be9958ff0d64568ea22a16c8",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "4c5167ccb33396522d3f4eb68421d35b15b9aa2b2234bc8f43293b5ac037d099",
+      "changedFields": [],
+      "currentSha256": "4c5167ccb33396522d3f4eb68421d35b15b9aa2b2234bc8f43293b5ac037d099",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "bf15ce2037ebac6d7c0b0aee6cc5815cb628055118de246ff23b378ac24f403e",
+      "changedFields": [
+        {
+          "baseline": 21,
+          "current": 27,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "1b8e9426b1069b1c2bc71373ea0c63168ed86966335dd8ccca972d987a6dfe9a",
+          "current": "9ea54e0490231b446a49ca031a61f2de31164e7245fa5179919f2ba29fe20cb1",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9211560d0ac1534773f9f8de9726c2cf313e64aae3652724657ffd45c1db3f20",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "fbbe0362dc1db619f4982a4129827631c1ac77976b56c81ed8bc8026bb9b210a",
+      "changedFields": [],
+      "currentSha256": "fbbe0362dc1db619f4982a4129827631c1ac77976b56c81ed8bc8026bb9b210a",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "e045b8073c333a89e824681b427716dbeec7ef1acd0e8e1705c935a99421d158",
+      "changedFields": [
+        {
+          "baseline": "66148d292af473c659bf1bac72f5cab8e7caece6614452c65f4110345d8438ba",
+          "current": "3afe95ab6a21eb3621cfce1a862448ce2122a6d9d6990b5a1de92fd3daf8493c",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "155f55e6ed6b03572ece94ef65fde613a1e26873e613e54346b497f066f10130",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "ae57203a26f0650cb0237333597ac0ebf334d9e2aa10010f71415cd426e2efc3",
+      "changedFields": [
+        {
+          "baseline": "e264d6d367342118f1a9fdf3496db76cd508fb6fa6536d173db36ab0b0bc2767",
+          "current": "6121a2f23a0bc35a4d53ee880ee858d7f14d2b90e9db16a3360f49b777dd24d2",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "5c1647cc2919dd9ba6a1d75ed574292b6bbdd6122c2be60f6b843cacec3113e4",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "22523cf16651ee607b0ae93982fdab52d29f09fc218ea8b243bb3a2174a81c39",
+      "changedFields": [],
+      "currentSha256": "22523cf16651ee607b0ae93982fdab52d29f09fc218ea8b243bb3a2174a81c39",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "5d2827e4f29e3f0f579bac6543aca053970896863fb73dcf3e34c52cb7906f67",
+      "changedFields": [
+        {
+          "baseline": 47,
+          "current": 51,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 40,
+          "current": 37,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "d987a97c69c83a9f98155565e89353ee77cf9ebc5f4ba52939be0d0805607918",
+          "current": "8c0ab384356e2428de9a323c1ffa111e0d41959778038600ef000b3deb70bd48",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "a93806a1c4fe956b7db5bb9962bac9a5d82bb441f7103812a82bd31135f53565",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "0f6019be4548783ec93b32552c8d3581d8bfe882d702bf945444e54f62971b55",
+      "changedFields": [],
+      "currentSha256": "0f6019be4548783ec93b32552c8d3581d8bfe882d702bf945444e54f62971b55",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "d1e399b430f294ead2cd658a4aceda86870e641daabd71e5f000d2dc2ccd0b1e",
+      "changedFields": [
+        {
+          "baseline": "b9f9cc2225003ba158823ab993212b882808e9df27fc9810dbad5c271827a45f",
+          "current": "2d7e869d23c990fa46a77014421b584f7db216a178c05be61014d9e29fc810da",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "3974cc741d7fa424a6dec54963b31e5918ffb48db6873297641ba05b96403a81",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "bc23b27ea863459556f17b11ebb3b1e84ab3f4b01c7e815636d63340af738350",
+      "changedFields": [
+        {
+          "baseline": "5815079424d319d3dbf5543db838692259448a33f2f6b2ef5e89a8fed5669b15",
+          "current": "9b2b4cad5431f43125f1cec53fd805996a929530c7320aa78710e58527dc7300",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "e3d1f5c88eeb47a9ef4134f8ae576ade5a6579f250b2356e2cf626b2cde564aa",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "35a93bfd9cea841b2897f5346d4161222795e78002b93bcfd1a0d86d686bd6a9",
+      "changedFields": [],
+      "currentSha256": "35a93bfd9cea841b2897f5346d4161222795e78002b93bcfd1a0d86d686bd6a9",
+      "key": {
+        "family": "DIODE_PROTECTED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "e2285a450828d17a66d01e2e438eef2e6a41c897d8a39733f19a54114ff14b93",
+      "changedFields": [
+        {
+          "baseline": 49,
+          "current": 50,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 16,
+          "current": 33,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "0a82bcdf2c4f4b00d8a6da9b63cf2dcc832f1c745026029d29ac76f59700884e",
+          "current": "d1c2bfced71c10bbcdfb9cba1b7fafbfef9507dd3904e0647e797b0b35902630",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "72979520ea51f6a8f84b34eaaa63ac3841969a373f1b41e61a695b65c712fdd7",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "86926fc79c51cdddb765ebf387a7c6494c7bba46210989d18d7c27300608669f",
+      "changedFields": [],
+      "currentSha256": "86926fc79c51cdddb765ebf387a7c6494c7bba46210989d18d7c27300608669f",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "7e857f5f22c39580a7440765ab7bfc74adc551fad9a0a544c996759bed0c9834",
+      "changedFields": [
+        {
+          "baseline": "4d7343ff78f9dd6c3b8befc095ea27ee7dd77c435fa9bdb52dd2a7840a41e51d",
+          "current": "ef5e5eb115494cb1d1d0d00f0bcd57e1d91942e3290cd4d40dfa23a36e3aff42",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "7fba77d485d6777599555f2cfb22c9e41f555adfc9801bfa7f995905968e7d28",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "c5613d503173793754c5ad08cb84e24b4cb56866f51585d226e01a7ab9753fde",
+      "changedFields": [
+        {
+          "baseline": "12f06fbcd841e0eba026a9c9f569df0bbe081e867f29ef19659afc1b414445f2",
+          "current": "af935a5da2d5fae3cb3055f6fa661d775dfb05339fb6b530d006a29c9d6255c2",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "b7af6590bbc0bb3f2021ac32e9227a83105017ff4e5007b9d9ad487133f333c1",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "e5da5f3b93e62aaa9ca3b04b3f0cace673fd124512b5c254a42cba4cda64fcc0",
+      "changedFields": [],
+      "currentSha256": "e5da5f3b93e62aaa9ca3b04b3f0cace673fd124512b5c254a42cba4cda64fcc0",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "030c057b74bb39a87bc9c3c21eb1ea238cb41961983cf2b5ef895c270cb9b843",
+      "changedFields": [
+        {
+          "baseline": 39,
+          "current": 27,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 35,
+          "current": 18,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "f86f79e47ecd96048dd6c3f4cb05cb8aef9f3431be906b3a1910fa7aaa8032a8",
+          "current": "aad7a9e5590ddc61baf95067d748f6c4ec185e67e8dd0264c5323504106526e1",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "b52280fa22544409c2f91e0dbfe4180aec49980a4b4bf99bfaf515169a0f33ef",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "7fccdd9f48c0a0181c728339247d789a680aeec457a94651ee3c2c506cbf4652",
+      "changedFields": [],
+      "currentSha256": "7fccdd9f48c0a0181c728339247d789a680aeec457a94651ee3c2c506cbf4652",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "ade08181d955fabbc6ca5b3c6e1afd7ff3807c1c7b56dc45dbd7a6fc9e276e9f",
+      "changedFields": [
+        {
+          "baseline": "c99b6b11aae7e545c0ccefe49e969e46ee6b15d9302991ff1cd9bb164026d060",
+          "current": "d1d6bed1424c747c2bcbdafeb4af2b7e20daed9638ab64bbaf1ab88d96f743a7",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "74e83618e85d800434ebb57e74df230064fe45fe1bacdc77318ec6efb0817106",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "200dfef50ec937731c3492f6feb458cbe0d194ce0cc68fc953af9ddaa2d4d6f9",
+      "changedFields": [
+        {
+          "baseline": "b80490b0d6a71dfe78bbf2522653260e459aed2ce80cf9d89a8524fe65be7ac1",
+          "current": "d41d8879a83ac9ab31ebbdb97ec268a2f9d5dd6ed52034f11590fdd88f7c466a",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "d459017c0cb448700c8dbcf9def0c2264d1136f278a3753cef124b9462df4e7a",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "d97ab8854eb32f2deac17177fd79285ef73cd729d7f7f3c67577ffb8d123879b",
+      "changedFields": [],
+      "currentSha256": "d97ab8854eb32f2deac17177fd79285ef73cd729d7f7f3c67577ffb8d123879b",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3adb1cc04322d74bfad1ad153611e1a436546fcf780dd0cf4dd36391795ea991",
+      "changedFields": [
+        {
+          "baseline": 19,
+          "current": 21,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "a4a25f4e595a1857b879869e15738197971efc959a6fc7977e0d2debfa3c9803",
+          "current": "774f3a8055f439b0e9e8e49dd03096e9f2825f04d84934f8408e7f6a7e1d0ed4",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "f5c0c64f79db04113446981ce96c35682af87ec73942f7c9254c9536676e465c",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "4f8ca55f922c1f8b477b77d98a2414581af8186d448aa4631aeac149be53e8dd",
+      "changedFields": [],
+      "currentSha256": "4f8ca55f922c1f8b477b77d98a2414581af8186d448aa4631aeac149be53e8dd",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "36da9567db71f7dd56a192cb50fd0511567dd00dae481d695efd5d7edbd0e0a3",
+      "changedFields": [
+        {
+          "baseline": "62ee9eb2c665c9bd5fc2df53e22178622f27bb0b3759ba115e8c0018626e66b3",
+          "current": "fbf4f417af6b4769ef2af820c7a27f281006ff7077295484f471decf63602f81",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "51fc1f22042b3e13b412295024c2dac15c9b4e9020be3960556de41f30f130b5",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "bd5f37f59a4b3b24cc679ffafac47a581ce981be5b765a58f80eb109742af2a4",
+      "changedFields": [
+        {
+          "baseline": "61eb3eb6a5df39728bb6e6527be26a11c759fdb2e5ca0df01a4cd40626460ee6",
+          "current": "631ad2e7e7274788adb81b0f6c4ca7b1c3e380c0d9cd89bd3f989e8cc1a33077",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "8ed0a57c082eeb275af9e64929987cf569060811bece7ee983241b43cd4f18da",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "dd0faedd8f29bd0dfb726fa83fb513fe41d2a43c9aab566a995af90a8309f05a",
+      "changedFields": [],
+      "currentSha256": "dd0faedd8f29bd0dfb726fa83fb513fe41d2a43c9aab566a995af90a8309f05a",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "d3c641a954bcf4dcc68405b5f3ff6ba9ed812ea84a20eafa2464c6f5c2a311ed",
+      "changedFields": [
+        {
+          "baseline": 28,
+          "current": 27,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": "9737d174bb9babba24836e929d1972f6cb4fb0aa7066bb5c1455482de069fc1f",
+          "current": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "ce40724805e39985e806c756608a603494b621c1561791de7bc729c8cb8631c6",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "2a0bae16a705b531e67d03aaa29f851170661b609348efa698f5791493f178d2",
+      "changedFields": [],
+      "currentSha256": "2a0bae16a705b531e67d03aaa29f851170661b609348efa698f5791493f178d2",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "4d2bb224b9da90866a9c811af9ce44bb49213e9ed443955fadf25983a62fd241",
+      "changedFields": [
+        {
+          "baseline": "91a7d9d934533e343906d6f09f88b7694aa529602cd405b7c2f08e619047e38d",
+          "current": "03f75df7aea092444709d6f359b53ef5cbafee58c80e9cb57bf09b5741088512",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "138daf30659161202df31539967efe9f6149428d1ad62f3dcd861fa538701421",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "31cc2266c4a40220fc66ff572966f9735a2f129aad3bd49d0a87a079bd15e7df",
+      "changedFields": [
+        {
+          "baseline": "933e360d7c3eae2592c2c0fc8f2c2ebd84c1a539c7c763ea2ec60631697699fb",
+          "current": "b304e7a30f7640c8b247bfab99f324828b16210ba6490850fba784c6e18e606b",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "c9fde448c88ff676b1b798fdb061dc0c540cd90c50315943741232ae9f1c8c0a",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "00e975e00c6beedf4db0e66dd9874cc8688f3486c35dff8db42835d90a39877c",
+      "changedFields": [],
+      "currentSha256": "00e975e00c6beedf4db0e66dd9874cc8688f3486c35dff8db42835d90a39877c",
+      "key": {
+        "family": "PARALLEL_DUAL_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a508a51de5bc827aa4f35a05610823a3870565026248c58daf843ae36e215771",
+      "changedFields": [
+        {
+          "baseline": 270,
+          "current": 263,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 64,
+          "current": 58,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "800260c731060f158be9825e4b3f647deca9b09e41c1a0ea8abe2b46f82ae7d3",
+          "current": "dd7376b3fe212cce7c6d3a06c473d53fbe47ce7745953fa72b5a510e3d22a4e5",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9c09daeba91772bca77424f1a0b9b377e5e9958db29fb2508562dcecb05fbed7",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "6bd2e1c6fe73b34f1f86f6165518878c39556660b1e9233c611d3727adbd95c9",
+      "changedFields": [],
+      "currentSha256": "6bd2e1c6fe73b34f1f86f6165518878c39556660b1e9233c611d3727adbd95c9",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "5cd5ba8d59c7a1691664589b5a1eb2248efd1155239d484f3b96e43025d7ce27",
+      "changedFields": [
+        {
+          "baseline": "4e6b3b77c958278f95e47183a5882a50d4e40c9d9caa30eaec5f4866b391f966",
+          "current": "420689207fdeee6d6cbd9f58c05fd6526f63eb630ef7116c34890da04fdf5bb8",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "ff7b2ef209c8d351f71233ca95894e42aaf17feff8df6604af97ab0f075cf82e",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "5a1666d5f3dba2e3829e3fc96e89d393c30af9c17f5fa7624422ae171344baea",
+      "changedFields": [
+        {
+          "baseline": "014a845d7bcbfe118916686b63c1f4c521cef406ba8b77427ec8dc0f466ed84d",
+          "current": "04d2d659c09ce7ffc992c713e5bbb17ee6e0dcc51cc4a760a15c91a58ce05c80",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "67f58d9caadc892783bc807f0bfcb8971ef99990c57a6b734cd036b4896b0f86",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "4aa2c87de00b9478dc20b81db4e6a07c719eef8b87b0eda45215448ed00b24c3",
+      "changedFields": [],
+      "currentSha256": "4aa2c87de00b9478dc20b81db4e6a07c719eef8b87b0eda45215448ed00b24c3",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "c7fb132b6e6ace14994fcfd19684c083cca196b90e06ac13261ffe15efcf08fe",
+      "changedFields": [
+        {
+          "baseline": 48,
+          "current": 46,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": "d08b4a293d70c633c4ce0044d6d81e5f1078961f3d3cd738500f50dffd294352",
+          "current": "bd0c6bafa7fc12b4391d9d2c5e23685ede7bb5ed2dfa89cf95bd033ba5200ace",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "cb4442012dd20826e00d8e7b6a8ed82ec3c6a76337e7304068c8764fd2c9fcbf",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "b727791947c4de89d0b9e99275aec4bc36e187eb4adf2a46cd0819f4ff7c3b24",
+      "changedFields": [],
+      "currentSha256": "b727791947c4de89d0b9e99275aec4bc36e187eb4adf2a46cd0819f4ff7c3b24",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "aaacfe8a9141ec904d8afb91e6607be2fe6285821496ee18ac90816c290729af",
+      "changedFields": [
+        {
+          "baseline": "623d9d2ea7b3ea9c1906450c7e3ecb3e2b96bf6abed47711b620f16c17552a52",
+          "current": "329ef37b6d11a6b078d60cbc7eaa06c8aa2f3921bf60c32cf738ab071e501e91",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "93a8d7cce26d2fac06b390426cefed1c20b0dea712f8b92d6fca921498eb4eb8",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "b97821f1d975d7f442567e758b2336e4dece0d3717adeb689964ca009085df4c",
+      "changedFields": [
+        {
+          "baseline": "be8b208a54a0797ce4137cd1d05f1152b3cddf6e63430394025aa2d88f544d4e",
+          "current": "9bc0e5434c62469ad3ab725ee3f2ba4c112e42abb5c77dcdd6056f043bd3d268",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "cca5dabd5d552724d4bba50d5ba1a96a414326841738bccf8b05403ea9be49ba",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "ad6f44c8bc18ba069a0de0d50338258c9e770b51b005d95080568c3644ac2829",
+      "changedFields": [],
+      "currentSha256": "ad6f44c8bc18ba069a0de0d50338258c9e770b51b005d95080568c3644ac2829",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "4b66218a6e697b769a69275d5d7083f63f7304c412b523ca57cda2a492a6f520",
+      "changedFields": [
+        {
+          "baseline": 42,
+          "current": 39,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 32,
+          "current": 28,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "4d585e888f4a1c705fd1cf5fd6f4d25ea06307cb58c87cbd902b25f0904edecf",
+          "current": "9e55f783ef4715ddf5f03418b7449a578a4ece29a716b38a6b8e43814b71a10d",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "41b4ef99e0e36b7d8542310c1b60041caec095bd269539a7626893f83586b38e",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "bc6ea8ddeaeb9872cc3d631da30afab2116ced3e43b01fae749050a00c04cc82",
+      "changedFields": [],
+      "currentSha256": "bc6ea8ddeaeb9872cc3d631da30afab2116ced3e43b01fae749050a00c04cc82",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "22bf79e3bd8f03f6c9977a44e1edad6697fc85447e8fc57df9077482aa5c67c1",
+      "changedFields": [
+        {
+          "baseline": "11c63661b4fbafe4e46a0073bc40cf54f7f9011e61587ca57b09a9230989d6b6",
+          "current": "e7e1db83d2e993baf1c3eefac0b2db9ec208c11bff908925223b54844ae109b1",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "434ae5ba53355e0ef68c7765436ca14e46d3387ebb2a835042459311a8b805a7",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "bda7d5f2357c49dca0ea87db92709cd4270426864b9d97e4b41db78bc47edea1",
+      "changedFields": [
+        {
+          "baseline": "01714044c613092ec96a5fc8c7f0c1178992e30f30cb12f8a30bbf1fef9bd430",
+          "current": "c95613e666c0ff82f56abbfb39ed0a4b03cbee139f2cd163e30e5b526670792d",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "64137909da437fdd44c147bb2c1f04922201bd7a078b45f252cb5db038bf3e5d",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "d59138e639f37a552ffdb1975fd3f2223b91a491c0ce99422522ba282243bb34",
+      "changedFields": [],
+      "currentSha256": "d59138e639f37a552ffdb1975fd3f2223b91a491c0ce99422522ba282243bb34",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "65c1a07f0d3fe23b29b7df50776432d6db76bea846d57a229e066c75793ea4b4",
+      "changedFields": [
+        {
+          "baseline": 52,
+          "current": 42,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 43,
+          "current": 31,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "4bebf7afbbd1a4514162f8effe9b4dee4b9c89586dff36f2a2ecda324435e4a2",
+          "current": "161f1e102a969f846c84579ffc0c69006f8ef9997026729e4aa0e614e588151a",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "978ecd1abcca95401e6ba50282a46bbdedba4cd3bc9d7f9cf7d20232d4f87232",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "4cc3445a2bcb59fb66757a4658990a6b6dbe76d117a7b883d4d0abf2c828c9ba",
+      "changedFields": [],
+      "currentSha256": "4cc3445a2bcb59fb66757a4658990a6b6dbe76d117a7b883d4d0abf2c828c9ba",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "7ffd9edd7aef348b9ecff0caa10d4fdfa0ec079507e2c2ca4079a1809c0ce321",
+      "changedFields": [
+        {
+          "baseline": "fe35157611a467b820e92ef74bc77b7a0ae921153400a60186ac3cc668779a29",
+          "current": "3292df91a4bc160787d25fe72de57d7da0bdfc4847f39663127c29c15565a966",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "ddc986e98befb7571eabd4284588d9cefbba71fe1932294e189a029ba1aa65b6",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "0e716aa76adb773a0a0a7555862a216b7645befb421b1b401950b5cce8a4cf55",
+      "changedFields": [
+        {
+          "baseline": "51426cf66e8ceb029a487f6235b719f7369241020ad3d31066511b5b9c0dd25d",
+          "current": "1857335069f5928db8cbf9854eb2a0b3be797cea2b892ee2199c3582d56a7383",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "487f4fb31a3d836cd18dd3c6300b395cba1763f762f587af1c5f9a366366bc24",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "363b8b733dc376757d61f2c4fbd59e8a7e5c720b3358ea8b5b286752c4182615",
+      "changedFields": [],
+      "currentSha256": "363b8b733dc376757d61f2c4fbd59e8a7e5c720b3358ea8b5b286752c4182615",
+      "key": {
+        "family": "RC_DELAY",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "2380ea982cfa2904398f39a6bc42a7483e1033b702d6d86aa809bfdd8826262d",
+      "changedFields": [
+        {
+          "baseline": 140,
+          "current": 124,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 78,
+          "current": 57,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "3cb9156045b10a1e9654bdd1b09468f6c8e54e2dcc7c9943e6a228cc464be993",
+          "current": "bcf3b4c04197f8bff69c9078683429f167abf0160d35d99b4e0d300b8553281f",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "216828c085cf6083c8a780532e896c782266481384004237bca2dcd5dc0348d4",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "aea57fa95bba6d0bab0a4345c6235bde89414a21828e6997e7f5a956a119820b",
+      "changedFields": [],
+      "currentSha256": "aea57fa95bba6d0bab0a4345c6235bde89414a21828e6997e7f5a956a119820b",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "b5ee3541db5dd10f8e16d24d2d4a1e60101e5ab2e475b5bc4f23bced4d873626",
+      "changedFields": [
+        {
+          "baseline": "b72af768ce4efc31291e934cc808bbef9e1bb602511e0928369f94aafa7e4013",
+          "current": "fb23ebf812bdd5a11ccb7fbf3f8481a0029f430d07c5a4e4b7f3fb4ddb7b6ec9",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "e9e2620ecf53611c5653d89094f5a17c87b982649bdd3acc78db8126293ff97c",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "defd685410435b02930adb16d315f6be2f9216fe9a50e1821879a08db9451596",
+      "changedFields": [
+        {
+          "baseline": "62cd8b01a36e7c72d87e72261d05b0ae7dd6450c0764e21fc0f8b600f1e69a78",
+          "current": "06f90259564fdec63e625aa600ef0aa08f11fb8e750e16eb49f0e02fcaff632b",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "6d89ba5fa4fb2085816ca60bcd9d36246eeebc1618ff05d803e85abd7cfeb388",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "7ac389591ea69c4915b65a925635995beff7b8025f0af85adc2d69384f5a7ddf",
+      "changedFields": [],
+      "currentSha256": "7ac389591ea69c4915b65a925635995beff7b8025f0af85adc2d69384f5a7ddf",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3ac1ef9310fd4996d908fab934c6525b783d18e47d248ada4e9adca2303d829e",
+      "changedFields": [
+        {
+          "baseline": 53,
+          "current": 49,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": "aab2f84ebcf1c30ac3f433ecc738fc07c4cc906c498ca61bdcdaad1c59c91f6a",
+          "current": "5560d0519bc61e7d2eac116a09f81fcd1530923edfec0b5f593cbafb70391bf4",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "c0ae0cf7b4aa1f2496d6748c87ffca17876b561e7ad363b9041742333fab4f2f",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "4ef180a165301baec069025e662b3c673901471989cfe69ee19cc5c41a2c82e9",
+      "changedFields": [],
+      "currentSha256": "4ef180a165301baec069025e662b3c673901471989cfe69ee19cc5c41a2c82e9",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "50068de6cc53e2b35ac426f3ca745f97dd1c27854bfb4632d7ae559798db5e1a",
+      "changedFields": [
+        {
+          "baseline": "1018b3655b585c0b579660fbd8f4da8daeb81b99e604605c9ea0b00718935297",
+          "current": "81bee56bb2b55471057229b91e34aea8c03acf152bffc0d933d1dd3151344f7a",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "c6e38e7551109d889bb8874a88b7e0833c7c945bc7ef0ddf5c1a8db0bbe2341b",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "655bb9d6ad4fc0ddd78fcc526bd85c8ceb9ff1895e2db7c6b5c58967266e8581",
+      "changedFields": [
+        {
+          "baseline": "8318377c93cfa4c60abf85eea8414d09a92d5816ec3da8d4e52ec0c122558e6f",
+          "current": "627787b9078c9ad1650d492af326b7d229f3743af65e0736befa1351cddc9c91",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "e57a7994f32289273401b155c9bd7a1dab38900bc8959d08750fa89004bdf6f0",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "a36a5bc6c0d40d307fe0914ac728cd377d5f221073a6a38627c1c5324642151c",
+      "changedFields": [],
+      "currentSha256": "a36a5bc6c0d40d307fe0914ac728cd377d5f221073a6a38627c1c5324642151c",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "c8556e640a4e6f5a5932f5a6b9b20a61d8f3c2b48047149546da42724e75b851",
+      "changedFields": [
+        {
+          "baseline": 57,
+          "current": 53,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 48,
+          "current": 46,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "fcaff5c4e919b69dbb9c87097ea12b7f7eb923289a8961e0d2107ee79352eb89",
+          "current": "c897dd7dbea863adc54c8b34f5b3841b2044c76bfd768974b87a2cd435ef686c",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "04946bb815ae3979b89cc1b33c98a27689c8b255bb33284c1ab7d9cbf2fe6bb2",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "7205d2086f1a7efd8bc8e9ead05e16b43681acfb89ee5aca86c23a9d133f28a0",
+      "changedFields": [],
+      "currentSha256": "7205d2086f1a7efd8bc8e9ead05e16b43681acfb89ee5aca86c23a9d133f28a0",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "1ced1758020952102abf46e63af3fb9f3ea1f048c1f7b371c7d48fb588cb1061",
+      "changedFields": [
+        {
+          "baseline": "c51fd80b2f999404c2cb78fef5b4f4862fab74b1a6e6518d4249f5b4cd898585",
+          "current": "2bce01085f708e14e9c5ea1cbe924a31a8a14d3ce9b974318a07f1b85762b006",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "49cf6ba5b93c4d73829b32d793e14d04acd7c52b67625330c95be272faedc21c",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "250043d742cf08f50965e40f89cad8a060891d433e3a459591a3c4b4fca15f45",
+      "changedFields": [
+        {
+          "baseline": "f245df46874560cc133ef80b802371ed032d0c75fb0c1a0e2a511cbe52280bbe",
+          "current": "b92d433103eb2d80b24da41fd88058910c2531fd4c2e59503ffd7b036e4f082e",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "7fa03761ae4820b02d4413b06a21a8c7549fe8b6df6d183650ba164070f4ea75",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "729e5002646ef3ea129d053271b621f605425f369c383c694cfc41e007365f78",
+      "changedFields": [],
+      "currentSha256": "729e5002646ef3ea129d053271b621f605425f369c383c694cfc41e007365f78",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "cdf7aaf0b95cf6c55a5a43fb187633bd1a0f8478d2b03e5d1f4d3657d6ca1ccd",
+      "changedFields": [
+        {
+          "baseline": 73,
+          "current": 63,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 58,
+          "current": 43,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "bd0d294d4e02fa186b07c5ad05924e58ec4bbf1a6036f448afd6ccaf0960f313",
+          "current": "818d4edba64b44cad8c305bd3d4cef29ece520f1441f9948b55ce4acd3025427",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "ffa14ceb2ec04fff16f9418be405fa66fa629503682d58b83ed5dfbb9df1f8e0",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "f097c2115a9c00075ef9a4d2e14630749694a5ede45cefb71b5c478d5b135006",
+      "changedFields": [],
+      "currentSha256": "f097c2115a9c00075ef9a4d2e14630749694a5ede45cefb71b5c478d5b135006",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "c4bec0d44fcba35fcf93b4bf4a56b9dd1e0a50df36e778d52f3111d9271a5282",
+      "changedFields": [
+        {
+          "baseline": "0204e4e9e529db745a594c262ab533ef081a2a5cf030fe93c48b3ac1f2f5b276",
+          "current": "b1c1bd6899fbd1c35355b14f967f5a3d7947bee3f5f687d2e66d342430f09f6a",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "7e2323cda5d8fcfcc3516159645b43d354781c7d8f240e81494fb0961ddf63fd",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "52517f4f1de7b69351ef4865ec3eee2378b4dbf62009fbaffeb5339c55c2266c",
+      "changedFields": [
+        {
+          "baseline": "12485dfe5da96bdabf8734426a6ff666662827a7ad982276bc88333eddada336",
+          "current": "d6098a541c081592f02b93bb3abb7c714d26b1ef104e536a5842ae99fbb74bab",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "79dcdda118aaf4c156ffbb91cb899841c52994c5455643ad2a189adb5e4891b3",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "ae1cdadf053d9848b96f0609f93b5c1832d94c3f38932b473ae3bbfceefe53ac",
+      "changedFields": [],
+      "currentSha256": "ae1cdadf053d9848b96f0609f93b5c1832d94c3f38932b473ae3bbfceefe53ac",
+      "key": {
+        "family": "NPN_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "252f07d54075f075e6493a37d6b1c4809cc60bbd2e5eab8112811b9761da37d0",
+      "changedFields": [
+        {
+          "baseline": 105,
+          "current": 110,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 27,
+          "current": 38,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "17e32ec1f844a2d01c50fdca2ca0d2e869c7f14fcee0f3f5fc8a4bbdb87eb253",
+          "current": "852220feb5492f50adb3186ca2de1898e3bdf648f80fd0182edd88252bec8387",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "08a3a4a3c74bc5c8683631734abced9f6880b7c619784b25e517541279daa67b",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "2218ee055c8e3b8d08485e9d1e109c7611a7c55404847beae99a552da37f5f32",
+      "changedFields": [],
+      "currentSha256": "2218ee055c8e3b8d08485e9d1e109c7611a7c55404847beae99a552da37f5f32",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "b6036148db9d1e4a3a91fb410fdd85e1ea1cd50b7995d548e8f5b3ef81189fb0",
+      "changedFields": [
+        {
+          "baseline": "641d417640e9a4d2c6f0437ab0767d750fb7fe33ac4b6619141d125d4fa46bef",
+          "current": "9c26dcc8d19ce11cd4538ca7d446e17a3ab05e867c377c057f3f0ed4e5a97b21",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "66fd6a1fa6537b9ca4421757bc24fe7f52eab85a0603efbc4f4f8ebac735faad",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "6085abfd5948b872d028dadb6eb658548a2bd5656e21b00e141d8675e30b42ac",
+      "changedFields": [
+        {
+          "baseline": "4f4a58c352aaace1259880170b2a9882a2d69b68f1c6f71493df1da7f5a19243",
+          "current": "999ad5d0f0a97018861b781342c948ebf6024ec1a6fc4870998004972baa2f51",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "b251beef30505edaf676e1fd32a4c155811f86c822e532a59f3931458b556a00",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "46b282debcaf216f3674967d64221e22273d479d1d9980b9a0c06d5e4bbb6e5c",
+      "changedFields": [],
+      "currentSha256": "46b282debcaf216f3674967d64221e22273d479d1d9980b9a0c06d5e4bbb6e5c",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "6119993dd143e85f39d47971599f0e0e846ed97f29ac9222d4b52b46e602eeb1",
+      "changedFields": [
+        {
+          "baseline": 37,
+          "current": 45,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 35,
+          "current": 31,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "4ad403cc716377e711cd68786c5b07386d4466b1b37eff0a1db3c994d2bca6f8",
+          "current": "4f362fc4c4008174d036e79013829f589c8094f03f56a9d89b4f9e6a2764aa15",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "ea340b1d5cb940c0e898aa4491f571287c81dd8994e385013cc43f60e84f84f9",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "07f9ce01b6f9057b97be10386e95f462a39b6c87c5caed8d8a0827032780f455",
+      "changedFields": [],
+      "currentSha256": "07f9ce01b6f9057b97be10386e95f462a39b6c87c5caed8d8a0827032780f455",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "222192054483dad029a585cd3cb4c78537c7b0df5de02f854d994fd12433be01",
+      "changedFields": [
+        {
+          "baseline": "10d43656c64dc47c6538547dbbc6e6ed7a74ade577a15c011696d15ad9e6b769",
+          "current": "679c7b98f1acf031a320067084d7caa6da5d379b6266266906191f0807b67267",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "a14c92230dd444529e277c07d36499e59e262a5db79d8ede6137ef7073688673",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "58ed89a58f9b0137a3d4041bfdc942be7228d636d5b6ae697c8f664f19742086",
+      "changedFields": [
+        {
+          "baseline": "1c19dce628930b078229f89b0241c9b4843410b7c547960fc6d0f0280b26436e",
+          "current": "77a4405c31e867551a5a7ec5aadd8b1d4c892b339659217115f627ddd86a8e8d",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "9c537aa6ae6abbd11d2cbe6126305f696045c89c04513862b9818df824a2c4a8",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "e801c39d411e009d7e1603bade5c4914e75736d1a4cbe6ccb621948192869d35",
+      "changedFields": [],
+      "currentSha256": "e801c39d411e009d7e1603bade5c4914e75736d1a4cbe6ccb621948192869d35",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "15b6f9fbe4e379afa7c02d3e73cb072d243d41d520c6f4c56cd100bf6aed8441",
+      "changedFields": [
+        {
+          "baseline": 19,
+          "current": 22,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 6,
+          "current": 15,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "fc1bb914776b0a2964cac90e3489c0d0d9d357e8be826425c64a7d378cf864c3",
+          "current": "e6e521268a33e21fbf3bc6558bcc1d35d10b53fb5996ace376015806fdba3266",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9f0a243ecf81afe8e3b105afa84a967725abe4ab5f063609df936fdc10f1fbfe",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "f07651cbb2d47bdb5c1966d47f73a57d4c608e9848a44e76ff9354a4256d9054",
+      "changedFields": [],
+      "currentSha256": "f07651cbb2d47bdb5c1966d47f73a57d4c608e9848a44e76ff9354a4256d9054",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "82e663448e2629a3a4b7f4444978c211a081716fb5a495246712d7fcd2235c16",
+      "changedFields": [
+        {
+          "baseline": "541745f11ea20ea46a79debc488540acbac833d6a0a8799a8ed5d75ddf49a5f9",
+          "current": "0b2a97d51afea0cc47620e8f4381278aa770713ad0c426f41e1ee3e8b4810cdb",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "a241e267ec729e100b8682123d0ad0a1c95b1f99a8a0536a45f76cfb8c32d7ca",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "9c9a906ffed2fe47a30d93ba5bf6dcbf457fbcd94c3540972a3e681315d2c188",
+      "changedFields": [
+        {
+          "baseline": "0dcdcf35e2c0144c90848ff95eabf423ca2e2d5149a3d7af0496787d6ba34928",
+          "current": "f879db39519dd977bc01324b9cd53d8b749b97e793671c44fefad33a4f451e1b",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "1c058079e94545afe281eb64b424aa042817cf96fe6a3f1c8102bc96e9c4365e",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "94fee6e1a054b7a98c36ddb74eda495e22b79d1c4ef38df6540bf76143fd958c",
+      "changedFields": [],
+      "currentSha256": "94fee6e1a054b7a98c36ddb74eda495e22b79d1c4ef38df6540bf76143fd958c",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "aa31ec62bcb29ee17d213245717a0f0fafeafc91fccd9e13ce383ad6401c53e2",
+      "changedFields": [
+        {
+          "baseline": 14,
+          "current": 17,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 11,
+          "current": 4,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "83dc4a52ced8360bb967be46ac3764a2f0b1144dae0fb3167b906f370d17915d",
+          "current": "7a26b7c0440a1068481ee3da33c2813173cf6efbc73d99ef9a51321f7bc7c97f",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "7b4ad0bee3c20a6e132c4f7d77b97bba8da135806cd1233f41cfee9486997a21",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "f3a96ba2f29b97fb942eb52aabefe7021ec4de967d67a4bc6b23cdead5e8262c",
+      "changedFields": [],
+      "currentSha256": "f3a96ba2f29b97fb942eb52aabefe7021ec4de967d67a4bc6b23cdead5e8262c",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "32bf0a5fdff689419d0d25940de8953350202c22c4f73ba228ba084556581a76",
+      "changedFields": [
+        {
+          "baseline": "3a3025a5f8a66c2f60df3f8fc45ab669d18d6521fba627c36b4a231e9559a9c9",
+          "current": "abb31a48e5d9eb8bafc4fc42a19a4cc187485b5e730c9b3911435afaa6f4ec0e",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "b8ee0fb791c0c85262f32b27906e0bdae8f7e31a673f62d61e3f0f2d5f4362d7",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "8811f56f9edb3047f8f89500759fc63f80a7c3ab364956b08f5deec78c5383a4",
+      "changedFields": [
+        {
+          "baseline": "5a8dd01434b7e960f6f32a62b1bbdab3c39c48dc303025b86b2428b32d25a182",
+          "current": "9fccec20ff7c0e950b2357e6fdfe9678040d26fa02ec59c26e93aeb655099e31",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "7b6ec026dbb1d3ad3462fc24985e7e2f033c8d848bb8970b6b42a506575059e7",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "0fc9464c6dc37379c11e46952efe4ce52cf48a9cd416fb9ecf766fc71fb93278",
+      "changedFields": [],
+      "currentSha256": "0fc9464c6dc37379c11e46952efe4ce52cf48a9cd416fb9ecf766fc71fb93278",
+      "key": {
+        "family": "NMOS_LOW_SIDE_SWITCH",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "7ad79bc165df0c85cad553563bac8eba6e84df73f6df2d0e9160a1f314f8dfcc",
+      "changedFields": [
+        {
+          "baseline": 495,
+          "current": 458,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 286,
+          "current": 257,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "4642f3b173a5725cd11e42eaad873f0a513dd3241978641def897e6e6e6a545a",
+          "current": "79fd1b3a7f15f62c27a1b9eaf53c3fe5b65999eb25b19adbc0b66e7320e3be71",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "6f846b534efff974e0f795e37c932900d8bacbf3aaaef695702a3dfb3b9c55fa",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "6e077d1bce5ff426c925578921cd30c49e5fee61de58955afcd50697723cd257",
+      "changedFields": [],
+      "currentSha256": "6e077d1bce5ff426c925578921cd30c49e5fee61de58955afcd50697723cd257",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "f097fd472fadc22dcf441ec12c68ba45454e4d8dad1be5b4ecc2e6b57d2dcd64",
+      "changedFields": [
+        {
+          "baseline": "551445c9c3aff73a65e5ac054850cfa2877ac81c0c89119872df26ec05249195",
+          "current": "f4291e6536d7c647ebf4e911d5c749a05e32ee3202cbd856b530050fe2948113",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "2499365cb8aab7820870d1bad62030dd99bdf3649949d379f5341e1caec8d6ea",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "ec4ce62fea7349bd0af15f2564eddf0fe95bba47cff6f8a474308dbda729d83a",
+      "changedFields": [
+        {
+          "baseline": "3fd8b4f74d0fa203e25f3fb4a8583abac752c7f48ccf2533cd311ae5f0a9f8f0",
+          "current": "8c2e4a242596cd31e6a8e52fb562aaf37115d1a115fd445e1f9a257417f72e93",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "cbe8dfab18696588ba0f9353d816da86add811207d02cf9467ea3c94920a4ee6",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "15d89ea6ca2cce85f9f25c4843e180a815745b8957c5c2182294aee1193975d2",
+      "changedFields": [],
+      "currentSha256": "15d89ea6ca2cce85f9f25c4843e180a815745b8957c5c2182294aee1193975d2",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3d6cc12806a421804e5bc5101593eebebaddad80f97e74287f5c57aaa004296f",
+      "changedFields": [
+        {
+          "baseline": 273,
+          "current": 309,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 231,
+          "current": 274,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "6a51ff9ecb8fd90b35e47cba521b700515e6aacba00b40fe2e850c142d79ccbc",
+          "current": "ef729f9d79a7e00f17bd00f3908e68b0db85a4c351903be5b0e52b078c40ae9f",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "ed8a7489358ac93f70ecee0a55f7c71a1e9ce7380d3e0401927c3b62338def44",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "fa2c74c31334c5c5b27ab56f5c9d02474a6126120f421d4a9af9e65422fc6859",
+      "changedFields": [],
+      "currentSha256": "fa2c74c31334c5c5b27ab56f5c9d02474a6126120f421d4a9af9e65422fc6859",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "fc85e335a20358df3e0005f9e05f9840d2d48b81a6eca95a9fdba87c1d7f800b",
+      "changedFields": [
+        {
+          "baseline": "cd64727e3bccf6097edcd39bfac469f93a3d2761949039da122648a80b466923",
+          "current": "d4a062f0dd159eb51bb38a283e27317a516ae42ba2233245acdbdb41742b9989",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "687b91c75cd8a86bf9dba4d6feb2f1e49ac5322fe899945f8a9091d9e8b37f3f",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "198b7f1cf1c2fafd6534b360bb4d99f7fd0e1d7059200fb42514d09c61517ef4",
+      "changedFields": [
+        {
+          "baseline": "d2bf89bc8bc87a3a8b0884c99003e00fd47489be7d6d1e149e09bdf80e54f90a",
+          "current": "7bc7dd0ecd3c8796627d75094758c29477912a8545588d9dbbbbadb7b6109e44",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "0201bc5e4a3de1faff6a621f950b2baae91631f135e22d47683efdbaa994f3b4",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "00190b208805f122d7312590a3b69dca992a578ebc4a15d3f4e66743064905e9",
+      "changedFields": [],
+      "currentSha256": "00190b208805f122d7312590a3b69dca992a578ebc4a15d3f4e66743064905e9",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "119b04c779b0bf69fcb74759cb58eb958c1ec7742a07ee76eafe485305a18745",
+      "changedFields": [
+        {
+          "baseline": 152,
+          "current": 150,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 125,
+          "current": 127,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "3bd0f4796e1b367b22cb819b1c8027a3a38f128351e5c733e040bc9c5b1f4217",
+          "current": "ed1b835bfdf04cb9d150e8a2f74df01a023995a90daf2d437052a7943f16cd5b",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "3d24d318aa5c27fed5e3de7496a5a086848be4bc917697ab2f24bf03bd9f62b4",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "63cd2177eec2dbc6422cf183e9085049306592c12d4e4adaa3b46fe86df433c6",
+      "changedFields": [],
+      "currentSha256": "63cd2177eec2dbc6422cf183e9085049306592c12d4e4adaa3b46fe86df433c6",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "a9d4e9c9109c8995d177f3bcffb270e47da2712e15800b4a968c63f1f6983a43",
+      "changedFields": [
+        {
+          "baseline": "caea253308f968e7c3baf40ae424cb5186a685cf5b5c389ee2612100b46d86b8",
+          "current": "23a897104fb5294c5d2da5f21e4248e6b9838e151c0f67687dac19e1aa671b33",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "0826808716bfc0f34489f9ceb66896e0e1fbc5886f028b4c952b1508f00a51df",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "2824d8a14c3805feb239559c5759261c52fcbe49d0b5e36f67e5950026e970ef",
+      "changedFields": [
+        {
+          "baseline": "b3a8ecf31f260c3141e44e58b730c8f8980d364fbbd7fba033f9012f200d1be8",
+          "current": "cc6a5f6eed7d3fd2dbd551bd782f1a50741474e5c8c872ac9c3dad53885b8642",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "c1ec4afbf6fdce00361d668afd57a1078d7aeef820370c2633ff0788acd14d23",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "1deabdfaa72da44488f4499e3ee7f8240aa9149a835001fcc5d9d556e597fedd",
+      "changedFields": [],
+      "currentSha256": "1deabdfaa72da44488f4499e3ee7f8240aa9149a835001fcc5d9d556e597fedd",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "7f43e3a7f19531465c21159f44838da61848890f938971ce07b676c540235e92",
+      "changedFields": [
+        {
+          "baseline": 79,
+          "current": 81,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 71,
+          "current": 69,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "f1a1597e9dae7b2ddeea3aa0c0c3dd9dc931bbaab9e785e7c1b51e08bd822735",
+          "current": "2a26ab8ef89a295503bf432146f9c5f83386e9e76101ec0ccab377758c026a2f",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "061ddda2fa2b19a85df8084ed88c0ec9f16526190ba1285ace02fd41c1c6e758",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "fe1d381a26b1b39a88979adf25befc7bc615ecc89d6c5c27551536741c7368d9",
+      "changedFields": [],
+      "currentSha256": "fe1d381a26b1b39a88979adf25befc7bc615ecc89d6c5c27551536741c7368d9",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "47584f80edda6183d2f05e67abce4544749e2a8108ca4733c7aaf00728831955",
+      "changedFields": [
+        {
+          "baseline": "3291857ec2e4bc549e914500fc10a25626e5b814db7e37c8da566643d0bfe25c",
+          "current": "d93167c0c9b235951bdb5f62e1035b5fe9bf8ec397bcc7df6705c885acfe0307",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "d67349c53298b485396c3a4a28d4c78cfe6e784864e40f5046d1d3974a9ce81c",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "067e51f1de21c2a28a9f9acd3b130efa345140645b265982dbf5199b3a3e39ce",
+      "changedFields": [
+        {
+          "baseline": "08bf339fd8411517eebbdab9f5dd227dc1f31b5985a944523b51be03fe677c7b",
+          "current": "9b60c7ea43e7bca9e12665cd7027549bdf6dda010dc9e005e48287cf3a2926b4",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "7f3da2c48f07c6e7962949505c587d12385198fe53864194ffb31a65ef9dda58",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "d14ace3355570b70801324acc1cd8bbe19a0d5517b7b87b7446310501b98f1fb",
+      "changedFields": [],
+      "currentSha256": "d14ace3355570b70801324acc1cd8bbe19a0d5517b7b87b7446310501b98f1fb",
+      "key": {
+        "family": "RELAY_OUTPUT",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a041bf6217781e74e868eeb397b3b79f31db2e2c7acd5e586be7383488f02631",
+      "changedFields": [
+        {
+          "baseline": 373,
+          "current": 378,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 232,
+          "current": 225,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "8772a7049f3213de1e50700c48086d3723bda6f63833b150b9a71fd3cda6081f",
+          "current": "24621e61d255550b725fc7086294a9c11228f1602dbca70a10e2d40aef8cb6b4",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "97902f9554ac6be78a6ac2dc62df3e4ed5886d81ae3e9a90d55bbfbcb983c8a3",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "54975b70c1ccb5aadb5f6f0a5914e6e1108cb8e471a14073d14107b30c690956",
+      "changedFields": [],
+      "currentSha256": "54975b70c1ccb5aadb5f6f0a5914e6e1108cb8e471a14073d14107b30c690956",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "81432dd2e367e9a6e3270064d4862dfed80fe72d14b93b505eada4cdfd46d2dd",
+      "changedFields": [
+        {
+          "baseline": "b3f79f2837e018dbdd5b70b96d0c2a14ef07b6695ee312cdb1fe80a5a325251d",
+          "current": "8ddbf04998b49f4eb6f328cc761eda7aeb27277c63acc5aaefbe43dda1a5f4d2",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "6e2797ce27590769337a48e144dbf5ec28e443372ebcff575ad060b0621f7258",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "39171e9f4307855eca4b22ac45febd99df3162dcbf3f29245e57555ab4a72138",
+      "changedFields": [
+        {
+          "baseline": "e37d159a930a27476a40b66be40ac854588e8e2dc5e972cbb9f51120c3010b4f",
+          "current": "103dc51fcb4fc088365ab85141ae7a07cba86a72a14bd2d4f9c0000de29f4eb6",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "e6ef163b5ee027476a5ffec4a7cbd737e9823ac9a78beecc0ddc51552b0c65ca",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "7e12d227eb1d99ab7b591c8d50c41c41452f769505cbb633e5dd14c84276ac4b",
+      "changedFields": [],
+      "currentSha256": "7e12d227eb1d99ab7b591c8d50c41c41452f769505cbb633e5dd14c84276ac4b",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "db9b16df303c720b0840aea27556e0764556955b12cc5f9dbb36476b962c6d2f",
+      "changedFields": [
+        {
+          "baseline": 383,
+          "current": 387,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 364,
+          "current": 367,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "86097d879cf6a2bd41788b54db06473cf0783120833c5d5739e50785eb5f91a0",
+          "current": "57dbf1f53f19b363d63d1938e78f1e25480f7c245d1fe7a20f9fbc0e1b2a732c",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "c83abde5ca879cf3ce475b733e2cd788773a00554211110b4db9ff5ac192e355",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "25f3a5aed578ed9f9117b919aaae5da6e078ac5ce822c7986974dc58f114a99e",
+      "changedFields": [],
+      "currentSha256": "25f3a5aed578ed9f9117b919aaae5da6e078ac5ce822c7986974dc58f114a99e",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "5f348f810e7d72bda8b9c102a236f35f4f5278a04718e484371d5d5cd9cb3d22",
+      "changedFields": [
+        {
+          "baseline": "e39446324477ef09dc65c2a81342c0fd16780707d2a9cc1a9e4d67949e9aaad2",
+          "current": "6e823b25dd21266646ba29092f238cfa1d4d640404e92fc2170bbd5193cff2ad",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "7922bf7328250324ef29f1b2e1979c57ba1dac21399bd273a2425a2ac27731fd",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "41b77355920839c1a7f234c4033cc412a4e1845d23d3ce02dc90e759ab4fec83",
+      "changedFields": [
+        {
+          "baseline": "70db3229fc9ae725a1529a2bdd24266a378113a340a222b3b8238a89c1422be9",
+          "current": "217ff1ce30fbb6a43d3cead745a3c40b7f6d7005d94ca3f8b11b596420722b64",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "84a40dcedec2dddb9e768cb333e45a5465d8f52face4b7a065d008d4e6407aa2",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "047b21a5e0bdf6e6ef868ef189ec7a10add6a318b64e369e4c0001c4314bd6ae",
+      "changedFields": [],
+      "currentSha256": "047b21a5e0bdf6e6ef868ef189ec7a10add6a318b64e369e4c0001c4314bd6ae",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "309e95b18eb13b0cdb91e228cf0323cc96da3ce0232914793cca9498c470c5dd",
+      "changedFields": [
+        {
+          "baseline": 350,
+          "current": 346,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 328,
+          "current": 329,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "7f5fd66d0fa428628623959caeb06a64302f7bd9c6a2725aa6149c20b291744f",
+          "current": "c869402f54b3c84131ca50f2899c8d23c3003c16972147be33db45b425c1d519",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "0aeb0ba8b8d508e524283f312face1b4e50b09fabb429f960e65d8e228cc729e",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "5ffb221f1e35801ef12adacfaefa5d993d0eb93a387ee92debb879884fe1ac38",
+      "changedFields": [],
+      "currentSha256": "5ffb221f1e35801ef12adacfaefa5d993d0eb93a387ee92debb879884fe1ac38",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "baa15f77b0ac1f72745f254671e7f19884160585af1667b0fd96ef6422adf1c6",
+      "changedFields": [
+        {
+          "baseline": "16f7e56982dfbeb0324fce8fe0ad85ebf00c66176f87e0492e27ae0c259ba49a",
+          "current": "b2a71cd91ef0d4e62730c946a87b1be2575f95274a17421a39a4840aeb706cc0",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "131f2f63603ed335a615c951aafea2468bff7e88abb9145055d441b0733ea5ed",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3b800785ca9fdcdc8e32c9f108d8c18aa22e8efa426429c803abbc057d06ee34",
+      "changedFields": [
+        {
+          "baseline": "84af533eec6d335a80c787f396be24d207e4ebec7dce1876e8dece299d353469",
+          "current": "a7eca0abb6ba179318ec7df6bdecaaa0ae55029fa0ee18763f8e030a2d6e39d0",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "1ea7f2632d91d90274e14c969459a734ea4837bc12abf3677502c1ab0ac76938",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "290c892054a0f9abb7ed1a2385d485bbfb934fbe3b9b90d9acb276c5a7d33c31",
+      "changedFields": [],
+      "currentSha256": "290c892054a0f9abb7ed1a2385d485bbfb934fbe3b9b90d9acb276c5a7d33c31",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "39045bd0fa11a565d2e3dbb9ab62019ec712b1aaf674402a390704150e167249",
+      "changedFields": [
+        {
+          "baseline": 239,
+          "current": 235,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 227,
+          "current": 216,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "ed926e2323ca346d9385b5dcbffac53dd7d5ab5af8a3689dfeb7978156a037b8",
+          "current": "aac97cdf57cd962098485faa6501860d3b5e84104ffbfe83f9f0651dfdee95ff",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "2ae30755ab6270ae7f7502d86ebeee9b317d55aade12c77ad534d1c877e788f7",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "6e183a8d7bfe7ee785e3efacd9f9dca47a96bf1b903023799cee1507b0c0b818",
+      "changedFields": [],
+      "currentSha256": "6e183a8d7bfe7ee785e3efacd9f9dca47a96bf1b903023799cee1507b0c0b818",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "21915bf37bf55f1f82fb18d760921bb6e41bcf59f5ba9d577644e9a6567cda72",
+      "changedFields": [
+        {
+          "baseline": "885b1f56be17bd87f8e8aca922d84103e347ce8e08bfe81b111dee474ec603d2",
+          "current": "f31f16660d4a508fc5b1cb9c048bef295632acd8bcdc45ef0e994796880391f4",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "e4c627355a2889cab1b2ca9b839132aeac39c655b50c5d53954d0579555f5113",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "ff47e232d890359c92108a38742b84431be16835039a692db6cdca60cae35bb3",
+      "changedFields": [
+        {
+          "baseline": "a5400ba8d732398ad474f7db2e0b0c488bc94fdf755e0f1a4abb0d344bf54416",
+          "current": "0d0eb53b06137c409b7c33c35d1e0a9efbda013904bade730d76065b6d30a359",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "ce3202845f48512c28c9e45fdb685a4cf6f5f30a72848137251f4ed8b3ff49b0",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "2003bfa81c7d369858b6e9244d270fcfd5b36fe8f6c154eddec8262b4ea6e54e",
+      "changedFields": [],
+      "currentSha256": "2003bfa81c7d369858b6e9244d270fcfd5b36fe8f6c154eddec8262b4ea6e54e",
+      "key": {
+        "family": "SENSOR_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "42db6e9f30f8409bfb83b82b0a098d65b6e01288d87ca6bbe7864cab629a80b2",
+      "changedFields": [
+        {
+          "baseline": 496,
+          "current": 493,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 437,
+          "current": 442,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "f11544badf27809d8b17a933a0b53cad8b91e5cf64591f5ad00da63c8343cf14",
+          "current": "bbf54bf9be50fc9a3ddb40379966c2fafa8818c0cc4316c64b44c412f9621042",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "f98783ccc5e70203ac37955fbbd21f630f1161e40d5f7090afcd19004ae27711",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "5c38e9040e5b4f4fafeca098cdafc6acb69c207c360bf44c6e8613446b9fa738",
+      "changedFields": [],
+      "currentSha256": "5c38e9040e5b4f4fafeca098cdafc6acb69c207c360bf44c6e8613446b9fa738",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "e6671018583e870ed6b39d05447254991ef36b2bdf4bd25817b3be7eafa8a8fe",
+      "changedFields": [
+        {
+          "baseline": "0a85912af30d25ae66f8a253fce9ac5837fde7721e8d3034ba377d58a52106d5",
+          "current": "29e3efce71a31187c88ff5375b94e4b517a0a783494134713f4d2d71dc5aa8bb",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "be5abc9fe26c80947a507b80ba639ddcc9515ee203b8d2405c1b09d79346e6f3",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "ef1ff15c668f131de8421bc7e88ab67b58ad8b52a0ca38ff6aa790abe1704c55",
+      "changedFields": [
+        {
+          "baseline": "f31c816fffe7a8b0037a81c840d83980f2a025646001faaaae72ab7c46f5daeb",
+          "current": "7da363d39715d96ddf5bb338a61754579bd4d5751b84a3efefab15d7c76e5ca8",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "39c7c2d73426f0b7becb1c94afb202e657f4727e1dba014c94ac219ef5762f37",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "3a31491f3861978e9171c4f7e947a443c283e5b6c302cb7c1c20a4039d17b4ba",
+      "changedFields": [],
+      "currentSha256": "3a31491f3861978e9171c4f7e947a443c283e5b6c302cb7c1c20a4039d17b4ba",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "e8cfa149a34085d9cd19c10def65aef713949b0de26b0ed1ce43d080a0fdfa3d",
+      "changedFields": [
+        {
+          "baseline": 7262,
+          "current": 6914,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 7113,
+          "current": 6816,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "7761fa04c79ab06d4169973793afd0937704f329bc1826a039a565a2d94fcdb3",
+          "current": "6c481b761c46f733b58bf3bf0669a0b78c55a08c645b4ad705fa608d083d78ea",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "944d449e9795288486969f5ba076e0fa986d2aa7d1df9f9982886e84281ed200",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "08b9d75ece85d0314cddf8926f86ed506d40de8f20ff02b643f76745c1eeaf81",
+      "changedFields": [],
+      "currentSha256": "08b9d75ece85d0314cddf8926f86ed506d40de8f20ff02b643f76745c1eeaf81",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "ebc52d9b41f836c218d064a59cc42d077a4708d4c61ea6e61480d7da31f66e0a",
+      "changedFields": [
+        {
+          "baseline": "6168bb01f5796341ec78c5c49b8d03d5f837564ec7f6c937eb498195703b7c6c",
+          "current": "907f791d0e66be7ed51a79942bb1adf0c8c5a0b3e63283f3be7c4deb6e8abb8a",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "f0682f37d3a3dda61a21886752c5ed14df407c30aa88aa918965bd2a2cb04f49",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a2a9edb8211baff326c3612e607d7e1879af915dd58bc7a79ee419df90a84461",
+      "changedFields": [
+        {
+          "baseline": "70e76f35fa9a67b9ab8d860e40679a57c9bcfad0fc5bafa7de3b4680776e391d",
+          "current": "7805c7c3294efb613591a3fb7a9019cd049b5df5fd9270dbdf2b5b8859ddd2dc",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "95fc850beeec4356ddce44da951744a227602473aef90fb0b5b5e58afb3b32fa",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "450327edc107d84caab7dd074e542d0b87722650691cbf8281dfc260178d8126",
+      "changedFields": [],
+      "currentSha256": "450327edc107d84caab7dd074e542d0b87722650691cbf8281dfc260178d8126",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "e201a7db995672188396885838ee86cbf4933e165042e414ebe23f03c8edbd61",
+      "changedFields": [
+        {
+          "baseline": 428,
+          "current": 426,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 398,
+          "current": 392,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "856eaf5490e63e93ab0f806a7ade8967d4db888cdb8f93f34736d8bd8df3c12e",
+          "current": "4d74cf71547b0e1e84be345dc3670e852db07623fe66a1cb5c3c4d4caf382dc4",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "ef9fbd6848aae9d3af23289928b8402c8e57a07d36e3fba09c8d40048127c135",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "fae5076bf30489b295f6831daeefb24682486d9663fed5e27096c588543cdbb0",
+      "changedFields": [],
+      "currentSha256": "fae5076bf30489b295f6831daeefb24682486d9663fed5e27096c588543cdbb0",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "9a8442649ea26891592e8ed44a0c48e117c5dfef90187d3bb3688c45b5a4a8dc",
+      "changedFields": [
+        {
+          "baseline": "2b33aefe4c2ee8061027cdc09114079842fbf06d8c0198d5e2d4abfccc9c25a0",
+          "current": "ea10f85806d22ed9ae77c50ce9f87b5725a801c8c82a2a13bccd6f7f6ad5d50e",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "a8b081a27196729fa2aab9a7e840a33e890c1ed3b9eed00445aa6687cf7e9c2b",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3ee67a188d28d98f6817c72d17cd87972a3e9b1068c53c141201b0be466c8420",
+      "changedFields": [
+        {
+          "baseline": "b4abda08435058b48a8e79b0db2c1c9855f7909e5c54c6f0832a95db84ac83d4",
+          "current": "29010f6013e33e5efdd4d3db03fee837d7231be50f41269e33d1e0b1b1a49789",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "452baa29314e20b336d7bf4bde86a8564bceeb311241a2a572931d50ec7fd7a7",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "88553900583b09e0a8767ffad0fba19d0324c8a758549f7fc7339b481083dd6e",
+      "changedFields": [],
+      "currentSha256": "88553900583b09e0a8767ffad0fba19d0324c8a758549f7fc7339b481083dd6e",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "1ca6764fa0d4f63d7efa8a020be30d2c4d32798277b2ecf104aa130709d702e4",
+      "changedFields": [
+        {
+          "baseline": 2389,
+          "current": 2223,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 2338,
+          "current": 2155,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "00823c021e2286dbb716adc2e0a8cf98aab1fe8f07e16937b8156b2cacc6dabc",
+          "current": "46111ba0ba6117fbd4a074b57476d7c2e9fe6a6f3eeec9595488c24dba04d850",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "86b583c8ab4d86c3ade8c4205714c6e88b35ec150ee70b122eb155a953036c4e",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "c967b5c51035a88f0f504ff513ce1f42ac262c65e3d40f2d0dc8ae9edd68b064",
+      "changedFields": [],
+      "currentSha256": "c967b5c51035a88f0f504ff513ce1f42ac262c65e3d40f2d0dc8ae9edd68b064",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "88e76a7b15a6ab662b4b3541166d9a3f467af5857b6ccb93bd5b81668ce43d37",
+      "changedFields": [
+        {
+          "baseline": "545ff76c6dc322127e69f5a5f0dd9764009fc5837345ded0b428f772b5d25ab2",
+          "current": "e1fb858a499bddd514b2a5376214b64b4a3a88fed4a5db73e0807687aeb0f727",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "4d689c024d98694bf4f394b65dfd24ef6b1688e47d20230522ce46e7d3f3df83",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "772a4c380ab0243a523cad35af53c2db7938aae274c6f5fc9ebcd1b13dad75f4",
+      "changedFields": [
+        {
+          "baseline": "00879f8c80f10aae3badf35f575aba27b007f5cd4575c42b10a271bf1b5df45f",
+          "current": "4010f5f3fbfdecff37640c2059ffeb0e175c4fdc9d302c2bd0a8d341425d85d7",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "52f6d7e3eba42f4ea2e2b9b29f71707e77f47b4743674cda0c85fbe526b10c39",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "c38421e96475e46888987bff186445db92fb1c6042a65b233938bb7f3a08f85c",
+      "changedFields": [],
+      "currentSha256": "c38421e96475e46888987bff186445db92fb1c6042a65b233938bb7f3a08f85c",
+      "key": {
+        "family": "RB15_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "6aa37acb3a78e59d41408da85e7db69016e51a2913de62e012547a8e93a51c07",
+      "changedFields": [
+        {
+          "baseline": 1334,
+          "current": 1363,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 558,
+          "current": 613,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "d3e2f61475c22f2b5ce99de70fe9f52b524189453ed95050ce956a801dc1fb1b",
+          "current": "c1a3f21286cd60eafa60d534b03dde32f771458918895b3c67ffd5574dc2c760",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "9a4807493dcecf97e62493fb98027b56208cc3ea01e353c8af68bfa5d6e574a1",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "a36d50828ea233786442c8279b0c318358768825e589c939f86eff38554e1c25",
+      "changedFields": [],
+      "currentSha256": "a36d50828ea233786442c8279b0c318358768825e589c939f86eff38554e1c25",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "35ad5f9a34b4f105d4d4de62915bee65d3becd3d2e224bab1e335687a711d767",
+      "changedFields": [
+        {
+          "baseline": "2faaa94b4b297c1b823681bfbd24d9a49a8208d84a2ba36d36bc41f80c2c6768",
+          "current": "b38308fa776778435402235a3ecb57e41325daaba02792b3cd9427193afba016",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "ed34fd73c959544256eaf8357dd06e1ad9f5b8c6c612a62d4b6079a89caea9b4",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "a210199f1393e503d485f6670831ad696870e67eedd7488b32f693a196c32c10",
+      "changedFields": [
+        {
+          "baseline": "1ad99eb33af1f4736e258169c144e30729a55d366c828319696e4acfb5cb1492",
+          "current": "6a4b1aa6f0a9de4b714a263f21a1784243319cc3a8b6ba418cd454cfc98fb344",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "9e78d9e78ed6d9989bac385341f017c9c3ccf493d3c9ede072394b95ae21e739",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "2cf9548423ae2251ef3514763f65941233b810ca0d4e50867b1cd9cacd17d504",
+      "changedFields": [],
+      "currentSha256": "2cf9548423ae2251ef3514763f65941233b810ca0d4e50867b1cd9cacd17d504",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "e542f3a85aa29345cbe09e40f6320d6586bed8856bcb21953e976ea5a92cdf6e",
+      "changedFields": [
+        {
+          "baseline": 761,
+          "current": 759,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 701,
+          "current": 697,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "7fec5bc4a107ffd8d1e4ad644b1cc7f4f248abdc1ec1ee430afb3020d0b6d585",
+          "current": "e00b5a53ddb9e0d2fa7baf68ddd5f0f7390ad516ea3a49878edfa42e1ff005ba",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "5be89210edcb6d5ca2cfae2fef908ca289d7693b1f9a286223682f17418fabe9",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "0597397d112d5fa57126bf36f5d7abf00491631495626e1e97606d6bf2bdaf38",
+      "changedFields": [],
+      "currentSha256": "0597397d112d5fa57126bf36f5d7abf00491631495626e1e97606d6bf2bdaf38",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "7aca116632b3a9f06bf3af7927fa0bca14fef6db57f148a4e5a29ab08ee34ee5",
+      "changedFields": [
+        {
+          "baseline": "9a10dbfa95c6d7ec877c09a459d83afd6254efd90710c6103843caf6803bbff7",
+          "current": "0506ef0899199253c11d5cac5aa2e9bc8794de27098f0e94aea1bdbdd47a153e",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "54395d8309899f8c3c18900ceb5004fe61334cb3dce59d11b5a9e77ca4c01a0f",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "540626fa6ba0cb39009b329511d80fcf04e64b6b1be5dab83f762a9ea02c6f57",
+      "changedFields": [
+        {
+          "baseline": "0f49a193e6dd0dd519986ae4415ca6fd2572485c648edc46622fcf3a59e2f36f",
+          "current": "4053351c3708dd2f5d81197ffa4782142dfa2d9ff323e8058ca83c86fcc1d124",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "a8fdb82280b79f7e81756b00340bd5f97fe7ac0ea1421122f0d8b88b53a3be52",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "da141d59c861b917374094e94e2c32d4da4ad9b5a7723b4630e20947417e46dd",
+      "changedFields": [],
+      "currentSha256": "da141d59c861b917374094e94e2c32d4da4ad9b5a7723b4630e20947417e46dd",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "3ae773b7254b1675262fe89e98758d32140584b5da7f06ab505117d162a8e1f3",
+      "changedFields": [
+        {
+          "baseline": 493,
+          "current": 505,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 449,
+          "current": 450,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "f891d107b75621bc09bedb219560e0b1f617bbf6cf13dc6b32b383c0efbe9ab6",
+          "current": "3d47cef0a59711a3c25d4393d747120cb24367c6375a64be65a0fefe091a4a41",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "99ab92a098604dc2d2bb79f2b6106035acac841b604bf0f24785d34435661420",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "9b879e3dbd3a9dd5863cfc40515c897cc454080aefa974d67003cb4602d87f8c",
+      "changedFields": [],
+      "currentSha256": "9b879e3dbd3a9dd5863cfc40515c897cc454080aefa974d67003cb4602d87f8c",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "ed6e63c567eb1ab8077eeaa03654f9bb443fa9b323413fca4edc62ead1b07df1",
+      "changedFields": [
+        {
+          "baseline": "786cd4e1ed679b0c02e070f674d96f66aa6836ede2c1f38cf83e5f09fa9698f0",
+          "current": "1ddb3d55f39797e4a0a8c0568ddbe64430e11ac06c1f296aa5eff0690ecba81c",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "c4c67844c700116ef6c2a041d1c577edd494db40ead94207f3a05adc7ee547f8",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "c969fc98b331751cedf06538a6525a0b9cfaabea1983172c3ba0d01bfd25baf4",
+      "changedFields": [
+        {
+          "baseline": "c2fcf0f10b7e6ed2adab5367b9ffc562ed17bc431c45187c24d7e24c4133dac4",
+          "current": "0794fa1a9947b03e7fa70fcc268448c4f4869e363580fe40c4a27ab9ee44187b",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "968f1ed560d25c8a774b0fa3e2b6178d71d0b0fd4d54c971817bf337e7bb9ec9",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "5863a66eb5f98df32d8104e631fecbedd9ddb5c8c58ba6b31191cb7fc7036711",
+      "changedFields": [],
+      "currentSha256": "5863a66eb5f98df32d8104e631fecbedd9ddb5c8c58ba6b31191cb7fc7036711",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "2c7a45a39a9884b94c51b50d2ef273d4b7ad2c829d7558631e0b0592b3af0f9e",
+      "changedFields": [
+        {
+          "baseline": 258,
+          "current": 264,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 224,
+          "current": 222,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "297aa9a12f52fba28b0f8179ba17d8ace19b6ee841ef976aa75d6f3e3617a51d",
+          "current": "d2fd48cf2bedd56bcbcfa34ed6175beb7a3c3d73a6f17aa6057a91ed2f57b51e",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        }
+      ],
+      "currentSha256": "8778958883bf76a663c702fa889351dd2b11312f425d7c0dfd1c2428f379578a",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "95ef666dee9f02122f50f789885b4b12adc45cf8760fd8c36294e1a27e44701f",
+      "changedFields": [],
+      "currentSha256": "95ef666dee9f02122f50f789885b4b12adc45cf8760fd8c36294e1a27e44701f",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "eb432d024862cf5f014d9bd687b5536fadce2379efb06960b2e094a63a117a83",
+      "changedFields": [
+        {
+          "baseline": "ae321dcceaac86c392bb0020d9cef838ee07fafe2998c3ffc02435d939b0a63b",
+          "current": "1be6c5de6c65849a6783eba40fdcd1462d9bfbe17333caee0c8e2caf48191a63",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "f1d5175c82709c4c164049cd018b4828d047d5f654d27c76fb3f1a46f03783ea",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "9775e34fea27bbe8dfd230ab0263df27b3d0bba3527f2cad040ff808642a01e8",
+      "changedFields": [
+        {
+          "baseline": "77136e0036d8644190c9c4894468064b940c7ebe42c2aff2e3364ca39c9e3a7f",
+          "current": "563b07f9d0b9cb6cbd7508407893156e14e48f1a9528ad103cd3a86ed5d3fbd8",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "534cd22fda24026b8b402015ae1d6c2e2f55e94e251de4957d7bc33460056e28",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "1388982b103e968867393d30aecfd7b940382bb2736d5a425cad2aab07f3e7f1",
+      "changedFields": [],
+      "currentSha256": "1388982b103e968867393d30aecfd7b940382bb2736d5a425cad2aab07f3e7f1",
+      "key": {
+        "family": "COMPOSED_CONTROLLED_INDICATOR",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "ef27f67b9ad9845994d5ff6c5a29e232be5d776e61ad017287a1b87bde163987",
+      "changedFields": [
+        {
+          "baseline": 3263,
+          "current": 3073,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 2550,
+          "current": 2397,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "047fd663d75cae551e66a6b909bf0f01978bf454f777db9847f59a5817d198f9",
+          "current": "da364529ae004cc9b52359edfada9d2f06a3d6428c2165840f2dee1a375c120a",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        },
+        {
+          "baseline": 594,
+          "current": 565,
+          "field": "$.maxAdvanceMillis",
+          "reason": "runtime observation varies between census executions"
+        }
+      ],
+      "currentSha256": "d342dea7567409be19e4a18daa3ff9c6cf43c49a176ff32d76166dd3ba507978",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "1a27a1f18ca80e599d58d260af9c76352b073ca722ef12a9f4d0595bca265376",
+      "changedFields": [],
+      "currentSha256": "1a27a1f18ca80e599d58d260af9c76352b073ca722ef12a9f4d0595bca265376",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "09a70b71bcb850308ef2deaed1aa3af6b9efd5fd799dc94aa2e23c8a598266a9",
+      "changedFields": [
+        {
+          "baseline": "0bea4d7f512068a193531f3595730e2aa7256cd8006ae45c0404b0289076b758",
+          "current": "664d8cd2759f6885975bdcd06ccf8612aa03d300f0965fe12c959ed855c80a1d",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "95c9f04090fcaa1274583ff0a0c0136850f8082f8f62d2cc3b20bda05697bf61",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "e3fcac316ffe9914e2ddce92d920bca31010d11fd4130be5631b50df89b17cbe",
+      "changedFields": [
+        {
+          "baseline": "db53031e5f808dd9604f718c6d5607a9e41ad96ca8509e79162edbe0446dda99",
+          "current": "0c132d688e66f2c5f2af6d4bf6d1c0f899e8c15c43703c1ab197268e80b472b3",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "792fe78d2c87a851112730156be6b4d7234d4f8e203a266b7af1a3656720b4fa",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "89547b32cc59043b3e8b482444b6b36c47d6a307a9a64164c1af1b66aecce862",
+      "changedFields": [],
+      "currentSha256": "89547b32cc59043b3e8b482444b6b36c47d6a307a9a64164c1af1b66aecce862",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "0"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "dd7597762ad01868e6ab06090823cb567ff18dcf771e277e67cac124f0474da9",
+      "changedFields": [
+        {
+          "baseline": 2573,
+          "current": 2554,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 2160,
+          "current": 2166,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "294be1706b3dc37a46f183180d097b1df1268585ed02ad77aad806ee5744d420",
+          "current": "0a1f12b616b59da2791de3e82d0d6fe7276840b47d169aa370c231fe4c0e81f0",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        },
+        {
+          "baseline": 423,
+          "current": 430,
+          "field": "$.maxAdvanceMillis",
+          "reason": "runtime observation varies between census executions"
+        }
+      ],
+      "currentSha256": "69f9bbe118f2fca6cb80a1ba0a7866b4e0f2cc09f009d14c1d0c712fb4aa3e8a",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "b96e20cbf34cf66f0315e3af083dd8970716d104e8347658200fbd34b26ea15d",
+      "changedFields": [],
+      "currentSha256": "b96e20cbf34cf66f0315e3af083dd8970716d104e8347658200fbd34b26ea15d",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "b84b2b00531cbdcd014a268a7a883d871f1736fc88a3ebd73fc272478bd99091",
+      "changedFields": [
+        {
+          "baseline": "ee88b42c09e22815068e0a2634ad67fe23f4d270a65021b2b5812a5b3584284a",
+          "current": "2255e22f13cc4ee42ef49a6999c73afd9fd5780ddfdd746028d8ada00c0eb891",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "c6ff95629767d5677cc7a433c499bc3583689b992d228bcb918e040e41d863c6",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "b9995263690c025a9367c08c85c55b6f01c5ed7cf7e500fbbcd99da2500954aa",
+      "changedFields": [
+        {
+          "baseline": "492f903bfa17a8c040d3b439c910859e76fbbcb464c3339ebcef13d0ff8896f6",
+          "current": "9685d87a74cf20cfb5048c789bcf0e9229bd44cccf544c7320c7c92440206504",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "7c6a55dd025046fa7980493803400e5f914307b652bbcaffdd3c94e37beedbab",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "f6207b7bad09b22b182c6f979de796535c2702b34c89c34ecee7c093549b0649",
+      "changedFields": [],
+      "currentSha256": "f6207b7bad09b22b182c6f979de796535c2702b34c89c34ecee7c093549b0649",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "17"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "19b3005443513863e4e5fd8dd1f4df85d8fddd9c3499ce4041eed56d5696c707",
+      "changedFields": [
+        {
+          "baseline": 1861,
+          "current": 1549,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 3085622,
+          "current": 3084848,
+          "field": "$.generationRoutingExpansions",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": 1427,
+          "current": 1224,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "44e76d5a1a8e9be6a8768557945858605b232f2a7f341c59614caee24652620b",
+          "current": "6b795bcd2b7671bd57e17893bde334cef1cfb5d578ca47720f08781117ff26c0",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        },
+        {
+          "baseline": 549,
+          "current": 346,
+          "field": "$.maxAdvanceMillis",
+          "reason": "runtime observation varies between census executions"
+        }
+      ],
+      "currentSha256": "9d19aff0196cb3868df88ac7da115d147f2c60b307fd9702af76856ac4c0c3f4",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "af1b2203452ca52187f9bf7c5c016ffa64bb39960f50a5af3344f3607ad08082",
+      "changedFields": [],
+      "currentSha256": "af1b2203452ca52187f9bf7c5c016ffa64bb39960f50a5af3344f3607ad08082",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "b1e4dfd354d227c1ed657a0625d5b3a872af88663beac66cd31db3245e070230",
+      "changedFields": [
+        {
+          "baseline": "a4b7e0b1a86dcb94803318a50a278028da33416e1b11ea72fa09d3738002a7b9",
+          "current": "ad0e38b8d865e0d429553c210b363bf95d6f2945462588c3ebeff68093485ce4",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "e014ad9267a009641b5b503ea48adba057c6a747e6735eec1756cca264c459af",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "883093c3016b045663a51a5fb52bb8360bb7d722fe9356df50539013cc9d90f4",
+      "changedFields": [
+        {
+          "baseline": "1696976833cd6b9dcb73a2b0f8706f5f26a6901a710ed211a29e67dacb8ce7dc",
+          "current": "04e04da02199a8662fd0be99db1e4f0f506772e60d20dc4dca69148d517c3dc7",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "2516813f3f9d4b726f0ba277bcc1d3ad0ee0f4775c3cbe8fa660a620580e4b31",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "354669a056812f44e11318d6edd4def496e99330a7626348e65383ae611b453b",
+      "changedFields": [],
+      "currentSha256": "354669a056812f44e11318d6edd4def496e99330a7626348e65383ae611b453b",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "13"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    },
+    {
+      "baselineSha256": "cb343342492ff1f63637b0dbaa19d965ff86ee4144b0f6af0ac8ae955e418da0",
+      "changedFields": [
+        {
+          "baseline": 3202,
+          "current": 2964,
+          "field": "$.elapsedMillis",
+          "reason": "runtime observation varies between census executions"
+        },
+        {
+          "baseline": 2581,
+          "current": 2420,
+          "field": "$.generationRoutingMillis",
+          "reason": "routing structure or work may change under the packing candidate"
+        },
+        {
+          "baseline": "bd674518164b844e27d207dfaeed569e2180896946800226123cd88bd24031eb",
+          "current": "851df912be92be2e5600333ef10d6da942054fe1617f3dc52bc35ff1688327bd",
+          "field": "$.geometrySha256",
+          "reason": "physical geometry may change; outline area remains gated"
+        },
+        {
+          "baseline": 18,
+          "current": 19,
+          "field": "$.layoutAlgorithmVersion",
+          "reason": "intended layout epoch change"
+        },
+        {
+          "baseline": 497,
+          "current": 392,
+          "field": "$.maxAdvanceMillis",
+          "reason": "runtime observation varies between census executions"
+        }
+      ],
+      "currentSha256": "5807c8e8a474287af6ceb532578aff2fbc4f6c622f6dd92982a21f573eeaad0b",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_PACKING_CASE"
+    },
+    {
+      "baselineSha256": "729398d0f2fa7a208c8655fd3e34997915b6565c89cd24b3e298cf5a8a1ac434",
+      "changedFields": [],
+      "currentSha256": "729398d0f2fa7a208c8655fd3e34997915b6565c89cd24b3e298cf5a8a1ac434",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_WHITESPACE_CASE"
+    },
+    {
+      "baselineSha256": "b5435e189df9785a2ea72f08a416b653702a8a85b00ddf7192a1b4b6b2a1a1b3",
+      "changedFields": [
+        {
+          "baseline": "e6e1ab84fc066054a4a4709d0e91b6a9900b0875a916f6df88b96d7106dd87c8",
+          "current": "88edeffcbb14a2555375286d39e88ecf87eda54cfbf8c84d517033ba49e42040",
+          "field": "$.geometryApartFromTitleSha256",
+          "reason": "physical geometry/label position may change"
+        }
+      ],
+      "currentSha256": "23b78038d3081e6afc5cdd8f3dd1d7817d2b0add7478e38710590c55e01dcde4",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_SILK_CASE"
+    },
+    {
+      "baselineSha256": "62b677639c72d6300e8a968ffc2d883e55a15bde6f1834634af014e2a1a0b6f8",
+      "changedFields": [
+        {
+          "baseline": "5fb3e2da74a72b10db9aae351e9e29093448280cc7aa6b8e38dda8be21bb4923",
+          "current": "e7b1430f65e8be01ced4a03d614094c643648ad99c01fda6b59c369f2b97d182",
+          "field": "$.geometryApartFromReferenceTextSha256",
+          "reason": "physical geometry digest may change; exposed identity and ink metadata remain exact"
+        }
+      ],
+      "currentSha256": "5eadc27ac5d72d89b6e8f30cd460a3d5fd37777298f4160b02716a35a72d35e1",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_NORMAL_REFERENCE_CASE"
+    },
+    {
+      "baselineSha256": "612868e02db1e77d7bac2f7302dfdd0556f16523a168a28fc5227ef107216188",
+      "changedFields": [],
+      "currentSha256": "612868e02db1e77d7bac2f7302dfdd0556f16523a168a28fc5227ef107216188",
+      "key": {
+        "family": "RB30_CONTROL",
+        "root": "-9223372036854775808"
+      },
+      "row": "PCB_LEAD_SILK_CASE"
+    }
+  ],
+  "rowCounts": {
+    "PCB_LEAD_SILK_CASE": 44,
+    "PCB_NORMAL_PACKING_CASE": 44,
+    "PCB_NORMAL_REFERENCE_CASE": 44,
+    "PCB_NORMAL_SILK_CASE": 44,
+    "PCB_WHITESPACE_CASE": 44
+  },
+  "schema": "packing-via-cap-census-comparison@1",
+  "status": "PASS"
+}

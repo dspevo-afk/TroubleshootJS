@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SOURCE_ONLY_NO_PRODUCTION_BLOCKER",
+  "reviewer": "via_outlier_scope Luna/MAX leaf",
+  "base": "076674ffe402dffee7238352533fc117cb4b1d82",
+  "consumedBlobs": {
+    "PcbLayerRoutingPrototype": "149edf888842bc6d43b07e7baac43e98e2b7546c",
+    "SeededPcbLayoutGenerator": "2d90b56c4f39a11f604f2e09394d111e303574da",
+    "PcbPlacementConstraints": "e165e2ba6eaf536e097511fe80b05a0755843462",
+    "PcbPackingProbeReceipt": "2bfc75605760c10e8b74646067a7a7adff0b553b"
+  },
+  "findings": [
+    "Ordinary overloads retain policy.vias; explicit caps validate0..policy.vias, preexisting holes and nonPTH still rejected.",
+    "Both search guards enforce immutable session cap; final overcap is uncaught invariant error after validation.",
+    "Alreadycomputed incumbent via count passed only into optional P07 packing probe; P05/default/cost/order/budgets untouched.",
+    "Typed route rejection retains incumbent; layout19/packing3 and canonical@3 identify interpretation."
+  ],
+  "limits": "Read-only production source review. No edit/test/build/browser execution. Test fixtures and actual target/matrix/player acceptance remain root responsibility."
+}

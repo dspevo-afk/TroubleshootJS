@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "owners": {
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "5927d17160a70d3e816e7b44477f6a98c5abba274fa49787e591c10aa57548a5",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "c7d2f17a3e4b2a892beae7856b5d00dce9af66f7d50d2c3f802ec74d8116cf68",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "e1ef75f6b00098d8d5a9a9965622a81463426eb470a8b50f6c0c8f9ae16ff97d",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "6f3af5412696b6dbf3e14593edf195151825483a9a034b7dadbb9043b854980f",
+    "tests/contracts/A03IdentityContractTest.java": "480b01830262b6eb84f642263d3ef562907b99ac7d2f55a4a97361bc76799ac3",
+    "tests/contracts/MediumBoardPhysicalPolicyContractTest.java": "c36b2cd5da02136212eab3d0305a65e491c7927bacbaf06c762fc474d2c53be7",
+    "tests/contracts/P07TwoLayerContractTest.java": "dd918cf1cc92903b66f774f12bfd9f44f587e8a42df2efb34e98e255106e860f",
+    "tests/contracts/PcbCompactnessContractTest.java": "796d538ca6115261c12d52f38cb644a03a47c5110d7addd92bfaeab690f4b49d",
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": "fbb0d83ba1854f390e9188e6fba446628ac60ee6e478af0a2e6633545b4d520d",
+    "tests/contracts/PcbPackingProbeReceiptContractTest.java": "0f06a05d67d41e33acb679dd766185511a11a7964fb9037110c8f2db905623c4",
+    "tests/contracts/Q30NormalCorpusContractTest.java": "28aafe8d0bfe962fc19faa4b649f311ce4027c3c46e91d8631c23aa27cee66dd"
+  },
+  "scope": "All four production and seven test owner diffs. Ordinary policy cap unchanged; optional packing probe alone gets immutable incumbent via cap; both search guards and invariant publish guard; no policy/cost/order/heuristic/RNG/search budget changes. Layout19/packing3/current consumer/stale negatives migrated. Boundary fixture independently connects alternating routing-grid boundary pairs, preserves old tests and graph/geometry atomicity. Earlier undefined helper calls fixed and first false minimum assumption retained in failed attempt.",
+  "limits": "Root source review only. Actual r2 fixture and target decision pending; no build/matrix/player acceptance."
+}

@@ -456,7 +456,7 @@ diagnostic measurement path may request an extended allowance. The continuation/
 terminal completion, and completion is delivered even if UI restoration throws.
 
 `PcbPlacementCompactor` removes empty routing-courtyard bands and, for explicit
-normal packing2, runs one bounded connected-vacancy pass. Every candidate retains
+normal packing3, runs one bounded connected-vacancy pass. Every candidate retains
 exact package geometry and rigidly translated pad/probe targets, then passes the
 original placement validator. The generator keeps its fully routed incumbent
 until a separately routed alternative passes the final metric guard. It neither
@@ -5908,12 +5908,13 @@ See the [border-trim evidence and current gate status](task-evidence/PCB/post-se
 ## Normal-player retained-route pocket refinement
 
 All eleven active normal providers use `SeededPcbLayoutGenerator`. Immutable
-`PcbPlacementConstraints.placementPackingVersion` explicitly selects packing2;
+`PcbPlacementConstraints.placementPackingVersion` explicitly selects packing3;
 legacy/default1 and held private RB56 keep the original policy. The general
-layout identity is17 and public replay is `tsj-alpha/6`; dependency canonicalization
-includes nondefault packing interpretation. Saved private geometry-body oracles
-retain their original hashes with only the explicit16-to17 fingerprint prefix
-normalization. The player catalog remains eleven enabled/twelve registered,
+layout identity is19 and public replay is `tsj-alpha/6`; dependency canonicalization
+includes nondefault packing interpretation. Historical private geometry-body
+evidence records its explicit epoch normalization; current literal consumers
+require layout19 and reject stale18. The player catalog remains eleven
+enabled/twelve registered,
 with HARD RB56 held from normal requests.
 
 The original placement candidates, routing selection and fully finished winner
@@ -5921,13 +5922,18 @@ remain the incumbent. `RoutedCandidate` carries the exact plan returned after
 `compactRouted` alongside its finalized layout through both small and medium
 selection. This plan stays in the routing grid frame; the display crop may
 translate by a non-grid amount and must never become a new router input.
-Packing2 uses one canonical pass of at most five existing vacancy origins per
-movable package, bounded by the existing60000 placement evaluations. Anchors,
+The connected-pocket placement pass uses one canonical pass of at most five
+existing vacancy origins per movable package, bounded by the existing60000 placement evaluations. Anchors,
 isolation bodies, declared domains, access and source-grid phases remain intact.
 
-One optional route uses the incumbent's P05 or resumable P07 strategy. An unchanged
-placement does not route again. Primary medium six-placement/three-per-strategy
-counters retain their meaning; all probe orderings, expansions and route time
+One optional route uses the incumbent's P05 or resumable P07 strategy. Packing3
+passes the already-measured incumbent via count as an immutable request-local
+P07 cap. Ordinary routes keep their existing policy cap. Session and Search
+carry the bound; both via-placement predicates enforce it, and publishing above
+it is an invariant error. A cap may be reduced within0..policy.vias, with no
+policy mutation, new candidate, cost/heuristic/order/RNG or budget change.
+An unchanged placement does not route again. Primary medium six-placement/
+three-per-strategy counters retain their meaning; all probe orderings, expansions and route time
 contribute to aggregate work. Deterministic remaining expansion/order headroom
 bounds the probe, without selecting geometry from elapsed clock time. Typed
 physical/route-quality rejection keeps the immutable incumbent. Unknown failures,
@@ -5948,7 +5954,7 @@ candidate objects at the real packing decision. Explicit NOT_MEASURED,
 BASELINE_UNAVAILABLE, BASELINE_ONLY, CANDIDATE_UNAVAILABLE and COMPARED states
 distinguish skips, route rejection, unavailable grids and actual comparison.
 Bounded reasons and state/disposition/strict-metric consistency are validated.
-These diagnostic fields are omitted from the unchanged normal-packing@2
+These diagnostic fields remain omitted from the normal-packing@3
 canonical, graph/geometry/save/session identities, player UI and scoring.
 Unsupported metric grids retain the NO_HEADROOM disposition with a distinct
 diagnostic state; there is no repeated production measurement or routing loop.
@@ -5962,8 +5968,8 @@ route rejections with no optional packing receipt compare entirely unchanged.
 The actual verifier compiles all declared test definitions regardless selected
 execution, so changing another test is a compiler-input change for native gates.
 
-The informed44 comparison retains all admissions/source graphs, with nine area
-gains and no protected metric regressions at its frozen candidate. Final15 native
+The initial packing2 informed44 comparison retained all admissions/source graphs,
+with nine area gains and no protected metric regressions at its frozen candidate. Final15 native
 contracts, the active11 matrix (220 admissions and exact replays), actual JDK8/GWT5
 and headed normal repair/retest/download/FileReader flows pass. The subsequent
 browser-test-only consumer migration is outside native/GWT/player inputs;

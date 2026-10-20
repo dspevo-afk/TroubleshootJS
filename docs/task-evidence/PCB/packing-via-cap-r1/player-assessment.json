@@ -1,0 +1,50 @@
+{
+  "status": "PASS_FINITE_FINAL_PLAYER",
+  "candidateSha256": "19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89",
+  "identities": {
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 3CFF2F2CCF419ECA909C78CF33A99D3A"
+    },
+    "multirail": {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5776064669694490064",
+      "build": "tsj-alpha/6 / 3CFF2F2CCF419ECA909C78CF33A99D3A"
+    },
+    "rc": {
+      "replay": "tsj-alpha/6/EASY/RC_DELAY/-9187226374781659024",
+      "build": "tsj-alpha/6 / 3CFF2F2CCF419ECA909C78CF33A99D3A"
+    },
+    "composed": {
+      "replay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/7141843758046216173",
+      "build": "tsj-alpha/6 / 3CFF2F2CCF419ECA909C78CF33A99D3A"
+    }
+  },
+  "events": 35,
+  "failedObservers": 5,
+  "images": {
+    "multirail-fitted.jpg": {
+      "sha256": "17382b09f23e24b138a0e4a4b97c54845eac6732d96d21d22990881dc3862d75",
+      "bytes": 166945
+    },
+    "rc-generated-fitted.jpg": {
+      "sha256": "dab7e30bd14d05c5d769dbb46164dced728b82e8dbf1cb7b85a352a90c7492bd",
+      "bytes": 140086
+    },
+    "composed-generated-fitted.jpg": {
+      "sha256": "007311ce9f0218343e087e7ac9d6dee8899b8df6abc41c90b9d406ddf2fdbb9d",
+      "bytes": 147963
+    },
+    "led-isolated-ol.jpg": {
+      "sha256": "f86d75f13b2db246c6e5cc3ce83522b82ecd0dafeef8be02458110060b6a209b",
+      "bytes": 146833
+    },
+    "led-repaired.jpg": {
+      "sha256": "ba3e5e342d1b311e38e5933933a10b59a674c3198cc41ac94a249122bcd311fd",
+      "bytes": 134062
+    }
+  },
+  "publicBodies": 30,
+  "diagnosticPrivacyTokensAbsent": true,
+  "sourceAndServedProvenanceBeforeAfterExact": true,
+  "limits": "Finite two exact replays plus first actual generated RC/composed and known LED diagnosis-to-freshPASS and finalOFF only; source/gates/native44+active220 separately bound. Console details and every failed observer retained; no all-seed/manufacturing/performance/Edge/CDP/FileReader/full-suite claim"
+}

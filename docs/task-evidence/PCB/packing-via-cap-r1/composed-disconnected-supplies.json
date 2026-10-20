@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Disconnect Supply 1 (+5V)",
+    "disconnectedObserved": true
+  },
+  {
+    "name": "Disconnect Supply 2 (+5V)",
+    "disconnectedObserved": true
+  },
+  {
+    "name": "Disconnect Supply 3 (+5V)",
+    "disconnectedObserved": true
+  }
+]

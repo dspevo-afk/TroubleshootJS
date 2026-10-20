@@ -1,0 +1,22 @@
+{
+  "phase": "preview-stop",
+  "actualExecExitCode": 0,
+  "scope": "Separate root observation after actual tool exec exit; no termination attempted",
+  "elapsedSeconds": 0.0046791,
+  "launchSha256": "df562d4fd8908a4ac46d8005712a58f87f3e07867c4a45b82b5bcca83ae009e0",
+  "status": "PASS",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "pid": 29368,
+      "recordedBirthExited": true,
+      "startTicks": "639281206202063027"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 22192,
+      "recordedBirthExited": true,
+      "startTicks": "639281206204344176"
+    }
+  ]
+}

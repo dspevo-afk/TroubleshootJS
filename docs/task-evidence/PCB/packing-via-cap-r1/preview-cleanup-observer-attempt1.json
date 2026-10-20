@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_ROOT_OBSERVER_FILENAME",
+  "actualLaunchFile": "preview-process-launch.json",
+  "reason": "Generic helper expected a different artifact prefix; no cleanup receipt created and host observer not invoked. Actual startup PASS remains separate.",
+  "actualPreviewStartExecExitCode": 0,
+  "attemptedPrefix": "preview-start"
+}

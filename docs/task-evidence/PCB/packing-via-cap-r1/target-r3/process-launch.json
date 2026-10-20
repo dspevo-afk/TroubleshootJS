@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 24564,
+      "startTicks": "639281188733439821",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 25252,
+      "startTicks": "639281188735775151",
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Actual task-owned native adapter, two births captured before invalid/valid seed invocations",
+  "phase": "packing-metric-diagnostic"
+}

@@ -1,0 +1,11 @@
+P07_SMALL linked=false policy=ONE_LAYER outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=SPARSE_LINK outcome=SUCCESS expansions=8315 vias=0 length=1040
+P07_SMALL linked=false policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=3405 vias=2 length=700
+P07_SMALL linked=false policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=670 vias=2 length=700
+P07_SMALL linked=true policy=ONE_LAYER outcome=LEFT:BRANCH_QUALITY_LIMIT expansions=13160 vias=0 length=0
+P07_SMALL linked=true policy=SPARSE_LINK outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=RESTRICTED_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_SMALL linked=true policy=FULLER_TWO_LAYER outcome=SUCCESS expansions=57 vias=0 length=540
+P07_VIA_CAP ordinary outcome=SUCCESS accepted=true expansions=3667 vias=2
+P07_VIA_CAP boundary cap=1 outcome=OVER:NO_PATH accepted=false expansions=28933 vias=0
+PASS: P07 two-layer contracts assertions=11955

@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "textFilesScanned": 333,
+  "privatePathWsCredentialMatches": [],
+  "limits": "Task packet text only; raw public bodies/images preserved. Root separately reviews added tracked diff and exact intended index."
+}

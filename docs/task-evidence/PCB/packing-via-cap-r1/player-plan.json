@@ -1,0 +1,39 @@
+{
+  "scope": "Actual final production packing3 incumbent via-cap, visible smaller multi-rail, first generated RC/composed and normal repair/retest",
+  "candidate": "final/candidate-inputs.json",
+  "viewport": [
+    1280,
+    900
+  ],
+  "browser": "Established headed sandboxed installed Brave fallback after earlier built-in Browser capture failures; no Edge/CDP-wrapper claim",
+  "replays": {
+    "multirail": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5776064669694490064",
+    "led": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  },
+  "checks": [
+    "Exact multi-rail replay admits with original customer complaint; Fit and close detail remain normal public views; disconnect every actual supply, BoardOFF and tray0",
+    "Normal actual first New board RC and composed admissions, record exact public replay identity, original complaint and all suppliesOFF; no seed substitution or handcraft",
+    "Known LED original complaint; disconnect5V, isolate original R1, actual physicalOHM/public red and black terminal probes readOL",
+    "Remove original R1, actual Shop330Ohm replacement install; actualOFF330Ohm; exitOHM, connect5V and await fresh customerPASS modal; finalOFF and original faulty part remains in tray",
+    "No diagnostic metric fields, metric values or hidden fault answer labels appear in normal public bodies"
+  ],
+  "primaryImages": [
+    "multirail-fitted.jpg",
+    "rc-generated-fitted.jpg",
+    "composed-generated-fitted.jpg",
+    "led-isolated-ol.jpg",
+    "led-repaired.jpg"
+  ],
+  "evidence": "Raw public bodies/images/action events; exact final candidate1482/24 and independent CLI/served six fields before/after; browser/preview birth identities and normal API/maintained cleanup",
+  "limits": "Finite current exact multi-rail and LED plus first actual RC/composed requests, paired44/active220 separately. No allseed/manufacturing/performance/Edge/CDP/FileReader/full-suite claim. Preserve failures and cleanup distinction.",
+  "generatedFamilies": {
+    "rc": {
+      "family": "RC_DELAY",
+      "profile": "EASY"
+    },
+    "composed": {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM"
+    }
+  }
+}

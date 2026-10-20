@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "canaries": [
+    {
+      "name": "valid-epoch-frame",
+      "result": "ACCEPTED_AS_EXPECTED"
+    },
+    {
+      "name": "admission",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "graph-id",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "component-id",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "public-metadata",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "metric-area",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "metric-copper",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "metric-vias",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "metric-protected-void",
+      "result": "REJECTED_AS_EXPECTED"
+    },
+    {
+      "name": "allowed-geometry-improvement",
+      "result": "ACCEPTED_AS_EXPECTED"
+    }
+  ]
+}

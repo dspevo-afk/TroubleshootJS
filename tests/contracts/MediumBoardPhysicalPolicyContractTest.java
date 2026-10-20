@@ -200,11 +200,11 @@ public final class MediumBoardPhysicalPolicyContractTest {
 
     /** Elapsed time is an observation; every deterministic receipt byte remains. */
     private static String withoutPackingWallClock(String canonical) {
-        String namespace = "normal-packing@2";
+        String namespace = "normal-packing@3";
         if (canonical.indexOf(namespace) < 0 ||
                 canonical.indexOf(namespace) != canonical.lastIndexOf(namespace))
             throw new IllegalArgumentException("Expected exactly one packing receipt");
-        Matcher clock = Pattern.compile("normal-packing@2;attempts=[01];orderings=[0-9]+;" +
+        Matcher clock = Pattern.compile("normal-packing@3;attempts=[01];orderings=[0-9]+;" +
             "expansions=[0-9]+;millis=([0-9]+);route=").matcher(canonical);
         if (!clock.find())
             throw new IllegalArgumentException("Missing nonnegative packing clock");
@@ -214,10 +214,10 @@ public final class MediumBoardPhysicalPolicyContractTest {
 
     private static void verifyPackingClockComparison() {
         final String receipt = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
-            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=417;" +
+            "normal-packing@3;attempts=1;orderings=1;expansions=7;millis=417;" +
             "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;selected=aaaa;failure=null";
         String expected = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
-            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
+            "normal-packing@3;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
             "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;selected=aaaa;failure=null";
         check(withoutPackingWallClock(receipt).equals(expected) &&
             withoutPackingWallClock(receipt.replace("millis=417;", "millis=603;")).equals(expected),

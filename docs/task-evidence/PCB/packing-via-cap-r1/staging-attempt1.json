@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_ROOT_STAGING_ARGUMENT",
+  "actualToolExecExitCode": 1,
+  "nativeExitCode": "NOT_CAPTURED",
+  "result": "Git treated the private pathspec manifest as an outside-repository positional path. No index path was staged.",
+  "correction": "Use structured Python subprocess argv with one --pathspec-from-file=<private manifest> argument; no shell expression inside native option.",
+  "limits": "Root publication preparation error, source/gates/results unchanged; no attempted commit or push."
+}

@@ -1,0 +1,20 @@
+{
+  "status": "PASS_ROOT_FINAL_INDEX_REVIEW",
+  "baseCommit": "076674ffe402dffee7238352533fc117cb4b1d82",
+  "sourceSealSha256": "19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89",
+  "reviewedPathsBeforeThisReceipt": 356,
+  "intendedFinalPaths": 357,
+  "indexMapSha256": "6841307ae09f206414fcae533cf7cc689e067c84140c513fbd4bf80e282a7760",
+  "privateFullActualIndexDiffSha256": "93ab384fbb75bd6d4693b16b0e08053b3e4f15f2ee9bc50d876d67f8ffd345e8",
+  "allPacketIndexBlobsRawExact": true,
+  "rootSourceDocsIndexBlobsEqualReviewedWorkingCanonical": true,
+  "addedLinePrivatePathWsCredentialMatches": 0,
+  "diffChecks": {
+    "cached": 0,
+    "working": 0
+  },
+  "gates": "Fresh final20contracts/paired44/active220+220/exacttarget4092/JDK8GWT5/player4/5rawframes/CLIserved6/24birthcleanup all pass",
+  "reviewScope": "Root complete eleven-owner source/test diff and three docs; all intended packet data/receipts/readers/raw snapshots/hash projections plus prior publication receipt checked against actual index bytes. Independent review covers production4 source only. Failed attempts remain.",
+  "publication": "Commit/push/exact remote proof pending; no main/email",
+  "limits": "Finite explicit evidence only; final review receipt is one additional root-controlled blob, verified separately after staging."
+}

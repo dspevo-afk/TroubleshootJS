@@ -618,7 +618,7 @@ public final class Q30NormalCorpusContractTest {
 
     /** Elapsed time is an observation; every other deterministic receipt byte remains. */
     private static String withoutPackingWallClock(String canonical) {
-        final String namespace = "normal-packing@2";
+        final String namespace = "normal-packing@3";
         if (canonical == null)
             throw new IllegalArgumentException("Missing medium-policy receipt");
         int namespaceStart = canonical.indexOf(namespace);
@@ -630,7 +630,7 @@ public final class Q30NormalCorpusContractTest {
         if (namespaceStart != canonical.lastIndexOf(namespace) ||
                 countOccurrences(canonical, "millis=") != 1)
             throw new IllegalArgumentException("Expected exactly one packing receipt clock");
-        Matcher clock = Pattern.compile("normal-packing@2;attempts=[01];orderings=[0-9]+;" +
+        Matcher clock = Pattern.compile("normal-packing@3;attempts=[01];orderings=[0-9]+;" +
             "expansions=[0-9]+;millis=([0-9]+);route=").matcher(canonical);
         if (!clock.find())
             throw new IllegalArgumentException("Missing or duplicate nonnegative packing clock");
@@ -653,11 +653,11 @@ public final class Q30NormalCorpusContractTest {
 
     private static void verifyPackingClockComparison() {
         final String receipt = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
-            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=417;" +
+            "normal-packing@3;attempts=1;orderings=1;expansions=7;millis=417;" +
             "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;" +
             "selected=aaaa;failure=null";
         final String expected = "MEDIUM_BOARD@1;outcome=SUCCESS;packingProbe=" +
-            "normal-packing@2;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
+            "normal-packing@3;attempts=1;orderings=1;expansions=7;millis=[wall-clock];" +
             "route=P07_FULLER_TWO_LAYER;disposition=KEPT;baseline=aaaa;" +
             "selected=aaaa;failure=null";
         check(withoutPackingWallClock(receipt).equals(expected) &&
@@ -701,7 +701,7 @@ public final class Q30NormalCorpusContractTest {
             withoutPackingWallClock(receipt + ";packingProbe=" + receipt);
         } }, "duplicate packing namespaces accepted by comparison");
         checkThrows(new Runnable() { public void run() {
-            withoutPackingWallClock(receipt.replace("normal-packing@2", "malformed-packing"));
+            withoutPackingWallClock(receipt.replace("normal-packing@3", "malformed-packing"));
         } }, "packing receipt without its namespace accepted by comparison");
     }
 

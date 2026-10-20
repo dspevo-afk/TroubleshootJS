@@ -1,0 +1,7 @@
+{
+  "status": "PASS_ACTUAL_OPERATION",
+  "phase": "fixture-r3",
+  "elapsedSeconds": 41.975783,
+  "inputSealSha256": "f7a73374d8b8ef707bd165c77d3027a4d3cf7afde636aa30a9fbeb6acf091af6",
+  "limits": "Actual maintained P07 fixture/all declared test compilation; no full matrix/build/player claim"
+}

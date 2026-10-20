@@ -1,0 +1,181 @@
+{
+  "currentProfileAbsent": true,
+  "managedStateAbsent": true,
+  "recordedBirths": 24,
+  "status": "PASS",
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "pid": 28648,
+      "startTicks": "639281183991258184",
+      "source": "fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 19952,
+      "startTicks": "639281183993517639",
+      "source": "fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 32604,
+      "startTicks": "639281186596908869",
+      "source": "fixture-r2/fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 8012,
+      "startTicks": "639281186599211306",
+      "source": "fixture-r2/fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 26252,
+      "startTicks": "639281188045475452",
+      "source": "fixture-r3/fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25512,
+      "startTicks": "639281188053194525",
+      "source": "fixture-r3/fixture-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 24564,
+      "startTicks": "639281188733439821",
+      "source": "target-r3/process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25252,
+      "startTicks": "639281188735775151",
+      "source": "target-r3/process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 31716,
+      "startTicks": "639281191740768102",
+      "source": "final/contracts-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 16636,
+      "startTicks": "639281191746986160",
+      "source": "final/contracts-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25920,
+      "startTicks": "639281193380794615",
+      "source": "final/matrix-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 18368,
+      "startTicks": "639281193389463224",
+      "source": "final/matrix-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25492,
+      "startTicks": "639281195691639077",
+      "source": "final/census-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 29072,
+      "startTicks": "639281195700123151",
+      "source": "final/census-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 25704,
+      "startTicks": "639281196493408798",
+      "source": "final/target-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 4068,
+      "startTicks": "639281196505655553",
+      "source": "final/target-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 17272,
+      "startTicks": "639281197078876311",
+      "source": "final/build-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 17672,
+      "startTicks": "639281197087367027",
+      "source": "final/build-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 17052,
+      "startTicks": "639281198138575829",
+      "source": "preview-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 30536,
+      "startTicks": "639281198150676921",
+      "source": "preview-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 29368,
+      "startTicks": "639281206202063027",
+      "source": "preview-stop-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 22192,
+      "startTicks": "639281206204344176",
+      "source": "preview-stop-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 15544,
+      "startTicks": "639281198933686789",
+      "source": "browser-owner.json",
+      "executable": "brave.exe"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 11612,
+      "startTicks": "639281198186199281",
+      "source": "preview-owner-before.json",
+      "executable": "powershell.exe"
+    }
+  ],
+  "limits": "Separate root observations after actual operation exits; no termination/deletion, no broad process scan. Shared Node kernel/private logs/older unrelated and blocked resources preserved.",
+  "port8907Released": true,
+  "elapsedSeconds": 0.3971445,
+  "browserApiExit0": true,
+  "actualPreviewStopExecExitCode": 0
+}

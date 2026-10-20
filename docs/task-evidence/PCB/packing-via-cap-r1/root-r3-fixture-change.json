@@ -1,0 +1,6 @@
+{
+  "status": "SOURCE_ONLY_PREEXECUTION_FIX",
+  "previousRawSha256": "dd918cf1cc92903b66f774f12bfd9f44f587e8a42df2efb34e98e255106e860f",
+  "currentRawSha256": "ebe2a5ad8baea07d45de3b14f5ccd0552ffcd3735331a2f4f95a6dcc15bd6d18",
+  "change": "Primary TOP matches original control; literal actual pad coordinates plus ordinary outcome log before assertions. R2 raw source/failure retained. Production unchanged."
+}

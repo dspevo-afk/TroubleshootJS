@@ -1,0 +1,15 @@
+{
+  "drivers": [
+    {
+      "pid": 29368,
+      "executable": "pwsh",
+      "startTicks": "639281206202063027"
+    },
+    {
+      "pid": 22192,
+      "executable": "pwsh",
+      "startTicks": "639281206204344176"
+    }
+  ],
+  "phase": "preview-stop"
+}

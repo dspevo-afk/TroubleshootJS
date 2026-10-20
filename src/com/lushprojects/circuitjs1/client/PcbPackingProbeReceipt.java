@@ -150,7 +150,7 @@ final class PcbPackingProbeReceipt {
     }
 
     String toCanonical() {
-        return "normal-packing@2" +
+        return "normal-packing@3" +
             ";attempts=" + attempts +
             ";orderings=" + orderings +
             ";expansions=" + expansions +

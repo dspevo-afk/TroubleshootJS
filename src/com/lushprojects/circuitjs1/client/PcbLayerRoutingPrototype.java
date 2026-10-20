@@ -45,7 +45,12 @@ final class PcbLayerRoutingPrototype {
     }
     static Session begin(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer,int maximum) {
-        return new Session(board,placement,policy,observer,maximum);
+        return begin(board,placement,policy,observer,maximum,policy==null?0:policy.vias);
+    }
+    /** A request may reduce the policy's via allowance without changing the policy. */
+    static Session begin(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias) {
+        return new Session(board,placement,policy,observer,maximum,maximumVias);
     }
     static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
@@ -53,7 +58,11 @@ final class PcbLayerRoutingPrototype {
     }
     static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer,int maximum) {
-        Session session=begin(board,placement,policy,observer,maximum);
+        return route(board,placement,policy,observer,maximum,policy==null?0:policy.vias);
+    }
+    static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias) {
+        Session session=begin(board,placement,policy,observer,maximum,maximumVias);
         while(!session.advanceSlice()) { }
         return session.result();
     }
@@ -64,6 +73,7 @@ final class PcbLayerRoutingPrototype {
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
         private final PcbBoardLayout template;
         private final int links;
+        private final int maximumVias;
         private final Budget budget;
         private final boolean roleWidths;
         private int pass,passes;
@@ -75,10 +85,12 @@ final class PcbLayerRoutingPrototype {
         private boolean complete;
 
         Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
-                SeededPcbLayoutGenerator.AttemptObserver observer,int maximum) {
+                SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias) {
             if(board==null || placement==null || policy==null || observer==null ||
-                    maximum<1 || maximum>MAX_EXPANSIONS) throw new IllegalArgumentException("Invalid P07 request");
+                    maximum<1 || maximum>MAX_EXPANSIONS || maximumVias<0 || maximumVias>policy.vias)
+                throw new IllegalArgumentException("Invalid P07 request");
             this.board=board; this.policy=policy; this.observer=observer;
+            this.maximumVias=maximumVias;
             roleWidths=board.getPlacementConstraints().getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS;
             observer.check(0);
             if(!placement.getHoles().isEmpty()) throw new IllegalArgumentException("P07 requires an undrilled candidate");
@@ -115,7 +127,7 @@ final class PcbLayerRoutingPrototype {
                     previousFailedNet=null;
                     candidate=template.copyForRouting();
                     try {
-                        search=new Search(board,candidate,policy,observer,budget,pass,promotedNet);
+                        search=new Search(board,candidate,policy,observer,budget,pass,promotedNet,maximumVias);
                     } catch(Exhausted failure) {
                         reason=failure.getMessage();
                         candidate=null;
@@ -133,6 +145,8 @@ final class PcbLayerRoutingPrototype {
                         candidate.validateRoutingGeometry(board);
                         search.rules.validate(candidate);
                         candidate.validateRouteQuality();
+                        if(candidate.getHoleCount()>maximumVias)
+                            throw new IllegalStateException("P07 route exceeded its request via allowance");
                         observer.check(pass); // No partial routes or holes can escape a failed/cancelled attempt.
                         candidate.setRoutingStatistics(budget.expanded,search.segments,0);
                         result=new Result(candidate,"SUCCESS",budget.expanded,passes,links);
@@ -353,7 +367,7 @@ final class PcbLayerRoutingPrototype {
         final Policy policy;
         final SeededPcbLayoutGenerator.AttemptObserver observer;
         final Budget budget;
-        final int pass,minX,minY,width,height,cells,primary;
+        final int pass,minX,minY,width,height,cells,primary,maximumVias;
         final PcbTwoLayerRules rules;
         final PcbNetRouter.Router[] faces=new PcbNetRouter.Router[2];
         final PcbPadPlacement[] pads;
@@ -370,10 +384,12 @@ final class PcbLayerRoutingPrototype {
         private Publisher publisher;
         private boolean complete;
         Search(TroubleshootBoard board,PcbBoardLayout layout,Policy policy,
-                SeededPcbLayoutGenerator.AttemptObserver observer,Budget budget,int pass,String promotedNet) {
+                SeededPcbLayoutGenerator.AttemptObserver observer,Budget budget,int pass,String promotedNet,
+                int maximumVias) {
             this.board=board; this.layout=layout; this.policy=policy;
             this.observer=observer; this.budget=budget; this.pass=pass;
             this.promotedNet=promotedNet;
+            this.maximumVias=maximumVias;
             Rectangle r=layout.getBoardOutline(); minX=r.x+GRID; minY=r.y+GRID;
             width=(r.width-2*GRID)/GRID+1; height=(r.height-2*GRID)/GRID+1;
             if(width<1 || height<1 || (long)width*height>MAX_CELLS) throw new Exhausted("GRID_LIMIT");
@@ -664,7 +680,7 @@ final class PcbLayerRoutingPrototype {
             if(policy.transitions==0) return false;
             for(PcbBoardHole hole:holes)
                 if(hole.x==x && hole.y==y) return net.equals(hole.netId);
-            if(holes.length>=policy.vias) return false;
+            if(holes.length>=maximumVias) return false;
             Rectangle land=new Rectangle(x-PcbTwoLayerRules.VIA_LAND,y-PcbTwoLayerRules.VIA_LAND,
                 PcbTwoLayerRules.VIA_LAND*2,PcbTwoLayerRules.VIA_LAND*2);
             if(!PcbTwoLayerRules.inside(layout.getBoardOutline(),land) || !rules.permits(net,land) ||
@@ -679,7 +695,7 @@ final class PcbLayerRoutingPrototype {
             return true;
         }
         boolean pathViaFits(Node current) {
-            if(layout.getHoleCount()+current.transitions+1>policy.vias) return false;
+            if(layout.getHoleCount()+current.transitions+1>maximumVias) return false;
             int pathIndex=0;
             for(Node node=current;node.previous!=null;node=node.previous) {
                 if((pathIndex++&255)==0) observer.check(pass);

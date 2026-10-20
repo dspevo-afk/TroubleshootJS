@@ -1,0 +1,18 @@
+{
+  "candidateSha256": "19fff0daa98be9291bf81c2c841f52b98ddc80b9a5e5a5eec975874ae4e8bf89",
+  "gates": {
+    "player-plan.json": "0d03311920c37dcdfdc96b6047ab0edbb48ed94b3007c4d8626f8e76dcb3db14",
+    "player_inputs.py": "11580866bfea837d558f23bee91dcf3a349256ba0e765ca47c9ccc7092d4d9db",
+    "launch_player.ps1": "e7f6025a2e57946733b757ec97728012bd19374b394a38b0b13738ef8de16ca7",
+    "stop_player.ps1": "8148c4eed5fc8e378c1e3b3b80ec69043b6418fa457ed593c3344255cbcd9142",
+    "observe_player_host.ps1": "fe3802c76300463784447f7e3a4a5dde5f1f0c677d063a12e24fc39777a2c589",
+    "review_player.py": "f55321805243a4ee2d3c7de9aceedab0e4e77ff69ba4204c4b92c14e9751a3cb"
+  },
+  "finalGates": {
+    "contracts": "5d64676fd439a6f70bae39daab27b5096b47c7c9f300e802553b2e55c17e155a",
+    "census": "18d9c111c8b90c47b03e9ea10765c870efe4c10ed737d59467688b4207120207",
+    "target": "fd8c72fd0c64b6d1333f10c8f726fa4adfb352880afad76710ad396509d2ac77",
+    "matrix": "146729851e043f5e51c848b9bc1fe2e021082b8981639c0137efea88d2835138",
+    "build": "3cbbcb2104bd8eb2a3d8ca04a430066c6d2a5ddee367ff7ee5e3537c693f4f71"
+  }
+}

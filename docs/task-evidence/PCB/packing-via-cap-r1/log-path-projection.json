@@ -1,0 +1,118 @@
+{
+  "status": "PASS_PATH_ONLY_PROJECTION",
+  "logs": [
+    {
+      "path": "fixture.txt",
+      "rawSha256": "3668875467d23315b6bb940ccf6f22fb587082af95df828313fab79ab2a3bd04",
+      "rawBytes": 1927,
+      "publicSha256": "3668875467d23315b6bb940ccf6f22fb587082af95df828313fab79ab2a3bd04",
+      "publicBytes": 1927,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "fixture-r2/fixture.txt",
+      "rawSha256": "e3ce7da7725c4fdfeb8efd24c93f99bd16e4ddc8297e98be6b12f78a48c97fc1",
+      "rawBytes": 1925,
+      "publicSha256": "e3ce7da7725c4fdfeb8efd24c93f99bd16e4ddc8297e98be6b12f78a48c97fc1",
+      "publicBytes": 1925,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "fixture-r3/fixture.txt",
+      "rawSha256": "2ade84e915ae6fbcfdb684e1728d6499c1f02606adea3a62cc13d6bdf8ef9115",
+      "rawBytes": 1675,
+      "publicSha256": "2ade84e915ae6fbcfdb684e1728d6499c1f02606adea3a62cc13d6bdf8ef9115",
+      "publicBytes": 1675,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "target-r3/native.txt",
+      "rawSha256": "f7fcb5a5f7c1db67aa3700d910782dacfca8106a03d439458a94411f1e277ca2",
+      "rawBytes": 136545,
+      "publicSha256": "f7fcb5a5f7c1db67aa3700d910782dacfca8106a03d439458a94411f1e277ca2",
+      "publicBytes": 136545,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "final/contracts.txt",
+      "rawSha256": "cf2e1e012d51fba89875c8eb4698c67c5482b8086082617d092876c7614d2b2f",
+      "rawBytes": 475671,
+      "publicSha256": "cf2e1e012d51fba89875c8eb4698c67c5482b8086082617d092876c7614d2b2f",
+      "publicBytes": 475671,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "final/matrix.txt",
+      "rawSha256": "d2c17303288ec2b47b1f0587ae840acef526aad3e1938136828e3b0a4e9a5d1c",
+      "rawBytes": 1748,
+      "publicSha256": "d2c17303288ec2b47b1f0587ae840acef526aad3e1938136828e3b0a4e9a5d1c",
+      "publicBytes": 1748,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "final/census.txt",
+      "rawSha256": "d13cd9cefe190a90b05170fcde9ed06fb88db6111ac914b30c1285abb977611a",
+      "rawBytes": 316424,
+      "publicSha256": "d13cd9cefe190a90b05170fcde9ed06fb88db6111ac914b30c1285abb977611a",
+      "publicBytes": 316424,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "final/target.txt",
+      "rawSha256": "169eb44fcdf2c379a94fedd8830e77f802bfc6ecd9c3f76f7939beb226da6a3c",
+      "rawBytes": 7323,
+      "publicSha256": "169eb44fcdf2c379a94fedd8830e77f802bfc6ecd9c3f76f7939beb226da6a3c",
+      "publicBytes": 7323,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "final/build.txt",
+      "rawSha256": "1d95cec2e52ff24f9f17aa4172679ea9531bcf0f9ef8a26cba8e55809f76cb96",
+      "rawBytes": 1250,
+      "publicSha256": "c94f3f2a5c15276352b8d8351a588fd06fa714a2f55a87ffc96dec51b6c153d1",
+      "publicBytes": 1186,
+      "prefixReplacements": {
+        "ownedCheckoutPrefix1": 1
+      },
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": true
+    },
+    {
+      "path": "preview-start.txt",
+      "rawSha256": "03e5b39c7850aecfbae3fe9d28298b1364e2f404003bfc83d87f91a8da34e38c",
+      "rawBytes": 190,
+      "publicSha256": "03e5b39c7850aecfbae3fe9d28298b1364e2f404003bfc83d87f91a8da34e38c",
+      "publicBytes": 190,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    },
+    {
+      "path": "preview-stop.txt",
+      "rawSha256": "43ff37361837f76d2103d95e6df793e507367435b0095377370dfb3336a3bacf",
+      "rawBytes": 77,
+      "publicSha256": "43ff37361837f76d2103d95e6df793e507367435b0095377370dfb3336a3bacf",
+      "publicBytes": 77,
+      "prefixReplacements": {},
+      "allOtherBytesExact": true,
+      "rawPreservedPrivately": false
+    }
+  ],
+  "limits": "Only exact owned checkout prefix variants replaced. Complete changed originals retained privately/hash-bound; every failure and all remaining bytes preserved. Source/helpers/receipts untouched."
+}
