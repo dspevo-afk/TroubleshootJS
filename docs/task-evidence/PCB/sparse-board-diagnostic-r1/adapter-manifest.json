@@ -1,0 +1,39 @@
+{
+  "status": "GENERATED_PRIVATE_TASK_ADAPTER",
+  "maintainedSourceSha256": "b87cd0569c5a3f263aa08d9fb5ed07d201f2c37e2934be2c393015ab03c129d3",
+  "generatedSha256": "11e0943321521168e0b9e499c7a632e6d11dc92e467dc118b0b2a5340971e802",
+  "generatedBytes": 83025,
+  "changes": [
+    {
+      "label": "explicit task inputs and canonical signed-long validation",
+      "replacements": 1,
+      "oldSha256": "3ab92784b0c6a24fb2d65fd368e98e4ed427f7af8f65a7fd0b6b0918a732dd29",
+      "newSha256": "b1ad4fc00b2e870fdc868e5e6a2b616e457bbe16f659fd3e8ae3633579416831"
+    },
+    {
+      "label": "explicit repository and maintained process-module owner",
+      "replacements": 1,
+      "oldSha256": "5a5f5eed27a4cdaab79cc2747e1a97272cb50b956214b319ae8f67a37f7273c2",
+      "newSha256": "40c0741c1adde524036d8245e9219159b8a60a890fb302ae69465664a73e5c6f"
+    },
+    {
+      "label": "add one task-owned class/marker without changing maintained definitions",
+      "replacements": 1,
+      "oldSha256": "a1aad1ef000fd9e2cf16c295167ee8f9a5d9827643b11d2e13c4e8ef512e9ef9",
+      "newSha256": "dd720016e728f6609111cf31b06e1f69219c7fd5318492c93be7a5b942614800"
+    },
+    {
+      "label": "resolve only task-owned class from frozen external source",
+      "replacements": 1,
+      "oldSha256": "df5a4bc4234a16868469403c3b040969e8a2131922cbb88f4eab4103b248a3fe",
+      "newSha256": "5fea572041800127c4d6bad1c86795dcdbafd99ec87477418339f410ca2f704f"
+    },
+    {
+      "label": "pass exact seed only to selected task class",
+      "replacements": 1,
+      "oldSha256": "4876b7e553a88c665c9b49a337908f24321b6f3ead93d06e8771dcdb8df57f14",
+      "newSha256": "6e9d89e29b45162911cab1ac7cf6c647cef454918c3e6ca8844d79ef3b8e606a"
+    }
+  ],
+  "limits": "Private generated adapter, not an unchanged maintained verifier invocation. Existing JDK8/compiler/native jobs/budgets/cleanup and all maintained class definitions remain; only one task-owned class registration/source/family+seed hook and explicit paths added. No production/script/test checkout edits"
+}

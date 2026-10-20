@@ -1,0 +1,34 @@
+{
+  "status": "PASS_ROOT_INTEGRATED_SOURCE_RECEIPT_PRIVACY_REVIEW",
+  "baseCommit": "e877c2cf6a790804dbb5a64693ab799ee9e7ea1d",
+  "baselineSealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "exportSealSha256": "89e2f3078c28dcef98179d76a054b6594decb0bed8d3b497e1623754505408af",
+  "assessmentSha256": "7cfc708fc1db6a344fcd28c9934685894961839fae18b322dd2991068ba25b33",
+  "executionReuseAuditSha256": "8a8b56c46dc2be5949e2cb1d2c3f568ef743847cb26821d7a0c140eb47be090e",
+  "scope": "Root reviewed complete released exporter/helper/adapter diff/reader and exact actual native rows, immutable identities, physical membership, independent metrics, receipt selection and actual driver exits. Source-only explorer and implementation leaf are not independent runtime reviewers.",
+  "checks": {
+    "pythonSyntax": "PASS",
+    "powerShellSyntax": "PASS",
+    "actualInvalidSeedAndFamily": "PASS",
+    "actualRc": "PASS",
+    "actualComposed": "PASS",
+    "independentReaderAndEightNegatives": "PASS",
+    "unchangedInputs1482AndMachinery24": "PASS",
+    "freshExecution6": "PASS",
+    "rawPacketPrivacy": "PASS",
+    "diffWhitespace": "PASS"
+  },
+  "rawEvidence": {
+    "canaries/timing.json": "43b6ce634a988d6be8f0b2b6a252af09563605f6ab228ca98e16a87a2596999f",
+    "canaries/process-launch.json": "abce55cc1a777697b8b7e0946c95652b5ed589fd71205131bbb8f4b893ef8803",
+    "canaries/process-cleanup.json": "93ae3356f6fba332361b98a8b11d7ab531dff3c7a4f0af968cea2e0432f922ed",
+    "rc/timing.json": "0bb259f66c79faaab50c0d23aadf996df4a377d0ab56c2dd1e03c1a41634d19c",
+    "rc/process-launch.json": "604e8fdcc0be6bc9fa87bbc7ccbd418f21ef9d00edcc70ec76383958d40badd0",
+    "rc/process-cleanup.json": "bb3ba3e463b662b03ba3ba9cf6a2e455b3fe903d706cb8ce7a8132a56abffa99",
+    "composed/timing.json": "d9c62d9cdd3e609245d30bdbc62a2b5867c0580c84ade2a160e0102d6e31ff81",
+    "composed/process-launch.json": "7ef73c0d6a959ce361900a726b9f9e54123056b25391cb078e9c8cf6f491b4a1",
+    "composed/process-cleanup.json": "0dc88db53b6f0ffe1346789a5f5c6e251ef92ade8a20d47660f6806951f60ee2"
+  },
+  "publication": "NOT_YET_RUN",
+  "limits": "No production/test/machinery change; prior build/player reused only within exact source/execution boundary. No new size, electrical, full-matrix, manufacturing or all-seed proof."
+}

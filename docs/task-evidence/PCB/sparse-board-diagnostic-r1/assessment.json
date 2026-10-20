@@ -1,0 +1,752 @@
+{
+  "status": "PASS_EXACT_SELECTED_NORMAL_BOARD_DIAGNOSIS",
+  "inputSealSha256": "89e2f3078c28dcef98179d76a054b6594decb0bed8d3b497e1623754505408af",
+  "canaryElapsedSeconds": 0.7018292,
+  "results": {
+    "rc": {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "publicSeed": "-9187226374781659024",
+      "replayId": "tsj-alpha/6/EASY/RC_DELAY/-9187226374781659024",
+      "geometrySha256": "4461e1a3b116bd3ba02f02d18258d721c3bfe0d0b06ba7df7e6ff5dbc3698b60",
+      "logicalBoardGraphSha256": "6a1cf393fbff8c1e82053366d6aaebe1d645e6c69e122ba9f722142cbc2c41dd",
+      "counts": {
+        "logicalParts": 6,
+        "layoutParts": 6,
+        "logicalPads": 12,
+        "layoutPads": 12,
+        "logicalNets": 3,
+        "traces": 9,
+        "holes": 0
+      },
+      "outline": [
+        50,
+        50,
+        922,
+        465
+      ],
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 428730,
+        "copper": 3920,
+        "vias": 0,
+        "protectedVoid": 36800,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=1;expansions=12524;millis=15;route=P05_ONE_FACE;disposition=KEPT;baseline=4461e1a3b116bd3ba02f02d18258d721c3bfe0d0b06ba7df7e6ff5dbc3698b60;selected=4461e1a3b116bd3ba02f02d18258d721c3bfe0d0b06ba7df7e6ff5dbc3698b60",
+        "attempts": 1,
+        "orderings": 1,
+        "expansions": 12524,
+        "millis": 15,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "4461e1a3b116bd3ba02f02d18258d721c3bfe0d0b06ba7df7e6ff5dbc3698b60",
+        "selectedGeometrySha256": "4461e1a3b116bd3ba02f02d18258d721c3bfe0d0b06ba7df7e6ff5dbc3698b60",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 428730,
+            "copper": 3920,
+            "vias": 0,
+            "protectedVoid": 36800
+          },
+          "candidate": {
+            "area": 414900,
+            "copper": 3130,
+            "vias": 0,
+            "protectedVoid": 38000
+          },
+          "unavailableReason": null
+        }
+      },
+      "whitespaceSampler": {
+        "seed": "-9187226374781659024",
+        "version": 1,
+        "parts": 6,
+        "gridUnits": 10,
+        "sampledCells": 4232,
+        "packageAccessOccupiedCells": 2249,
+        "protectedFreeCells": 1377,
+        "protectedFreeFraction": 0.3253780718336484,
+        "largestProtectedEmptyRectangle": {
+          "x": 50,
+          "y": 50,
+          "width": 920,
+          "height": 40,
+          "area": 36800
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "componentEnvelopes": [
+        {
+          "componentId": "C1",
+          "packageId": "RADIAL_ELECTROLYTIC_CAPACITOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            316,
+            157,
+            70,
+            64
+          ],
+          "routingCourtyard": [
+            301,
+            153,
+            110,
+            110
+          ],
+          "accessEnvelope": [
+            281,
+            91,
+            150,
+            192
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "C2",
+          "packageId": "RADIAL_CERAMIC_CAPACITOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            851,
+            157,
+            50,
+            53
+          ],
+          "routingCourtyard": [
+            841,
+            149,
+            80,
+            90
+          ],
+          "accessEnvelope": [
+            817,
+            94,
+            124,
+            165
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "J1",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            114,
+            337,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            100,
+            323,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            80,
+            283,
+            176,
+            202
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "J2",
+          "packageId": "THROUGH_HOLE_OUTPUT_HEADER_2",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            634,
+            347,
+            84,
+            54
+          ],
+          "routingCourtyard": [
+            620,
+            339,
+            112,
+            70
+          ],
+          "accessEnvelope": [
+            600,
+            284,
+            152,
+            145
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "R1",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            556,
+            147,
+            120,
+            34
+          ],
+          "routingCourtyard": [
+            498,
+            134,
+            236,
+            60
+          ],
+          "accessEnvelope": [
+            436,
+            94,
+            360,
+            120
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "R2",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            396,
+            337,
+            80,
+            34
+          ],
+          "routingCourtyard": [
+            338,
+            324,
+            196,
+            60
+          ],
+          "accessEnvelope": [
+            276,
+            284,
+            320,
+            120
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        }
+      ],
+      "elapsedSeconds": 42.8052006,
+      "receiptSha256": "4769848699f1f7a847b6777108fd0b2b375fcc1cb11f146b45f84623aafbf7f5"
+    },
+    "composed": {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "publicSeed": "7141843758046216173",
+      "replayId": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/7141843758046216173",
+      "geometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+      "logicalBoardGraphSha256": "1ee4360acaaae20dde88fa3f1817c153b0864dc0cd7f32791ab789e8a4d0cd0b",
+      "counts": {
+        "logicalParts": 15,
+        "layoutParts": 15,
+        "logicalPads": 32,
+        "layoutPads": 32,
+        "logicalNets": 11,
+        "traces": 21,
+        "holes": 0
+      },
+      "outline": [
+        60,
+        40,
+        1552,
+        795
+      ],
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 1233840,
+        "copper": 9060,
+        "vias": 0,
+        "protectedVoid": 142800,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=3;expansions=174696;millis=37;route=P05_ONE_FACE;disposition=KEPT;baseline=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609;selected=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "attempts": 1,
+        "orderings": 3,
+        "expansions": 174696,
+        "millis": 37,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "selectedGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 1233840,
+            "copper": 9060,
+            "vias": 0,
+            "protectedVoid": 142800
+          },
+          "candidate": {
+            "area": 1233840,
+            "copper": 9250,
+            "vias": 0,
+            "protectedVoid": 83200
+          },
+          "unavailableReason": null
+        }
+      },
+      "whitespaceSampler": {
+        "seed": "7141843758046216173",
+        "version": 1,
+        "parts": 15,
+        "gridUnits": 10,
+        "sampledCells": 12245,
+        "packageAccessOccupiedCells": 6477,
+        "protectedFreeCells": 4953,
+        "protectedFreeFraction": 0.404491629236423,
+        "largestProtectedEmptyRectangle": {
+          "x": 1060,
+          "y": 40,
+          "width": 340,
+          "height": 420,
+          "area": 142800
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "componentEnvelopes": [
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            1464,
+            148,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            1450,
+            134,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            1406,
+            94,
+            176,
+            202
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/Q1",
+          "packageId": "TO92_NMOS",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            924,
+            506,
+            64,
+            56
+          ],
+          "routingCourtyard": [
+            901,
+            484,
+            120,
+            118
+          ],
+          "accessEnvelope": [
+            856,
+            444,
+            185,
+            192
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/RG",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            446,
+            728,
+            100,
+            34
+          ],
+          "routingCourtyard": [
+            388,
+            715,
+            216,
+            60
+          ],
+          "accessEnvelope": [
+            326,
+            675,
+            340,
+            120
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/RPD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            826,
+            728,
+            100,
+            34
+          ],
+          "routingCourtyard": [
+            768,
+            715,
+            216,
+            60
+          ],
+          "accessEnvelope": [
+            706,
+            675,
+            340,
+            120
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/LED1",
+          "packageId": "THROUGH_HOLE_LED",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            741,
+            511,
+            50,
+            50
+          ],
+          "routingCourtyard": [
+            732,
+            504,
+            78,
+            92
+          ],
+          "accessEnvelope": [
+            707,
+            464,
+            123,
+            171
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            446,
+            538,
+            120,
+            34
+          ],
+          "routingCourtyard": [
+            388,
+            525,
+            236,
+            60
+          ],
+          "accessEnvelope": [
+            326,
+            485,
+            360,
+            120
+          ],
+          "regionId": "channel-a",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            124,
+            248,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            110,
+            234,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            90,
+            194,
+            176,
+            202
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/Q1",
+          "packageId": "TO92_NMOS",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            774,
+            146,
+            64,
+            56
+          ],
+          "routingCourtyard": [
+            751,
+            124,
+            120,
+            118
+          ],
+          "accessEnvelope": [
+            706,
+            84,
+            185,
+            192
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/RG",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            406,
+            138,
+            100,
+            34
+          ],
+          "routingCourtyard": [
+            348,
+            125,
+            216,
+            60
+          ],
+          "accessEnvelope": [
+            286,
+            85,
+            340,
+            120
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-driver/nmos-low-side-driver-alt@1/nmos-low-side-driver-alt@1/component/RPD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            806,
+            338,
+            120,
+            34
+          ],
+          "routingCourtyard": [
+            748,
+            325,
+            236,
+            60
+          ],
+          "accessEnvelope": [
+            686,
+            285,
+            360,
+            120
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/LED1",
+          "packageId": "THROUGH_HOLE_LED",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            931,
+            131,
+            50,
+            50
+          ],
+          "routingCourtyard": [
+            922,
+            124,
+            78,
+            92
+          ],
+          "accessEnvelope": [
+            897,
+            84,
+            123,
+            171
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/RLOAD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            446,
+            348,
+            120,
+            34
+          ],
+          "routingCourtyard": [
+            388,
+            335,
+            236,
+            60
+          ],
+          "accessEnvelope": [
+            326,
+            295,
+            360,
+            120
+          ],
+          "regionId": "channel-b",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            1464,
+            388,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            1450,
+            374,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            1406,
+            334,
+            176,
+            202
+          ],
+          "regionId": "power-input",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/LED1",
+          "packageId": "THROUGH_HOLE_LED",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            1101,
+            511,
+            50,
+            50
+          ],
+          "routingCourtyard": [
+            1092,
+            504,
+            78,
+            92
+          ],
+          "accessEnvelope": [
+            1067,
+            464,
+            123,
+            171
+          ],
+          "regionId": "power-indicator",
+          "domainId": "low-voltage"
+        },
+        {
+          "componentId": "tsj-realization-v1/controlled-indicator@1/supply-indicator/supply-present-indicator@1/supply-present-indicator@1/component/RSUP",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            1186,
+            708,
+            80,
+            34
+          ],
+          "routingCourtyard": [
+            1128,
+            695,
+            196,
+            60
+          ],
+          "accessEnvelope": [
+            1066,
+            655,
+            320,
+            120
+          ],
+          "regionId": "power-indicator",
+          "domainId": "low-voltage"
+        }
+      ],
+      "elapsedSeconds": 43.5800189,
+      "receiptSha256": "975aa483c3c6a3f35455406dd213c66f202e6d705d7e3a0cc9c90d1ce96c17b2"
+    }
+  },
+  "readerCanaries": [
+    {
+      "phase": "rc",
+      "rejectedCondition": "public identity"
+    },
+    {
+      "phase": "rc",
+      "rejectedCondition": "pad net membership"
+    },
+    {
+      "phase": "rc",
+      "rejectedCondition": "independent copper"
+    },
+    {
+      "phase": "rc",
+      "rejectedCondition": "independent protected void"
+    },
+    {
+      "phase": "composed",
+      "rejectedCondition": "public identity"
+    },
+    {
+      "phase": "composed",
+      "rejectedCondition": "pad net membership"
+    },
+    {
+      "phase": "composed",
+      "rejectedCondition": "independent copper"
+    },
+    {
+      "phase": "composed",
+      "rejectedCondition": "independent protected void"
+    }
+  ],
+  "limits": "Finite exact accepted public replays; unchanged selected geometry and logical board declarations. Existing grid10 sampler free cells are not packability proof. No production change, new electrical/player/build proof, optimum or all-seed claim."
+}

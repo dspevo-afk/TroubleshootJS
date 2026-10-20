@@ -1,0 +1,23 @@
+{
+  "baselineSealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "baseCommit": "e877c2cf6a790804dbb5a64693ab799ee9e7ea1d",
+  "gates": {
+    "scope.md": "1c8685325184cedeaa1917bb6f8feae970c9b4f75d6c525600ef09d5948876c3",
+    "inputs.py": "8e80b8083b69c1de208bd88f0f1abeea12f1b8bd674f4d0d1e8671cba427211e",
+    "make_export_adapter.py": "952b45afc0bb784588ec9cd2b4bfea83be65a5573e576b258242661acb1e8ee4",
+    "adapter-manifest.json": "2577654edf776cbb1779c4c8d0fa103f5a63f911d6791284851354fe2a0e1b29",
+    "adapter-diff.txt": "42546c0829ab9907c8aa32dfe964d73d4eb4730241d2603dad77547aa309e6c3",
+    "export_inputs.py": "032f8ec52764a7ed29fcb90681ab7a7d5b7f84d88ed6562e1dbf6e6475635fe5",
+    "run_export.ps1": "214c76e6baeed7f7eae6b6bf9744c4a9f2a25255c7eb1a59b68b79670e8a4f22",
+    "record_exit.ps1": "a77c7dcd396dde7ac8a0f95946fb9efc2bdf246bd353c61df35c41faa3df07f8",
+    "qualify.py": "0b8ff9c9cf22599c23d430901ed8b9d3c9867f1ecb1cb63407480647b9bbcc71",
+    "reader-scope.md": "f29f69174fe0ea536a7be8fada1eb33f751a918e9815d63bdaf31a676902a3cf",
+    "export-source/SparseNormalBoardDiagnostic.java": "b0bfa9152cf71438261dec707c27e91bd0e7db5757a4a2db0851d462e239876c",
+    "export-source/NOTES.md": "a48d740af70111fd59677c5b542bafe2b496c0a0d2e341253195e0e82314b031"
+  },
+  "adapterSha256": "11e0943321521168e0b9e499c7a632e6d11dc92e467dc118b0b2a5340971e802",
+  "requests": {
+    "rc": "tsj-alpha/6/EASY/RC_DELAY/-9187226374781659024",
+    "composed": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/7141843758046216173"
+  }
+}

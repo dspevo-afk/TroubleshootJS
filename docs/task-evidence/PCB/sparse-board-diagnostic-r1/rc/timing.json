@@ -1,0 +1,9 @@
+{
+  "elapsedSeconds": 42.8052006,
+  "terminalCleanupIncluded": true,
+  "status": "PASS",
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "failure": null,
+  "exitCode": 0,
+  "phase": "rc"
+}

@@ -7,9 +7,10 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **General packing3 via cap accepted; publication review**
+**Current task:** **Sparse-board diagnosis accepted; connected-pocket scope next**
 
-The shared generator's optional P07 compaction route now uses the incumbent's
+Packing3 is published at `e877c2cf`. The shared generator's optional P07
+compaction route now uses the incumbent's
 already-measured via allowance. The actual multi-rail replay selects33.29% less
 board area, copper29840→29120, vias34→34 and protected void2270400→508800, with
 original logical declarations intact. Ordinary policies/costs/orderings/RNG and
@@ -21,11 +22,19 @@ production multi-rail, first randomRC/composed and LED OFF/isolatedOL→Shop330�
 actual330→fresh customerPASS→finalOFF pass. Five rawimages inspected; three board
 shots pasted. All24recorded births exited, currentprofile/state absent/portreleased.
 Two failed native fixtures, five failed UI observers and root integration/procedure
-errors remain explicit. Publication still requires the final staged review, commit
-and verified normal push; no main/email. [Results and limitations](task-evidence/PCB/packing-via-cap-r1/RESULTS.md).
+errors remain explicit. Normal push/exact remote/source1482+24 and postpublication
+execution6 match are verified; no main/email. [Results and limitations](task-evidence/PCB/packing-via-cap-r1/RESULTS.md).
 
-Next unstarted: actual-owner diagnosis of remaining sparse generated layouts,
-then another bounded general PCB improvement selected from measured geometry.
+Exact first-generated RC/composed public replays now have actual selected
+geometry/access/copper/packing evidence. Both already use the shared compactor.
+RC's3.23% smaller proposal is kept out because protected void grows; composed's
+proposal has no area reduction and more copper despite less void. Actual JDK8
+exports138/327, invalid family/seed host canaries, independent mapping/metrics,
+eight reader negatives and separate six driver exits pass. Source1482/machinery24
+and fresh execution6 remain exact; prior production/player evidence is reused,
+with no new build/browser/electrical/full-matrix claim. Next investigate the
+existing connected-pocket placement beside composed edge connectors; no metric,
+budget or production change chosen yet. [Diagnosis and limits](task-evidence/PCB/sparse-board-diagnostic-r1/RESULTS.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

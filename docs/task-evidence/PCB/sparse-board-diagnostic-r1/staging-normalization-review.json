@@ -1,0 +1,19 @@
+{
+  "status": "PASS_EXACT_DOCUMENT_LINE_ENDING_NORMALIZATION",
+  "initialStagingReview": "FAIL raw-byte equality at docs/CODEX_TASK_REPORT.md after intended58 paths were staged; no commit/push attempted",
+  "normalization": [
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "reviewedWorkingSha256": "0fa36938365e53415af51c5e99c31252b0b407efe407de896940428d343dae58",
+      "indexSha256": "33656ac60d47b48987de1d7ea84073bfd6e0b42dfa5e6929375dda16530d17e7",
+      "onlyDifference": "existing Git text filter CRLF-to-LF"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "reviewedWorkingSha256": "c22f5e412af9f5449d5770667b950da554f7e799f870605f87b83d4e9435e57c",
+      "indexSha256": "b8aa9afccc2aec06c41aa736607e822070f952d0c9e1bacca87a5a1a86e3d648",
+      "onlyDifference": "existing Git text filter CRLF-to-LF"
+    }
+  ],
+  "limits": "Only the two existing Markdown docs may differ solely by CRLF-to-LF under existing Git attributes. All task packet raw files remain byte exact. Initial reviewed bytes preserved privately; cached whitespace and final updated review remain required."
+}

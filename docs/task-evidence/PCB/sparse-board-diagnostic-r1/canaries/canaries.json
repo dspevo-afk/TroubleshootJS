@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "privateLogBytes": 197,
+      "kind": "seed",
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "elapsedSeconds": 0.3639508,
+      "actualAdapterExitCode": 1,
+      "privateLogSha256": "db1cf130d4b9c0100c786686ec1481a4e6886b67ec49c26208af48848555195f"
+    },
+    {
+      "privateLogBytes": 295,
+      "kind": "family",
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "elapsedSeconds": 0.3074164,
+      "actualAdapterExitCode": 1,
+      "privateLogSha256": "4387f173f04c674ea34f2327db8bec0020e4bb8b0fd2b26f687c74549ef43cb8"
+    }
+  ],
+  "limits": "Actual selected private adapter binding before JDK/compiler/native work; raw stderr private and hash-bound"
+}

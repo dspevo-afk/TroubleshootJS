@@ -1,0 +1,55 @@
+--- maintained/verify-current-contracts.ps1
++++ private-task-adapter.ps1
+@@ -1,5 +1,12 @@
+ [CmdletBinding()]
+ param(
++    [Parameter(Mandatory=$true)][string]$TaskRepositoryRoot,
++    [Parameter(Mandatory=$true)][string]$TaskExportSource,
++    [Parameter(Mandatory=$true)][ValidateSet('RC_DELAY','COMPOSED_CONTROLLED_INDICATOR')][string]$TaskExportFamily,
++    [Parameter(Mandatory=$true)][ValidateScript({
++        $taskSeedValue=[long]::Parse($_,[Globalization.CultureInfo]::InvariantCulture)
++        $taskSeedValue.ToString([Globalization.CultureInfo]::InvariantCulture) -ceq $_
++    })][string]$TaskExportSeed,
+     [string]$JavaHome = $env:JAVA_HOME,
+     [string]$PythonExe = 'python',
+     [string]$ReceiptOutputPath = '',
+@@ -233,8 +240,8 @@
+             throw '-Q30PlanSeeds requires 1-128 distinct signed-long values.'
+         }
+     }
+-    Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
+-    $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
++    $repositoryRoot = [IO.Path]::GetFullPath($TaskRepositoryRoot)
++    Import-Module (Join-Path $repositoryRoot 'scripts/VerifierIsolation.psm1') -Force
+     if ([String]::IsNullOrWhiteSpace($JavaHome)) {
+         throw 'Select JDK 8 with -JavaHome or JAVA_HOME.'
+     }
+@@ -390,6 +397,7 @@
+     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
+     if ($needsE06NativeBridge) { $sourcePaths += $nativeChipShim }
+     $testDefinitions = @(
++        @{ Name = 'SparseNormalBoardDiagnostic'; Marker = 'sparse normal board diagnostic ' },
+         @{ Name = 'StagedFamilyRegistrationContractTest'; Marker = 'staged family registration contracts ' },
+         @{ Name = 'GeneratedExternalPowerBindingsControlObservationContractTest'; Marker = 'generated power control observation contracts assertions=' },
+         @{ Name = 'ProceduralFamilyContractTest'; Marker = 'procedural family contracts ' },
+@@ -569,7 +577,9 @@
+         if ($testClasses -notcontains $selectedSuite) { throw ('Unknown current suite: ' + $selectedSuite) }
+     }
+     foreach ($testClass in $testClasses) {
+-        $testSource = Join-Path $repositoryRoot ('tests/contracts/' + $testClass + '.java')
++        $testSource = if ($testClass -ceq 'SparseNormalBoardDiagnostic') {
++            (Resolve-Path -LiteralPath $TaskExportSource).Path
++        } else { Join-Path $repositoryRoot ('tests/contracts/' + $testClass + '.java') }
+         if (-not (Test-Path -LiteralPath $testSource -PathType Leaf)) {
+             throw ('Missing current contract: ' + $testClass)
+         }
+@@ -845,6 +855,9 @@
+         }
+         $testArguments = @('-ea', '-cp', $classPath,
+             ('com.lushprojects.circuitjs1.client.' + $testClass))
++        if ($testClass -ceq 'SparseNormalBoardDiagnostic') {
++            $testArguments += @('--family', $TaskExportFamily, '--seed', $TaskExportSeed)
++        }
+         if ($testClass -eq 'Q30PlanContractTest' -and
+                 $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
+             $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {

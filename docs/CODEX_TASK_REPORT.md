@@ -1,4 +1,48 @@
-# Current checkpoint: packing3 accepted; explicit commit/push next
+# Current checkpoint: exact sparse-board diagnosis accepted; publication next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact prior origin e877c2cf6a790804dbb5a64693ab799ee9e7ea1d. User authorizes
+indefinite general PCB realism and optional Luna/MAX leaves; no final/main/email.
+Three actual new-board screenshots were pasted. Preserve seven unrelated groups,
+private logs/adapters and three older blocked browser profiles. No task process,
+preview or browser is live. All six current recorded driver births exited.
+
+Accepted packet: docs/task-evidence/PCB/sparse-board-diagnostic-r1/RESULTS.md.
+No production/test/machinery/budget/oracle/RNG/epoch change. Exact first generated
+RC replay -9187226374781659024 and composed7141843758046216173 use parsed public
+identities with no candidate search, one actual normal construction each. Both
+ordinary one-face paths already invoke compactRouted. Selected geometry and
+logical board graph remain unchanged through admission/access/routing/sampling.
+
+Frozen baseline1482 compiler inputs+24 machinery, then12 exporter/reader helpers.
+Five-substitution private verifier adapter preserves all maintained test-class
+compilation and actual JDK8/jobs/bounds. Invalid seed/family host binding rejects
+both exit1 before native work; phase0.7018292s. RC PASS138/42.8052006s; composed
+PASS327/43.5800189s. Actual tool exits0 preceded separate driver observations.
+Independent Python metrics/mapping and existing grid10 sampler agree; eight
+single-defect reader negatives pass. Fresh maintained CLI execution6 equals the
+published production/player build12.2063413s. No new GWT/browser/electrical/full
+matrix run; exact unchanged-input evidence reused. No native failure here.
+Initial staging raw-byte check failed on the two existing Markdown docs' Git
+CRLF-to-LF normalization; exact-only difference and original bytes preserved.
+
+RC selected428730/3920/0/36800; proposal414900/3130/0/38000 stays KEPT solely
+because protected void grows. Selected largest void is top strip(50,50,920,40).
+Composed selected1233840/9060/0/142800; proposal1233840/9250/0/83200 stays KEPT
+because no area reduction and copper rises. Void(1060,40,340,420) beside right
+connectors is grounded evidence, not proof of a legal full-height cut. Full
+selected bodies/access/probe/lead/copper/silk/constraints exported; no discarded
+proposal reconstruction. Source-only explorer/exporter leaves ran no checks;
+root owns source/adapter/reader/raw/privacy/integration acceptance.
+
+Next finish explicit indexed diff/whitespace checks, commit, normal push and
+exact remote verification. Include two prior packing3 publication/provenance
+receipts. Then separately scope the existing connected-pocket candidate around
+composed edge connectors; require a general legal smaller routed result and all
+four strict predicates before production. Free cells are not packability proof;
+no optimum/manufacturing/all-seed/performance claim. Continue authorized work.
+
+# Previous checkpoint: packing3 accepted; explicit commit/push next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 HEAD/prior exactorigin076674ffe402dffee7238352533fc117cb4b1d82; source candidate
