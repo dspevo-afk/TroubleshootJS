@@ -1,0 +1,30 @@
+--- published/owner-diff.txt
++++ private-experiment/owner-diff.txt
+@@ -417,6 +417,11 @@
+         long area = occupiedEnvelopeArea(placed, constraints);
+         double wire = totalWireDemand(placed, topology);
+         int evaluations = input.evaluations;
++        for (int taskSweep = 1; taskSweep <= 2 && evaluations < MEDIUM_MAX_EVALUATIONS; taskSweep++) {
++            int taskStart = evaluations;
++            int taskMoves = 0;
++            long taskAreaStart = area;
++            double taskWireStart = wire;
+         for (PcbPlacementConstraints.Part demand : constraints.getParts()) {
+             GenerationWorkScope.check();
+             if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
+@@ -478,7 +483,14 @@
+                 placed.set(index, best);
+                 area = bestArea;
+                 wire = bestWire;
+-            }
++                taskMoves++;
++            }
++        }
++            System.out.println("PCB_POCKET_SWEEP_OBSERVATION {\"schema\":\"pocket-second-sweep@1\",\"sweep\":" + taskSweep +
++                ",\"evaluationStart\":" + taskStart + ",\"evaluationEnd\":" + evaluations +
++                ",\"acceptedMoves\":" + taskMoves + ",\"areaStart\":" + taskAreaStart + ",\"areaEnd\":" + area +
++                ",\"wireStart\":" + taskWireStart + ",\"wireEnd\":" + wire + "}");
++            if (taskMoves == 0) break;
+         }
+         if (evaluations == input.evaluations) return input;
+         return new Plan(input.outline, placed, input.regions, input.courtyardArea,

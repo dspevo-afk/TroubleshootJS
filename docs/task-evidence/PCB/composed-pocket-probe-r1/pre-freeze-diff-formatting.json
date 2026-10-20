@@ -1,0 +1,16 @@
+{
+  "status": "PASS_PREEXECUTION_DIFF_DISPLAY_CORRECTION",
+  "finding": "Initial human diff write_text doubled existing CRLF to CRCRLF on Windows. Generator now emits explicit LF diff bytes; initial diff bytes private/hash-bound. Private experimental Java/adapter bytes and manifest unchanged; no execution/freeze yet.",
+  "files": [
+    {
+      "path": "owner-diff.txt",
+      "initialRawSha256": "bda5ac00194f181a07719c34356b6b2d0baa2ddc8ad56da55f74a3cfc3798967",
+      "normalizedDiffSha256": "38592a2160973f7c4d5ef105bec42ead92b87943c2d99ab5a7ec54978decd3ab"
+    },
+    {
+      "path": "adapter-diff.txt",
+      "initialRawSha256": "15278fa5b60efd4b9925d7be61e322fa92d49b1859ea79aeb6d4365e74719623",
+      "normalizedDiffSha256": "614379b93b472eda1ecef38ce842d4e3842f4d10a95c2b991a691f06642b8ef1"
+    }
+  ]
+}

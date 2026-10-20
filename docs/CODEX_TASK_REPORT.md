@@ -1,4 +1,63 @@
-# Current checkpoint: exact sparse-board diagnosis accepted; publication next
+# Current checkpoint: same-cap second sweep NO_GO; publication next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact prior origin395fe5d87efabf2b189181374b11fff489b15dce. User indefinite
+PCB realism/optional leaves/screenshots; no final/main/email. Preserve seven
+unrelated groups/private resources/three older blocked profiles. No task process
+live; all six current recorded driver births exited, no preview/browser launched.
+Prior sparse diagnosis publication receipt is intended in this coherent commit.
+
+composed-pocket-probe-r1: task-only private planner copy adds at most one extra
+translation sweep under unchanged shared60000 cap, same part/target order and
+validators/anchor exclusions. Three guarded owner and three extra adapter changes;
+published exporter reused by exact hash; no production/test/machinery/epoch edit.
+Baseline two helpers then10 experimental helpers and supplemental inputs frozen.
+Actual missing-owner binding exit1/phase0.3791691s; cold PASS327/44.4077049s and
+repeat fresh JVM PASS327/43.6517437s. Actual tool exits preceded separate driver
+observations. Source1482/machinery24 unchanged; native compilation substitutes
+exactly one pinned private owner, not the current production interpretation.
+
+Sweeps108→164(4moves),164→217(1move); proxy59773→57725→57545, envelopearea
+1060812 unchanged. Actual proposal1217940/9130/0/76800 is1.29% smaller but copper
++70; strict comparator keeps published1233840/9060/0/142800 and exact full
+selected geometry. Final decision PASS/NO_GO_NO_STRICT_ROUTED_GAIN. All data
+except one validated packing clock/token exact across JVMs; independent metrics,
+mapping, logical graph, anchors and reader canaries pass. No discarded geometry
+reconstruction. Source leaf no execution/per-file hashes; root frozen inventory/
+actual checks own acceptance. No native failure; pre-freeze human diff CRCRLF
+formatting corrected/preserved privately with private native inputs unchanged.
+
+Root integrated review, explicit staged diff/whitespace/commit/normal push/exact
+remote remain. GWT/full matrix/new player/electrical NOT RUN; unchanged prior
+production evidence reused, no gain/optimality/all-seed/performance claim. Do not
+promote this extra sweep. Next unstarted: source review of visible component
+markings/PCB realism through existing owners. Continue authorized work.
+
+# Previous checkpoint: published sparse diagnosis; composed-pocket scope frozen
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact origin395fe5d87efabf2b189181374b11fff489b15dce,59 reviewed paths.
+Normal push0 and exact remote verified. Packet raw bytes exact; two existing
+Markdown docs only Git CRLF-to-LF, first raw-equality failure retained. Exact
+1482 source+24 machinery still unchanged after publication. Sparse diagnosis
+publication receipt is untracked/intended next coherent commit. No task process
+live; six recorded diagnostic births exited; no new preview/browser launched.
+Preserve seven unrelated groups/private resources/three older blocked profiles.
+User indefinite PCB realism/screenshots/optional leaves; no final/main/email.
+
+New composed-pocket-probe-r1 scope+two helpers frozen before read-only Luna/MAX
+explorer composed_pocket_scope. It owns no files and executes no checks. Review
+the shared connected-pocket legal moves/anchors/scoring/cutoffs against exact
+composed replay7141843758046216173 and the accepted selected geometry. No source/
+test/machinery/budget/metric/epoch change or new candidate execution yet. Target
+ordinary SMALL_BOARD/THT one-face, not P07 despite MEDIUM display. Root handles
+any task-only experiment scope/freeze/execution and integration/publication.
+Next receive source findings, choose one bounded existing-owner experiment only
+if justified; keep all four strict metrics and actual routing/access/admission.
+No seed-specific placement, discarded geometry reconstruction or packability
+claim from green/free cells. Accepted prior diagnosis details follow below.
+
+# Previous checkpoint: exact sparse-board diagnosis accepted; publication next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 HEAD/exact prior origin e877c2cf6a790804dbb5a64693ab799ee9e7ea1d. User authorizes

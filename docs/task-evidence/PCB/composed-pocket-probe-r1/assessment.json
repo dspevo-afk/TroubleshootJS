@@ -1,0 +1,169 @@
+{
+  "status": "PASS_BOUNDED_TASK_ONLY_EXPERIMENT",
+  "decision": "NO_GO_NO_STRICT_ROUTED_GAIN",
+  "interpretation": "TASK_ONLY_SECOND_SWEEP_NOT_CURRENT_PRODUCTION_REPLAY",
+  "inputSealSha256": "0c762cd9138086a99b98a7c2659470777baba6a6102fcc0720c228232e0616ce",
+  "canaryElapsedSeconds": 0.3791691,
+  "publishedIncumbent": {
+    "area": 1233840,
+    "copper": 9060,
+    "vias": 0,
+    "protectedVoid": 142800
+  },
+  "actualExperimentalSelected": {
+    "area": 1233840,
+    "copper": 9060,
+    "vias": 0,
+    "protectedVoid": 142800
+  },
+  "strictPredicates": {
+    "areaStrictlySmaller": false,
+    "copperNonincreasing": true,
+    "viasNonincreasing": true,
+    "protectedVoidNonincreasing": true
+  },
+  "selectedGeometryEqualsPublished": true,
+  "secondSweepExecuted": true,
+  "readerCanaries": {
+    "positiveClockOnly": "PASS",
+    "negativeNonclockCoordinate": "PASS",
+    "negativeOriginalCap": "PASS"
+  },
+  "results": {
+    "cold": {
+      "elapsedSeconds": 44.4077049,
+      "receiptSha256": "77f7c66f00d14d5596d254ec31aeb5fda9f9ebb95e48641e169047d29f476677",
+      "sweepInvocations": 1,
+      "sweeps": [
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 1,
+          "evaluationStart": 108,
+          "evaluationEnd": 164,
+          "acceptedMoves": 4,
+          "areaStart": 1060812,
+          "areaEnd": 1060812,
+          "wireStart": 59773.0,
+          "wireEnd": 57725.0
+        },
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 2,
+          "evaluationStart": 164,
+          "evaluationEnd": 217,
+          "acceptedMoves": 1,
+          "areaStart": 1060812,
+          "areaEnd": 1060812,
+          "wireStart": 57725.0,
+          "wireEnd": 57545.0
+        }
+      ],
+      "selectedGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 1233840,
+        "copper": 9060,
+        "vias": 0,
+        "protectedVoid": 142800,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=3;expansions=174760;millis=43;route=P05_ONE_FACE;disposition=KEPT;baseline=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609;selected=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "attempts": 1,
+        "orderings": 3,
+        "expansions": 174760,
+        "millis": 43,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "selectedGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 1233840,
+            "copper": 9060,
+            "vias": 0,
+            "protectedVoid": 142800
+          },
+          "candidate": {
+            "area": 1217940,
+            "copper": 9130,
+            "vias": 0,
+            "protectedVoid": 76800
+          },
+          "unavailableReason": null
+        }
+      }
+    },
+    "repeat": {
+      "elapsedSeconds": 43.6517437,
+      "receiptSha256": "1fcfbfc2ba576f608fd04f24d2a1a942edfac8c393af5324bea485ed6a57e131",
+      "sweepInvocations": 1,
+      "sweeps": [
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 1,
+          "evaluationStart": 108,
+          "evaluationEnd": 164,
+          "acceptedMoves": 4,
+          "areaStart": 1060812,
+          "areaEnd": 1060812,
+          "wireStart": 59773.0,
+          "wireEnd": 57725.0
+        },
+        {
+          "schema": "pocket-second-sweep@1",
+          "sweep": 2,
+          "evaluationStart": 164,
+          "evaluationEnd": 217,
+          "acceptedMoves": 1,
+          "areaStart": 1060812,
+          "areaEnd": 1060812,
+          "wireStart": 57725.0,
+          "wireEnd": 57545.0
+        }
+      ],
+      "selectedGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 1233840,
+        "copper": 9060,
+        "vias": 0,
+        "protectedVoid": 142800,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=3;expansions=174760;millis=37;route=P05_ONE_FACE;disposition=KEPT;baseline=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609;selected=00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "attempts": 1,
+        "orderings": 3,
+        "expansions": 174760,
+        "millis": 37,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "selectedGeometrySha256": "00d82d834e863586cf87acf399272c517d803418f655c2cd4d227b6d352b0609",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 1233840,
+            "copper": 9060,
+            "vias": 0,
+            "protectedVoid": 142800
+          },
+          "candidate": {
+            "area": 1217940,
+            "copper": 9130,
+            "vias": 0,
+            "protectedVoid": 76800
+          },
+          "unavailableReason": null
+        }
+      }
+    }
+  },
+  "limits": "Two finite fresh-JVM experimental substitutions; no production, epoch, budget, oracle, solver, preview or player change. No rejected proposal reconstructed, optimum/all-seed/manufacturing/electrical/performance or promotion claim."
+}

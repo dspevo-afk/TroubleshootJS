@@ -1,0 +1,21 @@
+{
+  "status": "PASS_ROOT_INTEGRATED_TASK_ONLY_NO_GO_REVIEW",
+  "baseCommit": "395fe5d87efabf2b189181374b11fff489b15dce",
+  "experimentSealSha256": "0c762cd9138086a99b98a7c2659470777baba6a6102fcc0720c228232e0616ce",
+  "decisionSha256": "1b697406d774de761ab70c4aec88ecfd9101f460d60a27de48acdd6d6024728d",
+  "scope": "Complete reviewed three-change private planner diff, three-change adapter diff, actual private hashes, unchanged published sources, shared cap/first-pass validator guards, raw native/sweep rows, clock-only normalization, graph/anchor/inventory and independent metric controls. No production delta promoted.",
+  "checks": {
+    "pythonAndPowerShellSyntax": "PASS",
+    "actualPrivateOwnerCanary": "PASS",
+    "actualCold327": "PASS",
+    "actualRepeat327": "PASS",
+    "fullNonclockAndSweepDeterminism": "PASS",
+    "independentReadOnlyValidator": "PASS",
+    "readerCanaries": "PASS",
+    "source1482Machinery24Unchanged": "PASS",
+    "sixRecordedDriverBirthsExited": "PASS",
+    "rawPrivacy": "PASS",
+    "workingWhitespace": "PASS"
+  },
+  "limitations": "Source-only explorer had no runtime evidence or separately captured per-file hashes. Root frozen inventory and actual native proofs own acceptance. Existing actual production GWT/player reused within unchanged inputs; no new build/player/electrical/full-matrix/all-seed/performance claim. Preparation diff-formatting correction preserved."
+}

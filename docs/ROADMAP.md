@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Sparse-board diagnosis accepted; connected-pocket scope next**
+**Current task:** **Same-cap second-sweep experiment NO_GO; component realism next**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -32,9 +32,18 @@ proposal has no area reduction and more copper despite less void. Actual JDK8
 exports138/327, invalid family/seed host canaries, independent mapping/metrics,
 eight reader negatives and separate six driver exits pass. Source1482/machinery24
 and fresh execution6 remain exact; prior production/player evidence is reused,
-with no new build/browser/electrical/full-matrix claim. Next investigate the
-existing connected-pocket placement beside composed edge connectors; no metric,
-budget or production change chosen yet. [Diagnosis and limits](task-evidence/PCB/sparse-board-diagnostic-r1/RESULTS.md).
+with no new build/browser/electrical/full-matrix claim. These observations
+motivated the bounded connected-pocket experiment below.
+[Diagnosis and limits](task-evidence/PCB/sparse-board-diagnostic-r1/RESULTS.md).
+
+The private same-cap second-sweep experiment is now complete: actual extra move
+and1.29% smaller proposal, but70 more copper; original selected board remains
+exact. Both fresh JDK8/native runs PASS327, every nonclock datum matches, and
+physical/mapping/independent metrics/reader canaries and all six driver exits
+pass. No production change is promoted; source1482/machinery24 and allowances
+remain. Preparation diff-formatting correction is preserved. Next review
+visible component markings and other PCB realism details through existing
+owners. [Finite NO_GO decision and limits](task-evidence/PCB/composed-pocket-probe-r1/RESULTS.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

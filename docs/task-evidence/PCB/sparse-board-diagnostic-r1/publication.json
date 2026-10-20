@@ -1,0 +1,20 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "395fe5d87efabf2b189181374b11fff489b15dce",
+  "message": "Diagnose remaining space on exact generated RC and controller boards",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "verifiedExactRemoteRef": "395fe5d87efabf2b189181374b11fff489b15dce\trefs/heads/codex/q60-faulted-profile-counts",
+  "reviewedPublishedPaths": 59,
+  "rawPacketBytesExact": true,
+  "existingTwoMarkdownDocsOnlyGitCrlfToLf": true,
+  "unchangedCompilerInputs": 1482,
+  "unchangedMachineryInputs": 24,
+  "executionReuseAuditSha256": "8a8b56c46dc2be5949e2cb1d2c3f568ef743847cb26821d7a0c140eb47be090e",
+  "resources": "All six recorded task driver births exited; no preview/browser/listener launched in this packet",
+  "preserved": "Seven unrelated untracked groups, private adapters/logs, earlier blocked profiles; no main merge or email",
+  "nextUnstarted": "Separate bounded connected-pocket placement investigation around composed edge connectors; no production change chosen",
+  "limits": "Exact accepted public replays and physical diagnosis only; existing unchanged final GWT/player evidence reused. Staging raw-equality failure preserved and exact normalization verified."
+}

@@ -1,0 +1,51 @@
+{
+  "status": "GENERATED_TASK_ONLY_EXPERIMENT",
+  "publishedOwner": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+  "publishedOwnerSha256": "373f6f4d3b5f3dc109238d5f0cb87346b0d9bb86514c1da5354af62d4f76c6b0",
+  "privateOwnerSha256": "8ddb96817588265a0748281de9a531827c8017b0b4ce0548e59534c7e33f5e07",
+  "privateOwnerBytes": 76507,
+  "ownerChanges": [
+    {
+      "label": "at most two declared-order sweeps sharing the original counter",
+      "replacements": 1,
+      "oldSha256": "1f1a5d1b8c53bab4457a7a5d6f03730f6478c91bd9bc97f9a98050e153324cc1",
+      "newSha256": "c883b1e4671598b8b083a6b11302eb0746fab120382c04c265e24fb8709ce426"
+    },
+    {
+      "label": "passive accepted-translation count",
+      "replacements": 1,
+      "oldSha256": "5b01e4c73da00a1ac27115ceb6500ce2476925c4eb43bda4b373a6efa74a70da",
+      "newSha256": "e7a140671a9728ff56d117145009442b75168abee223fb208b79604a196b61aa"
+    },
+    {
+      "label": "passive sweep receipt and stop after no accepted translation",
+      "replacements": 1,
+      "oldSha256": "c8bf88a3324f12970366ffad068f639b3e453ec3ec511b25aacdb9f337e54883",
+      "newSha256": "724583e8c868f1ab64d117e8a60565a5994dbb11b97b322194800998212d93ac"
+    }
+  ],
+  "baselineAdapterSha256": "11e0943321521168e0b9e499c7a632e6d11dc92e467dc118b0b2a5340971e802",
+  "privateAdapterSha256": "a8e1f2ae64e0434c9b4c920cc1870f3824b4a86a707e59d20dc68931c7f8d37f",
+  "adapterChanges": [
+    {
+      "label": "mandatory existing private owner input binding",
+      "replacements": 1,
+      "oldSha256": "49cd303a2f813c7f1d82a673604216307eef71e7a02a0450b473c0bb609ba7d0",
+      "newSha256": "8e8a202fce481cf8f28084531b3c3c87c2dd90eb65081ab0187f9b12ac69ea4f"
+    },
+    {
+      "label": "exclude exactly one checked-in owner from native compilation",
+      "replacements": 1,
+      "oldSha256": "0d70150d7abe5f3b332dbb6cff26353ca0451e0d8ee72f041fda10d35350d555",
+      "newSha256": "aa8e8d61fec1f2a74774cd76b0bd98bfd476e1e0d3a2a74cc5594c1b63bd1266"
+    },
+    {
+      "label": "compile exactly one frozen private owner instead",
+      "replacements": 1,
+      "oldSha256": "3aeaa583e858040682f04a376153c1a6459c3d5b5c2165a960bcf3bc92e21153",
+      "newSha256": "f50e2d9cd8ac5bd36ffc5a0d5a03ab97e90b39502efa19195301aaa20a3ca433"
+    }
+  ],
+  "reusedExporterSha256": "b0bfa9152cf71438261dec707c27e91bd0e7db5757a4a2db0851d462e239876c",
+  "limits": "Only this experimental native compilation substitutes one private planner owner. Production source/layout19/packing3 remain unchanged; experimental output is not the current production replay. Same original evaluation ceiling and validators, no allowance increase."
+}

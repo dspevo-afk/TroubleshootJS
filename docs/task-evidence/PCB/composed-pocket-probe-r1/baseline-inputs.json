@@ -1,0 +1,14 @@
+{
+  "baseCommit": "395fe5d87efabf2b189181374b11fff489b15dce",
+  "priorSourceInventorySealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "publishedEvidence": {
+    "publication.json": "ed77701e699190873afed51dfd0dbc6a3dfa3aa87a613af2e7f16a22bd2853a6",
+    "assessment.json": "7cfc708fc1db6a344fcd28c9934685894961839fae18b322dd2991068ba25b33",
+    "composed/receipt.txt": "975aa483c3c6a3f35455406dd213c66f202e6d705d7e3a0cc9c90d1ce96c17b2",
+    "execution-reuse-audit.json": "8a8b56c46dc2be5949e2cb1d2c3f568ef743847cb26821d7a0c140eb47be090e"
+  },
+  "gates": {
+    "scope.md": "8e4597ef4731dda2d6f868ebc86faa98a65b3fef111eb4694fae6a95ac67d3c3",
+    "inputs.py": "0e411a333f3a62f4e6ffa07564d70684b6a6f06f752e5d0d8623caa81ba93d0f"
+  }
+}

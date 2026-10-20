@@ -1,0 +1,9 @@
+{
+  "failure": null,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "terminalCleanupIncluded": true,
+  "exitCode": 0,
+  "phase": "cold",
+  "status": "PASS",
+  "elapsedSeconds": 44.4077049
+}
