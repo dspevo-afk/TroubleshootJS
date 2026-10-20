@@ -768,6 +768,7 @@ final class StandardPhysicalPartRenderProviders {
                 drawInstalledLead(graphics, context, geometry, terminal.getTerminalIndex());
             WorkbenchVisualTheme.body(graphics, geometry.getBodyBounds(), WorkbenchVisualTheme.CONNECTOR,
                 WorkbenchVisualTheme.CONNECTOR_LIGHT, false);
+            drawHousingDivider(graphics, geometry);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
                 Point point = terminal.getBoardPadPoint();
                 if (point != null) drawScrew(graphics, point, terminal.getPadBounds());
@@ -780,9 +781,26 @@ final class StandardPhysicalPartRenderProviders {
             drawLooseLeads(graphics, geometry, context);
             WorkbenchVisualTheme.body(graphics, geometry.getBodyBounds(), WorkbenchVisualTheme.CONNECTOR,
                 WorkbenchVisualTheme.CONNECTOR_LIGHT, false);
+            drawHousingDivider(graphics, geometry);
             for (PhysicalPartRenderTerminal terminal : geometry.getTerminals())
                 drawScrew(graphics, terminal.getPoint(), terminal.getPadBounds());
             context.markBodyDrawn();
+        }
+
+        private void drawHousingDivider(Graphics graphics, PhysicalPartRenderGeometry geometry) {
+            if (geometry.getTerminals().size() != 2) return;
+            Rectangle divider = WorkbenchVisualTheme.connectorDividerBounds(geometry.getBodyBounds(),
+                geometry.getTerminal(0).getPadBounds(), geometry.getTerminal(1).getPadBounds());
+            if (divider == null) return;
+            for (PhysicalPartRenderTerminal terminal : geometry.getTerminals()) {
+                if (divider.intersects(terminal.getLeadBounds()) ||
+                        divider.intersects(terminal.getComponentLeadProbeBounds())) return;
+                Rectangle boardProbe = terminal.getBoardPadProbeBounds();
+                if (boardProbe != null && divider.intersects(boardProbe)) return;
+                for (Rectangle surface : terminal.getProbeSurfaces())
+                    if (divider.intersects(surface)) return;
+            }
+            WorkbenchVisualTheme.connectorDivider(graphics, divider);
         }
 
         private void drawScrew(Graphics graphics, Point point, Rectangle bounds) {

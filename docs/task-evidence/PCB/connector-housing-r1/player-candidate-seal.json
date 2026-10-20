@@ -1,0 +1,9 @@
+{
+  "status": "SEALED_BEFORE_PLAYER",
+  "priorPlanSealSha256": "dc1bfc39d78f52cf567a77808a6b521971141e439d3baa5460e9ed88a3052a71",
+  "candidateInputsSha256": "03f49257f161d8351f517a10ee27e8f7e1575d1a1c06ce00bf2a7fbb1a5b7f23",
+  "limitations": "Census and actual GWT/player still pending",
+  "launcherSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+  "native": "Native9 actual exec24411 exit0/root separate exited-birth and source/gate assessments pass",
+  "scope": "Exact candidate and earlier visible plan bound before any new browser/preview navigation"
+}

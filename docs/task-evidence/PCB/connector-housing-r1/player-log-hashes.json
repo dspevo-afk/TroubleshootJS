@@ -1,0 +1,17 @@
+{
+  "privateBasename": "tsj-connector-player-B81KRS",
+  "files": {
+    "events.json": {
+      "sha256": "c88c9c2bb44552c0a4ea755185d69519e032c141cfbe0a3a39edf73afb705750",
+      "bytes": 7152
+    },
+    "console.json": {
+      "sha256": "e3ee440dadf3dc58b5d8cd50d3385e9d8670da7f5629bcb736be27e1583c0d46",
+      "bytes": 69932
+    },
+    "errors.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS_WITH_RETAINED_TOOLING_LIMITS",
+  "identities": [
+    {
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/0",
+      "build": "tsj-alpha/6 / 4CEACC9B41462FD291500A71C2C6A89D"
+    },
+    {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 4CEACC9B41462FD291500A71C2C6A89D"
+    }
+  ],
+  "servedAndIndependentSixFieldsExact": true,
+  "native": "Native9/census44/actual GWT5 separate exact source-bound PASS",
+  "visual": "Root inspected five primary1280x900 JPEGs; plastic divider clears contacts in installed mirrored input/output and clockwise loose input; separate bottom-face diagnostic has no housing",
+  "service": "RB30 all4OFF, original J1 Part1 lifted/removed/reinstalled, tray0; all4 reconnected for retest and original complaint observed again; all4OFF before leaving",
+  "repair": "Known LED original Installed FAIL observed before lift; allOFF isolatedR1 physicalOHM/public probes OL; actual Shop330Ohm Part4 installed; actualOFF330Ohm; exit mode/connect5V/fresh actual customerPASS modal; finalOFF/tray1",
+  "primaryImages": {
+    "rb30-fitted.jpg": {
+      "sha256": "931b2775007fa981eec76f16091a55393daefd84aee3171c1266e842912e7e8c",
+      "bytes": 146199
+    },
+    "rb30-connector-inspection.jpg": {
+      "sha256": "53ad3a0aab23d44a1a382ef7792f617a8fea58159e00fc8644565c72f8ec8742",
+      "bytes": 111102
+    },
+    "rb30-j1-loose-tray.jpg": {
+      "sha256": "e74750922ee0c3c9a62e233c38498b527959881ecce3c64ea27167c1ef4b5092",
+      "bytes": 149599
+    },
+    "led-fitted.jpg": {
+      "sha256": "b3a208024c729e804f64909fa3d9713de04d165ae6cf58ddffd1a18c90366799",
+      "bytes": 129987
+    },
+    "led-customer-passed.jpg": {
+      "sha256": "0aec5c01263007baf087ec2bdc82ef42caca5c07b2fa0fb9b1849d70997bb981",
+      "bytes": 123397
+    }
+  },
+  "postedInChat": [
+    "rb30-fitted.jpg",
+    "rb30-connector-inspection.jpg",
+    "led-fitted.jpg"
+  ],
+  "retainedPreparationIssues": [
+    "Owner raw exe path comparison failed before navigation; normalized same executable, birth and unique profile validated",
+    "Evidence helper closure declared before page binding failed on body capture after successful navigation; rebound, no kernel reset",
+    "First30s RB30 ticket wait NOT_READY at65pct/49s; same case completed later, no substitution or generation-budget change",
+    "First loose image showed menu only before tray hover; retained separately, later actual physical tray inspected",
+    "First physical OHM click with popup open did not select mode; no OL claimed, screenshot retained; explicit popup close then real mode selection gave OL",
+    "Existing stale Select a meter mode first panel feedback remained after successful placements; OL/330Ohm and actual customerPASS separately proven",
+    "First root reader rejected premature post-retest capture without FAIL; later existing original-Installed pre-lift capture proves initial FAIL; premature frame and rejection retained"
+  ],
+  "console": "1008 entries:1006 informational log and2 unattributed resource404 errors; no page/request/observed-response errors; raw private/hash-bound; no clean-console/favicon claim",
+  "cleanup": "All12 recorded births exited; browserAPI exit0/current profile absent; maintained preview stop1.8466316s/state absent/8907 released; three earlier blocked profiles untouched",
+  "limits": "Finite fixed11family/four-root sample, exact replays and actual Brave fallback; no all-seed, new-size, manufacturing, Edge/CDP wrapper, new FileReader or full unrelated matrix claim"
+}

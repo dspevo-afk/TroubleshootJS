@@ -1,0 +1,8 @@
+{
+  "actualExitCode": 1,
+  "status": "REJECTED_REVIEW_READER",
+  "correction": "Require exact header + literal plus-tab pair for each finding, and actual source line exactly byte09",
+  "bytesChangedBeforeFailure": false,
+  "condition": "Initial raw check reader expected3 output lines per finding; actual checker emits2 (81 findings/162 lines)",
+  "limits": "Read-only framing mistake only; artifact/source bytes unchanged and original Git check still failing until justified attributes are staged"
+}

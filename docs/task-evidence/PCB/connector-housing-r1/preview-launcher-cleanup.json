@@ -1,0 +1,20 @@
+{
+  "scope": "Root after actual exec22642 exit0; preview worker remains owned/running",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281031085627620",
+      "pid": 27096,
+      "recordedBirthExited": true
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281031239763442",
+      "pid": 26252,
+      "recordedBirthExited": true
+    }
+  ],
+  "actualExecExitCode": 0,
+  "launchSha256": "4d460cf9993cce8a87a27b1e97d7b8870a1c38ed0087411a169079ffb2a51e93",
+  "status": "PASS"
+}

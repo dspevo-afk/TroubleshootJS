@@ -1,0 +1,21 @@
+{
+  "limits": "Live actual selected owners before first player navigation; complete paths/commands private",
+  "preview": {
+    "port": 8907,
+    "executable": "powershell.exe",
+    "rootAndScriptAndCommandExact": true,
+    "http200": true,
+    "pid": 880,
+    "startTicks": "639281031273632072"
+  },
+  "browser": {
+    "profileName": "playwright_chromiumdev_profile-QlKDEz",
+    "normalizedExecutableExact": true,
+    "executable": "brave.exe",
+    "sandboxEnabled": true,
+    "pid": 19700,
+    "headed": true,
+    "startTicks": "639281031328798739"
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,9 @@
+{
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "exitCode": 0,
+  "terminalCleanupIncluded": true,
+  "elapsedSeconds": 67.0424622,
+  "phase": "contracts",
+  "failure": null,
+  "status": "PASS"
+}

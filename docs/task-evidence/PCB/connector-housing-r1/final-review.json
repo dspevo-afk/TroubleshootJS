@@ -1,0 +1,746 @@
+{
+  "status": "READY_TO_COMMIT",
+  "baseCommit": "2c987e45553a3a9346296f59e027e911222fcf6c",
+  "stagedPaths": 122,
+  "rawExact": 117,
+  "canonicalOnly": 5,
+  "rows": [
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "stagedSha256": "00d4911f25ed619078a495666f5db1aa83a44c4ece4e14402b1860d54f365079",
+      "worktreeSha256": "df689c6183b7629c77fd61d3c0b032f76ee7843503739b798a6c1d82f38bc065",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "stagedSha256": "634f4fec201cec44ea0c7794c743edeebabdd091edb5d770d8b38184ab74b516",
+      "worktreeSha256": "ca49c37abc07b7e4fb775047f478cf5705a8022683e173466e8de8e449fc9945",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/.gitattributes",
+      "stagedSha256": "df55a931770e95287b9100d1a5e777989a31566428c35da824f78b62005f8103",
+      "worktreeSha256": "df55a931770e95287b9100d1a5e777989a31566428c35da824f78b62005f8103",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/README.md",
+      "stagedSha256": "775434a9973c1935eed9f118f73f755696c1d1c85fced428866e724cdaae7418",
+      "worktreeSha256": "775434a9973c1935eed9f118f73f755696c1d1c85fced428866e724cdaae7418",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/accepted-inputs.json",
+      "stagedSha256": "1b3ba37bfcacb8cb05b625554c901b36d746d96a679eb4f3c7647a7a4ccd31dd",
+      "worktreeSha256": "1b3ba37bfcacb8cb05b625554c901b36d746d96a679eb4f3c7647a7a4ccd31dd",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/baseline-inputs.json",
+      "stagedSha256": "2bdcc23edc3b953eb38d672e12093e23ab79cc12d9d8cc733b3f05f96676313b",
+      "worktreeSha256": "2bdcc23edc3b953eb38d672e12093e23ab79cc12d9d8cc733b3f05f96676313b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/baseline-source/src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+      "stagedSha256": "257d27682f3c93caeb694859358be0c884b3d0172e0c8135682142c505d71b31",
+      "worktreeSha256": "257d27682f3c93caeb694859358be0c884b3d0172e0c8135682142c505d71b31",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/baseline-source/src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+      "stagedSha256": "83b35462747b40ad52d1936b816447b926d0c234353400c1a6c1394854a0f070",
+      "worktreeSha256": "83b35462747b40ad52d1936b816447b926d0c234353400c1a6c1394854a0f070",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/baseline-source/tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "stagedSha256": "f40bc077d5ca23e8a3c6c1015baebfe369940901f88e2a48b6a8871a4cf5ca51",
+      "worktreeSha256": "f40bc077d5ca23e8a3c6c1015baebfe369940901f88e2a48b6a8871a4cf5ca51",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/browser-api-cleanup.json",
+      "stagedSha256": "36a02e50c9b46e9bfda78981a34a98f704bd04f018e51d2c1d004b6338a02798",
+      "worktreeSha256": "36a02e50c9b46e9bfda78981a34a98f704bd04f018e51d2c1d004b6338a02798",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/browser-logs.json",
+      "stagedSha256": "60bad2758af95179a8da8d8b75e95cb70c19c62ebb3347d8ed96ca9c631405c4",
+      "worktreeSha256": "60bad2758af95179a8da8d8b75e95cb70c19c62ebb3347d8ed96ca9c631405c4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-assessment.json",
+      "stagedSha256": "e5638d84ce5859c88dfef789dbb49d018e5f62ba3b8185838d56d8a3e092da69",
+      "worktreeSha256": "e5638d84ce5859c88dfef789dbb49d018e5f62ba3b8185838d56d8a3e092da69",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-input-audit-after.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-input-audit-before.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-log-redaction.json",
+      "stagedSha256": "0630ce05f086a38a72eb328fad837b07e443ca51549ecbc5aa15869d59da169a",
+      "worktreeSha256": "0630ce05f086a38a72eb328fad837b07e443ca51549ecbc5aa15869d59da169a",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-process-cleanup.json",
+      "stagedSha256": "ae58f7f618a0358519858e46e471926c88b81520366a65f6372bec4f50b57901",
+      "worktreeSha256": "ae58f7f618a0358519858e46e471926c88b81520366a65f6372bec4f50b57901",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-process-launch.json",
+      "stagedSha256": "9759effabac234ac9bf8dc38c256e842153283bd197bde24d3460cb4388fd781",
+      "worktreeSha256": "9759effabac234ac9bf8dc38c256e842153283bd197bde24d3460cb4388fd781",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build-timing.json",
+      "stagedSha256": "b9b4f21a6f1d26b8db2af90f5ed34215d655325c629df0deb510fcd892a4ab9b",
+      "worktreeSha256": "b9b4f21a6f1d26b8db2af90f5ed34215d655325c629df0deb510fcd892a4ab9b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/build.txt",
+      "stagedSha256": "fae13b555d8b38e6ef3a19f58505d202443624a4af94dadf31751eb716ba8667",
+      "worktreeSha256": "fae13b555d8b38e6ef3a19f58505d202443624a4af94dadf31751eb716ba8667",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/candidate-inputs.json",
+      "stagedSha256": "03f49257f161d8351f517a10ee27e8f7e1575d1a1c06ce00bf2a7fbb1a5b7f23",
+      "worktreeSha256": "03f49257f161d8351f517a10ee27e8f7e1575d1a1c06ce00bf2a7fbb1a5b7f23",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/candidate-source/src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+      "stagedSha256": "ab6e747785d5bcedbfeb55e611b4426b88a1e0d02fe7fbe23c7aaed819fb2ba4",
+      "worktreeSha256": "ab6e747785d5bcedbfeb55e611b4426b88a1e0d02fe7fbe23c7aaed819fb2ba4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/candidate-source/src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+      "stagedSha256": "a2d94b7548b040c90933b6e5dc8278f5f7e648faec8fe65b08a9cbe595572ac3",
+      "worktreeSha256": "a2d94b7548b040c90933b6e5dc8278f5f7e648faec8fe65b08a9cbe595572ac3",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/candidate-source/tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "stagedSha256": "1849aaf05dadba87ce2bea49a4c4dee5c25550783acecdae06d57439f252c5d1",
+      "worktreeSha256": "1849aaf05dadba87ce2bea49a4c4dee5c25550783acecdae06d57439f252c5d1",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-assessment.json",
+      "stagedSha256": "f275b745ccde8fa988781d417503f7fa4fefa8fcc1a53e4e1f9fc056bc1b1e0e",
+      "worktreeSha256": "f275b745ccde8fa988781d417503f7fa4fefa8fcc1a53e4e1f9fc056bc1b1e0e",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-input-audit-after.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-input-audit-before.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-process-cleanup.json",
+      "stagedSha256": "cfeffaf736cc2ebd383d550ab09fcccf9aaa3816993480f176feefdb08cef3e2",
+      "worktreeSha256": "cfeffaf736cc2ebd383d550ab09fcccf9aaa3816993480f176feefdb08cef3e2",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-process-launch.json",
+      "stagedSha256": "4a0f7f23d93b740d422730072920363d5a3adeac63e5d22c72e67d32cf8d17eb",
+      "worktreeSha256": "4a0f7f23d93b740d422730072920363d5a3adeac63e5d22c72e67d32cf8d17eb",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-receipt.txt",
+      "stagedSha256": "f7b0f77136f79093d170279f7910514ed6d5ac8c1740e82d88c703a321ea04e7",
+      "worktreeSha256": "f7b0f77136f79093d170279f7910514ed6d5ac8c1740e82d88c703a321ea04e7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census-timing.json",
+      "stagedSha256": "259ab18d0911e33ee791697a83ec74e02986634101953be9c54f7c9dc7c826b4",
+      "worktreeSha256": "259ab18d0911e33ee791697a83ec74e02986634101953be9c54f7c9dc7c826b4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/census.txt",
+      "stagedSha256": "329a2875a73b5b589e87db5f6beb5aa7c008c56f2a819ecd10d1545053c37fde",
+      "worktreeSha256": "329a2875a73b5b589e87db5f6beb5aa7c008c56f2a819ecd10d1545053c37fde",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-assessment.json",
+      "stagedSha256": "09747109ad9b037f5b234c4d4975ed1dafad6f92474d736a108c6f408ae12901",
+      "worktreeSha256": "09747109ad9b037f5b234c4d4975ed1dafad6f92474d736a108c6f408ae12901",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-input-audit-after.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-input-audit-before.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-process-cleanup.json",
+      "stagedSha256": "387f6a89feda4ba47ef999477c7e38b3b4c55a4f4a1c3848ae07e88814c82d5a",
+      "worktreeSha256": "387f6a89feda4ba47ef999477c7e38b3b4c55a4f4a1c3848ae07e88814c82d5a",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-process-launch.json",
+      "stagedSha256": "5f4fe8e5dfdb309683d0c0bf4244baded5d4da51a538aaea0ed40a6639297cf8",
+      "worktreeSha256": "5f4fe8e5dfdb309683d0c0bf4244baded5d4da51a538aaea0ed40a6639297cf8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-receipt.txt",
+      "stagedSha256": "f9b7b663304326d4dc9b0b570378f48e421206bee0137b82e40e79a68ee82926",
+      "worktreeSha256": "f9b7b663304326d4dc9b0b570378f48e421206bee0137b82e40e79a68ee82926",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts-timing.json",
+      "stagedSha256": "d0a203114e6f15f20bf84c63c86d957d9b38e4ad64957a0ca1c28ae7d6901d30",
+      "worktreeSha256": "d0a203114e6f15f20bf84c63c86d957d9b38e4ad64957a0ca1c28ae7d6901d30",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/contracts.txt",
+      "stagedSha256": "4798afecdf9171e81727921124d89551ccb3e5c0709580516b717e82fc5ef0b8",
+      "worktreeSha256": "4798afecdf9171e81727921124d89551ccb3e5c0709580516b717e82fc5ef0b8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/final-input-audit.txt",
+      "stagedSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "worktreeSha256": "e86b38be5fa91db7959618dfde04240406676c49dcd9712a11c7733d536a8704",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/final-menu-body.txt",
+      "stagedSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "worktreeSha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/fixture-review.json",
+      "stagedSha256": "a6bb344ce6afb5d761658b0b240dec223670ca0c9cbf25a4a474d44e0355e98a",
+      "worktreeSha256": "a6bb344ce6afb5d761658b0b240dec223670ca0c9cbf25a4a474d44e0355e98a",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/initial-menu-body.txt",
+      "stagedSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "worktreeSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/inputs.py",
+      "stagedSha256": "996bbc8815c001a895a93d3990c68cdd788167622e122cc8cb7e6976e7de5803",
+      "worktreeSha256": "996bbc8815c001a895a93d3990c68cdd788167622e122cc8cb7e6976e7de5803",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/launch_player.ps1",
+      "stagedSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "worktreeSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt",
+      "stagedSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "worktreeSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed.jpg",
+      "stagedSha256": "0aec5c01263007baf087ec2bdc82ef42caca5c07b2fa0fb9b1849d70997bb981",
+      "worktreeSha256": "0aec5c01263007baf087ec2bdc82ef42caca5c07b2fa0fb9b1849d70997bb981",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt",
+      "stagedSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "worktreeSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-fitted.jpg",
+      "stagedSha256": "b3a208024c729e804f64909fa3d9713de04d165ae6cf58ddffd1a18c90366799",
+      "worktreeSha256": "b3a208024c729e804f64909fa3d9713de04d165ae6cf58ddffd1a18c90366799",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt",
+      "stagedSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad",
+      "worktreeSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-meter-mode-not-selected.jpg",
+      "stagedSha256": "ab24312a0d5aa11f6375313ac22d6f2f7c690bc351f89e40fe4037fee02f1c00",
+      "worktreeSha256": "ab24312a0d5aa11f6375313ac22d6f2f7c690bc351f89e40fe4037fee02f1c00",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt",
+      "stagedSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "worktreeSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt",
+      "stagedSha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "worktreeSha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt",
+      "stagedSha256": "549aa06dfe7adf9ed221db3bce4cf44b75ea9e294f63c99fff8a2326b49a5a91",
+      "worktreeSha256": "549aa06dfe7adf9ed221db3bce4cf44b75ea9e294f63c99fff8a2326b49a5a91",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt",
+      "stagedSha256": "93c466c8393edc1a15b89cb1af853493ac6f654057998ecedd260d0eeb702739",
+      "worktreeSha256": "93c466c8393edc1a15b89cb1af853493ac6f654057998ecedd260d0eeb702739",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt",
+      "stagedSha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "worktreeSha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-public-identity.json",
+      "stagedSha256": "61b826c4bf16348d701d9ae981549229645b2475e08196889bb206a03c88d378",
+      "worktreeSha256": "61b826c4bf16348d701d9ae981549229645b2475e08196889bb206a03c88d378",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt",
+      "stagedSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "worktreeSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt",
+      "stagedSha256": "9aa4be1c699d5a33914ab367f3cfd042921bb3d3f6841bc60518207c13e7dcf7",
+      "worktreeSha256": "9aa4be1c699d5a33914ab367f3cfd042921bb3d3f6841bc60518207c13e7dcf7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt",
+      "stagedSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "worktreeSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/owner-preflight-correction.json",
+      "stagedSha256": "51f2426d49cf8ec09cb4408764df50c1d4bc600bea62080b17af9b95effed4f5",
+      "worktreeSha256": "51f2426d49cf8ec09cb4408764df50c1d4bc600bea62080b17af9b95effed4f5",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/physical-comparison.json",
+      "stagedSha256": "9bdda7f542098927281a9900ba61a16531d3f8185204430f8030f4d4d20cc321",
+      "worktreeSha256": "9bdda7f542098927281a9900ba61a16531d3f8185204430f8030f4d4d20cc321",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-assessment.json",
+      "stagedSha256": "5629d6ba9a84c2c383d056847d786a3b13cee0bc83d2f5a3e29fc84a714f3535",
+      "worktreeSha256": "5629d6ba9a84c2c383d056847d786a3b13cee0bc83d2f5a3e29fc84a714f3535",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-candidate-seal.json",
+      "stagedSha256": "e99afb4133c6cb871120651888d62ceaf6b1b998e1fee36c1b97cb709c442f0c",
+      "worktreeSha256": "e99afb4133c6cb871120651888d62ceaf6b1b998e1fee36c1b97cb709c442f0c",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-events.json",
+      "stagedSha256": "c88c9c2bb44552c0a4ea755185d69519e032c141cfbe0a3a39edf73afb705750",
+      "worktreeSha256": "c88c9c2bb44552c0a4ea755185d69519e032c141cfbe0a3a39edf73afb705750",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-expected-execution.json",
+      "stagedSha256": "c76cd02c6f7800206d9789ef0ddc212df52f9eb3be2d4fb7face268a9b049833",
+      "worktreeSha256": "c76cd02c6f7800206d9789ef0ddc212df52f9eb3be2d4fb7face268a9b049833",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-log-hashes.json",
+      "stagedSha256": "d715266189ea209090985bbc550fcc4e998c46faa055a60fc5351ba1bcec2945",
+      "worktreeSha256": "d715266189ea209090985bbc550fcc4e998c46faa055a60fc5351ba1bcec2945",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-owner.json",
+      "stagedSha256": "fbbb72d9d2a20696e70a95508a1560cd623f8839aeea94c84270e2a52a08e7b1",
+      "worktreeSha256": "fbbb72d9d2a20696e70a95508a1560cd623f8839aeea94c84270e2a52a08e7b1",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-plan-seal.json",
+      "stagedSha256": "dc1bfc39d78f52cf567a77808a6b521971141e439d3baa5460e9ed88a3052a71",
+      "worktreeSha256": "dc1bfc39d78f52cf567a77808a6b521971141e439d3baa5460e9ed88a3052a71",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-reader-attempt1-rejected.json",
+      "stagedSha256": "ae79f08375eef5aa4b47ba718883cf66281dc2d1e8d0f5b17c4cb337c6346038",
+      "worktreeSha256": "ae79f08375eef5aa4b47ba718883cf66281dc2d1e8d0f5b17c4cb337c6346038",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-served-after.json",
+      "stagedSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "worktreeSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/player-served-before.json",
+      "stagedSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "worktreeSha256": "f7970d15450216b62ca5b61ebd473ff7f41c57d2afe8b92524ab169ac4be14f7",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/post-player-provenance.json",
+      "stagedSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "worktreeSha256": "1411971c2b5f73aad69bde331cafd1037333ba3bce93429f3e0f62cb0ad7a2fc",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/pre-close-owner-check.json",
+      "stagedSha256": "1dfe4e2acb8b5782a7c09a6e064edccccfcb605a27e522188b94baa54e6082a3",
+      "worktreeSha256": "1dfe4e2acb8b5782a7c09a6e064edccccfcb605a27e522188b94baa54e6082a3",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preflight.json",
+      "stagedSha256": "fd1967017f585e696832996c0a77aca65d5f6a5402360df77bc544df0741ff05",
+      "worktreeSha256": "fd1967017f585e696832996c0a77aca65d5f6a5402360df77bc544df0741ff05",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-launcher-cleanup.json",
+      "stagedSha256": "1802e477edc62bd0858714f77d5625c2b64dd9bc3577377bc02af1e0efa331e5",
+      "worktreeSha256": "1802e477edc62bd0858714f77d5625c2b64dd9bc3577377bc02af1e0efa331e5",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-process-launch.json",
+      "stagedSha256": "4d460cf9993cce8a87a27b1e97d7b8870a1c38ed0087411a169079ffb2a51e93",
+      "worktreeSha256": "4d460cf9993cce8a87a27b1e97d7b8870a1c38ed0087411a169079ffb2a51e93",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-start-timing.json",
+      "stagedSha256": "7774ef168015876362eae589456be1c58fbaf48ddbe3529038051b18c8834a69",
+      "worktreeSha256": "7774ef168015876362eae589456be1c58fbaf48ddbe3529038051b18c8834a69",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-start.txt",
+      "stagedSha256": "ff528f70297c524c0960b9b7e05daeed087154408160e0879f00084abf6eb944",
+      "worktreeSha256": "ff528f70297c524c0960b9b7e05daeed087154408160e0879f00084abf6eb944",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-stop-process-launch.json",
+      "stagedSha256": "3c15da51860aec642f610b6337c229e1fac0e9225aec16e2947cdce1f8d24729",
+      "worktreeSha256": "3c15da51860aec642f610b6337c229e1fac0e9225aec16e2947cdce1f8d24729",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-stop-timing.json",
+      "stagedSha256": "17f8b4635106a16e71ddbc5142fa03174cd07e2354ffbb927656043a3af68cc8",
+      "worktreeSha256": "17f8b4635106a16e71ddbc5142fa03174cd07e2354ffbb927656043a3af68cc8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/preview-stop.txt",
+      "stagedSha256": "1448e9e3ce106790ee36ae780f838841f646920f95ee379642bad6a810228595",
+      "worktreeSha256": "1448e9e3ce106790ee36ae780f838841f646920f95ee379642bad6a810228595",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/process-resource-cleanup.json",
+      "stagedSha256": "42748e754349c70bfc7af60131c19789d1ff1cf908c65a9c05b2f171017d95f6",
+      "worktreeSha256": "42748e754349c70bfc7af60131c19789d1ff1cf908c65a9c05b2f171017d95f6",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/qualify.py",
+      "stagedSha256": "2846b67b935814f93b5f6ad7c8040fb8f51ae56c98686ed99e0e4344afd1fdaa",
+      "worktreeSha256": "2846b67b935814f93b5f6ad7c8040fb8f51ae56c98686ed99e0e4344afd1fdaa",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/raw-body-whitespace-reader-attempt1.json",
+      "stagedSha256": "33ee9b0ac3988e390970617ef28c14016e5c2dd051c4cea7537134e488023750",
+      "worktreeSha256": "33ee9b0ac3988e390970617ef28c14016e5c2dd051c4cea7537134e488023750",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/raw-body-whitespace-review.json",
+      "stagedSha256": "7ac599e0b14ffff89ee5f8ac93027b14cc7885b3707d617a2140ab7e3c1a1e68",
+      "worktreeSha256": "7ac599e0b14ffff89ee5f8ac93027b14cc7885b3707d617a2140ab7e3c1a1e68",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt",
+      "stagedSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "worktreeSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt",
+      "stagedSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "worktreeSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper.jpg",
+      "stagedSha256": "c1dba2c64aacaca53d6b65368831a995291b5f6f27ec53babf1e7bcc1ad7ecfc",
+      "worktreeSha256": "c1dba2c64aacaca53d6b65368831a995291b5f6f27ec53babf1e7bcc1ad7ecfc",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-connector-inspection.jpg",
+      "stagedSha256": "53ad3a0aab23d44a1a382ef7792f617a8fea58159e00fc8644565c72f8ec8742",
+      "worktreeSha256": "53ad3a0aab23d44a1a382ef7792f617a8fea58159e00fc8644565c72f8ec8742",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt",
+      "stagedSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "worktreeSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-fitted.jpg",
+      "stagedSha256": "931b2775007fa981eec76f16091a55393daefd84aee3171c1266e842912e7e8c",
+      "worktreeSha256": "931b2775007fa981eec76f16091a55393daefd84aee3171c1266e842912e7e8c",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt",
+      "stagedSha256": "ce2dc7d4e64156fbd0023c07f9337922d30f5261fb15d5755d238874ebdf0929",
+      "worktreeSha256": "ce2dc7d4e64156fbd0023c07f9337922d30f5261fb15d5755d238874ebdf0929",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt",
+      "stagedSha256": "4b3f17286df3cf811581177859dc144979c326ecf8a4e821246f062116b351a8",
+      "worktreeSha256": "4b3f17286df3cf811581177859dc144979c326ecf8a4e821246f062116b351a8",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-only.jpg",
+      "stagedSha256": "ff0088ece7b049c936ee5c7fb746fccabe960f8af69b7f694941cd9d4b3be198",
+      "worktreeSha256": "ff0088ece7b049c936ee5c7fb746fccabe960f8af69b7f694941cd9d4b3be198",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt",
+      "stagedSha256": "11421df7847ff5d379bb2707743f6679372a92d57e22786b00f79449555eca0b",
+      "worktreeSha256": "11421df7847ff5d379bb2707743f6679372a92d57e22786b00f79449555eca0b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-tray.jpg",
+      "stagedSha256": "e74750922ee0c3c9a62e233c38498b527959881ecce3c64ea27167c1ef4b5092",
+      "worktreeSha256": "e74750922ee0c3c9a62e233c38498b527959881ecce3c64ea27167c1ef4b5092",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt",
+      "stagedSha256": "e2e4c18658a0a705b9f11df6546dc5e59382654b34637e1f9d3c8b014e9cc168",
+      "worktreeSha256": "e2e4c18658a0a705b9f11df6546dc5e59382654b34637e1f9d3c8b014e9cc168",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt",
+      "stagedSha256": "edbb5c15d99f2e72b9963ffbc67130b5ad7e08b41e662e67c361ad9d0cac75e9",
+      "worktreeSha256": "edbb5c15d99f2e72b9963ffbc67130b5ad7e08b41e662e67c361ad9d0cac75e9",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt",
+      "stagedSha256": "3e06fbfb9547e39f3cedbee83c14d2b2bd78ecf9f5cf784eb54aa3b959a3e432",
+      "worktreeSha256": "3e06fbfb9547e39f3cedbee83c14d2b2bd78ecf9f5cf784eb54aa3b959a3e432",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-not-ready-30s-body.txt",
+      "stagedSha256": "30f404096ce3280bab4f4f9e28995d7dfafd61f0865aa0a3009bcad28dd9b405",
+      "worktreeSha256": "30f404096ce3280bab4f4f9e28995d7dfafd61f0865aa0a3009bcad28dd9b405",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt",
+      "stagedSha256": "dd3a02f26aecd364c770bd8a92f9fe29005c8d5aae4f7f73827029c12fa1d50f",
+      "worktreeSha256": "dd3a02f26aecd364c770bd8a92f9fe29005c8d5aae4f7f73827029c12fa1d50f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt",
+      "stagedSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "worktreeSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt",
+      "stagedSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "worktreeSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt",
+      "stagedSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "worktreeSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-preparing-body.txt",
+      "stagedSha256": "be44f5d7bb48e2ab90ecb17f5fc362ba4f8baa350a07e7cfb90a29d692b07339",
+      "worktreeSha256": "be44f5d7bb48e2ab90ecb17f5fc362ba4f8baa350a07e7cfb90a29d692b07339",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-public-identity.json",
+      "stagedSha256": "92eab497545c669e8b08d5144555fe5e01e70955d5280f07abcc36abc420230d",
+      "worktreeSha256": "92eab497545c669e8b08d5144555fe5e01e70955d5280f07abcc36abc420230d",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt",
+      "stagedSha256": "c995f54ea8369a8d07106ef571479656e9028f376158bf6d0380d921a54816f0",
+      "worktreeSha256": "c995f54ea8369a8d07106ef571479656e9028f376158bf6d0380d921a54816f0",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt",
+      "stagedSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "worktreeSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt",
+      "stagedSha256": "3f558b6f0470dbfbe99c817cb9f53d5796ce479940c12101c33f3da5d165fd47",
+      "worktreeSha256": "3f558b6f0470dbfbe99c817cb9f53d5796ce479940c12101c33f3da5d165fd47",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/review_player.py",
+      "stagedSha256": "d6319b77c1da205d8f5211a132b7c63538a5afd16627978d7e2d4e29848a9cf4",
+      "worktreeSha256": "d6319b77c1da205d8f5211a132b7c63538a5afd16627978d7e2d4e29848a9cf4",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/run_phase.ps1",
+      "stagedSha256": "d63b91fdf56cb05e9ddf5e2b6045d8459068575c9b074e7e0a4237fbd8ae437b",
+      "worktreeSha256": "d63b91fdf56cb05e9ddf5e2b6045d8459068575c9b074e7e0a4237fbd8ae437b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/scope.md",
+      "stagedSha256": "f8028146e680491d044af73fe6f932f5fb7a25283b1d36bea66d38bca41870ba",
+      "worktreeSha256": "f8028146e680491d044af73fe6f932f5fb7a25283b1d36bea66d38bca41870ba",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/static-review.json",
+      "stagedSha256": "27d2e1b81bc8e678b3281b82c74f206f328768024c81873aa9286af6e9b47a6b",
+      "worktreeSha256": "27d2e1b81bc8e678b3281b82c74f206f328768024c81873aa9286af6e9b47a6b",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/stop-player-seal.json",
+      "stagedSha256": "18d5c1084ab7dabf047469934aba44076dadade92cc942c587e3a245a7922067",
+      "worktreeSha256": "18d5c1084ab7dabf047469934aba44076dadade92cc942c587e3a245a7922067",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/stop_player.ps1",
+      "stagedSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "worktreeSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/suites.json",
+      "stagedSha256": "3ab52384457a55613277e5df8998a4e7f80601deeb6246a6c10fcebe6bdd4890",
+      "worktreeSha256": "3ab52384457a55613277e5df8998a4e7f80601deeb6246a6c10fcebe6bdd4890",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/whitespace-comparison.json",
+      "stagedSha256": "6be685b7c55bceac0ac01550407221921386f29f980595c3921ea8bcb85688ff",
+      "worktreeSha256": "6be685b7c55bceac0ac01550407221921386f29f980595c3921ea8bcb85688ff",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "docs/task-evidence/PCB/reference-lead-clearance-r2/publication.json",
+      "stagedSha256": "e2324b37e0f4d6ddfbb55431ad25748f78ffb02dafe79c6b514c48987a0d3e7f",
+      "worktreeSha256": "e2324b37e0f4d6ddfbb55431ad25748f78ffb02dafe79c6b514c48987a0d3e7f",
+      "comparison": "RAW_EXACT"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+      "stagedSha256": "4f82be58e2bfa258f79e72f735fddb0724a2b4b6510afbfda903b08c5fbd2ef2",
+      "worktreeSha256": "ab6e747785d5bcedbfeb55e611b4426b88a1e0d02fe7fbe23c7aaed819fb2ba4",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/WorkbenchVisualTheme.java",
+      "stagedSha256": "ac286736be39aa567c30fa4a794dcf2cc3f08cf2dfe35d043abe016786423e72",
+      "worktreeSha256": "a2d94b7548b040c90933b6e5dc8278f5f7e648faec8fe65b08a9cbe595572ac3",
+      "comparison": "CRLF_TO_LF_ONLY"
+    },
+    {
+      "path": "tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "stagedSha256": "91c67ad7c51a0af7a83471bfeb4511968d52beb202fc397a9271a19a1ecfd69a",
+      "worktreeSha256": "1849aaf05dadba87ce2bea49a4c4dee5c25550783acecdae06d57439f252c5d1",
+      "comparison": "CRLF_TO_LF_ONLY"
+    }
+  ],
+  "review": "Root complete source/additive fixture/API review; five gates and actual receipts audited; exact physical44/whitespace44; actual five primary plus3diagnostic frames; failures and nonblocking stale panel feedback explicit; no blockers. Independent production static review only, no claimed independent execution.",
+  "privacy": "New packet and added docs zero personal absolute path/token hits; raw build/console/private metadata excluded; Original5/private baseline/cache preserved",
+  "gates": "Native9, fresh census8/44, actual final JDK8/GWT5, actual service/OHM/Shop/customerPASS, exact six served/CLI fields, all12 births exited; staged/unstaged checks passed with exact raw-tab artifact exceptions",
+  "publication": "Pending normal branch commit/push/exact remote SHA; no main/email",
+  "next": "Read-only fresh New board visual sample; no new production scope"
+}

@@ -1,0 +1,19 @@
+{
+  "consoleEntries": 1008,
+  "types": {
+    "error": 2,
+    "log": 1006
+  },
+  "nonLogEntries": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageRequestResponseErrors": [],
+  "limits": "Two unattributed resource404 console entries; no clean-console or favicon attribution claim. All1006 informational logs retained privately with exact byte/hash binding."
+}

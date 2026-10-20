@@ -1,0 +1,30 @@
+* -text whitespace=cr-at-eol
+
+# Verbatim visible innerText has literal tab-only meter-layout lines.
+led-customer-passed-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-initial-retest-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-new-resistor-target-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-off-before-service-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-original-isolated-ohm-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-original-isolated-ohm-confirmed-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-original-r1-removed-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-r1-original-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-replacement-330-ohm-body.txt whitespace=-blank-at-eol,cr-at-eol
+led-replacement-tray-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-all-four-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-bottom-copper-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-lifted-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-loose-menu-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-loose-selected-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-original-reinstalled-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-selected-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-j1-service-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-original-restored-powered-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-original-restored-retest-click-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-original-restored-retest-observed-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-original-retest-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-supplies-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-ticket-body.txt whitespace=-blank-at-eol,cr-at-eol
+rb30-view-controls-body.txt whitespace=-blank-at-eol,cr-at-eol

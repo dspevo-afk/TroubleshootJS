@@ -1,0 +1,16 @@
+{
+  "phase": "census",
+  "drivers": [
+    {
+      "pid": 15848,
+      "executable": "pwsh",
+      "startTicks": "639281028997680053"
+    },
+    {
+      "pid": 28936,
+      "executable": "pwsh",
+      "startTicks": "639281029004082857"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained connector housing phase"
+}

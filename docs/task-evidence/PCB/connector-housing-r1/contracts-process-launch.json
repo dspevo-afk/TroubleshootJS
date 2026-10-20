@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained connector housing phase",
+  "drivers": [
+    {
+      "pid": 27528,
+      "startTicks": "639281028167481716",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 22964,
+      "startTicks": "639281028173952309",
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "contracts"
+}

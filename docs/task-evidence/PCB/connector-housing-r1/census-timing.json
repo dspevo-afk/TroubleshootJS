@@ -1,0 +1,9 @@
+{
+  "failure": null,
+  "phase": "census",
+  "elapsedSeconds": 70.5154373,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "status": "PASS",
+  "terminalCleanupIncluded": true,
+  "exitCode": 0
+}

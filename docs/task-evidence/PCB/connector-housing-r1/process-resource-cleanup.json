@@ -1,0 +1,85 @@
+{
+  "recordedBirths": 12,
+  "birthObservationSeconds": 0.0052109,
+  "currentBrowserProfileAbsent": true,
+  "port8907Released": true,
+  "managedStateAbsent": true,
+  "actualStopExecExitCode": 0,
+  "browserApiExitCode": 0,
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281028167481716",
+      "executable": "pwsh",
+      "pid": 27528
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281028173952309",
+      "executable": "pwsh",
+      "pid": 22964
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281028997680053",
+      "executable": "pwsh",
+      "pid": 15848
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281029004082857",
+      "executable": "pwsh",
+      "pid": 28936
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281029900377670",
+      "executable": "pwsh",
+      "pid": 17644
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281029907283198",
+      "executable": "pwsh",
+      "pid": 32156
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281031085627620",
+      "executable": "pwsh",
+      "pid": 27096
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281031239763442",
+      "executable": "pwsh",
+      "pid": 26252
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281037301158564",
+      "executable": "pwsh",
+      "pid": 11980
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281037303742161",
+      "executable": "pwsh",
+      "pid": 29040
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281031328798739",
+      "executable": "brave.exe",
+      "pid": 19700
+    },
+    {
+      "recordedBirthExited": true,
+      "startTicks": "639281031273632072",
+      "executable": "powershell.exe",
+      "pid": 880
+    }
+  ],
+  "status": "PASS",
+  "limits": "Root after actual stop exec exit0; current resources only; three earlier policy-blocked profile directories/private scratch untouched"
+}

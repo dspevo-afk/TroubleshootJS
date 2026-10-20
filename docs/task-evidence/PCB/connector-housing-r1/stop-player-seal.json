@@ -1,0 +1,5 @@
+{
+  "status": "SEALED_BEFORE_STOP",
+  "method": "Maintained exact-owner stop, record wrapper births before operation; no global kill/profile deletion",
+  "sha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373"
+}

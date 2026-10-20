@@ -1,0 +1,22 @@
+{
+  "phase": "contracts",
+  "launchSha256": "5f4fe8e5dfdb309683d0c0bf4244baded5d4da51a538aaea0ed40a6639297cf8",
+  "scope": "Root after actual exec24411 exit0; no termination attempted",
+  "checks": [
+    {
+      "executable": "pwsh",
+      "pid": 27528,
+      "startTicks": "639281028167481716",
+      "recordedBirthExited": true
+    },
+    {
+      "executable": "pwsh",
+      "pid": 22964,
+      "startTicks": "639281028173952309",
+      "recordedBirthExited": true
+    }
+  ],
+  "actualExecExitCode": 0,
+  "elapsedSeconds": 0.005272,
+  "status": "PASS"
+}

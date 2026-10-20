@@ -1,0 +1,14 @@
+{
+  "correction": "Use existing led-r1-original-body.txt with FAIL + State Installed + BoardOFF before logged lift; immediate capture remains NOT_READY and preserved; no original/UI/source replay changed",
+  "readerSha256": "d6319b77c1da205d8f5211a132b7c63538a5afd16627978d7e2d4e29848a9cf4",
+  "failure": "AssertionError at combined initial FAIL/OL/330 condition: immediate led-initial-retest-body.txt does not contain completed customerFAIL",
+  "actualExitCode": 1,
+  "limits": "Root read-only evidence assessment revision, no native/build/source/budget/assertion relaxation",
+  "conditions": {
+    "immediateHasFail": false,
+    "confirmedOL": true,
+    "laterOriginalInstalledBeforeLiftHasFail": true,
+    "replacement330": true
+  },
+  "status": "REJECTED_READER_ATTEMPT"
+}

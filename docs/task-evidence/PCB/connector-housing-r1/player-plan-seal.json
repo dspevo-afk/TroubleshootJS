@@ -1,0 +1,11 @@
+{
+  "repair": "LED_INDICATOR/5577758334702827054 original FAIL isolated OL replacement330Ohm measured330Ohm poweredPASS",
+  "input": "Public replay ordinary visible actions only",
+  "assembly": "RB30/0 installed input and output; original input lift/remove/loose/reinstall whileALL4OFF; bottom face; original-restoredFAIL",
+  "files": {
+    "scope.md": "f8028146e680491d044af73fe6f932f5fb7a25283b1d36bea66d38bca41870ba",
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095"
+  },
+  "scope": "Launcher and actual visible-player plan frozen before launch; source candidate seal follows leaf completion",
+  "limits": "No hidden controller or DOM mutation; headed installed Brave fallback only; no CDP-wrapper/Edge claim"
+}

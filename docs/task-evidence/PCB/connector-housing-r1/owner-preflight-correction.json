@@ -1,0 +1,7 @@
+{
+  "rawFailureExitCode": 1,
+  "firstCheck": "Raw executable string exactness failed because API path uses slash and CIM uses Windows separator",
+  "evidence": "Live samePID, full normalized exe identity exact, literal unique profile present, no --no-sandbox",
+  "limits": "No production navigation/input before correction; no source/build/native change or rerun",
+  "status": "CORRECTED_BEFORE_NAVIGATION"
+}

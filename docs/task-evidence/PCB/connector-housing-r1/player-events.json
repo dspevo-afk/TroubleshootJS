@@ -1,0 +1,223 @@
+[
+  {
+    "label": "Navigate plain final production QuickPlay",
+    "started": "2026-10-20T14:26:30.686Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:26:31.181Z"
+  },
+  {
+    "label": "Evidence helper correction",
+    "status": "CORRECTED",
+    "detail": "Body/screenshot closures declared before persistent page binding could not resolve it; redefined after binding. Plain navigation succeeded; no application mutation or reset."
+  },
+  {
+    "label": "Prepare public RB30 root0 replay",
+    "started": "2026-10-20T14:27:07.836Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:27:07.902Z"
+  },
+  {
+    "label": "Accept admitted RB30 root0 customer ticket",
+    "started": "2026-10-20T14:27:20.037Z",
+    "status": "FAILED_ACTION",
+    "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Accept ticket and start', exact: true }) to be visible\u001b[22m\n",
+    "ended": "2026-10-20T14:27:50.054Z"
+  },
+  {
+    "label": "Same RB30 case: wait for admission after initial NOT_READY",
+    "started": "2026-10-20T14:28:13.382Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:13.404Z"
+  },
+  {
+    "label": "Accept ready RB30 ticket",
+    "started": "2026-10-20T14:28:20.126Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:20.204Z"
+  },
+  {
+    "label": "Read original RB30 customer retest",
+    "started": "2026-10-20T14:28:20.338Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:21.971Z"
+  },
+  {
+    "label": "Inspect RB30 supplies before service",
+    "started": "2026-10-20T14:28:31.369Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:31.410Z"
+  },
+  {
+    "label": "Disconnect all four RB30 supplies",
+    "started": "2026-10-20T14:28:43.862Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:44.178Z"
+  },
+  {
+    "label": "Open board view controls",
+    "started": "2026-10-20T14:28:44.181Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:28:44.859Z"
+  },
+  {
+    "label": "Inspect right-edge connector and output header with ordinary pan and wheel",
+    "started": "2026-10-20T14:29:06.083Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:09.227Z"
+  },
+  {
+    "label": "Inspect opposite copper face",
+    "started": "2026-10-20T14:29:31.787Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:33.795Z"
+  },
+  {
+    "label": "Return top face and select original J1",
+    "started": "2026-10-20T14:29:34.128Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:36.251Z"
+  },
+  {
+    "label": "Inspect original J1 service actions",
+    "started": "2026-10-20T14:29:43.696Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:44.356Z"
+  },
+  {
+    "label": "Lift original J1 lead1 while every supply is off",
+    "started": "2026-10-20T14:29:54.994Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:55.739Z"
+  },
+  {
+    "label": "Remove original J1 into the parts tray",
+    "started": "2026-10-20T14:29:55.802Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:29:56.553Z"
+  },
+  {
+    "label": "Select original Part1 and open physical tray by pointer hover",
+    "started": "2026-10-20T14:30:14.516Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:30:15.054Z"
+  },
+  {
+    "label": "Reinstall original input connector Part1 at J1",
+    "started": "2026-10-20T14:30:52.216Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:30:52.967Z"
+  },
+  {
+    "label": "Reconnect the original four supplies for customer retest",
+    "started": "2026-10-20T14:30:53.028Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:30:54.704Z"
+  },
+  {
+    "label": "Run customer retest with original connector restored",
+    "started": "2026-10-20T14:30:54.708Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:30:56.258Z"
+  },
+  {
+    "label": "Disconnect every RB30 output before leaving the board",
+    "started": "2026-10-20T14:31:16.252Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:16.658Z"
+  },
+  {
+    "label": "Read pristine identity before next repair fixture",
+    "started": "2026-10-20T14:31:16.772Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:18.351Z"
+  },
+  {
+    "label": "Prepare known normal LED repair replay",
+    "started": "2026-10-20T14:31:18.561Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:20.253Z"
+  },
+  {
+    "label": "Accept known LED repair ticket",
+    "started": "2026-10-20T14:31:34.370Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:34.431Z"
+  },
+  {
+    "label": "Read initial LED customer failure",
+    "started": "2026-10-20T14:31:34.477Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:34.516Z"
+  },
+  {
+    "label": "Disconnect LED supply before isolation",
+    "started": "2026-10-20T14:31:34.519Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:34.583Z"
+  },
+  {
+    "label": "Select original R1 through public board view",
+    "started": "2026-10-20T14:31:34.586Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:34.683Z"
+  },
+  {
+    "label": "Isolate original R1 and measure through the physical OHM mode",
+    "started": "2026-10-20T14:31:54.381Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:31:54.509Z"
+  },
+  {
+    "label": "First OHM attempt not selected",
+    "status": "NOT_READY",
+    "detail": "Actual public controls report Select a meter mode first; no OL measurement claimed. Inspect current physical meter position before retry."
+  },
+  {
+    "label": "Select physical OHM after explicitly closing the popup, then place both probes",
+    "started": "2026-10-20T14:32:20.855Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:32:20.986Z"
+  },
+  {
+    "label": "Exit OHM and remove original resistor while power remains off",
+    "started": "2026-10-20T14:32:41.075Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:32:41.180Z"
+  },
+  {
+    "label": "Buy a normal 330 Ohm replacement",
+    "started": "2026-10-20T14:32:41.184Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:32:41.345Z"
+  },
+  {
+    "label": "Select actual new resistor Part4",
+    "started": "2026-10-20T14:32:49.211Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:32:49.246Z"
+  },
+  {
+    "label": "Install replacement Part4 and measure its actual resistance with supply off",
+    "started": "2026-10-20T14:32:59.551Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:32:59.742Z"
+  },
+  {
+    "label": "Exit OHM, connect normal5V and run a fresh repaired customer retest",
+    "started": "2026-10-20T14:33:08.621Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:33:08.788Z"
+  },
+  {
+    "label": "Leave repaired LED board off and read exact public identity",
+    "started": "2026-10-20T14:33:30.902Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:33:31.044Z"
+  },
+  {
+    "label": "Close only the revalidated owned browser through its API",
+    "started": "2026-10-20T14:34:53.351Z",
+    "status": "PASS_ACTION",
+    "ended": "2026-10-20T14:34:53.470Z"
+  }
+]

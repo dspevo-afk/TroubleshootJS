@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "pid": 19700,
+  "actualExitCode": 0,
+  "profilePresent": false,
+  "method": "Context/client/server API close after root live owner revalidation; no manual profile deletion",
+  "limits": "Root separate birth absence and maintained preview stop still required"
+}

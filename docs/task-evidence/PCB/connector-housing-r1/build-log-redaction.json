@@ -1,0 +1,11 @@
+{
+  "scope": "Only exact current worktree prefixes replaced; raw bytes retained privately",
+  "rawSha256": "273f1cb28832741b09b904eb50b1827fd5aaf39c6cf049300344671b242edbca",
+  "publicSha256": "fae13b555d8b38e6ef3a19f58505d202443624a4af94dadf31751eb716ba8667",
+  "rawBytes": 1250,
+  "publicBytes": 1186,
+  "replacementCounts": [
+    1,
+    0
+  ]
+}

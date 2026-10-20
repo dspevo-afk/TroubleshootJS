@@ -257,6 +257,46 @@ final class WorkbenchVisualTheme {
         return best;
     }
 
+    /** Molded plastic between the modeled contacts, wholly inside the existing housing. */
+    static Rectangle connectorDividerBounds(Rectangle body, Rectangle first, Rectangle second) {
+        if (body == null || first == null || second == null || body.width < 12 ||
+                body.height < 12 || first.width <= 0 || first.height <= 0 ||
+                second.width <= 0 || second.height <= 0) return null;
+        double ax = first.x + first.width / 2.0, ay = first.y + first.height / 2.0;
+        double bx = second.x + second.width / 2.0, by = second.y + second.height / 2.0;
+        if (ax == bx && ay == by) return null;
+        int smaller = Math.min(body.width, body.height);
+        int inset = Math.max(2, smaller / 12), thickness = Math.max(2, smaller / 28);
+        Rectangle divider;
+        if (Math.abs(bx - ax) >= Math.abs(by - ay))
+            divider = new Rectangle((int)Math.round((ax + bx) / 2) - thickness / 2,
+                body.y + inset, thickness, body.height - inset * 2);
+        else
+            divider = new Rectangle(body.x + inset,
+                (int)Math.round((ay + by) / 2) - thickness / 2,
+                body.width - inset * 2, thickness);
+        if (divider.x < body.x + inset || divider.y < body.y + inset ||
+                divider.x + divider.width > body.x + body.width - inset ||
+                divider.y + divider.height > body.y + body.height - inset) return null;
+        for (Rectangle pad : new Rectangle[] {first, second})
+            if (divider.intersects(new Rectangle(pad.x - 1, pad.y - 1,
+                    pad.width + 2, pad.height + 2))) return null;
+        return divider;
+    }
+
+    static void connectorDivider(Graphics g, Rectangle divider) {
+        g.setColor("#436556");
+        g.fillRect(divider.x, divider.y, divider.width, divider.height);
+        g.setColor("#6b8e79");
+        if (divider.width < divider.height) {
+            int dark = divider.width / 2;
+            g.fillRect(divider.x + dark, divider.y, divider.width - dark, divider.height);
+        } else {
+            int dark = divider.height / 2;
+            g.fillRect(divider.x, divider.y + dark, divider.width, divider.height - dark);
+        }
+    }
+
     static void marking(Graphics g, String text, Rectangle b, int size, String color) {
         if (text == null || b.width < 12 || b.height < 9) return;
         Font previousFont = g.currentFont;

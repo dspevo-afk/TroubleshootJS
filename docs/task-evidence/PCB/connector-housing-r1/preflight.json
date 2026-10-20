@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "gateCanaries": "Pure timing positive1/rejected6 passed before baseline freeze; no native or OS claim",
+  "acceptedInputInterpretation": "accepted-inputs.json projects published r2 final files/machinery, current HEAD and raw equality verified by baseline freeze; inherited gates/prerequisites/preEditSha256 describe historical r2 only and are NOT current gates",
+  "baseCommit": "2c987e45553a3a9346296f59e027e911222fcf6c",
+  "processes": "No current native/build/browser/preview launched; three earlier policy-blocked profile directories retained; no cleanup retries",
+  "branch": "codex/q60-faulted-profile-counts",
+  "preservedChanges": [
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md",
+    "reference-lead-clearance-r2/publication.json",
+    "Original5 unrelated artifacts/caches",
+    "normal-packing-r1 private baseline/cache"
+  ],
+  "scope": "Only theme/provider/additive fixture3 source owners eligible; exact five new gates frozen",
+  "origin": "https://github.com/dspevo-afk/TroubleshootJS.git"
+}

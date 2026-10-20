@@ -1,0 +1,9 @@
+{
+  "baselineReceiptSha256": "db04359ec7a203e3c45716c3ae5bbf8a9bf6bf9e5ba75ed2c0a4a05c17c0ffb6",
+  "status": "PASS",
+  "cases": 44,
+  "checked": "176 indexed packing/reference/silk/lead observations exact after excluding ONLY elapsedMillis,maxAdvanceMillis,generationRoutingMillis from packing rows; all44 ordered full whitespace observations exact",
+  "limits": "Fixed eleven-family/four-root sample; renderer-only scope; no universal packing/new-size/fullmatrix claim",
+  "receiptSha256": "f7b0f77136f79093d170279f7910514ed6d5ac8c1740e82d88c703a321ea04e7",
+  "freshActualSeconds": 70.5154373
+}

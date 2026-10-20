@@ -1,0 +1,527 @@
+{
+  "status": "REVIEWED_RAW_ARTIFACT_ONLY",
+  "initialGitExitCode": 2,
+  "stdoutSha256": "1e046e0326c5b57c7fcbdedf159de5b0ba8329912c2f3b256da0e56c2ace5f38",
+  "stdoutUtf8": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt:34: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt:35: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt:40: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt:34: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt:35: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt:40: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt:43: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt:34: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt:35: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt:40: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt:37: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt:38: trailing whitespace.\n+\t\ndocs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt:43: trailing whitespace.\n+\t\n",
+  "stderrUtf8": "",
+  "flaggedLines": [
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-customer-passed-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt",
+      "line": 34,
+      "literalBytesHex": "09",
+      "fileSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt",
+      "line": 35,
+      "literalBytesHex": "09",
+      "fileSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-final-off-body.txt",
+      "line": 40,
+      "literalBytesHex": "09",
+      "fileSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt",
+      "line": 34,
+      "literalBytesHex": "09",
+      "fileSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt",
+      "line": 35,
+      "literalBytesHex": "09",
+      "fileSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-initial-retest-body.txt",
+      "line": 40,
+      "literalBytesHex": "09",
+      "fileSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-new-resistor-target-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-off-before-service-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "549aa06dfe7adf9ed221db3bce4cf44b75ea9e294f63c99fff8a2326b49a5a91"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "549aa06dfe7adf9ed221db3bce4cf44b75ea9e294f63c99fff8a2326b49a5a91"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "549aa06dfe7adf9ed221db3bce4cf44b75ea9e294f63c99fff8a2326b49a5a91"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "93c466c8393edc1a15b89cb1af853493ac6f654057998ecedd260d0eeb702739"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "93c466c8393edc1a15b89cb1af853493ac6f654057998ecedd260d0eeb702739"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-isolated-ohm-confirmed-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "93c466c8393edc1a15b89cb1af853493ac6f654057998ecedd260d0eeb702739"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-original-r1-removed-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-r1-original-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "9aa4be1c699d5a33914ab367f3cfd042921bb3d3f6841bc60518207c13e7dcf7"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "9aa4be1c699d5a33914ab367f3cfd042921bb3d3f6841bc60518207c13e7dcf7"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-330-ohm-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "9aa4be1c699d5a33914ab367f3cfd042921bb3d3f6841bc60518207c13e7dcf7"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/led-replacement-tray-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-all-four-off-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-bottom-copper-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-final-off-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "d15c726b9e92d6bd9b52aec488b10e3503a81c03b9df1af751fecea9bcdb919d"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "ce2dc7d4e64156fbd0023c07f9337922d30f5261fb15d5755d238874ebdf0929"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "ce2dc7d4e64156fbd0023c07f9337922d30f5261fb15d5755d238874ebdf0929"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-lifted-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "ce2dc7d4e64156fbd0023c07f9337922d30f5261fb15d5755d238874ebdf0929"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "4b3f17286df3cf811581177859dc144979c326ecf8a4e821246f062116b351a8"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "4b3f17286df3cf811581177859dc144979c326ecf8a4e821246f062116b351a8"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-menu-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "4b3f17286df3cf811581177859dc144979c326ecf8a4e821246f062116b351a8"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "11421df7847ff5d379bb2707743f6679372a92d57e22786b00f79449555eca0b"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "11421df7847ff5d379bb2707743f6679372a92d57e22786b00f79449555eca0b"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-loose-selected-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "11421df7847ff5d379bb2707743f6679372a92d57e22786b00f79449555eca0b"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "e2e4c18658a0a705b9f11df6546dc5e59382654b34637e1f9d3c8b014e9cc168"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "e2e4c18658a0a705b9f11df6546dc5e59382654b34637e1f9d3c8b014e9cc168"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-original-reinstalled-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "e2e4c18658a0a705b9f11df6546dc5e59382654b34637e1f9d3c8b014e9cc168"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "edbb5c15d99f2e72b9963ffbc67130b5ad7e08b41e662e67c361ad9d0cac75e9"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "edbb5c15d99f2e72b9963ffbc67130b5ad7e08b41e662e67c361ad9d0cac75e9"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-selected-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "edbb5c15d99f2e72b9963ffbc67130b5ad7e08b41e662e67c361ad9d0cac75e9"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "3e06fbfb9547e39f3cedbee83c14d2b2bd78ecf9f5cf784eb54aa3b959a3e432"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "3e06fbfb9547e39f3cedbee83c14d2b2bd78ecf9f5cf784eb54aa3b959a3e432"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-j1-service-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "3e06fbfb9547e39f3cedbee83c14d2b2bd78ecf9f5cf784eb54aa3b959a3e432"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "dd3a02f26aecd364c770bd8a92f9fe29005c8d5aae4f7f73827029c12fa1d50f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "dd3a02f26aecd364c770bd8a92f9fe29005c8d5aae4f7f73827029c12fa1d50f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-powered-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "dd3a02f26aecd364c770bd8a92f9fe29005c8d5aae4f7f73827029c12fa1d50f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-click-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-restored-retest-observed-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-original-retest-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "c995f54ea8369a8d07106ef571479656e9028f376158bf6d0380d921a54816f0"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "c995f54ea8369a8d07106ef571479656e9028f376158bf6d0380d921a54816f0"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-supplies-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "c995f54ea8369a8d07106ef571479656e9028f376158bf6d0380d921a54816f0"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt",
+      "line": 34,
+      "literalBytesHex": "09",
+      "fileSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt",
+      "line": 35,
+      "literalBytesHex": "09",
+      "fileSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-ticket-body.txt",
+      "line": 40,
+      "literalBytesHex": "09",
+      "fileSha256": "37317d5f83027b0149aa5b96cc6c6fa2378602eda862174e041fdef1a8b657f5"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt",
+      "line": 37,
+      "literalBytesHex": "09",
+      "fileSha256": "3f558b6f0470dbfbe99c817cb9f53d5796ce479940c12101c33f3da5d165fd47"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt",
+      "line": 38,
+      "literalBytesHex": "09",
+      "fileSha256": "3f558b6f0470dbfbe99c817cb9f53d5796ce479940c12101c33f3da5d165fd47"
+    },
+    {
+      "path": "docs/task-evidence/PCB/connector-housing-r1/rb30-view-controls-body.txt",
+      "line": 43,
+      "literalBytesHex": "09",
+      "fileSha256": "3f558b6f0470dbfbe99c817cb9f53d5796ce479940c12101c33f3da5d165fd47"
+    }
+  ],
+  "exactFiles": [
+    "led-customer-passed-body.txt",
+    "led-final-off-body.txt",
+    "led-initial-retest-body.txt",
+    "led-new-resistor-target-body.txt",
+    "led-off-before-service-body.txt",
+    "led-original-isolated-ohm-body.txt",
+    "led-original-isolated-ohm-confirmed-body.txt",
+    "led-original-r1-removed-body.txt",
+    "led-r1-original-body.txt",
+    "led-replacement-330-ohm-body.txt",
+    "led-replacement-tray-body.txt",
+    "rb30-all-four-off-body.txt",
+    "rb30-bottom-copper-body.txt",
+    "rb30-final-off-body.txt",
+    "rb30-j1-lifted-body.txt",
+    "rb30-j1-loose-menu-body.txt",
+    "rb30-j1-loose-selected-body.txt",
+    "rb30-j1-original-reinstalled-body.txt",
+    "rb30-j1-selected-body.txt",
+    "rb30-j1-service-body.txt",
+    "rb30-original-restored-powered-body.txt",
+    "rb30-original-restored-retest-click-body.txt",
+    "rb30-original-restored-retest-observed-body.txt",
+    "rb30-original-retest-body.txt",
+    "rb30-supplies-body.txt",
+    "rb30-ticket-body.txt",
+    "rb30-view-controls-body.txt"
+  ],
+  "reason": "Every flagged line is exactly byte09 from actual visible body.innerText. Preserve raw bytes/hashes; exact per-artifact whitespace exception only. No source/test/gate/UI text/assertion change.",
+  "attributeBeforeSha256": "f06202a408fef9b9ea69bb6b1cb8160dbb0378c5bb67a444d510d231813824c8",
+  "attributeAfterSha256": "df55a931770e95287b9100d1a5e777989a31566428c35da824f78b62005f8103"
+}

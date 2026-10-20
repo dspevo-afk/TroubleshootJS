@@ -1,68 +1,125 @@
-# Current checkpoint: fixed-envelope clearance accepted; publication review
+# Current checkpoint: connector housing accepted; publication review
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
+HEAD/exact origin2c987e45553a3a9346296f59e027e911222fcf6c; next candidate uncommitted.
+Indefinite ordinary PCB realism/screenshots/optional leaves authorized; no final
+at a milestone, no main/email. Root owns integrated acceptance/publication.
+
+connector-housing-r1: shared input/output installed/loose nonconductive plastic
+divider from immutable projected pad centers. Inset/expanded-pad and current
+lead/probe exclusion; original contact paint/mounted face retained. No geometry,
+target/graph/generation/labels/epoch/save change; current18/public6. Frozen1481,
+machinery24, five gates, raw baseline/candidate3. Native9 PASS67.0424622s/silk13092
+(old12867 intact), census8 PASS70.5154373s/44 admissions/176 indexed rows exact
+except3 packing times +44 full ordered whitespace exact, actual final JDK8/GWT5
+PASS89.071709s/unchanged900s. Actual exec exits0 before root separate birth checks
+and source-bound assessments. Fresh static production leaf review no blockers;
+fixture leaf additive209 lines; root reviewed complete diff/APIs before phases.
+
+Actual RB30/0 installed mirrored/output closeup, bottom housing absent, all4OFF
+originalJ1 Part1 lift/remove/clockwise loose/reinstall/tray0; originals reconnected,
+original complaint observed after retest; all4OFF. Known LED5577758334702827054
+originalInstalledFAIL before lift; OFF isolatedOL -> actualShop330Ohm Part4 ->
+OFF measured330Ohm -> fresh powered customerPASS modal, finalOFF/tray1. Exact
+public6 identities/build4CEACC9B41462FD291500A71C2C6A89D. Five primary JPEGs +3
+diagnostics inspected; fittedRB30/closeup/LED images pasted. Served before/after
+six fields exact final independent CLI. All12 recorded births exited; current
+browserAPI0/profile absent, maintained previewstop1.8466316s/state absent/8907 free.
+No active browser/preview/native/build. Node ch* bindings persist with closed
+chPage/chContext/chBrowser/chServer; privatebasename tsj-connector-player-B81KRS.
+
+Failures/limits retained: owner slash-string mismatch corrected before nav; body
+helper closure rebound after page declaration, no reset; first30s RB30 wait
+NOT_READY same case later admitted; first loose menu-only frame retained; first
+OHM outside popup did not select mode, explicit close+real click succeeded; stale
+Select a meter mode first panel text remained despite actual OL/330Ohm. Root
+reader1 rejected premature LED retest frame; existing later originalInstalled
+pre-lift FAIL proof used, no UI/source/oracle/budget change. Console1008=1006logs+
+2unattributed404, page/request/observed-response errors0; no clean-console claim.
+Raw build/console/private identities retained; exact public prefix redaction.
+Staged check initially2 on81 literal tab-only body lines/27 files; raw bytes
+preserved with exact per-artifact attributes. First review reader3-vs2 framing
+mistake retained/corrected before mutation; final staged/unstaged checks PASS.
+Preserve all3 policy-blocked old profile directories, Original5 + private baseline/
+cache/COPY/pointers; never stage those. Old r2 publication receipt intended here.
+
+Next: root actual/staged-byte/privacy/diff checks, normal commit/push/exact remote
+SHA; no main/email. Then bounded READ-ONLY actual fresh New board visual sample
+across ordinary families, using accepted exact compiled inputs only after auditing
+consumed boundary, to find a concrete next PCB realism issue. No new production
+scope selected yet; stale panel feedback is nonblocking outside this paint scope.
+
+# Previous checkpoint: clearance published; shared assembly paint audit
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
-codex/q60-faulted-profile-counts, HEAD/verified origin
-f724f9d7f56b7e5c8ff0022581dc4772cb6aa85b. Indefinite ordinary PCB realism,
-screenshots and optional agents authorized; no main/email. Three naming images
-previously posted, now four new board views posted. No stage/commit yet.
+codex/q60-faulted-profile-counts, HEAD/exact verified origin
+2c987e45553a3a9346296f59e027e911222fcf6c,
+Keep PCB references clear without expanding boards. Normal push verified against
+exact remote ref; no main/email. Indefinite ordinary PCB realism/screenshots/optional
+agents authorized; do not final/end at a milestone. Four new current board views
+posted plus three prior naming images. Publication receipt untracked in r2 for
+next coherent commit; preserved unrelated Original5 + private baseline/cache.
 
-Current GEN18 SHA44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464.
-Transient accepted17 original4 ink plan on copyForCompaction, strict lead-only
-pending reflow within EXACT old complete occupied envelope, final labels installed
-once; sealed/ink/receipt guards, no new layout API/RNG/physics/route/work change.
-Current8 consumers sealed; accepted17 independent old12 PASS390.9318617s,80canonical
-rows/44keys/69uses map independently; narrow helper masks only referenceXY+epoch,
-old area/work assertions retained. Static gate/production review PASS only; native
-proof separately fresh. Architecture current18/dependency17 and ownership updated.
+Published source GEN18 SHA44888ee1a3bd1927df2c89cf455beb8c1f6cb14ae046853a217be4d8ade4f464.
+Transient accepted17 original4 ink plan on existing physical copy; sorted pending
+lead-only reflow preserves EXACT complete occupied envelope and all metadata;
+final labels installed once under strict guards. No new layout mutation API,
+physics/geometry/target/RNG/route/work change. Current18/public6/dependency17.
+Accepted17 export old12 PASS390.9318617s/80rows/44keys/69uses independent map;
+legacy layout16 shim retired; original physical/area/work assertions retained.
 
-Actual r2 phases: fixtures2 PASS65.1944196s/601+12867 assertions; contracts31
-PASS438.6780756s (33unique total inclP04/P05); census44 PASS70.7076739s/15->0
-intersections/12 moved reference cases/all physical-graph-metric-work/nonref exact;
-active11 matrix PASS219.0275692s/220 admissions+220 exact replays; actual final
-JDK8-GWT5 OBF Compile PASS90.2436243s. All actualexec14570/17634/80002/6123/47952
-returned0 before separate root birth/input/strict assessment. Source1481/machinery24/
-gates8/prerequisites raw-byte audited. Frozen failed r1 candidate and initial r2
-transport128/fixture compilation2.411678s/actualroot1/maintained2 remain retained;
-root added only missing fixture brace under explicit gate revision. Canary identity
-gap corrected with actual source-bound optimized2/timing1+5 receipt, sealed before
-retry. Crop diagnostic accepted17 vs rejected18 proves D1 remote fallback enlarged
-attempt3/candidatewinner; exact prior source restored before current r2 edits.
+Fresh actual final gates: fixtures2 PASS65.1944196s (Compactness601/silk12867),
+contracts31 PASS438.6780756s (33unique inclP04/P05), paired44 PASS70.7076739s
+(15->0 lead/silk intersections,12 ref moves, all physical/graph/metrics/work/nonref
+exact), active11 matrix PASS219.0275692s/220 admissions+220 exact replays, actual
+JDK8/GWT5 OBF Compile PASS90.2436243s. Actual driver exits0 before separate birth/
+input/assessment; all1481/machinery24/gates8 pinned. Independent static review
+PASS, bounded fallback-scan performance only unmeasured nonblocker. Root staged
+review340 paths331rawexact/9CRLF-only; final review report341st path. Ordinary
+staged/unstaged diff checks PASS. Five required raw-patch blank context spaces
+initially flagged exit2: exact frozen bytes preserved, four per-artifact whitespace
+attributes justified, output/byte review retained. No source assertion relaxation.
 
-Actual headed sandboxed Brave final production: predeclared RB15/13 original
-Part15 RLED remove/reinstall, original customerFAIL, final2OFF/tray0; RB30/0
-fitted/wheel/Fit/D2 labels clear, originalFAIL, final4OFF; first public MEDIUM New
-board admits COMPOSED_CONTROLLED_INDICATOR/-2105106022359460505, originalFAIL,
-all3 outputs visibly disconnected. Known LED5577758334702827054: isolatedR1 OL,
-shop330Ohm actualPart4 install, OFF OHM330Ohm, powered customerPASS. Actual public
-Save session762bytes -> Load/FileChooser/FileReader restoresOFF/tray1/actual330Ohm;
-fresh powered customerPASS; finalOFF/exact public identity/tray1. Five primary raw
-frames inspected/four board images pasted. First/second before + second after
-served6 and final CLI execution provenance exact. Player assessment limits explicit.
+Visible final build: RB15/13 original RLED Part15 remove/reinstall while2OFF,
+original-restored FAIL/tray0; RB30/0 fitted/wheel/Fit/D2 reference clears lead,
+originalFAIL/all4OFF; first actual New board MEDIUM COMPOSED_CONTROLLED_INDICATOR
+-2105106022359460505 admitted, public identity read, originalFAIL/all3OFF.
+Known indicator5577758334702827054 isolatedR1 OL; actual Shop330Ohm Part4 installs,
+OFF OHM330Ohm and powered customerPASS. Download762byte current session -> ordinary
+Load/filechooser/FileReader restoresOFF/tray1, actual330Ohm and fresh poweredPASS;
+finalOFF/exact public identity. Five raw primary images inspected/four board views
+pasted. Served before/before/after and final independent CLI execution exact.
 
-Automation failures retained: unsupported exact summary/difficulty lookups; first
-Node default30s reset in read-only menu prep, durable23actions/1051console through
-last pre-reset flush, first post-proof absent. Root birth32328 exited but profile
-Rl8mqK removal auto-review BLOCKED before command execution; retained/no retry.
-New browser10784 T21z8N API/root0/profilegone. Second27actions/473console (472logs,
-1unattributed404), no page/request/observed-response errors; no favicon/cleanconsole
-claim. Immediate oldFAIL text after repaired retest prematurely labelled freshFAIL;
-actualPASS modal followed without repeat/circuit edit, blocked Supplies click;
-correction and actual completion frame retained. Restored retest waited actualmodal.
+Failures preserved: old lead-only and nearby18 crop regressions rejected; accepted
+oracle observer CRLF/compile49 failures and wrong-context audit retained. r2 fixture
+transport128 then compile2.411678s/actualroot1/maintained2 before suites; one missing
+fixture brace fixed under explicit revision, assertions unchanged. Source-bound
+optimized2/timing1+5 canary seal gap corrected before retry. Browser initial
+summary/difficulty selectors corrected; default30s Node reset during read-only menu
+prep, first23actions/1051console end at last pre-reset flush, first post-proof absent.
+One new profile Rl8mqK cleanup automatically BLOCKED before command execution and
+retained/no retry. Immediate oldFAIL text while repaired retest pending mislabelled;
+actualPASS modal arrived without repeat/edit and blocked an early Supplies click;
+explicit correction/frame retained. Second27actions/473console=472logs+1unattributed
+404; no page/request/observed-response errors, no favicon/clean-console claim.
 
-All17 r2 process births independently exited; managed stop2.6286062s/state absent/
-8907 released/currentprofile absent. No active browser/preview/native phase. Node
-kernel alive with lcFs/lcPath/lcOs/lcPw/lcRoot/lcPacket/lcPrivate2 (basename
- tsj-fixed-envelope-player2-tUIp1s), closed lcBrowser2/lcContext2/lcServer2/lcPage2;
-logs/raw save private. First private logs tsj-fixed-envelope-player-11VwwW retained.
-Compiler/build raw failures/private copies preserved; only exact task-root prefixes
-sanitized publicly/raw+public hashes. Preserve Original5, normal-packing private
-baseline pointer/cache, old COPY/runtime pointer and all THREE blocked profiles.
+All17 r2 recorded births exited; second browser API/root0/profile gone, maintained
+preview stop2.6286062s/state absent/8907 released. No active browser/preview/native
+phase. Node kernel alive with lcFs/lcPath/lcOs/lcPw/lcRoot/lcPacket/lcPrivate2,
+closed lcBrowser2/lcContext2/lcServer2/lcPage2. Private2 basename
+ tsj-fixed-envelope-player2-tUIp1s; first logs tsj-fixed-envelope-player-11VwwW.
+Private raw failures/build/save/logs/COPY/pointers retained; exact prefix-only public
+redactions hashed. Preserve ALL THREE earlier/current blocked profile directories;
+no deletion retries or alternate tools. Do not stage original caches/private data.
 
-Next: root integrated/raw/privacy/diff check; explicit intended staging, staged
-byte/canonical review, descriptive commit/normal push/exact origin SHA. No main/email.
-Then continue bounded shared PCB realism/placement-spacing investigation; no next
-production change yet. Do not final/end merely because this milestone completes.
-
+Current bounded scope connector-housing-r1: low-contrast plastic divider from two
+existing projected pad-bound centers, inside original housing and clear of all
+pad/lead/probe regions. No contact/geometry/target/graph/model/save change.
+Five gates/source1481/machinery24/baseline3 frozen before production edits. Root
+owns theme/provider; Luna leaf owns additive existing silk fixtures. Separate
+read-only leaf reviewing production diff. Fresh native9, census8/44 exact current18
+except3 times, actual JDK8/GWT5 and installed/loose/bottom-face/service/knownLED
+repair input required. No phase/build/browser/preview launched yet. Continue work.
 # Previous checkpoint: lead-silk rejection published
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch

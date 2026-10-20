@@ -1,0 +1,9 @@
+{
+  "sourceSha256": "1849aaf05dadba87ce2bea49a4c4dee5c25550783acecdae06d57439f252c5d1",
+  "worker": "Fresh bounded Luna MAX leaf connector_divider_fixtures",
+  "scope": "Existing PcbSilkscreenScaleContractTest insertion-only fixture extension",
+  "limits": "Worker ran only scoped git diff --check; actual native/build/player acceptance remains root-owned",
+  "checks": "Root read complete additive diff and actual geometry accessor definitions; previous12867 assertions untouched; literal translation and doubled expectations independently checked",
+  "status": "ROOT_PRE_PHASE_REVIEW",
+  "prePhaseCorrection": "Draft doubled rectangle height200 corrected to6 during root/worker static audit before candidate freeze and any native execution; invalid-pad and outside-housing omission cases added"
+}

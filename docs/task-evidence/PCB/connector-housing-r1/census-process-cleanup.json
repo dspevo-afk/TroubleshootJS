@@ -1,0 +1,22 @@
+{
+  "scope": "Root after actual exec39086 exit0; no termination attempted",
+  "elapsedSeconds": 0.0052566,
+  "status": "PASS",
+  "actualExecExitCode": 0,
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 15848,
+      "startTicks": "639281028997680053"
+    },
+    {
+      "recordedBirthExited": true,
+      "executable": "pwsh",
+      "pid": 28936,
+      "startTicks": "639281029004082857"
+    }
+  ],
+  "launchSha256": "4a0f7f23d93b740d422730072920363d5a3adeac63e5d22c72e67d32cf8d17eb",
+  "phase": "census"
+}

@@ -18,6 +18,7 @@ public final class PcbSilkscreenScaleContractTest {
         emptyChipFootprintsUseOnlyTheDeclaredBody();
         electrolyticMarkingsStayInsideTheCanFace();
         ceramicMarkingsClearTheContactPads();
+        connectorHousingDividerFixtures();
         System.out.println("PASS: PCB silkscreen scale contracts: " + assertions + " assertions");
     }
 
@@ -582,6 +583,214 @@ public final class PcbSilkscreenScaleContractTest {
                         }
                 }
         check(painted >= 32,"representative fitted arrangements retain real printable bands");
+    }
+
+    private static void connectorHousingDividerFixtures() {
+        Rectangle inputBody = new Rectangle(8,8,84,114);
+        Rectangle inputFirst = new Rectangle(77,27,26,26);
+        Rectangle inputSecond = new Rectangle(77,87,26,26);
+        Rectangle originalBody = new Rectangle(inputBody), originalFirst = new Rectangle(inputFirst);
+        Rectangle originalSecond = new Rectangle(inputSecond);
+        rect(WorkbenchVisualTheme.connectorDividerBounds(inputBody,inputFirst,inputSecond),
+            15,69,70,3,"literal two-pin power connector has a horizontal molded divider");
+        rect(WorkbenchVisualTheme.connectorDividerBounds(inputBody,inputSecond,inputFirst),
+            15,69,70,3,"connector divider is independent of terminal enumeration order");
+        rect(inputBody,originalBody.x,originalBody.y,originalBody.width,originalBody.height,
+            "divider fitting leaves the input body unchanged");
+        rect(inputFirst,originalFirst.x,originalFirst.y,originalFirst.width,originalFirst.height,
+            "divider fitting leaves the first pad unchanged");
+        rect(inputSecond,originalSecond.x,originalSecond.y,originalSecond.width,originalSecond.height,
+            "divider fitting leaves the second pad unchanged");
+
+        Rectangle doubledBody = new Rectangle(16,16,168,228);
+        Rectangle doubledFirst = new Rectangle(154,54,52,52);
+        Rectangle doubledSecond = new Rectangle(154,174,52,52);
+        rect(WorkbenchVisualTheme.connectorDividerBounds(doubledBody,doubledFirst,doubledSecond),
+            30,137,140,6,"literal doubled connector projection keeps independently rounded midpoint");
+        Rectangle translatedBody = new Rectangle(-23,55,84,114);
+        Rectangle translatedFirst = new Rectangle(46,74,26,26);
+        Rectangle translatedSecond = new Rectangle(46,134,26,26);
+        rect(WorkbenchVisualTheme.connectorDividerBounds(translatedBody,translatedFirst,
+            translatedSecond),-16,116,70,3,
+            "literal translated connector preserves the physical divider offset");
+
+        Rectangle outputBody = new Rectangle(8,8,84,54);
+        Rectangle outputFirst = new Rectangle(7,17,26,26);
+        Rectangle outputSecond = new Rectangle(57,17,26,26);
+        Rectangle outputDivider = WorkbenchVisualTheme.connectorDividerBounds(outputBody,
+            outputFirst,outputSecond);
+        rect(outputDivider,44,12,2,46,
+            "literal two-pin output header has a vertical molded divider");
+        outputDivider.x = -100;
+        rect(WorkbenchVisualTheme.connectorDividerBounds(outputBody,outputFirst,outputSecond),
+            44,12,2,46,"returned divider bounds do not alias later results");
+
+        Rectangle blockedBody = new Rectangle(0,0,84,54);
+        check(WorkbenchVisualTheme.connectorDividerBounds(null,inputFirst,inputSecond) == null &&
+                WorkbenchVisualTheme.connectorDividerBounds(blockedBody,null,inputSecond) == null &&
+                WorkbenchVisualTheme.connectorDividerBounds(new Rectangle(0,0,11,54),
+                    inputFirst,inputSecond) == null,
+            "missing or undersized connector geometry omits its divider");
+        check(WorkbenchVisualTheme.connectorDividerBounds(blockedBody,
+                new Rectangle(10,10,0,26),new Rectangle(50,10,26,26)) == null,
+            "a non-positive pad dimension omits the divider");
+        check(WorkbenchVisualTheme.connectorDividerBounds(blockedBody,
+                new Rectangle(-60,17,10,26),new Rectangle(-40,17,10,26)) == null,
+            "a divider midpoint outside the inset housing is omitted");
+        check(WorkbenchVisualTheme.connectorDividerBounds(blockedBody,
+                new Rectangle(20,20,26,26),new Rectangle(20,20,26,26)) == null,
+            "coincident terminal centers omit an ambiguous divider");
+        check(WorkbenchVisualTheme.connectorDividerBounds(blockedBody,
+                new Rectangle(30,17,26,26),new Rectangle(50,17,26,26)) == null,
+            "a fully pad-blocked divider is omitted");
+
+        PhysicalPackage inputPackage = PhysicalPackages.THROUGH_HOLE_CONNECTOR_2;
+        PhysicalPackage.GeometryVariant mirrored = inputPackage.getGeometryVariant(
+            "DEFAULT_MIRRORED_X");
+        PhysicalPackage outputPackage = PhysicalPackages.THROUGH_HOLE_OUTPUT_HEADER_2;
+        check(mirrored != null && "MIRROR_X".equals(mirrored.getTransformKey()) &&
+                inputPackage.acceptsGeometry(mirrored.getGeometry()),
+            "input fixture uses the connector package's declared mirrored realization");
+        connectorDividerInstalledFixtures(inputPackage,mirrored.getGeometry(),true);
+        connectorDividerInstalledFixtures(outputPackage,outputPackage.getGeometry(),false);
+        connectorDividerLooseTrayFixtures(inputPackage,
+            LoosePartPose.QuarterTurn.CLOCKWISE,"input connector");
+        connectorDividerLooseTrayFixtures(outputPackage,
+            LoosePartPose.QuarterTurn.NONE,"output header");
+    }
+
+    private static void connectorDividerInstalledFixtures(PhysicalPackage physicalPackage,
+            PhysicalPackageGeometry geometry, boolean inputConnector) {
+        int paintedZooms = 0;
+        for (PcbRotation rotation : physicalPackage.getAllowedRotations())
+            for (PcbBoardSide side : physicalPackage.getAllowedMountingSides()) {
+                PcbPackagePose pose = new PcbPackagePose(0,0,rotation,side);
+                check(physicalPackage.supportsPose(pose),
+                    "installed divider fixture uses only declared package poses");
+                PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                    inputConnector ? "J1" : "J2",pose,physicalPackage,geometry);
+                Rectangle expectedBody = P01PhysicalPoseChecks.expectedRectangle(
+                    geometry.getBodyBounds(),geometry.getWidth(),geometry.getHeight(),0,0,
+                    rotation,side);
+                Rectangle body = placement.getBodyBounds();
+                rect(body,expectedBody.x,expectedBody.y,expectedBody.width,expectedBody.height,
+                    "installed body follows the independent P01 affine pose oracle");
+                Rectangle[] pads = new Rectangle[2];
+                for (int terminal = 0; terminal < pads.length; terminal++) {
+                    Rectangle local = geometry.getTerminal(terminal).getPadBounds();
+                    Rectangle expected = P01PhysicalPoseChecks.expectedRectangle(local,
+                        geometry.getWidth(),geometry.getHeight(),0,0,rotation,side);
+                    pads[terminal] = placement.getPadBounds(terminal);
+                    rect(pads[terminal],expected.x,expected.y,expected.width,expected.height,
+                        "installed pad follows the independent P01 affine pose oracle");
+                }
+                Rectangle divider = WorkbenchVisualTheme.connectorDividerBounds(body,
+                    pads[0],pads[1]);
+                if (inputConnector)
+                    rect(divider,15,69,70,3,
+                        "declared mirrored input package keeps the literal divider location");
+                else
+                    rect(divider,44,12,2,46,
+                        "declared output package keeps the literal divider location");
+                connectorDividerClearance(divider,body,pads,
+                    installedConnectorClearanceBounds(placement),
+                    "installed " + physicalPackage.getId());
+
+                double[] zooms = {.5,1,2,4};
+                for (double zoom : zooms) {
+                    PcbViewport.Transform view = new PcbViewport.Transform(zoom,-17,29,0,false);
+                    Rectangle screenBody = view.project(body);
+                    Rectangle[] screenPads = projectConnectorRectangles(view,pads);
+                    Rectangle screenDivider = WorkbenchVisualTheme.connectorDividerBounds(
+                        screenBody,screenPads[0],screenPads[1]);
+                    check(screenDivider != null,
+                        "installed housing remains representable at declared zoom " + zoom);
+                    connectorDividerClearance(screenDivider,screenBody,screenPads,
+                        projectConnectorRectangles(view,
+                            installedConnectorClearanceBounds(placement)),
+                        "installed zoom " + zoom + " " + physicalPackage.getId());
+                    paintedZooms++;
+                }
+            }
+        check(paintedZooms >= 4,"installed connector fixtures cover useful zoom levels");
+    }
+
+    private static void connectorDividerLooseTrayFixtures(PhysicalPackage physicalPackage,
+            LoosePartPose.QuarterTurn expectedTurn, String description) {
+        Rectangle[] trays = {new Rectangle(0,0,80,240),new Rectangle(-35,22,320,440)};
+        int[] trayRows = {0,2};
+        for (int index = 0; index < trays.length; index++) {
+            LoosePartPose pose = LoosePartPose.forPart(physicalPackage,null,trays[index],
+                trayRows[index]);
+            check(pose.getQuarterTurn() == expectedTurn,
+                description + " uses the actual loose-part quarter-turn");
+            Rectangle body = pose.getBodyBounds();
+            Rectangle[] pads = {pose.getPadBounds(0),pose.getPadBounds(1)};
+            Rectangle divider = WorkbenchVisualTheme.connectorDividerBounds(body,pads[0],pads[1]);
+            check(divider != null,description + " fits a divider in the current tray cell");
+            connectorDividerClearance(divider,body,pads,looseConnectorClearanceBounds(pose),
+                description + " tray " + index);
+        }
+    }
+
+    private static Rectangle[] installedConnectorClearanceBounds(
+            PcbComponentPlacement placement) {
+        Rectangle[] result = new Rectangle[10];
+        for (int terminal = 0; terminal < 2; terminal++) {
+            int offset = terminal * 5;
+            result[offset] = placement.getBoardPadProbeBounds(terminal);
+            result[offset+1] = placement.getComponentLeadProbeBounds(terminal);
+            result[offset+2] = placement.getComponentLeadProbeBounds(terminal,true);
+            result[offset+3] = placement.getLeadBounds(terminal);
+            result[offset+4] = placement.getLeadBounds(terminal,true);
+        }
+        return result;
+    }
+
+    private static Rectangle[] looseConnectorClearanceBounds(LoosePartPose pose) {
+        Rectangle[] result = new Rectangle[10];
+        for (int terminal = 0; terminal < 2; terminal++) {
+            int offset = terminal * 5;
+            PhysicalPackageGeometry.Terminal source = pose.getSourceGeometry().getTerminal(terminal);
+            result[offset] = pose.getProbeBounds(terminal);
+            result[offset+1] = pose.getComponentLeadProbeBounds(terminal);
+            result[offset+2] = pose.transformRectangle(source.getComponentLeadProbeBounds(true));
+            result[offset+3] = pose.getLeadBounds(terminal);
+            result[offset+4] = pose.transformRectangle(source.getLiftedLead().getBounds());
+        }
+        return result;
+    }
+
+    private static Rectangle[] projectConnectorRectangles(PcbViewport.Transform view,
+            Rectangle[] source) {
+        Rectangle[] result = new Rectangle[source.length];
+        for (int index = 0; index < source.length; index++)
+            result[index] = view.project(source[index]);
+        return result;
+    }
+
+    private static void connectorDividerClearance(Rectangle divider, Rectangle body,
+            Rectangle[] pads, Rectangle[] protectedBounds, String description) {
+        if (divider == null) return;
+        check(divider.width > 0 && divider.height > 0 && divider.x >= body.x &&
+                divider.y >= body.y && divider.x + divider.width <= body.x + body.width &&
+                divider.y + divider.height <= body.y + body.height,
+            description + " divider is contained in its body");
+        for (Rectangle pad : pads)
+            check(divider.x + divider.width <= pad.x - 1 ||
+                    divider.x >= pad.x + pad.width + 1 ||
+                    divider.y + divider.height <= pad.y - 1 ||
+                    divider.y >= pad.y + pad.height + 1,
+                description + " divider clears a pad with an independent one-pixel margin");
+        for (Rectangle protectedBound : protectedBounds)
+            if (protectedBound != null)
+                check(!connectorRectanglesOverlap(divider,protectedBound),
+                    description + " divider clears actual pad/probe/lead geometry");
+    }
+
+    private static boolean connectorRectanglesOverlap(Rectangle first, Rectangle second) {
+        return first.x < second.x + second.width && second.x < first.x + first.width &&
+            first.y < second.y + second.height && second.y < first.y + first.height;
     }
 
     private static void near(double actual, double expected, String message) {
