@@ -170,6 +170,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             for (PcbComponentPlacement component : layout.getComponents()) {
                 Rectangle emptyFootprint = drawEmptyChipFootprint(graphics, component);
                 if (emptyFootprint != null) labelObstacles.add(emptyFootprint);
+                Rectangle emptyResistor = drawEmptyResistorFootprint(graphics, component);
+                if (emptyResistor != null) labelObstacles.add(emptyResistor);
                 PhysicalPartRenderGeometry geometry = drawComponent(graphics, component);
                 if (geometry != null && component.getMountingSide() == viewingFace) {
                     labelObstacles.add(geometry.getBodyBounds());
@@ -212,6 +214,41 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
                 placement.getMountingSide() != face || slot.getInstalledPart() != null ||
                 !placement.getComponentId().equals(slot.getComponentId()) ||
                 !ChipPinout.supports(placement.getPhysicalPackage()) ||
+                !placement.getPhysicalPackage().isEquivalentTo(slot.getPhysicalPackage()) ||
+                slot.getGeometryRealization() == null ||
+                !slot.getGeometryRealization().isEquivalentTo(placement.getGeometryRealization()))
+            return null;
+        return placement.getBodyBounds();
+    }
+
+    /** Axial assembly ink uses its rounded body, without a chip's reference dot. */
+    private Rectangle drawEmptyResistorFootprint(Graphics graphics, PcbComponentPlacement placement) {
+        Rectangle footprint = emptyResistorFootprint(placement,
+            instance.getPhysicalBoardRuntime().getSlot(placement.getComponentId()), viewingFace);
+        if (footprint == null) return null;
+        Rectangle body = screenRectForProvider(footprint);
+        if (body.width < 3 || body.height < 3) return null;
+        graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
+        graphics.setLineWidth(1);
+        graphics.context.save();
+        try {
+            graphics.clipRect(body.x, body.y, body.width, body.height);
+            WorkbenchVisualTheme.roundedPath(graphics, body.x + 1, body.y + 1,
+                body.width - 2, body.height - 2,
+                Math.min(body.width - 2, body.height - 2) * .38);
+            graphics.context.stroke();
+        } finally {
+            graphics.context.restore();
+        }
+        return body;
+    }
+
+    static Rectangle emptyResistorFootprint(PcbComponentPlacement placement,
+            PhysicalBoardSlot slot, PcbBoardSide face) {
+        if (placement == null || slot == null || !shouldDrawPhysicalSilkscreen(face) ||
+                placement.getMountingSide() != face || slot.getInstalledPart() != null ||
+                !placement.getComponentId().equals(slot.getComponentId()) ||
+                !PhysicalPackages.AXIAL_RESISTOR.isEquivalentTo(placement.getPhysicalPackage()) ||
                 !placement.getPhysicalPackage().isEquivalentTo(slot.getPhysicalPackage()) ||
                 slot.getGeometryRealization() == null ||
                 !slot.getGeometryRealization().isEquivalentTo(placement.getGeometryRealization()))

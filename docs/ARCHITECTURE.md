@@ -6044,6 +6044,18 @@ saved state is introduced. Native literal/transaction fixtures and actual normal
 removal/face/reinstallation/repair views qualify this presentation boundary.
 [Footprint evidence and limits](task-evidence/PCB/empty-chip-silk-r1/README.md).
 
+`PcbWorkbenchRenderer.emptyResistorFootprint` separately handles an empty declared
+axial resistor slot. It requires matching component/package and bound geometry
+realization on the top silk face, and returns the placed body rather than a
+courtyard or fallback span. The drawing path clips one inset, unfilled rounded
+stroke to that projected body and reserves the same rectangle among existing
+screen-label obstacles. It reads no bands, fault or electrical behavior and adds
+no target, land or lead. Occupied slots, including lifted parts, retain ordinary
+provider paint. The chip helper and its independent axial rejection remain
+unchanged; axial fuse/diode packages and disallowed package poses gain no policy.
+All three seeded resistor spans retain their existing geometry and identities.
+See [axial guide scope and qualification boundary](task-evidence/PCB/empty-resistor-silk-r1/scope.md).
+
 The shared installed/loose electrolytic provider passes the unchanged public
 nameplate string to `WorkbenchVisualTheme.marking` within a centered can-face
 band. Symmetric integer insets keep this band inside the existing metal disk;

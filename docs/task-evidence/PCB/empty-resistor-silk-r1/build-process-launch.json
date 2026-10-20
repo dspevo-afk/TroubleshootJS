@@ -1,0 +1,16 @@
+{
+  "phase": "build",
+  "scope": "Captured parent/current births before maintained empty axial outline phase",
+  "drivers": [
+    {
+      "startTicks": "639281101122524067",
+      "executable": "pwsh",
+      "pid": 18224
+    },
+    {
+      "startTicks": "639281101128843352",
+      "executable": "pwsh",
+      "pid": 29876
+    }
+  ]
+}

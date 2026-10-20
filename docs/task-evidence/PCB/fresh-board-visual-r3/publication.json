@@ -1,0 +1,20 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "891d6ce75ff97fd62adc98fc88b331230cf210f1",
+  "message": "Record first fresh protected dual and relay boards",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "normalPushExitCode": 0,
+  "exactRemoteHeadVerified": true,
+  "acceptedPaths": 55,
+  "priorReviewedIndexBlobsExact": 54,
+  "finalReviewRawExact": true,
+  "working1482Unchanged": true,
+  "scope": "Read-only first normal Protected/Dual/Relay sample at exact prior native/build reuse boundary; no production/build change",
+  "resources": "All6 recorded births exited/current profile-state absent/8907 released; older blocked profiles/private/unrelated artifacts retained",
+  "mainMerge": "NOT_DONE per user",
+  "email": "DISABLED by user; no notification attempted",
+  "nextUnstarted": "Empty axial resistor footprint source feasibility and actual normal removal baseline before selecting production change",
+  "receipt": "Created after exact verified publication; intended next coherent commit"
+}

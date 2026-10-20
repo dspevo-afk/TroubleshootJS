@@ -16,6 +16,10 @@ public final class PcbSilkscreenScaleContractTest {
         physicalLabelIdentityAndFacePolicyStayStable();
         referenceLeadClearanceFixtures();
         emptyChipFootprintsUseOnlyTheDeclaredBody();
+        axialResistorFootprintsUseOnlyTheDeclaredBody();
+        axialResistorFootprintsRejectForeignAndUnsupportedState();
+        axialResistorFootprintsPreserveDeclaredPosePolicy();
+        occupiedAxialResistorSlotsHideTheAssemblyGuide();
         electrolyticMarkingsStayInsideTheCanFace();
         ceramicMarkingsClearTheContactPads();
         connectorHousingDividerFixtures();
@@ -450,6 +454,226 @@ public final class PcbSilkscreenScaleContractTest {
             "U1",700,900,PhysicalPackages.TO220_REGULATOR_4,
             PhysicalPackages.TO220_REGULATOR_4.getGeometry()),wrongPackage,PcbBoardSide.TOP) == null,
             "same component ID with a different bound package fails closed");
+    }
+
+    private static void axialResistorFootprintsUseOnlyTheDeclaredBody() {
+        PhysicalPackage pkg = PhysicalPackages.AXIAL_RESISTOR;
+        String[] expectedKeys = {"SPAN_220", "SPAN_240", "SPAN_260"};
+        int[] expectedSpans = {220, 240, 260};
+        int[] expectedBodyWidths = {80, 100, 120};
+        Vector<PhysicalPackage.GeometryVariant> variants = pkg.getGeometryVariants();
+        check(variants.size() == expectedKeys.length,
+            "resistor assembly fixture covers every currently declared bound variant");
+        boolean[] seen = new boolean[expectedKeys.length];
+        for (PhysicalPackage.GeometryVariant variant : variants) {
+            int variantIndex = axialResistorVariantIndex(variant.getKey());
+            check(!seen[variantIndex], "declared resistor variant appears once: " + variant.getKey());
+            seen[variantIndex] = true;
+            PhysicalPackageGeometry geometry = variant.getGeometry();
+            int bodyWidth = expectedBodyWidths[variantIndex];
+            check(expectedKeys[variantIndex].equals(pkg.getGeometryVariantKey(geometry)) &&
+                    geometry.getWidth() == expectedSpans[variantIndex],
+                "fixture is bound to its actual declared geometry: " + variant.getKey());
+            rect(geometry.getBodyBounds(), 70, 18, bodyWidth, 34,
+                "literal package-local resistor body for " + variant.getKey());
+
+            PhysicalBoardSlot slot = emptySlot(pkg, "R1");
+            PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                "R1", 700, 900, pkg, geometry);
+            check(placement.getRotation() == PcbRotation.DEG_0 &&
+                    placement.getMountingSide() == PcbBoardSide.TOP,
+                "the fixture uses the existing top/zero resistor pose");
+            check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                    placement, slot, PcbBoardSide.TOP) == null,
+                "an unbound resistor slot does not certify assembly ink: " + variant.getKey());
+            slot.bindGeometryRealization(placement);
+            check(!slot.isOccupied() && slot.getGeometryRealization() != null &&
+                    slot.getGeometryRealization().isEquivalentTo(placement.getGeometryRealization()),
+                "only an empty slot bound to this geometry realization is eligible");
+
+            String slotId = slot.getId();
+            PhysicalPackage slotPackage = slot.getPhysicalPackage();
+            Vector<String> padIds = slot.getPadIds();
+            Vector<String> terminalIds = slot.getTerminalIds();
+            Vector<String> netIds = slot.getNetIds();
+            Vector<String> geometryTerminalIds = geometry.getTerminalIds();
+            String geometryFingerprint = placement.geometryFingerprint();
+            PhysicalPackageGeometry placementGeometry = placement.getPhysicalGeometry();
+            PhysicalGeometryRealization placementRealization = placement.getGeometryRealization();
+            PhysicalGeometryRealization slotRealization = slot.getGeometryRealization();
+            Rectangle placementBounds = placement.getBounds();
+            Rectangle bodyBounds = placement.getBodyBounds();
+            Rectangle keepOut = placement.getKeepOut();
+            Rectangle courtyard = placement.getRoutingCourtyard();
+            Rectangle padOne = placement.getPadBounds(0);
+            Rectangle padTwo = placement.getPadBounds(1);
+            Rectangle actual = PcbWorkbenchRenderer.emptyResistorFootprint(
+                placement, slot, PcbBoardSide.TOP);
+            rect(actual, 770, 918, bodyWidth, 34,
+                "placed assembly ink is the literal body bounds for " + variant.getKey());
+            check(actual.equals(bodyBounds) && !actual.equals(courtyard),
+                "assembly ink uses the body and excludes the larger courtyard");
+            check(770 - (padOne.x + padOne.width) == 27 &&
+                    padTwo.x - (770 + bodyWidth) == 27,
+                "resistor body remains 27 logical units clear of both terminal land outer edges");
+
+            actual.x = -999;
+            Rectangle defensive = PcbWorkbenchRenderer.emptyResistorFootprint(
+                placement, slot, PcbBoardSide.TOP);
+            rect(defensive, 770, 918, bodyWidth, 34,
+                "returned resistor body rectangle is defensive");
+            check(slot.getId().equals(slotId) && slot.getComponentId().equals("R1") &&
+                    slot.getPhysicalPackage() == slotPackage && slot.getPadIds().equals(padIds) &&
+                    slot.getTerminalIds().equals(terminalIds) && slot.getNetIds().equals(netIds) &&
+                    slot.getGeometryRealization() == slotRealization && !slot.isOccupied(),
+                "silkscreen reads preserve slot, pad, terminal, net and realization identities");
+            check(placement.getPhysicalPackage() == pkg &&
+                    placement.getPhysicalGeometry() == placementGeometry &&
+                    placement.getGeometryRealization() == placementRealization &&
+                    geometry.getTerminalIds().equals(geometryTerminalIds) &&
+                    placement.geometryFingerprint().equals(geometryFingerprint) &&
+                    placement.getBounds().equals(placementBounds) &&
+                    placement.getBodyBounds().equals(bodyBounds) &&
+                    placement.getKeepOut().equals(keepOut) &&
+                    placement.getRoutingCourtyard().equals(courtyard) &&
+                    placement.getPadBounds(0).equals(padOne) &&
+                    placement.getPadBounds(1).equals(padTwo),
+                "silkscreen reads leave geometry, pads, body and courtyard unchanged");
+        }
+        for (int index = 0; index < seen.length; index++)
+            check(seen[index], "declared resistor geometry is covered: " + expectedKeys[index]);
+    }
+
+    private static int axialResistorVariantIndex(String key) {
+        if ("SPAN_220".equals(key)) return 0;
+        if ("SPAN_240".equals(key)) return 1;
+        if ("SPAN_260".equals(key)) return 2;
+        throw new AssertionError("unexpected declared axial resistor variant: " + key);
+    }
+
+    private static void axialResistorFootprintsRejectForeignAndUnsupportedState() {
+        PhysicalPackage resistor = PhysicalPackages.AXIAL_RESISTOR;
+        PhysicalPackageGeometry narrow = resistor.getGeometryVariant("SPAN_220").getGeometry();
+        PhysicalPackageGeometry wide = resistor.getGeometryVariant("SPAN_240").getGeometry();
+        PcbComponentPlacement canonical = PcbComponentPlacement.fromPhysicalGeometry(
+            "R1", 700, 900, resistor, narrow);
+        PhysicalBoardSlot unbound = emptySlot(resistor, "R1");
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                canonical, unbound, PcbBoardSide.TOP) == null,
+            "unbound slot fails closed");
+
+        unbound.bindGeometryRealization(canonical);
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(null, unbound, PcbBoardSide.TOP) == null &&
+                PcbWorkbenchRenderer.emptyResistorFootprint(canonical, null, PcbBoardSide.TOP) == null &&
+                PcbWorkbenchRenderer.emptyResistorFootprint(canonical, unbound, null) == null,
+            "missing placement, slot or face emits no resistor assembly ink");
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                canonical, unbound, PcbBoardSide.BOTTOM) == null,
+            "top-mounted resistor body is absent from bottom silkscreen");
+
+        PcbComponentPlacement mismatched = PcbComponentPlacement.fromPhysicalGeometry(
+            "R1", 700, 900, resistor, wide);
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                mismatched, unbound, PcbBoardSide.TOP) == null,
+            "same package and component with a different bound variant fails closed");
+
+        PhysicalBoardSlot foreign = emptySlot(resistor, "R2");
+        foreign.bindGeometryRealization(PcbComponentPlacement.fromPhysicalGeometry(
+            "R2", 700, 900, resistor, narrow));
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                canonical, foreign, PcbBoardSide.TOP) == null,
+            "another component slot cannot certify this resistor body");
+
+        PhysicalPackage[] unsupported = {PhysicalPackages.AXIAL_FUSE, PhysicalPackages.AXIAL_DIODE};
+        for (PhysicalPackage pkg : unsupported) {
+            PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                "R1", 700, 900, pkg, pkg.getGeometry());
+            PhysicalBoardSlot slot = emptySlot(pkg, "R1");
+            slot.bindGeometryRealization(placement);
+            check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                    placement, slot, PcbBoardSide.TOP) == null,
+                "non-resistor axial package does not receive resistor body ink: " + pkg.getId());
+        }
+        PhysicalBoardSlot wrongPackage = emptySlot(PhysicalPackages.AXIAL_FUSE, "R1");
+        PcbComponentPlacement fuse = PcbComponentPlacement.fromPhysicalGeometry("R1", 700, 900,
+            PhysicalPackages.AXIAL_FUSE, PhysicalPackages.AXIAL_FUSE.getGeometry());
+        wrongPackage.bindGeometryRealization(fuse);
+        check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                canonical, wrongPackage, PcbBoardSide.TOP) == null,
+            "a different physical package in the same component slot fails closed");
+    }
+
+    private static void axialResistorFootprintsPreserveDeclaredPosePolicy() {
+        PhysicalPackage pkg = PhysicalPackages.AXIAL_RESISTOR;
+        PhysicalPackageGeometry geometry = pkg.getGeometryVariant("SPAN_220").getGeometry();
+        boolean foundAllowedPose = false;
+        for (PcbRotation rotation : PcbRotation.values())
+            for (PcbBoardSide mount : PcbBoardSide.values()) {
+                PcbPackagePose pose = new PcbPackagePose(700, 900, rotation, mount);
+                if (!pkg.supportsPose(pose)) {
+                    boolean rejected = false;
+                    try {
+                        PcbComponentPlacement.fromPhysicalGeometry("R1", pose, pkg, geometry);
+                    } catch (IllegalArgumentException expected) {
+                        rejected = true;
+                    }
+                    check(rejected, "resistor fixture preserves disallowed pose: " + pose.fingerprint());
+                    continue;
+                }
+                foundAllowedPose = true;
+                check(rotation == PcbRotation.DEG_0 && mount == PcbBoardSide.TOP,
+                    "only the existing top/zero resistor pose is allowed");
+                PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                    "R1", pose, pkg, geometry);
+                PhysicalBoardSlot slot = emptySlot(pkg, "R1");
+                slot.bindGeometryRealization(placement);
+                rect(PcbWorkbenchRenderer.emptyResistorFootprint(
+                        placement, slot, PcbBoardSide.TOP), 770, 918, 80, 34,
+                    "existing allowed pose retains its body guide");
+            }
+        check(foundAllowedPose, "package retains an allowed top/zero resistor pose");
+    }
+
+    private static void occupiedAxialResistorSlotsHideTheAssemblyGuide() {
+        CirSim previousSimulation = CircuitElm.sim;
+        try {
+            PhysicalPackage pkg = PhysicalPackages.AXIAL_RESISTOR;
+            PhysicalPackageGeometry geometry = pkg.getGeometryVariant("SPAN_220").getGeometry();
+            PhysicalBoardSlot slot = emptySlot(pkg, "R1");
+            PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                "R1", 700, 900, pkg, geometry);
+            slot.bindGeometryRealization(placement);
+            check(PcbWorkbenchRenderer.emptyResistorFootprint(
+                    placement, slot, PcbBoardSide.TOP) != null,
+                "empty bound slot exposes the body guide");
+
+            ResistorElm element = new ResistorElm(0, 0);
+            Vector<PhysicalPartTerminal> terminals = new Vector<PhysicalPartTerminal>();
+            terminals.add(new PhysicalPartTerminal("R1", "1",
+                new CircuitPostMeasurementEndpoint(element, 0)));
+            terminals.add(new PhysicalPartTerminal("R1", "2",
+                new CircuitPostMeasurementEndpoint(element, 1)));
+            Vector<CircuitElm> backing = new Vector<CircuitElm>();
+            backing.add(element);
+            FixedPhysicalPart<BasicPhysicalSpecification> installed =
+                new FixedPhysicalPart<BasicPhysicalSpecification>("R1",
+                    new BasicPhysicalSpecification("FIXTURE_RESISTOR"),
+                    new PhysicalNameplate("R1", "Fixture resistor"), pkg, terminals,
+                    backing, new PhysicalPartProvenance(
+                        PhysicalPartProvenance.DEVELOPER_CANARY, "R1"));
+            slot.install(installed);
+            check(slot.isOccupied() && slot.getInstalledPart() == installed &&
+                    PcbWorkbenchRenderer.emptyResistorFootprint(
+                        placement, slot, PcbBoardSide.TOP) == null,
+                "an installed resistor suppresses empty-slot assembly ink");
+            check(slot.remove() == installed && !slot.isOccupied() && !installed.isInstalled(),
+                "fixture removal restores the actual empty-slot association");
+            rect(PcbWorkbenchRenderer.emptyResistorFootprint(
+                    placement, slot, PcbBoardSide.TOP), 770, 918, 80, 34,
+                "removing the physical part exposes only the original body guide");
+        } finally {
+            CircuitElm.sim = previousSimulation;
+        }
     }
 
     private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {

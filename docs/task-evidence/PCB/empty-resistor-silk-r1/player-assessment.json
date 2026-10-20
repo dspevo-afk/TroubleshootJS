@@ -1,0 +1,46 @@
+{
+  "status": "PASS_FINITE_FINAL_PLAYER",
+  "baseCommit": "891d6ce75ff97fd62adc98fc88b331230cf210f1",
+  "candidateSha256": "5e57e67b6356a4ce8e730d048aec20e5ea41ab3aa77c835e5d5c3feafe23181c",
+  "build": "F4CA0D0FF6F4318FEF7078DA7D7978B3",
+  "identities": {
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / F4CA0D0FF6F4318FEF7078DA7D7978B3"
+    },
+    "sensor": {
+      "replay": "tsj-alpha/6/EASY/SENSOR_CONTROL/-3395796212705839809",
+      "build": "tsj-alpha/6 / F4CA0D0FF6F4318FEF7078DA7D7978B3"
+    }
+  },
+  "input": "26 actual normal production actions allPASS; no timeouts, controller calls, DOM mutation, forced input or seed substitution",
+  "visual": "Root inspected all5 raw1280x900 JPEGs: installed LED resistor; thin unfilled rounded empty R1 guide clear of lands/reference; bottom view without guide; fresh customerPASS; denser empty Sensor R5 guide clear of adjacent parts/lands/reference. Empty LED and Sensor images pasted in chat",
+  "images": {
+    "led-installed.jpg": {
+      "sha256": "65ac448d0f8393f91df8a729f434ac727cc004d141fc0ff27bd5092398184176",
+      "bytes": 115133
+    },
+    "led-empty-top.jpg": {
+      "sha256": "e9b0212789e415edc6e2b52902bf05efdd6a1f88fe48e25cd99c43f5626f3fe2",
+      "bytes": 110723
+    },
+    "led-empty-bottom.jpg": {
+      "sha256": "c44e91ed8b4223533437a6124b731ce07f40f429cb3690b34eb7a5f4ae422a64",
+      "bytes": 109352
+    },
+    "led-customer-passed.jpg": {
+      "sha256": "1bd9351604682780defe0c73ac450f50e159b5aa24fd80603a35937e29f94d47",
+      "bytes": 97773
+    },
+    "sensor-r5-empty-top.jpg": {
+      "sha256": "3361241c54ca081927d60fe5a63149ab8d9da3ee7d9ac7a0aabdc3e3f353d31a",
+      "bytes": 107291
+    }
+  },
+  "led": "OriginalPart2 Installed/customerFAIL, OFF lift/remove/top-bottom/original restore; original complaint observed after repeat retest. ActualOFF isolated original OL, actualShopPart4/330Ohm install andOFF330Ohm, exitmode/connect5V/fresh awaited customerPASS modal; final5Vdisconnected/BoardOFF/tray1",
+  "sensor": "Exact prior fresh optionalR5 replay, initialFAIL; BoardOFF originalPart10 removal/rounded guide/original CircuitR5 restore Installed/tray0; original complaint observed after repeat retest; finalBoardOFF/tray0. No Sensor measurement/repair claim",
+  "provenance": "Exact candidate1482/24/gates6 and independent CLI/served6 before/after, player wrappers/plan seal retained; prior baseline hashes immutable",
+  "console": "130=129log+1unattributed resource404; private raw hash retained, page/request/observed-response errors0; no clean-console attribution",
+  "cleanup": "All current12 plus pre-edit6 recorded births exited, API0/current profile absent, maintained stop1.7925389s/state absent/8907 released; older blocked profiles/private/unrelated data preserved",
+  "limits": "Finite2 actual replays and native44 census only; pure native slot association does not simulate lifted state. Repeated originalFAIL is observed complaint after actual click, without independent freshness token; freshPASS awaited new modal. No all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/newFileReader/full-matrix claim"
+}

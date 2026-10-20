@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "executable": "powershell.exe",
+  "limits": "Full local owner paths and command remain private; public projection contains six provenance fields only",
+  "http200": true,
+  "port": 8907,
+  "rootScriptCommandBirthExact": true,
+  "pid": 15088,
+  "startTicks": "639281090742653649",
+  "side": "after",
+  "servedIdentityEqualsIndependentProjection": true
+}

@@ -1,0 +1,3 @@
+TroubleshootJS preview started (PID 15088).
+Preview root URL (for verify-browser -BaseUrl): http://127.0.0.1:8907
+Preview page URL: http://127.0.0.1:8907/circuitjs.html?tsjQuickPlay=true

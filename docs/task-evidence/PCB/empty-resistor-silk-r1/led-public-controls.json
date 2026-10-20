@@ -1,0 +1,56 @@
+[
+  {
+    "label": "Select component",
+    "options": [
+      {
+        "value": "",
+        "label": "Select component"
+      },
+      {
+        "value": "J1",
+        "label": "J1"
+      },
+      {
+        "value": "LED1",
+        "label": "LED1"
+      },
+      {
+        "value": "R1",
+        "label": "R1"
+      }
+    ]
+  },
+  {
+    "label": "Probe terminal",
+    "options": [
+      {
+        "value": "",
+        "label": "Probe terminal"
+      },
+      {
+        "value": "J1.1",
+        "label": "J1 terminal 1"
+      },
+      {
+        "value": "J1.2",
+        "label": "J1 terminal 2"
+      },
+      {
+        "value": "LED1.A",
+        "label": "LED1 terminal A"
+      },
+      {
+        "value": "LED1.K",
+        "label": "LED1 terminal K"
+      },
+      {
+        "value": "R1.1",
+        "label": "R1 terminal 1"
+      },
+      {
+        "value": "R1.2",
+        "label": "R1 terminal 2"
+      }
+    ]
+  }
+]

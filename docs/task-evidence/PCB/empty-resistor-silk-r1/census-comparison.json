@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "cases": 44,
+  "allFullReferenceLeadTitleRowsExact": 132,
+  "packingRowsExactExceptExisting3TimingFields": 44,
+  "fullOrderedWhitespaceRowsExact": 44,
+  "limits": "No hash/text/bounds/style/target/metric/work/oracle exclusions; finite unchanged44 corpus only"
+}

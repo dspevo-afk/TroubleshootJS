@@ -1,0 +1,28 @@
+{
+  "status": "PASS_PRE_EDIT_BASELINE",
+  "baseCommit": "891d6ce75ff97fd62adc98fc88b331230cf210f1",
+  "identity": {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+  },
+  "inputSealSha256": "31e8e3009a4b3af7af84090d1b9b2b2bd6695231af340660ce4031d072f93794",
+  "sourceBoundary": "Exact unchanged1482/24/gates5 and independent compiled/served6 before/after; no new native/build/matrix run",
+  "input": "Actual normal replay/ticket/view/native-select/component/tray/supply/retest only;11 actions allPASS, no controller/DOM mutation/force",
+  "observed": "Root inspected two raw1280x900 views: installed R1 body, then actual empty top-side R1 region with only its reference and two lands; no assembly body outline is present",
+  "originalRestore": "Sole5V OFF before lead1 lift/removal; actual original Part2 returned to Circuit R1, Installed/tray0 and original complaint observed on repeated retest; final5V disconnected/BoardOFF/tray0",
+  "images": {
+    "baseline-installed-r1.jpg": {
+      "sha256": "65ac448d0f8393f91df8a729f434ac727cc004d141fc0ff27bd5092398184176",
+      "bytes": 115133
+    },
+    "baseline-empty-r1-top.jpg": {
+      "sha256": "9ddfa0fb9a764c6ca28990fed6f6dfa2a64cb6d6fae161f7de86aa8db2f4a655",
+      "bytes": 110002
+    }
+  },
+  "finding": "A small unfilled rounded body guide within the immutable axial body is a warranted scoped presentation candidate; preserve chip-only helper/null fixture and all package/identity/geometry/physics policies",
+  "implementation": "NOT SELECTED_OR_EDITED by this baseline; subsequent production scope/raw source must be frozen before edits",
+  "console": "45 entries=44log+1unattributed resource404; raw private/hash-bound, page/request/observed-response errors0; no clean-console attribution",
+  "cleanup": "All6 recorded births exited; API browser0/current profile absent; maintained stop1.8122673s/state absent/8907 released; older blocked profiles/private resources retained",
+  "limits": "Single exact normal removal observation, no measurement/repair/manufacturing/new-size/all-seed/Edge/CDP/FileReader/full-matrix claim; this baseline is pre-edit proof, not final-candidate acceptance"
+}

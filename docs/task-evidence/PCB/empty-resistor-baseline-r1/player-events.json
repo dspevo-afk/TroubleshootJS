@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Open plain accepted production baseline",
+    "status": "PASS",
+    "elapsedSeconds": 0.613
+  },
+  {
+    "name": "Prepare known normal LED baseline replay",
+    "status": "PASS",
+    "elapsedSeconds": 1.09
+  },
+  {
+    "name": "Accept LED baseline ticket",
+    "status": "PASS",
+    "elapsedSeconds": 0.067
+  },
+  {
+    "name": "Observe original baseline customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.066
+  },
+  {
+    "name": "Disconnect baselineLED5V before service",
+    "status": "PASS",
+    "elapsedSeconds": 0.034
+  },
+  {
+    "name": "Lift baseline original R1 lead1 whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.039
+  },
+  {
+    "name": "Remove baseline original R1 whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.157
+  },
+  {
+    "name": "Restore baseline original Part2 into Circuit R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.063
+  },
+  {
+    "name": "Retest restored original baseline board",
+    "status": "PASS",
+    "elapsedSeconds": 0.135
+  },
+  {
+    "name": "Disconnect restored baseline board before leaving",
+    "status": "PASS",
+    "elapsedSeconds": 0.066
+  },
+  {
+    "name": "Record exact baseline public identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.103
+  }
+]

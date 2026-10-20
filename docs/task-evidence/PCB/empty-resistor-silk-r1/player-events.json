@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Open actual final compiled production player",
+    "status": "PASS",
+    "elapsedSeconds": 0.592
+  },
+  {
+    "name": "Prepare and accept normal knownLED exact replay",
+    "status": "PASS",
+    "elapsedSeconds": 1.054
+  },
+  {
+    "name": "Observe final-build original LED customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.067
+  },
+  {
+    "name": "Disconnect final-buildLED5V before service",
+    "status": "PASS",
+    "elapsedSeconds": 0.035
+  },
+  {
+    "name": "Lift final-build original R1 lead1 whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.038
+  },
+  {
+    "name": "Remove final-build original R1 whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.157
+  },
+  {
+    "name": "View removedR1 from actual bottom-copper face",
+    "status": "PASS",
+    "elapsedSeconds": 0.096
+  },
+  {
+    "name": "Return actual top copper and inspect original tray part",
+    "status": "PASS",
+    "elapsedSeconds": 0.124
+  },
+  {
+    "name": "Reinstall same originalLED Part2 as CircuitR1",
+    "status": "PASS",
+    "elapsedSeconds": 0.058
+  },
+  {
+    "name": "Retest originalLED after exact original reinstallation",
+    "status": "PASS",
+    "elapsedSeconds": 0.135
+  },
+  {
+    "name": "DisconnectLED5V and isolate originalR1 for actual OHM",
+    "status": "PASS",
+    "elapsedSeconds": 0.169
+  },
+  {
+    "name": "Use physical OHM and public probes on isolated originalLED R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.133
+  },
+  {
+    "name": "Exit OHM and remove isolated originalR1 for replacement",
+    "status": "PASS",
+    "elapsedSeconds": 0.162
+  },
+  {
+    "name": "Acquire actual Shop330Ohm replacement",
+    "status": "PASS",
+    "elapsedSeconds": 0.123
+  },
+  {
+    "name": "Install Shop Part4 as Circuit R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.073
+  },
+  {
+    "name": "Measure installed replacement330Ohm whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.153
+  },
+  {
+    "name": "Exit OHM, connect5V and await fresh actual customerPASS",
+    "status": "PASS",
+    "elapsedSeconds": 0.242
+  },
+  {
+    "name": "Return repairedLED board and disconnect final5V",
+    "status": "PASS",
+    "elapsedSeconds": 0.121
+  },
+  {
+    "name": "Prepare exact prior fresh Sensor feedback replay",
+    "status": "PASS",
+    "elapsedSeconds": 3.008
+  },
+  {
+    "name": "Observe untouched Sensor customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.067
+  },
+  {
+    "name": "Switch actual Sensor BoardPowerOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.041
+  },
+  {
+    "name": "Remove original Sensor R5 with BoardOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.068
+  },
+  {
+    "name": "Restore same original Sensor Part10 to Circuit R5",
+    "status": "PASS",
+    "elapsedSeconds": 0.069
+  },
+  {
+    "name": "Retest Sensor with original feedback resistor restored",
+    "status": "PASS",
+    "elapsedSeconds": 0.107
+  },
+  {
+    "name": "Leave restored Sensor BoardPowerOFF and tray0",
+    "status": "PASS",
+    "elapsedSeconds": 0.038
+  },
+  {
+    "name": "Record exact final-build Sensor public identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.11
+  }
+]

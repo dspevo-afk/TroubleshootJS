@@ -1,0 +1,20 @@
+{
+  "scope": "Root after actual exec7351 exit0, no termination",
+  "checks": [
+    {
+      "startTicks": "639281090703804668",
+      "executable": "pwsh",
+      "pid": 19924,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281090706975612",
+      "executable": "pwsh",
+      "pid": 6920,
+      "recordedBirthExited": true
+    }
+  ],
+  "actualExecExitCode": 0,
+  "launchSha256": "4bbd11c9328b07397bd96378f901aaf73b07a7f3c6dd4483b80dfa7fdcd04979",
+  "status": "PASS"
+}

@@ -1,0 +1,9 @@
+{
+  "scope": "Only exact known current-worktree prefix in single compiler Linking into line; all other bytes unchanged; raw retained privately before any publication",
+  "replacements": 1,
+  "rawSha256": "a2c832e91765742426ceb4f54769207642e39c66ff571afd77e82c7fb170febe",
+  "publishedSha256": "404a2976a1ccfce29c9731cab748067facb9811f5d7d6c579dad88319745bbd0",
+  "rawBytes": 1250,
+  "publishedBytes": 1186,
+  "execution": "Actual build exec55824 exited0 before copying/sanitizing; no rerun"
+}

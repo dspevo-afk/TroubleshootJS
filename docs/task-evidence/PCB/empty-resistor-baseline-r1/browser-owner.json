@@ -1,0 +1,13 @@
+{
+  "executable": "brave.exe",
+  "headed": true,
+  "status": "PASS",
+  "limits": "Full executable/command/profile/websocket private",
+  "uniqueProfileInActualCommand": true,
+  "pid": 25116,
+  "normalizedExecutableExact": true,
+  "sandboxEnabled": true,
+  "profileName": "playwright_chromiumdev_profile-S40u9R",
+  "startTicks": "639281090915047091",
+  "navigation": "NOT_YET"
+}

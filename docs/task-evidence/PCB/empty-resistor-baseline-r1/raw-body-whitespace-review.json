@@ -1,0 +1,106 @@
+{
+  "status": "PASS",
+  "scope": "Exact unchanged raw body09 layout lines only, no source-wide suppression",
+  "files": {
+    "all-off-body.txt": {
+      "sha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "final-off-body.txt": {
+      "sha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "original-install-options-body.txt": {
+      "sha256": "c29eced058a385fae70337a02d83fa4d2cdfd6a0840ccc86d98b0a0ae35028af",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "original-restored-fail-observed-body.txt": {
+      "sha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "original-restored-installed-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "original-tray-body.txt": {
+      "sha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "r1-empty-top-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "r1-installed-off-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "r1-lifted-off-body.txt": {
+      "sha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "restored-retest-click-body.txt": {
+      "sha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    }
+  },
+  "lineCount": 33
+}

@@ -7,7 +7,16 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **First Protected/Dual/Relay sample accepted; empty resistor footprint feasibility next**
+**Current task:** **Empty axial resistor assembly outline accepted; publication pending**
+
+Empty declared axial resistor slots now retain a thin unfilled rounded top body
+guide. All3 seeded spans and old chip policy/identity/geometry remain; native10
+(silk13154), strict paired44 and actual final JDK8/GWT5 pass. Actual LED
+lift/remove/top-bottom/original restoration/isolatedOL/Shop330Ohm/actual330Ohm/
+fresh customerPASS and SensorR5 removal/original restoration pass. Five raw
+images inspected, emptyLED+Sensor pasted;26actionsPASS. Console404/private log
+and repeatedFAIL freshness limits explicit. All12 current+6 baseline births
+exited/current profile-state absent/port released. [Scope, checks and limits](task-evidence/PCB/empty-resistor-silk-r1/RESULTS.md).
 
 Read-only first actual New board Protected/Dual/Relay results all admit and
 show untouched customerFAIL; every supply disconnected/tray0. Exact1482/24/

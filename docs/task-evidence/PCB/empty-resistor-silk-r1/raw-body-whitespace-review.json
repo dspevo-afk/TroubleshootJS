@@ -1,0 +1,484 @@
+{
+  "status": "PASS_RAW_PRESERVED",
+  "scope": "Exact named raw production body files; every trailing whitespace line is one literal09 blank meter-layout line; evidence bytes unchanged, exact filename attributes only",
+  "bodyFiles": 28,
+  "tabOnlyLines": 84,
+  "files": {
+    "led-330-install-options-body.txt": {
+      "sha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-all-off-body.txt": {
+      "sha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-customer-passed-body.txt": {
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-empty-bottom-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-empty-top-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-final-off-body.txt": {
+      "sha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "tabOnlyLines": [
+        {
+          "line": 34,
+          "hex": "09"
+        },
+        {
+          "line": 35,
+          "hex": "09"
+        },
+        {
+          "line": 40,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-isolated-original-lifted-body.txt": {
+      "sha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-install-options-body.txt": {
+      "sha256": "c29eced058a385fae70337a02d83fa4d2cdfd6a0840ccc86d98b0a0ae35028af",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-installed-off-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-isolated-ohm-body.txt": {
+      "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-lifted-off-body.txt": {
+      "sha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-loose-for-repair-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-restored-fail-observed-body.txt": {
+      "sha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-restored-installed-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-restored-retest-click-body.txt": {
+      "sha256": "618f5c8eea0745362c390a8665145b4e044062e1331540aae8192c17f1971b76",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-original-tray-body.txt": {
+      "sha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-replacement-330-ohm-body.txt": {
+      "sha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "led-replacement-tray-body.txt": {
+      "sha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-final-off-body.txt": {
+      "sha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-original-fail-body.txt": {
+      "sha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-original-restored-fail-observed-body.txt": {
+      "sha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-original-restored-retest-click-body.txt": {
+      "sha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-r5-empty-top-body.txt": {
+      "sha256": "a3bc73a5e3830cbd9465daa777f08bc243b1b9129f84d3b50485ee7b0ebe038e",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-r5-original-install-options-body.txt": {
+      "sha256": "7fd25502daa4169316515f17a6e3e651f8b6d2ff32a27b28d49fc54cc6bb21ce",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-r5-original-installed-off-body.txt": {
+      "sha256": "26b8c1b1e1b24716b3a8ed75a9d4cbfbfa0d4a752b4d4c9fcbc0b06dd440f53a",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-r5-original-restored-installed-body.txt": {
+      "sha256": "26b8c1b1e1b24716b3a8ed75a9d4cbfbfa0d4a752b4d4c9fcbc0b06dd440f53a",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    },
+    "sensor-r5-original-tray-body.txt": {
+      "sha256": "ab9afdc27c96487df2418843668b14acc5aab9fa2d99a1470cb00812b3797362",
+      "tabOnlyLines": [
+        {
+          "line": 37,
+          "hex": "09"
+        },
+        {
+          "line": 38,
+          "hex": "09"
+        },
+        {
+          "line": 43,
+          "hex": "09"
+        }
+      ]
+    }
+  }
+}

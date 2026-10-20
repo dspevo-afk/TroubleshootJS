@@ -1,0 +1,21 @@
+{
+  "privateRuntimeSha256": "d33d399acdec759f53018e65c22ea9a0a117441f63ce48f57a0d6e7a5978d492",
+  "bytes": 13031,
+  "consoleEntries": 130,
+  "consoleTypes": {
+    "error": 1,
+    "log": 129
+  },
+  "nonLogEntries": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "errors": {
+    "page": [],
+    "request": [],
+    "response": []
+  },
+  "limits": "Raw console private/hash-bound; no clean-console attribution."
+}

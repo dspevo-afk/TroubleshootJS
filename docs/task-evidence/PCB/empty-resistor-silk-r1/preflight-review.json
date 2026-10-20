@@ -1,0 +1,16 @@
+{
+  "status": "PASS_PREFLIGHT",
+  "files": {
+    "tests/contracts/PcbSilkscreenScaleContractTest.java": "f75027ec0019641bffb15a16f06cd3f0c325f95b4b6ad3e388107ba86b3a2299",
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java": "e9a3077cc2334480ac9481a8cb37da0e19395a3c2e03555bacc1e8d4fe245b8a"
+  },
+  "scope": "Integrated renderer diff and insertion-only224-line fixture/API audit before candidate freeze",
+  "limits": "Pure native fixture scope only, no actual lifted electrical state or visual execution acceptance; final10/census44/GWT5/player pending",
+  "confirmed": [
+    "Old chip draw/helper and original axial-null assertion retained; separate axial painter uses bound body only.",
+    "All3 declared variants independently checked with literal local/placed bodies and27-unit land clearance; original geometry/identity snapshots retained.",
+    "Null/face/package/component/unbound/mismatched/occupied negatives and existing pose restrictions.",
+    "Valid FixedPhysicalPart with actual ResistorElm backing tests slot association without measurements; constructor/backing/slot APIs audited. No new solver/generator loop or external resource."
+  ],
+  "reviewer": "root"
+}

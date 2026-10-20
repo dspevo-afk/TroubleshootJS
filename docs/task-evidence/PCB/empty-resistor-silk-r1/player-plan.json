@@ -1,0 +1,20 @@
+{
+  "scope":"Actual final production empty axial guide and ordinary service/repair checks; no controller calls, DOM mutation or forced input",
+  "candidate":"candidate-inputs.json",
+  "viewport":[1280,900],
+  "browser":"Established headed sandboxed installed Brave fallback, plain production preview; no Edge/CDP-wrapper claim",
+  "replays":{
+    "led":"tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "sensor":"tsj-alpha/6/EASY/SENSOR_CONTROL/-3395796212705839809"
+  },
+  "checks":[
+    "LED original Installed/customerFAIL; disconnect sole5V before lift/removal; original body/labels/leads and public terminal names retained",
+    "Empty LED R1 top: one unfilled rounded body outline, no bands/dot, clears both original lands/reference; real bottom-copper view has no assembly guide",
+    "Same original tray part reinstalled, guide absent for occupied slot, original complaint remains; allOFF isolated original physicalOHM/public probes OL",
+    "Actual Shop330Ohm replacement installed, actualOFF330Ohm; exit mode/reconnect5V/await fresh customerPASS modal; finalOFF/tray1",
+    "Sensor optional R5 initial Installed/customerFAIL, actual BoardPowerOFF then original removal; rounded guide clears adjacent components/reference/lands; same original observed part reinstalled, original complaint remains, finalOFF/tray0"
+  ],
+  "primaryImages":["led-installed.jpg","led-empty-top.jpg","led-empty-bottom.jpg","led-customer-passed.jpg","sensor-r5-empty-top.jpg"],
+  "evidence":"Raw public bodies/images/action log, root visual inspection; exact source1482/machinery24/gates6 and independent compiled/served six fields before/after; actual process births, unique profile and normal API/maintained cleanup",
+  "limits":"Finite fixed replays and native44 family-root census only; no all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/newFileReader/full-matrix claim. Retain all preparation failures and operation/cleanup limits separately."
+}

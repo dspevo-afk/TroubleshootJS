@@ -1,4 +1,142 @@
-# Current checkpoint: first Protected/Dual/Relay sample accepted; publication pending
+# Current checkpoint: empty axial outline accepted; publication pending
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts,
+HEAD/exact origin891d6ce75ff97fd62adc98fc88b331230cf210f1. Indefinite PCB
+realism/screenshots/optional leaves, no final/main/email. Original5/private
+baseline/cache/COPY/pointers and3 blocked profiles preserved. No task OS process
+live; all ar*/er*/fp*/rr* contexts closed; private raw logs/pointers retained.
+
+empty-resistor-baseline-r1 accepted BEFORE edits at exact1482/24/gates5 and
+independent compiled/served6 before/after. KnownLED original Installed/FAIL,
+5VOFF lift/remove leaves reference+lands without body guide; originalPart2
+restored CircuitR1/Installed/tray0/complaint observed, final5VOFF. Two raw views
+inspected/11actionsPASS. Console45=44log+1unattributed404, other errors0.
+All6 births exited/API0/profile-state absent/8907 released; stop1.8122673s.
+Its unchanged-production reader is pre-edit proof and must not be rerun now.
+
+empty-resistor-silk-r1 accepted final source1482/24/gates6, exactly2 changed
+owners frozen: renderer separate empty axial rounded body guide, insertion-only
+224-line native fixture. Body inset1/clip/top/empty/ID/package/bound-realization
+guards, same label obstacle; old chip helper/axial-null assertion intact.
+All3 seeded spans220/240/260 and identity/negative/pose fixtures. No geometry/
+graph/targets/RNG/epoch/save/state/time-budget changes. Root source/API review
+and hash-bound Luna MAX read-only production review no blockers; no reviewer
+runtime/visual claim. Repeated radius maintenance note outside scope.
+
+Actual exec0 then separate root cleanup/qualification: native10 57.966822s,
+silk13154/service2115; census8/44 70.6793038s all44 admit/full132ink rows/full44
+packing except3 existing timing fields/full44 ordered whitespace exact; actual
+JDK8/GWT5 OBF build91.7028941s. No oracle/golden exclusion or new-size claim.
+Build single known worktree-prefix link-line sanitation; raw private/hash-bound.
+
+Actual final public6/buildF4CA0D0FF6F4318FEF7078DA7D7978B3, knownLED plus prior
+fresh Sensor optionalR5. LED OFF original lift/remove/rounded-guide/top-bottom/
+Part2restore/Installed/original complaint; actualOFFisolatedOL/ShopPart4/330Ohm/
+actualOFF330Ohm/exitmode/connect5V/fresh awaited customerPASS/finalOFFtray1.
+Sensor BoardOFF originalR5remove/guide/Part10restoreCircuitR5/Installed/tray0,
+original complaint observed/finalOFFtray0. RepeatedFAIL observed after actual
+click without independent freshness token; no Sensor repair/measurement claim.
+26actionsPASS/no timeouts/substitution/controller/DOM mutation/force;5 raw images
+inspected, emptyLED+Sensor pasted. Exact source/gates/CLI-served6 before/after.
+Console130=129log+1unattributed404/other errors0/private raw hash. Raw28body84tabs
+and baseline11body33tabs preserved with exact filename attributes.
+
+All current12+baseline6 recorded births exited, browserAPI0/currentprofile absent,
+maintained stop1.7925389s/state absent/8907 released. Readers PASS; results/limits
+in empty-resistor-silk-r1/RESULTS.md. Root final integrated/raw/canonical/staged/
+privacy/diff review then explicit commit/normal push/exact remote SHA pending;
+include both packets+fresh-board-visual-r3 publication receipt. Next unstarted:
+fresh normal visual sampling before another production scope. Existing TO92
+flatface confirmed, no new change warranted. No all-seed/manufacturing/performance/
+Edge/CDP-wrapper/newFileReader/unrelated full-matrix claim. Continue after push.
+
+# Previous checkpoint: empty axial outline implementation; final candidate pending
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts,
+HEAD/exact origin891d6ce75ff97fd62adc98fc88b331230cf210f1. Indefinite PCB
+realism/screenshots/optional leaves, no final/main/email. Prior fresh publication
+receipt intended this coherent commit; Original5/private baseline/cache/COPY/
+pointers and3 blocked profiles preserved. No native/build/browser/preview live;
+er*/fp*/rr* Node contexts closed and private logs/pointers retained.
+
+empty-resistor-baseline-r1 actual pre-edit PASS at exact unchanged1482/24/gates5/
+independent compiled6+served6 before/after. Normal knownLED5577758334702827054,
+public6/build47CB: original Installed/customerFAIL, sole5VOFF lead1 lift/remove,
+actual empty R1 top has only reference/lands/no body guide. Two raw1280x900 views
+inspected. Same originalPart2 restored CircuitR1/Installed/tray0, repeated actual
+retest complaint remains, final5VOFF/BoardOFF/tray0.11 actions allPASS, no timeout/
+substitution/measurement/repair claim. Console45=44log+1unattributed404, page/
+request/observed-response errors0; raw private/hash-bound. All6 births exited,
+browserAPI0/current profile absent, maintained stop1.8122673s/state absent/8907
+released. Reader accepted before ANY production/test edits.
+
+empty-resistor-silk-r1 scope/gates6/source1482/24/raw2-owner baseline frozen after
+that observation and BEFORE edits. Pure timing canaries positive1/rejected6 PASS;
+maintained suites10/8 resolved/syntax checked. Root added separate AXIAL-only
+emptyResistorFootprint/drawing path in PcbWorkbenchRenderer: top/empty/ID/package/
+exact bound-realization guards, immutable body, inset1+clip+existing roundedPath
+stroke, same body label obstacle. No chip helper/old axial-null assertion change;
+no bands/dot/graph/geometry/targets/RNG/epoch/state/budget change. NOT qualified.
+
+Fresh Luna MAX axial_outline_fixtures released insertion-only224-line existing
+PcbSilkscreenScaleContractTest. Root integrated/API/diff review PASS; old13092
+assertions/lines retained. Literal3 spans220/240/260, body/land clearance,
+defensive return/guard/identity/occupied/disallowed-pose cases. FixedPhysicalPart
+uses real ResistorElm backing for pure slot association, no measurement/solver
+claim; actual lifted state remains player gate. Read-only Luna MAX production
+review no blockers at renderer blob26838b0f, no execution/visual claim; repeated
+radius.38 maintenance note nonblocking/outside scope. Candidate1482/2 raw owners
+now frozen, player plan/wrappers sealed. Actual native10 running exec80692;
+census/build/player NOT RUN. All root and leaf edits confined to scoped owners.
+
+Next wait actual native10 exec completion then separate root birth cleanup and
+source/receipt qualification; census8 strict full44 equality except3 existing
+packing timing fields, final actual JDK8/GWT5 OBF Compile900s serially. Actual
+final knownLED original/lift/remove/rounded-guide/top-bottom/reinstall/fault/
+OL/Shop330Ohm/actual330Ohm/fresh customerPASS/finalOFF plus prior fresh Sensor
+optionalR5 removal/restoration. Keep2-5 useful raw images; exact source/gates/
+compiled-served6 and real ownership/API+maintained cleanup. Root integrated/
+privacy/raw staged review/docs/normal commit-push/exact remote receipt, no main/
+email. No saved physical oracle/golden weakening or all-seed/new-size/manufacturing/
+performance/Edge/CDP/FileReader/unrelated full-matrix claim. Continue work.
+
+# Previous checkpoint: empty axial resistor baseline frozen before observation
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
+HEAD/exact verified origin891d6ce75ff97fd62adc98fc88b331230cf210f1,
+Record first fresh protected dual and relay boards. Normal push55 docs-only
+paths verified: prior54 index blobs + final review raw exact, all1482 working
+sources unchanged. Fresh sample publication receipt untracked/intended next
+coherent commit. Indefinite PCB realism/screenshots/optional leaves, no final/
+main/email. Original5/private baseline/cache/COPY/pointers and3 blocked profiles
+preserved. No task OS process live; rr*/fp* Node contexts closed.
+
+empty-resistor-baseline-r1 phaseA only: source1482/24/gates5/reusedcompiled6
+frozen before preview/browser, wrappers syntax checked. No application/test/
+machinery/build edits and no production implementation selected. Exact current
+public6/build47CB reuse source/projection audits required before/after; no new
+native/build/full-matrix run. Predeclared knownLED5577758334702827054 normal
+replay, original Installed/customerFAIL, sole5V OFF before R1 lift/remove; two
+raw installed/empty-top views. Same original Part2 must be restored, Installed/
+tray0/customerFAIL, final5VOFF. No measurement/repair claim.
+
+Read-only Luna MAX passive_footprint_scope: existing chip helper deliberately
+excludes axial resistor, independent null fixture must stay. Separate rounded
+AXIAL-only inert body guide is feasible using exact empty bound realization,
+top silk/body/label obstacle; no bands/dot/land/target/graph/geometry/RNG changes.
+Spans220/240/260 need literal bound-body tests. Package current default-top/zero
+pose policy unchanged. Source-hash-bound reader recorded; no leaf edits/execution.
+Actual normal removal baseline must confirm value before implementation scope
+and raw pre-edit source are frozen. Old TO-92 oval concern rejected: actual zoom
+and existing painter already show the flat face, no change warranted.
+
+Next owned preview/Brave launch and real worker/birth/executable/profile proof,
+independent/served6 before, actual baseline flow, source/provenance after, root
+API/maintained cleanup with actual exits/birth-state-port absence, then decide
+whether to scope an axial-only outline. No all-seed/new-size/manufacturing/
+performance/Edge/CDP/FileReader/unrelated full-matrix claim. Continue work.
+
+# Previous checkpoint: first Protected/Dual/Relay sample accepted before publication
 
 2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
 HEAD/exact origin4934d4a05e743e88039fdacdc45a054e18961eeb; normal reference

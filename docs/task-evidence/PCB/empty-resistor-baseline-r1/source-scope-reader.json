@@ -1,0 +1,14 @@
+{
+  "limits": "No edits/tests/build/browser by reviewer. Root actual normal removal baseline required before any implementation selection.",
+  "files": {
+    "renderer": "115594e9651a5cada014cea96c458146b8b2a92548882a02427c253732862204",
+    "packages": "60f58a4499c10f396654f5d69ea19b7a9a7fd480952fed7196ba8a3c30dc88cd",
+    "silkscreenFixture": "1849aaf05dadba87ce2bea49a4c4dee5c25550783acecdae06d57439f252c5d1"
+  },
+  "status": "SCOPE_FEASIBILITY_ONLY",
+  "guards": "Missing/unbound/mismatched geometry/foreign component/wrong package/occupied/lifted/bottom reject; default top zero-degree package policy unchanged. Seeded spans220/240/260 must retain their actual bound bodies;27 logical units from terminal land edge to body.",
+  "current": "emptyChipFootprint supports only ChipPinout packages; axial resistor is explicitly null in existing independent fixture. No empty axial body outline elsewhere in audited owner.",
+  "reviewer": "Luna MAX read-only passive_footprint_scope",
+  "candidate": "Separate AXIAL_RESISTOR-only unfilled rounded body outline using matching empty bound realization, top silk, immutable body and existing label obstacle; preserve chip helper and null assertion.",
+  "boundaries": "No bands/chip dot/conductive target/lead/geometry/pad/copper/graph/RNG/state/fault reads; no diode/fuse extension."
+}

@@ -1,0 +1,9 @@
+{
+  "birthExecutableProfileExact": true,
+  "executable": "brave.exe",
+  "scope": "Root before normal API close; no process termination",
+  "status": "PASS",
+  "pid": 25116,
+  "startTicks": "639281090915047091",
+  "profileName": "playwright_chromiumdev_profile-S40u9R"
+}

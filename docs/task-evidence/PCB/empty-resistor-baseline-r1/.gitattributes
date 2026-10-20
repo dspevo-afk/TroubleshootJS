@@ -1,0 +1,12 @@
+* -text whitespace=cr-at-eol
+all-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+final-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+original-fail-body.txt whitespace=-blank-at-eol,cr-at-eol
+original-install-options-body.txt whitespace=-blank-at-eol,cr-at-eol
+original-restored-fail-observed-body.txt whitespace=-blank-at-eol,cr-at-eol
+original-restored-installed-body.txt whitespace=-blank-at-eol,cr-at-eol
+original-tray-body.txt whitespace=-blank-at-eol,cr-at-eol
+r1-empty-top-body.txt whitespace=-blank-at-eol,cr-at-eol
+r1-installed-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+r1-lifted-off-body.txt whitespace=-blank-at-eol,cr-at-eol
+restored-retest-click-body.txt whitespace=-blank-at-eol,cr-at-eol

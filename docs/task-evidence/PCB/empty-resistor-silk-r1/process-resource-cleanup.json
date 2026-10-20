@@ -1,0 +1,137 @@
+{
+  "elapsedObservationSeconds": 0.3685712,
+  "preEditBaselineBirths": 6,
+  "combinedRecordedBirths": 18,
+  "recordedBirths": 12,
+  "baselineChecks": [
+    {
+      "pid": 19924,
+      "recordedBirthExited": true,
+      "startTicks": "639281090703804668",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 6920,
+      "recordedBirthExited": true,
+      "startTicks": "639281090706975612",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 13740,
+      "recordedBirthExited": true,
+      "startTicks": "639281093080888807",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 22572,
+      "recordedBirthExited": true,
+      "startTicks": "639281093083233116",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 15088,
+      "recordedBirthExited": true,
+      "startTicks": "639281090742653649",
+      "executable": "powershell.exe"
+    },
+    {
+      "pid": 25116,
+      "recordedBirthExited": true,
+      "startTicks": "639281090915047091",
+      "executable": "brave.exe"
+    }
+  ],
+  "managedStateAbsent": true,
+  "status": "PASS",
+  "browserApiExit0": true,
+  "checks": [
+    {
+      "pid": 7844,
+      "recordedBirthExited": true,
+      "startTicks": "639281099429104626",
+      "kind": "contracts-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 10208,
+      "recordedBirthExited": true,
+      "startTicks": "639281099435198086",
+      "kind": "contracts-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 4100,
+      "recordedBirthExited": true,
+      "startTicks": "639281100201108887",
+      "kind": "census-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 30268,
+      "recordedBirthExited": true,
+      "startTicks": "639281100207737486",
+      "kind": "census-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 18224,
+      "recordedBirthExited": true,
+      "startTicks": "639281101122524067",
+      "kind": "build-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 29876,
+      "recordedBirthExited": true,
+      "startTicks": "639281101128843352",
+      "kind": "build-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 28380,
+      "recordedBirthExited": true,
+      "startTicks": "639281102283252875",
+      "kind": "preview-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 31192,
+      "recordedBirthExited": true,
+      "startTicks": "639281102290150844",
+      "kind": "preview-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 32144,
+      "recordedBirthExited": true,
+      "startTicks": "639281105662091513",
+      "kind": "preview-stop-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 32368,
+      "recordedBirthExited": true,
+      "startTicks": "639281105664389870",
+      "kind": "preview-stop-process-launch.json",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 19068,
+      "recordedBirthExited": true,
+      "startTicks": "639281102325357505",
+      "kind": "preview-owner-before.json",
+      "executable": "powershell.exe"
+    },
+    {
+      "pid": 29824,
+      "recordedBirthExited": true,
+      "startTicks": "639281102589323521",
+      "kind": "browser-owner.json",
+      "executable": "brave.exe"
+    }
+  ],
+  "actualPreviewStopExecExitCode": 0,
+  "port8907Released": true,
+  "limits": "All current candidate12 and pre-edit baseline6 recorded births exited; no termination/manual deletion; older blocked profiles/private logs/pointers/unrelated data retained",
+  "currentProfileAbsent": true
+}

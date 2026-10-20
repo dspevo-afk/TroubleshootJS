@@ -1,0 +1,24 @@
+{
+  "contracts": [
+    "PcbSilkscreenScaleContractTest",
+    "BenchInstrumentPresentationContractTest",
+    "P01PhysicalPoseContractTest",
+    "U01ViewportContractTest",
+    "PowerServicePartContractTest",
+    "PhysicalServiceabilityContractTest",
+    "U06SessionSaveContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "Rb30PhysicalMetadataContractTest",
+    "PcbScreenLabelLayoutContractTest"
+  ],
+  "census": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ]
+}

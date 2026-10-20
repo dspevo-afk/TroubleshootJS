@@ -1,0 +1,12 @@
+{
+  "status": "SEALED_BEFORE_PLAYER",
+  "scope": "Exact final source candidate and ordinary player plan/wrappers sealed before post-edit preview/browser launch",
+  "limits": "Native/census/build/player acceptance pending",
+  "files": {
+    "player-plan.json": "6b9ba189a4a5aa6b5a4fff2b6bddf6d7c77f678ab10cad75fcc97b3e42240467",
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+    "stop_player.ps1": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+    "observe_player_host.ps1": "4907149ff24829745b36f429fc5513b0003998505221653ee0e466a559122e36",
+    "candidate-inputs.json": "5e57e67b6356a4ce8e730d048aec20e5ea41ab3aa77c835e5d5c3feafe23181c"
+  }
+}

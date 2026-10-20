@@ -1,0 +1,16 @@
+{
+  "scope": "Captured parent/current births before maintained empty axial outline phase",
+  "phase": "census",
+  "drivers": [
+    {
+      "startTicks": "639281100201108887",
+      "executable": "pwsh",
+      "pid": 4100
+    },
+    {
+      "startTicks": "639281100207737486",
+      "executable": "pwsh",
+      "pid": 30268
+    }
+  ]
+}
