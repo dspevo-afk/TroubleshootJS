@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "pid": 21300,
+  "startTicks": "639280701549477111",
+  "birthRevalidated": true,
+  "executableRevalidated": true,
+  "profileCommandRevalidated": true,
+  "next": "Only public APIs on the captured owned BrowserServer/context"
+}

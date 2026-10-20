@@ -221,7 +221,8 @@ public final class PcbFunctionalGroupingContractTest {
                 long area=(long)layout.getBoardOutline().width*layout.getBoardOutline().height;
                 String hash=PlayerSessionFingerprint.of(layout.geometryFingerprint());
                 check(area==SAVED12_AREA[index],"published12 representative area remains exact: "+ROOTS[index]);
-                check(SAVED12_GEOMETRY_SHA256[index].equals(hash),
+                check(SAVED12_GEOMETRY_SHA256[index].equals(
+                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                     "published12 representative geometry remains byte-exact: "+ROOTS[index]);
             }
             catch(AssertionError failure) {
@@ -341,7 +342,8 @@ public final class PcbFunctionalGroupingContractTest {
             check(area==SAVED12_HOLDOUT_AREA[index],"published12 holdout area remains exact: "+seed);
             check(largestVoid==SAVED12_HOLDOUT_LARGEST_VOID[index],
                 "published12 holdout protected void remains exact: "+seed);
-            check(SAVED12_HOLDOUT_GEOMETRY_SHA256[index].equals(hash),
+            check(SAVED12_HOLDOUT_GEOMETRY_SHA256[index].equals(
+                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "published12 holdout geometry remains byte-exact: "+seed);
             System.out.println("PCB_SAVED_ROLE_WIDTH_CASE {\"seed\":\""+seed+
                 "\",\"version\":12,\"density\":"+constraints.placementDensityVersion+
@@ -449,7 +451,7 @@ public final class PcbFunctionalGroupingContractTest {
             }
         }
         if(version==3) check(SAVED3_GEOMETRY_SHA256[index].equals(
-            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
             "published saved3 geometry remains byte-exact: "+seed);
         Rectangle outline=layout.getBoardOutline();MediumBoardPhysicalPolicy.Statistics stats=result.getStatistics();
         if(version==12)System.out.println("PCB_ROLE_WIDTH_MEASUREMENT {\"seed\":\""+seed+
@@ -462,23 +464,24 @@ public final class PcbFunctionalGroupingContractTest {
         int largestProtectedVoid=0;
         if(version>=4) largestProtectedVoid=reportWhitespace(board,layout,seed,version);
         if(version==6) check(SAVED6_GEOMETRY_SHA256[index].equals(
-            PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved6 geometry stays byte-exact: "+seed);
+            PcbCompactnessContractTest.legacyGeometrySha256(layout)),"saved6 geometry stays byte-exact: "+seed);
         if(version==7) {
             String expected=index==2?"f4ea1023da1da851f16846ba6535d05742d4d7e6d30ff9ee878028b9cbc9158e":
                 SAVED6_GEOMETRY_SHA256[index];
-            check(expected.equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            check(expected.equals(PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "saved7 geometry stays byte-exact: "+seed);
             check((long)outline.width*outline.height<=SAVED6_AREA[index],"no representative outline regression: "+seed);
             check(stats.placementCandidates==6 && stats.oneFaceAttempts<=3 && stats.twoLayerAttempts<=3,
                 "guarded selection keeps original placement and per-policy route caps");
         }
         if(version==8) check(SAVED8_GEOMETRY_SHA256[index].equals(
-            PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved8 geometry stays byte-exact: "+seed);
+            PcbCompactnessContractTest.legacyGeometrySha256(layout)),"saved8 geometry stays byte-exact: "+seed);
         if(version==9) {
             long area=(long)outline.width*outline.height;
             check(area<=SAVED8_AREA[index],"no representative regression against accepted8: "+seed);
             if(index==3) check(area<SAVED8_AREA[index],"connected packing reduces the retained42 fixture");
-            else check(SAVED8_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            else check(SAVED8_GEOMETRY_SHA256[index].equals(
+                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "other representative layouts remain exact accepted8: "+seed);
         }
         if(version==10) {
@@ -486,7 +489,8 @@ public final class PcbFunctionalGroupingContractTest {
             check(area<=SAVED9_AREA[index],"no representative regression against accepted9: "+seed);
             if(index==5)check(area<SAVED9_AREA[index],"local-support candidate reduces the declared54 fixture");
             else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
-                SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                SAVED8_GEOMETRY_SHA256[index]).equals(
+                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "other representative layouts remain exact accepted9: "+seed);
         }
         if(version==11) {
@@ -495,7 +499,8 @@ public final class PcbFunctionalGroupingContractTest {
             check(area<=baseline,"no representative regression against accepted10: "+seed);
             if(index==5)check(area<baseline,"vacancy candidate reduces the declared54 fixture");
             else check((index==3 ? "5d93ab0115d8721826d93f2220ec10707dfe30836b6e31d56f7b068d249b7836" :
-                SAVED8_GEOMETRY_SHA256[index]).equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+                SAVED8_GEOMETRY_SHA256[index]).equals(
+                    PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "other representative layouts remain exact accepted10: "+seed);
         }
         if(version==12) {
@@ -537,13 +542,14 @@ public final class PcbFunctionalGroupingContractTest {
                 "narrow exploration retains original placement and per-policy route caps");
         }
         if(version==5 && (index==0 || index==1 || index==3))
-            check(SAVED4_GEOMETRY_SHA256[index].equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            check(SAVED4_GEOMETRY_SHA256[index].equals(
+                PcbCompactnessContractTest.legacyGeometrySha256(layout)),
                 "published single-group40/44/42 geometry must not regress: "+seed);
         if(version==5) check(SAVED5_GEOMETRY_SHA256[index].equals(
-            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
             "published saved5 geometry remains byte-exact: "+seed);
         if(version==4) check(SAVED4_GEOMETRY_SHA256[index].equals(
-            PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+            PcbCompactnessContractTest.legacyGeometrySha256(layout)),
             "published saved4 geometry remains byte-exact: "+seed);
         String caseMarker=version==13?"PCB_NEAREST_VACANCY_REPORT":"PCB_GROUPING_CASE";
         System.out.println(caseMarker+" {\"seed\":\""+seed+"\",\"version\":"+version+

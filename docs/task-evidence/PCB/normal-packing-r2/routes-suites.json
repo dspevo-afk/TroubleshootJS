@@ -1,0 +1,34 @@
+[
+  [
+    "PcbNormalPackingCensusContractTest",
+    "PCB normal packing census base-families-0-2 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PCB normal packing census base-families-3-5 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PCB normal packing census base-families-6-8 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PCB normal packing census controlled-indicator-all-roots "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PCB normal packing census rb30-root-0 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PCB normal packing census rb30-root-17 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PCB normal packing census rb30-root-13 "
+  ],
+  [
+    "PcbNormalPackingCensusContractTestGroup8",
+    "PCB normal packing census rb30-root-Long.MIN_VALUE "
+  ]
+]

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 71.1484421,
+  "suiteCount": 8,
+  "phase": "routes",
+  "scope": "Actual active11 normal random generation; fixed44 retained-route packing comparison",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

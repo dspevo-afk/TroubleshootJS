@@ -75,13 +75,13 @@ public final class PcbPocketPackingContractTest {
                 if(version==10) {
                     previousArea=area;
                     if(area!=baselineAreas[rootIndex] || !baselineHashes[rootIndex].equals(
-                            PlayerSessionFingerprint.of(layout.geometryFingerprint())))
+                            PcbCompactnessContractTest.legacyGeometrySha256(layout)))
                         throw new AssertionError("published10 pocket baseline changed: "+seed);
                 }
                 else {
                     if(area>previousArea)throw new AssertionError("pocket area regression: "+seed+" "+area+">"+previousArea);
                     if(area!=saved11Areas[rootIndex] || !saved11Hashes[rootIndex].equals(
-                            PlayerSessionFingerprint.of(layout.geometryFingerprint())))
+                            PcbCompactnessContractTest.legacyGeometrySha256(layout)))
                         throw new AssertionError("published11 full geometry baseline changed: "+seed);
                 }
                 checks++;

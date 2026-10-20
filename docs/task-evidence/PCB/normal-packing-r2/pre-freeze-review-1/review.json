@@ -1,0 +1,8 @@
+{
+  "status": "CHANGES_REQUIRED_BEFORE_NATIVE",
+  "native": "NOT_RUN",
+  "files": {
+    "PcbPackingProbeReceiptContractTest.java": "fa6d0b46a48f256ab205503d3832f2b146eb026e1c00390d97b91f0bfd8cd6b2"
+  },
+  "finding": "Zero-attempt positive fixture still used Long.MAX_VALUE millis after the constructor correctly required zero route work. Move positive long boundary to an attempted receipt; keep zero-time rejection."
+}

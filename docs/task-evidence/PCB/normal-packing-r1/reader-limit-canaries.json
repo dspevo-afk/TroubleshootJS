@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "scope": "Offline aggregate int bound only; native unchanged",
+  "originalRejectionReproduced": true,
+  "originalCanaryCount": 71,
+  "additionalCanaryCount": 11,
+  "cases": [
+    {
+      "value": 0,
+      "result": "PASS"
+    },
+    {
+      "value": 1000000,
+      "result": "PASS"
+    },
+    {
+      "value": 1000001,
+      "result": "PASS"
+    },
+    {
+      "value": 2147483647,
+      "result": "PASS"
+    },
+    {
+      "value": -1,
+      "result": "REJECTED"
+    },
+    {
+      "value": true,
+      "result": "REJECTED"
+    },
+    {
+      "value": 1.0,
+      "result": "REJECTED"
+    },
+    {
+      "value": "1000001",
+      "result": "REJECTED"
+    },
+    {
+      "value": null,
+      "result": "REJECTED"
+    },
+    {
+      "value": 2147483648,
+      "result": "REJECTED"
+    },
+    {
+      "field": "logicalParts",
+      "result": "REJECTED"
+    }
+  ]
+}

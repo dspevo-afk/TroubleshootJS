@@ -52,6 +52,16 @@ class PcbBoardLayout {
     private long generationRoutingMillis;
     private long generationPlacementSeed,generationRoutingSeed;
     private boolean procedural;
+    private PcbPackingProbeReceipt packingProbeReceipt;
+    void setPackingProbeReceipt(PcbPackingProbeReceipt receipt) {
+        requireMutable();
+        if (receipt == null || packingProbeReceipt != null)
+            throw new IllegalStateException("Packing generation receipt is set once");
+        receipt.requireGeometry(this);
+        packingProbeReceipt = receipt;
+    }
+    /** Original generation provenance; later physical edits retain that history. */
+    PcbPackingProbeReceipt getPackingProbeReceipt() { return packingProbeReceipt; }
     void setGenerationStatistics(int placements,int routes,int expansions,long millis,long placementSeed,long routingSeed) {
         requireMutable();generationPlacementAttempts=placements;generationRoutingAttempts=routes;
         generationRoutingExpansions=expansions;generationRoutingMillis=millis;
@@ -82,6 +92,7 @@ class PcbBoardLayout {
         copy.regions.putAll(regions);copy.holes.putAll(holes);
         copy.setRoutingStatistics(routingExpansions,rawRoutingSegments,routingCongestionRejections);
         copy.setRoutingRecoveryStatistics(routingRecoveryStatistics);
+        copy.packingProbeReceipt=packingProbeReceipt;
         if(procedural)copy.setGenerationStatistics(generationPlacementAttempts,generationRoutingAttempts,
             generationRoutingExpansions,generationRoutingMillis,generationPlacementSeed,generationRoutingSeed);
         return copy;

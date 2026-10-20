@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "elapsedSeconds": 45.9787537,
+  "suiteCount": 4,
+  "phase": "unit",
+  "scope": "Actual active11 normal random generation; fixed44 retained-route packing comparison",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

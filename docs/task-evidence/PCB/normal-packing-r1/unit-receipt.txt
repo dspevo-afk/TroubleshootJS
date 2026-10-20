@@ -1,0 +1,3 @@
+PASS: PCB connected pocket packing contracts assertions=49 fixtures=5
+
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6

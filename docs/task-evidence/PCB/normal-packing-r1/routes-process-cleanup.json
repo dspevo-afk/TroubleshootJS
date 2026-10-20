@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "phase": "routes",
+  "drivers": [
+    {
+      "pid": 27856,
+      "startTicks": "639280661768486993",
+      "executable": "pwsh",
+      "observed": "ABSENT",
+      "birthRevalidated": false,
+      "executableRevalidated": false,
+      "sameCreationStillRunning": false,
+      "outcome": "ABSENT",
+      "probeError": null
+    },
+    {
+      "pid": 16204,
+      "startTicks": "639280661775571046",
+      "executable": "pwsh",
+      "observed": "ABSENT",
+      "birthRevalidated": false,
+      "executableRevalidated": false,
+      "sameCreationStillRunning": false,
+      "outcome": "ABSENT",
+      "probeError": null
+    }
+  ],
+  "verificationElapsedSeconds": 0.0525,
+  "terminationAttempted": false,
+  "scope": "Recorded driver births only; absent or different births are reported and no uncertain process is terminated"
+}

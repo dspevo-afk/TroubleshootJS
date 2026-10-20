@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "phase": "contracts",
+  "status": "PASS",
+  "drivers": [
+    {
+      "role": "parent",
+      "pid": 22060,
+      "startTicks": "639280692048024005",
+      "executable": "pwsh",
+      "observed": "ABSENT",
+      "birthRevalidated": false,
+      "executableRevalidated": false,
+      "sameCreationStillRunning": false,
+      "outcome": "ABSENT",
+      "probeError": null
+    },
+    {
+      "role": "current",
+      "pid": 30044,
+      "startTicks": "639280692056297840",
+      "executable": "pwsh",
+      "observed": "ABSENT",
+      "birthRevalidated": false,
+      "executableRevalidated": false,
+      "sameCreationStillRunning": false,
+      "outcome": "ABSENT",
+      "probeError": null
+    }
+  ],
+  "verificationElapsedSeconds": 0.0259675,
+  "terminationAttempted": false,
+  "scope": "Recorded parent/current births only; no uncertain process is terminated"
+}

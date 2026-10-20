@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "stage": "Before second production navigation after failed entry helper",
+  "candidate": "normal-packing-r2 packing2 layout17 replay6",
+  "entry": "Plain production circuitjs.html normal menu with no request interception. Actual menu controls start generation; capture every console warning/error and failed response.",
+  "boards": [
+    {
+      "family": "RC_DELAY",
+      "root": "13",
+      "input": "Prepare exact seed",
+      "screenshot": "rc-delay-13.jpg"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "root": "0",
+      "input": "Prepare exact seed",
+      "screenshot": "sensor-control-0.jpg"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "root": "-9223372036854775808",
+      "profile": "MEDIUM",
+      "input": "Prepare exact seed",
+      "screenshot": "rb30-min.jpg"
+    }
+  ],
+  "extraFlows": [
+    "Actual New board from ordinary menu, record accepted replay seed",
+    "Fit bench and zoom with real controls",
+    "Unrepaired customer retest; electrically justified repair with supplies OFF; repaired retest",
+    "Actual downloaded current session file, FileReader restore, restored OFF state and powered retest",
+    "Normal Close/Main menu and owned browser/preview cleanup"
+  ],
+  "evidence": "DOM/served identity/console and network failures; unedited actual headed screenshots, no injected controller actions",
+  "limits": "Finite informed screenshots/reference host; fixed44 and broad active11 native matrix remain separate gates. No all-seed or manufacturing claim."
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "nativeRerunRequired": false,
+  "justification": "PcbBoardLayout.getGenerationRoutingExpansions and SeededPcbLayoutGenerator.GenerationStatistics.expansions are int; the original generic one-million bound is not a product limit.",
+  "files": {
+    "assess_normal.py": "ef7e14daf8c3b35ad471ad44f7d188654a68cf33198e433db708bb160bc760cb",
+    "check_normal_assessment.py": "34ffb7d9514bfce79c4489e031479993671009bbb36e109ca24f50342f8fd991",
+    "qualified_reader.py": "defed6dc99373dbeaa8c37b81e5aac2241ed39d1021924e6f02b3d03bde58783",
+    "check_reader_limit.py": "f53ac1abc440fca625723d9c43d4d4d2cae18f6f6b8a65359d195e5125f72b2c",
+    "reader-limit-canaries.json": "31035265f53f8e6fd842ede4ae75292c8afde9e8b56a8071885a62ab8dad4a28"
+  }
+}

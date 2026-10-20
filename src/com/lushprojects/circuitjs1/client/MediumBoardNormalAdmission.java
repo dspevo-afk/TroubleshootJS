@@ -96,6 +96,11 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
         PcbPlacementConstraints constraints = board.getPlacementConstraints();
         if (!MediumBoardPhysicalPolicy.selected(constraints))
             throw new IllegalArgumentException("Normal medium admission requires MEDIUM_BOARD@1 routing constraints");
+        if (statistics.packingProbe != null &&
+                constraints.getPlacementPackingVersion() !=
+                    PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION)
+            throw new IllegalArgumentException(
+                "Normal medium packing probe requires connected-pocket placement packing");
         PcbBoardLayout layout = result.getLayout();
         if (!layout.matchesGenerationSeeds(placementSeed, routingSeed))
             throw new IllegalArgumentException("Normal medium route seeds do not match the routed layout");
@@ -151,6 +156,16 @@ final class MediumBoardNormalAdmission implements GeneratedPhysicalAdmission {
         }
         if (!selectedTwoLayerSuccess)
             throw new IllegalArgumentException("Selected P07 route is absent from its accepted receipt");
+        if (statistics.packingProbe != null) {
+            PcbPackingProbeReceipt probe = statistics.packingProbe;
+            if (!MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(probe.routePolicy))
+                throw new IllegalArgumentException("Normal medium packing probe must use the selected P07 route");
+            probe.requireGeometry(layout);
+            if (probe.orderings > statistics.routingOrders ||
+                    probe.expansions > statistics.routingExpansions)
+                throw new IllegalArgumentException(
+                    "Normal medium packing probe exceeds aggregate routing work");
+        }
     }
 
     public String identity() { return contract.identity; }

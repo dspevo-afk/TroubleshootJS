@@ -7,7 +7,18 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private15 selected-board border reduction accepted; internal-pocket work continues**
+**Current task:** **Normal-player pocket refinement qualified; publication review**
+Shared normal packing2 retains the fully routed incumbent and tests one bounded
+alternative. All44 informed admissions/source graphs remain, nine areas improve
+(up to40.28%) and copper/vias/protected-void never increase. The fresh active11
+physical matrix passes220 admissions and220 exact replays; final15 native
+contracts and actual JDK8/GWT5 build pass. Headed normal player screenshots,
+unrepaired/repaired customer retests and downloaded-session FileReader restore
+pass. All running task resources exited; one unused browser profile remains
+after automatic approval review blocked deletion. A separately reviewed browser
+test consumer is migrated to active11/replay6; its Edge execution is NOT RUN.
+[Current implementation, evidence reuse boundary and retained failures](task-evidence/PCB/normal-packing-r2/RESULTS.md).
+
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.
 [Diagnostic evidence](task-evidence/PCB/occupancy-cause-r1/README.md).
@@ -319,8 +330,9 @@ bytes preserved. Unit fixture failure60files retained. COPY1481→1467 retired a
 all6birthsEXITED; main1475/default15/general16 unchanged. No fresh GWT/player or
 production promotion. User agrees diminishingreturns here and directs pre-routing
 placement plus persistent normal-random behavior, with actual new-board screenshots.
-Normal11-family requests do not use privateRB56density rules; both shared procedural
-and ControlledIndicator layout paths need appropriate coverage, without bypassing
+Normal11-family requests do not use privateRB56density rules. Corrected caller
+audit confirms all11 share SeededPcbLayoutGenerator, including composed Controlled
+Indicator through BoundedGeneratedBoardAssembler. Shared placement needs coverage without bypassing
 existing advanced release gates. Next is that coherent production scope.
 [Informed14 results and limits](task-evidence/PCB/routed-slide-cohort-r1/RESULTS.md).
 Finite reference-host scope;

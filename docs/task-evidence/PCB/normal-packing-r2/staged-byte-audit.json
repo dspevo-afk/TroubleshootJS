@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "stagedFilesChecked": 707,
+  "packetBlobsRawExact": 663,
+  "ordinaryTextBlobsCanonicalLfExact": 44,
+  "stagedPathBlobBindingSha256": "30dd89c0972159e94deca146bab99f5bc3ce1faa481004aa66e0549e835ffa7c",
+  "privacyScan": "PASS; no user-profile absolute paths, browser WS endpoint or credential patterns",
+  "excluded": "Original5, private baseline-local-state pointer and cache files",
+  "limits": "This record itself is staged afterward; no self-hash claim. Source manifests retain actual tested working bytes; canonical Git LF normalization is explicit."
+}

@@ -455,9 +455,11 @@ Developer verification keeps wall-time budgets. Only the isolated private
 diagnostic measurement path may request an extended allowance. The continuation/watchdog is revoked at
 terminal completion, and completion is delivered even if UI restoration throws.
 
-`PcbPlacementCompactor` removes only empty routing-courtyard bands before
-routing. Every candidate retains exact package geometry and rigidly translated
-pad/probe targets, then passes the original placement validator. It neither
+`PcbPlacementCompactor` removes empty routing-courtyard bands and, for explicit
+normal packing2, runs one bounded connected-vacancy pass. Every candidate retains
+exact package geometry and rigidly translated pad/probe targets, then passes the
+original placement validator. The generator keeps its fully routed incumbent
+until a separately routed alternative passes the final metric guard. It neither
 shrinks parts nor substitutes a decorative board for the validated layout.
 
 The top toolbar displays the existing native GWT widgets in DOM popovers,
@@ -5889,3 +5891,53 @@ when translation crosses a decimal digit boundary. Paired native proof therefore
 requires complete translated junction/edge/provenance and land/terminal/probe
 surface bijections, with literal negative fixtures, rather than raw serial equality.
 See the [border-trim evidence and current gate status](task-evidence/PCB/post-selection-edge-trim-r1/README.md).
+
+## Normal-player retained-route pocket refinement
+
+All eleven active normal providers use `SeededPcbLayoutGenerator`. Immutable
+`PcbPlacementConstraints.placementPackingVersion` explicitly selects packing2;
+legacy/default1 and held private RB56 keep the original policy. The general
+layout identity is17 and public replay is `tsj-alpha/6`; dependency canonicalization
+includes nondefault packing interpretation. Saved private geometry-body oracles
+retain their original hashes with only the explicit16-to17 fingerprint prefix
+normalization. The player catalog remains eleven enabled/twelve registered,
+with HARD RB56 held from normal requests.
+
+The original placement candidates, routing selection and fully finished winner
+remain the incumbent. `RoutedCandidate` carries the exact plan returned after
+`compactRouted` alongside its finalized layout through both small and medium
+selection. This plan stays in the routing grid frame; the display crop may
+translate by a non-grid amount and must never become a new router input.
+Packing2 uses one canonical pass of at most five existing vacancy origins per
+movable package, bounded by the existing60000 placement evaluations. Anchors,
+isolation bodies, declared domains, access and source-grid phases remain intact.
+
+One optional route uses the incumbent's P05 or resumable P07 strategy. An unchanged
+placement does not route again. Primary medium six-placement/three-per-strategy
+counters retain their meaning; all probe orderings, expansions and route time
+contribute to aggregate work. Deterministic remaining expansion/order headroom
+bounds the probe, without selecting geometry from elapsed clock time. Typed
+physical/route-quality rejection keeps the immutable incumbent. Unknown failures,
+cancellation and owner deadlines propagate.
+
+`PcbPackingMetrics` owns bounded GRID10 final drawing occupancy, including package
+access, both copper faces and widths, holes, labels and declared isolation. It
+reconstructs footprints in authoritative package terminal order, including G/D/S.
+The unchanged test sampler is an independent oracle. A fully validated alternative
+wins only with strictly smaller area and no increase in Manhattan copper, vias or
+the largest protected empty rectangle. Free cells are not proof of routability or
+manufacturability. `PcbPackingProbeReceipt` binds actual work, route policy,
+disposition and incumbent/selected geometry hashes. Layout and medium admission
+retain that immutable generation history; it does not define electrical identity
+or substitute for the live CircuitJS graph. Unsupported metric grids currently
+share the skipped `NO_HEADROOM` disposition, a reporting limitation.
+
+The informed44 comparison retains all admissions/source graphs, with nine area
+gains and no protected metric regressions at its frozen candidate. Final15 native
+contracts, the active11 matrix (220 admissions and exact replays), actual JDK8/GWT5
+and headed normal repair/retest/download/FileReader flows pass. The subsequent
+browser-test-only consumer migration is outside native/GWT/player inputs;
+`check_publication.py` audits that single overlay against the immutable tested
+seal and production provenance. It does not certify the unexecuted Edge wrapper.
+Failures, finite-corpus limits and blocked profile-directory cleanup are recorded
+in [normal packing r2](task-evidence/PCB/normal-packing-r2/RESULTS.md) and the task report.

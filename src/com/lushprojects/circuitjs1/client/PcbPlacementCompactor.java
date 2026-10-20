@@ -11,9 +11,30 @@ final class PcbPlacementCompactor {
 
     static PcbPlacementPlanner.Plan compact(TroubleshootBoard board,
             PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input) {
+        PcbPlacementPlanner.Plan result = compactStrips(board, constraints, input, true);
+        if (constraints.placementPackingVersion ==
+                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION) {
+            result = PcbPlacementPlanner.compactConnectedVacancies(board, constraints, result);
+            result = compactStrips(board, constraints, result, true);
+        }
+        return result;
+    }
+
+    static PcbPlacementPlanner.Plan compactStrips(TroubleshootBoard board,
+            PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input) {
+        return compactStrips(board, constraints, input, false);
+    }
+
+    private static PcbPlacementPlanner.Plan compactStrips(TroubleshootBoard board,
+            PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input,
+            boolean optionalBudget) {
         PcbPlacementPlanner.Plan result = input;
         for (int axis = 0; axis < 2; axis++) {
             GenerationWorkScope.check();
+            if (optionalBudget && constraints.placementPackingVersion ==
+                    PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION &&
+                    result.evaluations > PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS -
+                        result.footprints.size()) break;
             PcbPlacementPlanner.Plan trial = compactAxis(constraints, result, axis);
             if (trial == result) continue;
             try {
@@ -25,6 +46,18 @@ final class PcbPlacementCompactor {
             }
         }
         return result;
+    }
+
+    /** Counted placement work alone must not request a duplicate route. */
+    static boolean samePlacement(PcbPlacementPlanner.Plan first,
+            PcbPlacementPlanner.Plan second) {
+        Rectangle a = first.outline, b = second.outline;
+        if (a.x != b.x || a.y != b.y || a.width != b.width || a.height != b.height ||
+                first.footprints.size() != second.footprints.size()) return false;
+        for (int i = 0; i < first.footprints.size(); i++)
+            if (!first.footprints.get(i).geometryFingerprint().equals(
+                    second.footprints.get(i).geometryFingerprint())) return false;
+        return true;
     }
     static final class Routed {
         final PcbPlacementPlanner.Plan plan; final PcbBoardLayout layout;

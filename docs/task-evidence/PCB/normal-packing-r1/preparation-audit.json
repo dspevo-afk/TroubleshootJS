@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "baseCommit": "2a73b949a02de718bd968c2920ba6045d7406c5a",
+  "main1475Exact": true,
+  "acceptedSourceCount": 1467,
+  "baseSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "scopeSha256": "17305d52b437e84e259815e8bb536ce3d8bb50f0051d361366b27ffb65973ed4",
+  "roots": [
+    "0",
+    "17",
+    "13",
+    "-9223372036854775808"
+  ],
+  "caseCount": 44,
+  "nativeBaseline": "NOT_RUN"
+}

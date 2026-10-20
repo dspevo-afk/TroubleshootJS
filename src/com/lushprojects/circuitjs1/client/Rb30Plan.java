@@ -569,9 +569,13 @@ final class Rb30Plan {
             parts.add(new PcbPlacementConstraints.Part(id, region, label,
                 "low-voltage-board", anchor, 20));
         }
+        // RB30 is the shared normal provider, including its qualification
+        // construction path.  Select connected-pocket packing explicitly;
+        // private RB56 placement owns its legacy interpretation separately.
         return new PcbPlacementConstraints(parts,
             new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM,
-            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION);
+            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION)
+            .withConnectedPocketPacking();
     }
 
     private static String placementRegion(String id) {

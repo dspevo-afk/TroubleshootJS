@@ -1,0 +1,38 @@
+{
+  "scope": "All recorded task process births exited; unused profile retained after deletion rejected as blocked by policy. No retention approval inferred.",
+  "drivers": [
+    {
+      "pid": 21976,
+      "observation": "ABSENT",
+      "owner": "browser-owner.json",
+      "sameBirthStillRunning": false
+    },
+    {
+      "pid": 30812,
+      "observation": "ABSENT",
+      "owner": "browser-owner-2.json",
+      "sameBirthStillRunning": false
+    },
+    {
+      "pid": 21300,
+      "observation": "ABSENT",
+      "owner": "browser-owner-3.json",
+      "sameBirthStillRunning": false
+    },
+    {
+      "pid": 30568,
+      "observation": "ABSENT",
+      "owner": "preview-owner.json",
+      "sameBirthStillRunning": false
+    }
+  ],
+  "processStatus": "PASS",
+  "retainedProfileName": "playwright_chromiumdev_profile-wSFvyD",
+  "previewPort": 8907,
+  "retainedProfileProcessUsers": 0,
+  "previewAcceptsConnections": false,
+  "browserApiCleanup": "PASS",
+  "directoryCleanupStatus": "BLOCKED_BY_AUTOMATIC_APPROVAL_REVIEW",
+  "deletionRetried": false,
+  "retainedProfileExists": true
+}

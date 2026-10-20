@@ -1,0 +1,16 @@
+{
+  "status": "CHANGES_REQUIRED_BEFORE_NATIVE",
+  "nativeExecution": "NOT_RUN",
+  "issues": [
+    "Duplicate suite prefix corrected to exact unique pair/group marker",
+    "Non-staged maxadvance not measured: null instead offalsezero",
+    "JSONcontrolcharacters escaped instead ofreplaced"
+  ],
+  "originalFiles": {
+    "baseline-worker-notes.md": "0fc8f2b5dd520b0b223c05be5dc7ce20831c0d3cefeda30ccf7bddda7877cc30",
+    "PcbNormalPackingCensusContractTest.java": "989088f27655064833c19ff6f5d5dbab8d648eb1d8bfb97462af60b4c9a4d954",
+    "verify-current-contracts.ps1": "abb3f0182f3e83f68b8b84540e1b31545d605bd46d7c793843e5b841ac85b300"
+  },
+  "correctedHelperSha256": "3b43e98367873b54b2606427d68f6287bac49ab39d08eec3501e6290e0966ff0",
+  "correctedRegistrySha256": "a4198bc4b6e5aca872ca7a16e3ea22696d5f7731d208671a53793e24c4fc3ede"
+}

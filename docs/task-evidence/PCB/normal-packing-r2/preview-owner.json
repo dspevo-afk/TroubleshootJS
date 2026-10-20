@@ -1,0 +1,11 @@
+{
+  "pid": 30568,
+  "startTicks": "639280697892218807",
+  "executable": "powershell",
+  "port": 8907,
+  "parentPid": 18064,
+  "parentStartTicks": "639280697861877942",
+  "maintainedScript": "scripts/preview.ps1",
+  "commandRevalidated": true,
+  "stateBirthRevalidated": true
+}

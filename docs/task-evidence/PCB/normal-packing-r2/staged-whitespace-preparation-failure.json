@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "phase": "First staged diff whitespace check",
+  "exitCode": 2,
+  "cause": "Four raw browser innerText DOM captures contain twelve actual tab-only lines; the source whitespace check treated them as trailing whitespace.",
+  "correction": "Packet attributes exempt blank-at-eol only for raw *-dom.txt captures. Raw evidence bytes are unchanged; source whitespace checks remain enabled.",
+  "rawEvidenceRewritten": false
+}

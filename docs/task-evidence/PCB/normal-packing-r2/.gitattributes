@@ -1,0 +1,3 @@
+* -text whitespace=cr-at-eol
+# Browser innerText contains literal tab-only lines; preserve the raw capture.
+*-dom.txt whitespace=-blank-at-eol,cr-at-eol

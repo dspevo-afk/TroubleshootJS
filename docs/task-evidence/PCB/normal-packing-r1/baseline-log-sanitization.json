@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Known baseline COPY/worktree/JDK prefixes only; idempotent status/assertion/timing preservation",
+  "files": [
+    {
+      "file": "baseline.txt",
+      "rawSha256": "24dff415b33106673e3d1b4eadfa5f56cc03b6b3632937e62f3f12b110a8cdb1",
+      "sanitizedSha256": "24dff415b33106673e3d1b4eadfa5f56cc03b6b3632937e62f3f12b110a8cdb1",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "baseline-receipt.txt",
+      "rawSha256": "742e1e3e4b4b84b53107ffe1e21db9013c0bc866ec3d43188d444e5ba2f1eee9",
+      "sanitizedSha256": "742e1e3e4b4b84b53107ffe1e21db9013c0bc866ec3d43188d444e5ba2f1eee9",
+      "replacements": [
+        {
+          "prefixKind": "[TASK_COPY]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[WORKTREE]",
+          "count": 0
+        },
+        {
+          "prefixKind": "[JDK8]",
+          "count": 0
+        }
+      ]
+    }
+  ]
+}

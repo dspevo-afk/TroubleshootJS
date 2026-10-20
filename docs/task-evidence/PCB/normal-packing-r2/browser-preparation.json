@@ -1,0 +1,16 @@
+{
+  "status": "PASS_WITH_RETAINED_IAB_BLOCKER",
+  "iab": {
+    "tab": "14",
+    "url": "about:blank",
+    "capture": "Two Page.captureScreenshot timeouts before/after explicit visibility; no new production navigation, tab closed"
+  },
+  "fallback": {
+    "implementation": "Installed headed sandboxed Brave through public Playwright BrowserServer",
+    "owner": "browser-owner.json",
+    "positiveBlankScreenshot": true,
+    "negativeInvalidEndpointRejected": true,
+    "productionNavigation": "NOT_RUN"
+  },
+  "preparationLimitation": "Initial Playwright ESM import failed export resolution; supported CommonJS public package import succeeds. No production flow at failure."
+}

@@ -1,0 +1,18 @@
+[
+  [
+    "PcbConnectedPocketPackingContractTest",
+    "PCB connected pocket packing contracts "
+  ],
+  [
+    "PcbNormalPackingIdentityContractTest",
+    "PCB normal packing identity contracts "
+  ],
+  [
+    "PcbPackingMetricsContractTest",
+    "PCB packing metrics contracts "
+  ],
+  [
+    "PcbPackingProbeReceiptContractTest",
+    "PCB packing probe receipt contracts "
+  ]
+]

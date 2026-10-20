@@ -1,0 +1,11 @@
+PASS: PCB connected pocket packing contracts assertions=49 fixtures=5
+
+PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6
+
+PCB_WHITESPACE_CASE {"seed":"123","version":1,"parts":1,"gridUnits":10,"sampledCells":900,"packageAccessOccupiedCells":266,"protectedFreeCells":634,"protectedFreeFraction":0.7044444444444444,"largestProtectedEmptyRectangle":{"x":0,"y":0,"width":80,"height":300,"area":24000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"124","version":1,"parts":1,"gridUnits":10,"sampledCells":900,"packageAccessOccupiedCells":266,"protectedFreeCells":403,"protectedFreeFraction":0.4477777777777778,"largestProtectedEmptyRectangle":{"x":70,"y":0,"width":230,"height":60,"area":13800},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"125","version":1,"parts":2,"gridUnits":10,"sampledCells":1200,"packageAccessOccupiedCells":513,"protectedFreeCells":487,"protectedFreeFraction":0.4058333333333333,"largestProtectedEmptyRectangle":{"x":170,"y":0,"width":100,"height":200,"area":20000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PCB_WHITESPACE_CASE {"seed":"126","version":1,"parts":2,"gridUnits":10,"sampledCells":1200,"packageAccessOccupiedCells":513,"protectedFreeCells":687,"protectedFreeFraction":0.5725,"largestProtectedEmptyRectangle":{"x":170,"y":0,"width":300,"height":200,"area":60000},"scope":"GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"}
+PASS: PCB packing metrics contracts assertions=32 fixtures=7
+
+PASS: PCB packing probe receipt contracts assertions=31 fixtures=5

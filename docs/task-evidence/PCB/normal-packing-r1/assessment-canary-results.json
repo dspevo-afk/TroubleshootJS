@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "fixtureCount": 44,
+  "readerFixtureCount": 44,
+  "canaryCount": 71,
+  "positiveCount": 7,
+  "negativeCount": 64,
+  "consumedSha256": {
+    "assess_normal.py": "ef7e14daf8c3b35ad471ad44f7d188654a68cf33198e433db708bb160bc760cb",
+    "check_normal_assessment.py": "34ffb7d9514bfce79c4489e031479993671009bbb36e109ca24f50342f8fd991",
+    "protocol.json": "1456fb21aec5ee02af3c779cd14cae8d0cd8a280095e9e34b0f44671b34269cc",
+    "scope.md": "17305d52b437e84e259815e8bb536ce3d8bb50f0051d361366b27ffb65973ed4",
+    "sourceHelper.java": "3b43e98367873b54b2606427d68f6287bac49ab39d08eec3501e6290e0966ff0",
+    "unit-suites.json": "1ac63deadce73c15ebc010d7b4a68f0197249b47bf52b7fb116fb84196907930",
+    "routes-suites.json": "4c9760b9999a35451c1255d6c83c13f94f6279dc76c5acd4994faac21a7dc1d3"
+  },
+  "results": [
+    {
+      "case": "valid baseline 44-case matrix",
+      "result": "PASS"
+    },
+    {
+      "case": "valid unit phase with two exact markers",
+      "result": "PASS"
+    },
+    {
+      "case": "valid candidate matrix with retained rejections and strict gain",
+      "result": "PASS"
+    },
+    {
+      "case": "valid baseline input seal",
+      "result": "PASS"
+    },
+    {
+      "case": "valid candidate input seal",
+      "result": "PASS"
+    },
+    {
+      "case": "literal 44-case reader fixture corpus",
+      "result": "PASS",
+      "accepted": 15,
+      "rejected": 29,
+      "cases": 44
+    },
+    {
+      "case": "all eight actual collector suite names",
+      "result": "PASS"
+    },
+    {
+      "case": "duplicate case key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unexpected accepted case key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "NaN case value",
+      "result": "REJECTED"
+    },
+    {
+      "case": "strict bool versus integer",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown family",
+      "result": "REJECTED"
+    },
+    {
+      "case": "root order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "signed long canonical drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "seed identity drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown case order",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing baseline case",
+      "result": "REJECTED"
+    },
+    {
+      "case": "accepted case without whitespace",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace before rejected case",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace version drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace grid drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace seed drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace metric drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "whitespace fraction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate whitespace key",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown whitespace field",
+      "result": "REJECTED"
+    },
+    {
+      "case": "graph before/after mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "foreign graph digest",
+      "result": "REJECTED"
+    },
+    {
+      "case": "layout population drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "outline area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "outline negative width",
+      "result": "REJECTED"
+    },
+    {
+      "case": "geometry digest drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "baseline layout version drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "max advance bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "accepted elapsed bound drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "route suite PASS before group",
+      "result": "REJECTED"
+    },
+    {
+      "case": "cross-group suite boundary",
+      "result": "REJECTED"
+    },
+    {
+      "case": "suite count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "suite JSON identity drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "full marker used as suite JSON",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate suite PASS",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unknown PCB prefix",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stdout receipt report mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "terminal cleanup order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "missing cleanup marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "trailing output after cleanup",
+      "result": "REJECTED"
+    },
+    {
+      "case": "skip output",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timeout output",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing NaN",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing schema key drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing scope drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit marker packing drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit leaked report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "input seal phase drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "input seal source count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "input seal path traversal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "input seal unsorted paths",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected case whitespace substitution",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected case unknown phase",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected case missing type",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate lost baseline admission",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate area regression",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate copper regression",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate via regression",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate whitespace regression",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate no strict area gain",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate matched graph drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate fixed rejection type drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate source identity drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate missing case",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    }
+  ]
+}

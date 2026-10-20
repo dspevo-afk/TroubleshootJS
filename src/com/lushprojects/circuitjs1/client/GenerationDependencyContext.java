@@ -262,6 +262,9 @@ final class GenerationDependencyContext {
         appendField(out, "physical.policy", placementConstraints.getPhysicalPolicyIdentity());
         if (placementConstraints.placementDensityVersion != 1)
             appendField(out, "placement.density", Integer.toString(placementConstraints.placementDensityVersion));
+        if (placementConstraints.placementPackingVersion != 1)
+            appendField(out, "placement.packing",
+                Integer.toString(placementConstraints.placementPackingVersion));
         if (!placementConstraints.getTraceWidthProfile().isLegacyUniform())
             appendField(out, "physical.trace-width-profile",
                 placementConstraints.getTraceWidthProfile().canonical());

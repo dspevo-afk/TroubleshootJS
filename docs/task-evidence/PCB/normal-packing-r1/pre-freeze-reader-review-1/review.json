@@ -1,0 +1,27 @@
+{
+  "status": "CHANGES_REQUIRED_BEFORE_NATIVE",
+  "native": "NOT_RUN",
+  "files": {
+    "assess_normal.py": "38043f13ce43f7d2a7c5aef1bb926017b4588ee78d6bd515631e82baf7f8e235",
+    "check_normal_assessment.py": "e5b90e3e0e4aee44b46b812df6923236fad2adc594bbbfa346b59e3f5f0a5261",
+    "reader-notes.md": "b2a8f1884e380985fee5f0ea2940e234f5a8e39604e1fb4a60e25e1603adf373"
+  },
+  "findings": [
+    "Freeze attempt1 exit1: missing canary receipt after interrupting unfinished reader work; no source seal or native launch created.",
+    "Root replay of current reader attempt2 exit1: lost-admission synthetic fixture declared3/9 instead of its actual4/8 counts.",
+    "Protected whitespace is the largest empty rectangle; increase must fail, not decrease.",
+    "Typed-rejection negative must mutate a retained rejected row, not a newly admitted row."
+  ],
+  "rootRepairSyntaxFailure": {
+    "exitCode": 1,
+    "phase": "offline canary preparation",
+    "message": "Unmatched closing parenthesis in new valid-shape whitespace-regression fixture; one excess parenthesis removed before the fresh passing run."
+  },
+  "freshRootCanaries": {
+    "status": "PASS",
+    "canaryCount": 71,
+    "negativeCount": 64,
+    "receiptSha256": "a3dd9ff58432ce00e2d8db5c6ee59251e4ddbcb0570f9f74cdceb766db58da03",
+    "native": "NOT_RUN at repair time"
+  }
+}

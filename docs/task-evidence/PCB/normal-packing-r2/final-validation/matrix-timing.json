@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 217.5185021,
+  "phase": "matrix",
+  "scope": "Fresh r2 final-source contracts, physical matrix, and JDK8/GWT5 compile",
+  "operation": "scripts/verify-current-contracts.ps1",
+  "suiteCount": 1,
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

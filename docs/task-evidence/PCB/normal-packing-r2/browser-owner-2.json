@@ -1,0 +1,10 @@
+{
+  "pid": 30812,
+  "startTicks": "639280699557803765",
+  "executable": "brave.exe",
+  "headed": true,
+  "chromiumSandbox": true,
+  "profileKind": "Automatically owned OS-temp Playwright Chromium profile",
+  "recordedBeforeNavigation": true,
+  "entryAttempt": 2
+}

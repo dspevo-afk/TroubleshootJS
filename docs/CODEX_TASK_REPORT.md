@@ -1,4 +1,143 @@
-# Current checkpoint: informed14 complete; publish then persistent normal placement scope
+# Current checkpoint: normal packing r2 qualified; publication review
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, base HEAD/verified origin
+2a73b949a02de718bd968c2920ba6045d7406c5a. User authorizes indefinite ordinary
+random-board realism work; no main merge/email. Original5 untouched.
+
+Shared normal packing2/layout17/public replay6 retains the original fully routed
+incumbent and tests one bounded alternative. All44 informed admissions/source
+graphs remain; nine areas shrink1.78-40.28%, with zero area/copper/via/protected-
+void regressions. Exact post-route plan/layout pairing preserves router-grid
+coordinates, and metrics preserve declared transistor terminal order. Every
+failure is retained; no baseline, seed, budget or original body hash was blessed.
+
+Fresh four native units PASS43.0372179s (53/21/36/31 assertions); fixed44 census
+PASS71.1484421s; final15 maintained suites PASS107.1047354s; active11 physical
+matrix PASS217.5185021s,220 admissions/220 exact replays; actual final-source
+JDK8/GWT5 OBF build PASS91.1765667s. Reader80/transport12 and qualified final
+reader8 canaries pass. All source pre/post audits and recorded driver births
+pass. Full all-contract matrix/independent seed/value/role oracles NOT RUN.
+
+Actual headed normal player: RC13, Sensor0 and RB30 Long.MIN screenshots posted
+in chat; five raw images inspected. Right-click chip menu/View schematic works.
+Ordinary random LED seed5577758334702827054 failed unrepaired customer retest;
+live5V/isolated R1 OL, matching330ohm replacement, repaired retest PASS. Actual
+download/FileReader restore retained OFF/repair/removed part; restored330ohm and
+fresh powered customer retest PASS. Final OFF/Main menu, owned browser API close
+and maintained preview stop PASS. Actual served/current src/scripts/war digests
+remain exact. Two existing favicon.ico404 console errors retained; private
+Close7/zero-warning/CDP wrapper gates not claimed. Small-board generic silk title,
+remaining green pockets and tiny Fit overview silk remain visible follow-ups.
+
+Tested implementation seal1481/39deltas/14gates remains immutable (SHA7edd32d8...).
+Final source-consumer review migrated the unselected Edge browser wrapper from
+ten/replay5/heldQ30 to eleven/replay6/current HARD rejection. Wrapper syntax and
+catalog PASS; actual wrapper execution NOT RUN (Edge unavailable). Publication
+overlay audit requires exactly this one Python edit,1480 other inputs/14 gates
+unchanged,39 tested deltas and390 archived native files exact. Production native,
+GWT and actual player evidence is reused only at unchanged consumed inputs.
+
+All recorded task process births exited; preview8907 closed. Unused browser
+profile directory remains after automatic approval review rejected deletion as
+"blocked by policy"; process users0, no alternate deletion tried or user approval
+inferred. Directory cleanup BLOCKED, separately from process/application PASS.
+Old1475 baseline COPY and three tiny browser-canary temp directories retained as
+continuing-task audit resources; private pointers excluded from Git. Next: finish
+explicit staged/raw-blob audit, normal branch commit/push and verify remote SHA;
+then continue the next bounded PCB-realism change. No main/email.
+
+# Previous checkpoint: r2 comparison before final gates
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+2a73b949a02de718bd968c2920ba6045d7406c5a. User requests indefinite normal-random
+PCB realism work and screenshots; no main merge/email. Original5 untouched.
+
+R1 pre-route compaction rejected: all44 admissions retained but16 metric
+regressions; old exact source/native/qualified reader evidence remains immutable.
+R2 keeps the original fully routed winner, then permits one separately receipted
+bounded alternate route. Strict smaller-area/nonincreasing copper/vias/protected
+void guard selects it; all primary/aggregate90s/640/5s/physical limits remain.
+All11 normal providers select packing2, layout17/public replay6; private packing1
+remains legacy. Exact post-compactRouted plan is now carried with each finalized
+layout through both routing paths; the display crop is never rerouted.
+
+R2 native attempts1/2/3/4/5 remain frozen with causes/cleanup. Attempt3 caught
+cropped-coordinate grid mismatch. Attempt4's new fixture lacked simulator setup.
+Attempt5 caught lexicographic sorting of NMOS GDS terminal identities in the new
+metric owner. Both production causes and explicit regression fixtures corrected;
+independent sampler and original oracles remain intact. Current four fresh units
+PASS 43.88686s, assertions53/21/36/31, fixtures6/identity/8/5.
+Current frozen source1481/38deltas/14gates, baseline COPY1475 reuse audited,
+80reader/12transport canaries PASS. Current eight-group fixed44 census is running;
+no final fitness/GWT/visible-player/matrix PASS yet. Old COPY retained for audits.
+
+Owned headed sandboxed Brave browser PID21976/birth in r2/browser-owner.json,
+private profile metadata in unique OS-temp, blank screenshot/negative connection
+canaries pass. No production navigation yet. IAB14 blank capture timed out twice
+before/after explicit visibility; closed without production load. Actual three
+screenshots/repair/retest/save/load/Close and final gates/publication still pending.
+No sources/gates may change while current native phase runs.
+
+# Previous checkpoint: retained-route implementation before fresh r2 failures
+
+2026-10-20 local. HEAD/verified origin2a73b949a02de718bd968c2920ba6045d7406c5a,
+codex/q60-faulted-profile-counts. User authorizes indefinite continuation, no main
+merge/email, and requests screenshots. Original5 unrelated untracked preserved.
+The published routed cohort remains private diagnostic evidence; no all-seed gain.
+
+New normal-packing-r1 scope: one bounded canonical connected-vacancy pass before
+routing, immutable packing interpretation2 at all11 active normal providers,
+general layout17/public replay6. Private RB56 packing1 stays unchanged except the
+explicit general epoch. Root owns planner/compactor/integration; separate leaves
+own bounded units, replay/provider identity, collector, offline reader and runner.
+All11 active families already share SeededPcbLayoutGenerator, including composed
+Controlled Indicator; the unused fixed-trunk factory has no callers. This corrects
+the prior checkpoint's separate-factory inference.
+
+Fixed44 baseline/current cases: active11 families times roots0,17,13,Long.MIN_VALUE,
+eight ordinary60s JVM groups. Retain baseline admissions and exact source graph,
+require area/copper/via/protected-void nonregression and at least one area gain.
+Typed rejection and every failure retained; no seed or budget substitutions.
+Baseline COPY1475 (accepted1467 plus8 collector suites/registry override) is
+byte-audited and frozen with9source deltas/15gates. Its private pointer is
+normal-packing-r1/baseline-local-state.json. Baseline native PASS77.273819s;
+candidate2unit PASS43.9761305s (49packing/five groups,21identity assertions);
+candidate8census PASS68.8173002s. All44 original admissions/graphs retained;
+18area gains but16metric regressions across11cases, including two larger boards.
+Fitness FAIL; candidate not promoted. Exact1475COPY/1477main/31candidate deltas
+and all native/source artifacts remain frozen; six driver births exited.
+
+Reader71/host12canaries pass. Original offline baseline assessment exit2 retained:
+generic one-million counter bound contradicted actual Java int aggregate type.
+Separate exact-field qualification passes71+11cases; original15gates/native exact,
+qualified integrity/native PASS, fitness FAIL. Pre-freeze corrections/failures
+retained. No native/build/browser/preview is active; COPY remains task-owned.
+R2 prospective scope now declares one separately receipted extra route, unchanged
+primary six/three counters and all per-route/aggregate90s/640/5s/physical bounds.
+Root integrated exact primary placement/route retention, final-frame rebase,
+one optional compaction/P05 or resumable P07 probe, deterministic remaining
+expansion/order headroom, strict final geometry metrics and incumbent immutability.
+New bounded metrics owner keeps the old test sampler independent; census compares
+both on all44 cases. Immutable probe provenance is stored in generation layout/
+medium receipt; primary policy counters stay primary and aggregate work is total.
+No clock-based geometry choice or catch-all fallback. Source changed after r1
+rejection; archived r1 candidate31deltas remain authoritative for its old results.
+R2 candidate1481/static runner12transport/root74reader cases pass. Initial frozen
+38source-delta/14gate unit attempt FAIL34.7936574s (test vector type mismatch),
+preserved59files. Fixture-only fix; second fresh unit FAIL45.9787537s at wrong LED
+literal after49+21assertions passed, preserved59files plus predecessor note.
+Four r2 driver births exited; no active native. Root independently derives full
+LED selection/courtyard/escape sampling and fixes single/dual literal expectations,
+with two new binding assertions. Reader is being extended to retain the four
+legitimate fixed metric-fixture sampler reports in unit output. New fresh gates
+pending; no native PASS, GWT, player or metric fitness claim for r2 yet.
+All44 are informed regressions now. Fresh final units/comparison,
+normal matrix/JDK8GWT/player/repair/save/load/Close/screenshots remain NOT RUN.
+Post three actual screenshots after an accepted built change.
+
+# Previous checkpoint: informed14 complete; publish then persistent normal placement scope
 
 2026-10-19 local. Base/verified origin1202f18e48bcd3401aa117c3d5fd3b25bc0c21c9,
 codex/q60-faulted-profile-counts. Main1475/default15/general16 and original5
@@ -26,7 +165,7 @@ No current experiment promotion/GWT/player/solver/repair/fullmatrix/unseen claim
 
 Next explicitstage/diff/rawblob checks, commit/normalpush/exactoriginSHA; then
 pre-routing placement with persistent normal-Newboard behavior and built screenshots.
-Verified normalpath exposes11families:10sharedprocedural,ControlledIndicatorseparate.
+Verified normalpath exposes11families; all share SeededPcbLayoutGenerator.
 Private15trim/v13vacancy absentnormal; RB56catalog disabled. KeepadvancedU05/REL-B
 releaseholds; no implicitwaiver. Rootownsnewscope/integration; read-onlyagentfindings
 available. Evidence docs/task-evidence/PCB/routed-slide-cohort-r1/RESULTS.md.

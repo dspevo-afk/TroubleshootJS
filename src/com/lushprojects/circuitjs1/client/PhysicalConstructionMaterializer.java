@@ -86,7 +86,8 @@ final class PhysicalConstructionMaterializer {
                 "low-voltage", anchor, 20));
         }
         return new PcbPlacementConstraints(parts,
-            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM);
+            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM)
+            .withConnectedPocketPacking();
     }
 
     private static void addEnvelopeNets(ElectricalRealizationSpec spec,

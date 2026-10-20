@@ -1,0 +1,12 @@
+{
+  "status": "FAIL",
+  "phase": "offline baseline assessment",
+  "exitCode": 2,
+  "message": "generationRoutingExpansions is not a bounded integer",
+  "nativeStatus": "PASS",
+  "nativeExitCode": 0,
+  "nativeElapsedSeconds": 77.273819,
+  "nativeRerun": false,
+  "frozenReaderSha256": "ef7e14daf8c3b35ad471ad44f7d188654a68cf33198e433db708bb160bc760cb",
+  "resolution": "Separate exact-field Java-int bound qualification; original frozen15gates/source/native unchanged."
+}

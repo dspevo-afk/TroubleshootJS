@@ -9,6 +9,8 @@ final class PcbPlacementConstraints {
     /** The qualified one-face identity used by every existing caller. */
     static final String DEFAULT_PHYSICAL_POLICY_ID = "THT_SINGLE_FACE";
     static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
+    /** Explicit connected-pocket interpretation used by normal shared boards. */
+    static final int CONNECTED_POCKET_PACKING_VERSION = 2;
 
     enum Anchor { NONE, LEFT, RIGHT, EDGE }
     static final class TerminalDomain {
@@ -74,6 +76,7 @@ final class PcbPlacementConstraints {
     final String physicalPolicyId;
     final int physicalPolicyVersion;
     final int placementDensityVersion;
+    final int placementPackingVersion;
     final boolean requiresTwoLayerRouting;
     private final PcbTraceWidthProfile traceWidthProfile;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
@@ -100,6 +103,13 @@ final class PcbPlacementConstraints {
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
             PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
             boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, 1);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile,
+            int packingVersion) {
         if (traceWidthProfile == null)
             throw new IllegalArgumentException("Missing PCB trace width profile");
         this.traceWidthProfile = traceWidthProfile;
@@ -107,6 +117,9 @@ final class PcbPlacementConstraints {
         if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13 && densityVersion != 14)
             throw new IllegalArgumentException("Unknown placement density interpretation");
         placementDensityVersion = densityVersion;
+        if (packingVersion != 1 && packingVersion != CONNECTED_POCKET_PACKING_VERSION)
+            throw new IllegalArgumentException("Unknown placement packing interpretation");
+        placementPackingVersion = packingVersion;
         if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
         if(routingLayer==null) throw new IllegalArgumentException("Missing single copper layer");
         if (empty(policyId) || policyVersion < 1)
@@ -134,6 +147,15 @@ final class PcbPlacementConstraints {
     String getPhysicalPolicyId() { return physicalPolicyId; }
     PcbTraceWidthProfile getTraceWidthProfile() { return traceWidthProfile; }
     int getPhysicalPolicyVersion() { return physicalPolicyVersion; }
+    int getPlacementPackingVersion() { return placementPackingVersion; }
+    /** Returns a value copy with the explicitly selected normal connected-pocket policy. */
+    PcbPlacementConstraints withConnectedPocketPacking() {
+        if (placementPackingVersion == CONNECTED_POCKET_PACKING_VERSION)
+            return this;
+        return new PcbPlacementConstraints(getParts(), getBarriers(), routingLayer,
+            physicalPolicyId, physicalPolicyVersion, placementDensityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, CONNECTED_POCKET_PACKING_VERSION);
+    }
     String getPhysicalPolicyIdentity() {
         return physicalPolicyId + "@" + physicalPolicyVersion;
     }

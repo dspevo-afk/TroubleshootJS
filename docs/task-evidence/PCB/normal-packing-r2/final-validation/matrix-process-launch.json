@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "phase": "matrix",
+  "scope": "Fresh r2 final-source contracts, physical matrix, and JDK8/GWT5 compile",
+  "drivers": [
+    {
+      "role": "parent",
+      "pid": 29476,
+      "startTicks": "639280694271959786",
+      "startUtc": "2026-10-20T05:03:47.1959786Z",
+      "executable": "pwsh"
+    },
+    {
+      "role": "current",
+      "pid": 30836,
+      "startTicks": "639280694276280593",
+      "startUtc": "2026-10-20T05:03:47.6280593Z",
+      "executable": "pwsh"
+    }
+  ]
+}

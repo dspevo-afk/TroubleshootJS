@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 91.1765667,
+  "phase": "build",
+  "scope": "Fresh r2 final-source contracts, physical matrix, and JDK8/GWT5 compile",
+  "operation": "scripts/build.ps1",
+  "suiteCount": 0,
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

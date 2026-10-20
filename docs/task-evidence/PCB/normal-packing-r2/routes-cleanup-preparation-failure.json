@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "phase": "Premature process cleanup check before native wrapper terminal exit",
+  "cause": "Root checked births after seeing last suite marker while wrapper post-audit/cleanup still running. Both exact drivers remain; no termination attempted. This is not proof of native failure or cleanup completion. Wait actual exec exit, then revalidate and preserve both observations.",
+  "retainedReceipt": "routes-process-cleanup-premature.json",
+  "sha256": "2ee5a6ff847ffd609e8e26690afd4524fba9849914ff84b39da1f7e4826fbfff"
+}

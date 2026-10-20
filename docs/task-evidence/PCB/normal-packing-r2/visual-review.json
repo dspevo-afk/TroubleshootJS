@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "method": "Root visually inspected all five unedited actual browser JPEG captures; no pixel-level oracle claimed",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "captures": [
+    {
+      "file": "rc-delay-13.jpg",
+      "sha256": "5906f67684cb032745791af3ed2ced3805ad33c66fe15fd3fd0be034d86c4973",
+      "bytes": 141510,
+      "observations": "Actual timing board seed13 at Fit bench. Six physical packages and meter fit; remaining green area is visible. Existing generic TSJ LED INDICATOR silk title is incorrect for this family and remains a follow-up."
+    },
+    {
+      "file": "sensor-control-0.jpg",
+      "sha256": "86d26d4676f5dff12f1098aa5653b2196b5d275da0fae6c3346200a9869c7940",
+      "bytes": 137022,
+      "observations": "Actual nine-package sensor seed0 at Fit bench. Two chip bodies have compact top-side markings, no individual pin labels; all packages and meter fit. Existing generic silk title and remaining empty pockets are explicit limits."
+    },
+    {
+      "file": "rb30-min.jpg",
+      "sha256": "a6031a4b2a6e87ca6ad6d233809fe3162fb7636c20f0db692c961f219f0c9c19",
+      "bytes": 169347,
+      "observations": "Actual MEDIUM multi-rail board at exact Long.MIN_VALUE. Full board and meter fit, with functional groups and routed top copper visible. Small physical silk requires zoom; empty areas remain despite the measured40.28% reduction."
+    },
+    {
+      "file": "sensor-chip-pinout.jpg",
+      "sha256": "e5a3231e24ff00d1dc4c2d8ac6f7c21c2355cc62095d721c4b9b21741a48ba24",
+      "bytes": 152269,
+      "observations": "Actual right-click U2 menu then View schematic. Popup shows five package pins SENSOR,REFERENCE,RAIL,OUTPUT,RETURN; no whole-board neat schematic or hidden fault data."
+    },
+    {
+      "file": "random-repaired.jpg",
+      "sha256": "6b6d5733752909cdffcc7eedfaa140a1dbe3bcd949ab73816258fe6f9466bdfd",
+      "bytes": 138921,
+      "observations": "Actual ordinary New board result after matching330ohm replacement. LED lights with board powerON, one removed part remains in tray, and meter is inactive. Passing customer results are retained separately in DOM receipts."
+    }
+  ],
+  "limitations": [
+    "Remaining empty green area is visible; not globally optimal or manufacturing-qualified",
+    "Generic title wrongly labels small timing/sensor families LED INDICATOR; pre-existing follow-up",
+    "Fit overview silk is small; zoom enlarges physical markings and crops outer bench naturally"
+  ]
+}

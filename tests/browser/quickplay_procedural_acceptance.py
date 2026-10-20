@@ -22,6 +22,7 @@ EXPECTED_CATALOG = (
     ('SENSOR_CONTROL', 'EASY'),
     ('RB15_CONTROL', 'EASY'),
     ('COMPOSED_CONTROLLED_INDICATOR', 'MEDIUM'),
+    ('RB30_CONTROL', 'MEDIUM'),
 )
 NORMAL_JOB_MILLIS = 90000
 OBSERVATION_MARGIN_SECONDS = 25
@@ -146,7 +147,7 @@ try:
                         click('New board')
                         state, seconds, samples = prepare(family, row)
                         assert state['screen'] == 'TICKET', row
-                        assert state['replay'].startswith('tsj-alpha/5/' + family['profile'] + '/' + family['id'] + '/'), row
+                        assert state['replay'].startswith('tsj-alpha/6/' + family['profile'] + '/' + family['id'] + '/'), row
                         assert state['replay'] not in replays, row
                         replays.add(state['replay'])
                         saved[family['id']] = state['replay']
@@ -179,10 +180,10 @@ try:
                         save('progress.json', result)
                         raise
 
-            assert len(result['cases']) == 30 and all(row['outcome'] == 'PASS' for row in result['cases'])
+            assert len(result['cases']) == 33 and all(row['outcome'] == 'PASS' for row in result['cases'])
             result['replays'] = []
             family_by_id = {row['id']: row for row in families}
-            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR'):
+            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL'):
                 replay = saved[family_id]
                 family = family_by_id[family_id]
                 row = {'family': family_id, 'profile': family['profile'],
@@ -211,11 +212,11 @@ try:
                     row['failure'] = repr(failure)
                     save('progress.json', result)
                     raise
-            assert len(result['replays']) == 2 and all(
+            assert len(result['replays']) == 3 and all(
                 row['outcome'] == 'PASS' for row in result['replays'])
-            # Prior v4 Q30 codes are rejected at parse time before session/board mutation.
+            # Prior v5 codes are rejected at parse time before session/board mutation.
             before_stale = snapshot()
-            stale_replay = 'tsj-alpha/4/MEDIUM/RB30_CONTROL/13'
+            stale_replay = 'tsj-alpha/5/MEDIUM/RB30_CONTROL/13'
             page.get_by_text('Open a saved replay code', exact=True).click()
             page.get_by_label('Open current replay', exact=True).fill(stale_replay)
             click('Prepare replay')
@@ -235,22 +236,27 @@ try:
                 'noGenerationStarted': True, 'prelaunchStateUnchanged': True,
             }
 
-            # The current v5 request remains a separate Q30 normal-admission canary.
+            # The registered RB56 provider's HARD profile remains unavailable.
+            # Use the current epoch so this checks profile policy, not stale parsing.
             before_blocked = snapshot()
             page.get_by_label('Open current replay', exact=True).fill(
-                'tsj-alpha/5/MEDIUM/RB30_CONTROL/13')
+                'tsj-alpha/6/HARD/RB56_CONTROL/13')
             click('Prepare replay')
-            page.wait_for_function(
-                "() => window.tsjProduct.snapshot(false).screen === 'ERROR'", timeout=15000)
+            page.locator('[role="status"]').filter(
+                has_text='This difficulty profile is unavailable').first.wait_for(
+                    state='visible', timeout=5000)
             blocked = snapshot()
-            assert blocked['hasBoard'] and blocked['isolated']
-            assert blocked['replay'] == before_blocked['replay']
+            assert blocked['screen'] == 'MENU' and blocked['hasBoard'] and blocked['isolated']
+            for key in ('token', 'screen', 'hasBoard', 'replay', 'isolated', 'ready', 'completed'):
+                assert blocked.get(key) == before_blocked.get(key), (key, before_blocked, blocked)
             assert 'progress' not in blocked
             result['blockedFamilyReplay'] = {
-                'family': 'RB30_CONTROL', 'replayEpoch': 'tsj-alpha/5',
+                'family': 'RB56_CONTROL', 'profile': 'HARD', 'replayEpoch': 'tsj-alpha/6',
                 'outcome': 'EXPECTED_BLOCKED', 'screen': blocked['screen'],
+                'message': 'This difficulty profile is unavailable',
                 'predecessorReplay': blocked['replay'],
                 'predecessorIsolated': blocked['isolated'], 'noGenerationStarted': True,
+                'prelaunchStateUnchanged': True,
             }
             assert not result['errors'], result['errors']
             result['outcome'] = 'PASS'

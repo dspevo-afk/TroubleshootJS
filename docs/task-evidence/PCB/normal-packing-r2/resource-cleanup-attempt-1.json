@@ -1,0 +1,31 @@
+{
+  "status": "FAIL",
+  "phase": "First independent browser resource check",
+  "cause": "At least one task profile remains after earlier tool reset; no uncertain process terminated",
+  "observations": [
+    {
+      "owner": "browser-owner.json",
+      "pid": 21976,
+      "sameBirthStillRunning": false,
+      "profileProcessMatches": 0,
+      "profileDirectoryExists": false,
+      "profileName": "playwright_chromiumdev_profile-w4A8Fg"
+    },
+    {
+      "owner": "browser-owner-2.json",
+      "pid": 30812,
+      "sameBirthStillRunning": false,
+      "profileProcessMatches": 0,
+      "profileDirectoryExists": true,
+      "profileName": "playwright_chromiumdev_profile-wSFvyD"
+    },
+    {
+      "owner": "browser-owner-3.json",
+      "pid": 21300,
+      "sameBirthStillRunning": false,
+      "profileProcessMatches": 0,
+      "profileDirectoryExists": false,
+      "profileName": "playwright_chromiumdev_profile-VcNmCB"
+    }
+  ]
+}

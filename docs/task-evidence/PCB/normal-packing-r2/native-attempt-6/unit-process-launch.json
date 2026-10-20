@@ -1,0 +1,19 @@
+{
+  "drivers": [
+    {
+      "pid": 31596,
+      "startTicks": "639280687244703845",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/normal-packing-r2/run_native.ps1"
+    },
+    {
+      "pid": 5636,
+      "startTicks": "639280687263726231",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/normal-packing-r2/run_native.ps1"
+    }
+  ],
+  "phase": "unit",
+  "scope": "Actual active11 normal random generation; fixed44 retained-route packing comparison",
+  "ownership": "Captured before bounded normal-packing-r2 phase in the main worktree"
+}

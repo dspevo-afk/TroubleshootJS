@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "phase": "Before first final native gate",
+  "files": {
+    "run_final.ps1": "df30d23ce28d906a999e6d320d4de57fd91f11f28a407858815d0ad440e9615b",
+    "check_final.py": "1f05df1b9293df87ed8398e8524e9cd0a90825f97b154e3063d73e85cc88f804",
+    "suites.json": "1abee42434bf610131d1934ec230851239bf7b52234ae17ee3cbcebdef7ebb02",
+    "scope.md": "9fdf655d2b857f34c456f51a72f9b8c11417fe2a6806dc94372b089bdab2e976"
+  },
+  "candidateInputSealSha256": "b06e31c90577b72ecdaa77324497936c1cdd1ef68bd62bdaf0f4d7f3eca728d7",
+  "routesAssessmentSha256": "a54b47d3a9703b69e903828e1b2eab8ec768f918f664a76e0737412ac0a7942a",
+  "limits": "No native/build results yet. Root reviews exact receipts and gates after execution."
+}

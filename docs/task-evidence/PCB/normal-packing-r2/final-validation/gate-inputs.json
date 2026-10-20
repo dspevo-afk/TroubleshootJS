@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "phase": "Before fresh final contracts after catalog fixture correction",
+  "files": {
+    "run_final.ps1": "99ffb04927ebe5c9bbfa7c474573b4cd7c448ba8139953bf021e8effeb0a699b",
+    "check_final.py": "07235c310fe2d11aa19393543e135827f87cf8181a2c7d6eca89fee7771ac9be",
+    "suites.json": "1abee42434bf610131d1934ec230851239bf7b52234ae17ee3cbcebdef7ebb02",
+    "scope.md": "9fdf655d2b857f34c456f51a72f9b8c11417fe2a6806dc94372b089bdab2e976"
+  },
+  "candidateInputSealSha256": "7edd32d8af521b19a3247715821a315cf5384292777af8875987cf8044a42e8c",
+  "routesAssessmentSha256": "ca6543a2d06c4ea761a0f83b0560d4c38841cca8d30b68098b0e61d131beb75a",
+  "limits": "Prior failed final attempt preserved with passing44 at native-attempt-6. Current source1481/39deltas/14gates; fixed44 rerun fresh."
+}

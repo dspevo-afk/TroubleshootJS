@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 43.9761305,
+  "suiteCount": 2,
+  "phase": "unit",
+  "scope": "Actual active11 normal random generation; fixed44 baseline/current packing comparison",
+  "terminalCleanupIncluded": true,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

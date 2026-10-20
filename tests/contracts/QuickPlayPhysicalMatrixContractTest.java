@@ -104,11 +104,14 @@ public final class QuickPlayPhysicalMatrixContractTest {
     }
 
     private static Vector<String> selectedFamilies(String[] args) {
-        // Keep the implemented-family physical corpus even when normal
-        // publication of one of those families is blocked.
-        Vector<String> catalog = PlayerFamilyCatalog.registeredFamilies();
+        Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
+        Vector<String> catalog = PlayerFamilyCatalog.families();
+        check(registered.size() == 12 && registered.contains(Rb56Plan.FAMILY_ID) &&
+            !catalog.contains(Rb56Plan.FAMILY_ID) &&
+            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "Held RB56 remains registered but outside the normal-player catalog");
         check(catalog.size() == CATALOG_FAMILIES.length,
-            "Player family catalog size changed: expected " + CATALOG_FAMILIES.length +
+            "Normal-player family catalog size changed: expected " + CATALOG_FAMILIES.length +
             " but found " + catalog.size());
         for (int i = 0; i < CATALOG_FAMILIES.length; i++)
             check(CATALOG_FAMILIES[i].equals(catalog.get(i)),

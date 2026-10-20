@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "phase": "Original offline contracts reader",
+  "exitCode": 2,
+  "cause": "Maintained native driver puts final15-suite summary and cleanup in full log, not child receipt. All15 native markers/exit0/source prepost/birth cleanup pass; original checker wrongly requires summary in receipt. Preserve original reader, qualify exact output-location correction and negative canaries.",
+  "nativeArtifacts": {
+    "contracts-log.txt": "4cb3deb7098e423e6eaf8046c12aa944e5a8074025662370ea1b85372c638387",
+    "contracts-receipt.txt": "4fbc0445412027a164c6d3a5c08edd97220447fd25d0cca1b1b408d2f3a2fbb9",
+    "contracts-timing.json": "39c1fc9d5471b8e0b7cc55f952e1640983f36ac87df2b835c175b4e8b98aa5b9",
+    "contracts-input-audit-before.txt": "4b2a3fd44495ac4386e8d871498604eb2a5cebf9e5164117ed9359ba0d5e79b6",
+    "contracts-input-audit-after.txt": "4b2a3fd44495ac4386e8d871498604eb2a5cebf9e5164117ed9359ba0d5e79b6",
+    "contracts-process-launch.json": "91903fc6ce5a1dd71d919fdbe45c455ec3850cddcd87f914d1103e46988674f1",
+    "contracts-process-cleanup.json": "0bfd6f629ca3d8ac9846c8d72db030adf19cb37f7a90f715ecdd9e2da8134fd0"
+  },
+  "unchangedNativeConsumedOwners": {
+    "run_final.ps1": "99ffb04927ebe5c9bbfa7c474573b4cd7c448ba8139953bf021e8effeb0a699b",
+    "suites.json": "1abee42434bf610131d1934ec230851239bf7b52234ae17ee3cbcebdef7ebb02"
+  },
+  "candidateInputSealSha256": "7edd32d8af521b19a3247715821a315cf5384292777af8875987cf8044a42e8c"
+}

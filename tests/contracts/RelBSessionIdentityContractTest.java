@@ -41,8 +41,8 @@ public final class RelBSessionIdentityContractTest {
             "existing public session wire bytes remain exact");
         PlayerLaunchRequest request = new PlayerLaunchRequest(
             "LED_INDICATOR", "9007199254740993", "EASY");
-        check("tsj-alpha/5/EASY/LED_INDICATOR/9007199254740993".equals(request.replay()),
-            "normal replay identity remains unchanged");
+        check("tsj-alpha/6/EASY/LED_INDICATOR/9007199254740993".equals(request.replay()),
+            "normal replay identity uses the current epoch");
         check(request.replay().equals(PlayerSessionReplay.parse(request.replay()).canonical()) &&
             !PlayerSessionReplay.parse(request.replay()).isPrivateQualification(),
             "available public replay still uses PlayerLaunchRequest");

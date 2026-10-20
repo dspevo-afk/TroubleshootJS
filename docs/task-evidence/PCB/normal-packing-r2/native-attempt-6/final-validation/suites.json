@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "scope": "Fresh r2 final-source contracts, physical matrix, and JDK8/GWT5 compile",
+  "contracts": [
+    {"name": "P03PlacementContractTest", "marker": "P03 placement contracts "},
+    {"name": "PcbCompactionContractTest", "marker": "PCB compaction contracts "},
+    {"name": "MediumBoardFloorplanningContractTest", "marker": "medium board floorplanning contracts "},
+    {"name": "A10DependencyContractTest", "marker": "A10 dependency contracts "},
+    {"name": "U04SessionContractTest", "marker": "U04 session contracts "},
+    {"name": "U06SessionSaveContractTest", "marker": "U06 session save contracts "},
+    {"name": "RelBSessionIdentityContractTest", "marker": "REL-B session identity contracts "},
+    {"name": "PlayerSessionFingerprintContractTest", "marker": "PlayerSessionFingerprintContractTest assertions="},
+    {"name": "ControlledIndicatorAssemblyContractTest", "marker": "current controlled-indicator contracts "},
+    {"name": "Rb30PhysicalMetadataContractTest", "marker": "Q30 physical metadata contracts "},
+    {"name": "QuickPlayGateContractTest", "marker": "Quick Play gate contracts "},
+    {"name": "QuickPlayContractTest", "marker": "Quick Play current seed envelopes and construction"},
+    {"name": "PcbCompactnessContractTest", "marker": "actual RB56 geometry report "},
+    {"name": "PcbLayerRoutingResumptionContractTest", "marker": "Pcb layer routing resumption contracts "},
+    {"name": "MediumBoardNormalAdmissionContractTest", "marker": "medium normal admission contracts "}
+  ],
+  "matrix": {
+    "name": "QuickPlayPhysicalMatrixContractTest",
+    "smallFamilies": [
+      "LED_INDICATOR",
+      "DIODE_PROTECTED_INDICATOR",
+      "PARALLEL_DUAL_INDICATOR",
+      "RC_DELAY",
+      "NPN_LOW_SIDE_SWITCH",
+      "NMOS_LOW_SIDE_SWITCH",
+      "RELAY_OUTPUT",
+      "SENSOR_CONTROL",
+      "RB15_CONTROL",
+      "COMPOSED_CONTROLLED_INDICATOR"
+    ],
+    "smallBudgetMillis": 180000,
+    "mediumFamily": "RB30_CONTROL",
+    "mediumBudgetMillis": 600000,
+    "accepted": 220,
+    "exactReplays": 220
+  },
+  "build": {
+    "style": "OBF",
+    "target": "Compile",
+    "processTimeoutSeconds": 900,
+    "requiredPermutations": 5
+  }
+}

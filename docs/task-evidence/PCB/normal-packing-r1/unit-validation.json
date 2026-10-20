@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "baseCommit": "2a73b949a02de718bd968c2920ba6045d7406c5a",
+  "protocolSha256": "1456fb21aec5ee02af3c779cd14cae8d0cd8a280095e9e34b0f44671b34269cc",
+  "scopeSha256": "17305d52b437e84e259815e8bb536ce3d8bb50f0051d361366b27ffb65973ed4",
+  "sourceHelperSha256": "3b43e98367873b54b2606427d68f6287bac49ab39d08eec3501e6290e0966ff0",
+  "suiteManifestSha256": "1ac63deadce73c15ebc010d7b4a68f0197249b47bf52b7fb116fb84196907930",
+  "phaseInputsSha256": {
+    "unit.txt": "ecc753d742394d65cb3783771c723590548cbbf1d7335af01295f373f530a168",
+    "unit-receipt.txt": "34e24fb6dcaa993f52e57f94bf2006ef8b052e29c2c8f98f2f59687323614fc5",
+    "unit-timing.json": "34a26be4e389de7bb5529933d1302e416ac71a5e251ef14d7f981b6bd3456fab"
+  },
+  "readerQualification": {
+    "scope": "Only generationRoutingExpansions bound: nonnegative Java int",
+    "qualifiedReaderSha256": "defed6dc99373dbeaa8c37b81e5aac2241ed39d1021924e6f02b3d03bde58783",
+    "originalReaderSha256": "ef7e14daf8c3b35ad471ad44f7d188654a68cf33198e433db708bb160bc760cb",
+    "nativeLimitsChanged": false
+  },
+  "assessmentStatus": "PASS",
+  "phase": "unit",
+  "scope": "Normal connected-pocket and identity unit contracts only.",
+  "nativePhase": {
+    "status": "PASS",
+    "phase": "unit",
+    "suiteCount": 2,
+    "reportRows": 0,
+    "suiteMarkers": [
+      {
+        "assertions": 49,
+        "fixtures": 5
+      },
+      {
+        "assertions": 21,
+        "packing": 2,
+        "replay": "tsj-alpha/6"
+      }
+    ],
+    "eventLines": [
+      "PASS: PCB connected pocket packing contracts assertions=49 fixtures=5",
+      "PASS: PCB normal packing identity contracts assertions=21 packing=2 replay=tsj-alpha/6"
+    ]
+  },
+  "nativeRuntimeEvidence": "PASS"
+}

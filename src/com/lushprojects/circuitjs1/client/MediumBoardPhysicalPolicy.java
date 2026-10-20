@@ -422,6 +422,7 @@ final class MediumBoardPhysicalPolicy {
         final Vector<String> routeOutcomes;
         final long selectedPlacementScore;
         final long selectedRouteQualityMilli;
+        final PcbPackingProbeReceipt packingProbe;
 
         Statistics(String outcome, String selectedRoutePolicy,
                 int placementCandidates, int placementRejections, int routeAttempts,
@@ -455,6 +456,23 @@ final class MediumBoardPhysicalPolicy {
                 Vector<String> routeOutcomes, long placementEvaluations,
                 int routingOrders, int routingExpansions,
                 long selectedPlacementScore, long selectedRouteQualityMilli) {
+            this(outcome, selectedRoutePolicy, placementCandidates, placementRejections,
+                routeAttempts, oneFaceAttempts, oneFaceSuccesses, twoLayerAttempts,
+                twoLayerSuccesses, selectedPlacementAttempt, rankedPlacementAttempts,
+                placementScores, routeOutcomes, placementEvaluations, routingOrders,
+                routingExpansions, selectedPlacementScore, selectedRouteQualityMilli, null);
+        }
+
+        /** Append-only receipt overload; primary route counters retain their old meaning. */
+        Statistics(String outcome, String selectedRoutePolicy,
+                int placementCandidates, int placementRejections, int routeAttempts,
+                int oneFaceAttempts, int oneFaceSuccesses, int twoLayerAttempts,
+                int twoLayerSuccesses, int selectedPlacementAttempt,
+                Vector<Integer> rankedPlacementAttempts, Vector<String> placementScores,
+                Vector<String> routeOutcomes, long placementEvaluations,
+                int routingOrders, int routingExpansions,
+                long selectedPlacementScore, long selectedRouteQualityMilli,
+                PcbPackingProbeReceipt packingProbe) {
             if (outcome == null || placementCandidates < 0 || placementRejections < 0 ||
                     routeAttempts < 0 || oneFaceAttempts < 0 || oneFaceSuccesses < 0 ||
                     twoLayerAttempts < 0 || twoLayerSuccesses < 0 ||
@@ -484,6 +502,7 @@ final class MediumBoardPhysicalPolicy {
                 new Vector<String>() : new Vector<String>(routeOutcomes);
             this.selectedPlacementScore = selectedPlacementScore;
             this.selectedRouteQualityMilli = selectedRouteQualityMilli;
+            this.packingProbe = packingProbe;
         }
 
         String toCanonical() {
@@ -504,6 +523,8 @@ final class MediumBoardPhysicalPolicy {
             result.append(";selectedScore=").append(selectedPlacementScore);
             result.append(";selectedQualityMilli=").append(selectedRouteQualityMilli);
             result.append(";routeOutcomes=").append(routeOutcomes);
+            if (packingProbe != null)
+                result.append(";packingProbe=").append(packingProbe.toCanonical());
             return result.toString();
         }
     }

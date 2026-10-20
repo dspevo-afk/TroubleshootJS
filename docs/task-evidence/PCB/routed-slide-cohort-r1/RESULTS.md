@@ -89,8 +89,9 @@ root review 197d6034af45d2677c29e94c577ab69d309b918265f2ca3f9af22bc2869b5169.
 
 The normal catalog currently exposes11families; RB56 remains disabled behind its
 existing advanced release gates. The private15 trim/v13 vacancy rules do not apply
-to normal random requests. Ten normal families use the shared procedural generator;
-Controlled Indicator uses a separate factory. The next production scope must cover
-both appropriate owners and generation/replay identity without bypassing advanced
+to normal random requests. Corrected subsequent caller audit: all11 active normal
+families share SeededPcbLayoutGenerator; composed Controlled Indicator enters it
+through BoundedGeneratedBoardAssembler. The fixed-trunk factory is unused. The
+next production scope covers shared placement and generation/replay identity without bypassing advanced
 release requirements. User requests a few actual screenshots after the next built
 layout change. No main merge or email. Original5 unrelated entries remain preserved.

@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "baseCommit": "2a73b949a02de718bd968c2920ba6045d7406c5a",
+  "scope": "Actual active11 normal random generation; fixed44 retained-route packing comparison",
+  "scopeSha256": "c26f03183118d6f14bd1652f55d088df632aec9f4d00689ea5dcd28ca11a88d2",
+  "families": [
+    "LED_INDICATOR",
+    "DIODE_PROTECTED_INDICATOR",
+    "PARALLEL_DUAL_INDICATOR",
+    "RC_DELAY",
+    "NPN_LOW_SIDE_SWITCH",
+    "NMOS_LOW_SIDE_SWITCH",
+    "RELAY_OUTPUT",
+    "SENSOR_CONTROL",
+    "RB15_CONTROL",
+    "COMPOSED_CONTROLLED_INDICATOR",
+    "RB30_CONTROL"
+  ],
+  "roots": [
+    "0",
+    "17",
+    "13",
+    "-9223372036854775808"
+  ],
+  "groups": [
+    {
+      "families": [
+        "LED_INDICATOR",
+        "DIODE_PROTECTED_INDICATOR",
+        "PARALLEL_DUAL_INDICATOR"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RC_DELAY",
+        "NPN_LOW_SIDE_SWITCH",
+        "NMOS_LOW_SIDE_SWITCH"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RELAY_OUTPUT",
+        "SENSOR_CONTROL",
+        "RB15_CONTROL"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "COMPOSED_CONTROLLED_INDICATOR"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "0"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "17"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "13"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "-9223372036854775808"
+      ]
+    }
+  ],
+  "caseCount": 44,
+  "routeSuites": [
+    [
+      "PcbNormalPackingCensusContractTest",
+      "PCB normal packing census base-families-0-2 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup2",
+      "PCB normal packing census base-families-3-5 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup3",
+      "PCB normal packing census base-families-6-8 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup4",
+      "PCB normal packing census controlled-indicator-all-roots "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup5",
+      "PCB normal packing census rb30-root-0 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup6",
+      "PCB normal packing census rb30-root-17 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup7",
+      "PCB normal packing census rb30-root-13 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup8",
+      "PCB normal packing census rb30-root-Long.MIN_VALUE "
+    ]
+  ],
+  "unitSuites": [
+    [
+      "PcbConnectedPocketPackingContractTest",
+      "PCB connected pocket packing contracts "
+    ],
+    [
+      "PcbNormalPackingIdentityContractTest",
+      "PCB normal packing identity contracts "
+    ],
+    [
+      "PcbPackingMetricsContractTest",
+      "PCB packing metrics contracts "
+    ],
+    [
+      "PcbPackingProbeReceiptContractTest",
+      "PCB packing probe receipt contracts "
+    ]
+  ],
+  "baselineLayoutVersion": 16,
+  "candidateLayoutVersion": 17,
+  "baselineReplayEpoch": "tsj-alpha/5",
+  "candidateReplayEpoch": "tsj-alpha/6",
+  "packingVersion": 2,
+  "casePrefix": "PCB_NORMAL_PACKING_CASE ",
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "whitespaceVersion": 1,
+  "maxFileBytes": 67108864,
+  "maxPhaseSeconds": 36000,
+  "nativeJvmMillis": 60000,
+  "normalStepMillis": 5000,
+  "nativeCaseMillis": 60000,
+  "baselineCasesMayReject": true,
+  "rejectionPhases": [
+    "ROUTING",
+    "ENVELOPE",
+    "NORMAL_POLICY"
+  ],
+  "requiredMatchedFields": [
+    "family",
+    "profile",
+    "root",
+    "seed",
+    "executionPolicy",
+    "physicalAdmission",
+    "graphBefore",
+    "graphAfter",
+    "logicalParts",
+    "logicalPads",
+    "logicalNets",
+    "layoutParts",
+    "layoutPads"
+  ],
+  "metricNonregression": [
+    "outline.area",
+    "copperManhattanLength",
+    "viaCount",
+    "whitespace"
+  ],
+  "strictGain": "At least one baseline-admitted final board has strictly smaller area; all baseline admissions retained, complete logical source/mapping identities match, no declared metric regression",
+  "rejectedCaseRule": "Retain every fixed typed rejection, no seed substitutions; newly admitted cases are reported separately",
+  "phaseRule": "Baseline is audited reuse of immutable r1 native44/8groups; fresh4unit/8candidate groups. Each group reports exact ordered cases, adjacent whitespace and unique short-name suite PASS. Full log/child receipt equality and terminal cleanup required.",
+  "limits": [
+    "Finite informed44 normal source regressions; no all-seed or optimal-packing claim",
+    "Native comparison does not certify compiled solver/player behavior",
+    "Fresh final production build and actual visible normal flow/screenshots/save/load/repair remain required",
+    "Private RB56 geometry bodies retained; explicit general-epoch prefix17 differs from16",
+    "At most one separately receipted post-selection route; unchanged primary/per-route/aggregate/time/step/physical limits and RB56/HARD/U05/REL-B release holds"
+  ],
+  "baselineReference": {
+    "fileSha256": {
+      "docs/task-evidence/PCB/normal-packing-r1/protocol.json": "1456fb21aec5ee02af3c779cd14cae8d0cd8a280095e9e34b0f44671b34269cc",
+      "docs/task-evidence/PCB/normal-packing-r1/scope.md": "17305d52b437e84e259815e8bb536ce3d8bb50f0051d361366b27ffb65973ed4",
+      "docs/task-evidence/PCB/normal-packing-r1/unit-suites.json": "1ac63deadce73c15ebc010d7b4a68f0197249b47bf52b7fb116fb84196907930",
+      "docs/task-evidence/PCB/normal-packing-r1/routes-suites.json": "4c9760b9999a35451c1255d6c83c13f94f6279dc76c5acd4994faac21a7dc1d3",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline.txt": "24dff415b33106673e3d1b4eadfa5f56cc03b6b3632937e62f3f12b110a8cdb1",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-receipt.txt": "742e1e3e4b4b84b53107ffe1e21db9013c0bc866ec3d43188d444e5ba2f1eee9",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-timing.json": "df9a6920406efd4791d533714e321f0a9ffae2ac4082edff0f90a655d06ad08c",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-inputs.json": "4a9b59d7f34d0c2e523240607e119b68c8eb408e383e5b59bab8c124cc312cce",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-assessment.json": "a3c6099fa350e193d03f9e7d0a8ae4bdb56904fbff47b85b4ce7380300a23204",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-process-cleanup.json": "12625516d30342c0fbab9fbac5924ba9e61e5a1942b71e2e7faef62ee1f8133e",
+      "docs/task-evidence/PCB/normal-packing-r1/baseline-log-sanitization.json": "87ee414db21dead0b1012e1ea2c619507d255615b5f6dd134b97f27da5a82dee",
+      "docs/task-evidence/PCB/normal-packing-r1/reader-qualification.json": "6ed9283e066a8df8ca01d7a95057f349c39059c0455665ec698b64db6f9f0e10",
+      "docs/task-evidence/PCB/normal-packing-r1/reader-limit-canaries.json": "31035265f53f8e6fd842ede4ae75292c8afde9e8b56a8071885a62ab8dad4a28"
+    }
+  },
+  "sourceHelperSha256": "4b89b89ca7fc5d15488cf81e0cdb1b5fad96bdffde5083d6d9f91b7885b63596"
+}

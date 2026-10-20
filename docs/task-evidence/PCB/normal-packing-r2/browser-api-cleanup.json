@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "operations": [
+    "Close normal player tab after OFF/Main menu",
+    "Close owned context",
+    "Disconnect connected client",
+    "Close exact owned public BrowserServer"
+  ],
+  "elapsedMillis": 138,
+  "browserPid": 21300,
+  "rootExitObserved": true,
+  "scope": "Owned browser API lifecycle only; no private qualification Close7 counter exposed or claimed"
+}

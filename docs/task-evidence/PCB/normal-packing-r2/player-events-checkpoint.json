@@ -1,0 +1,44 @@
+[
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Prepare exact seed",
+    "started": 1792473381137
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Accept ticket and start; View / Fit bench; View close",
+    "capture": "rc-delay-13.jpg",
+    "ticketObservedAfterClickMs": 17730
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "observedReplay": "tsj-alpha/6/EASY/RC_DELAY/13",
+    "input": "Share pristine challenge"
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Prepare exact seed; Accept ticket; Fit bench",
+    "capture": "sensor-control-0.jpg",
+    "observedFromClickToTicketMs": 8341
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Right-click U2; View schematic",
+    "observed": "U2; five pins SENSOR,REFERENCE,RAIL,OUTPUT,RETURN; no schematic before menu choice",
+    "capture": "sensor-chip-pinout.jpg"
+  },
+  {
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  },
+  {
+    "family": "RB30_CONTROL",
+    "root": "-9223372036854775808",
+    "input": "MEDIUM / Prepare exact seed",
+    "started": 1792473618607
+  }
+]

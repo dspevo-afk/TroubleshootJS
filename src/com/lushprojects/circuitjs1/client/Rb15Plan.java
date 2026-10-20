@@ -88,6 +88,7 @@ final class Rb15Plan {
                 id.equals("J4")?PcbPlacementConstraints.Anchor.RIGHT:PcbPlacementConstraints.Anchor.NONE;
             parts.add(new PcbPlacementConstraints.Part(id,region,label,"low-voltage",anchor,20));
         }
-        return new PcbPlacementConstraints(parts,new Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.BOTTOM);
+        return new PcbPlacementConstraints(parts,new Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.BOTTOM)
+            .withConnectedPocketPacking();
     }
 }

@@ -1,0 +1,10 @@
+[
+  [
+    "PcbConnectedPocketPackingContractTest",
+    "PCB connected pocket packing contracts "
+  ],
+  [
+    "PcbNormalPackingIdentityContractTest",
+    "PCB normal packing identity contracts "
+  ]
+]

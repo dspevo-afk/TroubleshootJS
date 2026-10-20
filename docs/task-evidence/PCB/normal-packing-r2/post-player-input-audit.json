@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "candidateInputSealSha256": "7edd32d8af521b19a3247715821a315cf5384292777af8875987cf8044a42e8c",
+  "sourceCount": 1481,
+  "sourceDeltas": 39,
+  "gateOwners": 14,
+  "changedPaths": [],
+  "preservedNativeAttemptFilesChecked": 390,
+  "baselineCopyAudit": "Maintained inputs.py audit-candidate executed PASS before final profile cleanup; oldCOPY1475/9deltas/15gates PASS",
+  "scope": "Direct current1481 source and14 gates also rehashed after browser flow; all archived failed/passing predecessor bytes remain exact."
+}

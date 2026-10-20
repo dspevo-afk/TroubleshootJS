@@ -1,0 +1,15 @@
+{
+  "status": "BLOCKED_TOOL_TIMEOUT",
+  "phase": "Batched exact-seed menu preparation",
+  "browserOwner": "browser-owner-2.json",
+  "failure": "Node tool30s timeout reset its kernel and owned browser. Exact stalled locator/action unknown; no admitted-board or screenshot proof.",
+  "productionIdentity": "Actual html attributes match all five independent compiled/source identity fields. Earlier body-element probe was empty and caused a preparation-only assertion; corrected after reading maintained preview injection.",
+  "observedResourceError": {
+    "url": "http://127.0.0.1:8907/favicon.ico",
+    "status": 404,
+    "verifiedBy": "Browser performance resource entries",
+    "disposition": "Existing missing icon, separate from compiled player resources"
+  },
+  "cleanup": "UI qualification cleanup NOT OBSERVED. Root must independently verify exited birth/profile.",
+  "nextAttemptChange": "Use5000ms Playwright locator timeout,20000ms tool allowance, one visible action then inspect fresh DOM. No request interception or repeated unchanged batch."
+}

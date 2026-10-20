@@ -1,0 +1,120 @@
+[
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Prepare exact seed",
+    "started": 1792473381137
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "input": "Accept ticket and start; View / Fit bench; View close",
+    "capture": "rc-delay-13.jpg",
+    "ticketObservedAfterClickMs": 17730
+  },
+  {
+    "family": "RC_DELAY",
+    "root": "13",
+    "observedReplay": "tsj-alpha/6/EASY/RC_DELAY/13",
+    "input": "Share pristine challenge"
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Prepare exact seed; Accept ticket; Fit bench",
+    "capture": "sensor-control-0.jpg",
+    "observedFromClickToTicketMs": 8341
+  },
+  {
+    "family": "SENSOR_CONTROL",
+    "root": "0",
+    "input": "Right-click U2; View schematic",
+    "observed": "U2; five pins SENSOR,REFERENCE,RAIL,OUTPUT,RETURN; no schematic before menu choice",
+    "capture": "sensor-chip-pinout.jpg"
+  },
+  {
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  },
+  {
+    "family": "RB30_CONTROL",
+    "root": "-9223372036854775808",
+    "input": "MEDIUM / Prepare exact seed",
+    "started": 1792473618607
+  },
+  {
+    "family": "RB30_CONTROL",
+    "root": "-9223372036854775808",
+    "input": "MEDIUM exact; Accept ticket; Fit bench",
+    "capture": "rb30-min.jpg",
+    "observedFromClickToTicketMs": 71163
+  },
+  {
+    "family": "RB30_CONTROL",
+    "root": "-9223372036854775808",
+    "observedReplay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-9223372036854775808",
+    "input": "View / Zoom+ / Zoom- / Fit bench; Share replay",
+    "visual": "Zoom enlarges actual geometry and naturally crops outer board/meter; Fit bench restores both"
+  },
+  {
+    "family": "LED_INDICATOR",
+    "input": "Ordinary New board",
+    "started": 1792473775415,
+    "seed": "Selected by normal entropy/candidate owner"
+  },
+  {
+    "input": "Ordinary New board / Share pristine challenge",
+    "observedReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "observedClickToTicketUpperBoundMs": 33953
+  },
+  {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "input": "Run customer retest before repair",
+    "observed": "Customer retest did not pass. Continue troubleshooting."
+  },
+  {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "input": "DC V; red J1.1 / black J1.2 through visible terminal controls",
+    "observed": "5 V",
+    "scope": "Observed live reading, not independent numerical accuracy oracle"
+  },
+  {
+    "input": "OHM; red R1.1 / black R1.2 with power OFF",
+    "observed": "OL",
+    "reasoning": "Connector has5V while R1 has open resistance; replace the marked resistor then functionally retest"
+  },
+  {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "input": "Component examination R1",
+    "observed": "ORANGE, ORANGE, BROWN, GOLD =330 ohm5%; resistor reads OL with power OFF"
+  },
+  {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "input": "Power OFF; remove R1; acquire330ohm5%; install Part4 asR1; powerON; Run customer retest",
+    "observed": "Customer retest passed",
+    "loosePartsAfterRepair": 1
+  },
+  {
+    "input": "Load session / actual FileReader chooser",
+    "file": "repaired-random.tsjsave",
+    "sha256": "441ef06eefc4d0dfedb214f715de43a31df41cb5f842ee24ea852610594f5bfa",
+    "started": 1792474144989
+  },
+  {
+    "input": "Actual downloaded FileReader restore",
+    "observed": "Session restored; power OFF; one loose removed part; meter inactive",
+    "observedFromChooseToRestoreUpperBoundMs": 43364
+  },
+  {
+    "input": "Restored OHM with redR1.1/blackR1.2; powerOFF",
+    "observed": "330 Ohm",
+    "scope": "Observed live value; separate accuracy qualification not claimed"
+  },
+  {
+    "input": "PowerON; fresh Run customer retest after FileReader restore",
+    "observed": "Customer retest passed"
+  },
+  {
+    "input": "Return to board; power OFF; Main menu",
+    "observed": "Normal menu restored with existing repaired owner paused; no private qualification Close7 control in normal mode"
+  }
+]

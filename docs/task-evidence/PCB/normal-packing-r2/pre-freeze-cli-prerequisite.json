@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "exitCode": 2,
+  "phase": "offline baseline validation preparation",
+  "message": "sealed input is unavailable",
+  "cause": "Root invoked baseline assessment before the required candidate source seal existed. No native phase or assessment artifact was created.",
+  "resolution": "Freeze unchanged final source/gates, then validate reused baseline."
+}

@@ -25,6 +25,19 @@ public final class PcbCompactnessContractTest {
         }
     }
 
+    /** Hash a saved layout-16 geometry body after the global layout epoch became 17. */
+    static String legacyGeometrySha256(PcbBoardLayout layout) {
+        if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 17)
+            throw new AssertionError("Legacy geometry oracle requires layout version 17");
+        String fingerprint = layout.geometryFingerprint();
+        String currentPrefix = "layout=17|";
+        if (!fingerprint.startsWith(currentPrefix))
+            throw new AssertionError("Expected actual layout=17 geometry fingerprint");
+        return PlayerSessionFingerprint.of(
+            "layout=16|" + fingerprint.substring(currentPrefix.length()));
+    }
+
     public static void main(String[] args) {
         String mode = parseMode(args);
         System.out.println("PCB_COMPACTNESS_CRITERIA {\"mode\":" + quote(mode) +
@@ -48,7 +61,7 @@ public final class PcbCompactnessContractTest {
             MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(plan.board(),plan.layoutSeed,plan.routingSeed);
             require(result.accepted(),"legacy fixed saved-layout route remains accepted");
-            require(expected[i].equals(PlayerSessionFingerprint.of(result.getLayout().geometryFingerprint())),
+            require(expected[i].equals(legacyGeometrySha256(result.getLayout())),
                 "legacy geometry including exact pads/copper/labels remains byte-exact for "+seeds[i]);
             if (seeds[i] == -1022L) verifyMatchedViaCompaction(plan.board(), result.getLayout());
             boolean refused=false;
@@ -141,9 +154,9 @@ public final class PcbCompactnessContractTest {
 
         PcbBoardLayout layout = result.getLayout();
         if ("report".equals(mode)) {
-            if(root.seed==-1017L) require("84eff3d9cb6e087578873a79fc9e8db72271b6fa653c309a79cfcedbee9d9a25".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1017");
-            if(root.seed==-1004L) require("a05b554248d83dd2b8c1dc9e8fb8e7e05a70081323e6e0383a6e673f5276de61".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1004");
-            if(root.seed==-1022L) require("eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16".equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),"saved compact2 geometry remains exact for -1022");
+            if(root.seed==-1017L) require("84eff3d9cb6e087578873a79fc9e8db72271b6fa653c309a79cfcedbee9d9a25".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1017");
+            if(root.seed==-1004L) require("a05b554248d83dd2b8c1dc9e8fb8e7e05a70081323e6e0383a6e673f5276de61".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1004");
+            if(root.seed==-1022L) require("eeadd722d90c3f407dd5889caaff11d7fbe0e02d81f3dccf131322bcd6ee4f16".equals(legacyGeometrySha256(layout)),"saved compact2 geometry remains exact for -1022");
         }
         layout.validateGeometry(board);
         new PcbTwoLayerRules(board, layout).validate(layout);

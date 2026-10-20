@@ -149,29 +149,29 @@ final class QuickPlayDeveloperVerifier {
         require(catalog.size() == 11 && catalog.equals(expected),
             "Quick Play enabled catalog order or normal family census changed");
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
-        require(registered.size() == 11 && registered.equals(expected) &&
-            PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID),
-            "Accepted Q30 retains its registered construction and identity contracts");
+        Vector<String> expectedRegistered = new Vector<String>(expected);
+        expectedRegistered.add(Rb56Plan.FAMILY_ID);
+        require(registered.size() == 12 && registered.equals(expectedRegistered) &&
+            PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
+            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
+            PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.HARD,
+            "Enabled11 and held RB56 retain exact separate registered identities");
+        boolean heldRejected = false;
+        try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "HARD"); }
+        catch (IllegalArgumentException unavailableProfile) { heldRejected = true; }
+        require(heldRejected, "Held HARD RB56 entered an ordinary player request");
 
         long[] roots = { Long.MIN_VALUE, 9007199254740993L, Long.MAX_VALUE };
-        for (int familyIndex = 0; familyIndex < registered.size(); familyIndex++) {
-            String family = registered.elementAt(familyIndex);
+        for (int familyIndex = 0; familyIndex < catalog.size(); familyIndex++) {
+            String family = catalog.elementAt(familyIndex);
             DifficultyProfile profile = PlayerFamilyCatalog.candidateProfile(family);
             require(QuickPlayAdmission.supports(family, profile),
                 "Registered family has no declared request profile: " + family);
             for (long root : roots) {
-                boolean enabled = catalog.contains(family);
-                QuickPlaySelection selection = enabled ? new QuickPlaySelector(
-                    new QuickPlayFixedRandomSource(new long[] { familyIndex, root })).select() :
-                    new QuickPlaySelection(family, root);
+                QuickPlaySelection selection = new QuickPlaySelector(
+                    new QuickPlayFixedRandomSource(new long[] { familyIndex, root })).select();
                 require(family.equals(selection.getFamilyId()) && selection.getSeed() == root,
                     "Catalog selection or registered identity changed family order or signed-long seed: " + family);
-                if (!enabled) {
-                    boolean blocked = false;
-                    try { PlayerFamilyCatalog.requireNormalPlayerEnabled(family); }
-                    catch (IllegalArgumentException expectedFailure) { blocked = true; }
-                    require(blocked, "Disabled registration entered normal admission: " + family);
-                }
 
                 GenerationRequest staged = GenerationRequest.stagedQuickPlay(selection);
                 require(staged.isQuickPlay() && staged.getDifficulty() == profile &&

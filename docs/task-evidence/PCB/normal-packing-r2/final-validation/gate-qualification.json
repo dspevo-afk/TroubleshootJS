@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "originalGateInputSeal": "gate-inputs.json",
+  "changedGateOwners": [
+    "check_final.py"
+  ],
+  "qualification": "reader-qualification.json",
+  "originalOfflineRejection": "reader-review-1/failure.json",
+  "nativeConsumedOwnersUnchanged": [
+    "run_final.ps1",
+    "suites.json"
+  ],
+  "currentAdditionalOwners": {
+    "check_final.py": "c85f36b7a91a2bec9f7c61438e28e92bee598992303308126aade1810da82ec2",
+    "check_reader_qualification.py": "0394e581d6b114f2989a327aa3a8b3e10d6a4e88e4f180515a8151199dbe19e1",
+    "reader-qualification.json": "707d90aad800ad62970b3d37b931a26f267cfe8cfcd1b5aa63b6d0a17739bcb1"
+  },
+  "limits": "Offline output-location correction only; current parent1481/39source and actualnative bytes remain exact. Leaf scope38 describes its handoff; root-integration.md records current39."
+}

@@ -1,0 +1,11 @@
+{
+  "status": "FAIL",
+  "phase": "Production menu entry before any board",
+  "cause": "Releasing a paused compiled request then immediately removing its route caused route.continue already handled and an automation kernel reset. This was an automation harness error, not a production board result.",
+  "browserOwner": "browser-owner.json",
+  "ownedBrowserBirthAfterReset": "ABSENT (PID21976/start639280687585299082)",
+  "qualificationCleanup": "NOT_OBSERVED; no board or repair flow started",
+  "preview": "Maintained PID30568/port8907 remains owned and ready",
+  "inputScopeSha256": "4c7e6e670172dcd87c8cd11ec9b2060ed2c1797c45046285157af8aed9ea06bf",
+  "nextProspectiveEntry": "New owned headed browser; ordinary plain production menu, no request interception or injected actions. User starts generation through real controls. Record all warnings/errors as observed."
+}

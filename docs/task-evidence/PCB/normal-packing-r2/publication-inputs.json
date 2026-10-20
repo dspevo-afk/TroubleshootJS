@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "testedCandidateSha256": "7edd32d8af521b19a3247715821a315cf5384292777af8875987cf8044a42e8c",
+  "overlay": {
+    "path": "tests/browser/quickplay_procedural_acceptance.py",
+    "priorSha256": "18000e53eb63eb03a57509de8b445054f46ba87faeca645ae8a61e4e75fd4c9d",
+    "currentSha256": "28ab8adddbb61f492ce9c4496592647e801c186d880a1bd7e5a806ade10a4af8"
+  },
+  "scope": "Final browser-test consumer migration only. All1480 other tested inputs and14 gate owners remain exact. Original1481 candidate/native seals are not rewritten."
+}

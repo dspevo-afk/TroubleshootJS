@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 class SeededPcbLayoutGenerator {
     /** Current corrected layout algorithm; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 16;
+    static final int CURRENT_VERSION = 17;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;
@@ -121,6 +121,15 @@ class SeededPcbLayoutGenerator {
         private final GenerationStatistics statistics=new GenerationStatistics();
         private PcbRoutingRejectedException lastFailure;
         private PcbBoardLayout bestLayout;
+        private PcbPlacementPlanner.Plan bestPlan, packingPlan;
+        private PcbBoardLayout packingBaseline;
+        private PcbPackingMetrics packingBaselineMetrics;
+        private PcbLayerRoutingPrototype.Session packingRoute;
+        private String packingBaselineHash, packingRoutePolicy;
+        private int packingInitialOrders, packingInitialExpansions;
+        private long packingInitialMillis;
+        private boolean packingActive;
+        private PcbPackingProbeReceipt packingProbeReceipt;
         private double bestScore=Double.POSITIVE_INFINITY;
         private long bestArea=Long.MAX_VALUE;
         private int attempt,viableCandidates;
@@ -141,6 +150,7 @@ class SeededPcbLayoutGenerator {
         private final Vector<String> mediumPlacementScores = new Vector<String>();
         private final Vector<String> mediumRouteOutcomes = new Vector<String>();
         private PcbBoardLayout mediumOneFaceLayout, mediumTwoLayerLayout;
+        private PcbPlacementPlanner.Plan mediumOneFacePlan, mediumTwoLayerPlan;
         private double mediumOneFaceQuality = Double.POSITIVE_INFINITY;
         private double mediumTwoLayerQuality = Double.POSITIVE_INFINITY;
         private long mediumOneFaceArea = Long.MAX_VALUE;
@@ -170,13 +180,15 @@ class SeededPcbLayoutGenerator {
         }
         boolean advance() {
             if(complete)throw new IllegalStateException("PCB planning is already complete");
+            if (packingActive) return advancePackingProbe(this);
             if (mediumPolicy) return SeededPcbLayoutGenerator.this.advanceMedium(this);
             observer.check(attempt);
             statistics.placements++;
             try {
                 int variationMode = (int) ((seed % 4 + 4) % 4);
-                PcbBoardLayout candidate = generateAttempt(board, seed,
+                RoutedCandidate routed = generateAttempt(board, seed,
                     variationMode, attempt, observer,routingSeed,statistics);
+                PcbBoardLayout candidate = routed.layout;
                 if (envelope != null) envelope.requireBounds(board,candidate);
                 double score = candidate.getRouteQualityScore(board);
                 Rectangle bounds = candidate.getBoardOutline();
@@ -184,6 +196,7 @@ class SeededPcbLayoutGenerator {
                 if (bestLayout == null || area < bestArea || (area == bestArea && score < bestScore)) {
                     bestArea = area;
                     bestLayout = candidate;
+                    bestPlan = routed.plan;
                     bestScore = score;
                 }
                 viableCandidates++;
@@ -199,22 +212,179 @@ class SeededPcbLayoutGenerator {
                     failure.getMessage());
             }
             attempt++;
-            complete=attempt==MAX_ATTEMPTS || viableCandidates >=
+            boolean primaryComplete=attempt==MAX_ATTEMPTS || viableCandidates >=
                 (board.getPlacementConstraints().routingLayer==PcbCopperLayer.BOTTOM ? 1 : TARGET_VIABLE_CANDIDATES);
-            if(complete) {
+            if(primaryComplete) {
                 if(bestLayout==null) {
                     if(lastFailure==null)throw new IllegalStateException("PCB generation stopped without a result or rejection");
                     throw PcbRoutingRejectedException.exhausted(seed,MAX_ATTEMPTS,lastFailure);
                 }
-                bestLayout.setGenerationStatistics(statistics.placements,statistics.routes,statistics.expansions,statistics.routeMillis,seed,routingSeed);
+                if (beginPackingProbe(this)) return false;
+                return completeSmallSuccess(this);
             }
-            return complete;
+            return false;
         }
         PcbBoardLayout result() {
             if(!complete || bestLayout==null)throw new IllegalStateException("PCB planning has no completed result");
             return bestLayout;
         }
         MediumBoardPhysicalPolicy.Result mediumResult() { return mediumPolicyResult; }
+    }
+
+    private boolean completeSmallSuccess(Session session) {
+        session.bestLayout.setGenerationStatistics(session.statistics.placements,
+            session.statistics.routes, session.statistics.expansions,
+            session.statistics.routeMillis, session.seed, session.routingSeed);
+        session.complete = true;
+        return true;
+    }
+
+    /** One optional candidate follows the unchanged, fully routed winner. */
+    private boolean beginPackingProbe(Session session) {
+        PcbPlacementConstraints constraints = session.board.getPlacementConstraints();
+        if (constraints.placementPackingVersion !=
+                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION) return false;
+        GenerationWorkScope.check();
+        if (session.bestLayout == null || session.bestPlan == null)
+            throw new IllegalStateException("Packing probe has no selected source");
+        session.packingRoutePolicy = session.mediumPolicy ? session.mediumSelectedRoute :
+            MediumBoardPhysicalPolicy.P05_ONE_FACE;
+        session.packingBaseline = session.bestLayout;
+        session.packingBaselineHash = PlayerSessionFingerprint.of(
+            session.packingBaseline.geometryFingerprint());
+        // Keep the exact post-route compaction plan in its routing coordinate
+        // frame. The final display crop may translate pads by a non-grid amount.
+        PcbPlacementPlanner.Plan source = session.bestPlan;
+        session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
+        if (session.mediumPolicy)
+            session.mediumPlacementEvaluations += session.packingPlan.evaluations - source.evaluations;
+        if (PcbPlacementCompactor.samePlacement(source, session.packingPlan)) {
+            keepWithoutPackingRoute(session, "NO_CHANGE");
+            return false;
+        }
+        int remainingExpansions = packingExpansionLimit(session) - session.statistics.expansions;
+        int requiredOrders = MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+            session.packingRoutePolicy) ? PcbLayerRoutingPrototype.ORDERINGS :
+                PcbRoutingWork.Limits.MAX_ORDERINGS;
+        if (remainingExpansions < 1 ||
+                session.statistics.routes > SupportedEnvelope.MAX_ROUTE_ATTEMPTS - requiredOrders ||
+                MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(session.packingRoutePolicy) &&
+                    remainingExpansions < PcbRoutingWork.Limits.MAX_EXPANSIONS) {
+            keepWithoutPackingRoute(session, "NO_HEADROOM");
+            return false;
+        }
+        try {
+            session.packingBaselineMetrics = PcbPackingMetrics.measure(
+                session.board, session.packingBaseline);
+        } catch (PcbPackingMetrics.Unavailable unsupportedGrid) {
+            keepWithoutPackingRoute(session, "NO_HEADROOM");
+            return false;
+        }
+        session.packingInitialOrders = session.statistics.routes;
+        session.packingInitialExpansions = session.statistics.expansions;
+        session.packingInitialMillis = session.statistics.routeMillis;
+        session.packingActive = true;
+        if (MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(session.packingRoutePolicy)) {
+            long started = System.currentTimeMillis();
+            try {
+                session.packingRoute = PcbLayerRoutingPrototype.begin(session.board,
+                    session.packingPlan.materialize(),
+                    PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, session.observer,
+                    Math.min(PcbLayerRoutingPrototype.MAX_EXPANSIONS, remainingExpansions));
+            } finally {
+                session.statistics.routeMillis += System.currentTimeMillis() - started;
+            }
+        }
+        return true;
+    }
+
+    private static int packingExpansionLimit(Session session) {
+        return session.mediumPolicy ? MediumBoardPhysicalPolicy.ROUTING_CANDIDATES * 2 *
+            PcbRoutingWork.Limits.MAX_EXPANSIONS : SupportedEnvelope.MAX_EXPANSIONS;
+    }
+
+    private void keepWithoutPackingRoute(Session session, String disposition) {
+        session.packingProbeReceipt = new PcbPackingProbeReceipt(0, 0, 0, 0,
+            session.packingRoutePolicy, disposition, session.packingBaselineHash,
+            session.packingBaselineHash);
+        session.bestLayout.setPackingProbeReceipt(session.packingProbeReceipt);
+    }
+
+    private boolean advancePackingProbe(Session session) {
+        session.observer.check(session.bestPlan.candidate);
+        try {
+            RoutedCandidate routedCandidate;
+            if (session.packingRoute != null) {
+                long started = System.currentTimeMillis();
+                boolean complete;
+                try {
+                    complete = session.packingRoute.advanceSlice();
+                } finally {
+                    session.statistics.routeMillis += System.currentTimeMillis() - started;
+                }
+                if (!complete) return false;
+                PcbLayerRoutingPrototype.Result routed = session.packingRoute.result();
+                session.packingRoute = null;
+                session.statistics.routes += routed.orderings;
+                session.statistics.expansions += routed.expansions;
+                MediumBoardPhysicalPolicy.PlacementCandidate placement =
+                    new MediumBoardPhysicalPolicy.PlacementCandidate(session.board,
+                        session.bestPlan.candidate, session.packingPlan);
+                routedCandidate = finishMediumTwoLayerRoute(session.board, session.seed,
+                    placement, routed);
+            } else {
+                int variation = (int) ((session.seed % 4 + 4) % 4);
+                routedCandidate = routePlan(session.board, session.seed, variation,
+                    session.bestPlan.candidate, session.observer, session.routingSeed,
+                    session.statistics, session.packingPlan, true);
+            }
+            PcbBoardLayout candidate = routedCandidate.layout;
+            if (session.envelope != null) session.envelope.requireBounds(session.board, candidate);
+            PcbPackingMetrics metrics;
+            try {
+                metrics = PcbPackingMetrics.measure(session.board, candidate);
+            } catch (PcbPackingMetrics.Unavailable unsupportedGrid) {
+                return finishPackingProbe(session, "KEPT");
+            }
+            if (PcbPackingMetrics.strictlyImproves(session.packingBaselineMetrics, metrics)) {
+                session.bestLayout = candidate;
+                session.bestPlan = routedCandidate.plan;
+                session.bestArea = metrics.area;
+                session.bestScore = candidate.getRouteQualityScore(session.board);
+                if (session.mediumPolicy) {
+                    session.mediumSelectedPlacementScore =
+                        new MediumBoardPhysicalPolicy.PlacementCandidate(session.board,
+                            session.bestPlan.candidate, session.bestPlan).cheapScore;
+                    session.mediumSelectedRouteQualityMilli = routeQualityMilli(session.bestScore);
+                }
+                return finishPackingProbe(session, "SELECTED");
+            }
+            return finishPackingProbe(session, "KEPT");
+        } catch (CandidateRejected rejectedRoute) {
+            return finishPackingProbe(session, "ROUTE_REJECTED");
+        } catch (PcbPlacementPlanner.Rejected rejectedAccess) {
+            return finishPackingProbe(session, "ROUTE_REJECTED");
+        } catch (SupportedEnvelope.Rejected rejectedEnvelope) {
+            return finishPackingProbe(session, "ROUTE_REJECTED");
+        } catch (PcbBoardLayout.RouteQualityRejectedException rejectedQuality) {
+            return finishPackingProbe(session, "ROUTE_REJECTED");
+        }
+    }
+
+    private boolean finishPackingProbe(Session session, String disposition) {
+        if (!session.packingBaselineHash.equals(PlayerSessionFingerprint.of(
+                session.packingBaseline.geometryFingerprint())))
+            throw new IllegalStateException("Packing probe mutated its routed incumbent");
+        session.packingProbeReceipt = new PcbPackingProbeReceipt(1,
+            session.statistics.routes - session.packingInitialOrders,
+            session.statistics.expansions - session.packingInitialExpansions,
+            session.statistics.routeMillis - session.packingInitialMillis,
+            session.packingRoutePolicy, disposition, session.packingBaselineHash,
+            PlayerSessionFingerprint.of(session.bestLayout.geometryFingerprint()));
+        session.bestLayout.setPackingProbeReceipt(session.packingProbeReceipt);
+        session.packingActive = false;
+        session.packingRoute = null;
+        return session.mediumPolicy ? completeMediumSuccess(session) : completeSmallSuccess(session);
     }
 
     private boolean advanceMedium(Session session) {
@@ -326,15 +496,14 @@ class SeededPcbLayoutGenerator {
                 return advanceMediumTwoLayerRoute(session);
             }
             try {
-                PcbBoardLayout layout;
                 session.mediumOneFaceAttempts++;
                 int variationMode = (int) ((session.seed % 4 + 4) % 4);
-                layout = routePlan(session.board, session.seed, variationMode,
+                RoutedCandidate routed = routePlan(session.board, session.seed, variationMode,
                     candidate.attempt, session.observer, session.routingSeed,
                     session.statistics, candidate.plan, false);
                 if (envelopeFor(session) != null)
-                    envelopeFor(session).requireBounds(session.board, layout);
-                considerMediumLayout(session, candidate, layout, twoLayer);
+                    envelopeFor(session).requireBounds(session.board, routed.layout);
+                considerMediumLayout(session, candidate, routed, twoLayer);
                 session.mediumRouteOutcomes.add(MediumBoardPhysicalPolicy.P05_ONE_FACE + "@" + candidate.attempt +
                     "=SUCCESS");
             } catch (CandidateRejected failure) {
@@ -387,10 +556,10 @@ class SeededPcbLayoutGenerator {
         session.statistics.routeMillis+=session.mediumTwoLayerElapsedMillis;
         session.mediumTwoLayerElapsedMillis=0;
         try {
-            PcbBoardLayout layout=finishMediumTwoLayerRoute(session.board,session.seed,candidate,result);
+            RoutedCandidate routed=finishMediumTwoLayerRoute(session.board,session.seed,candidate,result);
             if (envelopeFor(session) != null)
-                envelopeFor(session).requireBounds(session.board, layout);
-            considerMediumLayout(session, candidate, layout, true);
+                envelopeFor(session).requireBounds(session.board, routed.layout);
+            considerMediumLayout(session, candidate, routed, true);
             session.mediumRouteOutcomes.add(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER + "@" +
                 candidate.attempt + "=SUCCESS");
         } catch (CandidateRejected failure) {
@@ -585,7 +754,8 @@ class SeededPcbLayoutGenerator {
 
     private void considerMediumLayout(Session session,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate,
-            PcbBoardLayout layout, boolean twoLayer) {
+            RoutedCandidate routed, boolean twoLayer) {
+        PcbBoardLayout layout = routed.layout;
         if (layout == null) throw new IllegalArgumentException("Missing medium routed layout");
         double score = layout.getRouteQualityScore(session.board);
         Rectangle bounds = layout.getBoardOutline();
@@ -600,6 +770,7 @@ class SeededPcbLayoutGenerator {
                     session.mediumTwoLayerArea, session.mediumTwoLayerPlacementAttempt,
                     session.mediumTwoLayerPlacementScore, preferCompact, preferDensePacking)) {
                 session.mediumTwoLayerLayout = layout;
+                session.mediumTwoLayerPlan = routed.plan;
                 session.mediumTwoLayerQuality = score;
                 session.mediumTwoLayerArea = area;
                 session.mediumTwoLayerPlacementAttempt = candidate.attempt;
@@ -610,6 +781,7 @@ class SeededPcbLayoutGenerator {
                 session.mediumOneFaceArea, session.mediumOneFacePlacementAttempt,
                 session.mediumOneFacePlacementScore, preferCompact, preferDensePacking)) {
             session.mediumOneFaceLayout = layout;
+            session.mediumOneFacePlan = routed.plan;
             session.mediumOneFaceQuality = score;
             session.mediumOneFaceArea = area;
             session.mediumOneFacePlacementAttempt = candidate.attempt;
@@ -670,6 +842,7 @@ class SeededPcbLayoutGenerator {
         }
         if (chooseTwoLayer) {
             session.bestLayout = session.mediumTwoLayerLayout;
+            session.bestPlan = session.mediumTwoLayerPlan;
             session.bestArea = session.mediumTwoLayerArea;
             session.bestScore = session.mediumTwoLayerQuality;
             session.mediumSelectedRoute = MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER;
@@ -679,6 +852,7 @@ class SeededPcbLayoutGenerator {
                 session.mediumTwoLayerQuality);
         } else {
             session.bestLayout = session.mediumOneFaceLayout;
+            session.bestPlan = session.mediumOneFacePlan;
             session.bestArea = session.mediumOneFaceArea;
             session.bestScore = session.mediumOneFaceQuality;
             session.mediumSelectedRoute = MediumBoardPhysicalPolicy.P05_ONE_FACE;
@@ -781,6 +955,11 @@ class SeededPcbLayoutGenerator {
         if (!selectMediumLayout(session))
             return finishMediumFailure(session);
         trimSelectedMediumBorder(session);
+        if (beginPackingProbe(session)) return false;
+        return completeMediumSuccess(session);
+    }
+
+    private boolean completeMediumSuccess(Session session) {
         session.bestLayout.setGenerationStatistics(session.statistics.placements,
             session.statistics.routes, session.statistics.expansions,
             session.statistics.routeMillis, session.seed, session.routingSeed);
@@ -812,12 +991,12 @@ class SeededPcbLayoutGenerator {
             session.mediumPlacementEvaluations, session.statistics.routes,
             session.statistics.expansions,
             session.mediumSelectedPlacementScore,
-            session.mediumSelectedRouteQualityMilli);
+            session.mediumSelectedRouteQualityMilli, session.packingProbeReceipt);
     }
 
     private SupportedEnvelope envelopeFor(Session session) { return session.envelope; }
 
-    private PcbBoardLayout finishMediumTwoLayerRoute(TroubleshootBoard board,long seed,
+    private RoutedCandidate finishMediumTwoLayerRoute(TroubleshootBoard board,long seed,
             MediumBoardPhysicalPolicy.PlacementCandidate candidate,
             PcbLayerRoutingPrototype.Result result) {
         if (!result.accepted())
@@ -828,7 +1007,16 @@ class SeededPcbLayoutGenerator {
             compactPlacementInterpretation(board.getPlacementConstraints()));
     }
 
-    private PcbBoardLayout generateAttempt(TroubleshootBoard board, long seed,
+    private static final class RoutedCandidate {
+        final PcbPlacementPlanner.Plan plan;
+        final PcbBoardLayout layout;
+        RoutedCandidate(PcbPlacementPlanner.Plan plan, PcbBoardLayout layout) {
+            this.plan = plan;
+            this.layout = layout;
+        }
+    }
+
+    private RoutedCandidate generateAttempt(TroubleshootBoard board, long seed,
             int variationMode, int attempt, AttemptObserver observer,long routingSeed,GenerationStatistics statistics) {
         PcbPlacementPlanner.Plan plan;
         try {
@@ -837,22 +1025,27 @@ class SeededPcbLayoutGenerator {
         } catch (PcbPlacementPlanner.Rejected failure) {
             throw reject(PcbRoutingRejectedException.Kind.PLACEMENT, failure.reason);
         }
-        PcbBoardLayout original = routePlan(board, seed, variationMode, attempt, observer,
+        RoutedCandidate original = routePlan(board, seed, variationMode, attempt, observer,
             routingSeed, statistics, plan, false);
-        PcbPlacementPlanner.Plan compact = PcbPlacementCompactor.compact(board, board.getPlacementConstraints(), plan);
-        if (compact == plan) return original;
+        PcbPlacementPlanner.Plan compact = PcbPlacementCompactor.compactStrips(
+            board, board.getPlacementConstraints(), plan);
+        if (compact == plan || PcbPlacementCompactor.samePlacement(plan, compact))
+            return original;
         // Keep every successful original candidate. A smaller layout is accepted
         // only after its own real routing, access and geometry checks succeed.
         // One bounded compact routing request retains the successful original on exhaustion.
         try {
-            PcbBoardLayout result = routePlan(board, seed, variationMode, attempt, observer,
+            RoutedCandidate result = routePlan(board, seed, variationMode, attempt, observer,
                 routingSeed, statistics, compact, true);
-            Rectangle a=original.getBoardOutline(), b=result.getBoardOutline();
-            return (long)b.width*b.height < (long)a.width*a.height ? result : original;
+            Rectangle a=original.layout.getBoardOutline(), b=result.layout.getBoardOutline();
+            return (long)b.width*b.height < (long)a.width*a.height ?
+                result : original;
         } catch (CandidateRejected unavailable) { return original; }
-        catch (PcbBoardLayout.RouteQualityRejectedException unavailable) { return original; }
+        catch (PcbBoardLayout.RouteQualityRejectedException unavailable) {
+            return original;
+        }
     }
-    private PcbBoardLayout routePlan(TroubleshootBoard board, long seed, int variationMode,
+    private RoutedCandidate routePlan(TroubleshootBoard board, long seed, int variationMode,
             int attempt, AttemptObserver observer, long routingSeed, GenerationStatistics statistics,
             PcbPlacementPlanner.Plan plan, boolean compactProbe) {
         Rectangle outline = plan.outline;
@@ -874,7 +1067,7 @@ class SeededPcbLayoutGenerator {
         return finishRoutedPlan(board, variationMode, plan, layout, recovery, true);
     }
 
-    private PcbBoardLayout finishRoutedPlan(TroubleshootBoard board, int variationMode,
+    private RoutedCandidate finishRoutedPlan(TroubleshootBoard board, int variationMode,
             PcbPlacementPlanner.Plan plan, PcbBoardLayout layout,
             PcbRoutingWork.Statistics recovery, boolean compactRouted) {
         Rectangle outline = plan.outline;
@@ -935,7 +1128,7 @@ class SeededPcbLayoutGenerator {
         try { PcbPlacementPlanner.validate(board,board.getPlacementConstraints(),layout.getBoardOutline(),finalFootprints); }
         catch(PcbPlacementPlanner.Rejected failure) { throw reject(PcbRoutingRejectedException.Kind.PLACEMENT,failure.reason); }
         layout.validateGeometry(board);
-        return layout;
+        return new RoutedCandidate(plan, layout);
     }
 
     private static int validatedCompactEdgeMargin(TroubleshootBoard board,

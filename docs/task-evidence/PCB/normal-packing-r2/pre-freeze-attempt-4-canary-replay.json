@@ -1,0 +1,6 @@
+{
+  "status": "FAIL",
+  "phase": "offline pre-freeze canary replay",
+  "exitCode": 1,
+  "cause": "Safe reader refused to overwrite previous passing artifact, which is preserved byte-exact in native-attempt-3. Removed only the verified duplicate before fresh replay. No native phase or candidate seal existed."
+}

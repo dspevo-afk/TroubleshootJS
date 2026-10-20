@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "phase": "Root acceptance-report preparation",
+  "exitCode": 1,
+  "cause": "Root compared entire provenance dictionaries; expected record additionally contains Protocol while selected publication record has exactly five digest/count fields. All five actual fields already passed maintained verifier comparison.",
+  "correction": "Compare exact declared five fields and independently require expected protocol. No source/native/browser evidence changed."
+}

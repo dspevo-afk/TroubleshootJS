@@ -1,0 +1,19 @@
+{
+  "drivers": [
+    {
+      "pid": 30044,
+      "startTicks": "639280659194792261",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/normal-packing-r1/run_native.ps1"
+    },
+    {
+      "pid": 31412,
+      "startTicks": "639280659206135016",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/normal-packing-r1/run_native.ps1"
+    }
+  ],
+  "phase": "baseline",
+  "scope": "Actual active11 normal random generation; fixed44 baseline/current packing comparison",
+  "ownership": "Captured before bounded normal-packing phase; baseline COPY or main worktree as declared"
+}

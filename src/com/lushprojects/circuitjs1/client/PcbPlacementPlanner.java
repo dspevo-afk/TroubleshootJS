@@ -21,7 +21,7 @@ final class PcbPlacementPlanner {
     private static final int MEDIUM_BORDER=80;
     private static final int MEDIUM_STEP=40;
     private static final int MEDIUM_CHAIN_GAP=120;
-    private static final int MEDIUM_MAX_EVALUATIONS=60000;
+    static final int MEDIUM_MAX_EVALUATIONS=60000;
     private static final long MEDIUM_MIN_AREA=5000000L;
     static final class Rejected extends RuntimeException {
         final String reason;
@@ -401,6 +401,112 @@ final class PcbPlacementPlanner {
             if(packed.evaluations<=MEDIUM_MAX_EVALUATIONS) return packed;
         }
         return plan;
+    }
+
+    /** A bounded placement-only pass; the existing router still proves copper. */
+    static Plan compactConnectedVacancies(TroubleshootBoard board,
+            PcbPlacementConstraints constraints, Plan input) {
+        if (constraints.placementPackingVersion !=
+                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION)
+            return input;
+        GenerationWorkScope.check();
+        if (input.evaluations >= MEDIUM_MAX_EVALUATIONS) return input;
+        validate(board, constraints, input.outline, input.footprints);
+        Vector<PcbFootprint> placed = new Vector<PcbFootprint>(input.footprints);
+        TopologyPlacementGraph topology = new TopologyPlacementGraph(board);
+        long area = occupiedEnvelopeArea(placed, constraints);
+        double wire = totalWireDemand(placed, topology);
+        int evaluations = input.evaluations;
+        for (PcbPlacementConstraints.Part demand : constraints.getParts()) {
+            GenerationWorkScope.check();
+            if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
+            int index = -1;
+            for (int i = 0; i < placed.size(); i++)
+                if (demand.componentId.equals(placed.get(i).getPlacement().getComponentId())) {
+                    index = i;
+                    break;
+                }
+            if (index < 0) throw new IllegalArgumentException("Missing pocket placement");
+            PcbFootprint source = placed.get(index);
+            if (demand.anchor != PcbPlacementConstraints.Anchor.NONE ||
+                    source.getPlacement().getPhysicalGeometry().getIsolationBody() != null)
+                continue;
+            Rectangle allowed = vacancyDomainBox(source, placed, constraints, input.outline);
+            if (allowed == null) continue;
+            Vector<Rectangle> obstacles = new Vector<Rectangle>();
+            for (int i = 0; i < placed.size(); i++) if (i != index) {
+                PcbFootprint peer = placed.get(i);
+                obstacles.add(envelope(peer, constraints.get(
+                    peer.getPlacement().getComponentId()).accessMargin));
+            }
+            PcbComponentPlacement pose = source.getPlacement();
+            Vector<Point> origins = PcbVacancyTargets.targets(allowed, obstacles,
+                envelope(source, demand.accessMargin), new Point(pose.getX(), pose.getY()));
+            PcbFootprint best = source;
+            long bestArea = area;
+            double bestWire = wire;
+            java.util.HashSet<String> visited = new java.util.HashSet<String>();
+            for (Point origin : origins) {
+                GenerationWorkScope.check();
+                if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
+                int x = pocketGridOrigin(origin.x, pose.getX());
+                int y = pocketGridOrigin(origin.y, pose.getY());
+                if (x == pose.getX() && y == pose.getY() ||
+                        !visited.add(x + "," + y)) continue;
+                evaluations++;
+                PcbFootprint trial = source.translated(x, y);
+                if (!fits(trial, input.outline, placed, index, constraints)) continue;
+                Vector<PcbFootprint> candidate = new Vector<PcbFootprint>(placed);
+                candidate.set(index, trial);
+                long candidateArea = occupiedEnvelopeArea(candidate, constraints);
+                double candidateWire = totalWireDemand(candidate, topology);
+                if (candidateArea > area || candidateWire > wire ||
+                        candidateArea == area && candidateWire == wire ||
+                        candidateArea > bestArea ||
+                        candidateArea == bestArea && candidateWire >= bestWire)
+                    continue;
+                try {
+                    validate(board, constraints, input.outline, candidate);
+                } catch (Rejected insufficientAccess) {
+                    continue;
+                }
+                best = trial;
+                bestArea = candidateArea;
+                bestWire = candidateWire;
+            }
+            if (best != source) {
+                placed.set(index, best);
+                area = bestArea;
+                wire = bestWire;
+            }
+        }
+        if (evaluations == input.evaluations) return input;
+        return new Plan(input.outline, placed, input.regions, input.courtyardArea,
+            input.demandArea, input.candidate, evaluations);
+    }
+
+    private static int pocketGridOrigin(int target, int original) {
+        long result = (long) original + Math.round(((long) target - original) / 10.0) * 10L;
+        return PcbCoordinateSystem.checkedInt(result);
+    }
+
+    static long occupiedEnvelopeArea(Vector<PcbFootprint> placed,
+            PcbPlacementConstraints constraints) {
+        Rectangle bounds = null;
+        for (PcbFootprint footprint : placed) {
+            Rectangle box = envelope(footprint, constraints.get(
+                footprint.getPlacement().getComponentId()).accessMargin);
+            bounds = bounds == null ? box : union(bounds, box);
+        }
+        if (bounds == null) throw new IllegalArgumentException("Missing pocket inventory");
+        return (long) bounds.width * bounds.height;
+    }
+
+    static double totalWireDemand(Vector<PcbFootprint> placed,
+            TopologyPlacementGraph topology) {
+        double result = 0;
+        for (PcbFootprint footprint : placed) result += wireDemand(footprint, placed, topology);
+        return result;
     }
 
     private static Vector<PcbLayoutRegion> navigationFor(

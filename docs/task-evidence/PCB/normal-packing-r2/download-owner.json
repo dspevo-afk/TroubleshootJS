@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "file": "repaired-random.tsjsave",
+  "sha256": "441ef06eefc4d0dfedb214f715de43a31df41cb5f842ee24ea852610594f5bfa",
+  "bytes": 727,
+  "schema": "tsj-session/1",
+  "observedReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+  "sourcePower": "OFF",
+  "input": "Actual Save session browser download",
+  "preparationError": "Initial root JSON.parse assumption rejected the length-prefixed semantic format. File bytes untouched; framing confirmed from maintained codec."
+}

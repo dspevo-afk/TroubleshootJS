@@ -521,7 +521,8 @@ final class SensorControlGenerator {
                     PcbPlacementConstraints.Anchor.NONE, 20));
         }
         board.setPlacementConstraints(new PcbPlacementConstraints(parts,
-            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM));
+            new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM)
+            .withConnectedPocketPacking());
     }
 
     private BoardPhysicalSpecifications createSpecifications(RailRegulationContract rail,

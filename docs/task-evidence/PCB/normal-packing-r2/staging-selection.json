@@ -1,0 +1,9 @@
+{
+  "scope": "Explicit root-owned paths only",
+  "trackedPaths": 30,
+  "newProductionAndContracts": 14,
+  "pathsBeforeThisRecord": 705,
+  "excludedPrivateOrCacheCount": 2,
+  "preservedOriginal5": true,
+  "packetRawBytes": "-text attributes; audit staged blobs separately"
+}

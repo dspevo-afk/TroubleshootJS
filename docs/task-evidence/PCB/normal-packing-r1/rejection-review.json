@@ -1,0 +1,16 @@
+{
+  "status": "REJECTED_NOT_PROMOTED",
+  "baseCommit": "2a73b949a02de718bd968c2920ba6045d7406c5a",
+  "baselineNative": "PASS",
+  "candidateNative": "PASS",
+  "fitness": "FAIL",
+  "baselineAdmissions": 44,
+  "retainedAdmissions": 44,
+  "strictAreaGains": 18,
+  "metricRegressions": 16,
+  "sourceStillExact": true,
+  "newBaselineState": "Only compiler COPY retained; no live driver/browser/preview",
+  "sourceSealSha256": "346c25a2c61dcd544dfed942197390aed16fbe1dcb4e9a9ae33662a3c0c8736a",
+  "assessmentSha256": "707b1dc76ef8347401be3ce29403255738272b8736ec0fe4c34a7972c857a3fa",
+  "nextScope": "Retain exact old routed baseline before comparing a single bounded rerouted compact alternative; explicit prospective route-budget scope required. No oracle or wall/step limit relaxation."
+}

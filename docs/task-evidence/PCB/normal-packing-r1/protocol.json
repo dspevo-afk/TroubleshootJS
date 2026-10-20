@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "baseCommit": "2a73b949a02de718bd968c2920ba6045d7406c5a",
+  "scope": "Actual active11 normal random generation; fixed44 baseline/current packing comparison",
+  "scopeSha256": "17305d52b437e84e259815e8bb536ce3d8bb50f0051d361366b27ffb65973ed4",
+  "families": [
+    "LED_INDICATOR",
+    "DIODE_PROTECTED_INDICATOR",
+    "PARALLEL_DUAL_INDICATOR",
+    "RC_DELAY",
+    "NPN_LOW_SIDE_SWITCH",
+    "NMOS_LOW_SIDE_SWITCH",
+    "RELAY_OUTPUT",
+    "SENSOR_CONTROL",
+    "RB15_CONTROL",
+    "COMPOSED_CONTROLLED_INDICATOR",
+    "RB30_CONTROL"
+  ],
+  "roots": [
+    "0",
+    "17",
+    "13",
+    "-9223372036854775808"
+  ],
+  "groups": [
+    {
+      "families": [
+        "LED_INDICATOR",
+        "DIODE_PROTECTED_INDICATOR",
+        "PARALLEL_DUAL_INDICATOR"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RC_DELAY",
+        "NPN_LOW_SIDE_SWITCH",
+        "NMOS_LOW_SIDE_SWITCH"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RELAY_OUTPUT",
+        "SENSOR_CONTROL",
+        "RB15_CONTROL"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "COMPOSED_CONTROLLED_INDICATOR"
+      ],
+      "roots": [
+        "0",
+        "17",
+        "13",
+        "-9223372036854775808"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "0"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "17"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "13"
+      ]
+    },
+    {
+      "families": [
+        "RB30_CONTROL"
+      ],
+      "roots": [
+        "-9223372036854775808"
+      ]
+    }
+  ],
+  "caseCount": 44,
+  "routeSuites": [
+    [
+      "PcbNormalPackingCensusContractTest",
+      "PCB normal packing census base-families-0-2 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup2",
+      "PCB normal packing census base-families-3-5 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup3",
+      "PCB normal packing census base-families-6-8 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup4",
+      "PCB normal packing census controlled-indicator-all-roots "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup5",
+      "PCB normal packing census rb30-root-0 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup6",
+      "PCB normal packing census rb30-root-17 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup7",
+      "PCB normal packing census rb30-root-13 "
+    ],
+    [
+      "PcbNormalPackingCensusContractTestGroup8",
+      "PCB normal packing census rb30-root-Long.MIN_VALUE "
+    ]
+  ],
+  "unitSuites": [
+    [
+      "PcbConnectedPocketPackingContractTest",
+      "PCB connected pocket packing contracts "
+    ],
+    [
+      "PcbNormalPackingIdentityContractTest",
+      "PCB normal packing identity contracts "
+    ]
+  ],
+  "baselineLayoutVersion": 16,
+  "candidateLayoutVersion": 17,
+  "baselineReplayEpoch": "tsj-alpha/5",
+  "candidateReplayEpoch": "tsj-alpha/6",
+  "packingVersion": 2,
+  "casePrefix": "PCB_NORMAL_PACKING_CASE ",
+  "whitespacePrefix": "PCB_WHITESPACE_CASE ",
+  "whitespaceVersion": 1,
+  "maxFileBytes": 67108864,
+  "maxPhaseSeconds": 36000,
+  "nativeJvmMillis": 60000,
+  "normalStepMillis": 5000,
+  "nativeCaseMillis": 60000,
+  "baselineCasesMayReject": true,
+  "rejectionPhases": [
+    "ROUTING",
+    "ENVELOPE",
+    "NORMAL_POLICY"
+  ],
+  "requiredMatchedFields": [
+    "family",
+    "profile",
+    "root",
+    "seed",
+    "executionPolicy",
+    "physicalAdmission",
+    "graphBefore",
+    "graphAfter",
+    "logicalParts",
+    "logicalPads",
+    "logicalNets",
+    "layoutParts",
+    "layoutPads"
+  ],
+  "metricNonregression": [
+    "outline.area",
+    "copperManhattanLength",
+    "viaCount",
+    "whitespace"
+  ],
+  "strictGain": "At least one baseline-admitted final board has strictly smaller area; all baseline admissions retained, complete logical source/mapping identities match, no declared metric regression",
+  "rejectedCaseRule": "Retain every fixed typed rejection, no seed substitutions; newly admitted cases are reported separately",
+  "phaseRule": "Each group reports its exact ordered family/root cases, each admitted case has its adjacent prior GRID10 report, then matching unique suite PASS; terminal8/cleanup only afterallgroups. Log/childreceipt report and suite lines exact.",
+  "limits": [
+    "Finite informed44 normal source cases; no all-seed or optimal-packing claim",
+    "Native comparison does not certify compiled solver/player behavior",
+    "Fresh final production build and actual visible normal flow/screenshots/save/load/repair remain required",
+    "Private RB56 geometry bodies retained; explicit general-epoch prefix17 differsfrom16",
+    "No RB56/HARD/U05/REL-B release or budget increase"
+  ]
+}

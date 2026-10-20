@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "unchanged actual fifteen-suite log and child receipt",
+      "expected": "PASS",
+      "result": "PASS"
+    },
+    {
+      "name": "missing full-log summary",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong full-log suite count",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicated full-log summary",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "missing terminal cleanup",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "child marker absent from log",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "missing child suite marker",
+      "expected": "REJECT",
+      "result": "PASS"
+    },
+    {
+      "name": "changed candidate audit",
+      "expected": "REJECT",
+      "result": "PASS"
+    }
+  ],
+  "caseCount": 8,
+  "positive": 1,
+  "negative": 7,
+  "nativeEvidenceReused": "Exact bytes and consumed owners unchanged",
+  "readerSha256": "c85f36b7a91a2bec9f7c61438e28e92bee598992303308126aade1810da82ec2",
+  "originalRejection": "reader-review-1/failure.json"
+}

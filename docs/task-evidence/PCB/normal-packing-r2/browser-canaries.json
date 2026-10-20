@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "positive": "Owned headed BrowserServer blank page and native Brave window rendered, captured before production navigation",
+  "nativeWindowId": 858732,
+  "screenshotCount": 1,
+  "negative": "Invalid path on the same owned BrowserServer rejected",
+  "negativeInvalidEndpointRejected": true,
+  "chromiumSandbox": true,
+  "productionNavigation": "NOT_RUN"
+}

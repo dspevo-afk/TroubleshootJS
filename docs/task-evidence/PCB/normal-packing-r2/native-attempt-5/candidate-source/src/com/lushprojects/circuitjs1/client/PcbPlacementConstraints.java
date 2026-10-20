@@ -1,0 +1,272 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.Vector;
+
+/** Role-supplied physical demands. No coordinates, selected fault or solver state. */
+final class PcbPlacementConstraints {
+    /** The qualified one-face identity used by every existing caller. */
+    static final String DEFAULT_PHYSICAL_POLICY_ID = "THT_SINGLE_FACE";
+    static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
+    /** Explicit connected-pocket interpretation used by normal shared boards. */
+    static final int CONNECTED_POCKET_PACKING_VERSION = 2;
+
+    enum Anchor { NONE, LEFT, RIGHT, EDGE }
+    static final class TerminalDomain {
+        final String terminalId, domainId;
+        TerminalDomain(String terminalId, String domainId) {
+            if (empty(terminalId) || empty(domainId))
+                throw new IllegalArgumentException("Invalid terminal physical domain");
+            this.terminalId = terminalId; this.domainId = domainId;
+        }
+    }
+    static final class Part {
+        final String componentId, regionId, regionLabel, domainId;
+        final Anchor anchor;
+        final int accessMargin;
+        private final TreeMap<String,TerminalDomain> terminalDomains =
+            new TreeMap<String,TerminalDomain>();
+        Part(String componentId, String regionId, String regionLabel, String domainId, Anchor anchor, int accessMargin) {
+            this(componentId, regionId, regionLabel, domainId, anchor, accessMargin,
+                new Vector<TerminalDomain>());
+        }
+        Part(String componentId, String regionId, String regionLabel, String domainId,
+                Anchor anchor, int accessMargin, Vector<TerminalDomain> declarations) {
+            if (empty(componentId) || empty(regionId) || empty(regionLabel) || empty(domainId) || anchor == null ||
+                    accessMargin < 16 || accessMargin > 500) throw new IllegalArgumentException("Invalid physical demand");
+            this.componentId=componentId; this.regionId=regionId; this.regionLabel=regionLabel;
+            this.domainId=domainId; this.anchor=anchor; this.accessMargin=accessMargin;
+            if (declarations == null)
+                throw new IllegalArgumentException("Missing terminal domain declarations");
+            for (TerminalDomain declaration : declarations)
+                if (declaration == null || terminalDomains.put(declaration.terminalId,
+                        declaration) != null)
+                    throw new IllegalArgumentException("Duplicate terminal physical domain");
+        }
+        String terminalDomain(String terminalId) {
+            if (terminalDomains.isEmpty()) return domainId;
+            TerminalDomain declaration = terminalDomains.get(terminalId);
+            if (declaration == null)
+                throw new IllegalArgumentException("Missing terminal physical domain: " +
+                    componentId + "." + terminalId);
+            return declaration.domainId;
+        }
+        Vector<TerminalDomain> getTerminalDomains() {
+            return new Vector<TerminalDomain>(terminalDomains.values());
+        }
+    }
+    static final class Barrier {
+        final String firstDomain, secondDomain;
+        final int clearance;
+        Barrier(String first, String second, int clearance) {
+            if (empty(first) || empty(second) || first.equals(second) || clearance < 20 || clearance > 1000)
+                throw new IllegalArgumentException("Invalid physical domain barrier");
+            firstDomain=first.compareTo(second)<0?first:second;
+            secondDomain=first.compareTo(second)<0?second:first;
+            this.clearance=clearance;
+        }
+        boolean separates(String a, String b) {
+            return firstDomain.equals(a) && secondDomain.equals(b) || firstDomain.equals(b) && secondDomain.equals(a);
+        }
+    }
+    private final TreeMap<String,Part> parts = new TreeMap<String,Part>();
+    private final Vector<Barrier> barriers;
+    final PcbCopperLayer routingLayer;
+    final String physicalPolicyId;
+    final int physicalPolicyVersion;
+    final int placementDensityVersion;
+    final int placementPackingVersion;
+    final boolean requiresTwoLayerRouting;
+    private final PcbTraceWidthProfile traceWidthProfile;
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
+        this(declarations,barriers,PcbCopperLayer.TOP);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,PcbCopperLayer routingLayer) {
+        this(declarations,barriers,routingLayer,DEFAULT_PHYSICAL_POLICY_ID,
+            DEFAULT_PHYSICAL_POLICY_VERSION);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, 1);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion, false);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion,
+            requiresTwoLayerRouting, PcbTraceWidthProfile.UNIFORM);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, 1);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile,
+            int packingVersion) {
+        if (traceWidthProfile == null)
+            throw new IllegalArgumentException("Missing PCB trace width profile");
+        this.traceWidthProfile = traceWidthProfile;
+        this.requiresTwoLayerRouting = requiresTwoLayerRouting;
+        if (densityVersion != 1 && densityVersion != 2 && densityVersion != 3 && densityVersion != 4 && densityVersion != 5 && densityVersion != 6 && densityVersion != 7 && densityVersion != 8 && densityVersion != 9 && densityVersion != 10 && densityVersion != 11 && densityVersion != 12 && densityVersion != 13 && densityVersion != 14)
+            throw new IllegalArgumentException("Unknown placement density interpretation");
+        placementDensityVersion = densityVersion;
+        if (packingVersion != 1 && packingVersion != CONNECTED_POCKET_PACKING_VERSION)
+            throw new IllegalArgumentException("Unknown placement packing interpretation");
+        placementPackingVersion = packingVersion;
+        if (declarations == null || barriers == null) throw new IllegalArgumentException("Missing placement declarations");
+        if(routingLayer==null) throw new IllegalArgumentException("Missing single copper layer");
+        if (empty(policyId) || policyVersion < 1)
+            throw new IllegalArgumentException("Invalid physical placement policy identity");
+        this.routingLayer=routingLayer;
+        this.physicalPolicyId=policyId;
+        this.physicalPolicyVersion=policyVersion;
+        this.barriers=new Vector<Barrier>(barriers);
+        for (Part part : declarations) {
+            if (part == null || parts.put(part.componentId, part) != null) throw new IllegalArgumentException("Duplicate placement part");
+        }
+        for (Barrier barrier : barriers) if (barrier == null) throw new IllegalArgumentException("Missing barrier");
+        Collections.sort(this.barriers,new java.util.Comparator<Barrier>() {
+            public int compare(Barrier a,Barrier b) {
+                int first=a.firstDomain.compareTo(b.firstDomain);
+                return first!=0?first:a.secondDomain.compareTo(b.secondDomain);
+            }
+        });
+        for(int i=1;i<this.barriers.size();i++) {
+            Barrier a=this.barriers.get(i-1),b=this.barriers.get(i);
+            if(a.firstDomain.equals(b.firstDomain)&&a.secondDomain.equals(b.secondDomain))
+                throw new IllegalArgumentException("Duplicate physical domain barrier");
+        }
+    }
+    String getPhysicalPolicyId() { return physicalPolicyId; }
+    PcbTraceWidthProfile getTraceWidthProfile() { return traceWidthProfile; }
+    int getPhysicalPolicyVersion() { return physicalPolicyVersion; }
+    int getPlacementPackingVersion() { return placementPackingVersion; }
+    /** Returns a value copy with the explicitly selected normal connected-pocket policy. */
+    PcbPlacementConstraints withConnectedPocketPacking() {
+        if (placementPackingVersion == CONNECTED_POCKET_PACKING_VERSION)
+            return this;
+        return new PcbPlacementConstraints(getParts(), getBarriers(), routingLayer,
+            physicalPolicyId, physicalPolicyVersion, placementDensityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, CONNECTED_POCKET_PACKING_VERSION);
+    }
+    String getPhysicalPolicyIdentity() {
+        return physicalPolicyId + "@" + physicalPolicyVersion;
+    }
+    String physicalPolicyIdentity() { return getPhysicalPolicyIdentity(); }
+    boolean usesDefaultPhysicalPolicy() {
+        return DEFAULT_PHYSICAL_POLICY_ID.equals(physicalPolicyId) &&
+            DEFAULT_PHYSICAL_POLICY_VERSION == physicalPolicyVersion;
+    }
+    Part get(String id) { return parts.get(id); }
+    Vector<Part> getParts() { return new Vector<Part>(parts.values()); }
+    Vector<Barrier> getBarriers() { return new Vector<Barrier>(barriers); }
+    String domainForPad(TroubleshootBoard board, String padId) {
+        BoardPad pad = board.getPad(padId);
+        if (pad == null || get(pad.getComponentId()) == null)
+            throw new IllegalArgumentException("Unknown physical-domain pad: " + padId);
+        return get(pad.getComponentId()).terminalDomain(pad.getTerminalId());
+    }
+    TreeMap<String,Rectangle> domainCourtyards(PcbComponentPlacement placement) {
+        Part part = get(placement.getComponentId());
+        if (part == null) throw new IllegalArgumentException("Missing physical demand");
+        TreeMap<String,Rectangle> result = new TreeMap<String,Rectangle>();
+        PhysicalPackageGeometry geometry = placement.getPhysicalGeometry();
+        PhysicalPackageGeometry.IsolationBody body = geometry.getIsolationBody();
+        if (body == null) result.put(part.domainId, placement.getRoutingCourtyard());
+        else {
+            PhysicalPackageGeometry.Placement placed = geometry.placedAt(placement.getPose());
+            result.put(body.domain(part, true), placed.getIsolationFirstCourtyard());
+            result.put(body.domain(part, false), placed.getIsolationSecondCourtyard());
+        }
+        return result;
+    }
+    private boolean hasBarrier(String first, String second) {
+        for (Barrier barrier : barriers) if (barrier.separates(first, second)) return true;
+        return false;
+    }
+    private void validateTerminalDomains(Part part, PhysicalPackage physical) {
+        Vector<String> terminals = physical.getTerminalIds();
+        Vector<TerminalDomain> declared = part.getTerminalDomains();
+        if (!declared.isEmpty()) {
+            if (declared.size() != terminals.size())
+                throw new IllegalArgumentException("Incomplete terminal physical domains");
+            for (TerminalDomain declaration : declared)
+                if (!terminals.contains(declaration.terminalId))
+                    throw new IllegalArgumentException("Foreign terminal physical domain");
+        }
+        java.util.TreeSet<String> domains = new java.util.TreeSet<String>();
+        for (String terminal : terminals) domains.add(part.terminalDomain(terminal));
+        if (!domains.contains(part.domainId))
+            throw new IllegalArgumentException("Packing domain is absent from package terminals");
+        for (PhysicalPackage.GeometryVariant variant : physical.getGeometryVariants()) {
+            PhysicalPackageGeometry.IsolationBody body = variant.getGeometry().getIsolationBody();
+            if (domains.size() > 1) {
+                if (domains.size() != 2 || body == null || part.anchor != Anchor.NONE ||
+                        variant.getGeometry().isDeveloperGeneric() ||
+                        body.domain(part, true).equals(body.domain(part, false)) ||
+                        !hasBarrier(body.domain(part, true), body.domain(part, false)))
+                    throw new IllegalArgumentException("Mixed-domain package lacks a declared body barrier");
+            } else if (body != null)
+                throw new IllegalArgumentException("Isolation body requires two terminal domains");
+        }
+        for (String first : terminals) for (String second : terminals)
+            if (physical.isInternallyConnected(first, second) &&
+                    hasBarrier(part.terminalDomain(first), part.terminalDomain(second)))
+                throw new IllegalArgumentException("Package connectivity crosses isolated physical domains");
+    }
+    int margin(String domain) {
+        int margin=0;
+        for (Barrier barrier : barriers) if (barrier.firstDomain.equals(domain) || barrier.secondDomain.equals(domain))
+            margin=Math.max(margin, (barrier.clearance+1)/2);
+        return margin;
+    }
+    void validate(TroubleshootBoard board) {
+        if (parts.size()!=board.getComponentIds().size()) throw new IllegalArgumentException("Incomplete physical demand");
+        TreeMap<String,String> labels=new TreeMap<String,String>();
+        for (String id : board.getComponentIds()) {
+            Part part=get(id);
+            if (part==null) throw new IllegalArgumentException("Missing physical demand: "+id);
+            validateTerminalDomains(part, board.getComponent(id).getPhysicalPackage());
+            String label=labels.put(part.regionId,part.regionLabel);
+            if (label!=null && !label.equals(part.regionLabel)) throw new IllegalArgumentException("Conflicting public region label");
+            if (part.anchor!=Anchor.NONE && !board.getComponent(id).getPhysicalPackage().isConnector())
+                throw new IllegalArgumentException("An edge anchor must be a declared connector");
+        }
+        for (Barrier barrier : barriers) {
+            boolean first=false,second=false;
+            for (Part part : parts.values())
+                for (String terminal : board.getComponent(part.componentId).getPhysicalPackage().getTerminalIds()) {
+                    String domain = part.terminalDomain(terminal);
+                    first |= barrier.firstDomain.equals(domain);
+                    second |= barrier.secondDomain.equals(domain);
+                }
+            if (!first || !second) throw new IllegalArgumentException("Barrier references an absent domain");
+            for (String netId : board.getNetIds()) {
+                first=false; second=false;
+                for (String pad : board.getNet(netId).getPadIds()) {
+                    String domain=domainForPad(board,pad);
+                    first |= barrier.firstDomain.equals(domain); second |= barrier.secondDomain.equals(domain);
+                }
+                if (first && second) throw new IllegalArgumentException("One conductive net crosses isolated physical domains");
+            }
+        }
+    }
+    static PcbPlacementConstraints standard(TroubleshootBoard board) {
+        Vector<String> ids=board.getComponentIds(); Collections.sort(ids);
+        Vector<Part> parts=new Vector<Part>();
+        for (String id : ids) {
+            boolean connector=board.getComponent(id).getPhysicalPackage().isConnector();
+            Anchor anchor=connector ? Anchor.EDGE : Anchor.NONE;
+            parts.add(new Part(id,"circuit","Circuit","board",anchor,20));
+        }
+        return new PcbPlacementConstraints(parts,new Vector<Barrier>());
+    }
+    private static boolean empty(String s) { return s==null || s.length()==0; }
+}

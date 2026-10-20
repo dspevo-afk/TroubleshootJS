@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "phase": "build",
+  "files": [
+    {
+      "file": "build-log.txt",
+      "replacements": 1
+    }
+  ],
+  "allowedPrefixes": [
+    "[WORKTREE]",
+    "[JDK8]"
+  ],
+  "policy": "Only the selected worktree and selected JDK prefixes are replaced; operation output is otherwise preserved"
+}
