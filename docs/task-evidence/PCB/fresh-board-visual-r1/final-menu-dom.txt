@@ -1,0 +1,53 @@
+- dialog "TroubleshootJS · Desktop alpha":
+  - banner:
+    - heading "TroubleshootJS · Desktop alpha" [level=2]
+  - banner:
+    - paragraph: THE ELECTRONICS REPAIR GAME
+    - heading "Troubleshoot!" [level=3]
+    - paragraph: A customer. A faulty board. A bench full of possibilities.
+    - list:
+      - listitem: Examine
+      - listitem: Measure
+      - listitem: Isolate
+      - listitem: Repair
+      - listitem: Retest
+  - heading "Your session" [level=3]
+  - paragraph: Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).
+  - paragraph: Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.
+  - button "Save session"
+  - button "Load session"
+  - group: Session history
+  - heading "Start a service job" [level=3]
+  - text: Difficulty
+  - combobox "Difficulty":
+    - option "EASY" [selected]
+    - option "MEDIUM"
+    - option "HARD — unavailable" [disabled]
+    - option "PSYCHOTIC — unavailable" [disabled]
+  - text: Board family
+  - combobox "Board family":
+    - option "Indicator board" [selected]
+    - option "Protected indicator"
+    - option "Dual indicator"
+    - option "Timing board"
+    - option "BJT output driver"
+    - option "MOSFET output driver"
+    - option "Relay output board"
+    - option "Sensor control board"
+    - option "Procedural control board"
+  - button "New board"
+  - paragraph: Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.
+  - group: Enter an exact seed
+  - group: Open a saved replay code
+  - button "Resume current board"
+  - button "Resources"
+  - button "Settings"
+  - group: About this alpha
+  - group:
+    - text: Share pristine challenge
+    - paragraph: Share this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.
+    - text: Pristine challenge replay
+    - textbox "Pristine challenge replay": tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320
+    - text: Interpretation / build
+    - textbox "Interpretation / build": tsj-alpha/6 / 971A32B25FD421103DD889CBBB3C50A7
+    - paragraph: You can select and copy this information for a bug report. Nothing is sent automatically.

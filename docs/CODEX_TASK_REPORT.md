@@ -1,10 +1,44 @@
-# Current checkpoint: empty-chip footprint qualified; publication review
+# Current checkpoint: fresh normal visual review complete; evidence publication
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
-codex/q60-faulted-profile-counts, base HEAD/verified origin
-466ffde5dbcd4450dedb0e517931567a56ad2f8b. User authorizes indefinite ordinary
+codex/q60-faulted-profile-counts, HEAD/verified origin
+1df6582b331d452da6fc622ab5760fcaa87795da. User authorizes indefinite ordinary
 random PCB realism/screenshots; no main merge/email. Original5/private baseline
-pointer/cache preserved. Contact publication receipt included in next commit.
+pointer/cache preserved. Empty-chip publication receipt included next commit.
+
+Read-only fresh-board-visual-r1 reuses the accepted final JDK8/GWT5 build only
+after exact1481 and source/script/web/execution/count equality before/after.
+Four actual ordinary New board launches reached tickets: EASY MOSFET
+-7281719014759016657, EASY Relay -2859644269863457366, MEDIUM Composed
+-1531998593498751668, MEDIUM Q30 -5864181845794033320. No exact seed entry or
+observed preparation failure. Four actual public6 replays recorded. Five raw views
+individually inspected (four full fitted boards, one partial multi-rail Zoom+2);
+first three pasted in chat. Timings are root-observed upper bounds, not a benchmark.
+No new production/native/build/measurement/repair/FileReader/full-matrix claim.
+
+Concrete next question: composed sample repeats LED1 three times, Q1 twice and
+RPD/RLOAD; trace unique public references without changing stable full IDs.
+Bounded read-only leaf ownership investigation running; no next production edit.
+Multi-rail overview markings need zoom; capacitor nameplate touching rim at zoom
+is a nonblocking follow-up. Exact Difficulty label selector timed out; fresh menu
+observation recovered via accessible combobox role. Failure retained. Two existing
+favicon404 errors, no page errors/other recorded warn/errors. Actual OFF/tray0
+body/menu and served identity preserved. Final observation audit PASS.
+
+Browser API/root0, new profile absent, browser/preview/launcher births exited.
+Maintained stop PASS2.5573939s,8907 released. Old unused profile deletion remains
+blocked by automatic approval review; untouched, no retention approval inferred.
+Baseline COPY/small private metadata retained outside Git. Next: root docs/privacy/
+staged-byte audit, normal evidence commit/push/remote verification, then resolve
+bounded duplicate-reference scope from reader findings. No main merge/email.
+
+# Previous checkpoint: empty-chip footprint published at1df6582b
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+1df6582b331d452da6fc622ab5760fcaa87795da. User authorizes indefinite ordinary
+random PCB realism/screenshots; no main merge/email. Original5/private baseline
+pointer/cache preserved. Contact publication receipt committed; current publication receipt pending next commit.
 
 Empty-chip-silk-r1 adds inert top-only body outline/existing terminal0 dot for an
 explicitly empty matching, geometry-bound slot among four supported rectangular
@@ -37,8 +71,10 @@ deletion remains rejected by automatic approval review as blocked by policy;
 untouched, no retention approval inferred. Baseline COPY/small private metadata
 retained outside Git. Archive-preparation missing-receipt stop, early timing-read
 race and documentation patch mismatch recorded; no evidence loss or false PASS.
-Final application audit PASS. Root diff/privacy/staged-byte review, normal commit/
-push and exact origin verification next, then continue bounded realism work.
+Final application audit PASS. Root diff/privacy and staged85 raw/canonical audit
+PASS. Normal commit/push and exact origin SHA verified. Next: read-only fresh
+ordinary New board visual review across families, using audited unchanged build.
+No next production edit or gate claim yet.
 
 # Previous checkpoint: contact collars published; footprint marking investigation
 

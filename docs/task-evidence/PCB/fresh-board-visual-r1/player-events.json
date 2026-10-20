@@ -1,0 +1,73 @@
+[
+  {
+    "attempt": 1,
+    "difficulty": "EASY",
+    "family": "MOSFET output driver",
+    "action": "Actual New board entropy; no exact seed input"
+  },
+  {
+    "attempt": 1,
+    "event": "Customer ticket visible",
+    "wallUpperBoundMs": 1043
+  },
+  {
+    "attempt": 1,
+    "event": "Actual displayed pristine identity after fitted capture and OFF/menu",
+    "observedReplay": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/-7281719014759016657"
+  },
+  {
+    "attempt": 2,
+    "difficulty": "EASY",
+    "family": "Relay output board",
+    "action": "Actual New board entropy; no exact seed input"
+  },
+  {
+    "attempt": 2,
+    "event": "Customer ticket visible",
+    "wallUpperBoundMs": 6057
+  },
+  {
+    "attempt": 2,
+    "event": "Actual displayed pristine identity after fitted capture and OFF/menu",
+    "observedReplay": "tsj-alpha/6/EASY/RELAY_OUTPUT/-2859644269863457366"
+  },
+  {
+    "attempt": 2,
+    "event": "Medium difficulty selector observation failure",
+    "status": "AUTOMATION_SELECTOR_TIMEOUT",
+    "detail": "Exact getByLabel Difficulty timed out after screenshot/replay; reobserve actual menu before retry. No product-generation failure inferred."
+  },
+  {
+    "attempt": 3,
+    "difficulty": "MEDIUM",
+    "family": "Two-channel controller",
+    "action": "Actual New board entropy; no exact seed input"
+  },
+  {
+    "attempt": 3,
+    "event": "Customer ticket visible",
+    "wallUpperBoundMs": 4814
+  },
+  {
+    "attempt": 3,
+    "event": "Actual displayed pristine identity after fitted capture and OFF/menu",
+    "observedReplay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-1531998593498751668"
+  },
+  {
+    "attempt": 4,
+    "difficulty": "MEDIUM",
+    "family": "Multi-rail control board",
+    "action": "Actual New board entropy; no exact seed input"
+  },
+  {
+    "attempt": 4,
+    "event": "Customer ticket visible",
+    "wallUpperBoundMs": 23870,
+    "note": "Upper bound includes root observation time between calls; not a generation benchmark"
+  },
+  {
+    "attempt": 4,
+    "event": "Actual displayed pristine identity after overview/inspection captures and OFF/menu",
+    "observedReplay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-5864181845794033320"
+  }
+]

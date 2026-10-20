@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "rootExitObserved": true,
+  "exitCode": 0,
+  "signalCode": null,
+  "newProfileAbsent": true,
+  "api": "Public context/client/BrowserServer close after exact owner revalidation"
+}

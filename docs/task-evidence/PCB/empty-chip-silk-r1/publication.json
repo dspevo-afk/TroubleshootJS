@@ -1,0 +1,18 @@
+{
+  "status": "PUSH_VERIFIED",
+  "commit": "1df6582b331d452da6fc622ab5760fcaa87795da",
+  "message": "Retain chip footprint markings after component removal",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q60-faulted-profile-counts",
+  "verification": "Normal push succeeded; ls-remote exact accepted SHA",
+  "stagedByteAudit": {
+    "status": "PASS",
+    "files": 85,
+    "rawEvidenceBlobs": 79,
+    "canonicalTextBlobs": 6
+  },
+  "mainMerge": "NOT_PERFORMED",
+  "email": "DISABLED_BY_USER",
+  "remaining": "Original5/private baseline pointer/cache; earlier policy-blocked unused profile and old baseline/small private audit metadata"
+}

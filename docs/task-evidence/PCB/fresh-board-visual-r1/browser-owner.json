@@ -1,0 +1,8 @@
+{
+  "profileName": "playwright_chromiumdev_profile-5Mp2gv",
+  "executable": "brave.exe",
+  "sandbox": true,
+  "startTicks": "639280812866012379",
+  "pid": 19120,
+  "state": "BLANK; actual birth/executable/profile checked before production navigation"
+}

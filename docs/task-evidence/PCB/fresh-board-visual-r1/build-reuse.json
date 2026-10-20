@@ -1,0 +1,9 @@
+{
+  "reusedBuild": "Actual final-source JDK8/GWT5 OBF92.7623523s",
+  "sourceCount": 1481,
+  "baseCommit": "1df6582b331d452da6fc622ab5760fcaa87795da",
+  "status": "PASS",
+  "proof": "Exact source/script/web/execution/count identity equals its post-player provenance",
+  "sourceHashMap": "Exact empty-chip-silk-r1/candidate-inputs.json unchanged",
+  "freshNativeBuild": "NOT RUN; no production or consumed-input edit"
+}

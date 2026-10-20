@@ -1,0 +1,7 @@
+{
+  "scope": "Immediately before own BrowserServer API close",
+  "exactExecutableProfileBirth": true,
+  "pid": 19120,
+  "status": "PASS",
+  "startTicks": "639280812866012379"
+}

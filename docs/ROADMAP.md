@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Empty-chip footprint markings qualified; publication review**
+**Current task:** **Fresh random board review complete; public-reference investigation next**
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -44,13 +44,20 @@ fresh customer FAIL->PASS pass. Five primary views plus retained completion fram
 were inspected; two current board images posted. No geometry, targets, physics,
 save state or new size/manufacturing claim. [Contact evidence and limitations](task-evidence/PCB/contact-collar-r1/README.md).
 
-Empty supported rectangular chip slots now retain a top-side body outline and
+Published1df6582b: empty supported rectangular chip slots retain a top-side body outline and
 first-semantic-terminal dot inside existing body geometry. Corrected native9 and
 actual JDK8/GWT5 pass; failed disallowed-pose fixture remains explicit. Actual
 normal removal/bottom-face absence/pinout/reinstall and fresh indicator isolated
 OL/replacement330Ohm/customer FAIL->PASS pass. Five raw views inspected; current
 resources closed. No new geometry, target, board size, generation or save state.
 [Footprint evidence and limits](task-evidence/PCB/empty-chip-silk-r1/README.md).
+
+Read-only fresh normal New board review at1df6582b observes four admitted families,
+five raw views and four exact public6 identities. Accepted build reused only at
+exact1481/compiled provenance boundary; no new algorithm or full-matrix claim.
+Three new board screenshots pasted in chat. Composed sample duplicates public
+component marks; bounded ownership investigation next. Current resources closed.
+[Fresh visual evidence and limits](task-evidence/PCB/fresh-board-visual-r1/README.md).
 
 Developer-only native exports and four inspected overlays identify domain,
 access/copper-clearance and pocket boundaries for roots42/-1022.

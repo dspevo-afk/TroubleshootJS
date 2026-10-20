@@ -1,0 +1,26 @@
+{
+  "olderProfile": "Earlier automatic-review policy block; untouched and separately BLOCKED",
+  "status": "PASS",
+  "checks": [
+    {
+      "startTicks": "639280812866012379",
+      "owner": "browser-owner.json",
+      "recordedBirthExited": true,
+      "pid": 19120
+    },
+    {
+      "startTicks": "639280812926767536",
+      "owner": "preview-owner.json",
+      "recordedBirthExited": true,
+      "pid": 10564
+    },
+    {
+      "startTicks": "639280812898107573",
+      "owner": "preview-launch-owner.json",
+      "recordedBirthExited": true,
+      "pid": 17208
+    }
+  ],
+  "newProfileAbsent": true,
+  "preview8907Listening": false
+}

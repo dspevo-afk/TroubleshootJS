@@ -1,0 +1,24 @@
+{
+  "observationAudit": "PASS",
+  "sourceCountUnchanged": 1481,
+  "freshRandomLaunches": 4,
+  "actualPublicIdentitiesRecorded": 4,
+  "rawImagesInspected": 5,
+  "build": "Reused only after exact1481 and source/script/web/execution/count equality before/after",
+  "nextConcreteQuestion": "Unique public component references on the composed board; stable graph IDs must remain intact",
+  "limits": [
+    "Manual actual visual review, no computed pixel oracle or all-seed/metric census",
+    "No new production edit, native/build, measurement, repair/retest or FileReader proof",
+    "Difficulty exact-label selector timeout retained; recovered after actual menu reobservation via accessible combobox role",
+    "Timing values are root-observed upper bounds; multi-rail includes inter-call observation time, not a benchmark"
+  ],
+  "findings": [
+    "Four ordinary New board launches admitted without observed preparation failure; exact public replays recorded",
+    "MOSFET/relay different package styles inspected; current contact convention present",
+    "Composed medium sample visibly repeats LED1 three times, Q1 twice, RPD and RLOAD; concrete public-marking follow-up",
+    "Multi-rail full-board overview has small markings; actual two-step zoom is partial viewport, not whole-board legibility proof",
+    "Existing large capacitor provider nameplate touches body/rim at inspection zoom; recorded as nonblocking visual follow-up"
+  ],
+  "cleanup": "PASS new owned resources; earlier policy-blocked unused directory remains separate",
+  "publication": "Pending root diff/privacy/staged-byte audit and normal existing-branch push; no main/email"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "OBSERVED",
+  "actualRawImagesInspected": 5,
+  "rawCaptures": [
+    {
+      "file": "random-mosfet.jpg",
+      "note": "Fresh actual New board EASY MOSFET output driver, fitted installed board",
+      "bytes": 132788,
+      "sha256": "63f195da49ea5dac092af931ef9de269c5f91fdc71ef5aee42f6b9c26d262109"
+    },
+    {
+      "file": "random-relay.jpg",
+      "note": "Fresh actual New board EASY relay output, fitted installed board",
+      "bytes": 132122,
+      "sha256": "b1a9316298d06a674b3e3a9a85c0f5d6b31e018d2ba5ae932a818195a2f75cb1"
+    },
+    {
+      "file": "random-two-channel.jpg",
+      "note": "Fresh actual New board MEDIUM two-channel controller, fitted installed board",
+      "bytes": 134035,
+      "sha256": "66babf8fd9384886483b2621579f06455f592f9c74fea359a210702f1c967463"
+    },
+    {
+      "file": "random-multirail.jpg",
+      "note": "Fresh actual New board MEDIUM multi-rail controller, fitted installed board; overview small markings are an inspection-zoom limitation",
+      "bytes": 145683,
+      "sha256": "1ebaf5561bd90247caee633955534622cc05ad5f07f79811d20cc797a144d939"
+    },
+    {
+      "file": "random-multirail-inspection.jpg",
+      "note": "Same fresh multi-rail board at two real Zoom+ inputs, OFF; partial viewport makes package markings readable, no whole-board coverage claim",
+      "bytes": 81978,
+      "sha256": "9a95ed8afdfcebc6c7ac6581680d4375367379b2b23bdf58c3ca3ce1b5838b46"
+    }
+  ],
+  "findings": [
+    "Four ordinary New board launches admitted without observed preparation failure; exact public replays recorded",
+    "MOSFET/relay different package styles inspected; current contact convention present",
+    "Composed medium sample visibly repeats LED1 three times, Q1 twice, RPD and RLOAD; concrete public-marking follow-up",
+    "Multi-rail full-board overview has small markings; actual two-step zoom is partial viewport, not whole-board legibility proof",
+    "Existing large capacitor provider nameplate touches body/rim at inspection zoom; recorded as nonblocking visual follow-up"
+  ],
+  "limits": [
+    "Manual actual visual review, no computed pixel oracle or all-seed/metric census",
+    "No new production edit, native/build, measurement, repair/retest or FileReader proof",
+    "Difficulty exact-label selector timeout retained; recovered after actual menu reobservation via accessible combobox role",
+    "Timing values are root-observed upper bounds; multi-rail includes inter-call observation time, not a benchmark"
+  ]
+}
