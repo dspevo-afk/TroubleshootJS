@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "main1475Exact": true,
+  "acceptedBaseCount": 1467,
+  "publishedCopyCount": 1471,
+  "plannedCopyCount": 1473,
+  "publishedSealSha256": "a4433f982b2453c976e414a7bf873f0a95ebbf18d218e154adbcb125f66fcb64",
+  "newFiles": [
+    "PcbRoutedSlideDescentContractTest",
+    "PcbRoutedSlideDescentTrialContractTest"
+  ],
+  "nativeExecution": "NOT_RUN"
+}

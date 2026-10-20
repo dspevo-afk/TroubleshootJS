@@ -295,6 +295,19 @@ retired,10driverbirths exited; main1475/default15/general16 unchanged. NoGWT/pla
 solver/repair/fullmatrix/unseen claim. Next bounded repeated generic slides and
 compaction to measure whether these small independent cuts can accumulate.
 [Selected compaction measurement and limits](task-evidence/PCB/routed-slide-compaction-probe-r1/RESULTS.md).
+The same bounded generic private descent now shrinks both informed5then2:
+one accepted step at5(-0.20321%area,copper-20,protectedvoidsame) and four at2
+(-0.82457%area,copper-130,protectedvoid-26000),48vias unchanged. Both obey all-four
+current/original source/control guards. Six current censuses,85attempts,
+50physical admissions/35rejections;5exhausts its next cohort,2hits4step cap.
+Finalunit4 PASS45.050s(40/41/36/25assertions6/6/5/6groups),routes1 PASS64.068s;
+selected42fields/whitespace/source/work exact. Every current/control/result
+passes fullphysical/identity/pair/provenance proof; bothroots' net-pair hashes
+are independently derived from all current pads. Reader80/host12/rootreviewPASS;
+1473COPY restored1467/retired,4births exited. Main1475/default15/general16 same;
+no production/GWT/player/solver/fullmatrix/unseen/manufacturing claim. Next apply
+the same4step/128proposal generic private search to all14 informed regressions.
+[Cumulative private reductions and limits](task-evidence/PCB/routed-slide-descent-r1/RESULTS.md).
 Finite reference-host scope;
 no all-seed, manufacturing or modest-host claim.
 User's indefinite continuation supersedes the earlier9am stop. No main/email.

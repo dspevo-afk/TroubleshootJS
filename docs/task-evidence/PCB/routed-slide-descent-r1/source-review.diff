@@ -1,0 +1,1457 @@
+--- published-probe/scripts/verify-current-contracts.ps1
++++ private-descent/scripts/verify-current-contracts.ps1
+@@ -410,2 +410,4 @@
+         @{ Name = 'PcbRoutedSlideCompactionTrialContractTest'; Marker = 'PCB routed slide compaction trial contracts ' },
++        @{ Name = 'PcbRoutedSlideDescentContractTest'; Marker = 'PCB routed slide descent contracts ' },
++        @{ Name = 'PcbRoutedSlideDescentTrialContractTest'; Marker = 'PCB routed slide descent trial contracts ' },
+         @{ Name = 'PcbPostSelectionEdgeTrimContractTest'; Marker = 'PCB post-selection edge trim ' },
+--- published-probe/tests/contracts/PcbRoutedPassiveLegCensusContractTest.java
++++ private-descent/tests/contracts/PcbRoutedPassiveLegCensusContractTest.java
+@@ -66,2 +66,89 @@
+     // END COPY-ONLY selected routed slide census adapter.
++
++    // BEGIN COPY-ONLY selected routed descent structural snapshot adapter.
++    /**
++     * One complete current-layout census.  The analysis is deliberately
++     * captured once so the descent driver cannot accidentally derive moves
++     * from a second, possibly changed, layout.
++     */
++    static final class SelectedSlideCensus {
++        private final String geometryHashBefore;
++        private final String geometryHashAfter;
++        private final Vector<PartResult> parts;
++        private final Vector<MoveIntent> moves;
++        private final String json;
++
++        private SelectedSlideCensus(String geometryHashBefore,
++                String geometryHashAfter, Vector<PartResult> parts,
++                Vector<MoveIntent> moves, String json) {
++            this.geometryHashBefore = geometryHashBefore;
++            this.geometryHashAfter = geometryHashAfter;
++            this.parts = parts;
++            this.moves = moves;
++            this.json = json;
++        }
++
++        String geometryHashBefore() { return geometryHashBefore; }
++        String geometryHashAfter() { return geometryHashAfter; }
++        int partCount() { return parts.size(); }
++        Vector<MoveIntent> moves() { return new Vector<MoveIntent>(moves); }
++        String json() { return json; }
++
++        int affectedTraceCount(MoveIntent move) {
++            if (move == null)
++                throw new IllegalArgumentException("Missing structural move");
++            for (PartResult part : parts) {
++                if (!part.componentId.equals(move.componentId)) continue;
++                TreeSet<Integer> traceIndices = new TreeSet<Integer>();
++                for (PadResult pad : part.pads)
++                    for (Incident incident : pad.incidents)
++                        traceIndices.add(Integer.valueOf(incident.trace.traceIndex));
++                return traceIndices.size();
++            }
++            throw new IllegalArgumentException("Unknown structural component: " +
++                move.componentId);
++        }
++    }
++
++    /** Captures all parts, including ineligible parts, and derives the exact
++     * canonical nonincreasing direction cohort from that same snapshot. */
++    static SelectedSlideCensus captureSelectedSlideCensus(
++            TroubleshootBoard board, PcbBoardLayout layout) {
++        if (board == null || layout == null)
++            throw new IllegalArgumentException("Missing selected-slide census input");
++        GenerationWorkScope.check();
++        String before = PlayerSessionFingerprint.of(layout.geometryFingerprint());
++        Vector<PartResult> parts = Recorder.analyzeTarget(board, layout);
++        String after = PlayerSessionFingerprint.of(layout.geometryFingerprint());
++        require(before.equals(after),
++            "structural census preserves the current geometry fingerprint");
++        Vector<MoveIntent> moves = new Vector<MoveIntent>();
++        for (PartResult part : parts) {
++            GenerationWorkScope.check();
++            for (DirectionResult direction : part.directions) {
++                GenerationWorkScope.check();
++                if (direction.eligible && direction.copperDelta != null &&
++                        direction.copperDelta.longValue() <= 0L)
++                    moves.add(new MoveIntent(part.componentId, direction.dx,
++                        direction.dy, direction.copperDelta.longValue()));
++            }
++        }
++        require(moves.size() <= MAX_PARTS * DIRECTIONS.length,
++            "structural move census stays within the 512-direction bound");
++        StringBuilder structural = new StringBuilder(32000);
++        structural.append('{');
++        structural.append("\"geometryHashBefore\":");
++        stringField(structural, before);
++        structural.append(",\"geometryHashAfter\":");
++        stringField(structural, after);
++        structural.append(",\"parts\":[");
++        for (int index = 0; index < parts.size(); index++) {
++            if (index != 0) structural.append(',');
++            appendPart(structural, parts.get(index));
++        }
++        structural.append("]}");
++        return new SelectedSlideCensus(before, after, parts, moves,
++            structural.toString());
++    }
++    // END COPY-ONLY selected routed descent structural snapshot adapter.
+     private PcbRoutedPassiveLegCensusContractTest() { }
+--- published-probe/tests/contracts/PcbRoutedSlideCompactionContractTest.java
++++ private-descent/tests/contracts/PcbRoutedSlideCompactionContractTest.java
+@@ -364,2 +364,11 @@
+             PcbBoardLayout routed, long seed, String generationMetadata) {
++        return compactAndVerify(board, plan, source, routed, seed,
++            generationMetadata, null);
++    }
++
++    private static FinalEvaluation compactAndVerify(TroubleshootBoard board,
++            PcbPlacementPlanner.Plan plan,
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source,
++            PcbBoardLayout routed, long seed, String generationMetadata,
++            PcbBoardLayout[] normalizedOutput) {
+         GenerationWorkScope.check();
+@@ -453,2 +462,3 @@
+             twoLayerValidated, proof, true, true, true);
++        if (normalizedOutput != null) normalizedOutput[0] = normalized;
+         return new FinalEvaluation(compacted, outputMetrics, finalProof, true, false);
+@@ -1144,2 +1154,180 @@
+ 
++    // BEGIN COPY-ONLY selected routed descent compaction adapter.
++    /** Small immutable view of the existing private metrics owner. */
++    static final class DescentMetrics {
++        final long area;
++        final long copperLength;
++        final int vias;
++        final int largestProtectedEmptyRectangleArea;
++        final String geometrySha256;
++        final String stableIdentitySha256;
++        final String labelIdentitySha256;
++        final String generationMetadata;
++
++        private DescentMetrics(Metrics value) {
++            area = value.area;
++            copperLength = value.copperLength;
++            vias = value.vias;
++            largestProtectedEmptyRectangleArea =
++                value.largestProtectedEmptyRectangleArea;
++            geometrySha256 = value.geometrySha256;
++            stableIdentitySha256 = value.stableIdentitySha256;
++            labelIdentitySha256 = value.labelIdentitySha256;
++            generationMetadata = value.generationMetadata;
++        }
++
++        String json() {
++            StringBuilder value = new StringBuilder(500);
++            value.append('{');
++            value.append("\"area\":").append(area);
++            value.append(",\"copperLength\":").append(copperLength);
++            value.append(",\"vias\":").append(vias);
++            value.append(",\"largestProtectedEmptyRectangleArea\":")
++                .append(largestProtectedEmptyRectangleArea);
++            value.append(",\"geometrySha256\":");
++            stringField(value, geometrySha256);
++            value.append(",\"stableIdentitySha256\":");
++            stringField(value, stableIdentitySha256);
++            value.append(",\"labelIdentitySha256\":");
++            stringField(value, labelIdentitySha256);
++            value.append(",\"generationMetadata\":");
++            stringField(value, generationMetadata);
++            value.append('}');
++            return value.toString();
++        }
++    }
++
++    /** Opaque descent result reusing the complete existing compaction proof. */
++    static final class DescentCompaction {
++        private final FinalEvaluation value;
++        private final PcbBoardLayout layout;
++        private final PcbPlacementPlanner.Plan plan;
++
++        private DescentCompaction(FinalEvaluation value,
++                PcbBoardLayout layout, PcbPlacementPlanner.Plan plan) {
++            this.value = value;
++            this.layout = layout;
++            this.plan = plan;
++        }
++
++        PcbBoardLayout layout() { return layout; }
++        PcbPlacementPlanner.Plan plan() { return plan; }
++        DescentMetrics metrics() { return new DescentMetrics(value.metrics); }
++        boolean compacted() { return value.compacted; }
++        boolean sourceImmutable() { return value.sourceImmutable; }
++    }
++
++    static DescentMetrics metricsForDescent(TroubleshootBoard board,
++            PcbBoardLayout layout, long seed, String generationMetadata) {
++        return new DescentMetrics(metrics(board, layout, seed, generationMetadata));
++    }
++
++    static void verifySelectedFrameForDescent(long seed,
++            TroubleshootBoard board, PcbBoardLayout layout,
++            PcbPlacementPlanner.Plan plan, int attempt) {
++        verifySelectedFrame(seed, board, layout, plan, attempt);
++    }
++
++    static void verifySourceUnchangedForDescent(
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source) {
++        requireSourceUnchanged(source);
++    }
++
++    static DescentCompaction compactForDescent(TroubleshootBoard board,
++            PcbPlacementPlanner.Plan plan,
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source,
++            PcbBoardLayout routed, long seed, String generationMetadata) {
++        PcbBoardLayout[] normalized = new PcbBoardLayout[] {null};
++        FinalEvaluation value = compactAndVerify(board, plan, source, routed, seed,
++            generationMetadata, normalized);
++        if (normalized[0] == null)
++            throw new IllegalStateException("Descent compaction omitted normalized layout");
++        PcbPlacementPlanner.Plan reframed =
++            SeededPcbLayoutGenerator.reframeSelectedSlidePlan(plan, normalized[0]);
++        if (reframed == null)
++            throw new IllegalStateException("Descent compaction omitted reframed plan");
++        verifyReframedPlanForDescent(reframed, normalized[0]);
++        return new DescentCompaction(value, normalized[0], reframed);
++    }
++
++    /**
++     * The next descent step must consume the plan/layout frame that the
++     * compactor actually returned.  This intentionally checks only placement
++     * and pad coordinates plus the plan outline; navigation region counts and
++     * other planner internals remain owned by the existing frame verifier.
++     */
++    private static void verifyReframedPlanForDescent(
++            PcbPlacementPlanner.Plan plan, PcbBoardLayout layout) {
++        require(plan != null && layout != null,
++            "descent reframe has a plan and layout");
++        require(sameRect(plan.outline, layout.getBoardOutline()),
++            "descent reframe preserves the normalized outline");
++        require(plan.footprints.size() == layout.getComponents().size(),
++            "descent reframe covers every normalized component");
++        TreeSet<String> planComponentIds = new TreeSet<String>();
++        TreeSet<String> layoutComponentIds = new TreeSet<String>();
++        TreeSet<String> planPadIds = new TreeSet<String>();
++        TreeSet<String> layoutPadIds = new TreeSet<String>();
++        for (PcbComponentPlacement component : layout.getComponents()) {
++            GenerationWorkScope.check();
++            require(layoutComponentIds.add(component.getComponentId()),
++                "normalized component IDs are unique");
++        }
++        for (PcbPadPlacement pad : layout.getPads()) {
++            GenerationWorkScope.check();
++            require(layoutPadIds.add(pad.getPadId()),
++                "normalized pad IDs are unique");
++        }
++        int planPadCount = 0;
++        for (PcbFootprint footprint : plan.footprints) {
++            GenerationWorkScope.check();
++            PcbComponentPlacement placement = footprint.getPlacement();
++            require(placement != null && planComponentIds.add(placement.getComponentId()),
++                "reframed plan component IDs are unique");
++            PcbComponentPlacement actual = layout.getComponent(placement.getComponentId());
++            require(actual != null && actual.geometryFingerprint().equals(
++                placement.geometryFingerprint()),
++                "reframed plan component coordinates match normalized layout: " +
++                placement.getComponentId());
++            for (PcbPadPlacement pad : footprint.getPads()) {
++                GenerationWorkScope.check();
++                planPadCount++;
++                require(planPadIds.add(pad.getPadId()),
++                    "reframed plan pad IDs are unique");
++                PcbPadPlacement actualPad = layout.getPad(pad.getPadId());
++                require(actualPad != null && actualPad.geometryFingerprint().equals(
++                    pad.geometryFingerprint()),
++                    "reframed plan pad coordinates match normalized layout: " +
++                    pad.getPadId());
++            }
++        }
++        require(planComponentIds.equals(layoutComponentIds) &&
++            planPadCount == layout.getPads().size() &&
++            planPadIds.equals(layoutPadIds),
++            "reframed plan covers every normalized component and pad");
++    }
++
++    static PcbPlacementPlanner.Plan movedPlanForDescent(
++            PcbPlacementPlanner.Plan source,
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideRow row) {
++        return movedPlan(source, row);
++    }
++
++    static void appendDescentCompaction(StringBuilder json,
++            DescentCompaction value, boolean strictImprovement) {
++        if (value == null) throw new IllegalArgumentException(
++            "Missing descent compaction");
++        value.value.strictImprovement = strictImprovement;
++        appendCompaction(json, value.value, true);
++    }
++
++    static void appendDescentControl(StringBuilder json,
++            DescentCompaction value) {
++        if (value == null) throw new IllegalArgumentException(
++            "Missing descent control");
++        appendCompaction(json, value.value, false);
++    }
++
++    // END COPY-ONLY selected routed descent compaction adapter.
++
+     private static void check(boolean condition, String message) {
+--- published-probe/tests/contracts/PcbRoutedSlideDescentContractTest.java
++++ private-descent/tests/contracts/PcbRoutedSlideDescentContractTest.java
+@@ -0,0 +1,1142 @@
++package com.lushprojects.circuitjs1.client;
++
++import java.util.Vector;
++
++/**
++ * Native-only bounded repeated private slide/compaction descent.  The selected
++ * route and the published board remain read-only; every accepted result is a
++ * private source for the next step.
++ */
++public final class PcbRoutedSlideDescentContractTest {
++    private static final int VERSION = 15;
++    private static final String PHASE = "SELECTED_AFTER_EDGE_TRIM";
++    private static final String SUMMARY_PREFIX =
++        "PCB_ROUTED_SLIDE_DESCENT_CASE ";
++    private static final String SOURCE_GENERATION_METADATA = "ACCEPTED_SELECTED";
++    private static final String PRIVATE_GENERATION_METADATA =
++        "UNASSIGNED_PRIVATE_CANDIDATE";
++    private static final int MAX_ACCEPTED_STEPS = 4;
++    private static final int MAX_EVALUATED_MOVES = 128;
++    private static int assertions;
++    private static int fixtures;
++
++    private PcbRoutedSlideDescentContractTest() { }
++
++    public static void main(String[] args) {
++        canonicalFirstImprovementAndTransitions();
++        strictDescentAndInitialGuards();
++        exhaustionAndEmptyCohort();
++        acceptedStepAndEvaluationCaps();
++        failureAndCancellationPropagation();
++        selectedObserverOwnershipAndAdapterIsolation();
++        check(fixtures == 6, "exactly six named selected-slide descent fixture groups");
++        System.out.println("PASS: PCB routed slide descent contracts assertions=" +
++            assertions + " fixtures=" + fixtures +
++            " evaluator=selectedRoutedSlideDescent");
++    }
++
++    /** The root wrapper calls this once for each fixed informed root. */
++    static void observe(long seed, String label) {
++        require(label != null && label.length() > 0,
++            "selected-slide descent label is present");
++        Recorder recorder = new Recorder(seed, label);
++        SeededPcbLayoutGenerator.SelectedSlideObserver previous =
++            SeededPcbLayoutGenerator.setSelectedSlideObserver(recorder);
++        String selectedReceipt;
++        try {
++            if (seed != 5L && seed != 2L)
++                throw new IllegalArgumentException(
++                    "Unexpected selected descent root: " + seed);
++            selectedReceipt =
++                PcbPostSelectionEdgeTrimContractTest.observeRoutedPassiveLegCensus(seed);
++        } finally {
++            SeededPcbLayoutGenerator.SelectedSlideObserver displaced =
++                SeededPcbLayoutGenerator.setSelectedSlideObserver(previous);
++            if (displaced != recorder)
++                throw new IllegalStateException(
++                    "Selected-slide descent observer owner changed");
++        }
++        require(recorder.callbacks == 1 && recorder.summary != null,
++            "selected root produced one complete descent callback");
++        require(selectedReceipt != null &&
++                selectedReceipt.startsWith("PCB_EDGE_TRIM_CASE {"),
++            "accepted15 helper returns its selected receipt");
++        System.out.println("PCB_ROUTED_LEG_CASE " +
++            selectedReceipt.substring("PCB_EDGE_TRIM_CASE ".length()));
++        System.out.println(recorder.summaryJson());
++    }
++
++    private static final class Recorder
++            implements SeededPcbLayoutGenerator.SelectedSlideObserver {
++        final long seed;
++        final String label;
++        int callbacks;
++        long startedNanos;
++        long finishedNanos;
++        String selectedRoute;
++        int selectedAttempt;
++        DescentRun result;
++        String summary;
++
++        Recorder(long seed, String label) {
++            this.seed = seed;
++            this.label = label;
++        }
++
++        public void onSelected(TroubleshootBoard board, PcbBoardLayout layout,
++                PcbPlacementPlanner.Plan plan, String route, int attempt) {
++            startedNanos = System.nanoTime();
++            try {
++                callbacks++;
++                require(callbacks == 1 && board != null && layout != null &&
++                        plan != null && route != null,
++                    "selected descent callback has a complete source frame");
++                require("P07_FULLER_TWO_LAYER".equals(route),
++                    "selected descent route is P07");
++                PcbRoutedSlideCompactionContractTest.verifySelectedFrameForDescent(
++                    seed, board, layout, plan, attempt);
++                selectedRoute = route;
++                selectedAttempt = attempt;
++                result = runDescent(new RuntimeBackend(seed, board, layout, plan));
++                summary = "ready";
++            } finally {
++                finishedNanos = System.nanoTime();
++            }
++        }
++
++        String summaryJson() {
++            require(summary != null && result != null,
++                "descent summary has a completed shared driver result");
++            StringBuilder json = new StringBuilder(300000);
++            json.append(SUMMARY_PREFIX).append('{');
++            json.append("\"seed\":"); stringField(json, Long.toString(seed));
++            json.append(",\"label\":"); stringField(json, label);
++            json.append(",\"version\":").append(VERSION);
++            json.append(",\"phase\":"); stringField(json, PHASE);
++            json.append(",\"status\":"); stringField(json, result.status);
++            json.append(",\"selectedAttempt\":").append(selectedAttempt);
++            json.append(",\"selectedRoute\":"); stringField(json, selectedRoute);
++            json.append(",\"newRouteRequests\":0");
++            json.append(",\"selectedMutation\":false");
++            json.append(",\"limits\":{\"maxAcceptedSteps\":")
++                .append(MAX_ACCEPTED_STEPS);
++            json.append(",\"maxEvaluatedMoves\":").append(MAX_EVALUATED_MOVES)
++                .append('}');
++            json.append(",\"source\":").append(result.sourceJson);
++            json.append(",\"sourceMetrics\":").append(result.sourceMetrics.json());
++            json.append(",\"initialControl\":")
++                .append(result.initialControl.controlJson());
++            json.append(",\"steps\":[");
++            for (int index = 0; index < result.steps.size(); index++) {
++                if (index != 0) json.append(',');
++                result.steps.get(index).appendJson(json);
++            }
++            json.append(']');
++            json.append(",\"finalMetrics\":").append(result.finalMetrics.json());
++            json.append(",\"aggregate\":{");
++            json.append("\"steps\":").append(result.steps.size());
++            json.append(",\"acceptedSteps\":").append(result.acceptedSteps);
++            json.append(",\"evaluatedMoves\":").append(result.evaluatedMoves);
++            json.append(",\"validatedMoves\":").append(result.validatedMoves);
++            json.append(",\"rejectedMoves\":").append(result.rejectedMoves);
++            json.append(",\"compactions\":").append(result.compactions);
++            json.append('}');
++            json.append(",\"elapsedMillis\":").append(elapsedMillis());
++            json.append('}');
++            return json.toString();
++        }
++
++        private long elapsedMillis() {
++            long end = finishedNanos == 0L ? System.nanoTime() : finishedNanos;
++            long elapsed = end - startedNanos;
++            return elapsed <= 0L ? 0L : elapsed / 1000000L;
++        }
++    }
++
++    private interface DescentBackend {
++        Object initialFrame();
++        Object source(Object frame);
++        MetricValue metrics(Object frame, boolean initial);
++        CompactionValue control(Object frame, Object source, boolean initial);
++        StructuralValue structural(Object frame);
++        RowValue evaluate(Object source, MoveValue move);
++        CompactionValue compact(Object frame, Object source, RowValue row);
++        String sourceJson(Object source);
++        void check();
++        void verifySource(Object source);
++    }
++
++    private static final class MetricValue {
++        final long area;
++        final long copperLength;
++        final int vias;
++        final int largestProtectedEmptyRectangleArea;
++        final String geometrySha256;
++        final String stableIdentitySha256;
++        final String labelIdentitySha256;
++        final String generationMetadata;
++
++        MetricValue(long area, long copperLength, int vias, int largestVoid,
++                String geometrySha256, String stableIdentitySha256,
++                String labelIdentitySha256, String generationMetadata) {
++            this.area = area;
++            this.copperLength = copperLength;
++            this.vias = vias;
++            this.largestProtectedEmptyRectangleArea = largestVoid;
++            this.geometrySha256 = geometrySha256;
++            this.stableIdentitySha256 = stableIdentitySha256;
++            this.labelIdentitySha256 = labelIdentitySha256;
++            this.generationMetadata = generationMetadata;
++        }
++
++        String json() {
++            StringBuilder value = new StringBuilder(500);
++            value.append('{');
++            value.append("\"area\":").append(area);
++            value.append(",\"copperLength\":").append(copperLength);
++            value.append(",\"vias\":").append(vias);
++            value.append(",\"largestProtectedEmptyRectangleArea\":")
++                .append(largestProtectedEmptyRectangleArea);
++            value.append(",\"geometrySha256\":");
++            stringField(value, geometrySha256);
++            value.append(",\"stableIdentitySha256\":");
++            stringField(value, stableIdentitySha256);
++            value.append(",\"labelIdentitySha256\":");
++            stringField(value, labelIdentitySha256);
++            value.append(",\"generationMetadata\":");
++            stringField(value, generationMetadata);
++            value.append('}');
++            return value.toString();
++        }
++
++        boolean same(MetricValue other) {
++            return other != null && area == other.area &&
++                copperLength == other.copperLength && vias == other.vias &&
++                largestProtectedEmptyRectangleArea ==
++                    other.largestProtectedEmptyRectangleArea &&
++                sameText(geometrySha256, other.geometrySha256) &&
++                sameText(stableIdentitySha256, other.stableIdentitySha256) &&
++                sameText(labelIdentitySha256, other.labelIdentitySha256) &&
++                sameText(generationMetadata, other.generationMetadata);
++        }
++    }
++
++    private static final class CompactionValue {
++        final MetricValue metrics;
++        final Object nextFrame;
++        final boolean compacted;
++        private final CompactionJson encoder;
++
++        CompactionValue(MetricValue metrics, Object nextFrame, boolean compacted,
++                CompactionJson encoder) {
++            this.metrics = metrics;
++            this.nextFrame = nextFrame;
++            this.compacted = compacted;
++            this.encoder = encoder;
++        }
++
++        String json(boolean strict) { return encoder.json(strict); }
++        String controlJson() { return encoder.controlJson(); }
++    }
++
++    private interface CompactionJson {
++        String json(boolean strict);
++        String controlJson();
++    }
++
++    private static final class MoveValue {
++        final Object token;
++        MoveValue(Object token) { this.token = token; }
++    }
++
++    private static final class StructuralValue {
++        final String json;
++        final Vector<MoveValue> moves;
++        StructuralValue(String json, Vector<MoveValue> moves) {
++            this.json = json;
++            this.moves = moves;
++        }
++    }
++
++    private static final class RowValue {
++        final String disposition;
++        final String feasibilityJson;
++        final Object token;
++        RowValue(String disposition, String feasibilityJson, Object token) {
++            this.disposition = disposition;
++            this.feasibilityJson = feasibilityJson;
++            this.token = token;
++        }
++    }
++
++    private static final class StepRecord {
++        final int index;
++        final Object source;
++        final String sourceJson;
++        final MetricValue sourceMetrics;
++        final CompactionValue control;
++        final StructuralValue structural;
++        final Vector<RowRecord> rows = new Vector<RowRecord>();
++        Integer acceptedRowIndex;
++
++        StepRecord(int index, Object source, String sourceJson,
++                MetricValue sourceMetrics, CompactionValue control,
++                StructuralValue structural) {
++            this.index = index;
++            this.source = source;
++            this.sourceJson = sourceJson;
++            this.sourceMetrics = sourceMetrics;
++            this.control = control;
++            this.structural = structural;
++        }
++
++        void appendJson(StringBuilder json) {
++            json.append('{');
++            json.append("\"index\":").append(index);
++            json.append(",\"source\":").append(sourceJson);
++            json.append(",\"sourceMetrics\":").append(sourceMetrics.json());
++            json.append(",\"control\":").append(control.controlJson());
++            json.append(",\"structural\":").append(structural.json);
++            json.append(",\"rows\":[");
++            for (int index = 0; index < rows.size(); index++) {
++                if (index != 0) json.append(',');
++                rows.get(index).appendJson(json);
++            }
++            json.append(']');
++            json.append(",\"acceptedRowIndex\":");
++            if (acceptedRowIndex == null) json.append("null");
++            else json.append(acceptedRowIndex.intValue());
++            json.append('}');
++        }
++    }
++
++    private static final class RowRecord {
++        final RowValue feasibility;
++        final CompactionValue compaction;
++        final boolean strictImprovement;
++
++        RowRecord(RowValue feasibility, CompactionValue compaction,
++                boolean strictImprovement) {
++            this.feasibility = feasibility;
++            this.compaction = compaction;
++            this.strictImprovement = strictImprovement;
++        }
++
++        void appendJson(StringBuilder json) {
++            json.append('{');
++            json.append("\"feasibility\":").append(feasibility.feasibilityJson);
++            json.append(",\"compaction\":");
++            if (compaction == null) json.append("null");
++            else json.append(compaction.json(strictImprovement));
++            json.append('}');
++        }
++    }
++
++    private static final class DescentRun {
++        final Object finalFrame;
++        final String sourceJson;
++        final MetricValue sourceMetrics;
++        final CompactionValue initialControl;
++        final MetricValue finalMetrics;
++        final Vector<StepRecord> steps;
++        final int acceptedSteps;
++        final int evaluatedMoves;
++        final int validatedMoves;
++        final int rejectedMoves;
++        final int compactions;
++        final String status;
++
++        DescentRun(Object finalFrame, String sourceJson, MetricValue sourceMetrics,
++                CompactionValue initialControl, MetricValue finalMetrics,
++                Vector<StepRecord> steps, int acceptedSteps, int evaluatedMoves,
++                int validatedMoves, int rejectedMoves, int compactions,
++                String status) {
++            this.finalFrame = finalFrame;
++            this.sourceJson = sourceJson;
++            this.sourceMetrics = sourceMetrics;
++            this.initialControl = initialControl;
++            this.finalMetrics = finalMetrics;
++            this.steps = steps;
++            this.acceptedSteps = acceptedSteps;
++            this.evaluatedMoves = evaluatedMoves;
++            this.validatedMoves = validatedMoves;
++            this.rejectedMoves = rejectedMoves;
++            this.compactions = compactions;
++            this.status = status;
++        }
++    }
++
++    private static DescentRun runDescent(DescentBackend backend) {
++        Object initialFrame = backend.initialFrame();
++        Object initialSource = backend.source(initialFrame);
++        MetricValue initialMetrics = backend.metrics(initialFrame, true);
++        CompactionValue initialControl = backend.control(initialFrame, initialSource, true);
++        MetricValue finalMetrics = initialMetrics;
++        Object currentFrame = initialFrame;
++        Vector<StepRecord> steps = new Vector<StepRecord>();
++        Vector<Object> retainedSources = new Vector<Object>();
++        int acceptedSteps = 0;
++        int evaluatedMoves = 0;
++        int validatedMoves = 0;
++        int rejectedMoves = 0;
++        int compactions = 0;
++        String status;
++
++        while (true) {
++            backend.check();
++            if (acceptedSteps >= MAX_ACCEPTED_STEPS) {
++                status = "STEP_CAP";
++                break;
++            }
++            if (evaluatedMoves >= MAX_EVALUATED_MOVES) {
++                status = "EVALUATION_CAP";
++                break;
++            }
++            Object stepSource = acceptedSteps == 0 ? initialSource :
++                backend.source(currentFrame);
++            retainedSources.add(stepSource);
++            MetricValue stepMetrics = acceptedSteps == 0 ? initialMetrics :
++                backend.metrics(currentFrame, false);
++            CompactionValue control = acceptedSteps == 0 ? initialControl :
++                backend.control(currentFrame, stepSource, false);
++            StructuralValue structural = backend.structural(currentFrame);
++            StepRecord step = new StepRecord(steps.size() + 1, stepSource,
++                backend.sourceJson(stepSource), stepMetrics, control, structural);
++            if (structural.moves.isEmpty()) {
++                steps.add(step);
++                status = "NO_STRUCTURAL_MOVES";
++                break;
++            }
++
++            boolean accepted = false;
++            boolean evaluationCap = false;
++            for (int index = 0; index < structural.moves.size(); index++) {
++                if (evaluatedMoves >= MAX_EVALUATED_MOVES) {
++                    evaluationCap = true;
++                    break;
++                }
++                backend.check();
++                RowValue row = backend.evaluate(stepSource,
++                    structural.moves.get(index));
++                evaluatedMoves++;
++                if ("PHYSICAL_REJECTED".equals(row.disposition)) {
++                    rejectedMoves++;
++                    step.rows.add(new RowRecord(row, null, false));
++                } else if ("PHYSICAL_VALIDATED".equals(row.disposition)) {
++                    validatedMoves++;
++                    CompactionValue candidate = backend.compact(currentFrame,
++                        stepSource, row);
++                    compactions++;
++                    boolean strict = strictDescentImprovement(candidate.metrics,
++                        stepMetrics, control.metrics, initialMetrics,
++                        initialControl.metrics);
++                    step.rows.add(new RowRecord(row, candidate, strict));
++                    if (strict) {
++                        step.acceptedRowIndex = Integer.valueOf(index);
++                        accepted = true;
++                        acceptedSteps++;
++                        finalMetrics = candidate.metrics;
++                        currentFrame = candidate.nextFrame;
++                        break;
++                    }
++                } else {
++                    throw new IllegalStateException(
++                        "Unknown selected-slide feasibility disposition: " +
++                        row.disposition);
++                }
++            }
++            steps.add(step);
++            if (accepted) {
++                if (acceptedSteps >= MAX_ACCEPTED_STEPS) {
++                    status = "STEP_CAP";
++                    break;
++                }
++                continue;
++            }
++            if (evaluationCap || evaluatedMoves >= MAX_EVALUATED_MOVES) {
++                status = "EVALUATION_CAP";
++                break;
++            }
++            status = "NO_STRICT_IMPROVEMENT";
++            break;
++        }
++
++        for (Object retained : retainedSources) backend.verifySource(retained);
++        MetricValue actualFinal = backend.metrics(currentFrame,
++            currentFrame == initialFrame);
++        require(finalMetrics.same(actualFinal),
++            "final metrics match a fresh final-frame capture");
++        return new DescentRun(currentFrame, backend.sourceJson(initialSource),
++            initialMetrics, initialControl, actualFinal, steps, acceptedSteps,
++            evaluatedMoves, validatedMoves, rejectedMoves, compactions, status);
++    }
++
++    private static boolean strictDescentImprovement(MetricValue candidate,
++            MetricValue currentSource, MetricValue currentControl,
++            MetricValue initialSource, MetricValue initialControl) {
++        return candidate.area < currentSource.area &&
++            candidate.area < currentControl.area &&
++            candidate.area < initialSource.area &&
++            candidate.area < initialControl.area &&
++            candidate.copperLength <= currentSource.copperLength &&
++            candidate.copperLength <= currentControl.copperLength &&
++            candidate.copperLength <= initialSource.copperLength &&
++            candidate.copperLength <= initialControl.copperLength &&
++            candidate.vias <= currentSource.vias &&
++            candidate.vias <= currentControl.vias &&
++            candidate.vias <= initialSource.vias &&
++            candidate.vias <= initialControl.vias &&
++            candidate.largestProtectedEmptyRectangleArea <=
++                currentSource.largestProtectedEmptyRectangleArea &&
++            candidate.largestProtectedEmptyRectangleArea <=
++                currentControl.largestProtectedEmptyRectangleArea &&
++            candidate.largestProtectedEmptyRectangleArea <=
++                initialSource.largestProtectedEmptyRectangleArea &&
++            candidate.largestProtectedEmptyRectangleArea <=
++                initialControl.largestProtectedEmptyRectangleArea;
++    }
++
++    private static final class RuntimeFrame {
++        final TroubleshootBoard board;
++        final PcbBoardLayout layout;
++        final PcbPlacementPlanner.Plan plan;
++        final boolean privateFrame;
++
++        RuntimeFrame(TroubleshootBoard board, PcbBoardLayout layout,
++                PcbPlacementPlanner.Plan plan, boolean privateFrame) {
++            this.board = board;
++            this.layout = layout;
++            this.plan = plan;
++            this.privateFrame = privateFrame;
++        }
++    }
++
++    private static final class RuntimeBackend implements DescentBackend {
++        final long seed;
++        final TroubleshootBoard board;
++        final RuntimeFrame initial;
++
++        RuntimeBackend(long seed, TroubleshootBoard board, PcbBoardLayout layout,
++                PcbPlacementPlanner.Plan plan) {
++            this.seed = seed;
++            this.board = board;
++            this.initial = new RuntimeFrame(board, layout, plan, false);
++        }
++
++        public Object initialFrame() { return initial; }
++
++        public Object source(Object frame) {
++            RuntimeFrame value = (RuntimeFrame) frame;
++            return PcbRoutedPassiveFeasibilityCensusContractTest
++                .captureSelectedSlideSource(board, value.layout);
++        }
++
++        public MetricValue metrics(Object frame, boolean initial) {
++            RuntimeFrame value = (RuntimeFrame) frame;
++            String generation = value.privateFrame ? PRIVATE_GENERATION_METADATA :
++                SOURCE_GENERATION_METADATA;
++            PcbRoutedSlideCompactionContractTest.DescentMetrics source =
++                PcbRoutedSlideCompactionContractTest.metricsForDescent(
++                    board, value.layout, seed, generation);
++            return new MetricValue(source.area, source.copperLength, source.vias,
++                source.largestProtectedEmptyRectangleArea, source.geometrySha256,
++                source.stableIdentitySha256, source.labelIdentitySha256,
++                source.generationMetadata);
++        }
++
++        public CompactionValue control(Object frame, Object source,
++                boolean initial) {
++            RuntimeFrame value = (RuntimeFrame) frame;
++            PcbRoutedSlideCompactionContractTest.DescentCompaction result =
++                PcbRoutedSlideCompactionContractTest.compactForDescent(board,
++                    value.plan,
++                    (PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource) source,
++                    value.layout, seed, PRIVATE_GENERATION_METADATA);
++            return runtimeCompaction(result, null);
++        }
++
++        public StructuralValue structural(Object frame) {
++            RuntimeFrame value = (RuntimeFrame) frame;
++            PcbRoutedPassiveLegCensusContractTest.SelectedSlideCensus census =
++                PcbRoutedPassiveLegCensusContractTest.captureSelectedSlideCensus(
++                    board, value.layout);
++            Vector<MoveValue> moves = new Vector<MoveValue>();
++            for (PcbRoutedPassiveLegCensusContractTest.MoveIntent move :
++                    census.moves())
++                moves.add(new MoveValue(move));
++            return new StructuralValue(census.json(), moves);
++        }
++
++        public RowValue evaluate(Object source, MoveValue move) {
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideRow row =
++                PcbRoutedPassiveFeasibilityCensusContractTest.evaluateSelectedSlide(
++                    (PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource) source,
++                    (PcbRoutedPassiveLegCensusContractTest.MoveIntent) move.token);
++            StringBuilder json = new StringBuilder(2000);
++            PcbRoutedPassiveFeasibilityCensusContractTest
++                .appendSelectedSlideFeasibility(json, row);
++            return new RowValue(row.disposition(), json.toString(), row);
++        }
++
++        public CompactionValue compact(Object frame, Object source,
++                RowValue row) {
++            RuntimeFrame value = (RuntimeFrame) frame;
++            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideRow feasibility =
++                (PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideRow) row.token;
++            PcbPlacementPlanner.Plan movedPlan =
++                PcbRoutedSlideCompactionContractTest.movedPlanForDescent(
++                    value.plan, feasibility);
++            PcbRoutedSlideCompactionContractTest.DescentCompaction result =
++                PcbRoutedSlideCompactionContractTest.compactForDescent(board,
++                    movedPlan,
++                    (PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource) source,
++                    feasibility.candidate(), seed, PRIVATE_GENERATION_METADATA);
++            RuntimeFrame next = new RuntimeFrame(board, result.layout(),
++                result.plan(), true);
++            return runtimeCompaction(result, next);
++        }
++
++        private CompactionValue runtimeCompaction(
++                PcbRoutedSlideCompactionContractTest.DescentCompaction result,
++                RuntimeFrame nextFrame) {
++            PcbRoutedSlideCompactionContractTest.DescentMetrics value =
++                result.metrics();
++            return new CompactionValue(new MetricValue(value.area,
++                value.copperLength, value.vias,
++                value.largestProtectedEmptyRectangleArea, value.geometrySha256,
++                value.stableIdentitySha256, value.labelIdentitySha256,
++                value.generationMetadata), nextFrame, result.compacted(),
++                new RuntimeCompactionJson(result));
++        }
++
++        public String sourceJson(Object source) {
++            return ((PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource)
++                source).sourceJson();
++        }
++
++        public void check() { GenerationWorkScope.check(); }
++
++        public void verifySource(Object source) {
++            PcbRoutedSlideCompactionContractTest.verifySourceUnchangedForDescent(
++                (PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource)
++                source);
++        }
++    }
++
++    private static final class RuntimeCompactionJson implements CompactionJson {
++        final PcbRoutedSlideCompactionContractTest.DescentCompaction value;
++
++        RuntimeCompactionJson(
++                PcbRoutedSlideCompactionContractTest.DescentCompaction value) {
++            this.value = value;
++        }
++
++        public String json(boolean strict) {
++            StringBuilder json = new StringBuilder(1800);
++            PcbRoutedSlideCompactionContractTest.appendDescentCompaction(
++                json, value, strict);
++            return json.toString();
++        }
++
++        public String controlJson() {
++            StringBuilder json = new StringBuilder(1800);
++            PcbRoutedSlideCompactionContractTest.appendDescentControl(json, value);
++            return json.toString();
++        }
++    }
++
++    private static final class LiteralBackend implements DescentBackend {
++        final LiteralMetrics sourceMetrics;
++        final LiteralMetrics controlMetrics;
++        final LiteralOutcome[][] cohorts;
++        final boolean cancelDuringEvaluation;
++        final RuntimeException evaluationFailure;
++        final RuntimeException finalizationFailure;
++        GenerationJob job;
++
++        LiteralBackend(LiteralMetrics sourceMetrics, LiteralMetrics controlMetrics,
++                LiteralOutcome[][] cohorts) {
++            this(sourceMetrics, controlMetrics, cohorts, false, false, false);
++        }
++
++        LiteralBackend(LiteralMetrics sourceMetrics, LiteralMetrics controlMetrics,
++                LiteralOutcome[][] cohorts, boolean throwDuringEvaluation,
++                boolean cancelDuringEvaluation, boolean failFinalization) {
++            this(sourceMetrics, controlMetrics, cohorts, throwDuringEvaluation,
++                cancelDuringEvaluation, failFinalization, null, null);
++        }
++
++        LiteralBackend(LiteralMetrics sourceMetrics, LiteralMetrics controlMetrics,
++                LiteralOutcome[][] cohorts, boolean throwDuringEvaluation,
++                boolean cancelDuringEvaluation, boolean failFinalization,
++                RuntimeException evaluationFailure,
++                RuntimeException finalizationFailure) {
++            this.sourceMetrics = sourceMetrics;
++            this.controlMetrics = controlMetrics;
++            this.cohorts = cohorts;
++            this.cancelDuringEvaluation = cancelDuringEvaluation;
++            this.evaluationFailure = evaluationFailure == null && throwDuringEvaluation ?
++                new IllegalStateException("literal unexpected evaluation") :
++                evaluationFailure;
++            this.finalizationFailure = finalizationFailure == null && failFinalization ?
++                new IllegalStateException("literal finalization failure") :
++                finalizationFailure;
++        }
++
++        public Object initialFrame() {
++            return new LiteralFrame(0, false, sourceMetrics);
++        }
++
++        public Object source(Object frame) { return frame; }
++
++        public MetricValue metrics(Object frame, boolean initial) {
++            LiteralFrame value = (LiteralFrame) frame;
++            String metadata = value.privateFrame ? PRIVATE_GENERATION_METADATA :
++                SOURCE_GENERATION_METADATA;
++            return metricValue(value.metrics, metadata, value.index);
++        }
++
++        public CompactionValue control(Object frame, Object source,
++                boolean initial) {
++            LiteralFrame value = (LiteralFrame) frame;
++            return literalCompaction(metricValue(controlMetrics,
++                PRIVATE_GENERATION_METADATA, value.index), value, false);
++        }
++
++        public StructuralValue structural(Object frame) {
++            LiteralFrame value = (LiteralFrame) frame;
++            LiteralOutcome[] cohort = value.index < cohorts.length ?
++                cohorts[value.index] : new LiteralOutcome[0];
++            Vector<MoveValue> moves = new Vector<MoveValue>();
++            for (int index = 0; index < cohort.length; index++)
++                moves.add(new MoveValue(Integer.valueOf(index)));
++            StringBuilder json = new StringBuilder(180);
++            json.append("{\"geometryHashBefore\":\"literal-")
++                .append(value.index).append("\",\"geometryHashAfter\":\"literal-")
++                .append(value.index).append("\",\"parts\":[]}");
++            return new StructuralValue(json.toString(), moves);
++        }
++
++        public RowValue evaluate(Object source, MoveValue move) {
++            if (evaluationFailure != null)
++                throw evaluationFailure;
++            if (cancelDuringEvaluation) {
++                if (job == null) throw new IllegalStateException(
++                    "literal cancellation job is missing");
++                job.cancel();
++                GenerationWorkScope.check();
++            }
++            LiteralFrame frame = (LiteralFrame) source;
++            LiteralOutcome value = cohorts[frame.index][
++                ((Integer) move.token).intValue()];
++            return new RowValue(value.disposition, value.feasibilityJson, value);
++        }
++
++        public CompactionValue compact(Object frame, Object source,
++                RowValue row) {
++            LiteralOutcome value = (LiteralOutcome) row.token;
++            LiteralFrame current = (LiteralFrame) frame;
++            LiteralFrame next = new LiteralFrame(current.index + 1, true,
++                value.metrics);
++            return literalCompaction(metricValue(value.metrics,
++                PRIVATE_GENERATION_METADATA, next.index), next, value.compacted);
++        }
++
++        public String sourceJson(Object source) {
++            LiteralFrame frame = (LiteralFrame) source;
++            return "{\"frame\":\"literal-" + frame.index + "\"}";
++        }
++
++        public void check() { GenerationWorkScope.check(); }
++
++        public void verifySource(Object source) {
++            if (finalizationFailure != null)
++                throw finalizationFailure;
++        }
++
++        private MetricValue metricValue(LiteralMetrics value, String metadata,
++                int index) {
++            return new MetricValue(value.area, value.copper, value.vias,
++                value.protectedVoid, "literal-geometry-" + index,
++                "literal-identity", "literal-labels", metadata);
++        }
++
++        private CompactionValue literalCompaction(MetricValue metrics,
++                LiteralFrame frame, boolean compacted) {
++            return new CompactionValue(metrics, frame, compacted,
++                new LiteralCompactionJson(metrics, compacted));
++        }
++    }
++
++    private static final class LiteralFrame {
++        final int index;
++        final boolean privateFrame;
++        final LiteralMetrics metrics;
++        LiteralFrame(int index, boolean privateFrame, LiteralMetrics metrics) {
++            this.index = index;
++            this.privateFrame = privateFrame;
++            this.metrics = metrics;
++        }
++    }
++
++    private static final class LiteralCompactionJson implements CompactionJson {
++        final MetricValue metrics;
++        final boolean compacted;
++
++        LiteralCompactionJson(MetricValue metrics, boolean compacted) {
++            this.metrics = metrics;
++            this.compacted = compacted;
++        }
++
++        public String json(boolean strict) {
++            return "{\"compacted\":" + compacted + ",\"metrics\":" +
++                metrics.json() + ",\"proof\":{},\"sourceImmutable\":true," +
++                "\"strictImprovement\":" + strict + "}";
++        }
++
++        public String controlJson() {
++            return "{\"compacted\":" + compacted + ",\"metrics\":" +
++                metrics.json() + ",\"proof\":{},\"sourceImmutable\":true}";
++        }
++    }
++
++    private static final class LiteralMetrics {
++        final long area, copper;
++        final int vias, protectedVoid;
++
++        LiteralMetrics(long area, long copper, int vias, int protectedVoid) {
++            this.area = area;
++            this.copper = copper;
++            this.vias = vias;
++            this.protectedVoid = protectedVoid;
++        }
++    }
++
++    private static final class LiteralOutcome {
++        final String disposition;
++        final String feasibilityJson;
++        final LiteralMetrics metrics;
++        final boolean validated;
++        final boolean compacted;
++
++        LiteralOutcome(LiteralMetrics metrics, boolean validated) {
++            this(validated ? "PHYSICAL_VALIDATED" : "PHYSICAL_REJECTED",
++                "{\"disposition\":\"" +
++                (validated ? "PHYSICAL_VALIDATED" : "PHYSICAL_REJECTED") + "\"}",
++                metrics, validated);
++        }
++
++        LiteralOutcome(String disposition, String feasibilityJson,
++                LiteralMetrics metrics, boolean validated) {
++            this.disposition = disposition;
++            this.feasibilityJson = feasibilityJson;
++            this.metrics = metrics;
++            this.validated = validated;
++            this.compacted = validated;
++        }
++    }
++    private static final class ScopeServices implements GenerationJob.Services {
++        long clock;
++
++        public int candidateCount() { return 1; }
++        public String manifest(int candidate) { return "descent-scope"; }
++        public void beginCandidate(int index) { }
++        public String resolve() { return "resolve"; }
++        public String healthy() { return "healthy"; }
++        public String physical() { return "physical"; }
++        public boolean proveNext() { return false; }
++        public String symptom() { return "symptom"; }
++        public String dependencies() { return "dependencies"; }
++        public void publish(GenerationReceipt receipt) { }
++        public void abort() { }
++        public boolean isCurrent() { return true; }
++        public long nowMillis() { return clock++; }
++    }
++
++    private static LiteralMetrics literalMetrics(long area, long copper,
++            int vias, int protectedVoid) {
++        return new LiteralMetrics(area, copper, vias, protectedVoid);
++    }
++
++    private static LiteralOutcome literalOutcome(LiteralMetrics metrics,
++            boolean validated) {
++        return new LiteralOutcome(validated ? "PHYSICAL_VALIDATED" :
++            "PHYSICAL_REJECTED", "{\"disposition\":\"" +
++            (validated ? "PHYSICAL_VALIDATED" : "PHYSICAL_REJECTED") + "\"}",
++            metrics, validated);
++    }
++
++    private static LiteralOutcome[] literalRows(int count, LiteralMetrics metrics,
++            boolean validated) {
++        LiteralOutcome[] rows = new LiteralOutcome[count];
++        for (int index = 0; index < count; index++)
++            rows[index] = literalOutcome(metrics, validated);
++        return rows;
++    }
++
++    private static DescentRun runLiteral(LiteralMetrics source,
++            LiteralMetrics control, LiteralOutcome[][] cohorts) {
++        return runDescent(new LiteralBackend(source, control, cohorts));
++    }
++
++    private static void canonicalFirstImprovementAndTransitions() {
++        LiteralMetrics source = literalMetrics(1000, 500, 4, 800);
++        LiteralMetrics control = literalMetrics(990, 500, 4, 790);
++        LiteralOutcome[][] cohorts = new LiteralOutcome[][] {
++            new LiteralOutcome[] {
++                literalOutcome(literalMetrics(990, 500, 4, 790), true),
++                literalOutcome(literalMetrics(970, 500, 4, 780), true),
++                literalOutcome(literalMetrics(950, 490, 4, 780), true)
++            },
++            new LiteralOutcome[0]
++        };
++        DescentRun run = runLiteral(source, control, cohorts);
++        check(run.acceptedSteps == 1 && run.evaluatedMoves == 2 &&
++                run.steps.size() == 2 &&
++                run.steps.get(0).acceptedRowIndex.intValue() == 1,
++            "shared driver accepts the first strict row and stops its cohort");
++        check(((LiteralFrame) run.finalFrame).index == 1 &&
++                "NO_STRUCTURAL_MOVES".equals(run.status),
++            "shared driver advances one private source then reports its empty cohort");
++        check(run.steps.get(0).rows.size() == 2 &&
++                run.steps.get(0).rows.get(0).compaction != null,
++            "the nonstrict prefix is retained before the accepted transition");
++        check(run.steps.get(1).sourceJson.indexOf("literal-1") >= 0 &&
++                run.steps.get(1).rows.isEmpty() &&
++                run.steps.get(1).acceptedRowIndex == null,
++            "the next step uses the accepted private source and empty cohort");
++        check(run.finalMetrics.area == 970 &&
++                PRIVATE_GENERATION_METADATA.equals(run.finalMetrics.generationMetadata),
++            "the final metrics are freshly captured from the accepted private frame");
++        fixture("canonicalFirstImprovementAndTransitions");
++    }
++
++    private static void strictDescentAndInitialGuards() {
++        LiteralMetrics source = literalMetrics(1000, 500, 4, 800);
++        LiteralMetrics control = literalMetrics(950, 500, 4, 790);
++        LiteralMetrics[] candidates = new LiteralMetrics[] {
++            literalMetrics(900, 500, 4, 780),
++            literalMetrics(900, 501, 4, 780),
++            literalMetrics(900, 500, 5, 780),
++            literalMetrics(900, 500, 4, 801),
++            literalMetrics(1000, 500, 4, 700)
++        };
++        DescentRun strict = runLiteral(source, control,
++            new LiteralOutcome[][] {{literalOutcome(candidates[0], true)}});
++        check(strict.acceptedSteps == 1,
++            "shared strict comparator accepts a lower-area nonregression");
++        for (int index = 1; index < candidates.length; index++) {
++            DescentRun rejected = runLiteral(source, control,
++                new LiteralOutcome[][] {{literalOutcome(candidates[index], true)}});
++            check(rejected.acceptedSteps == 0 &&
++                    "NO_STRICT_IMPROVEMENT".equals(rejected.status),
++                "shared strict comparator rejects guard regression " + index);
++        }
++        fixture("strictDescentAndInitialGuards");
++    }
++
++    private static void exhaustionAndEmptyCohort() {
++        LiteralMetrics source = literalMetrics(1000, 500, 4, 800);
++        LiteralMetrics control = literalMetrics(990, 500, 4, 790);
++        DescentRun empty = runLiteral(source, control,
++            new LiteralOutcome[][] {new LiteralOutcome[0]});
++        check(empty.steps.size() == 1 && empty.evaluatedMoves == 0 &&
++                "NO_STRUCTURAL_MOVES".equals(empty.status),
++            "shared driver reports an empty canonical cohort");
++        DescentRun exhausted = runLiteral(source, control,
++            new LiteralOutcome[][] {{literalOutcome(
++                literalMetrics(989, 500, 4, 790), false),
++                literalOutcome(literalMetrics(990, 500, 4, 790), true),
++                literalOutcome(literalMetrics(989, 501, 4, 790), true)}});
++        check(exhausted.steps.get(0).rows.size() == 3 &&
++                exhausted.acceptedSteps == 0 &&
++                exhausted.rejectedMoves == 1 &&
++                exhausted.steps.get(0).rows.get(0).compaction == null &&
++                "NO_STRICT_IMPROVEMENT".equals(exhausted.status),
++            "shared driver exhausts a nonempty cohort without accepting");
++        fixture("exhaustionAndEmptyCohort");
++    }
++
++    private static void acceptedStepAndEvaluationCaps() {
++        LiteralMetrics source = literalMetrics(1000, 500, 4, 800);
++        LiteralMetrics control = literalMetrics(990, 500, 4, 790);
++        LiteralOutcome[][] four = new LiteralOutcome[][] {
++            {literalOutcome(literalMetrics(900, 500, 4, 780), true)},
++            {literalOutcome(literalMetrics(800, 500, 4, 770), true)},
++            {literalOutcome(literalMetrics(700, 500, 4, 760), true)},
++            {literalOutcome(literalMetrics(600, 500, 4, 750), true)},
++            new LiteralOutcome[0]
++        };
++        DescentRun fourRun = runLiteral(source, control, four);
++        check(fourRun.acceptedSteps == 4 && fourRun.steps.size() == 4 &&
++                "STEP_CAP".equals(fourRun.status),
++            "shared driver stops at four accepted private transitions");
++        check(fourRun.steps.get(0).acceptedRowIndex.intValue() == 0 &&
++                fourRun.evaluatedMoves == 4,
++            "shared driver preserves zero-based accepted rows across steps");
++
++        LiteralOutcome[][] many = new LiteralOutcome[][] {
++            literalRows(129, control, true)
++        };
++        DescentRun capRun = runLiteral(source, control, many);
++        check(capRun.evaluatedMoves == MAX_EVALUATED_MOVES &&
++                capRun.steps.get(0).rows.size() == MAX_EVALUATED_MOVES &&
++                "EVALUATION_CAP".equals(capRun.status),
++            "shared driver stops exactly before evaluation 129");
++        fixture("acceptedStepAndEvaluationCaps");
++    }
++
++    private static void failureAndCancellationPropagation() {
++        LiteralMetrics source = literalMetrics(1000, 500, 4, 800);
++        LiteralMetrics control = literalMetrics(990, 500, 4, 790);
++        LiteralOutcome[][] cohort = new LiteralOutcome[][] {{
++            literalOutcome(literalMetrics(980, 500, 4, 780), true)
++        }};
++
++        final RuntimeException sentinel =
++            new IllegalStateException("literal unexpected evaluation");
++        final LiteralBackend unknown = new LiteralBackend(source, control, cohort,
++            false, false, false, sentinel, null);
++        boolean propagated = false;
++        try {
++            runDescent(unknown);
++        } catch (IllegalStateException expected) {
++            propagated = expected == sentinel;
++        }
++        check(propagated, "unknown evaluation failure propagates from the shared driver");
++
++        final GenerationJob job = new GenerationJob(new ScopeServices(),
++            100000L, 40, 5000L);
++        final LiteralBackend cancelled = new LiteralBackend(source, control, cohort,
++            false, true, false);
++        cancelled.job = job;
++        GenerationWorkScope.enter(job);
++        boolean cancellationPropagated = false;
++        try {
++            try {
++                runDescent(cancelled);
++            } catch (GenerationJob.Cancelled expected) {
++                cancellationPropagated = true;
++            }
++        } finally {
++            GenerationWorkScope.exit(job);
++        }
++        check(cancellationPropagated &&
++                job.getOutcome() == GenerationJob.Outcome.CANCELLED,
++            "actual cancellation during shared evaluation propagates and restores scope");
++
++        final RuntimeException finalizationSentinel =
++            new IllegalStateException("literal finalization failure");
++        final LiteralBackend failedFinalization = new LiteralBackend(source, control,
++            new LiteralOutcome[][] {new LiteralOutcome[0]},
++            false, false, false, null, finalizationSentinel);
++        boolean finalizationPropagated = false;
++        try {
++            runDescent(failedFinalization);
++        } catch (IllegalStateException expected) {
++            finalizationPropagated = expected == finalizationSentinel;
++        }
++        check(finalizationPropagated,
++            "final source verification failure propagates from the shared driver");
++        fixture("failureAndCancellationPropagation");
++    }
++
++    private static void selectedObserverOwnershipAndAdapterIsolation() {
++        final int[] calls = new int[] {0};
++        SeededPcbLayoutGenerator.SelectedSlideObserver sentinel =
++            new SeededPcbLayoutGenerator.SelectedSlideObserver() {
++                public void onSelected(TroubleshootBoard board, PcbBoardLayout layout,
++                        PcbPlacementPlanner.Plan plan, String route, int attempt) {
++                    calls[0]++;
++                    throw new AssertionError("null dispatch inspected its inputs");
++                }
++            };
++        SeededPcbLayoutGenerator.SelectedSlideObserver prior =
++            SeededPcbLayoutGenerator.setSelectedSlideObserver(sentinel);
++        try {
++            boolean invalidObserved = false;
++            try {
++                observe(987654321L, "invalid-descent-root");
++            } catch (IllegalArgumentException expected) {
++                invalidObserved = true;
++            }
++            check(invalidObserved,
++                "invalid descent root propagates the owner validation error");
++            check(SeededPcbLayoutGenerator.setSelectedSlideObserver(null) == sentinel,
++                "failed descent observation restores the prior observer owner");
++            SeededPcbLayoutGenerator.dispatchSelectedSlide(null, null, null, null, 0);
++            check(calls[0] == 0,
++                "null selected-slide dispatch performs no input inspection");
++            PcbBoardLayout empty = new PcbBoardLayout(100, 100,
++                new Rectangle(0, 0, 80, 80), new Rectangle(80, 0, 20, 80),
++                SeededPcbLayoutGenerator.CURRENT_VERSION);
++            TroubleshootBoard board = new TroubleshootBoard("DESCENT_EMPTY");
++            board.setPlacementConstraints(new PcbPlacementConstraints(
++                new Vector<PcbPlacementConstraints.Part>(),
++                new Vector<PcbPlacementConstraints.Barrier>()));
++            PcbRoutedPassiveLegCensusContractTest.SelectedSlideCensus census =
++                PcbRoutedPassiveLegCensusContractTest.captureSelectedSlideCensus(
++                    board, empty);
++            Vector<PcbRoutedPassiveLegCensusContractTest.MoveIntent> copy =
++                census.moves();
++            copy.add(new PcbRoutedPassiveLegCensusContractTest.MoveIntent(
++                "PRIVATE_ONLY", 10, 0, 0L));
++            check(census.moves().isEmpty() && census.partCount() == 0 &&
++                    census.geometryHashBefore().equals(census.geometryHashAfter()) &&
++                    census.json().indexOf("\"parts\":[]") >= 0,
++                "structural adapter returns an isolated immutable empty snapshot");
++            boolean missingRejected = false;
++            try {
++                PcbRoutedPassiveLegCensusContractTest.captureSelectedSlideCensus(
++                    null, empty);
++            } catch (IllegalArgumentException expected) {
++                missingRejected = true;
++            }
++            check(missingRejected, "structural adapter rejects a missing source");
++        } finally {
++            SeededPcbLayoutGenerator.setSelectedSlideObserver(prior);
++        }
++        check(calls[0] == 0, "selected observer owner remains untouched by null dispatch");
++        fixture("selectedObserverOwnershipAndAdapterIsolation");
++    }
++
++    private static void check(boolean condition, String message) {
++        assertions++;
++        if (!condition) throw new AssertionError(message);
++    }
++
++    private static void require(boolean condition, String message) {
++        if (!condition) throw new AssertionError(message);
++    }
++
++    private static void fixture(String name) {
++        if (name == null || name.length() == 0)
++            throw new AssertionError("Named fixture required");
++        fixtures++;
++    }
++
++    private static boolean sameText(String first, String second) {
++        return first == null ? second == null : first.equals(second);
++    }
++
++    private static void stringField(StringBuilder json, String value) {
++        if (value == null) {
++            json.append("null");
++            return;
++        }
++        json.append('"');
++        for (int index = 0; index < value.length(); index++) {
++            char ch = value.charAt(index);
++            if (ch == '"') json.append("\\\"");
++            else if (ch == '\\') json.append("\\\\");
++            else if (ch == '\n') json.append("\\n");
++            else if (ch == '\r') json.append("\\r");
++            else if (ch == '\t') json.append("\\t");
++            else if (ch < 0x20) json.append("\\u00")
++                .append(Character.forDigit((ch >> 4) & 0xf, 16))
++                .append(Character.forDigit(ch & 0xf, 16));
++            else json.append(ch);
++        }
++        json.append('"');
++    }
++}
+--- published-probe/tests/contracts/PcbRoutedSlideDescentTrialContractTest.java
++++ private-descent/tests/contracts/PcbRoutedSlideDescentTrialContractTest.java
+@@ -0,0 +1,11 @@
++package com.lushprojects.circuitjs1.client;
++
++/** Bounded private diagnostic; original selected output is never mutated. */
++public final class PcbRoutedSlideDescentTrialContractTest {
++    public static void main(String[] args) {
++        for(long seed:new long[]{5L,2L})
++            PcbRoutedSlideDescentContractTest.observe(seed,"seed"+seed);
++        System.out.println("PASS: PCB routed slide descent trial contracts "+
++            "roots=2 rows=2 evaluator=selectedRoutedSlideDescent");
++    }
++}

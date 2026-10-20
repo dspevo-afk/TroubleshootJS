@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "acceptedOwnerErasureExact": true,
+  "publishedProbeReversalExact": true,
+  "sourceDeltasFromMain": 10,
+  "changedFromPublished": [
+    "scripts/verify-current-contracts.ps1",
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java",
+    "tests/contracts/PcbRoutedSlideCompactionContractTest.java",
+    "tests/contracts/PcbRoutedSlideDescentContractTest.java",
+    "tests/contracts/PcbRoutedSlideDescentTrialContractTest.java"
+  ],
+  "registeredCopyRows": 6,
+  "newRowsBeyondPublished": 2,
+  "diffSha256": "ffb2cf0b9bcd39d42f95754eff6100fb4a470a247339032901de0873ac888538"
+}

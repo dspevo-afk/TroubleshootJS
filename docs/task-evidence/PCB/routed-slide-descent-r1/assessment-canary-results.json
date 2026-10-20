@@ -1,0 +1,435 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "canaryCount": 80,
+  "positiveCount": 8,
+  "negativeCount": 72,
+  "fixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5,
+    "PcbRoutedSlideDescentContractTest": 6
+  },
+  "consumedSha256": {
+    "assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "check_assessment.py": "c7d2450dd4622d4bf676c97d0d2b86790d6789f207cc4399b697aafd1e232250",
+    "protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+    "priorAssess.py": "c03cfd51dc2a93612a94438347b1a5fbbe92c9191a472e2d0b00efc749a4476e",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/native-inputs.json": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/root-review.json": "6dd3da2733a2708549a9c36b31a541872b460336dc10d8fdb499b1ff8643b1d3",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assessment.json": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/feasibility-analysis.json": "3be27e5cccef6241f405667eb1a8c3c372b3768fe735a10eb8a35ee12fa3858f",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/protocol.json": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/native-inputs.json": "a4433f982b2453c976e414a7bf873f0a95ebbf18d218e154adbcb125f66fcb64",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/root-review.json": "f815c2db92af515df7a79b1813f25730f2892acab045519d742ebfffcb3db342",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/routes.txt": "e19b55230786618773216b781a5f0277e02daa29487ecd8601484a2e10567c03",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/assessment.json": "1b565131398e2df611457ebbee3a89ab20cdd210959f64602218b79252ba335b",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/assess.py": "c03cfd51dc2a93612a94438347b1a5fbbe92c9191a472e2d0b00efc749a4476e",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/compaction-analysis.json": "714eca2aef1905f3d2fb4412f747f32ff93c91302115e54b14f6c4cc8e503845"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "26267a6a820ac5d09adfe331c8255209efa43beb6005b0745224bcedc57cf56a",
+      "routes-suites.json": "3e1ffb21131fa7c0270b66e6a8bf1e7cd516d379a80f0c72609ab48d39138f66"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "sourceHashes": {
+    "protocol": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+    "priorReader": "c03cfd51dc2a93612a94438347b1a5fbbe92c9191a472e2d0b00efc749a4476e",
+    "publishedInputs": {
+      "docs/task-evidence/PCB/passive-local-pose-choice-r1/accepted15-baselines.json": "12cebe33eeda3477d2e4d4a8531ff85c39025db9ea5ff341aacedf3007966816",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/protocol.json": "6982e4e88969f599c3c859ed8bb9fc2e67946f24c9f5b0453c7e705231102d30",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/native-inputs.json": "44243c64f1d494760d89c00598895858e17c409b30abc0ad898e01e49fc3d0bf",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/root-review.json": "6dd3da2733a2708549a9c36b31a541872b460336dc10d8fdb499b1ff8643b1d3",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/routes.txt": "ad0901034961f1ea079131080d5e242f63ac7a317cc3d13afb1516437c606ea3",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assessment.json": "c5d561e8953387b0f8f5e5d7c5767921e3bd21c1ff374ad1f995c63b7a81e593",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/feasibility-analysis.json": "3be27e5cccef6241f405667eb1a8c3c372b3768fe735a10eb8a35ee12fa3858f",
+      "docs/task-evidence/PCB/routed-passive-feasibility-census-r1/assess.py": "4cf7a9311de3252b6f3f04ca74a5a3945b3aa80fea71ac2f35ebfb962f417c1a",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/protocol.json": "88123f76e526d42dce97bb656eda8ffdf4479ca947052cf819738e8e79aa93cb",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/native-inputs.json": "a4433f982b2453c976e414a7bf873f0a95ebbf18d218e154adbcb125f66fcb64",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/root-review.json": "f815c2db92af515df7a79b1813f25730f2892acab045519d742ebfffcb3db342",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/routes.txt": "e19b55230786618773216b781a5f0277e02daa29487ecd8601484a2e10567c03",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/assessment.json": "1b565131398e2df611457ebbee3a89ab20cdd210959f64602218b79252ba335b",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/assess.py": "c03cfd51dc2a93612a94438347b1a5fbbe92c9191a472e2d0b00efc749a4476e",
+      "docs/task-evidence/PCB/routed-slide-compaction-probe-r1/compaction-analysis.json": "714eca2aef1905f3d2fb4412f747f32ff93c91302115e54b14f6c4cc8e503845"
+    },
+    "suiteManifests": {
+      "unit-suites.json": "26267a6a820ac5d09adfe331c8255209efa43beb6005b0745224bcedc57cf56a",
+      "routes-suites.json": "3e1ffb21131fa7c0270b66e6a8bf1e7cd516d379a80f0c72609ab48d39138f66"
+    },
+    "classificationOwners": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "68ef5eb7c2ed16f40d64fdf112ee4220498a16b2998d0613c3a2480f6218da6b",
+      "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "c2068645584013a658c97e9940c20e0a7a887da24c621d1a0e05f5e447979ba9",
+      "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorBuilder.java": "c253b133070cbfdec2b0d5b917476ea6262c3edfd2bbacb847218f5165165d37",
+      "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972",
+      "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4"
+    }
+  },
+  "caseCounts": {
+    "roots": 2,
+    "oldBaselineReports": 4,
+    "descentSummaries": 2,
+    "unitSuites": 4,
+    "routeSuites": 1
+  },
+  "coverage": [
+    "sealed protocol, prior reader, published-input, owner, and suite pins",
+    "independent 9045-pair/175409-byte seed2 pad-net oracle",
+    "generic current structural parts, directions, affected trace IDs, and chaining",
+    "first strict, no-improvement, no-move, step/evaluation caps, and compacted flag",
+    "source/control/metrics/identity/proof/comparator/counter/timing gates",
+    "old baseline filter, report order, terminal PASS, timing, exit, and prerequisite gates"
+  ],
+  "independentOracle": {
+    "source": "sealed seed2 target callback pad/net facts",
+    "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+    "padPairCount": 9045,
+    "canonicalUtf8Bytes": 175409
+  },
+  "results": [
+    {
+      "case": "valid empty seed5 and mixed seed2",
+      "result": "PASS"
+    },
+    {
+      "case": "valid all-rejected no-improvement",
+      "result": "PASS"
+    },
+    {
+      "case": "valid four-step accepted cap",
+      "result": "PASS"
+    },
+    {
+      "case": "valid compacted false invocation",
+      "result": "PASS"
+    },
+    {
+      "case": "valid compacted true control owner flag",
+      "result": "PASS"
+    },
+    {
+      "case": "valid evaluation cap fixture",
+      "result": "PASS"
+    },
+    {
+      "case": "independent all-pad net oracle",
+      "result": "PASS",
+      "sha256": "9a1081bec94f99493fff9bf12f2653f27d18db64b4b49b9b2ea826094c4d46b7",
+      "padPairCount": 9045,
+      "canonicalUtf8Bytes": 175409
+    },
+    {
+      "case": "valid unit phase",
+      "result": "PASS"
+    },
+    {
+      "case": "summary status drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary version float",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary selected route drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary limits drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary aggregate drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary elapsed float",
+      "result": "REJECTED"
+    },
+    {
+      "case": "summary elapsed below rows",
+      "result": "REJECTED"
+    },
+    {
+      "case": "step index zero based",
+      "result": "REJECTED"
+    },
+    {
+      "case": "accepted row index drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source graph drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source geometry drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source copper drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source trace count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source route count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source pair count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source reachability drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source provenance drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source metrics generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "source metric area drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "initial control compacted",
+      "result": "REJECTED"
+    },
+    {
+      "case": "control proof flag false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "control identity drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row duplicate",
+      "result": "REJECTED"
+    },
+    {
+      "case": "row missing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move component drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "move delta drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate geometry source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate affected traces drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "candidate generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "rejected row has compaction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "validated row lacks compaction",
+      "result": "REJECTED"
+    },
+    {
+      "case": "old feasibility disposition alias",
+      "result": "REJECTED"
+    },
+    {
+      "case": "embedded proof count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "embedded proof flag false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof count drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof hash drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "final proof identity flag false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "compaction source immutable false",
+      "result": "REJECTED"
+    },
+    {
+      "case": "strict improvement mismatch",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero compaction area",
+      "result": "REJECTED"
+    },
+    {
+      "case": "zero compaction copper",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protected void exceeds area",
+      "result": "REJECTED"
+    },
+    {
+      "case": "compaction geometry source",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float final proof count",
+      "result": "REJECTED"
+    },
+    {
+      "case": "float physical timing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "negative physical timing",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing total below floor",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing total over case bound",
+      "result": "REJECTED"
+    },
+    {
+      "case": "timing unrun stage nonnull",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural geometry drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural part reorder",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural pad net drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural trace index out of range",
+      "result": "REJECTED"
+    },
+    {
+      "case": "structural direction drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "later source transition drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "later source generation drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "later step extra after terminal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "evaluation cap overrun",
+      "result": "REJECTED"
+    },
+    {
+      "case": "old whitespace mutation",
+      "result": "REJECTED"
+    },
+    {
+      "case": "report order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate summary report",
+      "result": "REJECTED"
+    },
+    {
+      "case": "suite PASS after terminal",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native failure marker",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native timing bound",
+      "result": "REJECTED"
+    },
+    {
+      "case": "native exit status",
+      "result": "REJECTED"
+    },
+    {
+      "case": "unit suite order drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "stale unit prerequisite",
+      "result": "REJECTED"
+    },
+    {
+      "case": "protocol pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "prior reader pin drift",
+      "result": "REJECTED"
+    },
+    {
+      "case": "duplicate JSON object key",
+      "result": "REJECTED"
+    }
+  ],
+  "notes": [
+    "Pure offline canaries only; no native, GWT, browser, or runtime descent was executed.",
+    "Seed5 valid canaries use an explicit synthetic 54-part/131-pad fixture because the sealed prior packet has no seed5 pad map; runtime seed5 must derive its own native hash.",
+    "The pinned final protocol has no physicalRowContract, summaryStatuses, or expectedMoves top-level key; adapter binding, terminal statuses, and move order remain reader-owned against the sealed prior reader and current census output.",
+    "Offline validation checks endpoint incidents and independent pad/net reachability; complete native trace paths and compactor ownership remain native proof responsibilities."
+  ]
+}

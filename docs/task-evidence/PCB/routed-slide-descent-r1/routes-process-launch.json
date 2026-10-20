@@ -1,0 +1,18 @@
+{
+  "drivers": [
+    {
+      "pid": 27048,
+      "startTicks": "639280609374623506",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-descent-r1/run_native.ps1"
+    },
+    {
+      "pid": 14672,
+      "startTicks": "639280609376968362",
+      "executable": "pwsh",
+      "script": "docs/task-evidence/PCB/routed-slide-descent-r1/run_native.ps1"
+    }
+  ],
+  "phase": "routes",
+  "ownership": "Captured before bounded native private-slide-descent phase; unique source copy"
+}

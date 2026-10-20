@@ -1,0 +1,13 @@
+{
+  "status": "FAIL",
+  "operation": "Offline unit reader invocation",
+  "arguments": [
+    "--phase",
+    "unit"
+  ],
+  "exitCode": 2,
+  "reason": "CLI requires positional unit/routes; argparse rejected before assessment or output mutation",
+  "nativePhaseChanged": false,
+  "qualifiedUnitReceiptCreated": false,
+  "correction": "Invoke assess.py unit; frozen inputs unchanged"
+}

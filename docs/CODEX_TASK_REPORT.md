@@ -1,4 +1,63 @@
-# Current checkpoint: four selected-frame compaction improvements; publication next
+# Current checkpoint: cumulative generic private reductions complete; publication next
+
+2026-10-19 local. Base/verified origin80303258be31da72e238455a05068c2015ee84d4,
+codex/q60-faulted-profile-counts. Indefinite continuation, no main/email. Accepted
+main1475/default15/general16 and original5 untracked unchanged. No native/COPY/
+browser/preview/profile remains; owned private pointer removed.
+
+SAME generic first-strict search, fixed5then2/current15/density14, max4accepted/
+128evaluated perroot. Seed5 REN+ one cut: area9172744→9154104(-18640/0.203211%),
+copper38610→38590,48vias/protectedvoid1354500 same. Next25move cohort exhausted.
+Seed2 D3+,D4+,RFB+,RFB+ four cuts: area9178092→9102412(-75680/0.824572%), copper
+51860→51730,48vias same, void1807000→1781000; stops4stepcap. Sixcurrentcensuses,
+85attempts/50physicalvalid/35rejected/6controls, allfour current/originalsource/
+control guards preserved. Allfinal18physical/identity/labels/pairs/provenance
+and pre16endpoint proofs pass. Final allsource immutability/freshmetrics exact;
+selected42fields/whitespace/source/work exact. Bothroots now have independently
+derived current all-padnetpair hashes (5:8515pairs,2:9045). Private, no promotion.
+
+Fresh finalunit4 PASS45.0499992s/exit0,40/41/36/25assertions6/6/5/6groups;
+routes1 PASS64.0683345s/exit0. Reader80(8+/72-),actualPowerShell12/rootintegrated
+review10deltas/28gates/inversePASS. Native seal8c1c0a121455a4e02d85253c3df03c456d27dc1ae8044673ee29c764d0928ad5;
+rootreview57bc9be9f5a2faaffef94fed0e9640d3639173f65a558906e27f017e5445f1c6.
+COPY1473→1467 restored/retired,4driverbirths EXITED/no termination. No failed
+native phase. FirstofflineCLI invocation --phase rejectedexit2 beforemutation;
+positional retry passes unchangedinputs, invocationrecord retained. Pre-freeze
+shared-driver/controlbool/traceindex review corrections precede alloutcomes.
+Optionalscope/APIreview only; independent final-source review NOTRUN. GWT/player/
+solver/repair/fullmatrix/unseen/manufacturing NOTRUN; unchangedproduction.
+
+Next explicitstage/diff/rawblob checks, commit/normalpush/exactoriginSHAverify;
+then same4step/128proposal generic private search over all14 informed regressions,
+with generic source frame/route checks and unchanged proof/metric/time limits.
+Seed2 not exhausted; no extrapolated gain. Evidence:
+docs/task-evidence/PCB/routed-slide-descent-r1/RESULTS.md.
+
+# Previous checkpoint: published single-slide proof; bounded private descent in preparation
+
+2026-10-19 local. HEAD/origin80303258be31da72e238455a05068c2015ee84d4,
+codex/q60-faulted-profile-counts. Published four independent strict compaction
+improvements; each seed2 alternative removes18920area with no copper/via/void
+regression. Those alternatives are not a cumulative result or production change.
+Indefinite continuation authorized; no main/email. Original5 untracked preserved.
+
+Next predeclared private scope: SAME generic first-strict legal slide+unchanged
+compaction search for both informed5then2, current15/density14, max4acceptedsteps
+and128evaluatedproposals PER ROOT. Recensus current private layout at each step;
+all current/original source/control metric and full physical/identity/provenance
+guards remain. Explicit cap/exhaustion termination, no new route/selectedmutation.
+Scope/protocol frozen before outcomes; native NOT RUN, no gain assumed.
+
+Fresh task-owned OS-temp COPY prepared from exact accepted1467 plus published
+probe1471/adapters; planned1473 with new unit/wrapper. Actual selected PowerShell
+transport12 PASS with4unit/1route shapes. Source and independent reader leaves
+own separate files, root owns integration/freeze/native/publication. No native,
+browser/preview/profile active. Main1475/default15/general16 unchanged. Private
+pointer is packet local-state.json, excluded from publication. Next review final
+source and reader, seal, run fresh maintained units/routes, then retire COPY.
+Evidence: docs/task-evidence/PCB/routed-slide-descent-r1/scope.md.
+
+# Previous checkpoint: four selected-frame compaction improvements; publication next
 
 2026-10-19 local. Base39edb4823ec9658b7f60f63c9b5fc7eb71de5db6,
 codex/q60-faulted-profile-counts, exact origin verified. Indefinite continuation;

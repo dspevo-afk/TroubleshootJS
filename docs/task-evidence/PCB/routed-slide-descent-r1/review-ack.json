@@ -1,0 +1,10 @@
+{
+  "rootReviewed": true,
+  "diffSha256": "ffb2cf0b9bcd39d42f95754eff6100fb4a470a247339032901de0873ac888538",
+  "protocolSha256": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+  "syntheticReaderCases": 80,
+  "sourceReview": "Integrated actual shared driver, full native adapters, immutable current-source chain, frame alignment, all-four comparator, canonical prefixes and exact owner inverse",
+  "readerReview": "One top-level owner per validator; strict types, dynamic census/net-pair derivation, stage-local timing, source chains, control owner boolean, trace-index bounds, first strict and explicit caps",
+  "optionalScopeReview": "Read-only algorithm/API; not independent final-source review",
+  "nativeExecution": "NOT_RUN"
+}

@@ -1,0 +1,267 @@
+{
+  "analysisStatus": "COMPLETE",
+  "scope": "Bounded generic repeated private slide/compaction for both informed roots; no production change",
+  "assessmentSha256": "9afda2b35062f4cec8f3028469be031f65336a195d6357645ff250d73ea2922c",
+  "routesLogSha256": "d39a3033b90f87842d85298fcb66eafb6969d8e1556d9b6d21e2dc0948495dc2",
+  "roots": [
+    {
+      "seed": "5",
+      "termination": "NO_STRICT_IMPROVEMENT",
+      "initialMetrics": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 9172744,
+        "copperLength": 38610,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 9154104,
+        "copperLength": 38590,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1354500,
+        "geometrySha256": "ca4c524d94532476942b6ae58863d88c6a9b6f3d5f44e9f8652ed02a9fa8f07a",
+        "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+        "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaReduction": 18640,
+      "areaReductionPercent": 0.203210729526519,
+      "aggregate": {
+        "steps": 2,
+        "acceptedSteps": 1,
+        "evaluatedMoves": 35,
+        "validatedMoves": 18,
+        "rejectedMoves": 17,
+        "compactions": 18
+      },
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "move": {
+            "componentId": "REN",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "sourceMetrics": {
+            "area": 9172744,
+            "copperLength": 38610,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "5e0c1f4fbc93fc502e0763f37b21e7b19e8284b648ed01a45fd6a8f3210bf1a4",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "metrics": {
+            "area": 9154104,
+            "copperLength": 38590,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1354500,
+            "geometrySha256": "ca4c524d94532476942b6ae58863d88c6a9b6f3d5f44e9f8652ed02a9fa8f07a",
+            "stableIdentitySha256": "3fadd63534cc66202ce8e3d9dcff539c674f475ea829772cfd4d32e79c71c579",
+            "labelIdentitySha256": "7cce4c5e0740940685915888710daa7ceb090b5816ec265efb773b1dc693e9de",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "attempts": 10
+        }
+      ],
+      "callbackElapsedMillis": 2448
+    },
+    {
+      "seed": "2",
+      "termination": "STEP_CAP",
+      "initialMetrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "ACCEPTED_SELECTED"
+      },
+      "initialControlMetrics": {
+        "area": 9178092,
+        "copperLength": 51860,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1807000,
+        "geometrySha256": "b27b55af515947451e3df5647e0883ae336f8b656f538eeda05c4d3e4010f0a3",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "finalMetrics": {
+        "area": 9102412,
+        "copperLength": 51730,
+        "vias": 48,
+        "largestProtectedEmptyRectangleArea": 1781000,
+        "geometrySha256": "7fa62f6ca914b9039a94c44fc510585fa1749a575271098d4bcd877efd7c8f36",
+        "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+        "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+        "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+      },
+      "areaReduction": 75680,
+      "areaReductionPercent": 0.8245722531436818,
+      "aggregate": {
+        "steps": 4,
+        "acceptedSteps": 4,
+        "evaluatedMoves": 50,
+        "validatedMoves": 32,
+        "rejectedMoves": 18,
+        "compactions": 32
+      },
+      "acceptedSequence": [
+        {
+          "step": 1,
+          "move": {
+            "componentId": "D3",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "sourceMetrics": {
+            "area": 9178092,
+            "copperLength": 51860,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1807000,
+            "geometrySha256": "879ca4ad097b9f61a9993d3c9392ad2412662dd27f8fab9a229933745067ba8d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "ACCEPTED_SELECTED"
+          },
+          "metrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "attempts": 8
+        },
+        {
+          "step": 2,
+          "move": {
+            "componentId": "D4",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": 0,
+            "actualCopperDelta": 0
+          },
+          "sourceMetrics": {
+            "area": 9159172,
+            "copperLength": 51840,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1800500,
+            "geometrySha256": "b5db999003164dc1d90f8d611e0fe173e092b28505f959b44393781b074e5de4",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "attempts": 8
+        },
+        {
+          "step": 3,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "sourceMetrics": {
+            "area": 9140252,
+            "copperLength": 51810,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1794000,
+            "geometrySha256": "8025eec12b006988ef4b141b5b4919ea59dfd8afcf1b084866fc06e01fe3b48d",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "attempts": 17
+        },
+        {
+          "step": 4,
+          "move": {
+            "componentId": "RFB",
+            "dx": 10,
+            "dy": 0,
+            "analyticCopperDelta": -20,
+            "actualCopperDelta": -20
+          },
+          "sourceMetrics": {
+            "area": 9121332,
+            "copperLength": 51770,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1787500,
+            "geometrySha256": "2a8f3c229a64672933a408611d27331b5ad33b14b68b1d4ec3e64b1e60c5c991",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "metrics": {
+            "area": 9102412,
+            "copperLength": 51730,
+            "vias": 48,
+            "largestProtectedEmptyRectangleArea": 1781000,
+            "geometrySha256": "7fa62f6ca914b9039a94c44fc510585fa1749a575271098d4bcd877efd7c8f36",
+            "stableIdentitySha256": "afc09114deeffa334e802ceea0c1c286536ad23f886df17a944fcfbd89047470",
+            "labelIdentitySha256": "6575f5eb73c29569d89bfa7bdf57a4e19416a6a5670e9a73e63f197d4ba228f7",
+            "generationMetadata": "UNASSIGNED_PRIVATE_CANDIDATE"
+          },
+          "attempts": 17
+        }
+      ],
+      "callbackElapsedMillis": 2925
+    }
+  ],
+  "measurementDisposition": "USEFUL_PRIVATE_CHAIN",
+  "productionChange": "NONE",
+  "boardShrinkageAcceptance": "NOT_CLAIMED",
+  "limits": [
+    "Two informed roots only; bounded private search, no global optimum or general performance/manufacturing claim",
+    "No extra route request, actual selected mutation, policy/version or production change",
+    "Rows are canonical attempted prefixes; unattempted census moves remain explicitly unevaluated",
+    "No inference of compactor per-axis rejection cause; unchanged common label and whitespace owners",
+    "No GWT/player/solver/repair/full matrix/unseen claim"
+  ]
+}

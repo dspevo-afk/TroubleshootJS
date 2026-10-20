@@ -1,0 +1,50 @@
+{
+  "baseMainSealSha256": "9ff8de2abae0d3e555bc57c84ff7231d2aa8abd5dfdc2383a65398915074da9a",
+  "baseCount": 1467,
+  "copyCount": 1473,
+  "overrides": {
+    "scripts/verify-current-contracts.ps1": "6f86e366b3f33f486eff1996430952bc3b7c3010d6b8daa12623dd56cb1a51f0",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "917eda8045e158327e524c9d4fc6aa4d9960792b83377126a4c182e985bee282",
+    "tests/contracts/PcbFunctionalGroupingContractTest.java": "f1c02588b5a72b1300dd3e0be4adf7f669e78760def1b4c73e43546722a99544",
+    "tests/contracts/PcbPostSelectionEdgeTrimContractTest.java": "4a0eca5b23f88883f00d29c5fee4fec002a8b9777bf1393f447305454499bd10"
+  },
+  "additions": {
+    "tests/contracts/PcbRoutedPassiveFeasibilityCensusContractTest.java": "de4faa26d7a6e034c59c78c9e56a6894b11f0f3e74335fbdd543fc4271f56927",
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": "8e616f97e6a3f987cff1399368e312555634233c95dab4021921be8a8bfd0cbe",
+    "tests/contracts/PcbRoutedSlideCompactionContractTest.java": "9db10e401c9d51bdafc97803756d0eb812c61532b65ae2677cee394fbced4747",
+    "tests/contracts/PcbRoutedSlideCompactionTrialContractTest.java": "6161c2e00e31ab1eaf5261c60a2cc3e89af0320499d25bad3142328cb6cfde26",
+    "tests/contracts/PcbRoutedSlideDescentContractTest.java": "ff0741611ad7240948eaa3b5aead35f9b5587b5a9a73e11ac714ecda1f2ec8eb",
+    "tests/contracts/PcbRoutedSlideDescentTrialContractTest.java": "9a894dff9b708298b7c741352c2e0b363ef2fb2f597e8b4251cc9b3363e82331"
+  },
+  "gateOwners": {
+    "scope.md": "ae221d1fa3c027d241db2ec25e2e54102153de93e9289396c0f8410fddffc233",
+    "prepare.py": "a17491fa5485068d584d53631e4cc7f1b182a7b528ccb432d4eaca4c3ae1b618",
+    "preparation-audit.json": "cac249ff02d694efd48521b0c1c949601cf7b3fd3b0479ced9cb711b763b6687",
+    "declare_protocol.py": "2a91dc2ab535ace246c7e30c7fae3cb177b9c6d4cc3a2ec91d6fff1f19472d20",
+    "protocol.json": "e047c6b87e72538b7b161449b7938b80c8e1ec9c081bea27ba40c26d3c4b73ba",
+    "unit-suites.json": "26267a6a820ac5d09adfe331c8255209efa43beb6005b0745224bcedc57cf56a",
+    "routes-suites.json": "3e1ffb21131fa7c0270b66e6a8bf1e7cd516d379a80f0c72609ab48d39138f66",
+    "bootstrap_host.py": "a09b514ae2cbd32c1537335d0144cae5d8d196051a4a5382735508601633ceac",
+    "host-reuse.json": "ca1488cb2b2226b79aca67e2f4fb31808a38c5bbd1b653ada0301e60c9e4205e",
+    "inputs.py": "39dba74957c75feb2739cb7b65b3547169ab6035536bdacf441e932566669411",
+    "review_source.py": "bf16b9962cd8e9c500409771647af8fbeabbc5a06371d63dec082c5d978054e7",
+    "adapter-reversal.json": "7a23b14e4635f3d2a6a18c509ce49c97024a2d95a39c65a12201bab92e784122",
+    "source-review.diff": "ffb2cf0b9bcd39d42f95754eff6100fb4a470a247339032901de0873ac888538",
+    "source-review.json": "83b2a5700afaff346ac7442df482892389f796e3ca1dd2aea2a2613a3e744ad5",
+    "review-ack.json": "bada1b3dd7e2d1cdf00ee5af8b04a789f8065c03aa42a6e2abf08ecd3ce88233",
+    "source-audit.md": "4882ddc4ff1c386a861b4338ed0ca91dc3b3391610c176fdde38c716a2cd09d5",
+    "run_native.ps1": "40f533386c37d915a45e9f3f0e161e2996d4e516f389b00ec19b618df4a410f8",
+    "check_process_cleanup.ps1": "1f8d64d42b2f2ee18f828835a75601c50b8594e959fa319f758bd3cd6fbe0df9",
+    "sanitize.py": "c4d4addf29ad7433f2bf3b947bef85e4d1ef9df658dfb140518aa2fd90881704",
+    "retire_copy.py": "f16d8354fb0c8fb3a1274671ecf945bd084507f1565ee99c85234e3f772e5308",
+    "suite_transport.ps1": "414a52d3902670197d8c8212475fb451f48443bffe7a84eeb40e1f1c2edd1eb0",
+    "check_suite_transport.ps1": "df5a0fa2cf77876c3589a09540df9bb41d3e11749df2763ea754ef898d2abdef",
+    "suite-transport-canaries.json": "af61d00b9ddaebc4e39b61d486c68fbec9f74e09e985ad813140bde82cb90342",
+    "assess.py": "460c5bf29b2a65e4ad8ee83e8726a00afbfc90bedcab75459ab966ec2f2e38aa",
+    "check_assessment.py": "c7d2450dd4622d4bf676c97d0d2b86790d6789f207cc4399b697aafd1e232250",
+    "assessment-canary-results.json": "3754818ac21ebf4674db72b64364e79e8a80860dc6f6cbf017efd795d7c02221",
+    "reader-notes.md": "dba744bf1f91dc520f3158ae292b62af71da51fe2417d755c1d7bc3103211721",
+    "worker-notes.md": "9756ab77359b4cc0bff22b49cc03ddd74201e57f9b7ba6bcaf7b90f441a09d48"
+  },
+  "publishedProbeSealSha256": "a4433f982b2453c976e414a7bf873f0a95ebbf18d218e154adbcb125f66fcb64"
+}

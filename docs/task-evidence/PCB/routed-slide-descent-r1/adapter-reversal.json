@@ -1,0 +1,44 @@
+{
+  "files": {
+    "tests/contracts/PcbRoutedPassiveLegCensusContractTest.java": [
+      {
+        "kind": "erase",
+        "begin": "// BEGIN COPY-ONLY selected routed descent structural snapshot adapter.",
+        "end": "// END COPY-ONLY selected routed descent structural snapshot adapter.",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "// END COPY-ONLY selected routed slide census adapter.\n\n    private PcbRoutedPassiveLegCensusContractTest()",
+        "new": "// END COPY-ONLY selected routed slide census adapter.\n    private PcbRoutedPassiveLegCensusContractTest()",
+        "count": 1
+      }
+    ],
+    "tests/contracts/PcbRoutedSlideCompactionContractTest.java": [
+      {
+        "kind": "erase",
+        "begin": "// BEGIN COPY-ONLY selected routed descent compaction adapter.",
+        "end": "// END COPY-ONLY selected routed descent compaction adapter.",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "        return compactAndVerify(board, plan, source, routed, seed,\n            generationMetadata, null);\n    }\n\n    private static FinalEvaluation compactAndVerify(TroubleshootBoard board,\n            PcbPlacementPlanner.Plan plan,\n            PcbRoutedPassiveFeasibilityCensusContractTest.SelectedSlideSource source,\n            PcbBoardLayout routed, long seed, String generationMetadata,\n            PcbBoardLayout[] normalizedOutput) {\n",
+        "new": "",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "        if (normalizedOutput != null) normalizedOutput[0] = normalized;\n",
+        "new": "",
+        "count": 1
+      },
+      {
+        "kind": "replace",
+        "old": "\n\n\n    private static void check(boolean condition, String message)",
+        "new": "\n\n    private static void check(boolean condition, String message)",
+        "count": 1
+      }
+    ]
+  }
+}

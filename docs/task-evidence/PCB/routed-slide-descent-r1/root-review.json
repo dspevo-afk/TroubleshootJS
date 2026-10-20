@@ -1,0 +1,41 @@
+{
+  "integrityReviewStatus": "PASS",
+  "nativeDescentStatus": "PASS",
+  "measurementDisposition": "USEFUL_PRIVATE_CHAIN",
+  "baseCommit": "80303258be31da72e238455a05068c2015ee84d4",
+  "main1475Exact": true,
+  "sourceDeltas": 10,
+  "frozenGates": 28,
+  "acceptedAndPublishedOwnerErasureExact": true,
+  "syntheticReaderCases": 80,
+  "actualTransportCases": 12,
+  "unitSuites": 4,
+  "unitFixtureCounts": {
+    "PcbRoutedPassiveLegCensusContractTest": 6,
+    "PcbRoutedPassiveFeasibilityCensusContractTest": 6,
+    "PcbRoutedSlideCompactionContractTest": 5,
+    "PcbRoutedSlideDescentContractTest": 6
+  },
+  "routeSuites": 1,
+  "selectedRowsExact42Fields": 2,
+  "roots": [
+    {
+      "seed": "5",
+      "acceptedSteps": 1,
+      "evaluatedMoves": 35,
+      "areaReduction": 18640,
+      "termination": "NO_STRICT_IMPROVEMENT"
+    },
+    {
+      "seed": "2",
+      "acceptedSteps": 4,
+      "evaluatedMoves": 50,
+      "areaReduction": 75680,
+      "termination": "STEP_CAP"
+    }
+  ],
+  "recordedDriverBirthsExited": 4,
+  "copyRestored1467AndRetired": true,
+  "productionPolicyChange": "NONE",
+  "GwtPlayerSolverFullMatrixUnseen": "NOT_RUN"
+}

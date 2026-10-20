@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "sourceFilesWhitespaceChecked": 26,
+  "sourceWhitespaceExemptions": [],
+  "patchDataWhitespaceException": "Only source-review.diff literal one-space unified-context records; exact bytes preserved",
+  "patchSha256": "ffb2cf0b9bcd39d42f95754eff6100fb4a470a247339032901de0873ac888538",
+  "literalSpaceContextLines": [
+    119
+  ],
+  "privateStateAbsent": true,
+  "packetPycacheAbsent": true,
+  "scope": "Only packet plus roadmap/report may be staged; raw Git blob check follows"
+}
