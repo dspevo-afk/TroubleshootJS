@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **TO92 published; artwork source NO_GO; exact NPN envelope review**
+**Current task:** **Exact NPN envelope diagnosis accepted; generic relocation source review**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -92,8 +92,17 @@ producer RB56 remains disabled for normal play, and its painter already has the
 proposed bevel/highlight details. Source1482/machinery24/gate7/player8 and15
 consumed source hashes audit exact, actualexit0; no new build/native/browser
 needed for this documentation-only decision. Additional source review finds
-existing normal diode/LED cathode markings and relay labels adequate. Next:
-diagnose the exact accepted NPN board's sparse envelope before any planner edit.
+existing normal diode/LED cathode markings and relay labels adequate. Published
+ce6f3fef with normalpush/exactorigin/unchanged input audit. Exact accepted NPN
+replay diagnosis has pre-adaptation source seal/final eight-artifact export
+seal, actual host rejection canaries/JDK8 export161/strict reader four negatives
+and four separate driver exits PASS. Selected1022x615,area628530/copper4300/
+vias0/void80000; existing P05 proposal retains area/void/vias and reduces copper
+to3730, so strict area gate correctly keeps incumbent. Final envelope bounds
+are set by J1/J2 across x and LED1/RPD across y; corner void is not a removable
+strip proof. No planner edit/new size claim. Next source-backed generic
+relocation hypothesis before any new experiment.
+[Exact NPN diagnosis and limits](task-evidence/PCB/npn-sparse-diagnostic-r1/RESULTS.md).
 [Source decision and limits](task-evidence/PCB/optocoupler-source-review-r1/README.md).
 [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).
 [Scope and finite acceptance](task-evidence/PCB/to92-molded-detail-r1/scope.md).

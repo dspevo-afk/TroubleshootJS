@@ -1,0 +1,100 @@
+{
+  "status": "PASS_DESCRIPTIVE_SELECTED_ENVELOPE_ANALYSIS",
+  "receiptSha256": "a1b52f6fadeb28cebe55c5711a06f2603f071957e2e5f10786bcb2be2a95fa89",
+  "helperSha256": "b72f55fdeb1162e564b7f0ab17b9d084916321451acf0d99679ffc985034afda",
+  "geometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+  "outline": [
+    40,
+    40,
+    1022,
+    615
+  ],
+  "axes": {
+    "x": {
+      "envelopeMin": 70,
+      "envelopeMax": 1032,
+      "minOwners": [
+        "J1"
+      ],
+      "maxOwners": [
+        "J2"
+      ],
+      "outlineBeforeEnvelope": 30,
+      "outlineAfterEnvelope": 30,
+      "mergedCompleteEnvelopeProjections": [
+        [
+          70,
+          246
+        ],
+        [
+          266,
+          836
+        ],
+        [
+          856,
+          1032
+        ]
+      ],
+      "projectionGapsBeforeCopper": [
+        {
+          "start": 246,
+          "end": 266,
+          "width": 20
+        },
+        {
+          "start": 836,
+          "end": 856,
+          "width": 20
+        }
+      ],
+      "copperGuardBoundingMin": 151,
+      "copperGuardBoundingMax": 951
+    },
+    "y": {
+      "envelopeMin": 84,
+      "envelopeMax": 625,
+      "minOwners": [
+        "LED1"
+      ],
+      "maxOwners": [
+        "RPD"
+      ],
+      "outlineBeforeEnvelope": 44,
+      "outlineAfterEnvelope": 30,
+      "mergedCompleteEnvelopeProjections": [
+        [
+          84,
+          255
+        ],
+        [
+          274,
+          625
+        ]
+      ],
+      "projectionGapsBeforeCopper": [
+        {
+          "start": 255,
+          "end": 274,
+          "width": 19
+        }
+      ],
+      "copperGuardBoundingMin": 135,
+      "copperGuardBoundingMax": 605
+    }
+  },
+  "packingBaseline": {
+    "area": 628530,
+    "copper": 4300,
+    "vias": 0,
+    "protectedVoid": 80000
+  },
+  "packingCandidate": {
+    "area": 628530,
+    "copper": 3730,
+    "vias": 0,
+    "protectedVoid": 80000
+  },
+  "copperReductionPercent": 13.255813953488373,
+  "selectionReason": "Strictly smaller area is false; other three nonincrease predicates pass.",
+  "limits": "Axis projections and copper bounding boxes describe the selected board only. Projection gaps exclude copper/pads/holes/silk checks and are not legal-cut or packability proof. Candidate geometry was not exported or reconstructed. No proof that all visible whitespace is required."
+}

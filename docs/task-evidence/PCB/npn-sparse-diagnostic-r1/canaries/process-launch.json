@@ -1,0 +1,16 @@
+{
+  "phase": "canaries",
+  "scope": "Captured before actual selected private adapter invocation; root observes exit separately",
+  "drivers": [
+    {
+      "pid": 9044,
+      "startTicks": "639281308346545226",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 15428,
+      "startTicks": "639281308348901645",
+      "executable": "pwsh"
+    }
+  ]
+}

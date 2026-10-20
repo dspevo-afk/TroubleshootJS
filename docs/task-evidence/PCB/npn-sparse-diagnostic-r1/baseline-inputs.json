@@ -1,0 +1,25 @@
+{
+  "baseCommit": "ce6f3fef9ac86b3157f0ecac08ab53350022134d",
+  "applicationInputs": 1482,
+  "machineryInputs": 24,
+  "allCompilerInputsDigest": "6017b1c0307444354974cb4c67639a3e7c9e9456826fb16cc6ba0e5f3bd91539",
+  "publishedInputs": {
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/make_export_adapter.py": "952b45afc0bb784588ec9cd2b4bfea83be65a5573e576b258242661acb1e8ee4",
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/qualify.py": "0b8ff9c9cf22599c23d430901ed8b9d3c9867f1ecb1cb63407480647b9bbcc71",
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/run_export.ps1": "214c76e6baeed7f7eae6b6bf9744c4a9f2a25255c7eb1a59b68b79670e8a4f22",
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/record_exit.ps1": "a77c7dcd396dde7ac8a0f95946fb9efc2bdf246bd353c61df35c41faa3df07f8",
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/export-source/SparseNormalBoardDiagnostic.java": "b0bfa9152cf71438261dec707c27e91bd0e7db5757a4a2db0851d462e239876c",
+    "docs/task-evidence/PCB/sparse-board-diagnostic-r1/export-source/NOTES.md": "a48d740af70111fd59677c5b542bafe2b496c0a0d2e341253195e0e82314b031",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/baseline-inputs.json": "3e732b08d03c446b331cb32febf8da316d5c6365275da9c2ea8f5e34fde89549",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/candidate-inputs.json": "31d21012275f9b48e6387a99596eb50baaeebe8ba32233325898c5dfd4361425",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/player-inputs.json": "fdcb279e22f15f4cbd601045dc927c43732a36d267a71223d61d7ddf0a12d756",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/npn-public-identity.json": "fd0d573d0912d9cdcc89e501fc695d88e6a6fa8d0b82bf36fa78dea20d1999ad",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/npn-generated-fitted.jpg": "cc8351342d3a3255a2e1bce6721296ffc068922fa064d12dc7928be997c836fb",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/publication.json": "1ffc531840f3a74e234a22df51d41766c6d6ee4b4b24217ba3366126af63b5b9",
+    "docs/task-evidence/PCB/to92-molded-detail-r2/postpublication-execution.json": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01"
+  },
+  "baselineHelpers": {
+    "scope.md": "2420cbab97bb46c7cec5662c9e5e43d56c3d19d2d074fb5eb599e697b6bd7ce8",
+    "inputs.py": "9de629a4e7d17a16ad229b5a92f25d7f50f86cde0f1bb0f51710ff57ae0387b3"
+  }
+}

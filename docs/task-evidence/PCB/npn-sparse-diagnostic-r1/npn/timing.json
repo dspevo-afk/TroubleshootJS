@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "failure": null,
+  "phase": "npn",
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "terminalCleanupIncluded": true,
+  "exitCode": 0,
+  "elapsedSeconds": 43.0031078
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS_READ_ONLY_DIAGNOSIS",
+  "baseCommit": "ce6f3fef9ac86b3157f0ecac08ab53350022134d",
+  "actualCanaryExecExitCode": 0,
+  "actualNpnExecExitCode": 0,
+  "readerExecExitCode": 0,
+  "recordedDriverBirthsExited": 4,
+  "noPersistentProcessesLaunched": true,
+  "review": "Actual source/helper/adapter diffs and leaf hashes; final seals and current source1482/machinery24 audit; raw receipts, four independent reader negatives, separate driver exits, privacy and limits",
+  "artifacts": {
+    "baseline-inputs.json": "873707bc94631796a5601291fd6cc2daa39a6ede58e28c49f2e296b6c650f52c",
+    "export-inputs.json": "88357918374e80d4501c0a6ae3c63cdacd216c419606026787618d6a856c90cc",
+    "assessment.json": "805745749de8fe02e182054181a99c69aa2c224864ffd1e48aaa42b23d097a6f",
+    "envelope-analysis.json": "21ff4fd7d89978fd392c7e7fe4c22fed0eb1864ed58aa16cb3bfd1232b489b57",
+    "log-projection.json": "ff2fcb25dcf366c81cfad85c0e2108d179587b2e4fefd99f0c9710976d1ca721",
+    "npn/receipt.txt": "a1b52f6fadeb28cebe55c5711a06f2603f071957e2e5f10786bcb2be2a95fa89",
+    "npn/native.txt": "8b4c81164a9346a5bd824ff4482b4ec9fac3c3b82652112f9792293e7f6b963c",
+    "canaries/process-cleanup.json": "7d280314552c14ad6497759c6dc05cb4c2b69075dca44b79f6fea1a0f998a33d",
+    "npn/process-cleanup.json": "518848c5d95dbccc972facc54aee7e4defbba8740f5a59d5f2e0a065e6f75d5b"
+  },
+  "limits": "Source remains published89512645; no GWT/browser/electrical/full-matrix rerun, new size/all-seed claim, or blocked profile cleanup retry; private task adapter/raw data retained"
+}

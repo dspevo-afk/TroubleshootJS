@@ -1,0 +1,9 @@
+{
+  "status": "PASS_RAW_PUBLIC_LOG_NO_PROJECTION_NEEDED",
+  "privateRawSha256": "8b4c81164a9346a5bd824ff4482b4ec9fac3c3b82652112f9792293e7f6b963c",
+  "privateRawBytes": 24781,
+  "publicSha256": "8b4c81164a9346a5bd824ff4482b4ec9fac3c3b82652112f9792293e7f6b963c",
+  "publicBytes": 24781,
+  "changes": [],
+  "qualification": "Raw log qualified before projection; only exact owned root substitutions allowed; receipt untouched"
+}

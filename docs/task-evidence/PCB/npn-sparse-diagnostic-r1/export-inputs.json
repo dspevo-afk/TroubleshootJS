@@ -1,0 +1,13 @@
+{
+  "baselineSealSha256": "873707bc94631796a5601291fd6cc2daa39a6ede58e28c49f2e296b6c650f52c",
+  "gates": {
+    "prepare_export.py": "4aefae6831e84516c64a98ca673a046be0ee92c87f10650af4a02f1e1476a11f",
+    "run_export.ps1": "a7a3ad666dd7b23d5862fd29784dd9c26c1989057af99665beab9ae0d999322d",
+    "record_exit.ps1": "1c2be64231cf85eaa95c8458aee8eab76783043413e309168f5f0e0fe6cb1e4e",
+    "qualify.py": "562ce41af6c88c83cd77e4e60d4120222e4f578eb305b8f3202d6216bbc9e7ff",
+    "export-source/SparseNormalBoardDiagnostic.java": "14c472a9b8a28d648a8be17d4a4ae0d6b66ecac3e286fb475808d98f71d20b36",
+    "export-source/NOTES.md": "46cea3a2e3ef7684e64b0b3246b1c95a685531e9d0c06c515a13e3e442e6d5e6",
+    "adapter-manifest.json": "cd82628d1c0b4b7b803288dc78ae997fdf5fab19e5c3d77f2aa55bee0d892c9f",
+    "adapter-diff.txt": "60215ab10ea26f9951f20b0340189539820d1fbc370d26ae9da342d773c5e465"
+  }
+}

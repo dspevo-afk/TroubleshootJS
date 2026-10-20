@@ -1,59 +1,47 @@
-# Current checkpoint: TO92 published; optocoupler source NO_GO; prior cleanup BLOCKED
+# Current checkpoint: exact NPN sparse diagnosis accepted; source relocation review
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact origin01e306eb94ca8218f227c75198d18989fc6fd5f5. Continue
-indefinite PCB realism/screenshots/optional leaves; no main/email/milestone stop.
-Preserve seven unrelated groups/private data and FOUR known blocked profile
-cleanup actions (three older, R2 partial17256). Never retry their deletion by
-another tool/shell/wording. No recorded current task process is live.
+HEAD/exact origince6f3fef9ac86b3157f0ecac08ab53350022134d. Continue indefinite
+PCB realism/screenshots/optional leaves; no main/email/milestone stop. Preserve
+seven unrelated groups/private data and FOUR blocked profile-cleanup actions
+(three older, TO92R2 partial17256). Never retry their removal by another path.
+No current task browser/preview/listener or recorded driver is live.
 
-Delivered candidate only17 paint additions in shared drawTransistorBody,
-rendererSHA89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856.
-Guard32, insetmin5/min6, linewidthmin1/min48, oldrect+innerellipse clips; NPN/
-NMOS installed/loose, same geometry/metadata/markings/state/graph/RNG/epochs.
-Independent final source PASS exacthash, root actual5contracts52.6443533s,
-8census70.9249323s/44cases220protected pairs exact86clocks/canaries PASS,
-actual JDK8/GWT5 build90.8380682s. Durations include terminal cleanup, not
-separately timed. Final1482/24/7gate/8player inputs and source-review seal bound.
+Published TO92 detail01e306eb:17 shared installed/loose paint lines, renderer
+89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856. Final5
+contracts/44cases220pairs/actualJDK8GWT5 and accepted NPN/NMOS/LED visible retry
+PASS; five images inspected/three pasted. R1 rejected probe collision, R2
+preseal label fix and failed first-player Node reset remain explicit. First
+profile cleanup was automatically blocked before execution; unknown browser
+exit/noAPIclose, retained. Retry own APIclose0/profile/state absent/portreleased.
+All30 recorded births exited; code acceptance does not mark old cleanup PASS.
+TO92 publication/execution receipts and source-only optocoupler NO_GO are now
+publishedce6f3fef with normalpush0/exactorigin and fresh1482/24/7/8 audit PASS.
+Optocoupler only found producer RB56 is held; existing diode/LED polarity and
+relay labels already adequate. No artwork change from source review.
 
-Accepted retry normal NPNseed380469407799690561/NMOSseed6806229627414984633,
-build347032FDADA50729040B5D58ADBC4063; originalFAIL/allactualsuppliesOFF, NPN
-fit/loupe/lift/remove/loose/samePart5restore, NMOSloupe/bottom omission PASS.
-KnownLED5577758334702827054 originalFAIL/isolatedOL/Shop330/actualOFF330/
-fresh hidden→visible FUNCTION VERIFIED/finalOFF PASS.28events/0retryfailures,
-five rawimages inspected/three pasted. Before/after servedCLI6+actual owner
-match; fresh browser23992 APIclose0/profileabsent, maintained stop0/stateabsent/
-port8909released. Resource census30 unique recorded births exited (R1=12,
-R2native6+failedplayer6+acceptedplayer6); not every transient OS process.
+Current npn-sparse-diagnostic-r1 is read-only, source1482/machinery24 unchanged.
+Exact public replay380469407799690561 constructed once, ordinary small/bottom
+THT packing3; no developer fixed coordinates/reroll. Baseline13 published
+artifacts/two helpers frozen before adaptation; final eight export artifacts
+frozen before execution. Optional leaf changed only task Java comment/parser
+pins/notes; root six guarded private adapter changes keep maintained owners.
+Actual native PowerShell parse and real invalid-seed/family binding canaries
+PASS0.7274123s. Actual JDK8/native NPN PASS161, actualexit0,43.0031078s; tool
+completion before separate driver checks, all four recorded driver births exit.
+Times include terminal cleanup, not separately measured. Strict reader PASS
+four single-condition negatives/identity/mapping/access/independent metrics.
+Root review and privacy PASS, raw native log unchanged/private copy retained.
 
-R1probecollision rejected despite earlier gates; R2preseal24px label collision
-fixedguard32 before any gate. R2firstplayer rolebutton-vsSUMMARY error30s/Node
-kernelreset killed17256, no publicidentity/image/repair accepted;25files rawexact
-archived player-attempt-1. Its profile remains after automatic review blocked
-cleanup before processcreation; no delete/validation executed or retry. Exit
-code unknown/noAPIclose. Native/build reused only after unchanged1482/24/7/8
-audit. One unattributed console404 disclosed; no captured pageerror/requestfailed.
-
-See R1/R2 RESULTS, current player-assessment/resource-census and archive/history.
-Root integrated source/evidence/privacy and252 explicit staged/committed blobs
-PASS, normalpush0/exactremote/source1482+24 and fresh postpublication execution6
-verified. Only two existing docs normalizedCRLF→LF; tested owner/packets rawexact.
-Code publication does not mark prior failed profile cleanup PASS. R2 publication/
-postpublication receipts included in this documentation commit. Capacitor receipts
-now committed. No production/test/script delta; source remains89512645...
-No packinggain/allseed/manufacturing/performance/fullmatrix claim. Optocoupler
-source review is NO_GO: only found producer RB56 is disabled for normal play;
-physical-admission allowance does not enable it. Existing painter already has
-bevel/highlights/OPTO/reference dot; no useful artwork change selected. Optional
-read-only leaf made no files/executions. Root audit actualexit0 confirms all
-1482/24/7gate/8player and15 reviewed source hashes unchanged, with prior final
-assessments exact. No new build/native/browser needed for this docs-only task.
-See optocoupler-source-review-r1/README.md, source-review.json/input-audit.json.
-Additional source-only leaf review finds existing diode/LED reversal-derived
-cathode stripes/K labels and relay A1/A2/COM/NC/NO/SPDT adequate; no paint change.
-No tests/browser acceptance follows from that finding. Next exact NPN replay
-380469407799690561 sparse-envelope diagnosis through existing exporter, before
-any new planner scope/edit; root owns choice and acceptance.
+Selected1022x615,area628530/copper4300/vias0/void80000. Existing P05 proposal
+samearea/void/vias,copper3730; KEPT because no strict area reduction. Envelope
+x extremes J1x70/J2x1032, y extremes LED1y84/RPDy625; only20/20 x and19 y
+projection gaps before copper. Corner free rectangle320x250 is no legal-cut or
+packability proof. See RESULTS/assessment/envelope-analysis/root-review. No
+production/test/script/RNG/epoch/predicate/cap edit or new GWT/browser/electrical/
+allseed/size proof. Exact source/build/player evidence reuse boundary audited.
+Next: source-backed bounded generic relocation hypothesis from measured data;
+no planner experiment selected yet. Root owns diff/staging/normal publication.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 

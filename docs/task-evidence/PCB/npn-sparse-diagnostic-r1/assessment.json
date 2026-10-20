@@ -1,0 +1,290 @@
+{
+  "status": "PASS_EXACT_SELECTED_NORMAL_BOARD_DIAGNOSIS",
+  "inputSealSha256": "88357918374e80d4501c0a6ae3c63cdacd216c419606026787618d6a856c90cc",
+  "canaryElapsedSeconds": 0.7274123,
+  "results": {
+    "npn": {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "publicSeed": "380469407799690561",
+      "replayId": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/380469407799690561",
+      "geometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+      "logicalBoardGraphSha256": "0ad6b341e0299d9680d7da3b10ca9b113be6ce370a3704ff6537be6fa67baba2",
+      "counts": {
+        "logicalParts": 7,
+        "layoutParts": 7,
+        "logicalPads": 15,
+        "layoutPads": 15,
+        "logicalNets": 6,
+        "traces": 9,
+        "holes": 0
+      },
+      "outline": [
+        40,
+        40,
+        1022,
+        615
+      ],
+      "physicalMetrics": {
+        "available": true,
+        "unavailable": false,
+        "gridStep": 10,
+        "area": 628530,
+        "copper": 4300,
+        "vias": 0,
+        "protectedVoid": 80000,
+        "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=91488;millis=121;route=P05_ONE_FACE;disposition=KEPT;baseline=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5;selected=bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "attempts": 1,
+        "orderings": 5,
+        "expansions": 91488,
+        "millis": 121,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "KEPT",
+        "baselineGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "selectedGeometrySha256": "bd41ae74d9e78fea77e1af1d9e13cb0fd9773dd123a86ecad0e0fcc4b431ada5",
+        "metricEvidence": {
+          "state": "COMPARED",
+          "baseline": {
+            "area": 628530,
+            "copper": 4300,
+            "vias": 0,
+            "protectedVoid": 80000
+          },
+          "candidate": {
+            "area": 628530,
+            "copper": 3730,
+            "vias": 0,
+            "protectedVoid": 80000
+          },
+          "unavailableReason": null
+        }
+      },
+      "whitespaceSampler": {
+        "seed": "380469407799690561",
+        "version": 1,
+        "parts": 7,
+        "gridUnits": 10,
+        "sampledCells": 6222,
+        "packageAccessOccupiedCells": 2993,
+        "protectedFreeCells": 2873,
+        "protectedFreeFraction": 0.46174863387978143,
+        "largestProtectedEmptyRectangle": {
+          "x": 740,
+          "y": 40,
+          "width": 320,
+          "height": 250,
+          "area": 80000
+        },
+        "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+      },
+      "componentEnvelopes": [
+        {
+          "componentId": "J1",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            104,
+            378,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            90,
+            364,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            70,
+            324,
+            176,
+            202
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "J2",
+          "packageId": "THROUGH_HOLE_CONNECTOR_2",
+          "anchor": "EDGE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            914,
+            348,
+            84,
+            114
+          ],
+          "routingCourtyard": [
+            900,
+            334,
+            112,
+            142
+          ],
+          "accessEnvelope": [
+            856,
+            294,
+            176,
+            202
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "LED1",
+          "packageId": "THROUGH_HOLE_LED",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            641,
+            131,
+            50,
+            50
+          ],
+          "routingCourtyard": [
+            632,
+            124,
+            78,
+            92
+          ],
+          "accessEnvelope": [
+            607,
+            84,
+            123,
+            171
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "Q1",
+          "packageId": "TO92_NPN",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            354,
+            336,
+            64,
+            56
+          ],
+          "routingCourtyard": [
+            331,
+            314,
+            120,
+            118
+          ],
+          "accessEnvelope": [
+            286,
+            274,
+            185,
+            192
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "RB",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            636,
+            368,
+            80,
+            34
+          ],
+          "routingCourtyard": [
+            578,
+            355,
+            196,
+            60
+          ],
+          "accessEnvelope": [
+            516,
+            315,
+            320,
+            120
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "RLOAD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            406,
+            158,
+            80,
+            34
+          ],
+          "routingCourtyard": [
+            348,
+            145,
+            196,
+            60
+          ],
+          "accessEnvelope": [
+            286,
+            105,
+            320,
+            120
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        },
+        {
+          "componentId": "RPD",
+          "packageId": "AXIAL_RESISTOR",
+          "anchor": "NONE",
+          "accessMargin": 20,
+          "bodyBounds": [
+            386,
+            558,
+            100,
+            34
+          ],
+          "routingCourtyard": [
+            328,
+            545,
+            216,
+            60
+          ],
+          "accessEnvelope": [
+            266,
+            505,
+            340,
+            120
+          ],
+          "regionId": "circuit",
+          "domainId": "board"
+        }
+      ],
+      "elapsedSeconds": 43.0031078,
+      "receiptSha256": "a1b52f6fadeb28cebe55c5711a06f2603f071957e2e5f10786bcb2be2a95fa89"
+    }
+  },
+  "readerCanaries": [
+    {
+      "phase": "npn",
+      "rejectedCondition": "public identity"
+    },
+    {
+      "phase": "npn",
+      "rejectedCondition": "pad net membership"
+    },
+    {
+      "phase": "npn",
+      "rejectedCondition": "independent copper"
+    },
+    {
+      "phase": "npn",
+      "rejectedCondition": "independent protected void"
+    }
+  ],
+  "limits": "Finite exact accepted public replays; unchanged selected geometry and logical board declarations. Existing grid10 sampler free cells are not packability proof. No production change, new electrical/player/build proof, optimum or all-seed claim."
+}
