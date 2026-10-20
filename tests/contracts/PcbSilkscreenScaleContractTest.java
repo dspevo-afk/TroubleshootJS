@@ -12,6 +12,7 @@ public final class PcbSilkscreenScaleContractTest {
         canvasFrameTransformsTheObstacleOnce();
         boardClipBoundsTheObstacle();
         physicalLabelIdentityAndFacePolicyStayStable();
+        emptyChipFootprintsUseOnlyTheDeclaredBody();
         System.out.println("PASS: PCB silkscreen scale contracts: " + assertions + " assertions");
     }
 
@@ -88,6 +89,87 @@ public final class PcbSilkscreenScaleContractTest {
             "top face displays physical silkscreen");
         check(!PcbWorkbenchRenderer.shouldDrawPhysicalSilkscreen(PcbBoardSide.BOTTOM),
             "bottom face does not display top-face physical silkscreen");
+    }
+
+    private static void emptyChipFootprintsUseOnlyTheDeclaredBody() {
+        PhysicalPackage[] packages = {PhysicalPackages.TO220_REGULATOR_4,
+            PhysicalPackages.E04_DECISION_CONTROL_5, PhysicalPackages.OPTOCOUPLER_4,
+            PhysicalPackages.ISOLATED_CONVERTER_7};
+        Rectangle[] bodies = {new Rectangle(25,25,170,75), new Rectangle(25,25,210,75),
+            new Rectangle(90,25,160,140), new Rectangle(90,25,240,270)};
+        for (int i = 0; i < packages.length; i++) {
+            PhysicalPackage pkg = packages[i];
+            PhysicalPackageGeometry geometry = pkg.getGeometry();
+            PhysicalBoardSlot slot = emptySlot(pkg, "U1");
+            PcbComponentPlacement canonical = PcbComponentPlacement.fromPhysicalGeometry(
+                "U1", 700, 900, pkg, geometry);
+            check(PcbWorkbenchRenderer.emptyChipFootprint(canonical, slot, PcbBoardSide.TOP) == null,
+                "an unbound slot does not invent assembly ink");
+            slot.bindGeometryRealization(canonical);
+            for (PcbRotation rotation : PcbRotation.values())
+                for (PcbBoardSide mount : PcbBoardSide.values()) {
+                    PcbPackagePose pose = new PcbPackagePose(700,900,rotation,mount);
+                    if (!pkg.supportsPose(pose)) {
+                        try {
+                            PcbComponentPlacement.fromPhysicalGeometry("U1",pose,pkg,geometry);
+                            throw new AssertionError("package-disallowed pose accepted");
+                        } catch (IllegalArgumentException expected) {
+                            check(true,"assembly fixture preserves package pose restrictions");
+                        }
+                        continue;
+                    }
+                    PcbComponentPlacement placement = PcbComponentPlacement.fromPhysicalGeometry(
+                        "U1", pose, pkg, geometry);
+                    Rectangle actual = PcbWorkbenchRenderer.emptyChipFootprint(
+                        placement, slot, PcbBoardSide.TOP);
+                    if (mount == PcbBoardSide.TOP) {
+                        Rectangle expected = P01PhysicalPoseChecks.expectedRectangle(bodies[i],
+                            geometry.getWidth(),geometry.getHeight(),700,900,rotation,mount);
+                        rect(actual, expected.x, expected.y, expected.width, expected.height,
+                            "empty chip ink uses independently posed literal body, never courtyard");
+                        actual.x = -999;
+                        rect(PcbWorkbenchRenderer.emptyChipFootprint(placement,slot,PcbBoardSide.TOP),
+                            expected.x,expected.y,expected.width,expected.height,
+                            "returned footprint cannot mutate the canonical placement");
+                    } else check(actual == null, "top silk does not mark a bottom-mounted body");
+                    check(PcbWorkbenchRenderer.emptyChipFootprint(placement,slot,PcbBoardSide.BOTTOM) == null,
+                        "top-only assembly ink never appears on bottom copper");
+                }
+            check(PcbWorkbenchRenderer.emptyChipFootprint(null,slot,PcbBoardSide.TOP) == null &&
+                PcbWorkbenchRenderer.emptyChipFootprint(canonical,null,PcbBoardSide.TOP) == null &&
+                PcbWorkbenchRenderer.emptyChipFootprint(canonical,slot,null) == null,
+                "missing placement, slot or face emits no footprint");
+            PhysicalBoardSlot foreign = emptySlot(pkg,"U2");
+            foreign.bindGeometryRealization(PcbComponentPlacement.fromPhysicalGeometry(
+                "U2",700,900,pkg,geometry));
+            check(PcbWorkbenchRenderer.emptyChipFootprint(canonical,foreign,PcbBoardSide.TOP) == null,
+                "same package in another component slot does not certify this footprint");
+        }
+        PhysicalBoardSlot axial = emptySlot(PhysicalPackages.AXIAL_RESISTOR,"R1");
+        PcbComponentPlacement resistor = PcbComponentPlacement.fromPhysicalGeometry("R1",700,900,
+            PhysicalPackages.AXIAL_RESISTOR,PhysicalPackages.AXIAL_RESISTOR.getGeometry());
+        axial.bindGeometryRealization(resistor);
+        check(PcbWorkbenchRenderer.emptyChipFootprint(resistor,axial,PcbBoardSide.TOP) == null,
+            "nonrectangular axial parts do not acquire a misleading rectangular silhouette");
+        PhysicalBoardSlot wrongPackage = emptySlot(PhysicalPackages.OPTOCOUPLER_4,"U1");
+        wrongPackage.bindGeometryRealization(PcbComponentPlacement.fromPhysicalGeometry("U1",700,900,
+            PhysicalPackages.OPTOCOUPLER_4,PhysicalPackages.OPTOCOUPLER_4.getGeometry()));
+        check(PcbWorkbenchRenderer.emptyChipFootprint(PcbComponentPlacement.fromPhysicalGeometry(
+            "U1",700,900,PhysicalPackages.TO220_REGULATOR_4,
+            PhysicalPackages.TO220_REGULATOR_4.getGeometry()),wrongPackage,PcbBoardSide.TOP) == null,
+            "same component ID with a different bound package fails closed");
+    }
+
+    private static PhysicalBoardSlot emptySlot(PhysicalPackage pkg, String id) {
+        TroubleshootBoard board = new TroubleshootBoard("assembly-ink-fixture");
+        board.addComponent(new BoardComponent(id,"fixture",pkg));
+        int index = 0;
+        for (String terminal : pkg.getTerminalIds()) {
+            String net = "N" + index++;
+            board.addNet(new BoardNet(net));
+            board.addPad(new BoardPad(id+"."+terminal,id,terminal,net));
+        }
+        return new PhysicalBoardSlot(board,id);
     }
 
     private static void rect(Rectangle actual, int x, int y, int width, int height,

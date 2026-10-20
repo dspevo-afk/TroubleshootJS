@@ -1,0 +1,18 @@
+{
+  "status": "PUSH_VERIFIED",
+  "commit": "466ffde5dbcd4450dedb0e517931567a56ad2f8b",
+  "message": "Render physical contact collars on connected PCB leads",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q60-faulted-profile-counts",
+  "verification": "Normal push succeeded; ls-remote exact accepted SHA",
+  "stagedByteAudit": {
+    "status": "PASS",
+    "files": 89,
+    "rawEvidenceBlobs": 82,
+    "canonicalTextBlobs": 7
+  },
+  "mainMerge": "NOT_PERFORMED",
+  "email": "DISABLED_BY_USER",
+  "remaining": "Original5 and private baseline pointer/cache; documented old baseline/private metadata and earlier policy-blocked unused profile"
+}

@@ -1,0 +1,20 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.IllegalArgumentException: Package does not declare requested PCB pose: U1 / 700,900|rotation=DEG_0|mount=BOTTOM
+	at com.lushprojects.circuitjs1.client.PcbComponentPlacement.<init>(PcbComponentPlacement.java:45)
+	at com.lushprojects.circuitjs1.client.PcbComponentPlacement.fromPhysicalGeometry(PcbComponentPlacement.java:127)
+	at com.lushprojects.circuitjs1.client.PcbSilkscreenScaleContractTest.emptyChipFootprintsUseOnlyTheDeclaredBody(PcbSilkscreenScaleContractTest.java:111)
+	at com.lushprojects.circuitjs1.client.PcbSilkscreenScaleContractTest.main(PcbSilkscreenScaleContractTest.java:15)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PcbSilkscreenScaleContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

@@ -1,0 +1,49 @@
+[
+  {
+    "action": "Normal EASY Sensor control exact seed0 to customer ticket",
+    "observed": "PASS",
+    "wallUpperBoundMs": 3436
+  },
+  {
+    "action": "Sensor0 customer retest before service",
+    "observed": "FAIL complaint remains"
+  },
+  {
+    "action": "OFF Sensor0 remove original U2 and open physical drawer",
+    "observed": "Empty U2 body outline/dot and five gold lands; original loose chip"
+  },
+  {
+    "action": "View bottom copper then close view controls",
+    "observed": "No top-only assembly ink on bottom face"
+  },
+  {
+    "action": "Loose U2 View schematic -> close -> Install as Circuit/U2 -> close drawer",
+    "observed": "Named SENSOR pinout and original chip restored, OFF, tray0"
+  },
+  {
+    "action": "Power Sensor0 ON and customer retest after original-chip round trip",
+    "observed": "FAIL complaint remains; removal/reinstallation is not a repair"
+  },
+  {
+    "action": "Read actual Sensor0 pristine replay",
+    "observedReplay": "tsj-alpha/6/EASY/SENSOR_CONTROL/0"
+  },
+  {
+    "action": "Normal EASY indicator exact seed5577758334702827054 to ticket",
+    "observed": "PASS",
+    "wallUpperBoundMs": 360
+  },
+  {
+    "action": "OFF isolate R1 lead1 -> OHM real public probes -> remove -> shop330Ohm -> installR1 -> OHM real probes",
+    "observed": "Isolated original OL; installed replacement330Ohm"
+  },
+  {
+    "action": "Power repaired indicator ON and run customer retest",
+    "observed": "PASS; reported behavior resolved"
+  },
+  {
+    "action": "Final repaired indicator OFF, original loose part retained; Main menu/read replay",
+    "observed": "OFF; tray1",
+    "observedReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "api": "Public BrowserServer.close after revalidated exact owner; separate client/context closed",
+  "rootExitObserved": true,
+  "exitCode": 0,
+  "signalCode": null,
+  "newProfileAbsent": true
+}

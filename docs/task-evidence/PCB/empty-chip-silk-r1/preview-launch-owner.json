@@ -1,0 +1,8 @@
+{
+  "pid": 1324,
+  "output": "Separate task-owned private OS-temp stdout/stderr",
+  "executable": "pwsh.exe",
+  "state": "LAUNCHED; readiness not claimed",
+  "startTicks": "639280806528961449",
+  "port": 8907
+}

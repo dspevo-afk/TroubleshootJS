@@ -392,6 +392,19 @@ public final class PowerServicePartContractTest {
         check(placement.getMountingSide() == PcbBoardSide.TOP, "literal top-mounted ordinary fixture");
         String firstPad = "P." + part.getTerminal(0).getTerminalName();
         Object projectionToken = renderer.captureInstalledTargetIdentity("P", firstPad);
+        PhysicalBoardSlot physicalSlot = f.runtime.getSlot("P");
+        Rectangle emptyFootprint = PcbWorkbenchRenderer.emptyChipFootprint(
+            placement, physicalSlot, PcbBoardSide.TOP);
+        boolean emptyOptocoupler = part.getPackage() == PhysicalPackages.OPTOCOUPLER_4 &&
+            physicalSlot.getInstalledPart() == null;
+        check((emptyFootprint != null) == emptyOptocoupler,
+            "assembly outline follows actual empty slot, never a lifted or stale original part");
+        if (emptyOptocoupler)
+            check(emptyFootprint.x == 190 && emptyFootprint.y == 125 &&
+                emptyFootprint.width == 160 && emptyFootprint.height == 140,
+                "removed optocoupler retains only its independently known original body footprint");
+        check(PcbWorkbenchRenderer.emptyChipFootprint(placement,physicalSlot,PcbBoardSide.BOTTOM) == null,
+            "actual service slot has no assembly ink on the bottom face");
         PhysicalPartRenderContext context = new PhysicalPartRenderContext(renderer, placement,
             part, part.getPackage(), -1, false);
         for (int i = 0; i < part.getTerminalCount(); i++) {

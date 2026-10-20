@@ -168,6 +168,8 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
         Vector<Rectangle> labelObstacles = new Vector<Rectangle>();
         try {
             for (PcbComponentPlacement component : layout.getComponents()) {
+                Rectangle emptyFootprint = drawEmptyChipFootprint(graphics, component);
+                if (emptyFootprint != null) labelObstacles.add(emptyFootprint);
                 PhysicalPartRenderGeometry geometry = drawComponent(graphics, component);
                 if (geometry != null && component.getMountingSide() == viewingFace) {
                     labelObstacles.add(geometry.getBodyBounds());
@@ -178,6 +180,43 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             graphics.swapProviderTextCollector(previousCollector);
         }
         drawRequiredLabels(graphics, deferredProviderText, labelObstacles);
+    }
+
+    /** Assembly ink remains in the existing body area when its physical slot is empty. */
+    private Rectangle drawEmptyChipFootprint(Graphics graphics, PcbComponentPlacement placement) {
+        Rectangle footprint = emptyChipFootprint(placement,
+            instance.getPhysicalBoardRuntime().getSlot(placement.getComponentId()), viewingFace);
+        if (footprint == null) return null;
+        Rectangle body = screenRectForProvider(footprint);
+        if (body.width < 3 || body.height < 3) return null;
+        PhysicalPackageGeometry geometry = placement.getPhysicalGeometry();
+        Rectangle mark = screenRectForProvider(placement.getPose().toBoardRectangle(
+            ChipPinout.referenceMark(geometry), geometry.getWidth(), geometry.getHeight()));
+        graphics.setColor(WorkbenchVisualTheme.SILK_SECONDARY);
+        graphics.setLineWidth(1);
+        graphics.context.save();
+        try {
+            // The inset and clip keep all raster ink inside the existing body envelope.
+            graphics.clipRect(body.x, body.y, body.width, body.height);
+            graphics.drawRect(body.x + 1, body.y + 1, body.width - 2, body.height - 2);
+            graphics.fillOval(mark.x, mark.y, mark.width, mark.height);
+        } finally {
+            graphics.context.restore();
+        }
+        return body;
+    }
+
+    static Rectangle emptyChipFootprint(PcbComponentPlacement placement,
+            PhysicalBoardSlot slot, PcbBoardSide face) {
+        if (placement == null || slot == null || !shouldDrawPhysicalSilkscreen(face) ||
+                placement.getMountingSide() != face || slot.getInstalledPart() != null ||
+                !placement.getComponentId().equals(slot.getComponentId()) ||
+                !ChipPinout.supports(placement.getPhysicalPackage()) ||
+                !placement.getPhysicalPackage().isEquivalentTo(slot.getPhysicalPackage()) ||
+                slot.getGeometryRealization() == null ||
+                !slot.getGeometryRealization().isEquivalentTo(placement.getGeometryRealization()))
+            return null;
+        return placement.getBodyBounds();
     }
 
     private void drawHole(Graphics graphics, PcbBoardHole hole) {

@@ -1,0 +1,41 @@
+{
+  "nativeBuildQualification": "PASS",
+  "sourceCount": 1481,
+  "originalGates": 4,
+  "changedOwners": [
+    "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+    "tests/contracts/PcbSilkscreenScaleContractTest.java",
+    "tests/contracts/PowerServicePartContractTest.java"
+  ],
+  "operationSeconds": {
+    "contracts": 58.3684811,
+    "build": 92.7623523
+  },
+  "qualificationCases": [
+    {
+      "case": "actual nine receipt markers and separate driver footer",
+      "result": "PASS"
+    },
+    {
+      "case": "missing suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "duplicate suite",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "wrong driver count",
+      "result": "PASS_REJECTED"
+    },
+    {
+      "case": "failed operation",
+      "result": "PASS_REJECTED"
+    }
+  ],
+  "qualifierSha256": "0347f9c7b0bcae4ea6cf9022fda2b2a0e13a60ab92619df721daa817acece892",
+  "framing": "Nine suite markers are checked in the actual receipt; the maintained driver footer is checked separately in its log",
+  "reusedBoundary": "All generation/layout/solver/identity/physical-geometry/graph/mutation/save owners unchanged; no fresh fixed44 claim",
+  "player": "Separate actual normal empty-chip silk/removal/reinstall evidence required",
+  "limits": "No full unrelated matrix, all-seed/manufacturing or fresh functional-repair claim"
+}

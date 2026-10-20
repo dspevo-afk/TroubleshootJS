@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 32296,
+      "startTicks": "639280805077427262",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 7344,
+      "startTicks": "639280805080246251",
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "build",
+  "scope": "Captured parent/current births before maintained empty-chip-silk phase"
+}

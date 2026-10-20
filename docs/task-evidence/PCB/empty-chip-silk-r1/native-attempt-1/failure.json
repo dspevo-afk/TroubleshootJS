@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_NATIVE",
+  "elapsedSeconds": 41.329293,
+  "driverExitCode": 2,
+  "childExitCode": 1,
+  "phase": "PcbSilkscreenScaleContractTest first suite",
+  "cause": "New fixture attempted package-disallowed bottom mounting pose; production constraints correctly reject. Retry fixes new fixture only to assert rejection for undeclared poses.",
+  "receipt": "NOT PRODUCED: first suite failed before maintained aggregate receipt write",
+  "cleanup": "Recorded phase births exited; maintained driver cleanup footer present",
+  "buildAndPlayer": "NOT RUN for rejected fixture candidate",
+  "archivePreparation": "First exact-path archive attempt stopped after moving existing paths because aggregate receipt was absent. All moved artifacts retained; completed four-gate copy and baseline restore after inventory. No failed operation treated as pass."
+}

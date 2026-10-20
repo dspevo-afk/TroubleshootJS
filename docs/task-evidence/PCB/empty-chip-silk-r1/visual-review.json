@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "rawCaptures": [
+    {
+      "file": "sensor-installed.jpg",
+      "note": "Initial Sensor0 installed chips; only body reference dots, no phantom empty outlines",
+      "bytes": 126917,
+      "sha256": "9bdc2adacbcfd2aa9ba109061b62eae7a5b7e235ed69520a63691dc989b01991"
+    },
+    {
+      "file": "sensor-empty-footprint.jpg",
+      "note": "Removed original U2: thin unfilled body outline and semantic SENSOR dot remain; gold lands unchanged, original loose chip in drawer",
+      "bytes": 120517,
+      "sha256": "6d32072c3b8fdf57d484084a7ff8640cd9e074b476a18fdbc75bd5dcf36c8b93"
+    },
+    {
+      "file": "sensor-empty-bottom.jpg",
+      "note": "Bottom copper with U2 removed: no top-side body outline/dot; real copper and lands remain",
+      "bytes": 128819,
+      "sha256": "f4355a751a34b63455a3e138b0c426f9b155808c3de425c2720dbb420b00135b"
+    },
+    {
+      "file": "sensor-reinstalled.jpg",
+      "note": "Original U2 reinstalled: solid body hides empty-slot outline; original lead contacts restored, tray empty and power OFF",
+      "bytes": 129439,
+      "sha256": "7eaabfa69d64990b5e73f0dd09d5c9f3df6b2765a7919b27789b84ba72333c69"
+    },
+    {
+      "file": "led-repaired.jpg",
+      "note": "Fresh ordinary indicator repair: lit LED, matching R1 replacement, original loose resistor remains; customer PASS recorded separately",
+      "bytes": 128713,
+      "sha256": "53dd0e3ada2bf4e9033257f62dfc6ebbbcbb0213fc9fad1b3e057458a338fe5d"
+    }
+  ],
+  "actualRawImagesInspected": 5,
+  "review": "Root inspected all five unmodified actual headed page captures; initial/empty/top-v-bottom/reinstalled/repaired states. No computed pixel-equality oracle."
+}

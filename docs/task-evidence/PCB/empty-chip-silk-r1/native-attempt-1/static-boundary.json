@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "baseCommit": "466ffde5dbcd4450dedb0e517931567a56ad2f8b",
+  "files": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbWorkbenchRenderer.java",
+      "candidateRawSha256": "115594e9651a5cada014cea96c458146b8b2a92548882a02427c253732862204",
+      "existingSourceCanonicalUnchanged": true,
+      "insertions": 2
+    },
+    {
+      "path": "tests/contracts/PcbSilkscreenScaleContractTest.java",
+      "candidateRawSha256": "458989b9650c48dc1b90de99df2b0413aafb320d532a654a0d462b53aae93d07",
+      "existingSourceCanonicalUnchanged": true,
+      "insertions": 2
+    },
+    {
+      "path": "tests/contracts/PowerServicePartContractTest.java",
+      "candidateRawSha256": "af0c298e9f8f46ce563b855603746ac41a802df6d8cd1393914b8352ae40a1dc",
+      "existingSourceCanonicalUnchanged": true,
+      "insertions": 1
+    }
+  ],
+  "scope": "Exact insertion-only canonical changes; all old implementation and test assertions retained"
+}

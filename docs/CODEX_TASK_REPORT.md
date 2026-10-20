@@ -1,9 +1,51 @@
-# Current checkpoint: contact collars qualified; publication review
+# Current checkpoint: empty-chip footprint qualified; publication review
+
+2026-10-20 local. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, base HEAD/verified origin
+466ffde5dbcd4450dedb0e517931567a56ad2f8b. User authorizes indefinite ordinary
+random PCB realism/screenshots; no main merge/email. Original5/private baseline
+pointer/cache preserved. Contact publication receipt included in next commit.
+
+Empty-chip-silk-r1 adds inert top-only body outline/existing terminal0 dot for an
+explicitly empty matching, geometry-bound slot among four supported rectangular
+packages. Existing posed body only, clipped/inset paint and provider-label obstacle.
+No target, graph/fault input, board-size/generation/save change; layout17/public6.
+Frozen1481/four gates and renderer/two-test insertion-only boundaries pass.
+Native attempt1 FAIL41.329293s/driver2/child1: new fixture requested a disallowed
+bottom pose. Source/gates/logs/cleanup preserved; no aggregate receipt produced.
+Test-only correction requires unchanged constructor rejection. Corrected native9
+PASS58.3684811s: silk79/service620/serviceability1769/pose8605/view1277/bench235/
+save34988/identity21/Q30metadata3977. Final actual JDK8/GWT5 OBF PASS92.7623523s.
+Framing5 canaries, actual optimized-Python refusal and before/after source/gate
+checks pass. Narrow independent static review found no blocker; no execution.
+
+Actual headed sandboxed normal Sensor0: initial customer FAIL, OFF U2 removal,
+empty footprint/dot and loose original, bottom absence, loose View schematic,
+original reinstall OFF/tray0 and powered original-complaint FAIL. Known normal
+indicator5577758334702827054: fresh customer FAIL, OFF/isolated R1 OL, actual
+shop330Ohm replacement measures330Ohm, powered customer PASS. Settled lit-board
+capture, final OFF/original loose part/menu and both exact public6 identities pass.
+Five unmodified images individually inspected; board/footprint views pasted in
+chat. Five served/expected/post-player fields exact. One existing favicon404;
+no page errors/other recorded warnings/errors. No computed pixel oracle, fresh
+FileReader/full unrelated matrix/private Close7/CDP/Edge/unseen/all-seed/new-size
+or commercial footprint proof. Prior generation proof retains its frozen scope.
+
+Actual browser API/root0/new profile absent; native/build/browser/preview/launcher
+births exited. Maintained stop PASS2.2386261s/8907 released. Old unused profile
+deletion remains rejected by automatic approval review as blocked by policy;
+untouched, no retention approval inferred. Baseline COPY/small private metadata
+retained outside Git. Archive-preparation missing-receipt stop, early timing-read
+race and documentation patch mismatch recorded; no evidence loss or false PASS.
+Final application audit PASS. Root diff/privacy/staged-byte review, normal commit/
+push and exact origin verification next, then continue bounded realism work.
+
+# Previous checkpoint: contact collars published; footprint marking investigation
 
 2026-10-20 local. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, HEAD/verified origin
-f3c95e25f3718317ace504dad1f3eb9fec594fd0. Reference marks, titles and normal
-compaction published. User authorizes indefinite ordinary random PCB realism and
+466ffde5dbcd4450dedb0e517931567a56ad2f8b. Contact collars, reference marks,
+titles and normal compaction published; exact origin SHA verified. User authorizes indefinite ordinary random PCB realism and
 screenshots; no main merge/email. Original5/private baseline pointer/cache intact.
 
 Contact-collar-r1 adds a contained metallic contact convention for exact mounted
@@ -41,8 +83,10 @@ launcher births exited, maintained stop PASS2.2302646s/8907 released. Old unused
 profile deletion remains rejected by automatic approval review as "blocked by
 policy"; untouched, no user retention approval inferred. Old baseline and small
 private audit metadata retained outside Git. Final application audit PASS.
-Next: root diff/privacy/staged-byte checks, normal commit/push/remote SHA, then
-next bounded PCB-realism investigation. No main merge/email.
+Root diff/privacy and staged89 raw/canonical checks PASS; normal commit/push and
+exact remote SHA verified. Next is read-only rectangular-chip assembly-outline
+marking investigation, including existing geometry/pose/clearance ownership. No
+next production edit or gate claim yet. No main merge/email.
 
 # Previous checkpoint: chip reference marks qualified; subsequently published at f3c95e25
 

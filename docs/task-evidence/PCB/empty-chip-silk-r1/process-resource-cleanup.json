@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "owner": "browser-owner.json",
+      "startTicks": "639280804831104633",
+      "pid": 22060,
+      "recordedBirthExited": true
+    },
+    {
+      "owner": "preview-owner.json",
+      "startTicks": "639280806557621933",
+      "pid": 32588,
+      "recordedBirthExited": true
+    },
+    {
+      "owner": "preview-launch-owner.json",
+      "startTicks": "639280806528961449",
+      "pid": 1324,
+      "recordedBirthExited": true
+    }
+  ],
+  "preview8907Listening": false,
+  "olderProfile": "Earlier automatic-review deletion rejection; untouched and separately BLOCKED",
+  "newProfileAbsent": true
+}

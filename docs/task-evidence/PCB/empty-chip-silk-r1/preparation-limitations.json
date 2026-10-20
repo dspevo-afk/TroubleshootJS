@@ -1,0 +1,10 @@
+{
+  "nativeAttempt1": "FAIL41.329293s/driver2/child1; disallowed new fixture pose, all exact attempt artifacts retained",
+  "archivePreparation": "Exact-path move loop stopped after moving existing paths because first-suite failure produced no aggregate receipt. Subsequent inventory confirmed all artifacts and completed four-gate copy/baseline restoration. No deletion or evidence loss.",
+  "timingRead": "Early Get-Content raced native phase completion and returned missing timing-file error; final driver exit0 and completed58.3684811s receipt authoritative",
+  "selectedBrowser": "Actual headed sandboxed installed Brave BrowserServer fallback. Prior IAB captures failed twice and Edge unavailable; no unchanged retry, private CDP/Close7 or wrapper claim.",
+  "previewLauncher": "Hidden maintained launcher with separate task-owned OS-temp stdout/stderr; actual server birth/readiness/served identity checked. Outer launcher exit code not independently captured.",
+  "console": "One existing favicon404 console error; no page errors/other recorded warn/errors.",
+  "coverage": "Five actual raw screenshots inspected, no computed pixel equality oracle; no fresh full unrelated matrix, FileReader, unseen/all-seed, board-size or commercial footprint claim.",
+  "oldResource": "Earlier unused profile deletion rejected by automatic approval review as blocked by policy; untouched, no retention approval inferred. Old baseline COPY and small private audit metadata retained outside Git."
+}

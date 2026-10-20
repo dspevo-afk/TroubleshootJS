@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "operation": "Only known current-worktree absolute prefix redacted in build log; no solver/native/build output marker changed",
+  "originalRawPreserved": "Task-owned private OS-temp audit directory outside Git",
+  "rawSha256": "8d40ba5d379a7129ea88127c9c00eec085eadaddeebf0a5df4e60c0b3a7b312a",
+  "publishedSha256": "2fe527d679d9d8772bbb4c45f7eea9bcda74698279e6a3270f78b66dc697e12e"
+}

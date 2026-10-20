@@ -5978,3 +5978,14 @@ changes paint only. Existing land/drill, geometry, copper, probe/hit/identity an
 all generation/mutation/save ownership stay intact. Three insertion-only source
 boundaries, ordinary-solver lifecycle/token fixtures and actual normal Sensor/LED
 measurement/repair/retest qualify the effect. [Contact evidence and limits](task-evidence/PCB/contact-collar-r1/README.md).
+
+`PcbWorkbenchRenderer.emptyChipFootprint` derives inert assembly ink for the four
+existing `ChipPinout` rectangular packages from an explicitly empty matching
+physical slot with equivalent bound geometry realization. Top-mounted/top-view
+only, it uses the immutable placed body and the existing pose/reference dot.
+Inset/clip keep raster ink within that body; its existing envelope is reserved
+among provider-label obstacles. Occupied/lifted parts retain ordinary provider
+paint. No new geometry, graph/fault input, target, pin numbering, generation or
+saved state is introduced. Native literal/transaction fixtures and actual normal
+removal/face/reinstallation/repair views qualify this presentation boundary.
+[Footprint evidence and limits](task-evidence/PCB/empty-chip-silk-r1/README.md).
