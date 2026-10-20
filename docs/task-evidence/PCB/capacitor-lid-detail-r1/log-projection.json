@@ -1,0 +1,10 @@
+{
+  "status": "PASS_EXACT_OWNED_ROOT_ONLY_PROJECTION",
+  "file": "build.txt",
+  "privateRawSha256": "23b122736d1654ef7439e05ff3563fec58acc20777c9ef216e27bbb6b253f1a2",
+  "privateRawBytes": 1250,
+  "publicProjectionSha256": "9735bc3df60b85cea56c4cb1a949a8985c1868a06053b6a8ac0ddda8cf9f4343",
+  "publicBytes": 1186,
+  "replacements": 1,
+  "scope": "Only the already-owned worktree absolute spelling in Linking into is replaced with [WORKTREE]. Full original bytes retained private. Original build qualifier passed against raw log before projection; compiler inputs unchanged."
+}

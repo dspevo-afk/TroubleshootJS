@@ -1,0 +1,14 @@
+{
+  "status": "PASS_PREFREEZE_ROOT_SOURCE_INTEGRATION_RUNTIME_PENDING",
+  "workerHandoffSha256": {
+    "compare_census.py": "0b4fa27f2867c25a37c307b62c23868f6df1d5ed839f3a022e9f68d016a92b60",
+    "census-reader-notes.md": "1018ac06e8d0d6ea23c50f8e2114a1122f3cc3c6e08b10b227f3bc25979f2088"
+  },
+  "finding": "Three negative canary expected substrings use field=$... while actual comparator emits protected field changed at $.... Root corrects only those exact named-path fragments and changes output creation to exclusive x mode to preserve prior receipts. No reader/native/test execution yet. Original handoff bytes private/hash-bound.",
+  "workerScope": "Only reader/notes, source-only; root owns integration and actual canaries.",
+  "additionalFinding": "Preserve measured/unmeasured clock availability; select actual nonnull clock cases for positive control and reject null-to-zero advance. Three original named rejection fragments corrected, exclusive output creation, no physical oracle changed.",
+  "integratedSha256": {
+    "compare_census.py": "6f6d831c85f47f944f06ac32805046af4b6e71bbe55f9345fcfeec018d93513c",
+    "census-reader-notes.md": "46d671442b691039c6483be59eab902a6fb28dcc270832beb7b259f98d50324d"
+  }
+}

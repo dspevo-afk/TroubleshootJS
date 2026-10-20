@@ -1,0 +1,13 @@
+{
+  "status": "PASS_EXPLICIT_STAGED_PATHS_AND_BYTES",
+  "pathsChecked": 138,
+  "onlyNormalizedExistingDocs": [
+    "docs/CODEX_TASK_REPORT.md",
+    "docs/ROADMAP.md"
+  ],
+  "productionOwnerRawExactlyTested": true,
+  "packetRawBytesExact": true,
+  "cachedDiffCheck": "PASS",
+  "privateManifestSha256": "c82698fd520bb9b139a3f109d158ddde2395b4ee153a227422d20630d8ae86d4",
+  "limits": "This receipt was created after checking all other intended paths, then staged and byte checked separately. Commit/push/remote proof remain."
+}

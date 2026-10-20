@@ -1,0 +1,21 @@
+{
+  "preview": {
+    "portReleased": true,
+    "pid": 24748,
+    "port": 8907,
+    "recordedBirthExited": true,
+    "stateAbsent": true,
+    "startTicks": "639281250167711285"
+  },
+  "limits": "Current owned resources only. Older blocked private profiles are preserved; no broad termination/deletion.",
+  "browser": {
+    "apiClose": true,
+    "processExitCode": 0,
+    "pid": 29428,
+    "startTicks": "639281251193635266",
+    "signal": null,
+    "recordedBirthExited": true,
+    "profileAbsent": true
+  },
+  "status": "PASS"
+}

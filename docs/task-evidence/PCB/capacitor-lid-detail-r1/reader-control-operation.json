@@ -1,0 +1,8 @@
+{
+  "elapsedSeconds": 0.0927015,
+  "status": "FAIL",
+  "actualExecExitCode": 1,
+  "privateLogSha256": "a52e0d9451e04b94778cd52cee5a7f6fc2151b1946041251cde4a9e06bee3540",
+  "privateLogBytes": 248,
+  "scope": "Actual frozen same19 baseline control with three measured-clock positive and five specific negative reader canaries; raw output private/hash-bound"
+}

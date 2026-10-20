@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "build",
+  "elapsedSeconds": 89.7699933,
+  "inputSealSha256": "381d70ab2bcd6f5deb56e99cbf9e429acc88aeb96c227c18d0f59288dcccb0aa",
+  "scope": "Actual named finite final-source R2 phase with separate root birth observation; other phases/player/publication separate"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "SOURCE_PIN_REPAIR_REQUIRED_AFTER_FAILED_CONTROL",
+  "failedControlActualExecExitCode": 1,
+  "failedControlElapsedSeconds": 0.0927015,
+  "baselineInventorySealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "incorrectPins": [
+    {
+      "source": "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java",
+      "incorrectPin": "724e4d6822eaeb3178efdfba30340ff12f0bdb1821734666b1a49df47ca5a8e",
+      "incorrectPinLength": 63,
+      "publishedInventoryPin": "724e4d6822eaeb3178efdfbaa30340ff12f0bdb1821734666b1a49df47ca5a8e"
+    }
+  ],
+  "scope": "Repair only literal source pins and notes from immutable published baseline inventory; all affected app sources unchanged and final capacitor paint owner unchanged. Preserve candidate-inputs.json/candidate-source and failed reader-control operation/private log. R2 helper seal before rerun; no native/build run yet."
+}

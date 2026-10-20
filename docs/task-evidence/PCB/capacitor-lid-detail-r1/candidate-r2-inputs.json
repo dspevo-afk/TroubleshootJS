@@ -1,0 +1,24 @@
+{
+  "baseCommit": "7fd882552405561dc156ebf240be475b2c2ee2d6",
+  "revision": "R2",
+  "priorFailedSealSha256": "f32f6c1059a32016a683636f9cb3e38af55f05ba0c8865b36b275eea11f45b99",
+  "baselineSealSha256": "f2a5ae29592810147bd79847191d03b9a4ba244187eeaaab4cf3107a728df15d",
+  "sourceInventorySealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "changedSources": {
+    "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java": "26fc6ce825935cd59e84eb887498d4746965d3ce7bf8108dfdb5064d33750c88"
+  },
+  "allCompilerInputsDigest": "ec21f03d2e4590a98422019c338c464e94143f6756fce181734d17a166ded7f6",
+  "sourceCount": 1482,
+  "machineryCount": 24,
+  "gates": {
+    "scope.md": "2d7538e55175ba2596447f393e68834b9ddf8ad61a96d2186235e591e060b00e",
+    "candidate_inputs.py": "bebf2ce18adff6fcc749da9f788db13841910fd5dd6f7273679132f6606660c9",
+    "run_phase.ps1": "c3c7a230246a0954b7daa82ae717385521a5f5c5c044aa08e298fed9f8389dbf",
+    "record_exit.ps1": "b8465c89ba7626cd24703fb1d3e9cc1ccc7688ac558afa45a55da3e76de9b80e",
+    "qualify.py": "84562928a6d1944484010735cc4495a301ab5c6cab344e8d5c5d8d03be66221a",
+    "suites.json": "81c212a757e437dfc77e1631bae6921a718f8324b752c3333fc0cf85b412d673",
+    "compare_census.py": "30a6929170251af0730460f5e54b62ec706eb4aa797810e1ee6264db06cf26be",
+    "census-reader-notes.md": "d5cf5ec4d900b6fd52513964a1b4bb7a205c402cd1ef72be071833b5e922b681"
+  },
+  "baselineCensusSha256": "766fe39ad1e23ae18e08b7de1244a325826a5e42a9c5a5cba5cbe87b0d582510"
+}

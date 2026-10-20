@@ -680,6 +680,29 @@ final class StandardPhysicalPartRenderProviders {
             int inset = Math.max(2, Math.min(b.width, b.height) / 4);
             WorkbenchVisualTheme.ellipse(graphics, b.x + inset, b.y + inset,
                 b.width - inset * 2, b.height - inset * 2, WorkbenchVisualTheme.METAL);
+            int lidWidth = b.width - inset * 2, lidHeight = b.height - inset * 2;
+            if (lidWidth >= 16 && lidHeight >= 16) {
+                graphics.context.save();
+                WorkbenchVisualTheme.ellipsePath(graphics, b.x + inset, b.y + inset,
+                    lidWidth, lidHeight);
+                graphics.context.clip();
+                int stroke = Math.max(1, context.scale(1));
+                graphics.setLineWidth(stroke);
+                graphics.setColor(WorkbenchVisualTheme.METAL_LIGHT);
+                WorkbenchVisualTheme.ellipsePath(graphics, b.x + inset + 1, b.y + inset + 1,
+                    lidWidth - 2, lidHeight - 2);
+                graphics.context.stroke();
+                int left = b.x + inset + lidWidth / 4, right = b.x + inset + lidWidth * 3 / 4;
+                int top = b.y + inset + lidHeight / 4, bottom = b.y + inset + lidHeight * 3 / 4;
+                graphics.setColor(WorkbenchVisualTheme.BODY_LIGHT);
+                graphics.drawLine(left, top, right, bottom);
+                graphics.drawLine(left, bottom, right, top);
+                graphics.setColor("rgba(220,227,222,0.55)");
+                int highlight = Math.max(1, stroke / 2);
+                graphics.drawLine(left, top + highlight, right, bottom + highlight);
+                graphics.drawLine(left, bottom + highlight, right, top + highlight);
+                graphics.context.restore();
+            }
             Rectangle markingBounds = WorkbenchVisualTheme.electrolyticMarkingBounds(b);
             if (markingBounds != null)
                 WorkbenchVisualTheme.marking(graphics, specification.getNameplate().getMarking(),

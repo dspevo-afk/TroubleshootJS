@@ -1,0 +1,8 @@
+{
+  "privateLogSha256": "7adf23b1befe1cb71b6830ef833de11af3c105a8ed2077a5f09bd33ebedcc25b",
+  "scope": "Actual frozen R2 same19 control with three genuinely measured clocks and five specific negative reader canaries; failed V1 preserved",
+  "privateLogBytes": 137,
+  "elapsedSeconds": 0.171735,
+  "actualExecExitCode": 0,
+  "status": "PASS"
+}

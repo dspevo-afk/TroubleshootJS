@@ -1,0 +1,18 @@
+{
+  "candidateSealSha256": "381d70ab2bcd6f5deb56e99cbf9e429acc88aeb96c227c18d0f59288dcccb0aa",
+  "gates": {
+    "player-plan.json": "bf120ad165a7fd15293753213f1919921bac2c478640f84741579b8a8001f5ad",
+    "player_inputs.py": "f39d2f92305c9ab7f801fc3d75a5f2edbdef59d06dcdd7db557f8ab1d76c7031",
+    "launch_player.ps1": "e7f6025a2e57946733b757ec97728012bd19374b394a38b0b13738ef8de16ca7",
+    "stop_player.ps1": "8148c4eed5fc8e378c1e3b3b80ec69043b6418fa457ed593c3344255cbcd9142",
+    "observe_player_host.ps1": "fe3802c76300463784447f7e3a4a5dde5f1f0c677d063a12e24fc39777a2c589",
+    "record_preview_exit.ps1": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+    "player_bootstrap.mjs": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262",
+    "review_player.py": "bd5464ecbf8c1747b279574e946d560029018d2a66569a101eaad6a79ae72f97"
+  },
+  "acceptedFinalGates": {
+    "contracts": "4a08cec93ad54a55652b13da6debafc4db0bbf71d44a901ccc08dcedfc9d4583",
+    "census": "c599da9ba6d9e113c39a0a4d23999dacf71e8bc40f64a5ced43de9dd8949fed7",
+    "build": "47a6c82d918079c38786a2c449fb73ef22e8b15597bc27b0a43e780c79a03b05"
+  }
+}

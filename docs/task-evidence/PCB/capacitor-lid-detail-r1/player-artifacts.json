@@ -1,0 +1,121 @@
+{
+  "bodies": [
+    {
+      "file": "initial-ticket-public.txt",
+      "sha256": "a912d8b8a6baa0792da7d31535e29ebe854ec7ed418c411ef857e3d365f03766",
+      "bytes": 769
+    },
+    {
+      "file": "normal-menu-public.txt",
+      "sha256": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+      "bytes": 1323
+    },
+    {
+      "file": "rc-ticket-identity-public.txt",
+      "sha256": "3500c20b83e745b6e1b2dc971514701b3080acea7ecd6dc35ec51c1254955833",
+      "bytes": 1101
+    },
+    {
+      "file": "rc-original-off-public.txt",
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "bytes": 729
+    },
+    {
+      "file": "rc-installed-lid-public.txt",
+      "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+      "bytes": 491
+    },
+    {
+      "file": "rc-capacitor-lifted-public.txt",
+      "sha256": "f1f91dc133d2175296d08b2178e3538d20cf825293f00c5788e7fa83b412a526",
+      "bytes": 652
+    },
+    {
+      "file": "rc-capacitor-removed-public.txt",
+      "sha256": "0941edac18855c08ef49612ca873a8044f7c724d6600f9e959312360f9740612",
+      "bytes": 594
+    },
+    {
+      "file": "rc-capacitor-loose-public.txt",
+      "sha256": "741c40ebd238a760287bc5f43f39ef99341daefe1ed01f7450c4307ce84eacbd",
+      "bytes": 687
+    },
+    {
+      "file": "rc-original-restored-public.txt",
+      "sha256": "e36e00ea6f79687ed9a10d8a57734f87db8c813721454859d33ac01dcb6a46bf",
+      "bytes": 627
+    },
+    {
+      "file": "rc-restored-bottom-public.txt",
+      "sha256": "e4e21caaeb0b2a8f25f0d214f77a622329e86a37b26b76b959dccc31dcd47a29",
+      "bytes": 963
+    },
+    {
+      "file": "led-ticket-identity-public.txt",
+      "sha256": "85e37a3a523be4f4fb5b62984ed9a1b7f3adc05499ebdf2b1b43d77ca1458e4f",
+      "bytes": 1042
+    },
+    {
+      "file": "led-original-off-public.txt",
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "bytes": 729
+    },
+    {
+      "file": "led-isolated-ol-public.txt",
+      "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "bytes": 870
+    },
+    {
+      "file": "led-shop-installed-public.txt",
+      "sha256": "f63ede8e168f8cb3c52f92a9e3785ff25bce838e5432c68df8528e7095b741a4",
+      "bytes": 624
+    },
+    {
+      "file": "led-off-330-public.txt",
+      "sha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "bytes": 892
+    },
+    {
+      "file": "led-fresh-pass-public.txt",
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "bytes": 885
+    },
+    {
+      "file": "led-final-supplies-off-public.txt",
+      "sha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "bytes": 670
+    },
+    {
+      "file": "led-final-off-public.txt",
+      "sha256": "2c92d9bed563faaccf42b633ca33166a794b2f91df8da72fe7fb5c2402dd0ad9",
+      "bytes": 422
+    }
+  ],
+  "images": [
+    {
+      "file": "rc-generated-fitted.jpg",
+      "sha256": "d9b08f2b19d6883ac4edf6750a63182007fb1f2a7be24430094513f6305bd2d1",
+      "bytes": 125184
+    },
+    {
+      "file": "rc-capacitor-lid.jpg",
+      "sha256": "6175b9aa05911bbfd1688a3849727362a05db440b0ca1a42fbd72c78f6bb906d",
+      "bytes": 110394
+    },
+    {
+      "file": "rc-capacitor-loose.jpg",
+      "sha256": "1f8d499328216ea4198e251e2ab82f37c2bb667523e63ae573bf4f36d4c261a7",
+      "bytes": 115895
+    },
+    {
+      "file": "rc-capacitor-restored.jpg",
+      "sha256": "db4d2efd0fccac45aec829287bba1a7478473c1bf25ff9f4b755d6753553bd0d",
+      "bytes": 122314
+    },
+    {
+      "file": "led-final-off.jpg",
+      "sha256": "015a600eceb2ab0fbec6d64953a4177e6b4ff566f4b36a6961d6d07257f2a574",
+      "bytes": 128641
+    }
+  ]
+}

@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Same-cap second-sweep experiment NO_GO; component realism next**
+**Current task:** **Electrolytic lid paint refinement validated; publication next**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -44,6 +44,17 @@ pass. No production change is promoted; source1482/machinery24 and allowances
 remain. Preparation diff-formatting correction is preserved. Next review
 visible component markings and other PCB realism details through existing
 owners. [Finite NO_GO decision and limits](task-evidence/PCB/composed-pocket-probe-r1/RESULTS.md).
+
+NO_GO is published at7fd88255. The next bounded visual refinement adds a clipped
+scored cross/rim to the existing shared electrolytic capacitor lid paint, both
+installed and loose. One renderer owner changes; geometry/graph/seed/epochs and
+marking metadata remain. Final5 contracts, paired44/220 exact nonclock census,
+actual JDK8/GWT5 and normal generated RC installed/loupe/loose/restored/underside
+plus LED OL→Shop330→actual330→freshPASS→finalOFF pass. Five images inspected and
+three pasted; all12 current births exited/profile/state absent/port released.
+Failed V1 reader pin, initial UI wait and preclose slash observer are preserved
+and resolved. One unattributed console404 disclosed. Publication review next;
+no further packing/epoch/budget change. [Results and limits](task-evidence/PCB/capacitor-lid-detail-r1/RESULTS.md).
 
 Exact fresh JLOAD RIGHT anchor now identified;1306layoutunit package-access span
 has two coppersegments. Maintained exact native4078 and selectedexport376 pass

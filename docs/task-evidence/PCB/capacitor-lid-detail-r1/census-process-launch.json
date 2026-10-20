@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "startTicks": "639281245139087132",
+      "pid": 31704,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281245147796741",
+      "pid": 4808,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Captured before maintained final-source capacitor lid phase; actual tool exit precedes root observation",
+  "phase": "census"
+}

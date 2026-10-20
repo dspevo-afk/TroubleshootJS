@@ -1,0 +1,9 @@
+{
+  "operation": "preclose-host-observer-v1",
+  "birthExact": true,
+  "actualExitCode": 1,
+  "resolvedExecutableEqual": true,
+  "cause": "Observer compared forward-slash launch spelling with native backslash executable; no close attempted",
+  "literalExecutableEqual": false,
+  "status": "FAIL"
+}

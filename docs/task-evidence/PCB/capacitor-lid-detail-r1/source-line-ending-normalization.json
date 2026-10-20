@@ -1,0 +1,7 @@
+{
+  "status": "PASS_PREFREEZE_CANONICAL_SOURCE_LINE_ENDINGS",
+  "owner": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+  "initialCandidateRawSha256": "690236622b52781eacf8dc3d8b47411d7140d1d58afb28a7ce7af24f22f6a925",
+  "finalCandidateRawSha256": "26fc6ce825935cd59e84eb887498d4746965d3ce7bf8108dfdb5064d33750c88",
+  "scope": "Saved the one edited source with repository Git canonical LF before final-source freeze/build. Only CRLF-to-LF; actual git diff remains byte-exact23 inserted paint lines. Baseline owner raw bytes already preserved. No prior native/build execution for this candidate."
+}

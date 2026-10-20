@@ -1,0 +1,40 @@
+{
+  "status": "PASS_FINAL_PRODUCTION_CAPACITOR_LID_PLAYER",
+  "inputSealSha256": "392f0c0574ec4926d4c4fe53ede1e11ac219c54efd5312290e5fd0e4f026aa68",
+  "events": 25,
+  "resolvedObserverFailures": [
+    {
+      "name": "browser-open-final-production",
+      "status": "FAIL",
+      "startedUtc": "2026-10-20T20:32:30.497Z",
+      "elapsedMillis": 40651,
+      "error": "locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^New board$/i }) to be visible\u001b[22m\n",
+      "privateErrorSha256": "22c09d06ac7d83ce0c5807ed69fd252bb2777e48be72984e578140c92a14fcf0"
+    }
+  ],
+  "rcPublicIdentity": {
+    "replay": "tsj-alpha/6/EASY/RC_DELAY/-5619557423280878128",
+    "build": "tsj-alpha/6 / FD6E8A1ADB4AB12C86D81AD026DF947E"
+  },
+  "ledPublicIdentity": {
+    "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+    "build": "tsj-alpha/6 / FD6E8A1ADB4AB12C86D81AD026DF947E"
+  },
+  "images": [
+    "rc-generated-fitted.jpg",
+    "rc-capacitor-lid.jpg",
+    "rc-capacitor-loose.jpg",
+    "rc-capacitor-restored.jpg",
+    "led-final-off.jpg"
+  ],
+  "bodyCount": 18,
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "19efaa9f30c212e7e8fbc57cee2a405d71cdb7ee29484d0b8c610d40abf4a41d",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "0fd736a613a5a3090a78d0b09e70d8b48d4b0666e99a2b790c02fac730cd6355",
+    "Digest": "8ed7c79bf7eba2e6e91a7cba31c0001fb983fb1a660ad4e8b887cc32cdc909d5",
+    "FileCount": 1592
+  },
+  "limits": "Actual finite normal UI and raw screenshot evidence, root visual review, fresh PASS modal awaited from hidden state. Untouched FAIL banner has no separate public freshness token. No all-seed/manufacturing/optimality/performance/Edge/CDP/FileReader/full-matrix claim; failed V1 reader control preserved."
+}

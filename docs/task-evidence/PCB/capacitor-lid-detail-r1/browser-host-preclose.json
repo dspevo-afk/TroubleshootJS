@@ -1,0 +1,11 @@
+{
+  "headless": false,
+  "sandboxEnabled": true,
+  "pid": 29428,
+  "resolvedExecutableMatch": true,
+  "priorObserverFailurePreserved": "browser-host-preclose-v1-failure.json",
+  "startTicks": "639281251193635266",
+  "status": "PASS",
+  "profileArgumentMatched": true,
+  "executable": "brave.exe"
+}

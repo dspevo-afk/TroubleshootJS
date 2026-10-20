@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "images": {
+    "rc-generated-fitted.jpg": {
+      "sha256": "d9b08f2b19d6883ac4edf6750a63182007fb1f2a7be24430094513f6305bd2d1",
+      "judgment": "PASS",
+      "notes": "Actual first generated RC board, top view and fitted MM-90 visible. Lid scoring stays within C1 can; board labels, pads and other components readable. Existing empty space remains; no packing gain claimed."
+    },
+    "rc-capacitor-lid.jpg": {
+      "sha256": "6175b9aa05911bbfd1688a3849727362a05db440b0ca1a42fbd72c78f6bb906d",
+      "judgment": "PASS",
+      "notes": "Actual Space inspection loupe: clipped scored cross/rim contained within original metal disc, 33 uF 16 V marking readable, both pads and lead polarity retained."
+    },
+    "rc-capacitor-loose.jpg": {
+      "sha256": "1f8d499328216ea4198e251e2ab82f37c2bb667523e63ae573bf4f36d4c261a7",
+      "judgment": "PASS",
+      "notes": "C1 footprint is empty and original capacitor is visible selected in physical tray. Same clipped lid detail remains on loose part. Board OFF, one loose part."
+    },
+    "rc-capacitor-restored.jpg": {
+      "sha256": "db4d2efd0fccac45aec829287bba1a7478473c1bf25ff9f4b755d6753553bd0d",
+      "judgment": "PASS",
+      "notes": "Original capacitor restored before actual bottom-copper switch. Underside shows pads and routed copper with no top-side can/lid ghost; Board OFF and tray empty."
+    },
+    "led-final-off.jpg": {
+      "sha256": "015a600eceb2ab0fbec6d64953a4177e6b4ff566f4b36a6961d6d07257f2a574",
+      "judgment": "PASS",
+      "notes": "Actual repaired LED board in top view, MM-90 fits beside it. R1 installed with color bands, LED and connector readable, power OFF, faulty original remains as one loose part. Fresh customer PASS is established in separate public modal body, not this frame."
+    }
+  }
+}

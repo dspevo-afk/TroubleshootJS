@@ -1,0 +1,21 @@
+{
+  "status": "PASS_VERIFIED_PUBLICATION",
+  "sha": "7fd882552405561dc156ebf240be475b2c2ee2d6",
+  "message": "Record no-gain result of bounded PCB pocket second sweep",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "verifiedExactRemoteRef": "7fd882552405561dc156ebf240be475b2c2ee2d6\trefs/heads/codex/q60-faulted-profile-counts",
+  "reviewedPublishedPaths": 55,
+  "publishedPacketRawExact": true,
+  "existingTwoMarkdownDocsOnlyGitCrlfToLf": true,
+  "productionCompilerInputsUnchanged": 1482,
+  "machineryInputsUnchanged": 24,
+  "decision": "NO_GO_NO_STRICT_ROUTED_GAIN",
+  "privateExperimentalOwnerNotPromoted": true,
+  "resources": "All six recorded current driver births exited; no browser/preview/listener launched. Private experiment inputs retained hash-bound.",
+  "preserved": "Seven unrelated groups and older private/blocked resources remain; no main merge/email",
+  "nextUnstarted": "Read-only source review of visible component markings and PCB realism through existing owners",
+  "limits": "Finite private planner experiment with same allowance, not a production interpretation. Final selected board unchanged. No new build/player/electrical/full-matrix/all-seed/performance claim."
+}

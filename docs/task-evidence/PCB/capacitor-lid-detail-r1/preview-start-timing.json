@@ -1,0 +1,7 @@
+{
+  "failure": null,
+  "phase": "preview-start",
+  "elapsedSeconds": 14.9524747,
+  "status": "PASS",
+  "limits": "Startup only; actual served identity, player and worker cleanup require separate proof"
+}

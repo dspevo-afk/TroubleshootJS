@@ -1,0 +1,16 @@
+{
+  "scope": "Captured before maintained final-source capacitor lid phase; actual tool exit precedes root observation",
+  "phase": "build",
+  "drivers": [
+    {
+      "pid": 27484,
+      "executable": "pwsh",
+      "startTicks": "639281247064850697"
+    },
+    {
+      "pid": 30732,
+      "executable": "pwsh",
+      "startTicks": "639281247075006067"
+    }
+  ]
+}

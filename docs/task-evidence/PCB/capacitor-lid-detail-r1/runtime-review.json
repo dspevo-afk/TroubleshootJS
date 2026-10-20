@@ -1,0 +1,18 @@
+{
+  "status": "PASS_FINITE_PLAYER_WITH_DISCLOSED_CONSOLE_RESOURCE_ERROR",
+  "privateRuntimeSha256": "39cca2d6ba9e3b1cbc134457099d015f11a4d0645225db36626d253d5b7e0488",
+  "privateRuntimeBytes": 16056,
+  "entries": 166,
+  "counts": {
+    "console:error": 1,
+    "console:log": 165
+  },
+  "errors": [
+    {
+      "kind": "console",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "limits": "One console resource 404 has no URL attribution in captured diagnostic event. No captured pageerror/requestfailed/HTTP responseError; all required normal UI actions and fresh repair PASS completed. Do not label the unattributed resource or claim an error-free console."
+}

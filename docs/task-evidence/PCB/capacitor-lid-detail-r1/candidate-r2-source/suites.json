@@ -1,0 +1,4 @@
+{
+  "contracts": ["A02GeometryContractTest", "A03IdentityContractTest", "P01PhysicalPoseContractTest", "Task43PhysicalEndpointContractTest", "CapacitorStoragePartContractTest"],
+  "census": ["PcbNormalPackingCensusContractTest", "PcbNormalPackingCensusContractTestGroup2", "PcbNormalPackingCensusContractTestGroup3", "PcbNormalPackingCensusContractTestGroup4", "PcbNormalPackingCensusContractTestGroup5", "PcbNormalPackingCensusContractTestGroup6", "PcbNormalPackingCensusContractTestGroup7", "PcbNormalPackingCensusContractTestGroup8"]
+}

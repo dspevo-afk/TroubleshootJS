@@ -1,0 +1,18 @@
+{
+  "scope": "Actual final-source capacitor lid paint in normal generated RC and existing LED repair",
+  "candidate": "candidate-r2-inputs.json",
+  "viewport": [1280, 900],
+  "browser": "Established headed sandboxed installed Brave fallback for documented IAB host capture limitation; no Edge/CDP-wrapper claim",
+  "ledReplay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+  "checks": [
+    "First actual normal New board RC result: record public replay/build, initial complaint, all supplies OFF and tray0; no seed substitution",
+    "Fit and real visible zoom/loupe: installed C1 lid remains inside body with readable original markings, no displaced terminal/probe geometry",
+    "Board OFF capacitor C1 lift/remove: actual original capacitor renders loose in tray; restore original same part and inspect face/zoom/fit with supply still OFF",
+    "Known LED original customer FAIL; OFF R1 lead1 isolation; physical OHM red/black public terminal inputs read OL",
+    "Remove original, actual Shop330 Ohm install, actual OFF330 Ohm; exit OHM/connect5V/await newly visible customer PASS; return and final OFF",
+    "Raw normal bodies preserve privacy; no diagnostic metrics/hidden fault/answer keys; new lid paint depends only on existing public package geometry"
+  ],
+  "primaryImages": ["rc-generated-fitted.jpg", "rc-capacitor-lid.jpg", "rc-capacitor-loose.jpg", "rc-capacitor-restored.jpg", "led-final-off.jpg"],
+  "evidence": "Actual UI input events, raw public bodies/images, source1482 with one paint owner/machinery24/R2 seal and independent CLI/served execution6 before/after; real browser/preview births and normal API/maintained stop cleanup",
+  "limits": "Finite installed/loose/restored RC and LED repair cases; no manufacturing/all-seed/optimum/performance/Edge/CDP/FileReader or full-matrix proof. Failed V1 reader control retained."
+}

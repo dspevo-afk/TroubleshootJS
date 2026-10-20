@@ -1,0 +1,11 @@
+{
+  "baseCommit": "7fd882552405561dc156ebf240be475b2c2ee2d6",
+  "sourceInventorySealSha256": "c5a60907ad8c68293788c124249f7679ec5fc602430473e30ccd6fc9b93b9141",
+  "priorPublicationSha256": "9093791226a5ce5d7e9b44901998f9037d1f729da950931f67e5863af7628b1d",
+  "owner": "src/com/lushprojects/circuitjs1/client/StandardPhysicalPartRenderProviders.java",
+  "ownerSha256": "ab6e747785d5bcedbfeb55e611b4426b88a1e0d02fe7fbe23c7aaed819fb2ba4",
+  "gates": {
+    "scope.md": "2d7538e55175ba2596447f393e68834b9ddf8ad61a96d2186235e591e060b00e",
+    "inputs.py": "09a40aeb4140cfe2a160ba4638768db0bb6b364629e0c8808470f6e9fcb70534"
+  }
+}

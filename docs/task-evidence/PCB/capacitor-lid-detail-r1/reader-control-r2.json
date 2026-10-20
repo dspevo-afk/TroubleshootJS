@@ -1,0 +1,2600 @@
+{
+  "allFourMetricsExact": true,
+  "baseline": {
+    "file": "census-receipt.txt",
+    "sha256": "766fe39ad1e23ae18e08b7de1244a325826a5e42a9c5a5cba5cbe87b0d582510"
+  },
+  "canaries": {
+    "baselineControlSha256": "766fe39ad1e23ae18e08b7de1244a325826a5e42a9c5a5cba5cbe87b0d582510",
+    "negativeCases": [
+      {
+        "name": "changed-area",
+        "reason": "PCB_NORMAL_PACKING_CASE family=LED_INDICATOR root=0 protected field changed at $.outline.area (baseline=225545 current=225546)",
+        "status": "PASS_REJECTED"
+      },
+      {
+        "name": "changed-geometry-hash",
+        "reason": "PCB_NORMAL_PACKING_CASE family=LED_INDICATOR root=0 protected field changed at $.geometrySha256 (baseline='f2070d3d2df30cc5201699d772cd7fe60f7ef2d8c66e5296fc12a20b60bc7b42' current='02070d3d2df30cc5201699d772cd7fe60f7ef2d8c66e5296fc12a20b60bc7b42')",
+        "status": "PASS_REJECTED"
+      },
+      {
+        "name": "changed-nonclock-routing-work",
+        "reason": "PCB_NORMAL_PACKING_CASE family=LED_INDICATOR root=0 protected field changed at $.generationRoutingExpansions (baseline=1411 current=1412)",
+        "status": "PASS_REJECTED"
+      },
+      {
+        "name": "current-epoch-framing",
+        "reason": "current PCB_NORMAL_PACKING_CASE family=LED_INDICATOR root=0 has layoutAlgorithmVersion 18; expected current layout 19",
+        "status": "PASS_REJECTED"
+      },
+      {
+        "name": "clock-availability",
+        "reason": "PCB_NORMAL_PACKING_CASE family=LED_INDICATOR root=0 clock availability changed at $.maxAdvanceMillis",
+        "status": "PASS_REJECTED"
+      }
+    ],
+    "positiveClockOnly": {
+      "recordedClockDifferences": 3,
+      "sameLayoutEpoch": 19,
+      "samePackingVersion": 3,
+      "status": "PASS"
+    },
+    "status": "PASS"
+  },
+  "cases": 44,
+  "clockDifferences": [],
+  "clockFieldsAllowed": [
+    "elapsedMillis",
+    "maxAdvanceMillis",
+    "generationRoutingMillis"
+  ],
+  "current": {
+    "file": "census-receipt.txt",
+    "sha256": "766fe39ad1e23ae18e08b7de1244a325826a5e42a9c5a5cba5cbe87b0d582510"
+  },
+  "interpretation": {
+    "baselineConnectedPocketPackingVersion": 3,
+    "baselineLayoutAlgorithmVersion": 19,
+    "currentConnectedPocketPackingVersion": 3,
+    "currentLayoutAlgorithmVersion": 19,
+    "packingVersionEvidence": "pinned accepted packing3 baseline SHA plus pinned current source constant and normal-packing@3 receipt identity",
+    "sourceSha256": {
+      "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180",
+      "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "724e4d6822eaeb3178efdfbaa30340ff12f0bdb1821734666b1a49df47ca5a8e",
+      "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "c7d2f17a3e4b2a892beae7856b5d00dce9af66f7d50d2c3f802ec74d8116cf68",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "e1ef75f6b00098d8d5a9a9965622a81463426eb470a8b50f6c0c8f9ae16ff97d",
+      "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031",
+      "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "6f3af5412696b6dbf3e14593edf195151825483a9a034b7dadbb9043b854980f",
+      "tests/contracts/PcbCanvasBoundaryContractTest.java": "4aaa2d718ca2845eb0e38a0e6d9bcde5ed37144ea4f3199d795c99242e819aa6",
+      "tests/contracts/PcbFunctionalGroupingContractTest.java": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "tests/contracts/PcbNormalPackingCensusContractTest.java": "d27dc575ff767da34a3d0eab70755777e65602f72162e634daa23757cf4691e8"
+    }
+  },
+  "limits": [
+    "Finite paired 44-case accepted census; no all-seed or optimality claim.",
+    "The maintained receipt emits layoutAlgorithmVersion directly; packing3 is bound by the pinned baseline and unchanged, source-pinned packing3 implementation.",
+    "Only elapsedMillis, maxAdvanceMillis, and generationRoutingMillis may vary; all clock values are validated before masking."
+  ],
+  "metricPairs": [
+    {
+      "baseline": {
+        "area": 225545,
+        "copper": 920,
+        "protectedVoid": 28500,
+        "vias": 0
+      },
+      "current": {
+        "area": 225545,
+        "copper": 920,
+        "protectedVoid": 28500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "LED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 256386,
+        "copper": 1400,
+        "protectedVoid": 39600,
+        "vias": 0
+      },
+      "current": {
+        "area": 256386,
+        "copper": 1400,
+        "protectedVoid": 39600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "LED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 212065,
+        "copper": 1180,
+        "protectedVoid": 23200,
+        "vias": 0
+      },
+      "current": {
+        "area": 212065,
+        "copper": 1180,
+        "protectedVoid": 23200,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "LED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 227535,
+        "copper": 860,
+        "protectedVoid": 29500,
+        "vias": 0
+      },
+      "current": {
+        "area": 227535,
+        "copper": 860,
+        "protectedVoid": 29500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "LED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 300080,
+        "copper": 1730,
+        "protectedVoid": 26400,
+        "vias": 0
+      },
+      "current": {
+        "area": 300080,
+        "copper": 1730,
+        "protectedVoid": 26400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 285285,
+        "copper": 1270,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "current": {
+        "area": 285285,
+        "copper": 1270,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 391986,
+        "copper": 2530,
+        "protectedVoid": 59500,
+        "vias": 0
+      },
+      "current": {
+        "area": 391986,
+        "copper": 2530,
+        "protectedVoid": 59500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 313325,
+        "copper": 2050,
+        "protectedVoid": 38400,
+        "vias": 0
+      },
+      "current": {
+        "area": 313325,
+        "copper": 2050,
+        "protectedVoid": 38400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 378976,
+        "copper": 2000,
+        "protectedVoid": 63000,
+        "vias": 0
+      },
+      "current": {
+        "area": 378976,
+        "copper": 2000,
+        "protectedVoid": 63000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 557796,
+        "copper": 2920,
+        "protectedVoid": 94500,
+        "vias": 0
+      },
+      "current": {
+        "area": 557796,
+        "copper": 2920,
+        "protectedVoid": 94500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 300846,
+        "copper": 2220,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "current": {
+        "area": 300846,
+        "copper": 2220,
+        "protectedVoid": 29600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 494426,
+        "copper": 3050,
+        "protectedVoid": 96000,
+        "vias": 0
+      },
+      "current": {
+        "area": 494426,
+        "copper": 3050,
+        "protectedVoid": 96000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 389910,
+        "copper": 3120,
+        "protectedVoid": 74800,
+        "vias": 0
+      },
+      "current": {
+        "area": 389910,
+        "copper": 3120,
+        "protectedVoid": 74800,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RC_DELAY",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 513380,
+        "copper": 3640,
+        "protectedVoid": 47300,
+        "vias": 0
+      },
+      "current": {
+        "area": 513380,
+        "copper": 3640,
+        "protectedVoid": 47300,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RC_DELAY",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 368400,
+        "copper": 2860,
+        "protectedVoid": 20000,
+        "vias": 0
+      },
+      "current": {
+        "area": 368400,
+        "copper": 2860,
+        "protectedVoid": 20000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RC_DELAY",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 457796,
+        "copper": 2960,
+        "protectedVoid": 35200,
+        "vias": 0
+      },
+      "current": {
+        "area": 457796,
+        "copper": 2960,
+        "protectedVoid": 35200,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RC_DELAY",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 482811,
+        "copper": 4250,
+        "protectedVoid": 33200,
+        "vias": 0
+      },
+      "current": {
+        "area": 482811,
+        "copper": 4250,
+        "protectedVoid": 33200,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 535101,
+        "copper": 4570,
+        "protectedVoid": 59400,
+        "vias": 0
+      },
+      "current": {
+        "area": 535101,
+        "copper": 4570,
+        "protectedVoid": 59400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 418535,
+        "copper": 3450,
+        "protectedVoid": 24400,
+        "vias": 0
+      },
+      "current": {
+        "area": 418535,
+        "copper": 3450,
+        "protectedVoid": 24400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 526806,
+        "copper": 4150,
+        "protectedVoid": 60800,
+        "vias": 0
+      },
+      "current": {
+        "area": 526806,
+        "copper": 4150,
+        "protectedVoid": 60800,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 442540,
+        "copper": 2440,
+        "protectedVoid": 49400,
+        "vias": 0
+      },
+      "current": {
+        "area": 442540,
+        "copper": 2440,
+        "protectedVoid": 49400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 439292,
+        "copper": 3060,
+        "protectedVoid": 37400,
+        "vias": 0
+      },
+      "current": {
+        "area": 439292,
+        "copper": 3060,
+        "protectedVoid": 37400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 437710,
+        "copper": 3520,
+        "protectedVoid": 46000,
+        "vias": 0
+      },
+      "current": {
+        "area": 437710,
+        "copper": 3520,
+        "protectedVoid": 46000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 413316,
+        "copper": 3110,
+        "protectedVoid": 40600,
+        "vias": 0
+      },
+      "current": {
+        "area": 413316,
+        "copper": 3110,
+        "protectedVoid": 40600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 960752,
+        "copper": 8020,
+        "protectedVoid": 67600,
+        "vias": 0
+      },
+      "current": {
+        "area": 960752,
+        "copper": 8020,
+        "protectedVoid": 67600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RELAY_OUTPUT",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 922610,
+        "copper": 8220,
+        "protectedVoid": 50500,
+        "vias": 0
+      },
+      "current": {
+        "area": 922610,
+        "copper": 8220,
+        "protectedVoid": 50500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RELAY_OUTPUT",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 828440,
+        "copper": 7330,
+        "protectedVoid": 44400,
+        "vias": 0
+      },
+      "current": {
+        "area": 828440,
+        "copper": 7330,
+        "protectedVoid": 44400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RELAY_OUTPUT",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1029672,
+        "copper": 6800,
+        "protectedVoid": 107800,
+        "vias": 0
+      },
+      "current": {
+        "area": 1029672,
+        "copper": 6800,
+        "protectedVoid": 107800,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RELAY_OUTPUT",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 937728,
+        "copper": 7520,
+        "protectedVoid": 105000,
+        "vias": 0
+      },
+      "current": {
+        "area": 937728,
+        "copper": 7520,
+        "protectedVoid": 105000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "SENSOR_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 878204,
+        "copper": 7550,
+        "protectedVoid": 42900,
+        "vias": 0
+      },
+      "current": {
+        "area": 878204,
+        "copper": 7550,
+        "protectedVoid": 42900,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "SENSOR_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 945414,
+        "copper": 7500,
+        "protectedVoid": 73500,
+        "vias": 0
+      },
+      "current": {
+        "area": 945414,
+        "copper": 7500,
+        "protectedVoid": 73500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "SENSOR_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1163370,
+        "copper": 8200,
+        "protectedVoid": 113400,
+        "vias": 0
+      },
+      "current": {
+        "area": 1163370,
+        "copper": 8200,
+        "protectedVoid": 113400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "SENSOR_CONTROL",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 2081292,
+        "copper": 12670,
+        "protectedVoid": 179400,
+        "vias": 0
+      },
+      "current": {
+        "area": 2081292,
+        "copper": 12670,
+        "protectedVoid": 179400,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RB15_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 1904788,
+        "copper": 13050,
+        "protectedVoid": 147900,
+        "vias": 0
+      },
+      "current": {
+        "area": 1904788,
+        "copper": 13050,
+        "protectedVoid": 147900,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RB15_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 2030158,
+        "copper": 13800,
+        "protectedVoid": 215000,
+        "vias": 0
+      },
+      "current": {
+        "area": 2030158,
+        "copper": 13800,
+        "protectedVoid": 215000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RB15_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 2104968,
+        "copper": 11830,
+        "protectedVoid": 300900,
+        "vias": 0
+      },
+      "current": {
+        "area": 2104968,
+        "copper": 11830,
+        "protectedVoid": 300900,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "RB15_CONTROL",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 1528665,
+        "copper": 12000,
+        "protectedVoid": 158000,
+        "vias": 0
+      },
+      "current": {
+        "area": 1528665,
+        "copper": 12000,
+        "protectedVoid": 158000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 1570752,
+        "copper": 9670,
+        "protectedVoid": 235600,
+        "vias": 0
+      },
+      "current": {
+        "area": 1570752,
+        "copper": 9670,
+        "protectedVoid": 235600,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 1844970,
+        "copper": 12310,
+        "protectedVoid": 156000,
+        "vias": 0
+      },
+      "current": {
+        "area": 1844970,
+        "copper": 12310,
+        "protectedVoid": 156000,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 1611412,
+        "copper": 11080,
+        "protectedVoid": 110500,
+        "vias": 0
+      },
+      "current": {
+        "area": 1611412,
+        "copper": 11080,
+        "protectedVoid": 110500,
+        "vias": 0
+      },
+      "exact": true,
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "-9223372036854775808"
+    },
+    {
+      "baseline": {
+        "area": 4684888,
+        "copper": 24880,
+        "protectedVoid": 724200,
+        "vias": 27
+      },
+      "current": {
+        "area": 4684888,
+        "copper": 24880,
+        "protectedVoid": 724200,
+        "vias": 27
+      },
+      "exact": true,
+      "family": "RB30_CONTROL",
+      "root": "0"
+    },
+    {
+      "baseline": {
+        "area": 4085248,
+        "copper": 17750,
+        "protectedVoid": 440700,
+        "vias": 22
+      },
+      "current": {
+        "area": 4085248,
+        "copper": 17750,
+        "protectedVoid": 440700,
+        "vias": 22
+      },
+      "exact": true,
+      "family": "RB30_CONTROL",
+      "root": "17"
+    },
+    {
+      "baseline": {
+        "area": 2780388,
+        "copper": 15520,
+        "protectedVoid": 207200,
+        "vias": 15
+      },
+      "current": {
+        "area": 2780388,
+        "copper": 15520,
+        "protectedVoid": 207200,
+        "vias": 15
+      },
+      "exact": true,
+      "family": "RB30_CONTROL",
+      "root": "13"
+    },
+    {
+      "baseline": {
+        "area": 4050350,
+        "copper": 28620,
+        "protectedVoid": 498200,
+        "vias": 28
+      },
+      "current": {
+        "area": 4050350,
+        "copper": 28620,
+        "protectedVoid": 498200,
+        "vias": 28
+      },
+      "exact": true,
+      "family": "RB30_CONTROL",
+      "root": "-9223372036854775808"
+    }
+  ],
+  "observationPairs": 220,
+  "pairedObservations": [
+    {
+      "baselineMaskedRawSha256": "86658079edbdd9127bbcd759dbbc324b8ff8192752de662beee9d6f60ad27e02",
+      "currentMaskedRawSha256": "86658079edbdd9127bbcd759dbbc324b8ff8192752de662beee9d6f60ad27e02",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "45604024bbec39f6124a73221bcadca16f2228f0fdccd7b2ce51ee31e6782e16",
+      "currentMaskedRawSha256": "45604024bbec39f6124a73221bcadca16f2228f0fdccd7b2ce51ee31e6782e16",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "c5c83d8aaab83ac2832ec72374581551af8bab3be34ecc1e2e3fb1c9125a4d13",
+      "currentMaskedRawSha256": "c5c83d8aaab83ac2832ec72374581551af8bab3be34ecc1e2e3fb1c9125a4d13",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "4cd4d42d98b08bb7b32b023753c8edac37b9080c8e9928c32b7cc918aaf94144",
+      "currentMaskedRawSha256": "4cd4d42d98b08bb7b32b023753c8edac37b9080c8e9928c32b7cc918aaf94144",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "437235e9a4d42361621d4854736a6ca496cf0f99740bb01a45f0434a9af3fb3a",
+      "currentMaskedRawSha256": "437235e9a4d42361621d4854736a6ca496cf0f99740bb01a45f0434a9af3fb3a",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "515b1fe5a5ae58f112198bd31eab6beb38e9ddc36ce97b30cb85b0cbd0d44284",
+      "currentMaskedRawSha256": "515b1fe5a5ae58f112198bd31eab6beb38e9ddc36ce97b30cb85b0cbd0d44284",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d811e7f739b11ed8a642acc34efdf44a774b7d048240c23f8c5f33a2c9bae1dc",
+      "currentMaskedRawSha256": "d811e7f739b11ed8a642acc34efdf44a774b7d048240c23f8c5f33a2c9bae1dc",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "a5ebb8ea44af0395fa5d81ef495c2429359d42aa766608cc730c0ea134fa7399",
+      "currentMaskedRawSha256": "a5ebb8ea44af0395fa5d81ef495c2429359d42aa766608cc730c0ea134fa7399",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "cdd64764b1be1e77bd69b3548ca5cff1cc86f7572c394c8dba5b98f8239e5428",
+      "currentMaskedRawSha256": "cdd64764b1be1e77bd69b3548ca5cff1cc86f7572c394c8dba5b98f8239e5428",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "1fc5e66ce7d4d7ddf15aa5f7d1d51f3fc3c957b12f06c78c892bdf4ca4ac08da",
+      "currentMaskedRawSha256": "1fc5e66ce7d4d7ddf15aa5f7d1d51f3fc3c957b12f06c78c892bdf4ca4ac08da",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "441ab58cb94936879b50f428902d4bd37bee0a46616145d7c58e3fd9b4deefe2",
+      "currentMaskedRawSha256": "441ab58cb94936879b50f428902d4bd37bee0a46616145d7c58e3fd9b4deefe2",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "3561f1e72cd9f5d97791144ae49614158cda89bcfc46f214c62749e96936c8b9",
+      "currentMaskedRawSha256": "3561f1e72cd9f5d97791144ae49614158cda89bcfc46f214c62749e96936c8b9",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "4bbbb5b2d17c6fb70700b76c8204bbd566f33983e5d6d63b026104ea5095d81c",
+      "currentMaskedRawSha256": "4bbbb5b2d17c6fb70700b76c8204bbd566f33983e5d6d63b026104ea5095d81c",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "63f792035aa070ef3d2e2a980b9cc17ef290c9a7f04b5d50a7070d4801e29850",
+      "currentMaskedRawSha256": "63f792035aa070ef3d2e2a980b9cc17ef290c9a7f04b5d50a7070d4801e29850",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "80d378e57ed16bb8644ab55b2a63d9237b9ecec2466ce2688aceeca3d8172bbf",
+      "currentMaskedRawSha256": "80d378e57ed16bb8644ab55b2a63d9237b9ecec2466ce2688aceeca3d8172bbf",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "006b0694abf605cad6dba5c28f65c675299c147bcf3ae9bcf64e78dc1032bba8",
+      "currentMaskedRawSha256": "006b0694abf605cad6dba5c28f65c675299c147bcf3ae9bcf64e78dc1032bba8",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "1fe1e78da9a9b38c007af5226d064436ef9713cd184412d7c4fb12be81e81ac9",
+      "currentMaskedRawSha256": "1fe1e78da9a9b38c007af5226d064436ef9713cd184412d7c4fb12be81e81ac9",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "4ee9328dfa1219c5cb0373bc11efb319587bb20112a6f1ec039016dec3217156",
+      "currentMaskedRawSha256": "4ee9328dfa1219c5cb0373bc11efb319587bb20112a6f1ec039016dec3217156",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "9eebbf1027f14bc7975c0efb8ac26d571022effe60b77190f753a926bf3206f1",
+      "currentMaskedRawSha256": "9eebbf1027f14bc7975c0efb8ac26d571022effe60b77190f753a926bf3206f1",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "5839f2bd99df26a13acb4324768bfcbe5df84dd83b21376c7d6bc20fae4d0173",
+      "currentMaskedRawSha256": "5839f2bd99df26a13acb4324768bfcbe5df84dd83b21376c7d6bc20fae4d0173",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "4020b063495671c986df9635937a15127ab6c79dc91f727e920799ede0adfe10",
+      "currentMaskedRawSha256": "4020b063495671c986df9635937a15127ab6c79dc91f727e920799ede0adfe10",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "a12d47fca6b74a2e94fa5edc57aa96c3df68e3159a395fcd578fbf84fe21285c",
+      "currentMaskedRawSha256": "a12d47fca6b74a2e94fa5edc57aa96c3df68e3159a395fcd578fbf84fe21285c",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "1935f172527d7f211a5c780adfcba3082354d5c164cdbb5e5eba78ac043a61ea",
+      "currentMaskedRawSha256": "1935f172527d7f211a5c780adfcba3082354d5c164cdbb5e5eba78ac043a61ea",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "d8d7686e1c7b93e2a0146b9383420d72424ab47286b650d99ccdb2c39e94f63c",
+      "currentMaskedRawSha256": "d8d7686e1c7b93e2a0146b9383420d72424ab47286b650d99ccdb2c39e94f63c",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "d006347f398a524fccffeca3bb88de3dad829f1a746a9cddf7752c9973e88c60",
+      "currentMaskedRawSha256": "d006347f398a524fccffeca3bb88de3dad829f1a746a9cddf7752c9973e88c60",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "b4d737d91958ee26b66cea1eaf6ad204dd2b819e06ce23b8950b7d1b629d479f",
+      "currentMaskedRawSha256": "b4d737d91958ee26b66cea1eaf6ad204dd2b819e06ce23b8950b7d1b629d479f",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "46dc6a888339f814eaa58cc03060d40b35dbd810c77248fb34f0ac66bb249f02",
+      "currentMaskedRawSha256": "46dc6a888339f814eaa58cc03060d40b35dbd810c77248fb34f0ac66bb249f02",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "3d1bb4dac1fc0c6dbf33dfd7a8db95f74c9b367014107d71c4cce079ce8f8537",
+      "currentMaskedRawSha256": "3d1bb4dac1fc0c6dbf33dfd7a8db95f74c9b367014107d71c4cce079ce8f8537",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "f64b190afd11c8d656e762ea844ebe742a810e253be509ef6210c0c3e647c535",
+      "currentMaskedRawSha256": "f64b190afd11c8d656e762ea844ebe742a810e253be509ef6210c0c3e647c535",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "fdc40287161f995b9412a8c0407d122794d832b2351aab642226a222b465acec",
+      "currentMaskedRawSha256": "fdc40287161f995b9412a8c0407d122794d832b2351aab642226a222b465acec",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "fc88aadfbd45f8a5b159bd2d61a9feefc7e6177f010ace025725a356b35a9e7e",
+      "currentMaskedRawSha256": "fc88aadfbd45f8a5b159bd2d61a9feefc7e6177f010ace025725a356b35a9e7e",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "7d721be5d1608d4e17056467c2755a090fed1b108496cc868e9b28b0b9624664",
+      "currentMaskedRawSha256": "7d721be5d1608d4e17056467c2755a090fed1b108496cc868e9b28b0b9624664",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "3cddfb99a2577768cde1b498d20022825999ca28f3959388b89b723010a7f4cf",
+      "currentMaskedRawSha256": "3cddfb99a2577768cde1b498d20022825999ca28f3959388b89b723010a7f4cf",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "93bd3bb91724ba077d95e8d47a21c9ba05b03ab776cf977fecb02f0622fe0428",
+      "currentMaskedRawSha256": "93bd3bb91724ba077d95e8d47a21c9ba05b03ab776cf977fecb02f0622fe0428",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "3e918d7e5b0892d865ea9f6888e498f683d54b49ca5ff08070debc47395fb788",
+      "currentMaskedRawSha256": "3e918d7e5b0892d865ea9f6888e498f683d54b49ca5ff08070debc47395fb788",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "f37d7b2b497905fccbbc4cea9067c4ca5c9ec8698e018688abc384daedd8c035",
+      "currentMaskedRawSha256": "f37d7b2b497905fccbbc4cea9067c4ca5c9ec8698e018688abc384daedd8c035",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "931abee1fe6b7e094abc050b93086290c031775c9f40558c032a9f7f20b96d4d",
+      "currentMaskedRawSha256": "931abee1fe6b7e094abc050b93086290c031775c9f40558c032a9f7f20b96d4d",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "5c495c5b227606e1c22788acf415a8cc261e796f3025bf6c44a77d8986c6846f",
+      "currentMaskedRawSha256": "5c495c5b227606e1c22788acf415a8cc261e796f3025bf6c44a77d8986c6846f",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "0b6ce10854c80e14db0ba6148833c9dc120505ebe77d96f3a01c11bce869c86a",
+      "currentMaskedRawSha256": "0b6ce10854c80e14db0ba6148833c9dc120505ebe77d96f3a01c11bce869c86a",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "de945f11878c709b8d52e27c53c19e0e18ed695e084f7ccd69453259510e21d3",
+      "currentMaskedRawSha256": "de945f11878c709b8d52e27c53c19e0e18ed695e084f7ccd69453259510e21d3",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "d0ee9f7d869fec1f2048a7fa128df2a4e3622b9fa60f97c4947e25a5c39c8fbc",
+      "currentMaskedRawSha256": "d0ee9f7d869fec1f2048a7fa128df2a4e3622b9fa60f97c4947e25a5c39c8fbc",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "2b917087f9f9724840509ad422c6a457245ddc364c31b0fb099b28f4ec48b33c",
+      "currentMaskedRawSha256": "2b917087f9f9724840509ad422c6a457245ddc364c31b0fb099b28f4ec48b33c",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d07719d2391aaff30610b937ed6f952df8641f9b3496845ffa478b372c934033",
+      "currentMaskedRawSha256": "d07719d2391aaff30610b937ed6f952df8641f9b3496845ffa478b372c934033",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "df23e679dbf7e2155eea5568c62c387ff590c00cbfde1828cdde25f3028c5e1a",
+      "currentMaskedRawSha256": "df23e679dbf7e2155eea5568c62c387ff590c00cbfde1828cdde25f3028c5e1a",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_PACKING_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "68b8b86081283ebda30c5b1dcebf38723d1c633817307a543b47ccae86a77982",
+      "currentMaskedRawSha256": "68b8b86081283ebda30c5b1dcebf38723d1c633817307a543b47ccae86a77982",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "c80a44cfe6c3594215fab5b3233f37943b532361633d90f13d170c191172b2da",
+      "currentMaskedRawSha256": "c80a44cfe6c3594215fab5b3233f37943b532361633d90f13d170c191172b2da",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "4d5b8cde313f07124c633567709f1f2e891a22348c046be641ff1e631b4a7d19",
+      "currentMaskedRawSha256": "4d5b8cde313f07124c633567709f1f2e891a22348c046be641ff1e631b4a7d19",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "57f6d9e8f20e4ac48164d6de00d9b9148547a9aed65cebc41ba9d99869046646",
+      "currentMaskedRawSha256": "57f6d9e8f20e4ac48164d6de00d9b9148547a9aed65cebc41ba9d99869046646",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "2af8c2210654654000e22a593f076d9d214c220f95a6da7dc12ea33421eea931",
+      "currentMaskedRawSha256": "2af8c2210654654000e22a593f076d9d214c220f95a6da7dc12ea33421eea931",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "51288bc6ae47c5903534a11212131f6c9f54caef95218ceff76586e3eeb6bb40",
+      "currentMaskedRawSha256": "51288bc6ae47c5903534a11212131f6c9f54caef95218ceff76586e3eeb6bb40",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "cd7025c85878ffef0fd1b361da857ba9bf9619bc27a64ccbd484bed0f7347c02",
+      "currentMaskedRawSha256": "cd7025c85878ffef0fd1b361da857ba9bf9619bc27a64ccbd484bed0f7347c02",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "e60755704950c0465365a0919bae573a3a40c498615c0d281f08ac20c2e48d1d",
+      "currentMaskedRawSha256": "e60755704950c0465365a0919bae573a3a40c498615c0d281f08ac20c2e48d1d",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "b0fa5864c0ab62c7613381c2a3358acfeb6a0c5353119523476f07c78ba8efa7",
+      "currentMaskedRawSha256": "b0fa5864c0ab62c7613381c2a3358acfeb6a0c5353119523476f07c78ba8efa7",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "26aa8e6297e1c34b4e7786b7d5312a55e036f4d7a30f058e89eae2f600cdbad7",
+      "currentMaskedRawSha256": "26aa8e6297e1c34b4e7786b7d5312a55e036f4d7a30f058e89eae2f600cdbad7",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "6b351b9ff7a0c483503f753a63b05103e914993754714e584711a3bc57587198",
+      "currentMaskedRawSha256": "6b351b9ff7a0c483503f753a63b05103e914993754714e584711a3bc57587198",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "32ee45346d1913e99c4fc64f568fad3c280259b78f812fa22de9409776551afb",
+      "currentMaskedRawSha256": "32ee45346d1913e99c4fc64f568fad3c280259b78f812fa22de9409776551afb",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "c59a0c56c60404364998864e60b20545364c1ef7ea2f58fda0ddd2a2bad2a391",
+      "currentMaskedRawSha256": "c59a0c56c60404364998864e60b20545364c1ef7ea2f58fda0ddd2a2bad2a391",
+      "family": "RC_DELAY",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "b7e838740c7b903a624d85cfb319976aa2d208f1afce88acebbc36fd98a3f634",
+      "currentMaskedRawSha256": "b7e838740c7b903a624d85cfb319976aa2d208f1afce88acebbc36fd98a3f634",
+      "family": "RC_DELAY",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "49e5603f0d14606e23b9f3f59cc1abeaad20f6e641e4193d11fc14aed5bcfe02",
+      "currentMaskedRawSha256": "49e5603f0d14606e23b9f3f59cc1abeaad20f6e641e4193d11fc14aed5bcfe02",
+      "family": "RC_DELAY",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "15e83a84d327dfed9d193c0e41de895bf66d9a13b68534c090e9261815c7e9a2",
+      "currentMaskedRawSha256": "15e83a84d327dfed9d193c0e41de895bf66d9a13b68534c090e9261815c7e9a2",
+      "family": "RC_DELAY",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "63820a015b3b49d1a2bb39911780b7d754274fcb1974c60216429d09ac060ef0",
+      "currentMaskedRawSha256": "63820a015b3b49d1a2bb39911780b7d754274fcb1974c60216429d09ac060ef0",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "e90fdc40bb6976417fd89766c6638c3a719853b635404424503067539ec4f354",
+      "currentMaskedRawSha256": "e90fdc40bb6976417fd89766c6638c3a719853b635404424503067539ec4f354",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "be93bea41885a9ce1a029305fe58e540d05a9dde8c7c72571dfbee42aec4925a",
+      "currentMaskedRawSha256": "be93bea41885a9ce1a029305fe58e540d05a9dde8c7c72571dfbee42aec4925a",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "8117ee068d94560419089884be9a512ddb36c364605f0bde55f22ea04e1eb851",
+      "currentMaskedRawSha256": "8117ee068d94560419089884be9a512ddb36c364605f0bde55f22ea04e1eb851",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "e9ccada888686fd17c9bc5910a9c44d40b94fddd8ef0b21e8cae8ec00098174f",
+      "currentMaskedRawSha256": "e9ccada888686fd17c9bc5910a9c44d40b94fddd8ef0b21e8cae8ec00098174f",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "0edbb62f522d3703e921c41d11ba14375d1405a6c752218bd85400ad93e82174",
+      "currentMaskedRawSha256": "0edbb62f522d3703e921c41d11ba14375d1405a6c752218bd85400ad93e82174",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "581e22790fdf6f33dc2310687a9beaff5373093dca9bb3d24cb8f1706a7801ac",
+      "currentMaskedRawSha256": "581e22790fdf6f33dc2310687a9beaff5373093dca9bb3d24cb8f1706a7801ac",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "b7df1926a7897061238f711083b21219435a65334e0c2ac1d994692ed6839f32",
+      "currentMaskedRawSha256": "b7df1926a7897061238f711083b21219435a65334e0c2ac1d994692ed6839f32",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "5b2163eacfbe877036360895c76a30ff5a6d2e00ba0c277990e5f77730ed9afb",
+      "currentMaskedRawSha256": "5b2163eacfbe877036360895c76a30ff5a6d2e00ba0c277990e5f77730ed9afb",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "560a383c029af0769462b34eb54ebe641f162bfb0bb24a0c7c7178505c3cfc81",
+      "currentMaskedRawSha256": "560a383c029af0769462b34eb54ebe641f162bfb0bb24a0c7c7178505c3cfc81",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "9f178c9893bf928f298c336919729aa891a9de203d4f03748c0d05f7fd9edd06",
+      "currentMaskedRawSha256": "9f178c9893bf928f298c336919729aa891a9de203d4f03748c0d05f7fd9edd06",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "c499f4b1b07505a0fbda78293750cebfe870230450ae1ecbe8e26dc0d40f9ab7",
+      "currentMaskedRawSha256": "c499f4b1b07505a0fbda78293750cebfe870230450ae1ecbe8e26dc0d40f9ab7",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "8b1befceab5ffa0938169ff64071cfa458c08bba7339a23e3d9b3c7a085f5566",
+      "currentMaskedRawSha256": "8b1befceab5ffa0938169ff64071cfa458c08bba7339a23e3d9b3c7a085f5566",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "9f995cc29f70c50f0c82e1ac709721867578fad21211616acbb108e3dd0b8df4",
+      "currentMaskedRawSha256": "9f995cc29f70c50f0c82e1ac709721867578fad21211616acbb108e3dd0b8df4",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "cfe58ceba73ea1ccb20deb28c851d07c3847eba2747e0f25fd56a98aaf2caee1",
+      "currentMaskedRawSha256": "cfe58ceba73ea1ccb20deb28c851d07c3847eba2747e0f25fd56a98aaf2caee1",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "b5c53884e62609d704739ccada13adef7a767e7941b94c510f0852ff4e23e7aa",
+      "currentMaskedRawSha256": "b5c53884e62609d704739ccada13adef7a767e7941b94c510f0852ff4e23e7aa",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "bd54918174ec01d521c348db01cab85853956c333165a6fa1c44e448d93cf65d",
+      "currentMaskedRawSha256": "bd54918174ec01d521c348db01cab85853956c333165a6fa1c44e448d93cf65d",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "baf941e5004a1ec2ddb60baa8a97fde6dbfe88770edd45f037c41490a0cbb952",
+      "currentMaskedRawSha256": "baf941e5004a1ec2ddb60baa8a97fde6dbfe88770edd45f037c41490a0cbb952",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "f09d06b891037380f1d3a401adff1f84b1c9254dde2905d1fcaf0ba6ef45660f",
+      "currentMaskedRawSha256": "f09d06b891037380f1d3a401adff1f84b1c9254dde2905d1fcaf0ba6ef45660f",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "4d292e73c299f6961974eac7fc8decfb08b1b14c0328877d38f5825326bc7aaf",
+      "currentMaskedRawSha256": "4d292e73c299f6961974eac7fc8decfb08b1b14c0328877d38f5825326bc7aaf",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "508f8a83fd913a54a0edb4301fcd86319610191ea0d442529b85534faf9a148e",
+      "currentMaskedRawSha256": "508f8a83fd913a54a0edb4301fcd86319610191ea0d442529b85534faf9a148e",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "dc26fc83fe9fab7eba16078f3798dcd07d0aea447f345b6cf6fd88e2856759c9",
+      "currentMaskedRawSha256": "dc26fc83fe9fab7eba16078f3798dcd07d0aea447f345b6cf6fd88e2856759c9",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "7ba1db76b8b9fbea712e9b92f179b92c163da5d7827b4b95918bbe682dea9530",
+      "currentMaskedRawSha256": "7ba1db76b8b9fbea712e9b92f179b92c163da5d7827b4b95918bbe682dea9530",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "af4acb4ceea2f2425b4aacf27229001c66fd59782768103cd47f7fc3b98f8340",
+      "currentMaskedRawSha256": "af4acb4ceea2f2425b4aacf27229001c66fd59782768103cd47f7fc3b98f8340",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "0c903304697da6a866c15d4e2706d1ffa47c8b6aa40a24e2ca2af18d7b12f993",
+      "currentMaskedRawSha256": "0c903304697da6a866c15d4e2706d1ffa47c8b6aa40a24e2ca2af18d7b12f993",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "47ddc20670100bebe5f9d80373c6a2e1c02d244076c2a04637e3e03d86ce8adc",
+      "currentMaskedRawSha256": "47ddc20670100bebe5f9d80373c6a2e1c02d244076c2a04637e3e03d86ce8adc",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "6aa24327b0fbaac2a59e24cdb2488149a49aeb1aa8d56105a3563f47ba74fc45",
+      "currentMaskedRawSha256": "6aa24327b0fbaac2a59e24cdb2488149a49aeb1aa8d56105a3563f47ba74fc45",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "41c920c830fdd0fa6cc095fd4b4061239a11c813e46cb434859df24e0d2e0516",
+      "currentMaskedRawSha256": "41c920c830fdd0fa6cc095fd4b4061239a11c813e46cb434859df24e0d2e0516",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_WHITESPACE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "773852c4d3243e6d4b8255b382d4977a7e42a07f10a417887505bca494fec6e9",
+      "currentMaskedRawSha256": "773852c4d3243e6d4b8255b382d4977a7e42a07f10a417887505bca494fec6e9",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "5fe35ba5fddaba0cd14d1a43be388f02b3a7a60ec9f8ee29a755d5a58412acbc",
+      "currentMaskedRawSha256": "5fe35ba5fddaba0cd14d1a43be388f02b3a7a60ec9f8ee29a755d5a58412acbc",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "85e72a49dbe5ffdedfa8517425cec56e3449d9ab539f234e4c51ab034b8cc8eb",
+      "currentMaskedRawSha256": "85e72a49dbe5ffdedfa8517425cec56e3449d9ab539f234e4c51ab034b8cc8eb",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "85ccd1e48b390fce4f4f2ea31ba665d46b096b807a234e7e68c510002310c732",
+      "currentMaskedRawSha256": "85ccd1e48b390fce4f4f2ea31ba665d46b096b807a234e7e68c510002310c732",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "f133639fc170ff3d02057b9e65725a49234798ffdbb1cd0e28f541160feaa8cf",
+      "currentMaskedRawSha256": "f133639fc170ff3d02057b9e65725a49234798ffdbb1cd0e28f541160feaa8cf",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "4f822780856c1b3d576131f07431d47bb9f572f72c9d57d3f1db4b215488b60c",
+      "currentMaskedRawSha256": "4f822780856c1b3d576131f07431d47bb9f572f72c9d57d3f1db4b215488b60c",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "754561ceeb84f4842510cf35787face42fa4f93d724edac0688bd108736004c9",
+      "currentMaskedRawSha256": "754561ceeb84f4842510cf35787face42fa4f93d724edac0688bd108736004c9",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "4d43f1c1a88d918551183a8980dfaff7ad1c5fa36e3888d0898b4fc0dbee65f1",
+      "currentMaskedRawSha256": "4d43f1c1a88d918551183a8980dfaff7ad1c5fa36e3888d0898b4fc0dbee65f1",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "ee8d95a553b9cf6a588d0cfe54b9e456e778ded348d34673b5b9cc467857ffcb",
+      "currentMaskedRawSha256": "ee8d95a553b9cf6a588d0cfe54b9e456e778ded348d34673b5b9cc467857ffcb",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "a2427427a70dd5cdb323b483d726b2e92ad377e720c90743cdb5e8cfce606210",
+      "currentMaskedRawSha256": "a2427427a70dd5cdb323b483d726b2e92ad377e720c90743cdb5e8cfce606210",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d1cabfa06c70cad45118fca9898575d95002884835da3e14dea46b23fbe9c2e4",
+      "currentMaskedRawSha256": "d1cabfa06c70cad45118fca9898575d95002884835da3e14dea46b23fbe9c2e4",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "ace2b61ec8f30cfc3cae4945e7939046864ad3ada2b6a037aadb8ee6a119f701",
+      "currentMaskedRawSha256": "ace2b61ec8f30cfc3cae4945e7939046864ad3ada2b6a037aadb8ee6a119f701",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "553663aa790827504f1e7c5d457610d1843ce3214f97555830c579525a4d123b",
+      "currentMaskedRawSha256": "553663aa790827504f1e7c5d457610d1843ce3214f97555830c579525a4d123b",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "3d12a53aea67a486a7ec7a775e7d73287b4429c8b9e6fbc91f1ccfb738167e3d",
+      "currentMaskedRawSha256": "3d12a53aea67a486a7ec7a775e7d73287b4429c8b9e6fbc91f1ccfb738167e3d",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "a04bd994911c6c1981dc5e48b25e98b433669e54375236e73ab72b49fe33cd2c",
+      "currentMaskedRawSha256": "a04bd994911c6c1981dc5e48b25e98b433669e54375236e73ab72b49fe33cd2c",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "49f497e30cfe16ed407a02fc41b1afc7981e5cd80f50c03fc2069141dd31eea1",
+      "currentMaskedRawSha256": "49f497e30cfe16ed407a02fc41b1afc7981e5cd80f50c03fc2069141dd31eea1",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "2bfceca8c5d46164efcdd907ea6527f095500e05a17acb793898bb0d478ee55d",
+      "currentMaskedRawSha256": "2bfceca8c5d46164efcdd907ea6527f095500e05a17acb793898bb0d478ee55d",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "6d7b6cba4e683e1cba53f98b46924ece7a6d7eb5e55b0a380f6c8cf54f31f893",
+      "currentMaskedRawSha256": "6d7b6cba4e683e1cba53f98b46924ece7a6d7eb5e55b0a380f6c8cf54f31f893",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "775d1e65205a5b1df0416bf35650dd362beb86af126ed6aeabb613691b967a68",
+      "currentMaskedRawSha256": "775d1e65205a5b1df0416bf35650dd362beb86af126ed6aeabb613691b967a68",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "e6f762187c962553caf8487dd874ac99b17cf9165b6009fce6824c144c3efcb1",
+      "currentMaskedRawSha256": "e6f762187c962553caf8487dd874ac99b17cf9165b6009fce6824c144c3efcb1",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "8a90241062b2ecfb8d0c7ba8b0043a87fe03b95b1e03c9c8122a3291d9858d0a",
+      "currentMaskedRawSha256": "8a90241062b2ecfb8d0c7ba8b0043a87fe03b95b1e03c9c8122a3291d9858d0a",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "db646020d52d4a77c6681a4b8f63375e661ea43b0519e716b81e82ad709c489a",
+      "currentMaskedRawSha256": "db646020d52d4a77c6681a4b8f63375e661ea43b0519e716b81e82ad709c489a",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "e76eb6c9d8f78f80761f600f06ee9898ad4f63a41d72184a70cce71df21de92c",
+      "currentMaskedRawSha256": "e76eb6c9d8f78f80761f600f06ee9898ad4f63a41d72184a70cce71df21de92c",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "301384b3a6e3de3ca5c74b143f1ef4f390f69f46c6134df88f3e4bdc22cfdf18",
+      "currentMaskedRawSha256": "301384b3a6e3de3ca5c74b143f1ef4f390f69f46c6134df88f3e4bdc22cfdf18",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "b3c22b2318cb655cbc0b20bfff19f5d9def7dabf7407a38779aa9dbc5392e83b",
+      "currentMaskedRawSha256": "b3c22b2318cb655cbc0b20bfff19f5d9def7dabf7407a38779aa9dbc5392e83b",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "1d84c9bda1ebd777ac928aba17f02fc02a7528c3a5388816eda0d17f3cd0afd8",
+      "currentMaskedRawSha256": "1d84c9bda1ebd777ac928aba17f02fc02a7528c3a5388816eda0d17f3cd0afd8",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "55e618182bc2de5916b69f7f43a53106021e059143514f5e30690c7ae506787e",
+      "currentMaskedRawSha256": "55e618182bc2de5916b69f7f43a53106021e059143514f5e30690c7ae506787e",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "f38ae8b63eff46f6457742c00ba7d80af662f27a60b5f8cb4b8e3d07374b0ea9",
+      "currentMaskedRawSha256": "f38ae8b63eff46f6457742c00ba7d80af662f27a60b5f8cb4b8e3d07374b0ea9",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "2b8a7742bd1d6bd8ead2a73b4a13d2f9d08d3b5402079eee4fd94112ea4aa430",
+      "currentMaskedRawSha256": "2b8a7742bd1d6bd8ead2a73b4a13d2f9d08d3b5402079eee4fd94112ea4aa430",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "9e970dec68ba7154dcee470e33427765996e2cac059d86ee00596e68a0c25af8",
+      "currentMaskedRawSha256": "9e970dec68ba7154dcee470e33427765996e2cac059d86ee00596e68a0c25af8",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "2382abf27a8c97f390f3dbae5cd3f969ad2cecf12828aea1114051db18802f06",
+      "currentMaskedRawSha256": "2382abf27a8c97f390f3dbae5cd3f969ad2cecf12828aea1114051db18802f06",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "84e411bc212be81267fbbab2a2f82c152ff28a60e540380ca8876d785b83bcdb",
+      "currentMaskedRawSha256": "84e411bc212be81267fbbab2a2f82c152ff28a60e540380ca8876d785b83bcdb",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "d5a028e52ff7a7e304db3fa2d60178bf77c437ffd9a87de56ab82f7d77275960",
+      "currentMaskedRawSha256": "d5a028e52ff7a7e304db3fa2d60178bf77c437ffd9a87de56ab82f7d77275960",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "fb1839f08a1ecacb6e2ae995b09e803ad527574af8ee14ca72cdfca8427f96a2",
+      "currentMaskedRawSha256": "fb1839f08a1ecacb6e2ae995b09e803ad527574af8ee14ca72cdfca8427f96a2",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "fa510aef66e87ef40e268e8f8278821f7b169e576054d6bfaff8aa9daf760817",
+      "currentMaskedRawSha256": "fa510aef66e87ef40e268e8f8278821f7b169e576054d6bfaff8aa9daf760817",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "0c02d5fdd1ebf00a3b5b0a88de258c91a80fe903df12453cd297bb86679e1c03",
+      "currentMaskedRawSha256": "0c02d5fdd1ebf00a3b5b0a88de258c91a80fe903df12453cd297bb86679e1c03",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "34ac214eab59537c9ce34efcd2a02ecfdc29277ad15eaff635ebbdb4356a6536",
+      "currentMaskedRawSha256": "34ac214eab59537c9ce34efcd2a02ecfdc29277ad15eaff635ebbdb4356a6536",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "c82b48f8eb7f5fb4cd16495a4f13b75d9a79a36170942e96870b4c9cbb89958f",
+      "currentMaskedRawSha256": "c82b48f8eb7f5fb4cd16495a4f13b75d9a79a36170942e96870b4c9cbb89958f",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "1054416361a8017fb00c5825b0814b99ab9e7666e4f0788b315af5d79cd274d4",
+      "currentMaskedRawSha256": "1054416361a8017fb00c5825b0814b99ab9e7666e4f0788b315af5d79cd274d4",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "f3555fec642e91e5ddf36002cb58cc1db478fcadc18bf3ed07e9630f6c9dec41",
+      "currentMaskedRawSha256": "f3555fec642e91e5ddf36002cb58cc1db478fcadc18bf3ed07e9630f6c9dec41",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "5490db85cde645308a3d3b2915b7f2d86fb56dc8b795c2faed64ea78a6973feb",
+      "currentMaskedRawSha256": "5490db85cde645308a3d3b2915b7f2d86fb56dc8b795c2faed64ea78a6973feb",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "ad3a2e7d6e86c9ef7afc66b562f6c56277eba68a533a22101408751c6f6dbe7f",
+      "currentMaskedRawSha256": "ad3a2e7d6e86c9ef7afc66b562f6c56277eba68a533a22101408751c6f6dbe7f",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d56854e2eda524d7516ea330aecd9037a9c0480fe918788b1727b01d5c7939dd",
+      "currentMaskedRawSha256": "d56854e2eda524d7516ea330aecd9037a9c0480fe918788b1727b01d5c7939dd",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "f577a222f91d775d8dc6cfdd798bc7aa872a05e7dc3de16c216cbe35c5ba08ff",
+      "currentMaskedRawSha256": "f577a222f91d775d8dc6cfdd798bc7aa872a05e7dc3de16c216cbe35c5ba08ff",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "5b448dbe5fa8db7063a1138918446b3d6d43f58b015fd997ed4d622830547075",
+      "currentMaskedRawSha256": "5b448dbe5fa8db7063a1138918446b3d6d43f58b015fd997ed4d622830547075",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "497f31d1d3d189debee0d28db40ec4d951f701170e7a89f42848be92cf0f404b",
+      "currentMaskedRawSha256": "497f31d1d3d189debee0d28db40ec4d951f701170e7a89f42848be92cf0f404b",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "0a12e3d9719a9c348c03636f587a129bc776cad4999b2d78e6f707077af41115",
+      "currentMaskedRawSha256": "0a12e3d9719a9c348c03636f587a129bc776cad4999b2d78e6f707077af41115",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "00d3194c9f71962caa29a0e54659cb257e67602ef8872e7c2a98f517e6236879",
+      "currentMaskedRawSha256": "00d3194c9f71962caa29a0e54659cb257e67602ef8872e7c2a98f517e6236879",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "d18bbecc164c2461d4ed8743e685f654ebc8ec8bcf2a8464110fdbdc9fb99bce",
+      "currentMaskedRawSha256": "d18bbecc164c2461d4ed8743e685f654ebc8ec8bcf2a8464110fdbdc9fb99bce",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "937ce16e841c6110c7b258213901fb467e8721b5169bc8d06e2bdd0fcf0571fb",
+      "currentMaskedRawSha256": "937ce16e841c6110c7b258213901fb467e8721b5169bc8d06e2bdd0fcf0571fb",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "2077ac8fad8c8ce0216901242c98943f0fe165f888f9f25f8ae87e607bc74ac1",
+      "currentMaskedRawSha256": "2077ac8fad8c8ce0216901242c98943f0fe165f888f9f25f8ae87e607bc74ac1",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "c760b78c2b090ee5d01a8d1c3918ec8d31d005d1abebbf671e3653da207d8a01",
+      "currentMaskedRawSha256": "c760b78c2b090ee5d01a8d1c3918ec8d31d005d1abebbf671e3653da207d8a01",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "170a6301decf8d4e2cf91a0662207458e32ccac835d204c419892d311be3fca0",
+      "currentMaskedRawSha256": "170a6301decf8d4e2cf91a0662207458e32ccac835d204c419892d311be3fca0",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "924bf372a75f65b55c427307847d4ca3a498da5b3e4451e81f125cc48687d2bd",
+      "currentMaskedRawSha256": "924bf372a75f65b55c427307847d4ca3a498da5b3e4451e81f125cc48687d2bd",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "c890553db16ded8e5000d265beb1e22e1859d74443e4b0e01af4b9c32ea0e19a",
+      "currentMaskedRawSha256": "c890553db16ded8e5000d265beb1e22e1859d74443e4b0e01af4b9c32ea0e19a",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "834ba95132e85b94391d98098a0164062302dfa9b911fe7f82b0204b96b83912",
+      "currentMaskedRawSha256": "834ba95132e85b94391d98098a0164062302dfa9b911fe7f82b0204b96b83912",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "11ddf0b43169da6759a06cd97c18d5205c8630cd1ed611c135281963437f8fa2",
+      "currentMaskedRawSha256": "11ddf0b43169da6759a06cd97c18d5205c8630cd1ed611c135281963437f8fa2",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "91b592d8c01d8a98f4f19d6f5f8739ef4a4f759deb1bc20d0e26085cfc201ea2",
+      "currentMaskedRawSha256": "91b592d8c01d8a98f4f19d6f5f8739ef4a4f759deb1bc20d0e26085cfc201ea2",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "43eebc8a03341fb4dffdbeb43288e872f54c72880f1f5e7c4d3d746075c657c7",
+      "currentMaskedRawSha256": "43eebc8a03341fb4dffdbeb43288e872f54c72880f1f5e7c4d3d746075c657c7",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "841958dd32e9288e02fb0ba1791f121de71626b95db754094df5724f07c45ffa",
+      "currentMaskedRawSha256": "841958dd32e9288e02fb0ba1791f121de71626b95db754094df5724f07c45ffa",
+      "family": "RC_DELAY",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "fab55b88f6386f813f77e4de3d3f25696458cf31e3862a2fb230318f811d7915",
+      "currentMaskedRawSha256": "fab55b88f6386f813f77e4de3d3f25696458cf31e3862a2fb230318f811d7915",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "f2943652d53427b36f38660ce8fff3766874bf25f86dae994de9a2a513902679",
+      "currentMaskedRawSha256": "f2943652d53427b36f38660ce8fff3766874bf25f86dae994de9a2a513902679",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "b4d3950e71930c1251eb0e4b88ea3f9dc18e5ef4754058a92dffad71afffefc3",
+      "currentMaskedRawSha256": "b4d3950e71930c1251eb0e4b88ea3f9dc18e5ef4754058a92dffad71afffefc3",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "3ef6658c6b2882aa7d3e5eb957a1d20b5b918abea017655d0ded1a02a13975d8",
+      "currentMaskedRawSha256": "3ef6658c6b2882aa7d3e5eb957a1d20b5b918abea017655d0ded1a02a13975d8",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "ae28cfeb125f6f61decd4b78e3cbd14a95c918da5180d1a092334f2a6b72ea84",
+      "currentMaskedRawSha256": "ae28cfeb125f6f61decd4b78e3cbd14a95c918da5180d1a092334f2a6b72ea84",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "644b0650528acb1be89771ffc0bddccbf3dfa8c34f7830b384569ea69f67d5d9",
+      "currentMaskedRawSha256": "644b0650528acb1be89771ffc0bddccbf3dfa8c34f7830b384569ea69f67d5d9",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "1b417880f9c3f27a64f49bb4904205ed38bdf6c81ce3e962de0a50d9ed2e1f73",
+      "currentMaskedRawSha256": "1b417880f9c3f27a64f49bb4904205ed38bdf6c81ce3e962de0a50d9ed2e1f73",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "186041af41dc12fe2074bb815114bd87e53cef6067d02da84e32211500455624",
+      "currentMaskedRawSha256": "186041af41dc12fe2074bb815114bd87e53cef6067d02da84e32211500455624",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "13ccb8b790fb541bfec3b507f747a7e3d36ffed2dad125f49f8f2755053446d9",
+      "currentMaskedRawSha256": "13ccb8b790fb541bfec3b507f747a7e3d36ffed2dad125f49f8f2755053446d9",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "ddcb409ad520001720d473d24c13c82212e3223c586dd170a37a9069db8a6639",
+      "currentMaskedRawSha256": "ddcb409ad520001720d473d24c13c82212e3223c586dd170a37a9069db8a6639",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "eb33a32bf4ec3416b33f75e70c27ceb4c8db49e2c204047f2168082bc6448ffd",
+      "currentMaskedRawSha256": "eb33a32bf4ec3416b33f75e70c27ceb4c8db49e2c204047f2168082bc6448ffd",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "3a5f7293b36491128e15694e087dbe23c7cf8ca01a8e36dc785f806333fcd43b",
+      "currentMaskedRawSha256": "3a5f7293b36491128e15694e087dbe23c7cf8ca01a8e36dc785f806333fcd43b",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "6861176fc2425ce3df8fb633646d79c667d5eff4da12c8f1507a921a90eaa3a4",
+      "currentMaskedRawSha256": "6861176fc2425ce3df8fb633646d79c667d5eff4da12c8f1507a921a90eaa3a4",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "842b5b471cfc4546445e6fc1d8d6f8d764f1af6086c2e8709979bda2c427121a",
+      "currentMaskedRawSha256": "842b5b471cfc4546445e6fc1d8d6f8d764f1af6086c2e8709979bda2c427121a",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "c2f2063d5c936fc60cedc530e4d7354deaa037a95e8d9bda3efc2c3c9d4fb150",
+      "currentMaskedRawSha256": "c2f2063d5c936fc60cedc530e4d7354deaa037a95e8d9bda3efc2c3c9d4fb150",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "85b12ca1518e8812994be78d3fa1b1470680fc33dc944876d1219e47eebb3286",
+      "currentMaskedRawSha256": "85b12ca1518e8812994be78d3fa1b1470680fc33dc944876d1219e47eebb3286",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "7f442a8b3f1b83f9aaf5ffed27e0c72e2bda2e8a97b1c84a7c19e4b9daa1aeb0",
+      "currentMaskedRawSha256": "7f442a8b3f1b83f9aaf5ffed27e0c72e2bda2e8a97b1c84a7c19e4b9daa1aeb0",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "0d2f05a69f33996c5549f88db1f45af5c710a43d62c258437a5acf24f37956ea",
+      "currentMaskedRawSha256": "0d2f05a69f33996c5549f88db1f45af5c710a43d62c258437a5acf24f37956ea",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d247fae0a774ab409bb917099a565a6c6800cb4e52d8be552aa0c8bf004fb6f4",
+      "currentMaskedRawSha256": "d247fae0a774ab409bb917099a565a6c6800cb4e52d8be552aa0c8bf004fb6f4",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "1aa34a5ce1c616f29606ac5b84455b224e2d5bac041a507d95aba37f048135fa",
+      "currentMaskedRawSha256": "1aa34a5ce1c616f29606ac5b84455b224e2d5bac041a507d95aba37f048135fa",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "e970e79c4e31094cffad2ef6c140161ee5fe550ba7e081362c9107a3ee8102fd",
+      "currentMaskedRawSha256": "e970e79c4e31094cffad2ef6c140161ee5fe550ba7e081362c9107a3ee8102fd",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "b50391ba16df5c05f327312045e2147458612d05f8a7571e7d4db1283a334332",
+      "currentMaskedRawSha256": "b50391ba16df5c05f327312045e2147458612d05f8a7571e7d4db1283a334332",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "9d10305ce5babbbcaf5d952ffa4d6cea9085e0f65e8ab77e86730cda8c1cf5cf",
+      "currentMaskedRawSha256": "9d10305ce5babbbcaf5d952ffa4d6cea9085e0f65e8ab77e86730cda8c1cf5cf",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "2c5a68180b736b1dd8fe86f1151e9878537214bce2de93bbc724b3b467461822",
+      "currentMaskedRawSha256": "2c5a68180b736b1dd8fe86f1151e9878537214bce2de93bbc724b3b467461822",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "75ad0e3fdfd426b6dd9860d57bd4a09e57237306048bd4412ed77f434969e7cb",
+      "currentMaskedRawSha256": "75ad0e3fdfd426b6dd9860d57bd4a09e57237306048bd4412ed77f434969e7cb",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "255413a4828192f304ae6d5a5c846f24b7a0cedd211195c7d2a64312f3412123",
+      "currentMaskedRawSha256": "255413a4828192f304ae6d5a5c846f24b7a0cedd211195c7d2a64312f3412123",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "35159fbfa38f23c9de2b5d925898b9ba3c82b82bd2310f2dda2652697c2d4c85",
+      "currentMaskedRawSha256": "35159fbfa38f23c9de2b5d925898b9ba3c82b82bd2310f2dda2652697c2d4c85",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "fde19d7efece89a86779ce7ffb588b66706d333db8dfc2c46270ddae1f91160f",
+      "currentMaskedRawSha256": "fde19d7efece89a86779ce7ffb588b66706d333db8dfc2c46270ddae1f91160f",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_NORMAL_REFERENCE_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "aed0f7e4f5357771fcdd4b8570d01d50b438ddd839ff1d37657bad6f6890c3bf",
+      "currentMaskedRawSha256": "aed0f7e4f5357771fcdd4b8570d01d50b438ddd839ff1d37657bad6f6890c3bf",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "d1a224e1911215b5b5587902a2eeffa6456d4d41829077c604270ea6453eaa33",
+      "currentMaskedRawSha256": "d1a224e1911215b5b5587902a2eeffa6456d4d41829077c604270ea6453eaa33",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "dfee1cc89dd17485c6a91047f022847fcbad015b08f39452dbd29785c2eb4e07",
+      "currentMaskedRawSha256": "dfee1cc89dd17485c6a91047f022847fcbad015b08f39452dbd29785c2eb4e07",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "552c0a59be2ccfa2f4e0d429434fb57d3328f844549f9d3ce0831535f7d70e4d",
+      "currentMaskedRawSha256": "552c0a59be2ccfa2f4e0d429434fb57d3328f844549f9d3ce0831535f7d70e4d",
+      "family": "LED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "e41b9a2a5d6104c4dcae112e46621d162c37dbba1feebb58d0c64fc84e86d9fc",
+      "currentMaskedRawSha256": "e41b9a2a5d6104c4dcae112e46621d162c37dbba1feebb58d0c64fc84e86d9fc",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "e083641873286ac8be9cd999494c7915513c83de37745ae2e81a44f0d9e4c2cb",
+      "currentMaskedRawSha256": "e083641873286ac8be9cd999494c7915513c83de37745ae2e81a44f0d9e4c2cb",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "ed4bd7f8de34c71dd28831de0eba32689022d4976863ca9fbcaa20eeea3bb72b",
+      "currentMaskedRawSha256": "ed4bd7f8de34c71dd28831de0eba32689022d4976863ca9fbcaa20eeea3bb72b",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "ff78e2e4be273848d7ff1e2ba6669ebe347dfa1c067debf13fc466c581cfcd81",
+      "currentMaskedRawSha256": "ff78e2e4be273848d7ff1e2ba6669ebe347dfa1c067debf13fc466c581cfcd81",
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "cbe50a3934f716e09da858260b3f585230f14f582091a36cce6f714a8ad5d352",
+      "currentMaskedRawSha256": "cbe50a3934f716e09da858260b3f585230f14f582091a36cce6f714a8ad5d352",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "469349a820cf12d2f57757ac84e3abd04ef454b06ec7a558b24f1fff6165d3dd",
+      "currentMaskedRawSha256": "469349a820cf12d2f57757ac84e3abd04ef454b06ec7a558b24f1fff6165d3dd",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "5da5978964994c835e1710447dbc182eed82659fd1461b65df1bd90335514df4",
+      "currentMaskedRawSha256": "5da5978964994c835e1710447dbc182eed82659fd1461b65df1bd90335514df4",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "359c985479d493102913ea2c41896a4e66235c646ab1a9fd68902aec38e9cf28",
+      "currentMaskedRawSha256": "359c985479d493102913ea2c41896a4e66235c646ab1a9fd68902aec38e9cf28",
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "f5093e1eef92d5c3d4b82c1a05e6142bcffd22e48b80524ce7f66da474d49a7f",
+      "currentMaskedRawSha256": "f5093e1eef92d5c3d4b82c1a05e6142bcffd22e48b80524ce7f66da474d49a7f",
+      "family": "RC_DELAY",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "3a7c607e56f33730f810adb8bac0d376d92f6910ad517d610e1cda161e1df263",
+      "currentMaskedRawSha256": "3a7c607e56f33730f810adb8bac0d376d92f6910ad517d610e1cda161e1df263",
+      "family": "RC_DELAY",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "34b97e60a1bc70180bbc9758ff054dfb2127ad2dae63dbbd97cc476af48f0e44",
+      "currentMaskedRawSha256": "34b97e60a1bc70180bbc9758ff054dfb2127ad2dae63dbbd97cc476af48f0e44",
+      "family": "RC_DELAY",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "4f33837eb5f22b7ee0a22a8a30e40c3c68e5e50bfe111f15188fb43f259a73e1",
+      "currentMaskedRawSha256": "4f33837eb5f22b7ee0a22a8a30e40c3c68e5e50bfe111f15188fb43f259a73e1",
+      "family": "RC_DELAY",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "d46b4767c1565ebea578b16ca63bcf60bedeccde442878c7fbaece8d3ed15fea",
+      "currentMaskedRawSha256": "d46b4767c1565ebea578b16ca63bcf60bedeccde442878c7fbaece8d3ed15fea",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "37636cbf6aa348f608ce0487c74b559156d9f4a678a993659ca2de72f13c9784",
+      "currentMaskedRawSha256": "37636cbf6aa348f608ce0487c74b559156d9f4a678a993659ca2de72f13c9784",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "5d3dbecc7a49bfab1ac812b174fd6fe075d410354fc0d2266698dcc6411ddf02",
+      "currentMaskedRawSha256": "5d3dbecc7a49bfab1ac812b174fd6fe075d410354fc0d2266698dcc6411ddf02",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "352cf22657feb9e835252b7185e568655cca75fb023ddde7d7623c423916001a",
+      "currentMaskedRawSha256": "352cf22657feb9e835252b7185e568655cca75fb023ddde7d7623c423916001a",
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "42f2b033ffc4739372d9beb6164b7c82313917fe01237e55333915c4f98d07e7",
+      "currentMaskedRawSha256": "42f2b033ffc4739372d9beb6164b7c82313917fe01237e55333915c4f98d07e7",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "73224e2cfe23d158b0937956696ab62696874464f4462514c430d997d691ee4c",
+      "currentMaskedRawSha256": "73224e2cfe23d158b0937956696ab62696874464f4462514c430d997d691ee4c",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "66f2683c6cb2d2a2abdb5c5b36aab2710bda1154216b0d58b1c09c581c95741d",
+      "currentMaskedRawSha256": "66f2683c6cb2d2a2abdb5c5b36aab2710bda1154216b0d58b1c09c581c95741d",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "0f81b559f31903e1ef7b17eb0c57a7f781081aaeff56f8e8e3cd8fd89fd1dae3",
+      "currentMaskedRawSha256": "0f81b559f31903e1ef7b17eb0c57a7f781081aaeff56f8e8e3cd8fd89fd1dae3",
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "ee2baa45d0abc4f2bc1a5e588a8e5a3b9c3adc7f7768906773c9d57966ae8fe1",
+      "currentMaskedRawSha256": "ee2baa45d0abc4f2bc1a5e588a8e5a3b9c3adc7f7768906773c9d57966ae8fe1",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "c05dad1d254822dec1771e034b66bed45c62d00c7e01370dfb2df913b34ab925",
+      "currentMaskedRawSha256": "c05dad1d254822dec1771e034b66bed45c62d00c7e01370dfb2df913b34ab925",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "d0aefff438b637ddf19c7d9223cc56e4b62fa01a209afdc3d884a1fdbc046993",
+      "currentMaskedRawSha256": "d0aefff438b637ddf19c7d9223cc56e4b62fa01a209afdc3d884a1fdbc046993",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "9992dbca3b2a0b9e25ef82557f1d907221888dddd808a2fbd317c29264d7ad99",
+      "currentMaskedRawSha256": "9992dbca3b2a0b9e25ef82557f1d907221888dddd808a2fbd317c29264d7ad99",
+      "family": "RELAY_OUTPUT",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "495238a133c0e56878e17730ba93fdace469070c7a499c8ff84dc9edd50a7bc7",
+      "currentMaskedRawSha256": "495238a133c0e56878e17730ba93fdace469070c7a499c8ff84dc9edd50a7bc7",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "2e00f31ffb638abd31bb2a0d8ff2eb9cc21f26e0482b1d5b100a430425405635",
+      "currentMaskedRawSha256": "2e00f31ffb638abd31bb2a0d8ff2eb9cc21f26e0482b1d5b100a430425405635",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "de01bc091f2ff38a82769cc0c4ca7e520e2593e8937b9e37b5b73bf15f9c6118",
+      "currentMaskedRawSha256": "de01bc091f2ff38a82769cc0c4ca7e520e2593e8937b9e37b5b73bf15f9c6118",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "b92ed6428d321ce8563130d9673aa513122359f6a1eefb6c51e957d0ed3b351e",
+      "currentMaskedRawSha256": "b92ed6428d321ce8563130d9673aa513122359f6a1eefb6c51e957d0ed3b351e",
+      "family": "SENSOR_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "4d79af7e6a5d3ee4c095b460a09bd5d256dca644c0484d59ff35b42dd06c59d5",
+      "currentMaskedRawSha256": "4d79af7e6a5d3ee4c095b460a09bd5d256dca644c0484d59ff35b42dd06c59d5",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "9476b04f8cf7a53179d2431b0c200d95d5e4d601b32dabb59dd0b9e269afe736",
+      "currentMaskedRawSha256": "9476b04f8cf7a53179d2431b0c200d95d5e4d601b32dabb59dd0b9e269afe736",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "3f3ebd534471cc85897c4844a3f40da8abddb866f738890e28ea90cd768ff02a",
+      "currentMaskedRawSha256": "3f3ebd534471cc85897c4844a3f40da8abddb866f738890e28ea90cd768ff02a",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "b1f8e7601c9fa0395ab7c0ef26eb2787613d84461ed0fffb041261b27f20a590",
+      "currentMaskedRawSha256": "b1f8e7601c9fa0395ab7c0ef26eb2787613d84461ed0fffb041261b27f20a590",
+      "family": "RB15_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "0c9674477fc118fcc303edeefc05fa73f602f71312b9e18a6ef68534d0d84a65",
+      "currentMaskedRawSha256": "0c9674477fc118fcc303edeefc05fa73f602f71312b9e18a6ef68534d0d84a65",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "18e0ea7ae88cf531a76c58651c8d34ebecabd6b0b75975b42e12d6008e4b9947",
+      "currentMaskedRawSha256": "18e0ea7ae88cf531a76c58651c8d34ebecabd6b0b75975b42e12d6008e4b9947",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "232328735938314755da6fc326a4f4ad4ace17348921c48da1039fe07a3941ba",
+      "currentMaskedRawSha256": "232328735938314755da6fc326a4f4ad4ace17348921c48da1039fe07a3941ba",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "8d90c4836f0c2d2d48821cb0c9492f23836167e1212f78e1f529b1f12ccccb05",
+      "currentMaskedRawSha256": "8d90c4836f0c2d2d48821cb0c9492f23836167e1212f78e1f529b1f12ccccb05",
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    },
+    {
+      "baselineMaskedRawSha256": "ef3438479ffa66fb510e76542758c5b90ac20d567069f9703c588a7cb53d4c0e",
+      "currentMaskedRawSha256": "ef3438479ffa66fb510e76542758c5b90ac20d567069f9703c588a7cb53d4c0e",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "0"
+    },
+    {
+      "baselineMaskedRawSha256": "52e8dc3d8f03ee679b57a00f822ee49a572fc0e8b39a8c9959d46f9fd133b3a9",
+      "currentMaskedRawSha256": "52e8dc3d8f03ee679b57a00f822ee49a572fc0e8b39a8c9959d46f9fd133b3a9",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "17"
+    },
+    {
+      "baselineMaskedRawSha256": "09380744b4ed1804a0c4ed775d64725ac6a63ac633d6d54c3e5123516021ca33",
+      "currentMaskedRawSha256": "09380744b4ed1804a0c4ed775d64725ac6a63ac633d6d54c3e5123516021ca33",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "13"
+    },
+    {
+      "baselineMaskedRawSha256": "7550098f4a89d7c9645d4310317ce3f0a131530297f057515e99b05537cc2558",
+      "currentMaskedRawSha256": "7550098f4a89d7c9645d4310317ce3f0a131530297f057515e99b05537cc2558",
+      "family": "RB30_CONTROL",
+      "kind": "PCB_LEAD_SILK_CASE",
+      "maskedRawExact": true,
+      "root": "-9223372036854775808"
+    }
+  ],
+  "rawReceiptTextEqualAfterClockMask": true,
+  "rowCounts": {
+    "PCB_LEAD_SILK_CASE": 44,
+    "PCB_NORMAL_PACKING_CASE": 44,
+    "PCB_NORMAL_REFERENCE_CASE": 44,
+    "PCB_NORMAL_SILK_CASE": 44,
+    "PCB_WHITESPACE_CASE": 44
+  },
+  "status": "PASS"
+}

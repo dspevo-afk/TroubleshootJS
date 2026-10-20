@@ -1,0 +1,329 @@
+[
+  {
+    "name": "browser-open-final-production",
+    "status": "FAIL",
+    "startedUtc": "2026-10-20T20:32:30.497Z",
+    "elapsedMillis": 40651,
+    "error": "locator.waitFor: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^New board$/i }) to be visible\u001b[22m\n",
+    "privateErrorSha256": "22c09d06ac7d83ce0c5807ed69fd252bb2777e48be72984e578140c92a14fcf0"
+  },
+  {
+    "name": "browser-initial-ticket-observed",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:34:02.453Z",
+    "elapsedMillis": 23,
+    "details": {
+      "file": "initial-ticket-public.txt",
+      "sha256": "a912d8b8a6baa0792da7d31535e29ebe854ec7ed418c411ef857e3d365f03766",
+      "bytes": 769
+    }
+  },
+  {
+    "name": "open-normal-service-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:34:02.482Z",
+    "elapsedMillis": 199,
+    "details": {
+      "file": "normal-menu-public.txt",
+      "sha256": "d3c07a746f1da9a931be35aa03338a717e8ff8d894a8f2b2b8f8aed42b6b66b0",
+      "bytes": 1323
+    }
+  },
+  {
+    "name": "rc-new-board-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:34:08.932Z",
+    "elapsedMillis": 45,
+    "details": {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "ordinaryNewBoardClicks": 1
+    }
+  },
+  {
+    "name": "rc-first-generated-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:34:56.989Z",
+    "elapsedMillis": 223,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/RC_DELAY/-5619557423280878128",
+      "build": "tsj-alpha/6 / FD6E8A1ADB4AB12C86D81AD026DF947E",
+      "body": {
+        "file": "rc-ticket-identity-public.txt",
+        "sha256": "3500c20b83e745b6e1b2dc971514701b3080acea7ecd6dc35ec51c1254955833",
+        "bytes": 1101
+      }
+    }
+  },
+  {
+    "name": "rc-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:35:20.386Z",
+    "elapsedMillis": 100,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+5V)"
+      ],
+      "body": {
+        "file": "rc-original-off-public.txt",
+        "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+        "bytes": 729
+      }
+    }
+  },
+  {
+    "name": "rc-fit-initial-board",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:35:30.568Z",
+    "elapsedMillis": 153,
+    "details": {
+      "file": "rc-generated-fitted.jpg",
+      "sha256": "d9b08f2b19d6883ac4edf6750a63182007fb1f2a7be24430094513f6305bd2d1",
+      "bytes": 125184
+    }
+  },
+  {
+    "name": "rc-installed-lid-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:36:06.312Z",
+    "elapsedMillis": 320,
+    "details": {
+      "observedC1CanvasPoint": [
+        775,
+        528
+      ],
+      "realSpaceInspection": true,
+      "frame": {
+        "file": "rc-capacitor-lid.jpg",
+        "sha256": "6175b9aa05911bbfd1688a3849727362a05db440b0ca1a42fbd72c78f6bb906d",
+        "bytes": 110394
+      },
+      "body": {
+        "file": "rc-installed-lid-public.txt",
+        "sha256": "2efba495a72aef31caa1f04d7c5868099cc2200e07a4e24eaf903397f9494ec1",
+        "bytes": 491
+      }
+    }
+  },
+  {
+    "name": "rc-capacitor-lifted",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:36:40.278Z",
+    "elapsedMillis": 49,
+    "details": {
+      "file": "rc-capacitor-lifted-public.txt",
+      "sha256": "f1f91dc133d2175296d08b2178e3538d20cf825293f00c5788e7fa83b412a526",
+      "bytes": 652
+    }
+  },
+  {
+    "name": "rc-remove-original-capacitor",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:37:12.842Z",
+    "elapsedMillis": 122,
+    "details": {
+      "file": "rc-capacitor-removed-public.txt",
+      "sha256": "0941edac18855c08ef49612ca873a8044f7c724d6600f9e959312360f9740612",
+      "bytes": 594
+    }
+  },
+  {
+    "name": "rc-capacitor-loose",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:37:54.712Z",
+    "elapsedMillis": 360,
+    "details": {
+      "originalPart": "Part 1",
+      "body": {
+        "file": "rc-capacitor-loose-public.txt",
+        "sha256": "741c40ebd238a760287bc5f43f39ef99341daefe1ed01f7450c4307ce84eacbd",
+        "bytes": 687
+      },
+      "frame": {
+        "file": "rc-capacitor-loose.jpg",
+        "sha256": "1f8d499328216ea4198e251e2ab82f37c2bb667523e63ae573bf4f36d4c261a7",
+        "bytes": 115895
+      }
+    }
+  },
+  {
+    "name": "rc-capacitor-original-restored",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:39:20.666Z",
+    "elapsedMillis": 398,
+    "details": {
+      "sameOriginalPart": "Part 1",
+      "installed": {
+        "file": "rc-original-restored-public.txt",
+        "sha256": "e36e00ea6f79687ed9a10d8a57734f87db8c813721454859d33ac01dcb6a46bf",
+        "bytes": 627
+      },
+      "underside": {
+        "file": "rc-restored-bottom-public.txt",
+        "sha256": "e4e21caaeb0b2a8f25f0d214f77a622329e86a37b26b76b959dccc31dcd47a29",
+        "bytes": 963
+      },
+      "frame": {
+        "file": "rc-capacitor-restored.jpg",
+        "sha256": "db4d2efd0fccac45aec829287bba1a7478473c1bf25ff9f4b755d6753553bd0d",
+        "bytes": 122314
+      },
+      "returnedToTop": true
+    }
+  },
+  {
+    "name": "led-open-known-replay",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:40:11.656Z",
+    "elapsedMillis": 432,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / FD6E8A1ADB4AB12C86D81AD026DF947E",
+      "body": {
+        "file": "led-ticket-identity-public.txt",
+        "sha256": "85e37a3a523be4f4fb5b62984ed9a1b7f3adc05499ebdf2b1b43d77ca1458e4f",
+        "bytes": 1042
+      }
+    }
+  },
+  {
+    "name": "led-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:40:36.827Z",
+    "elapsedMillis": 180,
+    "details": {
+      "disconnected": [
+        "Disconnect Supply 1 (+5V)"
+      ],
+      "body": {
+        "file": "led-original-off-public.txt",
+        "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+        "bytes": 729
+      }
+    }
+  },
+  {
+    "name": "led-isolated-ol",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:41:09.866Z",
+    "elapsedMillis": 230,
+    "details": {
+      "actualPhysicalOhm": "OL",
+      "boardOff": true,
+      "body": {
+        "file": "led-isolated-ol-public.txt",
+        "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+        "bytes": 870
+      }
+    }
+  },
+  {
+    "name": "led-exit-ohm-before-mutation",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:43:45.082Z",
+    "elapsedMillis": 89,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nComponent\nR1\n\n\nType: resistor\n\n\nMarkings: Color bands\n\n\nColor bands: ORANGE, ORANGE, BROWN, GOLD\n\n\nState: Lead Lifted\n\n\nLead 1: R1.1\n\n\nLead 2: R1.2\n\n\n\nReconnect lead 1\nLift lead 2\nRemove component\nRestore component\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "led-remove-original-open-shop",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:43:50.082Z",
+    "elapsedMillis": 98,
+    "details": {
+      "boardOff": true
+    }
+  },
+  {
+    "name": "led-buy-330-open-tray",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:43:57.267Z",
+    "elapsedMillis": 113,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nAdded to the real Parts Tray. Select the loose part on the workbench to install it.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nParts Tray\n\n\nHover at the bottom edge for the physical tray. Scroll sideways for more parts.\n\nPart 2 - Color bands\nPart 4 - 330 Ohm +/-5%\n▲ PARTS TRAY · 2 parts"
+    }
+  },
+  {
+    "name": "led-shop-installed",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:05.895Z",
+    "elapsedMillis": 170,
+    "details": {
+      "part": "Part 4 - 330 Ohm +/-5%",
+      "target": "Circuit / R1"
+    }
+  },
+  {
+    "name": "led-off-330",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:16.548Z",
+    "elapsedMillis": 213,
+    "details": {
+      "physicalReading": "330 Ohm",
+      "boardOff": true,
+      "exitedOhmBeforePower": true
+    }
+  },
+  {
+    "name": "led-fresh-customer-pass",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:22.465Z",
+    "elapsedMillis": 165,
+    "details": {
+      "newlyVisiblePassModal": true
+    }
+  },
+  {
+    "name": "led-return-disconnect-supply",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:27.129Z",
+    "elapsedMillis": 99,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nBENCH POWER\n\n\nSupply 1 (+5V): 5 V, 9.75 mA\n\nDisconnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\nView\nTicket\nParts tray\n▲ PARTS TRAY · 1 part"
+    }
+  },
+  {
+    "name": "led-final-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:35.806Z",
+    "elapsedMillis": 303,
+    "details": {
+      "image": {
+        "file": "led-final-off.jpg",
+        "sha256": "015a600eceb2ab0fbec6d64953a4177e6b4ff566f4b36a6961d6d07257f2a574",
+        "bytes": 128641
+      },
+      "originalResistorLoose": true
+    }
+  },
+  {
+    "name": "served-final-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:44:52.272Z",
+    "elapsedMillis": 6,
+    "details": {
+      "Protocol": "troubleshootjs-execution-provenance-v1",
+      "SourceDigest": "19efaa9f30c212e7e8fbc57cee2a405d71cdb7ee29484d0b8c610d40abf4a41d",
+      "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+      "WebDigest": "0fd736a613a5a3090a78d0b09e70d8b48d4b0666e99a2b790c02fac730cd6355",
+      "Digest": "8ed7c79bf7eba2e6e91a7cba31c0001fb983fb1a660ad4e8b887cc32cdc909d5",
+      "FileCount": 1592
+    }
+  },
+  {
+    "name": "browser-owned-api-close",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T20:46:11.391Z",
+    "elapsedMillis": 113,
+    "details": {
+      "apiClose": true,
+      "browserExit": {
+        "code": 0,
+        "signal": null,
+        "utc": "2026-10-20T20:46:11.487Z"
+      },
+      "profileAbsent": true
+    }
+  }
+]

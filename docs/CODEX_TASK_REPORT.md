@@ -1,4 +1,49 @@
-# Current checkpoint: same-cap second sweep NO_GO; publication next
+# Current checkpoint: capacitor lid final gates/player/cleanup pass; publication next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exact origin7fd882552405561dc156ebf240be475b2c2ee2d6,55 reviewed published
+paths, normal push0/exact remote/source1482+machinery24 verified. Prior private
+planner was not promoted. Its publication receipt is intended next commit.
+User indefinite PCB realism/screenshots/optional leaves; no final/main/email.
+Preserve seven unrelated groups/private resources/three older blocked profiles.
+No current task process live. All12 recorded births exited, owned browser
+profile/preview state absent and port8907 released; older blocked profiles stay.
+
+Current packet capacitor-lid-detail-r1: baseline scope/helpers2 plus raw owner
+frozen BEFORE edit. One production owner StandardPhysicalPartRenderProviders
+adds23 paint lines in existing shared drawElectrolyticBody: clipped metal-lid
+rim/scored cross, bounded16px detail, balanced Canvas save/restore. Installed/
+loose path shared, existing geometry/probes/metadata/marking/state untouched.
+Owner saved canonical LF before candidate freeze; actual Git diff remains23
+additions, baseline raw bytes preserved. All other1481 inputs+24 machinery exact.
+
+Root integrated released Luna/MAX two-file census reader. Failed V1 reader
+control is preserved: one63-character source-pin transcription corrected from
+accepted immutable inventory before R2 freeze. R2 eight-helper source seal and
+actual reader control/5 negative canaries pass. Fresh5 maintained contracts,
+8 census partitions and actual final JDK8/GWT5 build pass. Paired44cases/220
+observations exact except84 validated clock differences; all geometry/graph/
+metrics/work/metadata remain exact. No test/oracle/budget/epoch change.
+
+Frozen eight-helper player: actual first random RC installed/loupe/leadlift/
+loose/originalrestored/underside and known LED originalFAIL/off/isolatedOL/
+Shop330/actual330/freshFUNCTION VERIFIED/finalOFF pass. All five raw images
+inspected. Initial ticket-vs-menu observer timeout preserved then resolved.
+Live before/after served6 equals independent CLI6 and exact preview birth.
+
+Player qualifier PASS; five images inspected, three pasted in chat. Browser API
+close0, maintained stop0, all current births separately proved exited. Preclose
+literal slash observer failure preserved then resolved path/birth/profile check.
+One unattributed console resource404 disclosed; no pageerror/requestfailed.
+Raw build log private/hash-bound, one exact owned-root public projection after
+raw qualification. Existing IAB capture limitation/Brave fallback retained.
+Contracts53.7821928s/census70.9829503s/build89.7699933s include terminal cleanup,
+not separately timed. No performance/manufacturing/all-seed/size/full-matrix claim.
+Root final diff/privacy/index review, explicit commit/normalpush/exactorigin next.
+See capacitor-lid-detail-r1/RESULTS.md. Continue authorized realism work after
+publication; next inspect another existing package renderer for bounded detail.
+
+# Previous checkpoint: same-cap second sweep NO_GO; publication next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 HEAD/exact prior origin395fe5d87efabf2b189181374b11fff489b15dce. User indefinite
