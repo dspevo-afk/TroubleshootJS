@@ -1,0 +1,37 @@
+[
+  {
+    "name": "production-bootstrap",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:31:24.683Z",
+    "elapsedMillis": 660,
+    "details": {
+      "url": "http://127.0.0.1:8910/circuitjs.html?tsjQuickPlay=true",
+      "servedProjectionSaved": true
+    }
+  },
+  {
+    "name": "default-ticket-to-supplies",
+    "status": "FAIL",
+    "startedUtc": "2026-10-20T22:32:40.647Z",
+    "elapsedMillis": 10212,
+    "error": "locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Supplies', exact: true })\u001b[22m\n",
+    "privateErrorSha256": "2726ee0a8c7d59e9827b35d74cc6a7dba057b53f42df2923f8d5fe3db4664a32"
+  },
+  {
+    "name": "inspect-default-supplies-by-visible-label",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:33:28.415Z",
+    "elapsedMillis": 307,
+    "details": {
+      "selector": "observed visible Supplies label"
+    }
+  },
+  {
+    "name": "default-supplies-off-and-open-menu",
+    "status": "FAIL",
+    "startedUtc": "2026-10-20T22:33:39.522Z",
+    "elapsedMillis": 827,
+    "error": "locator.click: Error: strict mode violation: getByText('Main menu', { exact: true }) resolved to 2 elements:\n    1) <span class=\"tsj-button-label\">Main menu</span> aka getByRole('button', { name: 'Main menu' })\n    2) <button type=\"button\" class=\"tsj-product-button\">Main menu</button> aka getByLabel('Customer ticket').getByText('Main menu')\n\nCall log:\n\u001b[2m  - waiting for getByText('Main menu', { exact: true })\u001b[22m\n",
+    "privateErrorSha256": "0fb773af86b97710d014f3daf968354ef9b9259d83b00fcd991a031f092e5406"
+  }
+]

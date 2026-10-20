@@ -1,0 +1,41 @@
+{
+  "status": "PASS_FINITE_SURVEY_AND_CAPTURE_WITH_PREPARATION_FAILURES_DISCLOSED",
+  "source1482Machinery24Unchanged": true,
+  "playerHelpers": 10,
+  "surveyCases": 44,
+  "enabledFamilies": 11,
+  "plannedExactNormalAdmissions": 3,
+  "captureEvents": 18,
+  "captureFailures": 0,
+  "preparationObserverFailures": 3,
+  "rawImagesInspected": 5,
+  "imagesPasted": 3,
+  "recordedResourceAndDriverBirthsExited": 6,
+  "browserApiExitCode": 0,
+  "previewStartAndStopActualExecExitCodes": [
+    0,
+    0
+  ],
+  "actualNativeMissingMetadataNegativeExitCode": 1,
+  "negativeTimingLimit": "Performed after closure, not an early launch-time negative; no false process identity/permanent mutation tested",
+  "reviewedSeedBoundarySourceHashes": {
+    "tests/contracts/PcbNormalPackingCensusContractTest.java": "d27dc575ff767da34a3d0eab70755777e65602f72162e634daa23757cf4691e8",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "84a687f7767bc06a4b1cade8f3747c70928e698d6797e56088e4eb15a1e673dd",
+    "src/com/lushprojects/circuitjs1/client/GenerationRequest.java": "e20a0cb5f6a535642327c9a029536e94575437bc567045689a66dc54c7be6ad1",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayAdmission.java": "7bcc63194e397f40956086b75cb68a24f0ef07a1a45dcd0dba8180ea0efa28bf",
+    "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java": "da9a5512b3a47e22951e6e1dc2b45e432c65c5e5f01b5c177d73a7d016d4e308",
+    "src/com/lushprojects/circuitjs1/client/PhysicalConstructionMaterializer.java": "47d4fee3b9d912693095ba95ac788d802b41ecb897c18b9c71905b46ce63c91a"
+  },
+  "artifacts": {
+    "survey.json": "dc54029523133d982c9d487b2ce60b60d53f22c743e4ec309b3bc72e1340d195",
+    "player-inputs.json": "6efb95c66a0db6b74a1ab79e3813b6ef87557fbde29cb34d9ec7bcc5f5167e3d",
+    "player-assessment.json": "b8e5961df1e88d36d8d3045978b4411abc921fbe793ee0a6ff5158a1aac399f6",
+    "acceptance-boundary.json": "6f36f13c1d17a131dd0747e27016c7c135fc6a19a1c72602ee0bc8cff8159f52",
+    "visual-review.json": "7ac58474eba8f3110812a0c882b85fb36cf8c1a5edc9219071e1c24727ae2b62",
+    "runtime-review.json": "c620d099616dbdf60ed9b9bc6711481edbf0313ed4a38791fe695ed42182b181",
+    "player-resource-cleanup.json": "a43e6c5793c00ca5d217723a203668daca5b927a2018937053686b5a746569c3",
+    "pre-replay-history.json": "b07d324037ded21aa9892525ff3c2d712bac09541ac25d36c81006410ef7495d",
+    "observer-canary.json": "1c392801b7327052eb808252ab8b276695218ecec1e0fd96da193055bbdfe882"
+  },
+  "limits": "Finite exact replay visuals/unchanged code, one unattributed console404, setup observer failures preserved; no new GWT/native-matrix/electrical/repair/size/all-seed claim. Four older blocked profiles and seven unrelated groups untouched; private data retained."
+}

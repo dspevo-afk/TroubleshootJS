@@ -1,0 +1,35 @@
+{
+  "status": "PASS_FINITE_NORMAL_REPLAY_VISUAL_REVIEW",
+  "inputSealSha256": "6efb95c66a0db6b74a1ab79e3813b6ef87557fbde29cb34d9ec7bcc5f5167e3d",
+  "events": 18,
+  "images": [
+    {
+      "file": "dual-top-fitted.jpg",
+      "sha256": "0ba50ce3209a889480922e8fba3b2e98974d1baed5373c7fe5cd6da0e1e2962d",
+      "bytes": 131139
+    },
+    {
+      "file": "dual-bottom-fitted.jpg",
+      "sha256": "c26acbc734cf70fd9c41fac72cbfeb4f6884c13df0447da1e23a840d39611a45",
+      "bytes": 127754
+    },
+    {
+      "file": "rc-top-fitted.jpg",
+      "sha256": "22fae79b14935f2b7bc0865fc6866d33ac409df2f756d2d16bd4cc186976445b",
+      "bytes": 131623
+    },
+    {
+      "file": "composed-top-fitted.jpg",
+      "sha256": "235007e69116305f8488644474cbe24a8d827cce4e9c92b0018195121a0103c1",
+      "bytes": 145810
+    },
+    {
+      "file": "composed-bottom-fitted.jpg",
+      "sha256": "73e5990661a6d7e393d68c96025044ffdb1ea2f01a31b3f890b68f1e10dade50",
+      "bytes": 141769
+    }
+  ],
+  "visualReviewSha256": "7ac58474eba8f3110812a0c882b85fb36cf8c1a5edc9219071e1c24727ae2b62",
+  "cleanupSha256": "a43e6c5793c00ca5d217723a203668daca5b927a2018937053686b5a746569c3",
+  "limits": "Three exact normal replay observations, unchanged production source. No new electrical/repair/size/all-seed/full-matrix claim. Repeated FAIL banner has no independent freshness token; prior blocked profiles preserved."
+}

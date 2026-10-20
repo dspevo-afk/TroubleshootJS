@@ -1,0 +1,72 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: ON
+Supplies
+View
+Ticket
+Parts tray
+Customer ticket
+
+SERVICE JOB
+
+Customer complaint
+
+The two indicators do not behave the same.
+
+FUNCTIONAL RETEST
+
+Observe both indicators after repair.
+
+Examine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.
+
+Accept ticket and start
+Main menu
+Resources
+Share pristine challenge
+
+Share this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.
+
+Pristine challenge replay
+Interpretation / build
+
+You can select and copy this information for a bug report. Nothing is sent automatically.

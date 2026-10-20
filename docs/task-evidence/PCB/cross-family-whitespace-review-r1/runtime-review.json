@@ -1,0 +1,13 @@
+{
+  "status": "OBSERVED_ONE_UNATTRIBUTED_CONSOLE_ERROR",
+  "privateRuntimeSha256": "d2490dbdd8478b52c48734c47e014d7b2db293b325d82e63d716067ab0dfd3eb",
+  "entries": 564,
+  "errorObservations": [
+    {
+      "kind": "console",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "limits": "No captured pageerror/requestfailed/responseError; console error is not an error-free runtime claim. Three preparation observers failed and remain separately archived."
+}

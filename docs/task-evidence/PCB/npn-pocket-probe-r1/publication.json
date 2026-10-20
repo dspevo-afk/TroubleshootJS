@@ -1,0 +1,18 @@
+{
+  "status": "PASS_VERIFIED_BOUNDED_NO_GO_PUBLICATION",
+  "sha": "b83e3a6424b07f3918ea8e7f8de2651be289b6b1",
+  "message": "Record bounded NPN second-sweep no-gain result",
+  "branch": "codex/q60-faulted-profile-counts",
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "pushActualExecExitCode": 0,
+  "verifiedExactRemoteRef": "b83e3a6424b07f3918ea8e7f8de2651be289b6b1\trefs/heads/codex/q60-faulted-profile-counts",
+  "reviewedCommittedBlobsVerified": 53,
+  "packetRawExact": true,
+  "existingTwoDocsOnlyGitCrlfToLf": true,
+  "postpublicationInputAudit": "PASS actualexit0 source1482/machinery24/gate7/player8 unchanged at b83e3a64",
+  "recordedDriverBirthsExited": 6,
+  "result": "NO_GO: private proposal618310/3650/0/84000 versus628530/4300/0/80000; protected void increased. Original full selected geometry retained; no production promotion.",
+  "limits": "No new GWT/browser/electrical/full-matrix/all-seed/size proof. Four blocked profile actions and seven unrelated groups preserved; private raw/native inputs retained; no main merge/email.",
+  "nextUnstarted": "Finite current cross-family corpus review and useful normal production screenshots before another experiment"
+}

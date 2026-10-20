@@ -1,0 +1,22 @@
+{
+  "preview": {
+    "pid": 24016,
+    "port": 8910,
+    "portReleased": true,
+    "stateAbsent": true,
+    "startTicks": "639281322115341577",
+    "recordedBirthExited": true
+  },
+  "scope": "Current owned resources only, API browser exit0 and maintained preview stop0 independently observed",
+  "status": "PASS",
+  "browser": {
+    "startTicks": "639281322588987616",
+    "status": "PASS",
+    "profileAbsent": true,
+    "limits": "Fresh owned profile only; four earlier blocked profiles untouched",
+    "profileProcessesAbsent": true,
+    "pid": 27104,
+    "recordedBirthExited": true
+  },
+  "limits": "All four older blocked profile-cleanup actions remain untouched; no recursive deletion or broad kill"
+}

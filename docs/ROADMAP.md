@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **NPN same-cap private probe NO_GO; finite cross-family review next**
+**Current task:** **Cross-family survey/captures accepted; generic paired-move feasibility next**
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's
@@ -114,6 +114,18 @@ No production planner edit/promotion. Sampler corner is not a legal target;
 source review demonstrates no further vacancy-search bug. Next current finite
 cross-family corpus review before another experiment.
 [Private NPN decision and limits](task-evidence/PCB/npn-pocket-probe-r1/RESULTS.md).
+
+NO_GO is publishedb83e3a64. Current44-case/11-family selected-board survey audits
+all consumed source/evidence unchanged; Dual has three high void/area samples.
+Actual normal exactDual/min-long,RC0,composed17 admit with originalFAIL/all actual
+suppliesOFF/tray0, matching public replay/build347032FD... . Five rawimages
+inspected/three pasted. Ten frozen helpers/servedCLI6/HTTPowner and six recorded
+birth exits/currentprofile-state absent/port8910released PASS. Three preparation
+selector/wait failures preserved separately; capture18events/0failures. One
+unattributed console404 and late missing-metadata negative disclosed. No new
+size/production/GWT/electrical/allseed claim. Source-only paired-translation
+feasibility is credible for a separate private scope; no experiment selected.
+[Survey, fresh screenshots and limits](task-evidence/PCB/cross-family-whitespace-review-r1/RESULTS.md).
 [Exact NPN diagnosis and limits](task-evidence/PCB/npn-sparse-diagnostic-r1/RESULTS.md).
 [Source decision and limits](task-evidence/PCB/optocoupler-source-review-r1/README.md).
 [Results and limits](task-evidence/PCB/to92-molded-detail-r2/RESULTS.md).

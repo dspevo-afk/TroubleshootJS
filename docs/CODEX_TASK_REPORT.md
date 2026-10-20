@@ -1,79 +1,57 @@
-# Current checkpoint: NPN private probe NO_GO; cross-family evidence review next
+# Current checkpoint: cross-family captures accepted; paired-move feasibility next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact origina73eeaeb3edd9898a29156b761d20021c3c6db18. Continue indefinite
-PCB realism/screenshots/optional leaves; no main/email/milestone stop. Preserve
-seven unrelated groups/private data and FOUR blocked profile-cleanup actions
-(three older, TO92R2 partial17256). Never retry their removal by another path.
+HEAD/exact originb83e3a6424b07f3918ea8e7f8de2651be289b6b1. User continues
+PCB realism indefinitely/screenshots/optional leaves; no main/email/milestone
+stop. Preserve seven unrelated groups/private evidence and FOUR blocked profile
+cleanup actions (three older, TO92R2 partial17256). Never retry their removal.
 No current task browser/preview/listener/native phase or recorded driver is live.
 
-Published TO92 detail01e306eb:17 shared installed/loose paint lines, renderer
-89512645f4042cef59df394ba09fe1b02593beea934808639354af44681f5856. Final5
-contracts/44cases220pairs/actualJDK8GWT5 and accepted NPN/NMOS/LED visible retry
-PASS; five images inspected/three pasted. R1 rejected probe collision, R2
-preseal label fix and failed first-player Node reset remain explicit. First
-profile cleanup was automatically blocked before execution; unknown browser
-exit/noAPIclose, retained. Retry own APIclose0/profile/state absent/portreleased.
-All30 recorded births exited; code acceptance does not mark old cleanup PASS.
-TO92 publication/execution receipts and source-only optocoupler NO_GO are now
-publishedce6f3fef with normalpush0/exactorigin and fresh1482/24/7/8 audit PASS.
-Optocoupler only found producer RB56 is held; existing diode/LED polarity and
-relay labels already adequate. No artwork change from source review.
+Production remains published89512645 renderer (TO92 detail01e306eb), layout19/
+packing3. Actual final5 contracts/44cases220pairs/JDK8GWT5 and prior NPN/NMOS/
+LED repair proof remain source-bound; no new production/test/script delta.
+Optocoupler/polarity/relay source reviews selected no further paint. NPN exact
+sparse diagnosisa73eeaeb and same-cap second-sweep NO_GOb83e3a64 are published
+with normalpush/exactorigin/reviewed42/53blobs and unchanged1482/24/7/8 audits.
+NPN private proposal618310/3650/0/84000 versus628530/4300/0/80000 shrinks but
+increases void5%; original fullgeometry retained. Private planner not promoted.
+Its inherited opposite-edge observer was corrected before freeze/native work;
+actual30-unit J1/J2 positives/negatives pass, prior reader preserved.
 
-Published npn-sparse-diagnostic-r1 is read-only, source1482/machinery24 unchanged.
-Exact public replay380469407799690561 constructed once, ordinary small/bottom
-THT packing3; no developer fixed coordinates/reroll. Baseline13 published
-artifacts/two helpers frozen before adaptation; final eight export artifacts
-frozen before execution. Optional leaf changed only task Java comment/parser
-pins/notes; root six guarded private adapter changes keep maintained owners.
-Actual native PowerShell parse and real invalid-seed/family binding canaries
-PASS0.7274123s. Actual JDK8/native NPN PASS161, actualexit0,43.0031078s; tool
-completion before separate driver checks, all four recorded driver births exit.
-Times include terminal cleanup, not separately measured. Strict reader PASS
-four single-condition negatives/identity/mapping/access/independent metrics.
-Root review and privacy PASS, raw native log unchanged/private copy retained.
+Current cross-family-whitespace-review-r1: survey PASS44/11, consumed accepted
+census/source1482/machinery24/gate7/player8 exact. Three of four Dual samples
+rank high for void/area. Corpus is finite reference data, no statistical or
+allseed claim and no optional-proposal evidence. Source-only leaf distinguishes
+census candidate0 seed from root search; all three exact public replays then
+separately reach full normal player tickets: Dual/min-long, RC0, composed17.
+Build347032FDADA50729040B5D58ADBC4063, original customerFAIL, actual all supplies
+OFF (1/1/3), tray0, no component edits. Five raw1280x900 images directly inspected;
+three top shots pasted. Fit/bottom/restoretop actual visible input. Capture
+phase18events/0failures; THREE setup observer failures remain exact under
+pre-replay-attempt/history/acceptance-boundary, before any planned replay request.
+Default ticket accepted/suppliesOFF, visible menu recovered without restart/
+reroll. Do not claim the entire setup or browser harness passed without limits.
 
-Selected1022x615,area628530/copper4300/vias0/void80000. Existing P05 proposal
-samearea/void/vias,copper3730; KEPT because no strict area reduction. Envelope
-x extremes J1x70/J2x1032, y extremes LED1y84/RPDy625; only20/20 x and19 y
-projection gaps before copper. Corner free rectangle320x250 is no legal-cut or
-packability proof. See RESULTS/assessment/envelope-analysis/root-review. No
-production/test/script/RNG/epoch/predicate/cap edit or new GWT/browser/electrical/
-allseed/size proof. Exact source/build/player evidence reuse boundary audited.
-Diagnosis publisheda73eeaeb; normalpush0/exactorigin/42reviewed committed blobs
-and fresh unchanged1482/24/7/8 audit PASS. Publication receipt intended nextcommit.
+Ten helpers frozen before launch. Actual previewstart/stop0; independent CLI6/
+servedDOM6 before-after equals acceptedbuild/HTTPowner. Browser27104 birth/
+profile/executable/sandbox verified before input/preclose; APIexit0/profileabsent.
+Preview24016 birth exited/stateabsent/port8910released; all six recorded births
+exit. Actual missing-native-metadata observer negative rejects1 after closure,
+not an early negative. Runtime564 entries/563logs/one unattributed console404,
+no captured pageerror/requestfailed/responseError; full data private/hash-bound.
+Root visual/privacy/source/cleanup review PASS with prep failures disclosed.
+See survey/player-assessment/root-review/RESULTS/seed-boundary. No new GWT/
+native matrix/electrical repair/size/optimality/manufacturing/allseed proof.
 
-Current npn-pocket-probe-r1 freezes baseline source1482/24/twohelpers and final
-11helpers/anchor-review/privateowner+adapter before execution. Only private
-PcbPlacementPlanner changes: accepted same-cap max2 sweeps/no-change stop,
-passive aggregate and accepted-move coordinates/envelopes; privateownerSHA
-b16d507aeddb9b72a52c3d7206e00f577741397bf0a1f6b541e2a394146644da.
-Four guarded owner/three adapter substitutions; actual diff reviewed. All
-production/tests/scripts remain unchanged. Source leaf justifies this finite
-repeat by NPN570 copper headroom versus prior composed copper regression.
-
-Prefreeze observer correction: inherited anchor-margin check used opposite
-edge. Planner inward +x/left and -x/right demand literal30, not816. Corrected
-current horizontal NPN reader only; prior reader unchanged. Actual2 positive/
-2 negative literal controls PASS and four generated helpers reproduce exactly.
-Corrected source-only finding/hash pinned in final seal; no native gate had run.
-Actual selected PowerShell syntax and missing-owner host binding canary PASS,
-actualexit0,0.3943648s. Cold/repeat actualJDK8/private exports PASS161, actual
-exits0,42.2000588/42.3427842s. Each exit precedes separate driver observation;
-all six recorded births exited. All nonclock rows/work/moves exact, only validated
-packing wall clock normalizes. Literal anchor/move/cap/nonclock controls and
-independent physical/graph/metrics readers PASS. Root integrated/privacy review
-PASS, private native bytes still exact, raw logs copied privately.
-
-Second sweep actually moves LED1 and reduces enclosing-envelope proxy. Routed
-proposal618310/3650/0/84000 reduces area1.63%/copper15.12%, but void grows5%.
-Original628530/4300/0/80000/full geometry retained. NO_GO, no promotion. Source
-review confirms the sampler corner clips to312 wide inside the movable inset10
-domain; RB320/RPD340 do not fit there. Conservative40-grid/five targets are not
-a demonstrated bug or another justified experiment. See probe RESULTS/assessment/
-root-review/anchor-oracle-review. No GWT/browser/electrical/allseed/size proof.
-Next review current finite cross-family corpus for a useful remaining pattern;
-root owns final diff/staging/normal publication, then continued authorized work.
+Next source finding supports one separate private generic paired translation:
+exact two-pad net joining disjoint nonanchor two-terminal parts, equal region/
+domain, no isolation; simultaneous vector update/fullvalidate, existing up-to5
+origins/shared60000 cap/one optional route/four strict metrics. No equivalent
+existing move; initial support-pair hint moves only one part. Common translation
+cannot shorten the internal link; conservative bounding hull may yield no gain.
+No experiment scope or production edit selected yet. Root owns current diff/
+staging/normal publication, then bounded next scope. Prior NPN publication receipt
+is intended in this coherent commit; all four blocked cleanup actions untouched.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 

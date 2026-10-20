@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "method": "Root directly inspected all five raw1280x900 JPEG90 files via view_image; no crop/edit/substitute",
+  "images": [
+    {
+      "file": "dual-top-fitted.jpg",
+      "sha256": "0ba50ce3209a889480922e8fba3b2e98974d1baed5373c7fe5cd6da0e1e2962d",
+      "bytes": 131139,
+      "observations": "Five original parts/clear J1,R1,R2,LED1,LED2 reference marks. Wide board and lower/right free-looking regions remain review targets; no new compaction claim."
+    },
+    {
+      "file": "dual-bottom-fitted.jpg",
+      "sha256": "c26acbc734cf70fd9c41fac72cbfeb4f6884c13df0447da1e23a840d39611a45",
+      "bytes": 127754,
+      "observations": "Actual underside shows pads/copper without front bodies; no visual claim certifies each electrical endpoint."
+    },
+    {
+      "file": "rc-top-fitted.jpg",
+      "sha256": "22fae79b14935f2b7bc0865fc6866d33ac409df2f756d2d16bd4cc186976445b",
+      "bytes": 131623,
+      "observations": "Six original parts, scored electrolytic lid/ceramic mark and resistor bands readable; all actual supply power OFF and tray0."
+    },
+    {
+      "file": "composed-top-fitted.jpg",
+      "sha256": "235007e69116305f8488644474cbe24a8d827cce4e9c92b0018195121a0103c1",
+      "bytes": 145810,
+      "observations": "Fifteen original parts, clear R1-R7/Q1-Q2/LED/connectors, portrait fit; substantial open regions remain. Meter scales with bench fit."
+    },
+    {
+      "file": "composed-bottom-fitted.jpg",
+      "sha256": "73e5990661a6d7e393d68c96025044ffdb1ea2f01a31b3f890b68f1e10dade50",
+      "bytes": 141769,
+      "observations": "Actual underside routing/lands; front bodies absent. Returned to top afterward; all three supplies stay OFF."
+    }
+  ],
+  "pastedInChat": [
+    "dual-top-fitted.jpg",
+    "rc-top-fitted.jpg",
+    "composed-top-fitted.jpg"
+  ],
+  "limits": "Normal exact replays of census candidates; current production visuals, no improvement/all-seed/electrical/manufacturing claim. Three preparation observer failures are separate and preserved."
+}

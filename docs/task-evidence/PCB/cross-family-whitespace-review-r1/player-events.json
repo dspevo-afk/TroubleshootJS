@@ -1,0 +1,192 @@
+[
+  {
+    "name": "capture-phase-start-at-replay-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:34:29.127Z",
+    "elapsedMillis": 234,
+    "details": {
+      "preparationArchive": "pre-replay-history.json",
+      "failedPreparationObservers": 3
+    }
+  },
+  {
+    "name": "dual-exact-replay-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:34:56.119Z",
+    "elapsedMillis": 305,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808"
+    }
+  },
+  {
+    "name": "dual-normal-publication",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:35:05.668Z",
+    "elapsedMillis": 21,
+    "details": {
+      "normalTicketVisible": true
+    }
+  },
+  {
+    "name": "dual-public-replay-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:35:12.450Z",
+    "elapsedMillis": 58,
+    "details": {
+      "summaryOpened": true
+    }
+  },
+  {
+    "name": "dual-save-identity-and-original-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:35:35.645Z",
+    "elapsedMillis": 133,
+    "details": {
+      "identityExact": true,
+      "originalRetestRequested": true
+    }
+  },
+  {
+    "name": "dual-inspect-actual-supplies",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:35:41.359Z",
+    "elapsedMillis": 31,
+    "details": {
+      "supplyPanelOpened": true
+    }
+  },
+  {
+    "name": "dual-supply-off-and-view-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:35:49.068Z",
+    "elapsedMillis": 122,
+    "details": {
+      "actualSupplyDisconnected": true,
+      "trayUntouched": true
+    }
+  },
+  {
+    "name": "dual-fitted-top-capture",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:36:05.909Z",
+    "elapsedMillis": 132,
+    "details": {
+      "file": "dual-top-fitted.jpg",
+      "sha256": "0ba50ce3209a889480922e8fba3b2e98974d1baed5373c7fe5cd6da0e1e2962d",
+      "bytes": 131139
+    }
+  },
+  {
+    "name": "dual-bottom-capture",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:36:37.758Z",
+    "elapsedMillis": 204,
+    "details": {
+      "file": "dual-bottom-fitted.jpg",
+      "sha256": "c26acbc734cf70fd9c41fac72cbfeb4f6884c13df0447da1e23a840d39611a45",
+      "bytes": 127754
+    }
+  },
+  {
+    "name": "rc-exact-replay-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:37:08.006Z",
+    "elapsedMillis": 207,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/RC_DELAY/0",
+      "dualLeftOff": true
+    }
+  },
+  {
+    "name": "rc-normal-publication-and-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:37:19.278Z",
+    "elapsedMillis": 13295,
+    "details": {
+      "normalTicketAndIdentityExact": true,
+      "originalRetestRequested": true
+    }
+  },
+  {
+    "name": "rc-off-fitted-top-capture",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:37:39.782Z",
+    "elapsedMillis": 331,
+    "details": {
+      "file": "rc-top-fitted.jpg",
+      "sha256": "22fae79b14935f2b7bc0865fc6866d33ac409df2f756d2d16bd4cc186976445b",
+      "bytes": 131623
+    }
+  },
+  {
+    "name": "composed-exact-replay-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:37:54.585Z",
+    "elapsedMillis": 132,
+    "details": {
+      "replay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/17",
+      "rcLeftOff": true
+    }
+  },
+  {
+    "name": "composed-normal-publication-and-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:38:01.274Z",
+    "elapsedMillis": 253,
+    "details": {
+      "normalTicketAndIdentityExact": true,
+      "originalRetestRequested": true
+    }
+  },
+  {
+    "name": "composed-off-fitted-top-capture",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:38:09.766Z",
+    "elapsedMillis": 357,
+    "details": {
+      "file": "composed-top-fitted.jpg",
+      "sha256": "235007e69116305f8488644474cbe24a8d827cce4e9c92b0018195121a0103c1",
+      "bytes": 145810
+    }
+  },
+  {
+    "name": "composed-bottom-capture-and-restore-top",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:38:41.729Z",
+    "elapsedMillis": 316,
+    "details": {
+      "image": {
+        "file": "composed-bottom-fitted.jpg",
+        "sha256": "73e5990661a6d7e393d68c96025044ffdb1ea2f01a31b3f890b68f1e10dade50",
+        "bytes": 141769
+      },
+      "topRestored": true
+    }
+  },
+  {
+    "name": "final-off-and-served-provenance",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:39:22.229Z",
+    "elapsedMillis": 35,
+    "details": {
+      "finalOff": true,
+      "tray": 0,
+      "images": 5,
+      "servedBeforeAfterExact": true
+    }
+  },
+  {
+    "name": "owned-browser-api-close",
+    "status": "PASS",
+    "startedUtc": "2026-10-20T22:40:05.097Z",
+    "elapsedMillis": 125,
+    "details": {
+      "apiClose": true,
+      "processExit": {
+        "code": 0,
+        "signal": null,
+        "utc": "2026-10-20T22:40:05.205Z"
+      }
+    }
+  }
+]

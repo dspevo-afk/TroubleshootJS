@@ -1,0 +1,40 @@
+{
+  "surveySha256": "dc54029523133d982c9d487b2ce60b60d53f22c743e4ec309b3bc72e1340d195",
+  "scopeSha256": "5a367c3c7c2d6c015d22271fdf7fa278700509526eca5fa8fba97dc30e7b2aef",
+  "surveyHelperSha256": "5b4a68d5336d49e2ac11c3c9a5bdb52e8b5a1279bb8fc12ab9acadc6226fec02",
+  "gates": {
+    "player-plan.json": "a723afd39acbfd43724ca94d6547ed87712a63be6ddbe3a87e53d35e02066092",
+    "player_inputs.py": "945dd01569af2be2aed7641316c7bfdf3f95e165ce40371ae74b7c7b617d2e8c",
+    "prepare_player_helpers.py": "807261436b431215d1b3beaaf94cc42e10d161d9775e0c6952663e12414a585f",
+    "launch_player.ps1": "d14fd1ac9b58ae8394961ccca8f65fd5e62cdfcb6ccc4df853559409cb62a82e",
+    "stop_player.ps1": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+    "observe_player_host.ps1": "6f043a698ccd589c67410a5fbb6740aaefbdd683835aca0515a9dd7e48113735",
+    "record_preview_exit.ps1": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+    "player_bootstrap.mjs": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262",
+    "observe_browser.ps1": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+    "review_player.py": "46f1ee17ab9dcf092913f01ef859e0eaa10d55aab981bc1af8fa8d70123b773f"
+  },
+  "sourceReuseAudit": {
+    "status": "PASS_UNCHANGED_INPUT_AUDIT",
+    "observedHead": "b83e3a6424b07f3918ea8e7f8de2651be289b6b1",
+    "sourceReviewSha256": "67fb3f25e8eff249de6e3bec27e0cec85e9d58c4f37ef78d6c96b1a47af8c8d0",
+    "auditHelperSha256": "aaacfa5858f2657e89f4b28c2de778ae81868481c38000aec781f257b77327d9",
+    "compilerInputs": 1482,
+    "allCompilerInputsDigest": "6017b1c0307444354974cb4c67639a3e7c9e9456826fb16cc6ba0e5f3bd91539",
+    "machineryInputs": 24,
+    "gateHelpers": 7,
+    "playerHelpers": 8,
+    "reviewedSourceHashes": 15,
+    "priorPublicationSha256": "1ffc531840f3a74e234a22df51d41766c6d6ee4b4b24217ba3366126af63b5b9",
+    "priorPostpublicationExecutionSha256": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01",
+    "limit": "Input identity audit only; no native/build/browser rerun or profile cleanup"
+  },
+  "borrowedPublishedHelpers": {
+    "launch_player.ps1": "e252b3d926b285d8c66a3481b54ce391639ecde3d242588612402385a8872e29",
+    "stop_player.ps1": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+    "observe_player_host.ps1": "c4ebcf43afe5c0ab5cdb22e0454ee27ef60e2f6b246b8ac504ba432da0205246",
+    "record_preview_exit.ps1": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+    "player_bootstrap.mjs": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262"
+  },
+  "expectedExecutionSha256": "97ae37dccddf914327aa99cb43bc8e97b43e6eab3a0d3a8627abd0454229eb01"
+}

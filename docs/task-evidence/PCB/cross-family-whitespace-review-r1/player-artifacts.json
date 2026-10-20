@@ -1,0 +1,76 @@
+{
+  "bodies": [
+    {
+      "file": "menu-before-captures-public.txt",
+      "sha256": "4b8f7794a3a52249dac453894c67e9620e15229c6cdc322be530073c28effa8d",
+      "bytes": 1324
+    },
+    {
+      "file": "dual-ticket-public.txt",
+      "sha256": "a912d8b8a6baa0792da7d31535e29ebe854ec7ed418c411ef857e3d365f03766",
+      "bytes": 769
+    },
+    {
+      "file": "dual-identity-public.txt",
+      "sha256": "698fafb1bee4b64bea48c019aaa2fcb928b8fd3d53e80d96b9d131fb0b9d75f0",
+      "bytes": 1061
+    },
+    {
+      "file": "dual-off-public.txt",
+      "sha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "bytes": 481
+    },
+    {
+      "file": "rc-ticket-public.txt",
+      "sha256": "00a5890b447e2c51c4a88d43738709d3ae559e7a3e5b187e712179bb881cde37",
+      "bytes": 809
+    },
+    {
+      "file": "rc-off-public.txt",
+      "sha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "bytes": 481
+    },
+    {
+      "file": "composed-ticket-public.txt",
+      "sha256": "2566709b99ca522b7273f506b3d4e969e16a3a01b9557aa26e19c221f7d8169f",
+      "bytes": 806
+    },
+    {
+      "file": "composed-off-public.txt",
+      "sha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "bytes": 481
+    },
+    {
+      "file": "composed-final-public.txt",
+      "sha256": "b6338e4e52f6b577d1dcdba6e91739e5f958a78b459d2c71f34feec11b2b6951",
+      "bytes": 481
+    }
+  ],
+  "images": [
+    {
+      "file": "dual-top-fitted.jpg",
+      "sha256": "0ba50ce3209a889480922e8fba3b2e98974d1baed5373c7fe5cd6da0e1e2962d",
+      "bytes": 131139
+    },
+    {
+      "file": "dual-bottom-fitted.jpg",
+      "sha256": "c26acbc734cf70fd9c41fac72cbfeb4f6884c13df0447da1e23a840d39611a45",
+      "bytes": 127754
+    },
+    {
+      "file": "rc-top-fitted.jpg",
+      "sha256": "22fae79b14935f2b7bc0865fc6866d33ac409df2f756d2d16bd4cc186976445b",
+      "bytes": 131623
+    },
+    {
+      "file": "composed-top-fitted.jpg",
+      "sha256": "235007e69116305f8488644474cbe24a8d827cce4e9c92b0018195121a0103c1",
+      "bytes": 145810
+    },
+    {
+      "file": "composed-bottom-fitted.jpg",
+      "sha256": "73e5990661a6d7e393d68c96025044ffdb1ea2f01a31b3f890b68f1e10dade50",
+      "bytes": 141769
+    }
+  ]
+}

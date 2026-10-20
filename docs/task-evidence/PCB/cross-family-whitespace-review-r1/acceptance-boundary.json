@@ -1,0 +1,10 @@
+{
+  "status": "CAPTURE_PHASE_PASS_WITH_PREPARATION_FAILURES_PRESERVED",
+  "preparation": "One menu visibility wait failure plus two failed selector/action wrappers before any planned replay request. Default ticket accepted/all three supplies disconnected; recovered to actual visible menu without restart/reroll. Original raw events and errors retained.",
+  "preparationHistorySha256": "b07d324037ded21aa9892525ff3c2d712bac09541ac25d36c81006410ef7495d",
+  "captureEvents": 18,
+  "captureFailures": 0,
+  "allPlannedNormalReplayAdmissions": 3,
+  "publicIdentitiesExact": true,
+  "limits": "The finite player qualifier covers the planned capture phase, not a claim that setup observers or the entire browser test harness never failed."
+}

@@ -1,0 +1,8 @@
+{
+  "timingLimit": "Canary performed after owned browser/preview cleanup, not an early launch-time negative test",
+  "status": "PASS_ACTUAL_MISSING_METADATA_REJECTION",
+  "actualObserverExitCode": 1,
+  "elapsedSeconds": 0.35698,
+  "scope": "Actual frozen native browser observer rejects missing owned launch metadata before any public receipt overwrite or process operation",
+  "rawPrivateSha256": "47b092deef3a9d03b4ea6535222508c0b82c1eb5a86bcc5202454713a1f0a043"
+}

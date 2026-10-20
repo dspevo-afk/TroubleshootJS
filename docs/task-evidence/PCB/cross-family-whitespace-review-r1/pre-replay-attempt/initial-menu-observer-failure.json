@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_READ_ONLY_OBSERVER",
+  "reportedError": "locator.waitFor: Timeout 15000ms exceeded waiting for exact button New board",
+  "reportedToolElapsedSeconds": 15.2,
+  "recordedUtc": "2026-10-20T22:32:40.641Z",
+  "scope": "The wait issued no replay or mutation. Production Quick Play automatically displayed a default customer ticket; the expected menu was not the initial screen. Browser and preview remain owned; corrected from actual visible state without restart."
+}

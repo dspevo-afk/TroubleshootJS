@@ -1,0 +1,11 @@
+{
+  "startTicks": "639281322588987616",
+  "status": "PASS",
+  "pid": 27104,
+  "privateMetadataSha256": "0928ecc83240d44a5f6dc97b8321f3a1e54e100b12bdc4f126ae8d4104982dd5",
+  "sandboxEnabled": true,
+  "resolvedExecutableMatch": true,
+  "profileArgumentMatched": true,
+  "headless": false,
+  "executable": "brave.exe"
+}

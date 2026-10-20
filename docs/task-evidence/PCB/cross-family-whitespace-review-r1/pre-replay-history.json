@@ -1,0 +1,12 @@
+{
+  "status": "PREPARATION_OBSERVERS_FAILED_AND_RECOVERED_BEFORE_TARGET_REQUESTS",
+  "preserved": {
+    "player-events.json": "2b00375425fdf47391fd423adf49339abf7960ad11523fd53d175b3d9caf2e66",
+    "player-artifacts.json": "233bb7e7948dc5e61c7dca897d7c90a738f532e0d7adb92274ba989487c17f86",
+    "initial-menu-observer-failure.json": "7865d8ebe6daff7d113ecf11b48e0e9146b96452fddeafa762a1635c459dda90"
+  },
+  "failures": 3,
+  "plannedReplayRequestsBeforeCapturePhase": 0,
+  "actualDefaultActions": "Accepted automatically shown default ticket; disconnected actual three default supplies; opened visible Main menu. No component edit or planned replay.",
+  "continuity": "Same frozen helpers/source, browser27104 and preview24016/8910, no restart/reroll/profile change. Raw failed prep events remain in pre-replay-attempt; player-events now scopes only the planned capture phase."
+}
