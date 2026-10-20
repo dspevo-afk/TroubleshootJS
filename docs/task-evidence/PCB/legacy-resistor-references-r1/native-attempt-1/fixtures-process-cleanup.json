@@ -1,0 +1,22 @@
+{
+  "actualExecExitCode": 1,
+  "elapsedSeconds": 0.0053525,
+  "checks": [
+    {
+      "recordedBirthExited": true,
+      "pid": 29276,
+      "executable": "pwsh",
+      "startTicks": "639281066359210918"
+    },
+    {
+      "recordedBirthExited": true,
+      "pid": 30096,
+      "executable": "pwsh",
+      "startTicks": "639281066361512045"
+    }
+  ],
+  "status": "PASS_CLEANUP_OF_FAILED_PHASE",
+  "scope": "Root after actual exec75412 exit1; no termination; native failure retained separately",
+  "phase": "fixtures",
+  "launchSha256": "c4f5bb25cf1e5d24cb8db401e0384f208ce73b9d86c86a70f833979da56c7df8"
+}

@@ -1,0 +1,439 @@
+{
+  "status": "PASS",
+  "scope": "Exact raw UI body files only; all blank whitespace lines are literal09 legacy meter layout bytes; no byte changes or source-wide check suppression",
+  "files": {
+    "led-330-install-options-body.txt": {
+      "sha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-all-off-body.txt": {
+      "sha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-customer-passed-body.txt": {
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-final-off-body.txt": {
+      "sha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-original-in-tray-body.txt": {
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-original-installed-off-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-original-isolated-ohm-body.txt": {
+      "sha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-original-lifted-body.txt": {
+      "sha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-replacement-330-ohm-body.txt": {
+      "sha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-replacement-tray-body.txt": {
+      "sha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-shop-330-added-body.txt": {
+      "sha256": "381dfeb0749905ccb48330632bdda39b8d6676e2b92b183fbe50de124d0573f6",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "led-supply-on-body.txt": {
+      "sha256": "1154bf36fd866373a3ae248247cec6bb25f5f935c1dd9be469ca4986c118a978",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-after-ticket-body.txt": {
+      "sha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-final-off-body.txt": {
+      "sha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-r1-install-options-body.txt": {
+      "sha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-r1-service-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-r1-tray-body.txt": {
+      "sha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-restored-final-off-body.txt": {
+      "sha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "nmos-supplies-body.txt": {
+      "sha256": "c594f336bd78307ac70ed82a4224a1c9fc111d170d11fb04618d250c7cc278a9",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-all-off-body.txt": {
+      "sha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-final-off-body.txt": {
+      "sha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-original-fail-body.txt": {
+      "sha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r1-install-options-body.txt": {
+      "sha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r1-service-body.txt": {
+      "sha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r1-tray-body.txt": {
+      "sha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r2-install-options-body.txt": {
+      "sha256": "9d175665604633ded2639df1c44b0c5c311062497565b753bb3aec326e25296c",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r2-service-body.txt": {
+      "sha256": "dbf0c2e2f4eaa0cc10bc6a472eed2fd2cdfd03c798e6caf09f9a2596735c67b5",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-r2-tray-body.txt": {
+      "sha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "npn-supplies-body.txt": {
+      "sha256": "f53b33fc913b6c3c271511d7426108eb7776e3e430cfb4a9c007c39774861b04",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-after-accept-before-fit-body.txt": {
+      "sha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-final-off-body.txt": {
+      "sha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-original-fail-body.txt": {
+      "sha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-original-restored-retest-observed-body.txt": {
+      "sha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-install-options-body.txt": {
+      "sha256": "c8d88b00699955c889b79763c05dd5537ba5d54ee1213de337774d9127eccffa",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-lifted-body.txt": {
+      "sha256": "a273b8feb94eaa49c476f33c691726dd48d5ec0d0b02ba20e8563e936f508f6f",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-removed-body.txt": {
+      "sha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-removed-settled-body.txt": {
+      "sha256": "a3bc73a5e3830cbd9465daa777f08bc243b1b9129f84d3b50485ee7b0ebe038e",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-restored-off-body.txt": {
+      "sha256": "b81348e57603f5af597dcee8778527a4f5fee0aef6051c2d4d8c2b1fea8a2953",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-selected-body.txt": {
+      "sha256": "cfb6c29624c27e7d214f1e24161f16c9e08398c268512479c7875b3f251d0dc8",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-service-body.txt": {
+      "sha256": "39d689b07bcafd9e0fcfa48c410e39608ea521c139c2c1f4ebcb53ab4e6d0647",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r1-tray-body.txt": {
+      "sha256": "5eeea701c3c3efce3670bb56c459a3c60d6b259568421259d4b79b6bf3cdd525",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-r5-service-body.txt": {
+      "sha256": "26b8c1b1e1b24716b3a8ed75a9d4cbfbfa0d4a752b4d4c9fcbc0b06dd440f53a",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-restored-retest-click-body.txt": {
+      "sha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "literalTabOnlyLines": [
+        37,
+        38,
+        43
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-share-menu-body.txt": {
+      "sha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-ticket-body.txt": {
+      "sha256": "888c42f007caad67ce330e4e7cfb290daf8afad856c8ff3db875313d9fa0ff59",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    },
+    "sensor-view-menu-body.txt": {
+      "sha256": "0c96d4ad055a6cde08ce1382d75290dab0735c4285a4f46cb133d168a28c55bf",
+      "literalTabOnlyLines": [
+        34,
+        35,
+        40
+      ],
+      "bytesPerLine": "09"
+    }
+  },
+  "lineCount": 144
+}

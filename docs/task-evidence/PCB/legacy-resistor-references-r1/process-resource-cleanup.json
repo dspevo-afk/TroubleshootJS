@@ -1,0 +1,124 @@
+{
+  "checks": [
+    {
+      "pid": 29276,
+      "executable": "pwsh",
+      "kind": "native-attempt-1/fixtures-process-launch.json",
+      "startTicks": "639281066359210918",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 30096,
+      "executable": "pwsh",
+      "kind": "native-attempt-1/fixtures-process-launch.json",
+      "startTicks": "639281066361512045",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31344,
+      "executable": "pwsh",
+      "kind": "fixtures-process-launch.json",
+      "startTicks": "639281067702620726",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26032,
+      "executable": "pwsh",
+      "kind": "fixtures-process-launch.json",
+      "startTicks": "639281067709457807",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31852,
+      "executable": "pwsh",
+      "kind": "contracts-process-launch.json",
+      "startTicks": "639281068349825688",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 25276,
+      "executable": "pwsh",
+      "kind": "contracts-process-launch.json",
+      "startTicks": "639281068356754771",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 30640,
+      "executable": "pwsh",
+      "kind": "census-process-launch.json",
+      "startTicks": "639281069094187891",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 26284,
+      "executable": "pwsh",
+      "kind": "census-process-launch.json",
+      "startTicks": "639281069100493635",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 25716,
+      "executable": "pwsh",
+      "kind": "build-process-launch.json",
+      "startTicks": "639281070030993978",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 31776,
+      "executable": "pwsh",
+      "kind": "build-process-launch.json",
+      "startTicks": "639281070037418867",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32628,
+      "executable": "pwsh",
+      "kind": "preview-process-launch.json",
+      "startTicks": "639281071107994469",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 16736,
+      "executable": "pwsh",
+      "kind": "preview-process-launch.json",
+      "startTicks": "639281071114232676",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 28548,
+      "executable": "pwsh",
+      "kind": "preview-stop-process-launch.json",
+      "startTicks": "639281077669487786",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 32588,
+      "executable": "pwsh",
+      "kind": "preview-stop-process-launch.json",
+      "startTicks": "639281077671793669",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 29536,
+      "executable": "powershell.exe",
+      "kind": "preview-owner-before.json",
+      "startTicks": "639281071150416812",
+      "recordedBirthExited": true
+    },
+    {
+      "pid": 30600,
+      "executable": "brave.exe",
+      "kind": "browser-owner.json",
+      "startTicks": "639281071455136398",
+      "recordedBirthExited": true
+    }
+  ],
+  "limits": "Includes failed fixture attempt two births plus accepted phase8, preview launch/stop4, preview worker1 and browser1; three older policy-blocked profiles/private logs preserved. No process termination or manual profile deletion.",
+  "port8907Released": true,
+  "status": "PASS",
+  "browserApiExit0": true,
+  "currentProfileAbsent": true,
+  "managedStateAbsent": true,
+  "elapsedObservationSeconds": 0.3899211,
+  "recordedBirths": 16
+}

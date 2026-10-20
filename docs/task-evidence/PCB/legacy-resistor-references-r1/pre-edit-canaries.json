@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "pureTimingPositive": 1,
+  "invalidTimingRejected": 6,
+  "actualAcceptedBaseline": {
+    "cases": 44,
+    "changedFamilyCases": 20,
+    "sensorFeedbackBranches": 2,
+    "rb15FilterBranches": 2,
+    "receiptSha256": "f7b0f77136f79093d170279f7910514ed6d5ac8c1740e82d88c703a321ea04e7"
+  },
+  "limits": "Pure reader framing and existing baseline parsing only; no new native/build/process claim"
+}

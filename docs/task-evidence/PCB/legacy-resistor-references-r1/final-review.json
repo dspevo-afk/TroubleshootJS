@@ -1,0 +1,996 @@
+{
+  "status": "PASS_ACCEPTED_FOR_NORMAL_COMMIT_PUSH",
+  "scope": "Root integrated diff, final source/gate/player evidence, exact explicit staged paths/raw or CRLF-only bytes and added-line privacy review",
+  "baseCommit": "79baf499dd8c14a1ed5e8aa049611026b2077e22",
+  "branch": "codex/q60-faulted-profile-counts",
+  "preFinalReviewStagedPaths": 195,
+  "comparisons": {
+    "RAW_EXACT": 186,
+    "CRLF_NORMALIZATION_ONLY": 9
+  },
+  "files": {
+    "docs/ARCHITECTURE.md": {
+      "workingSha256": "e4fc4b77922361c92d61c375b5a7bebd2349cfde23a7f3525542926de356e01a",
+      "indexSha256": "446ee5e2fc86937367f8ef27787b7811b9b7329d332c81ef4707d17123431987",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/CODEX_TASK_REPORT.md": {
+      "workingSha256": "2d3af248ca2dd6fea1d0c7eb7c8b6c6d9c99f587444d76057c8435176046762b",
+      "indexSha256": "50e523184c990f363982d32e38f5f6c9a7d125b88db5ec6e0eafa98c1ebff9e4",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/ROADMAP.md": {
+      "workingSha256": "826db1638a13109b83867b4d56fecac1ce3eb378aa5db381d44c7e24b861712e",
+      "indexSha256": "934fb29d41c775bff74dcef051d9bfac95d9b9cb82d6f6ea48ba52ebfc566615",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "docs/task-evidence/PCB/fresh-board-visual-r2/publication.json": {
+      "workingSha256": "c766d9948336742d7bc7228110feaaa0944100471ac23b5e28adbe860777e5d3",
+      "indexSha256": "c766d9948336742d7bc7228110feaaa0944100471ac23b5e28adbe860777e5d3",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/.gitattributes": {
+      "workingSha256": "3289411fbe2d5cfaa713c4707608cde17d279bdbfd671d590c357529bcb6af8b",
+      "indexSha256": "3289411fbe2d5cfaa713c4707608cde17d279bdbfd671d590c357529bcb6af8b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/RESULTS.md": {
+      "workingSha256": "89e42bb98d8ca6d30254b4df4d77dfafc7fbc62aa0460cb46ea5b08fba744a3f",
+      "indexSha256": "89e42bb98d8ca6d30254b4df4d77dfafc7fbc62aa0460cb46ea5b08fba744a3f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/accepted-inputs.json": {
+      "workingSha256": "a3c8c157ce8b322a241ee34af5091709c7ef9cf9e87d2112c5180c7f6b202815",
+      "indexSha256": "a3c8c157ce8b322a241ee34af5091709c7ef9cf9e87d2112c5180c7f6b202815",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-inputs.json": {
+      "workingSha256": "81b0a9d23f1a37dfb54b82796395dbcf1433da09c21955ad855672f1b6103097",
+      "indexSha256": "81b0a9d23f1a37dfb54b82796395dbcf1433da09c21955ad855672f1b6103097",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java": {
+      "workingSha256": "9236f50caf52dd82d305803af851e8992d1560034fb9332dd6a081bb1099e461",
+      "indexSha256": "9236f50caf52dd82d305803af851e8992d1560034fb9332dd6a081bb1099e461",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java": {
+      "workingSha256": "61fb84a65c526351a4476287a50aee9e8e678a9824d9748e3eb756458fe9aa19",
+      "indexSha256": "61fb84a65c526351a4476287a50aee9e8e678a9824d9748e3eb756458fe9aa19",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/src/com/lushprojects/circuitjs1/client/Rb15Plan.java": {
+      "workingSha256": "5aae021a178c25537ea89f8e32c539866f161b124b34f2e0d1b34ecb716b3fe2",
+      "indexSha256": "5aae021a178c25537ea89f8e32c539866f161b124b34f2e0d1b34ecb716b3fe2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": {
+      "workingSha256": "b4862167ad64887df6150bc20fbe78a01a9cae11bc445d66f778f1775fefe293",
+      "indexSha256": "b4862167ad64887df6150bc20fbe78a01a9cae11bc445d66f778f1775fefe293",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java": {
+      "workingSha256": "2d8cc48e18e4406790ef76b3446572ee7c91d347b9472deab8abacfa485adb8d",
+      "indexSha256": "2d8cc48e18e4406790ef76b3446572ee7c91d347b9472deab8abacfa485adb8d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/baseline-source/tests/contracts/PhysicalServiceabilityContractTest.java": {
+      "workingSha256": "0366a3fbb44b2e86b6551cf6d0affcaabb02fd63e18ca4d91ba4b082b2ab59b9",
+      "indexSha256": "0366a3fbb44b2e86b6551cf6d0affcaabb02fd63e18ca4d91ba4b082b2ab59b9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/browser-api-cleanup.json": {
+      "workingSha256": "e1a24d2a637eb6ffcb68701a81b4263a30282fc24bf44fc96fda4fd6654cbcad",
+      "indexSha256": "e1a24d2a637eb6ffcb68701a81b4263a30282fc24bf44fc96fda4fd6654cbcad",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/browser-owner.json": {
+      "workingSha256": "b177183d2bb6fbb3dcc45bc083f2b7ceb9808b4280714dabe852dfcd20acce32",
+      "indexSha256": "b177183d2bb6fbb3dcc45bc083f2b7ceb9808b4280714dabe852dfcd20acce32",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/browser-preclose-owner.json": {
+      "workingSha256": "44e787ea44cc028c5f26196246b2d402fe69565e5e8983c0caf6876c209537c6",
+      "indexSha256": "44e787ea44cc028c5f26196246b2d402fe69565e5e8983c0caf6876c209537c6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-assessment.json": {
+      "workingSha256": "7a5711ada126d9bda286b7dee3e2fc44403ce33b5188369e34ebf81c394c4d7b",
+      "indexSha256": "7a5711ada126d9bda286b7dee3e2fc44403ce33b5188369e34ebf81c394c4d7b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-log-sanitization.json": {
+      "workingSha256": "84593d1bdeca00fee7528b43bdad190795fa10b0da30e59a3256961b76d75e94",
+      "indexSha256": "84593d1bdeca00fee7528b43bdad190795fa10b0da30e59a3256961b76d75e94",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-process-cleanup.json": {
+      "workingSha256": "ffd6de5b841742afc4cbd2fca21a85a24577654aa68bfe3c69065c27ec51eb1c",
+      "indexSha256": "ffd6de5b841742afc4cbd2fca21a85a24577654aa68bfe3c69065c27ec51eb1c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-process-launch.json": {
+      "workingSha256": "4ed20a26f1ea430a208293f93a0d257cf2b73070311a0d87c35c906f08efe44e",
+      "indexSha256": "4ed20a26f1ea430a208293f93a0d257cf2b73070311a0d87c35c906f08efe44e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build-timing.json": {
+      "workingSha256": "b24915782a2353ddbb79865763236414fd9b202b305df351f92403da8e8a6869",
+      "indexSha256": "b24915782a2353ddbb79865763236414fd9b202b305df351f92403da8e8a6869",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/build.txt": {
+      "workingSha256": "0a2052efb66715f2b2b0556529314bc6b1c6c6648d8d91766793cd1344ca5b27",
+      "indexSha256": "0a2052efb66715f2b2b0556529314bc6b1c6c6648d8d91766793cd1344ca5b27",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-inputs.json": {
+      "workingSha256": "cd48a9ab316b6e8aa1d0b7e278d87cbebc0644b4852d6ac07695fd2dc8d3ef7b",
+      "indexSha256": "cd48a9ab316b6e8aa1d0b7e278d87cbebc0644b4852d6ac07695fd2dc8d3ef7b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java": {
+      "workingSha256": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+      "indexSha256": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/NormalResistorReferences.java": {
+      "workingSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "indexSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java": {
+      "workingSha256": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+      "indexSha256": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/Rb15Plan.java": {
+      "workingSha256": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477",
+      "indexSha256": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": {
+      "workingSha256": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+      "indexSha256": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java": {
+      "workingSha256": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+      "indexSha256": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/candidate-source/tests/contracts/PhysicalServiceabilityContractTest.java": {
+      "workingSha256": "205bb7b8b5665526b68408eee0c5733aa4fb39b82ca26f8e76e234b0f6f52ec7",
+      "indexSha256": "205bb7b8b5665526b68408eee0c5733aa4fb39b82ca26f8e76e234b0f6f52ec7",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-assessment.json": {
+      "workingSha256": "e991c874ab6b976dcba80105f26f2cb544c6dca8d3f496b55a0a3575256f22fb",
+      "indexSha256": "e991c874ab6b976dcba80105f26f2cb544c6dca8d3f496b55a0a3575256f22fb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-comparison.json": {
+      "workingSha256": "98122993bd74793ae73cb59d127ae8fe4c63cb05f91851c49c9f1268dbbee99c",
+      "indexSha256": "98122993bd74793ae73cb59d127ae8fe4c63cb05f91851c49c9f1268dbbee99c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-process-cleanup.json": {
+      "workingSha256": "d96c10f33fb592936509502653701cf9df4968d6e83f502b75a845e9fd095c23",
+      "indexSha256": "d96c10f33fb592936509502653701cf9df4968d6e83f502b75a845e9fd095c23",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-process-launch.json": {
+      "workingSha256": "a564e2fcb4f51a174fb8c7c78b876e377782a231a98c61c8d01aa7c54bb24a52",
+      "indexSha256": "a564e2fcb4f51a174fb8c7c78b876e377782a231a98c61c8d01aa7c54bb24a52",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-receipt.txt": {
+      "workingSha256": "a6a49f01e06d9fa05621da4961836fe6a6c08186c6762310dacad871f2f7007b",
+      "indexSha256": "a6a49f01e06d9fa05621da4961836fe6a6c08186c6762310dacad871f2f7007b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census-timing.json": {
+      "workingSha256": "66e96265ff7017442eb14e7225f0aa895d5100ff17f6f53b08a0fb2fbc3aa4c8",
+      "indexSha256": "66e96265ff7017442eb14e7225f0aa895d5100ff17f6f53b08a0fb2fbc3aa4c8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/census.txt": {
+      "workingSha256": "3793a9a2d76b911b20b40da9ae70bf69fe76677f7fdc835498d7e8142e8aee53",
+      "indexSha256": "3793a9a2d76b911b20b40da9ae70bf69fe76677f7fdc835498d7e8142e8aee53",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-assessment.json": {
+      "workingSha256": "059f684fcd35676f63c3d589784b378858cddbe2dce4598dc1c55fabf3f3f462",
+      "indexSha256": "059f684fcd35676f63c3d589784b378858cddbe2dce4598dc1c55fabf3f3f462",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-process-cleanup.json": {
+      "workingSha256": "8a04a73fe65d2fa97514705568cdd7ded90836a28149776edec03163c01fef49",
+      "indexSha256": "8a04a73fe65d2fa97514705568cdd7ded90836a28149776edec03163c01fef49",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-process-launch.json": {
+      "workingSha256": "53bfbcee93a0f6ead8dff27073a8251716306a0d6e3a272de6499c9ce2dc1220",
+      "indexSha256": "53bfbcee93a0f6ead8dff27073a8251716306a0d6e3a272de6499c9ce2dc1220",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-receipt.txt": {
+      "workingSha256": "3856fe7da35c76b29cdf6a5cb6bbd02fba2558d437cd93ffb18f08c036fd6083",
+      "indexSha256": "3856fe7da35c76b29cdf6a5cb6bbd02fba2558d437cd93ffb18f08c036fd6083",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts-timing.json": {
+      "workingSha256": "b87c68f94ac228a1e921a11a30be5bdfb70e16c314f4534bbb0378c0e534d5b4",
+      "indexSha256": "b87c68f94ac228a1e921a11a30be5bdfb70e16c314f4534bbb0378c0e534d5b4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/contracts.txt": {
+      "workingSha256": "48785274ac86a2feb3798320506f4f7b9fd1f8e453b6799a30347390d5ea2180",
+      "indexSha256": "48785274ac86a2feb3798320506f4f7b9fd1f8e453b6799a30347390d5ea2180",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixture-static-review.json": {
+      "workingSha256": "9d63f4e16b282cb1e542ebdf414108dd8cb97d545f6e86310d56edda33d55e93",
+      "indexSha256": "9d63f4e16b282cb1e542ebdf414108dd8cb97d545f6e86310d56edda33d55e93",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-assessment.json": {
+      "workingSha256": "c78205e9aabb0f4fd7c615b1d0f97cb66ea3c0e568f424da47913f7dc1c2ad96",
+      "indexSha256": "c78205e9aabb0f4fd7c615b1d0f97cb66ea3c0e568f424da47913f7dc1c2ad96",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-process-cleanup.json": {
+      "workingSha256": "156dbfbe61ffce15fd36a3ca78c704cabd88cadf905f1c5da0997df465b5a0e6",
+      "indexSha256": "156dbfbe61ffce15fd36a3ca78c704cabd88cadf905f1c5da0997df465b5a0e6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-process-launch.json": {
+      "workingSha256": "e79b028b87784f8f07857ac7b7a49c7173a27cee69f70d00bf8b8d30155a48a9",
+      "indexSha256": "e79b028b87784f8f07857ac7b7a49c7173a27cee69f70d00bf8b8d30155a48a9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-receipt.txt": {
+      "workingSha256": "052f0653ae29fc2b670445954a667ea4fc0e96da0aeacf4bebec25976835fc27",
+      "indexSha256": "052f0653ae29fc2b670445954a667ea4fc0e96da0aeacf4bebec25976835fc27",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures-timing.json": {
+      "workingSha256": "fd1cdc7abdb3686a9d3792475f65e26752ca56bdcdcabbf259d51f13821f0ac4",
+      "indexSha256": "fd1cdc7abdb3686a9d3792475f65e26752ca56bdcdcabbf259d51f13821f0ac4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/fixtures.txt": {
+      "workingSha256": "3764593ad4daa44bcca7e3441449b7d4958d7bbbb96e86b337e4cfdfd4bf5b5d",
+      "indexSha256": "3764593ad4daa44bcca7e3441449b7d4958d7bbbb96e86b337e4cfdfd4bf5b5d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/initial-menu-body.txt": {
+      "workingSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "indexSha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/inputs.py": {
+      "workingSha256": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+      "indexSha256": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/launch_player.ps1": {
+      "workingSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "indexSha256": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-330-install-options-body.txt": {
+      "workingSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "indexSha256": "98aa524187055852a9f779327a03d0a6146db97bfd92c91645fc9627503a2a2e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-all-off-body.txt": {
+      "workingSha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "indexSha256": "8da08593c448cf2007356796e11420dc914b6b33506c723fc680aeafcf1034b8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-customer-passed-body.txt": {
+      "workingSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "indexSha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-customer-passed.jpg": {
+      "workingSha256": "1bd9351604682780defe0c73ac450f50e159b5aa24fd80603a35937e29f94d47",
+      "indexSha256": "1bd9351604682780defe0c73ac450f50e159b5aa24fd80603a35937e29f94d47",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-final-off-body.txt": {
+      "workingSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "indexSha256": "c6787d298a37da6b3c1882cc59a10ec42ac34d877092c77688f5cad5ae887eac",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-original-in-tray-body.txt": {
+      "workingSha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "indexSha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-original-installed-off-body.txt": {
+      "workingSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "indexSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-original-isolated-ohm-body.txt": {
+      "workingSha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "indexSha256": "6f836e1a557efcbef56b4372b4ed2c54d1b60b9f003a4f8f00ad97c9a4f4942f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-original-lifted-body.txt": {
+      "workingSha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "indexSha256": "058217d484458d995d9d8422730991ce284cc2560ea2876e42941c8f4996b6bd",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-public-identity.json": {
+      "workingSha256": "88ffaa29e51277350892a88077b32428efb09753a6ad69156098f54c1105d3fc",
+      "indexSha256": "88ffaa29e51277350892a88077b32428efb09753a6ad69156098f54c1105d3fc",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-replacement-330-ohm-body.txt": {
+      "workingSha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "indexSha256": "6bd8833e3a6af3d9fe81027f7282a43b63b18d18a3a75b52f7c30554558ba22e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-replacement-tray-body.txt": {
+      "workingSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "indexSha256": "c4ea3ce933266f21b7bed6f159391c7daaf6d16cb4856a6a6eb42dc7e32a3494",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-shop-330-added-body.txt": {
+      "workingSha256": "381dfeb0749905ccb48330632bdda39b8d6676e2b92b183fbe50de124d0573f6",
+      "indexSha256": "381dfeb0749905ccb48330632bdda39b8d6676e2b92b183fbe50de124d0573f6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/led-supply-on-body.txt": {
+      "workingSha256": "1154bf36fd866373a3ae248247cec6bb25f5f935c1dd9be469ca4986c118a978",
+      "indexSha256": "1154bf36fd866373a3ae248247cec6bb25f5f935c1dd9be469ca4986c118a978",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/accepted-inputs.json": {
+      "workingSha256": "a3c8c157ce8b322a241ee34af5091709c7ef9cf9e87d2112c5180c7f6b202815",
+      "indexSha256": "a3c8c157ce8b322a241ee34af5091709c7ef9cf9e87d2112c5180c7f6b202815",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/baseline-inputs.json": {
+      "workingSha256": "d04a99827cfab7687c0d9e3c27fca1273688fca6745de3c00cc652ac074c2f1e",
+      "indexSha256": "d04a99827cfab7687c0d9e3c27fca1273688fca6745de3c00cc652ac074c2f1e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-inputs.json": {
+      "workingSha256": "5c436090a107d21b3eeb6f9b3ec28b17fcc78f12a70f2b8ee5e58b04c4e97c54",
+      "indexSha256": "5c436090a107d21b3eeb6f9b3ec28b17fcc78f12a70f2b8ee5e58b04c4e97c54",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java": {
+      "workingSha256": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+      "indexSha256": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/NormalResistorReferences.java": {
+      "workingSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "indexSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java": {
+      "workingSha256": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+      "indexSha256": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/Rb15Plan.java": {
+      "workingSha256": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477",
+      "indexSha256": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": {
+      "workingSha256": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+      "indexSha256": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java": {
+      "workingSha256": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+      "indexSha256": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/candidate-source/tests/contracts/PhysicalServiceabilityContractTest.java": {
+      "workingSha256": "c68054ee245131cb3f099ce627a99f07ef943b110255e1b1822ee02494136b9b",
+      "indexSha256": "c68054ee245131cb3f099ce627a99f07ef943b110255e1b1822ee02494136b9b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/failure.json": {
+      "workingSha256": "f597ed5cffc9f06239d3d2b2bbe167542671fc88ce44d12cdabfabc75be1077b",
+      "indexSha256": "f597ed5cffc9f06239d3d2b2bbe167542671fc88ce44d12cdabfabc75be1077b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures-process-cleanup.json": {
+      "workingSha256": "eb9614634b3f1cb8c2b8573cb1d4103828b4d8d06594970af053075d6de43847",
+      "indexSha256": "eb9614634b3f1cb8c2b8573cb1d4103828b4d8d06594970af053075d6de43847",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures-process-launch.json": {
+      "workingSha256": "c4f5bb25cf1e5d24cb8db401e0384f208ce73b9d86c86a70f833979da56c7df8",
+      "indexSha256": "c4f5bb25cf1e5d24cb8db401e0384f208ce73b9d86c86a70f833979da56c7df8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures-timing.json": {
+      "workingSha256": "4d787bd98bcbe95df81eaf16a7876d92b149ea432fedd27b72a6e0901dfb3f7e",
+      "indexSha256": "4d787bd98bcbe95df81eaf16a7876d92b149ea432fedd27b72a6e0901dfb3f7e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/fixtures.txt": {
+      "workingSha256": "d980b5f45b3a41d56a52d51e2c810292ed371ab3f9ae90607b70e8a2ff797e11",
+      "indexSha256": "d980b5f45b3a41d56a52d51e2c810292ed371ab3f9ae90607b70e8a2ff797e11",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/inputs.py": {
+      "workingSha256": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+      "indexSha256": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/preflight-review.json": {
+      "workingSha256": "8ab12e1ca29500016476797fd20ff2e6964705612365a7bb4e175884e874d684",
+      "indexSha256": "8ab12e1ca29500016476797fd20ff2e6964705612365a7bb4e175884e874d684",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/qualify.py": {
+      "workingSha256": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+      "indexSha256": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/run_phase.ps1": {
+      "workingSha256": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+      "indexSha256": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/scope.md": {
+      "workingSha256": "12ac7fe48335df48b9e0eb3f8353653e9b3a06bb0de040d10cdd2ad0022f47ef",
+      "indexSha256": "12ac7fe48335df48b9e0eb3f8353653e9b3a06bb0de040d10cdd2ad0022f47ef",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/static-review.json": {
+      "workingSha256": "1850a7b5fec94e349ad214a1b5593bf51e4ad572ab578c93338c7ba793f400d2",
+      "indexSha256": "1850a7b5fec94e349ad214a1b5593bf51e4ad572ab578c93338c7ba793f400d2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/native-attempt-1/suites.json": {
+      "workingSha256": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc",
+      "indexSha256": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-after-ticket-body.txt": {
+      "workingSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad",
+      "indexSha256": "4456e9747a3181e4bb6ddab6ecdae002a10384da4a8b459cc73e78e7d8b9afad",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-final-off-body.txt": {
+      "workingSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "indexSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-fitted.jpg": {
+      "workingSha256": "5ce3d2c47d5b2f1433265bf3a961c899963db8353595df388ee1ab62d8463723",
+      "indexSha256": "5ce3d2c47d5b2f1433265bf3a961c899963db8353595df388ee1ab62d8463723",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-public-controls.json": {
+      "workingSha256": "de76252cfbf06c84c33260847ed024813f02e7765dc95530fc19883f97a186fc",
+      "indexSha256": "de76252cfbf06c84c33260847ed024813f02e7765dc95530fc19883f97a186fc",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-public-identity.json": {
+      "workingSha256": "e508d3f5871615a8fa090c8773f22f6cc539e6c934e50efd09cac62dc84b1bea",
+      "indexSha256": "e508d3f5871615a8fa090c8773f22f6cc539e6c934e50efd09cac62dc84b1bea",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-r1-install-options-body.txt": {
+      "workingSha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "indexSha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-r1-service-body.txt": {
+      "workingSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "indexSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-r1-tray-body.txt": {
+      "workingSha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "indexSha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-restored-final-off-body.txt": {
+      "workingSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "indexSha256": "95c9ca3f0b39987e2327d2d6ee3f2f1f3eb3f93be25c858434c722676042263e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/nmos-supplies-body.txt": {
+      "workingSha256": "c594f336bd78307ac70ed82a4224a1c9fc111d170d11fb04618d250c7cc278a9",
+      "indexSha256": "c594f336bd78307ac70ed82a4224a1c9fc111d170d11fb04618d250c7cc278a9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-all-off-body.txt": {
+      "workingSha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "indexSha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-final-off-body.txt": {
+      "workingSha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "indexSha256": "ecf174fc5dd899fcc6e8d25bfd36f1c9094de16d781c20b9360b3f97dcf4272d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-original-fail-body.txt": {
+      "workingSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "indexSha256": "9cc3495c8414f875ecceed26b83232270b4243a21ddd372e7ce4bf3d8ca7218f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-public-controls.json": {
+      "workingSha256": "c18b6dc4a7cb76209534cc1e5b9c0cf84db7f4cc15978a0963a71c29c5a02beb",
+      "indexSha256": "c18b6dc4a7cb76209534cc1e5b9c0cf84db7f4cc15978a0963a71c29c5a02beb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-public-identity.json": {
+      "workingSha256": "3e20c7f6b5ab7745f0d26bfb4c77d85814b8515ff24ef4aaa156a4017250d19a",
+      "indexSha256": "3e20c7f6b5ab7745f0d26bfb4c77d85814b8515ff24ef4aaa156a4017250d19a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r1-install-options-body.txt": {
+      "workingSha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "indexSha256": "69840e8b50c01cbbe86c0bca69f9666eba57bb059cf1a30ca5e4ad5be9472fb6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r1-service-body.txt": {
+      "workingSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "indexSha256": "7416cf30fcc1da24d0403c4e6433acb3f26f3ced532f81d32725c5b698628095",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r1-tray-body.txt": {
+      "workingSha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "indexSha256": "c14331927d96720977d1df40bf787ae19e3c69239fb97cc79e49f9e76cc40b2d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r2-install-options-body.txt": {
+      "workingSha256": "9d175665604633ded2639df1c44b0c5c311062497565b753bb3aec326e25296c",
+      "indexSha256": "9d175665604633ded2639df1c44b0c5c311062497565b753bb3aec326e25296c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r2-service-body.txt": {
+      "workingSha256": "dbf0c2e2f4eaa0cc10bc6a472eed2fd2cdfd03c798e6caf09f9a2596735c67b5",
+      "indexSha256": "dbf0c2e2f4eaa0cc10bc6a472eed2fd2cdfd03c798e6caf09f9a2596735c67b5",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r2-service.jpg": {
+      "workingSha256": "f67438119c88a5eaf99c7ffc08b2ecb9ab4d5b90cb3c2fe933e81c9c339e8d59",
+      "indexSha256": "f67438119c88a5eaf99c7ffc08b2ecb9ab4d5b90cb3c2fe933e81c9c339e8d59",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-r2-tray-body.txt": {
+      "workingSha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "indexSha256": "c1192d0cee5549104447316aeb1400c45e5e5dba883c362adcc1e3215b4644ca",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/npn-supplies-body.txt": {
+      "workingSha256": "f53b33fc913b6c3c271511d7426108eb7776e3e430cfb4a9c007c39774861b04",
+      "indexSha256": "f53b33fc913b6c3c271511d7426108eb7776e3e430cfb4a9c007c39774861b04",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/observe-player-host-attempt1.ps1": {
+      "workingSha256": "cce9c1144c782eabb65dcb02f91e6921139b8434cef5bd5312a7d8d41128e15e",
+      "indexSha256": "cce9c1144c782eabb65dcb02f91e6921139b8434cef5bd5312a7d8d41128e15e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/observe_player_host.ps1": {
+      "workingSha256": "4907149ff24829745b36f429fc5513b0003998505221653ee0e466a559122e36",
+      "indexSha256": "4907149ff24829745b36f429fc5513b0003998505221653ee0e466a559122e36",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-assessment.json": {
+      "workingSha256": "eb32df06a8e79056adecea018946474a68f28dd529cb601183124de928059c2a",
+      "indexSha256": "eb32df06a8e79056adecea018946474a68f28dd529cb601183124de928059c2a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-events.json": {
+      "workingSha256": "6a09c12fa774fc58ed17053298eeca1d99f17698c86ab659c22c2a9614541c49",
+      "indexSha256": "6a09c12fa774fc58ed17053298eeca1d99f17698c86ab659c22c2a9614541c49",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-expected-execution.json": {
+      "workingSha256": "9503e4480cac283df1806e2d559b3d4185c010853e53aefb74c88acee9e814e0",
+      "indexSha256": "9503e4480cac283df1806e2d559b3d4185c010853e53aefb74c88acee9e814e0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-host-attempt1-failure.json": {
+      "workingSha256": "cddf0d597bf5fea84d3efbcf794d5d3d43751d5af9683eb1a37e6d0023b1992b",
+      "indexSha256": "cddf0d597bf5fea84d3efbcf794d5d3d43751d5af9683eb1a37e6d0023b1992b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-host-plan-seal-attempt1.json": {
+      "workingSha256": "fbcc54158f83fd9d17d80b32d16fec656f0be72b60e7c0a821361ba54efb680b",
+      "indexSha256": "fbcc54158f83fd9d17d80b32d16fec656f0be72b60e7c0a821361ba54efb680b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-host-plan-seal.json": {
+      "workingSha256": "cdf6efdbcdcaf3ba6834e07d7be3eb1c8e6a312e6540e1a514d220d1f415da29",
+      "indexSha256": "cdf6efdbcdcaf3ba6834e07d7be3eb1c8e6a312e6540e1a514d220d1f415da29",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-input-audit-after.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-input-audit-before.txt": {
+      "workingSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "indexSha256": "f36b1997e971fb6d54b82107ab27337e687ed30b2fe5e26db6b110053d1c829b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-log-hashes.json": {
+      "workingSha256": "8ccd54ff5ff651c76fa459e97614bfb8b0a67c534f62acc4c898e56287eacefe",
+      "indexSha256": "8ccd54ff5ff651c76fa459e97614bfb8b0a67c534f62acc4c898e56287eacefe",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-plan-seal.json": {
+      "workingSha256": "0c253e6304071189950d278fe62e631a3794af9bd3d8f641bcebc7f85074232f",
+      "indexSha256": "0c253e6304071189950d278fe62e631a3794af9bd3d8f641bcebc7f85074232f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-plan.json": {
+      "workingSha256": "c7f487bb4a057fd8a06e20522e22271d67d858c7b80e15a18fe1c8c2de30f9bb",
+      "indexSha256": "c7f487bb4a057fd8a06e20522e22271d67d858c7b80e15a18fe1c8c2de30f9bb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-preparation-issues.json": {
+      "workingSha256": "119f8f3cfd7b5620c206c3a6ca45cd1a65c4436c65fe087e1e5ffe7318d1d6ae",
+      "indexSha256": "119f8f3cfd7b5620c206c3a6ca45cd1a65c4436c65fe087e1e5ffe7318d1d6ae",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-served-after.json": {
+      "workingSha256": "7d952bfe4a665f288cf7f58933a4f1778a324f142b595a5cddc7d6c4090f0c80",
+      "indexSha256": "7d952bfe4a665f288cf7f58933a4f1778a324f142b595a5cddc7d6c4090f0c80",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/player-served-before.json": {
+      "workingSha256": "7d952bfe4a665f288cf7f58933a4f1778a324f142b595a5cddc7d6c4090f0c80",
+      "indexSha256": "7d952bfe4a665f288cf7f58933a4f1778a324f142b595a5cddc7d6c4090f0c80",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/post-player-provenance.json": {
+      "workingSha256": "9503e4480cac283df1806e2d559b3d4185c010853e53aefb74c88acee9e814e0",
+      "indexSha256": "9503e4480cac283df1806e2d559b3d4185c010853e53aefb74c88acee9e814e0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/pre-edit-canaries.json": {
+      "workingSha256": "b87707dbce1aebd3430291902d473784ba127a97f93bbdee17ce773624aba026",
+      "indexSha256": "b87707dbce1aebd3430291902d473784ba127a97f93bbdee17ce773624aba026",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preflight-review.json": {
+      "workingSha256": "2aed3e52aa782bfff293bc971be353fffb4a7f8ab1f5a795ed202c0ac25f6b70",
+      "indexSha256": "2aed3e52aa782bfff293bc971be353fffb4a7f8ab1f5a795ed202c0ac25f6b70",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/prepublish-privacy-review.json": {
+      "workingSha256": "549a19ad1f06f2b5b0756444cfa9f6f07d844453b0531e1d79fd96ef59e5f584",
+      "indexSha256": "549a19ad1f06f2b5b0756444cfa9f6f07d844453b0531e1d79fd96ef59e5f584",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-owner-after.json": {
+      "workingSha256": "1a0755b1740acec28f272a42564ea2b2f72305ee708a37d22db8d4f10117079a",
+      "indexSha256": "1a0755b1740acec28f272a42564ea2b2f72305ee708a37d22db8d4f10117079a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-owner-before.json": {
+      "workingSha256": "da405ab96e24ce8e223d3bd0164602e9b0eadf1f0d8b553f0cebb8053ca5c0f0",
+      "indexSha256": "da405ab96e24ce8e223d3bd0164602e9b0eadf1f0d8b553f0cebb8053ca5c0f0",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-process-cleanup.json": {
+      "workingSha256": "f6408f9efb421174ef7d932a09b9f576610093a8fb0b2ff9dcc97ddcac3e524b",
+      "indexSha256": "f6408f9efb421174ef7d932a09b9f576610093a8fb0b2ff9dcc97ddcac3e524b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-process-launch.json": {
+      "workingSha256": "b3cd476d70e1a3dd14ef2a018407a3e645c7e0cac7d98247f3aaf75e7320b59d",
+      "indexSha256": "b3cd476d70e1a3dd14ef2a018407a3e645c7e0cac7d98247f3aaf75e7320b59d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-start-timing.json": {
+      "workingSha256": "a1a678219eef0388e151c97850bc791637f6b0307708e3e6da35c87b3064b360",
+      "indexSha256": "a1a678219eef0388e151c97850bc791637f6b0307708e3e6da35c87b3064b360",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-start.txt": {
+      "workingSha256": "0e210a055976430a6d9429660e3953ba7af43ff465bb9ad12a96c89b1ea605b8",
+      "indexSha256": "0e210a055976430a6d9429660e3953ba7af43ff465bb9ad12a96c89b1ea605b8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-stop-process-cleanup.json": {
+      "workingSha256": "83c4e0745cfc1f6b52099694e6e6c0be1fd03bfffeb178f081d203f5118f6a33",
+      "indexSha256": "83c4e0745cfc1f6b52099694e6e6c0be1fd03bfffeb178f081d203f5118f6a33",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-stop-process-launch.json": {
+      "workingSha256": "e3f636abc8a7c08523cdca792c0872ed0826b919d8e495856cbb5b4dca22f1c1",
+      "indexSha256": "e3f636abc8a7c08523cdca792c0872ed0826b919d8e495856cbb5b4dca22f1c1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-stop-timing.json": {
+      "workingSha256": "acdae9b6aca525a3c7d37785338198b06215cd2cddaef76161294d300cd01904",
+      "indexSha256": "acdae9b6aca525a3c7d37785338198b06215cd2cddaef76161294d300cd01904",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/preview-stop.txt": {
+      "workingSha256": "ca77d2d320c69d09a40e80f0f0923b99e8fb4840c6ec38fa6cbdc0680815e7a9",
+      "indexSha256": "ca77d2d320c69d09a40e80f0f0923b99e8fb4840c6ec38fa6cbdc0680815e7a9",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/process-resource-cleanup.json": {
+      "workingSha256": "2b41cd9dcac7a02e9a4411c5df24b1903611f9a3cc5a6c09afeb60ac1a216594",
+      "indexSha256": "2b41cd9dcac7a02e9a4411c5df24b1903611f9a3cc5a6c09afeb60ac1a216594",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/qualify.py": {
+      "workingSha256": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+      "indexSha256": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/raw-body-whitespace-review.json": {
+      "workingSha256": "b60293e051928e994ec5d56ae2a45403cdf0a13db16a21cca31fb35a85238f30",
+      "indexSha256": "b60293e051928e994ec5d56ae2a45403cdf0a13db16a21cca31fb35a85238f30",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/record_exit.ps1": {
+      "workingSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "indexSha256": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/review_player.py": {
+      "workingSha256": "76749c0e699de45414a2907c64310410b9a7ed63d7a0005e8712140595e03625",
+      "indexSha256": "76749c0e699de45414a2907c64310410b9a7ed63d7a0005e8712140595e03625",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/run_phase.ps1": {
+      "workingSha256": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+      "indexSha256": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/scope-revision-1.json": {
+      "workingSha256": "9de897f15c88b564d96bc9f048fd5e4972260a1b936222b6f65b7f54ff5d296f",
+      "indexSha256": "9de897f15c88b564d96bc9f048fd5e4972260a1b936222b6f65b7f54ff5d296f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/scope.md": {
+      "workingSha256": "fd2222a7d1b40e2a629d37affba7d7d253b7a80c7b3671463ed99b53b1a2dbcb",
+      "indexSha256": "fd2222a7d1b40e2a629d37affba7d7d253b7a80c7b3671463ed99b53b1a2dbcb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-after-accept-before-fit-body.txt": {
+      "workingSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "indexSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-final-off-body.txt": {
+      "workingSha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "indexSha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-fitted.jpg": {
+      "workingSha256": "728b2218a70fe257c93e3e445f9670e7f1ed5ebc461b1b77e448e21f9cd59cb1",
+      "indexSha256": "728b2218a70fe257c93e3e445f9670e7f1ed5ebc461b1b77e448e21f9cd59cb1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-menu-settled-body.txt": {
+      "workingSha256": "107d0571200ddb8dbde15d74dcacd4224965dfafb15b4627bb65e32a861bb78c",
+      "indexSha256": "107d0571200ddb8dbde15d74dcacd4224965dfafb15b4627bb65e32a861bb78c",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-original-fail-body.txt": {
+      "workingSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "indexSha256": "f1e1f30c0ef412c22807686a7b630b42e47aefeebf6abdc2b01844d925e9657b",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-original-restored-retest-observed-body.txt": {
+      "workingSha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "indexSha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-public-controls.json": {
+      "workingSha256": "26a4dd9690e0a654c45c53e2415111fc0ae6bbfaf7438d14de85d8c9c2643dc7",
+      "indexSha256": "26a4dd9690e0a654c45c53e2415111fc0ae6bbfaf7438d14de85d8c9c2643dc7",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-public-identity.json": {
+      "workingSha256": "d1efb9dc695eb29496649e0ec3e89b4151aaacbdc5188197a0606ace93cad8c1",
+      "indexSha256": "d1efb9dc695eb29496649e0ec3e89b4151aaacbdc5188197a0606ace93cad8c1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-install-options-body.txt": {
+      "workingSha256": "c8d88b00699955c889b79763c05dd5537ba5d54ee1213de337774d9127eccffa",
+      "indexSha256": "c8d88b00699955c889b79763c05dd5537ba5d54ee1213de337774d9127eccffa",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-lifted-body.txt": {
+      "workingSha256": "a273b8feb94eaa49c476f33c691726dd48d5ec0d0b02ba20e8563e936f508f6f",
+      "indexSha256": "a273b8feb94eaa49c476f33c691726dd48d5ec0d0b02ba20e8563e936f508f6f",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-removed-body.txt": {
+      "workingSha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "indexSha256": "6b2812a4a4cf80f5812d1c0a13a07e381c48c4bd13d08fe43784e8a8d3ea30bb",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-removed-settled-body.txt": {
+      "workingSha256": "a3bc73a5e3830cbd9465daa777f08bc243b1b9129f84d3b50485ee7b0ebe038e",
+      "indexSha256": "a3bc73a5e3830cbd9465daa777f08bc243b1b9129f84d3b50485ee7b0ebe038e",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-restored-off-body.txt": {
+      "workingSha256": "b81348e57603f5af597dcee8778527a4f5fee0aef6051c2d4d8c2b1fea8a2953",
+      "indexSha256": "b81348e57603f5af597dcee8778527a4f5fee0aef6051c2d4d8c2b1fea8a2953",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-selected-body.txt": {
+      "workingSha256": "cfb6c29624c27e7d214f1e24161f16c9e08398c268512479c7875b3f251d0dc8",
+      "indexSha256": "cfb6c29624c27e7d214f1e24161f16c9e08398c268512479c7875b3f251d0dc8",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-service-body.txt": {
+      "workingSha256": "39d689b07bcafd9e0fcfa48c410e39608ea521c139c2c1f4ebcb53ab4e6d0647",
+      "indexSha256": "39d689b07bcafd9e0fcfa48c410e39608ea521c139c2c1f4ebcb53ab4e6d0647",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-service.jpg": {
+      "workingSha256": "d4bb24e42d3a6ff77148b7d834b82e5b08d52efa31dde79c88b409aa3641cab6",
+      "indexSha256": "d4bb24e42d3a6ff77148b7d834b82e5b08d52efa31dde79c88b409aa3641cab6",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r1-tray-body.txt": {
+      "workingSha256": "5eeea701c3c3efce3670bb56c459a3c60d6b259568421259d4b79b6bf3cdd525",
+      "indexSha256": "5eeea701c3c3efce3670bb56c459a3c60d6b259568421259d4b79b6bf3cdd525",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-r5-service-body.txt": {
+      "workingSha256": "26b8c1b1e1b24716b3a8ed75a9d4cbfbfa0d4a752b4d4c9fcbc0b06dd440f53a",
+      "indexSha256": "26b8c1b1e1b24716b3a8ed75a9d4cbfbfa0d4a752b4d4c9fcbc0b06dd440f53a",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-restored-retest-click-body.txt": {
+      "workingSha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "indexSha256": "2652903a3c8c8fc5febeb5e07030336793ce375a38310fab388654bfffb2d0e1",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-share-menu-body.txt": {
+      "workingSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "indexSha256": "28d3ae39e77d694b06926f75740a66e8c9dc84282bae47d747a2f2630271781d",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-ticket-body.txt": {
+      "workingSha256": "888c42f007caad67ce330e4e7cfb290daf8afad856c8ff3db875313d9fa0ff59",
+      "indexSha256": "888c42f007caad67ce330e4e7cfb290daf8afad856c8ff3db875313d9fa0ff59",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/sensor-view-menu-body.txt": {
+      "workingSha256": "0c96d4ad055a6cde08ce1382d75290dab0735c4285a4f46cb133d168a28c55bf",
+      "indexSha256": "0c96d4ad055a6cde08ce1382d75290dab0735c4285a4f46cb133d168a28c55bf",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/static-review.json": {
+      "workingSha256": "1850a7b5fec94e349ad214a1b5593bf51e4ad572ab578c93338c7ba793f400d2",
+      "indexSha256": "1850a7b5fec94e349ad214a1b5593bf51e4ad572ab578c93338c7ba793f400d2",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/stop_player.ps1": {
+      "workingSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "indexSha256": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+      "comparison": "RAW_EXACT"
+    },
+    "docs/task-evidence/PCB/legacy-resistor-references-r1/suites.json": {
+      "workingSha256": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc",
+      "indexSha256": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc",
+      "comparison": "RAW_EXACT"
+    },
+    "src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java": {
+      "workingSha256": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+      "indexSha256": "85aa54ae59273959c65c629976b0eb0abedf6cee57fca0c7949321d7426e3c42",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "src/com/lushprojects/circuitjs1/client/NormalResistorReferences.java": {
+      "workingSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "indexSha256": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+      "comparison": "RAW_EXACT"
+    },
+    "src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java": {
+      "workingSha256": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+      "indexSha256": "65f0659154ebb4c71831e7ab9f1982c7a4d3676b65bae41de8854a43f74900fb",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "src/com/lushprojects/circuitjs1/client/Rb15Plan.java": {
+      "workingSha256": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477",
+      "indexSha256": "e3d1ab6c2715da36a6f0275527b5cd21418cd61820b7a0bcdaf7fc04276b4945",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": {
+      "workingSha256": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+      "indexSha256": "5b0bae0029448b58585a1463ef5edf393e88499eb5766dd9fadec62322e94cd0",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java": {
+      "workingSha256": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+      "indexSha256": "0cc6f3661fc54da86d133594f7c847cebf70c2754dcac253c43ebb2f525b37c8",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    },
+    "tests/contracts/PhysicalServiceabilityContractTest.java": {
+      "workingSha256": "205bb7b8b5665526b68408eee0c5733aa4fb39b82ca26f8e76e234b0f6f52ec7",
+      "indexSha256": "1aad2e48180205e88e0e838ea5be6484dae5b917a630059138fb0bfcb890a38f",
+      "comparison": "CRLF_NORMALIZATION_ONLY"
+    }
+  },
+  "production": "Explicit normal resistor naming only, original reservations/stable IDs and existing adapter captions; no solver/geometry/model/epoch/RNG owner change",
+  "acceptance": "Corrected fixture2115/contracts15/census44/actual GWT5 and actual visible service/measurement/customerPASS; named source-bound assessments PASS",
+  "retainedFailures": "First fixture attempt, helper parser failure, four browser preparation timeouts, initial privacy finding/path-only log sanitation all explicit; no failures relabeled PASS",
+  "reviews": "Read-only Luna MAX production and corrected fixture reviews; fixture-alone variant limitation explicit, census both branches required",
+  "resources": "All16 births exited/current profile/state absent/8907 released; older blocked profiles/private resources and Original5+baseline/cache preserved",
+  "publication": "Normal commit/push and exact remote SHA verification next; no main/email",
+  "nextUnstarted": "First normal New board Protected/Dual/Relay visual sample at exact unchanged build reuse boundary",
+  "limits": "Finite named suites/corpus/replays; no all-seed/new-size/manufacturing/performance/Edge/CDP/FileReader/unrelated-full-matrix claim"
+}

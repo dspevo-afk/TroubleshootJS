@@ -1,0 +1,32 @@
+{
+  "census": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "contracts": [
+    "A02GeometryContractTest",
+    "A03IdentityContractTest",
+    "E03RelayContractTest",
+    "E04SensorControlContractTest",
+    "E05IsolationGeometryContractTest",
+    "U04SessionContractTest",
+    "U06SessionSaveContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "A02ReplayContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "PcbSilkscreenScaleContractTest",
+    "PcbScreenLabelLayoutContractTest",
+    "Rb56ModelIdentityContractTest",
+    "PowerServicePartContractTest",
+    "D01DiagnosticContractTest"
+  ],
+  "fixtures": [
+    "PhysicalServiceabilityContractTest"
+  ]
+}

@@ -306,9 +306,9 @@ final class NmosLowSideSwitchGenerator {
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
         board.addComponent(new BoardComponent("J2", "CONNECTOR",
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
-        board.addComponent(new BoardComponent("RLOAD", "RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RLOAD", "RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RPD", "RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RPD", "RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
         board.addComponent(new BoardComponent("LED1", "LED",
             PhysicalPackages.THROUGH_HOLE_LED));

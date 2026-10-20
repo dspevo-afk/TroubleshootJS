@@ -1,0 +1,96 @@
+[
+  {
+    "label": "Select component",
+    "options": [
+      {
+        "value": "",
+        "label": "Select component"
+      },
+      {
+        "value": "J1",
+        "label": "J1"
+      },
+      {
+        "value": "J2",
+        "label": "J2"
+      },
+      {
+        "value": "LED1",
+        "label": "LED1"
+      },
+      {
+        "value": "Q1",
+        "label": "Q1"
+      },
+      {
+        "value": "RLOAD",
+        "label": "R1"
+      },
+      {
+        "value": "RPD",
+        "label": "R2"
+      }
+    ]
+  },
+  {
+    "label": "Probe terminal",
+    "options": [
+      {
+        "value": "",
+        "label": "Probe terminal"
+      },
+      {
+        "value": "J1.1",
+        "label": "J1 terminal 1"
+      },
+      {
+        "value": "J1.2",
+        "label": "J1 terminal 2"
+      },
+      {
+        "value": "J2.1",
+        "label": "J2 terminal 1"
+      },
+      {
+        "value": "J2.2",
+        "label": "J2 terminal 2"
+      },
+      {
+        "value": "LED1.A",
+        "label": "LED1 terminal A"
+      },
+      {
+        "value": "LED1.K",
+        "label": "LED1 terminal K"
+      },
+      {
+        "value": "Q1.G",
+        "label": "Q1 terminal G"
+      },
+      {
+        "value": "Q1.D",
+        "label": "Q1 terminal D"
+      },
+      {
+        "value": "Q1.S",
+        "label": "Q1 terminal S"
+      },
+      {
+        "value": "RLOAD.1",
+        "label": "R1 terminal 1"
+      },
+      {
+        "value": "RLOAD.2",
+        "label": "R1 terminal 2"
+      },
+      {
+        "value": "RPD.1",
+        "label": "R2 terminal 1"
+      },
+      {
+        "value": "RPD.2",
+        "label": "R2 terminal 2"
+      }
+    ]
+  }
+]

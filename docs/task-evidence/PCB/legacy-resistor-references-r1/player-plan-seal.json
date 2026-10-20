@@ -1,0 +1,13 @@
+{
+  "scope": "Visible normal exact replay plan and wrappers bound to final native candidate before preview/browser launch",
+  "status": "SEALED_BEFORE_PLAYER",
+  "limits": "No execution acceptance implied by this seal",
+  "files": {
+    "player-plan.json": "c7f487bb4a057fd8a06e20522e22271d67d858c7b80e15a18fe1c8c2de30f9bb",
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+    "stop_player.ps1": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+    "record_exit.ps1": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+    "candidate-inputs.json": "cd48a9ab316b6e8aa1d0b7e278d87cbebc0644b4852d6ac07695fd2dc8d3ef7b"
+  },
+  "gates": "fixtures PASS; contracts in progress; census/build/player NOT RUN"
+}

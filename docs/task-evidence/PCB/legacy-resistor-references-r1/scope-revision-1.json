@@ -1,0 +1,22 @@
+{
+  "oldGates": {
+    "scope.md": "12ac7fe48335df48b9e0eb3f8353653e9b3a06bb0de040d10cdd2ad0022f47ef",
+    "inputs.py": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+    "qualify.py": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+    "run_phase.ps1": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+    "suites.json": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc"
+  },
+  "newGates": {
+    "scope.md": "fd2222a7d1b40e2a629d37affba7d7d253b7a80c7b3671463ed99b53b1a2dbcb",
+    "inputs.py": "c5482d46b2d1a0d3d2eb0922e033446c606ad938976f04c02ee4b164b961d526",
+    "qualify.py": "e4eb44b61a661647aeed80a95fca83cb35b2b884efbb0f627fa0c12cad510e04",
+    "run_phase.ps1": "4a2b39139ad47c2649eca556d8560c00b76c466e1ffc3f689f856d46895cc9f1",
+    "suites.json": "bc017f9e9387ff4ee0b9838d90ef42a3d5c1b31e053e1acc19b020e533b5befc"
+  },
+  "revision": 1,
+  "boundary": "Only scope gate re-frozen after explicit fixture correction; all1481 baseline source hashes,24 machinery, accepted seal and baseline evidence unchanged. Original full manifest and gates archived in native-attempt-1.",
+  "cause": "Supporting generic resistor capabilities omitted by new test expectation; no production fix or oracle/budget/suite change.",
+  "status": "FROZEN_BEFORE_RETRY",
+  "originalBaselineManifestSha256": "d04a99827cfab7687c0d9e3c27fca1273688fca6745de3c00cc652ac074c2f1e",
+  "revisedBaselineManifestSha256": "81b0a9d23f1a37dfb54b82796395dbcf1433da09c21955ad855672f1b6103097"
+}

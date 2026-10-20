@@ -1,0 +1,23 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.
+NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.
+NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+SERVICE_COVERAGE LED_INDICATOR parts=3
+SERVICE_COVERAGE DIODE_PROTECTED_INDICATOR parts=4
+SERVICE_COVERAGE PARALLEL_DUAL_INDICATOR parts=5
+SERVICE_COVERAGE RC_DELAY parts=6
+
+Exception in thread "main" java.lang.AssertionError: NPN_LOW_SIDE_SWITCH/RPD retains its primary capability and slot identity
+	at com.lushprojects.circuitjs1.client.PhysicalServiceabilityContractTest.check(PhysicalServiceabilityContractTest.java:339)
+	at com.lushprojects.circuitjs1.client.PhysicalServiceabilityContractTest.verifyNormalResistorReferences(PhysicalServiceabilityContractTest.java:277)
+	at com.lushprojects.circuitjs1.client.PhysicalServiceabilityContractTest.main(PhysicalServiceabilityContractTest.java:14)
+
+CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: PhysicalServiceabilityContractTest, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

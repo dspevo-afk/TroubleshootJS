@@ -407,7 +407,8 @@ final class SensorControlGenerator {
             specification, original, passive.firstLead, passive.secondLead, slot);
         runtime.registerCapability(new ReplaceableResistorBoardCapability(
             "SENSOR_REPLACEABLE_" + componentId, replaceable, inventory,
-            new ResistorReplacementCatalog(), componentId + " service resistor"));
+            new ResistorReplacementCatalog(),
+            runtime.getBoard().getComponent(componentId).getDisplayName() + " service resistor"));
     }
 
     private PassiveBuild createModelPassive(String id,
@@ -458,16 +459,16 @@ final class SensorControlGenerator {
             PhysicalPackages.TO220_REGULATOR_4));
         board.addComponent(new BoardComponent("U2", "SENSOR_CONTROL_DECISION",
             PhysicalPackages.E04_DECISION_CONTROL_5));
-        board.addComponent(new BoardComponent("RBIAS", "SENSOR_SOURCE_RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RBIAS", "SENSOR_SOURCE_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RREF", "REFERENCE_HIGH_RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RREF", "REFERENCE_HIGH_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RFB", "OUTPUT_SERIES_RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RFB", "OUTPUT_SERIES_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RREF_LOW", "REFERENCE_RETURN_RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RREF_LOW", "REFERENCE_RETURN_RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
         if (hasFeedback)
-            board.addComponent(new BoardComponent("RFB_HYST", "HYSTERESIS_FEEDBACK_RESISTOR",
+            board.addComponent(NormalResistorReferences.create(board, "RFB_HYST", "HYSTERESIS_FEEDBACK_RESISTOR",
                 PhysicalPackages.AXIAL_RESISTOR));
         addPad(board, "J1.1", "J1", "1", "RAW_INPUT");
         addPad(board, "J1.2", "J1", "2", "CONTROL_RETURN");

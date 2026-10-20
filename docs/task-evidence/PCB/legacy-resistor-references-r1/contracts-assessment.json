@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "contracts",
+  "elapsedSeconds": 66.4895517,
+  "sources": 1482,
+  "limits": "Named actual final-source phase only; player/publication and root production-diff acceptance separate"
+}

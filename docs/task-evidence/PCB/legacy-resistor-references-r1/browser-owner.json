@@ -1,0 +1,13 @@
+{
+  "limits": "Full paths, spawn arguments and websocket remain private",
+  "startTicks": "639281071455136398",
+  "uniqueProfileInActualCommand": true,
+  "normalizedExecutableExact": true,
+  "pid": 30600,
+  "sandboxEnabled": true,
+  "executable": "brave.exe",
+  "headed": true,
+  "profileName": "playwright_chromiumdev_profile-YWZa1E",
+  "navigation": "NOT_YET",
+  "status": "PASS"
+}

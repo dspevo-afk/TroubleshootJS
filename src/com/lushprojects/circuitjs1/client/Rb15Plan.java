@@ -71,7 +71,9 @@ final class Rb15Plan {
         board.setPlacementConstraints(placement(board)); board.validate(); return board;
     }
     private void declare(TroubleshootBoard board,String id,String type,PhysicalPackage physical,String... nets) {
-        board.addComponent(new BoardComponent(id,type,physical));
+        board.addComponent("RESISTOR".equals(type) ?
+            NormalResistorReferences.create(board,id,type,physical) :
+            new BoardComponent(id,type,physical));
         Vector<String> terminals=physical.getTerminalIds();
         if(terminals.size()!=nets.length) throw new IllegalArgumentException("Manifest terminal count mismatch");
         for(int i=0;i<nets.length;i++) board.addPad(new BoardPad(id+"."+terminals.get(i),id,terminals.get(i),nets[i]));

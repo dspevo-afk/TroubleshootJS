@@ -1,0 +1,16 @@
+{
+  "phase": "contracts",
+  "drivers": [
+    {
+      "startTicks": "639281068349825688",
+      "pid": 31852,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281068356754771",
+      "pid": 25276,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained normal resistor references phase"
+}

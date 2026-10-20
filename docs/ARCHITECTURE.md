@@ -5994,6 +5994,20 @@ already records names and reservation. No model/layout/save epoch changes.
 The separate Rb56 plan is outside this naming change. See
 [multi-rail reference evidence and limits](task-evidence/PCB/multirail-public-references-r1/README.md).
 
+`NormalResistorReferences.create` is an explicit declaration policy for Sensor,
+NMOS, NPN, normal Relay and RB15 resistors. It returns an immutable component
+with the first unused positive R reference among the board's existing public
+names. Membership checks do not depend on map traversal; callers retain sole
+ownership of adding the result. There is no counter, RNG or post-layout rename.
+Original IDs, type, package and ID-length label reservation remain authoritative,
+including the existing constructor's capacity rejection. Generic component
+defaults and predeclared Relay assembly manifests retain their original policy.
+Primary resistor service captions use this same public name; generic supporting
+service completion already does so. Operational component, capability, slot, pad
+and probe identities remain separate from the printed mark. The existing
+dependency fingerprint includes name and reservation; no epoch change is needed.
+See [scope and validation boundary](task-evidence/PCB/legacy-resistor-references-r1/scope.md).
+
 `ChipPinout` also owns the inert first-terminal reference rectangle for its four
 supported packages. It derives this ink from declared terminal0's connected body
 point and the package body; it has no live graph/fault input or commercial pin1

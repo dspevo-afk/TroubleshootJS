@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "textFilesScanned": 178,
+  "scope": "Current packet only: personal home/local-temp paths, raw websocket/profile arguments and bearer-style tokens absent",
+  "retainedInitialFinding": "build.txt absolute link destination caught before staging and redacted only exact known worktree prefix; raw private/hash-bound",
+  "limits": "Root integrated diff/staged byte review remains separate"
+}

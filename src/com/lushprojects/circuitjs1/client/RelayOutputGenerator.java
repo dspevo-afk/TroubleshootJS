@@ -125,7 +125,9 @@ final class RelayOutputGenerator {
             "RDRIVE_REPLACEMENTS", PhysicalResistorPart.class); resistors.add(drivePart);
         ReplaceableComponentSlot driveMutation = new ReplaceableComponentSlot("RDRIVE", driveSpec, drivePart,
             driveAttachments[0], driveAttachments[1], driveSlot);
-        runtime.registerCapability(new ReplaceableResistorBoardCapability(driveMutation, resistors, new ResistorReplacementCatalog()));
+        runtime.registerCapability(new ReplaceableResistorBoardCapability(
+            ReplaceableResistorBoardCapability.ID, driveMutation, resistors,
+            new ResistorReplacementCatalog(), a.board.getComponent("RDRIVE").getDisplayName()));
         runtime.createSlot("RPD").install(new PhysicalResistorPart("RPD_ORIGINAL", pullSpec, pullSpec, pull, null, null,
             ResistorPartLocation.INSTALLED, new PhysicalPartProvenance(PhysicalPartProvenance.FIXED_GENERATED, "RPD")));
         PhysicalNameplate qLabel = new PhysicalNameplate("Q1_ORIGINAL", "Low-side " + driver.getId() + " driver", "Part", driver.getId());
@@ -244,7 +246,9 @@ final class RelayOutputGenerator {
                     if(pad==null || !pad.getNetId().equals(netIds[i])) throw new IllegalArgumentException("Construction terminal disagrees with manifest: "+id);
                 }
             } else {
-                board.addComponent(new BoardComponent(id,type,physical));
+                board.addComponent("RESISTOR".equals(type) ?
+                    NormalResistorReferences.create(board,id,type,physical) :
+                    new BoardComponent(id,type,physical));
                 for(int i=0;i<terminals.length;i++) board.addPad(new BoardPad(id+"."+terminals[i],id,terminals[i],netIds[i]));
             }
         }

@@ -1,0 +1,9 @@
+{
+  "source": "observe-player-host-attempt1.ps1",
+  "scope": "No source/native/build candidate change; actual preview worker and fresh browser remain owned, no navigation yet.",
+  "fix": "Keep the redirection target on the same statement line and re-seal observer before any navigation.",
+  "cause": "PowerShell parse error: redirection target was on a new line without continuation.",
+  "actualExecExitCode": 1,
+  "status": "FAIL_PRE_NAVIGATION",
+  "operation": "Independent player host observer"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS_WITH_FIXTURE_ALONE_LIMITATION",
+  "confirmed": [
+    "Sorted supporting completion skips existing providers and uses default base ID if free, otherwise component suffix.",
+    "NPN supporting RPD retains the base capability ID; primary load/base IDs remain suffixed.",
+    "Complete expected primary and supporting inventories and captions are consistent with current registrations."
+  ],
+  "execution": "NOT RUN by reviewer; root native/census proof separate.",
+  "reviewer": "Luna MAX read-only legacy_reference_review",
+  "directOwnerSha256": "2ab3255ccd45131e6558117e93489ffa6540434da6bad6a2ac406e23dca63cba",
+  "combinedAssessment": "No blocker to combined frozen acceptance: separate actual census44 requires both Sensor feedback and RB15 filter branches; exact fresh Sensor UI root is predeclared for feedback. This classification does not claim reviewer execution.",
+  "findings": [],
+  "limitation": "Existing family loop constructs seed0 (Q30 seed13), so fixture alone exercises only each realized variant; alternate tables are not themselves branch coverage.",
+  "scope": "Corrected insertion-only fixture assertions, complete resistor inventory, literal primary/supporting IDs and public labels; original lines/assertions retained",
+  "fixtureSha256": "205bb7b8b5665526b68408eee0c5733aa4fb39b82ca26f8e76e234b0f6f52ec7"
+}

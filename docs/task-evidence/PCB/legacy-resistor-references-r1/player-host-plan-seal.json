@@ -1,0 +1,14 @@
+{
+  "scope": "Corrected redirection syntax only; original attempted seal/script/failure retained; re-sealed before any browser navigation",
+  "files": {
+    "player-plan.json": "c7f487bb4a057fd8a06e20522e22271d67d858c7b80e15a18fe1c8c2de30f9bb",
+    "player-plan-seal.json": "0c253e6304071189950d278fe62e631a3794af9bd3d8f641bcebc7f85074232f",
+    "launch_player.ps1": "a5d535d6f4a6ac1d16e36800610e7959de2e12fd81ab9055fb501393c8a92095",
+    "stop_player.ps1": "6805a9fa23726c2d09384244798e4c57815fdc2a0b32e4b2d229552171638373",
+    "record_exit.ps1": "8920c1c9b6d9bdce99d7101b26f0526538cf080979eaa89ef052a2b28b5dd2d4",
+    "observe_player_host.ps1": "4907149ff24829745b36f429fc5513b0003998505221653ee0e466a559122e36",
+    "candidate-inputs.json": "cd48a9ab316b6e8aa1d0b7e278d87cbebc0644b4852d6ac07695fd2dc8d3ef7b"
+  },
+  "status": "SEALED_BEFORE_PLAYER",
+  "limits": "No player execution acceptance"
+}

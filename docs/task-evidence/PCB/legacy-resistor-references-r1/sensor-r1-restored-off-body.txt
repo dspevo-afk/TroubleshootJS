@@ -1,0 +1,57 @@
+Reset
+
+TroubleshootJS
+ELECTRONICS WORKBENCH
+ALPHA
+Main menu
+Shop
+Resources
+Settings
+Run customer retest
+
+Customer retest did not pass. Continue troubleshooting.
+
+TSJ MM-90
+DIGITAL MULTIMETER
+HOLD
+RANGE
+MIN/MAX
+LIGHT
+OFF
+V~
+A
+mA
+µA
+CAP
+Hz
+%
+°C/°F
+ADDITIONAL FUNCTIONS: NOT IMPLEMENTED
+10A
+COM
+V Ω
+
+Click a mode, or turn the dial. Left / right click: red / black probe.
+
+DC V
+	
+	
+OHM
+
+
+CONT
+	
+DIODE
+--- V
+Board Power: OFF
+View
+Ticket
+Parts tray
+Parts Tray
+
+
+No loose parts.
+
+
+Hover at the bottom edge for the physical tray. Scroll sideways for more parts.
+▲ PARTS TRAY · 0 parts

@@ -1,0 +1,10 @@
+{
+  "scope": "Only exact known current-worktree absolute prefix in one compiler Linking into line; raw log retained privately, all other bytes unchanged",
+  "replacements": 1,
+  "rawSha256": "5995f4d58bd70ed2f05a20e2a20085bf52a4f10fba2e02e2e49a58eb4c8563cd",
+  "publishedSha256": "0a2052efb66715f2b2b0556529314bc6b1c6c6648d8d91766793cd1344ca5b27",
+  "rawBytes": 1250,
+  "publishedBytes": 1186,
+  "initialPrivacyScan": "FAIL exit1 before staging; detected build.txt absolute prefix; no publication",
+  "nativeExecution": "No rerun; cheap marker/source/receipt reassessment after declared path-only sanitization"
+}

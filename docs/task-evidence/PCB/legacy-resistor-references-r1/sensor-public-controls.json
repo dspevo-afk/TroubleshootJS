@@ -1,0 +1,160 @@
+[
+  {
+    "label": "Select component",
+    "options": [
+      {
+        "value": "",
+        "label": "Select component"
+      },
+      {
+        "value": "J1",
+        "label": "J1"
+      },
+      {
+        "value": "J2",
+        "label": "J2"
+      },
+      {
+        "value": "J3",
+        "label": "J3"
+      },
+      {
+        "value": "RBIAS",
+        "label": "R1"
+      },
+      {
+        "value": "RFB",
+        "label": "R3"
+      },
+      {
+        "value": "RFB_HYST",
+        "label": "R5"
+      },
+      {
+        "value": "RREF",
+        "label": "R2"
+      },
+      {
+        "value": "RREF_LOW",
+        "label": "R4"
+      },
+      {
+        "value": "U1",
+        "label": "U1"
+      },
+      {
+        "value": "U2",
+        "label": "U2"
+      }
+    ]
+  },
+  {
+    "label": "Probe terminal",
+    "options": [
+      {
+        "value": "",
+        "label": "Probe terminal"
+      },
+      {
+        "value": "J1.1",
+        "label": "J1 terminal 1"
+      },
+      {
+        "value": "J1.2",
+        "label": "J1 terminal 2"
+      },
+      {
+        "value": "J2.1",
+        "label": "J2 terminal 1"
+      },
+      {
+        "value": "J2.2",
+        "label": "J2 terminal 2"
+      },
+      {
+        "value": "J3.1",
+        "label": "J3 terminal 1"
+      },
+      {
+        "value": "J3.2",
+        "label": "J3 terminal 2"
+      },
+      {
+        "value": "RBIAS.1",
+        "label": "R1 terminal 1"
+      },
+      {
+        "value": "RBIAS.2",
+        "label": "R1 terminal 2"
+      },
+      {
+        "value": "RFB.1",
+        "label": "R3 terminal 1"
+      },
+      {
+        "value": "RFB.2",
+        "label": "R3 terminal 2"
+      },
+      {
+        "value": "RFB_HYST.1",
+        "label": "R5 terminal 1"
+      },
+      {
+        "value": "RFB_HYST.2",
+        "label": "R5 terminal 2"
+      },
+      {
+        "value": "RREF.1",
+        "label": "R2 terminal 1"
+      },
+      {
+        "value": "RREF.2",
+        "label": "R2 terminal 2"
+      },
+      {
+        "value": "RREF_LOW.1",
+        "label": "R4 terminal 1"
+      },
+      {
+        "value": "RREF_LOW.2",
+        "label": "R4 terminal 2"
+      },
+      {
+        "value": "U1.INPUT",
+        "label": "U1 terminal INPUT"
+      },
+      {
+        "value": "U1.OUTPUT",
+        "label": "U1 terminal OUTPUT"
+      },
+      {
+        "value": "U1.RETURN",
+        "label": "U1 terminal RETURN"
+      },
+      {
+        "value": "U1.ENABLE",
+        "label": "U1 terminal ENABLE"
+      },
+      {
+        "value": "U2.SENSOR",
+        "label": "U2 terminal SENSOR"
+      },
+      {
+        "value": "U2.REFERENCE",
+        "label": "U2 terminal REFERENCE"
+      },
+      {
+        "value": "U2.RAIL",
+        "label": "U2 terminal RAIL"
+      },
+      {
+        "value": "U2.OUTPUT",
+        "label": "U2 terminal OUTPUT"
+      },
+      {
+        "value": "U2.RETURN",
+        "label": "U2 terminal RETURN"
+      }
+    ]
+  }
+]

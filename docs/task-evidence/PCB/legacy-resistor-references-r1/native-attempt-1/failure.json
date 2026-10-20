@@ -1,0 +1,12 @@
+{
+  "operationSeconds": 42.4308372,
+  "maintainedPhaseExitCode": 2,
+  "cause": "New fixture incorrectly treated supporting generic resistor adapters as primary-only adapters; NPN RPD retains existing default capability ID.",
+  "fixPlan": "Assert complete resistor service inventory and explicit primary/supporting capability IDs and public captions; preserve all old assertions and add coverage.",
+  "child": "PhysicalServiceabilityContractTest exit1",
+  "production": "Unchanged",
+  "status": "FAIL_NATIVE",
+  "scopeRevision": "Supporting adapter expectations become explicit before retry; no production, physical oracle, budget or suite change.",
+  "cleanup": "Two recorded driver births exited; maintained scratch cleanup footer present.",
+  "actualExecExitCode": 1
+}

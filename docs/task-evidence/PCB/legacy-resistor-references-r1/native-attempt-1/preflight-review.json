@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "productionFiles": {
+    "src/com/lushprojects/circuitjs1/client/NormalResistorReferences.java": "c10089866b5aeaef102ae6c24778921fd91ded18b98691372edadafb2c9137c5",
+    "src/com/lushprojects/circuitjs1/client/SensorControlGenerator.java": "897e94fa8248623c093136595dd123b278bac9a0cf10bb38634c6a0a87a3e39b",
+    "src/com/lushprojects/circuitjs1/client/NmosLowSideSwitchGenerator.java": "973ff27b16125f51a3f932d398ded7c5c7e8fedcede4a4e5ceb4264c27e0e7ec",
+    "src/com/lushprojects/circuitjs1/client/NpnLowSideSwitchGenerator.java": "9261536f2b97a0621032a86947886b0b6788b6a0f4fc31bbcb13096e1df10fee",
+    "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": "eb7bc338d3969d16fc225b1fb6e0eaa163abe4cb4c04bb6ee3c9b217dd5426f2",
+    "src/com/lushprojects/circuitjs1/client/Rb15Plan.java": "a85f45c318cd6050eacb8569a8aec552d1a56b6818203e8c7fb8f2db75142477"
+  },
+  "fixtureSha256": "c68054ee245131cb3f099ce627a99f07ef943b110255e1b1822ee02494136b9b",
+  "scope": "Integrated production diff and additive fixture/API review before candidate freeze",
+  "confirmed": [
+    "Five recipe declaration owners use explicit factory; generic constructor and predeclared Relay paths unchanged.",
+    "Only presentation names and primary service captions changed; no solver/graph/layout/model/save/RNG owner edited.",
+    "Fixture additions retain all original lines and assertions; use existing APIs and literal public-name/type/package/capability expectations."
+  ],
+  "execution": "NOT RUN",
+  "limits": "Final native/census/build/player gates pending."
+}

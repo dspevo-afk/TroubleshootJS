@@ -1,0 +1,69 @@
+{
+  "status": "PASS_WITH_RETAINED_PREPARATION_FAILURES",
+  "identities": {
+    "sensor": {
+      "replay": "tsj-alpha/6/EASY/SENSOR_CONTROL/-3395796212705839809",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    },
+    "nmos": {
+      "replay": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/-3928309337809318024",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    },
+    "npn": {
+      "replay": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/0",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    },
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 47CB6E7FB2C6397086F05F5DFA2345EB"
+    }
+  },
+  "sourceAndServed": "1482 source/24 machinery/gates and independent compiled/served six fields exact before/after",
+  "publicControls": "Literal stable values retain correct R1-R5/R1-R2/R1-R3 component and terminal labels; Sensor optional R5 service observed",
+  "service": "Sensor original Part6 lead1 lifted/removed/reinstalled, original-restored customerFAIL, finalOFF/tray0; MOSFET original Part1 and NPN primary load Part1/base Part2 removed/reinstalled with Circuit R1/R2 captions, all suppliesOFF/tray0",
+  "repair": "Known LED original Installed customerFAIL, allOFF isolated original physicalOHM/public probes OL, Shop Part4 330Ohm installed, actualOFF330Ohm, exit mode/connect5V/fresh customerPASS modal, finalOFF/tray1",
+  "visual": "Root inspected five raw1280x900 primary JPEGs; three actual board images pasted in chat",
+  "images": {
+    "sensor-fitted.jpg": {
+      "sha256": "728b2218a70fe257c93e3e445f9670e7f1ed5ebc461b1b77e448e21f9cd59cb1",
+      "bytes": 105751
+    },
+    "sensor-r1-service.jpg": {
+      "sha256": "d4bb24e42d3a6ff77148b7d834b82e5b08d52efa31dde79c88b409aa3641cab6",
+      "bytes": 119285
+    },
+    "nmos-fitted.jpg": {
+      "sha256": "5ce3d2c47d5b2f1433265bf3a961c899963db8353595df388ee1ab62d8463723",
+      "bytes": 109149
+    },
+    "npn-r2-service.jpg": {
+      "sha256": "f67438119c88a5eaf99c7ffc08b2ecb9ab4d5b90cb3c2fe933e81c9c339e8d59",
+      "bytes": 126880
+    },
+    "led-customer-passed.jpg": {
+      "sha256": "1bd9351604682780defe0c73ac450f50e159b5aa24fd80603a35937e29f94d47",
+      "bytes": 97773
+    }
+  },
+  "postedInChat": [
+    "sensor-fitted.jpg",
+    "nmos-fitted.jpg",
+    "npn-r2-service.jpg"
+  ],
+  "actions": {
+    "logged": 44,
+    "pass": 43,
+    "failedPreparation": [
+      {
+        "name": "Accept Sensor ticket and fit bench",
+        "status": "FAIL",
+        "elapsedSeconds": 30.081,
+        "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'View', exact: true })\u001b[22m\n"
+      }
+    ],
+    "additionalPreparationFailures": "Three direct browser locator timeouts plus one pre-navigation helper parse failure; all five issues explicit in player-preparation-issues.json"
+  },
+  "console": "459 entries=457 log+2 unattributed resource404; raw private/hash-bound, page/request/observed-response errors0; no clean-console attribution",
+  "cleanup": "All16 recorded births exited, browserAPI0/profile absent, maintained stop1.8229243s, managed state absent/8907 released; older blocked profiles preserved",
+  "limits": "Finite exact replay cases; no all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/new FileReader/full-matrix claim; preserve all failed preparations and timing separately from cleanup"
+}

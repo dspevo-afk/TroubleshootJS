@@ -1,0 +1,9 @@
+{
+  "scope": "Separate root revalidation before normal browser API close; no process termination",
+  "executable": "brave.exe",
+  "birthExecutableProfileExact": true,
+  "profileName": "playwright_chromiumdev_profile-YWZa1E",
+  "pid": 30600,
+  "startTicks": "639281071455136398",
+  "status": "PASS"
+}

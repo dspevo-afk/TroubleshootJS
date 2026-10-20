@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "build",
+  "elapsedSeconds": 92.6292659,
+  "sources": 1482,
+  "limits": "Named actual final-source phase only; player/publication and root production-diff acceptance separate"
+}

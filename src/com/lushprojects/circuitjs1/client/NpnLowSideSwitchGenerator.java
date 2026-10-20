@@ -266,9 +266,9 @@ final class NpnLowSideSwitchGenerator {
         ReplaceableComponentSlot baseComponentSlot = new ReplaceableComponentSlot("RB", baseSpec,
             originalBase, baseResistorLead1, baseResistorLead2, baseSlot);
         runtime.registerCapability(new ReplaceableResistorBoardCapability("REPLACEABLE_RESISTOR_RLOAD",
-            loadComponentSlot, loadInventory, loadCatalog));
+            loadComponentSlot, loadInventory, loadCatalog, board.getComponent("RLOAD").getDisplayName()));
         runtime.registerCapability(new ReplaceableResistorBoardCapability("REPLACEABLE_RESISTOR_RB",
-            baseComponentSlot, baseInventory, baseCatalog));
+            baseComponentSlot, baseInventory, baseCatalog, board.getComponent("RB").getDisplayName()));
 
         PhysicalResistorPart pullDownPart = new PhysicalResistorPart("RPD_ORIGINAL",
             StandardPhysicalDefinitionProviders.RESISTOR.require(specifications, "RPD"),
@@ -398,11 +398,11 @@ final class NpnLowSideSwitchGenerator {
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
         board.addComponent(new BoardComponent("J2", "CONNECTOR",
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
-        board.addComponent(new BoardComponent("RLOAD", "RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RLOAD", "RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RB", "RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RB", "RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
-        board.addComponent(new BoardComponent("RPD", "RESISTOR",
+        board.addComponent(NormalResistorReferences.create(board, "RPD", "RESISTOR",
             PhysicalPackages.AXIAL_RESISTOR));
         board.addComponent(new BoardComponent("LED1", "LED",
             PhysicalPackages.THROUGH_HOLE_LED));

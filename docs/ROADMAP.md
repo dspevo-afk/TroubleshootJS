@@ -7,7 +7,19 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Fresh first-result board review complete; reference scope next**
+**Current task:** **Legacy resistor references accepted; fresh normal-family visual sampling next**
+
+Sensor/NMOS/NPN/normal Relay/RB15 now declare conventional R marks and matching
+primary service captions through an explicit board-local factory. Stable IDs,
+original label reservations and all physical/electrical owners remain. Corrected
+fixture2115, selected contracts15, paired census44 and actual final JDK8/GWT5 pass;
+both Sensor feedback/RB15 filter branches are required in the census. Actual
+four-replay service/probe/measurement/customerFAIL-to-PASS checks pass; five raw
+images inspected, three pasted in chat. Initial fixture failure, observer parse
+failure, preparation timeouts and path-only log sanitation remain explicit.
+All16 births exited, current profile/state absent and port released. No new-size/
+all-seed/manufacturing/full-matrix claim. [Scope, results and limits](task-evidence/PCB/legacy-resistor-references-r1/RESULTS.md).
+
 Shared normal packing2 retains the fully routed incumbent and tests one bounded
 alternative. All44 informed admissions/source graphs remain, nine areas improve
 (up to40.28%) and copper/vias/protected-void never increase. The fresh active11
@@ -1089,7 +1101,7 @@ isolatedOL/Shop330Ohm/measured330Ohm/customerPASS pass. Five primary views inspe
 three posted; all12 births exited/current resources closed. Tooling/preparation
 limits and stale existing feedback retained. No new geometry/target/graph/size/
 epoch/save or full-matrix claim. [Evidence and limitations](task-evidence/PCB/connector-housing-r1/README.md).
-Fresh first-result New board sample complete: Sensor/MOSFET/Timing all admit;
+Published79baf499 fresh first-result New board sample: Sensor/MOSFET/Timing all admit;
 all3 untouched customerFAIL, five inspected raw views/three fresh boards posted,
 all boardsOFF/tray0. Exact1481/24/compiled6 reuse plus served/CLI before/after;
 no new build/native/matrix or size claim. All6 births exited/current resources

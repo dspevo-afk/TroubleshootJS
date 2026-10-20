@@ -1,0 +1,25 @@
+{
+  "privateRuntimeSha256": "b1b5e75964b04ea3de66942e2a1d594323bb7ea2746563a897fcb916079d68af",
+  "bytes": 40837,
+  "consoleEntries": 459,
+  "consoleTypes": {
+    "error": 2,
+    "log": 457
+  },
+  "nonLogEntries": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "errors": {
+    "page": [],
+    "request": [],
+    "response": []
+  },
+  "limits": "Raw console retained privately; unattributed resource404 is not a clean-console claim."
+}

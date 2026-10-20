@@ -1,0 +1,22 @@
+{
+  "scope": "Actual final production player; conventional resistor references and service captions, unchanged service and known repair regression",
+  "candidate": "candidate-inputs.json",
+  "viewport": [1280, 900],
+  "browser": "Established headed sandboxed installed Brave fallback; no Edge/CDP-wrapper claim",
+  "replays": {
+    "sensor": "tsj-alpha/6/EASY/SENSOR_CONTROL/-3395796212705839809",
+    "nmos": "tsj-alpha/6/EASY/NMOS_LOW_SIDE_SWITCH/-3928309337809318024",
+    "npn": "tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/0",
+    "led": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+  },
+  "input": "Normal visible replay, toolbar, native select, mouse and service/shop/retest inputs only; no controller calls, DOM mutation or forced interaction",
+  "checks": [
+    "Sensor fitted R1-R5 as present; public component selector, terminal options and primary R1 service caption agree; allOFF before original lift/remove/reinstall; original-restored FAIL and finalOFF",
+    "MOSFET fitted R1/R2; selectors/probe labels and generic supporting R1 service/install caption agree; both suppliesOFF before leaving",
+    "NPN R1/R2/R3 and primary R1/R2 service/install captions; original customerFAIL and allOFF before leaving",
+    "LED original Installed and customerFAIL; OFF isolated original R1 physicalOHM/public probes OL; Shop330Ohm replacement, actualOFF330Ohm; exit mode and connect5V; await fresh actual customerPASS modal; finalOFF"
+  ],
+  "primaryImages": ["sensor-fitted.jpg", "sensor-r1-service.jpg", "nmos-fitted.jpg", "npn-r2-service.jpg", "led-customer-passed.jpg"],
+  "evidence": "Raw images/body/action log; root visual inspection; exact source1482/machinery24/gates, compiled and served six fields before/after; actual process births, unique profile and normal API/maintained cleanup",
+  "limits": "Finite exact replay cases; no all-seed/new-size/manufacturing/performance/Edge/CDP-wrapper/new FileReader/full-matrix claim; preserve all failed preparations and timing separately from cleanup"
+}

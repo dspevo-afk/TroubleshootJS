@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "fixtures",
+  "elapsedSeconds": 49.1175748,
+  "sources": 1482,
+  "limits": "Named actual final-source phase only; player/publication and root production-diff acceptance separate"
+}

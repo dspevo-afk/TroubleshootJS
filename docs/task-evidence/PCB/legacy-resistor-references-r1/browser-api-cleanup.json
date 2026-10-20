@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "pid": 30600,
+  "actualExitCode": 0,
+  "profileAbsent": true,
+  "elapsedSeconds": 0.114,
+  "method": "Normal context/client/BrowserServer APIs after root birth/executable/profile revalidation; no manual deletion"
+}

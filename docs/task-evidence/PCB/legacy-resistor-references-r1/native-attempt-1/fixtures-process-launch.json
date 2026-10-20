@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 29276,
+      "executable": "pwsh",
+      "startTicks": "639281066359210918"
+    },
+    {
+      "pid": 30096,
+      "executable": "pwsh",
+      "startTicks": "639281066361512045"
+    }
+  ],
+  "scope": "Captured parent/current births before maintained normal resistor references phase",
+  "phase": "fixtures"
+}

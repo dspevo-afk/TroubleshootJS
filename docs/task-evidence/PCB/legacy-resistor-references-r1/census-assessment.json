@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "census",
+  "elapsedSeconds": 70.2883703,
+  "sources": 1482,
+  "limits": "Named actual final-source phase only; player/publication and root production-diff acceptance separate"
+}

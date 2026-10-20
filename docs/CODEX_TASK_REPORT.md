@@ -1,9 +1,71 @@
-# Current checkpoint: fresh first-result boards accepted; publication review
+# Current checkpoint: legacy resistor references accepted; publication pending
+
+2026-10-20 local, q30-multirail-qualification / codex/q60-faulted-profile-counts.
+Accepted candidate based on HEAD/exact origin79baf499dd8c14a1ed5e8aa049611026b2077e22;
+normal commit/push and exact resulting SHA receipt pending this checkpoint.
+Indefinite PCB realism/screenshots/optional leaves; no final, no main/email.
+Original5/private baseline/cache/COPY/pointers and all3 blocked profiles preserved.
+Prior fresh-board sample publication receipt intended in this coherent commit.
+
+legacy-resistor-references-r1: explicit NormalResistorReferences returns immutable
+first-unused positive R marks, board-local/no order/global/RNG/mutation; original
+IDs/type/package/ID-length reservations and capacity guard. Five recipe owners
+Sensor/NMOS/NPN/normal Relay/Rb15Plan; predeclared Relay paths/global defaults/
+nonresistors unchanged. Primary service captions use public names through old
+adapters; selectors/probes/leads/generic support already do. No solver/graph/
+geometry/route/model/layout/save/work/budget change. Architecture updated.
+
+Before-edit1481/24/gates5 and baseline6 archives; final1482/7 archives exact.
+First fixture FAIL42.4308372s actualexec1/phase2: new primary-only adapter
+assumption omitted existing supporting adapters. Complete raw attempted source/
+gates/output/exited births retained native-attempt-1. Explicit revision1 corrects
+new expectations/adds complete service IDs/captions; old assertions/production/
+physical oracles/suites/budgets unchanged. Final fixtures1 PASS2115/49.1175748s,
+contracts15 PASS66.4895517s, census8 PASS70.2883703s, actual JDK8/GWT5 OBF Compile
+PASS92.6292659s. Each actual exec0 before separate root cleanup/receipt/source
+assessment. All44 admit;20 literal name/text/full-ink changes,24 unchanged;
+graph/physical/normalized geometry/label boxes/style/targets/reservations/copper/
+metrics/work/44 full whitespace rows exact except3 existing packing timing fields.
+Both Sensor feedback and RB15 filter branches independently required by census.
+Read-only Luna MAX production+corrected fixture reviews no blockers, no execution;
+fixture alone covers existing realized variants only, census covers alternate
+branches. No saved physical oracle/golden/assertion weakening.
+
+Actual final plain headed sandboxed Brave fallback1280x900, public6/build
+47CB6E7FB2C6397086F05F5DFA2345EB: Sensor-3395796212705839809, MOSFET
+-3928309337809318024, NPN0 and knownLED5577758334702827054. Literal public
+selectors/probes/leads/service/install captions agree, Sensor optionalR5 observed.
+Sensor originalPart6 lift/remove/reinstall and original-restoredFAIL, MOSFET
+originalPart1 and NPN primaryPart1/Part2 remove/reinstall; all endOFF/tray0.
+KnownLED InstalledFAIL/OFFisolatedOL/ShopPart4/actualOFF330Ohm/fresh customerPASS,
+finalOFF/tray1. Five raw primary images inspected, three pasted in chat.
+Exact1482/24/gates and independent compiled/served6 before/after; reader PASS.
+
+Retained helper parse failure before navigation, corrected/re-sealed observer;
+four locator preparation timeouts, no timeout PASS/forced input/substitution.
+44 logged actions43PASS/1failed prep;3 other direct timeouts/helper failure
+separate. Initial pre-staging privacy scan rejected one compiler link-path prefix;
+raw private/hash-bound, exact one-prefix sanitation only, source/marker reassess
+and packet scan PASS. Raw body09 lines preserved via exact per-file attributes.
+Console459=457log+2unattributed404; page/request/observed-response errors0;
+no clean-console attribution. All16 births exited, browserAPI0/current profile
+absent, maintained stop1.8229243s/state absent/8907 released. rr* Node bindings
+persist closed; privatebasename/pointers/logs retained. No task OS resource live.
+
+Next root final integrated/staged/raw/canonical/privacy/diff checks, normal
+commit/push/exact remote SHA and receipt, no main/email. Then unstarted read-only
+first normal New board Protected/Dual/Relay samples at exact unchanged build reuse
+boundary to choose the next evidenced realism scope. No all-seed/new-size/
+manufacturing/performance/Edge/CDP/newFileReader/unrelated-full-matrix claim.
+Continue authorized work.
+
+# Previous checkpoint: fresh first-result boards published; reference scope audit
 
 2026-10-20 local. q30-multirail-qualification / codex/q60-faulted-profile-counts,
-HEAD/exact origin924b4fd2570d289a0575cd810c908a237fcdfe89. Indefinite ordinary PCB
+HEAD/exact verified origin79baf499dd8c14a1ed5e8aa049611026b2077e22;
+Record first fresh PCB visual sample. Normal branch push verified. Indefinite PCB
 realism/screenshots/optional leaves; no final at a milestone, no main/email.
-Connector publication receipt untracked/intended next coherent commit; Original5
+Fresh-sample publication receipt untracked/intended next coherent commit; Original5
 and private baseline/cache/COPY/pointers and all3 policy-blocked profiles preserved.
 
 fresh-board-visual-r2 READ-ONLY: first actual EASY New board Sensor root
@@ -32,8 +94,8 @@ service captions must match. RB30/composed precedent and existing dependency nam
 width fingerprinting identified. Presentation option, no contract defect claimed;
 no edits/tests/build/UI by leaf. Root has NOT selected/implemented next scope.
 
-Next root actual diff/privacy/staged-byte checks and documentation-only normal
-commit/push/exact remote SHA; no main/email. Then inspect necessary declaration/
+Published55 docs-only paths, initial54=52rawexact/2CRLF-only plus final review
+rawexact; final diff/privacy checks pass, no main/email. Next inspect declaration/
 capability/oracle owners and define a bounded conventional-reference scope before
 editing. Continue authorized work. Do not re-run unchanged expensive gates merely
 for this read-only publication; preserve unrelated artifacts/private resources.

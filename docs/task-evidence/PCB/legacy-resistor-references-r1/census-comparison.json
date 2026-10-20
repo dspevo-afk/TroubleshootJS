@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "cases": 44,
+  "changedReferenceCases": [
+    [
+      "NPN_LOW_SIDE_SWITCH",
+      "0"
+    ],
+    [
+      "NPN_LOW_SIDE_SWITCH",
+      "17"
+    ],
+    [
+      "NPN_LOW_SIDE_SWITCH",
+      "13"
+    ],
+    [
+      "NPN_LOW_SIDE_SWITCH",
+      "-9223372036854775808"
+    ],
+    [
+      "NMOS_LOW_SIDE_SWITCH",
+      "0"
+    ],
+    [
+      "NMOS_LOW_SIDE_SWITCH",
+      "17"
+    ],
+    [
+      "NMOS_LOW_SIDE_SWITCH",
+      "13"
+    ],
+    [
+      "NMOS_LOW_SIDE_SWITCH",
+      "-9223372036854775808"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "0"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "17"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "13"
+    ],
+    [
+      "RELAY_OUTPUT",
+      "-9223372036854775808"
+    ],
+    [
+      "SENSOR_CONTROL",
+      "0"
+    ],
+    [
+      "SENSOR_CONTROL",
+      "17"
+    ],
+    [
+      "SENSOR_CONTROL",
+      "13"
+    ],
+    [
+      "SENSOR_CONTROL",
+      "-9223372036854775808"
+    ],
+    [
+      "RB15_CONTROL",
+      "0"
+    ],
+    [
+      "RB15_CONTROL",
+      "17"
+    ],
+    [
+      "RB15_CONTROL",
+      "13"
+    ],
+    [
+      "RB15_CONTROL",
+      "-9223372036854775808"
+    ]
+  ],
+  "unchangedReferenceCases": 24,
+  "whitespaceRowsExact": 44,
+  "baselineContract": {
+    "cases": 44,
+    "changedFamilyCases": 20,
+    "sensorFeedbackBranches": 2,
+    "rb15FilterBranches": 2,
+    "receiptSha256": "f7b0f77136f79093d170279f7910514ed6d5ac8c1740e82d88c703a321ea04e7"
+  },
+  "boundary": "Only literal five-family resistor display names/label texts and dependent full ink hashes; graph, physical fingerprint, normalized geometry, all label boxes/style/targets/reservations, metrics and work exact; only3 existing packing timing fields excluded"
+}

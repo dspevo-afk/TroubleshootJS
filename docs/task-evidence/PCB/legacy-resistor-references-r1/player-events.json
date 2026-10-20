@@ -1,0 +1,223 @@
+[
+  {
+    "name": "Open actual plain final production player",
+    "status": "PASS",
+    "elapsedSeconds": 0.611
+  },
+  {
+    "name": "Prepare exact prior fresh Sensor replay",
+    "status": "PASS",
+    "elapsedSeconds": 0.075
+  },
+  {
+    "name": "Accept Sensor ticket and fit bench",
+    "status": "FAIL",
+    "elapsedSeconds": 30.081,
+    "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'View', exact: true })\u001b[22m\n"
+  },
+  {
+    "name": "Open actual Sensor View control",
+    "status": "PASS",
+    "elapsedSeconds": 0.096
+  },
+  {
+    "name": "Fit Sensor bench using visible legacy control",
+    "status": "PASS",
+    "elapsedSeconds": 0.028
+  },
+  {
+    "name": "Open Sensor share identity through actual Main menu",
+    "status": "PASS",
+    "elapsedSeconds": 0.028
+  },
+  {
+    "name": "Read exact public Sensor replay and resume current board",
+    "status": "PASS",
+    "elapsedSeconds": 0.106
+  },
+  {
+    "name": "Observe original Sensor customer failure",
+    "status": "PASS",
+    "elapsedSeconds": 0.066
+  },
+  {
+    "name": "Sensor powerOFF and select printed R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.082
+  },
+  {
+    "name": "Inspect Sensor primary R1 service caption",
+    "status": "PASS",
+    "elapsedSeconds": 0.064
+  },
+  {
+    "name": "Lift Sensor original R1 lead1 with powerOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.048
+  },
+  {
+    "name": "Remove original Sensor R1 to tray with powerOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.043
+  },
+  {
+    "name": "Open Sensor parts tray after original removal",
+    "status": "PASS",
+    "elapsedSeconds": 0.043
+  },
+  {
+    "name": "Select original Sensor Part6 and inspect public install target",
+    "status": "PASS",
+    "elapsedSeconds": 0.038
+  },
+  {
+    "name": "Reinstall original Sensor Part6 into Circuit R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.04
+  },
+  {
+    "name": "Retest Sensor with original resistor restored",
+    "status": "PASS",
+    "elapsedSeconds": 0.101
+  },
+  {
+    "name": "Leave restored Sensor board powerOFF and tray0",
+    "status": "PASS",
+    "elapsedSeconds": 0.044
+  },
+  {
+    "name": "Open menu for next exact replay",
+    "status": "PASS",
+    "elapsedSeconds": 0.072
+  },
+  {
+    "name": "Prepare exact prior fresh MOSFET board",
+    "status": "PASS",
+    "elapsedSeconds": 0.03
+  },
+  {
+    "name": "Fit MOSFET board and inspect public controls",
+    "status": "PASS",
+    "elapsedSeconds": 0.077
+  },
+  {
+    "name": "Observe untouched MOSFET customer failure",
+    "status": "PASS",
+    "elapsedSeconds": 0.096
+  },
+  {
+    "name": "Disconnect both MOSFET supplies",
+    "status": "PASS",
+    "elapsedSeconds": 0.114
+  },
+  {
+    "name": "Remove MOSFET generic supporting R1 while both suppliesOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.104
+  },
+  {
+    "name": "Restore original MOSFET Part1 to Circuit R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.075
+  },
+  {
+    "name": "Read public MOSFET identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.101
+  },
+  {
+    "name": "Prepare normal NPN seed0",
+    "status": "PASS",
+    "elapsedSeconds": 1.391
+  },
+  {
+    "name": "Observe untouched NPN customerFAIL",
+    "status": "PASS",
+    "elapsedSeconds": 0.065
+  },
+  {
+    "name": "Disconnect both NPN supplies",
+    "status": "PASS",
+    "elapsedSeconds": 0.065
+  },
+  {
+    "name": "Remove NPN original primary R1 while allOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.098
+  },
+  {
+    "name": "Restore NPN original load Part1 to R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.075
+  },
+  {
+    "name": "Remove NPN original primary R2 while allOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.106
+  },
+  {
+    "name": "Restore NPN original base Part2 to R2",
+    "status": "PASS",
+    "elapsedSeconds": 0.075
+  },
+  {
+    "name": "Read public NPN identity",
+    "status": "PASS",
+    "elapsedSeconds": 0.104
+  },
+  {
+    "name": "Prepare known normal LED repair regression",
+    "status": "PASS",
+    "elapsedSeconds": 0.341
+  },
+  {
+    "name": "Observe original LED customerFAIL before service",
+    "status": "PASS",
+    "elapsedSeconds": 0.061
+  },
+  {
+    "name": "Disconnect LED5V before original resistor isolation",
+    "status": "PASS",
+    "elapsedSeconds": 0.029
+  },
+  {
+    "name": "Lift LED original R1 lead1 whileOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.035
+  },
+  {
+    "name": "Select actual physical OHM and probe isolated original LED R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.147
+  },
+  {
+    "name": "Exit OHM and remove isolated original LED R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.175
+  },
+  {
+    "name": "Acquire actual Shop330Ohm replacement",
+    "status": "PASS",
+    "elapsedSeconds": 0.094
+  },
+  {
+    "name": "Install Shop Part4 as LED Circuit R1",
+    "status": "PASS",
+    "elapsedSeconds": 0.071
+  },
+  {
+    "name": "Measure installed replacement330Ohm with powerOFF",
+    "status": "PASS",
+    "elapsedSeconds": 0.139
+  },
+  {
+    "name": "Exit OHM, reconnectLED5V and await fresh customerPASS",
+    "status": "PASS",
+    "elapsedSeconds": 0.245
+  },
+  {
+    "name": "Return repaired LED board and disconnect final5V",
+    "status": "PASS",
+    "elapsedSeconds": 0.14
+  }
+]

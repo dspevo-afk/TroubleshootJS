@@ -1,0 +1,11 @@
+{
+  "source": "Root record of tool outcomes; body/image bytes retained unchanged. These entries do not claim to be raw tool-output bytes.",
+  "issues": [
+    {"operation":"Independent host observer before navigation","result":"FAIL exit1 parse error","cause":"Redirection target on a new line without continuation","resolution":"Original script/seal/failure retained; same-line syntax corrected, parsed and re-sealed before navigation; actual before/after observer executions then exit0"},
+    {"operation":"Accept Sensor ticket and fit bench","result":"Ticket accepted; fit locator timed out30s","cause":"View text differs from the control's accessible role name","resolution":"Read actual visible View span, used normal text click and Fit bench; no board substitution; failed grouped action retained in player-events.json"},
+    {"operation":"Read Sensor identity from board","result":"Share summary locator timed out30s after fitted image was saved","cause":"Share control is in the normal menu, not visible on the board","resolution":"Kept the fitted image; opened Main menu, waited for Resume current board, read actual share fields and resumed same board"},
+    {"operation":"Inspect Main menu button after menu click","result":"Locator evaluate timed out30s","cause":"Menu transition settled asynchronously and navigation button became hidden","resolution":"Read settled body/visible controls, waited for actual Resume current board; retained pre-transition and settled body captures"},
+    {"operation":"Close Component popup after Sensor R1 removal","result":"Component click timed out30s","cause":"Successful removal clears selection and hides Component control","resolution":"Waited for settled tray1, used actual Parts tray control; retained immediate tray0 preparation frame and settled tray1 capture; restored same Part6"}
+  ],
+  "limits":"Four browser preparation timeouts and one pre-navigation helper parse failure; no timeout counted as PASS, no forced input/controller/DOM mutation, no source/generation-budget change. Native fixture failure is separate in native-attempt-1."
+}
