@@ -1,0 +1,11 @@
+{
+  "run": "native-after-oracle",
+  "actualExitCode": 1,
+  "operationSeconds": 47.3910522,
+  "inputsUnchanged": true,
+  "overall": "FAIL at existing immediate converter-service assertion after additional accepted physical-lead meter sample; literal diode suite and Q30 not reached",
+  "cleanup": "PASS actual fixture candidate disposal/overlay-clear, separate from failed check",
+  "rawSha256": "79310f7c30e45f89293585e003b139dc71ac863a8f4292441777cf95c386acd9",
+  "hypothesis": "Real meter excitation left storage requiring decay before service. Not yet attributed by passing decay observation.",
+  "next": "Observe natural solver decay in bounded10ms increments up to1solver-second before unchanged service guard. No clearing/resetting stores or changed thresholds. Preserve failure."
+}

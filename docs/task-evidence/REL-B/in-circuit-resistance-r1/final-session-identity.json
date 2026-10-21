@@ -1,0 +1,17 @@
+{
+  "status": "PASS_EPOCH_RELATED_SESSION_IDENTITY",
+  "actualExitCode": 0,
+  "operationSeconds": 42.6714174,
+  "inputsUnchanged": true,
+  "rawSha256": "88eeb11e350843a2aae9e0c7644b360396aae1c7493160af0ab1fe66ce73fd82",
+  "assertions": 35298,
+  "markers": [
+    "PASS: U06 session save contracts assertions=34988",
+    "PASS: REL-B session identity contracts assertions=191 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false",
+    "PASS: PlayerSessionFingerprintContractTest assertions=119",
+    "PASS: focused current contracts; 3 Java suites. Full matrix and independent oracles NOT RUN."
+  ],
+  "inputsManifestSha256": "61fd2a5b19c5ef3304d66ff1607aa1b57c46d451b9f9c545a11c041e88a0f5f3",
+  "scope": "Current-format parser, bounded history, private replay identities/admission and fingerprint contracts after dependency18 change; no runtime reconstruction/owner-round-trip or advanced save release claim",
+  "cleanup": "Maintained task-owned JVM scratch cleanup and root actual0"
+}

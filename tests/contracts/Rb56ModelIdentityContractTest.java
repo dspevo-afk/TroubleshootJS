@@ -186,7 +186,7 @@ public final class Rb56ModelIdentityContractTest {
     }
 
     private static void existingCanonicalBytes() throws Exception {
-        require("tsj-generation-dependencies-v17".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
+        require("tsj-generation-dependencies-v18".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
             "circuitjs-source-load-model-inputs-no-transient-dump-v6".equals(GenerationDependencyContext.CIRCUIT_DUMP_EPOCH),
             "reference-reservation dependency epoch changes while the CircuitJS model epoch stays exact");
         ResistorElm resistor = own(new ResistorElm(16, 32)); resistor.x2 = 80; resistor.resistance = 100;

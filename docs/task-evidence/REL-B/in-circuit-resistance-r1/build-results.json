@@ -1,0 +1,27 @@
+{
+  "status": "PASS_FINAL_SOURCE_JDK8_GWT",
+  "actualExitCode": 0,
+  "operationSeconds": 91.944739,
+  "inputsUnchanged": true,
+  "rawSha256": "abbfd9f97f01b46d486ee69c3e1066a034373785128fa0935907c3d04851367d",
+  "toolchain": "Temurin1.8.0_502; maintained scripts/build.ps1 -Style OBF -Target Compile",
+  "compileSeconds": 88.592,
+  "linkSeconds": 1.35,
+  "productionInputs": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "950c48f8856e35121354b1f92d15193cf241f273d41b95691837edc1a97361b5",
+    "src/com/lushprojects/circuitjs1/client/Rb56InstrumentAdmissionCapability.java": "ef97a2906250b5ae8d887e0a7181c4ec641c816b26b4bf042df38c791a74b95e",
+    "src/com/lushprojects/circuitjs1/client/InstrumentController.java": "15ab05b8eb4f9183708e4ebf33bb523e465653f5dce50ee7bf6321eddd6d6443",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java": "ec333be97e995aa87bd5a4c384e2380bc6db4b10b35e0d346b4ec1168b990bcf",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementBoundary.java": "ab4a847c2b8104a817f6748088224eb59f82fe4b3fa12fd88b0a60674e322f21",
+    "src/com/lushprojects/circuitjs1/client/ActiveInstrumentAdmissionCapability.java": "3719b8657b0dc688ef728427a99ab786a13961d65358ca224a9fffb97966e3ca",
+    "war/tsj-bench-instruments.css": "cdf8f3b777fa5b036248b95a5aaab02c9e2b7c4b84fe7f00b6c1b2484a172873"
+  },
+  "compiledModules": {
+    "029C055EF6ED95D6EDDC47B070B6506D.cache.js": "80afd6bfc7f662a8ca7ee69f204a66149d898a9b6a3b501e158cfd48a1baa5c1",
+    "3E5442AC19B831969048DBC20784879F.cache.js": "e3bd7c92b488ba25e84f312697c54a228f0363e09033d4d9a0bb33c0a73368fe",
+    "47E4506F1982013E1D0CA8D785736CCE.cache.js": "6c518a3b919ddb0c008683951eb6c3bdcb3788dd98d89ef37beacf85ad386e4b",
+    "A90DF74D927A42ABBEE3962FF09BFF3E.cache.js": "a4b7470ae5deca83c42f43bff1570293ae9949725fe36c8eb524a81c99790df9",
+    "F783C4A6EF68BBCFBEB702BCE7203087.cache.js": "e6c249d226abefe0813900e529fc690f606fe731e99d97302f8395054eda4eb3"
+  },
+  "limits": "Browser/player verification follows; no new generation/population matrix claim"
+}

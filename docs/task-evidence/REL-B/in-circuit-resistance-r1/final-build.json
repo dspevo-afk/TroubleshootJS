@@ -1,0 +1,22 @@
+{
+  "status": "PASS_FINAL_SOURCE_JDK8_GWT",
+  "actualExitCode": 0,
+  "operationSeconds": 88.3170445,
+  "inputsUnchanged": true,
+  "inputCount": 1182,
+  "rawSha256": "c396b931b46b9da340b33a989a7214faf93f0eca9ae0beb73d728c7f96db6dff",
+  "inputManifestSha256": "dc5c9387657f8c80e423f8128632080eeefa9e39ed8fd0e4da00292f2c375371",
+  "toolchain": "Temurin1.8.0_502; maintained scripts/build.ps1 -Style OBF -Target Compile",
+  "compileSeconds": 84.905,
+  "linkSeconds": 1.409,
+  "dependencyInterpretation": 18,
+  "dumpFormat": 6,
+  "compiledModules": {
+    "3921BBA67F125ADC1DBCE835A938D49A.cache.js": "dfa665c4c2e64c6de258c0e20979d44d62db8e0697356d317054767fe92988b8",
+    "5A9086F1A3BF52F91CCECC2BBF8AB087.cache.js": "214d985e4b66fb5332ed19920788e3c5183655a823d5068d37f3bdaa5984041c",
+    "695BB5F488D3D06B8046EAE4641721C3.cache.js": "3fdb3dfac901d5b04aab5d5f2ac0cbf6e42818caa86372647224bd1a5a261d2c",
+    "A44559503687534EBDF6EC61233CA394.cache.js": "0311dd680ac62b38a7001bb43bd5d49e2fc1fa3e581b97e486a1879fdb446c1d",
+    "CDF7FCF8BF6DF3186A871FE587AD8FD6.cache.js": "b1d0d2bae272b4bb479d45f6bc06267da6a6a5c5001db5816f021d69c1030915"
+  },
+  "limits": "Fresh player verification follows; no full generation/population matrix claim"
+}

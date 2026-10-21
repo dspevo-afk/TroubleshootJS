@@ -309,6 +309,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56TemporalWorkContractTest' -or
         $Suite -contains 'Rb56DependencyCaptureContractTest' -or
         $Suite -contains 'Rb56InstrumentAdmissionContractTest' -or
+        $Suite -contains 'InCircuitResistanceContractTest' -or
+        $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
@@ -326,6 +328,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56TemporalWorkContractTest' -or
         $Suite -contains 'Rb56DependencyCaptureContractTest' -or
         $Suite -contains 'Rb56InstrumentAdmissionContractTest' -or
+        $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
@@ -491,6 +494,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Rb56TemporalWorkContractTest'; Marker = 'RB56 temporal work contracts ' },
         @{ Name = 'Rb56DependencyCaptureContractTest'; Marker = 'RB56 dependency capture contracts ' },
         @{ Name = 'Rb56InstrumentAdmissionContractTest'; Marker = 'RB56 instrument admission contracts ' },
+        @{ Name = 'InCircuitResistanceContractTest'; Marker = 'in-circuit resistance contracts ' },
+        @{ Name = 'Rb56InCircuitReverseContractTest'; Marker = 'RB56 in-circuit reverse resistance assertions=' },
         @{ Name = 'Rb56GeometryContractTest'; Marker = 'RB56 geometry contracts ' },
         @{ Name = 'E05PowerContractTest'; Marker = 'E05 power contracts ' },
         @{ Name = 'E05IsolationGeometryContractTest'; Marker = 'E05 isolation geometry contracts ' },

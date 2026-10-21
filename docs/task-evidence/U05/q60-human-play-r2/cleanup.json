@@ -1,0 +1,12 @@
+{
+  "status": "PASS_TASK_CLEANUP",
+  "stopActualExitCode": 0,
+  "stopSeconds": 2.7815858,
+  "previewPort": 8898,
+  "recordedPid": 16892,
+  "recordedStartTicks": "639281499737043182",
+  "tabClosed": true,
+  "privateView": "Already expired; ordinary predecessor UI observed. No private verifier export read and no inferred human result.",
+  "userSteering": "Proceed with in-circuit resistance next; attempt interrupted by reported instrument limitation",
+  "priorBlockedProfiles": "Five untouched, no retry"
+}

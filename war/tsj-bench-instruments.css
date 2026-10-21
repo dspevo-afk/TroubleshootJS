@@ -34,6 +34,10 @@ body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-display {
   padding: 13px 8px; border: 5px solid #30292e; border-radius: 7px; background: #b9c7a3; color: #213025;
   box-shadow: inset 2px 3px 0 #778971; text-align: right; font: bold 24px/1.1 Consolas, monospace;
 }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-display[data-compact-reading="true"] {
+  padding-top: 6px; padding-bottom: 6px; font-size: 14px; line-height: 1.2;
+  overflow-wrap: anywhere;
+}
 body.tsj-workbench-ui .tsj-bench-meter .tsj-scope-trace {
   position: absolute; z-index: 3; top: 55px; left: 17px; width: 198px; height: 60px;
   box-sizing: border-box; border: 5px solid #30292e; border-radius: 7px; background: #0e171b;

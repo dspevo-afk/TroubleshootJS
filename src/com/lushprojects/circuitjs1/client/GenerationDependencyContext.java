@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    // E02's regulation/current-limit law and E04's mapped control topology
-    // change the meaning of an otherwise similar serial proof value.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v17";
+    // E02's bounded bipolar disabled-output leakage changes the accepted
+    // operating envelope even though its serialized declaration is unchanged.
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v18";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v6";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";

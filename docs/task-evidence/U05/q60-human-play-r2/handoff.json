@@ -1,5 +1,5 @@
 {
-  "status": "READY_WORKBENCH_HANDED_TO_OWNER",
+  "status": "USER_REDIRECTED_TO_IN_CIRCUIT_RESISTANCE_TASK_CLEANED",
   "candidateSource": "39cd281c55f15f50d1732eab7ffa243a02654e23",
   "compiledBuild": "13808B6577D799A49A34CCFD1D18738D",
   "seed": "-1004",
@@ -13,8 +13,8 @@
   "previewStartActualExitCode": 0,
   "humanOutcome": "NOT YET REPORTED",
   "automatedDiagnosis": "NONE",
-  "resourceDisposition": "Intentional preview/tab handoff for user play; exact owned cleanup after attempt. Original full ownership retained privately.",
+  "resourceDisposition": "Private view already expired and restored predecessor; exact tab closed/preview8898stop0. See cleanup.json.",
   "priorProfiles": "Five blocked profiles untouched",
-  "firstReadyObservation": "WORKBENCH, private banner, normal controls; screenshot inspected. Opens directly through adoptQualification; no agent accept/measurement/repair/retest actions.",
+  "firstReadyObservation": "WORKBENCH first observed; no ticket acceptance was observed by the agent. Later source and fresh UI confirm adoptQualification starts at TICKET. The earlier direct-workbench inference was incorrect. No agent acceptance/measurement/repair/retest before this handoff.",
   "recordedUtc": "2026-10-21T03:28:44.4921171Z"
 }

@@ -51,20 +51,35 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
 
     public ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
             ProbeTarget blackProbe) {
+        return getActiveMeasurementReadiness(redProbe, blackProbe, null);
+    }
+
+    public ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
+            ProbeTarget blackProbe, InstrumentMode mode) {
         CircuitPostMeasurementEndpoint[] endpoints = endpoints(redProbe, blackProbe);
         if (endpoints == null)
             return ActiveMeasurementReadiness.POWER_OFF;
         if (!boardPowerController.isElectricallyUnpowered())
             return ActiveMeasurementReadiness.POWER_OFF;
-        return sim.getActiveMeasurementReadiness(endpoints[0], endpoints[1]);
+        return sim.getActiveMeasurementReadiness(endpoints[0], endpoints[1], mode);
     }
 
     public boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe) {
         return getActiveMeasurementReadiness(redProbe, blackProbe).isReady();
     }
 
+    public boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe,
+            InstrumentMode mode) {
+        return getActiveMeasurementReadiness(redProbe, blackProbe, mode).isReady();
+    }
+
     public double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        if (!isActiveMeasurementAllowed(redProbe, blackProbe))
+        return measureResistance(redProbe, blackProbe, null);
+    }
+
+    public double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe,
+            InstrumentMode mode) {
+        if (!isActiveMeasurementAllowed(redProbe, blackProbe, mode))
             return Double.NaN;
         ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
         try {
@@ -75,14 +90,19 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
                 return Double.NaN;
             return sim.measureResistance(
                 (CircuitPostMeasurementEndpoint) session.getRedEndpoint(),
-                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint());
+                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint(), mode);
         } finally {
             session.close();
         }
     }
 
     public DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        if (!isActiveMeasurementAllowed(redProbe, blackProbe))
+        return measureDiode(redProbe, blackProbe, null);
+    }
+
+    public DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe,
+            InstrumentMode mode) {
+        if (!isActiveMeasurementAllowed(redProbe, blackProbe, mode))
             return null;
         ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
         try {

@@ -736,6 +736,9 @@ class InstrumentController {
             }
         }
         readingLabel.setText(text);
+        String displayed = readingLabel.getText();
+        readingLabel.getElement().setAttribute("data-compact-reading",
+            Boolean.toString(displayed != null && displayed.length() > 12));
     }
 
     ProbeTarget getRedProbeForStrategy() {
@@ -845,15 +848,18 @@ class InstrumentController {
 
     ActiveMeasurementReadiness getActiveMeasurementReadinessForStrategy(ProbeTarget red,
             ProbeTarget black) {
-        return measurementAdapter.getActiveMeasurementReadiness(red, black);
+        return measurementAdapter.getActiveMeasurementReadiness(red, black,
+            activeStrategy == null ? null : activeStrategy.getMode());
     }
 
     double measureResistanceForStrategy(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.measureResistance(red, black);
+        return measurementAdapter.measureResistance(red, black,
+            activeStrategy == null ? null : activeStrategy.getMode());
     }
 
     DiodeMeasurementResult measureDiodeForStrategy(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.measureDiode(red, black);
+        return measurementAdapter.measureDiode(red, black,
+            activeStrategy == null ? null : activeStrategy.getMode());
     }
 
     boolean isMeasurementAllowedForStrategy(InstrumentModeStrategy strategy,
@@ -863,7 +869,7 @@ class InstrumentController {
         if (!sim.isChallengeInteractionEnabled())
             return false;
         if (strategy.getPowerPolicy() == InstrumentPowerPolicy.UNPOWERED_ONLY)
-            return measurementAdapter.isActiveMeasurementAllowed(red, black);
+            return measurementAdapter.isActiveMeasurementAllowed(red, black, strategy.getMode());
         if (strategy.getPowerPolicy() == InstrumentPowerPolicy.POWERED_ONLY)
             return !sim.getBoardPowerController().isElectricallyUnpowered();
         return true;

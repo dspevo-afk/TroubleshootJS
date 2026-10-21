@@ -463,7 +463,11 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         if (enableVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
                 !changed(lastTarget, target))
             throw new IllegalArgumentException("Negative E02 enable source is unsupported");
-        if (outputVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
+        // The disabled output law is the existing symmetric 1 Mohm leakage
+        // path to RETURN. A reversed passive stimulus is dissipated by that
+        // path; it does not turn an unpowered regulator into a supply.
+        // Active regulation still excludes a persistent negative output.
+        if (target > 0.0 && outputVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
                 !changed(lastTarget, target) && !boundedTrial)
             throw new IllegalArgumentException("Negative E02 rail output is unsupported:" +
                 " input=" + inputVoltage + " rawOutput=" + getOutputVoltage() +
@@ -477,9 +481,10 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         // topology changes may therefore move it outside the *regulated*
         // band without the regulator sourcing energy.  The conservative
         // absolute terminal ceiling is the contract's declared maximum input
-        // voltage; above that common device envelope the operating point is
+        // voltage, applied in both polarities to the disabled output. Outside
+        // that common device envelope the operating point is
         // rejected.  Reverse current remains independently leakage-bounded.
-        if (outputVoltage > contract.getMaximumInputVolts() +
+        if ((target > 0.0 ? outputVoltage : Math.abs(outputVoltage)) > contract.getMaximumInputVolts() +
                 UNSUPPORTED_VOLTAGE_TOLERANCE &&
                 !changed(lastTarget, target) &&
                 !releasingCurrentLimit(target) && !boundedTrial)

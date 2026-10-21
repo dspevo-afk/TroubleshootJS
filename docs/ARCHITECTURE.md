@@ -1265,7 +1265,13 @@ The shared regulator limits Newton trial-drop movement to 0.5 V on every
 branch, including forward current limiting after an enable-path repair. This
 convergence bound leaves the operating-point law and voltage envelope intact;
 persistent unsupported voltages still fail validation. The model interpretation
-is recorded by circuit-dump dependency epoch v6.
+is recorded by circuit-dump dependency epoch v6. Interpretation epoch v18
+also admits the existing passive 1 Mohm disabled-output leakage in either
+polarity, bounded by the declared maximum-input voltage magnitude. Independent
+load-line and power checks cover reversed passive stimulus: the output absorbs
+energy and draws none from INPUT. This static model envelope does not claim a
+real device reverse-voltage rating or a protection diode. Active negative output
+and either off-state polarity beyond the absolute envelope remain unsupported.
 
 `SensorControlGenerator` composes one selected 5 V E02 role with a finite raw
 input, sensor source, reference divider and loaded decision output. Even seeds
@@ -2081,6 +2087,25 @@ another refresh, preventing an analyze/measure loop. Invalid probes are cleared
 as part of invalidation and show the mode-specific OHM placeholder. A power
 request during an active measurement is queued until the temporary overlay is
 removed and the normal solver state is restored.
+
+RB56 instrument admission now receives the registered `InstrumentMode` identity
+through `InstrumentController`, `CircuitMeasurementAdapter` and the actual `CirSim`
+resistance entry point. Exact `RESISTANCE` can measure exposed board pads and
+supported installed-part leads with proven current mappings and an admitted common
+reference. A physical lead maps through its current slot/terminal/connection binding
+and must still be connected; lifting it cannot silently alias it to PCB copper.
+Exposed board pads remain copper targets even when a part is absent. Unknown or
+cross-domain references and opaque converter terminals remain refused. The runtime
+power/residual API remains separate; continuity, diode and mode-unspecified queries
+retain their conservative admission. There is no nominal-value resistance shortcut.
+
+The existing1V/1k temporary source solves the entire connected graph, so parallel
+paths and nonlinear/polarity behavior affect the apparent resistance. Its finite
+sampling interval is not a global DC-equilibrium guarantee for arbitrary stored
+energy. Meter excitation can leave real energy requiring natural decay before
+service; cleanup never resets stores. The display adapter marks readings longer
+than12 characters for compact LCD typography, restoring normal type on shorter
+values. It changes presentation only.
 
 Every player-visible U02 DMM voltage result, DC and AC alike, uses a temporary
 passive `$10 MOhm$` `ResistorElm` between the red and black probe endpoints.

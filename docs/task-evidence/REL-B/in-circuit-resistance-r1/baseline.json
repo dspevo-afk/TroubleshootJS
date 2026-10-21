@@ -1,0 +1,20 @@
+{
+  "baseCommit": "2dd99e8dfc60ab53ead1f964c09617e4a7b94f3b",
+  "inputs": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "85f22ad5470f3ad4353bb01f09d7e4d89a7b95b8e21643fb572664544a99ee1a",
+    "src/com/lushprojects/circuitjs1/client/ResistanceInstrumentMode.java": "a34c053617615e9eb46523319ae33f6e5a7b5d25da771ccfdf8d76193d60df35",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java": "9447abff31bcb2b7ceb3a859813eb5884a86fb3c793209c1ba61540fd6750424",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementBoundary.java": "feb0fd46a0a1a7f8a4de50297a9ee5b5c9ca0cc318c1df77429f93bcc9a2a3b3",
+    "src/com/lushprojects/circuitjs1/client/InstrumentController.java": "e4b851b918ef263777badd47121ea7d2bd32dd221d1ba7e8290eb474bd705475",
+    "src/com/lushprojects/circuitjs1/client/Rb56InstrumentAdmissionCapability.java": "c18e9fc3a619d4cb0818aea8913b76883b9ca8e2dc126c3257009ca18df0f1dc",
+    "src/com/lushprojects/circuitjs1/client/ActiveInstrumentAdmissionCapability.java": "7686ad3bfcc9b9e64b35c76cccd457b1b6774a2200d7bfae3e11c1836c574705",
+    "src/com/lushprojects/circuitjs1/client/ResistanceMeasurementStimulus.java": "5e228b52a63d9c82927fad8389192504bf00cacbb9c7fb01848ea5e93ef26bf8",
+    "src/com/lushprojects/circuitjs1/client/PhysicalBoardRuntime.java": "1e356c185a7e198eca9f001f4787fa681c98d9970b54dc5947ce92195e58e977",
+    "src/com/lushprojects/circuitjs1/client/StoredEnergyMeasurementReadinessCapability.java": "d836204237923f1fdaaa449b70d6ce510f659538827d2d4d4f47cce1b7e951dd",
+    "src/com/lushprojects/circuitjs1/client/PowerDomainRuntimeCapability.java": "dc5d7527525c7c5085deb7e4add02c6a20aec894293aaa30c2fa5f8827600da2"
+  },
+  "productionCompiledStrongname": "13808B6577D799A49A34CCFD1D18738D",
+  "unrelated": "Seven original groups untouched",
+  "profiles": "Five blocked prior profiles untouched",
+  "priorTaskCleanup": "human-r2/cleanup.json actual stop0; view already expired/tabclosed"
+}

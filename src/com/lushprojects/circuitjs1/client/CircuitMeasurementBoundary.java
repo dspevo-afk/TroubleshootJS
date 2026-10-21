@@ -12,7 +12,14 @@ interface CircuitMeasurementBoundary {
     void stopObservingDifferentialVoltage(SolverTimeObservationService.Subscription samples);
     ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
         ProbeTarget blackProbe);
+    ActiveMeasurementReadiness getActiveMeasurementReadiness(ProbeTarget redProbe,
+        ProbeTarget blackProbe, InstrumentMode mode);
     boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe);
+    boolean isActiveMeasurementAllowed(ProbeTarget redProbe, ProbeTarget blackProbe,
+        InstrumentMode mode);
     double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe);
+    double measureResistance(ProbeTarget redProbe, ProbeTarget blackProbe, InstrumentMode mode);
     DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe);
+    DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe,
+        InstrumentMode mode);
 }

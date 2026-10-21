@@ -1,0 +1,13 @@
+{
+  "status": "PASS_VISIBLE_APPLICATION_RESTORATION",
+  "privateViewEnded": true,
+  "predecessor": "Ordinary led seed3 board with J1/LED1/R1 restored; no measurement lock",
+  "repairedPredecessorPoweredOff": true,
+  "lastExceptionObservation": {
+    "cursor": 5229,
+    "events": [],
+    "hasMore": false,
+    "truncated": false
+  },
+  "limits": "Scoped exception buffer; truncated history is not global absence proof. Actual visible reversal and restoration observations are recorded separately."
+}

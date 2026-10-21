@@ -1,0 +1,55 @@
+{
+  "status": "PASS_RB56_PLAYER_INPUT",
+  "build": "5A9086F1A3BF52F91CCECC2BBF8AB087",
+  "dependencyEpoch": 18,
+  "seed": "-1004",
+  "tab": "19",
+  "port": 8912,
+  "actions": [
+    "Customer ticket observed and accepted",
+    "OHM: redRREF_L.1 blackRREF_L.2 while powered -> POWER OFF",
+    "Board Power OFF -> DISCHARGE; natural decay -> installed network reading",
+    "Move red toRREF_L.2 -> same-post zero",
+    "Move black toRREF_L.1 -> reversed reading",
+    "CONT and DIODE on installed part -> full isolation message",
+    "Select active DIODE again -> off/---V",
+    "OHM reentry -> numeric reading"
+  ],
+  "forward": {
+    "clientHeight": 50,
+    "compact": "false",
+    "fontSize": "24px",
+    "scrollHeight": 50,
+    "text": "5.194 kOhm"
+  },
+  "samePost": "0 Ohm",
+  "reverse": {
+    "clientHeight": 50,
+    "compact": "false",
+    "fontSize": "24px",
+    "scrollHeight": 50,
+    "text": "5.194 kOhm"
+  },
+  "reverseExceptions": {
+    "cursor": 4675,
+    "events": [],
+    "hasMore": false,
+    "truncated": false
+  },
+  "compact": {
+    "clientHeight": 50,
+    "compact": "true",
+    "fontSize": "14px",
+    "scrollHeight": 50,
+    "text": "ISOLATE COMPONENT"
+  },
+  "diodeText": "ISOLATE COMPONENT",
+  "reentry": {
+    "clientHeight": 50,
+    "compact": "false",
+    "fontSize": "24px",
+    "scrollHeight": 50,
+    "text": "5.194 kOhm"
+  },
+  "limits": "Real visible input; read-only DOM and scoped exception observation. No controller injection, inferred human outcome, full population or arbitrary DC-equilibrium claim. Repair/retest and view exit follow separately."
+}

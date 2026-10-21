@@ -1,0 +1,7 @@
+{
+  "status": "PASS_SERVED_CSS_EQUALS_DISK",
+  "httpStatus": 200,
+  "localSha256": "cdf8f3b777fa5b036248b95a5aaab02c9e2b7c4b84fe7f00b6c1b2484a172873",
+  "servedSha256": "cdf8f3b777fa5b036248b95a5aaab02c9e2b7c4b84fe7f00b6c1b2484a172873",
+  "port": 8912
+}

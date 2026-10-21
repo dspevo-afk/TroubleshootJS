@@ -1,0 +1,12 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 2.3179561,
+  "pid": 15384,
+  "startTicks": "639281530946958880",
+  "port": 8912,
+  "tabClosed": true,
+  "applicationCleanup": "PASS; visible predecessor restoration and later boardOFF observed",
+  "stateAbsent": true,
+  "portAbsent": true,
+  "priorProfiles": "Five blocked profiles untouched"
+}

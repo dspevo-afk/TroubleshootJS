@@ -1,0 +1,66 @@
+{
+  "status": "MODEL_CANARY_PASS_AFTER_PRESERVED_FAILURES",
+  "runs": [
+    {
+      "phase": "reverse-before-model-fix",
+      "actualExitCode": 1,
+      "operationSeconds": 44.1997502,
+      "inputsUnchanged": true,
+      "rawSha256": "790a827a8809ae65a46891e56c8dc860d40a56962d28c79f2d0d03a1ec96fa72",
+      "markers": [
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"FORWARD_RESISTANCE\",\"pads\":\"RREF_L.1,RREF_L.2\",\"readiness\":\"READY\",\"ohms\":9065.382856099066,\"timeBefore\":13.840000000011509,\"timeAfter\":14.590000000013092,\"timeStep\":4.0E-4,\"cleanup\":true}",
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"SAME_POST_INTERMEDIATE\",\"pads\":\"RREF_L.2,RREF_L.2\",\"readiness\":\"READY\",\"ohms\":0.0,\"timeBefore\":14.590000000013092,\"timeAfter\":15.340000000014674,\"timeStep\":4.0E-4,\"cleanup\":true}",
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"REVERSED_RESISTANCE\",\"pads\":\"RREF_L.2,RREF_L.1\",\"readiness\":\"WAITING\",\"ohms\":null,\"failureType\":\"java.lang.IllegalArgumentException\",\"failureMessage\":\"Negative E02 rail output is unsupported: input=6.601178843402833E-4 rawOutput=-0.032018391538436775 evaluationOutput=-0.032018391538436775 enable=6.535820637031398E-4 target=0.0 lastTarget=0.0 lastOutputDrop=4.138182851942673E-15 boundedTrial=false time=15.340000000014674 timeStep=4.0E-4 subIteration=1\",\"timeBefore\":15.340000000014674,\"timeAfter\":15.340000000014674,\"timeStep\":4.0E-4,\"subIteration\":0,\"cleanup\":false,\"boardOff\":true}",
+        "RB56_REVERSE_PROBE_CLEANUP {\"phase\":\"REVERSED_RESISTANCE\",\"clean\":false}",
+        "Exception in thread \"main\" java.lang.AssertionError: reversing the real in-circuit OHM probes must not trigger an E02 solver failure: java.lang.IllegalArgumentException: Negative E02 rail output is unsupported: input=6.601178843402833E-4 rawOutput=-0.032018391538436775 evaluationOutput=-0.032018391538436775 enable=6.535820637031398E-4 target=0.0 lastTarget=0.0 lastOutputDrop=4.138182851942673E-15 boundedTrial=false time=15.340000000014674 timeStep=4.0E-4 subIteration=1"
+      ]
+    },
+    {
+      "phase": "reverse-after-model-fix",
+      "actualExitCode": 1,
+      "operationSeconds": 40.4438879,
+      "inputsUnchanged": true,
+      "rawSha256": "ca3a9aa11a946494cc6c7d8915102f2079f91c07b6b8d1a837761cb0998f7d66",
+      "markers": [
+        "Exception in thread \"main\" java.lang.AssertionError: regulator pads have declared outward escapes"
+      ]
+    },
+    {
+      "phase": "reverse-after-geometry-oracle",
+      "actualExitCode": 1,
+      "operationSeconds": 40.6512352,
+      "inputsUnchanged": true,
+      "rawSha256": "28f8c1d4880f5e53393c60f303f0d321b8561caa6fb5cd135de8db8af107b4e6",
+      "markers": [
+        "Exception in thread \"main\" java.lang.AssertionError: disabled negative output beyond the absolute envelope remains rejected"
+      ]
+    },
+    {
+      "phase": "reverse-envelope-diagnostic",
+      "actualExitCode": 1,
+      "operationSeconds": 40.3477332,
+      "inputsUnchanged": true,
+      "rawSha256": "e0a76ef7b4086edfcfb373cb5f6c475148285c751c898017a6efaed83c19dcb9",
+      "markers": [
+        "Exception in thread \"main\" java.lang.AssertionError: disabled negative output beyond the absolute envelope remains rejected; refusal=E02 source voltage must be 0-24 V"
+      ]
+    },
+    {
+      "phase": "reverse-valid-envelope-source",
+      "actualExitCode": 0,
+      "operationSeconds": 44.3428167,
+      "inputsUnchanged": true,
+      "rawSha256": "0d9ff7349130a59610836456c1b0f70e58db2feba58120167808679900d3f7cb",
+      "markers": [
+        "PASS: E02 regulator contracts 1477 assertions",
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"FORWARD_RESISTANCE\",\"pads\":\"RREF_L.1,RREF_L.2\",\"readiness\":\"READY\",\"ohms\":9065.382856099066,\"timeBefore\":13.840000000011509,\"timeAfter\":14.590000000013092,\"timeStep\":4.0E-4,\"cleanup\":true}",
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"SAME_POST_INTERMEDIATE\",\"pads\":\"RREF_L.2,RREF_L.2\",\"readiness\":\"READY\",\"ohms\":0.0,\"timeBefore\":14.590000000013092,\"timeAfter\":15.340000000014674,\"timeStep\":4.0E-4,\"cleanup\":true}",
+        "RB56_REVERSE_PROBE_STEP {\"seed\":\"-1004\",\"phase\":\"REVERSED_RESISTANCE\",\"pads\":\"RREF_L.2,RREF_L.1\",\"readiness\":\"READY\",\"ohms\":7039.406777701184,\"failureType\":\"\",\"failureMessage\":\"\",\"timeBefore\":15.340000000014674,\"timeAfter\":16.090000000015856,\"timeStep\":4.0E-4,\"subIteration\":2,\"cleanup\":true,\"boardOff\":true}",
+        "RB56_REVERSE_PROBE_CLEANUP {\"phase\":\"REVERSED_RESISTANCE\",\"clean\":true}",
+        "PASS: RB56 in-circuit reverse resistance assertions=76 seed=-1004 cadenceSeconds=0.25 scope=DEVELOPER_NATIVE_REPRODUCTION_ONLY",
+        "PASS: focused current contracts; 2 Java suites. Full matrix and independent oracles NOT RUN."
+      ]
+    }
+  ],
+  "limitations": "Healthy resolved -1004 topology, not faulted browser board; production run cadence remains a separate UI gate. Final affected native/GWT/UI pending."
+}

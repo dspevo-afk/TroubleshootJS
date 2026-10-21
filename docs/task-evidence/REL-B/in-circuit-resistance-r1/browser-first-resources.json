@@ -1,0 +1,11 @@
+{
+  "status": "PASS_PROCESS_RESOURCE_CLEANUP_ONLY",
+  "actualStopExitCode": 0,
+  "operationSeconds": 2.6508797,
+  "pid": 28940,
+  "startTicks": "639281518373097885",
+  "port": 8912,
+  "tabClosed": true,
+  "applicationMeasurementCleanup": "FAIL/locked; End view did not visibly restore predecessor. Tab destroyed; no application cleanup PASS inferred.",
+  "profileScope": "IAB task context closed; five earlier blocked profiles untouched"
+}

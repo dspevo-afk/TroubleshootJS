@@ -1,0 +1,11 @@
+{
+  "run": "native-first",
+  "actualExitCode": 1,
+  "operationSeconds": 49.8920931,
+  "inputsUnchanged": true,
+  "rb56": "PASS264; 2 installed reference networks, same-net zero, 2 actual injected failures, prior42/20 converter orientation census",
+  "overall": "FAIL in literal diode fixture before Q30 suite",
+  "cause": "Incorrect test assumption that every reverse diode must exceed10Mohm. Selected default model declares saturation1.7143528192808883e-7A, implying about5.83Mohm at1V, within range.",
+  "repair": "Pin exact declared default model and independently solve Shockley/load-line by bisection in both polarities. Preserve failed raw log/hash; no production model/threshold adjustment.",
+  "rawSha256": "4b2b0bf3bd23d8de4e36e90a42e80ebec75adc40a1ee5d2867d0f12e40c90faa"
+}

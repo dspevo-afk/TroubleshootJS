@@ -6,6 +6,7 @@ import java.util.Vector;
 final class Rb56InstrumentAdmissionCapability implements ActiveInstrumentAdmissionCapability,
         MeasurementReferenceCapability, PhysicalBoardInstallationProvider {
     static final String ID = "RB56_INSTRUMENT_ADMISSION@1";
+    private static final String RESISTANCE_MODE_ID = "RESISTANCE";
     private final PhysicalBoardRuntime runtime;
     private final TroubleshootBoard board;
     private CirSim sim;
@@ -36,19 +37,98 @@ final class Rb56InstrumentAdmissionCapability implements ActiveInstrumentAdmissi
             !runtime.isMutationInProgress() && !runtime.isMutationQuarantined();
     }
     public ActiveMeasurementReadiness getActiveInstrumentAdmission(CircuitPostMeasurementEndpoint red,
-            CircuitPostMeasurementEndpoint black) {
+            CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
         if (!currentOwner()) return ActiveMeasurementReadiness.UNKNOWN;
         try {
             Terminal r = terminal(red), b = terminal(black);
             if (touchesConverter(red) || touchesConverter(black) ||
                     r != null && !supported(r.part) || b != null && !supported(b.part))
                 return ActiveMeasurementReadiness.UNSUPPORTED;
+            if (isResistanceMode(mode)) {
+                if (touchesInstalledConverterPad(red) || touchesInstalledConverterPad(black))
+                    return ActiveMeasurementReadiness.UNSUPPORTED;
+                return admitResistance(red, black, r, b);
+            }
             if (r == null || b == null || r.part != b.part || r.index == b.index ||
                     r.part.isInstalled() || r.part.getBoardSlot() != null)
                 return ActiveMeasurementReadiness.ISOLATE_COMPONENT;
             if (!validPart(r.part)) return ActiveMeasurementReadiness.UNKNOWN;
             return isolated(r.part) ? ActiveMeasurementReadiness.READY : ActiveMeasurementReadiness.ISOLATE_COMPONENT;
         } catch (RuntimeException invalidOwner) { return ActiveMeasurementReadiness.UNKNOWN; }
+    }
+
+    private static boolean isResistanceMode(InstrumentMode mode) {
+        return mode != null && RESISTANCE_MODE_ID.equals(mode.getId());
+    }
+
+    private boolean touchesInstalledConverterPad(CircuitPostMeasurementEndpoint endpoint) {
+        if (endpoint == null) return false;
+        for (String padId : board.getPadIds()) {
+            if (!same(board.getSimulationBindings().getEndpoint(padId), endpoint)) continue;
+            BoardPad pad = board.getPad(padId);
+            PhysicalBoardSlot slot = pad == null ? null : runtime.getSlot(pad.getComponentId());
+            if (slot != null && slot.getInstalledPart() instanceof PhysicalConverterPart) return true;
+        }
+        return false;
+    }
+
+    private ActiveMeasurementReadiness admitResistance(CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, Terminal r, Terminal b) {
+        if (r != null && b != null && r.part == b.part && r.index != b.index &&
+                !r.part.isInstalled() && r.part.getBoardSlot() == null) {
+            if (!validPart(r.part)) return ActiveMeasurementReadiness.UNKNOWN;
+            return isolated(r.part) ? ActiveMeasurementReadiness.READY :
+                ActiveMeasurementReadiness.ISOLATE_COMPONENT;
+        }
+
+        String redNet = boardNetForResistanceEndpoint(red, r);
+        String blackNet = boardNetForResistanceEndpoint(black, b);
+        if (redNet == null || blackNet == null) return ActiveMeasurementReadiness.UNKNOWN;
+        PhysicalBoardRuntimeCapability capability =
+            runtime.getCapability(PowerDomainRuntimeCapability.CAPABILITY_ID);
+        if (!(capability instanceof PowerDomainContractProvider))
+            return ActiveMeasurementReadiness.UNKNOWN;
+        PowerDomainContract contract = ((PowerDomainContractProvider)capability).getContract();
+        MeasurementReferencePolicy.Result reference = MeasurementReferencePolicy.check(contract,
+            MeasurementReferencePolicy.Mode.DIFFERENTIAL, redNet, blackNet, null);
+        if (reference.getDecision() == MeasurementReferencePolicy.Decision.ADMITTED)
+            return ActiveMeasurementReadiness.READY;
+        if (reference.getDecision() == MeasurementReferencePolicy.Decision.REJECTED)
+            return ActiveMeasurementReadiness.ISOLATE_COMPONENT;
+        return ActiveMeasurementReadiness.UNKNOWN;
+    }
+
+    /** Resolves installed leads only through their live, connected board pad binding. */
+    private String boardNetForResistanceEndpoint(CircuitPostMeasurementEndpoint endpoint,
+            Terminal terminal) {
+        if (!validEndpoint(endpoint)) return null;
+        if (terminal == null)
+            return board.getSimulationBindings().getNetIdForEndpoint(endpoint);
+        PhysicalPart<?> part = terminal.part;
+        if (!supported(part) || !part.isInstalled() || !validPart(part)) return null;
+        PhysicalBoardSlot slot = part.getBoardSlot();
+        if (slot == null || slot.getRuntime() != runtime ||
+                runtime.getSlot(slot.getComponentId()) != slot || slot.getInstalledPart() != part)
+            return null;
+        String terminalName = part.getTerminal(terminal.index).getTerminalName();
+        Vector<String> terminalIds = slot.getTerminalIds();
+        Vector<String> padIds = slot.getPadIds();
+        int slotIndex = terminalIds.indexOf(terminalName);
+        if (slotIndex < 0 || slotIndex >= padIds.size()) return null;
+        String padId = padIds.get(slotIndex);
+        BoardPad pad = board.getPad(padId);
+        if (pad == null || !slot.getComponentId().equals(pad.getComponentId()) ||
+                !terminalName.equals(pad.getTerminalId()) ||
+                !modifications.isLeadConnected(slot.getComponentId(), padId)) return null;
+        GeneratedComponentConnectionBinding binding =
+            owner.getConnectionBindings().get(slot.getComponentId(), padId);
+        if (binding == null || !same(binding.getComponentEndpoint(), endpoint) ||
+                !(binding.getBoardEndpoint() instanceof CircuitPostMeasurementEndpoint)) return null;
+        CircuitPostMeasurementEndpoint boardEndpoint =
+            (CircuitPostMeasurementEndpoint)binding.getBoardEndpoint();
+        if (!validEndpoint(boardEndpoint)) return null;
+        String netId = board.getSimulationBindings().getNetIdForEndpoint(boardEndpoint);
+        return netId != null && netId.equals(pad.getNetId()) ? netId : null;
     }
 
     /** Existing simple loose-part families only; neither generic parts nor opaque controllers are blessed. */

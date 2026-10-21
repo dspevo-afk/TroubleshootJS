@@ -6545,8 +6545,13 @@ MouseOutHandler, MouseWheelHandler {
 
     double measureResistance(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
-	if (!boardPowerController.isElectricallyUnpowered() ||
-		!getActiveMeasurementReadiness(red, black).isReady() ||
+	return measureResistance(red, black, null);
+    }
+
+    double measureResistance(CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
+	if (red == null || black == null || !boardPowerController.isElectricallyUnpowered() ||
+		!getActiveMeasurementReadiness(red, black, mode).isReady() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return Double.NaN;
 	final CircuitPostMeasurementEndpoint redEndpoint = red;
@@ -6732,6 +6737,12 @@ MouseOutHandler, MouseWheelHandler {
 
     ActiveMeasurementReadiness getActiveMeasurementReadiness(
 	    CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+	// An unspecified instrument retains the conservative common admission policy.
+	return getActiveMeasurementReadiness(red, black, null);
+    }
+
+    ActiveMeasurementReadiness getActiveMeasurementReadiness(
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
 	if (!isGeneratedRuntimeSettled())
 	    return ActiveMeasurementReadiness.WAITING;
 	if (generatedBoardInstance == null)
@@ -6744,7 +6755,7 @@ MouseOutHandler, MouseWheelHandler {
         for (PhysicalBoardRuntimeCapability capability : runtime.getCapabilities())
             if (capability instanceof ActiveInstrumentAdmissionCapability)
                 result = ActiveMeasurementReadiness.combine(result,
-                    ((ActiveInstrumentAdmissionCapability)capability).getActiveInstrumentAdmission(red, black));
+                    ((ActiveInstrumentAdmissionCapability)capability).getActiveInstrumentAdmission(red, black, mode));
         return result;
     }
 

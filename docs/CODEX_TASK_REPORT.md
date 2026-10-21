@@ -1,4 +1,50 @@
-# Current checkpoint: advanced human workbench handed to owner
+# Current checkpoint: in-circuit resistance accepted
+
+Accepted change set on base2dd99e8dfc60ab53ead1f964c09617e4a7b94f3b, same q30
+worktree/codex/q60-faulted-profile-counts. Normal branch publication is the final
+step. No main/email; size work closed. Seven unrelated groups/FIVE previously
+blocked browser profiles preserved, no profile access or cleanup retries.
+
+Ω now uses the existing live CircuitJS1V/1k transaction for mapped board pads and
+connected supported installed leads in an admitted reference domain. Parallel
+paths/nonlinear polarity affect readings; no nameplate shortcut. Power/residual/
+current-owner/mutation boundaries and opaque-converter refusal remain; CONT/
+DIODE/modeless retain prior scope. Full isolation message fits the LCD.
+
+Initial native failures and production reversal cleanup failure remain recorded.
+Adaptive healthy seed-1004 replay reproduced the same -32mV E02 disabled-output
+exception after a successful same-post read. The existing passive1M output law
+now admits either polarity within its explicit absolute envelope; active-negative
+and excessive-voltage refusals remain. No stores reset or readings clamped.
+Interpretation18/dump6. Independent +/- load-line/input-energy/loss/removal checks
+pass; fixed-step samples alone are not sufficient. Stale50-unit geometry and
+invalid30V source oracles corrected with history/actual18V-vs12V boundary proof.
+
+Final focused native0/100.787s, ten suites/4,277 assertions; scratch cleanup PASS.
+Epoch-related parser/identity/fingerprint supplement0/42.671s, three suites/
+35,298 assertions; no owner-round-trip or advanced save enablement claim.
+Final actual JDK8/GWT0/88.317s, five permutations,1,182 source/build inputs unchanged.
+Production5A9086F1.../alpha6/dependency18/placement15: real ticket/POWER OFF/
+DISCHARGE/natural installed5.194kOhm, same-post0, reverse5.194kOhm with no exception,
+CONT/DIODE full message14px, active-mode exit, Ω reentry numeric24px. Normal power
+control works; unrepaired RB56 customer retest FAIL and actual End view restores
+LED predecessor. That12V predecessor rejects attempted330Ohm repair and passes
+marking-matched1k replacement. Agent software checks are not human/RB56 repair proof.
+Four final and three failed-candidate captures inspected, all retained separately.
+Root integrated review; optional source-only mode/model reviews have bounded scope.
+[Acceptance, failures, commands and limits](task-evidence/REL-B/in-circuit-resistance-r1/README.md).
+
+Final tab19closed, predecessorOFF; exact PID15384/birth/8912 stop0/2.318s, port/state
+absent. Start wrapper actual0 includes preview lifetime and is not startup latency.
+No current task preview/tab/native/build remains live. First failed application's
+cleanup stays FAIL; its process cleanup alone passed. Earlier human tab17/8898
+also cleaned. Old direct-workbench inference corrected: qualification starts at
+TICKET, timer at adoption/publication; prior ticket acceptance was not observed.
+
+Next unstarted: fresh owner play feedback/U05 and remaining REL-B/HARD prerequisites.
+Normal advanced admission/population/public advanced saves stay held; Q100 unstarted.
+
+# Previous checkpoint: advanced human workbench handed to owner
 
 First actual human feedback: meter appeared stuck on ISOLATE COMPONENT. Ω mode,
 powerOFF observed; root's one actual DC V click clears immediately to0V. Existing

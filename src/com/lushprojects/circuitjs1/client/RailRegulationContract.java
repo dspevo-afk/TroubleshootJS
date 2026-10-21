@@ -12,6 +12,11 @@ import java.util.List;
  * depending on whether its electrical owner is the linear or averaged model.
  * An averaged model never advertises a switching frequency or waveform through
  * this contract.</p>
+ *
+ * <p>The disabled output is modeled as a passive 1 Mohm leakage path to
+ * RETURN in either polarity, bounded by the magnitude of maximumInputVolts.
+ * This is a declared static model envelope, not a device reverse-voltage or
+ * protection-diode specification. Active negative output remains unsupported.</p>
  */
 final class RailRegulationContract {
     static final int VERSION = 2;

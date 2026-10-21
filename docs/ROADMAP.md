@@ -7,7 +7,23 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **REL-B public problem-report software checks complete; human play next**
+**Current task:** **In-circuit resistance software accepted**
+
+Ω now measures the real connected RB56 network, including parallel paths, through
+the existing CircuitJS source/transaction. Installed supported leads and proven
+same-reference copper targets are admitted after power isolation and natural
+residual decay; unsupported/reference boundaries remain explicit. A real reversed-
+probe failure led to the bounded passive E02 model correction and adaptive replay.
+Final ten native suites/4,277 assertions, actual final-source five-permutation GWT,
+real production reversal/mode/restoration and ordinary repair/retest pass. Failures
+and evidence limits are preserved. [Acceptance](task-evidence/REL-B/in-circuit-resistance-r1/README.md).
+
+Next: a fresh owner play attempt/U05 feedback and remaining REL-B/HARD prerequisites.
+The earlier human attempt supplied meter confusion and was interrupted; no human
+repair outcome or HARD calibration is inferred. PCB-size work stays closed;
+normal advanced admission/population/public advanced saves stay held; Q100 unstarted.
+
+Previous completed independent report step:
 
 The normal Share disclosure now composes a bounded local problem report from public
 replay/epoch/build/screen and player-entered symptoms, expectations and steps. Final

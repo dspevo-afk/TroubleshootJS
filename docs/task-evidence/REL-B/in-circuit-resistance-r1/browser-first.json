@@ -1,0 +1,24 @@
+{
+  "status": "FAIL_REVERSE_PROBE_CLEANUP",
+  "build": "029C055EF6ED95D6EDDC47B070B6506D",
+  "seed": "-1004",
+  "tab": "18",
+  "port": 8912,
+  "observations": [
+    "Fresh customer ticket observed and accepted through real UI",
+    "OHM RREF_L.1 red / RREF_L.2 black, powered: POWER OFF",
+    "Board power off: DISCHARGE",
+    "Automatically recovered to 5.194 kOhm; component still installed; tray0",
+    "Swap batch: red→RREF_L.2, then black→RREF_L.1; cleanup lock observed; exact failing click within batch not yet attributed"
+  ],
+  "initialReading": {
+    "clientHeight": 50,
+    "compact": "false",
+    "fontSize": "24px",
+    "scrollHeight": 50,
+    "text": "5.194 kOhm"
+  },
+  "error": "Exception caught: Negative E02 rail output is unsupported: input=6.062294820585734e-7 rawOutput=-0.032018391537605884 evaluationOutput=-0.032018391537605884 enable=6.00227210489912e-7 target=0 lastTarget=0 lastOutputDrop=4.774724723672491e-18 boundedTrial=false time=10.829705000005156 timeStep=0.0004 subIteration=1",
+  "diagnostics": "Read-only CUA/CDP exception event/properties; no controller calls or application mutation",
+  "limits": "No reversed reading, same-net UI, conservative-mode compact UI or repair/retest PASS claimed"
+}

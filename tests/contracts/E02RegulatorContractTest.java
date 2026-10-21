@@ -185,6 +185,8 @@ public final class E02RegulatorContractTest {
     }
 
     private static void verifyUnsupportedOperatingRegions() {
+        verifyDisabledBipolarStimulus(false, RailRegulationContract.linear5V());
+        verifyDisabledBipolarStimulus(true, RailRegulationContract.averagedSwitching5V());
         reject(new Runnable() { public void run() {
             new E02FiniteSourceElm(0, 0, -1.0, 1.0);
         }});
@@ -247,20 +249,81 @@ public final class E02RegulatorContractTest {
             topologyHarness.close();
         }
 
-        Harness harness = new Harness(false, contract);
+        // Use a 12 V device ceiling and an admissible 18 V finite source;
+        // a 30 V source would fail its own constructor before testing E02.
+        RailRegulationContract voltageBoundary = voltageBoundaryContract(false);
+        Harness harness = new Harness(false, voltageBoundary);
         boolean backfeedRejected = false;
         try {
             connectOutputSource(harness,
-                contract.getMaximumInputVolts() + 6.0, .1);
+                voltageBoundary.getMaximumInputVolts() + 6.0, .1);
             harness.sim.analyzeCircuit();
             harness.sim.solverExecutor.advanceSteps(8);
         } catch (IllegalArgumentException expected) {
-            backfeedRejected = true;
+            backfeedRejected = expected.getMessage().contains("backfeed voltage");
         } finally {
             harness.close();
         }
         check(backfeedRejected,
                 "output backfeed above the declared absolute device envelope is rejected");
+    }
+
+    private static void verifyDisabledBipolarStimulus(boolean averaged,
+            RailRegulationContract contract) {
+        for (int polarity : new int[] { 1, -1 }) {
+            Harness harness = new Harness(averaged, contract);
+            try {
+                harness.fixture.input.setVoltage(0);
+                harness.fixture.enable.setVoltage(0);
+                harness.fixture.load.setResistance(1000);
+                int originalSize = harness.fixture.elements.size();
+                E02FiniteSourceElm probe = connectOutputSource(harness, 1.0, 1000);
+                if (polarity < 0) probe.setPosition(probe.x2, probe.y2, probe.x, probe.y);
+                harness.analyzeAndSettle();
+                AbstractRailRegulatorElm regulator = harness.fixture.regulator;
+                // Independent KCL: 1 V / 1 kohm source feeding the actual 1 kohm
+                // load in parallel with the declared passive 1 Mohm output.
+                double expectedVoltage = polarity / (1 + 1000 * (.001 + .000001));
+                double output = regulator.getOutputVoltage();
+                near(output, expectedVoltage, 1e-7, "disabled bipolar load-line voltage");
+                near(regulator.getOutputCurrent(), -output * .000001, 1e-10,
+                    "disabled output follows its passive 1 Mohm law in either polarity");
+                near(regulator.getInputPowerWatts(), 0, 1e-12,
+                    "disabled bipolar output draws no input energy");
+                near(regulator.getPowerLossWatts(), output * output * .000001, 1e-10,
+                    "disabled bipolar branch only dissipates injected power");
+                check(Math.abs(output) < contract.getMaximumInputVolts(),
+                    "accepted disabled output is inside the declared absolute envelope");
+                while (harness.fixture.elements.size() > originalSize)
+                    harness.fixture.elements.remove(harness.fixture.elements.size() - 1).delete();
+                harness.analyzeAndSettle();
+                near(regulator.getOutputVoltage(), 0, 1e-9,
+                    "removing the real passive stimulus restores the unpowered output");
+            } finally { harness.close(); }
+        }
+        boolean rejected = false;
+        String refusal = "none";
+        RailRegulationContract voltageBoundary = voltageBoundaryContract(averaged);
+        Harness harness = new Harness(averaged, voltageBoundary);
+        try {
+            harness.fixture.input.setVoltage(0);
+            harness.fixture.enable.setVoltage(0);
+            E02FiniteSourceElm probe = connectOutputSource(harness,
+                voltageBoundary.getMaximumInputVolts() + 6, .1);
+            probe.setPosition(probe.x2, probe.y2, probe.x, probe.y);
+            harness.analyzeAndSettle();
+        } catch (IllegalArgumentException expected) {
+            refusal = expected.getMessage();
+            rejected = expected.getMessage().contains("backfeed voltage");
+        } finally { harness.close(); }
+        check(rejected, "disabled negative output beyond the absolute envelope remains rejected; refusal=" + refusal);
+    }
+
+    private static RailRegulationContract voltageBoundaryContract(boolean averaged) {
+        return new RailRegulationContract("passive-output-voltage-boundary",
+            "INPUT", "OUTPUT", "RETURN", "ENABLE", 5, 5.8, 12, .8, .2, .1,
+            .8, 2, averaged ? .003 : .001, averaged ? .90 : 1.0,
+            averaged, false, .90, .25);
     }
 
     private static void verifyForwardLimitTopologyTrials(boolean averaged,
@@ -403,8 +466,11 @@ public final class E02RegulatorContractTest {
                     "regulator pad geometry is deterministic");
             check(terminal.getAttachment() == PcbTerminalAttachment.PLATED_THROUGH_HOLE,
                     "regulator pads are plated through holes");
+            // Published Q60 geometry (a2fc74b2) clears the courtyard ending
+            // at y=205: from pad y=150 the first free 10-unit grid point is
+            // y=210, requiring a 60-unit escape rather than the old 50.
             check(terminal.getEscapeDx() == 0 && terminal.getEscapeDy() == 1 &&
-                    terminal.getEscapeLength() == 50,
+                    terminal.getEscapeLength() == 60,
                     "regulator pads have declared outward escapes");
         }
         check(!physical.isInternallyConnected("INPUT", "RETURN") &&

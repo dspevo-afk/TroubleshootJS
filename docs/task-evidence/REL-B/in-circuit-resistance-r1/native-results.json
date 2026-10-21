@@ -1,0 +1,32 @@
+{
+  "status": "PASS_FOCUSED_NATIVE",
+  "actualExitCode": 0,
+  "operationSeconds": 79.8930844,
+  "inputsUnchanged": true,
+  "suites": {
+    "Rb56InstrumentAdmissionContractTest": 272,
+    "Q30PowerReadinessContractTest": 144,
+    "InCircuitResistanceContractTest": 30
+  },
+  "nativeInputs": {
+    "src/com/lushprojects/circuitjs1/client/CirSim.java": "950c48f8856e35121354b1f92d15193cf241f273d41b95691837edc1a97361b5",
+    "src/com/lushprojects/circuitjs1/client/Rb56InstrumentAdmissionCapability.java": "ef97a2906250b5ae8d887e0a7181c4ec641c816b26b4bf042df38c791a74b95e",
+    "src/com/lushprojects/circuitjs1/client/InstrumentController.java": "15ab05b8eb4f9183708e4ebf33bb523e465653f5dce50ee7bf6321eddd6d6443",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementAdapter.java": "ec333be97e995aa87bd5a4c384e2380bc6db4b10b35e0d346b4ec1168b990bcf",
+    "src/com/lushprojects/circuitjs1/client/CircuitMeasurementBoundary.java": "ab4a847c2b8104a817f6748088224eb59f82fe4b3fa12fd88b0a60674e322f21",
+    "src/com/lushprojects/circuitjs1/client/ActiveInstrumentAdmissionCapability.java": "3719b8657b0dc688ef728427a99ab786a13961d65358ca224a9fffb97966e3ca",
+    "tests/contracts/Rb56InstrumentAdmissionContractTest.java": "1cf0482798c5f7b9929be571719d4f4163bc9d4b77ae19af77ef8305c3150e0d",
+    "tests/contracts/InCircuitResistanceContractTest.java": "04bb2b4eb3b21475968565c028a31ef8fdd9395706f34f4161894a44fc677b5e",
+    "scripts/verify-current-contracts.ps1": "1ea20dafab4a4b9757bcc5eba93ce8f243ac8876f9cf8d1c35c623b0db9a379b"
+  },
+  "rawSha256": "491d7562b08e5eb850ecb94ff0b88632825d74ef3f333a0fc1cce886f94aea01",
+  "diodeOracle": {
+    "reverseActual": 5832105.022431761,
+    "reverseExpected": 5832105.022438012,
+    "forwardActual": 725.2389072149874,
+    "forwardExpected": 725.2389072149874
+  },
+  "cooldown": "Actual unchanged service guard recovered after0.01solver-second natural decay. No storage reset, source repower or threshold change.",
+  "limits": "Three selected native suites, not full generation/population matrix; literal arithmetic oracles are test-only islands, RB56 physical admission proved separately; real GWT/UI pending",
+  "priorFailures": "Both actual failed gates retained in separate JSON and private raw logs"
+}
