@@ -1,0 +1,29 @@
+--- common/SparseNormalBoardDiagnostic.java
++++ variant/common/SparseNormalBoardDiagnostic.java
+@@ -16,6 +16,26 @@
+ 
+     public static void main(String[] args) {
+         Request request = parseArguments(args);
++        if ("RELAY_OUTPUT".equals(request.family)) {
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(0L) ==
++                    2926452371699457122L,
++                "optional routing seed vector 0 matches frozen reference");
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(1L) ==
++                    -1259826540137006295L,
++                "optional routing seed vector 1 matches frozen reference");
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(-1L) ==
++                    1145332496697143667L,
++                "optional routing seed vector -1 matches frozen reference");
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(Long.MIN_VALUE) ==
++                    721378348590188007L,
++                "optional routing seed vector LONG_MIN matches frozen reference");
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(Long.MAX_VALUE) ==
++                    426595435461648541L,
++                "optional routing seed vector LONG_MAX matches frozen reference");
++            check(SeededPcbLayoutGenerator.optionalPackingRoutingSeed(
++                    3078526323410797175L) == -7609816130686485171L,
++                "optional routing seed actual SOURCE value matches frozen reference");
++        }
+         CirSim prior = CircuitElm.sim;
+         CirSim sim = new CirSim();
+         sim.elmList = new Vector<CircuitElm>();

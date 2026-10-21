@@ -1,0 +1,65 @@
+{
+  "status": "PREPARED_FIXED_OPTIONAL_P05_STREAM",
+  "baseCommit": "be7098819b3bdba15012a7f8d6869645bca0ca58",
+  "baselineSealSha256": "c68bdf6bb5b4dce06ff4cd47b52f71574806473dffa95aa3de31d32bc0d4843c",
+  "request": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+  "candidateInterpretation": "PRIVATE_OPTIONAL_P05_STREAM@1;NOT_PRODUCTION_MODEL",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "66da7f7c97039304d0b28bf6fea406d12139c159a17e446dc000aa0d5c02a03f",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "variant/SeededPcbLayoutGenerator.java": "6b4b79e87542f220a0c80ee29a05d48e78b6fe11da5a6933a6b29764dc275641",
+    "variant/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "variant/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "controlPrivateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "ef3744673dee4fd537b8b44a57174cb3d6f2ec48f655ba8438750836368f1a5d",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "derivationVectorsSha256": "efa2c7625b5ca9727ea1e6905127e09c7ebf35ca995ae5ac5bd0b0ae0a28db18",
+  "changes": [
+    {
+      "owner": "exporter",
+      "label": "assert_optional_routing_seed_vectors",
+      "replacements": 1,
+      "oldSha256": "0ec4a20cf657d0a3d471e7c7a3c377014db6ae742ffdd3a8f05ede1f77a98de4",
+      "newSha256": "a85fc7903fe22c84fbf3706f4b7510b83902827246f3fa84f521ec96a9d0b576"
+    },
+    {
+      "owner": "generator",
+      "label": "add_optional_packing_routing_seed_helper",
+      "replacements": 1,
+      "oldSha256": "310486ddba9724df6d1c7593c60f9a6d287482c90b54065b1c5d4716540e3a54",
+      "newSha256": "6c9478f154885e1913ccd15a7b34b97a66c58fcd6e052b96d2320b6fb71c49b3"
+    },
+    {
+      "owner": "generator",
+      "label": "report_planned_optional_p05_seed_at_stages",
+      "replacements": 1,
+      "oldSha256": "b3818c35cad49f01dc9e0b41b333f0a2e9b45fd9cf6854fda7c1057364c3d0b1",
+      "newSha256": "9646a879d533292d22f76d47c6ac6da476d87fe3f254148dc4aeda1b2f0f7a9d"
+    },
+    {
+      "owner": "generator",
+      "label": "route_p05_and_report_outer_seed",
+      "replacements": 1,
+      "oldSha256": "2363afac438ec5d56137b191d4e2dcad4f1fd3f5f3ff74ac421bbec26794310c",
+      "newSha256": "6f5c3f6e31a5837f49cd8430ab3d1d896884c3d01fbc4de05cfde3a73c5ee588"
+    }
+  ],
+  "checks": {
+    "baselineAudit": "PASS",
+    "seedReference": "PASS",
+    "generatorReverse": "PASS",
+    "exporterReverse": "PASS",
+    "plannerUnchanged": "PASS",
+    "compactorUnchanged": "PASS",
+    "exporterSuffixUnchanged": "PASS",
+    "observerClassesUnchanged": "PASS",
+    "innerRoutePlanUnchanged": "PASS",
+    "p07RouteSetupUnchanged": "PASS"
+  },
+  "limits": "Pure source preparation only; Java compilation, native canaries, routing, browser, data reader, and GO decision are NOT RUN."
+}

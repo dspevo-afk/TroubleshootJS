@@ -7,7 +7,18 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Exact fresh relay diagnosed; bounded proposal review next**
+**Current task:** **Fixed optional route stream rejected; conservative proposal review next**
+
+Private one-stream experiment PASS227/native0 and17independent negative checks,
+but explicit NO_GO: same four placement stages, five route orders/182240expansions,
+CTRL_RETURN NO_PATH; accepted full layout/graph/four metrics unchanged. No size
+improvement or production promotion. Source1482/24/13/10/5 and execution6 exact;
+all4 driver births exited. Next new scope: strip-only optional proposal using the
+original stream and existing strict acceptance/budgets. Three new board tops posted.
+[Fixed-stream experiment and limits](task-evidence/PCB/packing-route-stream-probe-r1/RESULTS.md).
+
+Previous exact fresh relay diagnosis:
+
 
 Actual JDK8 PASS221/root0/41.8437257s; host6negatives/14readernegatives/4separate
 birth exits PASS. Existingordinarycompactor reducesrawproposal1030→910width,

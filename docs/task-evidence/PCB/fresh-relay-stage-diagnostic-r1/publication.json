@@ -1,0 +1,16 @@
+{
+  "status": "PASS_VERIFIED_NORMAL_PUBLICATION_FINITE_DIAGNOSIS",
+  "sha": "be7098819b3bdba15012a7f8d6869645bca0ca58",
+  "message": "Diagnose the fresh relay board packing rejection",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteUrl": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "pushActualExitCode": 0,
+  "remoteExactSha": "be7098819b3bdba15012a7f8d6869645bca0ca58",
+  "reviewedPublishedBlobs": 75,
+  "sourceBoundary": "1482/24/13/10/5 unchanged after publication; private5/20helpers exact",
+  "scope": "Finite exact relay stages and typed routing cause; no production variant or accepted size gain",
+  "priorVisualCleanup": "BLOCKED five retained profiles; no retry",
+  "mainMerge": "NOT REQUESTED",
+  "email": "DISABLED BY USER"
+}

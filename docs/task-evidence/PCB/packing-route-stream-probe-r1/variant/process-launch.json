@@ -1,0 +1,16 @@
+{
+  "phase": "variant",
+  "drivers": [
+    {
+      "startTicks": "639281464783407883",
+      "pid": 30984,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281464785763810",
+      "pid": 7280,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Captured before selected private span-probe adapter; root observes actual tool exit before separate birth checks"
+}

@@ -1,0 +1,7 @@
+{
+  "firstStagedVerificationActualExitCode": 1,
+  "phase": "Before commit/push",
+  "cause": "Verification compared raw CRLF documentation worktree bytes to normal LF text-filtered staged bytes. Both tracked documentation files are text=auto; their normalized bodies and Git filtered blob identities match exactly. Packet files have text unset and remain byte-exact.",
+  "correction": "Require Git --path filtered blob identity for all staged paths, and raw byte equality for every packet/evidence path; explicitly permit CRLF normalization only for the two existing tracked documentation files. No source, reader, acceptance predicate or whitespace setting changed.",
+  "nativeDataResult": "Unchanged accepted private NO_GO, native/root receipt checks still actual0."
+}

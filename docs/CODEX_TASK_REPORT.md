@@ -1,4 +1,30 @@
-# Current checkpoint: exact fresh relay diagnosed; publication preparing
+# Current checkpoint: fixed optional route stream private NO_GO; publication preparing
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+Base/exactremote be7098819b3bdba15012a7f8d6869645bca0ca58. Continue authorized
+realism indefinitely/screenshots/optional leaves; no main/email/final stop.
+Seven unrelated groups and FIVE blocked profiles untouched; never retry profiles.
+Three fresh board tops already pasted; no new production/GWT/matrix/player claim.
+
+Packing-route-stream-probe-r1 freezes one fixed named secondary P05 stream,
+3078526323410797175→-7609816130686485171. All placement stages exactly control
+except observation seed; graph/full selected layout and metrics unchanged.
+Actual JDK8 PASS227/root0/41.8721594s, host6negatives root0/2.0017796s; independent
+root reviewer PASS0/17 negatives; all4 recorded driver births separately exited.
+Real proposal rejects NO_PATH CTRL_RETURN/Q1.E→J1.2 after5orders/182240expansions.
+No candidate metrics/accepted size gain. Explicit NO_GO; no salt search/promotion.
+Baseline and17helpers/private5 frozen before execution; source1482/24/13/10/5
+and execution6before/after exact. Pre-baseline assertion/wrong filename failures
+corrected and recorded before private/native data. No native/data-reader failure.
+Optional source-preparation leaf/root integrated acceptance; no independent final
+agent. Private root retained by q60 pointer; no live task process/preview/browser.
+
+Next intended-only diff/stage/commit/normalpush/exactremote and source/fresh
+postpublication execution audit, then newly scoped conservative strip-only
+optional proposal with original stream/single-route/strict four-metric guard.
+Production remains accepted22cbf4bc. Prior visual cleanup remains BLOCKED.
+
+# Previous checkpoint: exact fresh relay diagnosed; publication preparing
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 Base/exactremote1327ca3bd359d7ffc3ec4a9969d648ad211812e7. Continue authorized

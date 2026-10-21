@@ -1,0 +1,28 @@
+{
+  "status": "ROOT_VERIFIED_SOURCE_ONLY_FIXED_EXPERIMENT",
+  "sourceBlobs": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0ade26079945364a7a9ad8e96e93d0c2c44d9975",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "73bbbe020ae42f63e5a3fe9c0c6fb50401c77dbc",
+    "src/com/lushprojects/circuitjs1/client/NamedRandomStreams.java": "936ff9f2f204b9aa6ccbe0feb26e0555ea3c79e7",
+    "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java": "e70831623323266103fac8374bfe758179d4ca04",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "e862a8f8eee19e6e410c65ddbe39dea69c0ab516",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "9722a34f1db1b03dbb1067288a04c355062ea5ac",
+    "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "f9b622fce44311efb5d07cf4352af9902ca9f517"
+  },
+  "priorResultBlob": "ce2cbb5f2ec19a1ab544ccd66e754bb6600ddf14",
+  "priorAssessmentBlob": "963ffcbf52371715ebe15b681313fed757e57c04",
+  "preparationCorrection": {
+    "originalAttemptActualExit": 1,
+    "beforeBaselineOrPrivateAdaptation": true,
+    "originalClaimedResultBlob": "178e4e05c2a9db1a256504d4fb99ee6a48825fb1",
+    "actualResultBlob": "ce2cbb5f2ec19a1ab544ccd66e754bb6600ddf14",
+    "review": "All seven source blob expectations and assessment match; the prior result expectation differs. Failed attempt created only packet directory and attributes. Corrected source advice before baseline; no native outcomes observed."
+  },
+  "advice": "Optional read-only leaf reviewed unchanged sources. Root selects one fixed named routing derivation for the existing optional P05 call only; no aspect/RNG/placement changes.",
+  "baselinePreparation": {
+    "firstFreezeActualExit": 1,
+    "cause": "Wrong prior cleanup receipt filename: tool-exit-cleanup.json instead of process-cleanup.json",
+    "correctedBeforeBaseline": true,
+    "noPrivateAdaptationOrNativeWork": true
+  }
+}

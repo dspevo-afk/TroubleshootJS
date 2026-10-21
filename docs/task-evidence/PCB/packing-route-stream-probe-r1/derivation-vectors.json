@@ -1,0 +1,39 @@
+{
+  "actualDerivedSeed": "-7609816130686485171",
+  "actualSourceSeed": "3078526323410797175",
+  "blockKey": "-",
+  "concern": "routing",
+  "concernRevision": 1,
+  "derivationVersion": 1,
+  "intent": "pcb-packing-route",
+  "intentVersion": 1,
+  "root": "session.routingSeed",
+  "scope": "device",
+  "semanticKey": "optional-p05-proposal",
+  "vectors": [
+    {
+      "derivedSeed": "2926452371699457122",
+      "sourceSeed": "0"
+    },
+    {
+      "derivedSeed": "-1259826540137006295",
+      "sourceSeed": "1"
+    },
+    {
+      "derivedSeed": "1145332496697143667",
+      "sourceSeed": "-1"
+    },
+    {
+      "derivedSeed": "721378348590188007",
+      "sourceSeed": "-9223372036854775808"
+    },
+    {
+      "derivedSeed": "426595435461648541",
+      "sourceSeed": "9223372036854775807"
+    },
+    {
+      "derivedSeed": "-7609816130686485171",
+      "sourceSeed": "3078526323410797175"
+    }
+  ]
+}

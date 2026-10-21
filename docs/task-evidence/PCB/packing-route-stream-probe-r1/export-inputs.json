@@ -1,0 +1,31 @@
+{
+  "baseCommit": "be7098819b3bdba15012a7f8d6869645bca0ca58",
+  "baselineSealSha256": "c68bdf6bb5b4dce06ff4cd47b52f71574806473dffa95aa3de31d32bc0d4843c",
+  "request": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "66da7f7c97039304d0b28bf6fea406d12139c159a17e446dc000aa0d5c02a03f",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "variant/SeededPcbLayoutGenerator.java": "6b4b79e87542f220a0c80ee29a05d48e78b6fe11da5a6933a6b29764dc275641",
+    "variant/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "variant/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "gates": {
+    "prepare_sources.py": "37fca8f5effa76d290ac19195c10613c91f376504b590b325513ceadb3ac4ddf",
+    "seed_reference.py": "41ad34c545088366336e7488c1b54aa05eeccab47e6c68c646203debe0b7a2a9",
+    "source-review.json": "247e6593c60f2c4bb63bf28966ce20b3aaa6b025ee486f21c19cb5c5c69c922e",
+    "private-inputs.json": "fafb3c0f3e94d43911f5e2c8e3ce349033ebbb2f53c46cb5b7164d2660a3b77e",
+    "variant-generator-diff.txt": "1c09ed495019929f16ecc945c39017ddc7bd98f74654beada7e8147982e9d11d",
+    "exporter-diff.txt": "6f080a9999a1f82d49a8a65a33d34821e970fe793887b1ee31850401af944a3c",
+    "derivation-vectors.json": "efa2c7625b5ca9727ea1e6905127e09c7ebf35ca995ae5ac5bd0b0ae0a28db18",
+    "preparation-notes.md": "274ba4ef89812d9214e4d497fe6537c13b322e7e54322c4961b83bfe37e6f11f",
+    "host-helper-review.json": "b3f36de7acb846e2923324b1c37bcba7109c3bddc13516678e4187b0af7e4c0d",
+    "run_export.ps1": "4cfee4b9bba5ac3d70f6d389b0465aedcc7bf6ab20bf57432425f0928867caf1",
+    "record_exit.ps1": "b0e9054c363686fe176b9db9190584d0152eb92419324cb91632e68cc24503f3",
+    "observe_execution.ps1": "f3388eb7b78b5a299a2e0330e3a6a98b234dc8787671085ce6908db663661ad1",
+    "qualify.py": "d0b1c8ea25f47a958e3bbc2197469da5f937bfbc33b09b1c5d9a912bd1ba4cb5",
+    "review_export.py": "c18dfdf334511be69fd6a39fa2a48865a3e9983d415331088a8e89adefa4401b",
+    "review-helper-adaptation.json": "dc25cca9cf8142b917e6454c7ec444f500807dee3c87ae8a1adba1bf6087e366",
+    "preseal-review.json": "55aa671774f3666d8709726003f975ed72765714883ca8163fdaa8fb8a7772eb",
+    "export_inputs.py": "ba43b4a1c61e5a93bfe3f8cbf0c2ab7f36915ae23ee480f2a20f879055098a46"
+  }
+}

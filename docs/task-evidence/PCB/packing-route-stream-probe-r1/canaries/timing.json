@@ -1,0 +1,9 @@
+{
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
+  "exitCode": 0,
+  "failure": null,
+  "status": "PASS",
+  "elapsedSeconds": 2.0017796,
+  "phase": "canaries",
+  "terminalCleanupIncluded": true
+}

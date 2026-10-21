@@ -1,0 +1,47 @@
+{
+  "sourceSha256": "2cb09f21d0bf27a750503b7af305ca93dac413e401b0ecac87aa91db676bb23d",
+  "changes": [
+    {
+      "from": "AUDIT='PASS fresh relay export source1482 machinery24 sealed helpers private5'",
+      "to": "AUDIT='PASS fixed optional stream source1482 machinery24 sealed helpers private5'"
+    },
+    {
+      "from": "timing=phase('relay');native=(HERE/'relay/native.txt')",
+      "to": "timing=phase('variant');native=(HERE/'variant/native.txt')"
+    },
+    {
+      "from": "reader['validate_receipt']((HERE/'relay/receipt.txt').read_text(encoding='utf-8-sig'))",
+      "to": "reader['validate_comparison']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig'))"
+    },
+    {
+      "from": "observation['status']=='PASS_EXACT_FRESH_RELAY_STAGE_RECEIPT' and observation['identity']['replayId']==seal['request']",
+      "to": "observation['status'] in ('GO_PRIVATE_TARGET_ONLY','NO_GO_PRIVATE_TARGET') and observation['variant']['identity']['replayId']==seal['request']"
+    },
+    {
+      "from": "'status':'PASS_FINITE_PRIVATE_RELAY_STAGE_DIAGNOSIS'",
+      "to": "'status':'PASS_FINITE_PRIVATE_OPTIONAL_STREAM_EXPERIMENT'"
+    },
+    {
+      "from": "sha(HERE/'relay/receipt.txt')",
+      "to": "sha(HERE/'variant/receipt.txt')"
+    },
+    {
+      "from": "sha(HERE/'relay/native.txt')",
+      "to": "sha(HERE/'variant/native.txt')"
+    },
+    {
+      "from": "'observation':observation,'limits':",
+      "to": "'observation':observation,'comparisonNegativeControls':reader['negatives']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig')),'limits':"
+    },
+    {
+      "from": "One exact ordinary relay replay with unchanged accepted private passive control, no production placement variant or GO. No per-origin outcome, optimum, manufacturing, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual profile cleanup remains BLOCKED and five retained profiles untouched.",
+      "to": "One exact ordinary relay replay, one predeclared fixed private optional routing stream. All placement plans, original graph and baseline metric tuple checked against audited accepted control. Target GO requires broader qualification; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched."
+    },
+    {
+      "from": "PASS finite exact relay stage observation; original row oracle and bounded independent stage checks; no production GO",
+      "to": "PASS fixed optional stream experiment; exact placement and independent metrics; private target result only"
+    }
+  ],
+  "diff": "--- accepted/review_export.py\n+++ stream/review_export.py\n@@ -3,7 +3,7 @@\n from pathlib import Path\n if not __debug__:raise RuntimeError('Assertion-enabled Python required')\n HERE=Path(__file__).resolve().parent\n-AUDIT='PASS fresh relay export source1482 machinery24 sealed helpers private5'\n+AUDIT='PASS fixed optional stream source1482 machinery24 sealed helpers private5'\n KINDS=('seed','family','previous-family','generator','planner','compactor')\n def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))\n def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()\n@@ -33,14 +33,14 @@\n         path=Path(private)/('invalid-'+c['kind']+'.txt');raw=path.read_bytes();decoded=raw.decode('utf-16') if raw.startswith((b'\\xff\\xfe',b'\\xfe\\xff')) else raw.decode('utf-8-sig')\n         require(sha(path)==c['privateLogSha256'] and len(raw)==c['privateLogBytes'] and (\"Cannot validate argument on parameter '\"+parameters[c['kind']]+\"'\") in decoded and re.search(r'CURRENT_CONTRACT_|javac|PASS: focused current contracts',decoded) is None,'actual private negative log '+c['kind'])\n     require(not (HERE/'canaries/native.txt').exists() and not (HERE/'canaries/receipt.txt').exists(),'no native work from invalid bindings')\n-    timing=phase('relay');native=(HERE/'relay/native.txt').read_text(encoding='utf-8-sig')\n+    timing=phase('variant');native=(HERE/'variant/native.txt').read_text(encoding='utf-8-sig')\n     marker='PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN.'\n     require(native.count(marker)==1 and 'CURRENT_CONTRACT_FAILURE:' not in native and 'CURRENT_CONTRACT_CLEANUP:' not in native,'actual maintained native completion')\n-    reader=runpy.run_path(str(HERE/'qualify.py'));observation=reader['validate_receipt']((HERE/'relay/receipt.txt').read_text(encoding='utf-8-sig'))\n-    require(isinstance(observation,dict) and observation['status']=='PASS_EXACT_FRESH_RELAY_STAGE_RECEIPT' and observation['identity']['replayId']==seal['request'],'independent relay observation')\n-    result={'status':'PASS_FINITE_PRIVATE_RELAY_STAGE_DIAGNOSIS','inputSealSha256':sha(HERE/'export-inputs.json'),'receiptSha256':sha(HERE/'relay/receipt.txt'),'nativeSha256':sha(HERE/'relay/native.txt'),'sourceReviewSha256':sha(HERE/'source-review.json'),'execution':expected_execution,'canaries':{'elapsedSeconds':canary_timing['elapsedSeconds'],'checks':canaries['checks']},'nativeOperationSeconds':timing['elapsedSeconds'],'driverBirthsSeparatelyExited':4,'observation':observation,'limits':'One exact ordinary relay replay with unchanged accepted private passive control, no production placement variant or GO. No per-origin outcome, optimum, manufacturing, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual profile cleanup remains BLOCKED and five retained profiles untouched.'}\n+    reader=runpy.run_path(str(HERE/'qualify.py'));observation=reader['validate_comparison']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig'))\n+    require(isinstance(observation,dict) and observation['status'] in ('GO_PRIVATE_TARGET_ONLY','NO_GO_PRIVATE_TARGET') and observation['variant']['identity']['replayId']==seal['request'],'independent relay observation')\n+    result={'status':'PASS_FINITE_PRIVATE_OPTIONAL_STREAM_EXPERIMENT','inputSealSha256':sha(HERE/'export-inputs.json'),'receiptSha256':sha(HERE/'variant/receipt.txt'),'nativeSha256':sha(HERE/'variant/native.txt'),'sourceReviewSha256':sha(HERE/'source-review.json'),'execution':expected_execution,'canaries':{'elapsedSeconds':canary_timing['elapsedSeconds'],'checks':canaries['checks']},'nativeOperationSeconds':timing['elapsedSeconds'],'driverBirthsSeparatelyExited':4,'observation':observation,'comparisonNegativeControls':reader['negatives']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig')),'limits':'One exact ordinary relay replay, one predeclared fixed private optional routing stream. All placement plans, original graph and baseline metric tuple checked against audited accepted control. Target GO requires broader qualification; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched.'}\n     target=HERE/'assessment.json';require(not target.exists(),'preserve previous assessment')\n     with target.open('x',encoding='utf-8',newline='\\n') as f:json.dump(result,f,indent=2);f.write('\\n')\n-    print('PASS finite exact relay stage observation; original row oracle and bounded independent stage checks; no production GO')\n+    print('PASS fixed optional stream experiment; exact placement and independent metrics; private target result only')\n if __name__=='__main__':\n     parser=argparse.ArgumentParser();parser.add_argument('--private-root',required=True,type=Path);main(parser.parse_args().private_root)\n",
+  "limits": "Actual six-host binding and phase/process/execution checks unchanged; positive receipt now checks exact cross-run invariant and strict result, with three additional real validator negatives."
+}

@@ -1,0 +1,1133 @@
+{
+  "status": "PASS_FINITE_PRIVATE_OPTIONAL_STREAM_EXPERIMENT",
+  "inputSealSha256": "9dffc9b3533ca11386fae9e5881d5c0bac3718d75baf27839090359bfa1e16cb",
+  "receiptSha256": "c7cc61e7e1fcb7dd52532540ce9265e230fc3d93e715d58f33dc76221a8a5694",
+  "nativeSha256": "476678c55066176aac24b3ceb62ec0e77df100ae318ada3907cdc25359be6901",
+  "sourceReviewSha256": "247e6593c60f2c4bb63bf28966ce20b3aaa6b025ee486f21c19cb5c5c69c922e",
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c48f7de9a91a09f0d7973531799a599cc2712a9abe751e94de7bb2606da19817",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "51b6280ed944f72a4d55422c245cf8c849890df25f7f8dd4b03b9e732a89e417",
+    "Digest": "eb534a477bfc257c97eb5d92a1db26750ab28319e7efe685ee839b65faba6117",
+    "FileCount": 1592
+  },
+  "canaries": {
+    "elapsedSeconds": 2.0017796,
+    "checks": [
+      {
+        "privateLogBytes": 449,
+        "kind": "seed",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.3391719,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "c68e74415fb76893c65c7a0ceb9333319158eac3067297441a4c58f9569dcd5a"
+      },
+      {
+        "privateLogBytes": 260,
+        "kind": "family",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.3273739,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "b4e0f4df7467ea552bb3a6e58d4ab8746839102fc5db754c736085a3b52e737b"
+      },
+      {
+        "privateLogBytes": 281,
+        "kind": "previous-family",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.324627,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "c45df1dd9b8caa60b5b804c76c4906d31a5666a7508463e5ca371c5170dc6cef"
+      },
+      {
+        "privateLogBytes": 392,
+        "kind": "generator",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.3209952,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "27eb62af84a57d6190b591fd2b2bf8926c6e7e79c5287a848254f6c772da35d5"
+      },
+      {
+        "privateLogBytes": 388,
+        "kind": "planner",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.3215505,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "b032d17157029bd2e89183aef1225138935db1007aaf2f649681aee20c6f227a"
+      },
+      {
+        "privateLogBytes": 392,
+        "kind": "compactor",
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+        "elapsedSeconds": 0.3179316,
+        "actualAdapterExitCode": 1,
+        "privateLogSha256": "aec451488c14c721aaf154e7b6ca05b36cf1f7738e187769eff1c70a72b8679b"
+      }
+    ]
+  },
+  "nativeOperationSeconds": 41.8721594,
+  "driverBirthsSeparatelyExited": 4,
+  "observation": {
+    "status": "NO_GO_PRIVATE_TARGET",
+    "sourceRoutingSeed": "3078526323410797175",
+    "optionalRoutingSeed": "-7609816130686485171",
+    "controlReceiptSha256": "7caebba6370ffab4958e63d39a6c67bc1f4db5d9487901f0f2ebaf4237b66d2b",
+    "variant": {
+      "status": "PASS_EXACT_FRESH_RELAY_STAGE_RECEIPT",
+      "identity": {
+        "family": "RELAY_OUTPUT",
+        "profile": "EASY",
+        "publicSeed": "-397178238694963708",
+        "replayId": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708"
+      },
+      "publishedRowOracle": {
+        "sha256": "0b8ff9c9cf22599c23d430901ed8b9d3c9867f1ecb1cb63407480647b9bbcc71",
+        "adaptedSha256": "e5dcbcae7fa786bb5c50223d13f0d1bf097ed86b374c22d05cc9d5402f8a9c06",
+        "guardedChanges": [
+          {
+            "site": "EXPECTED",
+            "from": "RC/composed",
+            "to": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708"
+          },
+          {
+            "site": "placementPackingVersion",
+            "from": 3,
+            "to": 4
+          }
+        ]
+      },
+      "diagnosticAssertionMarker": {
+        "line": "PASS: sparse normal board diagnostic family=RELAY_OUTPUT seed=-397178238694963708 assertions=227",
+        "assertions": 227
+      },
+      "row": {
+        "family": "RELAY_OUTPUT",
+        "profile": "EASY",
+        "publicSeed": "-397178238694963708",
+        "replayId": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+        "geometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "logicalBoardGraphSha256": "be4cea265608c9c6ca9a101e1e507cc9502c3a5b5621c96ec120f08eee503090",
+        "counts": {
+          "logicalParts": 9,
+          "layoutParts": 9,
+          "logicalPads": 22,
+          "layoutPads": 22,
+          "logicalNets": 9,
+          "traces": 13,
+          "holes": 0
+        },
+        "outline": [
+          70,
+          50,
+          1012,
+          841
+        ],
+        "physicalMetrics": {
+          "available": true,
+          "unavailable": false,
+          "gridStep": 10,
+          "area": 851092,
+          "copper": 6600,
+          "vias": 0,
+          "protectedVoid": 74000,
+          "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+        },
+        "packingProbe": {
+          "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=182240;millis=93;route=P05_ONE_FACE;disposition=ROUTE_REJECTED;baseline=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af;selected=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "attempts": 1,
+          "orderings": 5,
+          "expansions": 182240,
+          "millis": 93,
+          "routePolicy": "P05_ONE_FACE",
+          "disposition": "ROUTE_REJECTED",
+          "baselineGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "selectedGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "metricEvidence": {
+            "state": "BASELINE_ONLY",
+            "baseline": {
+              "area": 851092,
+              "copper": 6600,
+              "vias": 0,
+              "protectedVoid": 74000
+            },
+            "candidate": null,
+            "unavailableReason": null
+          }
+        },
+        "whitespaceSampler": {
+          "seed": "-397178238694963708",
+          "version": 1,
+          "parts": 9,
+          "gridUnits": 10,
+          "sampledCells": 8484,
+          "packageAccessOccupiedCells": 4803,
+          "protectedFreeCells": 3080,
+          "protectedFreeFraction": 0.36303630363036304,
+          "largestProtectedEmptyRectangle": {
+            "x": 710,
+            "y": 50,
+            "width": 370,
+            "height": 200,
+            "area": 74000
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "componentEnvelopes": [
+          {
+            "componentId": "D1",
+            "packageId": "AXIAL_DIODE",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              458,
+              738,
+              86,
+              32
+            ],
+            "routingCourtyard": [
+              398,
+              724,
+              206,
+              60
+            ],
+            "accessEnvelope": [
+              336,
+              684,
+              330,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J1",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              134,
+              157,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              120,
+              143,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              100,
+              103,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J2",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              134,
+              397,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              120,
+              383,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              100,
+              343,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J3",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              934,
+              307,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              920,
+              293,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              876,
+              253,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J4",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              934,
+              547,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              920,
+              533,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              876,
+              493,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "K1",
+            "packageId": "RELAY_SPDT",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              476,
+              539,
+              120,
+              100
+            ],
+            "routingCourtyard": [
+              396,
+              479,
+              280,
+              180
+            ],
+            "accessEnvelope": [
+              336,
+              409,
+              400,
+              270
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "Q1",
+            "packageId": "TO92_NPN",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              734,
+              745,
+              64,
+              56
+            ],
+            "routingCourtyard": [
+              711,
+              723,
+              120,
+              118
+            ],
+            "accessEnvelope": [
+              666,
+              683,
+              185,
+              192
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "RDRIVE",
+            "packageId": "AXIAL_RESISTOR",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              416,
+              307,
+              80,
+              34
+            ],
+            "routingCourtyard": [
+              358,
+              294,
+              196,
+              60
+            ],
+            "accessEnvelope": [
+              296,
+              254,
+              320,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "RPD",
+            "packageId": "AXIAL_RESISTOR",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              456,
+              147,
+              120,
+              34
+            ],
+            "routingCourtyard": [
+              398,
+              134,
+              236,
+              60
+            ],
+            "accessEnvelope": [
+              336,
+              94,
+              360,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          }
+        ]
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=182240;millis=93;route=P05_ONE_FACE;disposition=ROUTE_REJECTED;baseline=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af;selected=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "attempts": 1,
+        "orderings": 5,
+        "expansions": 182240,
+        "millis": 93,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "ROUTE_REJECTED",
+        "baselineGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "selectedGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "metricEvidence": {
+          "state": "BASELINE_ONLY",
+          "baseline": {
+            "area": 851092,
+            "copper": 6600,
+            "vias": 0,
+            "protectedVoid": 74000
+          },
+          "candidate": null,
+          "unavailableReason": null
+        }
+      },
+      "stages": [
+        {
+          "phase": "SOURCE",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "outline": [
+            20,
+            20,
+            1030,
+            930
+          ],
+          "evaluations": 45,
+          "inputPlanSha256": "eb73dcf40003c804c120335aedce791c2e4e8e7f432224c44daca88575ef0e45",
+          "componentPoses": {
+            "RPD": {
+              "x": 330,
+              "y": 110,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 650,
+              "y": 700,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 870,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 870,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  880,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 400
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  880,
+                  380
+                ],
+                [
+                  880,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  880,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 640
+            }
+          ]
+        },
+        {
+          "phase": "ORDINARY",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "outline": [
+            20,
+            20,
+            910,
+            930
+          ],
+          "evaluations": 72,
+          "inputPlanSha256": "7e4210825d3c636e40c62e24aeb95f7a3f1ec84cdf6a5b994c811b445d8f1f8a",
+          "componentPoses": {
+            "RPD": {
+              "x": 280,
+              "y": 150,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 130,
+              "y": 590,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 750,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 750,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [
+            "J3",
+            "J4",
+            "Q1",
+            "RPD"
+          ],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  760,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 280
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  760,
+                  380
+                ],
+                [
+                  760,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  760,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 520
+            }
+          ]
+        },
+        {
+          "phase": "PAIRED",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "outline": [
+            20,
+            20,
+            910,
+            930
+          ],
+          "evaluations": 72,
+          "inputPlanSha256": "7e4210825d3c636e40c62e24aeb95f7a3f1ec84cdf6a5b994c811b445d8f1f8a",
+          "componentPoses": {
+            "RPD": {
+              "x": 280,
+              "y": 150,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 130,
+              "y": 590,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 750,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 750,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  760,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 280
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  760,
+                  380
+                ],
+                [
+                  760,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  760,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 520
+            }
+          ]
+        },
+        {
+          "phase": "FINAL",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "outline": [
+            20,
+            20,
+            910,
+            930
+          ],
+          "evaluations": 72,
+          "inputPlanSha256": "7e4210825d3c636e40c62e24aeb95f7a3f1ec84cdf6a5b994c811b445d8f1f8a",
+          "componentPoses": {
+            "RPD": {
+              "x": 280,
+              "y": 150,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 130,
+              "y": 590,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 750,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 750,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  760,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 280
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  760,
+                  380
+                ],
+                [
+                  760,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  760,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 520
+            }
+          ]
+        }
+      ],
+      "selectedPadSpanRelation": "retained incumbent spans equal SOURCE up to translation",
+      "eligiblePairScreen": {
+        "exactTwoPadCrossComponentNets": 4,
+        "afterTwoTerminalNonanchorRegionDomain": 0,
+        "afterLinkedTerminalDomainMatch": 0,
+        "necessaryEligiblePairs": [],
+        "interpretation": "No exported two-pad net passes all necessary component/anchor/region/domain screens; isolation-body and movable-peer checks are therefore unnecessary for ruling out an eligible pair in this inventory."
+      },
+      "adaptedCauseReaderSha256": "2a477e2babcbe4bfcad6c6b83ff381ecc0f838bcb97b538cfb761884e6f940f5",
+      "typedCauseEvents": {
+        "eventCount": 2,
+        "outer": {
+          "schema": "packing-rejection-diagnostic@1",
+          "event": "PACKING_CAUGHT",
+          "phase": "PACKING_EXPECTED_CATCH",
+          "inputPlanCanonical": "task-packing-plan@1;outline=20,20,910,930;RPD@280,150,260,70|component=RPD@280,150,260,70|pose=280,150|rotation=DEG_0|mount=TOP|body=350,168,120,34;keepout=350,168,120,34;courtyard=292,155,236,60;selection=291,161,238,45;drag=285,155,250,57;package=AXIAL_RESISTOR|connector=false|variant=SPAN_260|transform=IDENTITY|version=3|looseVariant=SPAN_220|developerGeneric=false|internal:1=2=false;geometry=260x70|version=3|developerGeneric=false|localBody=70,18,120,34;localKeepout=70,18,120,34;localCourtyard=12,5,236,60;localSelection=11,11,238,45;localDrag=5,5,250,57;localTerminal[0]=1|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=75,30;connectedBounds=27,27,51,6;point=75,30;connectedProbe=71,26,8,8;lifted=point=82,30;point=75,30;liftedBounds=72,27,13,6;point=82,30;liftedProbe=78,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=230,30;pad=217,17,26,26;point=230,30;boardProbe=215,15,30,30;connected=point=230,30;point=185,30;connectedBounds=182,27,51,6;point=185,30;connectedProbe=181,26,8,8;lifted=point=178,30;point=185,30;liftedBounds=175,27,13,6;point=178,30;liftedProbe=174,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=310,180;pad=297,167,26,26;point=310,180;boardProbe=295,165,30,30;point=355,180;connectedProbe=351,176,8,8;point=362,180;liftedProbe=358,176,8,8;point=310,180;point=355,180;connectedLead=307,177,51,6;point=362,180;point=355,180;liftedLead=352,177,13,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=510,180;pad=497,167,26,26;point=510,180;boardProbe=495,165,30,30;point=465,180;connectedProbe=461,176,8,8;point=458,180;liftedProbe=454,176,8,8;point=510,180;point=465,180;connectedLead=462,177,51,6;point=458,180;point=465,180;liftedLead=455,177,13,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=RPD.1@310,180 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=297,167,26,26 probe=295,165,30,30;pad=RPD.2@510,180 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=497,167,26,26 probe=495,165,30,30;\nRDRIVE@290,270,220,70|component=RDRIVE@290,270,220,70|pose=290,270|rotation=DEG_0|mount=TOP|body=360,288,80,34;keepout=360,288,80,34;courtyard=302,275,196,60;selection=301,281,198,45;drag=295,275,210,57;package=AXIAL_RESISTOR|connector=false|variant=SPAN_220|transform=IDENTITY|version=3|looseVariant=SPAN_220|developerGeneric=false|internal:1=2=false;geometry=220x70|version=3|developerGeneric=false|localBody=70,18,80,34;localKeepout=70,18,80,34;localCourtyard=12,5,196,60;localSelection=11,11,198,45;localDrag=5,5,210,57;localTerminal[0]=1|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=75,30;connectedBounds=27,27,51,6;point=75,30;connectedProbe=71,26,8,8;lifted=point=82,30;point=75,30;liftedBounds=72,27,13,6;point=82,30;liftedProbe=78,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=190,30;pad=177,17,26,26;point=190,30;boardProbe=175,15,30,30;connected=point=190,30;point=145,30;connectedBounds=142,27,51,6;point=145,30;connectedProbe=141,26,8,8;lifted=point=138,30;point=145,30;liftedBounds=135,27,13,6;point=138,30;liftedProbe=134,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=320,300;pad=307,287,26,26;point=320,300;boardProbe=305,285,30,30;point=365,300;connectedProbe=361,296,8,8;point=372,300;liftedProbe=368,296,8,8;point=320,300;point=365,300;connectedLead=317,297,51,6;point=372,300;point=365,300;liftedLead=362,297,13,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=480,300;pad=467,287,26,26;point=480,300;boardProbe=465,285,30,30;point=435,300;connectedProbe=431,296,8,8;point=428,300;liftedProbe=424,296,8,8;point=480,300;point=435,300;connectedLead=432,297,51,6;point=428,300;point=435,300;liftedLead=425,297,13,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=RDRIVE.1@320,300 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=307,287,26,26 probe=305,285,30,30;pad=RDRIVE.2@480,300 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=467,287,26,26 probe=465,285,30,30;\nK1@330,450,300,210|component=K1@330,450,300,210|pose=330,450|rotation=DEG_0|mount=TOP|body=420,520,120,100;keepout=415,515,130,110;courtyard=340,460,280,180;selection=341,461,278,163;drag=335,455,290,176;package=RELAY_SPDT|connector=false|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:A1=A2=false;internal:A1=COM=false;internal:A1=NC=false;internal:A1=NO=false;internal:A2=COM=false;internal:A2=NC=false;internal:A2=NO=false;internal:COM=NC=false;internal:COM=NO=false;internal:NC=NO=false;geometry=300x210|version=3|developerGeneric=false|localBody=90,70,120,100;localKeepout=85,65,130,110;localCourtyard=10,10,280,180;localSelection=11,11,278,163;localDrag=5,5,290,176;localTerminal[0]=A1|point=30,120;pad=17,107,26,26;point=30,120;boardProbe=15,105,30,30;connected=point=30,120;point=90,120;connectedBounds=27,117,66,6;point=90,120;connectedProbe=86,116,8,8;lifted=point=70,140;point=90,120;liftedBounds=67,117,26,26;point=70,140;liftedProbe=66,136,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=A2|point=270,120;pad=257,107,26,26;point=270,120;boardProbe=255,105,30,30;connected=point=270,120;point=210,120;connectedBounds=207,117,66,6;point=210,120;connectedProbe=206,116,8,8;lifted=point=230,140;point=210,120;liftedBounds=207,117,26,26;point=230,140;liftedProbe=226,136,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[2]=COM|point=70,30;pad=57,17,26,26;point=70,30;boardProbe=55,15,30,30;connected=point=70,30;point=100,70;connectedBounds=67,27,36,46;point=100,70;connectedProbe=96,66,8,8;lifted=point=100,54;point=100,70;liftedBounds=97,51,6,22;point=100,54;liftedProbe=96,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;localTerminal[3]=NC|point=150,30;pad=137,17,26,26;point=150,30;boardProbe=135,15,30,30;connected=point=150,30;point=150,70;connectedBounds=147,27,6,46;point=150,70;connectedProbe=146,66,8,8;lifted=point=150,54;point=150,70;liftedBounds=147,51,6,22;point=150,54;liftedProbe=146,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;localTerminal[4]=NO|point=230,30;pad=217,17,26,26;point=230,30;boardProbe=215,15,30,30;connected=point=230,30;point=200,70;connectedBounds=197,27,36,46;point=200,70;connectedProbe=196,66,8,8;lifted=point=200,54;point=200,70;liftedBounds=197,51,6,22;point=200,54;liftedProbe=196,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[0]:A1|point=360,570;pad=347,557,26,26;point=360,570;boardProbe=345,555,30,30;point=420,570;connectedProbe=416,566,8,8;point=400,590;liftedProbe=396,586,8,8;point=360,570;point=420,570;connectedLead=357,567,66,6;point=400,590;point=420,570;liftedLead=397,567,26,26;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:A2|point=600,570;pad=587,557,26,26;point=600,570;boardProbe=585,555,30,30;point=540,570;connectedProbe=536,566,8,8;point=560,590;liftedProbe=556,586,8,8;point=600,570;point=540,570;connectedLead=537,567,66,6;point=560,590;point=540,570;liftedLead=537,567,26,26;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[2]:COM|point=400,480;pad=387,467,26,26;point=400,480;boardProbe=385,465,30,30;point=430,520;connectedProbe=426,516,8,8;point=430,504;liftedProbe=426,500,8,8;point=400,480;point=430,520;connectedLead=397,477,36,46;point=430,504;point=430,520;liftedLead=427,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[3]:NC|point=480,480;pad=467,467,26,26;point=480,480;boardProbe=465,465,30,30;point=480,520;connectedProbe=476,516,8,8;point=480,504;liftedProbe=476,500,8,8;point=480,480;point=480,520;connectedLead=477,477,6,46;point=480,504;point=480,520;liftedLead=477,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[4]:NO|point=560,480;pad=547,467,26,26;point=560,480;boardProbe=545,465,30,30;point=530,520;connectedProbe=526,516,8,8;point=530,504;liftedProbe=526,500,8,8;point=560,480;point=530,520;connectedLead=527,477,36,46;point=530,504;point=530,520;liftedLead=527,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;|pad=K1.A1@360,570 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=347,557,26,26 probe=345,555,30,30;pad=K1.A2@600,570 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=587,557,26,26 probe=585,555,30,30;pad=K1.COM@400,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=387,467,26,26 probe=385,465,30,30;pad=K1.NC@480,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=467,467,26,26 probe=465,465,30,30;pad=K1.NO@560,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=547,467,26,26 probe=545,465,30,30;\nD1@330,700,230,70|component=D1@330,700,230,70|pose=330,700|rotation=DEG_0|mount=TOP|body=402,719,86,32;keepout=402,719,86,32;courtyard=342,705,206,60;selection=341,711,208,44;drag=335,705,220,56;package=AXIAL_DIODE|connector=false|variant=SPAN_230|transform=IDENTITY|version=3|looseVariant=SPAN_230|developerGeneric=false|internal:A=K=false;geometry=230x70|version=3|developerGeneric=false|localBody=72,19,86,32;localKeepout=72,19,86,32;localCourtyard=12,5,206,60;localSelection=11,11,208,44;localDrag=5,5,220,56;localTerminal[0]=A|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=72,30;connectedBounds=27,27,48,6;point=72,30;connectedProbe=68,26,8,8;lifted=point=78,30;point=72,30;liftedBounds=69,27,12,6;point=78,30;liftedProbe=74,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=K|point=200,30;pad=187,17,26,26;point=200,30;boardProbe=185,15,30,30;connected=point=200,30;point=158,30;connectedBounds=155,27,48,6;point=158,30;connectedProbe=154,26,8,8;lifted=point=152,30;point=158,30;liftedBounds=149,27,12,6;point=152,30;liftedProbe=148,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:A|point=360,730;pad=347,717,26,26;point=360,730;boardProbe=345,715,30,30;point=402,730;connectedProbe=398,726,8,8;point=408,730;liftedProbe=404,726,8,8;point=360,730;point=402,730;connectedLead=357,727,48,6;point=408,730;point=402,730;liftedLead=399,727,12,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:K|point=530,730;pad=517,717,26,26;point=530,730;boardProbe=515,715,30,30;point=488,730;connectedProbe=484,726,8,8;point=482,730;liftedProbe=478,726,8,8;point=530,730;point=488,730;connectedLead=485,727,48,6;point=482,730;point=488,730;liftedLead=479,727,12,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=D1.A@360,730 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=347,717,26,26 probe=345,715,30,30;pad=D1.K@530,730 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=517,717,26,26 probe=515,715,30,30;\nQ1@130,590,130,125|component=Q1@130,590,130,125|pose=130,590|rotation=DEG_0|mount=TOP|body=158,616,64,56;keepout=148,602,84,78;courtyard=135,594,120,118;selection=131,612,118,87;drag=125,596,130,109;package=TO92_NPN|connector=false|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:B=C=false;internal:B=E=false;internal:C=E=false;geometry=130x125|version=3|developerGeneric=false|localBody=28,26,64,56;localKeepout=18,12,84,78;localCourtyard=5,4,120,118;localSelection=1,22,118,87;localDrag=-5,6,130,109;localTerminal[0]=B|point=20,90;pad=7,77,26,26;point=20,90;boardProbe=5,75,30,30;connected=point=20,90;point=44,70;connectedBounds=17,67,30,26;point=44,70;connectedProbe=40,66,8,8;lifted=point=44,64;point=44,70;liftedBounds=41,61,6,12;point=44,64;liftedProbe=40,60,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=C|point=60,90;pad=47,77,26,26;point=60,90;boardProbe=45,75,30,30;connected=point=60,90;point=60,70;connectedBounds=57,67,6,26;point=60,70;connectedProbe=56,66,8,8;lifted=point=60,64;point=60,70;liftedBounds=57,61,6,12;point=60,64;liftedProbe=56,60,8,8;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;localTerminal[2]=E|point=100,90;pad=87,77,26,26;point=100,90;boardProbe=85,75,30,30;connected=point=100,90;point=76,70;connectedBounds=73,67,30,26;point=76,70;connectedProbe=72,66,8,8;lifted=point=76,64;point=76,70;liftedBounds=73,61,6,12;point=76,64;liftedProbe=72,60,8,8;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;terminal[0]:B|point=150,680;pad=137,667,26,26;point=150,680;boardProbe=135,665,30,30;point=174,660;connectedProbe=170,656,8,8;point=174,654;liftedProbe=170,650,8,8;point=150,680;point=174,660;connectedLead=147,657,30,26;point=174,654;point=174,660;liftedLead=171,651,6,12;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:C|point=190,680;pad=177,667,26,26;point=190,680;boardProbe=175,665,30,30;point=190,660;connectedProbe=186,656,8,8;point=190,654;liftedProbe=186,650,8,8;point=190,680;point=190,660;connectedLead=187,657,6,26;point=190,654;point=190,660;liftedLead=187,651,6,12;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;terminal[2]:E|point=230,680;pad=217,667,26,26;point=230,680;boardProbe=215,665,30,30;point=206,660;connectedProbe=202,656,8,8;point=206,654;liftedProbe=202,650,8,8;point=230,680;point=206,660;connectedLead=203,657,30,26;point=206,654;point=206,660;liftedLead=203,651,6,12;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;|pad=Q1.B@150,680 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=137,667,26,26 probe=135,665,30,30;pad=Q1.C@190,680 escape=0,1,36 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=177,667,26,26 probe=175,665,30,30;pad=Q1.E@230,680 escape=0,1,36 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=217,667,26,26 probe=215,665,30,30;\nJ1@70,130,100,130|component=J1@70,130,100,130|pose=70,130|rotation=DEG_0|mount=TOP|body=78,138,84,114;keepout=70,130,100,130;courtyard=64,124,112,142;selection=74,134,105,122;drag=64,124,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=4,4,105,122;localDrag=-6,-6,121,142;localTerminal[0]=1|point=90,40;pad=77,27,26,26;point=90,40;boardProbe=75,25,30,30;connected=point=90,40;point=60,40;connectedBounds=57,37,36,6;point=60,40;connectedProbe=56,36,8,8;lifted=point=54,40;point=60,40;liftedBounds=51,37,12,6;point=54,40;liftedProbe=50,36,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=90,100;pad=77,87,26,26;point=90,100;boardProbe=75,85,30,30;connected=point=90,100;point=60,100;connectedBounds=57,97,36,6;point=60,100;connectedProbe=56,96,8,8;lifted=point=54,100;point=60,100;liftedBounds=51,97,12,6;point=54,100;liftedProbe=50,96,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=160,170;pad=147,157,26,26;point=160,170;boardProbe=145,155,30,30;point=130,170;connectedProbe=126,166,8,8;point=124,170;liftedProbe=120,166,8,8;point=160,170;point=130,170;connectedLead=127,167,36,6;point=124,170;point=130,170;liftedLead=121,167,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=160,230;pad=147,217,26,26;point=160,230;boardProbe=145,215,30,30;point=130,230;connectedProbe=126,226,8,8;point=124,230;liftedProbe=120,226,8,8;point=160,230;point=130,230;connectedLead=127,227,36,6;point=124,230;point=130,230;liftedLead=121,227,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J1.1@160,170 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,157,26,26 probe=145,155,30,30;pad=J1.2@160,230 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,217,26,26 probe=145,215,30,30;\nJ2@70,370,100,130|component=J2@70,370,100,130|pose=70,370|rotation=DEG_0|mount=TOP|body=78,378,84,114;keepout=70,370,100,130;courtyard=64,364,112,142;selection=74,374,105,122;drag=64,364,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=4,4,105,122;localDrag=-6,-6,121,142;localTerminal[0]=1|point=90,40;pad=77,27,26,26;point=90,40;boardProbe=75,25,30,30;connected=point=90,40;point=60,40;connectedBounds=57,37,36,6;point=60,40;connectedProbe=56,36,8,8;lifted=point=54,40;point=60,40;liftedBounds=51,37,12,6;point=54,40;liftedProbe=50,36,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=90,100;pad=77,87,26,26;point=90,100;boardProbe=75,85,30,30;connected=point=90,100;point=60,100;connectedBounds=57,97,36,6;point=60,100;connectedProbe=56,96,8,8;lifted=point=54,100;point=60,100;liftedBounds=51,97,12,6;point=54,100;liftedProbe=50,96,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=160,410;pad=147,397,26,26;point=160,410;boardProbe=145,395,30,30;point=130,410;connectedProbe=126,406,8,8;point=124,410;liftedProbe=120,406,8,8;point=160,410;point=130,410;connectedLead=127,407,36,6;point=124,410;point=130,410;liftedLead=121,407,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=160,470;pad=147,457,26,26;point=160,470;boardProbe=145,455,30,30;point=130,470;connectedProbe=126,466,8,8;point=124,470;liftedProbe=120,466,8,8;point=160,470;point=130,470;connectedLead=127,467,36,6;point=124,470;point=130,470;liftedLead=121,467,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J2.1@160,410 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,397,26,26 probe=145,395,30,30;pad=J2.2@160,470 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,457,26,26 probe=145,455,30,30;\nJ3@750,280,100,130|component=J3@750,280,100,130|pose=750,280|rotation=DEG_0|mount=TOP|body=758,288,84,114;keepout=750,280,100,130;courtyard=744,274,112,142;selection=741,284,105,122;drag=735,274,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT_MIRRORED_X|transform=MIRROR_X|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=-9,4,105,122;localDrag=-15,-6,121,142;localTerminal[0]=1|point=10,40;pad=-3,27,26,26;point=10,40;boardProbe=-5,25,30,30;connected=point=10,40;point=40,40;connectedBounds=7,37,36,6;point=40,40;connectedProbe=36,36,8,8;lifted=point=46,40;point=40,40;liftedBounds=37,37,12,6;point=46,40;liftedProbe=42,36,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=10,100;pad=-3,87,26,26;point=10,100;boardProbe=-5,85,30,30;connected=point=10,100;point=40,100;connectedBounds=7,97,36,6;point=40,100;connectedProbe=36,96,8,8;lifted=point=46,100;point=40,100;liftedBounds=37,97,12,6;point=46,100;liftedProbe=42,96,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=760,320;pad=747,307,26,26;point=760,320;boardProbe=745,305,30,30;point=790,320;connectedProbe=786,316,8,8;point=796,320;liftedProbe=792,316,8,8;point=760,320;point=790,320;connectedLead=757,317,36,6;point=796,320;point=790,320;liftedLead=787,317,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=760,380;pad=747,367,26,26;point=760,380;boardProbe=745,365,30,30;point=790,380;connectedProbe=786,376,8,8;point=796,380;liftedProbe=792,376,8,8;point=760,380;point=790,380;connectedLead=757,377,36,6;point=796,380;point=790,380;liftedLead=787,377,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J3.1@760,320 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,307,26,26 probe=745,305,30,30;pad=J3.2@760,380 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,367,26,26 probe=745,365,30,30;\nJ4@750,520,100,130|component=J4@750,520,100,130|pose=750,520|rotation=DEG_0|mount=TOP|body=758,528,84,114;keepout=750,520,100,130;courtyard=744,514,112,142;selection=741,524,105,122;drag=735,514,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT_MIRRORED_X|transform=MIRROR_X|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=-9,4,105,122;localDrag=-15,-6,121,142;localTerminal[0]=1|point=10,40;pad=-3,27,26,26;point=10,40;boardProbe=-5,25,30,30;connected=point=10,40;point=40,40;connectedBounds=7,37,36,6;point=40,40;connectedProbe=36,36,8,8;lifted=point=46,40;point=40,40;liftedBounds=37,37,12,6;point=46,40;liftedProbe=42,36,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=10,100;pad=-3,87,26,26;point=10,100;boardProbe=-5,85,30,30;connected=point=10,100;point=40,100;connectedBounds=7,97,36,6;point=40,100;connectedProbe=36,96,8,8;lifted=point=46,100;point=40,100;liftedBounds=37,97,12,6;point=46,100;liftedProbe=42,96,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=760,560;pad=747,547,26,26;point=760,560;boardProbe=745,545,30,30;point=790,560;connectedProbe=786,556,8,8;point=796,560;liftedProbe=792,556,8,8;point=760,560;point=790,560;connectedLead=757,557,36,6;point=796,560;point=790,560;liftedLead=787,557,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=760,620;pad=747,607,26,26;point=760,620;boardProbe=745,605,30,30;point=790,620;connectedProbe=786,616,8,8;point=796,620;liftedProbe=792,616,8,8;point=760,620;point=790,620;connectedLead=757,617,36,6;point=796,620;point=790,620;liftedLead=787,617,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J4.1@760,560 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,547,26,26 probe=745,545,30,30;pad=J4.2@760,620 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,607,26,26 probe=745,605,30,30;\n",
+          "inputPlanSha256": "7e4210825d3c636e40c62e24aeb95f7a3f1ec84cdf6a5b994c811b445d8f1f8a",
+          "planCandidate": 4,
+          "planOutline": [
+            20,
+            20,
+            910,
+            930
+          ],
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "routePolicy": "P05_ONE_FACE",
+          "baselineGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "exceptionType": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$CandidateRejected",
+          "kind": "ROUTING",
+          "reason": null,
+          "blockedNet": null,
+          "message": "Unable to route net CTRL_RETURN from Q1.E@230,680 to J1.2@160,230",
+          "recovery": {
+            "canonical": "routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=38;branchSearches=66;orders=5;ripPasses=2;ripped=4;rerouted=6;expansions=182240;failures=5;rawSegments=2858;conflicts=8330;order[0]=11:CTRL_RETURN,8:COIL_LOW,11:CTRL_SUPPLY,5:DRIVE,3:CMD,11:CONTACT_OUT,14:CONTACT_RETURN,14:CONTACT_SUPPLY,2:NC,tree=0;rip[DRIVE]=[CTRL_RETURN, CTRL_SUPPLY];reject[NO_PATH:CTRL_SUPPLY];order[1]=11:CTRL_SUPPLY,11:CTRL_RETURN,8:COIL_LOW,5:DRIVE,3:CMD,11:CONTACT_OUT,14:CONTACT_RETURN,14:CONTACT_SUPPLY,2:NC,tree=1;reject[QUALITY:DETOUR];order[2]=11:CTRL_RETURN,11:CTRL_SUPPLY,8:COIL_LOW,5:DRIVE,14:CONTACT_RETURN,14:CONTACT_SUPPLY,3:CMD,11:CONTACT_OUT,2:NC,tree=2;rip[COIL_LOW]=[CTRL_SUPPLY, CTRL_RETURN];recovered[COIL_LOW];reject[NO_PATH:DRIVE];order[3]=2:NC,14:CONTACT_RETURN,3:CMD,11:CONTACT_OUT,14:CONTACT_SUPPLY,8:COIL_LOW,11:CTRL_SUPPLY,5:DRIVE,11:CTRL_RETURN,tree=3;reject[QUALITY:DETOUR];order[4]=2:NC,14:CONTACT_SUPPLY,14:CONTACT_RETURN,11:CONTACT_OUT,3:CMD,5:DRIVE,11:CTRL_SUPPLY,8:COIL_LOW,11:CTRL_RETURN,tree=4;reject[NO_PATH:CTRL_RETURN];",
+            "orderingPasses": 5,
+            "expansions": 182240,
+            "outcome": "EXHAUSTED",
+            "rejectionReason": "NO_PATH"
+          }
+        },
+        "correlatedRouterEvent": {
+          "schema": "packing-rejection-diagnostic@1",
+          "event": "COMPACT_ROUTER_REJECTED",
+          "phase": "P05_ROUTE_SEARCH",
+          "inputPlanCanonical": "task-packing-plan@1;outline=20,20,910,930;RPD@280,150,260,70|component=RPD@280,150,260,70|pose=280,150|rotation=DEG_0|mount=TOP|body=350,168,120,34;keepout=350,168,120,34;courtyard=292,155,236,60;selection=291,161,238,45;drag=285,155,250,57;package=AXIAL_RESISTOR|connector=false|variant=SPAN_260|transform=IDENTITY|version=3|looseVariant=SPAN_220|developerGeneric=false|internal:1=2=false;geometry=260x70|version=3|developerGeneric=false|localBody=70,18,120,34;localKeepout=70,18,120,34;localCourtyard=12,5,236,60;localSelection=11,11,238,45;localDrag=5,5,250,57;localTerminal[0]=1|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=75,30;connectedBounds=27,27,51,6;point=75,30;connectedProbe=71,26,8,8;lifted=point=82,30;point=75,30;liftedBounds=72,27,13,6;point=82,30;liftedProbe=78,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=230,30;pad=217,17,26,26;point=230,30;boardProbe=215,15,30,30;connected=point=230,30;point=185,30;connectedBounds=182,27,51,6;point=185,30;connectedProbe=181,26,8,8;lifted=point=178,30;point=185,30;liftedBounds=175,27,13,6;point=178,30;liftedProbe=174,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=310,180;pad=297,167,26,26;point=310,180;boardProbe=295,165,30,30;point=355,180;connectedProbe=351,176,8,8;point=362,180;liftedProbe=358,176,8,8;point=310,180;point=355,180;connectedLead=307,177,51,6;point=362,180;point=355,180;liftedLead=352,177,13,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=510,180;pad=497,167,26,26;point=510,180;boardProbe=495,165,30,30;point=465,180;connectedProbe=461,176,8,8;point=458,180;liftedProbe=454,176,8,8;point=510,180;point=465,180;connectedLead=462,177,51,6;point=458,180;point=465,180;liftedLead=455,177,13,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=RPD.1@310,180 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=297,167,26,26 probe=295,165,30,30;pad=RPD.2@510,180 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=497,167,26,26 probe=495,165,30,30;\nRDRIVE@290,270,220,70|component=RDRIVE@290,270,220,70|pose=290,270|rotation=DEG_0|mount=TOP|body=360,288,80,34;keepout=360,288,80,34;courtyard=302,275,196,60;selection=301,281,198,45;drag=295,275,210,57;package=AXIAL_RESISTOR|connector=false|variant=SPAN_220|transform=IDENTITY|version=3|looseVariant=SPAN_220|developerGeneric=false|internal:1=2=false;geometry=220x70|version=3|developerGeneric=false|localBody=70,18,80,34;localKeepout=70,18,80,34;localCourtyard=12,5,196,60;localSelection=11,11,198,45;localDrag=5,5,210,57;localTerminal[0]=1|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=75,30;connectedBounds=27,27,51,6;point=75,30;connectedProbe=71,26,8,8;lifted=point=82,30;point=75,30;liftedBounds=72,27,13,6;point=82,30;liftedProbe=78,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=190,30;pad=177,17,26,26;point=190,30;boardProbe=175,15,30,30;connected=point=190,30;point=145,30;connectedBounds=142,27,51,6;point=145,30;connectedProbe=141,26,8,8;lifted=point=138,30;point=145,30;liftedBounds=135,27,13,6;point=138,30;liftedProbe=134,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=320,300;pad=307,287,26,26;point=320,300;boardProbe=305,285,30,30;point=365,300;connectedProbe=361,296,8,8;point=372,300;liftedProbe=368,296,8,8;point=320,300;point=365,300;connectedLead=317,297,51,6;point=372,300;point=365,300;liftedLead=362,297,13,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=480,300;pad=467,287,26,26;point=480,300;boardProbe=465,285,30,30;point=435,300;connectedProbe=431,296,8,8;point=428,300;liftedProbe=424,296,8,8;point=480,300;point=435,300;connectedLead=432,297,51,6;point=428,300;point=435,300;liftedLead=425,297,13,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=RDRIVE.1@320,300 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=307,287,26,26 probe=305,285,30,30;pad=RDRIVE.2@480,300 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=467,287,26,26 probe=465,285,30,30;\nK1@330,450,300,210|component=K1@330,450,300,210|pose=330,450|rotation=DEG_0|mount=TOP|body=420,520,120,100;keepout=415,515,130,110;courtyard=340,460,280,180;selection=341,461,278,163;drag=335,455,290,176;package=RELAY_SPDT|connector=false|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:A1=A2=false;internal:A1=COM=false;internal:A1=NC=false;internal:A1=NO=false;internal:A2=COM=false;internal:A2=NC=false;internal:A2=NO=false;internal:COM=NC=false;internal:COM=NO=false;internal:NC=NO=false;geometry=300x210|version=3|developerGeneric=false|localBody=90,70,120,100;localKeepout=85,65,130,110;localCourtyard=10,10,280,180;localSelection=11,11,278,163;localDrag=5,5,290,176;localTerminal[0]=A1|point=30,120;pad=17,107,26,26;point=30,120;boardProbe=15,105,30,30;connected=point=30,120;point=90,120;connectedBounds=27,117,66,6;point=90,120;connectedProbe=86,116,8,8;lifted=point=70,140;point=90,120;liftedBounds=67,117,26,26;point=70,140;liftedProbe=66,136,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=A2|point=270,120;pad=257,107,26,26;point=270,120;boardProbe=255,105,30,30;connected=point=270,120;point=210,120;connectedBounds=207,117,66,6;point=210,120;connectedProbe=206,116,8,8;lifted=point=230,140;point=210,120;liftedBounds=207,117,26,26;point=230,140;liftedProbe=226,136,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[2]=COM|point=70,30;pad=57,17,26,26;point=70,30;boardProbe=55,15,30,30;connected=point=70,30;point=100,70;connectedBounds=67,27,36,46;point=100,70;connectedProbe=96,66,8,8;lifted=point=100,54;point=100,70;liftedBounds=97,51,6,22;point=100,54;liftedProbe=96,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;localTerminal[3]=NC|point=150,30;pad=137,17,26,26;point=150,30;boardProbe=135,15,30,30;connected=point=150,30;point=150,70;connectedBounds=147,27,6,46;point=150,70;connectedProbe=146,66,8,8;lifted=point=150,54;point=150,70;liftedBounds=147,51,6,22;point=150,54;liftedProbe=146,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;localTerminal[4]=NO|point=230,30;pad=217,17,26,26;point=230,30;boardProbe=215,15,30,30;connected=point=230,30;point=200,70;connectedBounds=197,27,36,46;point=200,70;connectedProbe=196,66,8,8;lifted=point=200,54;point=200,70;liftedBounds=197,51,6,22;point=200,54;liftedProbe=196,50,8,8;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[0]:A1|point=360,570;pad=347,557,26,26;point=360,570;boardProbe=345,555,30,30;point=420,570;connectedProbe=416,566,8,8;point=400,590;liftedProbe=396,586,8,8;point=360,570;point=420,570;connectedLead=357,567,66,6;point=400,590;point=420,570;liftedLead=397,567,26,26;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:A2|point=600,570;pad=587,557,26,26;point=600,570;boardProbe=585,555,30,30;point=540,570;connectedProbe=536,566,8,8;point=560,590;liftedProbe=556,586,8,8;point=600,570;point=540,570;connectedLead=537,567,66,6;point=560,590;point=540,570;liftedLead=537,567,26,26;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[2]:COM|point=400,480;pad=387,467,26,26;point=400,480;boardProbe=385,465,30,30;point=430,520;connectedProbe=426,516,8,8;point=430,504;liftedProbe=426,500,8,8;point=400,480;point=430,520;connectedLead=397,477,36,46;point=430,504;point=430,520;liftedLead=427,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[3]:NC|point=480,480;pad=467,467,26,26;point=480,480;boardProbe=465,465,30,30;point=480,520;connectedProbe=476,516,8,8;point=480,504;liftedProbe=476,500,8,8;point=480,480;point=480,520;connectedLead=477,477,6,46;point=480,504;point=480,520;liftedLead=477,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;terminal[4]:NO|point=560,480;pad=547,467,26,26;point=560,480;boardProbe=545,465,30,30;point=530,520;connectedProbe=526,516,8,8;point=530,504;liftedProbe=526,500,8,8;point=560,480;point=530,520;connectedLead=527,477,36,46;point=530,504;point=530,520;liftedLead=527,501,6,22;escape=0,-1,40 attachment=PLATED_THROUGH_HOLE;|pad=K1.A1@360,570 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=347,557,26,26 probe=345,555,30,30;pad=K1.A2@600,570 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=587,557,26,26 probe=585,555,30,30;pad=K1.COM@400,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=387,467,26,26 probe=385,465,30,30;pad=K1.NC@480,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=467,467,26,26 probe=465,465,30,30;pad=K1.NO@560,480 escape=0,-1,40 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=547,467,26,26 probe=545,465,30,30;\nD1@330,700,230,70|component=D1@330,700,230,70|pose=330,700|rotation=DEG_0|mount=TOP|body=402,719,86,32;keepout=402,719,86,32;courtyard=342,705,206,60;selection=341,711,208,44;drag=335,705,220,56;package=AXIAL_DIODE|connector=false|variant=SPAN_230|transform=IDENTITY|version=3|looseVariant=SPAN_230|developerGeneric=false|internal:A=K=false;geometry=230x70|version=3|developerGeneric=false|localBody=72,19,86,32;localKeepout=72,19,86,32;localCourtyard=12,5,206,60;localSelection=11,11,208,44;localDrag=5,5,220,56;localTerminal[0]=A|point=30,30;pad=17,17,26,26;point=30,30;boardProbe=15,15,30,30;connected=point=30,30;point=72,30;connectedBounds=27,27,48,6;point=72,30;connectedProbe=68,26,8,8;lifted=point=78,30;point=72,30;liftedBounds=69,27,12,6;point=78,30;liftedProbe=74,26,8,8;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=K|point=200,30;pad=187,17,26,26;point=200,30;boardProbe=185,15,30,30;connected=point=200,30;point=158,30;connectedBounds=155,27,48,6;point=158,30;connectedProbe=154,26,8,8;lifted=point=152,30;point=158,30;liftedBounds=149,27,12,6;point=152,30;liftedProbe=148,26,8,8;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[0]:A|point=360,730;pad=347,717,26,26;point=360,730;boardProbe=345,715,30,30;point=402,730;connectedProbe=398,726,8,8;point=408,730;liftedProbe=404,726,8,8;point=360,730;point=402,730;connectedLead=357,727,48,6;point=408,730;point=402,730;liftedLead=399,727,12,6;escape=-1,0,50 attachment=PLATED_THROUGH_HOLE;terminal[1]:K|point=530,730;pad=517,717,26,26;point=530,730;boardProbe=515,715,30,30;point=488,730;connectedProbe=484,726,8,8;point=482,730;liftedProbe=478,726,8,8;point=530,730;point=488,730;connectedLead=485,727,48,6;point=482,730;point=488,730;liftedLead=479,727,12,6;escape=1,0,50 attachment=PLATED_THROUGH_HOLE;|pad=D1.A@360,730 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=347,717,26,26 probe=345,715,30,30;pad=D1.K@530,730 escape=1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=517,717,26,26 probe=515,715,30,30;\nQ1@130,590,130,125|component=Q1@130,590,130,125|pose=130,590|rotation=DEG_0|mount=TOP|body=158,616,64,56;keepout=148,602,84,78;courtyard=135,594,120,118;selection=131,612,118,87;drag=125,596,130,109;package=TO92_NPN|connector=false|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:B=C=false;internal:B=E=false;internal:C=E=false;geometry=130x125|version=3|developerGeneric=false|localBody=28,26,64,56;localKeepout=18,12,84,78;localCourtyard=5,4,120,118;localSelection=1,22,118,87;localDrag=-5,6,130,109;localTerminal[0]=B|point=20,90;pad=7,77,26,26;point=20,90;boardProbe=5,75,30,30;connected=point=20,90;point=44,70;connectedBounds=17,67,30,26;point=44,70;connectedProbe=40,66,8,8;lifted=point=44,64;point=44,70;liftedBounds=41,61,6,12;point=44,64;liftedProbe=40,60,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=C|point=60,90;pad=47,77,26,26;point=60,90;boardProbe=45,75,30,30;connected=point=60,90;point=60,70;connectedBounds=57,67,6,26;point=60,70;connectedProbe=56,66,8,8;lifted=point=60,64;point=60,70;liftedBounds=57,61,6,12;point=60,64;liftedProbe=56,60,8,8;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;localTerminal[2]=E|point=100,90;pad=87,77,26,26;point=100,90;boardProbe=85,75,30,30;connected=point=100,90;point=76,70;connectedBounds=73,67,30,26;point=76,70;connectedProbe=72,66,8,8;lifted=point=76,64;point=76,70;liftedBounds=73,61,6,12;point=76,64;liftedProbe=72,60,8,8;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;terminal[0]:B|point=150,680;pad=137,667,26,26;point=150,680;boardProbe=135,665,30,30;point=174,660;connectedProbe=170,656,8,8;point=174,654;liftedProbe=170,650,8,8;point=150,680;point=174,660;connectedLead=147,657,30,26;point=174,654;point=174,660;liftedLead=171,651,6,12;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:C|point=190,680;pad=177,667,26,26;point=190,680;boardProbe=175,665,30,30;point=190,660;connectedProbe=186,656,8,8;point=190,654;liftedProbe=186,650,8,8;point=190,680;point=190,660;connectedLead=187,657,6,26;point=190,654;point=190,660;liftedLead=187,651,6,12;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;terminal[2]:E|point=230,680;pad=217,667,26,26;point=230,680;boardProbe=215,665,30,30;point=206,660;connectedProbe=202,656,8,8;point=206,654;liftedProbe=202,650,8,8;point=230,680;point=206,660;connectedLead=203,657,30,26;point=206,654;point=206,660;liftedLead=203,651,6,12;escape=0,1,36 attachment=PLATED_THROUGH_HOLE;|pad=Q1.B@150,680 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=137,667,26,26 probe=135,665,30,30;pad=Q1.C@190,680 escape=0,1,36 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=177,667,26,26 probe=175,665,30,30;pad=Q1.E@230,680 escape=0,1,36 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=217,667,26,26 probe=215,665,30,30;\nJ1@70,130,100,130|component=J1@70,130,100,130|pose=70,130|rotation=DEG_0|mount=TOP|body=78,138,84,114;keepout=70,130,100,130;courtyard=64,124,112,142;selection=74,134,105,122;drag=64,124,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=4,4,105,122;localDrag=-6,-6,121,142;localTerminal[0]=1|point=90,40;pad=77,27,26,26;point=90,40;boardProbe=75,25,30,30;connected=point=90,40;point=60,40;connectedBounds=57,37,36,6;point=60,40;connectedProbe=56,36,8,8;lifted=point=54,40;point=60,40;liftedBounds=51,37,12,6;point=54,40;liftedProbe=50,36,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=90,100;pad=77,87,26,26;point=90,100;boardProbe=75,85,30,30;connected=point=90,100;point=60,100;connectedBounds=57,97,36,6;point=60,100;connectedProbe=56,96,8,8;lifted=point=54,100;point=60,100;liftedBounds=51,97,12,6;point=54,100;liftedProbe=50,96,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=160,170;pad=147,157,26,26;point=160,170;boardProbe=145,155,30,30;point=130,170;connectedProbe=126,166,8,8;point=124,170;liftedProbe=120,166,8,8;point=160,170;point=130,170;connectedLead=127,167,36,6;point=124,170;point=130,170;liftedLead=121,167,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=160,230;pad=147,217,26,26;point=160,230;boardProbe=145,215,30,30;point=130,230;connectedProbe=126,226,8,8;point=124,230;liftedProbe=120,226,8,8;point=160,230;point=130,230;connectedLead=127,227,36,6;point=124,230;point=130,230;liftedLead=121,227,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J1.1@160,170 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,157,26,26 probe=145,155,30,30;pad=J1.2@160,230 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,217,26,26 probe=145,215,30,30;\nJ2@70,370,100,130|component=J2@70,370,100,130|pose=70,370|rotation=DEG_0|mount=TOP|body=78,378,84,114;keepout=70,370,100,130;courtyard=64,364,112,142;selection=74,374,105,122;drag=64,364,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT|transform=IDENTITY|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=4,4,105,122;localDrag=-6,-6,121,142;localTerminal[0]=1|point=90,40;pad=77,27,26,26;point=90,40;boardProbe=75,25,30,30;connected=point=90,40;point=60,40;connectedBounds=57,37,36,6;point=60,40;connectedProbe=56,36,8,8;lifted=point=54,40;point=60,40;liftedBounds=51,37,12,6;point=54,40;liftedProbe=50,36,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=90,100;pad=77,87,26,26;point=90,100;boardProbe=75,85,30,30;connected=point=90,100;point=60,100;connectedBounds=57,97,36,6;point=60,100;connectedProbe=56,96,8,8;lifted=point=54,100;point=60,100;liftedBounds=51,97,12,6;point=54,100;liftedProbe=50,96,8,8;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=160,410;pad=147,397,26,26;point=160,410;boardProbe=145,395,30,30;point=130,410;connectedProbe=126,406,8,8;point=124,410;liftedProbe=120,406,8,8;point=160,410;point=130,410;connectedLead=127,407,36,6;point=124,410;point=130,410;liftedLead=121,407,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=160,470;pad=147,457,26,26;point=160,470;boardProbe=145,455,30,30;point=130,470;connectedProbe=126,466,8,8;point=124,470;liftedProbe=120,466,8,8;point=160,470;point=130,470;connectedLead=127,467,36,6;point=124,470;point=130,470;liftedLead=121,467,12,6;escape=1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J2.1@160,410 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,397,26,26 probe=145,395,30,30;pad=J2.2@160,470 escape=1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=147,457,26,26 probe=145,455,30,30;\nJ3@750,280,100,130|component=J3@750,280,100,130|pose=750,280|rotation=DEG_0|mount=TOP|body=758,288,84,114;keepout=750,280,100,130;courtyard=744,274,112,142;selection=741,284,105,122;drag=735,274,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT_MIRRORED_X|transform=MIRROR_X|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=-9,4,105,122;localDrag=-15,-6,121,142;localTerminal[0]=1|point=10,40;pad=-3,27,26,26;point=10,40;boardProbe=-5,25,30,30;connected=point=10,40;point=40,40;connectedBounds=7,37,36,6;point=40,40;connectedProbe=36,36,8,8;lifted=point=46,40;point=40,40;liftedBounds=37,37,12,6;point=46,40;liftedProbe=42,36,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=10,100;pad=-3,87,26,26;point=10,100;boardProbe=-5,85,30,30;connected=point=10,100;point=40,100;connectedBounds=7,97,36,6;point=40,100;connectedProbe=36,96,8,8;lifted=point=46,100;point=40,100;liftedBounds=37,97,12,6;point=46,100;liftedProbe=42,96,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=760,320;pad=747,307,26,26;point=760,320;boardProbe=745,305,30,30;point=790,320;connectedProbe=786,316,8,8;point=796,320;liftedProbe=792,316,8,8;point=760,320;point=790,320;connectedLead=757,317,36,6;point=796,320;point=790,320;liftedLead=787,317,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=760,380;pad=747,367,26,26;point=760,380;boardProbe=745,365,30,30;point=790,380;connectedProbe=786,376,8,8;point=796,380;liftedProbe=792,376,8,8;point=760,380;point=790,380;connectedLead=757,377,36,6;point=796,380;point=790,380;liftedLead=787,377,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J3.1@760,320 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,307,26,26 probe=745,305,30,30;pad=J3.2@760,380 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,367,26,26 probe=745,365,30,30;\nJ4@750,520,100,130|component=J4@750,520,100,130|pose=750,520|rotation=DEG_0|mount=TOP|body=758,528,84,114;keepout=750,520,100,130;courtyard=744,514,112,142;selection=741,524,105,122;drag=735,514,121,142;package=THROUGH_HOLE_CONNECTOR_2|connector=true|variant=DEFAULT_MIRRORED_X|transform=MIRROR_X|version=3|looseVariant=DEFAULT|developerGeneric=false|internal:1=2=false;geometry=100x130|version=3|developerGeneric=false|localBody=8,8,84,114;localKeepout=0,0,100,130;localCourtyard=-6,-6,112,142;localSelection=-9,4,105,122;localDrag=-15,-6,121,142;localTerminal[0]=1|point=10,40;pad=-3,27,26,26;point=10,40;boardProbe=-5,25,30,30;connected=point=10,40;point=40,40;connectedBounds=7,37,36,6;point=40,40;connectedProbe=36,36,8,8;lifted=point=46,40;point=40,40;liftedBounds=37,37,12,6;point=46,40;liftedProbe=42,36,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;localTerminal[1]=2|point=10,100;pad=-3,87,26,26;point=10,100;boardProbe=-5,85,30,30;connected=point=10,100;point=40,100;connectedBounds=7,97,36,6;point=40,100;connectedProbe=36,96,8,8;lifted=point=46,100;point=40,100;liftedBounds=37,97,12,6;point=46,100;liftedProbe=42,96,8,8;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[0]:1|point=760,560;pad=747,547,26,26;point=760,560;boardProbe=745,545,30,30;point=790,560;connectedProbe=786,556,8,8;point=796,560;liftedProbe=792,556,8,8;point=760,560;point=790,560;connectedLead=757,557,36,6;point=796,560;point=790,560;liftedLead=787,557,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;terminal[1]:2|point=760,620;pad=747,607,26,26;point=760,620;boardProbe=745,605,30,30;point=790,620;connectedProbe=786,616,8,8;point=796,620;liftedProbe=792,616,8,8;point=760,620;point=790,620;connectedLead=757,617,36,6;point=796,620;point=790,620;liftedLead=787,617,12,6;escape=-1,0,30 attachment=PLATED_THROUGH_HOLE;|pad=J4.1@760,560 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,547,26,26 probe=745,545,30,30;pad=J4.2@760,620 escape=-1,0,30 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=747,607,26,26 probe=745,605,30,30;\n",
+          "inputPlanSha256": "7e4210825d3c636e40c62e24aeb95f7a3f1ec84cdf6a5b994c811b445d8f1f8a",
+          "planCandidate": 4,
+          "planOutline": [
+            20,
+            20,
+            910,
+            930
+          ],
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "-7609816130686485171",
+          "routePolicy": "P05_ONE_FACE",
+          "baselineGeometrySha256": null,
+          "exceptionType": "com.lushprojects.circuitjs1.client.PcbNetRouter$Rejected",
+          "kind": "ROUTING",
+          "reason": "NO_PATH",
+          "blockedNet": "CTRL_RETURN",
+          "message": "Unable to route net CTRL_RETURN from Q1.E@230,680 to J1.2@160,230",
+          "recovery": {
+            "canonical": "routing-work@1;outcome=EXHAUSTED;reason=NO_PATH;netAttempts=38;branchSearches=66;orders=5;ripPasses=2;ripped=4;rerouted=6;expansions=182240;failures=5;rawSegments=2858;conflicts=8330;order[0]=11:CTRL_RETURN,8:COIL_LOW,11:CTRL_SUPPLY,5:DRIVE,3:CMD,11:CONTACT_OUT,14:CONTACT_RETURN,14:CONTACT_SUPPLY,2:NC,tree=0;rip[DRIVE]=[CTRL_RETURN, CTRL_SUPPLY];reject[NO_PATH:CTRL_SUPPLY];order[1]=11:CTRL_SUPPLY,11:CTRL_RETURN,8:COIL_LOW,5:DRIVE,3:CMD,11:CONTACT_OUT,14:CONTACT_RETURN,14:CONTACT_SUPPLY,2:NC,tree=1;reject[QUALITY:DETOUR];order[2]=11:CTRL_RETURN,11:CTRL_SUPPLY,8:COIL_LOW,5:DRIVE,14:CONTACT_RETURN,14:CONTACT_SUPPLY,3:CMD,11:CONTACT_OUT,2:NC,tree=2;rip[COIL_LOW]=[CTRL_SUPPLY, CTRL_RETURN];recovered[COIL_LOW];reject[NO_PATH:DRIVE];order[3]=2:NC,14:CONTACT_RETURN,3:CMD,11:CONTACT_OUT,14:CONTACT_SUPPLY,8:COIL_LOW,11:CTRL_SUPPLY,5:DRIVE,11:CTRL_RETURN,tree=3;reject[QUALITY:DETOUR];order[4]=2:NC,14:CONTACT_SUPPLY,14:CONTACT_RETURN,11:CONTACT_OUT,3:CMD,5:DRIVE,11:CTRL_SUPPLY,8:COIL_LOW,11:CTRL_RETURN,tree=4;reject[NO_PATH:CTRL_RETURN];",
+            "orderingPasses": 5,
+            "expansions": 182240,
+            "outcome": "EXHAUSTED",
+            "rejectionReason": "NO_PATH"
+          }
+        },
+        "unrelatedInnerRouterEvents": 0,
+        "causeCorrelation": "PACKING_CAUGHT is bound to the actual FINAL proposal"
+      },
+      "readerNegativeControls": [
+        "public identity",
+        "pad net membership",
+        "independent copper",
+        "independent protected void",
+        "current physical epochs"
+      ],
+      "stageNegativeControls": [
+        "missing two-pad span inventory",
+        "independent Manhattan span arithmetic",
+        "rehash-valid wrong pad identity",
+        "shared evaluation cap",
+        "FINAL candidate relation",
+        "FINAL retains paired cumulative work",
+        "hash-valid FINAL canonical suffix relation"
+      ],
+      "causeNegativeControls": [
+        "cause event detached from FINAL proposal",
+        "self-consistent cause counter disagrees with native probe"
+      ],
+      "limits": "One exact ordinary EASY relay replay. This receipt check does not validate host canaries, native process exits/cleanup, execution provenance, private source seals, visual cleanup, a route/placement optimum, production changes, or any broader seed/family claim."
+    },
+    "limits": "One fixed private stream, unchanged placement. Target GO requires broader qualification before production; no new production, matrix, GWT or player proof."
+  },
+  "comparisonNegativeControls": [
+    "original source routing stream",
+    "different shared stage work",
+    "changed source layout seed"
+  ],
+  "limits": "One exact ordinary relay replay, one predeclared fixed private optional routing stream. All placement plans, original graph and baseline metric tuple checked against audited accepted control. Target GO requires broader qualification; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched."
+}

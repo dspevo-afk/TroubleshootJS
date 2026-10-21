@@ -1,0 +1,27 @@
+{
+  "status": "PASS_PRESERVED_SELECTED_NATIVE_HOST_HELPERS",
+  "changes": [
+    {
+      "file": "run_export.ps1",
+      "from": "docs/task-evidence/PCB/fresh-relay-stage-diagnostic-r1/run_export.ps1",
+      "sourceSha256": "46fe6915894d4a785eb18cf041fa2c4b57bebb342e14e975bdbc9779f6b4ce84",
+      "adaptedSha256": "4cfee4b9bba5ac3d70f6d389b0465aedcc7bf6ab20bf57432425f0928867caf1",
+      "diff": "--- accepted/run_export.ps1\n+++ fixed-stream/run_export.ps1\n@@ -1,5 +1,5 @@\n [CmdletBinding()]\n-param([Parameter(Mandatory=$true)][ValidateSet('canaries','relay')][string]$Phase,\n+param([Parameter(Mandatory=$true)][ValidateSet('canaries','variant')][string]$Phase,\n       [Parameter(Mandatory=$true)][string]$JavaHome,\n       [Parameter(Mandatory=$true)][string]$PythonExe,\n       [Parameter(Mandatory=$true)][string]$PowerShellExe,\n@@ -24,7 +24,7 @@\n @{phase=$Phase;drivers=$drivers;scope='Captured before selected private span-probe adapter; root observes actual tool exit before separate birth checks'}|ConvertTo-Json -Depth 6|Set-Content -LiteralPath (Join-Path $attempt 'process-launch.json')\n $adapter=Join-Path $PrivateRoot 'common/verify-two-pad-span.ps1'\n $exporter=Join-Path $PrivateRoot 'common/SparseNormalBoardDiagnostic.java'\n-$arm='control'\n+$arm='variant'\n $generator=Join-Path $PrivateRoot ($arm+'/SeededPcbLayoutGenerator.java')\n $planner=Join-Path $PrivateRoot ($arm+'/PcbPlacementPlanner.java')\n $compactor=Join-Path $PrivateRoot ($arm+'/PcbPlacementCompactor.java')\n@@ -61,5 +61,5 @@\n     @{phase=$Phase;status=$(if($code -eq 0){'PASS'}else{'FAIL'});exitCode=$code;elapsedSeconds=$watch.Elapsed.TotalSeconds;terminalCleanupIncluded=$true;cleanupDuration='NOT_SEPARATELY_MEASURED';failure=$failure}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $attempt 'timing.json')\n }\n Audit-Inputs 'after'\n-if($code -ne 0){throw ('Fresh relay stage probe failed '+$Phase+' exit='+$code)}\n-Write-Output ('PASS fresh relay stage selected private adapter phase '+$Phase)\n+if($code -ne 0){throw ('Fixed optional stream probe failed '+$Phase+' exit='+$code)}\n+Write-Output ('PASS fixed optional stream selected private adapter phase '+$Phase)\n"
+    },
+    {
+      "file": "record_exit.ps1",
+      "from": "docs/task-evidence/PCB/fresh-relay-stage-diagnostic-r1/record_exit.ps1",
+      "sourceSha256": "7bb4421107b6bb7fbba209e6b4cd139a46b3c221c832c0734b593fbf81ea9c53",
+      "adaptedSha256": "b0e9054c363686fe176b9db9190584d0152eb92419324cb91632e68cc24503f3",
+      "diff": "--- accepted/record_exit.ps1\n+++ fixed-stream/record_exit.ps1\n@@ -1,5 +1,5 @@\n [CmdletBinding()]\n-param([Parameter(Mandatory=$true)][ValidateSet('canaries','relay')][string]$Phase,\n+param([Parameter(Mandatory=$true)][ValidateSet('canaries','variant')][string]$Phase,\n       [Parameter(Mandatory=$true)][int]$ActualExecExitCode)\n Set-StrictMode -Version Latest\n $ErrorActionPreference='Stop'\n"
+    },
+    {
+      "file": "observe_execution.ps1",
+      "from": "docs/task-evidence/PCB/fresh-relay-stage-diagnostic-r1/observe_execution.ps1",
+      "sourceSha256": "812bfd874d9ac32e002300bf5e478e73d66757a954c2e1c0bb23a5db863d9dfe",
+      "adaptedSha256": "f3388eb7b78b5a299a2e0330e3a6a98b234dc8787671085ce6908db663661ad1",
+      "diff": ""
+    }
+  ],
+  "limits": "Same actual adapter and six negative bindings; variant arm selected, no validation/cleanup weakening."
+}

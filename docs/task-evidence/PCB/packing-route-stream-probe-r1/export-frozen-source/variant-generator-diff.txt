@@ -1,0 +1,89 @@
+--- control/SeededPcbLayoutGenerator.java
++++ variant/SeededPcbLayoutGenerator.java
+@@ -240,6 +240,12 @@
+         return true;
+     }
+ 
++    static long optionalPackingRoutingSeed(long base) {
++        return new NamedRandomStreams(NamedRandomStreams.DERIVATION_VERSION,
++            base, "pcb-packing-route", 1).deviceSeed(
++            NamedRandomStreams.Concern.ROUTING, 1, "optional-p05-proposal");
++    }
++
+     /** One optional candidate follows the unchanged, fully routed winner. */
+     private boolean beginPackingProbe(Session session) {
+         PcbPlacementConstraints constraints = session.board.getPlacementConstraints();
+@@ -257,17 +263,20 @@
+         // Keep the exact post-route compaction plan in its routing coordinate
+         // frame. The final display crop may translate pads by a non-grid amount.
+         PcbPlacementPlanner.Plan source = session.bestPlan;
++        final long plannedPackingRoutingSeed =
++            MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(session.packingRoutePolicy) ?
++                optionalPackingRoutingSeed(session.routingSeed) : session.routingSeed;
+         TaskPackingSpanObservation.emit("SOURCE", session.board,
+-            source, session.seed, session.routingSeed);
++            source, session.seed, plannedPackingRoutingSeed);
+         session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
+         TaskPackingSpanObservation.emit("ORDINARY", session.board,
+-            session.packingPlan, session.seed, session.routingSeed);
++            session.packingPlan, session.seed, plannedPackingRoutingSeed);
+         session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(
+             session.board, constraints, session.packingPlan);
+         TaskPackingSpanObservation.emit("PAIRED", session.board,
+-            session.packingPlan, session.seed, session.routingSeed);
++            session.packingPlan, session.seed, plannedPackingRoutingSeed);
+         TaskPackingSpanObservation.emit("FINAL", session.board,
+-            session.packingPlan, session.seed, session.routingSeed);
++            session.packingPlan, session.seed, plannedPackingRoutingSeed);
+         if (session.mediumPolicy)
+             session.mediumPlacementEvaluations += session.packingPlan.evaluations - source.evaluations;
+         if (PcbPlacementCompactor.samePlacement(source, session.packingPlan)) {
+@@ -329,6 +338,9 @@
+ 
+     private boolean advancePackingProbe(Session session) {
+         session.observer.check(session.bestPlan.candidate);
++        final long plannedPackingRoutingSeed =
++            MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(session.packingRoutePolicy) ?
++                optionalPackingRoutingSeed(session.routingSeed) : session.routingSeed;
+         try {
+             RoutedCandidate routedCandidate;
+             if (session.packingRoute != null) {
+@@ -352,7 +364,7 @@
+             } else {
+                 int variation = (int) ((session.seed % 4 + 4) % 4);
+                 routedCandidate = routePlan(session.board, session.seed, variation,
+-                    session.bestPlan.candidate, session.observer, session.routingSeed,
++                    session.bestPlan.candidate, session.observer, plannedPackingRoutingSeed,
+                     session.statistics, session.packingPlan, true);
+             }
+             PcbBoardLayout candidate = routedCandidate.layout;
+@@ -383,25 +395,25 @@
+             return finishPackingProbe(session, "KEPT");
+         } catch (CandidateRejected rejectedRoute) {
+             TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
+-                session.packingPlan, session.seed, session.routingSeed,
++                session.packingPlan, session.seed, plannedPackingRoutingSeed,
+                 session.packingBaselineHash, session.packingRoutePolicy,
+                 rejectedRoute, rejectedRoute.getKind().name(), null, null, rejectedRoute.recovery);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (PcbPlacementPlanner.Rejected rejectedAccess) {
+             TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
+-                session.packingPlan, session.seed, session.routingSeed,
++                session.packingPlan, session.seed, plannedPackingRoutingSeed,
+                 session.packingBaselineHash, session.packingRoutePolicy,
+                 rejectedAccess, "PLACEMENT", rejectedAccess.reason, null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (SupportedEnvelope.Rejected rejectedEnvelope) {
+             TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
+-                session.packingPlan, session.seed, session.routingSeed,
++                session.packingPlan, session.seed, plannedPackingRoutingSeed,
+                 session.packingBaselineHash, session.packingRoutePolicy,
+                 rejectedEnvelope, "ENVELOPE", rejectedEnvelope.reason.name(), null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (PcbBoardLayout.RouteQualityRejectedException rejectedQuality) {
+             TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
+-                session.packingPlan, session.seed, session.routingSeed,
++                session.packingPlan, session.seed, plannedPackingRoutingSeed,
+                 session.packingBaselineHash, session.packingRoutePolicy,
+                 rejectedQuality, "QUALITY", null, null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
