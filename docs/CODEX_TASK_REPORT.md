@@ -1,4 +1,40 @@
-# Current checkpoint: board-size pass closed by user; resume REL-B
+# Current checkpoint: REL-B public report software accepted; human attempt next
+
+2026-10-20 America/New_York. Worktree q30-multirail-qualification, branch
+codex/q60-faulted-profile-counts, base/exactremote fc598e7f8ead61acd06c6d5707a712ea6df8f102.
+Owner closed size work; shared accepted packing unchanged. No main/email. Seven
+unrelated groups and FIVE blocked profiles untouched; no retry. Prior size closeout
+publication/postpublication receipts are included with this intended continuation.
+
+Local public report composer in existing JS adapter: public replay/epoch/build/screen
+and bounded entered text only, read-only preview/explicit selection, no transport or
+storage/private proof. New nested disclosure exposed closest-details focus defect;
+all-ancestor filter fixes it with original assertion retained. Initial missing-jsdom
+attempt0 assertions and actual focus FAIL1 preserved; task-local jsdom26.1.0, final
+contract PASS152 then final screen-guard PASS154/exit0 and syntax0. Root source/test
+review; optional source review identified screen guard and targeted post-fix PASS.
+No Java/scripts changes, relevant3Java/five compiled
+modules exactbaseline; no fresh GWT/electrical matrix claim.
+
+Real production Browser menu/ticket/edit/select/Ctrl+C equality/replay/originalFAIL
+and known powerOFF/R1/catalog330Ohm/tray/install/powerON/customerPASS/Results report
+verified on33a23203 source. Final screen-guard delta actual Menu/edit/select passes
+on27118a18 source; served final bytes exactdisk. Four inspected screenshots; guided
+software repair is not a human trial. Build13808B.../alpha6 observed.
+Task boardOFF/tabclosed/exactmaintainedstop0/2.498s; recorded worker+launcher exited,
+port8911 absent/state removed; separate final delta preview/tab/stop/port cleanup
+also PASS. Wrong guessed stop executable prevented first child
+launch; wrapper0 not PASS. Startup root returned0 after worker pipe closed. Prior
+five retained profiles remain a separate resource limit.
+
+[Evidence and boundaries](task-evidence/REL-B/public-problem-report-r1/README.md).
+Next: intended-only commit/normalpush/exactremote; owner says available for a short
+human advanced-board attempt next. Prepare current-build note before launching the
+six-minute ticket window; collect actual strategy/actions/outcome/clarity/assistance.
+HARD rule, advanced normal admission/population and public advanced saves held;
+Q100 unstarted. No task preview/browser/native remains live at this checkpoint.
+
+# Previous checkpoint: board-size pass closed by user; resume REL-B
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 Base/exactremote3460f1c9e26161d910249a850adb65f562fcffbe. User explicitly ended

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "previewPort": 8911,
+  "previewPid": 26392,
+  "previewStartTicks": "639281482886550092",
+  "recordedWorkerExited": true,
+  "recordedLauncherExited": true,
+  "listenerAbsent": true,
+  "taskStateFilesRemoved": true,
+  "taskTabClosed": true,
+  "finalBoardPower": "OFF observed via real input",
+  "startupActualExitCode": 0,
+  "startupCaveat": "Root tool invocation remained pending due to inherited worker pipe; returned 0 after maintained exact stop. Preview readiness and real UI were independently observed before stop.",
+  "stopActualExitCode": 0,
+  "stopSeconds": 2.4978398,
+  "preflight": "Wrong guessed PowerShell executable prevented first stop launch; child exit null, wrapper0 not counted PASS. Corrected to configured bundled runtime.",
+  "priorProfiles": "Five blocked profiles unchanged; no retry"
+}

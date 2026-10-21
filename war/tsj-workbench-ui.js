@@ -172,6 +172,54 @@
     }
     return (negative ? '-' : '') + decimal;
   }
+  function problemReport(parent) {
+    var source = { token: snapshot.token, replay: snapshot.replay, epoch: snapshot.epoch,
+      build: snapshot.build, screen: snapshot.screen };
+    var details = append(parent, 'details', undefined, 'tsj-product-report');
+    append(details, 'summary', 'Report a problem');
+    append(details, 'p', 'The report includes the pristine replay, build information and what you type below. Nothing is sent automatically.');
+    var problem = field(details, 'What happened?', 'textarea');
+    problem.rows = 3; problem.maxLength = 2000;
+    var expected = field(details, 'What did you expect?', 'textarea');
+    expected.rows = 3; expected.maxLength = 2000;
+    var steps = field(details, 'Steps to reproduce', 'textarea');
+    steps.rows = 5; steps.maxLength = 4000;
+    append(details, 'p', 'Include your measurements and repair actions. The replay starts from the original board; it does not include repairs or tray contents.', 'tsj-product-hint');
+    var output = readOnly(details, 'Report to copy', ' '); output.rows = 14;
+    var notice = append(details, 'p', '', 'tsj-product-hint');
+    notice.setAttribute('role', 'status'); notice.setAttribute('aria-live', 'polite');
+    function current() {
+      return snapshot && !privateSession() && snapshot.token === source.token &&
+        snapshot.replay === source.replay && snapshot.epoch === source.epoch &&
+        snapshot.build === source.build && snapshot.screen === source.screen;
+    }
+    function publicText(value, limit, fallback) {
+      return typeof value === 'string' && value ? value.slice(0, limit) : fallback;
+    }
+    function entered(input) { return input.value.slice(0, input.maxLength).trim() || '(not provided)'; }
+    function update() {
+      if (!current()) return;
+      // Only these public identity fields and player-written text enter a report.
+      // Never serialize the snapshot, session history, circuit, URL or private proof.
+      output.value = [
+        'TroubleshootJS problem report (v1)',
+        'Replay: ' + publicText(source.replay, 1024, 'No board selected.'),
+        'Interpretation: ' + publicText(source.epoch, 128, 'Not available.'),
+        'Build: ' + publicText(source.build, 128, 'Not available.'),
+        'Reported from: ' + publicText(source.screen, 32, 'Not available.'),
+        '', 'What happened:', entered(problem), '', 'Expected behavior:', entered(expected),
+        '', 'Steps to reproduce:', entered(steps)
+      ].join('\n');
+      setText(notice, '');
+    }
+    [problem, expected, steps].forEach(function (input) { listen(input, 'input', update); });
+    button(details, 'Select report', function () {
+      if (!current()) return;
+      update(); output.focus(); output.select();
+      setText(notice, 'Report selected. Use Copy to copy the selected text.');
+    });
+    update();
+  }
   function identity(parent) {
     if (privateSession()) {
       append(parent, 'p', sessionPersistence() ? 'Private qualification session. Normal catalog, HARD and replay remain unavailable.' : 'Private qualification session. Normal catalog, HARD, replay and session files remain unavailable.', 'tsj-product-hint');
@@ -183,6 +231,7 @@
     readOnly(details, 'Pristine challenge replay', snapshot.replay);
     readOnly(details, 'Interpretation / build', snapshot.epoch + ' / ' + snapshot.build);
     append(details, 'p', 'You can select and copy this information for a bug report. Nothing is sent automatically.');
+    problemReport(details);
   }
   function support(parent) {
     var note = append(parent, 'section', undefined, 'tsj-product-support');
@@ -408,9 +457,12 @@
   function focusable() {
     return Array.prototype.filter.call(dialog.querySelectorAll('button, input, select, textarea, a[href], summary, [tabindex]'), function (node) {
       // Chromium can report rectangles for fields inside a closed disclosure.
-      var closedDetails = node.closest('details:not([open])');
-      return !node.disabled && node.tabIndex >= 0 && node.getClientRects().length > 0 && !node.closest('[inert]') &&
-        (!closedDetails || (node.tagName === 'SUMMARY' && node.parentElement === closedDetails));
+      if (node.disabled || node.tabIndex < 0 || !node.getClientRects().length || node.closest('[inert]')) return false;
+      for (var parent = node; parent && parent !== dialog; parent = parent.parentElement) {
+        if (parent.tagName === 'DETAILS' && !parent.open &&
+            !(node.tagName === 'SUMMARY' && node.parentElement === parent)) return false;
+      }
+      return true;
     });
   }
   function focusDialog() { (focusable()[0] || dialog).focus(); }

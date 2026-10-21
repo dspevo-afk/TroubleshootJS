@@ -57,6 +57,13 @@ async function fixture({ storage, deny = false, noBridge = false, trackFocusList
     async flush() { await pause(); }, close() { w.close(); } };
 }
 function byText(d, text) { const result = [...d.querySelectorAll('button')].find(node => node.textContent === text && !node.closest('[hidden], [inert]')); assert.ok(result, 'Missing button: ' + text); return result; }
+function labelledTextarea(root, labelText) {
+  const label = [...root.querySelectorAll('label')].find(node => node.textContent === labelText);
+  assert.ok(label, 'Missing textarea label: ' + labelText);
+  const textarea = label.querySelector('textarea');
+  assert.ok(textarea, 'Missing textarea for label: ' + labelText);
+  return textarea;
+}
 function click(f, text) { byText(f.d, text).click(); }
 function key(f, name, shiftKey = false) { f.d.activeElement.dispatchEvent(new f.w.KeyboardEvent('keydown', { key: name, shiftKey, bubbles: true, cancelable: true })); }
 function literalRect(node, left, right, top = 0, bottom = 20) {
@@ -92,12 +99,29 @@ check([...f.d.querySelectorAll('option')].filter(n => n.disabled).map(n => n.val
 // Session controls now precede the board setup form. Start from its first
 // visible keyboard control so this still tests the actual reverse-wrap edge.
 const menuFirst = byText(f.d, 'Load session'), disclosure = f.d.querySelector('.tsj-product-identity');
+const reportDisclosure = disclosure.querySelector('.tsj-product-report');
+const initialReport = labelledTextarea(reportDisclosure, 'Report to copy');
+check(reportDisclosure && !reportDisclosure.open && reportDisclosure.querySelector('summary').textContent === 'Report a problem', 'problem reporting starts as a nested closed disclosure under Share pristine challenge');
+check(initialReport.readOnly && initialReport.value.includes('Replay: No board selected.\nInterpretation: tsj-alpha/1\nBuild: test-build\nReported from: MENU') &&
+  initialReport.value.includes('What happened:\n(not provided)') && initialReport.value.includes('Steps to reproduce:\n(not provided)'),
+  'no-board report uses public epoch/build/screen metadata and a truthful replay fallback');
 menuFirst.focus(); key(f, 'Tab', true);
 check(f.d.activeElement === disclosure.querySelector('summary'), 'collapsed replay fields cannot trap reverse menu focus');
 key(f, 'Tab'); check(f.d.activeElement === menuFirst, 'collapsed disclosure summary wraps to first menu control');
 disclosure.open = true; menuFirst.focus(); key(f, 'Tab', true);
-check(f.d.activeElement === disclosure.querySelectorAll('textarea')[1], 'expanded replay identity remains keyboard accessible');
-key(f, 'Tab'); check(f.d.activeElement === menuFirst, 'expanded replay identity wraps within menu');
+check(f.d.activeElement === reportDisclosure.querySelector('summary'), 'expanded Share keeps the nested report closed and reachable by keyboard');
+key(f, 'Tab'); check(f.d.activeElement === menuFirst, 'closed nested report summary wraps within the menu');
+reportDisclosure.open = true; menuFirst.focus(); key(f, 'Tab', true);
+const initialSelectReport = reportDisclosure.querySelector('button');
+check(f.d.activeElement === initialSelectReport, 'expanded nested report fields join the menu focus order');
+const initialCalls = f.calls.length, initialStorage = f.w.localStorage.length;
+initialSelectReport.click();
+check(f.d.activeElement === initialReport && initialReport.selectionStart === 0 && initialReport.selectionEnd === initialReport.value.length,
+  'Select report focuses the read-only preview and selects its exact current text');
+check(reportDisclosure.querySelector('[role=status]').textContent === 'Report selected. Use Copy to copy the selected text.' &&
+  reportDisclosure.textContent.includes('Nothing is sent automatically.'), 'selection explains that copying is a separate player action');
+check(f.calls.length === initialCalls && f.w.localStorage.length === initialStorage, 'Select report triggers no session action or storage write');
+reportDisclosure.open = false;
 disclosure.open = false;
 const profile = f.d.querySelector('select'); profile.value = 'MEDIUM'; profile.dispatchEvent(new f.w.Event('change'));
 check(f.d.querySelectorAll('select')[1].value === 'control', 'family options follow public profile catalog');
@@ -239,6 +263,116 @@ check(visibleCards().length === 1 && visibleCards()[0].querySelector('h4').textC
 visibleCards()[0].querySelector('button').click();
 check(f.calls.at(-1).accepted && f.calls.at(-1).args.join('|') === 'CAPACITOR|spec-live|', 'newly available card uses the current catalog lease');
 f.close();
+
+// Public problem-report composition stays inside Share pristine challenge.
+// These fixtures cover only the DOM adapter; they do not exercise the real browser.
+const reportFixture = await fixture();
+const minReplay = 'tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/-9223372036854775808';
+const publicEpoch = 'tsj-alpha/6', publicBuild = 'alpha6-public-build-test';
+await reportFixture.update({ screen: 'TICKET', token: 2, hasBoard: true, ready: true,
+  replay: minReplay, epoch: publicEpoch, build: publicBuild,
+  complaint: '<img src=x onerror=alert(1)> public complaint', retestInstruction: 'Check the output under load',
+  fault: 'PRIVATE-FAULT-SENTINEL', privateOriginal: 'PRIVATE-ORIGINAL-SENTINEL',
+  dependencyGraph: 'PRIVATE-DEPENDENCY-SENTINEL', netlist: 'PRIVATE-NETLIST-SENTINEL',
+  query: 'PRIVATE-QUERY-SENTINEL' });
+let publicReport = reportFixture.d.querySelector('.tsj-product-report');
+reportFixture.d.querySelector('.tsj-product-identity').open = true;
+publicReport.open = true;
+let happened = labelledTextarea(publicReport, 'What happened?');
+let expected = labelledTextarea(publicReport, 'What did you expect?');
+let steps = labelledTextarea(publicReport, 'Steps to reproduce');
+let reportOutput = labelledTextarea(publicReport, 'Report to copy');
+check(happened.maxLength === 2000 && expected.maxLength === 2000 && steps.maxLength === 4000 && reportOutput.readOnly,
+  'report exposes three editable fields with independent limits and a read-only preview');
+check(reportOutput.value.includes('Replay: ' + minReplay) && reportOutput.value.includes('Interpretation: ' + publicEpoch) &&
+  reportOutput.value.includes('Build: ' + publicBuild) && reportOutput.value.includes('Reported from: TICKET'),
+  'ticket report preserves the exact alpha6 signed-long minimum replay and current public build/epoch/screen strings');
+check(!['PRIVATE-FAULT-SENTINEL', 'PRIVATE-ORIGINAL-SENTINEL', 'PRIVATE-DEPENDENCY-SENTINEL', 'PRIVATE-NETLIST-SENTINEL', 'PRIVATE-QUERY-SENTINEL']
+  .some(value => reportOutput.value.includes(value)) && !reportOutput.value.includes('public complaint'),
+  'snapshot fault/private/dependency/netlist/query/complaint fields are excluded from the public report');
+check(reportFixture.d.querySelectorAll('img').length === 0 && reportFixture.d.querySelector('.tsj-product-complaint').textContent.includes('<img'),
+  'ticket HTML-like complaint text remains text in the page');
+
+happened.focus();
+happened.value = 'Output failed at D2; <img src=x onerror=alert(1)> stayed text.';
+expected.value = 'The relay should energize when the input is asserted.';
+steps.value = '1. Accept ticket.\n2. Measure D2 while switching the input.';
+for (const input of [happened, expected, steps]) input.dispatchEvent(new reportFixture.w.Event('input', { bubbles: true }));
+check(reportOutput.value.includes('What happened:\n' + happened.value) &&
+  reportOutput.value.includes('Expected behavior:\n' + expected.value) &&
+  reportOutput.value.includes('Steps to reproduce:\n' + steps.value) && reportFixture.d.activeElement === happened,
+  'editing any report field immediately refreshes the preview without replacing the focused field');
+check(!publicReport.querySelector('img') && reportOutput.value.includes('<img src=x onerror=alert(1)>'),
+  'player-entered markup remains literal report text and creates no HTML element');
+const callsBeforeSelect = reportFixture.calls.length, storageBeforeSelect = reportFixture.w.localStorage.length;
+publicReport.querySelector('button').click();
+check(reportFixture.d.activeElement === reportOutput && reportOutput.selectionStart === 0 && reportOutput.selectionEnd === reportOutput.value.length,
+  'Select report selects the exact alpha6 report preview after player edits');
+check(reportFixture.calls.length === callsBeforeSelect && reportFixture.w.localStorage.length === storageBeforeSelect,
+  'selecting the report does not submit a session action or persist it');
+
+happened.value = 'H'.repeat(2001); expected.value = 'E'.repeat(2001); steps.value = 'S'.repeat(4001);
+for (const input of [happened, expected, steps]) input.dispatchEvent(new reportFixture.w.Event('input', { bubbles: true }));
+check(happened.value.length === 2001 && expected.value.length === 2001 && steps.value.length === 4001 &&
+  reportOutput.value.includes('What happened:\n' + 'H'.repeat(2000) + '\n\nExpected behavior:\n' + 'E'.repeat(2000) +
+    '\n\nSteps to reproduce:\n' + 'S'.repeat(4000)),
+  'programmatically assigned overlong values are independently clipped to all three report limits');
+
+expected.focus(); expected.setSelectionRange(2, 7);
+const ticketReportNode = publicReport;
+await reportFixture.update({ sessionHistoryCount: 17 });
+check(reportFixture.d.querySelector('.tsj-product-report') === ticketReportNode && expected === labelledTextarea(publicReport, 'What did you expect?') &&
+  expected.value === 'E'.repeat(2001) && reportFixture.d.activeElement === expected && expected.selectionStart === 2 && expected.selectionEnd === 7,
+  'same-token count-only snapshot refresh preserves the report draft, active field and selection');
+const staleSelectReport = publicReport.querySelector('button'), staleOutputValue = reportOutput.value;
+const staleReportOutput = reportOutput;
+const callCountBeforeRetire = reportFixture.calls.length;
+await reportFixture.update({ token: 3 });
+publicReport = reportFixture.d.querySelector('.tsj-product-report');
+happened = labelledTextarea(publicReport, 'What happened?');
+expected = labelledTextarea(publicReport, 'What did you expect?');
+steps = labelledTextarea(publicReport, 'Steps to reproduce');
+reportOutput = labelledTextarea(publicReport, 'Report to copy');
+check(publicReport !== ticketReportNode && [happened, expected, steps].every(input => input.value === '') &&
+  reportOutput.value.includes('What happened:\n(not provided)'), 'new session token resets the problem-report draft');
+staleSelectReport.click();
+check(!staleSelectReport.isConnected && reportOutput.value.includes('What happened:\n(not provided)') &&
+  staleReportOutput.value === staleOutputValue && reportFixture.calls.length === callCountBeforeRetire,
+  'detached report controls from an earlier token cannot mutate the new report or call the bridge');
+
+const hiddenSelectReport = publicReport.querySelector('button'), hiddenReportOutput = reportOutput;
+const hiddenReportValue = reportOutput.value, callsBeforeWorkbench = reportFixture.calls.length;
+await reportFixture.update({ screen: 'WORKBENCH' });
+const workbenchFocus = reportFixture.d.activeElement;
+happened.value = 'An obsolete hidden draft';
+happened.dispatchEvent(new reportFixture.w.Event('input', { bubbles: true }));
+check(publicReport.isConnected && hiddenReportOutput.value === hiddenReportValue,
+  'same-token screen transition retires input callbacks even when hidden report content remains connected');
+hiddenSelectReport.click();
+check(reportFixture.d.activeElement === workbenchFocus && hiddenReportOutput.value === hiddenReportValue &&
+  reportFixture.calls.length === callsBeforeWorkbench,
+  'hidden report selection after a screen transition cannot steal focus or use obsolete screen context');
+
+await reportFixture.update({ screen: 'RESULTS', token: 4, message: 'Customer retest passed.' });
+publicReport = reportFixture.d.querySelector('.tsj-product-report');
+reportOutput = labelledTextarea(publicReport, 'Report to copy');
+check(reportOutput.value.includes('Reported from: RESULTS') && reportOutput.value.includes('Replay: ' + minReplay),
+  'normal Results report contains only the current public context');
+await reportFixture.update({ screen: 'ERROR', token: 5, message: 'Board preparation failed.' });
+publicReport = reportFixture.d.querySelector('.tsj-product-report');
+const errorSelectReport = publicReport.querySelector('button');
+reportOutput = labelledTextarea(publicReport, 'Report to copy');
+check(reportOutput.value.includes('Reported from: ERROR') && reportOutput.value.includes('Replay: ' + minReplay),
+  'normal error report retains the public replay and reports its current screen');
+const callsBeforePrivate = reportFixture.calls.length, errorOutputBeforePrivate = reportOutput.value;
+await reportFixture.update({ screen: 'ERROR', token: 6, privateQualification: true });
+check(!reportFixture.d.querySelector('.tsj-product-report') && !reportFixture.d.querySelector('.tsj-product-content').textContent.includes('Share pristine challenge') &&
+  !reportFixture.d.querySelector('.tsj-product-content').textContent.includes('Report a problem'),
+  'private qualification screen exposes no public Share or problem-report disclosure');
+errorSelectReport.click();
+check(!errorSelectReport.isConnected && reportOutput.value === errorOutputBeforePrivate && reportFixture.calls.length === callsBeforePrivate,
+  'a retired public report control is inert after the bridge enters a private qualification session');
+reportFixture.close();
 
 // Native popover visibility/focus is qualified in the real production browser.
 // These DOM checks prove the adapter keeps GWT widgets/owners and closes tools

@@ -1,0 +1,16 @@
+{
+  "status": "PASS_VERIFIED_NORMAL_PUBLICATION_DENSITY_CLOSED",
+  "sha": "fc598e7f8ead61acd06c6d5707a712ea6df8f102",
+  "message": "Close PCB size pass and resume advanced release roadmap",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteUrl": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "pushActualExitCode": 0,
+  "remoteExactSha": "fc598e7f8ead61acd06c6d5707a712ea6df8f102",
+  "reviewedPublishedBlobs": 67,
+  "sourceBoundary": "1482/24/13/10/5 exact after publication; private5/15helpers exact",
+  "scope": "Final private strip proposal NO_GO, no production promotion; owner ends density work and resumes REL-B",
+  "priorVisualCleanup": "BLOCKED five retained profiles; no retry",
+  "mainMerge": "NOT REQUESTED",
+  "email": "DISABLED BY USER"
+}

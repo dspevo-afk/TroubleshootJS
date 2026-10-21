@@ -1,0 +1,20 @@
+{
+  "status": "PASS_BOUNDED_SOFTWARE",
+  "baseCommit": "fc598e7f8ead61acd06c6d5707a712ea6df8f102",
+  "finalInputs": {
+    "war/tsj-workbench-ui.js": "27118a181d1657e2f9440e55930c7154d34e29394d766816004a8e116b3dd10e",
+    "tests/contracts/u04_ui_contract.mjs": "bfc77fd91be118b592686313db3d967673bd0782c5eafd023fb17d710e6d51d7"
+  },
+  "finalContract": {
+    "rawSha256": "01d0ef11ad5b91ce0e1773143e3d777dc39df8e9de14107be886c86980e96823",
+    "actualExitCode": 0,
+    "assertions": 154
+  },
+  "rootReview": "Integrated diff/source/tests and four images inspected",
+  "independentReview": "Read-only UI/test lifecycle/privacy/seed/focus review, one screen-context gap fixed; targeted post-fix review PASS; no independent execution/browser claim",
+  "browserBoundary": "Full normal menu/ticket/copy/replay/known repair predecessor33a23203; final source27118a18 adds only screen equality, finalMenu/edit/select delta checked",
+  "reuse": "No Java/scripts diff; relevant3Java and5compiled modules equal baseline; no fresh GWT/electrical/population proof",
+  "resources": "Initial and final preview/tab/process/state/listener cleanup PASS; five earlier blocked profiles untouched",
+  "release": "REL-B IN PROGRESS, human/HARD/normaladvancedpopulation held; Q100 unstarted",
+  "publication": "Normal intended-only branch publication; no main/email"
+}

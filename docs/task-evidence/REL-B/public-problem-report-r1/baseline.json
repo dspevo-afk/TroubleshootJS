@@ -1,0 +1,22 @@
+{
+  "baseCommit": "fc598e7f8ead61acd06c6d5707a712ea6df8f102",
+  "branch": "codex/q60-faulted-profile-counts",
+  "inputs": {
+    "war/tsj-workbench-ui.js": "e080b2d2e989ff088c37590d038eae24c315ac3b311fe9b1a7e8a8a346ce02ec",
+    "tests/contracts/u04_ui_contract.mjs": "5466d592440ac478b50e390d99547f8820da2de4e2e2c83b9feb6e3c8751d255",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": "262f4bd3037f04cd6ff7cc6905e303a4458bc4f1e002c562c7d08d863a4df6db",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "84a687f7767bc06a4b1cade8f3747c70928e698d6797e56088e4eb15a1e673dd",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "beed78fad34f7bc7e2dad08d1280ded01bc654dc61fb58ac3f1e60e43d872d47"
+  },
+  "compiledModules": {
+    "circuitjs1/04ACFC8E788170CE9A957094A893F186.cache.js": "fedb56c65f4a80ec6facfd8b067ddc66708b7755b82dc04188866ef8cbe6e04c",
+    "circuitjs1/08602D4E94702AADB5F4C9752B2E89D1.cache.js": "1d49ddce03d766935ba048dbfaaf357aab37277a42b2f96370edf69130feb9cc",
+    "circuitjs1/13808B6577D799A49A34CCFD1D18738D.cache.js": "d3728c869195da07c28195528001acee8d91c9a224a3767f80bd8df34e87311e",
+    "circuitjs1/4DCC4801EDA962A31A3A912DD7778CAB.cache.js": "5fb1be0314c10a93fc172fb1def22ccd4e5dae5c480d2878eff26fb33debb72b",
+    "circuitjs1/4F5C9CB5055E4E74CEE2638C442DAAE7.cache.js": "c30543cdb0045f39fb66b8a9da68ac237af9b81f8f2a45a3d8be950cb10dabfa"
+  },
+  "scopeSha256": "d8eb69b20dd59657a7627f660bd06a1b7fc22d9bb95cbb56c9091d98535eb678",
+  "acceptedProduction": "22cbf4bc06cd241999536aa92d739481f831378c",
+  "priorPrivateExperiment": "packing-strip-before-pairs-r1: NO_GO; owner closes density",
+  "priorResources": "Five blocked browser profiles retained; no retry. No active task preview/browser/native."
+}

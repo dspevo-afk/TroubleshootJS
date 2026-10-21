@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "actualStopExitCode": 0,
+  "stopSeconds": 2.4607245,
+  "workerPid": 11956,
+  "workerStartTicks": "639281497368041547",
+  "workerExited": true,
+  "listenerAbsent": true,
+  "stateRemoved": true,
+  "tabClosed": true,
+  "board": "none selected",
+  "launcher": "redirected stdout/stderr, actual startup0; no inherited tool pipe",
+  "priorBlockedProfiles": "Untouched/no retries"
+}

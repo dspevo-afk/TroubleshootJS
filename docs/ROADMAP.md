@@ -7,7 +7,20 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Board-size pass closed; resume REL-B advanced release work**
+**Current task:** **REL-B public problem-report software checks complete; human play next**
+
+The normal Share disclosure now composes a bounded local problem report from public
+replay/epoch/build/screen and player-entered symptoms, expectations and steps. Final
+DOM contract PASS154, real production menu/ticket/copy/replay and repaired Results
+pass with a final screen-guard delta check; four inspected images retained. Nested disclosure focus is fixed through the
+existing adapter. Java/compiled inputs unchanged; no fresh GWT/electrical/population
+claim. Current task preview/tab cleanup passes; five earlier blocked profiles remain.
+[Software evidence and limits](task-evidence/REL-B/public-problem-report-r1/README.md).
+Owner is available for a short human advanced-board attempt next. HARD calibration,
+normal advanced admission/population and advertised release cells remain pending;
+Q100 is unstarted. No further PCB-size experiment is planned.
+
+Previous board-size closeout:
 
 The owner ended further PCB-size tweaking on2026-10-20. Accepted generic packing4
 remains unchanged; three fresh production tops were posted. Final private strip-
@@ -17,10 +30,8 @@ Near-cap59999/60000 and headroom0 fixtures preserve the exact input/9parts22pads
 no new size gain/packing optimum or fresh production GWT/matrix/player claim.
 [Finite closeout and limits](task-evidence/PCB/packing-strip-before-pairs-probe-r1/RESULTS.md).
 
-Resume REL-B, whose HARD human calibration and actual normal advanced admission/
-population remain pending. Inspect current public non-spoiling reproduction/report
-support for independent progress; do not skip prerequisites or enable held gates.
-Q100 remains unstarted. No additional board-size experiment is planned.
+REL-B public report support proceeds within its independent software scope; do not
+skip prerequisites or enable held gates.
 
 Previous exact fresh relay diagnosis:
 
@@ -2027,7 +2038,7 @@ Every enabled instrument declares electrical connection/stimulus, burden/loading
 
 ## 7.1 Status and authority
 
-T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 is accepted for its frozen inventory and 100-cycle owner/repair scope; E05 is accepted for its bounded AC/isolation foundation; E06 is accepted for its bounded solver fidelity decision; Q60 is next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
+T49, N00, A01-A11, R00, P01-P09, U01, E01-E04, Q15, U02, U03, U04, U05, D01 and REL-A were recorded accepted/completed at the E02/E04/D01 publication: 35 catalog entries. U01/P03/P04 and the bounded A11-R1 follow-up complete the authorized work on base `0487555d6bd2e5e8ed4b01652b847d0fffcb900c`; R1 is not a new catalog node. Their implementations may be replaced; their historic passing outputs are not acceptance conditions. The current checkpoint and individual cards record their evidence and limits. The historical non-catalog post-P09 follow-up covered procedural layouts for the nine then-current normal families and resistor shop/formation; SENSOR_CONTROL subsequently made ten family/profile pairs and required its own fresh catalog evidence. U02/U03 provide the bounded solver-time meter/scope boundary. Q30 is accepted within its documented host/corpus scope; U06 is accepted for the measured current-format restart scope. U07 is accepted for its frozen inventory and 100-cycle owner/repair scope; E05 is accepted for its bounded AC/isolation foundation; E06 is accepted for its bounded solver fidelity decision; Q60 is accepted within its finite reference-PC envelope. Fresh human HARD calibration through U05 and REL-B normal advanced admission/population are next. Only currently implemented EASY/MEDIUM content is qualified; unavailable difficulties remain deferred. P08 current isolated CLI runs satisfy unchanged ownership/cleanup gates; earlier unqualified launch attempts remain separately recorded.
 
 A task-specific prompt authorizes a bounded scope. Follow current AGENTS.md for orchestration, ownership, review, publication and safety; R00 replaced its contradictory blanket compatibility wording under the owner's explicit instruction. A current correct requirement outranks an obsolete test. Do not start writers before relevant shared-interface investigations are reconciled.
 
@@ -2046,7 +2057,7 @@ preferred next eligible milestone. Future implementation needs its own authoriza
 than the old preferred order while satisfying their hard prerequisites: A10
 required A05/A07/A09/P02; A11 required A04/A08/A09. Their earlier placement does
 not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 → Q15 → U04 → U05 → REL-A → U02/U03 → E02 → E04 → D01 is complete. Q30 is now accepted within its documented host/corpus scope.
-**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is accepted for its bounded solver fidelity decision. Q60 is in progress, unaccepted and unpublished. Pending visual/FPS/tray work remains preserved.
+**Completed milestone: Q30 — ACCEPTED within documented host/corpus scope.** The generic-generation and 90-second acceptance repair preserves the working family. Historical normal-player passes under a 300-second policy do not satisfy the frozen budget. U06 current-format restart saves and semantic history are accepted. U07 is accepted within its declared scope. E05 is accepted within its fixed-fixture model/host scope. E06 is accepted for its bounded solver fidelity decision. Q60 is accepted within its documented finite reference-PC envelope; modest-host qualification is owner-deferred / NOT RUN. U05 human HARD calibration and REL-B advanced normal admission/population remain pending; public gates held. Independent public report software checks pass within their recorded scope. Historical visual/FPS/tray limits remain preserved.
 
 | Wave | Preferred sequence |
 |---|---|
@@ -4090,7 +4101,7 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** IN PROGRESS - independent current UTF-8/relay-discharge feedback and real native file-read error, stale callback, actual six-minute restore-expiry recovery PASS native175/GWT45/headed186. Finite advertised release matrix is recorded; accepted saved repair/state evidence retains its scoped authority. Human HARD calibration and actual normal advanced admission/population are BLOCKED/PENDING; public gates remain held. [Current matrix and independent proof](task-evidence/REL-B/release-matrix-r1/README.md).
+**Status:** IN PROGRESS - bounded public problem-report composer PASS154 DOM assertions plus actual production menu/ticket/copy/replay/repaired Results and task cleanup. JS-only change; no new GWT/electrical or human result. Earlier independent UTF-8/relay-discharge/native file-read/stale callback/six-minute recovery evidence retains its own scope. Human HARD calibration and actual normal advanced admission/population remain PENDING; public gates held. [Public report proof](task-evidence/REL-B/public-problem-report-r1/README.md), [finite matrix and recovery proof](task-evidence/REL-B/release-matrix-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 

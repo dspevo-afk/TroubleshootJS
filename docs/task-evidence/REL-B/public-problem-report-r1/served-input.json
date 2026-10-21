@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "servedSha256": "33a23203658c19f976bbdef8aecfba0557c6a281a7fe9fce85cd41a336abf608",
+  "diskSha256": "33a23203658c19f976bbdef8aecfba0557c6a281a7fe9fce85cd41a336abf608",
+  "url": "http://127.0.0.1:8911/tsj-workbench-ui.js",
+  "observedUtc": "2026-10-21T03:18:07.9996557Z"
+}

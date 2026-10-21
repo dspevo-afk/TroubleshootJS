@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "servedSha256": "27118a181d1657e2f9440e55930c7154d34e29394d766816004a8e116b3dd10e",
+  "diskSha256": "27118a181d1657e2f9440e55930c7154d34e29394d766816004a8e116b3dd10e",
+  "observedUtc": "2026-10-21T03:23:31.3217691Z",
+  "scope": "Final screen guard source: actual expanded Menu edit/select and fourth screenshot. Earlier ticket/copy/replay/repair tested predecessor differing only by added screen equality guard; not repeated."
+}

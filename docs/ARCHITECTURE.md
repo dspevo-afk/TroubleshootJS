@@ -584,6 +584,16 @@ revokes Shop leases on close/reopen/focus loss. It neither polls simulation nor
 maintains another inventory. Neutral tray ordinals come from current runtime
 inventory order; private part IDs remain internal.
 
+The same JavaScript adapter owns the local **Report a problem** composer nested
+under public **Share pristine challenge**. Its explicit export allowlist is replay,
+interpretation epoch, build and screen plus bounded player-entered text. It never
+serializes the public snapshot wholesale, private proof, circuit, URL or history.
+It selects a read-only preview without clipboard, transport or persistence APIs.
+Existing bridge/view listeners retire stale controls; same-view count refreshes
+preserve drafts and a new token resets them. Private qualification keeps public
+share/report unavailable. Modal focus excludes controls behind any closed enclosing
+disclosure, allowing only that disclosure's own visible summary.
+
 The shared solver lease checks use exact integer-valued double millisecond clocks
 in GWT, avoiding emulated-long allocation on every nonlinear trial. The JVM uses
 its real system millisecond clock. Clock values/deadline sums outside `0..2^53-1`,

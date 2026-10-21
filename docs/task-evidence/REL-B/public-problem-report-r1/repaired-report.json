@@ -1,0 +1,8 @@
+{
+  "focused": true,
+  "readOnly": true,
+  "screen": "RESULTS",
+  "selectionEnd": 544,
+  "selectionStart": 0,
+  "value": "TroubleshootJS problem report (v1)\nReplay: tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054\nInterpretation: tsj-alpha/6\nBuild: 13808B6577D799A49A34CCFD1D18738D\nReported from: RESULTS\n\nWhat happened:\nThe indicator initially failed the customer retest.\n\nExpected behavior:\nThe repaired indicator should pass the customer retest.\n\nSteps to reproduce:\n1. Prepared this replay and confirmed the initial retest failed.\n2. Switched board power off.\n3. Removed R1 and installed catalog 330 Ohm stock.\n4. Powered on and ran customer retest; it passed."
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "JS presentation and DOM contracts only; Java/solver/compiled artifact reuse audited, no new GWT/electrical matrix claim",
+  "reusedJavaSources": {
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionController.java": "262f4bd3037f04cd6ff7cc6905e303a4458bc4f1e002c562c7d08d863a4df6db",
+    "src/com/lushprojects/circuitjs1/client/PlayerLaunchRequest.java": "84a687f7767bc06a4b1cade8f3747c70928e698d6797e56088e4eb15a1e673dd",
+    "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java": "beed78fad34f7bc7e2dad08d1280ded01bc654dc61fb58ac3f1e60e43d872d47"
+  },
+  "compiledModulesUnchanged": 5,
+  "runs": [
+    {
+      "operation": "Optional leaf initial contract attempt",
+      "actualExitCode": 1,
+      "assertionsReached": 0,
+      "status": "BLOCKED_ENVIRONMENT",
+      "cause": "jsdom absent from installed/bundled paths"
+    },
+    {
+      "operation": "Root task-local dependency installation",
+      "actualExitCode": 0,
+      "jsdom": "26.1.0",
+      "source": "https://registry.npmjs.org",
+      "scripts": "ignored",
+      "globalInstall": false,
+      "lockSha256": "e13de858bd6f2f9ef4479dfa598f16c4cc17b288022e5e9eecc837139772fdb7"
+    },
+    {
+      "operation": "Root first actual UI contract",
+      "actualExitCode": 1,
+      "status": "FAIL",
+      "assertion": "collapsed replay fields cannot trap reverse menu focus",
+      "privateRawSha256": "54cd5281169a528e02f5cd0b038636fcb5d4f1be03af67dfa5177a8651b232bd"
+    },
+    {
+      "operation": "Root after all-ancestor disclosure focus fix",
+      "actualExitCode": 0,
+      "status": "PASS",
+      "assertions": 152,
+      "privateRawSha256": "8302d70b848201d22f9c5e0fdadca1f94587f36c4897af4a8da0e4fa38caa17c"
+    },
+    {
+      "operation": "Final after independent review screen-context guard",
+      "actualExitCode": 0,
+      "status": "PASS",
+      "assertions": 154,
+      "privateRawSha256": "01d0ef11ad5b91ce0e1773143e3d777dc39df8e9de14107be886c86980e96823"
+    }
+  ],
+  "sourceFix": "Nested report summary exposed a genuine single-closest-details filter defect. Focus filter now checks every enclosing closed details; original collapsed-share assertion retained. Root also opens the report fixture before input and compares refresh node to the live DOM. Optional read-only review found connected hidden content after same-token screen transition; source.screen equality and two assertions added. Final154 supersedes152 for acceptance.",
+  "limits": "jsdom DOM/layout shim is not real browser input or GWT qualification. Fresh real production menu/ticket/copy/replay/repaired Results verified separately in README and screenshots. No pre-fix PASS reused; no fresh Java/GWT/electrical/population or human HARD claim."
+}
