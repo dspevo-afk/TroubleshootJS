@@ -1,0 +1,49 @@
+{
+  "status": "PREPARED_FINITE_RELAY_PASSIVE_CONTROL",
+  "baseCommit": "1327ca3bd359d7ffc3ec4a9969d648ad211812e7",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "ef3744673dee4fd537b8b44a57174cb3d6f2ec48f655ba8438750836368f1a5d",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "borrowedPrivateSources": {
+    "common/SparseNormalBoardDiagnostic.java": "135107e4101f15849e5dfc98a9d771dbe1be25a9434f7b5cf595c9ff5c82a707",
+    "common/verify-two-pad-span.ps1": "a38dda3888baf3212cdc8e50af5cc4d3b327504871e1d81c5e37df4e40bede11",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "changes": [
+    {
+      "owner": "exporter",
+      "label": "extend_sparse_family_usage",
+      "replacements": 1,
+      "oldSha256": "70f81bb02981c1ed7bd74441dad01fc6b575459f7d5e3d66b38fcfe52a032624",
+      "newSha256": "d5133a98d2db4ed3d03b9cd45458dcd45585b938742b43291145cb129eb75ca6"
+    },
+    {
+      "owner": "exporter",
+      "label": "bind_relay_family_to_easy_profile",
+      "replacements": 1,
+      "oldSha256": "c1e35cac0648e8d1fce3c6d5bd261110d27dfbfc6aea663e23859a808841969f",
+      "newSha256": "e3e9db1aa722274d5ac5d76a7357dcac223bcf2cf7bccfe8080e43f3e51b95b7"
+    },
+    {
+      "owner": "exporter",
+      "label": "pin_relay_family_seed",
+      "replacements": 1,
+      "oldSha256": "f8d8a83e410fc0efcedaa73fb32f149e888093d422eb39efc8ebfdc677fc2493",
+      "newSha256": "deeb2d3784827fbcedf3c25f084e7f9e094760e01e23c109dfa25b69806da4af"
+    },
+    {
+      "owner": "adapter",
+      "label": "allow_relay_export_family",
+      "replacements": 1,
+      "oldSha256": "5fa6fbf47034f553cb9a618a88e26217dc432c4c52ed6ede64132a719a2367ff",
+      "newSha256": "169d3f1af6ac4e3aa9c16941460a2e29d81d0562158854cdaa7f5639e45cd1d9"
+    }
+  ],
+  "limits": "Only finite exporter/host binding changes. Generator passive control/planner/compactor exact accepted borrowed bytes; all export assertions/disposal/observers unchanged. No new production or private placement variant."
+}

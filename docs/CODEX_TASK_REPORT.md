@@ -1,4 +1,47 @@
-# Current checkpoint: three fresh boards pictured; relay placement diagnosis next
+# Current checkpoint: exact fresh relay diagnosed; publication preparing
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+Base/exactremote1327ca3bd359d7ffc3ec4a9969d648ad211812e7. Continue authorized
+realism indefinitely/screenshots/optional leaves; no main/email/final stop.
+Seven unrelated groups/FIVE retained profiles untouched, never retry validation/
+removal. Prior fresh visualresourcecleanup remainsBLOCKED; three new tops pasted.
+
+Fresh-relay-stage-diagnostic-r1 exact EASY RELAY_OUTPUT-397178238694963708.
+Baseline beforeadaptation;20helpers/private5 frozen beforeactual selected host/
+native. Only3finite exporter parser+1relay-only host binding changes; reverse4
+and full export/assertion/disposal/bothobserver suffix exact. Passivegenerator/
+originalplanner/compactor unchanged borrowed bytes, no productionvariant.
+
+Actual host6negatives child1/root0/2.0885132s; actualJDK8 normalexport221/root0/
+41.8437257s. Independentreview PASS0,14 negatives (5row/7stage/2cause); all4driver
+births separately exited after actual0. Source1482/24/native13/player10/modules5
+and before/afterexecution6 exactaudited. Prior productionmatrix/GWT/player/
+repair reused, not fresh. No current taskprocess/session/browser/preview live.
+
+Actual SOURCE outline1030x930/eval45→ORDINARY910x930/eval72→PAIRED/FINALsame72,
+resolvedplanner variant4. ChangedIDsJ3/J4/Q1/RPD belongcombinedordinarypasses,
+not per-origin attribution. All9parts/22pads/9nets/13traces/0holes validated;
+4two-padcrosscomponentnets but0necessaryeligiblepairs. Pairedpass no geometry/
+work change. Actualproposal route rejects P05NO_PATH CTRL_RETURN,
+Q1.E(230,680)→J1.2(160,230),5orders/190657expansions, correlatedtypedinner/wrapper.
+Earlierorderings includeotherNO_PATH andoneQUALITY:DETOUR; not allsamecause.
+Selectedce4fd139.../area851092/copper6600/vias0/void74000 unchanged, no candidate
+metrics/accepted sizegain/optimality or universalunroutability claim.
+
+Pre-runtime corrections preserved: wrong0headroom-stage scope conditional
+superseded by sourceclarification(all4precede guards); workerhostbroadening
+correctedbeforeprivatecreation, originalsprivate/hash-bound. Rootcorrected
+runpy-copy baseline assignment with guarded pinnedsource/one namespace and
+positive/invalidbindingcanaries; addedposes/changedIDs/9part/finalmarkerinventory/
+FINALcount/hashnegatives. No failednative/datareader or pre-fixPASS inthispacket.
+Root source/evidence integratedreview, optionalbinding/reader/sourceadviceleaves;
+noindependentfinalreview. Private sources/logs retainedviaq60pointer.
+
+Currentresults/rootreview complete. Next intended-only stageddiff/commit/
+normalpush/exactremote/source+freshpostpubexecutionaudit, then separatelyscoped
+proposal experiment after reviewingactualfailure; no production GO fromdiagnosis.
+
+# Previous checkpoint: three fresh boards pictured; relay placement diagnosis next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 HEAD/exactremote3278a79cd9893e2c41a6304c513cb1b7753bf29a; span-filter private

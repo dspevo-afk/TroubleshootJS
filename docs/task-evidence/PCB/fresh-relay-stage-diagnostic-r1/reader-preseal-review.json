@@ -1,0 +1,15 @@
+{
+  "status": "PASS_ROOT_PRESEAL_READER_SOURCE_AND_BINDING_CANARIES",
+  "originalWorkerReaderSha256": "76701ac9b91c81ac9d15ab359dcfa695384d5303b2fdaf1ffbf02ea4f3ca1a5b",
+  "qualifierSha256": "8e3ed88a0454825df5ac65101591b440788f3ed75e8c2851bc797ed0f80e8869",
+  "scopeSha256": "fccc6c3636cb273df6b70b0f11ec288c47ec0b039befa43aad575ab96c24e24e",
+  "wrapperSha256": "2cb09f21d0bf27a750503b7af305ca93dac413e401b0ecac87aa91db676bb23d",
+  "findings": [
+    "Original sparse validate_row guarded2adaptations only; exact inherited assertions retained. Parsed all canonical components/pads and independent two-pad net span/coordinate correlation reviewed. All4 ordered stages required with grid10 contraction and retained FINAL counts/equality; no invented per-origin outcome.",
+    "Root corrects runpy namespace-copy baseline assignment using guarded pinned-source literal replacement/exec. Positive actual function-global binding and invalid-baseline rejection canaries pass; no sample receipt involved.",
+    "Root adds explicit9part inventory, all-family final-marker uniqueness, returned poses/changed IDs, FINAL count and rehashed canonical-suffix correlation negatives. Original worker bytes retained privately.",
+    "Cause schema/recovery bound to actual FINAL/probe baseline/net/counters; original composed cause/counters are not imposed. Necessary eligibility screen reads actual exported topology and requires0pairs; no unexported isolation geometry claim."
+  ],
+  "syntax": "PASS all current Python AST; prior selected4PowerShellparse PASS",
+  "limits": "Source/binding-only. No runtime seal, actual selected host/native, sample receipt or data qualification executed yet."
+}

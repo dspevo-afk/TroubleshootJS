@@ -7,7 +7,19 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Fresh three-board visual survey complete; one profile cleanup blocked**
+**Current task:** **Exact fresh relay diagnosed; bounded proposal review next**
+
+Actual JDK8 PASS221/root0/41.8437257s; host6negatives/14readernegatives/4separate
+birth exits PASS. Existingordinarycompactor reducesrawproposal1030→910width,
+evals45→72; paired unchanged72 with0eligiblepairs fromactual9part22pad topology.
+RealP05router rejects CTRL_RETURN NO_PATH atQ1.E→J1.2,5orders/190657expansions,
+correlatedtypedcause; selectedarea851092/copper6600/vias0/void74000 unchanged.
+No candidate metrics/acceptedsizegain/productionvariant or GO. Frozenbaseline/
+20helpers/private5 precede actualruns; source1482/24/13/10/5/execution6 exact.
+Preseal source/reader corrections preserved beforedata; no failednative/data
+or pre-fixPASS. Next: publish finite diagnosis, then bounded proposal review.
+[Actual stages, cause and limits](task-evidence/PCB/fresh-relay-stage-diagnostic-r1/RESULTS.md).
+
 
 Ordinary unseeded RB30-7246877603843301116, RB153981106694414844002 and relay
 -397178238694963708 all reach checked tickets/originalFAIL/allactualsuppliesOFF/

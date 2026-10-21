@@ -1,0 +1,15 @@
+{
+  "status": "VERIFIED_NORMAL_PUBLICATION_WITH_RESOURCE_LIMIT",
+  "sha": "1327ca3bd359d7ffc3ec4a9969d648ad211812e7",
+  "message": "Record fresh random PCB views and browser cleanup limit",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteUrl": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "pushActualExitCode": 0,
+  "remoteExactSha": "1327ca3bd359d7ffc3ec4a9969d648ad211812e7",
+  "reviewedPublishedBlobs": 74,
+  "scope": "Three fresh first-result observations and four raw images; cleanup remains explicitly BLOCKED for first browser profile",
+  "sourceBoundary": "1482/24/13/10/5 unchanged after publication",
+  "mainMerge": "NOT REQUESTED",
+  "email": "DISABLED BY USER"
+}

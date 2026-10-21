@@ -1,0 +1,56 @@
+{
+  "status": "PREPARED_SIX_NEGATIVE_SELECTED_HOST_BINDINGS",
+  "changes": [
+    {
+      "label": "finite phases",
+      "replacements": 1,
+      "oldSha256": "52a7675f31483f627e722257acafb04a8f89bded20d6df6a06467769a61cbd34",
+      "newSha256": "c8044a6f6d93b0a9dd351e46f08ed8b3987338a867ab84de646a83c0ac290700"
+    },
+    {
+      "label": "only unchanged observed control",
+      "replacements": 1,
+      "oldSha256": "733f4c6f82d83689a6f0abbfbd9074921601018565592083df6fcd0491fa2c05",
+      "newSha256": "e5ac1577b3f1171d67191f363ac4d8e82cab43a18a4c5e115e6f5fa2a28bca3b"
+    },
+    {
+      "label": "also reject previously accepted composed host binding",
+      "replacements": 1,
+      "oldSha256": "eeda7a966ebf3cfb641907f034a981f2e2abe198bd582c2cdcc70b7b9d447c02",
+      "newSha256": "63544185792d72f982ee80d930abb5a86723faa8ccc51d41c18e01aefa5157f5"
+    },
+    {
+      "label": "actual two excluded host families",
+      "replacements": 1,
+      "oldSha256": "bfcf4da1936608743a90f5a0afc82a545a4178f87693b7e9c9cbf86ba1ee172e",
+      "newSha256": "ffa9a2ba77a112e9e33da3172eeaa5b8f514138eb515e5a8dcaeefd54f95712b"
+    },
+    {
+      "label": "negative family parameter mapping",
+      "replacements": 1,
+      "oldSha256": "0ee840230a48c40103df33a6094298e6e2a3100901625434d5813d1245c6e2ba",
+      "newSha256": "8fa1454cce272adae0a16d8423f50f78d515f324812ff8d94eb26294ae29d169"
+    },
+    {
+      "label": "finite positive family",
+      "replacements": 1,
+      "oldSha256": "0a7715a4e9c3399b0788c7544a0dce745dca7ede9240fca782883b20fdf889af",
+      "newSha256": "4b91e95e6b92cf95be8a792965b311d242fc6cf490472b7ec86902e234600952"
+    },
+    {
+      "label": "six actual negative scope",
+      "replacements": 1,
+      "oldSha256": "a8704d66420cdf54339032edf96e58e9ca651ad1fe0bdf2d009a96b97b4077ea",
+      "newSha256": "82d92e015831ea662d6b9ffa3ccd86f34eb134036a9e3a4297342e896cfec9fe"
+    },
+    {
+      "label": "cleanup finite phases",
+      "replacements": 1,
+      "oldSha256": "52a7675f31483f627e722257acafb04a8f89bded20d6df6a06467769a61cbd34",
+      "newSha256": "c8044a6f6d93b0a9dd351e46f08ed8b3987338a867ab84de646a83c0ac290700"
+    }
+  ],
+  "unloggedLiteralBindings": "Public canonical target and its one-leading-zero invalid spelling replace old two-pad composed strings; display labels updated.",
+  "scope": "Same maintained job/process/Java budgets, explicit private five sources, canonical-long host validation and separate root exit/birth mechanism; only finite binding/phase/audit labels changed.",
+  "limits": "Source only; actual host negatives and native NOT RUN."
+}

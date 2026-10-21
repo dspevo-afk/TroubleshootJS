@@ -1,0 +1,9 @@
+{
+  "phase": "relay",
+  "terminalCleanupIncluded": true,
+  "elapsedSeconds": 41.8437257,
+  "failure": null,
+  "status": "PASS",
+  "exitCode": 0,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

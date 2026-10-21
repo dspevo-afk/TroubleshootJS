@@ -1,0 +1,58 @@
+--- borrowed-runner
++++ finite-relay-runner
+@@ -1,5 +1,5 @@
+ [CmdletBinding()]
+-param([Parameter(Mandatory=$true)][ValidateSet('canaries','control','variant')][string]$Phase,
++param([Parameter(Mandatory=$true)][ValidateSet('canaries','relay')][string]$Phase,
+       [Parameter(Mandatory=$true)][string]$JavaHome,
+       [Parameter(Mandatory=$true)][string]$PythonExe,
+       [Parameter(Mandatory=$true)][string]$PowerShellExe,
+@@ -24,16 +24,16 @@
+ @{phase=$Phase;drivers=$drivers;scope='Captured before selected private span-probe adapter; root observes actual tool exit before separate birth checks'}|ConvertTo-Json -Depth 6|Set-Content -LiteralPath (Join-Path $attempt 'process-launch.json')
+ $adapter=Join-Path $PrivateRoot 'common/verify-two-pad-span.ps1'
+ $exporter=Join-Path $PrivateRoot 'common/SparseNormalBoardDiagnostic.java'
+-$arm=if($Phase -eq 'variant'){'variant'}else{'control'}
++$arm='control'
+ $generator=Join-Path $PrivateRoot ($arm+'/SeededPcbLayoutGenerator.java')
+ $planner=Join-Path $PrivateRoot ($arm+'/PcbPlacementPlanner.java')
+ $compactor=Join-Path $PrivateRoot ($arm+'/PcbPlacementCompactor.java')
+ $watch=[Diagnostics.Stopwatch]::StartNew();$code=2;$failure=$null
+ try{
+     if($Phase -eq 'canaries'){
+-        $checks=@(foreach($kind in @('seed','family','generator','planner','compactor')){
+-            $family=if($kind -eq 'family'){'RC_DELAY'}else{'COMPOSED_CONTROLLED_INDICATOR'}
+-            $seed=if($kind -eq 'seed'){'-02750102463469069236'}else{'-2750102463469069236'}
++        $checks=@(foreach($kind in @('seed','family','previous-family','generator','planner','compactor')){
++            $family=if($kind -eq 'family'){'RC_DELAY'}elseif($kind -eq 'previous-family'){'COMPOSED_CONTROLLED_INDICATOR'}else{'RELAY_OUTPUT'}
++            $seed=if($kind -eq 'seed'){'-0397178238694963708'}else{'-397178238694963708'}
+             $missing=Join-Path $PrivateRoot ('missing-'+$kind+'-canary.java')
+             if(Test-Path -LiteralPath $missing){throw 'Canary path unexpectedly exists'}
+             $selectedGenerator=if($kind -eq 'generator'){$missing}else{$generator}
+@@ -44,16 +44,16 @@
+             $negativeWatch=[Diagnostics.Stopwatch]::StartNew()
+             & $PowerShellExe -NoProfile -File $adapter -TaskRepositoryRoot $repo -TaskExportSource $exporter -TaskGeneratorSource $selectedGenerator -TaskPlannerSource $selectedPlanner -TaskCompactorSource $selectedCompactor -TaskExportFamily $family -TaskExportSeed $seed -JavaHome $JavaHome -PythonExe $PythonExe -Suite @('SparseNormalBoardDiagnostic') *> $log
+             $negativeCode=[int]$LASTEXITCODE;$negativeWatch.Stop()
+-            $parameter=if($kind -eq 'seed'){'TaskExportSeed'}elseif($kind -eq 'family'){'TaskExportFamily'}elseif($kind -eq 'generator'){'TaskGeneratorSource'}elseif($kind -eq 'planner'){'TaskPlannerSource'}else{'TaskCompactorSource'}
++            $parameter=if($kind -eq 'seed'){'TaskExportSeed'}elseif($kind -eq 'family' -or $kind -eq 'previous-family'){'TaskExportFamily'}elseif($kind -eq 'generator'){'TaskGeneratorSource'}elseif($kind -eq 'planner'){'TaskPlannerSource'}else{'TaskCompactorSource'}
+             $raw=Get-Content -LiteralPath $log -Raw
+             if($negativeCode -ne 1 -or $raw -notmatch ("Cannot validate argument on parameter '"+$parameter+"'")){throw ('Parameter binding did not reject '+$kind)}
+             if($raw -match 'CURRENT_CONTRACT_|javac|PASS: focused current contracts'){throw 'Invalid binding reached native work'}
+             @{kind=$kind;status='PASS_REJECTED_AT_PARAMETER_BINDING';actualAdapterExitCode=$negativeCode;elapsedSeconds=$negativeWatch.Elapsed.TotalSeconds;privateLogSha256=(Get-FileHash -LiteralPath $log -Algorithm SHA256).Hash.ToLowerInvariant();privateLogBytes=(Get-Item -LiteralPath $log).Length}
+         })
+-        @{checks=$checks;limits='Actual selected private adapter rejects noncanonical seed, excluded family and absent generator/planner/compactor before compiler/native work; raw stderr private/hash-bound'}|ConvertTo-Json -Depth 6|Set-Content -LiteralPath (Join-Path $attempt 'canaries.json')
++        @{checks=$checks;limits='Actual selected private adapter rejects noncanonical seed, excluded RC and previous composed families, and absent generator/planner/compactor before compiler/native work; raw stderr private/hash-bound'}|ConvertTo-Json -Depth 6|Set-Content -LiteralPath (Join-Path $attempt 'canaries.json')
+         $code=0
+     }else{
+-        & $PowerShellExe -NoProfile -File $adapter -TaskRepositoryRoot $repo -TaskExportSource $exporter -TaskGeneratorSource $generator -TaskPlannerSource $planner -TaskCompactorSource $compactor -TaskExportFamily COMPOSED_CONTROLLED_INDICATOR -TaskExportSeed '-2750102463469069236' -JavaHome $JavaHome -PythonExe $PythonExe -Suite @('SparseNormalBoardDiagnostic') -ReceiptOutputPath (Join-Path $attempt 'receipt.txt') *> (Join-Path $attempt 'native.txt')
++        & $PowerShellExe -NoProfile -File $adapter -TaskRepositoryRoot $repo -TaskExportSource $exporter -TaskGeneratorSource $generator -TaskPlannerSource $planner -TaskCompactorSource $compactor -TaskExportFamily RELAY_OUTPUT -TaskExportSeed '-397178238694963708' -JavaHome $JavaHome -PythonExe $PythonExe -Suite @('SparseNormalBoardDiagnostic') -ReceiptOutputPath (Join-Path $attempt 'receipt.txt') *> (Join-Path $attempt 'native.txt')
+         $code=[int]$LASTEXITCODE
+     }
+ }catch{$failure=$_.Exception.Message;$code=2}finally{
+@@ -61,5 +61,5 @@
+     @{phase=$Phase;status=$(if($code -eq 0){'PASS'}else{'FAIL'});exitCode=$code;elapsedSeconds=$watch.Elapsed.TotalSeconds;terminalCleanupIncluded=$true;cleanupDuration='NOT_SEPARATELY_MEASURED';failure=$failure}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $attempt 'timing.json')
+ }
+ Audit-Inputs 'after'
+-if($code -ne 0){throw ('Two-pad span probe failed '+$Phase+' exit='+$code)}
+-Write-Output ('PASS two-pad span selected private adapter phase '+$Phase)
++if($code -ne 0){throw ('Fresh relay stage probe failed '+$Phase+' exit='+$code)}
++Write-Output ('PASS fresh relay stage selected private adapter phase '+$Phase)

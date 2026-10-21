@@ -1,0 +1,19 @@
+{
+  "status": "PASS_PRIVATE_RELAY_BINDING_SOURCE_ONLY",
+  "manifestSha256": "0619221e6aa085fbf12823c8711c53e8ad540b5f9c707f8b2227776752ff83c7",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "ef3744673dee4fd537b8b44a57174cb3d6f2ec48f655ba8438750836368f1a5d",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "reviewer": "root",
+  "findings": [
+    "Actual exporter3binding and host1binding diffs inspected. Four reverse replacements restore exact borrowed source; complete export/assertion/disposal and both observer suffixes exact.",
+    "Passive control generator and production planner/compactor remain exact borrowed accepted bytes; no new observer, state, move, route, budget, target order, validator, electrical graph, source epoch or production edit.",
+    "Actual helper diff inspected: only finite phase/seed/family/source audit labels and six selected negatives, including formerly accepted composed host family. Same process jobs, limits, native invocation, source substitution and separate actual-exit/birth mechanism.",
+    "Python AST and four actual selected PowerShell sources parse. Frozen scope incorrect zero-headroom-stage conditional superseded before native by source-backed clarification: all4 stages precede headroom. Original worker broad host family corrected before private generation; originals hash-bound."
+  ],
+  "limits": "Source/syntax only. Runtime seal, actual host negatives, JDK8 relay, final independent reader and driver/execution checks NOT RUN."
+}

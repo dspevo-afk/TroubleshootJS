@@ -1,0 +1,15 @@
+{
+  "status": "READ_ONLY_INITIAL_SIZING_ADVICE_NO_RUNTIME_VALUES",
+  "source": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+  "sourceBlob": "e34312c88ab25143a0c34981c0a5f526a03ae254",
+  "reviewer": "optional via_outlier_scope leaf; root source blob verified",
+  "facts": [
+    "Nine-part small bottom planner resolves variant=(candidate+seedOffset)%6, and Plan.candidate stores that variant. Aspect values1.4,1.9,1.0,2.4,1.2,1.65.",
+    "Demand sums (access envelope width+40)*(height+40). contentWidth=align(ceil(sqrt(demandArea*aspect))), at leastmaxWidth+40. Final width adds one maximum anchor envelope per occupied side and80.",
+    "Single default region wraps nonanchors at min(contentWidth,max(widest,align(sqrt(regionArea*aspect)))); nonanchor rows increase height lower bound.",
+    "EDGE anchor side comes from seeded/candidate hash; Y starts50 plus deterministic0..70bucket, sidefree span depends on nonanchor row extent and side stack; stack advances envelopeheight+40+2*domainMargin. No-barrier default has domainMargin0.",
+    "Final height takes maximum nonanchor-row and anchor-stack extents. No separate multiplication of anchor spacing by nonanchor row count."
+  ],
+  "possibleLever": "Existing six-value aspect affects content width and row wrap with existing bounded work; no proposed or tested change.",
+  "limits": "Actual derived seed, variant, package envelopes, left/right assignments, rows, initial free span and original outline values not observed. SOURCE stage is post-route winner, so do not infer original initial sizing values from it. No extra observer added in this scope."
+}

@@ -1,0 +1,26 @@
+--- borrowed-exporter
++++ private-relay-exporter
+@@ -59,11 +59,12 @@
+         if (args == null || args.length != 4 || !"--family".equals(args[0]) ||
+                 !"--seed".equals(args[2]))
+             throw new IllegalArgumentException(
+-                "Usage: --family <RC_DELAY|COMPOSED_CONTROLLED_INDICATOR> --seed <canonical signed-long>");
++                "Usage: --family <RC_DELAY|COMPOSED_CONTROLLED_INDICATOR|RELAY_OUTPUT> --seed <canonical signed-long>");
+         String family = args[1];
+         String profile;
+         if (RC_FAMILY.equals(family)) profile = DifficultyProfile.EASY.name();
+         else if (COMPOSED_FAMILY.equals(family)) profile = DifficultyProfile.MEDIUM.name();
++        else if ("RELAY_OUTPUT".equals(family)) profile = DifficultyProfile.EASY.name();
+         else throw new IllegalArgumentException("Unsupported sparse diagnostic family");
+ 
+         String seedText = args[3];
+@@ -76,7 +77,8 @@
+         if (!Long.toString(seed).equals(seedText))
+             throw new IllegalArgumentException("Sparse diagnostic seed is not canonical");
+         if ((RC_FAMILY.equals(family) && seed != -9187226374781659024L) ||
+-                (COMPOSED_FAMILY.equals(family) && seed != -2750102463469069236L))
++                (COMPOSED_FAMILY.equals(family) && seed != -2750102463469069236L) ||
++                ("RELAY_OUTPUT".equals(family) && seed != -397178238694963708L))
+             throw new IllegalArgumentException("Seed is not the pinned accepted public replay for this family");
+         String replayId = PlayerLaunchRequest.EPOCH + "/" + profile + "/" + family + "/" + seedText;
+         return new Request(family, profile, seedText, seed, replayId);

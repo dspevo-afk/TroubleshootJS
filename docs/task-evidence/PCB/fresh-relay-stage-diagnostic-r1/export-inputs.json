@@ -1,0 +1,34 @@
+{
+  "baseCommit": "1327ca3bd359d7ffc3ec4a9969d648ad211812e7",
+  "baselineSealSha256": "a4bff61ab2ddb6247faf66e02cf799b9631865a6f71513027c5175ea58607dc7",
+  "request": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "ef3744673dee4fd537b8b44a57174cb3d6f2ec48f655ba8438750836368f1a5d",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "gates": {
+    "initial-sizing-advice.json": "547cf008d30d7436d87910e232f942ef326250d50162d57883264cb923e35cfe",
+    "scope-clarification.md": "f399a0364f821a28062815f9804b299b4bf76d4b4c07fce1ced2b017970552c7",
+    "preparation-review.json": "46000cfb7eaca31e1d05183f88f449ec1125037166db48e30303538320b80493",
+    "relay_binding_patch.py": "ef590ec3aae10431d92ced3fe8876fd4c7660bdba950f05dee69bf2d398a236a",
+    "binding-notes.md": "6dc1eb21d8120c5605b147386b3e44dad3af419b81003ac7d14a9c73b8bde129",
+    "prepare_sources.py": "0417db66986469e7eaac2e004ca16932e058784d83ec508ab8f5ec5b9aec02d6",
+    "private-inputs.json": "0619221e6aa085fbf12823c8711c53e8ad540b5f9c707f8b2227776752ff83c7",
+    "exporter-diff.txt": "ea73999734adeb3c8103bf34f1d77e2b1b26a68da92868aa7f73e8dbc4c44250",
+    "adapter-diff.txt": "55973c3424d30262a22dd97fc78c70f806b5f899f5b138acca30ba831d7e1450",
+    "host-helper-review.json": "419b2fc7afa90b69f93cc7e7f4c477f1ced26772a4b819522f035213d57c97d1",
+    "run-helper-diff.txt": "a2d773049c055726d419eff234907b61bc3076be25d665f93ee74c9ea5d96706",
+    "run_export.ps1": "46fe6915894d4a785eb18cf041fa2c4b57bebb342e14e975bdbc9779f6b4ce84",
+    "record_exit.ps1": "7bb4421107b6bb7fbba209e6b4cd139a46b3c221c832c0734b593fbf81ea9c53",
+    "observe_execution.ps1": "812bfd874d9ac32e002300bf5e478e73d66757a954c2e1c0bb23a5db863d9dfe",
+    "source-review.json": "e709ec18af644c7c031192609b2f145f6c500844e16a48536378a9ef4ead7f90",
+    "qualify.py": "8e3ed88a0454825df5ac65101591b440788f3ed75e8c2851bc797ed0f80e8869",
+    "reader-scope.md": "fccc6c3636cb273df6b70b0f11ec288c47ec0b039befa43aad575ab96c24e24e",
+    "reader-preseal-review.json": "cfd17f2756485630335b1ee17f69f1b1a83237ee163f5ed8ca31ba4936026953",
+    "review_export.py": "2cb09f21d0bf27a750503b7af305ca93dac413e401b0ecac87aa91db676bb23d",
+    "export_inputs.py": "747c1ff2e0da6e4ba390994db7f62e730697f8213512ac5ac7552066430ac538"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "limits": "Actual selected private adapter rejects noncanonical seed, excluded RC and previous composed families, and absent generator/planner/compactor before compiler/native work; raw stderr private/hash-bound",
+  "checks": [
+    {
+      "elapsedSeconds": 0.3941747,
+      "privateLogSha256": "c68e74415fb76893c65c7a0ceb9333319158eac3067297441a4c58f9569dcd5a",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 449,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "seed"
+    },
+    {
+      "elapsedSeconds": 0.3283751,
+      "privateLogSha256": "b4e0f4df7467ea552bb3a6e58d4ab8746839102fc5db754c736085a3b52e737b",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 260,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "family"
+    },
+    {
+      "elapsedSeconds": 0.3333854,
+      "privateLogSha256": "c45df1dd9b8caa60b5b804c76c4906d31a5666a7508463e5ca371c5170dc6cef",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 281,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "previous-family"
+    },
+    {
+      "elapsedSeconds": 0.3233943,
+      "privateLogSha256": "e0ae80355d9e9430b902c6655a2fe97f4732a19049ec0c2c5e1026d0bf95352b",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 389,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "generator"
+    },
+    {
+      "elapsedSeconds": 0.3218824,
+      "privateLogSha256": "61dc55894d08d46da985661b0226fa4fe1c53a101eccead48bca56dc6ca135a5",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 385,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "planner"
+    },
+    {
+      "elapsedSeconds": 0.3292025,
+      "privateLogSha256": "5f9d18aeb5282f53125f722dc85899650997f5fe76badc992c4e313873875897",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 389,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "kind": "compactor"
+    }
+  ]
+}

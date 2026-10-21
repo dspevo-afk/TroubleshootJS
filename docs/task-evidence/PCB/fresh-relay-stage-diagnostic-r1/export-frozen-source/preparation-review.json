@@ -1,0 +1,14 @@
+{
+  "status": "ROOT_SOURCE_CORRECTIONS_BEFORE_PRIVATE_GENERATION_OR_NATIVE",
+  "originalWorkerFiles": {
+    "relay_binding_patch.py": "68afea15e7a6cb77c427efbf9633074e4e9a3aecbf3a39ab04ae690218cc1cf6",
+    "binding-notes.md": "e797352040163e6f2d8024620ad2a8201dd2da1a9d13405f3c9e27f8dd2c1a1c"
+  },
+  "currentBindingPatchSha256": "ef590ec3aae10431d92ced3fe8876fd4c7660bdba950f05dee69bf2d398a236a",
+  "clarificationSha256": "f399a0364f821a28062815f9804b299b4bf76d4b4c07fce1ced2b017970552c7",
+  "findings": [
+    "Actual source emits all4 checkpoints before no-change/headroom guards; frozen original scope retained and conditional corrected by clarification.",
+    "Released worker retained COMPOSED in host ValidateSet; corrected to RELAY-only before private source creation. Exporter old branches/assertions/observers remain preserved."
+  ],
+  "limits": "Source-only; no private source generation, Java/native/runtime/data gate has run yet."
+}

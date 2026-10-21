@@ -1,0 +1,19 @@
+{
+  "status": "PASS_ROOT_FINITE_PRIVATE_RELAY_OBSERVATION_ONLY",
+  "assessmentSha256": "2494706ba9b6ff95d941777ddaa7925972ecb2f0034cb0b4c0a0dc42a567137e",
+  "runtimeSealSha256": "00ca9d3458449fc022dfc54d931e8785fdd6c1d3634bde824a5549871262ed4b",
+  "sourceReviewSha256": "e709ec18af644c7c031192609b2f145f6c500844e16a48536378a9ef4ead7f90",
+  "presealReaderReviewSha256": "cfd17f2756485630335b1ee17f69f1b1a83237ee163f5ed8ca31ba4936026953",
+  "actualExits": {
+    "canaries": 0,
+    "relayNative": 0,
+    "finalReview": 0
+  },
+  "nativeAssertions": 221,
+  "readerNegatives": 14,
+  "actualSelectedHostNegatives": 6,
+  "driverBirthsSeparatelyExited": 4,
+  "selectedGeometry": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+  "review": "Root inspected actual binding/host diffs, four reverse restorations, export+observer suffix equality, source/checkpoint/eligible inventory and typed cause work. Optional leaves supplied pure binding patch and receipt validator/source advice; root corrected preseal issues. No independent final acceptance reviewer.",
+  "limitations": "No production variant, smaller accepted PCB, per-origin cause, universal unroutability, optimality or fresh full matrix/GWT/player/repair claim. Prior visual profile cleanup BLOCKED; five retained profiles untouched."
+}

@@ -1,0 +1,16 @@
+{
+  "scope": "Captured before selected private span-probe adapter; root observes actual tool exit before separate birth checks",
+  "drivers": [
+    {
+      "startTicks": "639281448407810253",
+      "pid": 1448,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281448410182886",
+      "pid": 33252,
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "relay"
+}
