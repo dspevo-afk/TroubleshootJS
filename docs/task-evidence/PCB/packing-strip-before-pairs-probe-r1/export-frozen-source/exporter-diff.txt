@@ -1,0 +1,81 @@
+--- common/SparseNormalBoardDiagnostic.java
++++ variant/common/SparseNormalBoardDiagnostic.java
+@@ -109,6 +109,7 @@
+ 
+         requireExactInventories(board, layout);
+         PcbPlacementConstraints constraints = board.getPlacementConstraints();
++        runOptionalStripBudgetChecks(board, layout, constraints);
+         int accessReachableCells = PcbAccessPlanner.validate(layout.getBoardOutline(),
+             orderedFootprints(board, layout), constraints.getTraceWidthProfile().maximumWidth());
+         int whitespace = PcbFunctionalGroupingContractTest.reportWhitespace(
+@@ -231,6 +232,70 @@
+                 geometryBefore.equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
+             "final serialization preserves the accepted graph and selected geometry");
+         System.out.println(PREFIX + json.toString());
++    }
++
++    private static void runOptionalStripBudgetChecks(TroubleshootBoard board,
++            PcbBoardLayout layout, PcbPlacementConstraints constraints) {
++        check(constraints.placementPackingVersion ==
++                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION,
++            "optional strip fixture uses the connected packing contract");
++        Vector<PcbFootprint> footprints = orderedFootprints(board, layout);
++        check(footprints.size() == 9 && countPads(footprints) == 22,
++            "optional strip fixture retains the accepted nine-part twenty-two-pad inventory");
++        String graphBefore = PcbCanvasBoundaryContractTest.liveGraphSha256(board);
++        String layoutBefore = PlayerSessionFingerprint.of(layout.geometryFingerprint());
++        int[] inputEvaluations = new int[] {59999, 60000, 0};
++        for (int evaluations : inputEvaluations)
++            runOptionalStripBudgetCheck(board, constraints, layout.getBoardOutline(),
++                footprints, evaluations);
++        check(graphBefore.equals(PcbCanvasBoundaryContractTest.liveGraphSha256(board)) &&
++                layoutBefore.equals(PlayerSessionFingerprint.of(layout.geometryFingerprint())),
++            "optional strip fixture preserves the live graph and selected layout");
++    }
++
++    private static void runOptionalStripBudgetCheck(TroubleshootBoard board,
++            PcbPlacementConstraints constraints, Rectangle outline,
++            Vector<PcbFootprint> footprints, int inputEvaluations) {
++        PcbPlacementPlanner.Plan input = new PcbPlacementPlanner.Plan(outline, footprints,
++            new Vector<PcbLayoutRegion>(), 0L, 0L, 4, inputEvaluations);
++        String inputGeometry = PlayerSessionFingerprint.of(input.materialize().geometryFingerprint());
++        PcbPlacementPlanner.Plan result = PcbPlacementCompactor.compactOptionalStrips(
++            board, constraints, input);
++        String inputGeometryAfter =
++            PlayerSessionFingerprint.of(input.materialize().geometryFingerprint());
++        boolean samePlan = PcbPlacementCompactor.samePlacement(input, result);
++        boolean inputUnchanged = inputGeometry.equals(inputGeometryAfter);
++        int parts = result.footprints.size();
++        int pads = countPads(result.footprints);
++        check(result.evaluations >= inputEvaluations &&
++                result.evaluations <= PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS,
++            "optional strip fixture remains within the shared placement evaluation cap");
++        check(inputUnchanged, "optional strip fixture does not mutate its input plan");
++        check(parts == input.footprints.size() && pads == countPads(input.footprints),
++            "optional strip fixture preserves the plan inventory");
++        if (inputEvaluations >= 59999)
++            check(result == input && samePlan && result.evaluations == inputEvaluations,
++                "optional strip budget guard returns the exact near-cap input");
++        StringBuilder json = new StringBuilder(180);
++        json.append('{').append('"').append("inputEvaluations").append('"').append(':')
++            .append(inputEvaluations);
++        json.append(',').append('"').append("resultEvaluations").append('"').append(':')
++            .append(result.evaluations);
++        json.append(',').append('"').append("samePlan").append('"').append(':')
++            .append(samePlan);
++        json.append(',').append('"').append("inputUnchanged").append('"').append(':')
++            .append(inputUnchanged);
++        json.append(',').append('"').append("parts").append('"').append(':')
++            .append(parts);
++        json.append(',').append('"').append("pads").append('"').append(':')
++            .append(pads).append('}');
++        System.out.println("PCB_OPTIONAL_STRIP_BUDGET_CHECKPOINT " + json.toString());
++    }
++
++    private static int countPads(Vector<PcbFootprint> footprints) {
++        int result = 0;
++        for (PcbFootprint footprint : footprints) result += footprint.getPads().size();
++        return result;
+     }
+ 
+     private static void requireExactInventories(TroubleshootBoard board,

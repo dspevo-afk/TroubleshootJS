@@ -1,0 +1,64 @@
+{
+  "status": "PREPARED_PRIVATE_STRIP_BEFORE_PAIRS",
+  "baseCommit": "3460f1c9e26161d910249a850adb65f562fcffbe",
+  "baselineSealSha256": "ba3ebaa3fc8398f4b0324e1553d56870f95666fe0dfe811c21c930601022e05d",
+  "candidateInterpretation": "PRIVATE_OPTIONAL_STRIP_BEFORE_PAIRS@1;NOT_PRODUCTION_MODEL",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "1892b875493b3475d3fb1aef1df1eb1496a8a7030d3ac7a54af69601ef7746c1",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "variant/SeededPcbLayoutGenerator.java": "735fd7b70b9e2d4af33c9d7e8c9bd17d9a67aea477d0886675bfaf7f7978c816",
+    "variant/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "variant/PcbPlacementCompactor.java": "e81ae2197dab370242a5a0d22c8ac0447e30c8b98bd4ce92c38e647cef115012"
+  },
+  "controlPrivateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "ef3744673dee4fd537b8b44a57174cb3d6f2ec48f655ba8438750836368f1a5d",
+    "common/verify-two-pad-span.ps1": "68997a0430807f6d79f75b2bef18d1a9e8d4cb1518cb02dcef8721c5e495dd08",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+  },
+  "changes": [
+    {
+      "owner": "exporter",
+      "label": "run_actual_optional_strip_budget_fixture",
+      "replacements": 1,
+      "oldSha256": "65eff19e54ee89239f314058e2b99b5c18b3eb91a3df67bea4e5c8d7b00ea2ab",
+      "newSha256": "b943011a28175d1c821659faba7ddaffe69510d8cc6370871b9ae431d74b1315"
+    },
+    {
+      "owner": "exporter",
+      "label": "add_actual_budget_fixture_helpers",
+      "replacements": 1,
+      "oldSha256": "40feccc12d427dacf825d532810d578bba9514a525a735199ab13d05a5a52f6c",
+      "newSha256": "b7ac60628b121cdc328e96c3d63cbbe6662f5cfb8fd3725b36095c223de0a094"
+    },
+    {
+      "owner": "generator",
+      "label": "use_optional_strips_only_for_p05",
+      "replacements": 1,
+      "oldSha256": "d8b2750707cf10b9830c87ee7b25081c37873ed17e8da8a3e5fc9e24107247d0",
+      "newSha256": "a2d36e0bbe5d155cddd68aaaa56066eae006605a65cf75b5a5c810495b63ecac"
+    },
+    {
+      "owner": "compactor",
+      "label": "add_optional_strip_wrapper",
+      "replacements": 1,
+      "oldSha256": "de54b2ec4d0a72625dc72390b90c6cd617684e593420ee71a896d9b1d79bb667",
+      "newSha256": "3eb590bdcb86411cd62654559e021e623a4c5a1552b70f58a87d06d607e3c8fb"
+    }
+  ],
+  "checks": {
+    "baselineAudit": "PASS",
+    "originalControlPrivateInputs": "PASS",
+    "generatorReverse": "PASS",
+    "compactorReverse": "PASS",
+    "exporterReverse": "PASS",
+    "plannerUnchanged": "PASS",
+    "adapterUnchanged": "PASS",
+    "generatorSuffixUnchanged": "PASS",
+    "compactorSuffixUnchanged": "PASS",
+    "exporterSuffixUnchanged": "PASS",
+    "runtimeBudgetFixture": "NOT RUN (Java/native leaf restriction)"
+  },
+  "limits": "Pure source preparation only; Java compilation, native canaries, routing, browser, data reader, and GO decision are NOT RUN."
+}

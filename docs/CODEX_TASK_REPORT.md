@@ -1,4 +1,29 @@
-# Current checkpoint: fixed optional route stream private NO_GO; publication preparing
+# Current checkpoint: board-size pass closed by user; resume REL-B
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+Base/exactremote3460f1c9e26161d910249a850adb65f562fcffbe. User explicitly ended
+size tweaks and requested rest of roadmap. No further density trials. No main/
+email; seven unrelated groups/FIVE blocked profiles untouched, never retry profiles.
+Three fresh production tops already pasted. Accepted shared production22cbf4bc
+unchanged; current finite closeout ready for intended-only publication.
+
+Final strip-before-pairs private NO_GO: SOURCE/ORDINARY/PAIRED/FINAL1030x930/eval45,
+NO_CHANGE/zero optional route work; no candidate metrics/size gain/optimum claim.
+Actual JDK8 PASS266/root0/47.4464675s; six host negatives/root0/2.5877864s; root
+review0/17 actual negatives, cause negatives N/A; four separate driver exits.
+Budget59999/60000 exact no-op and0 no-op preserve9parts22pads/input/live graph.
+Fifteen helpers/private5 frozen pre-native; source1482/24/13/10/5 and actual
+execution6before/after exact. Source-template/static-prefix and in-flight hash
+attribution corrections retained before seal; no native/data-reader failure.
+Optional preparation/advice leaves/root acceptance, no independent final agent.
+Private logs/sources via q60 pointer; no task live native/browser/preview resources.
+
+Next after closeout commit/push/exactremote/fresh execution audit: REL-B independent
+non-spoiling reproduction/report row current-source inspection. HARD human trials
+and calibrated normal advanced admission/population still pending; no invented
+human results or early gate enablement. Q100 remains unstarted.
+
+# Previous checkpoint: fixed optional route stream private NO_GO; publication preparing
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 Base/exactremote be7098819b3bdba15012a7f8d6869645bca0ca58. Continue authorized

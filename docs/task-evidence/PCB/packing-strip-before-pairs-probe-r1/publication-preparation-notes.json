@@ -1,0 +1,11 @@
+{
+  "firstCachedDiffCheckActualExitCode": 2,
+  "cause": "The already frozen preparation helper has a terminal empty line, in both original and archived bytes. Actual host/native input seals and phase audits bind those bytes.",
+  "scope": "Preserve the two exact sealed preparation helper files byte-for-byte; permit only their terminal blank line through two packet-local explicit whitespace attributes. No source/runtime/helper content, assertion, receipt, native oracle, runtime budget, global Git setting or production whitespace policy changes.",
+  "changedAttributes": {
+    "oldSha256": "d273ba496677ad6d04718dae3243216c3b4c3db720c285dcecd78ccdc514451a",
+    "newSha256": "4b9693bbd435a0bd5e4b5a57384698771837099cc15c1692291b2531cb84a8d1"
+  },
+  "rawFrozenHelperSha256": "c226c837ad31d1c36af78f969a0db07433665db727fd94c9af9fe1a6b54e2282",
+  "limitations": "Original cached check2 retained as FAIL; next cached check uses explicit archival-byte policy. Actual native/source/reader result unchanged. No failed native/data-reader claim."
+}

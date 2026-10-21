@@ -1,0 +1,1086 @@
+{
+  "status": "PASS_FINITE_PRIVATE_STRIP_BEFORE_PAIRS_EXPERIMENT",
+  "inputSealSha256": "d2bb00b5825973c6adad126ba14d66f48a1b1e52c9c9742ab151aa43439e6473",
+  "receiptSha256": "f252e77ef6bae592a261dc6cee08dcb31c7a4e9c808a9f97b1b1893bfa22efdc",
+  "nativeSha256": "b6a6ebf7b34be49fa309533e60b79a660d9612c7ee400cd44e3016cc95a565f6",
+  "sourceReviewSha256": "dafedc828db7e7c0f4bd22f9a92dd432457cdc00f0f0f8f1e18ab0f5a92c23b7",
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c48f7de9a91a09f0d7973531799a599cc2712a9abe751e94de7bb2606da19817",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "51b6280ed944f72a4d55422c245cf8c849890df25f7f8dd4b03b9e732a89e417",
+    "Digest": "eb534a477bfc257c97eb5d92a1db26750ab28319e7efe685ee839b65faba6117",
+    "FileCount": 1592
+  },
+  "canaries": {
+    "elapsedSeconds": 2.5877864,
+    "checks": [
+      {
+        "kind": "seed",
+        "elapsedSeconds": 0.4375059,
+        "privateLogSha256": "c68e74415fb76893c65c7a0ceb9333319158eac3067297441a4c58f9569dcd5a",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 449,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      },
+      {
+        "kind": "family",
+        "elapsedSeconds": 0.4224102,
+        "privateLogSha256": "b4e0f4df7467ea552bb3a6e58d4ab8746839102fc5db754c736085a3b52e737b",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 260,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      },
+      {
+        "kind": "previous-family",
+        "elapsedSeconds": 0.4043058,
+        "privateLogSha256": "c45df1dd9b8caa60b5b804c76c4906d31a5666a7508463e5ca371c5170dc6cef",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 281,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      },
+      {
+        "kind": "generator",
+        "elapsedSeconds": 0.4109499,
+        "privateLogSha256": "9448317731449066d378cf4679ce35a52e12545f513818334996aaa583e48a86",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 390,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      },
+      {
+        "kind": "planner",
+        "elapsedSeconds": 0.4129988,
+        "privateLogSha256": "73dab5f25fa556d83da7aa281d9bbe70ca4fe935c95740171ad862e9fdd245c2",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 386,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      },
+      {
+        "kind": "compactor",
+        "elapsedSeconds": 0.4296619,
+        "privateLogSha256": "8a443f166378474d1e5e09308878ef6bf212842265b24fee2bc75876b4888a61",
+        "actualAdapterExitCode": 1,
+        "privateLogBytes": 390,
+        "status": "PASS_REJECTED_AT_PARAMETER_BINDING"
+      }
+    ]
+  },
+  "nativeOperationSeconds": 47.4464675,
+  "driverBirthsSeparatelyExited": 4,
+  "observation": {
+    "status": "NO_GO_PRIVATE_TARGET",
+    "sourceRoutingSeed": "3078526323410797175",
+    "optionalRoutingSeed": "3078526323410797175",
+    "controlReceiptSha256": "7caebba6370ffab4958e63d39a6c67bc1f4db5d9487901f0f2ebaf4237b66d2b",
+    "budgetCanaries": [
+      {
+        "inputEvaluations": 59999,
+        "resultEvaluations": 59999,
+        "samePlan": true,
+        "inputUnchanged": true,
+        "parts": 9,
+        "pads": 22
+      },
+      {
+        "inputEvaluations": 60000,
+        "resultEvaluations": 60000,
+        "samePlan": true,
+        "inputUnchanged": true,
+        "parts": 9,
+        "pads": 22
+      },
+      {
+        "inputEvaluations": 0,
+        "resultEvaluations": 0,
+        "samePlan": true,
+        "inputUnchanged": true,
+        "parts": 9,
+        "pads": 22
+      }
+    ],
+    "variant": {
+      "status": "PASS_EXACT_FRESH_RELAY_STAGE_RECEIPT",
+      "identity": {
+        "family": "RELAY_OUTPUT",
+        "profile": "EASY",
+        "publicSeed": "-397178238694963708",
+        "replayId": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708"
+      },
+      "publishedRowOracle": {
+        "sha256": "0b8ff9c9cf22599c23d430901ed8b9d3c9867f1ecb1cb63407480647b9bbcc71",
+        "adaptedSha256": "e5dcbcae7fa786bb5c50223d13f0d1bf097ed86b374c22d05cc9d5402f8a9c06",
+        "guardedChanges": [
+          {
+            "site": "EXPECTED",
+            "from": "RC/composed",
+            "to": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708"
+          },
+          {
+            "site": "placementPackingVersion",
+            "from": 3,
+            "to": 4
+          }
+        ]
+      },
+      "diagnosticAssertionMarker": {
+        "line": "PASS: sparse normal board diagnostic family=RELAY_OUTPUT seed=-397178238694963708 assertions=266",
+        "assertions": 266
+      },
+      "row": {
+        "family": "RELAY_OUTPUT",
+        "profile": "EASY",
+        "publicSeed": "-397178238694963708",
+        "replayId": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+        "geometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "logicalBoardGraphSha256": "be4cea265608c9c6ca9a101e1e507cc9502c3a5b5621c96ec120f08eee503090",
+        "counts": {
+          "logicalParts": 9,
+          "layoutParts": 9,
+          "logicalPads": 22,
+          "layoutPads": 22,
+          "logicalNets": 9,
+          "traces": 13,
+          "holes": 0
+        },
+        "outline": [
+          70,
+          50,
+          1012,
+          841
+        ],
+        "physicalMetrics": {
+          "available": true,
+          "unavailable": false,
+          "gridStep": 10,
+          "area": 851092,
+          "copper": 6600,
+          "vias": 0,
+          "protectedVoid": 74000,
+          "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+        },
+        "packingProbe": {
+          "canonical": "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0;route=P05_ONE_FACE;disposition=NO_CHANGE;baseline=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af;selected=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "attempts": 0,
+          "orderings": 0,
+          "expansions": 0,
+          "millis": 0,
+          "routePolicy": "P05_ONE_FACE",
+          "disposition": "NO_CHANGE",
+          "baselineGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "selectedGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+          "metricEvidence": {
+            "state": "NOT_MEASURED",
+            "baseline": null,
+            "candidate": null,
+            "unavailableReason": null
+          }
+        },
+        "whitespaceSampler": {
+          "seed": "-397178238694963708",
+          "version": 1,
+          "parts": 9,
+          "gridUnits": 10,
+          "sampledCells": 8484,
+          "packageAccessOccupiedCells": 4803,
+          "protectedFreeCells": 3080,
+          "protectedFreeFraction": 0.36303630363036304,
+          "largestProtectedEmptyRectangle": {
+            "x": 710,
+            "y": 50,
+            "width": 370,
+            "height": 200,
+            "area": 74000
+          },
+          "scope": "GRID10_FULL_PACKAGE_ACCESS_BOTH_COPPER_FACES_VIAS_SILK_AND_DECLARED_ISOLATION;FREE_IS_NOT_PACKABLE_PROOF"
+        },
+        "componentEnvelopes": [
+          {
+            "componentId": "D1",
+            "packageId": "AXIAL_DIODE",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              458,
+              738,
+              86,
+              32
+            ],
+            "routingCourtyard": [
+              398,
+              724,
+              206,
+              60
+            ],
+            "accessEnvelope": [
+              336,
+              684,
+              330,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J1",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              134,
+              157,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              120,
+              143,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              100,
+              103,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J2",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              134,
+              397,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              120,
+              383,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              100,
+              343,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J3",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              934,
+              307,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              920,
+              293,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              876,
+              253,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "J4",
+            "packageId": "THROUGH_HOLE_CONNECTOR_2",
+            "anchor": "EDGE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              934,
+              547,
+              84,
+              114
+            ],
+            "routingCourtyard": [
+              920,
+              533,
+              112,
+              142
+            ],
+            "accessEnvelope": [
+              876,
+              493,
+              176,
+              202
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "K1",
+            "packageId": "RELAY_SPDT",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              476,
+              539,
+              120,
+              100
+            ],
+            "routingCourtyard": [
+              396,
+              479,
+              280,
+              180
+            ],
+            "accessEnvelope": [
+              336,
+              409,
+              400,
+              270
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "Q1",
+            "packageId": "TO92_NPN",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              734,
+              745,
+              64,
+              56
+            ],
+            "routingCourtyard": [
+              711,
+              723,
+              120,
+              118
+            ],
+            "accessEnvelope": [
+              666,
+              683,
+              185,
+              192
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "RDRIVE",
+            "packageId": "AXIAL_RESISTOR",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              416,
+              307,
+              80,
+              34
+            ],
+            "routingCourtyard": [
+              358,
+              294,
+              196,
+              60
+            ],
+            "accessEnvelope": [
+              296,
+              254,
+              320,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          },
+          {
+            "componentId": "RPD",
+            "packageId": "AXIAL_RESISTOR",
+            "anchor": "NONE",
+            "accessMargin": 20,
+            "bodyBounds": [
+              456,
+              147,
+              120,
+              34
+            ],
+            "routingCourtyard": [
+              398,
+              134,
+              236,
+              60
+            ],
+            "accessEnvelope": [
+              336,
+              94,
+              360,
+              120
+            ],
+            "regionId": "circuit",
+            "domainId": "board"
+          }
+        ]
+      },
+      "packingProbe": {
+        "canonical": "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0;route=P05_ONE_FACE;disposition=NO_CHANGE;baseline=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af;selected=ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "attempts": 0,
+        "orderings": 0,
+        "expansions": 0,
+        "millis": 0,
+        "routePolicy": "P05_ONE_FACE",
+        "disposition": "NO_CHANGE",
+        "baselineGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "selectedGeometrySha256": "ce4fd139924615af760040a06df6fc3040667cdbcf2745dcc935e0bf8ed239af",
+        "metricEvidence": {
+          "state": "NOT_MEASURED",
+          "baseline": null,
+          "candidate": null,
+          "unavailableReason": null
+        }
+      },
+      "stages": [
+        {
+          "phase": "SOURCE",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "3078526323410797175",
+          "outline": [
+            20,
+            20,
+            1030,
+            930
+          ],
+          "evaluations": 45,
+          "inputPlanSha256": "eb73dcf40003c804c120335aedce791c2e4e8e7f432224c44daca88575ef0e45",
+          "componentPoses": {
+            "RPD": {
+              "x": 330,
+              "y": 110,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 650,
+              "y": 700,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 870,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 870,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  880,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 400
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  880,
+                  380
+                ],
+                [
+                  880,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  880,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 640
+            }
+          ]
+        },
+        {
+          "phase": "ORDINARY",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "3078526323410797175",
+          "outline": [
+            20,
+            20,
+            1030,
+            930
+          ],
+          "evaluations": 45,
+          "inputPlanSha256": "eb73dcf40003c804c120335aedce791c2e4e8e7f432224c44daca88575ef0e45",
+          "componentPoses": {
+            "RPD": {
+              "x": 330,
+              "y": 110,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 650,
+              "y": 700,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 870,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 870,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  880,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 400
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  880,
+                  380
+                ],
+                [
+                  880,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  880,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 640
+            }
+          ]
+        },
+        {
+          "phase": "PAIRED",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "3078526323410797175",
+          "outline": [
+            20,
+            20,
+            1030,
+            930
+          ],
+          "evaluations": 45,
+          "inputPlanSha256": "eb73dcf40003c804c120335aedce791c2e4e8e7f432224c44daca88575ef0e45",
+          "componentPoses": {
+            "RPD": {
+              "x": 330,
+              "y": 110,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 650,
+              "y": 700,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 870,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 870,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  880,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 400
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  880,
+                  380
+                ],
+                [
+                  880,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  880,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 640
+            }
+          ]
+        },
+        {
+          "phase": "FINAL",
+          "planCandidate": 4,
+          "layoutSeed": "-8877770744987239933",
+          "routingSeed": "3078526323410797175",
+          "outline": [
+            20,
+            20,
+            1030,
+            930
+          ],
+          "evaluations": 45,
+          "inputPlanSha256": "eb73dcf40003c804c120335aedce791c2e4e8e7f432224c44daca88575ef0e45",
+          "componentPoses": {
+            "RPD": {
+              "x": 330,
+              "y": 110,
+              "width": 260,
+              "height": 70
+            },
+            "RDRIVE": {
+              "x": 290,
+              "y": 270,
+              "width": 220,
+              "height": 70
+            },
+            "K1": {
+              "x": 330,
+              "y": 450,
+              "width": 300,
+              "height": 210
+            },
+            "D1": {
+              "x": 330,
+              "y": 700,
+              "width": 230,
+              "height": 70
+            },
+            "Q1": {
+              "x": 650,
+              "y": 700,
+              "width": 130,
+              "height": 125
+            },
+            "J1": {
+              "x": 70,
+              "y": 130,
+              "width": 100,
+              "height": 130
+            },
+            "J2": {
+              "x": 70,
+              "y": 370,
+              "width": 100,
+              "height": 130
+            },
+            "J3": {
+              "x": 870,
+              "y": 280,
+              "width": 100,
+              "height": 130
+            },
+            "J4": {
+              "x": 870,
+              "y": 520,
+              "width": 100,
+              "height": 130
+            }
+          },
+          "changedComponentIdsSincePrevious": [],
+          "componentCount": 9,
+          "padCount": 22,
+          "twoPadNetSpans": [
+            {
+              "netId": "CMD",
+              "padIds": [
+                "J2.1",
+                "RDRIVE.1"
+              ],
+              "centers": [
+                [
+                  160,
+                  410
+                ],
+                [
+                  320,
+                  300
+                ]
+              ],
+              "span": 270
+            },
+            {
+              "netId": "CONTACT_OUT",
+              "padIds": [
+                "J4.1",
+                "K1.NO"
+              ],
+              "centers": [
+                [
+                  880,
+                  560
+                ],
+                [
+                  560,
+                  480
+                ]
+              ],
+              "span": 400
+            },
+            {
+              "netId": "CONTACT_RETURN",
+              "padIds": [
+                "J3.2",
+                "J4.2"
+              ],
+              "centers": [
+                [
+                  880,
+                  380
+                ],
+                [
+                  880,
+                  620
+                ]
+              ],
+              "span": 240
+            },
+            {
+              "netId": "CONTACT_SUPPLY",
+              "padIds": [
+                "J3.1",
+                "K1.COM"
+              ],
+              "centers": [
+                [
+                  880,
+                  320
+                ],
+                [
+                  400,
+                  480
+                ]
+              ],
+              "span": 640
+            }
+          ]
+        }
+      ],
+      "selectedPadSpanRelation": "retained incumbent spans equal SOURCE up to translation",
+      "eligiblePairScreen": {
+        "exactTwoPadCrossComponentNets": 4,
+        "afterTwoTerminalNonanchorRegionDomain": 0,
+        "afterLinkedTerminalDomainMatch": 0,
+        "necessaryEligiblePairs": [],
+        "interpretation": "No exported two-pad net passes all necessary component/anchor/region/domain screens; isolation-body and movable-peer checks are therefore unnecessary for ruling out an eligible pair in this inventory."
+      },
+      "adaptedCauseReaderSha256": "2a477e2babcbe4bfcad6c6b83ff381ecc0f838bcb97b538cfb761884e6f940f5",
+      "typedCauseEvents": {
+        "eventCount": 0,
+        "outer": null,
+        "unrelatedInnerRouterEvents": 0,
+        "causeCorrelation": "NOT APPLICABLE; no outer optional-probe catch was emitted"
+      },
+      "readerNegativeControls": [
+        "public identity",
+        "pad net membership",
+        "independent copper",
+        "independent protected void",
+        "current physical epochs"
+      ],
+      "stageNegativeControls": [
+        "missing two-pad span inventory",
+        "independent Manhattan span arithmetic",
+        "rehash-valid wrong pad identity",
+        "shared evaluation cap",
+        "FINAL candidate relation",
+        "FINAL retains paired cumulative work",
+        "hash-valid FINAL canonical suffix relation"
+      ],
+      "causeNegativeControls": [
+        "NOT APPLICABLE: no PACKING_CAUGHT event exists to mutate"
+      ],
+      "limits": "One exact ordinary EASY relay replay. This receipt check does not validate host canaries, native process exits/cleanup, execution provenance, private source seals, visual cleanup, a route/placement optimum, production changes, or any broader seed/family claim."
+    },
+    "limits": "One private strip stage before unchanged pair pass. Target GO requires broader qualification; no production, matrix, GWT, browser, all-seed or optimality proof."
+  },
+  "comparisonNegativeControls": [
+    "source cumulative work changed",
+    "routing stream changed",
+    "exhausted budget returns different plan",
+    "headroom fixture exceeds cap",
+    "missing native budget canary"
+  ],
+  "limits": "One exact ordinary relay replay, private P05 strip before unchanged pair pass. Exact routed SOURCE and original routing stream; shared placement cap and actual boundary fixtures, original graph and accepted baseline tuple checked. Target GO requires broader qualification including all four prior optional wins; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched."
+}

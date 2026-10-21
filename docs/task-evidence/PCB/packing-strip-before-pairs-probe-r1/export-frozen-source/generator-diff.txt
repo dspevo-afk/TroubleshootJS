@@ -1,0 +1,14 @@
+--- control/SeededPcbLayoutGenerator.java
++++ variant/SeededPcbLayoutGenerator.java
+@@ -259,7 +259,10 @@
+         PcbPlacementPlanner.Plan source = session.bestPlan;
+         TaskPackingSpanObservation.emit("SOURCE", session.board,
+             source, session.seed, session.routingSeed);
+-        session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
++        session.packingPlan =
++            MediumBoardPhysicalPolicy.P05_ONE_FACE.equals(session.packingRoutePolicy) ?
++                PcbPlacementCompactor.compactOptionalStrips(session.board, constraints, source) :
++                PcbPlacementCompactor.compact(session.board, constraints, source);
+         TaskPackingSpanObservation.emit("ORDINARY", session.board,
+             session.packingPlan, session.seed, session.routingSeed);
+         session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(

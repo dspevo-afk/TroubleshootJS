@@ -1,0 +1,16 @@
+{
+  "status": "PASS_VERIFIED_NORMAL_PUBLICATION_PRIVATE_NO_GO",
+  "sha": "3460f1c9e26161d910249a850adb65f562fcffbe",
+  "message": "Evaluate fixed optional PCB routing stream without promotion",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteUrl": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "pushActualExitCode": 0,
+  "remoteExactSha": "3460f1c9e26161d910249a850adb65f562fcffbe",
+  "reviewedPublishedBlobs": 71,
+  "sourceBoundary": "1482/24/13/10/5 exact after publication; private5/17helpers exact",
+  "scope": "One fixed private optional stream NO_GO, no production promotion",
+  "priorVisualCleanup": "BLOCKED five retained profiles; no retry",
+  "mainMerge": "NOT REQUESTED",
+  "email": "DISABLED BY USER"
+}

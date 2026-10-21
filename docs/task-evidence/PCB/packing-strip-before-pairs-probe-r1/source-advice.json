@@ -1,0 +1,14 @@
+{
+  "status": "ROOT_VERIFIED_SOURCE_ONLY_PRIVATE_EXPERIMENT",
+  "sourceBlobs": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "94870b8fa8893a65730cf04627497e08b56ab67c",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0ade26079945364a7a9ad8e96e93d0c2c44d9975",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "e34312c88ab25143a0c34981c0a5f526a03ae254",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "9722a34f1db1b03dbb1067288a04c355062ea5ac",
+    "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java": "f9b622fce44311efb5d07cf4352af9902ca9f517",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "c07f719b4bf27c5786ffc796c397d3cd20d7a266"
+  },
+  "advice": "Optional read-only leaf: justified finite removal of optional P05 single-part vacancies plus induced second strip; preserve initial budgeted strip and unchanged pair phase. Gate P05 explicitly because shared compaction call also reaches P07. Existing four optional wins can regress and require fresh census before promotion.",
+  "rootCorrections": "A leaf message called182240 the original-seed outcome; actual stream packet uses derived -7609816130686485171. Original control uses3078526323410797175 and190657 expansions. Strict baseline guard alone does not protect prior optional production wins.",
+  "limits": "No edits/native/build/browser or GO prediction from leaf; root owns acceptance."
+}

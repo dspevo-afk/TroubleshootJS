@@ -1,0 +1,30 @@
+{
+  "status": "PASS_UNCHANGED_SELECTED_HOST_AND_PHASE_BOUNDARIES",
+  "changes": [
+    {
+      "file": "run_export.ps1",
+      "sourceSha256": "4cfee4b9bba5ac3d70f6d389b0465aedcc7bf6ab20bf57432425f0928867caf1",
+      "adaptedSha256": "1c8c6a1cf8ecf2995b0402e5bcfa553368c95e1a90e05bbdf54f488d3e51b592",
+      "diff": "--- fixed-stream/run_export.ps1\n+++ strip-before-pairs/run_export.ps1\n@@ -61,5 +61,5 @@\n     @{phase=$Phase;status=$(if($code -eq 0){'PASS'}else{'FAIL'});exitCode=$code;elapsedSeconds=$watch.Elapsed.TotalSeconds;terminalCleanupIncluded=$true;cleanupDuration='NOT_SEPARATELY_MEASURED';failure=$failure}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $attempt 'timing.json')\n }\n Audit-Inputs 'after'\n-if($code -ne 0){throw ('Fixed optional stream probe failed '+$Phase+' exit='+$code)}\n-Write-Output ('PASS fixed optional stream selected private adapter phase '+$Phase)\n+if($code -ne 0){throw ('Strip-before-pairs probe failed '+$Phase+' exit='+$code)}\n+Write-Output ('PASS strip-before-pairs selected private adapter phase '+$Phase)\n"
+    },
+    {
+      "file": "record_exit.ps1",
+      "sourceSha256": "b0e9054c363686fe176b9db9190584d0152eb92419324cb91632e68cc24503f3",
+      "adaptedSha256": "b0e9054c363686fe176b9db9190584d0152eb92419324cb91632e68cc24503f3",
+      "diff": ""
+    },
+    {
+      "file": "observe_execution.ps1",
+      "sourceSha256": "f3388eb7b78b5a299a2e0330e3a6a98b234dc8787671085ce6908db663661ad1",
+      "adaptedSha256": "f3388eb7b78b5a299a2e0330e3a6a98b234dc8787671085ce6908db663661ad1",
+      "diff": ""
+    },
+    {
+      "file": "review_export.py",
+      "sourceSha256": "c18dfdf334511be69fd6a39fa2a48865a3e9983d415331088a8e89adefa4401b",
+      "adaptedSha256": "8f4f5befb65671617174d535d7f06dc4c62c5ec8e2931a3694f1f657316555cf",
+      "diff": "--- fixed-stream/review_export.py\n+++ strip-before-pairs/review_export.py\n@@ -3,7 +3,7 @@\n from pathlib import Path\n if not __debug__:raise RuntimeError('Assertion-enabled Python required')\n HERE=Path(__file__).resolve().parent\n-AUDIT='PASS fixed optional stream source1482 machinery24 sealed helpers private5'\n+AUDIT='PASS strip-before-pairs source1482 machinery24 sealed helpers private5'\n KINDS=('seed','family','previous-family','generator','planner','compactor')\n def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))\n def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()\n@@ -38,9 +38,9 @@\n     require(native.count(marker)==1 and 'CURRENT_CONTRACT_FAILURE:' not in native and 'CURRENT_CONTRACT_CLEANUP:' not in native,'actual maintained native completion')\n     reader=runpy.run_path(str(HERE/'qualify.py'));observation=reader['validate_comparison']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig'))\n     require(isinstance(observation,dict) and observation['status'] in ('GO_PRIVATE_TARGET_ONLY','NO_GO_PRIVATE_TARGET') and observation['variant']['identity']['replayId']==seal['request'],'independent relay observation')\n-    result={'status':'PASS_FINITE_PRIVATE_OPTIONAL_STREAM_EXPERIMENT','inputSealSha256':sha(HERE/'export-inputs.json'),'receiptSha256':sha(HERE/'variant/receipt.txt'),'nativeSha256':sha(HERE/'variant/native.txt'),'sourceReviewSha256':sha(HERE/'source-review.json'),'execution':expected_execution,'canaries':{'elapsedSeconds':canary_timing['elapsedSeconds'],'checks':canaries['checks']},'nativeOperationSeconds':timing['elapsedSeconds'],'driverBirthsSeparatelyExited':4,'observation':observation,'comparisonNegativeControls':reader['negatives']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig')),'limits':'One exact ordinary relay replay, one predeclared fixed private optional routing stream. All placement plans, original graph and baseline metric tuple checked against audited accepted control. Target GO requires broader qualification; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched.'}\n+    result={'status':'PASS_FINITE_PRIVATE_STRIP_BEFORE_PAIRS_EXPERIMENT','inputSealSha256':sha(HERE/'export-inputs.json'),'receiptSha256':sha(HERE/'variant/receipt.txt'),'nativeSha256':sha(HERE/'variant/native.txt'),'sourceReviewSha256':sha(HERE/'source-review.json'),'execution':expected_execution,'canaries':{'elapsedSeconds':canary_timing['elapsedSeconds'],'checks':canaries['checks']},'nativeOperationSeconds':timing['elapsedSeconds'],'driverBirthsSeparatelyExited':4,'observation':observation,'comparisonNegativeControls':reader['negatives']((HERE/'variant/receipt.txt').read_text(encoding='utf-8-sig')),'limits':'One exact ordinary relay replay, private P05 strip before unchanged pair pass. Exact routed SOURCE and original routing stream; shared placement cap and actual boundary fixtures, original graph and accepted baseline tuple checked. Target GO requires broader qualification including all four prior optional wins; no production promotion, optimum, all-seed, new electrical, fresh matrix/GWT/browser/repair proof. Prior visual cleanup remains BLOCKED; five retained profiles untouched.'}\n     target=HERE/'assessment.json';require(not target.exists(),'preserve previous assessment')\n     with target.open('x',encoding='utf-8',newline='\\n') as f:json.dump(result,f,indent=2);f.write('\\n')\n-    print('PASS fixed optional stream experiment; exact placement and independent metrics; private target result only')\n+    print('PASS strip-before-pairs experiment; exact source, budgets and independent metrics; private target result only')\n if __name__=='__main__':\n     parser=argparse.ArgumentParser();parser.add_argument('--private-root',required=True,type=Path);main(parser.parse_args().private_root)\n"
+    }
+  ],
+  "limits": "Same selected host adapter/private arm, six negative bindings, two drivers per phase, separate actual exits/birth checks, source/input audits, actual native marker and execution6. Only banners/result scope updated; substantive comparison handled by newly scoped qualifier."
+}

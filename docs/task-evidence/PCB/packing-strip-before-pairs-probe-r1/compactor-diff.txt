@@ -1,0 +1,15 @@
+--- control/PcbPlacementCompactor.java
++++ variant/PcbPlacementCompactor.java
+@@ -18,6 +18,12 @@
+             result = compactStrips(board, constraints, result, true);
+         }
+         return result;
++    }
++
++    static PcbPlacementPlanner.Plan compactOptionalStrips(
++            TroubleshootBoard board, PcbPlacementConstraints constraints,
++            PcbPlacementPlanner.Plan input) {
++        return compactStrips(board, constraints, input, true);
+     }
+ 
+     /** Pair search belongs only after selection of the routed incumbent. */

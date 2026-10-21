@@ -1,0 +1,4 @@
+* -text whitespace=cr-at-eol
+*-diff.txt whitespace=-blank-at-eol,cr-at-eol
+prepare_sources.py whitespace=-blank-at-eof,cr-at-eol
+export-frozen-source/prepare_sources.py whitespace=-blank-at-eof,cr-at-eol

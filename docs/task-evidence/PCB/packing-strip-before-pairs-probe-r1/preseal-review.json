@@ -1,0 +1,25 @@
+{
+  "status": "PASS_ROOT_PRIVATE_STRIP_SOURCE_PRESEAL",
+  "actualPureAuditExitCode": 0,
+  "independentReconstruction": "Root regenerated exporter/generator/compactor in memory from original control and final functions; exact private bytes and reverse restoration pass; no native or private file rewrite.",
+  "pythonSyntax": "PASS five helpers",
+  "budgetReaderCanaries": "Earlier actual0: literal1positive/4negative schema cases plus actual old-control missing-fixture negative; no variant/native proof.",
+  "integratedReview": "Root inspected full generator/compactor/exporter diff. Explicit P05 conditional preserves P07; one true-budget wrapper; primary/routing/acceptance/observer suffixes unchanged; actual-inventory budget fixture checks reference identity, mutation, counts and live graph/layout.",
+  "sourceCorrection": "Malformed Java JSON quote excerpt caught before seal/compilation. Wrong bad-hash attribution corrected; final source1892... confirmed char-quote syntax. Pure invocation1 on wrong static prefix expectation retained; no native failure.",
+  "files": {
+    "prepare_sources.py": "c226c837ad31d1c36af78f969a0db07433665db727fd94c9af9fe1a6b54e2282",
+    "private-inputs.json": "267a4e9952d3c142b218d61226e30603b9ad4c40f5fa7dc1e986fb45c0a5797f",
+    "source-review.json": "dafedc828db7e7c0f4bd22f9a92dd432457cdc00f0f0f8f1e18ab0f5a92c23b7",
+    "generator-diff.txt": "0bc4eb8de5e9a82bb0934142857f94d1c3d739815af2f7839c0894dee2a9904d",
+    "compactor-diff.txt": "52cae61f3eef2507fdf9bb54d0198ed73057c4cf1bfdfce20307fee4894b4527",
+    "exporter-diff.txt": "34843153fc0fb4513d127a4f9aab85496592937c7074ac2182eec11f8d840a99",
+    "preparation-notes.md": "d15dc9c13c9dad2e0fdcba899e491e88b96413f95a1c73aaf3db465752125159",
+    "host-helper-review.json": "80e188cfb87d12c2c4dfc3ad217fe45b6748bf3b6a017e912e54dc041526ebf1",
+    "qualify.py": "3ed890f9bc3a32fbba769cd10ab1538843b921cc12a1cb2d46c17d4d90edf9c0",
+    "review_export.py": "8f4f5befb65671617174d535d7f06dc4c62c5ec8e2931a3694f1f657316555cf",
+    "run_export.ps1": "1c8c6a1cf8ecf2995b0402e5bcfa553368c95e1a90e05bbdf54f488d3e51b592",
+    "record_exit.ps1": "b0e9054c363686fe176b9db9190584d0152eb92419324cb91632e68cc24503f3",
+    "observe_execution.ps1": "f3388eb7b78b5a299a2e0330e3a6a98b234dc8787671085ce6908db663661ad1"
+  },
+  "limits": "Before native outcomes, root integrated acceptance; optional preparation/read-only advice leaves, no independent final agent."
+}
