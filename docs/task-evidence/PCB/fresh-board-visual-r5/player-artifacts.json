@@ -1,0 +1,36 @@
+{
+  "bodies": [
+    {
+      "file": "startup-public.txt",
+      "sha256": "f10b607b3016781f597063199dd0de23f09561e6dd89376df55775b6f8dcc118",
+      "bytes": 1218
+    },
+    {
+      "file": "board-1-ticket-public.txt",
+      "sha256": "5e5eb0646cb10a9e6e326a37e7779bd880951ef841da12f0b1a8ee88354cd7f0",
+      "bytes": 849
+    },
+    {
+      "file": "board-1-off-public.txt",
+      "sha256": "64fa0732866728a6f913d1b2fd2299df59251d421f2adec200c8039f0049c864",
+      "bytes": 1005
+    },
+    {
+      "file": "board-1-identity-public.txt",
+      "sha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "bytes": 1616
+    }
+  ],
+  "images": [
+    {
+      "file": "board-1-top.jpg",
+      "sha256": "6409ffa46862d2d5089ae0f41ba765863716a483bd268fbd93c6ad4d891eac34",
+      "bytes": 184010
+    },
+    {
+      "file": "board-1-bottom.jpg",
+      "sha256": "ad0a42b643674b05fe856e8cf98384b10d53a0683dac3e19f16b2dd4f116ff35",
+      "bytes": 177340
+    }
+  ]
+}

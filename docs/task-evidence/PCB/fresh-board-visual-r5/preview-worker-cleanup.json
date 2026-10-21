@@ -1,0 +1,9 @@
+{
+  "recordedBirthExited": true,
+  "status": "PASS",
+  "scope": "Independent exact preview worker birth/state/listener check after maintained stop actual0",
+  "stateAbsent": true,
+  "port8911Released": true,
+  "startTicks": "639281430020218134",
+  "pid": 33132
+}

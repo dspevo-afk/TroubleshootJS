@@ -1,0 +1,168 @@
+[
+  {
+    "name": "open-accepted-production",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:30:58.591Z",
+    "elapsedMillis": 497,
+    "details": {
+      "url": "http://127.0.0.1:8911/circuitjs.html"
+    }
+  },
+  {
+    "name": "select-medium-profile",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:31:15.469Z",
+    "elapsedMillis": 5,
+    "details": {
+      "profile": "MEDIUM"
+    }
+  },
+  {
+    "name": "select-first-family",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:31:22.314Z",
+    "elapsedMillis": 5,
+    "details": {
+      "profile": "MEDIUM",
+      "familyLabel": "Multi-rail control board",
+      "value": "RB30_CONTROL"
+    }
+  },
+  {
+    "name": "request-board-1-unseeded",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:31:28.861Z",
+    "elapsedMillis": 37,
+    "details": {
+      "request": 1,
+      "profile": "MEDIUM",
+      "family": "RB30_CONTROL",
+      "seedEntered": false
+    }
+  },
+  {
+    "name": "observe-board-1-preparation-end",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:31:37.399Z",
+    "elapsedMillis": 13917,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer ticket\n\nSERVICE JOB\n\nCustomer complaint\n\nOne or both loads fail to follow their sensor inputs. Check each channel separately and together.\n\nFUNCTIONAL RETEST\n\nCheck that the external load follows sensor A at LOW and HIGH.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nShare pristine challenge"
+    }
+  },
+  {
+    "name": "accept-board-1-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:31:58.485Z",
+    "elapsedMillis": 50,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer ticket\n\nSERVICE JOB\n\nCustomer complaint\n\nOne or both loads fail to follow their sensor inputs. Check each channel separately and together.\n\nFUNCTIONAL RETEST\n\nCheck that the external load follows sensor A at LOW and HIGH.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nShare pristine challenge"
+    }
+  },
+  {
+    "name": "board-1-original-customer-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:10.562Z",
+    "elapsedMillis": 652,
+    "details": {
+      "requestedFreshRetest": true
+    }
+  },
+  {
+    "name": "board-1-power-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:15.693Z",
+    "elapsedMillis": 44,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-1-observe-supplies",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:20.151Z",
+    "elapsedMillis": 585,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nBENCH POWER\n\n\nSupply 1 (+12V): disconnected\n\nConnect Supply 1 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): disconnected\n\nConnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 3 (+12V): disconnected\n\nConnect Supply 3 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-1-open-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:24.619Z",
+    "elapsedMillis": 534,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nBOARD VIEW\n\n\nFit bench\n\n\nZoom +\nZoom -\nView bottom copper\n\n\nWheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top.\n\n\nTop side / top copper\n\n\nSelect component\nC2\nC3\nC1\nD2\nD1\nF1\nJ1\nJLOAD\nJOA\nJSA\nK1\nLED1\nLED2\nQ1\nR2\nR7\nR1\nR9\nR10\nR8\nR4\nR5\nR6\nR3\nU1\nU2\n\n\nProbe terminal\nC2 terminal 1\nC2 terminal 2\nC3 terminal 1\nC3 terminal 2\nC1 terminal +\nC1 terminal -\nD2 terminal A\nD2 terminal K\nD1 terminal A\nD1 terminal K\nF1 terminal 1\nF1 terminal 2\nJ1 terminal 1\nJ1 terminal 2\nJLOAD terminal 1\nJLOAD terminal 2\nJOA terminal 1\nJOA terminal 2\nJSA terminal 1\nJSA terminal 2\nK1 terminal A1\nK1 terminal A2\nK1 terminal COM\nK1 terminal NC\nK1 terminal NO\nLED1 terminal A\nLED1 terminal K\nLED2 terminal A\nLED2 terminal K\nQ1 terminal B\nQ1 terminal C\nQ1 terminal E\nR2 terminal 1\nR2 terminal 2\nR7 terminal 1\nR7 terminal 2\nR1 terminal 1\nR1 terminal 2\nR9 terminal 1\nR9 terminal 2\nR10 terminal 1\nR10 terminal 2\nR8 terminal 1\nR8 terminal 2\nR4 terminal 1\nR4 terminal 2\nR5 terminal 1\nR5 terminal 2\nR6 terminal 1\nR6 terminal 2\nR3 terminal 1\nR3 terminal 2\nU1 terminal INPUT\nU1 terminal OUTPUT\nU1 terminal RETURN\nU1 terminal ENABLE\nU2 terminal SENSOR\nU2 terminal REFERENCE\nU2 terminal RAIL\nU2 terminal OUTPUT\nU2 terminal RETURN\n\n\nPlace red probe\nPlace black probe\n\n\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-1-fit-bench",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:30.356Z",
+    "elapsedMillis": 407,
+    "details": {
+      "fitted": true
+    }
+  },
+  {
+    "name": "board-1-close-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:37.170Z",
+    "elapsedMillis": 485,
+    "details": {
+      "viewCollapsed": true
+    }
+  },
+  {
+    "name": "board-1-open-bottom-controls",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:48.623Z",
+    "elapsedMillis": 539,
+    "details": {
+      "bottomControlVisible": true
+    }
+  },
+  {
+    "name": "board-1-bottom-side",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:53.785Z",
+    "elapsedMillis": 533,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nBOARD VIEW\n\n\nFit bench\n\n\nZoom +\nZoom -\nView top copper\n\n\nWheel: zoom. Shift-drag or middle-drag: pan. Hold Space: inspection loupe. Hold Tab on the board: bottom view; release: top.\n\n\nBottom side / bottom copper\n\n\nSelect component\nC2\nC3\nC1\nD2\nD1\nF1\nJ1\nJLOAD\nJOA\nJSA\nK1\nLED1\nLED2\nQ1\nR2\nR7\nR1\nR9\nR10\nR8\nR4\nR5\nR6\nR3\nU1\nU2\n\n\nProbe terminal\nC2 terminal 1\nC2 terminal 2\nC3 terminal 1\nC3 terminal 2\nC1 terminal +\nC1 terminal -\nD2 terminal A\nD2 terminal K\nD1 terminal A\nD1 terminal K\nF1 terminal 1\nF1 terminal 2\nJ1 terminal "
+    }
+  },
+  {
+    "name": "board-1-close-bottom-controls",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:32:59.687Z",
+    "elapsedMillis": 418,
+    "details": {
+      "viewCollapsed": true
+    }
+  },
+  {
+    "name": "board-1-open-menu-for-public-identity",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T01:33:10.358Z",
+    "elapsedMillis": 28,
+    "error": "locator.click: Error: strict mode violation: getByText('Main menu', { exact: true }) resolved to 2 elements:\n    1) <span class=\"tsj-button-label\">Main menu</span> aka getByRole('button', { name: 'Main menu' })\n    2) <button type=\"button\" class=\"tsj-product-button\">Main menu</button> aka getByLabel('Customer ticket').getByText('Main menu')\n\nCall log:\n\u001b[2m  - waiting for getByText('Main menu', { exact: true })\u001b[22m\n",
+    "privateErrorSha256": "7be3e2649166955fa785a21c8baed67db801b56a65c83cf3850f1195529380bc"
+  },
+  {
+    "name": "board-1-menu-visible-button",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:33:25.221Z",
+    "elapsedMillis": 353,
+    "details": {
+      "normalMenu": true
+    }
+  },
+  {
+    "name": "board-1-reveal-public-replay",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:33:31.477Z",
+    "elapsedMillis": 520,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\nTroubleshootJS · Desktop alpha\n\nTHE ELECTRONICS REPAIR GAME\n\nTroubleshoot!\n\nA customer. A faulty board. A bench full of possibilities.\n\nExamine\nMeasure\nIsolate\nRepair\nRetest\nYour session\n\nDownload a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).\n\nRestoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.\n\nSave session\nLoad session\nSession history\nStart a service job\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output board\nSensor control board\nProcedural control board\nNEW BOARD\n\nEvery listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.\n\nEnter an exact seed\nOpen a saved replay code\nResume current board\nResources\nSettings\nAbout this alpha\nShare pristine challenge\n\nShare this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.\n\nPristine challenge replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically."
+    }
+  }
+]

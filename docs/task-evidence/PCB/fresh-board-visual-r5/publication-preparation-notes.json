@@ -1,0 +1,7 @@
+{
+  "status": "PRESERVED_RAW_PUBLIC_BODY_WHITESPACE",
+  "firstCachedDiffCheckExit": 2,
+  "cause": "Actual DOM innerText contains tab-only lines in multimeter mode text. Raw captured public bodies are hash-bound evidence, so stripping them would change observed bytes.",
+  "resolution": "Narrow packet-local *-public.txt blank-at-eol attribute only; source/helper/general evidence whitespace checks stay enabled. Raw text/image hashes remain exact.",
+  "scope": "Publication formatting only; no product validation/oracle weakened or image altered."
+}

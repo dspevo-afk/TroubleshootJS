@@ -1,0 +1,6 @@
+{
+  "status": "SEALED_BEFORE_CONTINUATION_BROWSER",
+  "observerSha256": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+  "rootRuntimeSealSha256": "2f050a39504a3625920ee1abcdea9d49e4732b5f81aa6c163441369f3521c620",
+  "scope": "Continue with request2 and3; retain first request as original; same existing verified preview worker. Fresh context; page default action timeout7000ms below tool budget; visible select locators. Old five retained profiles untouched."
+}

@@ -1,4 +1,52 @@
-# Current checkpoint: span filter private NO_GO; fresh visual sampling next
+# Current checkpoint: three fresh boards pictured; relay placement diagnosis next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exactremote3278a79cd9893e2c41a6304c513cb1b7753bf29a; span-filter private
+NO_GO published88 reviewedblobs/normalpush0/exactremote/sourceaudit/fresh
+execution6. Its publication/provenance outputs intended next coherent commit.
+Continue authorized realism indefinitely/screenshots/optional leaves; no main,
+email or final milestone stop. Seven unrelated groups preserved.
+
+Fresh-board-visual-r5: actual first ordinary unseeded requests RB30 MEDIUM
+-7246877603843301116, RB15 EASY3981106694414844002, RELAY EASY-397178238694963708.
+Each checked ticket accepted, original customer FAIL, all supplies disconnected
+3/2/3, tray0. All use compiled13808B6577D799A49A34CCFD1D18738D. Four raw images
+inspected/three tops pasted;42 flushed action events and exact public identity,
+raw body/image hashes retained. Broad gaps remain, clearest in nine-part relay.
+No claim that a legal smaller placement exists from screenshots alone.
+
+Original browser21552 has a resolved strict-menu selector failure, then unscoped
+second-family select times out30s/resetskernel before step flush; first board
+identity/images preserved and no second New board click occurred. Recorded birth
+observed exited/profile exists. Guarded cleanup auto-review rejects before
+CreateProcess: blocked by policy; no fullguards/removal/receipt execute. API close
+UNKNOWN. Now FIVE retained profiles, never retry any through other tools/wording.
+Overall VISUAL_OBSERVATIONS_COMPLETE_RESOURCE_CLEANUP_BLOCKED, not all-clean PASS.
+
+Distinct continuation browser4300: frozen observer, visible selectors/default7s
+UI timeout; requests2/3 complete, no failed continuationevents. One ESM loader
+failure before its creation corrected via bundled CommonJS. Actual headed/
+sandboxed native pre/preclose identity, APIcontext/client/serverclose/exit0 and
+native profile/process absence PASS. Preview33132 maintainedstart0/stop0, four
+root driver births exited; exactworkerbirth gone/state absent/port8911released.
+No current task browser/preview/session live. Private logs/metadata retained.
+One unattributed console404 perbrowser; no observed page/request/HTTPresponse
+errors, solver logs not electrical proof. First log completeness ends lastflush.
+
+Scope/baseline before helper preparation, six selected helper/archive seal before
+launch. Production1482/24/accepted13/10/5 exactaudited; CLI/served6beforeafter exact.
+No production source change/fresh GWT/matrix/repair/geometry/optimality claim.
+Root artifact/source review exits0 while preserving resourceBLOCKED; no independent
+final reviewer. Current visualpacket documentation/review ready for intended-only
+stage/commit/normalpush/exactremote. Optional read-only relaycause review complete: current pair eligibility has no
+relay pair in source declarations; default domains permit ordinary moves. Runtime
+plan/origin/route cause unobserved. Eight exact blobs verified; malformed prose
+planner link corrected. No source-based production GO.
+
+Next: source-backed exact fresh relay diagnosis; no placement edit until actual
+constraints/runtime decision is established. Current model remains acceptedpacking4.
+
+# Previous checkpoint: span filter private NO_GO; fresh visual sampling next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 Base/exactorigin113456fc2d781411f9a3e94bfca4b676fee883b6; current finite packet

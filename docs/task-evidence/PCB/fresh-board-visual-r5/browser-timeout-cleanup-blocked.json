@@ -1,0 +1,16 @@
+{
+  "status": "BLOCKED_FRESH_PROFILE_CLEANUP_AFTER_KERNEL_RESET",
+  "browserPid": 21552,
+  "priorReadOnlyObservation": {
+    "recordedBirthExited": true,
+    "profileExists": true
+  },
+  "apiClose": "UNKNOWN: node tool timed out after30s and reset kernel while selecting second family; no second New board click occurred",
+  "cleanupAttempt": "Guarded exact owned-profile native removal",
+  "automaticApproval": "Rejected before CreateProcess: blocked by policy",
+  "fullGuardChecksExecuted": false,
+  "removalExecuted": false,
+  "cleanupReceiptProduced": false,
+  "retry": "DO NOT RETRY this profile through other wording/tools; retain along with four earlier blocked profiles",
+  "scope": "First board top/bottom/identity and all flushed events preserved; second-family selector outcome unproven"
+}

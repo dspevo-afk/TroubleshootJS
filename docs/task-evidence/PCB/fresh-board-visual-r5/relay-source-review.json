@@ -1,0 +1,26 @@
+{
+  "status": "SOURCE_ONLY_NO_IMPLEMENTATION_GO",
+  "replay": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+  "reviewer": "optional read-only via_outlier_scope leaf; root verifies exact source blobs and fixes malformed prose link",
+  "sourceBlobs": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "e34312c88ab25143a0c34981c0a5f526a03ae254",
+    "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java": "971cc501ec556a2afad04ca28758b7dbe524ba0a",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "94870b8fa8893a65730cf04627497e08b56ab67c",
+    "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java": "448e9c28f3f40c6509cdcf5d7807f1462e516fca",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "0ade26079945364a7a9ad8e96e93d0c2c44d9975",
+    "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java": "e70831623323266103fac8374bfe758179d4ca04",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "4a0d76e8c9d62160f9cb77ae15a030db8013aa8c",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayFamilyRegistry.java": "f86e4be55807163189a1add780c666bbb433bdda"
+  },
+  "confirmedSourceFacts": [
+    "Ordinary RelayOutputGenerator uses shared ProceduralPcbLayout packing4/current19, nine parts take small P05 normal path.",
+    "Default all relay parts circuit/board with margin20; all connectors EDGE anchors, nonconnectors movable; no barriers.",
+    "Current pair eligibility needs exactly-two-pad net joining two nonanchored two-terminal parts plus another movable domain peer. Source relay net declarations contain no such pair; connectors or five-terminal relay participate in the other two-pad nets.",
+    "Single vacancy pass considers up to five advisory origins with original envelope/fit/strict area-or-wire improvement/validation. Strip pass requires whole protected free strips.",
+    "Current outside crop retains accessMargin+30. Screenshot gaps do not identify runtime proposal or rejection."
+  ],
+  "hypothesis": "A functional cluster linked through multi-pad nets cannot translate as a group in the current pair pass; neutral single-part intermediate moves may prevent a more compact arrangement. This is not actual runtime proof or a legal smaller candidate.",
+  "next": "Bounded exact relay private stage/pose/eligibility/optional-disposition observation before changing placement. Existing sparse exporter needs a new finite relay binding; no claim its old assertion count applies.",
+  "proseCorrection": "One returned planner hyperlink duplicated a path segment; root uses actual src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java, verified above.",
+  "limits": "Read-only source advice; no native, build, player mutation or production promotion."
+}

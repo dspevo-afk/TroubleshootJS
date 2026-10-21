@@ -1,0 +1,11 @@
+{
+  "privateMetadataSha256": "e2d417fc3671344638284fed8747272374222c9c295dab63b2d8698041f69fbc",
+  "pid": 21552,
+  "status": "PASS",
+  "resolvedExecutableMatch": true,
+  "startTicks": "639281430465793901",
+  "executable": "brave.exe",
+  "sandboxEnabled": true,
+  "headless": false,
+  "profileArgumentMatched": true
+}

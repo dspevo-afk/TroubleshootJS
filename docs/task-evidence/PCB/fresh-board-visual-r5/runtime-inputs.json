@@ -1,0 +1,11 @@
+{
+  "baselineSealSha256": "615567abea809fe869dd6622b98e0a9f19227764ba134e6f2387a0a884773726",
+  "helpers": {
+    "launch_player.ps1": "45cbacc2e103127a11c79f90f69f29d7c5ac4d576f015550d829c24c87405f62",
+    "stop_player.ps1": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+    "observe_player_host.ps1": "6264d9ec0cd2f2bd3d777e42af64056e7dbfa62661a324eb10d078f8ef5a027e",
+    "record_preview_exit.ps1": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+    "observe_browser.ps1": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+    "player_bootstrap.mjs": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262"
+  }
+}

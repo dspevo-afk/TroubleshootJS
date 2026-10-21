@@ -7,7 +7,23 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private two-pad span experiment complete: NO_GO**
+**Current task:** **Fresh three-board visual survey complete; one profile cleanup blocked**
+
+Ordinary unseeded RB30-7246877603843301116, RB153981106694414844002 and relay
+-397178238694963708 all reach checked tickets/originalFAIL/allactualsuppliesOFF/
+tray0. Four raw images inspected/three tops pasted; large gaps remain, especially
+nine-part relay. Source1482/24/13/10/5 and fresh CLI/served execution6 exact.
+Original browser selector timeout resetskernel; birth exits/profile remains;
+auto-review rejects guarded cleanup before CreateProcess. Fifth profile retained,
+never retry. Overall visualcomplete/resourceBLOCKED, not all-cleanPASS. Continuation
+API/native browsercleanup and exactpreviewbirth/state/portcleanup PASS. No production
+change/newsize/geometry/electrical proof. Next unstarted: actual fresh relay
+placement/constraint diagnosis before editing.
+[Fresh images, preserved failures and resource limits](task-evidence/PCB/fresh-board-visual-r5/RESULTS.md).
+
+Private span-filter NO_GO previously published3278a79c/88reviewedblobs/normalpush0/
+exactremote/freshpostpublicationexecution6; production remains22cbf4bc packing4.
+
 
 Actual JDK8 control/variant327/root0; host5negatives and6 separate driver exits
 PASS. Generic caps keep all7 two-pad spans, supply370 vscontrol390. Variant routes

@@ -1,0 +1,94 @@
+{
+  "status": "VISUAL_OBSERVATIONS_COMPLETE_RESOURCE_CLEANUP_BLOCKED",
+  "visibleScope": "PASS three ordinary unseeded first results; four directly inspected raw images; three pasted in chat",
+  "baseCommit": "3278a79cd9893e2c41a6304c513cb1b7753bf29a",
+  "boards": [
+    {
+      "request": 1,
+      "replay": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-7246877603843301116",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D",
+      "suppliesDisconnected": 3,
+      "originalCustomerResult": "FAIL",
+      "trayParts": 0,
+      "topImage": "board-1-top.jpg"
+    },
+    {
+      "request": 2,
+      "replay": "tsj-alpha/6/EASY/RB15_CONTROL/3981106694414844002",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D",
+      "suppliesDisconnected": 2,
+      "originalCustomerResult": "FAIL",
+      "trayParts": 0,
+      "topImage": "attempt-2/board-2-top.jpg"
+    },
+    {
+      "request": 3,
+      "replay": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D",
+      "suppliesDisconnected": 3,
+      "originalCustomerResult": "FAIL",
+      "trayParts": 0,
+      "topImage": "attempt-2/board-3-top.jpg"
+    }
+  ],
+  "images": [
+    {
+      "file": "board-1-top.jpg",
+      "sha256": "6409ffa46862d2d5089ae0f41ba765863716a483bd268fbd93c6ad4d891eac34",
+      "bytes": 184010,
+      "path": "board-1-top.jpg",
+      "rootInspected": true
+    },
+    {
+      "file": "board-1-bottom.jpg",
+      "sha256": "ad0a42b643674b05fe856e8cf98384b10d53a0683dac3e19f16b2dd4f116ff35",
+      "bytes": 177340,
+      "path": "board-1-bottom.jpg",
+      "rootInspected": true
+    },
+    {
+      "file": "board-2-top.jpg",
+      "sha256": "45c6a21365e3e1adb55eb871d1bda8b77dcbc8278401ad9b7e9cb64efdc00616",
+      "bytes": 164985,
+      "path": "attempt-2/board-2-top.jpg",
+      "rootInspected": true
+    },
+    {
+      "file": "board-3-top.jpg",
+      "sha256": "2b4191a6235ef7d6e54991b2dc6361f699395f75f42d674d540749f3bbb43340",
+      "bytes": 165378,
+      "path": "attempt-2/board-3-top.jpg",
+      "rootInspected": true
+    }
+  ],
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c48f7de9a91a09f0d7973531799a599cc2712a9abe751e94de7bb2606da19817",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "51b6280ed944f72a4d55422c245cf8c849890df25f7f8dd4b03b9e732a89e417",
+    "Digest": "eb534a477bfc257c97eb5d92a1db26750ab28319e7efe685ee839b65faba6117",
+    "FileCount": 1592
+  },
+  "runtimeSealSha256": "2f050a39504a3625920ee1abcdea9d49e4732b5f81aa6c163441369f3521c620",
+  "inputEvents": {
+    ".": 18,
+    "attempt-2": 24
+  },
+  "preservedFailures": [
+    {
+      "folder": ".",
+      "name": "board-1-open-menu-for-public-identity",
+      "status": "FAIL"
+    }
+  ],
+  "externalTimeout": "Separate preserved node30s timeout/kernel reset during second-family selection, before any second New board click; no flushed step receipt from that timeout",
+  "resources": {
+    "preview": "PASS maintained start0/stop0, four root births exited, exact worker birth gone/state absent/port8911 released",
+    "attempt2Browser": "PASS headed sandboxed native pre/preclose birth proof; API context/client/server close, exit0, native profile/process absence",
+    "attempt1Browser": "Recorded birth exited by separate read-only observation, API close UNKNOWN, exact new profile remains; guarded cleanup auto-review rejected before CreateProcess",
+    "retainedProfiles": 5,
+    "oldProfilesRetried": false
+  },
+  "limitations": "Finite visual survey, not geometry/route/optimality/electrical/manufacturing or all-seed proof. No production edits, fresh native matrix/GWT build or fresh repair acceptance; accepted sources/modules/earlier gates reused only after exact input audits. One unattributed console404 per browser; solver logs retained privately. Runtime loader ESM attempt failed before continuation browser creation, corrected with bundled CommonJS package; no product mutation.",
+  "next": "Source-backed diagnosis of exact fresh relay case before any placement edit."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS_ROOT_REVIEW_OF_FINITE_VISUAL_OBSERVATIONS_WITH_BLOCKED_CLEANUP",
+  "assessmentSha256": "25d399283d971c9357c4a3e710a0c61a250600244d0afd4027fa5a4ae8fc7dac",
+  "images": {
+    "board-1-top.jpg": "6409ffa46862d2d5089ae0f41ba765863716a483bd268fbd93c6ad4d891eac34",
+    "board-1-bottom.jpg": "ad0a42b643674b05fe856e8cf98384b10d53a0683dac3e19f16b2dd4f116ff35",
+    "attempt-2/board-2-top.jpg": "45c6a21365e3e1adb55eb871d1bda8b77dcbc8278401ad9b7e9cb64efdc00616",
+    "attempt-2/board-3-top.jpg": "2b4191a6235ef7d6e54991b2dc6361f699395f75f42d674d540749f3bbb43340"
+  },
+  "actualReviewExitCode": 0,
+  "scope": "Root independently checks public identities, original failure/off/supply/tray bodies, all4 raw image/body hashes, both CLI projections, live preview owner receipts, separate driver exits, continuation API/native cleanup and original policy-block record. All4 raw images inspected and3 pasted.",
+  "limits": "Visual observations complete; first browser cleanup remains BLOCKED and is never a PASS. No production change, fresh geometry/native/build/repair acceptance or independent final reviewer."
+}

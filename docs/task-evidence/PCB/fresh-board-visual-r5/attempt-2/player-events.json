@@ -1,0 +1,238 @@
+[
+  {
+    "name": "open-continuation-production",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:17.732Z",
+    "elapsedMillis": 503,
+    "details": {
+      "samePreview": true
+    }
+  },
+  {
+    "name": "select-board-2-family",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:29.576Z",
+    "elapsedMillis": 7,
+    "details": {
+      "request": 2,
+      "profile": "EASY",
+      "family": "RB15_CONTROL"
+    }
+  },
+  {
+    "name": "request-board-2-unseeded",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:35.960Z",
+    "elapsedMillis": 39,
+    "details": {
+      "request": 2,
+      "profile": "EASY",
+      "family": "RB15_CONTROL",
+      "seedEntered": false
+    }
+  },
+  {
+    "name": "board-2-admitted-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:42.037Z",
+    "elapsedMillis": 2512,
+    "details": {
+      "firstResult": true
+    }
+  },
+  {
+    "name": "accept-board-2-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:53.210Z",
+    "elapsedMillis": 233,
+    "details": {
+      "body": "stomer complaint\n\nThe external load will not turn on when the control input is HIGH. Restore switching on HIGH and off on LOW.\n\nFUNCTIONAL RETEST\n\nCheck that the external load turns on with control HIGH and off with control LOW.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nShare pristine challenge"
+    }
+  },
+  {
+    "name": "board-2-original-customer-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:36:57.449Z",
+    "elapsedMillis": 705,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-2-power-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:03.517Z",
+    "elapsedMillis": 266,
+    "details": {
+      "body": " mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-2-supplies",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:07.977Z",
+    "elapsedMillis": 210,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nBENCH POWER\n\n\nSupply 1 (+12V): disconnected\n\nConnect Supply 1 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): disconnected\n\nConnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-2-fit-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:19.642Z",
+    "elapsedMillis": 472,
+    "details": {
+      "fitted": true
+    }
+  },
+  {
+    "name": "board-2-collapse-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:20.128Z",
+    "elapsedMillis": 250,
+    "details": {
+      "viewCollapsed": true
+    }
+  },
+  {
+    "name": "board-2-open-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:42.437Z",
+    "elapsedMillis": 195,
+    "details": {
+      "menuVisible": false
+    }
+  },
+  {
+    "name": "board-2-public-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:49.498Z",
+    "elapsedMillis": 278,
+    "details": {
+      "request": 2,
+      "replay": "tsj-alpha/6/EASY/RB15_CONTROL/3981106694414844002",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  {
+    "name": "select-board-3-family",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:37:56.742Z",
+    "elapsedMillis": 103,
+    "details": {
+      "request": 3,
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY"
+    }
+  },
+  {
+    "name": "request-board-3-unseeded",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:03.075Z",
+    "elapsedMillis": 203,
+    "details": {
+      "request": 3,
+      "profile": "EASY",
+      "family": "RELAY_OUTPUT",
+      "seedEntered": false
+    }
+  },
+  {
+    "name": "board-3-admitted-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:09.448Z",
+    "elapsedMillis": 23,
+    "details": {
+      "firstResult": true
+    }
+  },
+  {
+    "name": "accept-board-3-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:27.065Z",
+    "elapsedMillis": 184,
+    "details": {
+      "accepted": true
+    }
+  },
+  {
+    "name": "board-3-original-customer-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:33.079Z",
+    "elapsedMillis": 424,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-3-power-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:44.599Z",
+    "elapsedMillis": 206,
+    "details": {
+      "powerOff": true
+    }
+  },
+  {
+    "name": "board-3-supplies",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:49.179Z",
+    "elapsedMillis": 116,
+    "details": {
+      "body": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nCustomer retest did not pass. Continue troubleshooting.\n\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: OFF\nSupplies\nBENCH POWER\n\n\nSupply 1 (+5V): disconnected\n\nConnect Supply 1 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 2 (+5V): disconnected\n\nConnect Supply 2 (+5V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nSupply 3 (+12V): disconnected\n\nConnect Supply 3 (+12V)\n\nLimit: 1 mA\nLimit: 10 mA\nLimit: 25 mA\nLimit: 100 mA\nLimit: 250 mA\nLimit: 500 mA\n\n\nEach output disconnects independently. Fixed nominal voltage; reverse blocking has small leakage.\nView\nTicket\nParts tray\n▲ PARTS TRAY · 0 parts"
+    }
+  },
+  {
+    "name": "board-3-fit-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:55.860Z",
+    "elapsedMillis": 282,
+    "details": {
+      "fitted": true
+    }
+  },
+  {
+    "name": "board-3-collapse-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:38:56.156Z",
+    "elapsedMillis": 128,
+    "details": {
+      "viewCollapsed": true
+    }
+  },
+  {
+    "name": "board-3-open-public-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:39:14.495Z",
+    "elapsedMillis": 148,
+    "details": {
+      "menuVisible": true
+    }
+  },
+  {
+    "name": "board-3-public-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:39:21.552Z",
+    "elapsedMillis": 131,
+    "details": {
+      "request": 3,
+      "replay": "tsj-alpha/6/EASY/RELAY_OUTPUT/-397178238694963708",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  {
+    "name": "close-continuation-owned-browser",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T01:40:21.531Z",
+    "elapsedMillis": 130,
+    "details": {
+      "contextClosed": true,
+      "clientClosed": true,
+      "serverClosed": true,
+      "browserExit": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  }
+]

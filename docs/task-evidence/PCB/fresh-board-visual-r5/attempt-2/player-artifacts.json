@@ -1,0 +1,46 @@
+{
+  "bodies": [
+    {
+      "file": "board-2-ticket-public.txt",
+      "sha256": "63b2d16bfdeb8c6ed5d3bed1219e2133568e2c8cac0d48748a1e3c0b299bfcf0",
+      "bytes": 879
+    },
+    {
+      "file": "board-2-off-public.txt",
+      "sha256": "1fa735115f47dbd2845f0ca6333f5c453b07f4e639fc85f6a6bb6163598b506c",
+      "bytes": 867
+    },
+    {
+      "file": "board-2-identity-public.txt",
+      "sha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "bytes": 1616
+    },
+    {
+      "file": "board-3-ticket-public.txt",
+      "sha256": "63b2d16bfdeb8c6ed5d3bed1219e2133568e2c8cac0d48748a1e3c0b299bfcf0",
+      "bytes": 879
+    },
+    {
+      "file": "board-3-off-public.txt",
+      "sha256": "62349aed893589dbb2621cdb9282efef34d7e3244eb2f86c93b436f63a905c80",
+      "bytes": 1003
+    },
+    {
+      "file": "board-3-identity-public.txt",
+      "sha256": "6dc8045fdb8da6a9c6b0ede4d05678feb09e2f8131a58bf68b1e577af441482c",
+      "bytes": 1616
+    }
+  ],
+  "images": [
+    {
+      "file": "board-2-top.jpg",
+      "sha256": "45c6a21365e3e1adb55eb871d1bda8b77dcbc8278401ad9b7e9cb64efdc00616",
+      "bytes": 164985
+    },
+    {
+      "file": "board-3-top.jpg",
+      "sha256": "2b4191a6235ef7d6e54991b2dc6361f699395f75f42d674d540749f3bbb43340",
+      "bytes": 165378
+    }
+  ]
+}

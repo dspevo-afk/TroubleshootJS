@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_BROWSER_AUTOMATION_TIMEOUT",
+  "actualToolResult": "js execution timed out; kernel reset, rerun your request",
+  "phase": "select-second-family",
+  "limits": "Wrapper timeout prevented step error flush; do not claim a completed family selection or any second board generation. First board identity file had already been flushed.",
+  "firstRequest": "tsj-alpha/6/MEDIUM/RB30_CONTROL/-7246877603843301116",
+  "resolution": "New API-owned continuation browser; lower per-action timeout than tool timeout and visible-select scoping. Original files and blocked profile untouched."
+}
