@@ -1,0 +1,16 @@
+{
+  "scope": "Captured before selected private diagnostic adapter; actual tool exit precedes separate root birth check",
+  "drivers": [
+    {
+      "pid": 17056,
+      "startTicks": "639281407146358623",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 21672,
+      "startTicks": "639281407148665417",
+      "executable": "pwsh"
+    }
+  ],
+  "phase": "composed"
+}

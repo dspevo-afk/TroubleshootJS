@@ -1,0 +1,16 @@
+{
+  "phase": "canaries",
+  "scope": "Captured before selected private diagnostic adapter; actual tool exit precedes separate root birth check",
+  "drivers": [
+    {
+      "pid": 23428,
+      "executable": "pwsh",
+      "startTicks": "639281406873648874"
+    },
+    {
+      "pid": 26644,
+      "executable": "pwsh",
+      "startTicks": "639281406882223810"
+    }
+  ]
+}

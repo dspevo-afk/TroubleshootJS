@@ -1,0 +1,18 @@
+{
+  "status": "CORRECTED_BEFORE_RUNTIME_FREEZE_OR_EXECUTION",
+  "originalQualifierSha256": "e5796701814dd14e71b04df59b1138c25bd44194dd8d0dee09790626d0c76260",
+  "originalReaderNotesSha256": "197b845483d252b623b36c1a85802171960cea1e6b4d38c33383f4c36a1364d1",
+  "currentQualifierSha256": "461a8283ebfb1e056ab9e106127b2af9f9cc7c2121acf76d0e705393791e7be7",
+  "currentReaderNotesSha256": "ea5e6b44b7c654efa159485e723f1e61ae94d759b8703783266623baf2de6c62",
+  "publishedAdaptedReaderSha256": "184494a0d25b1f2d4d3551a66e49679a89728b61ae855b9f27ac1200ddf9881c",
+  "rootFindings": [
+    "Three event-negative branches originally lacked explicit else:raise on acceptance. Corrected before any data run.",
+    "Added typed inner reason/recovery agreement, wrapper/inner message agreement and actual-board blocked-net membership checks.",
+    "Coherent recovery-counter and changed/rehashed inner-plan controls now pass their individual framing checks before failing the intended cross-record assertion.",
+    "Added canonical-consistent ordinary probe counter control that must pass the original row reader before exact nonclock comparison rejects it.",
+    "Retain full correlated router observation in the assessment; distinguish unrelated compact-event count from total.",
+    "Optional leaf reported a failed-to-match attempted refactor that made no changes; root preserved released bytes privately before correcting."
+  ],
+  "syntax": "PASS all task Python AST and retained exact two-transform published reader compiled; no bytecode caches",
+  "limits": "Preseal source review only. No host/native/data-reader run yet; no acceptance reused from the released uncorrected helper."
+}

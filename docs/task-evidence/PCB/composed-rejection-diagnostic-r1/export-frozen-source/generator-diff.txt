@@ -1,0 +1,42 @@
+--- published-generator
++++ private-observed-generator
+@@ -374,12 +374,28 @@
+             }
+             return finishPackingProbe(session, "KEPT");
+         } catch (CandidateRejected rejectedRoute) {
++            TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
++                session.packingPlan, session.seed, session.routingSeed,
++                session.packingBaselineHash, session.packingRoutePolicy,
++                rejectedRoute, rejectedRoute.getKind().name(), null, null, rejectedRoute.recovery);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (PcbPlacementPlanner.Rejected rejectedAccess) {
++            TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
++                session.packingPlan, session.seed, session.routingSeed,
++                session.packingBaselineHash, session.packingRoutePolicy,
++                rejectedAccess, "PLACEMENT", rejectedAccess.reason, null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (SupportedEnvelope.Rejected rejectedEnvelope) {
++            TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
++                session.packingPlan, session.seed, session.routingSeed,
++                session.packingBaselineHash, session.packingRoutePolicy,
++                rejectedEnvelope, "ENVELOPE", rejectedEnvelope.reason.name(), null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         } catch (PcbBoardLayout.RouteQualityRejectedException rejectedQuality) {
++            TaskPackingObservation.emit("PACKING_CAUGHT", "PACKING_EXPECTED_CATCH",
++                session.packingPlan, session.seed, session.routingSeed,
++                session.packingBaselineHash, session.packingRoutePolicy,
++                rejectedQuality, "QUALITY", null, null, null);
+             return finishPackingProbe(session, "ROUTE_REJECTED");
+         }
+     }
+@@ -1069,6 +1085,10 @@
+         long routingStarted=System.currentTimeMillis();
+         try { PcbNetRouter.route(layout,board,outline,attempt,observer,true,routingSeed); }
+         catch(PcbNetRouter.Rejected failure) {
++            if (compactProbe) TaskPackingObservation.emit("COMPACT_ROUTER_REJECTED",
++                "P05_ROUTE_SEARCH", plan, seed, routingSeed, null,
++                MediumBoardPhysicalPolicy.P05_ONE_FACE, failure, "ROUTING",
++                failure.reason.name(), failure.blockedNet, failure.statistics);
+             throw new CandidateRejected(PcbRoutingRejectedException.Kind.ROUTING,
+                 failure.getMessage(),failure.statistics);
+         } finally {

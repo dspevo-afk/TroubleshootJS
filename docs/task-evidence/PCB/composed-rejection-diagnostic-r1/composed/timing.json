@@ -1,0 +1,9 @@
+{
+  "phase": "composed",
+  "elapsedSeconds": 42.703764,
+  "failure": null,
+  "status": "PASS",
+  "terminalCleanupIncluded": true,
+  "exitCode": 0,
+  "cleanupDuration": "NOT_SEPARATELY_MEASURED"
+}

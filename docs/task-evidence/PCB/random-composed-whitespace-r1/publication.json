@@ -1,0 +1,22 @@
+{
+  "mainMerge": "NOT_DONE_USER_DISABLED",
+  "email": "NOT_SENT_USER_DISABLED",
+  "acceptedSourceCount": 1482,
+  "upstream": "origin/codex/q60-faulted-profile-counts",
+  "productionModuleCount": 5,
+  "acceptedPlayerHelperCount": 10,
+  "privateReviewedBlobMapSha256": "f883a656b052253eded0ae94b675a33de68542a75652cc00b807461ec4621b46",
+  "nextUnstarted": "Bounded private rejection attribution on exact first random board",
+  "postpublicationExecutionSha256": "11dd446ecca996850e98018fa90a1993f83b734feb7ae5b8e53bfbd34717f761",
+  "status": "PUBLISHED_EXACT_REMOTE_AND_UNCHANGED_EXECUTION",
+  "acceptedNativeGateCount": 13,
+  "exactRemoteSha": "6c583204af0897071514304b886c9dfb3eb1562b",
+  "branch": "codex/q60-faulted-profile-counts",
+  "reviewedBlobCount": 62,
+  "resources": "No task process/session/browser/preview live; private root and seven unrelated groups/four old blocked profiles retained",
+  "acceptedMachineryCount": 24,
+  "limits": "Finite diagnosis only. No production change, further size reduction, fresh matrix/GWT/player or measured rejection cause",
+  "normalPushActualToolExitCode": 0,
+  "message": "Diagnose whitespace on the first generated composed PCB",
+  "commit": "6c583204af0897071514304b886c9dfb3eb1562b"
+}

@@ -1,4 +1,46 @@
-# Current checkpoint: exact first-random board diagnosed; rejection attribution next
+# Current checkpoint: private exact-board rejection attributed; publication preparing
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exactorigin6c583204af0897071514304b886c9dfb3eb1562b. Prior exact-board
+diagnosis62 reviewedblobs/normalpush0/exactremote/fresh execution6 published;
+its two publication outputs intended this coherent commit. Continue authorized
+realism indefinitely/screenshots/optional leaves; no main/email/final stop.
+Seven unrelated groups/four blocked old profiles untouched, never retry deletion.
+
+composed-rejection-diagnostic-r1 baseline1482/24/prior accepted evidence/advice
+frozen BEFORE passive private source changes. Root verifies reverse5four-line
+catchhooks restores accepted generator bytes; reverse3hostbindings restores old
+adapter. Exact previous exporter prefix plus task-only serializer. No checkout
+production edit/epoch/budget/route/order/validator/solver/graph change. Corrected
+reader/source review and13helpers/private3 frozen BEFORE actual selected runs.
+
+Actual host seed/family/absent-generator negatives PASS, child1/root0,
+1.0618647s; actualJDK8 export327/root0/42.703764s. Corrected independentreader
+PASS original5row+5cause/correlation+1coherent ordinarycounter negatives. Entire
+ordinary row equal to accepted except packing millis/canonicalclock, sampler
+exact, final327marker exact. Fresh execution6 before/after matches accepted.
+All4 driver births separately exited after observed actual0; native terminal
+cleanup included/not separately timed. No task process/session/browser/preview
+live. Private inputs/raw hostlogs/originalpresealreader retained for audit.
+
+Exactly2matching events prove actual P05_ROUTE_SEARCH NO_PATH, EXHAUSTED after
+5orderings/305104expansions, supply-indicator LED_NODE RSUP.2(1220,700)→
+LED1.A(830,700). Planb5e76bc7.../candidate3/routingframe1520x1040; frame is not
+an accepted displaycrop metric. Selected14cb0825.../1457568/12490/0/79200
+unchanged. Bounded failure does not prove universal unroutability or sizeoptimality.
+No accepted smaller tuple/production GO/fresh matrix/GWT/player/electrical claim;
+prior proof reused after consumed-input/ancestry audit.
+
+Preseal reader gaps corrected before freeze/data: explicit failure if negative
+accepted, stronger reason/message/net bindings, coherent counter/rehash controls,
+actual inner observation retained and unrelated-event count fixed. Original
+released bytes private/hash-bound; leaf failed-to-match patch made no changes.
+No failed native/data gate or pre-fix acceptance reused. Root integrated review,
+no independent agent final acceptance review. Packetacceptance/results complete;
+next explicit stage/diff/normal push/exactremote. Optional read-only movement
+advice in progress to scope next connected-part variant; no implementation byleaf.
+
+# Previous checkpoint: exact first-random board diagnosed; rejection attribution next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 Base/exact publishedHEAD22cbf4bc06cd241999536aa92d739481f831378c. Continue

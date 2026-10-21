@@ -7,7 +7,21 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Exact first-random whitespace diagnosed; rejection attribution next**
+**Current task:** **Exact first-random rejection attributed; connected-part review next**
+
+The actual optional proposal's final failed net is supply-indicator LED_NODE:
+P05 route search NO_PATH, EXHAUSTED after5orderings/305104expansions. Two typed
+private observations independently correlate exact plan/seed/recovery/baseline.
+Fresh JDK8 export327/root0/42.703764s, three actual host negatives,11 reader
+negatives and four separate driver exits PASS. Entire ordinary row unchanged
+except packing clock; sampler/final327marker and execution6 exact. No production
+edit, accepted smaller tuple, allowance/validator change or fresh matrix/GWT/player
+claim. Baseline1482/24 and helper/private seals precede actual runs. Root preseal
+reader gaps corrected/preserved before freeze, no pre-fix acceptance reused.
+Next unstarted implementation: separately scoped connected-part movement/private
+variant after read-only advice; no production GO from this finite diagnosis.
+[Attribution, evidence and limits](task-evidence/PCB/composed-rejection-diagnostic-r1/RESULTS.md).
+
 
 The actual first ordinary composed replay -2750102463469069236 is now observed
 through normal construction: JDK8 export327/root0, host family/canonical-seed

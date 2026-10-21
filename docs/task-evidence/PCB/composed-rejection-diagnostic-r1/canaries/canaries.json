@@ -1,0 +1,29 @@
+{
+  "limits": "Actual selected private adapter rejects noncanonical seed, excluded family and absent private generator before compiler/native work; raw stderr private/hash-bound",
+  "checks": [
+    {
+      "privateLogBytes": 456,
+      "actualAdapterExitCode": 1,
+      "elapsedSeconds": 0.3804993,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "privateLogSha256": "53762216c616b9a31ed21f71bff6a924fde548a7e62e225bb9450ce478da0f75",
+      "kind": "seed"
+    },
+    {
+      "privateLogBytes": 283,
+      "actualAdapterExitCode": 1,
+      "elapsedSeconds": 0.3174129,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "privateLogSha256": "2f1fab7e17c293e8ee463f229a364ba76211a0bfff9fb4437363d55a2a43e38f",
+      "kind": "family"
+    },
+    {
+      "privateLogBytes": 420,
+      "actualAdapterExitCode": 1,
+      "elapsedSeconds": 0.329576,
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "privateLogSha256": "82703658297c996a7e17717c93f7a2b2b7f7d1131aa2e0f6a65864dfbe22d389",
+      "kind": "generator"
+    }
+  ]
+}

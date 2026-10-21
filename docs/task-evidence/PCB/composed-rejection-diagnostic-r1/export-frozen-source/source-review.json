@@ -1,0 +1,20 @@
+{
+  "status": "PASS_PASSIVE_PRIVATE_SOURCE_ONLY",
+  "reviewer": "root",
+  "privateInputManifestSha256": "97e9b0bd2da15735056789074ad60df88ea238bc76badc9a2cf3336105b13add",
+  "privateInputs": {
+    "SeededPcbLayoutGenerator.java": "107ab7941b173074da1d535a16d0c24ee12a4400e40b40b79aab07f9476c8064",
+    "verify-composed-rejection.ps1": "662cae0d761ae84f57e719bae2ba68e04d512450545da1afc1633a89ce2357b1",
+    "SparseNormalBoardDiagnostic.java": "cecacbb7f707466cccc784b28d07dc3a69131ae0c0d9223992685442fa45fad0"
+  },
+  "verifiedHooks": 5,
+  "verifiedPrivateAdapterBindings": 3,
+  "findings": [
+    "Root inspected actual generator/adapter diffs. Removing exactly five four-line passive hooks restores the exact accepted production generator bytes. All original return/throw, catch, router call, budget, ordering and acceptance code is exact.",
+    "Reversing exactly three private-source binding edits restores the previously accepted composed-only adapter bytes. No maintained native limit/process owner changes.",
+    "Task exporter is the exact previous byte prefix plus one task-only serializer. All 327 prior checks, normal construction, physical mapping, graph/geometry checks, sampler and nested disposal retained.",
+    "Serializer reads original plan/exception/recovery fields, hashes canonical plan UTF8, emits valid JSON primitives/escaped strings; no acceptance/graph state or extra generation/router calls. Earlier compact events remain distinct from authoritative outer packing catch.",
+    "Outer wrapper does not recover swallowed finalization subtypes. Router-prewrap attribution is conditional on actual matching router/outer records."
+  ],
+  "limits": "Source/syntax review only; selected-host canaries, actual private JDK8 execution, nonclock comparison and independent cause/correlation negatives NOT RUN yet."
+}

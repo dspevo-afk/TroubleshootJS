@@ -1,0 +1,23 @@
+{
+  "status": "SOURCE_ONLY_NO_ACTUAL_CAUSE_MEASURED",
+  "optionalLeaf": "sparse_layout_scope",
+  "baseCommit": "6c583204af0897071514304b886c9dfb3eb1562b",
+  "consumedSources": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "57cf9db656fdee48b8b737c4a4d980c69f799dccc021cf370a32168a9a13e498",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "5927d17160a70d3e816e7b44477f6a98c5abba274fa49787e591c10aa57548a5",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java": "6f0b0b36ce6ad91ec4dfb6b4581e5b8e2cd514ed36eed3e53905a32a2f7994cc",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180",
+    "src/com/lushprojects/circuitjs1/client/PcbRoutingRejectedException.java": "eaab826a27fe9972d18c8618de709370f40a1f137abb9cf6ab537c5651b84ca2"
+  },
+  "consumedReceiptSha256": "d9c87938cb9e0d710c162cc257271d9c35b13c736ab21f590fcee21a7fe8f5f4",
+  "rootVerification": "Actual full source/receipt hashes verified against current accepted snapshot; leaf advice was source-only.",
+  "findings": [
+    "Exact rejected proposal selects P05 one-face. Router Rejected has reason/blockedNet/statistics; CandidateRejected wrapper retains kind/message/recovery but drops the cause.",
+    "Observe typed router failure before original wrap and expected outer packing catch before unchanged finishPackingProbe; preserve all throws/returns/budgets/order/validators.",
+    "Earlier compact probes can fail too. A plan fingerprint and event order must correlate the actual packing wrapper to its prewrap event.",
+    "Outer wrapper/phase alone does not recover a swallowed finalization subtype. No actual rejection cause measured by this source review."
+  ],
+  "limits": "No edits/native/build/browser by optional leaf; no implementation or production acceptance."
+}

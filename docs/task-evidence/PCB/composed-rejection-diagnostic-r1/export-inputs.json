@@ -1,0 +1,25 @@
+{
+  "baseCommit": "6c583204af0897071514304b886c9dfb3eb1562b",
+  "baselineSealSha256": "92aa23e359ad9f17e35951e0f6a9fdcbabbf254eae5c06255fdac7e5054feb09",
+  "request": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2750102463469069236",
+  "privateInputs": {
+    "SeededPcbLayoutGenerator.java": "107ab7941b173074da1d535a16d0c24ee12a4400e40b40b79aab07f9476c8064",
+    "verify-composed-rejection.ps1": "662cae0d761ae84f57e719bae2ba68e04d512450545da1afc1633a89ce2357b1",
+    "SparseNormalBoardDiagnostic.java": "cecacbb7f707466cccc784b28d07dc3a69131ae0c0d9223992685442fa45fad0"
+  },
+  "gates": {
+    "prepare_diagnostic.py": "88a8db2c09a913e1ff5531218b385b73153231874c3e8da29f9c38ca1f1def5c",
+    "observer-source/TaskPackingObservation.java.inc": "83314436b4c773bd3db220f3c704bc456f4f2996eb4cd51621bfbd81d4922231",
+    "private-inputs.json": "97e9b0bd2da15735056789074ad60df88ea238bc76badc9a2cf3336105b13add",
+    "generator-diff.txt": "93a22c49f710f7771b2d4d34dbefea3d56f5c4e3d525e355319e1d9259a4e0f6",
+    "adapter-diff.txt": "28a389717160e1be0ff777754da1e8b6f718aaf8e1387979fc6a4480f5b07b90",
+    "source-review.json": "aae1b61565a49bc8280973464f057fc9b456c19e3589b4d0e627b802da2a4e7d",
+    "export_inputs.py": "c54e8b636aaedf5648653002d79b67187b224439e6476fae968360a41a980c9f",
+    "run_export.ps1": "506a7fb5a04d601e4706600a16cd82cc8760d0582c22a0dd390fa12f796f8147",
+    "record_exit.ps1": "14fcca4ac105172ec940f34b60448c6274bccd05982b017b529263d1943466f1",
+    "observe_execution.ps1": "812bfd874d9ac32e002300bf5e478e73d66757a954c2e1c0bb23a5db863d9dfe",
+    "qualify.py": "461a8283ebfb1e056ab9e106127b2af9f9cc7c2121acf76d0e705393791e7be7",
+    "reader-scope.md": "ea5e6b44b7c654efa159485e723f1e61ae94d759b8703783266623baf2de6c62",
+    "reader-preseal-review.json": "a068d479b73219b29fd5ba16198cf13738d2076befc0260f464acd7529911fad"
+  }
+}

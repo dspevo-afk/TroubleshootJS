@@ -1,0 +1,65 @@
+{
+  "status": "GENERATED_PASSIVE_PRIVATE_CATCH_OBSERVATIONS",
+  "publishedGeneratorSha256": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+  "previousAdapterSha256": "9a6e970e814f3aeda278c54dd06b7fba79ee12c784f9fcecbc6a479c0253bd3e",
+  "publishedExporterSha256": "6cb13b66b3eace4175c6f2fc37f863826da92ff6dba504aeef866e6e5457e89a",
+  "appendedObserverSha256": "83314436b4c773bd3db220f3c704bc456f4f2996eb4cd51621bfbd81d4922231",
+  "privateInputs": {
+    "SeededPcbLayoutGenerator.java": "107ab7941b173074da1d535a16d0c24ee12a4400e40b40b79aab07f9476c8064",
+    "verify-composed-rejection.ps1": "662cae0d761ae84f57e719bae2ba68e04d512450545da1afc1633a89ce2357b1",
+    "SparseNormalBoardDiagnostic.java": "cecacbb7f707466cccc784b28d07dc3a69131ae0c0d9223992685442fa45fad0"
+  },
+  "generatorChanges": [
+    {
+      "label": "observe existing outer CandidateRejected catch before unchanged return",
+      "replacements": 1,
+      "oldSha256": "6d4cce5ce9416c1309664d82a5f5072b8b2249a51aab7df9107642192c3000f8",
+      "newSha256": "4af2602b1af385fd5998ea0a8798014b7e0ced3e874a1d56cbe6d5a55285073c"
+    },
+    {
+      "label": "observe existing outer PcbPlacementPlanner.Rejected catch before unchanged return",
+      "replacements": 1,
+      "oldSha256": "c6af5b0d455ebb3ae2a3d8c675a096cb03ebae7dc53f9cfb8ac93b933fca3941",
+      "newSha256": "a89656a526ef671733376ec8088ec9e8c8518d7fdcab6e102dc22983b4a5982d"
+    },
+    {
+      "label": "observe existing outer SupportedEnvelope.Rejected catch before unchanged return",
+      "replacements": 1,
+      "oldSha256": "4e013f90673ebf2fdcf7ad3dbe95690ad4bd0d7cec488b45671b3ec68c95cb4f",
+      "newSha256": "0b02bf99cc5719b92bd1168aa4953159ff9da7899c38f1ba327bdcf6677c34aa"
+    },
+    {
+      "label": "observe existing outer PcbBoardLayout.RouteQualityRejectedException catch before unchanged return",
+      "replacements": 1,
+      "oldSha256": "29db391857839b255cfaa3cca76f02f7441c15bbf65b2e308784fe432723629f",
+      "newSha256": "c787149e62ffaf3e40380c517e185e3e711e6dfea2029092b21d73f97fc5229a"
+    },
+    {
+      "label": "observe typed router failure before unchanged CandidateRejected wrap",
+      "replacements": 1,
+      "oldSha256": "76ffa7d58d9897601e143e2b2b898496163c36299a513e4c959a7296e02dc381",
+      "newSha256": "6bd34ef1ef8f558ab3b762904618219986461bcf38f7ec4a73a0bfe2e05f4847"
+    }
+  ],
+  "adapterChanges": [
+    {
+      "label": "bind existing private-generator source through real host file validation",
+      "replacements": 1,
+      "oldSha256": "49cd303a2f813c7f1d82a673604216307eef71e7a02a0450b473c0bb609ba7d0",
+      "newSha256": "4718e056d124be71295e4ce738bd5195e713de22a64ee8060a6b1546e70bb2eb"
+    },
+    {
+      "label": "exclude only checked-in generator from private native compile",
+      "replacements": 1,
+      "oldSha256": "0d70150d7abe5f3b332dbb6cff26353ca0451e0d8ee72f041fda10d35350d555",
+      "newSha256": "b1bd06c09a639814bdc9185e1a88ab060ac25df54f7083a8326bbb26f9c57e4c"
+    },
+    {
+      "label": "include sealed copied same-owner generator",
+      "replacements": 1,
+      "oldSha256": "3aeaa583e858040682f04a376153c1a6459c3d5b5c2165a960bcf3bc92e21153",
+      "newSha256": "e2a97ca2f4d26c5f69fab0809b832b98c2e31a9a3c18ad62d35a4f51b94ec359"
+    }
+  ],
+  "limits": "Five passive catch hooks only; all original throws/returns/budgets/order/validators remain. Three already-proven private-generator substitution hooks. Exporter exact original prefix plus task-only serializer. No production checkout edit, extra route or acceptance predicate."
+}
