@@ -1,0 +1,14 @@
+{
+  "status": "PASS_TASK_ONLY_ADAPTATION_SOURCE_REVIEW",
+  "reviewer": "root",
+  "adapterManifestSha256": "ac7defa2f28e330d4b16e64b1dea16a5ca8b3318eddb0ace4373294865d8c553",
+  "exporterSha256": "6cb13b66b3eace4175c6f2fc37f863826da92ff6dba504aeef866e6e5457e89a",
+  "findings": [
+    "Actual maintained-adapter diff inspected: five published factory hooks plus composed-only binding; existing process jobs/compiler/native definitions and 60000ms selected limit unchanged.",
+    "Exporter byte-equivalent to published sparse exporter after exactly one seed literal substitution; original admission, graph, mapping, sampler and nested disposal assertions retained.",
+    "Birth observer copied exactly except permitted phase set; runner captures before selected adapter and separates actual root exit from later birth observation.",
+    "Canonical negative seed is the actual signed long with a leading zero; RC family is excluded by actual selected adapter binding.",
+    "Baseline frozen before adaptation; source-only painter review pins and all accepted source/machinery/gates/player helpers/modules audited unchanged."
+  ],
+  "limits": "Source review only; actual host negatives, JDK8 export and independent receipt reader still NOT RUN. Optional independent reader implementation will be integrated before freeze."
+}

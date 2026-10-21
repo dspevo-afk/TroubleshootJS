@@ -1,0 +1,23 @@
+{
+  "baselineSealSha256": "23ddaa20bb5d0b6cf2672dca0980357d432871d732f3516cd3701000394b9e25",
+  "baseCommit": "22cbf4bc06cd241999536aa92d739481f831378c",
+  "request": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2750102463469069236",
+  "adapterSha256": "9a6e970e814f3aeda278c54dd06b7fba79ee12c784f9fcecbc6a479c0253bd3e",
+  "gates": {
+    "prepare_export.py": "62814c7438c8773df683cb15be3ae798db65551b3027916edda55154b89998b3",
+    "adapter-manifest.json": "ac7defa2f28e330d4b16e64b1dea16a5ca8b3318eddb0ace4373294865d8c553",
+    "adapter-diff.txt": "64f67728efe346203e43765591702d626d11380dfdaf86144ec8b8ca10db2e4e",
+    "exporter-diff.txt": "33d8398330f102c05b55fb9f9c0a3ea62b3247683a79cacfdf0f1b7716bb23a3",
+    "export_inputs.py": "3dca5471bb0447a2ab02a5be68fb425b2c52a6196b8efcf357d781bacc961d9c",
+    "run_export.ps1": "d00bdabefca429a42267d2868e1bceed54f73cfda2288d33989078719667ea4a",
+    "record_exit.ps1": "14fcca4ac105172ec940f34b60448c6274bccd05982b017b529263d1943466f1",
+    "observe_execution.ps1": "812bfd874d9ac32e002300bf5e478e73d66757a954c2e1c0bb23a5db863d9dfe",
+    "qualify.py": "33c5022c1dd13b1fce80c9a8e3250b734d4a7a01cc0c26c5b390abab75d51413",
+    "reader-scope.md": "012e04642756f8dca2e292864ed387cbaa84d0a042b716cd3cb7f7a385dcb402",
+    "export-source/SparseNormalBoardDiagnostic.java": "6cb13b66b3eace4175c6f2fc37f863826da92ff6dba504aeef866e6e5457e89a",
+    "source-review.json": "03e32bfc31dddac8c7832f9d57e0750ce553f3138c5f50f64c9e5850f746d8ce",
+    "reader-preseal-review.json": "3056ab59df653a98e5d98492e8a5527a13e262616c632d45560c44e8e4c4419f",
+    "preseal-preparation-note.json": "75c6f8b1158cffa798aba7cdf5e81521266575c720e145334786864faadcef66",
+    "summarize_geometry.py": "559c2bb69390249b0d957d8240bd9fdb8f5a0ed535dbefc3490d6a7fc79b9eaa"
+  }
+}

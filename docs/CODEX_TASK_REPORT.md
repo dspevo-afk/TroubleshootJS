@@ -1,7 +1,50 @@
-# Current checkpoint: paired packing4 R2 accepted; explicit publication preparing
+# Current checkpoint: exact first-random board diagnosed; rejection attribution next
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exactorigin6426b3ff702c8197324dd996b5b4ede899bb9139. Continue authorized
+Base/exact publishedHEAD22cbf4bc06cd241999536aa92d739481f831378c. Continue
+user-authorized PCB realism indefinitely/screenshots/optional leaves; no main,
+email or final milestone stop. Seven unrelated groups/four blocked profiles
+preserved, never retry those profile removals.
+
+random-composed-whitespace-r1 observes the actual first ordinary production
+composed replay -2750102463469069236, no reroll/production edit. Baseline1482
+source/24machinery plus accepted13native/10player/5modules and reviewed5surface
+sources/3images frozen BEFORE minimal private adapter/exporter adaptation.
+Fresh host noncanonical-seed/excluded-RC negatives PASS both child1; root0,
+0.7111923s. ActualJDK8 normal export PASS327/root0/43.2123703s; original
+independent row reader+5 intended negatives PASS. Receipt packing@3/layout19/
+packing4, real SMALL_BOARD_EXECUTION@1 despite MEDIUM profile. Fresh execution6
+before/after exact; old matrix/GWT/player reused after consumed-input/ancestry
+audit, not rerun. Optional reader implementation root-reviewed; no independent
+agent final acceptance review.
+
+Actual geometry14cb0825... outline1512x964, metrics1457568/12490/0/79200,
+15parts/32pads/11nets/21traces. Accessbbox1452x890/margins30/44/30/30,
+xprojection gaps20/20/20 and y9/28: no full10unit strip under existing20channel.
+Actual optional proposal1attempt/5orderings/305104expansions ROUTE_REJECTED,
+baseline-only. Aggregate disposition does not identify rejection subtype;
+no accepted candidate metrics or further size improvement claim. Surface paint
+review NO_GO. Root static rectangle arithmetic/source review PASS.
+
+All4 recorded driver births separately exited after actual0; managed native
+cleanup included in operation, not separately timed. No live task resource.
+Private adapter/root/preseal helper retained; first baseline-prep absent-filename
+exit1/correction preserved before any freeze/native run. Root premature helper
+reads were readiness inspections only. Prior paired-packing-r2 publication and
+execution receipts included in next coherent commit. Current diagnostic/docs
+await explicit stage/diff/normal push/exactremote verification.
+
+Next unstarted: bounded private type/reason/phase attribution for this exact
+rejected proposal, no budget/validator/order/normal selection change. Read-only
+sparse_layout_scope source advice completed: capture the typed router rejection
+before its wrapper drops the cause, with finalization-phase attribution. No
+actual rejection cause measured yet; no edits or execution by that leaf.
+See docs/task-evidence/PCB/random-composed-whitespace-r1/RESULTS.md.
+
+# Previous checkpoint: paired packing4 R2 published; next realism review preparing
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+HEAD/exactorigin22cbf4bc06cd241999536aa92d739481f831378c. Continue authorized
 PCB realism indefinitely/screenshots/optional leaves; no main/email/final stop.
 Private pair GO published6426b3ff; its publication receipt intended thiscommit.
 
@@ -47,13 +90,20 @@ APIclose0/profileabsent; previewmanagedstop0/stateabsent/8911released. No task
 process/session/browser/listenerlive. Four older blockedprofiledeletions untouched,
 neverretry. One buildlogownerprefix sanitizedreversibly; rawprivate/hashreceipt
 retained. See paired-packing-r2/acceptance.json and RESULTS.md. Seven unrelated
-groups/private roots preserved. No stage/commit/push yet for this candidate.
+groups/private roots preserved. Explicit301 staged blobs/source/privacy review,
+diffchecks and commit22cbf4bc normalpush0/exactorigin verification PASS. All
+accepted1482/24/13/10/5 inputs unchanged and fresh postpublicationexecution6 exact;
+publication receipt/execution projection intended next coherent commit.
 
-Next explicitintendedstage/diffcheck/commit/normalpush/exactremote and unchanged
-source/module/execution audit. Publication must not reuse HEAD-equality-bound old
-candidate helper after commit; compare accepted snapshots and ancestry explicitly.
-Next unstarted work after publication: source-based remaining-realism review of
-actualfirst random board; its largegreenregions remain an explicit limit.
+Postpublication audit explicitly compared accepted snapshots/reviewed tree and
+base ancestry; old HEAD-equality-bound helpers were not reused after commit.
+One stagedwhitespacecheck initially rejected rawDOMtabs/frozenreaderEOF; narrow
+artifact-only attributes preserve captured/sealed bytes, later checkPASS.
+Next source-based remaining-realism review of actualfirst random board; its
+largegreenregions remain an explicit limit. Read-only package_realism_scope
+reviews existing board/pad/copper painters only, no edits/tests/spawn. No new
+production/source milestone started; root may prepare exact-first-board metrics
+diagnosis through existing developer exporters, not a prettier seed reroll.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 

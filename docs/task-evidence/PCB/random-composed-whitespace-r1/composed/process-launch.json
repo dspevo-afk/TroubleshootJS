@@ -1,0 +1,16 @@
+{
+  "scope": "Captured before selected private adapter; root observes actual tool exit before separate birth checks",
+  "phase": "composed",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "pid": 18340,
+      "startTicks": "639281395583016807"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 9648,
+      "startTicks": "639281395585434902"
+    }
+  ]
+}

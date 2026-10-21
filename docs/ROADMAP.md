@@ -7,7 +7,22 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Paired packing4 R2 accepted; publication preparing**
+**Current task:** **Exact first-random whitespace diagnosed; rejection attribution next**
+
+The actual first ordinary composed replay -2750102463469069236 is now observed
+through normal construction: JDK8 export327/root0, host family/canonical-seed
+negatives, original independent reader+5 negatives and all4 separate driver
+exits PASS. Published source1482/machinery24/native13/player10/modules5 and fresh
+execution6 remain exact; prior matrix/build/player are reused, not fresh claims.
+No production edit. Outline1512x964/accessbbox1452x890 already has margins
+30/44/30/30 and no removable10unit whole strip under the existing20channel.
+The actual optional proposal is ROUTE_REJECTED after1attempt/5orderings/305104
+expansions; its aggregate receipt does not identify the failed physical/routing
+check. No accepted candidate metric tuple or new size improvement claim.
+Surface-paint review NO_GO. Next unstarted: bounded private rejection attribution
+with unchanged root/selection/budgets/validators. No main/email.
+[Finite diagnosis, reuse boundary and limits](task-evidence/PCB/random-composed-whitespace-r1/RESULTS.md).
+
 
 The R1 unaccepted candidate passes15 focused contracts, the exact Dual
 target and44-case/four-metric nonregression (five improved cases). The broader
@@ -25,8 +40,9 @@ cases, no worse metrics). Full enabled11-family matrix passes220accepted/220
 exactreplays with original diversity assertions. Actual JDK8/GWT5 and fresh
 production random/exact/repair flows pass. Four raw images inspected/three pasted;
 all29 recorded births exited, fresh profile/state absent/port released. Six UI
-observer failures and one unattributed console404 remain disclosed. Explicit
-stage/root review/normal publication preparing; no main/email. Next unstarted:
+observer failures and one unattributed console404 remain disclosed. Published
+22cbf4bc with301 reviewed blobs/normalpush0/exactremote/unchanged1482-24-13-10-5
+and fresh execution6 audit. No main/email. Next unstarted:
 source-based review of remaining realism gaps on the actual first random board.
 [Accepted results and limits](task-evidence/PCB/paired-packing-r2/RESULTS.md),
 [preserved failure](task-evidence/PCB/paired-packing-r1/matrix-failure-assessment.json),

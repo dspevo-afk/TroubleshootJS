@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SOURCE_AND_SYNTAX_ONLY",
+  "qualifierSha256": "33c5022c1dd13b1fce80c9a8e3250b734d4a7a01cc0c26c5b390abab75d51413",
+  "readerNotesSha256": "012e04642756f8dca2e292864ed387cbaa84d0a042b716cd3cb7f7a385dcb402",
+  "publishedReaderSha256": "0b8ff9c9cf22599c23d430901ed8b9d3c9867f1ecb1cb63407480647b9bbcc71",
+  "adaptedReaderSha256": "184494a0d25b1f2d4d3551a66e49679a89728b61ae855b9f27ac1200ddf9881c",
+  "guardedReaderChanges": [
+    {
+      "label": "pin only the actual first-random composed replay identity",
+      "replacements": 1
+    },
+    {
+      "label": "require current packing4 physical epoch",
+      "replacements": 1
+    }
+  ],
+  "scope": "Optional leaf owns reader implementation; root inspected final source, preserved original validation assertions, syntax-compiled all helpers, checked exact two adaptations and rectangle arithmetic. Actual data/native qualification NOT RUN at this point."
+}

@@ -1,0 +1,921 @@
+{
+  "status": "DESCRIPTIVE_EXACT_SELECTED_GEOMETRY_ONLY",
+  "assessmentSha256": "0ea218ebc25f1fd1104c614e5ba0185d0cfec5845b5136a8f32288b12e8d12de",
+  "receiptSha256": "d9c87938cb9e0d710c162cc257271d9c35b13c736ab21f590fcee21a7fe8f5f4",
+  "replayId": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2750102463469069236",
+  "outline": [
+    60,
+    40,
+    1512,
+    964
+  ],
+  "physicalMetrics": {
+    "available": true,
+    "unavailable": false,
+    "gridStep": 10,
+    "area": 1457568,
+    "copper": 12490,
+    "vias": 0,
+    "protectedVoid": 79200,
+    "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+  },
+  "packingProbe": {
+    "canonical": "normal-packing@3;attempts=1;orderings=5;expansions=305104;millis=54;route=P05_ONE_FACE;disposition=ROUTE_REJECTED;baseline=14cb0825afcb5d05b9c5866706a8945649f801a5f1bdb64477bb2264881a851f;selected=14cb0825afcb5d05b9c5866706a8945649f801a5f1bdb64477bb2264881a851f",
+    "attempts": 1,
+    "orderings": 5,
+    "expansions": 305104,
+    "millis": 54,
+    "routePolicy": "P05_ONE_FACE",
+    "disposition": "ROUTE_REJECTED",
+    "baselineGeometrySha256": "14cb0825afcb5d05b9c5866706a8945649f801a5f1bdb64477bb2264881a851f",
+    "selectedGeometrySha256": "14cb0825afcb5d05b9c5866706a8945649f801a5f1bdb64477bb2264881a851f",
+    "metricEvidence": {
+      "state": "BASELINE_ONLY",
+      "baseline": {
+        "area": 1457568,
+        "copper": 12490,
+        "vias": 0,
+        "protectedVoid": 79200
+      },
+      "candidate": null,
+      "unavailableReason": null
+    }
+  },
+  "largestProtectedEmptyRectangle": {
+    "x": 1460,
+    "y": 40,
+    "width": 110,
+    "height": 720,
+    "area": 79200
+  },
+  "envelopes": {
+    "bodyBounds": {
+      "boundingRectangle": [
+        124,
+        137,
+        1384,
+        794
+      ],
+      "rectangleUnionArea": 65156,
+      "extremeComponents": {
+        "left": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1"
+        ],
+        "top": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD"
+        ],
+        "right": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ],
+        "bottom": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ]
+      },
+      "outlineMargins": {
+        "left": 64,
+        "top": 97,
+        "right": 64,
+        "bottom": 73
+      },
+      "projections": {
+        "x": {
+          "occupied": [
+            [
+              124,
+              208
+            ],
+            [
+              361,
+              506
+            ],
+            [
+              636,
+              756
+            ],
+            [
+              766,
+              886
+            ],
+            [
+              911,
+              961
+            ],
+            [
+              1061,
+              1111
+            ],
+            [
+              1146,
+              1226
+            ],
+            [
+              1424,
+              1508
+            ]
+          ],
+          "internalGaps": [
+            [
+              208,
+              361,
+              153
+            ],
+            [
+              506,
+              636,
+              130
+            ],
+            [
+              756,
+              766,
+              10
+            ],
+            [
+              886,
+              911,
+              25
+            ],
+            [
+              961,
+              1061,
+              100
+            ],
+            [
+              1111,
+              1146,
+              35
+            ],
+            [
+              1226,
+              1424,
+              198
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              208,
+              361,
+              153
+            ],
+            [
+              506,
+              636,
+              130
+            ],
+            [
+              886,
+              911,
+              25
+            ],
+            [
+              961,
+              1061,
+              100
+            ],
+            [
+              1111,
+              1146,
+              35
+            ],
+            [
+              1226,
+              1424,
+              198
+            ]
+          ]
+        },
+        "y": {
+          "occupied": [
+            [
+              137,
+              171
+            ],
+            [
+              270,
+              331
+            ],
+            [
+              487,
+              601
+            ],
+            [
+              630,
+              680
+            ],
+            [
+              707,
+              931
+            ]
+          ],
+          "internalGaps": [
+            [
+              171,
+              270,
+              99
+            ],
+            [
+              331,
+              487,
+              156
+            ],
+            [
+              601,
+              630,
+              29
+            ],
+            [
+              680,
+              707,
+              27
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              171,
+              270,
+              99
+            ],
+            [
+              331,
+              487,
+              156
+            ],
+            [
+              601,
+              630,
+              29
+            ],
+            [
+              680,
+              707,
+              27
+            ]
+          ]
+        }
+      }
+    },
+    "keepOut": {
+      "boundingRectangle": [
+        116,
+        137,
+        1400,
+        802
+      ],
+      "rectangleUnionArea": 85348,
+      "extremeComponents": {
+        "left": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1"
+        ],
+        "top": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD"
+        ],
+        "right": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ],
+        "bottom": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ]
+      },
+      "outlineMargins": {
+        "left": 56,
+        "top": 97,
+        "right": 56,
+        "bottom": 65
+      },
+      "projections": {
+        "x": {
+          "occupied": [
+            [
+              116,
+              216
+            ],
+            [
+              358,
+              506
+            ],
+            [
+              636,
+              756
+            ],
+            [
+              766,
+              886
+            ],
+            [
+              908,
+              974
+            ],
+            [
+              1058,
+              1124
+            ],
+            [
+              1146,
+              1226
+            ],
+            [
+              1416,
+              1516
+            ]
+          ],
+          "internalGaps": [
+            [
+              216,
+              358,
+              142
+            ],
+            [
+              506,
+              636,
+              130
+            ],
+            [
+              756,
+              766,
+              10
+            ],
+            [
+              886,
+              908,
+              22
+            ],
+            [
+              974,
+              1058,
+              84
+            ],
+            [
+              1124,
+              1146,
+              22
+            ],
+            [
+              1226,
+              1416,
+              190
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              216,
+              358,
+              142
+            ],
+            [
+              506,
+              636,
+              130
+            ],
+            [
+              886,
+              908,
+              22
+            ],
+            [
+              974,
+              1058,
+              84
+            ],
+            [
+              1124,
+              1146,
+              22
+            ],
+            [
+              1226,
+              1416,
+              190
+            ]
+          ]
+        },
+        "y": {
+          "occupied": [
+            [
+              137,
+              171
+            ],
+            [
+              261,
+              339
+            ],
+            [
+              479,
+              609
+            ],
+            [
+              627,
+              685
+            ],
+            [
+              707,
+              939
+            ]
+          ],
+          "internalGaps": [
+            [
+              171,
+              261,
+              90
+            ],
+            [
+              339,
+              479,
+              140
+            ],
+            [
+              609,
+              627,
+              18
+            ],
+            [
+              685,
+              707,
+              22
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              171,
+              261,
+              90
+            ],
+            [
+              339,
+              479,
+              140
+            ],
+            [
+              685,
+              707,
+              22
+            ]
+          ]
+        }
+      }
+    },
+    "selectionBounds": {
+      "boundingRectangle": [
+        120,
+        130,
+        1392,
+        805
+      ],
+      "rectangleUnionArea": 144120,
+      "extremeComponents": {
+        "left": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1"
+        ],
+        "top": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD"
+        ],
+        "right": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ],
+        "bottom": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ]
+      },
+      "outlineMargins": {
+        "left": 60,
+        "top": 90,
+        "right": 60,
+        "bottom": 69
+      },
+      "projections": {
+        "x": {
+          "occupied": [
+            [
+              120,
+              225
+            ],
+            [
+              347,
+              565
+            ],
+            [
+              577,
+              975
+            ],
+            [
+              1047,
+              1285
+            ],
+            [
+              1407,
+              1512
+            ]
+          ],
+          "internalGaps": [
+            [
+              225,
+              347,
+              122
+            ],
+            [
+              565,
+              577,
+              12
+            ],
+            [
+              975,
+              1047,
+              72
+            ],
+            [
+              1285,
+              1407,
+              122
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              225,
+              347,
+              122
+            ],
+            [
+              975,
+              1047,
+              72
+            ],
+            [
+              1285,
+              1407,
+              122
+            ]
+          ]
+        },
+        "y": {
+          "occupied": [
+            [
+              130,
+              175
+            ],
+            [
+              266,
+              358
+            ],
+            [
+              483,
+              605
+            ],
+            [
+              626,
+              935
+            ]
+          ],
+          "internalGaps": [
+            [
+              175,
+              266,
+              91
+            ],
+            [
+              358,
+              483,
+              125
+            ],
+            [
+              605,
+              626,
+              21
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              175,
+              266,
+              91
+            ],
+            [
+              358,
+              483,
+              125
+            ],
+            [
+              605,
+              626,
+              21
+            ]
+          ]
+        }
+      }
+    },
+    "routingCourtyard": {
+      "boundingRectangle": [
+        110,
+        124,
+        1412,
+        821
+      ],
+      "rectangleUnionArea": 184680,
+      "extremeComponents": {
+        "left": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1"
+        ],
+        "top": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD"
+        ],
+        "right": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ],
+        "bottom": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ]
+      },
+      "outlineMargins": {
+        "left": 50,
+        "top": 84,
+        "right": 50,
+        "bottom": 59
+      },
+      "projections": {
+        "x": {
+          "occupied": [
+            [
+              110,
+              222
+            ],
+            [
+              348,
+              564
+            ],
+            [
+              578,
+              980
+            ],
+            [
+              1052,
+              1284
+            ],
+            [
+              1410,
+              1522
+            ]
+          ],
+          "internalGaps": [
+            [
+              222,
+              348,
+              126
+            ],
+            [
+              564,
+              578,
+              14
+            ],
+            [
+              980,
+              1052,
+              72
+            ],
+            [
+              1284,
+              1410,
+              126
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              222,
+              348,
+              126
+            ],
+            [
+              980,
+              1052,
+              72
+            ],
+            [
+              1284,
+              1410,
+              126
+            ]
+          ]
+        },
+        "y": {
+          "occupied": [
+            [
+              124,
+              184
+            ],
+            [
+              253,
+              371
+            ],
+            [
+              473,
+              615
+            ],
+            [
+              623,
+              945
+            ]
+          ],
+          "internalGaps": [
+            [
+              184,
+              253,
+              69
+            ],
+            [
+              371,
+              473,
+              102
+            ],
+            [
+              615,
+              623,
+              8
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              184,
+              253,
+              69
+            ],
+            [
+              371,
+              473,
+              102
+            ]
+          ]
+        }
+      }
+    },
+    "accessEnvelope": {
+      "boundingRectangle": [
+        90,
+        84,
+        1452,
+        890
+      ],
+      "rectangleUnionArea": 519195,
+      "extremeComponents": {
+        "left": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+          "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1"
+        ],
+        "top": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RG",
+          "tsj-realization-v1/controlled-indicator@1/channel-a-driver/nmos-low-side-driver@1/nmos-low-side-driver@1/component/RPD"
+        ],
+        "right": [
+          "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2"
+        ],
+        "bottom": [
+          "tsj-realization-v1/controlled-indicator@1/channel-b-load/resistor-led-load@2/resistor-led-load@2/component/LED1"
+        ]
+      },
+      "outlineMargins": {
+        "left": 30,
+        "top": 44,
+        "right": 30,
+        "bottom": 30
+      },
+      "projections": {
+        "x": {
+          "occupied": [
+            [
+              90,
+              266
+            ],
+            [
+              286,
+              1006
+            ],
+            [
+              1026,
+              1346
+            ],
+            [
+              1366,
+              1542
+            ]
+          ],
+          "internalGaps": [
+            [
+              266,
+              286,
+              20
+            ],
+            [
+              1006,
+              1026,
+              20
+            ],
+            [
+              1346,
+              1366,
+              20
+            ]
+          ],
+          "internalGapsOverChannel20": []
+        },
+        "y": {
+          "occupied": [
+            [
+              84,
+              204
+            ],
+            [
+              213,
+              405
+            ],
+            [
+              433,
+              974
+            ]
+          ],
+          "internalGaps": [
+            [
+              204,
+              213,
+              9
+            ],
+            [
+              405,
+              433,
+              28
+            ]
+          ],
+          "internalGapsOverChannel20": [
+            [
+              405,
+              433,
+              28
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "anchors": [
+    {
+      "componentId": "tsj-realization-v1/controlled-indicator@1/channel-a-control/external-adapter@1/external-adapter@1/component/J2",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "anchor": "EDGE",
+      "pose": {
+        "x": 1416,
+        "y": 809,
+        "width": 100,
+        "height": 130,
+        "rotation": "DEG_0",
+        "mountingSide": "TOP"
+      },
+      "accessEnvelope": [
+        1366,
+        763,
+        176,
+        202
+      ]
+    },
+    {
+      "componentId": "tsj-realization-v1/controlled-indicator@1/channel-b-control/external-adapter@1/external-adapter@1/component/J3",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "anchor": "EDGE",
+      "pose": {
+        "x": 116,
+        "y": 479,
+        "width": 100,
+        "height": 130,
+        "rotation": "DEG_0",
+        "mountingSide": "TOP"
+      },
+      "accessEnvelope": [
+        90,
+        433,
+        176,
+        202
+      ]
+    },
+    {
+      "componentId": "tsj-realization-v1/controlled-indicator@1/power-adapter/external-adapter@1/external-adapter@1/component/J1",
+      "packageId": "THROUGH_HOLE_CONNECTOR_2",
+      "anchor": "EDGE",
+      "pose": {
+        "x": 116,
+        "y": 719,
+        "width": 100,
+        "height": 130,
+        "rotation": "DEG_0",
+        "mountingSide": "TOP"
+      },
+      "accessEnvelope": [
+        90,
+        673,
+        176,
+        202
+      ]
+    }
+  ],
+  "limits": "Actual drawing units and axis-aligned exported envelopes; rectangle union area is descriptive. Projection gaps exclude trace/ink/barrier/access-route guards, so even a gap over20 is not a legal strip-removal proof. No movement, reroute, alternate seed, experiment, or optimum claim."
+}

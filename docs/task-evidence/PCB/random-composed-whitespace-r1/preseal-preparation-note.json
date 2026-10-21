@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_BEFORE_BASELINE_FREEZE_OR_ADAPTATION",
+  "cause": "Root guessed absent random-public.txt evidence path; actual files are random-public-identity.json and random-off-public.txt",
+  "correction": "Pin both existing evidence files; preserve pre-correction helper privately. No baseline or native/export work was created.",
+  "sourceSha256": "801023d6e316a0a6df503016d2c67649abf78799cf75f2c1a895e15a8a57cbae",
+  "actualToolExitCode": 1
+}

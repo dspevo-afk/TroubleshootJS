@@ -1,0 +1,11 @@
+--- published-exporter
++++ task-exporter
+@@ -76,7 +76,7 @@
+         if (!Long.toString(seed).equals(seedText))
+             throw new IllegalArgumentException("Sparse diagnostic seed is not canonical");
+         if ((RC_FAMILY.equals(family) && seed != -9187226374781659024L) ||
+-                (COMPOSED_FAMILY.equals(family) && seed != 7141843758046216173L))
++                (COMPOSED_FAMILY.equals(family) && seed != -2750102463469069236L))
+             throw new IllegalArgumentException("Seed is not the pinned accepted public replay for this family");
+         String replayId = PlayerLaunchRequest.EPOCH + "/" + profile + "/" + family + "/" + seedText;
+         return new Request(family, profile, seedText, seed, replayId);

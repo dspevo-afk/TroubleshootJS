@@ -1,0 +1,21 @@
+{
+  "limits": "Actual selected adapter rejects a noncanonical signed long and excluded RC family before compiler/native work; raw stderr private/hash-bound",
+  "checks": [
+    {
+      "kind": "seed",
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 453,
+      "privateLogSha256": "ff2280a280243e0ab6ced060131f6652946e011f57142fccedaa5381b7d5104f",
+      "elapsedSeconds": 0.3623261
+    },
+    {
+      "kind": "family",
+      "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+      "actualAdapterExitCode": 1,
+      "privateLogBytes": 280,
+      "privateLogSha256": "7986ae459edd23335f517d6cc0971a36dd72bb65b22b2557576a1c5fcbcc33c4",
+      "elapsedSeconds": 0.3214835
+    }
+  ]
+}
