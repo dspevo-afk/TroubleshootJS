@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "pid": 26692,
+      "startTicks": "639281355149398173"
+    },
+    {
+      "executable": "pwsh",
+      "pid": 30884,
+      "startTicks": "639281355151861025"
+    }
+  ],
+  "scope": "Captured before maintained final-source paired packing phase; actual tool exit precedes root observation",
+  "phase": "matrix"
+}

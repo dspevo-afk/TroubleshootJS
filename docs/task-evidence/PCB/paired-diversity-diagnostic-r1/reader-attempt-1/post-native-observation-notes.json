@@ -1,0 +1,11 @@
+{
+  "status": "ROOT_OBSERVATION_ERROR_PRESERVED_QUALIFIER_REVISED",
+  "failure": "Root post-native inspection attempted current/receipt.txt and got FileNotFoundError; maintained adapter emits a receipt only after qualified PASS. Current/native.txt already contains all19 original observations and duplicate assertion.",
+  "actualCurrentExecExitCode": 1,
+  "operationExitCode": 2,
+  "sourceOrNativeRerun": "NONE; failure log and sealed inputs untouched",
+  "oldQualifier": "qualify.py remains sealed and NOT RUN; its obsolete failed-phase receipt path was not exercised",
+  "newQualifier": "qualify_v2.py changes only failed-phase observation path and separately frozen post-reader input map; it consumes the actual native log and requires same actual exit/failure truth",
+  "readerPreExecutionFinding": "Reader state map is keyed by disposition; testing state membership in its keys falsely rejects every positive receipt. Corrected before first execution to the original allowed-state set for that disposition. Actual report additionally requires all19 unrejected roots0..18, preventing omitted observations.",
+  "originalReaderSha256": "d2ff473376a2e18fb8cac47492f1c7c95e66e2ce4462695b574e218482fe3e01"
+}

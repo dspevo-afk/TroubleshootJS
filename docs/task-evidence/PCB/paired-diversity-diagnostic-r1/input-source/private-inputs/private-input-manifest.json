@@ -1,0 +1,58 @@
+{
+  "status": "GENERATED_TASK_ONLY_LED_DIVERSITY_DIAGNOSTIC",
+  "baseCommit": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "family": "LED_INDICATOR",
+  "batchStartOrdinal": "0",
+  "sourceMatrixSha256": "f54486fad58d30d003355932a67e01dfdeb814d401a7bcfdaa212f2e0d4ff395",
+  "exporterSha256": "fb0f1caea0d5d341e1fc5ea04ee3f0b82b8d7d4ac0664e5cca81722e51a9ef6a",
+  "baselineAdapterSha256": "a079fd62c07d9790a73884ae8f284e60ff60e7122e4b92711033a64d502c4247",
+  "currentAdapterSha256": "7459269ee401fdfd37c822e51b420f7fce9e979d2e9d763d715c989494ba5d78",
+  "nohookAdapterSha256": "2b2d05162a1d1c3e721f3f5b9b213d97de9230ce0c20c3fea88ddcb090886bf5",
+  "publishedGeneratorSha256": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+  "privateGeneratorSha256": "6f3af5412696b6dbf3e14593edf195151825483a9a034b7dadbb9043b854980f",
+  "guardedChanges": {
+    "publishedGenerator": [
+      {
+        "label": "remove only the two paired-compactor orchestration call lines",
+        "replacements": 1,
+        "oldSha256": "3af2cc8e4bf5819dd6a1368fc01bcd6c5d9630ef0813b799d2039b3b7d1b133a",
+        "newSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "currentAdapter": [
+      {
+        "label": "restrict the current diagnostic adapter to LED_INDICATOR",
+        "replacements": 1,
+        "oldSha256": "9beb4c60735833be52f2bbc71f3d2aa897e7b2c66bc7108817326269dc5ba7d4",
+        "newSha256": "fadff37382d664e305634d5239367959ca582982283acbd20b17f189f4326ad9"
+      },
+      {
+        "label": "use the batch-specific receipt marker",
+        "replacements": 1,
+        "oldSha256": "e0076cb08a5855327f3b101f0307d8a27ef94ee7f4f36e0c352ca2be00b18441",
+        "newSha256": "026b339f2b469bac529241587b3cb9d3701be16e3d0b5d3f1185b2073325ddbf"
+      }
+    ],
+    "nohookAdapter": [
+      {
+        "label": "require the private no-hook generator source",
+        "replacements": 1,
+        "oldSha256": "49cd303a2f813c7f1d82a673604216307eef71e7a02a0450b473c0bb609ba7d0",
+        "newSha256": "4718e056d124be71295e4ce738bd5195e713de22a64ee8060a6b1546e70bb2eb"
+      },
+      {
+        "label": "exclude only the checked-in generator from the no-hook native compile",
+        "replacements": 1,
+        "oldSha256": "0d70150d7abe5f3b332dbb6cff26353ca0451e0d8ee72f041fda10d35350d555",
+        "newSha256": "b1bd06c09a639814bdc9185e1a88ab060ac25df54f7083a8326bbb26f9c57e4c"
+      },
+      {
+        "label": "compile the private same-owner generator copy",
+        "replacements": 1,
+        "oldSha256": "3aeaa583e858040682f04a376153c1a6459c3d5b5c2165a960bcf3bc92e21153",
+        "newSha256": "e2a97ca2f4d26c5f69fab0809b832b98c2e31a9a3c18ad62d35a4f51b94ec359"
+      }
+    ]
+  },
+  "limits": "The copied physical matrix runs LED_INDICATOR only with its original zero-based root sequence, target 20, maximum 48 roots, and all original generation, exact-replay, physical/novelty uniqueness, placement, routing, copper, macro, and outline assertions. The diagnostic row is passive and precedes the unchanged physical duplicate assertion. The current adapter compiles checked-in WIP; the no-hook adapter substitutes one private generator source with only the two paired-compactor call lines removed."
+}

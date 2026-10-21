@@ -1,0 +1,9 @@
+{
+  "actualNativeExitCode": 1,
+  "scope": "Actual selected runner before compilation/audit/artifact mutation; synchronous child returned; no termination",
+  "privateLogBytes": 359,
+  "privateLogSha256": "d3a6810b6420c36f9ed48d172fb24c1460db5d9c7320c3efbba338266d80c3cc",
+  "status": "PASS_REJECTED_MISSING_ADAPTER_AT_PARAMETER_BINDING",
+  "elapsedSeconds": 0.3700316,
+  "runnerSha256": "6467aa62439d3a4484e5c238151f3cc25d3c4d8be5f81a9628eaf3e0076533bb"
+}

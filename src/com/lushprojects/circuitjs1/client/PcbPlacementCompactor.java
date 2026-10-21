@@ -20,6 +20,15 @@ final class PcbPlacementCompactor {
         return result;
     }
 
+    /** Pair search belongs only after selection of the routed incumbent. */
+    static PcbPlacementPlanner.Plan compactPairedVacancies(TroubleshootBoard board,
+            PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input) {
+        PcbPlacementPlanner.Plan paired = PcbPlacementPlanner.compactConnectedPairs(
+            board, constraints, input);
+        if (samePlacement(input, paired)) return paired;
+        return compactStrips(board, constraints, paired, true);
+    }
+
     static PcbPlacementPlanner.Plan compactStrips(TroubleshootBoard board,
             PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input) {
         return compactStrips(board, constraints, input, false);

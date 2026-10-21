@@ -1,0 +1,15 @@
+{
+  "status": "PASS_SOURCE_CORRECTION_REVIEW_BEFORE_FINAL_SEAL",
+  "candidateBase": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "finding": "Original entire-movable-domain pair eligibility converges two LED seeds; R1 duplicate failure and unchanged-source diagnosis retained.",
+  "correction": "Require a third placed movable nonisolation peer in the same physical domain. No other planner or fixture code changed from R1 outside the new guard and new subgroup contracts.",
+  "correctedSources": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+    "tests/contracts/PcbConnectedPocketPackingContractTest.java": "f2a899c33d3ef2ce91dc5d101a1f832c295fa662f60cdbc09a6c4afc0091b55d",
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": "a4c4806a856dd6ed9d5aee213c5c82d7914bc87d75fd90a1b45c96ee5ce29250"
+  },
+  "nativeFinalGates": "NOT_RUN"
+}

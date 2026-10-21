@@ -1,0 +1,1 @@
+PASS: paired-packing census comparison cases=44 observations=220 changes=432 output=docs/task-evidence/PCB/paired-packing-r1/census-comparison.json

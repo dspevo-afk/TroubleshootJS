@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "phase": "build",
+  "elapsedSeconds": 91.3763737,
+  "candidateSealSha256": "70c232114980b1da1a02ef818057de53efe026449a12c3d1e7e74672d4ff6dca",
+  "limits": "Actual named finite final-source phase; other native/build/player/publication gates separate"
+}

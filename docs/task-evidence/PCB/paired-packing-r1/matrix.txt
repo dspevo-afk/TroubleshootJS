@@ -1,0 +1,15 @@
+The names of some imported commands from the module 'VerifierIsolation' include unapproved verbs that might make them less discoverable. To find the commands with unapproved verbs, run the Import-Module command again with the Verbose parameter. For a list of approved verbs, type Get-Verb.
+JDK: javac 1.8.0_502
+
+warning: [options] bootstrap class path not set in conjunction with -source 1.7
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+
+Exception in thread "main" java.lang.AssertionError: Duplicate physical realization: LED_INDICATOR/-611041393415742133
+	at com.lushprojects.circuitjs1.client.QuickPlayPhysicalMatrixContractTest.check(QuickPlayPhysicalMatrixContractTest.java:224)
+	at com.lushprojects.circuitjs1.client.QuickPlayPhysicalMatrixContractTest.main(QuickPlayPhysicalMatrixContractTest.java:65)
+
+CURRENT_CONTRACT_FAILURE: Physical matrix group failed or incomplete: LED_INDICATOR,DIODE_PROTECTED_INDICATOR,PARALLEL_DUAL_INDICATOR,RC_DELAY,NPN_LOW_SIDE_SWITCH,NMOS_LOW_SIDE_SWITCH,RELAY_OUTPUT,SENSOR_CONTROL,RB15_CONTROL,COMPOSED_CONTROLLED_INDICATOR, exit 1
+CLEANUP: current JVM contract classes and task-owned scratch removed.

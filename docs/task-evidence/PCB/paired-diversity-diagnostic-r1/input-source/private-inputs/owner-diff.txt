@@ -1,0 +1,11 @@
+--- published/SeededPcbLayoutGenerator.java
++++ private-nohook/SeededPcbLayoutGenerator.java
+@@ -258,8 +258,6 @@
+         // frame. The final display crop may translate pads by a non-grid amount.
+         PcbPlacementPlanner.Plan source = session.bestPlan;
+         session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
+-        session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(
+-            session.board, constraints, session.packingPlan);
+         if (session.mediumPolicy)
+             session.mediumPlacementEvaluations += session.packingPlan.evaluations - source.evaluations;
+         if (PcbPlacementCompactor.samePlacement(source, session.packingPlan)) {

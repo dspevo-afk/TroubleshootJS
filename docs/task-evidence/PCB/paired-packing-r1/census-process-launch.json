@@ -1,0 +1,16 @@
+{
+  "phase": "census",
+  "scope": "Captured before maintained final-source paired packing phase; actual tool exit precedes root observation",
+  "drivers": [
+    {
+      "startTicks": "639281353726216229",
+      "pid": 2676,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281353728579111",
+      "pid": 20680,
+      "executable": "pwsh"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "status": "PASS_EXACT_CURRENT_TARGET",
+  "request": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808",
+  "receiptSha256": "a936e6db63ac673f946833eebccf509c4e21e5b1ccdca42b8ff07a706c4a0993",
+  "publishedReaderSha256": "562ce41af6c88c83cd77e4e60d4120222e4f578eb305b8f3202d6216bbc9e7ff",
+  "readerAdaptation": "Only expected request and literal packing3->4; original schema/geometry/mapping/independent metric/strict probe assertions retained",
+  "metrics": {
+    "available": true,
+    "unavailable": false,
+    "gridStep": 10,
+    "area": 443466,
+    "copper": 2750,
+    "vias": 0,
+    "protectedVoid": 63000,
+    "protectedVoidMeaning": "largest protected empty drawing-space rectangle; not packing proof"
+  },
+  "geometrySha256": "a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+  "packingProbe": {
+    "canonical": "normal-packing@3;attempts=1;orderings=4;expansions=132841;millis=37;route=P05_ONE_FACE;disposition=SELECTED;baseline=9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9;selected=a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+    "attempts": 1,
+    "orderings": 4,
+    "expansions": 132841,
+    "millis": 37,
+    "routePolicy": "P05_ONE_FACE",
+    "disposition": "SELECTED",
+    "baselineGeometrySha256": "9433b956d0c4eb5880c758fb92caeda0f30885ca382e5865bbae7a37fc72dde9",
+    "selectedGeometrySha256": "a1794723e9156c443402549ab9534fa8e846a611a86825017fb3ef52ad06ac2d",
+    "metricEvidence": {
+      "state": "COMPARED",
+      "baseline": {
+        "area": 494426,
+        "copper": 3050,
+        "vias": 0,
+        "protectedVoid": 96000
+      },
+      "candidate": {
+        "area": 443466,
+        "copper": 2750,
+        "vias": 0,
+        "protectedVoid": 63000
+      },
+      "unavailableReason": null
+    }
+  },
+  "readerNegativeControls": [
+    "public identity",
+    "current physical epochs",
+    "pad net membership",
+    "independent copper",
+    "independent protected void"
+  ],
+  "limits": "Exact finite native target; no player/electrical/build/allseed proof"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "command": "python -X utf8 -B compare_census.py --canaries",
+  "actualExecExitCode": 0,
+  "observedToolElapsedSeconds": 0.4050196,
+  "operationDuration": "NOT_SEPARATELY_MEASURED",
+  "readerSha256": "065d6bf11b9216b5585c6f795b09889e7113e76813aa87c4d01449bbd7da8a9b",
+  "outputSha256": "8a88e48b2b6272481ec1aa4bb832734d18cc1cb654fce07c4c4d6e74efd7bc2c",
+  "scope": "Actual preseal reader controls3positive14negative, no native/build/player claim"
+}

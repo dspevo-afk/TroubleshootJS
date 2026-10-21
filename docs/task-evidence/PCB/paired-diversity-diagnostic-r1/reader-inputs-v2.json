@@ -1,0 +1,11 @@
+{
+  "diagnosticSealSha256": "e8ad8134c274a0870b363e35c4deafad1ae5f94b2e107ef2d60ac7f36294119f",
+  "files": {
+    "read_diagnostic.py": "147a307c00ce8aa283539199d859b82ebe6434991514761ce790e0fbf419da00",
+    "reader-notes.md": "a95a66c3eeac79f87c886a4e4c25cb47c20a5963f8335ac3278ed2c69cd31f4c",
+    "qualify_v3.py": "3daba87139913e39431f7678f24ee6e9f28c8dbd86f48eb2fcb5a0049c2d7572",
+    "post-native-observation-notes.json": "b790236ea23f7e28ed1c97f7b4dbee5345ed7ec2f183c0c922134b9a8aeced6f",
+    "reader-attempt-history.json": "bf48bc480616a900d0d19e2934722d50748a3fcf7fbbcee15b5d8713366bba62"
+  },
+  "syntaxPreflight": "PASS compile of reader and qualifier; no data execution before new seal"
+}

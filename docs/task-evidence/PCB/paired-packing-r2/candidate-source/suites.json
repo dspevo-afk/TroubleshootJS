@@ -1,0 +1,35 @@
+{
+  "contracts": [
+    "PcbConnectedPocketPackingContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "PcbPackingMetricsContractTest",
+    "PcbPackingProbeReceiptContractTest",
+    "MediumBoardPhysicalPolicyContractTest",
+    "MediumBoardNormalAdmissionContractTest",
+    "PcbCompactionContractTest",
+    "PcbCompactnessContractTest",
+    "Task43PhysicalEndpointContractTest",
+    "A10DependencyContractTest",
+    "A03IdentityContractTest",
+    "P01PhysicalPoseContractTest",
+    "PhysicalServiceabilityContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "P07TwoLayerContractTest"
+  ],
+  "census": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "matrix": [
+    "QuickPlayPhysicalMatrixContractTest"
+  ],
+  "target": [
+    "SparseNormalBoardDiagnostic"
+  ]
+}

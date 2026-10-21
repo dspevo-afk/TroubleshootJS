@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "browser": {
+    "processExitCode": 0,
+    "recordedBirthExited": true,
+    "profileAbsent": true,
+    "apiClose": true
+  },
+  "preview": {
+    "stateAbsent": true,
+    "pid": 33200,
+    "startTicks": "639281377954698478",
+    "portReleased": true,
+    "recordedBirthExited": true
+  },
+  "limits": "Only current owned resources; four older blocked profile removals untouched"
+}

@@ -1,0 +1,17 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "baseCommit": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "changedSources": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+    "tests/contracts/PcbConnectedPocketPackingContractTest.java": "f2a899c33d3ef2ce91dc5d101a1f832c295fa662f60cdbc09a6c4afc0091b55d",
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": "a4c4806a856dd6ed9d5aee213c5c82d7914bc87d75fd90a1b45c96ee5ce29250"
+  },
+  "productionOwnerReview": "R1 four-owner preservation review retained; only added18-line eligibility guard differs. Removing it restores exact R1 planner; all old medium/single-part behavior unchanged. Guard checks generation cancellation, anchor, physical domain and isolation body; no RNG/family/seed/budget/comparator changes.",
+  "testReview": "Removing only new main call, subgroup test and helpers restores exact R1 test. Existing900130/18900 literalpositive/cap/cancel/identity expectations untouched. New valid full-validation fixtures: wholemovabledomain+anchor no-op/eval0, otherdomainpeer no-op, declared isolationpeer no-op, same-domain differentsemanticregionpeer positive/rigidpair/peer+anchorunchanged.",
+  "presealFindingSha256": "7370115cc7b1d03358dbb355b882553ed8429b621642a9ae31472af635b45b14",
+  "independentAgentReview": "NOT_RUN; optional fixtures implementation and root integrated source review, not independent acceptance",
+  "limitations": "Source-only; every final native/census/matrix/target/GWT/player gate must run fresh for corrected source"
+}

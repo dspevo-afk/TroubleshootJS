@@ -1,46 +1,59 @@
-# Current checkpoint: private paired move GO; production integration next
+# Current checkpoint: paired packing4 R2 accepted; explicit publication preparing
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
-HEAD/exact origin c29b81bbe87aa192761b35a6ee3c9ebdb037ba43. Continue authorized
-PCB realism indefinitely/screenshots/optional leaves; no main/email. Cross-family
-capture publication verified80 blobs/normalpush0/exact origin/fresh unchanged
-1482/24/7/8 audit. Three normal replay captures/five images inspected/three pasted;
-three prep failures and one unattributed console404 remain disclosed separately.
+HEAD/exactorigin6426b3ff702c8197324dd996b5b4ede899bb9139. Continue authorized
+PCB realism indefinitely/screenshots/optional leaves; no main/email/final stop.
+Private pair GO published6426b3ff; its publication receipt intended thiscommit.
 
-Current paired-pocket-probe-r1: exactDual/min-long private experiment GO, no
-production promotion. Baseline1482/24/published references before edit; final12
-helpers and six private inputs sealed before execution. One planner insertion/
-four adapter guards, exporter only family/comment/usage/MIN pins. Actual early
-seed01/missingowner binding negatives each reject1; canary0 in0.7420606s. Fresh
-actual JDK8 baseline/cold/repeat PASS115, actualexits0,43.1380181/42.7587486/
-43.8260429s. Actualexit precedes separate root driver-birth checks; all8 recorded
-births exited. Terminalcleanup included in operation time, not separately timed.
-Raw six logs/receipts match private copies. Root source/privacy/integrated review
-PASS within finite scope; no new build/browser/screenshot/electrical/allseed proof.
-Documentation count13 assertion stopped before writes; sealed12 used, no seal/
-helper/native change. Failure preserved in preparation-notes.json.
+R1 unaccepted six-source packing4 archive/seal preserved. Focused15/exactDual/
+44-case census passed but fullmatrixFAIL original LED duplicate seed
+-611041393415742133,actualroot1/op2/43.0522687s. Unchanged-source diagnostic
+reproduces root18/13 collapse; private nohook20unique/exactreplay PASS. Current19
+rows root1/op2/41.7713869s; nohookroot0/op0/42.0554584s. Independentreader16controls
+PASS, DIAGNOSTIC_ONLY/productionR1remainsFAIL. PresealJSON/SHA/readerstatebugs,
+absentfailedreceipt/rootreaderror and first syntax-failedreaderattempt preserved.
 
-Baseline494426/3050/0/96000 exactly matches published geometry9433b956. Two generic
-canonical disjoint branch pairs/10 targets/sharedcounter56 to66 accept common
-(+10,-40) and(-10,0) moves. One existing P05 route selects443466/2750/0/63000,
-geometrya1794723: area-10.31%, copper-9.84%, protectedvoid-34.38%, vias0. Actual
-cold/repeat nonclock data/events exact. Independent mapping/metrics/immutable
-graph and IDs/rigid packages/anchor-edge checks plus literal/control negatives
-PASS. Four existing strict predicates unchanged. See assessment/root-review/RESULTS.
+R2scope/published1482+24baseline and failedsourcecopies frozen BEFORE correction.
+Planner requires a third placed nonanchor/nonisolation same-physical-domain peer,
+leaving each pair a proper movable subgroup. Othersemanticregion allowed. Exact
+pairqualifications/order/fiveorigins/shared60000/validators/proxies/oneoptionalroute/
+strict4metrics remain. Currentpacking4/obsolete3reject/layout19/receiptshape@3.
+Only4productionowners+2tests change. Root source review verifies removing guard
+restores exactR1planner; removing new subgroupfixtures restores exactR1test.
+Existing900130/18900/cap/cancel/identity oracles untouched. No independentagent
+acceptancereview; optional fixture implementation/source advice rootreviewed.
 
-Next production scope: separate paired method at beginPackingProbe after current
-ordinary compaction, before same-placement/headroom. Medium's preselection
-compactor must retain its behavior. Distinct packing interpretation required;
-normal declarations/admission/dependency and relevant contracts must agree.
-No extra optional route or budget/oracle change. Root owns intended-only current
-publication then integration scope and broader final-source gates/player images.
+All fresh final gates PASS actualroot0/separatebirthchecks: contracts15
+108.4642707s; exactDual115/41.0000399s; census8/44cases220obs69.0977857s;
+enabled11matrix220accepted/220exactreplays215.7794379s with originaldiversity;
+actualJDK8GWT5 build91.3763737s. Censusall4metricsnonworse,4improvedcases
+(Dual/minlong,NMOS13,RB15/0,composed17). Targeta1794723/area443466/copper2750/
+vias0/void63000 retains10.31%area reduction. Hostbindingnegative/census17controls/
+target5negativesPASS. Finalsource/helper/playerinputaudits exact.
 
-Production remains layout19/packing3/renderer89512645. Accepted TO92 final native/
-census/JDK8GWT5 and player repair proof is source-bound and reused unchanged.
-NPN second-sweep NO_GO still stands. No current task browser/preview/listener/
-native phase or recorded driver live. Preserve seven unrelated groups/private
-roots and FOUR blocked old profile cleanup actions, including TO92 partial17256;
-never retry removal. Cross-family publication receipt intended in this commit.
+Fresh normalplayer PASS: firstordinaryunseededMEDIUM/composed request
+-2750102463469069236, exactDualMIN, originalFAIL/allactualsuppliesOFF/emptytrays;
+knownLED5577758334702827054 OFF/lift→OL→modeexit/remove→Shop330install→actual330
+OFF→modeexit/power→newlyvisiblecustomerPASSmodal→allOFF/originalpartloose.
+46events/9bodies/4rawimages inspected;3boardshots pasted. Fiveactualbuiltmodules
+pinned; browser13808B6577D799A49A34CCFD1D18738D, independentCLI/servedbeforeafter/
+postplayerexecution6 exact. Six observerfailures retained/resolved sameboards,
+no rerolls/injectedcontrollercalls. Two manual failuretimings use toolduration/
+reconstructedtimestamps. One unattributedconsole404; no page/request/HTTPresponse
+errors. Initialoverbroadruntimeclassification corrected with priorprivatebytes.
+
+All29 unique recorded births acrossR1/diagnostic/R2/player exited. Freshbrowser
+APIclose0/profileabsent; previewmanagedstop0/stateabsent/8911released. No task
+process/session/browser/listenerlive. Four older blockedprofiledeletions untouched,
+neverretry. One buildlogownerprefix sanitizedreversibly; rawprivate/hashreceipt
+retained. See paired-packing-r2/acceptance.json and RESULTS.md. Seven unrelated
+groups/private roots preserved. No stage/commit/push yet for this candidate.
+
+Next explicitintendedstage/diffcheck/commit/normalpush/exactremote and unchanged
+source/module/execution audit. Publication must not reuse HEAD-equality-bound old
+candidate helper after commit; compare accepted snapshots and ancestry explicitly.
+Next unstarted work after publication: source-based remaining-realism review of
+actualfirst random board; its largegreenregions remain an explicit limit.
 
 # Previous checkpoint: TO92 R2 native/build PASS; player retry after observer failure
 

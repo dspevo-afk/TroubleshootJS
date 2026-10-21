@@ -1,0 +1,21 @@
+{
+  "scope": "Root birth observation after actual tool exec completion, no termination",
+  "checks": [
+    {
+      "startTicks": "639281373311260384",
+      "executable": "pwsh",
+      "pid": 21532,
+      "recordedBirthExited": true
+    },
+    {
+      "startTicks": "639281373322026972",
+      "executable": "pwsh",
+      "pid": 21696,
+      "recordedBirthExited": true
+    }
+  ],
+  "launchSha256": "02a6b80f2440a0994525906b88fd7311f3e3cabc574476f84f5cba33b9def553",
+  "status": "PASS",
+  "elapsedSeconds": 0.0045702,
+  "actualExecExitCode": 0
+}

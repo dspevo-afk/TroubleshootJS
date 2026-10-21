@@ -1,0 +1,30 @@
+{
+  "schema": "paired-production-modules@1",
+  "modules": [
+    {
+      "strongName": "04ACFC8E788170CE9A957094A893F186",
+      "sha256": "fedb56c65f4a80ec6facfd8b067ddc66708b7755b82dc04188866ef8cbe6e04c",
+      "bytes": 3333344
+    },
+    {
+      "strongName": "08602D4E94702AADB5F4C9752B2E89D1",
+      "sha256": "1d49ddce03d766935ba048dbfaaf357aab37277a42b2f96370edf69130feb9cc",
+      "bytes": 3454650
+    },
+    {
+      "strongName": "13808B6577D799A49A34CCFD1D18738D",
+      "sha256": "d3728c869195da07c28195528001acee8d91c9a224a3767f80bd8df34e87311e",
+      "bytes": 3453738
+    },
+    {
+      "strongName": "4DCC4801EDA962A31A3A912DD7778CAB",
+      "sha256": "5fb1be0314c10a93fc172fb1def22ccd4e5dae5c480d2878eff26fb33debb72b",
+      "bytes": 3453375
+    },
+    {
+      "strongName": "4F5C9CB5055E4E74CEE2638C442DAAE7",
+      "sha256": "c30543cdb0045f39fb66b8a9da68ac237af9b81f8f2a45a3d8be950cb10dabfa",
+      "bytes": 3455091
+    }
+  ]
+}

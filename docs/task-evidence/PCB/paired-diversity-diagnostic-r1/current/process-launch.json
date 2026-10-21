@@ -1,0 +1,16 @@
+{
+  "drivers": [
+    {
+      "pid": 28192,
+      "startTicks": "639281363653899305",
+      "executable": "pwsh"
+    },
+    {
+      "pid": 19688,
+      "startTicks": "639281363656191004",
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Task-only original-assertion LED diagnostic; root separately observes actual tool exit",
+  "phase": "current"
+}

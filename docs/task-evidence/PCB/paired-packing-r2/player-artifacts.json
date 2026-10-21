@@ -1,0 +1,71 @@
+{
+  "bodies": [
+    {
+      "file": "random-off-public.txt",
+      "sha256": "db4727530454355bb9d358592e9791309a958d6267ba3985e49603e15c78cb59",
+      "bytes": 1001
+    },
+    {
+      "file": "dual-off-public.txt",
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "bytes": 729
+    },
+    {
+      "file": "led-original-off-public.txt",
+      "sha256": "8db677e0fe63c1a6962cc2976421ac32995fe1d2a9748241e52303437c0ca605",
+      "bytes": 729
+    },
+    {
+      "file": "led-isolated-ol-public.txt",
+      "sha256": "70f1dc83fb5eb8ecd97c7e45fce7a4596b278817c936034390886e364812c007",
+      "bytes": 488
+    },
+    {
+      "file": "led-removed-part-public.txt",
+      "sha256": "cdae9dbec84124c71b5eea21acbbffcea8be1ad2048a6ef2b5fc9109d06800db",
+      "bytes": 480
+    },
+    {
+      "file": "led-shop-installed-public.txt",
+      "sha256": "d4f3e4dbbcbf98b9d8e5111239a81bfeabc45627cf010780c0b2f95019a5f377",
+      "bytes": 623
+    },
+    {
+      "file": "led-off-330-public.txt",
+      "sha256": "a37126450c98fa3f5f474bdb88263dfb7f0a28879c426bd81c4f0c58f9e66a31",
+      "bytes": 510
+    },
+    {
+      "file": "led-fresh-pass-public.txt",
+      "sha256": "e434a98af5859ee2ef4baf67c21bad9422c098212421792c54ad975fb1df4064",
+      "bytes": 885
+    },
+    {
+      "file": "led-final-off-public.txt",
+      "sha256": "7f054a7600e47cc115bab1f08ca6ae9e1b8e0d99c411b40e11be63b85ec00d8c",
+      "bytes": 537
+    }
+  ],
+  "images": [
+    {
+      "file": "random-top.jpg",
+      "sha256": "eecf23b157c2d62c6ac7140a8ad75b4533cbe2d1ff8b0c5804b2499e627eb82f",
+      "bytes": 134419
+    },
+    {
+      "file": "dual-top.jpg",
+      "sha256": "964c1d92330a080ac5b6f54fc73d70e51d05a0f081b2fadb4b51420ac2dd7528",
+      "bytes": 130374
+    },
+    {
+      "file": "dual-bottom.jpg",
+      "sha256": "2f73779b260c2fadb1d3b9dfdb591d6fbc986ea1af9d99ce3faa525aea372fc5",
+      "bytes": 126570
+    },
+    {
+      "file": "led-repaired.jpg",
+      "sha256": "2d7da62151f575fa75cb4086d485c683aac2bb7c5130593a8c10b03b4a1bad15",
+      "bytes": 128725
+    }
+  ]
+}

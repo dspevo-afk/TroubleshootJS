@@ -1,0 +1,44 @@
+{
+  "status": "PASS_FINAL_SOURCE_AND_FINITE_PLAYER",
+  "baseCommit": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "candidateSealSha256": "70c232114980b1da1a02ef818057de53efe026449a12c3d1e7e74672d4ff6dca",
+  "playerInputSealSha256": "d7305029aaf9ec237463b38aa7e461a8fe81daad27835123de56ccf0b5387818",
+  "phases": {
+    "contracts": {
+      "assessmentSha256": "2116ecabbb37bb7c10483656b1830da75dd37e3a3c5ab3f6f8f3ac88777628b9",
+      "cleanupSha256": "184042ac265b27a56c0795eec1d1b9f3afe9e9f9ef6a7cf97909fd68ca2decdb",
+      "actualToolExitCode": 0
+    },
+    "target": {
+      "assessmentSha256": "6ccebca4978b8af515a9ca60b2e15ee5f7a2fb57f94eb56c49f4c5f0cf9e3779",
+      "cleanupSha256": "52f77ae89ff70a90139aea7cb71c6398d72e1bd1d5cc0ed041f956ca12bfcf5d",
+      "actualToolExitCode": 0
+    },
+    "census": {
+      "assessmentSha256": "33cb72327e9b23debc706b464cb91302cddab29505864780eb3e36b05c8a2f76",
+      "cleanupSha256": "bcb0cd46d8f6ad7c32e6e16c93dc13d6704dc4484eb6a83e20e14619b24f5268",
+      "actualToolExitCode": 0
+    },
+    "matrix": {
+      "assessmentSha256": "5dc1e79e203fea042951af056c72dd053ee7d0f7e65a622913b2e7e742e7be96",
+      "cleanupSha256": "b67a5df45a8e6f42df254cb5508939fc2c68422874e1a5546c03b659fe1da12f",
+      "actualToolExitCode": 0
+    },
+    "build": {
+      "assessmentSha256": "30bf37d4b89bd68295f64a01afd88e4e368e3431e5c580f690dd543f2adf04d5",
+      "cleanupSha256": "d81c0ad92846a69ff0d0409a77d039ee4e8fa8117f902c0dd7a8d6e53d3967c9",
+      "actualToolExitCode": 0
+    }
+  },
+  "playerAssessmentSha256": "5bf729db594016a0295bc89caa8fd375946eff429e4dab9c85af45736eb17a99",
+  "runtimeReviewSha256": "dd24e2ba99f5d51f98f45fc1a99c67c0ad09528a0371122a4effef99da89cea9",
+  "visualReviewSha256": "3fa38741a9c0af73a1bc4bac8fb6a27bed98567336c245d8ac2913270b1c2673",
+  "publicLogSanitizationSha256": "df782ece4e4f4feb2ddbd5b607db5af8d1309142ca47523d02175989c5756798",
+  "recordedBirths": 29,
+  "recordedBirthsExited": 29,
+  "freshProfileStateAndPort": "ABSENT_ABSENT_RELEASED",
+  "oldBlockedProfiles": "FOUR_UNTOUCHED",
+  "independentAgentAcceptanceReview": "NOT_RUN; optional implementation/source advice reviewed by root",
+  "publication": "PENDING explicit stage/diff/normal push/exact remote verification",
+  "limits": "Finite gates and one browser permutation; R1 failure, diagnostic/reader failures, six player observer failures and console404 preserved; no all-seed/manufacturing/optimality claim"
+}

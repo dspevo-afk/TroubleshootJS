@@ -7,7 +7,30 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Private paired translation GO; isolated shared-generator integration next**
+**Current task:** **Paired packing4 R2 accepted; publication preparing**
+
+The R1 unaccepted candidate passes15 focused contracts, the exact Dual
+target and44-case/four-metric nonregression (five improved cases). The broader
+matrix FAILS a duplicate LED physical realization at signed seed
+-611041393415742133: actual root exit1/operation2, not an environment timeout.
+All recorded driver births exited. Build/player/publication remain NOT RUN.
+The bounded current-versus-private-no-hook diagnostic preserves the exact root
+sequence, diversity assertions, fingerprint and budgets. It reproduces root18's
+collision with root13; no-hook passes20 distinct boards/exact replays. Independent
+reader16 controls and all6 driver exits pass. R2 restricts linked pairs to a
+proper subgroup of movable inventory in their physical domain; baseline frozen,
+planner guard/literal fixtures added and source seal frozen. Fresh R2 final15
+contracts, exact Dual115 and44-case/220-observation census pass (four improved
+cases, no worse metrics). Full enabled11-family matrix passes220accepted/220
+exactreplays with original diversity assertions. Actual JDK8/GWT5 and fresh
+production random/exact/repair flows pass. Four raw images inspected/three pasted;
+all29 recorded births exited, fresh profile/state absent/port released. Six UI
+observer failures and one unattributed console404 remain disclosed. Explicit
+stage/root review/normal publication preparing; no main/email. Next unstarted:
+source-based review of remaining realism gaps on the actual first random board.
+[Accepted results and limits](task-evidence/PCB/paired-packing-r2/RESULTS.md),
+[preserved failure](task-evidence/PCB/paired-packing-r1/matrix-failure-assessment.json),
+[diagnosis and limits](task-evidence/PCB/paired-diversity-diagnostic-r1/RESULTS.md).
 
 Packing3 is published at `e877c2cf`. The shared generator's optional P07
 compaction route now uses the incumbent's

@@ -1,0 +1,10 @@
+{
+  "status": "CORRECTED_BEFORE_FACTORY_OR_NATIVE_EXECUTION",
+  "finding": "Factory SHA helper emits lowercase while the supplied exporter pin was uppercase, causing a false mismatch before writes.",
+  "originalFactorySha256": "70ac5d8b17ed328989748cb71ff92b775e3fa8d06912ee75f020c13d2c1852be",
+  "correction": "Normalize the literal exporter SHA pin to the same lowercase representation; exporter bytes and all runtime assertions unchanged.",
+  "nativeExecutedBeforeCorrection": false,
+  "secondFinding": "Passive JSON field helper unconditionally prefixed first object keys with comma; root corrected both field helpers before native execution. Private factory must be regenerated into a new empty directory because exporter bytes changed.",
+  "originalExporterSha256": "d2f3466fe9b87951037f187936da6c3ff65ac46691f6586aa8be7feb0d18eada",
+  "correctedExporterSha256": "fb0f1caea0d5d341e1fc5ea04ee3f0b82b8d7d4ac0664e5cca81722e51a9ef6a"
+}

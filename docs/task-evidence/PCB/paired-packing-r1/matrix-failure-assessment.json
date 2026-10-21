@@ -1,0 +1,18 @@
+{
+  "status": "FAIL_PHYSICAL_DIVERSITY_REGRESSION",
+  "phase": "matrix",
+  "actualToolExitCode": 1,
+  "operationExitCode": 2,
+  "elapsedSeconds": 43.0522687,
+  "failure": "Duplicate physical realization: LED_INDICATOR/-611041393415742133",
+  "failureKind": "JVM assertion, not timeout or environment failure",
+  "timingSha256": "b9f23fbba7a269068b69108b8b448dfa26f1357fb64de971a81c165c21c5b857",
+  "nativeLogSha256": "fbfbe7bd8a1432728aae42f143fae6fd3f1200344d426b8b0bc9197c966702d8",
+  "cleanupSha256": "d0b62f465e678165fbff192982ff0a8675de71978258e1cc10295622ac2e72c4",
+  "cleanupStatus": "PASS_CLEANUP_OF_FAILED_PHASE",
+  "candidateSealSha256": "bc2bf466c764ef62215c5ecc098645f22f27d92046d0fbffe3c0dc9d6cbb5885",
+  "completedFamilyRows": 0,
+  "completed220Matrix": "FAIL_NOT_COMPLETED",
+  "productionPublication": "NOT_DONE",
+  "next": "Bounded current-vs-no-pair LED diagnostic retaining all diversity assertions; preserve source and failed evidence"
+}

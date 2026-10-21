@@ -1,0 +1,10 @@
+{
+  "status": "SANITIZED_EXACT_OWNER_PATH_ONLY",
+  "file": "build.txt",
+  "originalSha256": "875ec4bb06369ecdc09134f6854ac54c8c076710d263316f41803659b690641a",
+  "publishedSha256": "18123f204da68e38836cad004586c9a551ba9e6e4343e3f32a951dd03045b44a",
+  "replacementCount": 1,
+  "replacement": "Exact worktree absolute prefix to [WORKTREE]; all remaining bytes exact",
+  "privateOriginalRetained": true,
+  "qualificationBoundary": "Original actual build already PASS; no build/phase/source/helper/metric/failure text changed. Independent reversibility assertion passed before public write."
+}

@@ -1,0 +1,34 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "baseCommit": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "changedSources": {
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "df561459c15fcd85840672971b1244bc019e92f58cfef4f81dc663d14f99f1b1",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+    "tests/contracts/PcbConnectedPocketPackingContractTest.java": "d4d788bb9d6cf351c8c28c02ac8f7b4aef8445b110380382532392886d4e0a51",
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": "a4c4806a856dd6ed9d5aee213c5c82d7914bc87d75fd90a1b45c96ee5ce29250"
+  },
+  "productionOwnerReview": {
+    "status": "PASS_FOUR_PRODUCTION_OWNERS_SOURCE_ONLY",
+    "sourceHashes": {
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "df561459c15fcd85840672971b1244bc019e92f58cfef4f81dc663d14f99f1b1",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+      "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+      "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb"
+    },
+    "preservationChecks": {
+      "PcbPlacementPlanner.java": "Remove only new paired method: entire prior planner including medium initial placement and single-part pass is exact",
+      "PcbPlacementCompactor.java": "Remove only new pair-plus-optional-budget-strips orchestration: original compactor is exact",
+      "SeededPcbLayoutGenerator.java": "Remove only two post-incumbent call lines: entire prior generator is exact",
+      "PcbPlacementConstraints.java": "Only interpretation constant/comment changes; constructor still accepts exactly1/current4"
+    },
+    "newMethodReview": "Qualified canonical disjoint pair algorithm, simultaneous candidate update before both fits/fullvalidate, original shared cap/proxies, no logs/staticmutable state",
+    "callerReview": "Only planner caller in compactor pair helper; only normal generator call in beginPackingProbe after ordinary compact and before same-placement/headroom",
+    "limitations": "Tests/native/build/player not run yet; final fixtures/reader and six-source seal pending"
+  },
+  "testReview": "Existing literal single-part expectations retained. New independent package envelope/pad-distance positive900130/18900, common rigid pair/nonincrease metrics, graph/source/identity/orientation preservation, deterministic result, exact-two-pad/anchor/domain/non-two-terminal exclusions, shared60000/cancellation cleanup. Current4/obsolete2+3/unknown5 explicit. All actual runtime checks pending.",
+  "presealFindingSha256": "0bd088712a9f84bab3abbe76b759c7576279a8890a5b23f328a1e6fbac530841",
+  "independentAgentReview": "NOT_RUN; optional leaf implementations reviewed by root, not claimed independent acceptance",
+  "limitations": "Read-only integrated source review only; final native/census/matrix/exacttarget/GWT/player and publication still required"
+}

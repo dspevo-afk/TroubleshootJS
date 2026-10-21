@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "limits": "Fresh owned profile only; four earlier blocked profiles untouched",
+  "startTicks": "639281378418471712",
+  "profileAbsent": true,
+  "recordedBirthExited": true,
+  "profileProcessesAbsent": true,
+  "pid": 6296
+}

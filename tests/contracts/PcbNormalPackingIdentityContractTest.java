@@ -7,6 +7,8 @@ public final class PcbNormalPackingIdentityContractTest {
     private static int assertions;
 
     public static void main(String[] args) {
+        check(PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION == 4,
+            "normal paired packing explicitly identifies interpretation 4");
         verifyImmutableCopyAndPreservation();
         verifyProceduralDeclarationAndFaceConversion();
         verifyNormalAndPrivateProviders();
@@ -35,7 +37,7 @@ public final class PcbNormalPackingIdentityContractTest {
         check(legacy != normal && legacy.getPlacementPackingVersion() == 1 &&
             normal.getPlacementPackingVersion() ==
                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION,
-            "legacy constraints remain immutable while normal copy opts into packing 3");
+            "legacy constraints remain immutable while normal copy opts into packing 4");
         check(normal.routingLayer == legacy.routingLayer &&
             normal.getPhysicalPolicyId().equals(legacy.getPhysicalPolicyId()) &&
             normal.getPhysicalPolicyVersion() == legacy.getPhysicalPolicyVersion() &&
@@ -51,8 +53,12 @@ public final class PcbNormalPackingIdentityContractTest {
             "repeated normal opt-in is idempotent and preserves the current copy");
         reject(new Attempt() { public void run() {
             new PcbPlacementConstraints(parts, barriers, PcbCopperLayer.TOP,
-                "TEST_POLICY", 7, 9, true, PcbTraceWidthProfile.ROLE_WIDTHS, 4);
+                "TEST_POLICY", 7, 9, true, PcbTraceWidthProfile.ROLE_WIDTHS, 5);
         } }, "unknown packing interpretation accepted");
+        reject(new Attempt() { public void run() {
+            new PcbPlacementConstraints(parts, barriers, PcbCopperLayer.TOP,
+                "TEST_POLICY", 7, 9, true, PcbTraceWidthProfile.ROLE_WIDTHS, 3);
+        } }, "obsolete single-part packing interpretation accepted");
         reject(new Attempt() { public void run() {
             new PcbPlacementConstraints(parts, barriers, PcbCopperLayer.TOP,
                 "TEST_POLICY", 7, 9, true, PcbTraceWidthProfile.ROLE_WIDTHS, 2);
@@ -84,7 +90,7 @@ public final class PcbNormalPackingIdentityContractTest {
         check(topBoard.getPlacementConstraints().routingLayer == PcbCopperLayer.BOTTOM &&
             topBoard.getPlacementConstraints().getPlacementPackingVersion() ==
                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION,
-            "shared normal declaration explicitly selects packing 3 before routing");
+            "shared normal declaration explicitly selects packing 4 before routing");
 
         TroubleshootBoard bottomBoard = new TroubleshootBoard("NORMAL_BOTTOM");
         bottomBoard.setPlacementConstraints(new PcbPlacementConstraints(
@@ -94,7 +100,7 @@ public final class PcbNormalPackingIdentityContractTest {
         ProceduralPcbLayout.declare(bottomBoard);
         check(bottomBoard.getPlacementConstraints().getPlacementPackingVersion() ==
                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION,
-            "already-bottom normal declaration retains its explicit packing 3");
+            "already-bottom normal declaration retains its explicit packing 4");
 
         final TroubleshootBoard legacyBottomBoard = new TroubleshootBoard("LEGACY_BOTTOM");
         legacyBottomBoard.setPlacementConstraints(new PcbPlacementConstraints(

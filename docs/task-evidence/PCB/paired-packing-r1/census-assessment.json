@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "phase": "census",
+  "elapsedSeconds": 71.6414049,
+  "candidateSealSha256": "bc2bf466c764ef62215c5ecc098645f22f27d92046d0fbffe3c0dc9d6cbb5885",
+  "limits": "Actual named finite final-source phase; other native/build/player/publication gates separate",
+  "receiptSha256": "cfe8bca68239e9d7e46747a295dd5ecd687a5063b65b4cabf5a7ab22525aa959",
+  "suites": [
+    "PcbNormalPackingCensusContractTest",
+    "PcbNormalPackingCensusContractTestGroup2",
+    "PcbNormalPackingCensusContractTestGroup3",
+    "PcbNormalPackingCensusContractTestGroup4",
+    "PcbNormalPackingCensusContractTestGroup5",
+    "PcbNormalPackingCensusContractTestGroup6",
+    "PcbNormalPackingCensusContractTestGroup7",
+    "PcbNormalPackingCensusContractTestGroup8"
+  ],
+  "comparisonSha256": "886d0524c3761cbdfaaec7cb6cdaba9d01527716ab23ff58ba409108214c1e49"
+}

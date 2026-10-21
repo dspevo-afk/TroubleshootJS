@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "phase": "target",
+  "elapsedSeconds": 42.9198617,
+  "candidateSealSha256": "bc2bf466c764ef62215c5ecc098645f22f27d92046d0fbffe3c0dc9d6cbb5885",
+  "limits": "Actual named finite final-source phase; other native/build/player/publication gates separate",
+  "receiptSha256": "67f402dd4238331b41ef119abd84a09442f4de47559df1539f5bf33845b7ea33",
+  "suites": [
+    "SparseNormalBoardDiagnostic"
+  ],
+  "comparisonSha256": "10cb3e9ec570eaf1533be02dbac0e0a213196ba63bef6413e14ba1b7ec77e294"
+}

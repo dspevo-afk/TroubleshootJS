@@ -9,8 +9,8 @@ final class PcbPlacementConstraints {
     /** The qualified one-face identity used by every existing caller. */
     static final String DEFAULT_PHYSICAL_POLICY_ID = "THT_SINGLE_FACE";
     static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
-    /** Connected-pocket packing with the incumbent via allowance for a P07 probe. */
-    static final int CONNECTED_POCKET_PACKING_VERSION = 3;
+    /** Post-incumbent connected-pair packing with the incumbent P07 via allowance. */
+    static final int CONNECTED_POCKET_PACKING_VERSION = 4;
 
     enum Anchor { NONE, LEFT, RIGHT, EDGE }
     static final class TerminalDomain {

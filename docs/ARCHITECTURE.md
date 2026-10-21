@@ -456,7 +456,11 @@ diagnostic measurement path may request an extended allowance. The continuation/
 terminal completion, and completion is delivered even if UI restoration throws.
 
 `PcbPlacementCompactor` removes empty routing-courtyard bands and, for explicit
-normal packing3, runs one bounded connected-vacancy pass. Every candidate retains
+normal packing4, runs one bounded connected-vacancy pass. A separate paired pass
+runs only after the generator selects its routed incumbent. Each pair must leave
+another nonanchor component without an isolation body in the same physical domain;
+an individual pair move cannot translate that domain's entire movable inventory.
+Every candidate retains
 exact package geometry and rigidly translated pad/probe targets, then passes the
 original placement validator. The generator keeps its fully routed incumbent
 until a separately routed alternative passes the final metric guard. It neither
@@ -5908,7 +5912,7 @@ See the [border-trim evidence and current gate status](task-evidence/PCB/post-se
 ## Normal-player retained-route pocket refinement
 
 All eleven active normal providers use `SeededPcbLayoutGenerator`. Immutable
-`PcbPlacementConstraints.placementPackingVersion` explicitly selects packing3;
+`PcbPlacementConstraints.placementPackingVersion` explicitly selects packing4;
 legacy/default1 and held private RB56 keep the original policy. The general
 layout identity is19 and public replay is `tsj-alpha/6`; dependency canonicalization
 includes nondefault packing interpretation. Historical private geometry-body
@@ -5926,7 +5930,25 @@ The connected-pocket placement pass uses one canonical pass of at most five
 existing vacancy origins per movable package, bounded by the existing60000 placement evaluations. Anchors,
 isolation bodies, declared domains, access and source-grid phases remain intact.
 
-One optional route uses the incumbent's P05 or resumable P07 strategy. Packing3
+`PcbPlacementPlanner.compactConnectedPairs` enumerates canonical disjoint pairs
+joined by exact two-pad nets. Both packages must have two terminals, share the
+same region/domain and linked-pad domain, and be movable without isolation bodies.
+At least one other placed nonanchor component without an isolation body must
+remain in their physical domain. This scope restriction preserves a proper
+subgroup; the peer may belong to a different semantic region in that domain.
+Each pair tries at most five existing vacancy origins as a common snapped
+translation, retaining relative placement, geometry and identities. Both members
+replace their source positions before fit and whole-plan validation. Area/wire
+proxies must not grow and one must improve; the same60000 counter bounds the work.
+`PcbPlacementCompactor.compactPairedVacancies` applies this pass and, only after a
+placement change, the existing optional-budget strip compaction. Its only normal
+caller is `beginPackingProbe`, after ordinary compaction and before same-placement/
+headroom checks. Medium initial planning keeps the existing single-part behavior.
+Obsolete packing3 is rejected; the current dependency identity includes4. The
+unchanged `normal-packing@3` receipt identifies its shape rather than the search
+interpretation.
+
+One optional route uses the incumbent's P05 or resumable P07 strategy. Packing4
 passes the already-measured incumbent via count as an immutable request-local
 P07 cap. Ordinary routes keep their existing policy cap. Session and Search
 carry the bound; both via-placement predicates enforce it, and publishing above

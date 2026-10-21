@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "apiClose": true,
+  "processExitCode": 0,
+  "signal": null,
+  "elapsedMillis": 125,
+  "profileAbsent": true,
+  "limits": "Exact owned context/client/server only; four old blocked profiles untouched"
+}

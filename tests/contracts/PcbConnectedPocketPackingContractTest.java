@@ -6,6 +6,7 @@ import java.util.Vector;
 /** Literal placement-only contracts for the normal connected-pocket pass. */
 public final class PcbConnectedPocketPackingContractTest {
     private static final Rectangle LED_ENVELOPE = new Rectangle(-19, -36, 123, 171);
+    private static final Rectangle E04_ENVELOPE = new Rectangle(-15, -35, 290, 275);
     private static final Rectangle MIRRORED_CONNECTOR_ENVELOPE =
         new Rectangle(-50, -46, 176, 202);
     private static int assertions;
@@ -16,6 +17,10 @@ public final class PcbConnectedPocketPackingContractTest {
 
     public static void main(String[] args) {
         literalConnectedPocketPositive();
+        literalConnectedPairPositive();
+        pairedEligibilityExclusions();
+        pairedSubgroupEligibility();
+        pairedEvaluationBoundAndCancellation();
         countedNoOpAndLegacyFlag();
         evaluationCeiling();
         cancellationAndScopeCleanup();
@@ -100,6 +105,273 @@ public final class PcbConnectedPocketPackingContractTest {
                 (double) literalWireDemand(first),
             "planner result wire metric matches independently computed final distances");
         namedFixture("literalConnectedPocketPositive");
+    }
+
+    private static void literalConnectedPairPositive() {
+        Fixture fixture = pairedFixture();
+        String boardBefore = graphSnapshot(fixture.board);
+        String inputBefore = planSnapshot(fixture.plan);
+        long inputArea = literalEnvelopeArea(fixture.plan);
+        long inputWire = literalPairWireDemand(fixture.plan);
+        check(fixture.board.getComponentIds().size() == 4 &&
+                fixture.board.getPadIds().size() == 11 &&
+                fixture.board.getNetIds().size() == 8 &&
+                fixture.constraints.getParts().size() == 4 &&
+                fixture.board.getComponent("J").getPhysicalPackage().isConnector() &&
+                fixture.constraints.get("J").anchor == PcbPlacementConstraints.Anchor.LEFT,
+            "literal pair fixture contains two linked two-terminal parts, one fixed multi-terminal part, and one singleton connector");
+        check(fixture.board.getNet("PAIR_LINK").getPadIds().size() == 2 &&
+                fixture.board.getNet("PAIR_LINK").getPadIds().contains("A.A") &&
+                fixture.board.getNet("PAIR_LINK").getPadIds().contains("B.A") &&
+                fixture.board.getComponent("A").getPhysicalPackage().getTerminalIds().size() == 2 &&
+                fixture.board.getComponent("B").getPhysicalPackage().getTerminalIds().size() == 2 &&
+                fixture.board.getComponent("U").getPhysicalPackage().getTerminalIds().size() == 5,
+            "the positive net is exact-two-pad and the linked pair is distinct from its five-terminal endpoint");
+        check(fixture.constraints.get("A").anchor == PcbPlacementConstraints.Anchor.NONE &&
+                fixture.constraints.get("B").anchor == PcbPlacementConstraints.Anchor.NONE &&
+                fixture.constraints.get("A").regionId.equals(fixture.constraints.get("B").regionId) &&
+                fixture.constraints.get("A").domainId.equals(fixture.constraints.get("B").domainId) &&
+                fixture.constraints.get("A").terminalDomain("A").equals(
+                    fixture.constraints.get("B").terminalDomain("A")),
+            "the linked pair has matching non-anchor region, domain, and terminal-domain declarations");
+        PcbPlacementPlanner.validate(fixture.board, fixture.constraints,
+            fixture.plan.outline, fixture.plan.footprints);
+        check(inputArea == 900130L,
+            "independent expanded package envelopes give literal pair source area 900130");
+        check(inputWire == 18900L,
+            "independent pad distances give literal linked-pair source wire demand 18900");
+        check(PcbPlacementPlanner.occupiedEnvelopeArea(fixture.plan.footprints,
+                fixture.constraints) == inputArea,
+            "planner source envelope metric agrees with the independent pair envelope oracle");
+        check(PcbPlacementPlanner.totalWireDemand(fixture.plan.footprints,
+                new TopologyPlacementGraph(fixture.board)) == (double) inputWire,
+            "planner source wire metric agrees with the independent pair pad oracle");
+
+        PcbPlacementPlanner.Plan first = PcbPlacementPlanner.compactConnectedPairs(
+            fixture.board, fixture.constraints, fixture.plan);
+        PcbPlacementPlanner.Plan repeated = PcbPlacementPlanner.compactConnectedPairs(
+            fixture.board, fixture.constraints, fixture.plan);
+        check(first != fixture.plan && first.evaluations > fixture.plan.evaluations &&
+                first.evaluations <= fixture.plan.evaluations + 5 &&
+                first.evaluations <= PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS,
+            "one linked pair consumes at most the five shared vacancy trials and stays within the 60000 budget");
+        check(planSnapshot(first).equals(planSnapshot(repeated)),
+            "the same immutable pair input produces a deterministic placement and count");
+        check(inputBefore.equals(planSnapshot(fixture.plan)) &&
+                boardBefore.equals(graphSnapshot(fixture.board)) &&
+                fixture.board.getPlacementConstraints() == fixture.constraints,
+            "paired trials leave the source plan, graph, and live constraints unchanged");
+        PcbPlacementPlanner.validate(fixture.board, fixture.constraints,
+            first.outline, first.footprints);
+
+        PcbFootprint sourceA = footprint(fixture.plan, "A");
+        PcbFootprint sourceB = footprint(fixture.plan, "B");
+        PcbFootprint resultA = footprint(first, "A");
+        PcbFootprint resultB = footprint(first, "B");
+        int dxA = resultA.getPlacement().getX() - sourceA.getPlacement().getX();
+        int dyA = resultA.getPlacement().getY() - sourceA.getPlacement().getY();
+        int dxB = resultB.getPlacement().getX() - sourceB.getPlacement().getX();
+        int dyB = resultB.getPlacement().getY() - sourceB.getPlacement().getY();
+        check((dxA != 0 || dyA != 0) && dxA == dxB && dyA == dyB,
+            "the positive result rigidly translates both linked two-terminal parts by one common displacement");
+        check(resultA.getPlacement().getPhysicalPackage().getId().equals(
+                    sourceA.getPlacement().getPhysicalPackage().getId()) &&
+                resultB.getPlacement().getPhysicalPackage().getId().equals(
+                    sourceB.getPlacement().getPhysicalPackage().getId()) &&
+                resultA.getPlacement().getGeometryVariantKey().equals(
+                    sourceA.getPlacement().getGeometryVariantKey()) &&
+                resultB.getPlacement().getGeometryVariantKey().equals(
+                    sourceB.getPlacement().getGeometryVariantKey()) &&
+                resultA.getPlacement().getGeometryTransformKey().equals(
+                    sourceA.getPlacement().getGeometryTransformKey()) &&
+                resultB.getPlacement().getGeometryTransformKey().equals(
+                    sourceB.getPlacement().getGeometryTransformKey()) &&
+                resultA.getPlacement().getRotation() == sourceA.getPlacement().getRotation() &&
+                resultB.getPlacement().getRotation() == sourceB.getPlacement().getRotation() &&
+                resultA.getPlacement().getMountingSide() == sourceA.getPlacement().getMountingSide() &&
+                resultB.getPlacement().getMountingSide() == sourceB.getPlacement().getMountingSide(),
+            "pair translation preserves package identity, geometry variant, rotation, and mounting side");
+        check(resultA.getPad("A.A").getPadId().equals(sourceA.getPad("A.A").getPadId()) &&
+                resultA.getPad("A.K").getPadId().equals(sourceA.getPad("A.K").getPadId()) &&
+                resultB.getPad("B.A").getPadId().equals(sourceB.getPad("B.A").getPadId()) &&
+                resultB.getPad("B.K").getPadId().equals(sourceB.getPad("B.K").getPadId()),
+            "pair translation preserves all electrical pad identities");
+        long resultArea = literalEnvelopeArea(first);
+        long resultWire = literalPairWireDemand(first);
+        check(resultArea < inputArea && resultWire < inputWire,
+            "the independently measured rigid pair result improves both envelope area and wire demand");
+        check(PcbPlacementPlanner.occupiedEnvelopeArea(first.footprints,
+                fixture.constraints) == resultArea &&
+                PcbPlacementPlanner.totalWireDemand(first.footprints,
+                    new TopologyPlacementGraph(fixture.board)) == (double) resultWire,
+            "full candidate validation and planner metrics agree with independent pair result measurements");
+        namedFixture("literalConnectedPairPositive");
+    }
+
+    private static void pairedEligibilityExclusions() {
+        Fixture nonExact = nonExactPairFixture();
+        PcbPlacementPlanner.validate(nonExact.board, nonExact.constraints,
+            nonExact.plan.outline, nonExact.plan.footprints);
+        check(nonExact.board.getNet("PAIR_LINK").getPadIds().size() == 3,
+            "negative pair fixture uses a literal three-pad link instead of an exact two-pad net");
+        check(PcbPlacementPlanner.compactConnectedPairs(nonExact.board,
+                nonExact.constraints, nonExact.plan) == nonExact.plan,
+            "a three-pad net cannot create a linked pair candidate");
+
+        Fixture anchored = anchoredPairFixture();
+        PcbPlacementPlanner.validate(anchored.board, anchored.constraints,
+            anchored.plan.outline, anchored.plan.footprints);
+        check(anchored.constraints.get("J1").anchor == PcbPlacementConstraints.Anchor.LEFT &&
+                anchored.constraints.get("J2").anchor == PcbPlacementConstraints.Anchor.LEFT &&
+                PcbPlacementPlanner.compactConnectedPairs(anchored.board,
+                    anchored.constraints, anchored.plan) == anchored.plan,
+            "edge-anchored two-terminal connectors are excluded without changing their source plan");
+
+        Fixture domainMismatch = domainMismatchPairFixture();
+        PcbPlacementPlanner.validate(domainMismatch.board, domainMismatch.constraints,
+            domainMismatch.plan.outline, domainMismatch.plan.footprints);
+        check(domainMismatch.board.getPlacementConstraints() == domainMismatch.constraints &&
+                !domainMismatch.constraints.get("A").terminalDomain("A").equals(
+                    domainMismatch.constraints.get("B").terminalDomain("A")) &&
+                PcbPlacementPlanner.compactConnectedPairs(domainMismatch.board,
+                    domainMismatch.constraints, domainMismatch.plan) == domainMismatch.plan,
+            "a pair with mismatched linked terminal domains is excluded without inventing a connection");
+
+        Fixture physicalMismatch = physicalEligibilityFixture();
+        PcbPlacementPlanner.validate(physicalMismatch.board, physicalMismatch.constraints,
+            physicalMismatch.plan.outline, physicalMismatch.plan.footprints);
+        check(physicalMismatch.board.getComponent("U").getPhysicalPackage().getTerminalIds().size() != 2 &&
+                physicalMismatch.board.getComponent("V").getPhysicalPackage().getTerminalIds().size() != 2 &&
+                PcbPlacementPlanner.compactConnectedPairs(physicalMismatch.board,
+                    physicalMismatch.constraints, physicalMismatch.plan) == physicalMismatch.plan,
+            "exact-two-pad links between multi-terminal packages are excluded by physical eligibility");
+        namedFixture("pairedEligibilityExclusions");
+    }
+
+    private static void pairedSubgroupEligibility() {
+        Fixture wholeDomain = wholeDomainPairFixture();
+        PcbPlacementPlanner.validate(wholeDomain.board, wholeDomain.constraints,
+            wholeDomain.plan.outline, wholeDomain.plan.footprints);
+        PcbPlacementPlanner.Plan wholeDomainResult =
+            PcbPlacementPlanner.compactConnectedPairs(wholeDomain.board,
+                wholeDomain.constraints, wholeDomain.plan);
+        check(wholeDomain.constraints.get("A").anchor == PcbPlacementConstraints.Anchor.NONE &&
+                wholeDomain.constraints.get("B").anchor == PcbPlacementConstraints.Anchor.NONE &&
+                wholeDomain.constraints.get("J").anchor == PcbPlacementConstraints.Anchor.LEFT &&
+                wholeDomain.constraints.get("A").domainId.equals(
+                    wholeDomain.constraints.get("J").domainId) &&
+                wholeDomainResult == wholeDomain.plan && wholeDomain.plan.evaluations == 0,
+            "a pair that is the entire movable domain beside an anchored J is an exact no-op");
+
+        Fixture otherDomain = otherDomainPeerFixture();
+        PcbPlacementPlanner.validate(otherDomain.board, otherDomain.constraints,
+            otherDomain.plan.outline, otherDomain.plan.footprints);
+        PcbPlacementPlanner.Plan otherDomainResult =
+            PcbPlacementPlanner.compactConnectedPairs(otherDomain.board,
+                otherDomain.constraints, otherDomain.plan);
+        check(otherDomain.constraints.get("C").anchor == PcbPlacementConstraints.Anchor.NONE &&
+                !otherDomain.constraints.get("A").domainId.equals(
+                    otherDomain.constraints.get("C").domainId) &&
+                otherDomainResult == otherDomain.plan && otherDomain.plan.evaluations == 0,
+            "an otherwise movable peer in another physical domain does not qualify the pair");
+
+        Fixture isolationPeer = isolationPeerFixture();
+        PcbPlacementPlanner.validate(isolationPeer.board, isolationPeer.constraints,
+            isolationPeer.plan.outline, isolationPeer.plan.footprints);
+        PcbPlacementPlanner.Plan isolationResult =
+            PcbPlacementPlanner.compactConnectedPairs(isolationPeer.board,
+                isolationPeer.constraints, isolationPeer.plan);
+        check(isolationPeer.board.getComponent("C").getPhysicalPackage().getGeometry()
+                    .getIsolationBody() != null &&
+                isolationPeer.constraints.getBarriers().size() == 1 &&
+                isolationResult == isolationPeer.plan && isolationPeer.plan.evaluations == 0,
+            "a same-domain peer with a declared isolation body does not qualify the pair");
+
+        Fixture semanticRegionPeer = semanticRegionPeerFixture();
+        PcbPlacementPlanner.validate(semanticRegionPeer.board, semanticRegionPeer.constraints,
+            semanticRegionPeer.plan.outline, semanticRegionPeer.plan.footprints);
+        PcbPlacementPlanner.Plan semanticResult =
+            PcbPlacementPlanner.compactConnectedPairs(semanticRegionPeer.board,
+                semanticRegionPeer.constraints, semanticRegionPeer.plan);
+        check(semanticRegionPeer.constraints.get("A").domainId.equals(
+                    semanticRegionPeer.constraints.get("C").domainId) &&
+                !semanticRegionPeer.constraints.get("A").regionId.equals(
+                    semanticRegionPeer.constraints.get("C").regionId) &&
+                semanticRegionPeer.constraints.get("C").anchor ==
+                    PcbPlacementConstraints.Anchor.NONE &&
+                semanticResult != semanticRegionPeer.plan &&
+                semanticResult.evaluations > semanticRegionPeer.plan.evaluations &&
+                semanticResult.evaluations <= semanticRegionPeer.plan.evaluations + 5,
+            "a non-anchor peer in the same physical domain qualifies across semantic regions");
+        PcbPlacementPlanner.validate(semanticRegionPeer.board, semanticRegionPeer.constraints,
+            semanticRegionPeer.plan.outline, semanticResult.footprints);
+        PcbFootprint sourceA = footprint(semanticRegionPeer.plan, "A");
+        PcbFootprint sourceB = footprint(semanticRegionPeer.plan, "B");
+        PcbFootprint resultA = footprint(semanticResult, "A");
+        PcbFootprint resultB = footprint(semanticResult, "B");
+        check((resultA.getPlacement().getX() - sourceA.getPlacement().getX() != 0 ||
+                resultA.getPlacement().getY() - sourceA.getPlacement().getY() != 0) &&
+                resultA.getPlacement().getX() - sourceA.getPlacement().getX() ==
+                resultB.getPlacement().getX() - sourceB.getPlacement().getX() &&
+                resultA.getPlacement().getY() - sourceA.getPlacement().getY() ==
+                resultB.getPlacement().getY() - sourceB.getPlacement().getY(),
+            "the semantic-region positive translates the selected pair rigidly");
+        check(footprint(semanticResult, "C").getPlacement().getX() ==
+                footprint(semanticRegionPeer.plan, "C").getPlacement().getX() &&
+                footprint(semanticResult, "C").getPlacement().getY() ==
+                footprint(semanticRegionPeer.plan, "C").getPlacement().getY() &&
+                footprint(semanticResult, "J").getPlacement().getX() ==
+                footprint(semanticRegionPeer.plan, "J").getPlacement().getX() &&
+                footprint(semanticResult, "J").getPlacement().getY() ==
+                footprint(semanticRegionPeer.plan, "J").getPlacement().getY(),
+            "the semantic-region positive leaves its peer and anchored connector in place");
+        namedFixture("pairedSubgroupEligibility");
+    }
+
+    private static void pairedEvaluationBoundAndCancellation() {
+        Fixture fixture = pairedFixture();
+        PcbPlacementPlanner.Plan nearLimit = withEvaluations(fixture.plan,
+            PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS - 1);
+        PcbPlacementPlanner.Plan bounded = PcbPlacementPlanner.compactConnectedPairs(
+            fixture.board, fixture.constraints, nearLimit);
+        check(bounded.evaluations >= PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS - 1 &&
+                bounded.evaluations <= PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS,
+            "paired search shares the exact 60000 evaluation ceiling");
+        PcbPlacementPlanner.Plan exhausted = withEvaluations(fixture.plan,
+            PcbPlacementPlanner.MEDIUM_MAX_EVALUATIONS);
+        check(PcbPlacementPlanner.compactConnectedPairs(fixture.board,
+                fixture.constraints, exhausted) == exhausted,
+            "an exhausted paired search returns the exact source plan without extra work");
+
+        final Fixture canceledFixture = pairedFixture();
+        final String before = planSnapshot(canceledFixture.plan);
+        GenerationJob job = new GenerationJob(new ScopeService(), 100000L, 8, 5000L);
+        job.cancel();
+        GenerationWorkScope.enter(job);
+        boolean propagated = false;
+        try {
+            try {
+                PcbPlacementPlanner.compactConnectedPairs(canceledFixture.board,
+                    canceledFixture.constraints, canceledFixture.plan);
+            } catch (GenerationJob.Cancelled expected) {
+                propagated = expected.getOutcome() == GenerationJob.Outcome.CANCELLED;
+            }
+        } finally {
+            GenerationWorkScope.exit(job);
+        }
+        check(propagated && job.getOutcome() == GenerationJob.Outcome.CANCELLED &&
+                before.equals(planSnapshot(canceledFixture.plan)),
+            "paired cancellation propagates at entry and leaves the source plan untouched");
+        boolean scopeCleared = false;
+        try {
+            GenerationWorkScope.check();
+            scopeCleared = true;
+        } catch (GenerationJob.Cancelled leakedScope) {
+            // A cancelled owner surviving exit would make this fresh checkpoint fail.
+        }
+        check(scopeCleared,
+            "paired cancellation cleanup removes the owner before the next checkpoint");
+        namedFixture("pairedEvaluationBoundAndCancellation");
     }
 
     private static void countedNoOpAndLegacyFlag() {
@@ -211,6 +483,7 @@ public final class PcbConnectedPocketPackingContractTest {
                 singleFaceLegacy.getPhysicalPolicyVersion() ==
                     PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_VERSION &&
                 singleFaceLegacy.placementPackingVersion == 1 &&
+                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION == 4 &&
                 PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_ID.equals(
                     singleFacePacking2.getPhysicalPolicyId()) &&
                 singleFacePacking2.getPhysicalPolicyVersion() ==
@@ -227,6 +500,10 @@ public final class PcbConnectedPocketPackingContractTest {
                 singleFaceLegacy.getTraceWidthProfile() ==
                     singleFacePacking2.getTraceWidthProfile(),
             "external single-face copies retain identical declarations and differ only by packing version");
+        check(rejectsPackingVersion(boardConstraints, 2) &&
+                rejectsPackingVersion(boardConstraints, 3) &&
+                rejectsPackingVersion(boardConstraints, 5),
+            "obsolete packing versions 2 and 3 and unknown version 5 are rejected while current version 4 remains explicit");
 
         String graphBefore = graphSnapshot(board);
         PcbPlacementPlanner planner = new PcbPlacementPlanner(
@@ -289,6 +566,237 @@ public final class PcbConnectedPocketPackingContractTest {
         for (CircuitElm element : owner.getSimulationElements()) element.delete();
     }
 
+    private static Fixture pairedFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-positive");
+        for (String net : new String[] { "PAIR_LINK", "A_TO_U", "B_TO_U",
+                "U_RAIL", "U_OUTPUT", "U_RETURN", "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_TO_U");
+        addLed(board, "B", "PAIR_LINK", "B_TO_U");
+        addMultiTerminal(board, "U", "CONTROLLER", PhysicalPackages.E04_DECISION_CONTROL_5,
+            "A_TO_U", "B_TO_U", "U_RAIL", "U_OUTPUT", "U_RETURN");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        PcbPlacementConstraints constraints = connectedConstraints(board);
+        board.setPlacementConstraints(constraints);
+
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("U"), 100, 100));
+        footprints.add(mirroredConnector(board.getComponent("J"), 500, 130));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("A"), 900, 700));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("B"), 1150, 700));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1500, 1300), footprints, 0));
+    }
+
+    private static Fixture nonExactPairFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-non-exact");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN", "C_RETURN",
+                "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addLed(board, "C", "PAIR_LINK", "C_RETURN");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        PcbPlacementConstraints constraints = connectedConstraints(board);
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("A"), 250, 200));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("B"), 600, 200));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("C"), 950, 200));
+        footprints.add(mirroredConnector(board.getComponent("J"), 1000, 500));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1200, 700), footprints, 0));
+    }
+
+    private static Fixture anchoredPairFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-anchored");
+        for (String net : new String[] { "PAIR_LINK", "J1_RETURN", "J2_RETURN" })
+            board.addNet(new BoardNet(net));
+        addConnector(board, "J1", "PAIR_LINK", "J1_RETURN");
+        addConnector(board, "J2", "PAIR_LINK", "J2_RETURN");
+        PcbPlacementConstraints constraints = connectedConstraints(board);
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(mirroredConnector(board.getComponent("J1"), 250, 200));
+        footprints.add(mirroredConnector(board.getComponent("J2"), 700, 200));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1200, 700), footprints, 0));
+    }
+
+    private static Fixture domainMismatchPairFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-domain-mismatch");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN", "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        Vector<PcbPlacementConstraints.Part> parts = new Vector<PcbPlacementConstraints.Part>();
+        parts.add(new PcbPlacementConstraints.Part("A", "all", "All", "board-a",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        parts.add(new PcbPlacementConstraints.Part("B", "all", "All", "board-b",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        parts.add(new PcbPlacementConstraints.Part("J", "all", "All", "board",
+            PcbPlacementConstraints.Anchor.LEFT, 20));
+        PcbPlacementConstraints constraints = new PcbPlacementConstraints(parts,
+            new Vector<PcbPlacementConstraints.Barrier>()).withConnectedPocketPacking();
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("A"), 250, 200));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("B"), 700, 200));
+        footprints.add(mirroredConnector(board.getComponent("J"), 1000, 500));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1200, 700), footprints, 0));
+    }
+
+    private static Fixture physicalEligibilityFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-physical-eligibility");
+        for (String net : new String[] { "MULTI_LINK", "U_REFERENCE", "U_RAIL",
+                "U_OUTPUT", "U_RETURN", "V_OUTPUT", "V_RETURN", "V_ENABLE",
+                "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addMultiTerminal(board, "U", "CONTROLLER", PhysicalPackages.E04_DECISION_CONTROL_5,
+            "MULTI_LINK", "U_REFERENCE", "U_RAIL", "U_OUTPUT", "U_RETURN");
+        addMultiTerminal(board, "V", "REGULATOR", PhysicalPackages.TO220_REGULATOR_4,
+            "MULTI_LINK", "V_OUTPUT", "V_RETURN", "V_ENABLE");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        PcbPlacementConstraints constraints = connectedConstraints(board);
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("U"), 120, 180));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("V"), 700, 180));
+        footprints.add(mirroredConnector(board.getComponent("J"), 1000, 500));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1200, 700), footprints, 0));
+    }
+
+    private static Fixture wholeDomainPairFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-whole-domain");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN",
+                "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        Vector<PcbPlacementConstraints.Part> parts = new Vector<PcbPlacementConstraints.Part>();
+        parts.add(new PcbPlacementConstraints.Part("A", "pair", "Pair", "board",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        parts.add(new PcbPlacementConstraints.Part("B", "pair", "Pair", "board",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        parts.add(new PcbPlacementConstraints.Part("J", "edge", "Edge", "board",
+            PcbPlacementConstraints.Anchor.LEFT, 20));
+        PcbPlacementConstraints constraints = new PcbPlacementConstraints(parts,
+            new Vector<PcbPlacementConstraints.Barrier>()).withConnectedPocketPacking();
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("A"), 900, 700));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("B"), 1150, 700));
+        footprints.add(mirroredConnector(board.getComponent("J"), 500, 130));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1500, 1300), footprints, 0));
+    }
+
+    private static Fixture otherDomainPeerFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-other-domain-peer");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN",
+                "C_A", "C_K", "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addLed(board, "C", "C_A", "C_K");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        PcbPlacementConstraints constraints = pairPeerConstraints("other", "Other", "other",
+            null, new Vector<PcbPlacementConstraints.Barrier>());
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = pairPeerFootprints(board);
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1500, 1300), footprints, 0));
+    }
+
+    private static Fixture isolationPeerFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-isolation-peer");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN",
+                "C_A", "C_K", "C_C", "C_E", "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addMultiTerminal(board, "C", "ISOLATOR", PhysicalPackages.OPTOCOUPLER_4,
+            "C_A", "C_K", "C_C", "C_E");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        Vector<PcbPlacementConstraints.TerminalDomain> domains =
+            new Vector<PcbPlacementConstraints.TerminalDomain>();
+        domains.add(new PcbPlacementConstraints.TerminalDomain("A", "board"));
+        domains.add(new PcbPlacementConstraints.TerminalDomain("K", "board"));
+        domains.add(new PcbPlacementConstraints.TerminalDomain("C", "isolated"));
+        domains.add(new PcbPlacementConstraints.TerminalDomain("E", "isolated"));
+        PcbPlacementConstraints constraints = pairPeerConstraints("isolated", "Isolated",
+            "board", domains, isolationBarrier());
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = pairCoreFootprints(board);
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("C"), 1600, 100));
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 2300, 1300), footprints, 0));
+    }
+
+    private static Fixture semanticRegionPeerFixture() {
+        TroubleshootBoard board = new TroubleshootBoard("connected-pair-semantic-region-peer");
+        for (String net : new String[] { "PAIR_LINK", "A_RETURN", "B_RETURN",
+                "C_A", "C_K", "J_ONE", "J_TWO" })
+            board.addNet(new BoardNet(net));
+        addLed(board, "A", "PAIR_LINK", "A_RETURN");
+        addLed(board, "B", "PAIR_LINK", "B_RETURN");
+        addLed(board, "C", "C_A", "C_K");
+        addConnector(board, "J", "J_ONE", "J_TWO");
+        PcbPlacementConstraints constraints = pairPeerConstraints("other", "Other", "board",
+            null, new Vector<PcbPlacementConstraints.Barrier>());
+        board.setPlacementConstraints(constraints);
+        Vector<PcbFootprint> footprints = pairPeerFootprints(board);
+        return new Fixture(board, constraints,
+            plan(new Rectangle(40, 40, 1500, 1300), footprints, 0));
+    }
+
+    private static Vector<PcbFootprint> pairPeerFootprints(TroubleshootBoard board) {
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("C"), 100, 100));
+        footprints.addAll(pairCoreFootprints(board));
+        return footprints;
+    }
+
+    private static Vector<PcbFootprint> pairCoreFootprints(TroubleshootBoard board) {
+        Vector<PcbFootprint> footprints = new Vector<PcbFootprint>();
+        footprints.add(mirroredConnector(board.getComponent("J"), 500, 130));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("A"), 900, 700));
+        footprints.add(PcbFootprint.fromPhysicalPackage(board.getComponent("B"), 1150, 700));
+        return footprints;
+    }
+
+    private static PcbPlacementConstraints pairPeerConstraints(String peerRegion,
+            String peerLabel, String peerDomain,
+            Vector<PcbPlacementConstraints.TerminalDomain> peerDomains,
+            Vector<PcbPlacementConstraints.Barrier> barriers) {
+        Vector<PcbPlacementConstraints.Part> parts =
+            new Vector<PcbPlacementConstraints.Part>();
+        parts.add(new PcbPlacementConstraints.Part("A", "pair", "Pair", "board",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        parts.add(new PcbPlacementConstraints.Part("B", "pair", "Pair", "board",
+            PcbPlacementConstraints.Anchor.NONE, 20));
+        if (peerDomains == null)
+            parts.add(new PcbPlacementConstraints.Part("C", peerRegion, peerLabel, peerDomain,
+                PcbPlacementConstraints.Anchor.NONE, 20));
+        else
+            parts.add(new PcbPlacementConstraints.Part("C", peerRegion, peerLabel, peerDomain,
+                PcbPlacementConstraints.Anchor.NONE, 20, peerDomains));
+        parts.add(new PcbPlacementConstraints.Part("J", "edge", "Edge", "board",
+            PcbPlacementConstraints.Anchor.LEFT, 20));
+        return new PcbPlacementConstraints(parts, barriers).withConnectedPocketPacking();
+    }
+
+    private static Vector<PcbPlacementConstraints.Barrier> isolationBarrier() {
+        Vector<PcbPlacementConstraints.Barrier> barriers =
+            new Vector<PcbPlacementConstraints.Barrier>();
+        barriers.add(new PcbPlacementConstraints.Barrier("board", "isolated", 60));
+        return barriers;
+    }
+
     private static Fixture positiveFixture() {
         TroubleshootBoard board = new TroubleshootBoard("connected-pocket-positive");
         board.addNet(new BoardNet("ONE"));
@@ -342,6 +850,16 @@ public final class PcbConnectedPocketPackingContractTest {
             source.getTraceWidthProfile(), packingVersion);
     }
 
+    private static boolean rejectsPackingVersion(
+            PcbPlacementConstraints source, int packingVersion) {
+        try {
+            singleFaceCopy(source, packingVersion);
+            return false;
+        } catch (IllegalArgumentException expected) {
+            return true;
+        }
+    }
+
     private static PcbPlacementConstraints baseConstraints(TroubleshootBoard board) {
         Vector<PcbPlacementConstraints.Part> parts =
             new Vector<PcbPlacementConstraints.Part>();
@@ -370,6 +888,17 @@ public final class PcbConnectedPocketPackingContractTest {
             PhysicalPackages.THROUGH_HOLE_CONNECTOR_2));
         board.addPad(new BoardPad(id + ".1", id, "1", firstNet));
         board.addPad(new BoardPad(id + ".2", id, "2", secondNet));
+    }
+
+    private static void addMultiTerminal(TroubleshootBoard board, String id, String type,
+            PhysicalPackage physical, String... nets) {
+        Vector<String> terminals = physical.getTerminalIds();
+        if (terminals.size() != nets.length)
+            throw new IllegalArgumentException("Pair fixture terminal count: " + id);
+        board.addComponent(new BoardComponent(id, type, physical));
+        for (int index = 0; index < terminals.size(); index++)
+            board.addPad(new BoardPad(id + "." + terminals.get(index), id,
+                terminals.get(index), nets[index]));
     }
 
     private static void addUniqueNetLed(TroubleshootBoard board, String id) {
@@ -432,6 +961,26 @@ public final class PcbConnectedPocketPackingContractTest {
         return pairDistance * 4L;
     }
 
+    private static long literalPairWireDemand(PcbPlacementPlanner.Plan plan) {
+        PcbFootprint a = footprint(plan, "A");
+        PcbFootprint b = footprint(plan, "B");
+        PcbFootprint u = footprint(plan, "U");
+        long pair = padManhattan(a, "A.A", b, "B.A");
+        long aEndpoint = padManhattan(a, "A.K", u, "U.SENSOR");
+        long bEndpoint = padManhattan(b, "B.K", u, "U.REFERENCE");
+        // Each exact two-pad net contributes one directed link per endpoint;
+        // the topology weight for those links is the literal value three.
+        return (pair + aEndpoint + bEndpoint) * 6L;
+    }
+
+    private static long padManhattan(PcbFootprint first, String firstPad,
+            PcbFootprint second, String secondPad) {
+        PcbPadPlacement a = first.getPad(firstPad);
+        PcbPadPlacement b = second.getPad(secondPad);
+        return Math.abs((long) a.getX() - b.getX()) +
+            Math.abs((long) a.getY() - b.getY());
+    }
+
     private static long literalSingletonNetWireDemand(TroubleshootBoard board) {
         Vector<String> netIds = board.getNetIds();
         for (String netId : netIds)
@@ -465,6 +1014,7 @@ public final class PcbConnectedPocketPackingContractTest {
         PcbComponentPlacement placement = footprint.getPlacement();
         String packageId = placement.getPhysicalPackage().getId();
         if ("THROUGH_HOLE_LED".equals(packageId)) return LED_ENVELOPE;
+        if ("E04_DECISION_CONTROL_5".equals(packageId)) return E04_ENVELOPE;
         if ("THROUGH_HOLE_CONNECTOR_2".equals(packageId) &&
                 "MIRROR_X".equals(placement.getGeometryTransformKey()))
             return MIRRORED_CONNECTOR_ENVELOPE;

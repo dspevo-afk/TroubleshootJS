@@ -1,0 +1,30 @@
+{
+  "status": "DIAGNOSIS_COMPLETED_PRODUCTION_REMAINS_BLOCKED",
+  "productionMatrixStatus": "FAIL_PHYSICAL_DIVERSITY_REGRESSION",
+  "phases": {
+    "canary": {
+      "actualToolExitCode": 0,
+      "operationExitCode": 0,
+      "elapsedSeconds": 0.4028158,
+      "timingSha256": "ea832cc03ae728ad3c5fe2d791e504f4ba5dfda390200d6ae42c0868d5942f9d",
+      "cleanupSha256": "c17cd11394c2ba84f0cfb78c37e61554b004b6b51d7f1d35c4dc32e6af4c6c12"
+    },
+    "current": {
+      "actualToolExitCode": 1,
+      "operationExitCode": 2,
+      "elapsedSeconds": 41.7713869,
+      "timingSha256": "207d0f3ae8cc4271d9c77ee7bb92361f1d69291b1294a90b935f5fa058ef52df",
+      "cleanupSha256": "958bc98cef57697287c97224574569eb67250a553ab2e81560f34a955d75785a"
+    },
+    "nohook": {
+      "actualToolExitCode": 0,
+      "operationExitCode": 0,
+      "elapsedSeconds": 42.0554584,
+      "timingSha256": "7abbf557b223ea1adc04565798370cbc6ef490ffc4a167bc92919e99edd6e876",
+      "cleanupSha256": "6a87287e4df163162274ca8210c4c3d8c35f3a4b10d9bc458eaafa19168e4e9a"
+    }
+  },
+  "diagnosticSealSha256": "e8ad8134c274a0870b363e35c4deafad1ae5f94b2e107ef2d60ac7f36294119f",
+  "comparisonSha256": "d341b417d382e1a77640f17a45058faf94763c5f00ff1b7cec0cf27777e788d2",
+  "limits": "Task-only LED batch; no final-source correction, GWT, player, all-seed or production publication claim"
+}

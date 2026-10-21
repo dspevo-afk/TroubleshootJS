@@ -1,0 +1,453 @@
+[
+  {
+    "name": "production-page-open",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:04:19.490Z",
+    "elapsedMillis": 595,
+    "details": {
+      "productionPreview": true
+    }
+  },
+  {
+    "name": "production-quickplay-entry",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:04:32.230Z",
+    "elapsedMillis": 1854,
+    "details": {
+      "url": "http://127.0.0.1:8911/circuitjs.html?tsjQuickPlay=true"
+    }
+  },
+  {
+    "name": "initial-default-board-ready",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:04:45.301Z",
+    "elapsedMillis": 4,
+    "details": {
+      "initialBootBoard": true
+    }
+  },
+  {
+    "name": "open-normal-generator-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:04:59.167Z",
+    "elapsedMillis": 28,
+    "details": {
+      "fromInitialTicket": true
+    }
+  },
+  {
+    "name": "random-new-board-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:05:40.128Z",
+    "elapsedMillis": 45,
+    "details": {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "seedEntered": false,
+      "exactSeedInputVisible": false
+    }
+  },
+  {
+    "name": "random-admitted-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:05:49.842Z",
+    "elapsedMillis": 38,
+    "details": {
+      "firstRequestAdmitted": true
+    }
+  },
+  {
+    "name": "random-share-observer-before-menu",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:05:59.480Z",
+    "elapsedMillis": 10300,
+    "error": "Share pristine challenge summary was hidden after accepting the ticket; click timed out before any action.",
+    "privateErrorSha256": "abae987b662eab69ed2d57a3256adf39951913529d5e4381695d538c7b4c6214"
+  },
+  {
+    "name": "random-share-menu-open",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:06:35.619Z",
+    "elapsedMillis": 142,
+    "details": {
+      "normalMenu": true
+    }
+  },
+  {
+    "name": "random-first-generated-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:06:51.120Z",
+    "elapsedMillis": 12,
+    "details": {
+      "replay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2750102463469069236",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  {
+    "name": "random-original-customer-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:06:51.179Z",
+    "elapsedMillis": 71,
+    "details": {
+      "requestedFreshRetest": true
+    }
+  },
+  {
+    "name": "random-supplies-accessible-name-observer",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:07:21.953Z",
+    "elapsedMillis": 10300,
+    "error": "Supplies exact button accessible-name lookup timed out; power had already changed OFF. Visible text remains Supplies.",
+    "privateErrorSha256": "7b81251b2440e22de828d5518983a35f25b87a6e39080fb3c54aa7354d06da36"
+  },
+  {
+    "name": "random-supply-panel-visible-input",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:07:32.278Z",
+    "elapsedMillis": 41,
+    "details": {
+      "clickedVisibleSuppliesLabel": true
+    }
+  },
+  {
+    "name": "random-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:07:42.634Z",
+    "elapsedMillis": 15,
+    "details": {
+      "customerResult": "FAIL",
+      "boardPower": "OFF",
+      "disconnectedSupplies": 3,
+      "trayParts": 0
+    }
+  },
+  {
+    "name": "random-view-menu-open",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:07:42.662Z",
+    "elapsedMillis": 67,
+    "details": {
+      "visibleViewMenu": true
+    }
+  },
+  {
+    "name": "random-top-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:07:53.634Z",
+    "elapsedMillis": 131,
+    "details": {
+      "file": "random-top.jpg",
+      "sha256": "eecf23b157c2d62c6ac7140a8ad75b4533cbe2d1ff8b0c5804b2499e627eb82f",
+      "bytes": 134419
+    }
+  },
+  {
+    "name": "dual-open-replay-menu",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:08:09.753Z",
+    "elapsedMillis": 114,
+    "details": {
+      "normalReplayForm": true
+    }
+  },
+  {
+    "name": "dual-exact-replay-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:08:19.251Z",
+    "elapsedMillis": 40,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808"
+    }
+  },
+  {
+    "name": "dual-public-identity",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:08:19.305Z",
+    "elapsedMillis": 11154,
+    "error": "locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Main menu', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"tsj-product-button\">Main menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not stable\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not visible\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    18 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+    "privateErrorSha256": "74531d35e3d3003c4a629130372b80727ccd299ccdde29d47329de2286428368"
+  },
+  {
+    "name": "dual-public-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:08:54.327Z",
+    "elapsedMillis": 156,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  {
+    "name": "dual-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:08:54.497Z",
+    "elapsedMillis": 151,
+    "details": {
+      "customerResult": "FAIL",
+      "boardPower": "OFF",
+      "disconnectedSupplies": 1,
+      "trayParts": 0
+    }
+  },
+  {
+    "name": "dual-top-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:05.133Z",
+    "elapsedMillis": 171,
+    "details": {
+      "file": "dual-top.jpg",
+      "sha256": "964c1d92330a080ac5b6f54fc73d70e51d05a0f081b2fadb4b51420ac2dd7528",
+      "bytes": 130374
+    }
+  },
+  {
+    "name": "dual-bottom-view",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:05.317Z",
+    "elapsedMillis": 167,
+    "details": {
+      "file": "dual-bottom.jpg",
+      "sha256": "2f73779b260c2fadb1d3b9dfdb591d6fbc986ea1af9d99ce3faa525aea372fc5",
+      "bytes": 126570
+    }
+  },
+  {
+    "name": "led-exact-replay-request",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:34.496Z",
+    "elapsedMillis": 158,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054"
+    }
+  },
+  {
+    "name": "led-admitted-ticket",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:34.668Z",
+    "elapsedMillis": 285,
+    "details": {
+      "normalReplayAdmitted": true
+    }
+  },
+  {
+    "name": "led-public-identity",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:45.302Z",
+    "elapsedMillis": 157,
+    "details": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  {
+    "name": "led-original-fail-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:45.474Z",
+    "elapsedMillis": 153,
+    "details": {
+      "customerResult": "FAIL",
+      "boardPower": "OFF",
+      "disconnectedSupplies": 1,
+      "trayParts": 0
+    }
+  },
+  {
+    "name": "led-fit-bench",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:45.643Z",
+    "elapsedMillis": 107,
+    "details": {
+      "fitted": true
+    }
+  },
+  {
+    "name": "led-select-resistor",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:09:55.537Z",
+    "elapsedMillis": 66,
+    "details": {
+      "selectedComponent": "R1"
+    }
+  },
+  {
+    "name": "led-component-actions-open",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:10:00.552Z",
+    "elapsedMillis": 40,
+    "details": {
+      "selected": "R1"
+    }
+  },
+  {
+    "name": "led-isolate-resistor-lead",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:10:14.485Z",
+    "elapsedMillis": 138,
+    "details": {
+      "liftedLead": 1,
+      "mode": "OHM"
+    }
+  },
+  {
+    "name": "led-isolated-ol",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:10:31.117Z",
+    "elapsedMillis": 160,
+    "details": {
+      "physicalReading": "OL",
+      "boardPower": "OFF",
+      "liftedLead": 1,
+      "exitedModeBeforeMutation": true
+    }
+  },
+  {
+    "name": "led-remove-faulty-part",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:10:31.292Z",
+    "elapsedMillis": 10076,
+    "error": "locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Component', { exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"tsj-button-label\">Component</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not stable\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not visible\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    18 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n",
+    "privateErrorSha256": "496f5e47341be83b203d7391587316490dff41ea0a1aa8adcd66357e87f0371a"
+  },
+  {
+    "name": "led-open-shop-after-removal",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:10:51.778Z",
+    "elapsedMillis": 2,
+    "error": "Removed part/off state missing",
+    "privateErrorSha256": "0b3d56fb635726784b7697fe578055dd4b93ed8a9b92006cffccbbd0ddfeeb7f"
+  },
+  {
+    "name": "led-open-shop-after-removal",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:11:01.390Z",
+    "elapsedMillis": 62,
+    "details": {
+      "originalPartLoose": true,
+      "boardPower": "OFF",
+      "trayParts": 1
+    }
+  },
+  {
+    "name": "led-shop-purchase",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:11:17.366Z",
+    "elapsedMillis": 75,
+    "details": {
+      "purchased": "330 Ohm +/-5%",
+      "boardPower": "OFF"
+    }
+  },
+  {
+    "name": "led-open-loose-parts-tray",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:11:26.831Z",
+    "elapsedMillis": 32,
+    "details": {
+      "looseParts": 2
+    }
+  },
+  {
+    "name": "led-loose-part-actions-open",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:11:34.698Z",
+    "elapsedMillis": 35,
+    "details": {
+      "openedNormalLoosePartActions": true
+    }
+  },
+  {
+    "name": "led-select-purchased-part",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:11:39.929Z",
+    "elapsedMillis": 31,
+    "details": {
+      "part": "Part 4 - 330 Ohm +/-5%"
+    }
+  },
+  {
+    "name": "led-shop-installed",
+    "status": "FAIL",
+    "startedUtc": "2026-10-21T00:11:52.734Z",
+    "elapsedMillis": 40,
+    "error": "Installed part/off state missing",
+    "privateErrorSha256": "60a5c2c31c5469058c430b49ec469e65ab346778f4f1ba30a2f5636ea5bb97f7"
+  },
+  {
+    "name": "led-shop-installed",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:16.671Z",
+    "elapsedMillis": 53,
+    "details": {
+      "part": "Part 4 - 330 Ohm +/-5%",
+      "target": "Circuit / R1",
+      "boardPower": "OFF",
+      "originalFaultyPartLoose": true,
+      "observationAfterPriorInstallAction": true
+    }
+  },
+  {
+    "name": "led-off-330",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:16.739Z",
+    "elapsedMillis": 269,
+    "details": {
+      "physicalReading": "330 Ohm",
+      "boardPower": "OFF",
+      "exitedModeBeforePower": true
+    }
+  },
+  {
+    "name": "led-request-final-retest",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:33.242Z",
+    "elapsedMillis": 74,
+    "details": {
+      "passAbsentBeforeRequest": true,
+      "off330VerifiedBeforePower": true
+    }
+  },
+  {
+    "name": "led-fresh-customer-pass",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:54.466Z",
+    "elapsedMillis": 58,
+    "details": {
+      "newlyVisibleCustomerPass": true,
+      "passAbsentBeforeRequest": true,
+      "physicalOff330VerifiedBeforePower": true
+    }
+  },
+  {
+    "name": "led-final-off",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:54.539Z",
+    "elapsedMillis": 184,
+    "details": {
+      "boardPower": "OFF",
+      "disconnectedSupplies": 1,
+      "originalFaultyPartLoose": true,
+      "customerPassRecorded": true
+    }
+  },
+  {
+    "name": "led-repaired-board-image",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:12:54.737Z",
+    "elapsedMillis": 176,
+    "details": {
+      "file": "led-repaired.jpg",
+      "sha256": "2d7da62151f575fa75cb4086d485c683aac2bb7c5130593a8c10b03b4a1bad15",
+      "bytes": 128725
+    }
+  },
+  {
+    "name": "served-production-after",
+    "status": "PASS",
+    "startedUtc": "2026-10-21T00:13:29.888Z",
+    "elapsedMillis": 6,
+    "details": {
+      "http200": true,
+      "sameExecution": true
+    }
+  }
+]

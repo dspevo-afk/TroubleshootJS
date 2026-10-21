@@ -1,0 +1,64 @@
+{
+  "candidateSealSha256": "70c232114980b1da1a02ef818057de53efe026449a12c3d1e7e74672d4ff6dca",
+  "acceptedFinalGates": {
+    "contracts": "2116ecabbb37bb7c10483656b1830da75dd37e3a3c5ab3f6f8f3ac88777628b9",
+    "target": "6ccebca4978b8af515a9ca60b2e15ee5f7a2fb57f94eb56c49f4c5f0cf9e3779",
+    "census": "33cb72327e9b23debc706b464cb91302cddab29505864780eb3e36b05c8a2f76",
+    "matrix": "5dc1e79e203fea042951af056c72dd053ee7d0f7e65a622913b2e7e742e7be96",
+    "build": "30bf37d4b89bd68295f64a01afd88e4e368e3431e5c580f690dd543f2adf04d5"
+  },
+  "expectedExecutionSha256": "11dd446ecca996850e98018fa90a1993f83b734feb7ae5b8e53bfbd34717f761",
+  "productionModuleMapSha256": "43ea5f01eab2d3279a7f3730cf05fe10e8361b509b9811088b4962152c333159",
+  "productionBootstrapSha256": "23220d62716a3d747f57ae75ed91644dabd5da38c1e07e426d0ad32609e3f172",
+  "playerPresealReviewSha256": "51a8e17f84e6c6ab28843bbab4a96175785104b2b851e7a04d38db492eb6c767",
+  "borrowedHelpers": {
+    "launch_player.ps1": {
+      "publishedSha256": "d14fd1ac9b58ae8394961ccca8f65fd5e62cdfcb6ccc4df853559409cb62a82e",
+      "selectedSha256": "45cbacc2e103127a11c79f90f69f29d7c5ac4d576f015550d829c24c87405f62",
+      "adaptation": "port8910->8911 only"
+    },
+    "stop_player.ps1": {
+      "publishedSha256": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+      "selectedSha256": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+      "adaptation": "unchanged except explicit LF encoding"
+    },
+    "observe_player_host.ps1": {
+      "publishedSha256": "6f043a698ccd589c67410a5fbb6740aaefbdd683835aca0515a9dd7e48113735",
+      "selectedSha256": "668769193c79abec83b6bc2ff35553b990a7143ff283f94e1bee4ebe7be35824",
+      "adaptation": "port8910->8911 only"
+    },
+    "record_preview_exit.ps1": {
+      "publishedSha256": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+      "selectedSha256": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+      "adaptation": "unchanged except explicit LF encoding"
+    },
+    "observe_browser.ps1": {
+      "publishedSha256": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+      "selectedSha256": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+      "adaptation": "unchanged except explicit LF encoding"
+    },
+    "player_bootstrap.mjs": {
+      "publishedSha256": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262",
+      "selectedSha256": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262",
+      "adaptation": "unchanged except explicit LF encoding"
+    }
+  },
+  "gates": {
+    "player-plan.json": "ef8f7142035af38e132fa51515a1a0e5b0aafbf82fbaac8f147709d63be2fbe7",
+    "player_inputs.py": "42c17edd565cf0e44a2a20e67b8604c9fad8310bf8e5cf4b8a3401fe53bcf819",
+    "prepare_player_helpers.py": "b1419973334421758e58450136db369de2faa44b4d96768853c6b3867cdfe3c6",
+    "launch_player.ps1": "45cbacc2e103127a11c79f90f69f29d7c5ac4d576f015550d829c24c87405f62",
+    "stop_player.ps1": "4334dc72b9ba760f58e89eca7edb91af17c0c69f97ae48bf9310b40128d889d6",
+    "observe_player_host.ps1": "668769193c79abec83b6bc2ff35553b990a7143ff283f94e1bee4ebe7be35824",
+    "record_preview_exit.ps1": "4c9e48ffda27c6cba4884f978d0a0e0581912454a05921f3ef8dd0ec5ca62e86",
+    "player_bootstrap.mjs": "54e024cd80cf50d9ade4f5497cfcebc5ec05cd1b817c95205b49b07ceb8d3262",
+    "observe_browser.ps1": "d83f0004ef857ee5fa3aeb3f9e9154bdb9189be4fb3b2fcf3e03678d1370461d",
+    "review_player.py": "89e21bb1d827cae735470f358f403d8690db544cc03783e8744e72890449d2e8"
+  },
+  "scopeSha256": "a6913f208d48d9d8d1866a2de561a20486e02d2debbc381f073417d24683b2c3",
+  "interpretation": {
+    "packing": 4,
+    "layout": 19,
+    "replay": "tsj-alpha/6"
+  }
+}

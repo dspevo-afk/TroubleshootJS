@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "phase": "contracts",
+  "elapsedSeconds": 108.4642707,
+  "candidateSealSha256": "70c232114980b1da1a02ef818057de53efe026449a12c3d1e7e74672d4ff6dca",
+  "limits": "Actual named finite final-source phase; other native/build/player/publication gates separate",
+  "receiptSha256": "ae404aebb59a17c4f4cd8829b12406d8701e2854deb1019f03060e9d24c6636c",
+  "suites": [
+    "PcbConnectedPocketPackingContractTest",
+    "PcbNormalPackingIdentityContractTest",
+    "PcbPackingMetricsContractTest",
+    "PcbPackingProbeReceiptContractTest",
+    "MediumBoardPhysicalPolicyContractTest",
+    "MediumBoardNormalAdmissionContractTest",
+    "PcbCompactionContractTest",
+    "PcbCompactnessContractTest",
+    "Task43PhysicalEndpointContractTest",
+    "A10DependencyContractTest",
+    "A03IdentityContractTest",
+    "P01PhysicalPoseContractTest",
+    "PhysicalServiceabilityContractTest",
+    "PlayerSessionFingerprintContractTest",
+    "P07TwoLayerContractTest"
+  ]
+}

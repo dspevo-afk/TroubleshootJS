@@ -1,0 +1,88 @@
+{
+  "status": "PASS_FINAL_PRODUCTION_PAIRED_PACKING_PLAYER",
+  "inputSealSha256": "d7305029aaf9ec237463b38aa7e461a8fe81daad27835123de56ccf0b5387818",
+  "productionModulesSha256": "43ea5f01eab2d3279a7f3730cf05fe10e8361b509b9811088b4962152c333159",
+  "events": 46,
+  "preservedObserverFailures": [
+    {
+      "name": "random-share-observer-before-menu",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:05:59.480Z",
+      "elapsedMillis": 10300,
+      "error": "Share pristine challenge summary was hidden after accepting the ticket; click timed out before any action.",
+      "privateErrorSha256": "abae987b662eab69ed2d57a3256adf39951913529d5e4381695d538c7b4c6214"
+    },
+    {
+      "name": "random-supplies-accessible-name-observer",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:07:21.953Z",
+      "elapsedMillis": 10300,
+      "error": "Supplies exact button accessible-name lookup timed out; power had already changed OFF. Visible text remains Supplies.",
+      "privateErrorSha256": "7b81251b2440e22de828d5518983a35f25b87a6e39080fb3c54aa7354d06da36"
+    },
+    {
+      "name": "dual-public-identity",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:08:19.305Z",
+      "elapsedMillis": 11154,
+      "error": "locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Main menu', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"tsj-product-button\">Main menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not stable\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not visible\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    18 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+      "privateErrorSha256": "74531d35e3d3003c4a629130372b80727ccd299ccdde29d47329de2286428368"
+    },
+    {
+      "name": "led-remove-faulty-part",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:10:31.292Z",
+      "elapsedMillis": 10076,
+      "error": "locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Component', { exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"tsj-button-label\">Component</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not stable\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is not visible\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    18 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n",
+      "privateErrorSha256": "496f5e47341be83b203d7391587316490dff41ea0a1aa8adcd66357e87f0371a"
+    },
+    {
+      "name": "led-open-shop-after-removal",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:10:51.778Z",
+      "elapsedMillis": 2,
+      "error": "Removed part/off state missing",
+      "privateErrorSha256": "0b3d56fb635726784b7697fe578055dd4b93ed8a9b92006cffccbbd0ddfeeb7f"
+    },
+    {
+      "name": "led-shop-installed",
+      "status": "FAIL",
+      "startedUtc": "2026-10-21T00:11:52.734Z",
+      "elapsedMillis": 40,
+      "error": "Installed part/off state missing",
+      "privateErrorSha256": "60a5c2c31c5469058c430b49ec469e65ab346778f4f1ba30a2f5636ea5bb97f7"
+    }
+  ],
+  "publicIdentities": {
+    "random": {
+      "replay": "tsj-alpha/6/MEDIUM/COMPOSED_CONTROLLED_INDICATOR/-2750102463469069236",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    },
+    "dual": {
+      "replay": "tsj-alpha/6/EASY/PARALLEL_DUAL_INDICATOR/-9223372036854775808",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    },
+    "led": {
+      "replay": "tsj-alpha/6/EASY/LED_INDICATOR/5577758334702827054",
+      "build": "tsj-alpha/6 / 13808B6577D799A49A34CCFD1D18738D"
+    }
+  },
+  "browserStrongName": "13808B6577D799A49A34CCFD1D18738D",
+  "moduleCount": 5,
+  "images": [
+    "random-top.jpg",
+    "dual-top.jpg",
+    "dual-bottom.jpg",
+    "led-repaired.jpg"
+  ],
+  "bodyCount": 9,
+  "execution": {
+    "Protocol": "troubleshootjs-execution-provenance-v1",
+    "SourceDigest": "c48f7de9a91a09f0d7973531799a599cc2712a9abe751e94de7bb2606da19817",
+    "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+    "WebDigest": "51b6280ed944f72a4d55422c245cf8c849890df25f7f8dd4b03b9e732a89e417",
+    "Digest": "eb534a477bfc257c97eb5d92a1db26750ab28319e7efe685ee839b65faba6117",
+    "FileCount": 1592
+  },
+  "limits": "Finite actual normal-player requests, exact replays, repair and raw screenshots with root visual review and verified owned-resource cleanup. No all-seed, manufacturing, optimality, or broader performance claim."
+}

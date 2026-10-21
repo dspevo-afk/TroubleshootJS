@@ -1,0 +1,18 @@
+{
+  "status": "PASS_WITH_UNATTRIBUTED_CONSOLE_404",
+  "counts": {
+    "pageErrors": 0,
+    "requestFailures": 0,
+    "httpErrors": 0,
+    "consoleErrors": 1
+  },
+  "preservedObserverFailures": 6,
+  "limits": "Six observer failures retained; two manual timing records use tool duration/reconstructed timestamps. No board rerolls or injected controller actions. One console404 has no attributed request and is disclosed; no page errors, failed requests or observed HTTP response errors.",
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "correction": {
+    "priorReviewSha256": "3e6812a84886be985390d32ada39a496d758b6e3a1cd204729e0dbc3e0d1545c",
+    "reason": "Root corrected an initial overbroad no-errors status after inspecting console count1; all counts retained."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "phase": "nohook",
+  "scope": "Task-only original-assertion LED diagnostic; root separately observes actual tool exit",
+  "drivers": [
+    {
+      "executable": "pwsh",
+      "startTicks": "639281364265260944",
+      "pid": 29240
+    },
+    {
+      "executable": "pwsh",
+      "startTicks": "639281364267589824",
+      "pid": 32896
+    }
+  ]
+}

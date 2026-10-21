@@ -1,0 +1,16 @@
+{
+  "phase": "canary",
+  "drivers": [
+    {
+      "startTicks": "639281363555920543",
+      "pid": 4900,
+      "executable": "pwsh"
+    },
+    {
+      "startTicks": "639281363563418364",
+      "pid": 30788,
+      "executable": "pwsh"
+    }
+  ],
+  "scope": "Task-only original-assertion LED diagnostic; root separately observes actual tool exit"
+}

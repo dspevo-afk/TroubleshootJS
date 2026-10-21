@@ -1,0 +1,14 @@
+{
+  "status": "PASS_CORRECTED_BEFORE_FINAL_SEAL",
+  "candidateBase": "6426b3ff702c8197324dd996b5b4ede899bb9139",
+  "owner": "tests/contracts/PcbConnectedPocketPackingContractTest.java",
+  "observedWorkingTreeGitBlob": "2dfee0b82dd1ff8f86bbe384384940fe6e758d6c",
+  "finding": "New positive and three exclusion fixtures omitted real connector; TopologyPlacementGraph requires a connector before pair search. Domain-mismatch fixture also omitted authoritative board constraints assignment.",
+  "action": "Returned only owned fixture file to leaf; add real connector with singleton nets/valid geometry and update independent counts without relaxing topology or positive assertions.",
+  "nativeFinalGates": "NOT_RUN",
+  "seal": "NOT_YET_FROZEN",
+  "limit": "Read-only source finding, no runtime failure or pass claim",
+  "correctedTestGitBlob": "5ab4b0f928600f4632d75fe9ce95954e7ac84a9e",
+  "correctedTestSha256": "d4d788bb9d6cf351c8c28c02ac8f7b4aef8445b110380382532392886d4e0a51",
+  "correction": "Real mirrored singleton connector added to all affected fixtures; positive4parts/11pads/8nets/4demands, literal900130/18900 retained; authoritative distinct-domain board constraints set. Source reviewed; runtime pending."
+}

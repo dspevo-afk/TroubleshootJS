@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "images": {
+    "random-top.jpg": {
+      "sha256": "eecf23b157c2d62c6ac7140a8ad75b4533cbe2d1ff8b0c5804b2499e627eb82f",
+      "judgment": "PASS",
+      "notes": "First ordinary random composed request; fifteen visible components, readable meter/markings and no menu covering the bench. Large green regions remain; this is not optimal packing proof."
+    },
+    "dual-top.jpg": {
+      "sha256": "964c1d92330a080ac5b6f54fc73d70e51d05a0f081b2fadb4b51420ac2dd7528",
+      "judgment": "PASS",
+      "notes": "Exact dual replay; five physical components and labels remain readable after the measured area reduction, with correct-sized bench meter."
+    },
+    "dual-bottom.jpg": {
+      "sha256": "2f73779b260c2fadb1d3b9dfdb591d6fbc986ea1af9d99ce3faa525aea372fc5",
+      "judgment": "PASS",
+      "notes": "Actual bottom-copper view of the same board; mirrored pad/copper presentation is visible. Electrical mapping is established separately by native contracts."
+    },
+    "led-repaired.jpg": {
+      "sha256": "2d7da62151f575fa75cb4086d485c683aac2bb7c5130593a8c10b03b4a1bad15",
+      "judgment": "PASS",
+      "notes": "Repaired board returned to power OFF after fresh customer PASS; installed replacement and one original loose tray part retained."
+    }
+  },
+  "limits": "Four raw production screenshots directly inspected; finite rendering/input acceptance, no global-density/manufacturing/all-seed claim."
+}

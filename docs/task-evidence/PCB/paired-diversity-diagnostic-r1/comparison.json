@@ -1,0 +1,362 @@
+{
+  "allowedCrossRunDifferences": [
+    {
+      "field": "placement/physical/novelty geometry",
+      "reason": "Packing may move parts/copper; each run's source replay and uniqueness assertions remain active."
+    },
+    {
+      "field": "outline origin/dimensions",
+      "reason": "Packing may translate/resize; duplicate current rows retain identical normalized poses and dimensions."
+    },
+    {
+      "field": "packing receipt metrics and clocks",
+      "reason": "Observed diagnostic data may differ; schema, bounds and disposition consistency are checked."
+    }
+  ],
+  "batchStartOrdinal": 0,
+  "bySeedCurrentVsNoHook": [
+    {
+      "current": {
+        "acceptedOrdinal": 13,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;82:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,0;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,100;26,26;;13:520,40;26,26;;26:BOTTOM/EXPOSED/H/40/30/520;27:BOTTOM/EXPOSED/H/70/230/350;27:BOTTOM/EXPOSED/H/70/390/520;25:BOTTOM/EXPOSED/V/30/40/70;27:BOTTOM/EXPOSED/V/520/70/100;",
+        "noveltyFingerprintSha256": "06d050c4da89229a8f038b786b7931dff156d9da2826aa6c0c86b03334bb9a80",
+        "outline": [
+          40,
+          40,
+          741,
+          306
+        ],
+        "packingCanonical": "normal-packing@3;attempts=1;orderings=1;expansions=156;millis=0;route=P05_ONE_FACE;disposition=SELECTED;baseline=31fd6ac64984e9733da827db6e5feae7a359492e16aed1fa553ef86a199ff0bb;selected=2c99deea9a8265feb9ebfefc5e2b01c141e5ddf9fc3f98b5c7c217c46a06c19a",
+        "packingMetricEvidence": {
+          "baseline": {
+            "area": 286026,
+            "copper": 960,
+            "protectedVoid": 60200,
+            "vias": 0
+          },
+          "candidate": {
+            "area": 226746,
+            "copper": 800,
+            "protectedVoid": 37000,
+            "vias": 0
+          },
+          "state": "COMPARED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,306;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,105;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,145;;65:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,105;;27:4:J1.1;3:VIN;580,145;26,26;;27:4:J1.2;3:GND;580,205;26,26;;26:4:R1.1;3:VIN;90,175;26,26;;32:4:R1.2;8:LED_NODE;290,175;26,26;;34:6:LED1.A;8:LED_NODE;410,175;26,26;;29:6:LED1.K;3:GND;450,175;26,26;;53:3:GND;6:BOTTOM;7:EXPOSED;24:450,175/580,175/580,205/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,145/550,145/90,145/90,175/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,175/340,175/410,175/;;",
+        "physicalFingerprintSha256": "8ac03058f375ab1456342f34bc8607a78c82501b180563d4ddb1bd4cbaeaeddb",
+        "placementCanonical": "J1:570,105:DEG_0:TOP;LED1:390,105:DEG_0:TOP;R1:60,145:DEG_0:TOP;",
+        "rootOrdinal": 13,
+        "seed": "4515843680402079038"
+      },
+      "nohook": {
+        "acceptedOrdinal": 13,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;83:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,90;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,130;26,26;;14:520,190;26,26;;26:BOTTOM/EXPOSED/H/50/30/520;27:BOTTOM/EXPOSED/H/70/230/350;28:BOTTOM/EXPOSED/H/190/390/520;25:BOTTOM/EXPOSED/V/30/50/70;27:BOTTOM/EXPOSED/V/390/70/190;27:BOTTOM/EXPOSED/V/520/50/130;",
+        "noveltyFingerprintSha256": "fd3506e46a3e5d42c0f1bca69366d47657dface061bbddd81c71bb192767ace6",
+        "outline": [
+          40,
+          40,
+          741,
+          386
+        ],
+        "packingCanonical": "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0;route=P05_ONE_FACE;disposition=NO_CHANGE;baseline=31fd6ac64984e9733da827db6e5feae7a359492e16aed1fa553ef86a199ff0bb;selected=31fd6ac64984e9733da827db6e5feae7a359492e16aed1fa553ef86a199ff0bb",
+        "packingMetricEvidence": {
+          "baseline": null,
+          "candidate": null,
+          "state": "NOT_MEASURED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,386;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,185;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,135;;64:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,95;;27:4:J1.1;3:VIN;580,225;26,26;;27:4:J1.2;3:GND;580,285;26,26;;26:4:R1.1;3:VIN;90,165;26,26;;32:4:R1.2;8:LED_NODE;290,165;26,26;;34:6:LED1.A;8:LED_NODE;410,165;26,26;;29:6:LED1.K;3:GND;450,165;26,26;;69:3:GND;6:BOTTOM;7:EXPOSED;40:450,165/450,200/450,285/550,285/580,285/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,225/580,145/90,145/90,165/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,165/340,165/410,165/;;",
+        "physicalFingerprintSha256": "714396adf141a497d6d8e3f712c3dd694c2ed6f3c6a9b9958910ff6e6d982b23",
+        "placementCanonical": "J1:570,185:DEG_0:TOP;LED1:390,95:DEG_0:TOP;R1:60,135:DEG_0:TOP;",
+        "rootOrdinal": 13,
+        "seed": "4515843680402079038"
+      },
+      "observedDeltas": {
+        "noveltyFingerprintEqual": false,
+        "outlineOriginDelta": {
+          "x": 0,
+          "y": 0
+        },
+        "outlineSizeDelta": {
+          "height": -80,
+          "width": 0
+        },
+        "packingCanonicalEqual": false,
+        "packingMetricEvidenceEqual": false,
+        "physicalFingerprintEqual": false,
+        "placementEqual": false
+      },
+      "seed": "4515843680402079038"
+    },
+    {
+      "current": {
+        "acceptedOrdinal": 18,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;82:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,0;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,100;26,26;;13:520,40;26,26;;26:BOTTOM/EXPOSED/H/40/30/520;27:BOTTOM/EXPOSED/H/70/230/350;27:BOTTOM/EXPOSED/H/70/390/520;25:BOTTOM/EXPOSED/V/30/40/70;27:BOTTOM/EXPOSED/V/520/70/100;",
+        "noveltyFingerprintSha256": "06d050c4da89229a8f038b786b7931dff156d9da2826aa6c0c86b03334bb9a80",
+        "outline": [
+          40,
+          40,
+          741,
+          306
+        ],
+        "packingCanonical": "normal-packing@3;attempts=1;orderings=1;expansions=156;millis=2;route=P05_ONE_FACE;disposition=SELECTED;baseline=ca750cf629d93dcf865fd231d290629a6defc05af02cdafde99383fe6e514372;selected=afc18b0411d28daee350f87f1f594632909a1020d948d5f6e6399260804b27a2",
+        "packingMetricEvidence": {
+          "baseline": {
+            "area": 271206,
+            "copper": 920,
+            "protectedVoid": 51600,
+            "vias": 0
+          },
+          "candidate": {
+            "area": 226746,
+            "copper": 800,
+            "protectedVoid": 37000,
+            "vias": 0
+          },
+          "state": "COMPARED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,306;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,105;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,145;;65:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,105;;27:4:J1.1;3:VIN;580,145;26,26;;27:4:J1.2;3:GND;580,205;26,26;;26:4:R1.1;3:VIN;90,175;26,26;;32:4:R1.2;8:LED_NODE;290,175;26,26;;34:6:LED1.A;8:LED_NODE;410,175;26,26;;29:6:LED1.K;3:GND;450,175;26,26;;53:3:GND;6:BOTTOM;7:EXPOSED;24:450,175/580,175/580,205/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,145/550,145/90,145/90,175/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,175/340,175/410,175/;;",
+        "physicalFingerprintSha256": "8ac03058f375ab1456342f34bc8607a78c82501b180563d4ddb1bd4cbaeaeddb",
+        "placementCanonical": "J1:570,105:DEG_0:TOP;LED1:390,105:DEG_0:TOP;R1:60,145:DEG_0:TOP;",
+        "rootOrdinal": 18,
+        "seed": "-611041393415742133"
+      },
+      "nohook": {
+        "acceptedOrdinal": 18,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;83:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,70;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,110;26,26;;14:520,170;26,26;;26:BOTTOM/EXPOSED/H/50/30/520;27:BOTTOM/EXPOSED/H/70/230/350;28:BOTTOM/EXPOSED/H/170/390/520;25:BOTTOM/EXPOSED/V/30/50/70;27:BOTTOM/EXPOSED/V/390/70/170;27:BOTTOM/EXPOSED/V/520/50/110;",
+        "noveltyFingerprintSha256": "115ceacb0105930435c995db4cccd114e5731bb3d2c531b19b4cd232f7ab96ca",
+        "outline": [
+          40,
+          40,
+          741,
+          366
+        ],
+        "packingCanonical": "normal-packing@3;attempts=0;orderings=0;expansions=0;millis=0;route=P05_ONE_FACE;disposition=NO_CHANGE;baseline=ca750cf629d93dcf865fd231d290629a6defc05af02cdafde99383fe6e514372;selected=ca750cf629d93dcf865fd231d290629a6defc05af02cdafde99383fe6e514372",
+        "packingMetricEvidence": {
+          "baseline": null,
+          "candidate": null,
+          "state": "NOT_MEASURED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,366;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,165;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,135;;64:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,95;;27:4:J1.1;3:VIN;580,205;26,26;;27:4:J1.2;3:GND;580,265;26,26;;26:4:R1.1;3:VIN;90,165;26,26;;32:4:R1.2;8:LED_NODE;290,165;26,26;;34:6:LED1.A;8:LED_NODE;410,165;26,26;;29:6:LED1.K;3:GND;450,165;26,26;;69:3:GND;6:BOTTOM;7:EXPOSED;40:450,165/450,200/450,265/550,265/580,265/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,205/580,145/90,145/90,165/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,165/340,165/410,165/;;",
+        "physicalFingerprintSha256": "5ef9e0ef05e0a1ff2b2c56b11ad3f4ceda72ba1f76ca72294ae154f30edd36b2",
+        "placementCanonical": "J1:570,165:DEG_0:TOP;LED1:390,95:DEG_0:TOP;R1:60,135:DEG_0:TOP;",
+        "rootOrdinal": 18,
+        "seed": "-611041393415742133"
+      },
+      "observedDeltas": {
+        "noveltyFingerprintEqual": false,
+        "outlineOriginDelta": {
+          "x": 0,
+          "y": 0
+        },
+        "outlineSizeDelta": {
+          "height": -60,
+          "width": 0
+        },
+        "packingCanonicalEqual": false,
+        "packingMetricEvidenceEqual": false,
+        "physicalFingerprintEqual": false,
+        "placementEqual": false
+      },
+      "seed": "-611041393415742133"
+    }
+  ],
+  "canaries": {
+    "controls": [
+      {
+        "name": "positive_clock_translation_and_improved_geometry",
+        "result": "ACCEPTED_AS_EXPECTED"
+      },
+      {
+        "name": "positive_nohook_20_row_fixture",
+        "result": "ACCEPTED_AS_EXPECTED"
+      },
+      {
+        "name": "seed_root_identity",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "physical_digest",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "prior_seed_mapping",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "duplicate_absence",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "assertion_text",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "row_order",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "metric_vias",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "metric_protectedVoid",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "count_placements",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "count_routes",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "count_copper",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "count_macros",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "count_sizes",
+        "result": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "name": "nohook_pass_text",
+        "result": "REJECTED_AS_EXPECTED"
+      }
+    ],
+    "status": "PASS"
+  },
+  "collision": {
+    "classification": "ORIGINAL_PHYSICAL_DUPLICATE_ASSERTION",
+    "priorRootOrdinal": 13,
+    "priorSeed": "4515843680402079038",
+    "rootOrdinal": 18,
+    "rows": [
+      {
+        "acceptedOrdinal": 13,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;82:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,0;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,100;26,26;;13:520,40;26,26;;26:BOTTOM/EXPOSED/H/40/30/520;27:BOTTOM/EXPOSED/H/70/230/350;27:BOTTOM/EXPOSED/H/70/390/520;25:BOTTOM/EXPOSED/V/30/40/70;27:BOTTOM/EXPOSED/V/520/70/100;",
+        "noveltyFingerprintSha256": "06d050c4da89229a8f038b786b7931dff156d9da2826aa6c0c86b03334bb9a80",
+        "outline": [
+          40,
+          40,
+          741,
+          306
+        ],
+        "packingCanonical": "normal-packing@3;attempts=1;orderings=1;expansions=156;millis=0;route=P05_ONE_FACE;disposition=SELECTED;baseline=31fd6ac64984e9733da827db6e5feae7a359492e16aed1fa553ef86a199ff0bb;selected=2c99deea9a8265feb9ebfefc5e2b01c141e5ddf9fc3f98b5c7c217c46a06c19a",
+        "packingMetricEvidence": {
+          "baseline": {
+            "area": 286026,
+            "copper": 960,
+            "protectedVoid": 60200,
+            "vias": 0
+          },
+          "candidate": {
+            "area": 226746,
+            "copper": 800,
+            "protectedVoid": 37000,
+            "vias": 0
+          },
+          "state": "COMPARED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,306;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,105;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,145;;65:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,105;;27:4:J1.1;3:VIN;580,145;26,26;;27:4:J1.2;3:GND;580,205;26,26;;26:4:R1.1;3:VIN;90,175;26,26;;32:4:R1.2;8:LED_NODE;290,175;26,26;;34:6:LED1.A;8:LED_NODE;410,175;26,26;;29:6:LED1.K;3:GND;450,175;26,26;;53:3:GND;6:BOTTOM;7:EXPOSED;24:450,175/580,175/580,205/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,145/550,145/90,145/90,175/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,175/340,175/410,175/;;",
+        "physicalFingerprintSha256": "8ac03058f375ab1456342f34bc8607a78c82501b180563d4ddb1bd4cbaeaeddb",
+        "placementCanonical": "J1:570,105:DEG_0:TOP;LED1:390,105:DEG_0:TOP;R1:60,145:DEG_0:TOP;",
+        "rootOrdinal": 13,
+        "seed": "4515843680402079038"
+      },
+      {
+        "acceptedOrdinal": 18,
+        "noveltyCanonical": "physical-board@1;56:3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;330,0;;59:8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;0,40;;82:9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;510,0;;13:230,70;26,26;;12:30,70;26,26;;13:350,70;26,26;;13:390,70;26,26;;14:520,100;26,26;;13:520,40;26,26;;26:BOTTOM/EXPOSED/H/40/30/520;27:BOTTOM/EXPOSED/H/70/230/350;27:BOTTOM/EXPOSED/H/70/390/520;25:BOTTOM/EXPOSED/V/30/40/70;27:BOTTOM/EXPOSED/V/520/70/100;",
+        "noveltyFingerprintSha256": "06d050c4da89229a8f038b786b7931dff156d9da2826aa6c0c86b03334bb9a80",
+        "outline": [
+          40,
+          40,
+          741,
+          306
+        ],
+        "packingCanonical": "normal-packing@3;attempts=1;orderings=1;expansions=156;millis=2;route=P05_ONE_FACE;disposition=SELECTED;baseline=ca750cf629d93dcf865fd231d290629a6defc05af02cdafde99383fe6e514372;selected=afc18b0411d28daee350f87f1f594632909a1020d948d5f6e6399260804b27a2",
+        "packingMetricEvidence": {
+          "baseline": {
+            "area": 271206,
+            "copper": 920,
+            "protectedVoid": 51600,
+            "vias": 0
+          },
+          "candidate": {
+            "area": 226746,
+            "copper": 800,
+            "protectedVoid": 37000,
+            "vias": 0
+          },
+          "state": "COMPARED",
+          "unavailableReason": null
+        },
+        "physicalCanonical": "physical-board@1;13:LED_INDICATOR;13:DIRECT_SERIES;741,306;89:2:J1;9:CONNECTOR;24:THROUGH_HOLE_CONNECTOR_2;18:DEFAULT_MIRRORED_X;5:DEG_0;3:TOP;570,105;;66:2:R1;8:RESISTOR;14:AXIAL_RESISTOR;8:SPAN_260;5:DEG_0;3:TOP;60,145;;65:4:LED1;3:LED;16:THROUGH_HOLE_LED;7:DEFAULT;5:DEG_0;3:TOP;390,105;;27:4:J1.1;3:VIN;580,145;26,26;;27:4:J1.2;3:GND;580,205;26,26;;26:4:R1.1;3:VIN;90,175;26,26;;32:4:R1.2;8:LED_NODE;290,175;26,26;;34:6:LED1.A;8:LED_NODE;410,175;26,26;;29:6:LED1.K;3:GND;450,175;26,26;;53:3:GND;6:BOTTOM;7:EXPOSED;24:450,175/580,175/580,205/;;59:3:VIN;6:BOTTOM;7:EXPOSED;30:580,145/550,145/90,145/90,175/;;58:8:LED_NODE;6:BOTTOM;7:EXPOSED;24:290,175/340,175/410,175/;;",
+        "physicalFingerprintSha256": "8ac03058f375ab1456342f34bc8607a78c82501b180563d4ddb1bd4cbaeaeddb",
+        "placementCanonical": "J1:570,105:DEG_0:TOP;LED1:390,105:DEG_0:TOP;R1:60,145:DEG_0:TOP;",
+        "rootOrdinal": 18,
+        "seed": "-611041393415742133"
+      }
+    ],
+    "seed": "-611041393415742133"
+  },
+  "consumedSourceSha256": {
+    "docs/task-evidence/PCB/paired-diversity-diagnostic-r1/export-source/SparseNormalBoardDiagnostic.java": "fb0f1caea0d5d341e1fc5ea04ee3f0b82b8d7d4ac0664e5cca81722e51a9ef6a",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java": "724e4d6822eaeb3178efdfbaa30340ff12f0bdb1821734666b1a49df47ca5a8e",
+    "src/com/lushprojects/circuitjs1/client/PcbPackingProbeReceipt.java": "c7d2f17a3e4b2a892beae7856b5d00dce9af66f7d50d2c3f802ec74d8116cf68",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "df561459c15fcd85840672971b1244bc019e92f58cfef4f81dc663d14f99f1b1",
+    "src/com/lushprojects/circuitjs1/client/PhysicalBoardFingerprint.java": "e6b8a1bca49ff913e614171c65bc86df9f6a5a39ed28cb44744b8e88cf9daf06",
+    "src/com/lushprojects/circuitjs1/client/PlayerSessionFingerprint.java": "e1efcc45ae485b978f9ee771193eaae2622f4930d7a7461318de4c09c10673cf",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "7f27c83d12f47579a7fea50b496c2f0320e833e412f0aebe82594a62c7184750",
+    "tests/contracts/PcbConnectedPocketPackingContractTest.java": "d4d788bb9d6cf351c8c28c02ac8f7b4aef8445b110380382532392886d4e0a51",
+    "tests/contracts/PcbNormalPackingIdentityContractTest.java": "a4c4806a856dd6ed9d5aee213c5c82d7914bc87d75fd90a1b45ee5ce29250",
+    "tests/contracts/QuickPlayPhysicalMatrixContractTest.java": "f54486fad58d30d003355932a67e01dfdeb814d401a7bcfdaa212f2e0d4ff395"
+  },
+  "currentRowCount": 19,
+  "family": "LED_INDICATOR",
+  "independentlyRecomputedNoHookCounts": {
+    "macros": 11,
+    "physical": 20,
+    "placements": 20,
+    "sizes": 20
+  },
+  "inputSha256": {
+    "currentNativeLog": "573f8038efa65f651e0034d04116a2c6406d668589e1a429d9b0c3e841c0e5a2",
+    "currentObservations": "573f8038efa65f651e0034d04116a2c6406d668589e1a429d9b0c3e841c0e5a2",
+    "nohookReceipt": "2c64ce4d9d336256e0cfdff0c06256f6cde4295b5903fd094455759b184b50fa"
+  },
+  "limits": [
+    "LED_INDICATOR batch only; original root sequence, target 20, maximum 48 roots.",
+    "Current reproduces the original duplicate assertion; no-hook PASS is bounded to its 20 accepted rows.",
+    "Route/copper diversity comes from the original PHYSICAL_MATRIX summary and retained Java assertions, not independent reconstruction.",
+    "Physical canonical fingerprints are not authenticated receipts or proof of electrical solver-graph equivalence.",
+    "No full-matrix, all-seed, optimality, manufacturing, player-behavior, or production-acceptance claim."
+  ],
+  "nohookAcceptedRowCount": 20,
+  "nohookMatrixSummary": {
+    "accepted": 20,
+    "copper": 20,
+    "elapsedMillis": 866,
+    "macros": 11,
+    "physical": 20,
+    "placements": 20,
+    "rejected": 0,
+    "roots": 20,
+    "routes": 20,
+    "sizes": 20
+  },
+  "productionMatrixStatus": "BLOCKED_BY_REPRODUCED_PHYSICAL_DUPLICATE",
+  "profile": "EASY",
+  "schema": "paired-diversity-diagnostic-comparison@1",
+  "status": "DIAGNOSTIC_ONLY"
+}

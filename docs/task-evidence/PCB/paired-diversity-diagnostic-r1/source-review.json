@@ -1,0 +1,20 @@
+{
+  "status": "PASS_SOURCE_ONLY_AFTER_TWO_PRESEAL_CORRECTIONS",
+  "reviewer": "root",
+  "files": {
+    "make_diagnostic.py": "6eae13d41f80efb7b388db3d5e05b1a385776ad061207e4bd4b527f4eb577437",
+    "export-source/SparseNormalBoardDiagnostic.java": "fb0f1caea0d5d341e1fc5ea04ee3f0b82b8d7d4ac0664e5cca81722e51a9ef6a",
+    "run_diagnostic.ps1": "e39ef59e44e7e7124eedc572d67089f2b8620f824804632606128de2ac5ae068",
+    "record_exit.ps1": "5041179a5ad9dd074947b4e7b89dc17fb4047c77ccbdd3cfc9cf58c650c8bd04",
+    "inputs.py": "adf27b8be9c7e52216ca74243644a3471072d6b435bd53cc8fcb9e9828cda79e",
+    "qualify.py": "f4b06a32f73bcf62d3b16a65c5b309d97a0d02894fa7c3c842e4c1a4451526ce"
+  },
+  "scope": [
+    "Normalized source diff retains original matrix generation/replay/selection/root/TARGET20/MAX48 and all original assertions; passive row precedes physical.add duplicate assertion.",
+    "Private generator omits exactly two new hook lines; nohook adapter substitutes only that owner; original native class limits and cleanup retained.",
+    "Actual native exit remains failure for duplicate; root birth observation separate; expected diagnostic reproduction cannot mark production PASS.",
+    "First-field comma and hash representation bugs corrected before native; unused first private factory output preserved.",
+    "Native seal includes every runtime-consumed helper/private input. Post-run independent reader will be separately frozen before its first execution; qualification binds that reader seal to this native seal."
+  ],
+  "limits": "Reader reviewed separately after ownership release; no runtime or GWT/player proof from source review"
+}

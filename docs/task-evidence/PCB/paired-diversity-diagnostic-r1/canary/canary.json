@@ -1,0 +1,6 @@
+{
+  "status": "PASS_REJECTED_AT_PARAMETER_BINDING",
+  "privateLogSha256": "518b7d2dc93023f7ef1e73d86ccb310b4bbb79f7734cf2019532167333a9bfb9",
+  "privateLogBytes": 419,
+  "actualAdapterExitCode": 1
+}

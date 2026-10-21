@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "phase": "matrix",
+  "elapsedSeconds": 215.7794379,
+  "candidateSealSha256": "70c232114980b1da1a02ef818057de53efe026449a12c3d1e7e74672d4ff6dca",
+  "limits": "Actual named finite final-source phase; other native/build/player/publication gates separate",
+  "receiptSha256": "633a83a326b61fd9938e0f05a893a67a47ed318a9e13ca6812cab022c3c06cb2",
+  "suites": [
+    "QuickPlayPhysicalMatrixContractTest"
+  ],
+  "families": 11,
+  "accepted": 220,
+  "exactReplays": 220
+}

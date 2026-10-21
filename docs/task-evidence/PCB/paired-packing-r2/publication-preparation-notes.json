@@ -1,0 +1,8 @@
+{
+  "status": "STAGED_WHITESPACE_FINDING_RESOLVED_FOR_IMMUTABLE_EVIDENCE",
+  "firstStagedDiffCheck": "FAIL before staged source inspection/commit: raw DOM body captures contain tab-only lines; two sealed diagnostic reader copies retain an extra final blank line.",
+  "correction": "Narrow local gitattributes exceptions for *-public.txt blank-at-eol and the exact two sealed reader paths blank-at-eof. Source/code whitespace rules remain; no captured or sealed bytes normalized.",
+  "reason": "Preserve the exact raw capture and frozen reader hashes used by accepted and failed evidence. The exception is limited to those artifact shapes and paths.",
+  "productionOrGateInputChanges": "NONE",
+  "checksAfterCorrection": "Separate fresh staged diff check and explicit blob/source/privacy review required before commit."
+}
