@@ -20,6 +20,12 @@ Owner is available for a short human advanced-board attempt next. HARD calibrati
 normal advanced admission/population and advertised release cells remain pending;
 Q100 is unstarted. No further PCB-size experiment is planned.
 
+The current human attempt supplied its first clarity report: ISOLATE COMPONENT
+appeared stuck in Ω mode. Actual DC V switch clears it to0V; existing RB56 active
+tests require a fully removed isolated supported part. The message clips under the
+LCD. [Observation, assistance and bounded follow-up](task-evidence/U05/q60-human-play-r2/meter-feedback-01.json).
+No human repair outcome or HARD calibration is inferred.
+
 Previous board-size closeout:
 
 The owner ended further PCB-size tweaking on2026-10-20. Accepted generic packing4

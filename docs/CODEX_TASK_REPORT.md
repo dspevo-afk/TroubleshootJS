@@ -1,5 +1,13 @@
 # Current checkpoint: advanced human workbench handed to owner
 
+First actual human feedback: meter appeared stuck on ISOLATE COMPONENT. Ω mode,
+powerOFF observed; root's one actual DC V click clears immediately to0V. Existing
+RB56 loose-part-only active-test policy is the cause; message also clips under LCD.
+[Verbatim observation and explicit agent assistance](task-evidence/U05/q60-human-play-r2/meter-feedback-01.json).
+No production changes/native/GWT rerun; no inferred human diagnosis/repair/time.
+Next product follow-up: explain the bounded restriction and fit readiness messages.
+Human attempt/preview8898/tab17 still intentionally retained pending user feedback.
+
 Source39cd281c55f15f50d1732eab7ffa243a02654e23 is normally pushed/exactremote verified:
 22 reviewed blobs, public report composer/focus guards accepted with scoped proof.
 No main/email. Seven unrelated groups/FIVE blocked profiles preserved, no retries.

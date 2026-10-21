@@ -1,5 +1,12 @@
 # Current advanced-board human attempt
 
+First human feedback: the meter appeared stuck at **ISOLATE COMPONENT**. Actual
+Ω/powerOFF state was observed; one agent click to DC V cleared it to0V. The current
+RB56 active-test policy requires a supported fully removed isolated part, and the
+message clips beneath the LCD. [Verbatim report, assistance, captures and limits](meter-feedback-01.json).
+Human strategy/elapsed time/repair outcome remain unreported. This assistance is
+part of the trial record; no physics/policy/production source change was made.
+
 The owner volunteered on 2026-10-20 to play next. This is a qualitative attempt,
 not completion of HARD calibration. Candidate: current private RB56 regression
 seed `-1004`, production source `39cd281c55f15f50d1732eab7ffa243a02654e23`,

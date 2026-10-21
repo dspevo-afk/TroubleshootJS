@@ -1,0 +1,29 @@
+{
+  "status": "HUMAN_CLARITY_REPORT_WITH_SOFTWARE_TRIAGE",
+  "candidateSource": "39cd281c55f15f50d1732eab7ffa243a02654e23",
+  "documentationHeadAtReport": "e944aef65795d81486febd1fa598e5741f060a2e",
+  "seed": "-1004",
+  "userReportVerbatim": "so for some reason the meter is stuck saying ISOLATE COMPONENT",
+  "observedBefore": {
+    "screen": "WORKBENCH",
+    "meterMode": "RESISTANCE",
+    "display": "ISOLATE COMPONENT",
+    "boardPower": "OFF",
+    "trayCount": 0,
+    "screenshot": "meter-isolate-before.jpg"
+  },
+  "sourceFinding": "Rb56InstrumentAdmissionCapability.getActiveInstrumentAdmission rejects active injection unless both endpoints belong to different terminals of the same supported fully removed and electrically isolated physical part. Installed parts, board pads and cross-part pairs return ISOLATE_COMPONENT after energy readiness. This is current bounded RB56 support, not a universal real-meter requirement.",
+  "agentAssistance": "One real visible click on DC V, followed by visible state and screenshot inspection. No power, probe, physical part, Shop, repair or retest action.",
+  "observedAfter": {
+    "meterMode": "DC_VOLTAGE",
+    "display": "0 V",
+    "boardPower": "OFF",
+    "screenshot": "meter-dcv-after.jpg"
+  },
+  "conclusion": "Mode switching clears the message; a stuck display was not reproduced. The user did encounter an unexplained active-injection restriction. The two-line label visibly extends below the LCD and under the buttons.",
+  "followUp": "Explain the RB56 loose-part-only active-test limitation clearly and fit readiness messages within the LCD. Any expansion to in-circuit active injection needs its own solver/model and lifecycle qualification, without fake readings or relaxed guards.",
+  "humanOutcome": "Not reported. This single clarity observation does not establish human strategy, elapsed time, repair outcome or HARD calibration.",
+  "productionChanges": "NONE",
+  "nativeOrGwtBuild": "NOT RUN: source and compiled production inputs unchanged",
+  "resources": "Preview8898/tab17 intentionally retained for the ongoing user attempt; no blocked-profile access"
+}
