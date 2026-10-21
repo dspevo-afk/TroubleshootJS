@@ -1,0 +1,11 @@
+{
+  "status": "PASS_VERIFIED_NORMAL_PUBLICATION",
+  "sha": "39cd281c55f15f50d1732eab7ffa243a02654e23",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "origin",
+  "remoteExactSha": "39cd281c55f15f50d1732eab7ffa243a02654e23",
+  "reviewedBlobs": 22,
+  "pushExitCode": 0,
+  "mainMerge": "NOT REQUESTED",
+  "email": "DISABLED BY USER"
+}

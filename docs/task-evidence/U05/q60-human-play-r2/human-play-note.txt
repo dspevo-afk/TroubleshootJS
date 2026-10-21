@@ -1,0 +1,18 @@
+RB56 HUMAN PLAY NOTE — actual human observations only
+
+Source: 39cd281c55f15f50d1732eab7ffa243a02654e23
+Build: 13808B6577D799A49A34CCFD1D18738D
+Seed: -1004; app alpha/6; dependency17; placement15
+Prior guided software exposure of this seed must be disclosed.
+No human outcome has been entered.
+
+Date/time:
+Approximate elapsed time:
+Outcome or stopping point:
+Strategy in your own words:
+Measurements and observations in order:
+Actions (isolation, Shop, repair, retest if attempted):
+Retries, errors, stuck points:
+Hints, assistance, prior exposure:
+Clear or confusing UI:
+Verifier/expiry status if seen (separate from human outcome):

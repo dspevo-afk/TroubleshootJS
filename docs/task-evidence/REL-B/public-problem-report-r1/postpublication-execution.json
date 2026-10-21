@@ -1,0 +1,9 @@
+{
+  "Protocol": "troubleshootjs-execution-provenance-v1",
+  "SourceDigest": "c48f7de9a91a09f0d7973531799a599cc2712a9abe751e94de7bb2606da19817",
+  "ScriptDigest": "bc9ae2885544d1f3850a8032b5bb332d1ca8c2fbb188dd7cfdf9c767766da488",
+  "WebDigest": "f2b8c893687d3bb3dd5e6d45b4ba77d67742c2d480b2e2191ef6c5a42374d331",
+  "Digest": "c780a978d483e681737096ac22dca4b83e7d9090a1d979f64d121ace36ef39f9",
+  "FileCount": 1592,
+  "firstAttempt": "Actual exit1: guessed helper Get-VerifierExecutionProvenance absent, no proof emitted; corrected to maintained Get-VerifierExecutionTreeProvenance, actual0. No prior failed proof relabeled PASS."
+}

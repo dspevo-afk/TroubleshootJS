@@ -1,4 +1,26 @@
-# Current checkpoint: REL-B public report software accepted; human attempt next
+# Current checkpoint: advanced human workbench handed to owner
+
+Source39cd281c55f15f50d1732eab7ffa243a02654e23 is normally pushed/exactremote verified:
+22 reviewed blobs, public report composer/focus guards accepted with scoped proof.
+No main/email. Seven unrelated groups/FIVE blocked profiles preserved, no retries.
+Owner volunteered to play next. [Current human packet](task-evidence/U05/q60-human-play-r2/README.md)
+supersedes old placement3/alpha5 metadata for this attempt: private regression-1004,
+current placement15/alpha6/dependency17/build13808B..., no profile flags changed.
+Prior guided same-seed exposure disclosed; no automated diagnosis/human outcome.
+
+Maintained preview port8898 and IAB tab17 intentionally retained for human handoff.
+Exact PID/birth and startup0 are in packet handoff.json/private q60 human-r2 pointer.
+Six-minute timer starts at private workbench adoption; root only navigated and observed. Direct WORKBENCH/no ticket overlay is confirmed by openQualifiedBoard/adoptQualification. Human
+strategy, stopping point, elapsed estimate, measurements/actions, hints and confusion
+remain NOT REPORTED until the owner supplies them. Do not infer them from software
+proof/verifier success. End view/expiry verdict is separate. After play, close exact
+task tab and stop the owned preview using recorded state; no broad cleanup.
+
+Current independent report task resources are already cleaned. Human handoff is a
+new intentional resource hold. HARD calibration/admission/population/public advanced
+saves remain held; Q100 unstarted. Next collect actual feedback and apply U05 protocol.
+
+# Previous checkpoint: REL-B public report software accepted; human attempt next
 
 2026-10-20 America/New_York. Worktree q30-multirail-qualification, branch
 codex/q60-faulted-profile-counts, base/exactremote fc598e7f8ead61acd06c6d5707a712ea6df8f102.
