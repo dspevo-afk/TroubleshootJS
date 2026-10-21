@@ -1,0 +1,28 @@
+{
+  "status": "PASS_PRIVATE_SPAN_PROBE_SOURCE_ONLY",
+  "reviewer": "root",
+  "privateInputManifestSha256": "affc609b88d9f3ab29ae9007ba872acd3f822246f6c89a30c1b86a6e850cb61b",
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "135107e4101f15849e5dfc98a9d771dbe1be25a9434f7b5cf595c9ff5c82a707",
+    "common/verify-two-pad-span.ps1": "a38dda3888baf3212cdc8e50af5cc4d3b327504871e1d81c5e37df4e40bede11",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "variant/SeededPcbLayoutGenerator.java": "d7cbb67672735a7fdb9fb3bc4127d6a6d407815432e82a3395f5c0739073a7c3",
+    "variant/PcbPlacementPlanner.java": "db61775d57008b4fdb73723849760fac9499edb1c3154d6ce820c471522dd672",
+    "variant/PcbPlacementCompactor.java": "dbca1d400c387e6423931fec9929368063da5a379ff77b562d65820e52fb659b"
+  },
+  "guardPatchSha256": "ddccf3b8435e423b1fb958dd6d6d0e43e91ebfdfca4b86f18cfb1493a3e8ed07",
+  "guardNotesSha256": "d781c7eb12f6f47fbf6ec2b1aa213a468162c6fa39c8759d8139629405b6726d",
+  "verifiedControlCheckpointHooks": 4,
+  "verifiedReversibleGuardChanges": 6,
+  "findings": [
+    "Removing exactly four two-line stage observations restores accepted observed generator bytes; control planner/compactor exact accepted checkout owners.",
+    "Root inspected generator/compactor/planner diffs and pure guard source. Exact six reverse replacements restore both published owners. Three-argument default callers pass null and retain the original body/guards/order/increments/validators; only optional generator entry passes selected-source caps.",
+    "Generic exactly-two-pad bounds use actual placed pads and authoritative board/TopologyPlacementGraph, long Manhattan arithmetic, deterministic TreeMaps, complete pad/footprint/cap inventories. BoardNet/TroubleshootBoard getters return defensive vectors, so sorted copies do not mutate the graph.",
+    "Existing paired pass and limits unchanged. Final source-geometry fallback retains trial evaluations. Root actual variant diff inspected; no extra route or reset of work counts.",
+    "Independent stage observer uses direct BoardNet membership/placed-pad lookup and its own span arithmetic, not the new guard API; old exporter and typed rejection observer remain exact byte prefix.",
+    "Adapter changes add two required validated source paths/exclude only three physical owners/compile their exact copies; all original process jobs, budgets, class definitions and canonical binding remain."
+  ],
+  "limits": "Source/syntax only. Native control/variant, actual host5negatives, independent stage/metric reader and guard/fallback fixtures NOT RUN. No production GO; cap validation/overflow/cancellation/fallback branch generalization requires later promotion fixtures."
+}

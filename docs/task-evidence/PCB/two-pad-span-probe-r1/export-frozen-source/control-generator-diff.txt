@@ -1,0 +1,20 @@
+--- accepted-control-generator
++++ private-control-generator
+@@ -257,9 +257,17 @@
+         // Keep the exact post-route compaction plan in its routing coordinate
+         // frame. The final display crop may translate pads by a non-grid amount.
+         PcbPlacementPlanner.Plan source = session.bestPlan;
++        TaskPackingSpanObservation.emit("SOURCE", session.board,
++            source, session.seed, session.routingSeed);
+         session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
++        TaskPackingSpanObservation.emit("ORDINARY", session.board,
++            session.packingPlan, session.seed, session.routingSeed);
+         session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(
+             session.board, constraints, session.packingPlan);
++        TaskPackingSpanObservation.emit("PAIRED", session.board,
++            session.packingPlan, session.seed, session.routingSeed);
++        TaskPackingSpanObservation.emit("FINAL", session.board,
++            session.packingPlan, session.seed, session.routingSeed);
+         if (session.mediumPolicy)
+             session.mediumPlacementEvaluations += session.packingPlan.evaluations - source.evaluations;
+         if (PcbPlacementCompactor.samePlacement(source, session.packingPlan)) {

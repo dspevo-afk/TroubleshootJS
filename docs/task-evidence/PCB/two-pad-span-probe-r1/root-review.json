@@ -1,0 +1,26 @@
+{
+  "status": "PASS_ROOT_FINITE_PROBE_NO_GO",
+  "baseCommit": "113456fc2d781411f9a3e94bfca4b676fee883b6",
+  "assessmentSha256": "8da182f3492285ac35601491b029b462a7296b73140712e71ed38bff31a25b22",
+  "failedReaderReceiptSha256": "2c1277a3f9917d2513086241fb3a6206ae4251ca74cba7ed467ad49b7b87faaa",
+  "correctedReaderSealSha256": "d409cae772ee01548cdf8fcb3f37cdc786d027bf333252ae785a304965a7660a",
+  "actualNativeExits": {
+    "canaries": 0,
+    "control": 0,
+    "variant": 0
+  },
+  "originalPostControlReaderExit": 1,
+  "correctedQualifierExit": 0,
+  "nativeAssertionsPerArm": 327,
+  "readerNegatives": 13,
+  "driverBirthsSeparatelyExited": 6,
+  "selectedGeometry": "14cb0825afcb5d05b9c5866706a8945649f801a5f1bdb64477bb2264881a851f",
+  "decision": "NO_GO",
+  "sourceReview": "Root inspected actual transformed owners, reverse restorations, adapter and observer; optional leaves supplied pure patch and reader only. Root corrected and preserved reader source gaps before seal and actual outline failure after control. No independent final acceptance reviewer.",
+  "limits": "Private one-replay experiment; no production source/epoch/selection change; no fresh matrix, GWT, browser/player or screenshots in this packet. Prior accepted production evidence reused only after source1482/machinery24/native13/player10/modules5 and execution6 input audits.",
+  "precommitIndexAudit": {
+    "firstExit": 1,
+    "cause": "Exact raw/index check for root task-report CRLF versus Git normalized LF; no commit occurred.",
+    "resolution": "Only root roadmap/report permit CRLF-to-LF under configured core.autocrlf; all scoped evidence requires exact bytes. Full corrected index audit follows."
+  }
+}

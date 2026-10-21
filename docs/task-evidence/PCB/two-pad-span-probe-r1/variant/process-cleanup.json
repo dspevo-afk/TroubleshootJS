@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "executable": "pwsh",
+      "pid": 16000,
+      "startTicks": "639281426072367507",
+      "recordedBirthExited": true
+    },
+    {
+      "executable": "pwsh",
+      "pid": 15944,
+      "startTicks": "639281426075781901",
+      "recordedBirthExited": true
+    }
+  ],
+  "scope": "Separate root birth checks after actual tool exec completion; no termination",
+  "actualExecExitCode": 0,
+  "status": "PASS",
+  "elapsedSeconds": 0.0047066,
+  "launchSha256": "3862066a23922ee517ef04d8e66baa099dd00c1c3c5d6bca7800e7389a5ee91f"
+}

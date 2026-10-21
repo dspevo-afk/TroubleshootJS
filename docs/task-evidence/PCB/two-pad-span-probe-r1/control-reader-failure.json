@@ -1,0 +1,47 @@
+{
+  "status": "FAIL_CONTROL_READER_R1",
+  "actualExecExitCode": 1,
+  "phase": "post-control independent stage qualification",
+  "nativeControlActualExecExitCode": 0,
+  "nativeAssertions": 327,
+  "separateDriverExits": "PASS two births",
+  "passedBeforeFailure": [
+    "original row oracle",
+    "exact accepted row except packing clock",
+    "exact accepted sampler",
+    "exact accepted typed causes",
+    "four independent inventories and spans"
+  ],
+  "failure": "stage plans preserve outline, candidate, and replay seeds",
+  "observedOutlines": [
+    [
+      20,
+      20,
+      1530,
+      1040
+    ],
+    [
+      20,
+      20,
+      1520,
+      1040
+    ],
+    [
+      20,
+      20,
+      1520,
+      1040
+    ],
+    [
+      20,
+      20,
+      1520,
+      1040
+    ]
+  ],
+  "cause": "Reader incorrectly required outline equality despite existing compactAxis grid-strip contraction. Production and private native inputs remain unchanged.",
+  "readerSha256": "eece2711f31efc85143aa14155a183ecdaca3120397c52bb9f3c3e1173a3096a",
+  "controlReceiptSha256": "0074635d913e32784c172541c8d1272360f82f7e063d9762316213f87b662ee2",
+  "controlNativeSha256": "f56d654ebbd00d6182a14b005ad28d39b6f75086b850fd4cafcd0bfb10183a0e",
+  "resolution": "Separate corrected qualifier; original failed reader, input seal and native receipts preserved; no pre-fix PASS reused."
+}

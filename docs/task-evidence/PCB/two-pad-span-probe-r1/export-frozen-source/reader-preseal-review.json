@@ -1,0 +1,15 @@
+{
+  "status": "PASS_ROOT_PRESEAL_SOURCE_REVIEW",
+  "originalWorkerReaderSha256": "a35d353665d2e160affbd40db23892950081dc8b3e7f08edffc39fa93c89ef8a",
+  "qualifierSha256": "eece2711f31efc85143aa14155a183ecdaca3120397c52bb9f3c3e1173a3096a",
+  "scopeSha256": "47a3d77af0d7290ea6480b7a3d5008179b3cfa2b53a6d1fc75acd991aae5b2c1",
+  "findings": [
+    "Corrected a source-shape assertion that expected three expanded missing-path literals although the runner builds one dynamic missing path. Actual five bindings and absent paths still checked.",
+    "Added generic typed cause validation for both arms and correlation of the actual catch to FINAL, including actual router work and blocked-net membership; no old route reason or counter imposed on the variant.",
+    "Added explicit original-incumbent binding and actual SELECTED disposition to GO, and a hash-valid cause correlation negative.",
+    "Retained five inherited row negatives, coherent counter negative, five stage/span/fallback negatives with explicit rejection branches.",
+    "Independent source net inventory, Manhattan arithmetic, stage order/cumulative budget, identical arm SOURCE, preserved fallback count, and strict four-metric selection inspected."
+  ],
+  "syntax": "PASS Python AST; no native or data qualification executed before seal",
+  "limits": "Finite private single replay; no production approval, per-pair visit proof or general guard fixtures."
+}

@@ -1,0 +1,21 @@
+--- accepted-variant-compactor
++++ private-variant-compactor
+@@ -11,10 +11,17 @@
+ 
+     static PcbPlacementPlanner.Plan compact(TroubleshootBoard board,
+             PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input) {
++        return compact(board, constraints, input, null);
++    }
++
++    static PcbPlacementPlanner.Plan compact(TroubleshootBoard board,
++            PcbPlacementConstraints constraints, PcbPlacementPlanner.Plan input,
++            java.util.Map<String,Long> caps) {
+         PcbPlacementPlanner.Plan result = compactStrips(board, constraints, input, true);
+         if (constraints.placementPackingVersion ==
+                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION) {
+-            result = PcbPlacementPlanner.compactConnectedVacancies(board, constraints, result);
++            result = PcbPlacementPlanner.compactConnectedVacancies(
++                board, constraints, result, caps);
+             result = compactStrips(board, constraints, result, true);
+         }
+         return result;

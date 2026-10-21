@@ -1,0 +1,11 @@
+{
+  "status": "SEALED_READER_CORRECTION_AFTER_CONTROL_FAILURE",
+  "files": {
+    "qualify_r2.py": "bf896d242a25dfd4b8ab396479618ad3935acaa572fefd7f787e053a0bd11b51",
+    "reader-r2-note.md": "4a0741b3e27b056ec5f3d7a65052a9b0f970c9f93508ab4895edcd4596ecc508",
+    "control-reader-failure.json": "2c1277a3f9917d2513086241fb3a6206ae4251ca74cba7ed467ad49b7b87faaa"
+  },
+  "initialInputSealSha256": "7fb5e42312506febb8d5d1edeb7f6c1b41d54a991f5dce30545fc94fdba789c4",
+  "reusedControlReceiptSha256": "0074635d913e32784c172541c8d1272360f82f7e063d9762316213f87b662ee2",
+  "compactorSourceSha256": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3"
+}

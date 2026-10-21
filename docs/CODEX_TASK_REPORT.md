@@ -1,4 +1,39 @@
-# Current checkpoint: private exact-board rejection attributed; publication preparing
+# Current checkpoint: span filter private NO_GO; fresh visual sampling next
+
+2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
+Base/exactorigin113456fc2d781411f9a3e94bfca4b676fee883b6; current finite packet
+ready for root diff/stage/commit/normalpush/exactremote. Continue authorized
+realism indefinitely; no main/email/final milestone stop. Seven unrelated groups
+and four old blocked profiles untouched; no deletion retry.
+
+Two-pad-span-probe-r1: same actual first ordinary composed replay -2750102463469069236.
+Control/variant actual JDK8 PASS327/root0,43.1120845/43.0847814s. Actual host5
+negativebindings child1/root0,1.7173008s; all6 recorded driver births separately
+exited. Initial post-control reader FAIL/root1 on invalid outline-equality
+assumption; preserved originalreader/seal/receipt and failure. Existing strip
+source contracts1530→1520. Separately pre-variant-sealed R2 reader permits only
+stable-origin grid10 contraction and exact paired/source fallback with retained
+counts; final PASS/root0 and13 negatives. No pre-fix PASS reused/native rerun.
+
+Variant all7 two-pad spans capped; supply span370 vscontrol390. Its proposal
+routes4orders/208256expansions but has equal area1457568 and copper12500 vs12490,
+vias0/void79200. Original strictselector KEPT incumbent14cb0825...; finite NO_GO,
+no finalfallback, no production promotion/source/epoch/budget/validator change.
+Control accepted row/sampler/events exact except packing clock. Both SOURCE
+checkpoints exact; cumulativecounts108→183→198 vs108→168→183 independentlychecked.
+Root source/evidence review; optional leaves patch/reader, no independentfinalreview.
+
+Baseline1482/24/accepted13/10/5 and frozen18helpers/private8 exactaudits; execution6
+before/after exact. Prior production matrix/GWT/player reused after input audit;
+not fresh gates. Private source/log directory retained via q60pointer; no live
+session/browser/preview. Results/evidence: task-evidence/PCB/two-pad-span-probe-r1/.
+No fresh image in this private packet. Three accepted production images pasted
+previously. Surface/package source re-review NO_GO; current treatments adequate.
+
+Next unstarted: fresh normal production board sampling under accepted packing4,
+record actual first results and inspect visible remaining gaps before a new scope.
+
+# Previous checkpoint: private exact-board rejection attributed; publication preparing
 
 2026-10-20, q30-multirail-qualification/codex/q60-faulted-profile-counts.
 HEAD/exactorigin6c583204af0897071514304b886c9dfb3eb1562b. Prior exact-board

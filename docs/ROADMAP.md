@@ -7,7 +7,18 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Exact first-random rejection attributed; connected-part review next**
+**Current task:** **Private two-pad span experiment complete: NO_GO**
+
+Actual JDK8 control/variant327/root0; host5negatives and6 separate driver exits
+PASS. Generic caps keep all7 two-pad spans, supply370 vscontrol390. Variant routes
+but candidate area1457568 unchanged/copper12500 vs12490; strictselector KEPT
+incumbent. No production change/promotion. Initial reader FAIL/root1 on incorrect
+outline equality preserved; separately sealed R2 checks grid10 contraction and
+fallback counts, final PASS/root0 with13 negatives. Old production1482/24/13/10/5
+and execution6 exactaudited; no fresh matrix/GWT/player/image claim. Next unstarted:
+fresh ordinary production board sampling under accepted packing4 for visible gaps.
+[Finite decision, failure and evidence limits](task-evidence/PCB/two-pad-span-probe-r1/RESULTS.md).
+
 
 The actual optional proposal's final failed net is supply-indicator LED_NODE:
 P05 route search NO_PATH, EXHAUSTED after5orderings/305104expansions. Two typed

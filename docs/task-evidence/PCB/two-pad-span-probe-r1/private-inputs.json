@@ -1,0 +1,124 @@
+{
+  "status": "GENERATED_PRIVATE_TWO_ARM_SPAN_PROBE",
+  "baseCommit": "113456fc2d781411f9a3e94bfca4b676fee883b6",
+  "borrowedPrivateSources": {
+    "SeededPcbLayoutGenerator.java": "107ab7941b173074da1d535a16d0c24ee12a4400e40b40b79aab07f9476c8064",
+    "SparseNormalBoardDiagnostic.java": "cecacbb7f707466cccc784b28d07dc3a69131ae0c0d9223992685442fa45fad0",
+    "verify-composed-rejection.ps1": "662cae0d761ae84f57e719bae2ba68e04d512450545da1afc1633a89ce2357b1"
+  },
+  "privateInputs": {
+    "common/SparseNormalBoardDiagnostic.java": "135107e4101f15849e5dfc98a9d771dbe1be25a9434f7b5cf595c9ff5c82a707",
+    "common/verify-two-pad-span.ps1": "a38dda3888baf3212cdc8e50af5cc4d3b327504871e1d81c5e37df4e40bede11",
+    "control/SeededPcbLayoutGenerator.java": "0e2658b30d418f95f90c95a6cd96f429b9b7d37f3be165d9e0a7c2f129c0a407",
+    "control/PcbPlacementPlanner.java": "087287969fcdb6c18e1b38ed015054c4c16e25bad81823f936fe79843e61d66b",
+    "control/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "variant/SeededPcbLayoutGenerator.java": "d7cbb67672735a7fdb9fb3bc4127d6a6d407815432e82a3395f5c0739073a7c3",
+    "variant/PcbPlacementPlanner.java": "db61775d57008b4fdb73723849760fac9499edb1c3154d6ce820c471522dd672",
+    "variant/PcbPlacementCompactor.java": "dbca1d400c387e6423931fec9929368063da5a379ff77b562d65820e52fb659b"
+  },
+  "factoryChanges": [
+    {
+      "owner": "control-generator",
+      "label": "observe selected-source input before optional compaction",
+      "replacements": 1,
+      "oldSha256": "65b177d00071837ebccfc5c737838e789424831a60e58afbb853fb27b1bea58c",
+      "newSha256": "19a61c56d7dd36e87ce18f3d46cef2e453da4db6153c69e363e4346a95bf93ec"
+    },
+    {
+      "owner": "control-generator",
+      "label": "observe ordinary optional-compaction result",
+      "replacements": 1,
+      "oldSha256": "d8b2750707cf10b9830c87ee7b25081c37873ed17e8da8a3e5fc9e24107247d0",
+      "newSha256": "61889b12586467e425728e3e720126d4c599ffcf02360ce2d7df496e9f960142"
+    },
+    {
+      "owner": "control-generator",
+      "label": "observe paired and final proposal before unchanged acceptance flow",
+      "replacements": 1,
+      "oldSha256": "3af2cc8e4bf5819dd6a1368fc01bcd6c5d9630ef0813b799d2039b3b7d1b133a",
+      "newSha256": "aee161d0e3545835109db63f5468817331433950c1fa6d51bd1e8c1dbacd27d3"
+    },
+    {
+      "owner": "variant-generator",
+      "label": "pass selected-source caps only to optional single-part compaction",
+      "replacements": 1,
+      "oldSha256": "d8b2750707cf10b9830c87ee7b25081c37873ed17e8da8a3e5fc9e24107247d0",
+      "newSha256": "bc96801398d66a90f3a8af256333e643ad608fc2e6868b84f977481e14497158"
+    },
+    {
+      "owner": "variant-generator",
+      "label": "filter completed proposal while retaining all counted placement evaluations",
+      "replacements": 1,
+      "oldSha256": "babad77e952c730ae4b28f88b44a4ab35c79127a8fd44fdf3859e3406971049b",
+      "newSha256": "aefb48901d58e0f7071d1b7f677cac2f6f81fad9b26faaa4898162fd0f31a787"
+    },
+    {
+      "owner": "adapter",
+      "label": "require actual private planner and compactor source files",
+      "replacements": 1,
+      "oldSha256": "e6b847d819c7e65d0980e1a05f5b1390a0844009db58c449a6f008b3b3fc0eaf",
+      "newSha256": "154e89ac217b62af29fbf24e186ab445f32fe34408b8de9ca0048714f2965df4"
+    },
+    {
+      "owner": "adapter",
+      "label": "substitute exactly the three scoped physical owners",
+      "replacements": 1,
+      "oldSha256": "bf7d5632b4a26082aa78db172dab2c944ee79c545d8e482686106a9c0e146a7a",
+      "newSha256": "db8c0b13ff7d7bfcded44238cb4b75f3764e3abfb59291fa5f63a66f28ffbccb"
+    },
+    {
+      "owner": "adapter",
+      "label": "compile the three sealed private physical owner copies",
+      "replacements": 1,
+      "oldSha256": "d97dd3adf80ad4cd16a429bc1d47f28a02573441e616579500e64044415c20eb",
+      "newSha256": "470cef6de107e6a7955117bba09b1616a542a98456517289848becb9155277fd"
+    }
+  ],
+  "guardChanges": [
+    {
+      "owner": "planner",
+      "label": "add_two_pad_span_api",
+      "replacements": 1,
+      "oldSha256": "d70bade3960634ad9b0b78a8be8f2d8e6c0feba44824c26aa9e6fdb6201738ef",
+      "newSha256": "fef8cd2856aa7205a8e91783bef879e28bb1a44211bab1ddf432f92431806bfa"
+    },
+    {
+      "owner": "planner",
+      "label": "overload_connected_vacancies_with_caps",
+      "replacements": 1,
+      "oldSha256": "69715b65b3e6466ec234e536c0e63a9105e84054d7f16741d147384decfd622e",
+      "newSha256": "d4f20194cae1ef4b406b92053b7f86d4fd81f95ae6e748fc20203705e2d0c1a8"
+    },
+    {
+      "owner": "planner",
+      "label": "validate_span_cap_inventory_before_trials",
+      "replacements": 1,
+      "oldSha256": "1f1a5d1b8c53bab4457a7a5d6f03730f6478c91bd9bc97f9a98050e153324cc1",
+      "newSha256": "aefe48f14130dda4e31dd99a66d414f3c2a70463ed801c1434a71b031bb5b0b2"
+    },
+    {
+      "owner": "planner",
+      "label": "filter_vacancy_candidates_by_two_pad_spans",
+      "replacements": 1,
+      "oldSha256": "c0cbd8d5300dadf2ec8b8f6a56995cbf608ea8b249547a35225216f8277582e6",
+      "newSha256": "4271c073069c261e7b46943ce418cde2f0558c1f44cd5265caf153a05e3ff190"
+    },
+    {
+      "owner": "compactor",
+      "label": "overload_compactor_with_caps",
+      "replacements": 1,
+      "oldSha256": "ff8b77fb0deec35d580971ef1144b70d6a0449841eb1314146c6a603c7ef065d",
+      "newSha256": "a608f42b7b3a35d6745e8df20670816d3f20ed6feee237ae27bbbbfb50684a86"
+    },
+    {
+      "owner": "compactor",
+      "label": "pass_caps_to_optional_vacancy_pass",
+      "replacements": 1,
+      "oldSha256": "15d0dca78b04ba9ea29af92aff54f789dba80e0fef89914094f411fe69b9bb89",
+      "newSha256": "0142095ed5ca176cd632f99492e80669cea693f7e529708b38e0720120b468e4"
+    }
+  ],
+  "appendedObserverSha256": "f3365eaf519ccdabd53337b77a18da6217cb30c33552d1af554bb54180a2d242",
+  "candidateInterpretation": "PRIVATE_TWO_PAD_SPAN_FILTER@1;NOT_PRODUCTION_MODEL",
+  "limits": "One control/variant exact replay, no production changes or model promotion. All default callers retain null caps; only optional vacancy moves use selected-source bounds. Final cap fallback retains source geometry with trial counted evaluations. No additional route, RNG, solver, budget, validator or strict four-metric acceptance change."
+}

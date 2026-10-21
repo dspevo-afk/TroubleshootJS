@@ -1,0 +1,25 @@
+--- accepted-variant-generator
++++ private-variant-generator
+@@ -259,13 +259,21 @@
+         PcbPlacementPlanner.Plan source = session.bestPlan;
+         TaskPackingSpanObservation.emit("SOURCE", session.board,
+             source, session.seed, session.routingSeed);
+-        session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
++        java.util.TreeMap<String,Long> taskSpanCaps = PcbPlacementPlanner.twoPadSpanBounds(
++            session.board, source.footprints);
++        session.packingPlan = PcbPlacementCompactor.compact(
++            session.board, constraints, source, taskSpanCaps);
+         TaskPackingSpanObservation.emit("ORDINARY", session.board,
+             session.packingPlan, session.seed, session.routingSeed);
+         session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(
+             session.board, constraints, session.packingPlan);
+         TaskPackingSpanObservation.emit("PAIRED", session.board,
+             session.packingPlan, session.seed, session.routingSeed);
++        if (!PcbPlacementPlanner.twoPadSpansFit(session.board,
++                session.packingPlan.footprints, taskSpanCaps))
++            session.packingPlan = new PcbPlacementPlanner.Plan(source.outline,
++                source.footprints, source.regions, source.courtyardArea, source.demandArea,
++                source.candidate, session.packingPlan.evaluations);
+         TaskPackingSpanObservation.emit("FINAL", session.board,
+             session.packingPlan, session.seed, session.routingSeed);
+         if (session.mediumPolicy)
