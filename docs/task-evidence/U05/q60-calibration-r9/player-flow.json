@@ -1,0 +1,54 @@
+{
+  "schema": "tsj-resistance-player-flow/1",
+  "build": "956F998381E75F1B4D9406BCECACEFBB",
+  "seed": "-1022",
+  "scope": "Agent real player input in private ordinary bench; not human feedback or public RB56 admission",
+  "actions": [
+    "Accept ticket and start",
+    "OHM",
+    "Board view / RDA terminal1 / Place red probe",
+    "RDA terminal2 / Place black probe",
+    "Close Board view",
+    "Board Power ON to OFF",
+    "Wait through natural solver decay",
+    "Power ON then OFF clears cached reading",
+    "Retarget black to RDA terminal1",
+    "CONT / CONT exits / DIODE",
+    "Run customer retest, then power ON and retest",
+    "End qualification view",
+    "Restored LED owner OFF; select R1, inspect BROWN BLACK RED GOLD, Remove component, catalog1000Ohm, Install new resistor, power ON, Retest Customer, power OFF"
+  ],
+  "observations": {
+    "poweredResistance": "POWER OFF",
+    "offImmediate": "--- Ohm",
+    "duringDecay": "DISCHARGE",
+    "naturalCompleted": "990.099 Ohm",
+    "retargetedSamePad": "0 Ohm",
+    "continuity": "ISOLATE COMPONENT",
+    "activeModeExit": "--- V",
+    "diode": "ISOLATE COMPONENT",
+    "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+    "restoredLedRetest": "Customer retest passed. The reported behavior is resolved.",
+    "finalPower": "OFF",
+    "finalMeter": "--- V",
+    "finalMeterStatus": ""
+  },
+  "heldCaption": "NOT_OBSERVED: requested12s wait returned after3.5003s tool wall with DISCHARGE; subsequent numeric reading had empty status. No visual caption proof claimed. Real native RC and compiled diagnostic retention provide separate behavior evidence.",
+  "firstOffScreenshot": "Stale prior ON frame despite updated OFF DOM; retained under failed-observations, not used as OFF proof.",
+  "privateViewTerminal": "Expected FAIL: ordinary unrepaired customer retest did not pass; restoration owner/meter/player-session cleanup true. Separate from accepted unprofiled development.",
+  "screenshotsInspected": [
+    "player-powered-refusal.jpg",
+    "player-discharge.jpg",
+    "player-natural-reading.jpg",
+    "player-retargeted-zero.jpg",
+    "player-unrepaired-retest.jpg",
+    "restored-led-repaired.jpg"
+  ],
+  "tab50": "Explicitly closed after final power OFF",
+  "limitations": [
+    "No advanced human repair outcome inferred",
+    "No public RB56 admission/save/replay claim",
+    "No visual held-caption qualification",
+    "No controlled CPU speedup claim"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "status": "ACTUAL_READER_RESULT_DISCARDED_BY_POST_GUARD",
+  "actualQualification": "FAIL",
+  "resultReaderCalls": 1,
+  "actualSourceCurrentAmps": 0.0005024875624849752,
+  "sourceSpecification": {
+    "testVolts": 1,
+    "internalOhms": 1000
+  },
+  "rawResistanceDerivedFromActualSourceCurrent": 990.0990087289988,
+  "literalParallelCrossCheckOhms": 990.09900990099,
+  "crossCheckScope": "Load-line consistency with literal1k/100k paths; not a whole-model oracle or admitted observation",
+  "postPowerReadiness": "DISCHARGE",
+  "postResidualRail": "PRE_L",
+  "postStoredEnergyReadiness": "READY",
+  "cleanup": "PASS",
+  "conclusion": "Raw reader ran once with valid finite source current; source method returns nonnegative value; mode post guard discards it. Residual attribution to stimulus versus natural/reanalysis dynamics is not proved."
+}

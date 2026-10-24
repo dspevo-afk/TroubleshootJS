@@ -1,0 +1,144 @@
+{
+  "schema": "tsj-u05-calibration-capture/2",
+  "seed": "-1067",
+  "build": "8D0CC3D7F0B0017F220DB11DC285CA37",
+  "sourceBinding": "131f87f1e1965f4bcda7d3ed1a13181e75eb865b1f12ffbec78a4d04cb38208b",
+  "report": {
+    "protocol": "TSJ-RB56-QUALIFICATION-1",
+    "scope": "PRIVATE_SHARED_WORKBENCH",
+    "family": "RB56_CONTROL",
+    "seed": "-1067",
+    "sourceEpoch": "tsj-generation-dependencies-v18",
+    "planVersion": 1,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "forcedAfterPublish": false,
+    "normalCatalogEnabled": false,
+    "status": "FAIL",
+    "phase": "RESTORED",
+    "failurePhase": "COLD_GENERATION",
+    "jobOutcome": "WORK_EXHAUSTED",
+    "jobStage": "PUBLISH",
+    "jobWork": 640,
+    "jobMillis": 86958,
+    "manualUnitMaxMillis": 1644,
+    "routingMillis": 0,
+    "proofMillis": 0,
+    "jobStageMillis": {
+      "RESOLVE": 1,
+      "HEALTHY": 31003,
+      "PHYSICAL": 137,
+      "HYPOTHESES": 48271,
+      "SYMPTOM": 19,
+      "PUBLISH": 0
+    },
+    "jobStageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 117,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 520,
+      "SYMPTOM": 1,
+      "PUBLISH": 0
+    },
+    "diagnosticWorkTimings": {
+      "REPLAY_INSTALL": {
+        "units": 5,
+        "millis": 994,
+        "maxMillis": 233
+      },
+      "CANDIDATE_HEALTHY_SETTLE": {
+        "units": 65,
+        "millis": 9842,
+        "maxMillis": 344
+      },
+      "CANDIDATE_SETTLE": {
+        "units": 45,
+        "millis": 5446,
+        "maxMillis": 303
+      },
+      "OBSERVATION_STEP:INPUT": {
+        "units": 5,
+        "millis": 453,
+        "maxMillis": 170
+      },
+      "OBSERVATION_STEP:WAIT": {
+        "units": 20,
+        "millis": 8760,
+        "maxMillis": 1108
+      },
+      "OBSERVATION_STEP:DC_VOLTAGE": {
+        "units": 60,
+        "millis": 676,
+        "maxMillis": 14
+      },
+      "OBSERVATION_STEP:POWER": {
+        "units": 5,
+        "millis": 257,
+        "maxMillis": 63
+      },
+      "OBSERVATION_STEP:SETTLE": {
+        "units": 5,
+        "millis": 409,
+        "maxMillis": 93
+      },
+      "OBSERVATION_STEP:RESISTANCE": {
+        "units": 5,
+        "millis": 398,
+        "maxMillis": 97
+      },
+      "POWER_OFF_SETTLE": {
+        "units": 150,
+        "millis": 216,
+        "maxMillis": 4
+      },
+      "REMOVE_SETTLE": {
+        "units": 5,
+        "millis": 695,
+        "maxMillis": 162
+      },
+      "REPLACE_SETTLE": {
+        "units": 5,
+        "millis": 723,
+        "maxMillis": 182
+      },
+      "POWER_ON_SETTLE": {
+        "units": 5,
+        "millis": 417,
+        "maxMillis": 107
+      },
+      "REPAIR_STATUS_SETTLE": {
+        "units": 65,
+        "millis": 10107,
+        "maxMillis": 423
+      },
+      "CUSTOMER_RETEST": {
+        "units": 65,
+        "millis": 8544,
+        "maxMillis": 251
+      },
+      "CUSTOMER_RETEST_COMPLETION": {
+        "units": 5,
+        "millis": 78,
+        "maxMillis": 21
+      },
+      "EVIDENCE_RESTORE_PRIMARY": {
+        "units": 5,
+        "millis": 198,
+        "maxMillis": 47
+      }
+    },
+    "qualifiedPublication": false,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "ordinaryCustomerRetestPassed": false,
+    "cleanupPending": false,
+    "playerSessionReleased": true,
+    "playerBridgeReleased": true,
+    "wallMillis": 86967,
+    "failure": "Failure: Generation work budget exhausted at 640 steps"
+  }
+}

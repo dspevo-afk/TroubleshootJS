@@ -1,0 +1,8 @@
+{
+  "schema": "tsj-u05-profile-build-reuse/1",
+  "build": "5BC4454BB0B4620B6611849B4D993BC0",
+  "inputs": 1182,
+  "allConsumedInputsUnchanged": true,
+  "scope": "Actual compiled CPU diagnosis only, not new admission or generation PASS",
+  "testsChanged": "Three native probe files; not consumed by GWT build"
+}

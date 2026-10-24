@@ -1,0 +1,31 @@
+{
+  "schema": "tsj-u05-q60-current-calibration-plan/2",
+  "status": "FROZEN_CURRENT_BUILD_BEFORE_ANY_CAPTURE",
+  "baseCommit": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "build": "956F998381E75F1B4D9406BCECACEFBB",
+  "dependencyEpoch": 18,
+  "placement": 15,
+  "development": [
+    "-1017",
+    "-1067",
+    "-1022"
+  ],
+  "regression": [
+    "9007199254741579",
+    "-1004",
+    "-1028"
+  ],
+  "selection": "Reuse the predeclared curated feature split for current-model freshness, with known prior histories. This is not random population holdout or blind human trial.",
+  "observations": "Same powered DC program and installed RDA.1/RDA.2 RESISTANCE; three natural OFF waits each max1requested second, ten equal advances, stop only at actual registered-mode READY. Other refusals fail; no energy reset. Program2/provider@3. Traces export actual requested natural time.",
+  "profileRule": "NOT_FROZEN; inspect current development first, freeze rule before regression. No automatic promotion from package count, rail-name counts or witness route length.",
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "failurePolicy": "Preserve every failed case, stage and cleanup result; no cohort substitutions or threshold fitting on regression",
+  "publicAdmission": "HELD during evidence collection; no HARD/catalog/public save flag changes in this first scope",
+  "amendment": "R9 completed real resistance survives post DISCHARGE only in the same validated context. Next injection retains all guards. R7 first-ready service/actual work retained; R5 LU remains pending integrated acceptance and CPU diagnosis. Native15/GWT5/compiled A07 pass. All earlier failures retained.",
+  "sourceBinding": "3f80c5263a3982368791441152aa8c0915a1930485d9ad38bdebb1984d61b5f7",
+  "frozenUtc": "2026-10-24T00:49:24.639348+00:00"
+}

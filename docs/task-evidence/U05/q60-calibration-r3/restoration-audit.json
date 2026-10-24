@@ -1,0 +1,11 @@
+{
+  "schema": "tsj-maintained-fixture-restoration-audit/1",
+  "inputs": 1377,
+  "allR2NativeConsumedInputsRestored": true,
+  "changed": [],
+  "lineEndingCorrection": "Git restore materialized CRLF in two originally LF fixtures; exact original LF SHA256 confirmed before byte restoration",
+  "experimentalSourcePreserved": "probe-diff.json",
+  "probeFailuresPreserved": true,
+  "newProbePassingClaim": false,
+  "scope": "Original passing maintained contracts restored byte-for-byte; fixed-step probe failure remains NO_GO"
+}

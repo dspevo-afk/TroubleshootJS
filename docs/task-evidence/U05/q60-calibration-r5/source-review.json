@@ -1,0 +1,15 @@
+{
+  "scope": "Read-only R5 JSNI source correctness, no execution or edits",
+  "head": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "cirSimGitBlob": "4bb0bbfb6dd10a6ddd3c95046ed08dbef68ffaa9",
+  "result": "NO_SOURCE_CORRECTNESS_BLOCKER",
+  "checks": [
+    "ascending nonzero column gather",
+    "next cursor after full groups",
+    "exact1-7 tail no absent pivot writes",
+    "same per-cell multiply/subtract/store",
+    "signed-zero pivot skip",
+    "distinct rows and immutable pivot/factor input"
+  ],
+  "limits": "No runtime proof or speedup; no isolated R5 CPU profile; native/build/compiled/cohort gates still required"
+}

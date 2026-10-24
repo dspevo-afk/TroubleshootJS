@@ -1,0 +1,12 @@
+{
+  "status": "NO_GO_CURRENT_COHORT_NOT_QUALIFIED",
+  "actualExitCode": 2,
+  "operationSeconds": 0.1541345,
+  "output": [
+    "FAIL: U05 calibration feature reader: native qualification did not pass"
+  ],
+  "capsChanged": false,
+  "profileRule": "NOT_FROZEN",
+  "regression": "NOT_RUN",
+  "kernelAcceptance": "PENDING_INTEGRATED_CURRENT_COHORT_AND_CPU_DIAGNOSIS"
+}

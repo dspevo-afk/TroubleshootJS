@@ -1,0 +1,18 @@
+{
+  "schema": "tsj-u05-development-decision/1",
+  "status": "NO_GO_CURRENT_COHORT_NOT_QUALIFIED",
+  "readerActualExitCode": 2,
+  "readerSeconds": 0.1098543,
+  "readerOutput": "FAIL: U05 calibration feature reader: native qualification did not pass",
+  "cohortSubstitutions": 0,
+  "capsChanged": false,
+  "hypothesesRequired": 5,
+  "case1": "PASS: -1017, 40 packages, five hypotheses and repair classes, two certified-set readings, 39835ms/533work/max1154ms",
+  "case2": "FAIL TIMEOUT: -1067, HYPOTHESES,90236ms/575work/max1584ms; predecessor restored and cleanup complete",
+  "case3": "FAIL TIMEOUT: -1022, HYPOTHESES,90073ms/514work/max1966ms; predecessor restored and cleanup complete",
+  "profileRule": "NOT_FROZEN: incomplete development cannot support current calibration",
+  "regression": "NOT_RUN: preserve separation until a technical candidate and rule qualify",
+  "ordinaryPlayerRepair": "NOT_CLAIMED",
+  "next": "Diagnose legitimate readiness/temporal work cost without raising limits, clearing energy or changing cohort",
+  "rawLogSha256": "652503aa8bd83850f730599eb4d236d541f395c8f9986f63f82c86abfb7afe8e"
+}

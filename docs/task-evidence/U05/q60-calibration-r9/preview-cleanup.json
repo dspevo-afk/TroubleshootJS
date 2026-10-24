@@ -1,0 +1,12 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 2.5761656,
+  "pid": 25396,
+  "startTicks": "639283997007842249",
+  "port": 8920,
+  "stateAbsent": true,
+  "listenerAbsent": true,
+  "tabs44Through51": "explicitly closed",
+  "profiler": "stopped and disabled",
+  "oldBlockedResources": "untouched"
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "tsj-u05-calibration-capture/2",
+  "seed": "-1022",
+  "build": "8D0CC3D7F0B0017F220DB11DC285CA37",
+  "sourceBinding": "131f87f1e1965f4bcda7d3ed1a13181e75eb865b1f12ffbec78a4d04cb38208b",
+  "report": {
+    "protocol": "TSJ-RB56-QUALIFICATION-1",
+    "scope": "PRIVATE_SHARED_WORKBENCH",
+    "family": "RB56_CONTROL",
+    "seed": "-1022",
+    "sourceEpoch": "tsj-generation-dependencies-v18",
+    "planVersion": 1,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "forcedAfterPublish": false,
+    "normalCatalogEnabled": false,
+    "status": "FAIL",
+    "phase": "RESTORED",
+    "failurePhase": "COLD_GENERATION",
+    "jobOutcome": "PROGRAMMING_FAILURE",
+    "jobStage": "HYPOTHESES",
+    "jobWork": 127,
+    "jobMillis": 33054,
+    "manualUnitMaxMillis": 1512,
+    "routingMillis": 0,
+    "proofMillis": 0,
+    "jobStageMillis": {
+      "RESOLVE": 2,
+      "HEALTHY": 25336,
+      "PHYSICAL": 153,
+      "HYPOTHESES": 6061,
+      "SYMPTOM": 0,
+      "PUBLISH": 0
+    },
+    "jobStageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 82,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 43,
+      "SYMPTOM": 0,
+      "PUBLISH": 0
+    },
+    "diagnosticWorkTimings": {
+      "REPLAY_INSTALL": {
+        "units": 1,
+        "millis": 196,
+        "maxMillis": 196
+      },
+      "CANDIDATE_HEALTHY_SETTLE": {
+        "units": 13,
+        "millis": 1943,
+        "maxMillis": 330
+      },
+      "CANDIDATE_SETTLE": {
+        "units": 9,
+        "millis": 1388,
+        "maxMillis": 197
+      },
+      "OBSERVATION_STEP:INPUT": {
+        "units": 1,
+        "millis": 90,
+        "maxMillis": 90
+      },
+      "OBSERVATION_STEP:WAIT": {
+        "units": 4,
+        "millis": 1969,
+        "maxMillis": 1298
+      },
+      "OBSERVATION_STEP:DC_VOLTAGE": {
+        "units": 12,
+        "millis": 162,
+        "maxMillis": 15
+      },
+      "OBSERVATION_STEP:POWER": {
+        "units": 1,
+        "millis": 61,
+        "maxMillis": 61
+      },
+      "OBSERVATION_STEP:SETTLE": {
+        "units": 1,
+        "millis": 89,
+        "maxMillis": 89
+      },
+      "OBSERVATION_STEP:RESISTANCE": {
+        "units": 1,
+        "millis": 140,
+        "maxMillis": 140
+      }
+    },
+    "qualifiedPublication": false,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "ordinaryCustomerRetestPassed": false,
+    "cleanupPending": false,
+    "playerSessionReleased": true,
+    "playerBridgeReleased": true,
+    "wallMillis": 33063,
+    "failure": "IllegalStateException: Invalid diagnostic resistance measurement: DRIVER_A_RESISTANCE"
+  }
+}

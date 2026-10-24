@@ -1,0 +1,6 @@
+{
+  "reader": "../q60-calibration-r2/read_features.py",
+  "sha256": "469ba33f119cff99d5311bc1572a72a46f4c87e456658ab7718f8a18bb4c6311",
+  "reuse": "R2 corrected automatic-versus-retained contract and synthetic self-test; actual R4 reduction still required",
+  "status": "AUDITED_UNCHANGED"
+}

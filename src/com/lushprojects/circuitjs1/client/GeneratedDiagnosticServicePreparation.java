@@ -39,7 +39,7 @@ final class GeneratedDiagnosticServicePreparation {
         String canonical() {
             return "action=REMOVE;units=" + workUnits +
                 ";maximumAdvanceSeconds=" + Double.toString(maximumAdvanceSeconds) +
-                ";readiness=exact-current-owner";
+                ";readiness=exact-current-owner;completion=first-ready";
         }
     }
 
@@ -77,7 +77,7 @@ final class GeneratedDiagnosticServicePreparation {
             host.checkCurrent();
         }
 
-        /** Executes one declared unit and returns true while more units remain. */
+        /** Executes one unit, stopping at actual readiness within the declared cap. */
         boolean step() {
             ensureOpen();
             if (complete) return false;
@@ -89,10 +89,10 @@ final class GeneratedDiagnosticServicePreparation {
                 available = currentAvailability();
             }
             completedUnits++;
-            if (completedUnits == policy.workUnits) {
+            if (available) complete = true;
+            else if (completedUnits == policy.workUnits) {
                 require(available,
                     "Physical REMOVE did not become available within the declared service bound");
-                complete = true;
             }
             host.checkCurrent();
             return !complete;
@@ -101,7 +101,7 @@ final class GeneratedDiagnosticServicePreparation {
         /** Final gate repeats the real readiness query immediately before REMOVE. */
         void finish() {
             ensureOpen();
-            require(complete && completedUnits == policy.workUnits,
+            require(complete && completedUnits > 0 && completedUnits <= policy.workUnits,
                 "Diagnostic service preparation cursor is incomplete");
             host.checkCurrent();
             require(currentAvailability(),

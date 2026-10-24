@@ -45,6 +45,7 @@ final class GenerationCoordinator {
     private int yields;
     private long cancelledAt, cancellationLatency, maxAdvanceMillis;
     private long lastRoutingElapsedMillis, lastProofElapsedMillis;
+    private int lastCompletedProofWorkUnits;
     private final Map<String, long[]> diagnosticMeasurementWorkTimings =
         new LinkedHashMap<String, long[]>();
     private Map<String, long[]> lastDiagnosticMeasurementWorkTimings =
@@ -102,6 +103,7 @@ final class GenerationCoordinator {
     long getMaxAdvanceMillis() { return maxAdvanceMillis; }
     long getLastRoutingElapsedMillisForDeveloperVerification() { return lastRoutingElapsedMillis; }
     long getLastProofElapsedMillisForDeveloperVerification() { return lastProofElapsedMillis; }
+    int getLastCompletedProofWorkUnitsForDeveloperVerification() { return lastCompletedProofWorkUnits; }
     Map<String, long[]> getLastDiagnosticMeasurementWorkTimingsForDeveloperVerification() {
         return copyWorkTimings(lastDiagnosticMeasurementWorkTimings);
     }
@@ -260,6 +262,7 @@ final class GenerationCoordinator {
         job = new GenerationJob(services, maximumJobMillis, MAX_JOB_STEPS, MAX_STEP_MILLIS);
         yields = 0; cancelledAt = 0; cancellationLatency = 0; maxAdvanceMillis = 0;
         lastRoutingElapsedMillis = 0; lastProofElapsedMillis = 0;
+        lastCompletedProofWorkUnits = 0;
         lastCleanupAudit = null;
         startedAt = lastProgressAt = System.currentTimeMillis(); expectedProofUnits = 0;
         sim.setGenerationBusy(true, "Preparing board...");
@@ -487,6 +490,7 @@ final class GenerationCoordinator {
                 throw new IllegalStateException("Previous candidate still owns resources");
             request = selection.candidate(index);
             expectedProofUnits = 0; cleanupComplete = false; proofContextKey = null;
+            lastCompletedProofWorkUnits = 0;
             dependencyContext = null; rawTemporalDependencyCanonical = null; proofCacheHit = false;
             proofCachePublicationPending = false;
             pendingProofCacheEntry = null;
@@ -597,10 +601,11 @@ final class GenerationCoordinator {
                 if (proofReceipt != null) {
                     proofCacheHit = true;
                     expectedProofUnits = 1;
+                    lastCompletedProofWorkUnits = 1;
                     requireCurrentProofContext("warm diagnostic proof completion");
                     assessDifficulty();
                     if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
-                            declaredProofWorkUnits())
+                            completedProofWorkUnits())
                         throw new IllegalStateException(
                             "Warm diagnostic operation count differs from its declared program");
                     return false;
@@ -622,6 +627,7 @@ final class GenerationCoordinator {
             }
             if (!more) {
                 proofReceipt = proof.finish(proofContextKey);
+                lastCompletedProofWorkUnits = proof.getCompletedWorkUnits();
                 requireCurrentProofContext("serial diagnostic proof completion");
                 if (allowDiagnosticProofReuse) {
                     /* Preflight the immutable artifact while this candidate is
@@ -633,7 +639,7 @@ final class GenerationCoordinator {
                 }
                 assessDifficulty();
                 if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
-                        declaredProofWorkUnits())
+                        completedProofWorkUnits())
                     throw new IllegalStateException("Diagnostic operation count differs from its declared program");
             }
             return more;
@@ -643,7 +649,7 @@ final class GenerationCoordinator {
             if (proofReceipt == null)
                 throw new IllegalStateException("Generation has no completed diagnostic proof receipt");
             if (job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES) !=
-                    declaredProofWorkUnits())
+                    completedProofWorkUnits())
                 throw new IllegalStateException("Diagnostic operation count differs from its declared program");
             sim.getGeneratedChallengeController().completeGenerationPresentation();
             return "selected-fault-validated;complete-hypotheses=" +
@@ -782,9 +788,13 @@ final class GenerationCoordinator {
                 installation != null || proof != null || constructionSession != null;
         }
 
-        private int declaredProofWorkUnits() {
-            return proofCacheHit ? 1 : GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
+        private int completedProofWorkUnits() {
+            int actual = proofCacheHit ? 1 : proof.getCompletedWorkUnits();
+            int maximum = proofCacheHit ? 1 : GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
                 request.requiresExplicitCompletion());
+            if (actual < 1 || actual > maximum)
+                throw new IllegalStateException("Diagnostic operation count exceeds its declared bound");
+            return actual;
         }
 
         private void assessDifficulty() {

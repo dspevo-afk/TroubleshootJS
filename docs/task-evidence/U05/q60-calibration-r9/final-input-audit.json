@@ -1,0 +1,15 @@
+{
+  "status": "PASS_UNCHANGED_CONSUMED_INPUTS",
+  "gates": {
+    "native-final": {
+      "inputs": 1378,
+      "unchanged": true
+    },
+    "build-final": {
+      "inputs": 1184,
+      "unchanged": true
+    }
+  },
+  "loadedScriptUnchanged": true,
+  "scope": "Reuses the actual R9 final-source native/build receipts because every consumed input is unchanged after CPU/player/privacy work. Documentation/evidence only changed."
+}

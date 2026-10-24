@@ -1,0 +1,20 @@
+{
+  "schema": "tsj-u05-reader-correction/1",
+  "reason": "Initial root retained-view attempt ended without repair; correctly FAIL. Automatic qualification separately completes D01 repairs without an ordinary player retest.",
+  "preservedFailure": "development-1-retained-failure.json",
+  "sameSeedColdRepeat": "capture-development-1.json",
+  "productionChanged": false,
+  "budgetsChanged": false,
+  "cohortChanged": false,
+  "ordinaryRetestContract": "No hold: false; retained hold: actual true required",
+  "readerInitialSha256": "0f6443d635866e76ac47be93ce1c973ae726f4ce525070475fd93d2c2123323b",
+  "readerFinalSha256": "469ba33f119cff99d5311bc1572a72a46f4c87e456658ab7718f8a18bb4c6311",
+  "rootSelfTest": {
+    "actualExitCode": 0,
+    "wallSeconds": 0.2040995,
+    "stdout": "PASS: U05 calibration feature reader self-test",
+    "addedCases": "automatic missing failure-only fields; unrepaired retained rejection; actual retained pass; invented ordinary pass rejection"
+  },
+  "captureRoute": "Remaining curated cases use automatic no-retained-view cold qualifier; no injected app/controller calls",
+  "utc": "2026-10-23T22:56:38.7232657Z"
+}

@@ -1,0 +1,46 @@
+{
+  "canary": {
+    "actualExitCode": 0,
+    "operationSeconds": 41.3948873,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "d44ee14f6160c15901ef956d10e1163d95bb9196880fce43b3e7b1045cdf263d"
+  },
+  "native": {
+    "actualExitCode": 0,
+    "operationSeconds": 129.7341108,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "2c9394673dd9db45643b6d2f68083aa115aff1bb64e7c1752a61a6745d3afab9"
+  },
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 95.7059677,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1184,
+    "rawSha256": "2ad4d2b187dde92d2ce70f885f085a7a54517d4b14c855a4ec143a825bbf60b7"
+  },
+  "nativeSuites": 15,
+  "assertions": 482705,
+  "nativeCleanup": "PASS",
+  "compiled": "PASS:a07 pure306530/runtime103; cleanupPASS",
+  "buildInputs": "1182 source/build plus2 served UI inputs; all unchanged",
+  "broadTask41": {
+    "status": "NOT_COMPLETED",
+    "tab": "45",
+    "attempts": [
+      "DOMSnapshot.captureSnapshot timeout (41.057s tool wall)",
+      "Emulation.setFocusEmulationEnabled timeout (28.532s tool wall)"
+    ],
+    "operationElapsedSeconds": null,
+    "cleanup": "Task-owned tab45 explicitly closed. No terminal application report; no cleanup proof inferred.",
+    "diagnosis": "Source inspection shows a synchronous whole normal-family diagnostic corpus; not a focused measurement-restoration canary. Not rerun."
+  },
+  "development": "PASS all3; independent feature and temporal readers actual exits0",
+  "player": "PASS bounded normal-input mode/power/probe/reading flow and restored LED repair; held caption NOT_OBSERVED; advanced unrepaired-view terminal expectedFAIL with cleanupPASS",
+  "privacy": "PASS current debug=false private flags/invalid private seed inert; public HARD/PSYCHOTIC disabled and RB56 absent",
+  "cpu": "Current compiled bounded JSNI invocation observed; applicationPASS84743ms/496, actual reducer0; no controlled speedup"
+}

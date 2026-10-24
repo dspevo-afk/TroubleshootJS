@@ -912,7 +912,8 @@ public final class D01DiagnosticContractTest {
                 copy.profilePower(step.id, step.power);
                 break;
             case WAIT:
-                copy.waitSample(step.id, step.seconds);
+                if (step.readinessMode == null) copy.waitSample(step.id, step.seconds);
+                else copy.waitForReadinessSample(step.id, step.readinessMode, step.red, step.black, step.seconds);
                 break;
             case SETTLE:
                 copy.settle();

@@ -1,10 +1,29 @@
-# Current Q60 continuation: private features captured, HARD not frozen
+Current R9 development: the same40/55/60 cases and independent feature/wait
+readers pass after completed-reading/next-injection separation and first-ready
+service accounting. Larger cases are close to90s; all still require two certified-
+set readings. HARD remains unassigned and protected regression untouched.
+[Current source, results and limits](q60-calibration-r9/README.md).
+
+# Current continuation: owner play approved; resistance-aware calibration
+
+2026-10-23: the owner reports having played and explicitly approves roadmap
+continuation. No repeat trial is requested and no repair outcome, strategy or
+elapsed time is inferred. [Verbatim feedback and finite current scope](q60-calibration-r2/scope.md).
+The current refresh adds an actual installed-network Ω observation to the
+certified set and fixes mode-specific preflight before fresh development/regression
+capture. Earlier voltage-only features retain their historical scope. A HARD rule,
+normal advanced population/admission and public saves still need their technical
+qualification; owner approval is not a substitute for solver/source proof.
+
+# Historical October11 checkpoint: private features captured, HARD not frozen
 
 2026-10-11. [Private feature extraction and fresh curated three development / three regression
 captures](q60-calibration-features-r1/README.md) pass final native/GWT/compiled
 gates. All six cases have two certified-set readings and 19/20-action executed
-witnesses. No HARD rule/profile has been frozen; actual human strategies and
-outcomes remain required before freezing HARD and REL-B release. Independent
+witnesses. No HARD rule/profile was frozen at that checkpoint; its human trial
+was then pending. The owner has since reported playing and approved continuation;
+unreported strategy/outcome remain unknown. Current technical calibration is
+recorded above and does not require repeating the human trial. Independent
 REL-B preparation can proceed. [Ready local human-play workflow and note](q60-human-play-r1/README.md)
 use the exact regression44 build/seed with a configured six-minute private view;
 launch/ordinary controls and owned cleanup pass, human trial NOT RUN.

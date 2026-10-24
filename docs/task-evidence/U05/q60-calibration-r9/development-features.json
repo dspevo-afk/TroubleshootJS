@@ -1,0 +1,81 @@
+{
+  "baseCommit": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "build": "956F998381E75F1B4D9406BCECACEFBB",
+  "cases": [
+    {
+      "captureSha256": "0ff41777aa399b012bbd5451938c49897576fc4f2a8fe212306e3068f8e72486",
+      "generationMillis": 34760,
+      "generationWork": 388,
+      "hypotheses": 5,
+      "manualUnitMaxMillis": 1190,
+      "omegaOutcomes": {
+        "numeric": 5,
+        "overRange": 0
+      },
+      "omegaSampleCount": 12,
+      "omegaWorstRemaining": 4,
+      "ordinal": 0,
+      "packages": 40,
+      "readings": 2,
+      "repairClasses": 5,
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "seed": "-1017",
+      "singleRemaining": 2
+    },
+    {
+      "captureSha256": "e375f80a2c5f5d068d7f8103ff0bb5818e2e586f6195bab54205e0d21f5116e0",
+      "generationMillis": 89303,
+      "generationWork": 496,
+      "hypotheses": 5,
+      "manualUnitMaxMillis": 1625,
+      "omegaOutcomes": {
+        "numeric": 5,
+        "overRange": 0
+      },
+      "omegaSampleCount": 13,
+      "omegaWorstRemaining": 4,
+      "ordinal": 1,
+      "packages": 55,
+      "readings": 2,
+      "repairClasses": 5,
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "seed": "-1067",
+      "singleRemaining": 3
+    },
+    {
+      "captureSha256": "6077bbff866fec2d2e34fdc1991061e02211d57746f9d11d2d600a5c7281ae17",
+      "generationMillis": 87453,
+      "generationWork": 461,
+      "hypotheses": 5,
+      "manualUnitMaxMillis": 1494,
+      "omegaOutcomes": {
+        "numeric": 5,
+        "overRange": 0
+      },
+      "omegaSampleCount": 13,
+      "omegaWorstRemaining": 4,
+      "ordinal": 2,
+      "packages": 60,
+      "readings": 2,
+      "repairClasses": 5,
+      "scope": "PRIVATE_SHARED_WORKBENCH",
+      "seed": "-1022",
+      "singleRemaining": 2
+    }
+  ],
+  "difficultyLabelAssigned": false,
+  "globalToolsetOptimumClaimed": false,
+  "partition": "development",
+  "planBudgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "planSha256": "a7d8b451dd60cf362f75f7c3e4f945b606d9d7829f45ce4c0e1a91915b35ad2e",
+  "profileAssignment": "NONE",
+  "readerSha256": "469ba33f119cff99d5311bc1572a72a46f4c87e456658ab7718f8a18bb4c6311",
+  "schema": "tsj-u05-calibration-feature-reader/1",
+  "selection": "FROZEN_CURATED_COHORT_NOT_RANDOM_HOLDOUT",
+  "sourceBinding": "3f80c5263a3982368791441152aa8c0915a1930485d9ad38bdebb1984d61b5f7",
+  "status": "PASS_FEATURE_REDUCTION_ONLY"
+}

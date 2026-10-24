@@ -531,6 +531,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'E01SourceContractTest'; Marker = 'E01 source contracts ' },
         @{ Name = 'A06PowerContractTest'; Marker = 'A06 power contracts ' },
         @{ Name = 'A07ExecutionContractTest'; Marker = 'A07 execution contracts ' },
+        @{ Name = 'DiagnosticReadinessWaitContractTest'; Marker = 'diagnostic readiness wait contracts ' },
         @{ Name = 'Q30OwnedLuZeroRowContractTest'; Marker = 'Q30 owned LU zero-row contracts ' },
         @{ Name = 'Q30LuPivotCollectionContractTest'; Marker = 'Q30 LU pivot collection contracts ' },
         @{ Name = 'A09DiagnosticContractTest'; Marker = 'A09 diagnostic contracts ' },

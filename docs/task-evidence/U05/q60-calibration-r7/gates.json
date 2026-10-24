@@ -1,0 +1,32 @@
+{
+  "native": {
+    "actualExitCode": 0,
+    "operationSeconds": 433.883972,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "cacd9be3ff84cacd0a44b493485e566c0127d13f29d7e63cfff127b0fd128629"
+  },
+  "nativeSuites": 16,
+  "assertions": 650593,
+  "normalCorpus": {
+    "attempted": 51,
+    "accepted": 48,
+    "rejected": 3,
+    "failed": 0,
+    "scope": "NATIVE_CONSTRUCTION_AND_MAXIMUM_RESERVATION_NOT_COMPILED_PLAYER_PROOF"
+  },
+  "nativeCleanup": "PASS",
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 98.1321127,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1182,
+    "rawSha256": "9372d3e3f4aeb1cf41cc7d884947baec4e0a0543ee7626d9d1887168b318c0aa"
+  },
+  "compiled": "PASS:a07 pure306530/runtime103; cleanupPASS",
+  "diagnosis": "FAIL: INVALID_RESISTANCE; actual post display/readiness DISCHARGE; 34545ms/127work",
+  "cohort": "NOT_RUN; two targeted canaries are not an ordered cohort",
+  "serviceCanary": "PASS: five hypotheses/65 solver samples; 86374ms/496work; qualified publication and complete cleanup"
+}

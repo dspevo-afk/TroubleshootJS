@@ -1,0 +1,25 @@
+{
+  "status": "PASS_EXACT_EXPORTED_OBSERVATIONS",
+  "seed": "-1017",
+  "hypotheses": 5,
+  "samplesPerHypothesis": 12,
+  "comparisonsPerCandidate": 60,
+  "candidates": [
+    {
+      "packet": "q60-calibration-r2",
+      "build": "5BC4454BB0B4620B6611849B4D993BC0",
+      "captureSha256": "4b510f64a8e14fa638866bac1d14e900982b76370728f91dfba134b8c72b6cc7"
+    },
+    {
+      "packet": "q60-calibration-r4",
+      "build": "33B584C3B3D59BE966CC3AD4E65FEE5E",
+      "captureSha256": "33cfc6bdf6c1e1832f6277aa9bc2070c2a3c2acdc8ea3282b4fc71de1fd9ca2c"
+    },
+    {
+      "packet": "q60-calibration-r5",
+      "build": "64C24BC37322CE5819BE0351ADE4569B",
+      "captureSha256": "226995ed15ae3e43d9af9683c05a102ac3bbe63858ea4907f80e621622807944"
+    }
+  ],
+  "scope": "Exact exported numeric/outcome/tolerance/repair-class data for one completed40-part proof; not global bitwise solver, performance, profile or cohort admission"
+}

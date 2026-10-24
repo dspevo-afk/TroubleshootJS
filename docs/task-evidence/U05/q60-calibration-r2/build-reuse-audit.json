@@ -1,0 +1,9 @@
+{
+  "status": "PASS_REUSE_AUDIT_ONLY",
+  "sourceInputCount": 1182,
+  "sourceChanged": [],
+  "compiledModules": 5,
+  "moduleChanged": [],
+  "buildEvidence": "../REL-B/in-circuit-resistance-r1/final-build.json",
+  "boundary": "Reuse unchanged production build only; current compiled calibration capture will be fresh. No reused historical calibration, human repair or population PASS."
+}

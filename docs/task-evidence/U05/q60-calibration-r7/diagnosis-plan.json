@@ -1,0 +1,17 @@
+{
+  "schema": "tsj-u05-diagnostic-canary/1",
+  "status": "FROZEN_BEFORE_CAPTURE",
+  "seed": "-1022",
+  "build": "3E2404C6D72D882A32E27BC64CBBC567",
+  "sourceBinding": "c4955abe3a57ef5f50cee123b74225a879fecc7f05acb4036592febab529d9f8",
+  "dependencyEpoch": 18,
+  "placement": 15,
+  "scope": "Actual invalid resistance diagnosis only; not ordered development or protected regression",
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "publicAdmission": "HELD",
+  "frozenUtc": "2026-10-24T00:21:16.911404+00:00"
+}

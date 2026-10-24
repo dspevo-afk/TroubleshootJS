@@ -1,0 +1,10 @@
+{
+  "phase": "PRE_CAPTURE_SCOPE_AMENDMENT",
+  "stopActualExitCode": 0,
+  "stopSeconds": 2.2705272,
+  "noBrowserOpened": true,
+  "reason": "Initial unchanged-build capture not started; scope now includes Ω observation/preflight and requires fresh build",
+  "port": 8913,
+  "portAbsent": true,
+  "stateAbsent": true
+}

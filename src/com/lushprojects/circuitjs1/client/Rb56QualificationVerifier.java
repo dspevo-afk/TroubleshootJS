@@ -286,8 +286,11 @@ final class Rb56QualificationVerifier {
                     "D01 hypothesis observations do not match the complete production program");
             }
             GeneratedFaultServiceabilityAdmission.validateHypothesisPopulation(published.getFaultCandidates(), keys);
-            require(keys.size() == 5 && receipt.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) ==
-                GeneratedDiagnosticProofService.requiredWorkUnits(published, request.requiresExplicitCompletion()),
+            int completedProofUnits = coordinator.getLastCompletedProofWorkUnitsForDeveloperVerification();
+            require(keys.size() == 5 && completedProofUnits > 0 &&
+                completedProofUnits <= GeneratedDiagnosticProofService.requiredWorkUnits(published,
+                    request.requiresExplicitCompletion()) &&
+                receipt.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) == completedProofUnits,
                 "RB56 full five-hypothesis/work census failed");
             require(coordinator.getDiagnosticMeasurementProofCacheHits() == proofHitsBefore &&
                 coordinator.getDiagnosticMeasurementProofCacheMisses() == proofMissesBefore + 1,
@@ -320,7 +323,53 @@ final class Rb56QualificationVerifier {
                 put(report, "difficultyFeatureStatus", "UNCALIBRATED");
                 put(report, "difficultyFeatureVersion", DifficultyAssessment.CALIBRATION_FEATURE_VERSION);
                 put(report, "difficultyFeatureExtractionMillis", System.currentTimeMillis() - featureStart);
+                // Private, opt-in qualification data only. Export observable
+                // outcomes and opaque class ordinals for an independent
+                // reduction reader, never selected-fault keys or part values.
+                put(report, "calibrationObservationFormat", 1);
+                put(report, "diagnosticProgramVersion", GeneratedDiagnosticProgram.VERSION);
+                report.put("calibrationObservations", calibrationObservations(proof));
+                JSONArray waits = new JSONArray();
+                for (GeneratedDiagnosticSolvabilityEvidence row : proof.getEvidence()) {
+                    JSONArray executed = new JSONArray();
+                    for (String wait : row.getExecutedTemporalWaitSamples())
+                        executed.set(executed.size(), new JSONString(wait));
+                    waits.set(waits.size(), executed);
+                }
+                report.put("calibrationTemporalWaits", waits);
             }
+        }
+
+        private JSONArray calibrationObservations(GeneratedDiagnosticProofReceipt proof) {
+            JSONArray rows = new JSONArray();
+            Vector<GeneratedDiagnosticSolvabilityEvidence> evidence = proof.getEvidence();
+            int[] repairClasses = new int[evidence.size()];
+            int distinct = 0;
+            for (int index = 0; index < evidence.size(); index++) {
+                GeneratedDiagnosticSolvabilityEvidence row = evidence.get(index);
+                int repairClass = distinct;
+                for (int prior = 0; prior < index; prior++)
+                    if (row.getRepairSemantics().isEquivalentTo(evidence.get(prior).getRepairSemantics())) {
+                        repairClass = repairClasses[prior]; break;
+                    }
+                if (repairClass == distinct) distinct++;
+                repairClasses[index] = repairClass;
+                JSONObject result = new JSONObject();
+                put(result, "ordinal", index); put(result, "repairClass", repairClass);
+                JSONArray samples = new JSONArray();
+                for (GeneratedDiagnosticSample sample : row.getSolverSamples()) {
+                    JSONObject observed = new JSONObject();
+                    put(observed, "id", sample.getSampleId());
+                    put(observed, "outcome", sample.getOutcome().name());
+                    if (!sample.isOverRange()) {
+                        observed.put("value", new JSONNumber(sample.getValue()));
+                        observed.put("tolerance", new JSONNumber(sample.getComparisonTolerance()));
+                    }
+                    samples.set(samples.size(), observed);
+                }
+                result.put("samples", samples); rows.set(rows.size(), result);
+            }
+            return rows;
         }
 
         void retainBench() {

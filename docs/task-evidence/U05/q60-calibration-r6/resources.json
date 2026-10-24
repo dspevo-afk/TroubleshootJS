@@ -1,0 +1,12 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 2.2674542,
+  "stateAbsent": true,
+  "listenerAbsent": true,
+  "processId": 33484,
+  "processStartTicks": "639283966090301484",
+  "port": 8917,
+  "tabs": "35-38 explicitly closed; old blocked tab20 untouched",
+  "retainedDriverExitCode": 0,
+  "retainedSession": 85467
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "tsj-u05-diagnostic-canary/1",
+  "status": "FROZEN_BEFORE_CAPTURE",
+  "seed": "-1022",
+  "build": "A164DD3B412AC76B1B8EE8D1F8BECEBF",
+  "sourceBinding": "162dd467f4d1e304dbe77a185958a8c0b9cb918ca857c4d30b6a21af7dc61f1c",
+  "dependencyEpoch": 18,
+  "placement": 15,
+  "scope": "Private actual result-reader/post-readiness diagnosis only; no behavior fix or ordered cohort",
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "publicAdmission": "HELD",
+  "frozenUtc": "2026-10-24T00:32:04.090092+00:00"
+}

@@ -1,0 +1,36 @@
+{
+  "difficulty": [
+    {
+      "disabled": false,
+      "text": "EASY"
+    },
+    {
+      "disabled": false,
+      "text": "MEDIUM"
+    },
+    {
+      "disabled": true,
+      "text": "HARD — unavailable"
+    },
+    {
+      "disabled": true,
+      "text": "PSYCHOTIC — unavailable"
+    }
+  ],
+  "familyTexts": [
+    "Indicator board",
+    "Protected indicator",
+    "Dual indicator",
+    "Timing board",
+    "BJT output driver",
+    "MOSFET output driver",
+    "Relay output board",
+    "Sensor control board",
+    "Procedural control board"
+  ],
+  "privacy": {
+    "privateReport": null,
+    "verification": null
+  },
+  "observerCorrection": "First read assumed aria-label attributes and failed without mutation; current read uses the observed accessible labels."
+}

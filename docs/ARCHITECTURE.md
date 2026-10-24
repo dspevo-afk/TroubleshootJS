@@ -692,6 +692,47 @@ version2 classification/output and public HARD/catalog/save gates remain.
 The old hold was superseded by Dave's 15:41 UTC all-clear; only modest-host
 testing is DEFERRED BY OWNER / NOT RUN.
 
+The resistance-aware refresh uses `Rb56DiagnosticProvider` @3 and its V3
+observation template. Every hypothesis receives the same powered DC sequence,
+OFF/settlement, three natural-decay waits bounded to one requested second each,
+and installed RDA.1–RDA.2 resistance observation. Each wait declares that same
+registered mode and pad pair; it advances ten equal bounded segments only while
+the actual meter reports WAITING/DISCHARGE, and stops at READY. Other refusals
+fail immediately; exhausting a wait never grants readiness. Program version2
+canonicalizes this optional predicate; ordinary fixed WAIT behavior is unchanged.
+The execution trace records requested natural time actually issued. Owner checks
+bracket each readiness query and advance; the real solver retains accepted-time,
+deadline and error ownership. `GeneratedDiagnosticObservationExecutor` preflights the
+declared registered instrument mode before selecting it; unspecified active tests
+keep their conservative admission. Live power, residual and reference guards
+still apply. No stored energy is cleared for the observation. The opt-in private
+verifier also exports actual numeric/over-range samples and opaque equivalent-
+repair ordinals for independent reduction. Over-range exports no hidden number;
+normal aggregate output and debug-off privacy remain separate. The owner reports
+playing and approves continuation on October23; the current evidence packet
+records that feedback without assigning an unreported outcome or strategy.
+
+Physical service preparation stops at the first current-owner REMOVE availability
+within its declared work/time maximum, then repeats readiness immediately before
+dispatch. The policy canonical identity binds this completion rule. The proof
+session counts successful canonical steps; generation stage accounting must equal
+that actual count, including exactly one step for a valid warm proof artifact.
+The declared maximum remains the preflight reservation and progress denominator.
+Early readiness does not skip observations, hypotheses, repairs, retests or cleanup.
+
+Resistance completion is separate from permission to inject again. The adapter's
+temporary `ActiveMeasurementSession` validates the same owner, graph contents,
+source-control observation, mutation receipt and exact endpoints across the real
+CircuitJS transaction, then closes. The controller also checks unchanged selected
+mode/probes and pending invalidation. A completed Ω value can remain visible when
+post-readiness is only DISCHARGE, alongside a held-reading status; fresh tests still
+require full readiness. Other refusals and NaN never become completed readings.
+Normal probe, mode, power, topology and reset refreshes clear the cached sample.
+Status updates observe natural progress without reinjection, and developer snapshot
+capture/restoration/equality include the status. The mode uses its one authoritative
+pending flag. No persistent graph lease, hidden solver advance or stored-energy
+reset is introduced; CONT/DIODE retain their conservative admission.
+
 ## U06 semantic history, session saves and private reconstruction
 
 `PlayerLaunchRequest` remains the pristine sharing contract: the current
@@ -5227,6 +5268,18 @@ stamps store before finite validation and can revoke eligibility; baseline
 restoration and Task41 preserve proof flags. Historical source0A native132/
 compiled87 Crout/failure-prefix/cleanup contracts and mapped emission checks keep
 their original scope. These changes alone do not establish CPU speedup/admission.
+
+The current script branch of the bounded trailing kernel accesses those already
+owned primitive arrays directly, avoiding repeated GWT nested-array cast checks.
+It gathers up to eight ascending nonzero upper entries into scalars and reuses
+each lower row's factor across the group, with an exact1–7-entry final group.
+Row independence permits that within-pivot order;
+each cell retains ascending pivot arithmetic and its multiply/subtract/store.
+The JVM kernel remains available to the same independent Crout oracle. Bound
+eligibility, input scanning, reciprocal/scaling guards, unsafe/alias fallback and
+workspace cleanup stay outside the script helper. Compiled A07 exercises the
+actual script branch with the oracle and failure/ownership contracts; cohort
+timing and admission remain separate evidence.
 
 E06 may reuse its finite Newton initialization only after the owning executor
 confirms the global accepted step at the exact time, with active state, duty,

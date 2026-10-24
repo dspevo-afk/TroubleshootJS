@@ -1,0 +1,69 @@
+PASS: U05 difficulty contracts assertions=61
+PASS: RB56 physical-owner contracts assertions=81908 cases=3 scope=DEVELOPER_PHYSICAL_OWNER_ONLY
+PASS: RB56 fault-population contracts assertions=92109 healthyCases=3 selectedServiceCases=15 acceptedSteps=90 scope=DEVELOPER_FAULT_VALUE_AND_SERVICE_OWNERSHIP_ONLY
+PASS: RB56 temporal work contracts 292 assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 faultedUnits=9 scope=FIXED_TEMPORAL_PILOT_ONLY
+PASS: RB56 instrument admission contracts assertions=272 activePairs=21 activeOrientations=42 passivePairs=10 passiveOrientations=20 realOhm=2 installedReferenceTargets=2 sameNet=1 failureStages=2 scope=DEVELOPER_BOUNDARY_ONLY
+PASS: in-circuit resistance contracts assertions=30 scope=LITERAL_SOLVER_TRANSACTION_NOT_RB56_ADMISSION
+PASS: Q30 power readiness contracts 144 assertions seeds=3 realOhm=3 realDiode=3
+PASS: diagnostic service preparation contracts 21 assertions policy=action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner;completion=first-ready
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3867 seed=0
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3942 seed=1
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=SUCCESS normalAdmission=REJECTED_POLICY cleanup=true assertions=37 seed=15
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2692 seed=14
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4017 seed=44
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3660 seed=8
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3946 seed=10
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2970 seed=12
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2754 seed=48
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3036 seed=35
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4021 seed=6
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4078 seed=18
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4149 seed=43
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4149 seed=93
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4158 seed=20
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2551 seed=64
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3942 seed=56
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2613 seed=13
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3796 seed=4
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3951 seed=11
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2979 seed=2
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4092 seed=3
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2838 seed=19
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2820 seed=9
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4008 seed=7
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4158 seed=42
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2829 seed=24
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3792 seed=21
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4158 seed=75
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4224 seed=22
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2754 seed=105
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2758 seed=27
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4158 seed=53
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2679 seed=50
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2763 seed=16
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2688 seed=25
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=SUCCESS normalAdmission=REJECTED_POLICY cleanup=true assertions=37 seed=60
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=3792 seed=100
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4162 seed=59
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4224 seed=84
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2622 seed=70
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4224 seed=41
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2547 seed=45
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4017 seed=23
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4158 seed=5
+PASS: Q30 normal corpus contracts outcome=REJECTED routeOutcome=SUCCESS normalAdmission=REJECTED_POLICY cleanup=true assertions=37 seed=38
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2679 seed=40
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4149 seed=26
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=4149 seed=-9223372036854775808
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2481 seed=9223372036854775807
+PASS: Q30 normal corpus contracts outcome=ACCEPTED routeOutcome=SUCCESS normalAdmission=ACCEPTED cleanup=true assertions=2613 seed=9007199254740993
+Q30_CORPUS_CENSUS attempted=51 accepted=48 rejected=3 failed=0 childBudgetMs=60000
+PASS: A07 execution contracts assertions=306531
+PASS: diagnostic readiness wait contracts assertions=121
+PASS: Q30 owned LU zero-row contracts assertions=292
+PASS: Q30 LU pivot collection contracts 388
+PASS: A09 diagnostic contracts assertions=322 replays=44
+PASS: D01 diagnostic contracts assertions=169
+PASS: A10 dependency contracts assertions=15
+PASS: focused current contracts; 16 Java suites. Full matrix and independent oracles NOT RUN.
+CLEANUP: current JVM contract classes and task-owned scratch removed.

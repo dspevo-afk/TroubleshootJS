@@ -1,0 +1,22 @@
+{
+  "nativeFinal": {
+    "actualExitCode": 0,
+    "operationSeconds": 130.0351044,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1377,
+    "rawSha256": "b282f0b9d08ce21c5037d7a71d5b266183e7cb6dce82dc1235a981e617dde38e"
+  },
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 99.3110999,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1182,
+    "rawSha256": "8f8682849dd4b6d981ca4bcebde65555dcf50311dc9d46708e869d6afd0a60ab"
+  },
+  "nativeSuites": 13,
+  "nativeCleanup": "PASS",
+  "compiledA07": "PASS:306530 pure/103 runtime; independent Crout and bounded/unsafe/failure-prefix/cleanup cases",
+  "buildIdentity": "33B584C3B3D59BE966CC3AD4E65FEE5E"
+}

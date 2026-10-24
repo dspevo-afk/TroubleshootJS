@@ -5,7 +5,7 @@ import java.util.Vector;
 /** Domain-local public probes and exact replay of RB56's complete fault population. */
 final class Rb56DiagnosticProvider implements GeneratedDiagnosticProvider,
         GeneratedDiagnosticServicePreparation.Provider {
-    private static final String TEMPLATE = "RB56_POWER_AND_HIGH_INPUT_SNAPSHOT_V1";
+    private static final String TEMPLATE = "RB56_POWER_HIGH_INPUT_AND_OFF_RESISTANCE_V3";
     private static final String SERVICE = "BOARD_POWER_OFF_SERVICE";
     private static final GeneratedDiagnosticServicePreparation.Policy PREPARATION =
         new GeneratedDiagnosticServicePreparation.Policy(30, .100);
@@ -18,7 +18,7 @@ final class Rb56DiagnosticProvider implements GeneratedDiagnosticProvider,
             throw new IllegalArgumentException("RB56 diagnosis requires its exact physical admission");
         this.plan = plan; this.layout = layout; this.admission = admission;
     }
-    public String getProviderId() { return "rb56-domain-diagnostic@1"; }
+    public String getProviderId() { return "rb56-domain-diagnostic@3"; }
     public GeneratedDiagnosticServicePreparation.Policy getServicePreparationPolicy() { return PREPARATION; }
 
     public GeneratedDiagnosticPlan getDiagnosticPlan() {
@@ -27,13 +27,13 @@ final class Rb56DiagnosticProvider implements GeneratedDiagnosticProvider,
                 "COUT.+", "REN.2", "U1.OUTPUT", "RSA.2", "RDA.1", "RDA.2", relayId() + ".A2"}) pads.add(pad);
         for (String channel : plan.channels()) { pads.add("JO" + channel + ".1"); pads.add("JO" + channel + ".2"); }
         return new GeneratedDiagnosticPlan(TEMPLATE, "UAC.OUT-", pads.toArray(new String[pads.size()]),
-            new String[] {"DC_VOLTAGE"}, new String[] {Rb30Behavior.SENSORS_HIGH, SERVICE},
+            new String[] {"DC_VOLTAGE", "RESISTANCE"}, new String[] {Rb30Behavior.SENSORS_HIGH, SERVICE},
             new String[] {WorkbenchOperation.REMOVE, WorkbenchOperation.LIFT_LEAD},
             new String[] {WorkbenchOperation.CATALOG_INSTALL},
             new String[] {WorkbenchOperation.LIFT_LEAD, WorkbenchOperation.RECONNECT_LEAD,
                 WorkbenchOperation.REMOVE, WorkbenchOperation.CATALOG_INSTALL},
             new String[] {Rb30Behavior.SENSORS_HIGH, GeneratedBoardOperationIds.CUSTOMER_RETEST},
-            new String[] {"HIGH_INPUT_SETTLED"},
+            new String[] {"HIGH_INPUT_SETTLED", "SERVICE_DECAY_1", "SERVICE_DECAY_2", "SERVICE_DECAY_3"},
             new String[] {"PRIMARY_DC", "ISOLATED_12V", "REGULATED_5V", "SENSOR_A_PATH",
                 "DRIVE_A_PATH", "RELAY_COIL", "EXTERNAL_LOAD"},
             9, false, true, "PHYSICAL_COMPONENT_REPLACEMENT");
@@ -57,6 +57,16 @@ final class Rb56DiagnosticProvider implements GeneratedDiagnosticProvider,
         for (String channel : plan.channels()) measure(program, "OUTPUT_" + channel,
             "JO" + channel + ".1", "JO" + channel + ".2");
         program.power(SERVICE, BoardPowerState.UNPOWERED).settle();
+        // Same declared readiness predicate for every hypothesis. Advance
+        // naturally only while the real meter needs decay; never clear storage.
+        program.waitForReadinessSample("SERVICE_DECAY_1", GeneratedDiagnosticProgram.Kind.RESISTANCE,
+                "RDA.1", "RDA.2", 1)
+            .waitForReadinessSample("SERVICE_DECAY_2", GeneratedDiagnosticProgram.Kind.RESISTANCE,
+                "RDA.1", "RDA.2", 1)
+            .waitForReadinessSample("SERVICE_DECAY_3", GeneratedDiagnosticProgram.Kind.RESISTANCE,
+                "RDA.1", "RDA.2", 1);
+        program.measure(GeneratedDiagnosticProgram.Kind.RESISTANCE,
+            "DRIVER_A_RESISTANCE", "RDA.1", "RDA.2");
         return program.build();
     }
     private static void measure(GeneratedDiagnosticProgram.Builder program, String id, String red, String black) {

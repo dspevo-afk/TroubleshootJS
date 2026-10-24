@@ -1,0 +1,23 @@
+{
+  "native": {
+    "actualExitCode": 0,
+    "operationSeconds": 129.7373146,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "6bd247b42928965a9aa8a89a624fbe5f47e5df21da7bb80293e0a7678c621324"
+  },
+  "nativeSuites": 15,
+  "assertions": 482685,
+  "nativeCleanup": "PASS",
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 99.1495686,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1182,
+    "rawSha256": "92b413fbda4085eb400797740059a73e0c6bb6bad3cfbf12c9c89fc2a58fb0af"
+  },
+  "compiled": "PASS:a07 pure306530/runtime103; cleanupPASS",
+  "diagnosis": "FAIL retained; actual reader1/finite source current with post power DISCHARGE/PRE_L residual and stored-energy READY; all cleanupPASS"
+}

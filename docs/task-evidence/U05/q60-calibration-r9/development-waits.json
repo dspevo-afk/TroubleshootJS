@@ -1,0 +1,41 @@
+{
+  "status": "PASS_TEMPORAL_TRACE_BOUND_ONLY",
+  "cases": [
+    {
+      "seed": "-1017",
+      "requestedOffWaitSecondsByHypothesis": [
+        1.8,
+        1.8,
+        2.0,
+        1.8,
+        1.6
+      ],
+      "captureSha256": "0ff41777aa399b012bbd5451938c49897576fc4f2a8fe212306e3068f8e72486"
+    },
+    {
+      "seed": "-1067",
+      "requestedOffWaitSecondsByHypothesis": [
+        1.7,
+        1.7,
+        2.0,
+        1.7,
+        1.4
+      ],
+      "captureSha256": "e375f80a2c5f5d068d7f8103ff0bb5818e2e586f6195bab54205e0d21f5116e0"
+    },
+    {
+      "seed": "-1022",
+      "requestedOffWaitSecondsByHypothesis": [
+        1.6,
+        1.6,
+        2.1,
+        1.6,
+        1.4
+      ],
+      "captureSha256": "6077bbff866fec2d2e34fdc1991061e02211d57746f9d11d2d600a5c7281ae17"
+    }
+  ],
+  "scope": "Executed requested natural time; no CPU speedup or independent electrical/admission grant",
+  "featureReaderStillRequired": true,
+  "profileAssignment": "NONE"
+}

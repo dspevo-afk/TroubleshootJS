@@ -1,0 +1,1966 @@
+{
+  "schema": "tsj-compiled-cpu-profile-summary/1",
+  "scope": "Sampled CPU diagnosis; profiler overhead and sampling are not admission proof",
+  "profileSha256": "6bcf94c09f531e75772faddad1a041a886f99d992f6277cd9e8a56897bead93d",
+  "symbolMapSha256": "1dddb9a067590ef721d1f44aa8e11e257fae7373ca1ecb3a865dc9e29b49afe2",
+  "samples": 81759,
+  "sampledMillis": 118585.209,
+  "negativeDeltas": [
+    {
+      "index": 2385,
+      "microseconds": -15
+    }
+  ],
+  "durationMethod": "Stable timestamp sort; each sample to next, final sample to capture end",
+  "unassignedPrefixMicros": 37487,
+  "profilerWallMillis": 118622.696,
+  "topSelf": [
+    {
+      "function": "(idle)",
+      "selfMillis": 31622.213,
+      "inclusiveMillis": 31622.213,
+      "sampledPercent": 26.666
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 3333.16,
+      "inclusiveMillis": 3333.16,
+      "sampledPercent": 2.811,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 2915.658,
+      "inclusiveMillis": 2915.658,
+      "sampledPercent": 2.459,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 2494.98,
+      "inclusiveMillis": 2494.98,
+      "sampledPercent": 2.104,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 1940.228,
+      "inclusiveMillis": 1940.228,
+      "sampledPercent": 1.636,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "prd",
+      "selfMillis": 1678.84,
+      "inclusiveMillis": 3833.075,
+      "sampledPercent": 1.416,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$canTraverse",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "688"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 1652.605,
+      "inclusiveMillis": 1652.605,
+      "sampledPercent": 1.394,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 1631.89,
+      "inclusiveMillis": 1631.89,
+      "sampledPercent": 1.376,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 1625.804,
+      "inclusiveMillis": 1625.804,
+      "sampledPercent": 1.371,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 1577.991,
+      "inclusiveMillis": 1577.991,
+      "sampledPercent": 1.331,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "(garbage collector)",
+      "selfMillis": 1577.001,
+      "inclusiveMillis": 1577.001,
+      "sampledPercent": 1.33
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 1479.461,
+      "inclusiveMillis": 4862.167,
+      "sampledPercent": 1.248,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "mqd",
+      "selfMillis": 1325.239,
+      "inclusiveMillis": 2814.432,
+      "sampledPercent": 1.118,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$TurnLowerBound",
+      "member": "PcbLayerRoutingPrototype$TurnLowerBound",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "239"
+    },
+    {
+      "function": "Zdf",
+      "selfMillis": 1068.377,
+      "inclusiveMillis": 1068.377,
+      "sampledPercent": 0.901,
+      "class": "java.lang.String",
+      "member": "$equals",
+      "source": "com/google/gwt/emul/java/lang/String.java",
+      "sourceLine": "656"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 1031.559,
+      "inclusiveMillis": 3965.371,
+      "sampledPercent": 0.87,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "ord",
+      "selfMillis": 1016.444,
+      "inclusiveMillis": 2990.574,
+      "sampledPercent": 0.857,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$canOccupy",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "651"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 921.901,
+      "inclusiveMillis": 929.641,
+      "sampledPercent": 0.777,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 831.861,
+      "inclusiveMillis": 831.861,
+      "sampledPercent": 0.701,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 805.757,
+      "inclusiveMillis": 3320.911,
+      "sampledPercent": 0.679,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "Ard",
+      "selfMillis": 663.461,
+      "inclusiveMillis": 1731.838,
+      "sampledPercent": 0.559,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$isPadAtOtherNet",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "876"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 642.361,
+      "inclusiveMillis": 2295.58,
+      "sampledPercent": 0.542,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 637.831,
+      "inclusiveMillis": 2599.723,
+      "sampledPercent": 0.538,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 636.38,
+      "inclusiveMillis": 2307.94,
+      "sampledPercent": 0.537,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 606.957,
+      "inclusiveMillis": 2211.351,
+      "sampledPercent": 0.512,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 598.166,
+      "inclusiveMillis": 2243.14,
+      "sampledPercent": 0.504,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 564.035,
+      "inclusiveMillis": 567.092,
+      "sampledPercent": 0.476,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    },
+    {
+      "function": "Ws",
+      "selfMillis": 545.094,
+      "inclusiveMillis": 545.094,
+      "sampledPercent": 0.46,
+      "class": "com.google.gwt.lang.Array",
+      "member": "initializeArrayElementsWithDefaults",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Array.java",
+      "sourceLine": "285"
+    },
+    {
+      "function": "(program)",
+      "selfMillis": 536.395,
+      "inclusiveMillis": 536.395,
+      "sampledPercent": 0.452
+    },
+    {
+      "function": "Drd",
+      "selfMillis": 532.902,
+      "inclusiveMillis": 579.827,
+      "sampledPercent": 0.449,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$ownsLayerGridCell",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "910"
+    },
+    {
+      "function": "DYb",
+      "selfMillis": 499.776,
+      "inclusiveMillis": 499.776,
+      "sampledPercent": 0.421,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "restoreReducedMatrixRowInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8131"
+    },
+    {
+      "function": "Edf",
+      "selfMillis": 490.914,
+      "inclusiveMillis": 490.914,
+      "sampledPercent": 0.414,
+      "class": "java.lang.Math",
+      "member": "min",
+      "source": "com/google/gwt/emul/java/lang/Math.java",
+      "sourceLine": "168"
+    },
+    {
+      "function": "trd",
+      "selfMillis": 487.58,
+      "inclusiveMillis": 571.609,
+      "sampledPercent": 0.411,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$distanceField",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "617"
+    },
+    {
+      "function": "Rpd",
+      "selfMillis": 484.516,
+      "inclusiveMillis": 579.476,
+      "sampledPercent": 0.409,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$lowerBound",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "491"
+    },
+    {
+      "function": "Tje",
+      "selfMillis": 475.336,
+      "inclusiveMillis": 475.336,
+      "sampledPercent": 0.401,
+      "class": "com.lushprojects.circuitjs1.client.Rectangle",
+      "member": "$intersects",
+      "source": "com/lushprojects/circuitjs1/client/Rectangle.java",
+      "sourceLine": "91"
+    },
+    {
+      "function": "$je",
+      "selfMillis": 458.933,
+      "inclusiveMillis": 458.933,
+      "sampledPercent": 0.387,
+      "class": "com.lushprojects.circuitjs1.client.Rectangle",
+      "member": "Rectangle",
+      "source": "com/lushprojects/circuitjs1/client/Rectangle.java",
+      "sourceLine": "48"
+    },
+    {
+      "function": "mqd",
+      "selfMillis": 433.475,
+      "inclusiveMillis": 886.791,
+      "sampledPercent": 0.366,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$TurnLowerBound",
+      "member": "PcbLayerRoutingPrototype$TurnLowerBound",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "239"
+    },
+    {
+      "function": "Mrd",
+      "selfMillis": 411.048,
+      "inclusiveMillis": 3982.139,
+      "sampledPercent": 0.347,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$route",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "482"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 409.233,
+      "inclusiveMillis": 412.338,
+      "sampledPercent": 0.345,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 398.347,
+      "inclusiveMillis": 404.48,
+      "sampledPercent": 0.336,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 394.307,
+      "inclusiveMillis": 398.915,
+      "sampledPercent": 0.333,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    }
+  ],
+  "topInclusive": [
+    {
+      "function": "(root)",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 118585.209,
+      "sampledPercent": 100.0
+    },
+    {
+      "function": "(anonymous)",
+      "selfMillis": 4.692,
+      "inclusiveMillis": 84169.452,
+      "sampledPercent": 70.978
+    },
+    {
+      "function": "zi",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 84164.76,
+      "sampledPercent": 70.974,
+      "class": "com.google.gwt.core.client.impl.Impl",
+      "member": "apply",
+      "source": "com/google/gwt/core/client/impl/Impl.java",
+      "sourceLine": "244"
+    },
+    {
+      "function": "Ci",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 84164.76,
+      "sampledPercent": 70.974,
+      "class": "com.google.gwt.core.client.impl.Impl",
+      "member": "entry0",
+      "source": "com/google/gwt/core/client/impl/Impl.java",
+      "sourceLine": "283"
+    },
+    {
+      "function": "(anonymous)",
+      "selfMillis": 2.432,
+      "inclusiveMillis": 84156.995,
+      "sampledPercent": 70.968
+    },
+    {
+      "function": "Mc",
+      "selfMillis": 2.936,
+      "inclusiveMillis": 84152.408,
+      "sampledPercent": 70.964,
+      "class": "com.lushprojects.circuitjs1.client.Task41SimulationSnapshot",
+      "member": "steps",
+      "source": "com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+      "sourceLine": "121"
+    },
+    {
+      "function": "Efe",
+      "selfMillis": 1.357,
+      "inclusiveMillis": 81009.659,
+      "sampledPercent": 68.313,
+      "class": "com.lushprojects.circuitjs1.client.Rb56QualificationVerifier$Runner$1",
+      "member": "run",
+      "source": "com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+      "sourceLine": "125"
+    },
+    {
+      "function": "pfe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 81008.302,
+      "sampledPercent": 68.312,
+      "class": "com.lushprojects.circuitjs1.client.Rb56QualificationVerifier$Runner",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+      "sourceLine": "194"
+    },
+    {
+      "function": "INc",
+      "selfMillis": 1.514,
+      "inclusiveMillis": 80736.081,
+      "sampledPercent": 68.083,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator",
+      "member": "$advanceForDeveloperVerification",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "173"
+    },
+    {
+      "function": "HNc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 80734.567,
+      "sampledPercent": 68.081,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "336"
+    },
+    {
+      "function": "VPc",
+      "selfMillis": 1.544,
+      "inclusiveMillis": 80672.766,
+      "sampledPercent": 68.029,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "229"
+    },
+    {
+      "function": "rQc",
+      "selfMillis": 1.52,
+      "inclusiveMillis": 80664.579,
+      "sampledPercent": 68.022,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runStage",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "455"
+    },
+    {
+      "function": "oQc",
+      "selfMillis": 3.105,
+      "inclusiveMillis": 49222.748,
+      "sampledPercent": 41.508,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runHypotheses",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "517"
+    },
+    {
+      "function": "AOc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 49216.667,
+      "sampledPercent": 41.503,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator$Services",
+      "member": "$proveNext",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "593"
+    },
+    {
+      "function": "KGc",
+      "selfMillis": 1.516,
+      "inclusiveMillis": 49168.618,
+      "sampledPercent": 41.463,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "443"
+    },
+    {
+      "function": "IGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 48935.393,
+      "sampledPercent": 41.266,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runUnit",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "499"
+    },
+    {
+      "function": "(idle)",
+      "selfMillis": 31622.213,
+      "inclusiveMillis": 31622.213,
+      "sampledPercent": 26.666
+    },
+    {
+      "function": "vOc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 31113.417,
+      "sampledPercent": 26.237,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator$Services",
+      "member": "$healthy",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "515"
+    },
+    {
+      "function": "nQc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 31113.417,
+      "sampledPercent": 26.237,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runHealthy",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "497"
+    },
+    {
+      "function": "Fee",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27775.443,
+      "sampledPercent": 23.422,
+      "class": "com.lushprojects.circuitjs1.client.Rb56PlayerFamilyCapability$1",
+      "member": "advance",
+      "source": "com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+      "sourceLine": "72"
+    },
+    {
+      "function": "PRc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27775.443,
+      "sampledPercent": 23.422,
+      "class": "com.lushprojects.circuitjs1.client.GenerationRequest$ConstructionSession",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "sourceLine": "361"
+    },
+    {
+      "function": "nBe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27536.37,
+      "sampledPercent": 23.221,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator",
+      "member": "$advanceMedium",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "404"
+    },
+    {
+      "function": "zCe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27536.37,
+      "sampledPercent": 23.221,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$Session",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "182"
+    },
+    {
+      "function": "qBe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 17112.109,
+      "sampledPercent": 14.43,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator",
+      "member": "$advanceMediumTwoLayerRoute",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "555"
+    },
+    {
+      "function": "hqd",
+      "selfMillis": 42.6,
+      "inclusiveMillis": 16930.48,
+      "sampledPercent": 14.277,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Session",
+      "member": "$advanceSlice",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "113"
+    },
+    {
+      "function": "Opd",
+      "selfMillis": 35.939,
+      "inclusiveMillis": 16822.212,
+      "sampledPercent": 14.186,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$advanceOne",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "414"
+    },
+    {
+      "function": "_pd",
+      "selfMillis": 211.403,
+      "inclusiveMillis": 12548.124,
+      "sampledPercent": 10.582,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "$advanceOne",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "550"
+    },
+    {
+      "function": "ODc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11321.904,
+      "sampledPercent": 9.547,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor$Cursor",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "111"
+    },
+    {
+      "function": "DGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11321.904,
+      "sampledPercent": 9.547,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runObservationStep",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "649"
+    },
+    {
+      "function": "JDc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11048.915,
+      "sampledPercent": 9.317,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor$Cursor",
+      "member": "$executeStep",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "224"
+    },
+    {
+      "function": "T8d",
+      "selfMillis": 1.527,
+      "inclusiveMillis": 10234.133,
+      "sampledPercent": 8.63,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "629"
+    },
+    {
+      "function": "Y8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 10234.133,
+      "sampledPercent": 8.63,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "629"
+    },
+    {
+      "function": "GGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 10234.133,
+      "sampledPercent": 8.63,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runRepairStatusAndSettle",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "761"
+    },
+    {
+      "function": "bqd",
+      "selfMillis": 257.768,
+      "inclusiveMillis": 9682.825,
+      "sampledPercent": 8.165,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "$offerStep",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "541"
+    },
+    {
+      "function": "GKc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9659.317,
+      "sampledPercent": 8.145,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedRuntimeDeveloperSettlement",
+      "member": "stepTemporalPreparation",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "sourceLine": "29"
+    },
+    {
+      "function": "EDc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9205.832,
+      "sampledPercent": 7.763,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor",
+      "member": "waitForReadiness",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "18"
+    },
+    {
+      "function": "fGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9022.066,
+      "sampledPercent": 7.608,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$captureTemporalRetestCompletion",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "820"
+    },
+    {
+      "function": "BGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9022.066,
+      "sampledPercent": 7.608,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runCustomerRetest",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "782"
+    },
+    {
+      "function": "T8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9019.222,
+      "sampledPercent": 7.606,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "629"
+    },
+    {
+      "function": "g8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9019.222,
+      "sampledPercent": 7.606,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$4",
+      "member": "step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "459"
+    }
+  ],
+  "publicAdmissionGranted": false,
+  "topFunctionsSelf": [
+    {
+      "function": "(idle)",
+      "selfMillis": 31622.213,
+      "inclusiveMillis": 31622.213,
+      "sampledPercent": 26.666
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 19657.542,
+      "inclusiveMillis": 19657.542,
+      "sampledPercent": 16.577,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 7350.475,
+      "inclusiveMillis": 27231.317,
+      "sampledPercent": 6.198,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "_s",
+      "selfMillis": 4420.664,
+      "inclusiveMillis": 4687.826,
+      "sampledPercent": 3.728,
+      "class": "com.google.gwt.lang.Cast",
+      "member": "canCast",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Cast.java",
+      "sourceLine": "40"
+    },
+    {
+      "function": "dYb",
+      "selfMillis": 4230.698,
+      "inclusiveMillis": 4275.557,
+      "sampledPercent": 3.568,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_solve",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8839"
+    },
+    {
+      "function": "prd",
+      "selfMillis": 1955.862,
+      "inclusiveMillis": 5618.433,
+      "sampledPercent": 1.649,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$canTraverse",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "688"
+    },
+    {
+      "function": "DYb",
+      "selfMillis": 1934.413,
+      "inclusiveMillis": 1934.413,
+      "sampledPercent": 1.631,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "restoreReducedMatrixRowInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8131"
+    },
+    {
+      "function": "mqd",
+      "selfMillis": 1758.714,
+      "inclusiveMillis": 3701.223,
+      "sampledPercent": 1.483,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$TurnLowerBound",
+      "member": "PcbLayerRoutingPrototype$TurnLowerBound",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "239"
+    },
+    {
+      "function": "Xs",
+      "selfMillis": 1609.175,
+      "inclusiveMillis": 1609.175,
+      "sampledPercent": 1.357,
+      "class": "com.google.gwt.lang.Array",
+      "member": "nativeArraySplice",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Array.java",
+      "sourceLine": "190"
+    },
+    {
+      "function": "(garbage collector)",
+      "selfMillis": 1577.001,
+      "inclusiveMillis": 1577.001,
+      "sampledPercent": 1.33
+    },
+    {
+      "function": "Zdf",
+      "selfMillis": 1360.986,
+      "inclusiveMillis": 1362.208,
+      "sampledPercent": 1.148,
+      "class": "java.lang.String",
+      "member": "$equals",
+      "source": "com/google/gwt/emul/java/lang/String.java",
+      "sourceLine": "656"
+    },
+    {
+      "function": "s$b",
+      "selfMillis": 1319.755,
+      "inclusiveMillis": 2540.077,
+      "sampledPercent": 1.113,
+      "class": "com.lushprojects.circuitjs1.client.CircuitNode",
+      "member": "$applyVoltage",
+      "source": "com/lushprojects/circuitjs1/client/CircuitNode.java",
+      "sourceLine": "45"
+    },
+    {
+      "function": "Ws",
+      "selfMillis": 1267.091,
+      "inclusiveMillis": 1267.091,
+      "sampledPercent": 1.069,
+      "class": "com.google.gwt.lang.Array",
+      "member": "initializeArrayElementsWithDefaults",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Array.java",
+      "sourceLine": "285"
+    },
+    {
+      "function": "ord",
+      "selfMillis": 1149.989,
+      "inclusiveMillis": 3191.18,
+      "sampledPercent": 0.97,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$canOccupy",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "651"
+    },
+    {
+      "function": "$je",
+      "selfMillis": 1100.193,
+      "inclusiveMillis": 1154.365,
+      "sampledPercent": 0.928,
+      "class": "com.lushprojects.circuitjs1.client.Rectangle",
+      "member": "Rectangle",
+      "source": "com/lushprojects/circuitjs1/client/Rectangle.java",
+      "sourceLine": "48"
+    },
+    {
+      "function": "Edf",
+      "selfMillis": 1081.09,
+      "inclusiveMillis": 1081.09,
+      "sampledPercent": 0.912,
+      "class": "java.lang.Math",
+      "member": "min",
+      "source": "com/google/gwt/emul/java/lang/Math.java",
+      "sourceLine": "168"
+    },
+    {
+      "function": "pWb",
+      "selfMillis": 970.487,
+      "inclusiveMillis": 43663.13,
+      "sampledPercent": 0.818,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$runCircuitOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3334"
+    },
+    {
+      "function": "NXb",
+      "selfMillis": 945.84,
+      "inclusiveMillis": 945.84,
+      "sampledPercent": 0.798,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "console",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "2355"
+    },
+    {
+      "function": "Vs",
+      "selfMillis": 848.07,
+      "inclusiveMillis": 848.07,
+      "sampledPercent": 0.715,
+      "class": "com.google.gwt.lang.Array",
+      "member": "initValues",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Array.java",
+      "sourceLine": "145"
+    },
+    {
+      "function": "gXb",
+      "selfMillis": 824.504,
+      "inclusiveMillis": 886.633,
+      "sampledPercent": 0.695,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$stampMatrix",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3227"
+    },
+    {
+      "function": "vof",
+      "selfMillis": 705.792,
+      "inclusiveMillis": 2149.771,
+      "sampledPercent": 0.595,
+      "class": "java.util.TreeMap",
+      "member": "$getEntry",
+      "source": "com/google/gwt/emul/java/util/TreeMap.java",
+      "sourceLine": "688"
+    },
+    {
+      "function": "Ard",
+      "selfMillis": 676.886,
+      "inclusiveMillis": 1757.587,
+      "sampledPercent": 0.571,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$isPadAtOtherNet",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "876"
+    },
+    {
+      "function": "Drd",
+      "selfMillis": 671.029,
+      "inclusiveMillis": 739.133,
+      "sampledPercent": 0.566,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$ownsLayerGridCell",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "910"
+    },
+    {
+      "function": "Rpd",
+      "selfMillis": 647.405,
+      "inclusiveMillis": 768.407,
+      "sampledPercent": 0.546,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$lowerBound",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "491"
+    },
+    {
+      "function": "cYb",
+      "selfMillis": 644.448,
+      "inclusiveMillis": 27878.81,
+      "sampledPercent": 0.543,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorNonlinearOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8258"
+    },
+    {
+      "function": "$vb",
+      "selfMillis": 618.707,
+      "inclusiveMillis": 1023.516,
+      "sampledPercent": 0.522,
+      "class": "com.lushprojects.circuitjs1.client.CircuitElm",
+      "member": "setNodeVoltage",
+      "source": "com/lushprojects/circuitjs1/client/CircuitElm.java",
+      "sourceLine": "212"
+    },
+    {
+      "function": "jt",
+      "selfMillis": 580.286,
+      "inclusiveMillis": 580.286,
+      "sampledPercent": 0.489,
+      "class": "com.google.gwt.lang.Cast",
+      "member": "isJavaString",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Cast.java",
+      "sourceLine": "291"
+    },
+    {
+      "function": "(program)",
+      "selfMillis": 536.395,
+      "inclusiveMillis": 536.395,
+      "sampledPercent": 0.452
+    },
+    {
+      "function": "Tje",
+      "selfMillis": 507.379,
+      "inclusiveMillis": 507.379,
+      "sampledPercent": 0.428,
+      "class": "com.lushprojects.circuitjs1.client.Rectangle",
+      "member": "$intersects",
+      "source": "com/lushprojects/circuitjs1/client/Rectangle.java",
+      "sourceLine": "91"
+    },
+    {
+      "function": "removeChild",
+      "selfMillis": 505.665,
+      "inclusiveMillis": 505.665,
+      "sampledPercent": 0.426
+    },
+    {
+      "function": "Ps",
+      "selfMillis": 494.191,
+      "inclusiveMillis": 712.877,
+      "sampledPercent": 0.417,
+      "class": "com.google.gwt.lang.Array",
+      "member": "cloneSubrange",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Array.java",
+      "sourceLine": "48"
+    },
+    {
+      "function": "trd",
+      "selfMillis": 490.666,
+      "inclusiveMillis": 574.695,
+      "sampledPercent": 0.414,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$distanceField",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "617"
+    },
+    {
+      "function": "Bhb",
+      "selfMillis": 464.244,
+      "inclusiveMillis": 976.497,
+      "sampledPercent": 0.391,
+      "class": "com.google.gwt.user.client.ui.ListBox",
+      "member": "$insertItem",
+      "source": "com/google/gwt/user/client/ui/ListBox.java",
+      "sourceLine": "369"
+    },
+    {
+      "function": "TWb",
+      "selfMillis": 459.865,
+      "inclusiveMillis": 3306.573,
+      "sampledPercent": 0.388,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$setNodeVoltages",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3566"
+    },
+    {
+      "function": "Spd",
+      "selfMillis": 451.836,
+      "inclusiveMillis": 2138.011,
+      "sampledPercent": 0.381,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$offer",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "674"
+    },
+    {
+      "function": "kqd",
+      "selfMillis": 427.423,
+      "inclusiveMillis": 924.255,
+      "sampledPercent": 0.36,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$TurnLowerBound",
+      "member": "$cardinalValue",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "353"
+    },
+    {
+      "function": "createElement",
+      "selfMillis": 425.582,
+      "inclusiveMillis": 425.582,
+      "sampledPercent": 0.359
+    },
+    {
+      "function": "sMd",
+      "selfMillis": 418.189,
+      "inclusiveMillis": 508.422,
+      "sampledPercent": 0.353,
+      "class": "com.lushprojects.circuitjs1.client.PhysicalPackageGeometry",
+      "member": "copyPositive",
+      "source": "com/lushprojects/circuitjs1/client/PhysicalPackageGeometry.java",
+      "sourceLine": "728"
+    },
+    {
+      "function": "Mrd",
+      "selfMillis": 412.892,
+      "inclusiveMillis": 3994.774,
+      "sampledPercent": 0.348,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$route",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "482"
+    },
+    {
+      "function": "jmf",
+      "selfMillis": 395.498,
+      "inclusiveMillis": 395.498,
+      "sampledPercent": 0.334,
+      "class": "java.util.InternalJsHashCodeMap",
+      "member": "$ensureChain",
+      "source": "com/google/gwt/emul/java/util/InternalJsHashCodeMap.java",
+      "sourceLine": "226"
+    },
+    {
+      "function": "mTb",
+      "selfMillis": 394.957,
+      "inclusiveMillis": 614.949,
+      "sampledPercent": 0.333,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$calcWireCurrents",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3575"
+    },
+    {
+      "function": "Erd",
+      "selfMillis": 382.078,
+      "inclusiveMillis": 7601.443,
+      "sampledPercent": 0.322,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$permitsLayerStep",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "899"
+    },
+    {
+      "function": "bt",
+      "selfMillis": 380.091,
+      "inclusiveMillis": 4516.046,
+      "sampledPercent": 0.321,
+      "class": "com.google.gwt.lang.Cast",
+      "member": "dynamicCast",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Cast.java",
+      "sourceLine": "57"
+    },
+    {
+      "function": "iTb",
+      "selfMillis": 355.264,
+      "inclusiveMillis": 3674.3,
+      "sampledPercent": 0.3,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$applySolvedRightSide",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3536"
+    },
+    {
+      "function": "cc",
+      "selfMillis": 326.906,
+      "inclusiveMillis": 944.327,
+      "sampledPercent": 0.276,
+      "class": "java.lang.Object",
+      "member": "equals_Ljava_lang_Object__Z__devirtual$",
+      "source": "com/google/gwt/emul/java/lang/Object.java",
+      "sourceLine": "66"
+    },
+    {
+      "function": "Apd",
+      "selfMillis": 323.728,
+      "inclusiveMillis": 323.728,
+      "sampledPercent": 0.273,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Node",
+      "member": "$compareTo",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "189"
+    },
+    {
+      "function": "Upd",
+      "selfMillis": 314.916,
+      "inclusiveMillis": 1248.921,
+      "sampledPercent": 0.266,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$viaFits",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "679"
+    },
+    {
+      "function": "B7",
+      "selfMillis": 305.271,
+      "inclusiveMillis": 409.788,
+      "sampledPercent": 0.257,
+      "class": "com.google.gwt.lang.LongLib",
+      "member": "fromInt",
+      "source": "com/google/gwt/lang/LongLib.java",
+      "sourceLine": "118"
+    },
+    {
+      "function": "wdf",
+      "selfMillis": 282.829,
+      "inclusiveMillis": 282.829,
+      "sampledPercent": 0.239,
+      "class": "java.lang.Math",
+      "member": "exp",
+      "source": "com/google/gwt/emul/java/lang/Math.java",
+      "sourceLine": "107"
+    },
+    {
+      "function": "lmf",
+      "selfMillis": 278.622,
+      "inclusiveMillis": 278.622,
+      "sampledPercent": 0.235,
+      "class": "java.util.InternalJsHashCodeMap",
+      "member": "$getChainOrEmpty",
+      "source": "com/google/gwt/emul/java/util/InternalJsHashCodeMap.java",
+      "sourceLine": "222"
+    },
+    {
+      "function": "jyd",
+      "selfMillis": 275.579,
+      "inclusiveMillis": 2965.048,
+      "sampledPercent": 0.232,
+      "class": "com.lushprojects.circuitjs1.client.PcbTwoLayerRules",
+      "member": "$permits",
+      "source": "com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+      "sourceLine": "62"
+    },
+    {
+      "function": "bqd",
+      "selfMillis": 270.943,
+      "inclusiveMillis": 9907.386,
+      "sampledPercent": 0.228,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "$offerStep",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "541"
+    },
+    {
+      "function": "Tpd",
+      "selfMillis": 266.424,
+      "inclusiveMillis": 537.549,
+      "sampledPercent": 0.225,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$pathViaFits",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "697"
+    },
+    {
+      "function": "QZb",
+      "selfMillis": 262.733,
+      "inclusiveMillis": 552.24,
+      "sampledPercent": 0.222,
+      "class": "com.lushprojects.circuitjs1.client.CirSim$FindPathInfo",
+      "member": "$findPath",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3069"
+    },
+    {
+      "function": "H$b",
+      "selfMillis": 259.972,
+      "inclusiveMillis": 43777.285,
+      "sampledPercent": 0.219,
+      "class": "com.lushprojects.circuitjs1.client.CircuitSolverExecutor",
+      "member": "$advanceFor",
+      "source": "com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "sourceLine": "142"
+    },
+    {
+      "function": "c8",
+      "selfMillis": 255.568,
+      "inclusiveMillis": 255.568,
+      "sampledPercent": 0.216,
+      "class": "com.google.gwt.lang.Util",
+      "member": "hasTypeMarker",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Util.java",
+      "sourceLine": "36"
+    },
+    {
+      "function": "mmf",
+      "selfMillis": 254.975,
+      "inclusiveMillis": 1236.14,
+      "sampledPercent": 0.215,
+      "class": "java.util.InternalJsHashCodeMap",
+      "member": "$getEntry",
+      "source": "com/google/gwt/emul/java/util/InternalJsHashCodeMap.java",
+      "sourceLine": "144"
+    },
+    {
+      "function": "kXb",
+      "selfMillis": 249.558,
+      "inclusiveMillis": 249.558,
+      "sampledPercent": 0.21,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$stampRightSide",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3275"
+    },
+    {
+      "function": "Qpd",
+      "selfMillis": 234.109,
+      "inclusiveMillis": 1077.519,
+      "sampledPercent": 0.197,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$goals",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "478"
+    },
+    {
+      "function": "swc",
+      "selfMillis": 232.495,
+      "inclusiveMillis": 552.494,
+      "sampledPercent": 0.196,
+      "class": "com.lushprojects.circuitjs1.client.Expr",
+      "member": "$eval",
+      "source": "com/lushprojects/circuitjs1/client/Expr.java",
+      "sourceLine": "31"
+    }
+  ],
+  "topFunctionsInclusive": [
+    {
+      "function": "(root)",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 118585.209,
+      "sampledPercent": 100.0
+    },
+    {
+      "function": "(anonymous)",
+      "selfMillis": 80.308,
+      "inclusiveMillis": 84778.259,
+      "sampledPercent": 71.491
+    },
+    {
+      "function": "Ci",
+      "selfMillis": 1.551,
+      "inclusiveMillis": 84673.942,
+      "sampledPercent": 71.403,
+      "class": "com.google.gwt.core.client.impl.Impl",
+      "member": "entry0",
+      "source": "com/google/gwt/core/client/impl/Impl.java",
+      "sourceLine": "283"
+    },
+    {
+      "function": "zi",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 84671.79,
+      "sampledPercent": 71.402,
+      "class": "com.google.gwt.core.client.impl.Impl",
+      "member": "apply",
+      "source": "com/google/gwt/core/client/impl/Impl.java",
+      "sourceLine": "244"
+    },
+    {
+      "function": "Mc",
+      "selfMillis": 2.936,
+      "inclusiveMillis": 84153.964,
+      "sampledPercent": 70.965,
+      "class": "com.lushprojects.circuitjs1.client.Task41SimulationSnapshot",
+      "member": "steps",
+      "source": "com/lushprojects/circuitjs1/client/Task41SimulationSnapshot.java",
+      "sourceLine": "121"
+    },
+    {
+      "function": "HNc",
+      "selfMillis": 1.614,
+      "inclusiveMillis": 81184.556,
+      "sampledPercent": 68.461,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "336"
+    },
+    {
+      "function": "VPc",
+      "selfMillis": 1.544,
+      "inclusiveMillis": 81119.531,
+      "sampledPercent": 68.406,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "229"
+    },
+    {
+      "function": "rQc",
+      "selfMillis": 1.52,
+      "inclusiveMillis": 81111.344,
+      "sampledPercent": 68.399,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runStage",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "455"
+    },
+    {
+      "function": "pfe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 81010.457,
+      "sampledPercent": 68.314,
+      "class": "com.lushprojects.circuitjs1.client.Rb56QualificationVerifier$Runner",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+      "sourceLine": "194"
+    },
+    {
+      "function": "Efe",
+      "selfMillis": 1.357,
+      "inclusiveMillis": 81009.659,
+      "sampledPercent": 68.313,
+      "class": "com.lushprojects.circuitjs1.client.Rb56QualificationVerifier$Runner$1",
+      "member": "run",
+      "source": "com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+      "sourceLine": "125"
+    },
+    {
+      "function": "INc",
+      "selfMillis": 1.514,
+      "inclusiveMillis": 80736.081,
+      "sampledPercent": 68.083,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator",
+      "member": "$advanceForDeveloperVerification",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "173"
+    },
+    {
+      "function": "oQc",
+      "selfMillis": 4.617,
+      "inclusiveMillis": 49536.022,
+      "sampledPercent": 41.773,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runHypotheses",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "517"
+    },
+    {
+      "function": "AOc",
+      "selfMillis": 0.831,
+      "inclusiveMillis": 49526.926,
+      "sampledPercent": 41.765,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator$Services",
+      "member": "$proveNext",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "593"
+    },
+    {
+      "function": "KGc",
+      "selfMillis": 1.516,
+      "inclusiveMillis": 49466.8,
+      "sampledPercent": 41.714,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "443"
+    },
+    {
+      "function": "IGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 49227.248,
+      "sampledPercent": 41.512,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runUnit",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "499"
+    },
+    {
+      "function": "bTb",
+      "selfMillis": 4.605,
+      "inclusiveMillis": 44920.771,
+      "sampledPercent": 37.881,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$advanceGeneratedTemporalProfile",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "6462"
+    },
+    {
+      "function": "H$b",
+      "selfMillis": 259.972,
+      "inclusiveMillis": 43777.285,
+      "sampledPercent": 36.916,
+      "class": "com.lushprojects.circuitjs1.client.CircuitSolverExecutor",
+      "member": "$advanceFor",
+      "source": "com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "sourceLine": "142"
+    },
+    {
+      "function": "pWb",
+      "selfMillis": 970.487,
+      "inclusiveMillis": 43663.13,
+      "sampledPercent": 36.82,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$runCircuitOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "3334"
+    },
+    {
+      "function": "T8d",
+      "selfMillis": 1.527,
+      "inclusiveMillis": 36007.762,
+      "sampledPercent": 30.364,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "629"
+    },
+    {
+      "function": "(idle)",
+      "selfMillis": 31622.213,
+      "inclusiveMillis": 31622.213,
+      "sampledPercent": 26.666
+    },
+    {
+      "function": "vOc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 31222.534,
+      "sampledPercent": 26.329,
+      "class": "com.lushprojects.circuitjs1.client.GenerationCoordinator$Services",
+      "member": "$healthy",
+      "source": "com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sourceLine": "515"
+    },
+    {
+      "function": "nQc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 31222.534,
+      "sampledPercent": 26.329,
+      "class": "com.lushprojects.circuitjs1.client.GenerationJob",
+      "member": "$runHealthy",
+      "source": "com/lushprojects/circuitjs1/client/GenerationJob.java",
+      "sourceLine": "497"
+    },
+    {
+      "function": "cYb",
+      "selfMillis": 644.448,
+      "inclusiveMillis": 27878.81,
+      "sampledPercent": 23.51,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorNonlinearOwned",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8258"
+    },
+    {
+      "function": "PRc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27845.449,
+      "sampledPercent": 23.481,
+      "class": "com.lushprojects.circuitjs1.client.GenerationRequest$ConstructionSession",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/GenerationRequest.java",
+      "sourceLine": "361"
+    },
+    {
+      "function": "Fee",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27775.443,
+      "sampledPercent": 23.422,
+      "class": "com.lushprojects.circuitjs1.client.Rb56PlayerFamilyCapability$1",
+      "member": "advance",
+      "source": "com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+      "sourceLine": "72"
+    },
+    {
+      "function": "zCe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27647.681,
+      "sampledPercent": 23.315,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator$Session",
+      "member": "$advance",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "182"
+    },
+    {
+      "function": "nBe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 27536.37,
+      "sampledPercent": 23.221,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator",
+      "member": "$advanceMedium",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "404"
+    },
+    {
+      "function": "bYb",
+      "selfMillis": 7350.475,
+      "inclusiveMillis": 27231.317,
+      "sampledPercent": 22.964,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_factorAfterInputScan",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8282"
+    },
+    {
+      "function": "Y8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 26988.54,
+      "sampledPercent": 22.759,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "629"
+    },
+    {
+      "function": "_Xb",
+      "selfMillis": 19657.542,
+      "inclusiveMillis": 19657.542,
+      "sampledPercent": 16.577,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "lu_applyBoundedTrailingUpdatesInScript",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "8782"
+    },
+    {
+      "function": "qBe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 18841.092,
+      "sampledPercent": 15.888,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator",
+      "member": "$advanceMediumTwoLayerRoute",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "555"
+    },
+    {
+      "function": "rWb",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 18693.126,
+      "sampledPercent": 15.763,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$runGeneratedBoardVerificationIfReady",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "5307"
+    },
+    {
+      "function": "hqd",
+      "selfMillis": 46.581,
+      "inclusiveMillis": 18659.463,
+      "sampledPercent": 15.735,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Session",
+      "member": "$advanceSlice",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "113"
+    },
+    {
+      "function": "GKc",
+      "selfMillis": 1.543,
+      "inclusiveMillis": 18611.31,
+      "sampledPercent": 15.694,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedRuntimeDeveloperSettlement",
+      "member": "stepTemporalPreparation",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedRuntimeDeveloperSettlement.java",
+      "sourceLine": "29"
+    },
+    {
+      "function": "Opd",
+      "selfMillis": 37.361,
+      "inclusiveMillis": 18541.772,
+      "sampledPercent": 15.636,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search",
+      "member": "$advanceOne",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "414"
+    },
+    {
+      "function": "$Ac",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 16871.967,
+      "sampledPercent": 14.228,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedChallengeController",
+      "member": "$afterGeneratedVerification",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedChallengeController.java",
+      "sourceLine": "162"
+    },
+    {
+      "function": "ZAc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 16755.033,
+      "sampledPercent": 14.129,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedChallengeController",
+      "member": "$advancePreparationProfile",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedChallengeController.java",
+      "sourceLine": "56"
+    },
+    {
+      "function": "nWb",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 16599.23,
+      "sampledPercent": 13.998,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$resumeGeneratedTemporalPreparation",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "5299"
+    },
+    {
+      "function": "v8d",
+      "selfMillis": 1.556,
+      "inclusiveMillis": 13877.539,
+      "sampledPercent": 11.703,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$applyInput",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "907"
+    },
+    {
+      "function": "J8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 13518.304,
+      "sampledPercent": 11.4,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$observeRb56Input",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "681"
+    },
+    {
+      "function": "_pd",
+      "selfMillis": 222.756,
+      "inclusiveMillis": 12896.68,
+      "sampledPercent": 10.875,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "$advanceOne",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "550"
+    },
+    {
+      "function": "H8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 12703.959,
+      "sampledPercent": 10.713,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$ProfileWork",
+      "member": "$observeCondition",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "666"
+    },
+    {
+      "function": "ODc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11441.307,
+      "sampledPercent": 9.648,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor$Cursor",
+      "member": "$step",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "111"
+    },
+    {
+      "function": "DGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11441.307,
+      "sampledPercent": 9.648,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runObservationStep",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "649"
+    },
+    {
+      "function": "JDc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 11154.963,
+      "sampledPercent": 9.407,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor$Cursor",
+      "member": "$executeStep",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "224"
+    },
+    {
+      "function": "GGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 10234.133,
+      "sampledPercent": 8.63,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runRepairStatusAndSettle",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "761"
+    },
+    {
+      "function": "bqd",
+      "selfMillis": 270.943,
+      "inclusiveMillis": 9907.386,
+      "sampledPercent": 8.355,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "$offerStep",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "541"
+    },
+    {
+      "function": "EDc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9205.832,
+      "sampledPercent": 7.763,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticObservationExecutor",
+      "member": "waitForReadiness",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticObservationExecutor.java",
+      "sourceLine": "18"
+    },
+    {
+      "function": "BGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9025.187,
+      "sampledPercent": 7.611,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runCustomerRetest",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "782"
+    },
+    {
+      "function": "EBc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9022.343,
+      "sampledPercent": 7.608,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedChallengeController$1",
+      "member": "step",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedChallengeController.java",
+      "sourceLine": "336"
+    },
+    {
+      "function": "fGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9022.066,
+      "sampledPercent": 7.608,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$captureTemporalRetestCompletion",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "820"
+    },
+    {
+      "function": "g8d",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 9019.222,
+      "sampledPercent": 7.606,
+      "class": "com.lushprojects.circuitjs1.client.Rb30Behavior$4",
+      "member": "step",
+      "source": "com/lushprojects/circuitjs1/client/Rb30Behavior.java",
+      "sourceLine": "459"
+    },
+    {
+      "function": "Erd",
+      "selfMillis": 382.078,
+      "inclusiveMillis": 7601.443,
+      "sampledPercent": 6.41,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$permitsLayerStep",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "899"
+    },
+    {
+      "function": "zXb",
+      "selfMillis": 7.766,
+      "inclusiveMillis": 7525.02,
+      "sampledPercent": 6.346,
+      "class": "com.lushprojects.circuitjs1.client.CirSim",
+      "member": "$updateCircuit",
+      "source": "com/lushprojects/circuitjs1/client/CirSim.java",
+      "sourceLine": "1847"
+    },
+    {
+      "function": "pBe",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 5766.112,
+      "sampledPercent": 4.862,
+      "class": "com.lushprojects.circuitjs1.client.SeededPcbLayoutGenerator",
+      "member": "$advanceMediumRouting",
+      "source": "com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sourceLine": "463"
+    },
+    {
+      "function": "JGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 5751.923,
+      "sampledPercent": 4.85,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$settleCandidateForObservations",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "618"
+    },
+    {
+      "function": "AGc",
+      "selfMillis": 0.0,
+      "inclusiveMillis": 5751.923,
+      "sampledPercent": 4.85,
+      "class": "com.lushprojects.circuitjs1.client.GeneratedDiagnosticProofService$Session",
+      "member": "$runCandidateSettleAndPrepareObservations",
+      "source": "com/lushprojects/circuitjs1/client/GeneratedDiagnosticProofService.java",
+      "sourceLine": "608"
+    },
+    {
+      "function": "prd",
+      "selfMillis": 1955.862,
+      "inclusiveMillis": 5618.433,
+      "sampledPercent": 4.738,
+      "class": "com.lushprojects.circuitjs1.client.PcbNetRouter$Router",
+      "member": "$canTraverse",
+      "source": "com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sourceLine": "688"
+    },
+    {
+      "function": "cqd",
+      "selfMillis": 18.352,
+      "inclusiveMillis": 5571.943,
+      "sampledPercent": 4.699,
+      "class": "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch",
+      "member": "PcbLayerRoutingPrototype$Search$BranchSearch",
+      "source": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceLine": "520"
+    },
+    {
+      "function": "_s",
+      "selfMillis": 4420.664,
+      "inclusiveMillis": 4687.826,
+      "sampledPercent": 3.953,
+      "class": "com.google.gwt.lang.Cast",
+      "member": "canCast",
+      "source": "com/google/gwt/dev/jjs/intrinsic/com/google/gwt/lang/Cast.java",
+      "sourceLine": "40"
+    }
+  ]
+}

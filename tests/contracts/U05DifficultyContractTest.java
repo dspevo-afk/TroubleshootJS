@@ -130,6 +130,7 @@ public final class U05DifficultyContractTest {
 
             GeneratedChallengeController controller = installCaptureOwner(sim, owner);
             GeneratedDiagnosticProgram program = owner.getDiagnosticProvider().getObservationProgram();
+            rb56ResistanceObservationContracts(sim, owner, program);
             GeneratedDiagnosticContextKey trusted = captureTrustedKey(sim, owner, plan);
             check(trusted.isTrustedCapture() && !owner.isDeveloperOnlyFaultRoute() &&
                     MediumBoardNormalAdmission.RB56_IDENTITY.equals(owner.getPhysicalAdmission().identity()) &&
@@ -229,6 +230,100 @@ public final class U05DifficultyContractTest {
                 MosfetElm.globalFlags = priorFlags; MosfetElm.lastBeta = priorBeta;
             }
         }
+    }
+
+    /** The normal RB56 owner advertises its installed-network Ω observation only after service OFF. */
+    private static void rb56ResistanceObservationContracts(CirSim sim,
+            GeneratedBoardInstance owner, GeneratedDiagnosticProgram program) {
+        final GeneratedDiagnosticPlan plan = owner.getDiagnosticProvider().getDiagnosticPlan();
+        Vector<String> modes = plan.getMeterModeIds();
+        Vector<String> probeIds = plan.getProbeTargetIds();
+        check(modes.contains("DC_VOLTAGE") && modes.contains("RESISTANCE") &&
+                !modes.contains("CONTINUITY") && !modes.contains("DIODE"),
+            "normal RB56 diagnostic plan advertises DC and resistance without broadening active modes");
+        check(probeIds.contains("RDA.1") && probeIds.contains("RDA.2"),
+            "RB56 resistance probes are declared semantic board pads");
+
+        int offIndex = -1, resistanceIndex = -1;
+        Vector<GeneratedDiagnosticProgram.Step> steps = program.getSteps();
+        for (int i = 0; i < steps.size(); i++) {
+            GeneratedDiagnosticProgram.Step step = steps.get(i);
+            if ((step.kind == GeneratedDiagnosticProgram.Kind.POWER ||
+                    step.kind == GeneratedDiagnosticProgram.Kind.PROFILE_POWER) &&
+                    step.power == BoardPowerState.UNPOWERED)
+                offIndex = i;
+            if (step.kind == GeneratedDiagnosticProgram.Kind.RESISTANCE &&
+                    "DRIVER_A_RESISTANCE".equals(step.id) &&
+                    "RDA.1".equals(step.red) && "RDA.2".equals(step.black))
+                resistanceIndex = i;
+        }
+        boolean settledAfterOff = false, inputAfterOff = false, repoweredAfterOff = false;
+        double naturalWaitAfterOff = 0;
+        if (offIndex >= 0 && resistanceIndex > offIndex) {
+            for (int i = offIndex + 1; i < resistanceIndex; i++) {
+                GeneratedDiagnosticProgram.Step step = steps.get(i);
+                if (step.kind == GeneratedDiagnosticProgram.Kind.SETTLE)
+                    settledAfterOff = true;
+                if (step.kind == GeneratedDiagnosticProgram.Kind.WAIT) {
+                    check(step.readinessMode == GeneratedDiagnosticProgram.Kind.RESISTANCE &&
+                            "RDA.1".equals(step.red) && "RDA.2".equals(step.black),
+                        "each natural OFF wait uses the same declared meter readiness and physical pair");
+                    naturalWaitAfterOff += step.seconds;
+                }
+                if (step.kind == GeneratedDiagnosticProgram.Kind.INPUT)
+                    inputAfterOff = true;
+                if ((step.kind == GeneratedDiagnosticProgram.Kind.POWER ||
+                        step.kind == GeneratedDiagnosticProgram.Kind.PROFILE_POWER) &&
+                        step.power == BoardPowerState.POWERED)
+                    repoweredAfterOff = true;
+            }
+        }
+        check(offIndex >= 0 && resistanceIndex > offIndex && settledAfterOff &&
+                naturalWaitAfterOff > 0 &&
+                naturalWaitAfterOff <= GeneratedDiagnosticProgram.MAX_TOTAL_WAIT_SECONDS &&
+                !inputAfterOff && !repoweredAfterOff,
+            "resistance observation follows OFF settling and bounded natural decay without input or repower");
+
+        PhysicalPart<?> driverResistor = owner.getPhysicalBoardRuntime().getInstalledPart("RDA");
+        PhysicalBoardSlot driverSlot = driverResistor == null ? null : driverResistor.getBoardSlot();
+        boolean livePhysicalPads = sim.getGeneratedBoardInstance() == owner &&
+            driverResistor instanceof PhysicalResistorPart && driverResistor.isInstalled() &&
+            driverSlot != null && driverSlot.getInstalledPart() == driverResistor;
+        for (String padId : new String[] {"RDA.1", "RDA.2"}) {
+            BoardPad pad = owner.getBoard().getPad(padId);
+            CircuitMeasurementEndpoint endpoint = owner.getSimulationBindings().getEndpoint(padId);
+            if (pad == null || driverSlot == null ||
+                    !(endpoint instanceof CircuitPostMeasurementEndpoint)) {
+                livePhysicalPads = false;
+                continue;
+            }
+            int terminalIndex = driverSlot.getTerminalIds().indexOf(pad.getTerminalId());
+            CircuitPostMeasurementEndpoint post = (CircuitPostMeasurementEndpoint)endpoint;
+            livePhysicalPads &= "RDA".equals(pad.getComponentId()) && terminalIndex >= 0 &&
+                terminalIndex < driverSlot.getPadIds().size() &&
+                padId.equals(driverSlot.getPadIds().get(terminalIndex)) &&
+                owner.ownsRuntimeSimulationElement(post.getElement()) &&
+                sim.containsElement(post.getElement()) && post.getPostIndex() >= 0 &&
+                post.getPostIndex() < post.getElement().getPostCount() &&
+                pad.getNetId().equals(owner.getSimulationBindings().getNetIdForEndpoint(post));
+        }
+        check(livePhysicalPads,
+            "RB56 Ω endpoints resolve to live current-owner posts on their declared board nets");
+
+        reject("RB56 plan rejects an unadvertised continuity program", new Attempt() {
+            public void run() {
+                GeneratedDiagnosticProgram.builder(plan).measure(
+                    GeneratedDiagnosticProgram.Kind.CONTINUITY,
+                    "U05_UNADVERTISED_CONTINUITY", "RDA.1", "RDA.2").build();
+            }
+        });
+        reject("RB56 plan rejects an unadvertised diode program", new Attempt() {
+            public void run() {
+                GeneratedDiagnosticProgram.builder(plan).measure(
+                    GeneratedDiagnosticProgram.Kind.DIODE,
+                    "U05_UNADVERTISED_DIODE", "RDA.1", "RDA.2").build();
+            }
+        });
     }
 
     private interface Attempt { void run(); }
@@ -372,7 +467,10 @@ public final class U05DifficultyContractTest {
             case INPUT: copy.input(step.id); break;
             case POWER: copy.power(step.id, step.power); break;
             case PROFILE_POWER: copy.profilePower(step.id, step.power); break;
-            case WAIT: copy.waitSample(step.id, step.seconds); break;
+            case WAIT:
+                if (step.readinessMode == null) copy.waitSample(step.id, step.seconds);
+                else copy.waitForReadinessSample(step.id, step.readinessMode, step.red, step.black, step.seconds);
+                break;
             case SETTLE: copy.settle(); break;
             default: copy.measure(step.kind, step.id, step.red, step.black); break;
             }

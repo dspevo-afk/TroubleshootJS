@@ -8,6 +8,35 @@ import java.util.Vector;
 final class GeneratedDiagnosticObservationExecutor {
     private GeneratedDiagnosticObservationExecutor() { }
 
+    interface ReadinessWaitHost {
+        void requireCurrent();
+        ActiveMeasurementReadiness readiness();
+        void advance(double seconds);
+    }
+
+    /** Requested natural solver time, never a grant of measurement readiness. */
+    static double waitForReadiness(ReadinessWaitHost host, double maximumSeconds) {
+        if (host == null || Double.isNaN(maximumSeconds) || Double.isInfinite(maximumSeconds) ||
+                maximumSeconds <= 0 || maximumSeconds > 1)
+            throw new IllegalArgumentException("Invalid diagnostic readiness wait bound");
+        double elapsed = 0;
+        for (int segment = 0; segment <= 10; segment++) {
+            host.requireCurrent();
+            ActiveMeasurementReadiness readiness = host.readiness();
+            host.requireCurrent();
+            if (readiness == ActiveMeasurementReadiness.READY) return elapsed;
+            require(readiness == ActiveMeasurementReadiness.WAITING ||
+                    readiness == ActiveMeasurementReadiness.DISCHARGE,
+                "Unavailable diagnostic readiness wait: " + readiness);
+            if (segment == 10) return elapsed;
+            double next = maximumSeconds * (segment + 1) / 10;
+            host.advance(next - elapsed);
+            elapsed = next;
+            host.requireCurrent();
+        }
+        throw new IllegalStateException("Unreachable diagnostic readiness wait");
+    }
+
     /**
      * Creates a resumable observation cursor. Construction performs only the
      * detached program and rendered-probe checks; Cursor.step() executes one
@@ -216,8 +245,20 @@ final class GeneratedDiagnosticObservationExecutor {
             break;
         case WAIT:
             sim.instrumentController.exitInstrumentModeIfActiveForDeveloperVerification();
-            if (step.seconds > 0) sim.advanceGeneratedTemporalProfile(step.seconds);
-            trace.recordTemporalWaitSample(step.id, step.seconds);
+            double waited = step.seconds;
+            if (step.readinessMode != null) {
+                final ProbeTarget waitRed = boardProbe(step.red), waitBlack = boardProbe(step.black);
+                final String waitMode = step.readinessMode.name();
+                waited = waitForReadiness(new ReadinessWaitHost() {
+                    public void requireCurrent() { requireCurrentContext("readiness-wait"); }
+                    public ActiveMeasurementReadiness readiness() {
+                        return sim.instrumentController.getActiveMeasurementReadinessForMode(waitMode,
+                            waitRed, waitBlack);
+                    }
+                    public void advance(double seconds) { sim.advanceGeneratedTemporalProfile(seconds); }
+                }, step.seconds);
+            } else if (step.seconds > 0) sim.advanceGeneratedTemporalProfile(step.seconds);
+            trace.recordTemporalWaitSample(step.id, waited);
             break;
         case SETTLE:
             GeneratedRuntimeDeveloperSettlement.settle(sim, instance, "diagnostic-observation-settle");
@@ -228,16 +269,18 @@ final class GeneratedDiagnosticObservationExecutor {
         default:
             ProbeTarget red = boardProbe(step.red);
             ProbeTarget black = boardProbe(step.black);
-            ActiveMeasurementReadiness readiness = sim.instrumentController.getActiveMeasurementReadinessForStrategy(red, black);
+            ActiveMeasurementReadiness readiness = sim.instrumentController
+                .getActiveMeasurementReadinessForMode(step.kind.name(), red, black);
             require(readiness.isReady(),
                 "Unavailable active diagnostic measurement: " + step.id + ":" + readiness);
             if (step.kind == GeneratedDiagnosticProgram.Kind.RESISTANCE) {
                 int count = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+                int readerCalls = sim.getResistanceResultReaderCallsForDeveloperVerification();
                 sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
                 require(sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification() == count + 1,
                     "Diagnostic resistance measurement did not execute: " + step.id);
                 addResistanceSample(sim, samples, step.id,
-                    sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), trace);
+                    sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), trace, readerCalls);
             } else if (step.kind == GeneratedDiagnosticProgram.Kind.CONTINUITY) {
                 sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
                 trace.recordMeterMode("CONTINUITY");
@@ -313,13 +356,49 @@ final class GeneratedDiagnosticObservationExecutor {
     /** Only successful player-visible resistance outcomes may distinguish hypotheses. */
     private static void addResistanceSample(CirSim sim,
             Vector<GeneratedDiagnosticSample> samples, String sampleId, double reading,
-            GeneratedDiagnosticExecutionTrace.Builder trace) {
+            GeneratedDiagnosticExecutionTrace.Builder trace, int priorReaderCalls) {
         trace.recordMeterMode("RESISTANCE");
+        if (Double.isNaN(reading) || reading < 0)
+            throw new IllegalStateException("Invalid diagnostic resistance measurement: " + sampleId +
+                "; display=" + sim.instrumentController.getReadingForDeveloperVerification() +
+                "; readiness=" + sim.instrumentController.getActiveMeasurementReadinessForStrategy(
+                    sim.instrumentController.getRedProbeForStrategy(),
+                    sim.instrumentController.getBlackProbeForStrategy()) +
+                resistanceFailureDiagnostics(sim, priorReaderCalls));
         GeneratedDiagnosticSample sample = resistanceObservation(sampleId, reading);
         String expectedDisplay = sample.isOverRange() ? "OL" : CircuitElm.getUnitText(reading, "Ohm");
         require(expectedDisplay.equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Diagnostic resistance was not a completed player-visible measurement: " + sampleId);
         samples.add(sample);
+    }
+
+    /** Private failure evidence only; normal generation must not disclose solver internals. */
+    private static String resistanceFailureDiagnostics(CirSim sim, int priorReaderCalls) {
+        if (!sim.troubleshootDebug || !sim.developerVerifierRunning) return "";
+        String result = "; resultReaderCalls=" +
+            (sim.getResistanceResultReaderCallsForDeveloperVerification() - priorReaderCalls) +
+            "; testCurrent=" + sim.getLastResistanceTestCurrentForDeveloperVerification() +
+            "; interaction=" + sim.isChallengeInteractionEnabled() +
+            "; transaction=" + sim.getLastResistanceMeasurementDiagnosticsForDeveloperVerification();
+        ProbeTarget red = sim.instrumentController.getRedProbeForStrategy();
+        ProbeTarget black = sim.instrumentController.getBlackProbeForStrategy();
+        if (red == null || black == null || !red.isValid() || !black.isValid())
+            return result + "; targets=INVALID";
+        CircuitMeasurementEndpoint r = red.getMeasurementEndpoint(), b = black.getMeasurementEndpoint();
+        if (!(r instanceof CircuitPostMeasurementEndpoint) || !(b instanceof CircuitPostMeasurementEndpoint))
+            return result + "; endpoints=UNSUPPORTED";
+        for (PhysicalBoardRuntimeCapability capability : sim.getGeneratedBoardInstance()
+                .getPhysicalBoardRuntime().getCapabilities()) {
+            if (capability instanceof ActiveMeasurementReadinessCapability)
+                result += "; " + capability.getCapabilityId() + "=" +
+                    ((ActiveMeasurementReadinessCapability) capability).getActiveMeasurementReadiness(
+                        (CircuitPostMeasurementEndpoint)r, (CircuitPostMeasurementEndpoint)b,
+                        sim.getBoardPowerController().getState(),
+                        sim.getBoardPowerController().isElectricallyUnpowered());
+            if (capability instanceof PowerDomainRuntimeCapability)
+                result += "; rails=" + ((PowerDomainRuntimeCapability)capability).assessPower().getRailConditions();
+        }
+        return result;
     }
 
     /** Pure encoding of a completed reading; NaN/failure is not an open circuit. */

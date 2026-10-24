@@ -1,0 +1,162 @@
+{
+  "build": "http://127.0.0.1:8920/circuitjs1/956F998381E75F1B4D9406BCECACEFBB.cache.js",
+  "meterStatus": "",
+  "reading": "--- V",
+  "report": {
+    "candidateDisposed": true,
+    "cleanupPending": false,
+    "coldProof": true,
+    "coordinatorReleased": true,
+    "debugRestored": true,
+    "diagnosticContextDigest": "e18e784dbb00a1228212d1f95f579169222d4346806f8cb5fa9c28309da04115",
+    "diagnosticProgramDigest": "e022d7728d90051bf64fc33876f0937342de6f071bf58719e957d90d19da5cc1",
+    "diagnosticWorkTimings": {
+      "CANDIDATE_HEALTHY_SETTLE": {
+        "maxMillis": 345,
+        "millis": 10233,
+        "units": 65
+      },
+      "CANDIDATE_SETTLE": {
+        "maxMillis": 331,
+        "millis": 7051,
+        "units": 45
+      },
+      "CUSTOMER_RETEST": {
+        "maxMillis": 385,
+        "millis": 9244,
+        "units": 65
+      },
+      "CUSTOMER_RETEST_COMPLETION": {
+        "maxMillis": 36,
+        "millis": 131,
+        "units": 5
+      },
+      "EVIDENCE_RESTORE_PRIMARY": {
+        "maxMillis": 83,
+        "millis": 317,
+        "units": 5
+      },
+      "OBSERVATION_STEP:DC_VOLTAGE": {
+        "maxMillis": 22,
+        "millis": 907,
+        "units": 60
+      },
+      "OBSERVATION_STEP:INPUT": {
+        "maxMillis": 126,
+        "millis": 485,
+        "units": 5
+      },
+      "OBSERVATION_STEP:POWER": {
+        "maxMillis": 115,
+        "millis": 361,
+        "units": 5
+      },
+      "OBSERVATION_STEP:RESISTANCE": {
+        "maxMillis": 167,
+        "millis": 595,
+        "units": 5
+      },
+      "OBSERVATION_STEP:SETTLE": {
+        "maxMillis": 118,
+        "millis": 508,
+        "units": 5
+      },
+      "OBSERVATION_STEP:WAIT": {
+        "maxMillis": 1484,
+        "millis": 10603,
+        "units": 20
+      },
+      "POWER_OFF_SETTLE": {
+        "maxMillis": 6,
+        "millis": 22,
+        "units": 5
+      },
+      "POWER_ON_SETTLE": {
+        "maxMillis": 164,
+        "millis": 614,
+        "units": 5
+      },
+      "REMOVE_SETTLE": {
+        "maxMillis": 292,
+        "millis": 1005,
+        "units": 5
+      },
+      "REPAIR_STATUS_SETTLE": {
+        "maxMillis": 493,
+        "millis": 10412,
+        "units": 65
+      },
+      "REPLACE_SETTLE": {
+        "maxMillis": 259,
+        "millis": 953,
+        "units": 5
+      },
+      "REPLAY_INSTALL": {
+        "maxMillis": 518,
+        "millis": 1726,
+        "units": 5
+      }
+    },
+    "failure": "IllegalStateException: Ordinary customer retest did not pass before view cleanup",
+    "failurePhase": "HOLD",
+    "family": "RB56_CONTROL",
+    "forcedAfterPublish": false,
+    "fullProductionD01": true,
+    "generationMillis": 85903,
+    "generationReceiptDigest": "e358aadcd7d1e0b67e36543a0ba1bc5ebe4e85e357835743dac261316631ed94",
+    "generationStages": 6,
+    "generationWork": 461,
+    "holdMillis": 360000,
+    "hypotheses": 5,
+    "jobMillis": 86140,
+    "jobOutcome": "PASS",
+    "jobStage": "PUBLISH",
+    "jobStageMillis": {
+      "HEALTHY": 25271,
+      "HYPOTHESES": 55218,
+      "PHYSICAL": 142,
+      "PUBLISH": 237,
+      "RESOLVE": 1,
+      "SYMPTOM": 24
+    },
+    "jobStageWork": {
+      "HEALTHY": 82,
+      "HYPOTHESES": 375,
+      "PHYSICAL": 1,
+      "PUBLISH": 1,
+      "RESOLVE": 1,
+      "SYMPTOM": 1
+    },
+    "jobWork": 461,
+    "manualUnitMaxMillis": 1537,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxManualUnitMillis": 1537,
+    "maxUnitMillis": 5000,
+    "normalCatalogEnabled": false,
+    "normalLabels": true,
+    "normalPhysicalAdmission": true,
+    "ordinaryCustomerRetestPassed": false,
+    "ownerRestored": true,
+    "packages": 60,
+    "phase": "RESTORED",
+    "physicalAdmission": "RB56_BOARD_NORMAL@1",
+    "planVersion": 1,
+    "playerBridgeReleased": true,
+    "playerSessionInstalled": true,
+    "playerSessionReleased": true,
+    "privatePersistence": false,
+    "proofMillis": 59583,
+    "protocol": "TSJ-RB56-QUALIFICATION-1",
+    "qualifiedPublication": true,
+    "routingMillis": 15021,
+    "scope": "PRIVATE_PLAYER_SESSION",
+    "seed": "-1022",
+    "solverSamples": 65,
+    "sourceEpoch": "tsj-generation-dependencies-v18",
+    "status": "FAIL",
+    "temporaryMeterClean": true,
+    "wallMillis": 355422
+  },
+  "status": "FAIL:rb56:Ordinary customer retest did not pass before view cleanup"
+}

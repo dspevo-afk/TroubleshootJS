@@ -81,16 +81,20 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
             InstrumentMode mode) {
         if (!isActiveMeasurementAllowed(redProbe, blackProbe, mode))
             return Double.NaN;
-        ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
+        ActiveMeasurementSession session = new ActiveMeasurementSession(sim, redProbe, blackProbe);
         try {
             if (!session.hasValidTargets())
                 return Double.NaN;
             if (!(session.getRedEndpoint() instanceof CircuitPostMeasurementEndpoint) ||
                     !(session.getBlackEndpoint() instanceof CircuitPostMeasurementEndpoint))
                 return Double.NaN;
-            return sim.measureResistance(
+            double reading = sim.measureResistance(
                 (CircuitPostMeasurementEndpoint) session.getRedEndpoint(),
                 (CircuitPostMeasurementEndpoint) session.getBlackEndpoint(), mode);
+            // Admission belongs before injection. Residual energy after a clean
+            // transaction blocks the next test; it does not erase this sample.
+            return session.hasValidTargets() && !sim.activeMeasurementOverlay &&
+                sim.stopMessage == null && sim.isGeneratedRuntimeSettled() ? reading : Double.NaN;
         } finally {
             session.close();
         }
@@ -104,7 +108,7 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
             InstrumentMode mode) {
         if (!isActiveMeasurementAllowed(redProbe, blackProbe, mode))
             return null;
-        ActiveMeasurementSession session = new ActiveMeasurementSession(redProbe, blackProbe);
+        ActiveMeasurementSession session = new ActiveMeasurementSession(sim, redProbe, blackProbe);
         try {
             if (!session.hasValidTargets() ||
                     !(session.getRedEndpoint() instanceof CircuitPostMeasurementEndpoint) ||

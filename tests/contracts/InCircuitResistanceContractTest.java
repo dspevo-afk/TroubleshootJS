@@ -39,6 +39,10 @@ public final class InCircuitResistanceContractTest {
             numeric(sim, a, b, 1000, .01, "removing the parallel path exposes the actual 1k branch");
             sim.elmList.add(ten); one.setResistance(2000); settle(sim, owner);
             numeric(sim, a, b, 10000.0 / 6, .01, "changing a connected branch changes equivalent resistance");
+            int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+            check(Double.isNaN(sim.measureResistance(null, b, OHM)) &&
+                    sim.getResistanceResultReaderCallsForDeveloperVerification() == readers,
+                "an early invalid-target refusal does not invoke the actual result reader");
 
             WireElm shorted = new WireElm(100000, 100160);
             shorted.setPosition(100000, 100160, 100080, 100160);
@@ -86,6 +90,8 @@ public final class InCircuitResistanceContractTest {
             }
             sim.troubleshootTask43PVerification = false; sim.developerVerifierRunning = false;
             numeric(sim, a, b, 10000.0 / 6, .01, "a new real measurement succeeds after both cleanup failures");
+            verifyTransactionIdentity(sim, owner, a, b);
+            verifyMeterChargedCapacitor(sim, owner, fixture);
             check(sim.getBoardPowerController().isElectricallyUnpowered(), "measurement and error cleanup never repower the board");
         } catch (RuntimeException error) { failure = error; throw error;
         } catch (Error error) { failure = error; throw error;
@@ -107,6 +113,111 @@ public final class InCircuitResistanceContractTest {
     private static ResistorElm resistor(int x, int y, int x2, int y2, double ohms) {
         ResistorElm result = new ResistorElm(x, y);
         result.setPosition(x, y, x2, y2); result.setResistance(ohms); return result;
+    }
+
+    private static void verifyTransactionIdentity(MeterSim sim, GeneratedBoardInstance owner,
+            CircuitPostMeasurementEndpoint a, CircuitPostMeasurementEndpoint b) {
+        LiteralProbe red = new LiteralProbe(sim, a), black = new LiteralProbe(sim, b);
+        ActiveMeasurementSession session = new ActiveMeasurementSession(sim, red, black);
+        check(session.hasValidTargets(), "fresh transaction binds its exact owner, graph and targets");
+        Vector<CircuitElm> graph = sim.elmList;
+        sim.elmList = new Vector<CircuitElm>(graph);
+        check(!session.hasValidTargets(), "an equal successor graph cannot inherit the transaction");
+        sim.elmList = graph;
+        sim.generatedBoardInstance = null;
+        check(!session.hasValidTargets(), "a changed owner cannot inherit a completed reading");
+        sim.generatedBoardInstance = owner;
+        red.endpoint = b;
+        check(!session.hasValidTargets(), "retargeting the same probe wrapper invalidates its transaction");
+        red.endpoint = a;
+        red.valid = false;
+        check(!session.hasValidTargets(), "an invalid physical target cannot retain a reading");
+        red.valid = true;
+        CircuitElm element = graph.remove(graph.size() - 1);
+        check(!session.hasValidTargets(), "changing the contents of the same graph is detected");
+        graph.add(element);
+        String source = owner.getBoard().getPowerInputIds().get(0);
+        ExternalPowerSimulationBinding binding = owner.getExternalPowerBindings().getBinding(source);
+        double limit = binding.getLimitedSupply().getLimitAmps();
+        binding.setCurrentLimit(limit / 2);
+        check(!session.hasValidTargets(), "source command revision invalidates a completed reading");
+        binding.setCurrentLimit(limit);
+        check(!session.hasValidTargets(), "restoring a source value cannot resurrect the old command revision");
+        session.close();
+        check(!session.hasValidTargets(), "closed transaction cannot be reused");
+        ActiveMeasurementSession fresh = new ActiveMeasurementSession(sim, red, black);
+        check(fresh.hasValidTargets(), "a newly admitted transaction binds the current source controls");
+        fresh.close();
+        settle(sim, owner);
+    }
+
+    /** Real RC energy, not a forced readiness return or a replacement solver. */
+    private static void verifyMeterChargedCapacitor(MeterSim sim, GeneratedBoardInstance owner,
+            Vector<CircuitElm> fixture) {
+        ResistorElm load = resistor(100000, 100640, 100080, 100640, 1000);
+        CapacitorElm capacitor = new CapacitorElm(100000, 100640);
+        capacitor.setPosition(100000, 100640, 100080, 100640);
+        capacitor.capacitance = 1e-6;
+        capacitor.initialVoltage = 0;
+        capacitor.reset();
+        add(sim, fixture, load); add(sim, fixture, capacitor);
+        LiteralEnergyReadiness energy = new LiteralEnergyReadiness(capacitor);
+        owner.getPhysicalBoardRuntime().registerCapability(energy);
+        settle(sim, owner);
+        LiteralProbe red = new LiteralProbe(sim, endpoint(load, 0));
+        LiteralProbe black = new LiteralProbe(sim, endpoint(load, 1));
+        CircuitMeasurementAdapter adapter = new CircuitMeasurementAdapter(sim);
+        check(adapter.getActiveMeasurementReadiness(red, black, OHM) == ActiveMeasurementReadiness.READY,
+            "discharged literal RC graph admits the first real injection");
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        double reading = adapter.measureResistance(red, black, OHM);
+        check(PowerDomainContract.finite(reading) && reading >= 0 &&
+                sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+            "completed real RC sample survives its own post-transaction residual energy");
+        restored(sim, graph);
+        check(Math.abs(capacitor.getVoltageDiff()) > .25 &&
+                adapter.getActiveMeasurementReadiness(red, black, OHM) == ActiveMeasurementReadiness.DISCHARGE,
+            "the actual meter source charges the capacitor beyond the unchanged residual threshold");
+        readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        check(Double.isNaN(adapter.measureResistance(red, black, OHM)) &&
+                sim.getResistanceResultReaderCallsForDeveloperVerification() == readers,
+            "remaining real energy blocks the next injection before its reader runs");
+        sim.solverExecutor.advanceFor(.01);
+        owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);
+        check(Math.abs(capacitor.getVoltageDiff()) < .001 &&
+                adapter.getActiveMeasurementReadiness(red, black, OHM) == ActiveMeasurementReadiness.READY,
+            "explicit natural solver advance dissipates energy and restores admission");
+        check(PowerDomainContract.finite(adapter.measureResistance(red, black, OHM)) &&
+                sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+            "a new real injection succeeds after natural recovery");
+        restored(sim, graph);
+        System.out.println("IN_CIRCUIT_RC heldOhms=" + reading + " residualVolts=" + capacitor.getVoltageDiff());
+    }
+
+    private static final class LiteralProbe implements ProbeTarget {
+        private final MeterSim sim;
+        CircuitPostMeasurementEndpoint endpoint;
+        boolean valid = true;
+        LiteralProbe(MeterSim sim, CircuitPostMeasurementEndpoint endpoint) {
+            this.sim = sim; this.endpoint = endpoint;
+        }
+        public boolean isValid() { return valid && sim.containsElement(endpoint.getElement()); }
+        public boolean isSameTarget(ProbeTarget other) { return other == this; }
+        public Point getMarkerPoint() { return null; }
+        public CircuitMeasurementEndpoint getMeasurementEndpoint() { return endpoint; }
+    }
+
+    private static final class LiteralEnergyReadiness implements ActiveMeasurementReadinessCapability {
+        private final CapacitorElm capacitor;
+        LiteralEnergyReadiness(CapacitorElm capacitor) { this.capacitor = capacitor; }
+        public String getCapabilityId() { return "LITERAL_RC_ENERGY_CONTRACT"; }
+        public ActiveMeasurementReadiness getActiveMeasurementReadiness(CircuitPostMeasurementEndpoint red,
+                CircuitPostMeasurementEndpoint black, BoardPowerState power, boolean allOff) {
+            if (power != BoardPowerState.UNPOWERED || !allOff) return ActiveMeasurementReadiness.POWER_OFF;
+            return Math.abs(capacitor.getVoltageDiff()) > .25 ?
+                ActiveMeasurementReadiness.DISCHARGE : ActiveMeasurementReadiness.READY;
+        }
     }
     /** Independent load-line bisection with literal model and meter specifications. */
     private static double diodeResistance(boolean forward) {
@@ -134,7 +245,10 @@ public final class InCircuitResistanceContractTest {
     }
     private static double measure(MeterSim sim, CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
         Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
         double value = sim.measureResistance(red, black, OHM);
+        check(sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+            "a real numeric or over-range transaction invokes the result reader exactly once");
         restored(sim, graph); return value;
     }
     private static void numeric(MeterSim sim, CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,

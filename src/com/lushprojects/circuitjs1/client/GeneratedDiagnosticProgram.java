@@ -4,11 +4,12 @@ import java.util.Vector;
 
 /**
  * An immutable, answer-blind observation sequence. Providers declare this data
- * before hypothesis enumeration. There are no callbacks, branches, fault IDs,
- * solver handles or runtime objects in a program.
+ * before hypothesis enumeration. A bounded wait may declare a public meter
+ * readiness predicate; there are no callbacks, fault IDs, solver handles or
+ * runtime objects in a program.
  */
 final class GeneratedDiagnosticProgram {
-    static final int VERSION = 1;
+    static final int VERSION = 2;
     static final int MAX_STEPS = 4096;
     static final double MAX_TOTAL_WAIT_SECONDS = 10.0;
     enum Kind { INPUT, POWER, PROFILE_POWER, WAIT, SETTLE,
@@ -21,10 +22,12 @@ final class GeneratedDiagnosticProgram {
         final String black;
         final BoardPowerState power;
         final double seconds;
+        final Kind readinessMode;
         private Step(Kind kind, String id, String red, String black,
-                BoardPowerState power, double seconds) {
+                BoardPowerState power, double seconds, Kind readinessMode) {
             this.kind = kind; this.id = id; this.red = red; this.black = black;
             this.power = power; this.seconds = seconds;
+            this.readinessMode = readinessMode;
         }
     }
 
@@ -40,7 +43,7 @@ final class GeneratedDiagnosticProgram {
         planIdentity = describePlan(plan);
         Vector<String> samples = new Vector<String>();
         double totalWait = 0;
-        StringBuilder identity = new StringBuilder("diagnostic-program-v1");
+        StringBuilder identity = new StringBuilder("diagnostic-program-v" + VERSION);
         frame(identity, planIdentity);
         for (Step step : steps) {
             if (step == null || step.kind == null)
@@ -61,6 +64,13 @@ final class GeneratedDiagnosticProgram {
                 if (Double.isNaN(step.seconds) || Double.isInfinite(step.seconds) ||
                         step.seconds < 0 || step.seconds > 1.0)
                     throw new IllegalArgumentException("Invalid diagnostic wait duration");
+                if (step.readinessMode != null) {
+                    if (step.seconds <= 0 || (step.readinessMode != Kind.RESISTANCE &&
+                            step.readinessMode != Kind.CONTINUITY && step.readinessMode != Kind.DIODE))
+                        throw new IllegalArgumentException("Invalid diagnostic readiness wait mode");
+                    requireContains(plan.getMeterModeIds(), step.readinessMode.name(), "readiness instrument");
+                    requireProbe(plan, step.red); requireProbe(plan, step.black);
+                }
                 totalWait += step.seconds;
                 if (totalWait > MAX_TOTAL_WAIT_SECONDS)
                     throw new IllegalArgumentException("Diagnostic program exceeds its time bound");
@@ -81,6 +91,7 @@ final class GeneratedDiagnosticProgram {
             frame(identity, step.red); frame(identity, step.black);
             frame(identity, step.power == null ? null : step.power.name());
             frame(identity, Long.toHexString(Double.doubleToLongBits(step.seconds)));
+            frame(identity, step.readinessMode == null ? null : step.readinessMode.name());
         }
         if (samples.isEmpty())
             throw new IllegalArgumentException("Diagnostic program contains no observations");
@@ -113,6 +124,13 @@ final class GeneratedDiagnosticProgram {
         Builder waitSample(String id, double seconds) {
             return add(Kind.WAIT, id, null, null, null, seconds);
         }
+        Builder waitForReadinessSample(String id, Kind mode, String red, String black, double seconds) {
+            if (mode == null) throw new IllegalArgumentException("Missing diagnostic readiness mode");
+            if (steps.size() >= MAX_STEPS)
+                throw new IllegalArgumentException("Diagnostic program exceeds its step bound");
+            steps.add(new Step(Kind.WAIT, id, red, black, null, seconds, mode));
+            return this;
+        }
         Builder settle() { return add(Kind.SETTLE, null, null, null, null, 0); }
         Builder measure(Kind kind, String id, String red, String black) {
             if (kind != Kind.DC_VOLTAGE && kind != Kind.RESISTANCE &&
@@ -124,7 +142,7 @@ final class GeneratedDiagnosticProgram {
                 BoardPowerState state, double seconds) {
             if (steps.size() >= MAX_STEPS)
                 throw new IllegalArgumentException("Diagnostic program exceeds its step bound");
-            steps.add(new Step(kind, id, red, black, state, seconds));
+            steps.add(new Step(kind, id, red, black, state, seconds, null));
             return this;
         }
         GeneratedDiagnosticProgram build() { return new GeneratedDiagnosticProgram(plan, steps); }

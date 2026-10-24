@@ -1,0 +1,52 @@
+{
+  "nativeFirst": {
+    "actualExitCode": 1,
+    "operationSeconds": 38.3649606,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "24f558af5a1b8092260540dc97d88bf922b5e2aeef79b17e6297ca9beff6cd9e"
+  },
+  "nativeFinal": {
+    "actualExitCode": 0,
+    "operationSeconds": 127.6926151,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "9b9c874464a920674efbed9c1e08d3d922c158d4d8c6ff44f88f917274e8d4e0"
+  },
+  "nativeSuites": 15,
+  "assertions": 482672,
+  "nativeCleanup": "PASS",
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 94.8570931,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1182,
+    "rawSha256": "798978a280ba0a3a48bc6cddb9ba75d8de283e3f97010069cd66d518de55ea28"
+  },
+  "compiled": "PASS:a07 pure306530/runtime103; exact current script kernel",
+  "cohort": "NO_GO",
+  "readerActualExitCodes": [
+    2,
+    2
+  ],
+  "development": [
+    {
+      "seed": "-1017",
+      "status": "PASS",
+      "capture": "capture-development-1.json"
+    },
+    {
+      "seed": "-1067",
+      "status": "FAIL",
+      "capture": "capture-development-2.json"
+    },
+    {
+      "seed": "-1022",
+      "status": "FAIL",
+      "capture": "capture-development-3.json"
+    }
+  ]
+}

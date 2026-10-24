@@ -1,0 +1,12 @@
+{
+  "scope": "Optional read-only instrument/readiness review; no edits or execution",
+  "result": "DIAGNOSIS_PENDING_ACTUAL_CANARY",
+  "facts": [
+    "Measurement count increments after adapter return even if NaN; count alone does not prove result reader ran.",
+    "Real CircuitJS resistance result reader returns finite resistance or positive infinity; earlier refusal and post-cleanup mode guard can produce NaN.",
+    "RB56 registers power-domain, stored-energy and instrument-admission capabilities; RelayEnergyReadiness is not registered on RB56.",
+    "Post-cleanup readiness/interaction refusal can overwrite an otherwise valid result."
+  ],
+  "inference": "A post-measurement readiness change is plausible but not established for seed-1022 by source inspection.",
+  "nextEvidence": "Actual compiled exception captures existing LCD/post-readiness. If ambiguous, separately inspect result-reader execution and each readiness capability before changing behavior."
+}

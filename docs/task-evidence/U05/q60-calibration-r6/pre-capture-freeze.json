@@ -1,0 +1,12 @@
+{
+  "frozenUtc": "2026-10-23T23:57:32.9482725Z",
+  "build": "8D0CC3D7F0B0017F220DB11DC285CA37",
+  "sourceBinding": "131f87f1e1965f4bcda7d3ed1a13181e75eb865b1f12ffbec78a4d04cb38208b",
+  "featureReaderSha256": "469ba33f119cff99d5311bc1572a72a46f4c87e456658ab7718f8a18bb4c6311",
+  "temporalReaderSha256": "6d3e93ed1dcc3a2ff544756f2c14636cd161e0095befb39ebdf096df396348dc",
+  "cohortPlanSha256": "6d99a0be64e3e8418a0f6922f0aba5ce55fc0585eed52127eff4448cc70d62c5",
+  "scopeSha256": "7e132b3b46727061e43ec71542205f4f09e16dab591e8c69ba73e2262593ba7c",
+  "sourceInputs": 1182,
+  "nativeInputs": 1378,
+  "nativeUntrackedTestExplicitlyConsumed": true
+}

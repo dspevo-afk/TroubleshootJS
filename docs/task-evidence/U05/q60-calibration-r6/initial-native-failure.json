@@ -1,0 +1,15 @@
+{
+  "initialGate": {
+    "actualExitCode": 1,
+    "operationSeconds": 38.3649606,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1378,
+    "rawSha256": "24f558af5a1b8092260540dc97d88bf922b5e2aeef79b17e6297ca9beff6cd9e"
+  },
+  "failure": "Test-local wait() resolved inherited Object.wait inside anonymous Actions; renamed test helper runWait",
+  "cleanup": "PASS",
+  "failedTestSha256": "49da587158c63436c2823bf5509249863a340b9d55f3190b046f32a1f0950c4c",
+  "productionCompileFailure": false,
+  "passingClaim": false
+}

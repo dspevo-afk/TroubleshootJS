@@ -1,0 +1,23 @@
+{
+  "schema": "tsj-compiled-cpu-diagnosis-plan/1",
+  "status": "FROZEN_BEFORE_PROFILER_START",
+  "build": "956F998381E75F1B4D9406BCECACEFBB",
+  "sourceBinding": "3f80c5263a3982368791441152aa8c0915a1930485d9ad38bdebb1984d61b5f7",
+  "seed": "-1067",
+  "samplingIntervalMicros": 1000,
+  "commands": [
+    "Profiler.enable",
+    "Profiler.setSamplingInterval",
+    "Profiler.start",
+    "ordinary same-origin navigation to exact private seed55 verifier",
+    "Profiler.stop",
+    "Profiler.disable"
+  ],
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "purpose": "Actual compiled bounded LU invocation/bottleneck diagnosis after successful unprofiled development; sampling overhead is not admission proof or controlled speedup evidence.",
+  "frozenUtc": "2026-10-24T00:56:23.522513+00:00"
+}

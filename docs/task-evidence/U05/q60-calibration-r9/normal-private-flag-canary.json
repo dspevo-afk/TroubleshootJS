@@ -1,0 +1,6 @@
+{
+  "build": "http://127.0.0.1:8920/circuitjs1/956F998381E75F1B4D9406BCECACEFBB.cache.js",
+  "privateReport": null,
+  "text": "Reset\n\nTroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\nTSJ MM-90\nDIGITAL MULTIMETER\nHOLD\nRANGE\nMIN/MAX\nLIGHT\nOFF\nV~\nA\nmA\nµA\nCAP\nHz\n%\n°C/°F\nADDITIONAL FUNCTIONS: NOT IMPLEMENTED\n10A\nCOM\nV Ω\n\nClick a mode, or turn the dial. Left / right click: red / black probe.\n\nDC V\n\t\n\t\nOHM\n\n\nCONT\n\t\nDIODE\n--- V\nBoard Power: ON\nSupplies\nView\nTicket\nParts tray\nCustomer ticket\n\nSERVICE JOB\n\nCustomer complaint\n\nOne of the controlled indicators does not turn on.\n\nFUNCTIONAL RETEST\n\nSet each channel HIGH and LOW and verify every indicator responds.\n\nExamine the board and use the instruments to identify a repair. Switch off every supply and wait for stored energy to discharge before changing parts.\n\nAccept ticket and start\nMain menu\nResources\nShare pristine challenge",
+  "verification": null
+}

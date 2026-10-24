@@ -1,0 +1,19 @@
+{
+  "schema": "tsj-u05-r2-resource-close/1",
+  "actualExitCode": 0,
+  "operationSeconds": 2.4328709,
+  "ownedPid": 832,
+  "ownedStartTicks": "639283926901351483",
+  "port": 8913,
+  "previewStateAbsent": true,
+  "listenerAbsent": true,
+  "closedTabs": [
+    "21",
+    "22",
+    "23",
+    "24",
+    "25"
+  ],
+  "failedErrorTab": "20: could not bind data URL due browser policy; unmarked temporary tab left to managed lifecycle",
+  "applicationFailures": "Retained-view ordinary retest FAIL and two cold job TIMEOUTs remain; process closure does not convert them to PASS"
+}

@@ -29,6 +29,7 @@ class InstrumentController {
     private final Grid modeGrid;
     private final VerticalPanel meterPanel;
     private final Label readingLabel;
+    private final Label statusLabel;
     private final Label continuityLabel;
     private final Canvas scopeTraceCanvas;
     private final Grid scopeControls;
@@ -56,6 +57,7 @@ class InstrumentController {
         final ProbeTarget blackProbe;
         final boolean interactionEnabled;
         final String readingText;
+        final String statusText;
         final boolean continuityVisible;
         final boolean continuityRequested;
         final int continuityPrepareCount;
@@ -66,7 +68,7 @@ class InstrumentController {
         final Vector<ModeState> modeStates;
 
         DeveloperState(InstrumentModeStrategy activeStrategy, ProbeTarget redProbe,
-                ProbeTarget blackProbe, boolean interactionEnabled, String readingText,
+                ProbeTarget blackProbe, boolean interactionEnabled, String readingText, String statusText,
                 boolean continuityVisible, boolean continuityRequested,
                 int continuityPrepareCount, int continuityStartCount, int continuityStopCount,
                 int dcVoltagePlaceholderDisplayCount, int dcVoltageDisplayChangeCount,
@@ -76,6 +78,7 @@ class InstrumentController {
             this.blackProbe = blackProbe;
             this.interactionEnabled = interactionEnabled;
             this.readingText = readingText;
+            this.statusText = statusText;
             this.continuityVisible = continuityVisible;
             this.continuityRequested = continuityRequested;
             this.continuityPrepareCount = continuityPrepareCount;
@@ -130,6 +133,11 @@ class InstrumentController {
         readingLabel = new Label(activeStrategy.getInitialDisplay());
         readingLabel.setStyleName("tsj-meter-display");
         meterPanel.add(readingLabel);
+        statusLabel = new Label("");
+        statusLabel.setStyleName("tsj-meter-status");
+        statusLabel.getElement().setAttribute("role", "status");
+        statusLabel.setVisible(false);
+        meterPanel.add(statusLabel);
         scopeTraceCanvas = Canvas.createIfSupported();
         if (scopeTraceCanvas != null) {
             scopeTraceCanvas.setCoordinateSpaceWidth(SCOPE_TRACE_WIDTH);
@@ -219,7 +227,7 @@ class InstrumentController {
         for (InstrumentModeStrategy strategy : modeRegistry.getAll())
             states.add(new ModeState(strategy.getId(), strategy.getState()));
         return new DeveloperState(activeStrategy, redProbe, blackProbe, interactionEnabled,
-            readingLabel.getText(), continuityLabel.isVisible(),
+            readingLabel.getText(), statusLabel.getText(), continuityLabel.isVisible(),
             continuityFeedback.isRequestedActive(),
             continuityFeedback.getPrepareCount(), continuityFeedback.getStartCount(),
             continuityFeedback.getStopCount(), dcVoltagePlaceholderDisplayCount,
@@ -251,6 +259,9 @@ class InstrumentController {
             state.setRefreshPending(savedState.refreshPending);
         }
         readingLabel.setText(saved.readingText);
+        readingLabel.getElement().setAttribute("data-compact-reading",
+            Boolean.toString(saved.readingText != null && saved.readingText.length() > 12));
+        setInstrumentStatusForStrategy(saved.statusText);
         continuityLabel.setVisible(saved.continuityVisible);
         continuityFeedback.setActive(saved.continuityRequested);
         if (!(continuityFeedback instanceof BrowserContinuityFeedback))
@@ -727,6 +738,7 @@ class InstrumentController {
     }
 
     void setInstrumentDisplayForStrategy(String text) {
+        setInstrumentStatusForStrategy("");
         if (activeStrategy.getId().equals("DC_VOLTAGE")) {
             String prior = readingLabel.getText();
             if (!text.equals(prior)) {
@@ -739,6 +751,11 @@ class InstrumentController {
         String displayed = readingLabel.getText();
         readingLabel.getElement().setAttribute("data-compact-reading",
             Boolean.toString(displayed != null && displayed.length() > 12));
+    }
+
+    void setInstrumentStatusForStrategy(String text) {
+        statusLabel.setText(text);
+        statusLabel.setVisible(text != null && text.length() > 0);
     }
 
     ProbeTarget getRedProbeForStrategy() {
@@ -852,9 +869,32 @@ class InstrumentController {
             activeStrategy == null ? null : activeStrategy.getMode());
     }
 
+    /** Preflight a declared observation before it selects its instrument mode. */
+    ActiveMeasurementReadiness getActiveMeasurementReadinessForMode(String modeId,
+            ProbeTarget red, ProbeTarget black) {
+        return measurementAdapter.getActiveMeasurementReadiness(red, black,
+            modeRegistry.get(modeId).getMode());
+    }
+
     double measureResistanceForStrategy(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.measureResistance(red, black,
-            activeStrategy == null ? null : activeStrategy.getMode());
+        InstrumentModeStrategy strategy = activeStrategy;
+        double reading = measurementAdapter.measureResistance(red, black,
+            strategy == null ? null : strategy.getMode());
+        return activeStrategy == strategy && redProbe == red && blackProbe == black &&
+            strategy != null && !strategy.getState().isRefreshPending() &&
+            sim.isChallengeInteractionEnabled() && sim.getBoardPowerController().isElectricallyUnpowered() ?
+            reading : Double.NaN;
+    }
+
+    /** A completed Ω value may coexist with a block on the next injection. */
+    boolean canDisplayCompletedResistanceForStrategy(InstrumentModeStrategy strategy,
+            ProbeTarget red, ProbeTarget black) {
+        if (activeStrategy != strategy || !"RESISTANCE".equals(strategy.getId()) ||
+                redProbe != red || blackProbe != black || red == null || black == null ||
+                !red.isValid() || !black.isValid() || !sim.isChallengeInteractionEnabled() ||
+                !sim.getBoardPowerController().isElectricallyUnpowered()) return false;
+        ActiveMeasurementReadiness readiness = getActiveMeasurementReadinessForStrategy(red, black);
+        return readiness == ActiveMeasurementReadiness.READY || readiness == ActiveMeasurementReadiness.DISCHARGE;
     }
 
     DiodeMeasurementResult measureDiodeForStrategy(ProbeTarget red, ProbeTarget black) {

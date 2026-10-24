@@ -1,0 +1,15 @@
+{
+  "status": "NO_SOURCE_BLOCKER",
+  "scope": "Optional read-only accounting/lifecycle review; no test/build/runtime execution",
+  "findings": [
+    "Successful canonical proof steps counted after unit/restoration/internal-proof cleanup; failures do not increment.",
+    "Warm cache uses one validated artifact step, cold Session count survives finish; actual stage equality and maximum reservation remain separate.",
+    "New job/candidate resets retained scalar; publication precedes verifier consumption; no graph handles retained by scalar.",
+    "Policy canonical includes first-ready completion; dependency context already binds policy."
+  ],
+  "nonblocking": [
+    "requiredWorkUnits Javadoc calls the deterministic maximum a full proof count; architecture/scope explicitly describe maximum reservation.",
+    "Last completed count can remain after terminal rejection/cleanup failure; sole current consumer reads it only after PASS."
+  ],
+  "rootDisposition": "Reviewed current callers; these notes do not grant qualification or change held gates."
+}

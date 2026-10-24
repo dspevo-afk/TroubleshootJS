@@ -1,0 +1,28 @@
+{
+  "preview": {
+    "actualExitCode": 0,
+    "operationSeconds": 2.5761656,
+    "pid": 25396,
+    "startTicks": "639283997007842249",
+    "port": 8920,
+    "stateAbsent": true,
+    "listenerAbsent": true,
+    "tabs44Through51": "explicitly closed",
+    "profiler": "stopped and disabled",
+    "oldBlockedResources": "untouched"
+  },
+  "closedTabs": [
+    "44",
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51"
+  ],
+  "oldBlockedResources": "Untouched",
+  "liveTab": null,
+  "profiler": "STOPPED_AND_DISABLED",
+  "driverSession92550": "finished actual0"
+}

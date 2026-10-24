@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **In-circuit resistance software accepted**
+**Current task:** **Owner play approved; current U05 calibration and REL-B continuation**
 
 Ω now measures the real connected RB56 network, including parallel paths, through
 the existing CircuitJS source/transaction. Installed supported leads and proven
@@ -18,7 +18,17 @@ Final ten native suites/4,277 assertions, actual final-source five-permutation G
 real production reversal/mode/restoration and ordinary repair/retest pass. Failures
 and evidence limits are preserved. [Acceptance](task-evidence/REL-B/in-circuit-resistance-r1/README.md).
 
-Next: a fresh owner play attempt/U05 feedback and remaining REL-B/HARD prerequisites.
+The owner reports having played and approves roadmap continuation (2026-10-23).
+No repeat play is requested. Current U05 work refreshes the certified observations
+with real in-circuit Ω before a HARD rule and normal advanced admission campaign.
+Current development candidates preserve the original limits and their failures.
+The current completed-reading and first-ready service candidate passes the same
+40/55/60 development cases and both independent readers under unchanged caps.
+The larger cases remain close to90s. All still reduce in two certified-set readings;
+no higher difficulty band follows from package, rail-name or witness counts.
+[Current development and limits](task-evidence/U05/q60-calibration-r9/README.md).
+No HARD rule is frozen or protected regression captured; public gates remain held.
+[Failed candidate and preserved evidence](task-evidence/U05/q60-calibration-r2/README.md).
 The earlier human attempt supplied meter confusion and was interrupted; no human
 repair outcome or HARD calibration is inferred. PCB-size work stays closed;
 normal advanced admission/population/public advanced saves stay held; Q100 unstarted.
@@ -32,9 +42,9 @@ pass with a final screen-guard delta check; four inspected images retained. Nest
 existing adapter. Java/compiled inputs unchanged; no fresh GWT/electrical/population
 claim. Current task preview/tab cleanup passes; five earlier blocked profiles remain.
 [Software evidence and limits](task-evidence/REL-B/public-problem-report-r1/README.md).
-Owner is available for a short human advanced-board attempt next. HARD calibration,
-normal advanced admission/population and advertised release cells remain pending;
-Q100 is unstarted. No further PCB-size experiment is planned.
+The owner has since reported playing and approved roadmap continuation. Current
+resistance-aware calibration, normal advanced admission/population and advertised
+release cells remain pending; Q100 is unstarted. No further PCB-size experiment is planned.
 
 The current human attempt supplied its first clarity report: ISOLATE COMPONENT
 appeared stuck in Ω mode. Actual DC V switch clears it to0V; existing RB56 active
@@ -2912,12 +2922,14 @@ The shared current-only policy and validation rules apply to every card. There i
 
 **Status:** COMPLETE for initial EASY/MEDIUM — version1 measured diagnostic features, requested-profile admission,38-case separation/repair corpus and qualitative user findings recorded. Reported mechanical/UI defects are fixed and qualified; the failed human attempt and missing EASY outcome/timings remain explicit. HARD/PSYCHOTIC stay unavailable. [Evidence and later calibration protocol](task-evidence/U05/README.md).
 
-**Q60 HARD continuation (2026-10-11):** IN PROGRESS. Private uncalibrated
+**Historical Q60 HARD checkpoint (2026-10-11):** Private uncalibrated
 feature extraction and fresh preassigned three development / three regression captures pass
 native168, actual GWT build41 and compiled168–171 on the final source. All six
 have two certified-set readings and 19/20-action executed witnesses; no HARD policy
-is inferred from these counts. Human strategies/outcomes remain required before
-profile freeze; HARD/PSYCHOTIC and advanced durable release stay held. The old
+was inferred from these counts. The then-pending human trial has since been
+reported played with owner approval to continue (2026-10-23); unreported strategy
+and repair outcome remain unknown. Current resistance-aware technical calibration
+is still incomplete; HARD/PSYCHOTIC and advanced durable release stay held. The old
 PC hold predates Dave's 15:41 UTC all-clear and was mistakenly reapplied; current
 readiness/gates ran under that authorization. Modest-host alone is deferred.
 [Measured features and next protocol](task-evidence/U05/q60-calibration-features-r1/README.md).
@@ -4123,7 +4135,7 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 ### REL-B · Advanced desktop beta and HARD-profile release
 
-**Status:** IN PROGRESS - bounded public problem-report composer PASS154 DOM assertions plus actual production menu/ticket/copy/replay/repaired Results and task cleanup. JS-only change; no new GWT/electrical or human result. Earlier independent UTF-8/relay-discharge/native file-read/stale callback/six-minute recovery evidence retains its own scope. Human HARD calibration and actual normal advanced admission/population remain PENDING; public gates held. [Public report proof](task-evidence/REL-B/public-problem-report-r1/README.md), [finite matrix and recovery proof](task-evidence/REL-B/release-matrix-r1/README.md).
+**Status:** IN PROGRESS - owner reports playing and approves continuation (2026-10-23); no repeat trial requested or unreported repair inferred. Current resistance-aware U05 calibration is checking the unchanged generation limits before a HARD rule and normal advanced admission/population. Existing public report, UTF-8, relay-discharge, native file-read, stale callback and six-minute recovery evidence retains its own scope. Public gates stay held pending technical qualification. [Current calibration](task-evidence/U05/q60-calibration-r9/README.md), [current release matrix](task-evidence/REL-B/current-release-matrix-r2/README.md), [public report proof](task-evidence/REL-B/public-problem-report-r1/README.md), [finite matrix and recovery proof](task-evidence/REL-B/release-matrix-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 

@@ -1,0 +1,10 @@
+{
+  "schema": "tsj-u05-calibration-freeze/1",
+  "planSha256": "9b3e5b7f13f23a49809cc716e6a5bc4a4875c2ace542b7f2a0b1721a5e6123b8",
+  "sourceBinding": "91f25a68e88c1aa00ae5144a83c18bee89b8ddd1aaa041487821159b29fba7e2",
+  "readerSha256": "0f6443d635866e76ac47be93ce1c973ae726f4ce525070475fd93d2c2123323b",
+  "build": "5BC4454BB0B4620B6611849B4D993BC0",
+  "currentCaptures": 0,
+  "publicObservation": "Interpretation / build textbox; current cache.js present; debug=false report/verifier attrs absent, HARD/PSYCHOTIC disabled",
+  "frozenUtc": "2026-10-23T22:53:49.5482395Z"
+}

@@ -1,0 +1,9 @@
+{
+  "actualReaderExit": 0,
+  "readerSha256": "eabd583f4efaa0ffdd5303c4fd4a8bf03ae2cb4ce55b4e16186f5dc15cc25387",
+  "profilerStopped": true,
+  "profilerDisabled": true,
+  "profileTab": "49",
+  "profileTabClosed": true,
+  "scope": "Current compiled bounded-LU diagnosis only; no controlled before/after speedup or admission granted by sampling."
+}

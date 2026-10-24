@@ -1098,6 +1098,7 @@ final class Task41SimulationSnapshot {
                 actual.blackProbe != expected.blackProbe ||
                 actual.interactionEnabled != expected.interactionEnabled ||
                 !same(actual.readingText, expected.readingText) ||
+                !same(actual.statusText, expected.statusText) ||
                 actual.continuityVisible != expected.continuityVisible ||
                 actual.continuityRequested != expected.continuityRequested ||
                 actual.continuityPrepareCount != expected.continuityPrepareCount ||

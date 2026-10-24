@@ -1,0 +1,17 @@
+{
+  "schema": "tsj-rb56-resistance-readiness-plan/1",
+  "status": "FROZEN_BEFORE_NATIVE_CANARY",
+  "baseCommit": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "dependencyEpoch": 18,
+  "developmentSeeds": ["-1017", "-1067", "-1022"],
+  "faultCasesPerSeed": 5,
+  "totalCases": 15,
+  "naturalSampleSeconds": 0.1,
+  "maximumNaturalSeconds": 3,
+  "targets": ["RDA.1", "RDA.2"],
+  "mode": "RESISTANCE",
+  "selectionRule": "Only after all 15 actual native cases pass: propose the maximum verified whole-second READY boundary across the cases, at least one and at most three seconds. Do not use wall time or fault identity to choose a per-case delay. Three means no shorter candidate was established.",
+  "meaning": "Native readiness boundary and real-meter cleanup canary, not cold physical admission, a family-wide guarantee, population holdout or HARD calibration.",
+  "subsequentRequirement": "A changed fixed program still needs final-source native/GWT and fresh complete compiled development proof under 90000ms/640work/5000ms. Keep failures and the existing regression assignment; no profile freeze before qualified development.",
+  "forbidden": ["stored-energy reset", "unready stimulus injection", "source repower", "target-local voltage substituted for global readiness", "seed substitution", "limit increase"]
+}

@@ -1,0 +1,40 @@
+{
+  "difficultyOptions": [
+    {
+      "disabled": true,
+      "text": "HARD — unavailable"
+    },
+    {
+      "disabled": true,
+      "text": "PSYCHOTIC — unavailable"
+    }
+  ],
+  "privateAttributes": [
+    {
+      "name": "data-tsj-preview-identity-protocol",
+      "value": "troubleshootjs-execution-provenance-v1"
+    },
+    {
+      "name": "data-tsj-preview-source-digest",
+      "value": "e3b116c66c837c842dba06a36b3d4049c0439157c83323025533ced979b3fdde"
+    },
+    {
+      "name": "data-tsj-preview-script-digest",
+      "value": "208ed002244c31091c178ca600e031e3ab8c3142a0ed59f6fe5263a09f03c06f"
+    },
+    {
+      "name": "data-tsj-preview-web-digest",
+      "value": "cff4c1e2ecf8601a34be315e408ac4bc6a9f8c606647165361d480588d3812dc"
+    },
+    {
+      "name": "data-tsj-preview-execution-digest",
+      "value": "0be1d9429d58ee6bd997b852d515e8f0b83c2121aa995bb1f77c510eb56e0f40"
+    },
+    {
+      "name": "data-tsj-preview-file-count",
+      "value": "1592"
+    }
+  ],
+  "text": "TroubleshootJS\nELECTRONICS WORKBENCH\nALPHA\nMain menu\nShop\nResources\nSettings\nRun customer retest\n\nBoard preparation cancelled.\n\nBoard preparation cancelled.\nTroubleshootJS · Desktop alpha\n\nBoard preparation cancelled.\n\nTHE ELECTRONICS REPAIR GAME\n\nTroubleshoot!\n\nA customer. A faulty board. A bench full of possibilities.\n\nExamine\nMeasure\nIsolate\nRepair\nRetest\nYour session\n\nDownload a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).\n\nRestoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.\n\nLoad session\nStart a service job\nDifficulty\nEASY\nMEDIUM\nHARD — unavailable\nPSYCHOTIC — unavailable\nBoard family\nIndicator board\nProtected indicator\nDual indicator\nTiming board\nBJT output driver\nMOSFET output driver\nRelay output board\nSensor control board\nProcedural control board\nNEW BOARD\n\nEvery listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.\n\nEnter an exact seed\nOpen a saved replay code\nResources\nSettings\nAbout this alpha\nAbout this desktop alpha\n\nSelected low-voltage families include a 16-part procedural control board and multi-rail control boards with 33, 35 or 37 parts. The 3-part indicator and 4-part protected indicator are introductory practice boards.\n\nEASY and MEDIUM candidates are checked before play. HARD and PSYCHOTIC are unavailable. Only the listed board families are supported. Mains circuits and general multilayer routing are not supported. Use Main menu to save or load a session file. Loading restarts dynamic state; retest the board afterward.\n\nShare pristine challenge\n\nShare this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.\n\nPristine challenge replay\nInterpretation / build\n\nYou can select and copy this information for a bug report. Nothing is sent automatically.\n\nReport a problem",
+  "build": "tsj-alpha/6 / 5BC4454BB0B4620B6611849B4D993BC0"
+}

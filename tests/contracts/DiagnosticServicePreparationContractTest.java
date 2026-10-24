@@ -12,8 +12,9 @@ public final class DiagnosticServicePreparationContractTest {
         GeneratedDiagnosticServicePreparation.Policy policy =
             new GeneratedDiagnosticServicePreparation.Policy(5, UNIT_SECONDS);
         verifyImmutablePolicy(policy);
-        verifyAlreadyReadyConsumesBoundWithoutAdvancing(policy);
+        verifyAlreadyReadyStopsWithoutAdvancing(policy);
         verifyDelayedReadinessUsesRealBoundedAdvances(policy);
+        verifyReadinessAtBoundAndCompletionNoOp(policy);
         verifyNeverReadyFailsAtBound(policy);
         verifyAvailabilityExpiresBeforeDispatch(policy);
         verifyIncompleteAndStaleCursorsNeverAdvanceOnCancel(policy);
@@ -27,7 +28,7 @@ public final class DiagnosticServicePreparationContractTest {
                 policy.getMaximumAdvanceSeconds() == UNIT_SECONDS,
             "policy exposes its fixed five-unit, 50-ms cap");
         check(policy.canonical().equals(
-                "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner"),
+                "action=REMOVE;units=5;maximumAdvanceSeconds=0.05;readiness=exact-current-owner;completion=first-ready"),
             "policy canonical includes operation, unit duration, count, and owner-bound readiness");
         rejects(new Action() {
             public void run() {
@@ -46,16 +47,16 @@ public final class DiagnosticServicePreparationContractTest {
         }, "unbounded per-unit advance rejected");
     }
 
-    private static void verifyAlreadyReadyConsumesBoundWithoutAdvancing(
+    private static void verifyAlreadyReadyStopsWithoutAdvancing(
             GeneratedDiagnosticServicePreparation.Policy policy) {
         FakeHost host = new FakeHost(0);
         GeneratedDiagnosticServicePreparation.Cursor cursor =
             new GeneratedDiagnosticServicePreparation.Cursor(policy, host);
         while (cursor.step()) { }
         cursor.finish();
-        check(cursor.getCompletedUnits() == 5 && host.advances == 0 &&
-                host.availabilityChecks == 6,
-            "available REMOVE consumes all declared units with zero solver advances");
+        check(cursor.getCompletedUnits() == 1 && host.advances == 0 &&
+                host.availabilityChecks == 2,
+            "available REMOVE stops after one checked unit and repeats readiness before dispatch");
     }
 
     private static void verifyDelayedReadinessUsesRealBoundedAdvances(
@@ -67,8 +68,25 @@ public final class DiagnosticServicePreparationContractTest {
         cursor.finish();
         check(host.advances == 2 && host.advancedSeconds == 2 * UNIT_SECONDS,
             "unavailable target advances once per bounded unit until readiness");
-        check(cursor.getCompletedUnits() == 5 && host.availabilityChecks == 8,
-            "readiness is rechecked while remaining declared units drain without time advance");
+        check(cursor.getCompletedUnits() == 2 && host.availabilityChecks == 5,
+            "actual readiness stops work after two natural advances with a fresh dispatch check");
+    }
+
+    private static void verifyReadinessAtBoundAndCompletionNoOp(
+            GeneratedDiagnosticServicePreparation.Policy policy) {
+        FakeHost host = new FakeHost(5);
+        GeneratedDiagnosticServicePreparation.Cursor cursor =
+            new GeneratedDiagnosticServicePreparation.Cursor(policy, host);
+        while (cursor.step()) { }
+        check(cursor.isComplete() && cursor.getCompletedUnits() == 5 && host.advances == 5,
+            "readiness on the last permitted advance completes within the original maximum");
+        int checks = host.availabilityChecks;
+        check(!cursor.step() && cursor.getCompletedUnits() == 5 &&
+                host.advances == 5 && host.availabilityChecks == checks,
+            "repeating a complete cursor does not invent more work or time");
+        cursor.finish();
+        check(host.availabilityChecks == checks + 1,
+            "completion no-op cannot replace the final fresh dispatch gate");
     }
 
     private static void verifyNeverReadyFailsAtBound(

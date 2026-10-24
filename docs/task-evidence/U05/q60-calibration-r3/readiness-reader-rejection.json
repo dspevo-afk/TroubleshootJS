@@ -1,0 +1,10 @@
+{
+  "actualExitCode": 2,
+  "operationSeconds": 0.0915961,
+  "output": [
+    "FAIL: native readiness reader: native gate failed or inputs changed"
+  ],
+  "status": "EXPECTED_REJECTION_OF_FAILED_NATIVE_GATE",
+  "accepted": false,
+  "priorMetadataWrite": "PowerShell bare false typo corrected; reader already rejected actual gate"
+}

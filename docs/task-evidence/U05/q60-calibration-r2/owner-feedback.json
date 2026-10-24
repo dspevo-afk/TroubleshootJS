@@ -1,0 +1,20 @@
+{
+  "schema": "tsj-owner-play-feedback/1",
+  "reportedDate": "2026-10-23",
+  "source": "Direct user messages in this chat",
+  "verbatim": [
+    "I approve the play test 👍",
+    "No I mean I played it and I approve moving forward with the roadmap"
+  ],
+  "reportedPlayed": true,
+  "approvesRoadmapContinuation": true,
+  "repeatPlayRequested": false,
+  "repairOutcome": "NOT_REPORTED",
+  "strategy": "NOT_REPORTED",
+  "elapsedTime": "NOT_REPORTED",
+  "actionsRetriesAssistance": "NOT_REPORTED",
+  "priorReportedClarityIssue": "Meter appeared stuck on ISOLATE COMPONENT, recorded separately in human-play-r2",
+  "expectedCurrentCandidate": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "actualPlayedBuildAndSeed": "NOT_REPORTED; do not assign an observed candidate or claim a blind trial",
+  "followup": "Optional outcome-only question unanswered; approval to continue recorded and technical work proceeds without a repeat trial"
+}

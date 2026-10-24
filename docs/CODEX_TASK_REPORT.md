@@ -1,4 +1,114 @@
-# Current checkpoint: in-circuit resistance accepted
+# Current checkpoint: resistance-aware development proof accepted; HARD held
+
+Owner says they played and approve roadmap continuation. No repeat trial; human
+strategy/repair outcome/time/build NOT_REPORTED. Same q30 worktree and
+codex/q60-faulted-profile-counts. Candidate on base/last pre-candidate origin
+885d5c6c3e1c228928d68c55702d75f6fab5aa77. No main/email; size work closed.
+
+[R9 acceptance and limits](task-evidence/U05/q60-calibration-r9/README.md):
+source3f80c5263a3982368791441152aa8c0915a1930485d9ad38bdebb1984d61b5f7,
+actual GWT956F998381E75F1B4D9406BCECACEFBB. Same-owner completed real Ω survives
+post DISCHARGE; every new injection retains all original guards. Temporary exact
+context validation, one pending flag, status snapshot/restore; no physics changes.
+Program2/provider3 natural readiness waits and first-ready REMOVE accounting
+retain maximum reservations and fresh dispatch. Bounded compiled LU correctness
+and real invocation covered; no controlled speedup claim. R2-R8 failures preserved.
+
+Final native15/482705 assertions0/129.734s,1378 unchanged/cleanupPASS; actual JDK8/
+GWT5 0/95.706s,1184 unchanged (1182 source/build plus2 served UI); compiled A07
+pure306530/runtime103 cleanupPASS. Final consumed-input audit unchanged. Current
+ordered dev40/34760ms/388work,55/89303/496,60/87453/461 all PASS:5hypotheses,
+all repair/retest/isolation/publication/cleanup. Independent readers both0.
+Larger cases nearly90s. All still2 certified-set readings; HARD rule unfrozen,
+protected regression untouched. Public advanced profile/catalog/save gates held.
+
+Real player input passes POWER OFF→DISCHARGE→990.099Ω, retarget0Ω, power/mode
+invalidation, conservative CONT/DIODE and active-mode exit. Unrepaired advanced
+retest correctly fails; End view expectedFAIL for unrepaired case with all cleanup
+flagsPASS. Restored ordinary LED marking-matched1k repair/retestPASS. Held caption
+NOT_OBSERVED visually; separate native RC/compiled retention proof, no fake UI.
+Current debug=false invalid-private-seed/flag canary inert; public gates held.
+Broad synchronous Task41 NOT_COMPLETED after observation timeouts, tab closed;
+no terminal/restoration PASS claimed. Optional R9 source review no remaining blocker.
+
+Current CPU diagnosis appPASS84743ms/496; matching-map reducer0,81,759 samples.
+Profiler stopped/disabled. Tabs44-51 closed. Exact8920 PID25396/birth revalidated,
+maintained stop0/2.576s, listener/state absent; driver92550 ended0. No current task
+preview/tab/build/native remains. Seven unrelated untracked groups and old five
+blocked profiles/tab20 untouched. Private R9 scratch retained outside repository.
+
+Normal origin branch publication is in scope; no main/email. Next: bounded U05
+analysis of actual preparation/reference cost in two-reading strategies; do not
+promote a label from part/rail-name/witness counts. [Current REL-B matrix](task-evidence/REL-B/current-release-matrix-r2/README.md)
+reconciles owner approval and R9; generic save/restore already exists. Q100 unstarted.
+
+# Previous checkpoint: R2-R9 development in progress
+
+Owner confirms "I played it and I approve moving forward with the roadmap".
+No repeat human trial; outcome/strategy/time/build NOT_REPORTED. Same q30 worktree,
+codex/q60-faulted-profile-counts, HEAD/last exact origin885d5c6c3e1c228928d68c55702d75f6fab5aa77.
+No new stage/commit/push. No main/email; size work closed. Seven original untracked
+groups/five policy-blocked profiles untouched; blocked early tab20 not retried.
+
+Program2/provider@3 declares registered-mode/pair readiness WAITs with natural
+advances, same3x1s max. R2-R6 failures preserved. R6 dev40 PASS35165ms/533work;
+55 WORK_EXHAUSTED at PUBLISH86958ms/640;60 invalid Ω after READY33054ms/127.
+Both independent readers exit2/NO_GO. All native/GWT/compiled and failures retain
+own source binding. No HARD rule frozen or protected regression captured; public
+HARD/catalog/advanced-save/population held; Q100 unstarted.
+
+[R7](task-evidence/U05/q60-calibration-r7/README.md) stops service at first actual
+REMOVE availability, retaining maximum, fresh final gate and actual dispatch.
+Session counts successful canonical units; job count equals actual, within max
+reservation. Native16/650593 assertions0/433.884s,1378 unchanged; medium corpus51
+has48 accepted/3 typed rejected/0failed, cleanup PASS. Actual GWT5 0/98.132s,
+1182 unchanged, compiled A07pure306530/runtime103 PASS. Targeted55 full proof PASS
+86374ms/496work,5hyp/65samples/all repairs/customer/isolation. Targeted60 FAIL
+34545ms/127, LCD/readiness DISCHARGE. These are canaries, not a cohort/calibration.
+Exact8918 stopped0/2.115s/state+listener absent, driver97009 ended0/tabs39-41 closed.
+
+[R8](task-evidence/U05/q60-calibration-r8/README.md) diagnostics only: native15/
+482685 assertions0/129.737s,1378 unchanged/cleanup PASS. Actual GWT5 0/99.150s,
+1182 unchanged, compiled A07pure306530/runtime103 PASS. Same60 FAIL32892ms/127.
+Actual reader1/source0.5024875625mA produces~990.099Ω; clean transaction then
+post power DISCHARGE at unrelated PRE_L, stored-energy READY, interaction true.
+Mode discarded the completed result. Rebound attribution not proved; no guard
+waiver, fake reading or calibration follows. Private diagnostic detail requires
+both debug AND active verifier. Exact8919 stopped0/2.140s/state+listener absent,
+driver9181 ended0/tabs42-43 closed. No preview/build remains live.
+
+[R9 scope](task-evidence/U05/q60-calibration-r9/scope.md): preserve completed Ω
+through post DISCHARGE with visible held-reading status; fresh tests retain all
+preflight checks. Temporary session validates exact owner/graph/controls/mutation/
+endpoints, controller same mode/probes/pending/off/interaction; closes after call,
+no persistent owner lease. Existing refresh invalidates cache on changes. One
+ModeState pending flag replaces duplicate private flag, status participates in
+Task41 capture/restore/equality. No physical source/threshold/solver/time changes.
+Root owns all files. Optional source-only review has no remaining blocker; finite-
+only OL finding withdrawn under established completed open/over-range semantics.
+Early real RC/identity canary PASS60,0/41.395s. Final native15/482705 assertions
+actual0/129.734s,1378 unchanged/cleanup PASS; actual GWT5 0/95.706s,1184 unchanged
+(1182 source/build plus2 served UI). Compiled A07pure306530/runtime103 cleanup PASS.
+Build956F998381E75F1B4D9406BCECACEFBB/source3f80c5263a3982368791441152aa8c0915a1930485d9ad38bdebb1984d61b5f7.
+Broad synchronous Task41 attempt yielded two browser observation timeouts; tab45
+closed without terminal report, NOT_COMPLETED, no cleanup/application PASS claim.
+Current ordered development PASS:40/34760ms/388work;55/89303ms/496;
+60/87453ms/461. Five hypotheses, real observations, all repairs/retests/isolation,
+publication and cleanup pass. Both unchanged independent readers actual0. All
+still two certified-set readings; one Ω leaves four repair classes. No HARD rule
+or protected regression/public enablement. Larger cases have little time headroom.
+Preview8920 PID25396/birth639283997007842249 retained driver92550; tabs44-48
+closed. Separate CPU diagnosis actual applicationPASS84743ms/496work;81,759
+samples,118.623s capture includes31.622s idle. Actual current bounded JSNI kernel
+19.658s sampled self; factorization27.231s inclusive. Matching-map reader0;
+Profiler stop/disable/tab49close pass. No controlled speedup/admission inferred.
+Visible ordinary player tab50 preparing same60 under private6min hold; real input
+and screenshots pending. Preview/driver unchanged, profiler inactive.
+Private root tsj-resistance-completion-r9-e3mma0r2. Next real visible input/screens,
+source/diff acceptance and finite fix publication. Later HARD needs a justified
+separation; independent REL-B software preparation can proceed with public gates held.
+
+# Previous checkpoint: in-circuit resistance accepted
 
 Accepted change set on base2dd99e8dfc60ab53ead1f964c09617e4a7b94f3b, same q30
 worktree/codex/q60-faulted-profile-counts. Normal branch publication is the final

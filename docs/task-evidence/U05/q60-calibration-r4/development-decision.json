@@ -1,0 +1,10 @@
+{
+  "status": "NO_GO_CURRENT_COHORT_NOT_QUALIFIED",
+  "actualExitCode": 2,
+  "operationSeconds": 0.094354,
+  "output": [],
+  "capsChanged": false,
+  "regression": "NOT_RUN",
+  "profileRule": "NOT_FROZEN",
+  "stderrObservedInToolResult": "FAIL: U05 calibration feature reader: native qualification did not pass"
+}

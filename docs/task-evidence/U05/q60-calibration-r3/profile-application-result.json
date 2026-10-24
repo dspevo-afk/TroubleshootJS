@@ -1,0 +1,145 @@
+{
+  "schema": "tsj-profiled-application-attempt/1",
+  "build": "5BC4454BB0B4620B6611849B4D993BC0",
+  "seed": "-1067",
+  "scope": "CPU diagnosis only; profiler overhead; not cohort admission",
+  "wallSeconds": 133.639,
+  "report": {
+    "candidateDisposed": true,
+    "cleanupPending": false,
+    "coordinatorReleased": true,
+    "debugRestored": true,
+    "diagnosticWorkTimings": {
+      "CANDIDATE_HEALTHY_SETTLE": {
+        "maxMillis": 260,
+        "millis": 10206,
+        "units": 65
+      },
+      "CANDIDATE_SETTLE": {
+        "maxMillis": 285,
+        "millis": 5721,
+        "units": 45
+      },
+      "CUSTOMER_RETEST": {
+        "maxMillis": 261,
+        "millis": 7382,
+        "units": 52
+      },
+      "CUSTOMER_RETEST_COMPLETION": {
+        "maxMillis": 21,
+        "millis": 64,
+        "units": 4
+      },
+      "EVIDENCE_RESTORE_PRIMARY": {
+        "maxMillis": 55,
+        "millis": 180,
+        "units": 4
+      },
+      "OBSERVATION_STEP:DC_VOLTAGE": {
+        "maxMillis": 14,
+        "millis": 711,
+        "units": 60
+      },
+      "OBSERVATION_STEP:INPUT": {
+        "maxMillis": 87,
+        "millis": 397,
+        "units": 5
+      },
+      "OBSERVATION_STEP:POWER": {
+        "maxMillis": 68,
+        "millis": 273,
+        "units": 5
+      },
+      "OBSERVATION_STEP:RESISTANCE": {
+        "maxMillis": 96,
+        "millis": 429,
+        "units": 5
+      },
+      "OBSERVATION_STEP:SETTLE": {
+        "maxMillis": 98,
+        "millis": 440,
+        "units": 5
+      },
+      "OBSERVATION_STEP:WAIT": {
+        "maxMillis": 1518,
+        "millis": 18019,
+        "units": 20
+      },
+      "POWER_OFF_SETTLE": {
+        "maxMillis": 3,
+        "millis": 194,
+        "units": 150
+      },
+      "POWER_ON_SETTLE": {
+        "maxMillis": 112,
+        "millis": 426,
+        "units": 5
+      },
+      "REMOVE_SETTLE": {
+        "maxMillis": 168,
+        "millis": 772,
+        "units": 5
+      },
+      "REPAIR_STATUS_SETTLE": {
+        "maxMillis": 469,
+        "millis": 8964,
+        "units": 53
+      },
+      "REPLACE_SETTLE": {
+        "maxMillis": 171,
+        "millis": 747,
+        "units": 5
+      },
+      "REPLAY_INSTALL": {
+        "maxMillis": 310,
+        "millis": 1119,
+        "units": 5
+      }
+    },
+    "failure": "Deadline: Generation wall budget exhausted",
+    "failurePhase": "COLD_GENERATION",
+    "family": "RB56_CONTROL",
+    "forcedAfterPublish": false,
+    "jobMillis": 90295,
+    "jobOutcome": "TIMEOUT",
+    "jobStage": "HYPOTHESES",
+    "jobStageMillis": {
+      "HEALTHY": 31058,
+      "HYPOTHESES": 56025,
+      "PHYSICAL": 144,
+      "PUBLISH": 0,
+      "RESOLVE": 1,
+      "SYMPTOM": 0
+    },
+    "jobStageWork": {
+      "HEALTHY": 117,
+      "HYPOTHESES": 493,
+      "PHYSICAL": 1,
+      "PUBLISH": 0,
+      "RESOLVE": 1,
+      "SYMPTOM": 0
+    },
+    "jobWork": 612,
+    "manualUnitMaxMillis": 1824,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "normalCatalogEnabled": false,
+    "ordinaryCustomerRetestPassed": false,
+    "ownerRestored": true,
+    "phase": "RESTORED",
+    "planVersion": 1,
+    "playerBridgeReleased": true,
+    "playerSessionReleased": true,
+    "proofMillis": 0,
+    "protocol": "TSJ-RB56-QUALIFICATION-1",
+    "qualifiedPublication": false,
+    "routingMillis": 0,
+    "scope": "PRIVATE_SHARED_WORKBENCH",
+    "seed": "-1067",
+    "sourceEpoch": "tsj-generation-dependencies-v18",
+    "status": "FAIL",
+    "temporaryMeterClean": true,
+    "wallMillis": 90359
+  }
+}

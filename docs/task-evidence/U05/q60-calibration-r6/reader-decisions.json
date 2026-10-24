@@ -1,0 +1,20 @@
+[
+  {
+    "reader": "read_features.py",
+    "readerSha256": "469ba33f119cff99d5311bc1572a72a46f4c87e456658ab7718f8a18bb4c6311",
+    "actualExitCode": 2,
+    "operationSeconds": 0.12835560005623847,
+    "stdout": "",
+    "stderr": "FAIL: U05 calibration feature reader: native qualification did not pass\n",
+    "status": "NO_GO"
+  },
+  {
+    "reader": "read_waits.py",
+    "readerSha256": "6d3e93ed1dcc3a2ff544756f2c14636cd161e0095befb39ebdf096df396348dc",
+    "actualExitCode": 2,
+    "operationSeconds": 0.06972629996016622,
+    "stdout": "FAIL: temporal wait reader: actual qualification did not pass\n",
+    "stderr": "",
+    "status": "NO_GO"
+  }
+]

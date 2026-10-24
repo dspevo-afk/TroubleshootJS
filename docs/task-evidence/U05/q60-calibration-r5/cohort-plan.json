@@ -1,0 +1,31 @@
+{
+  "schema": "tsj-u05-q60-current-calibration-plan/2",
+  "status": "FROZEN_CURRENT_BUILD_BEFORE_ANY_CAPTURE",
+  "baseCommit": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "build": "64C24BC37322CE5819BE0351ADE4569B",
+  "dependencyEpoch": 18,
+  "placement": 15,
+  "development": [
+    "-1017",
+    "-1067",
+    "-1022"
+  ],
+  "regression": [
+    "9007199254741579",
+    "-1004",
+    "-1028"
+  ],
+  "selection": "Reuse the predeclared curated feature split for current-model freshness, with known prior histories. This is not random population holdout or blind human trial.",
+  "observations": "Powered DC program plus a declared3s natural OFF decay (three1s waits), then identical DRIVER_A_RESISTANCE acrossRDA.1/RDA.2 for every hypothesis. Current registered mode passed explicitly at preflight. No global minimum over every possible probe pairing claimed.",
+  "profileRule": "NOT_FROZEN; inspect current development first, freeze rule before regression. No automatic promotion from package count, rail-name counts or witness route length.",
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "failurePolicy": "Preserve every failed case, stage and cleanup result; no cohort substitutions or threshold fitting on regression",
+  "publicAdmission": "HELD during evidence collection; no HARD/catalog/public save flag changes in this first scope",
+  "amendment": "R5: direct primitive-array bounded LU kernel with8-column scalar reuse; actual native13/GWT5/compiled A07 oracle PASS. No wait/physics/guard/cap/cohort changes. All R2/R3/R4 failures preserved.",
+  "sourceBinding": "7928c57c6299e3e7499f9015926cafabf1b813badb7989ef4cab8172caee4d69",
+  "frozenUtc": "2026-10-23T23:40:04.7909581Z"
+}

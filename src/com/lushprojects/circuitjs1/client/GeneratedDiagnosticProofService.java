@@ -182,7 +182,9 @@ final class GeneratedDiagnosticProofService {
     }
 
     /**
-     * Returns the deterministic full serial-proof work count for one owner.
+     * Returns the deterministic maximum serial-proof reservation for one owner.
+     * First-ready service preparation may execute fewer units; Session counts
+     * the successful canonical units independently of this declared maximum.
      * The five GenerationJob stage units (resolve, healthy, physical, symptom
      * and publish) are outside this proof population.
      */
@@ -358,6 +360,7 @@ final class GeneratedDiagnosticProofService {
         private String repairCatalogId;
         private Unit nextUnit = Unit.REPLAY_INSTALL;
         private int nextHypothesis;
+        private int completedWorkUnits;
         private boolean internalProof;
         private boolean closed;
         private boolean failed;
@@ -486,8 +489,12 @@ final class GeneratedDiagnosticProofService {
                 closeAsFailed(failure);
                 throwFailure(failure);
             }
+            completedWorkUnits++;
             return nextUnit != Unit.COMPLETE;
         }
+
+        /** Successful canonical units only; completion no-ops and failures do not count. */
+        int getCompletedWorkUnits() { return completedWorkUnits; }
 
         private void runUnit(Unit attempted) {
             switch (attempted) {

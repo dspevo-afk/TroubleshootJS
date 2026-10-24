@@ -1,0 +1,39 @@
+{
+  "schema": "tsj-u05-current-gates/1",
+  "baseCommit": "885d5c6c3e1c228928d68c55702d75f6fab5aa77",
+  "nativeFirst": {
+    "actualExitCode": 1,
+    "operationSeconds": 27.300286,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1377,
+    "rawSha256": "9019e8bd72cfa65e320e8ab3e47b2cc3076f8da7fdcccee8a33de54877cbb2a3"
+  },
+  "nativeFinal": {
+    "actualExitCode": 0,
+    "operationSeconds": 114.2769632,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1377,
+    "rawSha256": "3a565a681478f9fc392408aa10e2c1d7724282eda6b78625b79519eaf6301450"
+  },
+  "build": {
+    "actualExitCode": 0,
+    "operationSeconds": 96.9400387,
+    "inputsUnchanged": true,
+    "changedInputs": [],
+    "inputCount": 1182,
+    "rawSha256": "810bba6fc029f5015f69e7e11a2a09b1fb95aecae38cb57c8f1a8e789e91eb13"
+  },
+  "nativeSuites": 9,
+  "assertions": 93414,
+  "nativeCleanup": "PASS: current JVM classes and task-owned scratch removed",
+  "nativeInitialFailure": "Exporter compilation: two missing double serialization overloads; fixed with JSONNumber, no measurement rounding",
+  "readerSelfTest": {
+    "actualExitCode": 0,
+    "wallSeconds": 0.5692682,
+    "stdout": "PASS: U05 calibration feature reader self-test",
+    "readerSha256": "0f6443d635866e76ac47be93ce1c973ae726f4ce525070475fd93d2c2123323b"
+  },
+  "limitations": "Focused native only; actual compiled captures pending; no full matrix/global strategy optimum/human repair claim"
+}
