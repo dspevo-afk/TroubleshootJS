@@ -28,6 +28,15 @@ The larger cases remain close to90s. All still reduce in two certified-set readi
 no higher difficulty band follows from package, rail-name or witness counts.
 [Current development and limits](task-evidence/U05/q60-calibration-r9/README.md).
 No HARD rule is frozen or protected regression captured; public gates remain held.
+[Preparation-cost analysis](task-evidence/U05/preparation-cost-scope-r1/README.md)
+also finds a same-reference powered two-DC-reading tree in all three captures;
+optional OFF/Ω steps do not supply unavoidable extra diagnostic cost. The product
+choice between qualifying this content as MEDIUM and developing harder content
+remains pending. No repeat owner play is required. [Public held-family replay
+admission hardening](task-evidence/REL-B/public-admission-fence-r1/README.md) now
+refuses before session mutation; final native6, actual five-permutation GWT and
+real invalid/valid replay plus retained-board repair/retest pass. No public
+advanced admission follows from that independent fix.
 [Failed candidate and preserved evidence](task-evidence/U05/q60-calibration-r2/README.md).
 The earlier human attempt supplied meter confusion and was interrupted; no human
 repair outcome or HARD calibration is inferred. PCB-size work stays closed;

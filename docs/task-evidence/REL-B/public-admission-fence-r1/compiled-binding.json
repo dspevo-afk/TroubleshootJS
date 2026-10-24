@@ -1,0 +1,7 @@
+{
+  "build": "0583868ADE0F4D276EA89F45DF5AEF21",
+  "compiledPath": "war/circuitjs1/0583868ADE0F4D276EA89F45DF5AEF21.cache.js",
+  "sha256": "6b6a81e395d6e43864e0f4541415207490985d307d085e6d426968955abcea8e",
+  "servedMatchesLocal": true,
+  "source": "Actual script src read from tab53 DOM, then exact localhost response compared to final built file"
+}

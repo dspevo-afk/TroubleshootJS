@@ -1,0 +1,19 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 59.6252874,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "inputCount": 1378,
+  "rawSha256": "63da61828026e2971233eff65a406b979f03008e9b6bee42efa8e0a8b4b080c0",
+  "cleanup": "PASS current JVM contract classes and task-owned scratch removed",
+  "scope": [
+    "QuickPlayContractTest",
+    "QuickPlayGateContractTest",
+    "U04SessionContractTest",
+    "U06SessionSaveContractTest",
+    "RelBSessionIdentityContractTest",
+    "A10DependencyContractTest"
+  ],
+  "countedAssertions": 66293,
+  "limit": "QuickPlayContractTest emits a PASS marker but no assertion count; independent full-matrix oracles NOT RUN"
+}

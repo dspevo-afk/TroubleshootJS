@@ -173,7 +173,7 @@ final class PlayerFamilyCatalog {
         }
 
         boolean supportsQuickPlay(String id, DifficultyProfile profile) {
-            if (!isRegistered(id) || profile == null || !profile.isAvailable()) return false;
+            if (!isNormalPlayerEnabled(id) || profile == null || !profile.isAvailable()) return false;
             return profile == executionDeclaration(id).candidateProfile;
         }
 

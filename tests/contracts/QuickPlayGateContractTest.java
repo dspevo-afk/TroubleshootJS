@@ -9,6 +9,7 @@ public final class QuickPlayGateContractTest {
     private static void check(boolean value,String message) { checks++; if(!value) throw new AssertionError(message); }
     public static void main(String[] args) {
         replayEpoch();
+        heldRegistration();
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L,-4518705223253195925L}) selection(seed);
         for(int i=0;i<1024;i++) selection(QuickPlayGateCorpus.seed(false,i));
         for(long seed:new long[]{0,1,-1,Long.MIN_VALUE,Long.MAX_VALUE,9007199254740993L})
@@ -49,6 +50,33 @@ public final class QuickPlayGateContractTest {
                     Rb30Plan.FAMILY_ID.equals(decoded.familyId) && replay.equals(decoded.replay()),
                 "Current v6 replay rounded or reinterpreted signed-long seed " + seed);
         }
+    }
+
+    private static void heldRegistration() {
+        PlayerFamilyCatalog.RegistrationBoundary registration =
+            PlayerFamilyCatalog.newRegistrationBoundary();
+        check(DifficultyProfile.MEDIUM.isAvailable() &&
+                QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM, registration),
+            "Available MEDIUM registered-family positive is required for the held-family canary");
+        registration.setNormalPlayerEnabled(Rb30Plan.FAMILY_ID, false);
+        check(registration.isRegistered(Rb30Plan.FAMILY_ID) &&
+                !registration.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
+                !QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM, registration),
+            "Registration alone must not advertise broad-seed admission for a held available profile");
+        registration.setNormalPlayerEnabled(Rb30Plan.FAMILY_ID, true);
+        check(QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM, registration) &&
+                PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
+                QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM),
+            "Local reenablement restores support without changing the live catalog");
+        check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
+                !QuickPlayAdmission.supports(Rb56Plan.FAMILY_ID) &&
+                QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID),
+            "Family-only public support must distinguish installed private and enabled families");
+        // Exact requests are assessed using their actual proof, not the broad-seed declaration.
+        PlayerLaunchRequest exact = new PlayerLaunchRequest(Rb30Plan.FAMILY_ID, "0", "EASY");
+        check(exact.profile == DifficultyProfile.EASY && !exact.candidateSearch &&
+                !QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.EASY),
+            "Early family admission must not replace exact-request evidence with broad-seed profile policy");
     }
 
     private static void selection(long seed) {

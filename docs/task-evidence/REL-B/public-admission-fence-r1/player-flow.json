@@ -1,0 +1,38 @@
+{
+  "schema": "tsj-public-admission-player-input/1",
+  "base": "fc88419b4e4dfe5f58cede8e23ce9a9cfab388f4",
+  "preFixBuild": "956F998381E75F1B4D9406BCECACEFBB",
+  "finalBuild": "0583868ADE0F4D276EA89F45DF5AEF21",
+  "scope": "Agent real production player input; not owner play feedback or public RB56 release qualification",
+  "heldReplay": "tsj-alpha/6/MEDIUM/RB56_CONTROL/0",
+  "before": "Real menu replay submit reached Board preparation failed; previous board retained",
+  "after": {
+    "screen": "MENU",
+    "notice": "This family is not enabled for normal-player generation",
+    "retainedReplay": "tsj-alpha/6/EASY/LED_INDICATOR/3",
+    "retainedPower": "OFF",
+    "resume": "WORKBENCH with Board Power OFF",
+    "unrepairedRetest": "Customer retest did not pass. Continue troubleshooting.",
+    "repair": "Power OFF; R1 BROWN/BLACK/RED/GOLD; Remove component; Shop1000Ohm; Part4 Install as Circuit/R1; power ON; customer retest PASS",
+    "validReplay": "tsj-alpha/6/EASY/LED_INDICATOR/9007199254740993",
+    "validReplayResult": "Customer ticket with exact public identity",
+    "finalPower": "OFF",
+    "browserErrorWarnLogEntries": 0
+  },
+  "actions": "Ordinary visible locators only; no injected controller calls or UI mutation",
+  "screenshotsInspected": [
+    "pre-fix-error.jpg",
+    "post-fix-refusal.jpg",
+    "retained-unrepaired.jpg",
+    "retained-repaired.jpg",
+    "valid-long-replay-ticket.jpg"
+  ],
+  "observationLimits": [
+    "Some immediate AX reads retained the prior frame until a later observation; only terminal DOM/screenshot states used as proof",
+    "Pre-fix menu keyboard action followed an unchanged click snapshot; native AX click failed shadow-root lookup. No wrapper certification claimed",
+    "Post-removal Component lookup timed out because removal cleared selection. Fresh DOM and actual Parts Tray path used; no product failure inferred",
+    "Public replay/power continuity and repair/retest observed; no browser object-identity injection was used",
+    "Pre-fix narrow and post-fix normal viewport differ; comparison is session behavior, not layout",
+    "Native public-save/private-identity checks are separate from UI replay checks; normal advanced save/population and protected cohort NOT RUN"
+  ]
+}

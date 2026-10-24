@@ -1,0 +1,103 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+      - generic: ALPHA
+    - navigation:
+      - button:
+        - generic: Main menu
+      - button [disabled]:
+        - generic: Shop
+      - button:
+        - generic: Resources
+      - button:
+        - generic: Settings
+      - button [disabled]:
+        - generic: Run customer retest
+    - status: This family is not enabled for normal-player generation
+    - row:
+      - cell:
+        - button: "Board Power: OFF"
+    - row:
+      - cell:
+        - button:
+          - generic: Supplies
+    - row:
+      - cell:
+        - button:
+          - generic: View
+    - row:
+      - cell:
+        - button:
+          - generic: Ticket
+    - row:
+      - cell:
+        - button:
+          - generic: Parts tray
+- dialog "TroubleshootJS · Desktop alpha":
+  - banner:
+    - heading "TroubleshootJS · Desktop alpha" [level=2]
+  - status: This family is not enabled for normal-player generation
+  - banner:
+    - paragraph: THE ELECTRONICS REPAIR GAME
+    - heading "Troubleshoot!" [level=3]
+    - paragraph: A customer. A faulty board. A bench full of possibilities.
+    - list:
+      - listitem: Examine
+      - listitem: Measure
+      - listitem: Isolate
+      - listitem: Repair
+      - listitem: Retest
+  - heading "Your session" [level=3]
+  - paragraph: Download a .tsjsave file to keep this board and its parts. Load a current compatible file from your device (up to 2 MiB).
+  - paragraph: Restoring a session restarts capacitor charge, relay motion, sensor hysteresis and simulation time. Repairs, parts, permanent damage and supply/input settings are preserved. Retest the board after loading.
+  - button "Save session"
+  - button "Load session"
+  - generic "Session history"
+  - heading "Start a service job" [level=3]
+  - text: Difficulty
+  - combobox "Difficulty":
+    - option "EASY" [selected]
+    - option "MEDIUM"
+    - option "HARD — unavailable" [disabled]
+    - option "PSYCHOTIC — unavailable" [disabled]
+  - text: Board family
+  - combobox "Board family":
+    - option "Indicator board" [selected]
+    - option "Protected indicator"
+    - option "Dual indicator"
+    - option "Timing board"
+    - option "BJT output driver"
+    - option "MOSFET output driver"
+    - option "Relay output board"
+    - option "Sensor control board"
+    - option "Procedural control board"
+  - button "New board"
+  - paragraph: Every listed family uses procedural placement and routing. New boards try up to four candidate seeds within shared preparation limits; only a fully checked, distinct board reaches its customer ticket.
+  - generic "Enter an exact seed"
+  - generic "Open a saved replay code"
+  - heading "Return to a challenge" [level=3]
+  - paragraph: Paste a current replay to reconstruct its initial board. Repairs and tray contents are not saved.
+  - text: Open current replay
+  - textbox "Open current replay": tsj-alpha/6/MEDIUM/RB56_CONTROL/0
+  - button "Prepare replay" [active]
+  - button "Resume current board"
+  - button "Resources"
+  - button "Settings"
+  - generic "About this alpha"
+  - generic "Share pristine challenge"
+  - paragraph: Share this replay code to reconstruct the initial challenge. Repairs and tray contents are not included. Only the current replay format is supported.
+  - text: Pristine challenge replay
+  - textbox "Pristine challenge replay": tsj-alpha/6/EASY/LED_INDICATOR/3
+  - text: Interpretation / build
+  - textbox "Interpretation / build": tsj-alpha/6 / 0583868ADE0F4D276EA89F45DF5AEF21
+  - paragraph: You can select and copy this information for a bug report. Nothing is sent automatically.
+  - generic "Report a problem"

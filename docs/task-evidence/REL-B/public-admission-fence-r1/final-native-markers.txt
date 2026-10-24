@@ -1,0 +1,6 @@
+PASS: Quick Play current seed envelopes and construction
+PASS: U04 session contracts assertions=4010
+PASS: U06 session save contracts assertions=34988
+PASS: REL-B session identity contracts assertions=201 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false
+PASS: A10 dependency contracts assertions=15
+PASS: Quick Play gate contracts assertions=27079

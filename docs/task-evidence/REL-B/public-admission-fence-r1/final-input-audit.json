@@ -1,0 +1,16 @@
+{
+  "status": "PASS_UNCHANGED_CONSUMED_INPUTS",
+  "gates": {
+    "final-native": {
+      "inputs": 1378,
+      "unchanged": true
+    },
+    "final-build": {
+      "inputs": 1191,
+      "unchanged": true
+    }
+  },
+  "loadedScriptUnchanged": true,
+  "scope": "All consumed source/test/build/static UI inputs audited unchanged after real UI QA and owned cleanup; receipts reused only within this exact boundary",
+  "observationCorrection": "Initial PowerShell member enumeration serialized one Count value per property; scalar counts corrected against the exact original manifests. Every input hash had already passed; no gate rerun or changed-input waiver."
+}

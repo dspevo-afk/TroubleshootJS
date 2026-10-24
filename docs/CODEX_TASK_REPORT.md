@@ -1,4 +1,47 @@
-# Current checkpoint: resistance-aware development proof accepted; HARD held
+# Current checkpoint: R11 public held-family replay fence
+
+HEAD/verified origin codex/q60-faulted-profile-counts:
+fc88419b4e4dfe5f58cede8e23ce9a9cfab388f4 (R9 published). No main/email; size
+work closed, seven original unrelated groups preserved. Owner played/approved;
+no repeat trial or unreported outcome inferred.
+
+R10 preparation-cost analysis is NO_GO for a new HARD feature: exact independent
+reader0 verifies a powered same-reference two-DC-reading tree in all3 pinned R9
+captures and rejects15 negatives. Retrospective data tree, not executed adaptive
+player order/global minimum. [Result](task-evidence/U05/preparation-cost-scope-r1/README.md).
+Product question pending: qualify existing boards as MEDIUM with HARD held, or
+keep gated and develop harder scenarios. No dependent release change without answer.
+
+Independent [R11 acceptance](task-evidence/REL-B/public-admission-fence-r1/README.md):
+held-family requests now refuse before session mutation through existing catalog/
+parser/support owners. Coordinator pre-cancel/publication guards retained.
+Private identities and all public enablement flags unchanged. Root owns files.
+RelB identity negative uses current epoch/available MEDIUM held family; actual
+pre-fix native1/41.418s expected assertionFAIL, cleanupPASS/1378 unchanged. Exact
+oracle retained. Real pre-fix replay input reaches ERROR with prior board retained;
+image inspected. Tab52 closed;8921 PID2756/birth639284016368049113 revalidated,
+maintained stop0/2.136s, state/listener absent; driver48917 ended0.
+
+Production now reuses the normal-enabled gate in PlayerLaunchRequest and both
+Quick Play support paths. No flags, epochs, limits, physics or private identity
+changed. Copied-registration available-profile negative/reenable and exact-request
+semantics retained. Post-fix canary201/0/42.272s; final6 native66293 counted
+assertions plus uncounted QuickPlay PASS/0/59.625s; cleanupPASS/1378 unchanged.
+Actual JDK8/GWT5 0/98.717s,1191 unchanged. Loaded0583868ADE0F4D276EA89F45DF5AEF21
+served/local SHA exact. Real invalid replay stays MENU with originalLED/3 identity/
+powerOFF; resume and unrepaired retestFAIL, marked1k replacement/retestPASS.
+Valid9007199254740993 exact replay reaches ticket without rounding. Five images
+inspected. Immediate stale AX/native click/cleared-selection lookup limits retained;
+no injected controller or browser object-identity proof. Final consumed-input audit
+PASS; count-serialization observation corrected against original manifests.
+Tab53 closed after OFF;8922 PID27952/birth639284021434442485 revalidated, maintained
+stop0/2.151s, state/listener absent; driver65536 ended0. No current task resources.
+Private scratch tsj-public-admission-r11-vxk1cuxv retained outside repo; pointer
+public-admission-r11-pointer.json. Root diff review done; commit/push pending.
+R9 preview/profiler/tabs44-51 all cleaned; old five blocked profiles/tab20 untouched.
+Protected regression/public advanced gates stay held; Q100 unstarted.
+
+# Previous checkpoint: resistance-aware development proof accepted; HARD held
 
 Owner says they played and approve roadmap continuation. No repeat trial; human
 strategy/repair outcome/time/build NOT_REPORTED. Same q30 worktree and

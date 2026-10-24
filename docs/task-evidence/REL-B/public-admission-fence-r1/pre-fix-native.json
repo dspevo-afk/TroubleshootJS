@@ -1,0 +1,12 @@
+{
+  "actualExitCode": 1,
+  "operationSeconds": 41.417865,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "inputCount": 1378,
+  "rawSha256": "3bd809d8a5bb11cd58fa3883bc186bac86c886c33ce11ff97e1a590ce1a209c2",
+  "status": "EXPECTED_FAIL_REPRODUCED",
+  "failure": "exact public constructor refuses held family before a session can begin",
+  "cleanup": "PASS current JVM contract classes and task-owned scratch removed",
+  "newTestSha256": "fecd8f9775ed9994a122c0a3333ed29186a43dc11c837de1172e2248ae25c6be"
+}

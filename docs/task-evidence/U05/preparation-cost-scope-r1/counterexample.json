@@ -1,0 +1,146 @@
+{
+  "status": "PASS_RETROSPECTIVE_COUNTEREXAMPLE_ONLY",
+  "cases": [
+    {
+      "seed": "-1017",
+      "captureSha256": "0ff41777aa399b012bbd5451938c49897576fc4f2a8fe212306e3068f8e72486",
+      "values": [
+        {
+          "ordinal": 0,
+          "DRIVER_A_COMMAND": 4.84987093328215,
+          "DRIVER_A_INPUT": 0.6500565715543019,
+          "REGULATED_5V": 4.9998708832851735
+        },
+        {
+          "ordinal": 1,
+          "DRIVER_A_COMMAND": 4.849870934214509,
+          "DRIVER_A_INPUT": 0.0004806425404311198,
+          "REGULATED_5V": 4.999870884217523
+        },
+        {
+          "ordinal": 2,
+          "DRIVER_A_COMMAND": -3.552713678800501e-15,
+          "DRIVER_A_INPUT": -3.552713678800501e-15,
+          "REGULATED_5V": 1.425348727934761e-11
+        },
+        {
+          "ordinal": 3,
+          "DRIVER_A_COMMAND": 3.552713678800501e-15,
+          "DRIVER_A_INPUT": 5.0488750957811135e-09,
+          "REGULATED_5V": 4.99987088421752
+        },
+        {
+          "ordinal": 4,
+          "DRIVER_A_COMMAND": -8.881784197001252e-16,
+          "DRIVER_A_INPUT": 2.3388113667976995e-09,
+          "REGULATED_5V": 2.294970566056169
+        }
+      ],
+      "negativeCanariesRejected": 5
+    },
+    {
+      "seed": "-1067",
+      "captureSha256": "e375f80a2c5f5d068d7f8103ff0bb5818e2e586f6195bab54205e0d21f5116e0",
+      "values": [
+        {
+          "ordinal": 0,
+          "DRIVER_A_COMMAND": 4.84585134926736,
+          "DRIVER_A_INPUT": 4.797397633269893,
+          "REGULATED_5V": 4.995851299321453
+        },
+        {
+          "ordinal": 1,
+          "DRIVER_A_COMMAND": 4.845851328080584,
+          "DRIVER_A_INPUT": 0.0004797397612144038,
+          "REGULATED_5V": 4.99585127813467
+        },
+        {
+          "ordinal": 2,
+          "DRIVER_A_COMMAND": -7.105427357601002e-15,
+          "DRIVER_A_INPUT": 3.552713678800501e-15,
+          "REGULATED_5V": 4.6343373583113134e-11
+        },
+        {
+          "ordinal": 3,
+          "DRIVER_A_COMMAND": 3.552713678800501e-15,
+          "DRIVER_A_INPUT": 1.7763568394002505e-15,
+          "REGULATED_5V": 4.995851278134669
+        },
+        {
+          "ordinal": 4,
+          "DRIVER_A_COMMAND": 1.7763568394002505e-15,
+          "DRIVER_A_INPUT": 4.440892098500626e-16,
+          "REGULATED_5V": 2.154006954566769
+        }
+      ],
+      "negativeCanariesRejected": 5
+    },
+    {
+      "seed": "-1022",
+      "captureSha256": "6077bbff866fec2d2e34fdc1991061e02211d57746f9d11d2d600a5c7281ae17",
+      "values": [
+        {
+          "ordinal": 0,
+          "DRIVER_A_COMMAND": 4.845921973374589,
+          "DRIVER_A_INPUT": 0.6950334645467624,
+          "REGULATED_5V": 4.995921923427828
+        },
+        {
+          "ordinal": 1,
+          "DRIVER_A_COMMAND": 4.845871316920206,
+          "DRIVER_A_INPUT": 0.0004802461820041515,
+          "REGULATED_5V": 4.995871266973882
+        },
+        {
+          "ordinal": 2,
+          "DRIVER_A_COMMAND": -3.552713678800501e-15,
+          "DRIVER_A_INPUT": 5.3290705182007506e-15,
+          "REGULATED_5V": 1.4380496793364728e-10
+        },
+        {
+          "ordinal": 3,
+          "DRIVER_A_COMMAND": -1.7763568394002505e-15,
+          "DRIVER_A_INPUT": 5.0449173727429306e-09,
+          "REGULATED_5V": 4.995871266973882
+        },
+        {
+          "ordinal": 4,
+          "DRIVER_A_COMMAND": -4.440892098500626e-16,
+          "DRIVER_A_INPUT": 2.0885986273810886e-09,
+          "REGULATED_5V": 2.0409985234681276
+        }
+      ],
+      "negativeCanariesRejected": 5
+    }
+  ],
+  "root": "DRIVER_A_COMMAND",
+  "branches": [
+    {
+      "ordinals": [
+        0,
+        1
+      ],
+      "second": "DRIVER_A_INPUT"
+    },
+    {
+      "ordinals": [
+        2,
+        3,
+        4
+      ],
+      "second": "REGULATED_5V"
+    }
+  ],
+  "sourceAudit": {
+    "src/com/lushprojects/circuitjs1/client/Rb56DiagnosticProvider.java": "fdf4618f6cf11c6351380ac441efbfede6d183e46586b4967795c3e368c7e1bc",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+    "src/com/lushprojects/circuitjs1/client/Rb56PowerDomains.java": "848f32d1880aee545a5d5d7bca736aa00827eedbbf38ae1360b9c458d12c0d02",
+    "src/com/lushprojects/circuitjs1/client/MeasurementReferencePolicy.java": "26f2205b29cd7c221fd57e98ad9690a40d665a4538f2917e23f0372cd01b6f33"
+  },
+  "context": "Source-audited powered DC / SENSORS_HIGH; all black probes UAC.OUT- / CTRL_RETURN / SECONDARY",
+  "scope": "Two-reading witness within certified observations; not executed player-adaptive order or global minimum preparation",
+  "newDifficultyFeature": "NO_GO: optional OFF/ohms waits are not unavoidable diagnostic cost",
+  "profileAssigned": null,
+  "protectedRegressionRead": false,
+  "readerSha256": "9b4e9812f88711812e438a7cf15359e47ada3158ef9339aae7c02400050feba2"
+}

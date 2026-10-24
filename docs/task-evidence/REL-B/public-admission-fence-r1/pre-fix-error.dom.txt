@@ -1,0 +1,82 @@
+- table:
+  - rowgroup:
+    - row:
+      - cell:
+        - table:
+          - rowgroup:
+            - row:
+              - cell:
+                - button: Reset
+    - banner:
+      - strong: TroubleshootJS
+      - generic: ELECTRONICS WORKBENCH
+    - navigation:
+      - button:
+      - button [disabled]:
+      - button:
+      - button:
+      - button [disabled]:
+    - status: Board preparation could not start. The previous board is retained.
+    - rowgroup:
+      - button: TSJ MM-90
+      - generic: DIGITAL MULTIMETER
+      - button [disabled]: HOLD
+      - button [disabled]: RANGE
+      - button [disabled]: MIN/MAX
+      - button: LIGHT
+      - slider [disabled]
+      - button [disabled] [pressed]: "OFF"
+      - button [disabled]: V~
+      - button [disabled]: A
+      - button [disabled]: mA
+      - button [disabled]: µA
+      - button [disabled]: CAP
+      - button [disabled]: Hz
+      - button [disabled]: "%"
+      - button [disabled]: °C/°F
+      - generic: "ADDITIONAL FUNCTIONS: NOT IMPLEMENTED"
+      - generic: 10A
+      - generic: COM
+      - generic: V Ω
+      - status: "Click a mode, or turn the dial. Left / right click: red / black probe."
+      - row:
+        - cell:
+          - table:
+            - rowgroup:
+              - row:
+                - cell:
+                  - button: DC V
+                - cell
+              - row:
+                - cell
+                - cell:
+                  - button: OHM
+              - row:
+                - cell:
+                  - button: CONT
+                - cell:
+                  - button: DIODE
+      - generic: "--- V"
+    - row:
+      - cell:
+        - button: "Board Power: ON"
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+    - row:
+      - cell:
+        - button:
+- dialog "Board preparation failed":
+  - banner:
+    - heading "Board preparation failed" [level=2]
+  - status: Board preparation could not start. The previous board is retained.
+  - paragraph: The previous board, if any, is retained. Use the main menu to choose another seed or enter a supported current replay.
+  - button "Main menu" [active]
+  - button "Resume previous board"
+  - generic "Share pristine challenge"

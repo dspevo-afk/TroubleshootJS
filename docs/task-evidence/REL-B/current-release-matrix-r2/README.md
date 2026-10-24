@@ -29,7 +29,11 @@ not a new random population or a higher difficulty band.
 | Recovery/file failures/reporting | Historical native unreadable-file, stale callback, expiry and public report receipts retain their stated bounds. No blanket current-build or expanded-platform pass is claimed. |
 | Public beta | HELD pending calibrated admission, normal population and all advertised cells. Q100 remains unstarted and is not opened by this checkpoint. |
 
-Next work is a bounded analysis of whether the current certified two-reading
-strategies require additional actual preparation/reference-domain reasoning, or
-whether the content overlaps MEDIUM by all available evidence. No new label,
-physics, tolerance, assistance or admission waiver follows from that analysis.
+The [bounded preparation/reference analysis](../../U05/preparation-cost-scope-r1/README.md)
+is NO_GO for a new HARD feature: all three captures admit a powered same-reference
+two-DC-reading tree. No new label, physics, tolerance, assistance or admission waiver
+follows. Product direction is pending: qualify the existing content in MEDIUM, or
+keep it gated while developing harder scenarios. Independent [public held-family
+parser/support hardening](../public-admission-fence-r1/README.md) now passes native6,
+actual GWT5 and real invalid/valid replay plus retained-board repair/retest. It
+does not change either release direction or qualify public advanced persistence.

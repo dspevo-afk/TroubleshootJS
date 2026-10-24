@@ -1,0 +1,10 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 42.2721487,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "inputCount": 1378,
+  "rawSha256": "c078bd509f9720c82f7159a56acf91ac99a1f27c44d02086d0f6ded8d5d21dd1",
+  "cleanup": "PASS current JVM contract classes and task-owned scratch removed",
+  "assertions": 201
+}

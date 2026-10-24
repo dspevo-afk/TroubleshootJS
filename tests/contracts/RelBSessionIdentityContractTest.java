@@ -29,6 +29,7 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-11/RB56_CONTROL/1");
         } }, "public parser still refuses saved private placement11");
         verifyExistingPublicWire();
+        verifyHeldPublicAdmission();
         verifyPrivateIdentity();
         verifyPreCancelGuards();
         System.out.println("PASS: REL-B session identity contracts assertions=" + assertions +
@@ -67,8 +68,40 @@ public final class RelBSessionIdentityContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/1");
         } }, "public parser refuses the private placement-3 replay namespace");
         reject(new Attempt() { public void run() {
-            PlayerLaunchRequest.parse("tsj-alpha/5/HARD/LED_INDICATOR/1");
+            PlayerLaunchRequest.parse(PlayerLaunchRequest.EPOCH + "/HARD/LED_INDICATOR/1");
         } }, "public parser continues refusing unavailable HARD");
+    }
+
+    /** An available profile must not turn a registered private family into a public request. */
+    private static void verifyHeldPublicAdmission() {
+        check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
+                !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
+                DifficultyProfile.MEDIUM.isAvailable(),
+            "held-family negative uses a registered family and an available current profile");
+        reject(new Attempt() { public void run() {
+            new PlayerLaunchRequest(Rb56Plan.FAMILY_ID, "0", "MEDIUM");
+        } }, "exact public constructor refuses held family before a session can begin");
+        for (final String profile : new String[] {"EASY", "MEDIUM"}) {
+            final String replay = PlayerLaunchRequest.EPOCH + "/" + profile + "/RB56_CONTROL/0";
+            reject(new Attempt() { public void run() {
+                PlayerLaunchRequest.parse(replay);
+            } }, "current exact public replay refuses held family: " + profile);
+            reject(new Attempt() { public void run() {
+                PlayerSessionReplay.parse(replay);
+            } }, "public session identity refuses held family: " + profile);
+            reject(new Attempt() { public void run() {
+                emptySave(replay);
+            } }, "public save constructor refuses held family: " + profile);
+        }
+        final String heldReplay = PlayerLaunchRequest.EPOCH + "/MEDIUM/RB56_CONTROL/0";
+        final String heldWire = U06SessionSaveContractTest.crossEnvironmentFixture().replace(
+            "47:tsj-alpha/6/EASY/LED_INDICATOR/9007199254740993\n",
+            heldReplay.length() + ":" + heldReplay + "\n");
+        check(heldWire.contains(heldReplay.length() + ":" + heldReplay + "\n"),
+            "held public wire has the current epoch and correct independent field length");
+        reject(new Attempt() { public void run() {
+            PlayerSessionSave.parse(heldWire);
+        } }, "well-framed public save refuses held family before reconstruction");
     }
 
     private static void verifyPrivateIdentity() {

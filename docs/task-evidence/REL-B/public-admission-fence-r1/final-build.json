@@ -1,0 +1,10 @@
+{
+  "actualExitCode": 0,
+  "operationSeconds": 98.7174702,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "inputCount": 1191,
+  "rawSha256": "38d32d2a131965f0b3896d75b24b650aaa04f88816a8e9d59b335212224415f2",
+  "permutations": 5,
+  "command": "scripts/build.ps1 -JavaHome JDK8 -Style OBF -Target Compile"
+}

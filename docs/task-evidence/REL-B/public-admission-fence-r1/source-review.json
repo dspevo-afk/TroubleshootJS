@@ -1,0 +1,7 @@
+{
+  "base": "fc88419b4e4dfe5f58cede8e23ce9a9cfab388f4",
+  "patchSha256": "486174aa4213c5a4470e3b80f7023527191a6740575e48e6262d723b4b668339",
+  "files": 5,
+  "scope": "Three production public-admission owners and two contract suites; no electrical, private identity, flags, profile or wire-epoch changes",
+  "review": "Root source/caller/test diff review; optional independent review not used"
+}

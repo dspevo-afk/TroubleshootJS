@@ -90,8 +90,15 @@ precede state deletion. Ambiguous identity retains state and the process.
 
 ## Procedural Quick Play admission and exact replay
 
-QuickPlayAdmission version4 supports the registered family/profile request
-identities. The normal menu exposes eleven enabled pairs: nine EASY synchronous
+QuickPlayAdmission version4 supports normal-player-enabled family/profile request
+identities. Registration alone remains available for developer qualification.
+`PlayerLaunchRequest` checks the same normal-family gate before a public request
+can reach session mutation, so held families reject in launch, replay and public
+save parsing even with an available profile. Broad support also checks the flag;
+the coordinator retains its pre-cancel and publication guards. Private session
+identities keep their separate qualification path. Enabled exact requests retain
+their existing profile assessment rather than adopting broad-seed declarations.
+The normal menu exposes eleven enabled pairs: nine EASY synchronous
 leaf families (including SENSOR_CONTROL), the composed MEDIUM family and the
 accepted Q30 multi-rail MEDIUM provider. Other available difficulty labels do
 not advertise electrical content that has not passed that profile. Fresh signed-long

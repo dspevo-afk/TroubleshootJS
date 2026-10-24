@@ -13,7 +13,7 @@ final class QuickPlayAdmission {
         return registration != null && registration.supportsQuickPlay(family, profile);
     }
     static boolean supports(String family) {
-        return PlayerFamilyCatalog.isRegistered(family);
+        return PlayerFamilyCatalog.isNormalPlayerEnabled(family);
     }
     static long candidateSeed(long entropy, int ordinal) {
         if (ordinal < 0 || ordinal >= MAX_CANDIDATES)
