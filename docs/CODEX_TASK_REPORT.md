@@ -1,7 +1,9 @@
 # Current checkpoint: R11 public held-family replay fence
 
-HEAD/verified origin codex/q60-faulted-profile-counts:
-fc88419b4e4dfe5f58cede8e23ce9a9cfab388f4 (R9 published). No main/email; size
+Accepted implementation / verified origin codex/q60-faulted-profile-counts:
+1e704ce78aabb8e9af49afc88711a7699bf59bdb, "Reject held families before public
+replay starts". Normal push and exact remote SHA verified; documentation-only
+closeout may follow this source candidate. No main/email; size
 work closed, seven original unrelated groups preserved. Owner played/approved;
 no repeat trial or unreported outcome inferred.
 
@@ -37,9 +39,15 @@ PASS; count-serialization observation corrected against original manifests.
 Tab53 closed after OFF;8922 PID27952/birth639284021434442485 revalidated, maintained
 stop0/2.151s, state/listener absent; driver65536 ended0. No current task resources.
 Private scratch tsj-public-admission-r11-vxk1cuxv retained outside repo; pointer
-public-admission-r11-pointer.json. Root diff review done; commit/push pending.
+public-admission-r11-pointer.json. Root reviewed the actual integrated/staged diff;
+staged code equals the frozen reviewed patch, both diff checks PASS. Source/tests/
+evidence committed and normal origin push verified. Only original seven unrelated
+untracked groups remain; no task-owned runtime left. [Publication](task-evidence/REL-B/public-admission-fence-r1/publication.json).
 R9 preview/profiler/tabs44-51 all cleaned; old five blocked profiles/tab20 untouched.
 Protected regression/public advanced gates stay held; Q100 unstarted.
+Next unstarted: pending U05 product direction, followed by its profile/population/
+REL-B release prerequisites. Conditional harder-scenario source proposal recorded;
+no experiment/rule/release change started. No further human play is requested.
 
 # Previous checkpoint: resistance-aware development proof accepted; HARD held
 

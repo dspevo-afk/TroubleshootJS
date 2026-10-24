@@ -1,0 +1,17 @@
+{
+  "implementationCommit": "1e704ce78aabb8e9af49afc88711a7699bf59bdb",
+  "message": "Reject held families before public replay starts",
+  "branch": "codex/q60-faulted-profile-counts",
+  "remote": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "normalPush": "PASS actual exit0",
+  "remoteVerification": "PASS git ls-remote exact branch tip at implementation publication; tracking branch synchronized",
+  "rootReview": "PASS actual integrated diff and source/callers/tests; exact staged code patch matches reviewed final-source patch",
+  "unstagedDiffCheck": "PASS",
+  "stagedDiffCheck": "PASS",
+  "remainingWorktree": "Seven original unrelated untracked groups only at implementation publication",
+  "resources": "Both owned previews/tabs closed and drivers ended0; no task profiler/build/native process remains; five old blocked profiles and old tab20 untouched",
+  "mainMerge": "NOT PERFORMED per user",
+  "completionEmail": "DISABLED per user",
+  "next": "U05 product direction pending; normal advanced admission/population/public advanced save gates remain held; Q100 unstarted",
+  "closeout": "Documentation-only checkpoint publication can follow; accepted application source remains this implementation commit"
+}
