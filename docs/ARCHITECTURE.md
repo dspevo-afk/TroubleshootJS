@@ -113,6 +113,15 @@ and unchanged P09 access/physical limits. Q30 uses its separately versioned
 medium-board admission token and qualified MEDIUM_BOARD@1 routing policy; it does
 not enlarge P09.
 
+Assessment3 extends the admitted size guard only for the exact RB56 normal
+physical identity to40–60 packages; other normal owners retain40 and synthetic
+classification retains20. Package count adds no score. The staged RB56 provider
+declares MEDIUM, but its normal catalog flag remains held during qualification.
+Its normal `advanced-control@2` request resolves current placement15; explicit
+private saved placement versions remain separate. The opt-in private verifier
+can validate `assess(...).require(MEDIUM)` on complete cold solver proofs without
+granting normal publication. [Profile checkpoint and remaining normal gates](task-evidence/REL-B/rb56-medium-qualification-r1/README.md).
+
 Every normal launch has at most four deterministic candidates sharing the
 existing 90-second, 640-unit and five-second bounds. The staged normal-medium
 policy is `NORMAL_MEDIUM_EXECUTION@2`, with the same 90,000 ms cumulative limit.

@@ -85,7 +85,7 @@ public final class U05DifficultyContractTest {
         System.out.println("PASS: U05 difficulty contracts assertions=" + assertions);
     }
     /**
-     * One actual normally admitted RB56 reference owner and its fixed route.
+     * One actual normally admitted current 60-package RB56 owner and its route.
      * Receipt samples are explicitly mathematical falsifiers, never solver or
      * human-trial evidence; this fixture does not advance or solve a circuit.
      */
@@ -103,7 +103,8 @@ public final class U05DifficultyContractTest {
         GeneratedBoardInstance owner = null, foreignOwner = null, developerOwner = null, smallOwner = null;
         CircuitElm.sim = sim; CirSim.theSim = sim;
         try {
-            Rb56Plan plan = Rb56Plan.reference(77L);
+            Rb56Plan plan = Rb56Plan.resolve(-1022L,
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT);
             MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(plan.board(), plan.layoutSeed, plan.routingSeed);
             check(route != null && route.accepted() && route.getLayout() != null &&
@@ -158,6 +159,26 @@ public final class U05DifficultyContractTest {
                     features.readings == 1 && features.bestSingleRemaining == 1 &&
                     features.minWitnessActions == features.maxWitnessActions,
                 "aggregate values come from the complete exact-owner synthetic receipt");
+            check(features.components == 60,
+                "normal assessment boundary uses an actual maximum-size RB56 physical owner");
+            DifficultyAssessment oneProbe = DifficultyAssessment.assess(owner, receipt);
+            check(oneProbe.profile == DifficultyProfile.EASY && oneProbe.readings == 1,
+                "even a 60-package current owner cannot earn MEDIUM from a one-probe answer");
+            GeneratedDiagnosticProofReceipt twoReadingReceipt = proofReceipt(owner, controller,
+                program, mathematicalEvidence(owner, program, true, true), trusted, false);
+            DifficultyAssessment twoReadings = DifficultyAssessment.assess(owner, twoReadingReceipt);
+            check(twoReadings.profile == DifficultyProfile.MEDIUM && twoReadings.readings == 2 &&
+                    twoReadings.repairClasses == 5 && twoReadings.components == 60,
+                "current admitted 60-package owner can qualify MEDIUM from two-reading evidence");
+            twoReadings.require(DifficultyProfile.MEDIUM);
+            rejectUnavailable(twoReadings, DifficultyProfile.EASY);
+            rejectUnavailable(twoReadings, DifficultyProfile.HARD);
+            rejectUnavailable(twoReadings, DifficultyProfile.PSYCHOTIC);
+            reject("foreign normal assessment owner", assessmentAttempt(foreignOwner, twoReadingReceipt));
+            reject("developer-only normal assessment owner", assessmentAttempt(developerOwner, twoReadingReceipt));
+            reject("incomplete normal assessment witness", assessmentAttempt(owner,
+                proofReceipt(owner, controller, program,
+                    mathematicalEvidence(owner, program, false, true), trusted, false)));
             boolean privateDetailsOmitted = !canonical.contains(program.canonical()) &&
                 !canonical.contains("1000000");
             for (GeneratedFaultCandidate hypothesis : owner.getFaultCandidates())
@@ -335,6 +356,13 @@ public final class U05DifficultyContractTest {
         };
     }
 
+    private static Attempt assessmentAttempt(final GeneratedBoardInstance owner,
+            final GeneratedDiagnosticProofReceipt receipt) {
+        return new Attempt() {
+            public void run() { DifficultyAssessment.assess(owner, receipt); }
+        };
+    }
+
     private static void rejectUnavailable(final DifficultyAssessment assessment,
             final DifficultyProfile profile) {
         reject("uncalibrated features cannot grant " + profile, new Attempt() {
@@ -391,6 +419,12 @@ public final class U05DifficultyContractTest {
     private static Vector<GeneratedDiagnosticSolvabilityEvidence> mathematicalEvidence(
             GeneratedBoardInstance owner, GeneratedDiagnosticProgram program,
             boolean completeActionWitness) {
+        return mathematicalEvidence(owner, program, completeActionWitness, false);
+    }
+
+    private static Vector<GeneratedDiagnosticSolvabilityEvidence> mathematicalEvidence(
+            GeneratedBoardInstance owner, GeneratedDiagnosticProgram program,
+            boolean completeActionWitness, boolean twoReadings) {
         Vector<GeneratedFaultCandidate> candidates = owner.getFaultCandidates();
         int count = GeneratedFaultServiceabilityAdmission.getAdmittedCandidateCount(candidates);
         int physicalOwners = GeneratedDiagnosticSolvabilityAdmission.getPhysicalOwnerCount(candidates);
@@ -426,7 +460,7 @@ public final class U05DifficultyContractTest {
                 "U05-MATHEMATICAL-FALSIFIER", owner.getCircuitFamilyId(), owner.getSeed(),
                 candidate.getHypothesisKey(), count, physicalOwners,
                 owner.getDiagnosticProvider().getDiagnosticPlan(),
-                mathematicalSamples(program, hypothesis++), trace.freeze(
+                mathematicalSamples(program, hypothesis++, twoReadings), trace.freeze(
                     GeneratedDiagnosticRepairSemantics.forServiceability(
                         candidate.getServiceability())),
                 true, "NONE", "PASS", "NONE", true, true, true));
@@ -435,11 +469,15 @@ public final class U05DifficultyContractTest {
     }
 
     private static Vector<GeneratedDiagnosticSample> mathematicalSamples(
-            GeneratedDiagnosticProgram program, int hypothesis) {
+            GeneratedDiagnosticProgram program, int hypothesis, boolean twoReadings) {
         Vector<GeneratedDiagnosticSample> samples = new Vector<GeneratedDiagnosticSample>();
         int sampleIndex = 0;
         for (GeneratedDiagnosticProgram.Step step : program.getSteps()) {
-            double value = 1000000 + hypothesis * 100 + sampleIndex;
+            // Independent information fixture: root partitions 0..2 / 3..4;
+            // every other reading partitions by ordinal mod3. Neither alone
+            // distinguishes five repairs, while their pair does. No solver ran.
+            double value = twoReadings ? (sampleIndex == 0 ? hypothesis / 3 : hypothesis % 3) :
+                1000000 + hypothesis * 100 + sampleIndex;
             switch (step.kind) {
             case DC_VOLTAGE:
             case RESISTANCE:

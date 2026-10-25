@@ -154,12 +154,12 @@ final class QuickPlayDeveloperVerifier {
         require(registered.size() == 12 && registered.equals(expectedRegistered) &&
             PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
             !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
-            PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.HARD,
+            PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.MEDIUM,
             "Enabled11 and held RB56 retain exact separate registered identities");
         boolean heldRejected = false;
-        try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "HARD"); }
+        try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "MEDIUM"); }
         catch (IllegalArgumentException unavailableProfile) { heldRejected = true; }
-        require(heldRejected, "Held HARD RB56 entered an ordinary player request");
+        require(heldRejected, "Held MEDIUM RB56 entered an ordinary player request");
 
         long[] roots = { Long.MIN_VALUE, 9007199254740993L, Long.MAX_VALUE };
         for (int familyIndex = 0; familyIndex < catalog.size(); familyIndex++) {

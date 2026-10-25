@@ -1,0 +1,53 @@
+{
+  "schema": "tsj-rb56-medium-qualification-plan/1",
+  "baseCommit": "e83dcc5ab2372dbbc3dac4605158160242052ecb",
+  "status": "SEEDS_AND_ACCEPTANCE_FROZEN_BEFORE_EXECUTION; SOURCE_BUILD_BINDING_PENDING",
+  "profile": "MEDIUM",
+  "hardAvailable": false,
+  "calibrationDevelopment": [
+    "-1017",
+    "-1067",
+    "-1022"
+  ],
+  "calibrationPackageExpectations": [
+    40,
+    55,
+    60
+  ],
+  "normalDevelopment": [
+    "-2230691771308388107",
+    "6702341860553104274",
+    "-8360266000248569150"
+  ],
+  "normalHoldout": [
+    "5954648469308924264",
+    "8746043109435501874",
+    "-5914932438307118819",
+    "-5623001022168249027",
+    "3437424778755667517",
+    "3219288467305141894",
+    "-3242722890621869748",
+    "3274142870939325193"
+  ],
+  "seedDerivation": "First8 SHA256 bytes, signed big-endian int64, canonical decimal; domain tsj-rb56-medium-population/1/<partition>/<ordinal>",
+  "normalMode": "Actual staged normal MEDIUM four-candidate requests, cold proof per launch, canonical retry order, no seed substitution",
+  "acceptance": "All3 curated actual MEDIUM assessments and all11 fixed normal roots publish fully checked boards within unchanged shared caps; all5fault/repair/customer/isolation rows pass per accepted case. All8 holdout roots are first-use for this campaign; any source fix after observing holdout makes that set consumed regression, never fresh blind acceptance. Preserve failures and freeze a new finite holdout before any replacement execution.",
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000,
+    "maximumCandidates": 4
+  },
+  "actualUi": {
+    "newBoardAttempts": 3,
+    "entropy": "Ordinary New Board user input with native page entropy; record all3 attempts in order without substitution",
+    "required": "At least3 distinct accepted public boards, exact public replay, fresh-owner durable restore, unrepaired symptom and repaired functional retest; any failed attempt retained and blocks these declared acceptance cells"
+  },
+  "protectedHardRegression": "NOT READ OR RUN; neither selected nor used to fit MEDIUM",
+  "scopeLimits": [
+    "Finite reference-host campaign, not all seeds or a guaranteed random success probability",
+    "Declared-program profile, not global arbitrary-probe optimality",
+    "No HARD/PSYCHOTIC enablement, relaxed physical model, tolerance or cap",
+    "No advanced capacity/endurance/modest-host claim"
+  ]
+}

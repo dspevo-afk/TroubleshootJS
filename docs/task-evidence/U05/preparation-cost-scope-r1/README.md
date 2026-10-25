@@ -28,7 +28,10 @@ the program's initial LOW→HIGH setup is not a measured global minimum. Existin
 MEDIUM also uses LOW/HIGH conditions. No additional feature or HARD label follows.
 Protected regression was not read, and no production source or public gate changed.
 
-The product direction is pending: qualify the existing content in MEDIUM while
-HARD remains unavailable, or keep it gated while developing harder scenarios.
-This asks for a content/release preference, not another play test. Independent
-public replay admission hardening can proceed in either direction.
+The owner resolved the product direction on2026-10-24: qualify the existing
+content as MEDIUM and keep HARD unavailable. The play attempt stopped before
+completing the repair; approval to continue stands, with no repeat trial needed.
+This decision authorizes qualification, not automatic normal release. The
+[MEDIUM qualification scope](../../REL-B/rb56-medium-qualification-r1/scope.md)
+owns the subsequent actual profile, normal population and release gates. The
+conditional harder-scenario proposal remains unstarted.

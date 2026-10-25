@@ -7,7 +7,7 @@
 **Historical Edition 3.0 review baseline:** `cc3532e8d138424ce986aa8f9b76688ec315f0a0`<br>
 **Historical baseline commit:** `Complete A04 provider-owned electrical construction`<br>
 **Historical review branch:** `codex/task43p-final-recovery`<br>
-**Current task:** **Owner play approved; current U05 calibration and REL-B continuation**
+**Current task:** **RB56 MEDIUM qualification; HARD remains unavailable**
 
 Ω now measures the real connected RB56 network, including parallel paths, through
 the existing CircuitJS source/transaction. Installed supported leads and proven
@@ -19,8 +19,11 @@ real production reversal/mode/restoration and ordinary repair/retest pass. Failu
 and evidence limits are preserved. [Acceptance](task-evidence/REL-B/in-circuit-resistance-r1/README.md).
 
 The owner reports having played and approves roadmap continuation (2026-10-23).
-No repeat play is requested. Current U05 work refreshes the certified observations
-with real in-circuit Ω before a HARD rule and normal advanced admission campaign.
+On2026-10-24 they clarified that they stopped before completing the repair and
+chose to qualify the existing advanced content as MEDIUM while keeping HARD
+unavailable. No repeat play is requested. [Current qualification scope](task-evidence/REL-B/rb56-medium-qualification-r1/scope.md)
+requires actual profile, normal generation/population and advertised session
+proof; it does not turn the three curated observations into release acceptance.
 Current development candidates preserve the original limits and their failures.
 The current completed-reading and first-ready service candidate passes the same
 40/55/60 development cases and both independent readers under unchanged caps.
@@ -30,9 +33,9 @@ no higher difficulty band follows from package, rail-name or witness counts.
 No HARD rule is frozen or protected regression captured; public gates remain held.
 [Preparation-cost analysis](task-evidence/U05/preparation-cost-scope-r1/README.md)
 also finds a same-reference powered two-DC-reading tree in all three captures;
-optional OFF/Ω steps do not supply unavoidable extra diagnostic cost. The product
-choice between qualifying this content as MEDIUM and developing harder content
-remains pending. No repeat owner play is required. [Public held-family replay
+optional OFF/Ω steps do not supply unavoidable extra diagnostic cost. The owner
+chose MEDIUM qualification; harder scenarios and a HARD rule remain deferred.
+No repeat owner play is required. [Public held-family replay
 admission hardening](task-evidence/REL-B/public-admission-fence-r1/README.md) now
 refuses before session mutation; final native6, actual five-permutation GWT and
 real invalid/valid replay plus retained-board repair/retest pass. No public
@@ -2104,7 +2107,7 @@ not require rollback or reimplementation. U01 → P03 → P04 → E01 → E03 �
 |---|---|
 | Small-board platform | E01 → E03 → Q15 → U04 → U05 → REL-A |
 | Normal-board scaling | P06 → P07 → P08 → P09 → Procedural Quick Play Admission Gate → U02 → U03 → E02 → E04 → D01 → Q30 → U06 → U07 |
-| Advanced boards | E05 → E06 → conditional E08 → Q60 → HARD calibration through U05 → REL-B |
+| Advanced boards | E05 → E06 → conditional E08 → Q60 → MEDIUM qualification through U05 → REL-B; HARD deferred by owner2026-10-24 |
 | Mature target | Q100 → selected advanced X capabilities → X05 → X09 → REL-1 |
 
 **Player/product landmarks:** P04 proves the first playable procedurally placed
@@ -4142,9 +4145,9 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 <a id="m-rel-b"></a>
 
-### REL-B · Advanced desktop beta and HARD-profile release
+### REL-B · Advanced desktop beta with qualified MEDIUM content
 
-**Status:** IN PROGRESS - owner reports playing and approves continuation (2026-10-23); no repeat trial requested or unreported repair inferred. Current resistance-aware U05 calibration is checking the unchanged generation limits before a HARD rule and normal advanced admission/population. Existing public report, UTF-8, relay-discharge, native file-read, stale callback and six-minute recovery evidence retains its own scope. Public gates stay held pending technical qualification. [Current calibration](task-evidence/U05/q60-calibration-r9/README.md), [current release matrix](task-evidence/REL-B/current-release-matrix-r2/README.md), [public report proof](task-evidence/REL-B/public-problem-report-r1/README.md), [finite matrix and recovery proof](task-evidence/REL-B/release-matrix-r1/README.md).
+**Status:** IN PROGRESS - owner reports playing and approves continuation (2026-10-23); on2026-10-24 they report stopping before repair completion and choose MEDIUM qualification with HARD unavailable. No repeat trial. This explicitly narrows the advertised profile scope; a HARD rule is deferred rather than inferred from size. Current profile/normal population/public persistence still need technical qualification under unchanged limits. Existing public report, UTF-8, relay-discharge, native file-read, stale callback and six-minute recovery evidence retain their own scope. [Current scope](task-evidence/REL-B/rb56-medium-qualification-r1/scope.md), [current release matrix](task-evidence/REL-B/current-release-matrix-r2/README.md), [public report proof](task-evidence/REL-B/public-problem-report-r1/README.md), [finite matrix and recovery proof](task-evidence/REL-B/release-matrix-r1/README.md).
 
 **Hard prerequisites:** [Q60](#m-q60), [REL-A](#m-rel-a), [U05](#m-u05), [U06](#m-u06), [U07](#m-u07)
 
@@ -4156,9 +4159,9 @@ REL-B independent preparation is IN PROGRESS; Q100 remains UNSTARTED. [Admission
 
 **Must not be coupled:** PSYCHOTIC, Q100, economy, mobile and optional advanced faults are not beta prerequisites unless advertised.
 
-**Exact deliverable:** Beta support for EASY/MEDIUM/HARD and the qualified 40-60-part family, durable sessions/replay as advertised, source/reference instrumentation and honest layer policy.
+**Exact deliverable:** Beta support for the qualified EASY/MEDIUM content and 40-60-part family, durable sessions/replay as advertised, source/reference instrumentation and honest layer policy. HARD/PSYCHOTIC remain unavailable; future HARD content needs separate calibration.
 
-**Acceptance:** HARD has a fresh Q60-based calibration receipt; every advertised repair/instrument/source/catalog/save state is validated; unsupported fidelity is documented; non-spoiling bug reports reproduce failures.
+**Acceptance:** The advanced family has a fresh Q60-based MEDIUM assessment and finite normal population qualification; every advertised repair/instrument/source/catalog/save state is validated; HARD/PSYCHOTIC remain unavailable; unsupported fidelity is documented; non-spoiling bug reports reproduce failures.
 
 **Important negative tests:** Outdated U05 receipt enabling HARD; saved copper actions unsupported by current state provider; failed cold generation hidden behind a warm cached demo; old source graph reused after reset.
 

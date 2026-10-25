@@ -1,0 +1,15 @@
+{
+  "status": "PASS_UNCHANGED_PROFILE_INPUTS",
+  "gates": {
+    "profile-native": {
+      "inputs": 1378,
+      "unchanged": true
+    },
+    "profile-build": {
+      "inputs": 1191,
+      "unchanged": true
+    }
+  },
+  "all3ActualMedium": true,
+  "normalCatalogEnabled": false
+}

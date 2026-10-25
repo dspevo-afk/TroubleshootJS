@@ -1,4 +1,53 @@
-# Current checkpoint: R11 public held-family replay fence
+# Current checkpoint: R12 RB56 MEDIUM qualification
+
+Owner2026-10-24: stopped before completing the repair; approves continuation and
+chooses "Qualify these boards as MEDIUM; keep HARD unavailable". No repeat trial;
+strategy/time/exact played build remain unknown. This resolves the product question
+without asserting successful human repair. Size work closed; no main/email.
+
+Worktree q30-multirail-qualification/TroubleshootJS, branch
+codex/q60-faulted-profile-counts, HEAD/verified origin
+e83dcc5ab2372dbbc3dac4605158160242052ecb. Seven unrelated untracked groups
+preserved; no task preview/build/native process active. Old blocked profiles/tab20
+untouched. [R12 scope](task-evidence/REL-B/rb56-medium-qualification-r1/scope.md).
+
+Phase1 implementation: DifficultyAssessment3 extends only the exact normal RB56
+physical identity to60; general40/synthetic20 remain. Diagnosis thresholds unchanged.
+Candidate provider MEDIUM; normal request advanced-control@2 resolves current
+placement15, while private saved interpretations remain explicit. Private verifier
+opt-in tsjRb56Medium exports actual assess/requireMEDIUM alongside unlabelled facts;
+normal publication remains held. No electrical model/tolerance/cap/wire epoch edit.
+Two read-only source reviews; root owns all writes/acceptance. HARD/PSYCHOTIC stay
+unavailable; protected HARD regression unopened, harder scenarios not started.
+
+Actual60-owner mathematical regression firstFAIL1/58.314s outside40; cleanupPASS.
+Fix canary67/0/52.741s. Integrated native9 PASS120000 counted plus uncounted QuickPlay,
+0/64.511s,1378 unchanged/cleanupPASS. Phase1 actual JDK8/GWT5 0/100.546s,1191 unchanged.
+Build899967D5AB10B6D6A369F7C23B69B6E6 served/local exact; input binding
+6145c942bfa76d810bb2d6daf8928ebfdb7e8539ff502c977ca50234a778a955.
+Profile-plan frozen before runs.40/-1017 PASS33369ms/388work,55/-1067
+PASS86344ms/496work,60/-1022 PASS82901ms/461work: all actual MEDIUM, five fault/
+repair proofs/cleanup. Complete independent three-case profile reader actual0;
+final native1378/build1191 inputs unchanged. Tabs54–57 closed. Preview8923
+PID25672/birth639284960034994653 revalidated, maintained stop0/2.466s, state/listener
+absent, driver52937 ended0. No active task build/native/preview/tab/profiler.
+[Profile phase accepted](task-evidence/REL-B/rb56-medium-qualification-r1/README.md);
+normal publication remains held, source/evidence checkpoint commit/push next.
+
+Reader pins unchanged R2 reduction/R6 wait validators; self-test firstFAIL due
+missing current-version fixture field, corrected before data, final0/48 new negative
+canaries plus sealed wait7. No real-data workaround. Campaign-plan freezes3fresh
+normal-development+8holdout signed-long roots before execution; none run yet. All
+must publish within90s/640/5s, actual3unseeded UI attempts/replay/restore/repair follow.
+This finite campaign is not the protected HARD cohort or all-seed assurance.
+
+Private scratch tsj-rb56-medium-r12-4a994eeab6; pointer medium-r12-pointer.json.
+Phase2 still unstarted: normal catalog enablement, copied exact-request guard,
+private namespace/controller-adoption authority decoupled from held flag, migrated
+catalog/codec/census tests and actual normal coordinator population. Native/GWT/
+compiled/real UI final gates and publication still pending; Q100 unstarted.
+
+# Previous checkpoint: R11 public held-family replay fence
 
 Accepted implementation / verified origin codex/q60-faulted-profile-counts:
 1e704ce78aabb8e9af49afc88711a7699bf59bdb, "Reject held families before public

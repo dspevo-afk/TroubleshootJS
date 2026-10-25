@@ -1,0 +1,11 @@
+{
+  "actualExitCode": 1,
+  "operationSeconds": 58.313642,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "inputCount": 1378,
+  "rawSha256": "6cd52c9568e30cc8fa07aef4aaf48094a5f254a40c07a2546913f2e13183e9fe",
+  "status": "EXPECTED_FAIL_REPRODUCED on actual current60-package physical owner with mathematical one-probe receipt",
+  "failure": "Outside the admitted physical board envelope",
+  "cleanup": "PASS current JVM contract classes and task-owned scratch removed"
+}

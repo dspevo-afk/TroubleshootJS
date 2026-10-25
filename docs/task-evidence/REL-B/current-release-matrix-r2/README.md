@@ -1,8 +1,9 @@
 # Current REL-B release checkpoint
 
 The owner reports having played and approves roadmap continuation. No repeat
-human trial is required. Strategy, repair outcome, duration and exact played
-candidate remain NOT_REPORTED. This supersedes the historical matrix's human
+human trial is required. On2026-10-24 the owner clarified that they stopped before
+completing the repair and chose MEDIUM qualification with HARD unavailable.
+Strategy, duration and exact played candidate remain NOT_REPORTED. This supersedes the historical matrix's human
 NOT RUN row without inventing a result or marking HARD calibrated.
 
 The earlier [finite release matrix](../release-matrix-r1/README.md) and its sealed
@@ -17,7 +18,7 @@ not a new random population or a higher difficulty band.
 
 | Release cell | Current status and next concrete boundary |
 | --- | --- |
-| Human play | PLAYED / owner approval reported. Unreported details remain unknown; no successful advanced repair is inferred. |
+| Human play | PLAYED / STOPPED BEFORE COMPLETING REPAIR; owner approval to continue reported. Strategy/time/build unknown; no successful advanced human repair inferred. |
 | HARD calibration | NOT QUALIFIED. No rule frozen or protected regression captured. Establish a defensible separation from MEDIUM before assigning a profile; package, rail-name and witness counts do not supply it. |
 | Public RB56/profile/replay admission | HELD. HARD remains unavailable and RB56 is absent from the normal catalog. Global profile parsing is not sufficient family-specific admission. |
 | Normal population/retries/diversity | NOT QUALIFIED. A predeclared finite development/hold-out normal campaign follows admitted profile support. Current three development cases and older six cases do not replace that campaign. |
@@ -32,8 +33,9 @@ not a new random population or a higher difficulty band.
 The [bounded preparation/reference analysis](../../U05/preparation-cost-scope-r1/README.md)
 is NO_GO for a new HARD feature: all three captures admit a powered same-reference
 two-DC-reading tree. No new label, physics, tolerance, assistance or admission waiver
-follows. Product direction is pending: qualify the existing content in MEDIUM, or
-keep it gated while developing harder scenarios. Independent [public held-family
+follows. The owner chose [MEDIUM qualification](../rb56-medium-qualification-r1/scope.md)
+on2026-10-24 with HARD unavailable; normal admission/population/release gates still
+require fresh proof. Independent [public held-family
 parser/support hardening](../public-admission-fence-r1/README.md) now passes native6,
 actual GWT5 and real invalid/valid replay plus retained-board repair/retest. It
 does not change either release direction or qualify public advanced persistence.

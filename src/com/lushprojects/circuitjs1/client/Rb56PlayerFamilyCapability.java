@@ -5,7 +5,7 @@ final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamily
     public String familyId() { return Rb56Plan.FAMILY_ID; }
     public String displayName() { return "Isolated AC control board"; }
     public String routeId() { return "isolated-ac-control"; }
-    public DifficultyProfile candidateProfile() { return DifficultyProfile.HARD; }
+    public DifficultyProfile candidateProfile() { return DifficultyProfile.MEDIUM; }
     public GenerationExecutionPolicy executionPolicy() { return GenerationExecutionPolicy.RB56; }
     public String physicalAdmissionIdentity() { return MediumBoardNormalAdmission.RB56_IDENTITY; }
     public boolean supportsPrivateQualification() { return true; }
@@ -21,7 +21,8 @@ final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamily
         if (!request.privateQualification) {
             if (request.rb56PlacementInterpretationVersion != 0)
                 throw new IllegalArgumentException("Private RB56 placement version leaked into a normal request");
-            return new ResolvedPlan(Rb56Plan.resolve(seed));
+            return new ResolvedPlan(Rb56Plan.resolve(seed,
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT));
         }
         if (!Rb56Placement.supportsVersion(request.rb56PlacementInterpretationVersion))
             throw new IllegalArgumentException("Versioned RB56 placement requires a supported private interpretation");
@@ -48,7 +49,7 @@ final class Rb56PlayerFamilyCapability implements VersionedPlacementStagedFamily
         }
         if (request.difficulty == null)
             throw new IllegalArgumentException("Staged normal-family request requires a difficulty profile");
-        return "tsj-generation-request/5;advanced-control@1;native;" +
+        return "tsj-generation-request/5;advanced-control@2;native;" +
             request.descriptorCanonical + ";replay=" + request.replayEpoch + "/" +
             request.difficulty.name() + "/" + request.familyId + "/" +
             Long.toString(request.rootSeed) + ";quickPlay=" + request.quickPlay +

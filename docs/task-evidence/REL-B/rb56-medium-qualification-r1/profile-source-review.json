@@ -1,0 +1,14 @@
+{
+  "base": "e83dcc5ab2372dbbc3dac4605158160242052ecb",
+  "files": [
+    "src/com/lushprojects/circuitjs1/client/DifficultyAssessment.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56PlayerFamilyCapability.java",
+    "src/com/lushprojects/circuitjs1/client/QuickPlayDeveloperVerifier.java",
+    "src/com/lushprojects/circuitjs1/client/Rb56QualificationVerifier.java",
+    "tests/contracts/StagedFamilyRegistrationContractTest.java",
+    "tests/contracts/U05DifficultyContractTest.java"
+  ],
+  "patchSha256": "aa09ef93ef1f582d1ab390e34b37197a28a57e3d5416f525b5499cd50e4a6f5c",
+  "scope": "Root integrated source/caller/test review after native9/GWT5/current3cases; optional leaves mapped dependencies only",
+  "result": "No profile-phase blocker; normal release/enablement is unstarted and held"
+}

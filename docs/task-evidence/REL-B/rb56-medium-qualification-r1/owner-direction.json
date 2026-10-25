@@ -1,0 +1,11 @@
+{
+  "reportedDate": "2026-10-24",
+  "timezone": "America/New_York",
+  "playOutcomeVerbatim": "Stopped before completing the repair",
+  "directionVerbatim": "Qualify these boards as MEDIUM; keep HARD unavailable",
+  "continuationApproval": "Previously reported played and approved moving forward; this clarification retains that approval",
+  "successfulHumanRepair": false,
+  "strategyDurationExactPlayedBuild": "NOT_REPORTED",
+  "repeatHumanTrialRequired": false,
+  "scope": "Authorizes technical MEDIUM qualification; does not itself certify normal population, public persistence or release acceptance"
+}

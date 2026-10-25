@@ -5,7 +5,7 @@ import java.util.Vector;
 /** Immutable, private aggregate over a complete current diagnostic proof.
  * No selected fault or owner determines the profile. Physics/tolerances are inputs only. */
 final class DifficultyAssessment {
-    static final int VERSION = 2;
+    static final int VERSION = 3;
     static final int CALIBRATION_FEATURE_VERSION = 1;
     final int components, hypotheses, repairClasses, physicalOwners, readings, bestSingleRemaining;
     final int minExecutedEvidenceDepth, maxExecutedEvidenceDepth, minWitnessActions, maxWitnessActions;
@@ -85,7 +85,8 @@ final class DifficultyAssessment {
         readings = reduction.readings;
         bestSingleRemaining = reduction.bestSingleRemaining;
         profile = assignCalibratedProfile ? classifyAdmittedEvidence(components, physicalOwners, repairClasses, readings,
-            minExecutedEvidenceDepth, meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths) : null;
+            minExecutedEvidenceDepth, meterModes, inputTransitions, declaredRailTargets, temporalSamples, parallelPaths,
+            maximumAdmittedParts(board)) : null;
     }
 
     static DifficultyAssessment assess(GeneratedBoardInstance board, GeneratedDiagnosticProofReceipt receipt) {
@@ -111,12 +112,17 @@ final class DifficultyAssessment {
         if (parts < 1 || parts > 20 || owners < 1 || repairs < 1 || readings < 0 || depth < 1 || modes < 1)
             throw new IllegalArgumentException("Outside the calibrated small-board envelope");
         return classifyAdmittedEvidence(parts, owners, repairs, readings, depth, modes, inputs,
-            railTargets, temporal, parallel);
+            railTargets, temporal, parallel, 20);
+    }
+    private static int maximumAdmittedParts(GeneratedBoardInstance board) {
+        return Rb56Plan.FAMILY_ID.equals(board.getCircuitFamilyId()) &&
+            board.getPhysicalAdmission() != null && MediumBoardNormalAdmission.RB56_IDENTITY.equals(
+                board.getPhysicalAdmission().identity()) ? Rb56Plan.MAX_PACKAGES : 40;
     }
     private static DifficultyProfile classifyAdmittedEvidence(int parts, int owners, int repairs,
             int readings, int depth, int modes, int inputs, int railTargets, int temporal,
-            boolean parallel) {
-        if (parts < 1 || parts > 40 || owners < 1 || repairs < 1 || readings < 0 ||
+            boolean parallel, int maximumParts) {
+        if (parts < 1 || parts > maximumParts || owners < 1 || repairs < 1 || readings < 0 ||
                 depth < 1 || modes < 1)
             throw new IllegalArgumentException("Outside the admitted physical board envelope");
         // Initial alpha bands: a simple DC measurement/repair versus interacting

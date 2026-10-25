@@ -1,0 +1,28 @@
+{
+  "schema": "tsj-rb56-medium-profile-plan/1",
+  "baseCommit": "e83dcc5ab2372dbbc3dac4605158160242052ecb",
+  "status": "FROZEN_BEFORE_FIRST_CURRENT_PROFILE_CAPTURE",
+  "development": [
+    "-1017",
+    "-1067",
+    "-1022"
+  ],
+  "packages": [
+    40,
+    55,
+    60
+  ],
+  "build": "899967D5AB10B6D6A369F7C23B69B6E6",
+  "sourceBinding": "6145c942bfa76d810bb2d6daf8928ebfdb7e8539ff502c977ca50234a778a955",
+  "assessmentVersion": 3,
+  "dependencyEpoch": 18,
+  "placement": 15,
+  "budgets": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "mode": "Private current cold owner, actual DifficultyAssessment.assess and require MEDIUM; normal catalog stays held",
+  "selection": "Curated size-boundary development, not normal population or protected HARD regression",
+  "readerSha256": "295b78d9c4475b10b3de97d2df1ecb9c10beaf9cc52abb6eb3bee987b372975a"
+}

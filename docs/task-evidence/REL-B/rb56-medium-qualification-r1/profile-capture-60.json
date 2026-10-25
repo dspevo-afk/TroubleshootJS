@@ -1,0 +1,510 @@
+{
+  "schema": "tsj-u05-calibration-capture/2",
+  "seed": "-1022",
+  "build": "899967D5AB10B6D6A369F7C23B69B6E6",
+  "sourceBinding": "6145c942bfa76d810bb2d6daf8928ebfdb7e8539ff502c977ca50234a778a955",
+  "report": {
+    "protocol": "TSJ-RB56-QUALIFICATION-1",
+    "scope": "PRIVATE_SHARED_WORKBENCH",
+    "family": "RB56_CONTROL",
+    "seed": "-1022",
+    "sourceEpoch": "tsj-generation-dependencies-v18",
+    "planVersion": 1,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "forcedAfterPublish": false,
+    "normalCatalogEnabled": false,
+    "status": "PASS",
+    "phase": "RESTORED",
+    "packages": 60,
+    "hypotheses": 5,
+    "solverSamples": 65,
+    "generationStages": 6,
+    "generationWork": 461,
+    "generationMillis": 82901,
+    "maxManualUnitMillis": 1585,
+    "physicalAdmission": "RB56_BOARD_NORMAL@1",
+    "normalPhysicalAdmission": true,
+    "fullProductionD01": true,
+    "coldProof": true,
+    "generationReceiptDigest": "e358aadcd7d1e0b67e36543a0ba1bc5ebe4e85e357835743dac261316631ed94",
+    "diagnosticContextDigest": "e18e784dbb00a1228212d1f95f579169222d4346806f8cb5fa9c28309da04115",
+    "diagnosticProgramDigest": "e022d7728d90051bf64fc33876f0937342de6f071bf58719e957d90d19da5cc1",
+    "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=60;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=9-9;legalWitnessActions=24-24;modes=2;inputs=3;railTargets=7;temporal=4;parallel=false",
+    "difficultyFeatureStatus": "UNCALIBRATED",
+    "difficultyFeatureVersion": 1,
+    "difficultyFeatureExtractionMillis": 36,
+    "normalProfileAssessment": "difficulty/3;profile=MEDIUM;parts=60;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=9-9;legalWitnessActions=24-24;modes=2;inputs=3;railTargets=7;temporal=4;parallel=false",
+    "normalProfileAssessmentVersion": 3,
+    "normalProfileValidated": "MEDIUM",
+    "normalPublicationGranted": false,
+    "calibrationObservationFormat": 1,
+    "diagnosticProgramVersion": 2,
+    "calibrationObservations": [
+      {
+        "ordinal": 0,
+        "repairClass": 0,
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 159.73368334202152,
+            "tolerance": 3.1946736668404303
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.957825641158365,
+            "tolerance": 0.19915651282316732
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.849782315646848,
+            "tolerance": 0.19699564631293698
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.185580130179252,
+            "tolerance": 0.22371160260358505
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.050928228169257,
+            "tolerance": 0.22101856456338514
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.995921923427828,
+            "tolerance": 0.09991843846855655
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.555229482848861,
+            "tolerance": 0.09110458965697722
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 4.845921973374589,
+            "tolerance": 0.09691843946749178
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 0.6950334645467624,
+            "tolerance": 0.013900669290935249
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 5.668923108714807e-10,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 11.98309607839109,
+            "tolerance": 0.23966192156782182
+          },
+          {
+            "id": "OUTPUT_B",
+            "outcome": "NUMERIC",
+            "value": 0.000002159351837005268,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.0990087289988,
+            "tolerance": 19.801980174579978
+          }
+        ]
+      },
+      {
+        "ordinal": 1,
+        "repairClass": 1,
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 160.66604048582795,
+            "tolerance": 3.213320809716559
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.959127484279577,
+            "tolerance": 0.19918254968559154
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.850918375781049,
+            "tolerance": 0.197018367515621
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.18177759738794,
+            "tolerance": 0.2236355519477588
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.045332700783238,
+            "tolerance": 0.22090665401566476
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.995871266973882,
+            "tolerance": 0.09991742533947764
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.5552274736100875,
+            "tolerance": 0.09110454947220176
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 4.845871316920206,
+            "tolerance": 0.09691742633840413
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 0.0004802461820041515,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 0.0024235030995569673,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 0.000002159351837005359,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_B",
+            "outcome": "NUMERIC",
+            "value": 11.983096078391094,
+            "tolerance": 0.2396619215678219
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 99989.99005715447,
+            "tolerance": 1999.7998011430896
+          }
+        ]
+      },
+      {
+        "ordinal": 2,
+        "repairClass": 2,
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 159.9995294388228,
+            "tolerance": 3.199990588776456
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.958848287426207,
+            "tolerance": 0.19917696574852414
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.850351926651115,
+            "tolerance": 0.1970070385330223
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.215640667387893,
+            "tolerance": 0.22431281334775788
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 0.010183918495718203,
+            "tolerance": 0.01
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 1.4380496793364728e-10,
+            "tolerance": 0.01
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.363020722254917,
+            "tolerance": 0.08726041444509834
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": -3.552713678800501e-15,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 5.329070518200751e-15,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 1.418349881987524e-10,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 0.000002159960356115134,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_B",
+            "outcome": "NUMERIC",
+            "value": 0.0000021599603561151345,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.099008711257,
+            "tolerance": 19.801980174225143
+          }
+        ]
+      },
+      {
+        "ordinal": 3,
+        "repairClass": 3,
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 160.66609280271956,
+            "tolerance": 3.2133218560543915
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.959088818519064,
+            "tolerance": 0.19918177637038129
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.85092086934469,
+            "tolerance": 0.19701841738689382
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.179917604055351,
+            "tolerance": 0.22359835208110704
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.043305355941477,
+            "tolerance": 0.22086610711882956
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.995871266973882,
+            "tolerance": 0.09991742533947764
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 0.000343429175710952,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": -1.7763568394002505e-15,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 5.04491737274293e-9,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 0.0024235030995676254,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 0.000002159351837005359,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_B",
+            "outcome": "NUMERIC",
+            "value": 11.983096078391094,
+            "tolerance": 0.2396619215678219
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.0990087249324,
+            "tolerance": 19.80198017449865
+          }
+        ]
+      },
+      {
+        "ordinal": 4,
+        "repairClass": 4,
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 161.4201163479548,
+            "tolerance": 3.2284023269590962
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.998913166311269,
+            "tolerance": 0.19997826332622537
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 0.009081750695344226,
+            "tolerance": 0.01
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 2.862080534820662,
+            "tolerance": 0.057241610696413245
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 2.820511020567809,
+            "tolerance": 0.05641022041135618
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 2.0409985234681276,
+            "tolerance": 0.04081997046936255
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.363020722254921,
+            "tolerance": 0.08726041444509842
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": -4.440892098500626e-16,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 2.0885986273810886e-9,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 1.999283409842616,
+            "tolerance": 0.03998566819685232
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 0.000002159960356115134,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_B",
+            "outcome": "NUMERIC",
+            "value": 0.0000021599603561151345,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.0990087098619,
+            "tolerance": 19.801980174197237
+          }
+        ]
+      }
+    ],
+    "calibrationTemporalWaits": [
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.6",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.6",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@1",
+        "SERVICE_DECAY_3@0.1"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.6",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.4",
+        "SERVICE_DECAY_3@0"
+      ]
+    ],
+    "qualifiedPublication": true,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "ordinaryCustomerRetestPassed": false,
+    "cleanupPending": false,
+    "playerSessionReleased": true,
+    "playerBridgeReleased": true,
+    "wallMillis": 83311
+  }
+}

@@ -119,7 +119,7 @@ final class Rb56QualificationVerifier {
         final GeneratedBoardInstance predecessor;
         final GeneratedChallengeController predecessorController;
         final Vector<CircuitElm> predecessorGraph;
-        final boolean originalDebug, originalVerifierRunning, forced, keepBench, modernBench, collectDifficulty, persistence;
+        final boolean originalDebug, originalVerifierRunning, forced, keepBench, modernBench, collectDifficulty, collectMediumProfile, persistence;
         final int benchHoldMillis;
         final JSONObject report = new JSONObject();
         final Timer advanceTimer = new Timer() { public void run() { advance(); } };
@@ -146,6 +146,9 @@ final class Rb56QualificationVerifier {
             this.forced = forced; this.keepBench = keepBench;
             modernBench = keepBench && "true".equals(Window.Location.getParameter("tsjRb56PlayerSession"));
             collectDifficulty = "true".equals(Window.Location.getParameter("tsjRb56Difficulty"));
+            collectMediumProfile = "true".equals(Window.Location.getParameter("tsjRb56Medium"));
+            require(!collectMediumProfile || collectDifficulty,
+                "MEDIUM qualification requires the complete private observation export");
             persistence = modernBench && "true".equals(Window.Location.getParameter("tsjRb56Persistence"));
             // The explicit debug-only route may retain this same owner for a bounded session.
             benchHoldMillis = keepBench && "true".equals(
@@ -323,6 +326,17 @@ final class Rb56QualificationVerifier {
                 put(report, "difficultyFeatureStatus", "UNCALIBRATED");
                 put(report, "difficultyFeatureVersion", DifficultyAssessment.CALIBRATION_FEATURE_VERSION);
                 put(report, "difficultyFeatureExtractionMillis", System.currentTimeMillis() - featureStart);
+                if (collectMediumProfile) {
+                    DifficultyAssessment assessment = DifficultyAssessment.assess(published, proof);
+                    assessment.require(DifficultyProfile.MEDIUM);
+                    require(assessment.profile == DifficultyProfile.MEDIUM &&
+                        !DifficultyProfile.HARD.isAvailable() && !DifficultyProfile.PSYCHOTIC.isAvailable(),
+                        "Current owner did not qualify MEDIUM with higher bands unavailable");
+                    put(report, "normalProfileAssessment", assessment.canonical());
+                    put(report, "normalProfileAssessmentVersion", DifficultyAssessment.VERSION);
+                    put(report, "normalProfileValidated", "MEDIUM");
+                    put(report, "normalPublicationGranted", false);
+                }
                 // Private, opt-in qualification data only. Export observable
                 // outcomes and opaque class ordinals for an independent
                 // reduction reader, never selected-fault keys or part values.

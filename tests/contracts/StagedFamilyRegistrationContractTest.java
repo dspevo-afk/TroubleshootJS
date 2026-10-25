@@ -9,6 +9,7 @@ public final class StagedFamilyRegistrationContractTest {
 
     public static void main(String[] args) {
         verifyRegisteredAndEnabledAreSeparate();
+        verifyCurrentRb56MediumRequest();
         verifySecondProviderUsesTheGenericRequestAndSession();
         System.out.println("PASS: staged family registration contracts " + assertions + " assertions");
     }
@@ -120,6 +121,42 @@ public final class StagedFamilyRegistrationContractTest {
             }
             CircuitElm.sim = previous;
         }
+    }
+
+    private static void verifyCurrentRb56MediumRequest() {
+        boolean liveEnabled = PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID);
+        PlayerFamilyCatalog.RegistrationBoundary registration =
+            PlayerFamilyCatalog.newRegistrationBoundary();
+        registration.setNormalPlayerEnabled(Rb56Plan.FAMILY_ID, true);
+        require(PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.MEDIUM &&
+                QuickPlayAdmission.supports(Rb56Plan.FAMILY_ID, DifficultyProfile.MEDIUM, registration) &&
+                !DifficultyProfile.HARD.isAvailable() && !DifficultyProfile.PSYCHOTIC.isAvailable(),
+            "RB56 candidate declares available MEDIUM without enabling higher bands");
+        for (long root : new long[] {-1017L, -1067L, -1022L, Long.MIN_VALUE,
+                9007199254740993L, Long.MAX_VALUE}) {
+            GenerationRequest search = GenerationRequest.stagedQuickPlay(
+                new QuickPlaySelection(Rb56Plan.FAMILY_ID, root), registration);
+            require(search.getExecutionPolicy() == GenerationExecutionPolicy.RB56 &&
+                    search.getDifficulty() == DifficultyProfile.MEDIUM &&
+                    search.candidateCount() == 4 && !search.isPrivateDiagnosticQualification(),
+                "normal MEDIUM RB56 retains its four-candidate execution contract");
+            for (int ordinal = 0; ordinal < search.candidateCount(); ordinal++) {
+                long exactSeed = QuickPlayAdmission.candidateSeed(root, ordinal);
+                GenerationRequest exact = search.candidate(ordinal);
+                Rb56Plan current = Rb56Plan.resolve(exactSeed,
+                    GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT);
+                String canonical = exact.canonical();
+                require(exact.getDescriptor().getRootSeed() == exactSeed &&
+                        exact.getRb56PlacementInterpretationVersion() == 0 &&
+                        canonical.startsWith("tsj-generation-request/5;advanced-control@2;") &&
+                        canonical.contains(";plan=" + current.canonical() + ";route=") &&
+                        canonical.contains(";difficulty=MEDIUM@" + DifficultyProfile.VERSION) &&
+                        canonical.contains(";assessment=" + DifficultyAssessment.VERSION),
+                    "normal exact signed-long candidate resolves the current accepted placement, not legacy");
+            }
+        }
+        require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) == liveEnabled,
+            "local candidate qualification does not change live release enablement");
     }
 
     private static final class FixtureFamilyCapability implements StagedFamilyCapability {

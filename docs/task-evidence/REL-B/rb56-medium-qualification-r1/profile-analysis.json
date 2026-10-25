@@ -1,0 +1,72 @@
+{
+  "status": "PASS_CURRENT_COLD_MEDIUM_ASSESSMENT",
+  "cases": [
+    {
+      "seed": "-1017",
+      "packages": 40,
+      "readings": 2,
+      "repairClasses": 5,
+      "singleRemaining": 2,
+      "generationMillis": 33369,
+      "generationWork": 388,
+      "maxManualUnitMillis": 1142,
+      "naturalRequestedSeconds": [
+        1.8,
+        1.8,
+        2.0,
+        1.8,
+        1.6
+      ],
+      "profile": "MEDIUM",
+      "publicReleaseGranted": false,
+      "captureSha256": "d9e3b05056017f7a0c35f89757f625f92cf029c15096a09fa632f927871ad84b"
+    },
+    {
+      "seed": "-1067",
+      "packages": 55,
+      "readings": 2,
+      "repairClasses": 5,
+      "singleRemaining": 3,
+      "generationMillis": 86344,
+      "generationWork": 496,
+      "maxManualUnitMillis": 1656,
+      "naturalRequestedSeconds": [
+        1.7,
+        1.7,
+        2.0,
+        1.7,
+        1.4
+      ],
+      "profile": "MEDIUM",
+      "publicReleaseGranted": false,
+      "captureSha256": "81f8d986b20844f582e52eb367deae62898e5023031d68ab58704d56bacd9b7f"
+    },
+    {
+      "seed": "-1022",
+      "packages": 60,
+      "readings": 2,
+      "repairClasses": 5,
+      "singleRemaining": 2,
+      "generationMillis": 82901,
+      "generationWork": 461,
+      "maxManualUnitMillis": 1585,
+      "naturalRequestedSeconds": [
+        1.6,
+        1.6,
+        2.1,
+        1.6,
+        1.4
+      ],
+      "profile": "MEDIUM",
+      "publicReleaseGranted": false,
+      "captureSha256": "a53add9bcb429352a3e4feeb534571d00cc4718347958eb40f67e0d102bdf076"
+    }
+  ],
+  "planSha256": "0c4e9f1c5b16cd858edd5e5b092abc1a19607fd85400791066791aab41f5905a",
+  "readerSha256": "295b78d9c4475b10b3de97d2df1ecb9c10beaf9cc52abb6eb3bee987b372975a",
+  "build": "899967D5AB10B6D6A369F7C23B69B6E6",
+  "sourceBinding": "6145c942bfa76d810bb2d6daf8928ebfdb7e8539ff502c977ca50234a778a955",
+  "scope": "Current declared-program policy; curated profile boundaries, not random population or global probe optimum",
+  "protectedHardRegressionRead": false,
+  "normalReleaseGranted": false
+}

@@ -1,0 +1,7 @@
+{
+  "firstAttempt": "FAIL reader fixture lacked diagnosticProgramVersion, observed tool exit1",
+  "cause": "Synthetic fixture omission, not real data or application failure",
+  "correction": "Set the declared current program2 on the mathematical fixture; correct the non-distinguishing duplicate-row falsifier before data capture; assertions preserved",
+  "finalAttempt": "PASS actual exit0:48 new negatives across3 size boundaries plus sealed wait-reader7; old independent feature self-test also completed",
+  "scope": "Mathematical fixtures only, no simulator/capture success claimed"
+}

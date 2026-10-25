@@ -1,0 +1,23 @@
+{
+  "status": "PASS_ONE_CURRENT_CASE_ONLY",
+  "case": {
+    "seed": "-1017",
+    "packages": 40,
+    "readings": 2,
+    "repairClasses": 5,
+    "singleRemaining": 2,
+    "generationMillis": 33369,
+    "generationWork": 388,
+    "maxManualUnitMillis": 1142,
+    "naturalRequestedSeconds": [
+      1.8,
+      1.8,
+      2.0,
+      1.8,
+      1.6
+    ],
+    "profile": "MEDIUM",
+    "publicReleaseGranted": false
+  },
+  "remainingCuratedCases": "PENDING"
+}
