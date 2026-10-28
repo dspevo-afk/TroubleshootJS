@@ -38,7 +38,7 @@ public final class E02RegulatorContractTest {
         check(linear5.getMinimumInputVolts() >=
                 linear5.getNominalOutputVolts() + linear5.getDropoutVolts());
         check(averaged5.getEfficiency() < 1.0);
-        check(linear5.getVersion() == 2 && averaged5.getVersion() == 2);
+        check(linear5.getVersion() == 3 && averaged5.getVersion() == 3);
         check(linear5.getUsableRegulatedCurrentFraction() > 0.0 &&
                 linear5.getUsableRegulatedCurrentFraction() < 1.0);
         check(linear5.getUsableRegulatedCurrentAmps() <
@@ -102,6 +102,12 @@ public final class E02RegulatorContractTest {
         check(new AveragedSwitchingRegulatorElm(0, 0).getPostCount() == 4);
         verifyDumpRoundTrip();
         verifyUnsupportedOperatingRegions();
+        verifyPassiveReverseInput(false, RailRegulationContract.linear5V());
+        verifyPassiveReverseInput(true, RailRegulationContract.averagedSwitching5V());
+        verifyActivePositiveOutputBackfeed(false, RailRegulationContract.linear5V());
+        verifyActivePositiveOutputBackfeed(true, RailRegulationContract.averagedSwitching5V());
+        verifyTinyTargetActivation(false, RailRegulationContract.linear5V());
+        verifyTinyTargetActivation(true, RailRegulationContract.averagedSwitching5V());
         verifyForwardLimitTopologyTrials(false, linear5);
         verifyForwardLimitTopologyTrials(true, averaged5);
         verifyReturnReference();
@@ -123,6 +129,10 @@ public final class E02RegulatorContractTest {
                 "454 dump restores a linear regulator");
         check(linearDump.equals(restoredLinear.dump()),
                 "454 dump retains the complete rail contract");
+        final String oldVersionDump = withRailVersion(linearDump, 2);
+        reject(new Runnable() { public void run() {
+            restoreDump(oldVersionDump);
+        }});
 
         final RailRegulationContract explicitEnvelope =
                 new RailRegulationContract("linear-custom-envelope", "INPUT",
@@ -182,6 +192,20 @@ public final class E02RegulatorContractTest {
         check(restored != null, "E02 dump type is registered");
         restored.setPoints();
         return restored;
+    }
+
+    private static String withRailVersion(String dump, int version) {
+        StringTokenizer tokens = new StringTokenizer(dump);
+        StringBuilder result = new StringBuilder();
+        int index = 0;
+        while (tokens.hasMoreTokens()) {
+            if (result.length() > 0) result.append(' ');
+            String token = tokens.nextToken();
+            result.append(index == 6 ? Integer.toString(version) : token);
+            index++;
+        }
+        if (index < 7) throw new AssertionError("E02 dump lacks its version token");
+        return result.toString();
     }
 
     private static void verifyUnsupportedOperatingRegions() {
@@ -410,7 +434,7 @@ public final class E02RegulatorContractTest {
                     harness.sim.solverExecutor.advanceSteps(8);
                 } catch (IllegalArgumentException expected) {
                     overvoltageRejected = expected.getMessage().contains(
-                        "Rail input exceeds declared envelope");
+                        "Rail input exceeds declared absolute envelope");
                 }
                 check(overvoltageRejected,
                     "real input overvoltage remains rejected with either initial tangent");
@@ -418,6 +442,217 @@ public final class E02RegulatorContractTest {
                         harness.sim.a01AcceptedStepCount == beforeAccepted && acceptedEvents[0] == 0,
                     "unsupported real input advances no accepted time, count, or callback");
             } finally { harness.close(); }
+        }
+    }
+
+    /** Reverse INPUT stimulus is only bounded passive leakage, never regulation. */
+    private static void verifyPassiveReverseInput(boolean averaged,
+            RailRegulationContract contract) {
+        for (final int polarity : new int[] { 1, -1 }) {
+            Harness harness = new Harness(averaged, contract);
+            try {
+                harness.fixture.enable.setVoltage(0.0);
+                harness.fixture.load.setResistance(1000.0);
+                if (polarity < 0) {
+                    E02FiniteSourceElm input = harness.fixture.input;
+                    input.setPosition(input.x2, input.y2, input.x, input.y);
+                }
+                harness.analyzeAndSettle();
+                AbstractRailRegulatorElm regulator = harness.fixture.regulator;
+                double source = harness.fixture.input.getSourceVoltage();
+                double expectedInput = polarity * source * 1000000.0 /
+                        (1000000.0 + harness.fixture.input.getResistance());
+                near(regulator.getInputVoltage(), expectedInput, 2e-6,
+                    contract.getVariantId() + " signed finite source/input-leak KCL");
+                near(regulator.getInputCurrent(), expectedInput / 1000000.0,
+                    2e-12, contract.getVariantId() +
+                    " reverse input has only its passive leakage current");
+                near(regulator.getTargetVoltage(), 0.0, 1e-12,
+                    contract.getVariantId() + " reverse input cannot regulate");
+                near(regulator.getInputPowerWatts(), expectedInput * expectedInput /
+                        1000000.0, 3e-9, contract.getVariantId() +
+                        " reverse input dissipates leakage power instead of sourcing it");
+                check(regulator.getPowerLossWatts() >= 0.0 &&
+                        Math.abs(regulator.getInputVoltage()) <=
+                            contract.getMaximumInputVolts(),
+                    contract.getVariantId() +
+                    " signed input is passive and within the declared absolute envelope");
+            } finally {
+                harness.close();
+            }
+        }
+
+        final RailRegulationContract boundary = voltageBoundaryContract(averaged);
+        Harness outside = new Harness(averaged, boundary);
+        boolean rejected = false;
+        try {
+            outside.fixture.input.setVoltage(boundary.getMaximumInputVolts() + 6.0);
+            E02FiniteSourceElm input = outside.fixture.input;
+            input.setPosition(input.x2, input.y2, input.x, input.y);
+            outside.sim.analyzeCircuit();
+            outside.sim.solverExecutor.advanceSteps(8);
+        } catch (IllegalArgumentException expected) {
+            rejected = expected.getMessage().contains(
+                "Rail input exceeds declared absolute envelope");
+        } finally {
+            outside.close();
+        }
+        check(rejected, contract.getVariantId() +
+            " reverse input beyond the same absolute device envelope is rejected");
+    }
+
+    /** Active positive output backfeed must remain at OUTPUT, never regenerate at INPUT. */
+    private static void verifyActivePositiveOutputBackfeed(boolean averaged,
+            RailRegulationContract contract) {
+        Harness harness = new Harness(averaged, contract);
+        try {
+            // The finite source holds OUTPUT just below the declared reverse-
+            // current refusal threshold while the ordinary positive INPUT and
+            // ENABLE rails keep the regulator active. Its passive reverse
+            // output branch is the only return path from this source.
+            double sourceVoltage = 5.9;
+            E02FiniteSourceElm backfeed = connectOutputSource(harness,
+                    sourceVoltage, 1.0);
+            harness.analyzeAndSettle();
+
+            AbstractRailRegulatorElm regulator = harness.fixture.regulator;
+            double target = regulator.getTargetVoltage();
+            double output = regulator.getOutputVoltage();
+            double outputCurrent = regulator.getOutputCurrent();
+            double loadCurrent = harness.fixture.load.getCurrent();
+            double expectedOutput = (sourceVoltage + target * 1e-6) /
+                    (1.0 + 1.0 / 1000.0 + 1e-6);
+            near(output, expectedOutput, 1e-6,
+                contract.getVariantId() +
+                " active positive backfeed follows independent output KCL");
+            near(outputCurrent, (target - output) * 1e-6, 2e-10,
+                contract.getVariantId() +
+                " active reverse output current is only passive leakage");
+            check(target > 0.0 && output > target && outputCurrent < 0.0 &&
+                    outputCurrent > -1e-6,
+                contract.getVariantId() +
+                " positive-rail backfeed is accepted inside the declared envelope");
+            near(backfeed.getCurrent(), (sourceVoltage - output), 1e-7,
+                contract.getVariantId() +
+                " finite backfeed source current follows its Thevenin law");
+            near(backfeed.getCurrent(), loadCurrent - outputCurrent, 1e-7,
+                contract.getVariantId() +
+                " output node KCL closes across load and regulator leakage");
+            near(backfeed.getVoltageDiff() * backfeed.getCurrent(),
+                    output * loadCurrent - output * outputCurrent, 2e-6,
+                contract.getVariantId() +
+                " output backfeed power supplies load and absorbed reverse leakage");
+
+            // Independent input-source KCL: active reverse output leakage is
+            // clamped to zero delivered load current, so the source supplies
+            // only quiescent draw plus the declared 1 Mohm input leak. Checking
+            // the real source current catches a stamped linearization that
+            // disagrees with the model's clipped current-reading accessor.
+            double inputResistance = harness.fixture.input.getResistance();
+            double inputSourceVoltage = harness.fixture.input.getSourceVoltage();
+            double quiescent = contract.getQuiescentCurrentAmps();
+            double expectedInputSourceCurrent =
+                    (quiescent + inputSourceVoltage / 1000000.0) /
+                    (1.0 + inputResistance / 1000000.0);
+            double expectedInputVoltage = inputSourceVoltage -
+                    inputResistance * expectedInputSourceCurrent;
+            near(regulator.getInputVoltage(), expectedInputVoltage, 3e-6,
+                contract.getVariantId() +
+                " input rail follows independent quiescent-plus-leak KCL");
+            near(regulator.getInputCurrent(), expectedInputSourceCurrent, 2e-10,
+                contract.getVariantId() +
+                " reported input current excludes reverse output regeneration");
+            near(harness.fixture.input.getCurrent(), expectedInputSourceCurrent,
+                    1e-7,
+                contract.getVariantId() +
+                " real finite input source confirms no reverse-output regeneration");
+            near(harness.fixture.input.getVoltageDiff() *
+                    harness.fixture.input.getCurrent(),
+                    regulator.getInputPowerWatts(), 2e-7,
+                contract.getVariantId() +
+                " measured input-source power matches regulator input draw");
+            check(regulator.getInputPowerWatts() >= 0.0 &&
+                    regulator.getPowerLossWatts() >= -1e-9,
+                contract.getVariantId() +
+                " active output backfeed remains passive at both rail ports");
+        } finally {
+            harness.close();
+        }
+    }
+
+    /** The inactive-to-active transition must preserve exact port KCL at a tiny target. */
+    private static void verifyTinyTargetActivation(boolean averaged,
+            RailRegulationContract contract) {
+        Harness harness = new Harness(averaged, contract);
+        try {
+            AbstractRailRegulatorElm regulator = harness.fixture.regulator;
+            harness.fixture.enable.setVoltage(5.0);
+            harness.fixture.input.setVoltage(contract.getDropoutVolts() - .01);
+            harness.analyzeAndSettle();
+            check(regulator.getTargetVoltage() == 0.0,
+                    contract.getVariantId() +
+                    " finite input source holds the disabled side of dropout");
+
+            // Cross into regulation with only a fraction of a millivolt of
+            // available headroom. All currents below are read from the solved
+            // CircuitJS graph and checked against the finite-source KCL.
+            harness.fixture.input.setVoltage(contract.getDropoutVolts() + .0005);
+            harness.analyzeAndSettle();
+            double inputVoltage = regulator.getInputVoltage();
+            double outputVoltage = regulator.getOutputVoltage();
+            double enableVoltage = regulator.getEnableVoltage();
+            double enableFraction;
+            if (enableVoltage <= contract.getEnableLowVolts()) {
+                enableFraction = 0.0;
+            } else if (enableVoltage >= contract.getEnableHighVolts()) {
+                enableFraction = 1.0;
+            } else {
+                enableFraction = (enableVoltage - contract.getEnableLowVolts()) /
+                        (contract.getEnableHighVolts() -
+                        contract.getEnableLowVolts());
+            }
+            double expectedTarget = Math.max(0.0, Math.min(
+                    contract.getNominalOutputVolts(),
+                    inputVoltage - contract.getDropoutVolts())) * enableFraction;
+            double target = regulator.getTargetVoltage();
+            double outputCurrent = regulator.getOutputCurrent();
+            double loadCurrent = harness.fixture.load.getCurrent();
+            double inputCurrent = regulator.getInputCurrent();
+            double expectedLoadCurrent = outputVoltage /
+                    harness.fixture.load.getResistance();
+            double expectedInputCurrent = inputVoltage / 1000000.0 +
+                    contract.getQuiescentCurrentAmps() * enableFraction +
+                    (averaged ? outputVoltage * loadCurrent /
+                            (inputVoltage * contract.getEfficiency()) : loadCurrent);
+
+            check(target > 0.0 && target < .001,
+                    contract.getVariantId() +
+                    " transition settles at a positive sub-millivolt target");
+            near(target, expectedTarget, 1e-12,
+                    contract.getVariantId() + " tiny target follows dropout law");
+            near(outputCurrent, (target - outputVoltage) /
+                    contract.getOutputResistanceOhms(), 1e-9,
+                    contract.getVariantId() +
+                    " tiny active output follows the finite regulation branch");
+            near(loadCurrent, expectedLoadCurrent, 1e-10,
+                    contract.getVariantId() +
+                    " real load current follows solved output voltage");
+            near(outputCurrent, loadCurrent, 2e-9,
+                    contract.getVariantId() +
+                    " actual output-node KCL closes across activation");
+            near(inputCurrent, expectedInputCurrent, 2e-9,
+                    contract.getVariantId() +
+                    " active tiny-load input current follows independent power law");
+            near(harness.fixture.input.getCurrent(), inputCurrent, 2e-8,
+                    contract.getVariantId() +
+                    " real finite input-source current closes KCL across activation");
+            near(inputVoltage, harness.fixture.input.getSourceVoltage() -
+                    harness.fixture.input.getResistance() *
+                    harness.fixture.input.getCurrent(), 2e-8,
+                    contract.getVariantId() +
+                    " finite input-source voltage drop closes independently");
+        } finally {
+            harness.close();
         }
     }
 

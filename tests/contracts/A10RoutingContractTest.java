@@ -9,6 +9,7 @@ public final class A10RoutingContractTest {
     private A10RoutingContractTest() { }
 
     public static void main(String[] args) {
+        admissibleRoutingLowerBounds();
         deterministicAttemptsAndBestCandidate();
         placementRejectionRetriesToTypedExhaustion();
         routingRejectionRetriesToTypedExhaustion();
@@ -40,6 +41,218 @@ public final class A10RoutingContractTest {
             "deterministic attempt checkpoints");
         require(first.geometryFingerprint().equals(second.geometryFingerprint()),
             "deterministic best viable geometry");
+        System.out.println("ROUTING_METRICS profile=EASY seed=0 placements=" +
+            first.getGenerationPlacementAttempts() + " routes=" +
+            first.getGenerationRoutingAttempts() + " expansions=" +
+            first.getGenerationRoutingExpansions() + " routeMillis=" +
+            first.getGenerationRoutingMillis());
+    }
+
+    private static void admissibleRoutingLowerBounds() {
+        require(PcbNetRouter.admissibleLowerBound(8, 10, 2) == 150,
+            "fresh endpoint route charges ten per step and both required turns");
+        require(PcbNetRouter.admissibleLowerBound(8, 7, 2) == 126,
+            "fresh endpoint route with same-net clearance uses the seven-cost floor");
+        require(PcbNetRouter.admissibleLowerBound(8, 2, 2) == 86,
+            "existing same-net copper and tree joins retain the cost-two floor");
+        require(PcbNetRouter.admissibleLowerBound(0, 2, 0) == 0,
+            "an already reached goal has zero remaining cost");
+        require(PcbNetRouter.admissibleLowerBound(Integer.MAX_VALUE, 10,
+                Integer.MAX_VALUE) == Integer.MAX_VALUE,
+            "routing lower bound saturates instead of overflowing");
+        for (int direction = 0; direction < 4; direction++) {
+            int dx = direction == 1 ? 1 : direction == 3 ? -1 : 0;
+            int dy = direction == 0 ? -1 : direction == 2 ? 1 : 0;
+            int px = dx == 0 ? 1 : 0;
+            int py = dy == 0 ? 1 : 0;
+            requireTurnBound(2 * dx, 2 * dy, direction, 0);
+            requireTurnBound(-2 * dx, -2 * dy, direction, 1);
+            requireTurnBound(dx + px, dy + py, direction, 1);
+            requireTurnBound(-dx + px, -dy + py, direction, 2);
+        }
+        boolean[] diagonalGoal = new boolean[49];
+        diagonalGoal[4 * 7 + 4] = true;
+        require(new PcbNetRouter.GoalTurnBounds(diagonalGoal, 7, 7)
+                .minimumTurns(3, 3, 4) == 0,
+            "the initial heading pays no turn cost before its first move");
+        dijkstraRoutingParity();
+    }
+
+    private static void requireTurnBound(int goalDx, int goalDy, int direction, int expected) {
+        boolean[] goals = new boolean[49];
+        goals[(3 + goalDy) * 7 + 3 + goalDx] = true;
+        PcbNetRouter.GoalTurnBounds bounds = new PcbNetRouter.GoalTurnBounds(goals, 7, 7);
+        require(bounds.minimumTurns(3, 3, direction) == expected,
+            "directional turn lower bound " + direction + " to offset " + goalDx + "," +
+                goalDy + " is admissible");
+    }
+
+    /** Compares the production heuristic with an independent exhaustive Dijkstra oracle. */
+    private static void dijkstraRoutingParity() {
+        final int[][][] profiles = new int[][][] {
+            filledCosts(7, 6, 10), clearanceCosts(7, 6), treeCosts(7, 6)
+        };
+        final int[] expectedMinimumSteps = new int[] { 10, 7, 2 };
+        final boolean[] goals = new boolean[42];
+        goals[5 * 7 + 6] = true;
+        goals[5 * 7] = true;
+        for (int profile = 0; profile < profiles.length; profile++) {
+            int[][] costs = profiles[profile];
+            int width = costs[0].length;
+            int height = costs.length;
+            int[] distances = routingDistances(goals, width, height);
+            int minimum = expectedMinimumSteps[profile];
+            PcbNetRouter.GoalTurnBounds turns =
+                new PcbNetRouter.GoalTurnBounds(goals, width, height);
+            for (int y = 0; y < height; y++) for (int x = 0; x < width; x++)
+                for (int direction = 0; direction <= 4; direction++) {
+                    int exact = dijkstraRouteCost(costs, goals, x, y, direction);
+                    int heuristic = PcbNetRouter.admissibleLowerBound(
+                        distances[y * width + x], minimum,
+                        turns.minimumTurns(x, y, direction));
+                    require(heuristic <= exact,
+                        "routing heuristic stays below Dijkstra profile " + profile +
+                            " state " + x + "," + y + "," + direction);
+                    require(aStarRouteCost(costs, goals, x, y, direction, distances,
+                            turns, minimum) == exact,
+                        "A* and independent Dijkstra route costs agree for profile " + profile +
+                            " state " + x + "," + y + "," + direction);
+                }
+        }
+    }
+
+    private static int[][] filledCosts(int width, int height, int cost) {
+        int[][] result = new int[height][width];
+        for (int y = 0; y < height; y++) java.util.Arrays.fill(result[y], cost);
+        return result;
+    }
+
+    private static int[][] clearanceCosts(int width, int height) {
+        int[][] result = filledCosts(width, height, 10);
+        for (int y = 0; y < height; y++) for (int x = 0; x < width; x++)
+            if (x == 2 || y == 3) result[y][x] = 7;
+        return result;
+    }
+
+    private static int[][] treeCosts(int width, int height) {
+        int[][] result = clearanceCosts(width, height);
+        result[1][2] = 2; result[1][3] = 2; result[2][3] = 2;
+        result[4][4] = 2; result[5][4] = 2;
+        return result;
+    }
+
+    private static int[] routingDistances(boolean[] goals, int width, int height) {
+        int[] distances = new int[goals.length];
+        java.util.Arrays.fill(distances, Integer.MAX_VALUE);
+        int[] queue = new int[goals.length];
+        int head = 0, tail = 0;
+        for (int cell = 0; cell < goals.length; cell++) if (goals[cell]) {
+            distances[cell] = 0;
+            queue[tail++] = cell;
+        }
+        while (head < tail) {
+            int cell = queue[head++], x = cell % width, y = cell / width;
+            if (x > 0) tail = addDistance(cell - 1, cell, distances, queue, tail);
+            if (x + 1 < width) tail = addDistance(cell + 1, cell, distances, queue, tail);
+            if (y > 0) tail = addDistance(cell - width, cell, distances, queue, tail);
+            if (y + 1 < height) tail = addDistance(cell + width, cell, distances, queue, tail);
+        }
+        return distances;
+    }
+
+    private static int addDistance(int next, int current, int[] distances,
+            int[] queue, int tail) {
+        if (distances[next] == Integer.MAX_VALUE) {
+            distances[next] = distances[current] + 1;
+            queue[tail++] = next;
+        }
+        return tail;
+    }
+
+    private static int dijkstraRouteCost(int[][] costs, boolean[] goals,
+            int startX, int startY, int startDirection) {
+        int width = costs[0].length, height = costs.length, stateCount = width * height * 5;
+        int[] best = new int[stateCount];
+        java.util.Arrays.fill(best, Integer.MAX_VALUE);
+        boolean[] settled = new boolean[stateCount];
+        int start = (startY * width + startX) * 5 + startDirection;
+        best[start] = 0;
+        for (int iteration = 0; iteration < stateCount; iteration++) {
+            int current = -1;
+            for (int key = 0; key < stateCount; key++)
+                if (!settled[key] && best[key] != Integer.MAX_VALUE &&
+                        (current < 0 || best[key] < best[current])) current = key;
+            if (current < 0) return Integer.MAX_VALUE;
+            int direction = current % 5, cell = current / 5;
+            int x = cell % width, y = cell / width;
+            if (goals[cell]) return best[current];
+            settled[current] = true;
+            for (int nextDirection = 0; nextDirection < 4; nextDirection++) {
+                int nx = x + (nextDirection == 1 ? 1 : nextDirection == 3 ? -1 : 0);
+                int ny = y + (nextDirection == 0 ? -1 : nextDirection == 2 ? 1 : 0);
+                if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+                int next = (ny * width + nx) * 5 + nextDirection;
+                int candidate = best[current] + costs[ny][nx] +
+                    (direction != 4 && direction != nextDirection ? 35 : 0);
+                if (candidate < best[next]) best[next] = candidate;
+            }
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    private static int aStarRouteCost(int[][] costs, boolean[] goals, int startX, int startY,
+            int startDirection, int[] distances, PcbNetRouter.GoalTurnBounds turns,
+            int minimumStepCost) {
+        int width = costs[0].length, height = costs.length;
+        int[] best = new int[width * height * 5];
+        java.util.Arrays.fill(best, Integer.MAX_VALUE);
+        java.util.PriorityQueue<ContractRouteNode> open =
+            new java.util.PriorityQueue<ContractRouteNode>();
+        int start = (startY * width + startX) * 5 + startDirection;
+        best[start] = 0;
+        open.add(new ContractRouteNode(start, 0, routeHeuristic(start, width, distances,
+            turns, minimumStepCost)));
+        while (!open.isEmpty()) {
+            ContractRouteNode node = open.remove();
+            if (node.cost != best[node.state]) continue;
+            int direction = node.state % 5, cell = node.state / 5;
+            int x = cell % width, y = cell / width;
+            if (goals[cell]) return node.cost;
+            for (int nextDirection = 0; nextDirection < 4; nextDirection++) {
+                int nx = x + (nextDirection == 1 ? 1 : nextDirection == 3 ? -1 : 0);
+                int ny = y + (nextDirection == 0 ? -1 : nextDirection == 2 ? 1 : 0);
+                if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+                int next = (ny * width + nx) * 5 + nextDirection;
+                int candidate = node.cost + costs[ny][nx] +
+                    (direction != 4 && direction != nextDirection ? 35 : 0);
+                if (candidate < best[next]) {
+                    best[next] = candidate;
+                    open.add(new ContractRouteNode(next, candidate,
+                        routeHeuristic(next, width, distances, turns, minimumStepCost)));
+                }
+            }
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    private static int routeHeuristic(int state, int width, int[] distances,
+            PcbNetRouter.GoalTurnBounds turns, int minimumStepCost) {
+        int direction = state % 5, cell = state / 5;
+        return PcbNetRouter.admissibleLowerBound(distances[cell], minimumStepCost,
+            turns.minimumTurns(cell % width, cell / width, direction));
+    }
+
+    private static final class ContractRouteNode implements Comparable<ContractRouteNode> {
+        final int state, cost, heuristic;
+        ContractRouteNode(int state, int cost, int heuristic) {
+            this.state = state; this.cost = cost; this.heuristic = heuristic;
+        }
+        public int compareTo(ContractRouteNode other) {
+            int byTotal = (cost + heuristic) - (other.cost + other.heuristic);
+            if (byTotal != 0) return byTotal;
+            int byHeuristic = heuristic - other.heuristic;
+            return byHeuristic != 0 ? byHeuristic : state - other.state;
+        }
     }
 
     private static void placementRejectionRetriesToTypedExhaustion() {

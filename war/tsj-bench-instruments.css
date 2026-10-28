@@ -80,6 +80,9 @@ body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-off { position: absolute; top:
 .tsj-meter-off[aria-pressed='true'] { box-shadow: 0 0 0 2px #ffe6a4; }
 .tsj-meter-future { position: absolute; left: 20px; right: 20px; top: 308px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
 body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-future button { min-height: 21px; padding: 2px; border-radius: 4px; font-size: 9px; }
+body.tsj-workbench-ui .tsj-bench-meter .tsj-meter-future button[aria-pressed='true']:not(:disabled) {
+  background: #fcae3f; color: #24202a; border-color: #ffe8ae; box-shadow: 0 0 0 2px #ffe6a4;
+}
 .tsj-meter-future-label { position: absolute; top: 361px; width: 100%; font-size: 8px; text-align: center; font-weight: bold; }
 .tsj-meter-jacks { position: absolute; top: 379px; left: 25px; right: 25px; display: flex; justify-content: space-between; }
 .tsj-meter-jack { position: relative; padding-top: 23px; width: 46px; color: #242029; text-align: center; font-size: 9px; font-weight: 900; }

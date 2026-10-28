@@ -5,8 +5,10 @@ import java.util.Vector;
 /** RB56-only supported bench injection and real loose-module reference boundaries. */
 final class Rb56InstrumentAdmissionCapability implements ActiveInstrumentAdmissionCapability,
         MeasurementReferenceCapability, PhysicalBoardInstallationProvider {
-    static final String ID = "RB56_INSTRUMENT_ADMISSION@1";
+    static final String ID = "RB56_INSTRUMENT_ADMISSION@2";
     private static final String RESISTANCE_MODE_ID = "RESISTANCE";
+    private static final String CONTINUITY_MODE_ID = "CONTINUITY";
+    private static final String DIODE_MODE_ID = "DIODE";
     private final PhysicalBoardRuntime runtime;
     private final TroubleshootBoard board;
     private CirSim sim;
@@ -44,7 +46,7 @@ final class Rb56InstrumentAdmissionCapability implements ActiveInstrumentAdmissi
             if (touchesConverter(red) || touchesConverter(black) ||
                     r != null && !supported(r.part) || b != null && !supported(b.part))
                 return ActiveMeasurementReadiness.UNSUPPORTED;
-            if (isResistanceMode(mode)) {
+            if (isSolverNetworkTestMode(mode)) {
                 if (touchesInstalledConverterPad(red) || touchesInstalledConverterPad(black))
                     return ActiveMeasurementReadiness.UNSUPPORTED;
                 return admitResistance(red, black, r, b);
@@ -57,8 +59,11 @@ final class Rb56InstrumentAdmissionCapability implements ActiveInstrumentAdmissi
         } catch (RuntimeException invalidOwner) { return ActiveMeasurementReadiness.UNKNOWN; }
     }
 
-    private static boolean isResistanceMode(InstrumentMode mode) {
-        return mode != null && RESISTANCE_MODE_ID.equals(mode.getId());
+    private static boolean isSolverNetworkTestMode(InstrumentMode mode) {
+        if (mode == null) return false;
+        String id = mode.getId();
+        return RESISTANCE_MODE_ID.equals(id) || CONTINUITY_MODE_ID.equals(id) ||
+            DIODE_MODE_ID.equals(id);
     }
 
     private boolean touchesInstalledConverterPad(CircuitPostMeasurementEndpoint endpoint) {

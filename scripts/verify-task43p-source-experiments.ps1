@@ -232,9 +232,9 @@ function Assert-DisposablePreviewIdentity($Destination, $Identity, $Port,
     $expectedWebRoot = Get-ExperimentCanonicalPath (Join-Path $Destination 'war')
     $expectedScriptRoot = Get-ExperimentCanonicalPath (Join-Path $Destination 'scripts')
     $expectedPreviewScript = Get-ExperimentCanonicalPath (Join-Path $expectedScriptRoot 'preview.ps1')
-    $allowedProperties = @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
-        'previewPort', 'processId', 'processStartTicks', 'verifierRunId',
-        'verifierNonce', 'sourceRoot', 'scriptRoot', 'sourceDigest', 'scriptDigest',
+    $allowedProperties = @('protocol', 'repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+        'sourceRootIdentity', 'scriptRootIdentity', 'previewPort', 'processId', 'processStartTicks', 'verifierRunId',
+        'verifierNonce', 'sourceDigest', 'scriptDigest',
         'webDigest', 'executionDigest', 'executionFileCount')
     foreach ($property in @($Identity.PSObject.Properties)) {
         if ($allowedProperties -cnotcontains [string]$property.Name) {
@@ -246,8 +246,8 @@ function Assert-DisposablePreviewIdentity($Destination, $Identity, $Port,
             Throw-SourceExperimentInfrastructure "Disposable preview identity omitted '$propertyName'."
         }
     }
-    foreach ($propertyName in @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
-            'verifierRunId', 'verifierNonce', 'sourceRoot', 'scriptRoot',
+    foreach ($propertyName in @('protocol', 'repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+            'sourceRootIdentity', 'scriptRootIdentity', 'verifierRunId', 'verifierNonce',
             'sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
         $rawValue = $Identity.PSObject.Properties[$propertyName].Value
         if ($null -eq $rawValue -or $rawValue.GetType() -ne [string]) {
@@ -261,23 +261,20 @@ function Assert-DisposablePreviewIdentity($Destination, $Identity, $Port,
             Throw-SourceExperimentInfrastructure "Disposable preview identity field '$propertyName' was not an exact raw integral."
         }
     }
-    foreach ($digestName in @('sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
+    foreach ($digestName in @('repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+            'sourceRootIdentity', 'scriptRootIdentity', 'sourceDigest', 'scriptDigest',
+            'webDigest', 'executionDigest')) {
         if ([string]$Identity.PSObject.Properties[$digestName].Value -notmatch '^[0-9a-f]{64}$') {
             Throw-SourceExperimentInfrastructure "Disposable preview identity field '$digestName' was not a canonical SHA-256 digest."
         }
     }
-    if ([string]$Identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-            -not ((Get-ExperimentCanonicalPath $Identity.repositoryRoot).Equals(
-                $expectedRepositoryRoot, [StringComparison]::OrdinalIgnoreCase)) -or
-            -not ((Get-ExperimentCanonicalPath $Identity.previewScript).Equals(
-                $expectedPreviewScript, [StringComparison]::OrdinalIgnoreCase)) -or
-            -not ((Get-ExperimentCanonicalPath $Identity.webRoot).Equals(
-                $expectedWebRoot, [StringComparison]::OrdinalIgnoreCase)) -or
-            -not ((Get-ExperimentCanonicalPath $Identity.sourceRoot).Equals(
-                (Get-ExperimentCanonicalPath (Join-Path $Destination 'src')),
-                [StringComparison]::OrdinalIgnoreCase)) -or
-            -not ((Get-ExperimentCanonicalPath $Identity.scriptRoot).Equals(
-                $expectedScriptRoot, [StringComparison]::OrdinalIgnoreCase)) -or
+    $expectedSourceRoot = Get-ExperimentCanonicalPath (Join-Path $Destination 'src')
+    if ([string]$Identity.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+            [string]$Identity.repositoryIdentity -cne (Get-VerifierOpaquePathIdentity 'repository' $expectedRepositoryRoot) -or
+            [string]$Identity.previewScriptIdentity -cne (Get-VerifierOpaquePathIdentity 'preview-script' $expectedPreviewScript) -or
+            [string]$Identity.webRootIdentity -cne (Get-VerifierOpaquePathIdentity 'web-root' $expectedWebRoot) -or
+            [string]$Identity.sourceRootIdentity -cne (Get-VerifierOpaquePathIdentity 'source-root' $expectedSourceRoot) -or
+            [string]$Identity.scriptRootIdentity -cne (Get-VerifierOpaquePathIdentity 'script-root' $expectedScriptRoot) -or
             [long]$Identity.previewPort -ne [long]$Port -or
             [long]$Identity.processId -ne [long]$LaunchedProcessId -or
             [long]$Identity.processStartTicks -ne [long]$LaunchedProcessStartTicks -or
@@ -295,16 +292,16 @@ function Assert-DisposablePreviewIdentity($Destination, $Identity, $Port,
     }
     return [ordered]@{
         protocol = [string]$Identity.protocol
-        repositoryRoot = [string]$Identity.repositoryRoot
-        previewScript = [string]$Identity.previewScript
-        webRoot = [string]$Identity.webRoot
+        repositoryIdentity = [string]$Identity.repositoryIdentity
+        previewScriptIdentity = [string]$Identity.previewScriptIdentity
+        webRootIdentity = [string]$Identity.webRootIdentity
         previewPort = [int]$Identity.previewPort
         processId = [int]$Identity.processId
         processStartTicks = [long]$Identity.processStartTicks
         verifierRunId = [string]$Identity.verifierRunId
         verifierNonce = [string]$Identity.verifierNonce
-        sourceRoot = [string]$Identity.sourceRoot
-        scriptRoot = [string]$Identity.scriptRoot
+        sourceRootIdentity = [string]$Identity.sourceRootIdentity
+        scriptRootIdentity = [string]$Identity.scriptRootIdentity
         sourceDigest = [string]$Identity.sourceDigest
         scriptDigest = [string]$Identity.scriptDigest
         webDigest = [string]$Identity.webDigest
@@ -1259,7 +1256,7 @@ function Copy-DisposableBuildTree([string]$Destination) {
 function Invoke-DisposableCompile([string]$Destination, [string]$SelectedJavaHome) {
     $buildPath = Join-Path $Destination 'scripts\build.ps1'
     $arguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $buildPath,
-        '-Target', 'Compile', '-Style', 'OBF',
+        '-Target', 'Compile', '-Style', 'OBF', '-Variant', 'Developer',
         '-ProcessTimeoutSeconds', [string]$ProcessTimeoutSeconds)
     if (-not [String]::IsNullOrWhiteSpace($SelectedJavaHome)) {
         $arguments += @('-JavaHome', $SelectedJavaHome)
@@ -1566,18 +1563,23 @@ function Invoke-DisposableRuntimeExtraction([string]$Destination, $Definition,
 
 function Invoke-DisposablePreviewIdentityCanary() {
     $provenance = Get-ExperimentExecutionProvenance $repositoryRoot
+    $expectedRepositoryRoot = Get-ExperimentCanonicalPath $repositoryRoot
+    $expectedPreviewScript = Get-ExperimentCanonicalPath (Join-Path $repositoryRoot 'scripts\preview.ps1')
+    $expectedWebRoot = Get-ExperimentCanonicalPath (Join-Path $repositoryRoot 'war')
+    $expectedSourceRoot = Get-ExperimentCanonicalPath (Join-Path $repositoryRoot 'src')
+    $expectedScriptRoot = Get-ExperimentCanonicalPath (Join-Path $repositoryRoot 'scripts')
     $valid = [pscustomobject]@{
-        protocol = 'troubleshootjs-preview-identity-v1'
-        repositoryRoot = $provenance.repositoryRoot
-        previewScript = Get-ExperimentCanonicalPath (Join-Path $repositoryRoot 'scripts\preview.ps1')
-        webRoot = $provenance.webRoot
+        protocol = 'troubleshootjs-preview-identity-v2'
+        repositoryIdentity = Get-VerifierOpaquePathIdentity 'repository' $expectedRepositoryRoot
+        previewScriptIdentity = Get-VerifierOpaquePathIdentity 'preview-script' $expectedPreviewScript
+        webRootIdentity = Get-VerifierOpaquePathIdentity 'web-root' $expectedWebRoot
+        sourceRootIdentity = Get-VerifierOpaquePathIdentity 'source-root' $expectedSourceRoot
+        scriptRootIdentity = Get-VerifierOpaquePathIdentity 'script-root' $expectedScriptRoot
         previewPort = 40123
         processId = 1
         processStartTicks = 1L
         verifierRunId = ''
         verifierNonce = ''
-        sourceRoot = $provenance.sourceRoot
-        scriptRoot = $provenance.scriptRoot
         sourceDigest = $provenance.sourceDigest
         scriptDigest = $provenance.scriptDigest
         webDigest = $provenance.webDigest
@@ -1587,13 +1589,13 @@ function Invoke-DisposablePreviewIdentityCanary() {
     [void](Assert-DisposablePreviewIdentity $repositoryRoot $valid 40123 1 1L)
     $cases = @(
         [pscustomobject]@{ Name = 'unknown-field'; Mutate = { param($value) $value | Add-Member -MemberType NoteProperty -Name Unknown -Value 1 } }
-        [pscustomobject]@{ Name = 'wrong-case-protocol'; Mutate = { param($value) $value.protocol = 'TroubleshootJS-preview-identity-v1' } }
+        [pscustomobject]@{ Name = 'wrong-case-protocol'; Mutate = { param($value) $value.protocol = 'TroubleshootJS-preview-identity-v2' } }
         [pscustomobject]@{ Name = 'numeric-string-port'; Mutate = { param($value) $value.previewPort = '40123' } }
         [pscustomobject]@{ Name = 'negative-pid'; Mutate = { param($value) $value.processId = -1 } }
         [pscustomobject]@{ Name = 'different-positive-pid'; Mutate = { param($value) $value.processId = 2 } }
         [pscustomobject]@{ Name = 'different-positive-start'; Mutate = { param($value) $value.processStartTicks = 2L } }
         [pscustomobject]@{ Name = 'zero-start'; Mutate = { param($value) $value.processStartTicks = 0 } }
-        [pscustomobject]@{ Name = 'foreign-source-root'; Mutate = { param($value) $value.sourceRoot = $value.repositoryRoot } }
+        [pscustomobject]@{ Name = 'foreign-source-root'; Mutate = { param($value) $value.sourceRootIdentity = $value.repositoryIdentity } }
         [pscustomobject]@{ Name = 'half-run-identity'; Mutate = { param($value) $value.verifierRunId = 'foreign-run' } }
     )
     foreach ($case in $cases) {
@@ -1908,11 +1910,17 @@ $definitions = @(
         seed = 0
         expectedMarker = 'FAIL:task43p-renderer-pad-projection-mismatch:J1.1'
         mutationKind = 'renderer-source-pad-projection'
-        needle = '        return pad == null ? null : new Point(screenX(pad.getX()), screenY(pad.getY()));'
+        # Offset the screen-space pad projection consumed by drawPad. Applying
+        # the displacement after the viewport transform keeps the falsifier a
+        # renderer-only 20 px J1.1 shift at every zoom level.
+        needle = '        return pad == null ? null : screenPointForProvider(new Point(pad.getX(),pad.getY()));'
         replacement = @"
-        if (pad != null && "J1.1".equals(padId))
-            return new Point(screenX(pad.getX()) + 20, screenY(pad.getY()));
-        return pad == null ? null : new Point(screenX(pad.getX()), screenY(pad.getY()));
+        if (pad == null)
+            return null;
+        Point point = screenPointForProvider(new Point(pad.getX(),pad.getY()));
+        if ("J1.1".equals(padId))
+            point.x += 20;
+        return point;
 "@
     }
     [ordered]@{
@@ -2060,7 +2068,7 @@ $definitions = @(
     }
     [ordered]@{
         id = 'omitted-manifest-terminal'
-        relativePath = 'src\com\lushprojects\circuitjs1\client\Task43PPhysicalTruthDeveloperVerifier.java'
+        relativePath = 'src\com\lushprojects\circuitjs1\client\GeneratedBoardPhysicalTruthDeveloperVerifier.java'
         family = 'LED_INDICATOR'
         topology = 'DIRECT_SERIES'
         seed = 0
@@ -2093,8 +2101,8 @@ $definitions = @(
         mutationKind = 'public-remove-button-disabled'
         # Anchor one unchanged line so mixed LF/CRLF source cannot hide the
         # real disabled-button mutation behind a pre-compilation mismatch.
-        needle = '        addAction(operationLabel(part, operation, "Remove component"),'
-        replacement = '        addAction(operationLabel(part, operation, "Remove component"), true ||'
+        needle = '        addAction(targetPanel, operationLabel(part, operation, "Remove component"),'
+        replacement = '        addAction(targetPanel, operationLabel(part, operation, "Remove component"), true ||'
     }
 )
 

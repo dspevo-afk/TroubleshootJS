@@ -12,6 +12,78 @@ instruments, valid repair behavior and answer privacy remain required. The
 [current task report](CODEX_TASK_REPORT.md) records qualification and limitations;
 older evidence packets describe their own historical candidates.
 
+## Audit corrections and current execution boundaries
+
+The default `scripts/build.ps1 -Variant Player` binds `TroubleshootBuild` to a
+constant player configuration. Developer menus, query flags and verifier dispatch
+are reachable only in the explicit `-Variant Developer` target. GWT removes the
+unreachable verifier code from player output. Both targets compile into a fresh
+ignored module under the worktree's tool directory, on the installed output's
+volume; promotion replaces the complete generated directory and rolls back if
+installation fails. An exclusive per-worktree process guard serializes shared
+compiler/cache work through receipt writing. Inputs are checked before and after
+promotion. A receipt binds compiler inputs, variant and complete
+deployed output. The launcher checks that receipt before adopting an existing
+preview, so an old bootstrap file alone cannot establish freshness.
+`TroubleshootDeveloperVerification` owns the developer dispatch; `CirSim` keeps
+only its guarded entry and failure adapter, with the existing live state owner.
+
+`TemporaryMeasurementTransaction` owns source installation, acquisition, removal,
+solver reconstruction and fail-closed power isolation. `CirSim` retains its narrow
+simulation and power adapters. `TemporaryMeasurementSettlement` scans the installed
+live graph, including the meter stimulus. A closed set of electrically memoryless
+DC elements uses eight accepted solver steps; unknown, reactive or time-varying
+elements use 10 ms of simulated time. DC source waveform and bias must also match
+the static contract. Passive connection uses two accepted solver steps and
+reconstruction uses one. Device-specific energy settlement remains
+explicit. These are finite acquisition windows, not an assertion that every RC
+network has reached DC. A wall deadline rejects incomplete work rather than
+returning a partial reading. Solver exceptions stop the runtime and retain their
+actual cause.
+
+Completed resistance, continuity and diode samples may remain visible when their
+own stimulus leaves residual charge. A new injection still requires READY; a held
+continuity indicator does not keep its tone sounding during discharge. Mode,
+target, graph and power invalidation clear stale results. Generated-board failure
+messages stay generic on the player canvas, while the original exception remains
+available to diagnostics and explicit developer views.
+
+E02 rail contract v3 admits bounded reverse-input passive leakage. Its input
+stamp uses the same non-regenerative delivered-current clamp as its current
+accessor. Across adjacent solved points that cross a known output/dropout knee,
+the regulator may use a bounded secant Jacobian; its physical current law stays
+unchanged. Chord history is cleared on every timestep attempt, retry and reset.
+Acceptance compares exact solved-node currents with the preceding stamped affine
+model, including activation transitions, before CircuitJS may accept that matrix.
+The E04 v2 decision output is a finite, current-limited branch from its supply to its output,
+with declared headroom, leakage and sink behavior. Its delivered current loads the
+real supply graph. RB56 instrument admission v2 shares the same supported passive
+differential path across resistance, continuity and diode modes. Power, reference,
+isolation and residual-energy checks remain authoritative. Layout interpretation
+20, public replay epoch `tsj-alpha/7` and dependency/model epochs v19/v7
+invalidate earlier physical and electrical proof artifacts. Earlier public replay
+epochs reject before session mutation rather than silently selecting new routes.
+
+Generation stage elapsed time covers each contiguous stage visit for one
+candidate, including gaps between yielded units. Initial, cross-stage and
+cross-candidate gaps do not enter that stage span; the whole-job clock still
+includes them. Rejection, stale ownership and terminal failures sample their
+closing boundary. Per-unit deadlines remain separate, and an over-budget rejected
+unit cannot retry. The issued receipt is a prepublication snapshot; the completed
+job's PUBLISH elapsed value includes the final observed publication unit.
+
+The dormant authored `ControlledIndicatorPcbLayoutFactory` and five unused
+capability/catalog interfaces were removed after type-level caller, registration
+and reflection checks. `E04DecisionControlPhysical` and `PcbPhysicalTransform`
+remain live aggregate source files. `GeneratedBoardPhysicalTruthDeveloperVerifier`
+names the retained generated-board correspondence oracle; historical evidence
+continues to name its original candidate sources.
+
+Preview identity protocol v2 publishes opaque path identities while retaining
+source/output, PID, creation-time and port checks. The TCP fallback validates a
+loopback Host authority on the selected port. Current status and the full planned
+milestone catalog are linked from the compact roadmap/report into dated archives.
+
 ## Maintained Q30 qualification ownership and current gates
 
 The Q30 workflow keeps three identities separate: the source snapshot for the
@@ -132,7 +204,8 @@ local play after parent acceptance of the documented scale/performance evidence.
 novelty identity that ignores the seed, fault, values,
 board translation, outline-only differences and route-tree segmentation while
 comparing the merged drawn copper. The generation coordinator rejects
-a repeated physical realization after complete validation and before publication.
+a repeated physical realization before electrical proof and checks novelty again
+after complete validation, immediately before publication.
 Its page-session history retains sixteen successful New Board signatures. Exact
 replay bypasses this novelty gate and remains a single exact candidate. Only typed
 expected rejection followed by successful
@@ -155,10 +228,10 @@ v16 captures admission4/layout15 and the current dump-model v6. Eight entropy
 bytes travel as canonical signed decimal text,
 never through a lossy JavaScript Number.
 
-`ControlledIndicatorPcbLayoutFactory` still contains an authored fixed reference
-layout, but has no production or test callers. The composed player path uses
+The removed `ControlledIndicatorPcbLayoutFactory` contained an unused authored
+fixed reference layout. The composed player path uses
 `BoundedGeneratedBoardAssembler` and the common seeded placement/routing session;
-the authored factory is outside player generation. Three stale leaf generator
+the authored factory is retired. Three stale leaf generator
 fields that constructed unused layout generators were removed.
 
 New loose catalog axial resistors may be unformed. Compatibility queries are pure;
@@ -4908,7 +4981,7 @@ does not add a request, board, or session epoch. Its verifier-design state
 fingerprint is evidence of current state, not a repository claim, rollback, or
 transaction guarantee.
 
-`Task43PPhysicalTruthDeveloperVerifier` is intentionally authored outside the
+`GeneratedBoardPhysicalTruthDeveloperVerifier` is intentionally authored outside the
 production board-binding and renderer metadata. It gathers independent raw
 logical-board, raw `PcbTraceGeometry`, package, renderer, and live CircuitJS
 post observations into source snapshots. One canonical validator performs
@@ -6018,10 +6091,10 @@ See the [border-trim evidence and current gate status](task-evidence/PCB/post-se
 All eleven active normal providers use `SeededPcbLayoutGenerator`. Immutable
 `PcbPlacementConstraints.placementPackingVersion` explicitly selects packing4;
 legacy/default1 and held private RB56 keep the original policy. The general
-layout identity is19 and public replay is `tsj-alpha/6`; dependency canonicalization
+layout identity is20 and public replay is `tsj-alpha/7`; dependency canonicalization
 includes nondefault packing interpretation. Historical private geometry-body
 evidence records its explicit epoch normalization; current literal consumers
-require layout19 and reject stale18. The player catalog remains eleven
+require layout20 and reject stale19. The player catalog remains eleven
 enabled/twelve registered,
 with HARD RB56 held from normal requests.
 

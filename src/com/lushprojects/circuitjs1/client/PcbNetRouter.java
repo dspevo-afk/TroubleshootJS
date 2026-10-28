@@ -10,6 +10,100 @@ import java.util.Vector;
 final class PcbNetRouter {
     private static final int GRID=10, ROUTING_CHECK_INTERVAL=128;
     static final int MINIMUM_STEP_COST=2;
+    private static final int FRESH_STEP_COST=10, CLEARANCE_STEP_COST=7, TURN_COST=35;
+
+    /** Cost lower bound for the two bounded route shapes used by the search. */
+    static int admissibleLowerBound(int distance, int minimumStepCost, int minimumTurns) {
+        if (distance < 0 || (minimumStepCost != MINIMUM_STEP_COST &&
+                minimumStepCost != CLEARANCE_STEP_COST && minimumStepCost != FRESH_STEP_COST) ||
+                minimumTurns < 0)
+            throw new IllegalArgumentException("Invalid routing lower-bound inputs");
+        long total = (long) distance * minimumStepCost + (long) minimumTurns * TURN_COST;
+        return total >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) total;
+    }
+
+    /** Admissible directional lower bound shared by routing and focused contract oracles. */
+    static final class GoalTurnBounds {
+        private final boolean[] goals;
+        private final int gridWidth;
+        private final int gridHeight;
+        private final int[] rowPrefix;
+        private final int[] columnPrefix;
+        private final int[] rowTotals;
+        private final int[] columnTotals;
+
+        GoalTurnBounds(boolean[] goals, int gridWidth, int gridHeight) {
+            if (goals == null || gridWidth < 1 || gridHeight < 1 ||
+                    (long) gridWidth * gridHeight != goals.length)
+                throw new IllegalArgumentException("Invalid routing goal grid");
+            this.goals = goals;
+            this.gridWidth = gridWidth;
+            this.gridHeight = gridHeight;
+            rowPrefix = new int[gridHeight * (gridWidth + 1)];
+            columnPrefix = new int[gridWidth * (gridHeight + 1)];
+            rowTotals = new int[gridHeight + 1];
+            columnTotals = new int[gridWidth + 1];
+            for (int y = 0; y < gridHeight; y++) {
+                int offset = y * (gridWidth + 1);
+                for (int x = 0; x < gridWidth; x++)
+                    rowPrefix[offset + x + 1] = rowPrefix[offset + x] +
+                        (goals[y * gridWidth + x] ? 1 : 0);
+                rowTotals[y + 1] = rowTotals[y] + rowPrefix[offset + gridWidth];
+            }
+            for (int x = 0; x < gridWidth; x++) {
+                int offset = x * (gridHeight + 1);
+                for (int y = 0; y < gridHeight; y++)
+                    columnPrefix[offset + y + 1] = columnPrefix[offset + y] +
+                        (goals[y * gridWidth + x] ? 1 : 0);
+                columnTotals[x + 1] = columnTotals[x] +
+                    columnPrefix[offset + gridHeight];
+            }
+        }
+
+        int minimumTurns(int x, int y, int direction) {
+            if (x < 0 || y < 0 || x >= gridWidth || y >= gridHeight ||
+                    direction < 0 || direction > 4)
+                throw new IllegalArgumentException("Invalid routing turn-bound state");
+            int cell = y * gridWidth + x;
+            if (goals[cell] || direction == 4) return 0;
+            int rowOffset = y * (gridWidth + 1);
+            int columnOffset = x * (gridHeight + 1);
+            int rowCount = rowPrefix[rowOffset + gridWidth];
+            int columnCount = columnPrefix[columnOffset + gridHeight];
+            switch (direction) {
+            case 0: {
+                int forwardAxis = columnPrefix[columnOffset + y];
+                int forwardDiagonal = rowTotals[y] - forwardAxis;
+                return forwardAxis > 0 ? 0 :
+                    (forwardDiagonal > 0 || rowCount + columnCount > 0 ? 1 : 2);
+            }
+            case 1: {
+                int forwardAxis = rowPrefix[rowOffset + gridWidth] -
+                    rowPrefix[rowOffset + x + 1];
+                int forwardDiagonal = columnTotals[gridWidth] - columnTotals[x + 1] -
+                    forwardAxis;
+                return forwardAxis > 0 ? 0 :
+                    (forwardDiagonal > 0 || rowCount + columnCount > 0 ? 1 : 2);
+            }
+            case 2: {
+                int forwardAxis = columnPrefix[columnOffset + gridHeight] -
+                    columnPrefix[columnOffset + y + 1];
+                int forwardDiagonal = rowTotals[gridHeight] - rowTotals[y + 1] -
+                    forwardAxis;
+                return forwardAxis > 0 ? 0 :
+                    (forwardDiagonal > 0 || rowCount + columnCount > 0 ? 1 : 2);
+            }
+            case 3: {
+                int forwardAxis = rowPrefix[rowOffset + x];
+                int forwardDiagonal = columnTotals[x] - forwardAxis;
+                return forwardAxis > 0 ? 0 :
+                    (forwardDiagonal > 0 || rowCount + columnCount > 0 ? 1 : 2);
+            }
+            default:
+                throw new IllegalArgumentException("Unknown routing direction");
+            }
+        }
+    }
     enum Reason { NO_PATH, GRID_LIMIT, SEARCH_LIMIT, RECOVERY_LIMIT, QUALITY_LIMIT }
     static final class Rejected extends RuntimeException {
         final Reason reason;
@@ -497,6 +591,10 @@ final class PcbNetRouter {
             else for(int gx=0;gx<gridWidth;gx++) for(int gy=0;gy<gridHeight;gy++)
                 goals[gy*gridWidth+gx]=netId.equals(occupiedNet[gx][gy]) && canJoinTree(gx,gy,netId);
             int[] distances=distanceField(goals);
+            GoalTurnBounds turnBounds=new GoalTurnBounds(goals,gridWidth,gridHeight);
+            // A tree join may reach non-joinable own copper on the way to an
+            // admissible trunk cell; keep the global minimum in that shape.
+            int minimumStepCost=endPad==null ? MINIMUM_STEP_COST : minimumStepCost(netId);
 
             final int noneDirection = 4;
             final int[] directionX = { 0, 1, 0, -1 };
@@ -510,7 +608,8 @@ final class PcbNetRouter {
             int sequence = 0;
             previous[stateKey(startX,startY,noneDirection)] = -1;
             open.add(new SearchNode(startX, startY, noneDirection, 0,
-                lowerBound(distances[startY*gridWidth+startX],endPad), sequence++));
+                lowerBound(distances[startY*gridWidth+startX],minimumStepCost,
+                    turnBounds.minimumTurns(startX,startY,noneDirection)), sequence++));
             SearchNode goal = null;
             int expanded = 0;
             while (!open.isEmpty()) {
@@ -551,7 +650,9 @@ final class PcbNetRouter {
                     bestCost[nextKey] = cost;
                     previous[nextKey] = currentKey+1;
                     open.add(new SearchNode(nextX, nextY, direction, cost,
-                        lowerBound(distances[nextY*gridWidth+nextX],endPad), sequence++));
+                        lowerBound(distances[nextY*gridWidth+nextX],minimumStepCost,
+                            turnBounds.minimumTurns(nextX,nextY,direction)),
+                        sequence++));
                 }
             }
             if (goal == null)
@@ -605,13 +706,16 @@ final class PcbNetRouter {
                             traceStroke(px,py,px,py,activeTraceWidth)))) return false;
             return true;
         }
-        private int lowerBound(int distance,PcbPadPlacement end) {
-            if(layer!=PcbCopperLayer.BOTTOM || !emptyComponentFace) return distance*MINIMUM_STEP_COST;
-            // All parts in the bottom-layer envelope mount on top. Thus every
-            // cell of existing same-net copper is a goal: the cost-2 step can
-            // occur only once, at arrival; preceding fresh/clearance steps cost
-            // at least 7. The initial two-pad branch has no same-net copper yet.
-            return end!=null ? distance*10 : Math.max(0,distance*7-5);
+        private int lowerBound(int distance,int minimumStepCost,int minimumTurns) {
+            return admissibleLowerBound(distance,minimumStepCost,minimumTurns);
+        }
+        private int minimumStepCost(String netId) {
+            boolean sameNetClearanceExists = false;
+            for(int x=0;x<gridWidth;x++) for(int y=0;y<gridHeight;y++) {
+                if(netId.equals(occupiedNet[x][y])) return MINIMUM_STEP_COST;
+                if(netId.equals(clearanceNet[x][y])) sameNetClearanceExists = true;
+            }
+            return sameNetClearanceExists ? CLEARANCE_STEP_COST : FRESH_STEP_COST;
         }
         /** Manhattan lower bound to ANY connected trunk cell, multiplied by the true minimum step cost. */
         private int[] distanceField(boolean[] goals) {
@@ -628,6 +732,10 @@ final class PcbNetRouter {
             return distance;
         }
 
+        /**
+         * Exact obstacle-free lower bound on turns to any goal. Prefix counts
+         * answer row, column, and forward-quadrant queries in constant time.
+         */
         private boolean isLegalMove(int fromX, int fromY, int nextX, int nextY, int direction,
                 int startX, int startY, int endX, int endY, PcbPadPlacement startPad,
                 PcbPadPlacement endPad) {

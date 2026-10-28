@@ -44,6 +44,26 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
     private double lastInputCurrent = Double.NaN;
     private double lastEnableFraction = Double.NaN;
     private double lastOutputDrop = Double.NaN;
+    // Adjacent actual Newton node points are retained only within one
+    // timestep. They support a secant Jacobian when a trial crosses a known
+    // piecewise-law knee; the current law and stamped operating-point value
+    // remain the exact bounded model values.
+    private int priorNewtonSubIteration = -1;
+    private double priorNewtonTime = Double.NaN;
+    private double priorNewtonInputVoltage = Double.NaN;
+    private double priorNewtonEnableVoltage = Double.NaN;
+    private double priorNewtonRequestedDrop = Double.NaN;
+    private boolean priorNewtonOutputActive;
+    private boolean priorNewtonStampValid;
+    private double priorNewtonEvaluationOutput = Double.NaN;
+    private double priorNewtonOutputCurrent = Double.NaN;
+    private double priorNewtonOutputConductance = Double.NaN;
+    private double priorNewtonOutputInputGain = Double.NaN;
+    private double priorNewtonOutputEnableGain = Double.NaN;
+    private double priorNewtonInputCurrent = Double.NaN;
+    private double priorNewtonInputGain = Double.NaN;
+    private double priorNewtonInputOutputGain = Double.NaN;
+    private double priorNewtonInputEnableGain = Double.NaN;
 
     AbstractRailRegulatorElm(int x, int y, RailRegulationContract contract) {
         super(x, y);
@@ -108,6 +128,11 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         sim.stampResistor(nodes[ENABLE_POST], nodes[RETURN_POST], ENABLE_LEAK_OHMS);
     }
 
+    void startIteration() {
+        super.startIteration();
+        clearNewtonChordHistory();
+    }
+
     void doStep() {
         validateContractForModel();
         double inputVoltage = getInputVoltage();
@@ -117,6 +142,8 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         double target = targetVoltage(inputVoltage, enableFraction);
         boolean outputActive = target > 0.0;
         double requestedDrop = target - outputVoltage;
+        boolean adjacentSolvedPoint = hasAdjacentSolvedPoint();
+        boolean adjacentNewtonPoint = hasAdjacentNewtonPoint(outputActive);
         double evaluationDrop = limitNewtonDrop(requestedDrop, target,
                 outputActive);
         double evaluationOutput = target - evaluationDrop;
@@ -133,6 +160,19 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         double outputConductance = outputConductanceForDrop(evaluationDrop,
                 outputActive);
         double targetInputSlope = targetInputSlope(inputVoltage, enableFraction);
+        if (adjacentNewtonPoint) {
+            outputConductance = outputKinkChordConductance(
+                    priorNewtonRequestedDrop, requestedDrop, outputActive,
+                    outputConductance);
+            targetInputSlope = targetInputChordSlope(priorNewtonInputVoltage,
+                    inputVoltage, enableFraction, targetInputSlope);
+        }
+        double inputLoadConductance = outputCurrent >= 0.0 ?
+                outputConductance : 0.0;
+        if (adjacentNewtonPoint)
+            inputLoadConductance = inputLoadKinkChordConductance(
+                    priorNewtonRequestedDrop, requestedDrop, outputActive,
+                    inputLoadConductance);
         double targetEnableSlope = targetEnableSlope(inputVoltage, enableVoltage);
         double outputInputGain = outputActive ?
                 -outputConductance * targetInputSlope : 0.0;
@@ -156,8 +196,11 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
 
         InputLinearization input = inputLinearization(inputVoltage,
                 evaluationOutput, outputCurrent, enableFraction,
-                targetInputSlope, targetEnableSlope, outputConductance,
+                targetInputSlope, targetEnableSlope, inputLoadConductance,
                 outputActive);
+        boolean physicalCurrentResidual = adjacentSolvedPoint &&
+                priorStampHasPhysicalCurrentResidual(inputVoltage,
+                        outputVoltage, enableVoltage, target, outputActive);
         sim.stampConductance(nodes[INPUT_POST], nodes[RETURN_POST], input.inputGain);
         sim.stampVCCurrentSource(nodes[INPUT_POST], nodes[RETURN_POST],
                 nodes[OUTPUT_POST], nodes[RETURN_POST], input.outputGain);
@@ -172,12 +215,16 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         boolean inputChanged = changed(lastInputCurrent, input.current);
         boolean enableChanged = changed(lastEnableFraction, enableFraction);
         boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
-        if (boundedTrial || targetChanged || inputChanged || enableChanged || outputChanged)
+        if (boundedTrial || targetChanged || inputChanged || enableChanged ||
+                outputChanged || physicalCurrentResidual)
             sim.converged = false;
         lastTarget = target;
         lastInputCurrent = input.current;
         lastEnableFraction = enableFraction;
         lastOutputDrop = evaluationDrop;
+        rememberNewtonPoint(inputVoltage, enableVoltage, requestedDrop,
+                outputActive, evaluationOutput, outputCurrent,
+                outputConductance, outputInputGain, outputEnableGain, input);
         current = getInputCurrent();
     }
 
@@ -214,6 +261,197 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         return base * enableFractionSlope(enableVoltage);
     }
 
+    private boolean hasAdjacentNewtonPoint(boolean outputActive) {
+        return hasAdjacentSolvedPoint() &&
+                priorNewtonOutputActive == outputActive;
+    }
+
+    private boolean hasAdjacentSolvedPoint() {
+        return sim.subIterations > 0 &&
+                priorNewtonSubIteration == sim.subIterations - 1 &&
+                priorNewtonTime == sim.t &&
+                finite(priorNewtonInputVoltage) &&
+                finite(priorNewtonRequestedDrop);
+    }
+
+    private void rememberNewtonPoint(double inputVoltage,
+            double enableVoltage, double requestedDrop, boolean outputActive,
+            double evaluationOutput, double outputCurrent,
+            double outputConductance, double outputInputGain,
+            double outputEnableGain, InputLinearization input) {
+        priorNewtonSubIteration = sim.subIterations;
+        priorNewtonTime = sim.t;
+        priorNewtonInputVoltage = inputVoltage;
+        priorNewtonEnableVoltage = enableVoltage;
+        priorNewtonRequestedDrop = requestedDrop;
+        priorNewtonOutputActive = outputActive;
+        priorNewtonStampValid = true;
+        priorNewtonEvaluationOutput = evaluationOutput;
+        priorNewtonOutputCurrent = outputCurrent;
+        priorNewtonOutputConductance = outputConductance;
+        priorNewtonOutputInputGain = outputInputGain;
+        priorNewtonOutputEnableGain = outputEnableGain;
+        priorNewtonInputCurrent = input.current;
+        priorNewtonInputGain = input.inputGain;
+        priorNewtonInputOutputGain = input.outputGain;
+        priorNewtonInputEnableGain = input.enableGain;
+    }
+
+    private void clearNewtonChordHistory() {
+        priorNewtonSubIteration = -1;
+        priorNewtonTime = Double.NaN;
+        priorNewtonInputVoltage = Double.NaN;
+        priorNewtonEnableVoltage = Double.NaN;
+        priorNewtonRequestedDrop = Double.NaN;
+        priorNewtonOutputActive = false;
+        priorNewtonStampValid = false;
+        priorNewtonEvaluationOutput = Double.NaN;
+        priorNewtonOutputCurrent = Double.NaN;
+        priorNewtonOutputConductance = Double.NaN;
+        priorNewtonOutputInputGain = Double.NaN;
+        priorNewtonOutputEnableGain = Double.NaN;
+        priorNewtonInputCurrent = Double.NaN;
+        priorNewtonInputGain = Double.NaN;
+        priorNewtonInputOutputGain = Double.NaN;
+        priorNewtonInputEnableGain = Double.NaN;
+    }
+
+    /**
+     * CircuitJS tests convergence before it factors this trial's new matrix.
+     * Compare the actual model currents at the solved nodes with the affine
+     * currents from the matrix that produced them; small state changes alone
+     * cannot certify this element's KCL residual across a piecewise knee.
+     */
+    private boolean priorStampHasPhysicalCurrentResidual(double inputVoltage,
+            double outputVoltage, double enableVoltage, double target,
+            boolean outputActive) {
+        if (!priorNewtonStampValid) return true;
+        double predictedOutputCurrent = priorNewtonOutputCurrent +
+                priorNewtonOutputConductance *
+                    (priorNewtonEvaluationOutput - outputVoltage) -
+                priorNewtonOutputInputGain *
+                    (inputVoltage - priorNewtonInputVoltage) -
+                priorNewtonOutputEnableGain *
+                    (enableVoltage - priorNewtonEnableVoltage);
+        double actualOutputCurrent = outputCurrentForDrop(
+                target - outputVoltage, outputActive);
+        double predictedInputCurrent = priorNewtonInputCurrent +
+                priorNewtonInputGain *
+                    (inputVoltage - priorNewtonInputVoltage) +
+                priorNewtonInputOutputGain *
+                    (outputVoltage - priorNewtonEvaluationOutput) +
+                priorNewtonInputEnableGain *
+                    (enableVoltage - priorNewtonEnableVoltage);
+        // The 1 Mohm input-to-return leak is a separate, exactly linear stamp.
+        double actualInputCurrent = getInputCurrent() - getInputLeakCurrent();
+        double tolerance = Math.max(CURRENT_LIMIT_TOLERANCE_AMPS,
+                contract.getMaximumOutputCurrentAmps() * 1e-7);
+        return !finite(predictedOutputCurrent) ||
+                !finite(actualOutputCurrent) ||
+                !finite(predictedInputCurrent) || !finite(actualInputCurrent) ||
+                Math.abs(actualOutputCurrent - predictedOutputCurrent) > tolerance ||
+                Math.abs(actualInputCurrent - predictedInputCurrent) > tolerance;
+    }
+
+    /**
+     * Use the physical secant only when adjacent solved drops cross an output
+     * law knee. Elsewhere the exact local derivative is the better Jacobian.
+     */
+    private double outputKinkChordConductance(double previousDrop,
+            double currentDrop, boolean outputActive, double localConductance) {
+        double knee = contract.getMaximumOutputCurrentAmps() *
+                contract.getOutputResistanceOhms();
+        if (!outputActive || !crossesKink(previousDrop, currentDrop, 0.0) &&
+                !crossesKink(previousDrop, currentDrop, knee))
+            return localConductance;
+        double delta = currentDrop - previousDrop;
+        if (Math.abs(delta) < 1e-9 ||
+                Math.abs(delta) > MAX_NEWTON_DROP_STEP_VOLTS)
+            return localConductance;
+        double previousCurrent = outputCurrentForDrop(previousDrop, true);
+        double currentOutputCurrent = outputCurrentForDrop(currentDrop, true);
+        double secant = (currentOutputCurrent - previousCurrent) / delta;
+        double resistanceSlope = 1.0 / contract.getOutputResistanceOhms();
+        double minimum = Math.min(CURRENT_LIMIT_LEAKAGE_SIEMENS,
+                Math.min(REVERSE_LEAKAGE_SIEMENS, resistanceSlope));
+        double maximum = Math.max(CURRENT_LIMIT_LEAKAGE_SIEMENS,
+                Math.max(REVERSE_LEAKAGE_SIEMENS, resistanceSlope));
+        double tolerance = Math.max(1e-12, maximum * 1e-10);
+        if (!finite(secant) || secant < minimum - tolerance ||
+                secant > maximum + tolerance)
+            return localConductance;
+        return Math.max(minimum, Math.min(maximum, secant));
+    }
+
+    /**
+     * The input port sees only max(0, delivered output current). Its chord
+     * therefore has a separate secant across the reverse-to-forward boundary;
+     * output reverse leakage remains dissipated at OUTPUT.
+     */
+    private double inputLoadKinkChordConductance(double previousDrop,
+            double currentDrop, boolean outputActive, double localConductance) {
+        double knee = contract.getMaximumOutputCurrentAmps() *
+                contract.getOutputResistanceOhms();
+        if (!outputActive || !crossesKink(previousDrop, currentDrop, 0.0) &&
+                !crossesKink(previousDrop, currentDrop, knee))
+            return localConductance;
+        double delta = currentDrop - previousDrop;
+        if (Math.abs(delta) < 1e-9 ||
+                Math.abs(delta) > MAX_NEWTON_DROP_STEP_VOLTS)
+            return localConductance;
+        double previousLoad = Math.max(0.0,
+                outputCurrentForDrop(previousDrop, true));
+        double currentLoad = Math.max(0.0,
+                outputCurrentForDrop(currentDrop, true));
+        double secant = (currentLoad - previousLoad) / delta;
+        double maximum = Math.max(CURRENT_LIMIT_LEAKAGE_SIEMENS,
+                1.0 / contract.getOutputResistanceOhms());
+        double tolerance = Math.max(1e-12, maximum * 1e-10);
+        if (!finite(secant) || secant < -tolerance ||
+                secant > maximum + tolerance)
+            return localConductance;
+        return Math.max(0.0, Math.min(maximum, secant));
+    }
+
+    /** Secant the dropout/nominal target slope only across its real knee. */
+    private double targetInputChordSlope(double previousInputVoltage,
+            double currentInputVoltage, double enableFraction,
+            double localSlope) {
+        double dropout = contract.getDropoutVolts();
+        double nominal = contract.getNominalOutputVolts();
+        boolean previousOnDroopBranch = previousInputVoltage > dropout &&
+                previousInputVoltage < dropout + nominal;
+        boolean currentOnDroopBranch = currentInputVoltage > dropout &&
+                currentInputVoltage < dropout + nominal;
+        if (previousOnDroopBranch == currentOnDroopBranch)
+            return localSlope;
+        double delta = currentInputVoltage - previousInputVoltage;
+        if (Math.abs(delta) < 1e-9 ||
+                Math.abs(delta) > MAX_NEWTON_DROP_STEP_VOLTS)
+            return localSlope;
+        double previousBase = baseTargetVoltage(previousInputVoltage);
+        double currentBase = baseTargetVoltage(currentInputVoltage);
+        double secant = enableFraction * (currentBase - previousBase) / delta;
+        double tolerance = Math.max(1e-12, enableFraction * 1e-10);
+        if (!finite(secant) || secant < -tolerance ||
+                secant > enableFraction + tolerance)
+            return localSlope;
+        return Math.max(0.0, Math.min(enableFraction, secant));
+    }
+
+    private double baseTargetVoltage(double inputVoltage) {
+        double available = inputVoltage - contract.getDropoutVolts();
+        if (available <= 0.0) return 0.0;
+        return Math.min(contract.getNominalOutputVolts(), available);
+    }
+
+    private static boolean crossesKink(double first, double second,
+            double kink) {
+        return first != second &&
+                (first <= kink && second >= kink ||
+                second <= kink && first >= kink);
+    }
+
     private double enableFractionSlope(double enableVoltage) {
         if (enableVoltage <= contract.getEnableLowVolts() ||
                 enableVoltage >= contract.getEnableHighVolts()) return 0.0;
@@ -229,7 +467,7 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
     private InputLinearization inputLinearization(double inputVoltage,
             double outputVoltage, double outputCurrent, double enableFraction,
             double targetInputSlope, double targetEnableSlope,
-            double outputConductance, boolean outputActive) {
+            double inputLoadConductance, boolean outputActive) {
         if (enableFraction <= 0.0 || inputVoltage <= 0.0)
             return new InputLinearization(0.0, 0.0, 0.0, 0.0);
         double enableSlope = enableFractionSlope(getEnableVoltage());
@@ -237,15 +475,19 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         if (!outputActive)
             return new InputLinearization(quiescent * enableFraction,
                     0.0, 0.0, quiescent * enableSlope);
-        double loadInputGain = outputConductance * targetInputSlope;
-        double loadOutputGain = -outputConductance;
-        double loadEnableGain = outputConductance * targetEnableSlope;
+        // The delivered current is clamped exactly as in inputCurrent(). The
+        // preselected load conductance is zero on an ordinary reverse trial,
+        // but may be a physical secant across the reverse-to-forward knee.
+        double deliveredOutputCurrent = Math.max(0.0, outputCurrent);
+        double loadInputGain = inputLoadConductance * targetInputSlope;
+        double loadOutputGain = -inputLoadConductance;
+        double loadEnableGain = inputLoadConductance * targetEnableSlope;
         double current;
         double inputGain;
         double outputGain;
         double enableGain;
         if (!contract.isAveragedSwitching()) {
-            current = outputCurrent + quiescent * enableFraction;
+            current = deliveredOutputCurrent + quiescent * enableFraction;
             inputGain = loadInputGain;
             outputGain = loadOutputGain;
             enableGain = loadEnableGain + quiescent * enableSlope;
@@ -253,13 +495,13 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
             double efficiency = contract.getEfficiency();
             double conversion = inputVoltage > 0.0 ?
                     Math.max(0.0, outputVoltage) / (inputVoltage * efficiency) : 0.0;
-            current = conversion * outputCurrent + quiescent * enableFraction;
+            current = conversion * deliveredOutputCurrent + quiescent * enableFraction;
             inputGain = conversion * loadInputGain;
             if (inputVoltage > 0.0 && outputVoltage > 0.0)
-                inputGain -= outputVoltage * outputCurrent /
+                inputGain -= outputVoltage * deliveredOutputCurrent /
                         (inputVoltage * inputVoltage * efficiency);
             outputGain = (inputVoltage > 0.0 && outputVoltage > 0.0 ?
-                    outputCurrent / (inputVoltage * efficiency) : 0.0) +
+                    deliveredOutputCurrent / (inputVoltage * efficiency) : 0.0) +
                     conversion * loadOutputGain;
             enableGain = conversion * loadEnableGain + quiescent * enableSlope;
         }
@@ -376,6 +618,7 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         lastInputCurrent = Double.NaN;
         lastEnableFraction = Double.NaN;
         lastOutputDrop = Double.NaN;
+        clearNewtonChordHistory();
     }
 
     void getInfo(String arr[]) {
@@ -457,9 +700,10 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
         // first Newton trial.  Reject only a persistent unsupported region;
         // the changed-target trial is allowed to settle to its new bounded
         // operating point.
-        if (inputVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
-                !changed(lastTarget, target))
-            throw new IllegalArgumentException("Negative E02 rail source is unsupported");
+        // The contract's nonpositive-input approximation is only the fixed
+        // passive INPUT-to-RETURN leakage.  It does not regulate, deliver
+        // reverse current, or grant a reverse-voltage rating.  The same
+        // absolute terminal envelope is checked below for either polarity.
         if (enableVoltage < -UNSUPPORTED_VOLTAGE_TOLERANCE &&
                 !changed(lastTarget, target))
             throw new IllegalArgumentException("Negative E02 enable source is unsupported");
@@ -492,9 +736,9 @@ abstract class AbstractRailRegulatorElm extends CircuitElm {
                 "Unsupported E02 rail output backfeed voltage: output=" +
                 outputVoltage + " target=" + target + " ceiling=" +
                 contract.getMaximumInputVolts());
-        if (inputVoltage > contract.getMaximumInputVolts() +
+        if (Math.abs(inputVoltage) > contract.getMaximumInputVolts() +
                 UNSUPPORTED_VOLTAGE_TOLERANCE && !boundedTrial)
-            throw new IllegalArgumentException("Rail input exceeds declared envelope:" +
+            throw new IllegalArgumentException("Rail input exceeds declared absolute envelope:" +
                 " input=" + inputVoltage + " maximum=" + contract.getMaximumInputVolts() +
                 " rawOutput=" + getOutputVoltage() + " evaluationOutput=" + outputVoltage +
                 " enable=" + enableVoltage + " target=" + target +

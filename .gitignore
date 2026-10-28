@@ -6,6 +6,18 @@ war/circuitjs1/
 war/circuitjs1/circuits/
 war/e-*.html
 war/WEB-INF/
+**/__pycache__/
+*.py[cod]
+docs/task-evidence/**/*.log
+# Keep raw captures and profiles in task-owned scratch, with compact Markdown
+# receipts and the required small screenshot set available for review.
+docs/task-evidence/**/*.json
+docs/task-evidence/**/*.jsonl
+docs/task-evidence/**/*.txt
+docs/task-evidence/**/*.out
+docs/task-evidence/**/*.err
+docs/task-evidence/**/*.gz
+docs/task-evidence/**/*.zip
 
 # Windows image file caches
 Thumbs.db

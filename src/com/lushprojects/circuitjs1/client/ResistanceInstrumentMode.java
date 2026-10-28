@@ -66,10 +66,11 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
         controller.validateTargetsForStrategy();
         red = controller.getRedProbeForStrategy();
         black = controller.getBlackProbeForStrategy();
-        boolean completed = !Double.isNaN(getState().getPrimaryValue()) && getState().getPrimaryValue() >= 0;
+        boolean completed = getState().getPrimaryValue() >= 0 &&
+            !Double.isNaN(getState().getPrimaryValue()) && !Double.isInfinite(getState().getPrimaryValue());
         if (red == null || black == null ||
                 !controller.isMeasurementAllowedForStrategy(this, red, black) &&
-                !(completed && !continuity && controller.canDisplayCompletedResistanceForStrategy(this, red, black))) {
+                !(completed && controller.canDisplayCompletedMeasurementForStrategy(this, red, black))) {
             getState().setPrimaryValue(Double.NaN);
             getState().setContinuityDetected(false);
         }
@@ -85,9 +86,10 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
             text = getInitialDisplay();
             getState().setContinuityDetected(false);
         } else if (!controller.isMeasurementAllowedForStrategy(this, red, black) &&
-                !(resistance >= 0 && !continuity &&
-                    controller.canDisplayCompletedResistanceForStrategy(this, red, black))) {
+                !(resistance >= 0 && !Double.isInfinite(resistance) &&
+                    controller.canDisplayCompletedMeasurementForStrategy(this, red, black))) {
             text = controller.getActiveMeasurementReadinessForStrategy(red, black).getDisplayText();
+            getState().setPrimaryValue(Double.NaN);
             getState().setContinuityDetected(false);
         } else if (Double.isNaN(resistance)) {
             text = getInitialDisplay();
@@ -101,9 +103,9 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
             getState().setContinuityDetected(continuity &&
                 resistance <= CONTINUITY_THRESHOLD_OHMS);
         }
-        if (!continuity && resistance >= 0 &&
+        if (resistance >= 0 && !Double.isInfinite(resistance) &&
                 controller.getActiveMeasurementReadinessForStrategy(red, black) == ActiveMeasurementReadiness.DISCHARGE &&
-                controller.canDisplayCompletedResistanceForStrategy(this, red, black))
+                controller.canDisplayCompletedMeasurementForStrategy(this, red, black))
             status = "Reading held; discharge first";
         getState().setDisplayText(text);
         controller.setInstrumentDisplayForStrategy(text);
@@ -120,7 +122,7 @@ final class ResistanceInstrumentMode extends AbstractInstrumentModeStrategy {
                  controller.getRedProbeForStrategy() != null &&
                  controller.getBlackProbeForStrategy() != null)))
             controller.updateReadingForStrategy();
-        else if (!continuity && getState().getPrimaryValue() >= 0)
+        else if (getState().getPrimaryValue() >= 0)
             display(controller);
     }
 

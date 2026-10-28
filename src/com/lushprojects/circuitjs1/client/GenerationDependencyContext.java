@@ -21,11 +21,11 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    // E02's bounded bipolar disabled-output leakage changes the accepted
-    // operating envelope even though its serialized declaration is unchanged.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v18";
+    // Corrected bipolar meters, supply-loaded sensor output and routing v20
+    // invalidate proof values and serialized models from the earlier epoch.
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v19";
     static final String CIRCUIT_DUMP_EPOCH =
-        "circuitjs-source-load-model-inputs-no-transient-dump-v6";
+        "circuitjs-source-load-model-inputs-no-transient-dump-v7";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";
     private static final String POWER_DYNAMIC_INPUT_POLICY =
         "excluded:SolverExecutionBoundary.Observation,rail-voltage-samples," +

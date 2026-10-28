@@ -13,11 +13,16 @@ permissions:
 jobs:
   gate-b:
     name: Gate B Windows JDK8 deterministic verification
-    runs-on: windows-latest
-    timeout-minutes: 15
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 90
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        env:
+          GIT_CONFIG_COUNT: '1'
+          GIT_CONFIG_KEY_0: core.longpaths
+          GIT_CONFIG_VALUE_0: 'true'
 
       - name: Select JDK 8
         uses: actions/setup-java@v4
@@ -58,6 +63,14 @@ jobs:
             throw 'No compiled GWT permutation cache artifact was produced.'
           }
           Write-Host "GWT artifacts: bootstrap=$nocache permutations=$($cacheFiles.Count)"
+
+      - name: Run every current native contract and independent oracle
+        shell: pwsh
+        run: .\scripts\verify-current-contracts.ps1 -JavaHome $env:JAVA_HOME
+
+      - name: Run live preview listener and TCP Host contracts
+        shell: pwsh
+        run: .\tests\contracts\preview-listener-identity.ps1 -Live
 
       - name: Verify renderer/provider boundary
         shell: pwsh

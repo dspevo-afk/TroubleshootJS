@@ -574,7 +574,7 @@ class InstrumentController {
     boolean selectPlayerMode(String id) {
         if (!isCurrentPlayerInteractionAllowed() || id == null ||
                 !("NONE".equals(id) || modeButtons.containsKey(id))) return false;
-        setActiveMode(id, true);
+        toggleMode(id);
         updateReading();
         return true;
     }
@@ -886,20 +886,48 @@ class InstrumentController {
             reading : Double.NaN;
     }
 
-    /** A completed Ω value may coexist with a block on the next injection. */
-    boolean canDisplayCompletedResistanceForStrategy(InstrumentModeStrategy strategy,
+    /** A completed active-test result may coexist with a block on the next injection. */
+    boolean canDisplayCompletedMeasurementForStrategy(InstrumentModeStrategy strategy,
             ProbeTarget red, ProbeTarget black) {
-        if (activeStrategy != strategy || !"RESISTANCE".equals(strategy.getId()) ||
+        if (strategy == null || activeStrategy != strategy ||
+                !isCompletedMeasurementMode(strategy.getId()) ||
                 redProbe != red || blackProbe != black || red == null || black == null ||
                 !red.isValid() || !black.isValid() || !sim.isChallengeInteractionEnabled() ||
-                !sim.getBoardPowerController().isElectricallyUnpowered()) return false;
+                !sim.getBoardPowerController().isElectricallyUnpowered() ||
+                sim.activeMeasurementOverlay) return false;
         ActiveMeasurementReadiness readiness = getActiveMeasurementReadinessForStrategy(red, black);
-        return readiness == ActiveMeasurementReadiness.READY || readiness == ActiveMeasurementReadiness.DISCHARGE;
+        return canRetainCompletedMeasurementAtReadiness(strategy.getId(), true, readiness);
     }
 
-    DiodeMeasurementResult measureDiodeForStrategy(ProbeTarget red, ProbeTarget black) {
-        return measurementAdapter.measureDiode(red, black,
-            activeStrategy == null ? null : activeStrategy.getMode());
+    /** Shared retained-reading policy; READY admits refresh and DISCHARGE only retains a past sample. */
+    static boolean canRetainCompletedMeasurementAtReadiness(String modeId, boolean completed,
+            ActiveMeasurementReadiness readiness) {
+        return completed && isCompletedMeasurementMode(modeId) &&
+            (readiness == ActiveMeasurementReadiness.READY || readiness == ActiveMeasurementReadiness.DISCHARGE);
+    }
+
+    private static boolean isCompletedMeasurementMode(String modeId) {
+        return "RESISTANCE".equals(modeId) || "CONTINUITY".equals(modeId) || "DIODE".equals(modeId);
+    }
+
+    DiodeMeasurementResult measureDiodeForStrategy(InstrumentModeStrategy strategy,
+            ProbeTarget red, ProbeTarget black) {
+        if (strategy == null || activeStrategy != strategy || redProbe != red || blackProbe != black ||
+                strategy.getState().isRefreshPending() || !isMeasurementAllowedForStrategy(strategy, red, black))
+            return null;
+        ActiveMeasurementSession session = new ActiveMeasurementSession(sim, red, black);
+        try {
+            if (!session.hasValidTargets())
+                return null;
+            DiodeMeasurementResult result = measurementAdapter.measureDiode(red, black, strategy.getMode());
+            return activeStrategy == strategy && redProbe == red && blackProbe == black &&
+                !strategy.getState().isRefreshPending() && sim.isChallengeInteractionEnabled() &&
+                sim.getBoardPowerController().isElectricallyUnpowered() &&
+                !sim.activeMeasurementOverlay && sim.stopMessage == null &&
+                sim.isGeneratedRuntimeSettled() && session.hasValidTargets() ? result : null;
+        } finally {
+            session.close();
+        }
     }
 
     boolean isMeasurementAllowedForStrategy(InstrumentModeStrategy strategy,
@@ -932,7 +960,14 @@ class InstrumentController {
 
     void setContinuityFeedbackForStrategy(boolean active) {
         continuityLabel.setVisible(active);
-        continuityFeedback.setActive(active);
+        boolean audible = active;
+        if (active && activeStrategy != null && "CONTINUITY".equals(activeStrategy.getId())) {
+            ActiveMeasurementReadiness readiness = getActiveMeasurementReadinessForStrategy(redProbe, blackProbe);
+            // The captured indicator can stay visible, but an old continuity result
+            // must not keep sounding while stored energy blocks a new injection.
+            audible = readiness == ActiveMeasurementReadiness.READY;
+        }
+        continuityFeedback.setActive(audible);
     }
 
     void finishActiveMeasurementForStrategy() {

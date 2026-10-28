@@ -11,6 +11,7 @@ import java.util.Comparator;
 final class GenerationJob {
     static final int MAX_CANDIDATES = 80;
     private static final int STAGE_COUNT = 6;
+    private static final int POST_HYPOTHESIS_WORK_UNITS = 2;
 
     interface Services {
         int candidateCount();
@@ -142,6 +143,7 @@ final class GenerationJob {
     private int nextCandidatePosition;
     private int candidateIndex = -1;
     private int stepCount;
+    private int candidateStepCount;
     private int proofStepCount;
     private boolean candidateActive;
     private boolean needsAbort;
@@ -158,8 +160,12 @@ final class GenerationJob {
     private final long[] stageElapsedMillis = new long[STAGE_COUNT];
     private final int[] stageWorkCounts = new int[STAGE_COUNT];
     private final int[] candidateStageWorkCounts = new int[STAGE_COUNT];
+    private Stage openStageTelemetry;
+    private int openStageTelemetryCandidate = -1;
+    private long openStageTelemetryStartedMillis;
+    private long openStageTelemetryLastFinishedMillis;
+    private long openStageTelemetryBaseMillis;
     private final ArrayList<Attempt> attempts = new ArrayList<Attempt>();
-    private int candidateStartedSteps;
 
     static final class Attempt {
         final int ordinal, workUnits, proofUnits;
@@ -181,7 +187,7 @@ final class GenerationJob {
     private void recordAttempt(Outcome result) {
         if (candidateIndex < 0 || (!attempts.isEmpty() && attempts.get(attempts.size()-1).ordinal==candidateIndex)) return;
         attempts.add(new Attempt(candidateIndex, currentManifest(), stage, result,
-            stepCount-candidateStartedSteps, candidateStageWorkCounts[Stage.HYPOTHESES.ordinal()]));
+            candidateStepCount, candidateStageWorkCounts[Stage.HYPOTHESES.ordinal()]));
     }
 
     GenerationJob(Services services, long maxJobMillis, int maxSteps, long maxStepMillis) {
@@ -249,35 +255,57 @@ final class GenerationJob {
                 throw new Failure(Outcome.WORK_EXHAUSTED,
                     "Generation work budget exhausted at " + maxSteps + " steps");
             stepCount++;
+            if (candidateActive)
+                candidateStepCount++;
             stageAttempted = true;
             stageWorkCounts[attempted.ordinal()]++;
             candidateStageWorkCounts[attempted.ordinal()]++;
             boolean more = runStage(attempted);
-            recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+            recordStageTelemetry(attempted, stageStarted, lastObservedMillis,
+                outcome != Outcome.RUNNING || stage != attempted);
             telemetryRecorded = true;
             if (outcome == Outcome.PASS)
                 completedElapsedMillis = elapsedAt(lastObservedMillis);
             return more;
         } catch (Rejected rejected) {
+            long rejectedFinished = sampleFailureMillis();
+            try {
+                checkUnitClock();
+            } catch (CheckpointFailure deadline) {
+                addSuppressed(deadline, rejected);
+                unitActive = false;
+                if (stageAttempted && !telemetryRecorded)
+                    recordStageTelemetry(attempted, stageStarted, rejectedFinished, true);
+                else
+                    closeOpenStageTelemetry(rejectedFinished);
+                return failTerminal(deadline, deadline.getOutcome());
+            }
             unitActive = false;
             if (stageAttempted && !telemetryRecorded)
-                recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+                recordStageTelemetry(attempted, stageStarted, rejectedFinished, true);
             return handleRejection(rejected);
         } catch (CheckpointFailure checkpointFailure) {
             unitActive = false;
             if (stageAttempted && !telemetryRecorded)
-                recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+                recordStageTelemetry(attempted, stageStarted, lastObservedMillis, true);
+            else
+                closeOpenStageTelemetry(lastObservedMillis);
             return failTerminal(checkpointFailure, checkpointFailure.getOutcome());
         } catch (Failure boundedFailure) {
+            long failureFinished = sampleFailureMillis();
             unitActive = false;
             if (stageAttempted && !telemetryRecorded)
-                recordStageTelemetry(attempted, stageStarted, lastObservedMillis);
+                recordStageTelemetry(attempted, stageStarted, failureFinished, true);
+            else
+                closeOpenStageTelemetry(failureFinished);
             return failTerminal(boundedFailure, boundedFailure.getOutcome());
         } catch (Throwable unexpected) {
             unitActive = false;
             long failureFinished = sampleFailureMillis();
             if (stageAttempted && !telemetryRecorded)
-                recordStageTelemetry(attempted, stageStarted, failureFinished);
+                recordStageTelemetry(attempted, stageStarted, failureFinished, true);
+            else
+                closeOpenStageTelemetry(failureFinished);
             return failTerminal(unexpected, Outcome.PROGRAMMING_FAILURE);
         } finally {
             unitActive = false;
@@ -287,6 +315,7 @@ final class GenerationJob {
     void cancel() {
         if (outcome != Outcome.RUNNING)
             return;
+        sampleFailureMillis();
         Cancelled cancelled = new Cancelled("Generation cancelled");
         markTerminal(cancelled.getOutcome(), cancelled);
         unitActive = false;
@@ -309,6 +338,7 @@ final class GenerationJob {
         }
         unitActive = false;
         if (outcome == Outcome.RUNNING) {
+            sampleFailureMillis();
             markTerminal(Outcome.INFRASTRUCTURE_FAILURE, infrastructureFailure);
             // Scope entry can fail before a candidate is active.  It still
             // owns a live generation service that must receive one abort.
@@ -360,6 +390,7 @@ final class GenerationJob {
             throw new Failure(outcome, "Generation is " + outcome);
         }
         if (!services.isCurrent()) {
+            sampleFailureMillis();
             Stale stale = new Stale("Generation owner is stale");
             markTerminal(stale.getOutcome(), stale);
             throw stale;
@@ -392,6 +423,27 @@ final class GenerationJob {
         return stepCount;
     }
 
+    int getCandidateStepCount() {
+        return candidateStepCount;
+    }
+
+    int getRemainingStepCount() {
+        return maxSteps - stepCount;
+    }
+
+    /** Reserves proof plus mandatory post-proof work before diagnostic proof starts. */
+    void preflightProofWork(int proofUnits) {
+        if (!unitActive || !candidateActive || stage != Stage.PHYSICAL)
+            throw new IllegalStateException(
+                "Diagnostic work can only be preflighted after physical validation");
+        if (proofUnits < 1)
+            throw new IllegalArgumentException("Diagnostic proof must declare positive work");
+        long required = (long) proofUnits + POST_HYPOTHESIS_WORK_UNITS;
+        if (required > getRemainingStepCount())
+            throw new Failure(Outcome.WORK_EXHAUSTED,
+                "Remaining generation work budget cannot complete diagnostic proof and publication");
+    }
+
     int getCandidateIndex() {
         return candidateIndex;
     }
@@ -402,6 +454,7 @@ final class GenerationJob {
         return elapsedAt(lastObservedMillis);
     }
 
+    /** Returns the observed wall span through the latest completed unit/checkpoint. */
     long getStageElapsedMillis(Stage requestedStage) {
         if (requestedStage == null)
             throw new IllegalArgumentException("Missing generation stage");
@@ -614,6 +667,8 @@ final class GenerationJob {
     private void markTerminal(Outcome terminal, Throwable primary) {
         if (outcome != Outcome.RUNNING)
             return;
+        if (!unitActive)
+            closeOpenStageTelemetry(lastObservedMillis);
         outcome = terminal;
         failure = primary;
         needsAbort = true;
@@ -643,7 +698,7 @@ final class GenerationJob {
 
     private void resetCandidateAttempt() {
         clearCandidateLineage();
-        candidateStartedSteps = stepCount - 1;
+        candidateStepCount = 1;
         // RESOLVE entered before the candidate was initialized.
         candidateStageWorkCounts[Stage.RESOLVE.ordinal()] = 1;
         stage = Stage.RESOLVE;
@@ -661,15 +716,66 @@ final class GenerationJob {
         physicalDependencies = null;
     }
 
-    private void recordStageTelemetry(Stage completedStage, long stageStarted, long stageFinished) {
+    /**
+     * Records the wall span for one contiguous stage visit. Repeated work units
+     * in the same candidate keep the original start sample, so time between
+     * yielded turns is included. Candidate and stage boundaries close the
+     * visit before another one can start.
+     */
+    private void recordStageTelemetry(Stage completedStage, long stageStarted,
+            long stageFinished, boolean closeVisit) {
         int index = completedStage.ordinal();
-        long delta = stageFinished >= stageStarted ? stageFinished - stageStarted : 0;
-        if (delta < 0)
-            delta = Long.MAX_VALUE;
-        if (Long.MAX_VALUE - stageElapsedMillis[index] < delta)
-            stageElapsedMillis[index] = Long.MAX_VALUE;
-        else
-            stageElapsedMillis[index] += delta;
+        if (openStageTelemetry != completedStage ||
+                openStageTelemetryCandidate != candidateIndex) {
+            if (openStageTelemetry != null)
+                closeOpenStageTelemetry(openStageTelemetryLastFinishedMillis);
+            openStageTelemetry = completedStage;
+            openStageTelemetryCandidate = candidateIndex;
+            openStageTelemetryStartedMillis = stageStarted;
+            openStageTelemetryLastFinishedMillis = stageStarted;
+            openStageTelemetryBaseMillis = stageElapsedMillis[index];
+        }
+        long finished = monotonicStageFinish(stageFinished);
+        long span = elapsedBetween(openStageTelemetryStartedMillis, finished);
+        stageElapsedMillis[index] = saturatedAdd(openStageTelemetryBaseMillis, span);
+        openStageTelemetryLastFinishedMillis = finished;
+        if (closeVisit)
+            closeOpenStageTelemetry(finished);
+    }
+
+    private void closeOpenStageTelemetry(long stageFinished) {
+        if (openStageTelemetry == null)
+            return;
+        int index = openStageTelemetry.ordinal();
+        long finished = monotonicStageFinish(stageFinished);
+        long span = elapsedBetween(openStageTelemetryStartedMillis, finished);
+        stageElapsedMillis[index] = saturatedAdd(openStageTelemetryBaseMillis, span);
+        openStageTelemetry = null;
+        openStageTelemetryCandidate = -1;
+        openStageTelemetryStartedMillis = 0;
+        openStageTelemetryLastFinishedMillis = 0;
+        openStageTelemetryBaseMillis = 0;
+    }
+
+    private long monotonicStageFinish(long requestedFinish) {
+        if (requestedFinish < openStageTelemetryStartedMillis)
+            return openStageTelemetryStartedMillis;
+        if (requestedFinish < openStageTelemetryLastFinishedMillis)
+            return openStageTelemetryLastFinishedMillis;
+        return requestedFinish;
+    }
+
+    private static long elapsedBetween(long started, long finished) {
+        if (finished < started)
+            return 0;
+        long elapsed = finished - started;
+        return elapsed < 0 ? Long.MAX_VALUE : elapsed;
+    }
+
+    private static long saturatedAdd(long first, long second) {
+        if (Long.MAX_VALUE - first < second)
+            return Long.MAX_VALUE;
+        return first + second;
     }
 
     private long sampleFailureMillis() {

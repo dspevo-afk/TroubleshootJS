@@ -11,9 +11,17 @@ public final class A10GenerationContractTest {
         cancellationAtEveryStage();
         staleCallback();
         reorderedCandidateCollection();
+        physicalRejectionPrecedesDiagnosticProof();
+        perCandidateStepResetKeepsTheSharedCap();
         sameIdentityDespiteClocks();
         healthyPartialUnits();
+        remainingProofBudgetPreflight();
         unitClockStartsAfterYield();
+        stageTelemetrySpansYieldGapsAndResetsAtBoundaries();
+        rejectionTelemetrySamplesWorkWithoutCheckpoint();
+        boundedFailureTelemetrySamplesWorkWithoutCheckpoint();
+        staleAfterYieldCapturesStageAndJobTime();
+        publishTelemetrySnapshotBoundary();
         failedStageTelemetryAndBudgetIdentity();
         expectedAndUnexpectedFailure();
         missingReceiptAndChangedContext();
@@ -183,6 +191,41 @@ public final class A10GenerationContractTest {
         check(job.getStageWorkCount(GenerationJob.Stage.RESOLVE) == 2,
             "retry work telemetry remains in the bounded job ledger");
         check("z".equals(job.getReceipt().getManifest()), "receipt uses the winning manifest");
+        java.util.List<GenerationJob.Attempt> attempts = job.getAttempts();
+        check(attempts.size() == 2 && attempts.get(0).workUnits == 1 &&
+                attempts.get(1).workUnits == 6 && attempts.get(0).proofUnits == 0 &&
+                attempts.get(1).proofUnits == 1,
+            "candidate work and proof counts reset at the canonical retry boundary");
+    }
+
+    private static void perCandidateStepResetKeepsTheSharedCap() {
+        Harness service = new Harness(new String[] { "z", "a" });
+        service.rejectSource = 1;
+        GenerationJob job = new GenerationJob(service, 100000, 6, 5000);
+        runToTerminal(job);
+        java.util.List<GenerationJob.Attempt> attempts = job.getAttempts();
+        check(job.getOutcome() == GenerationJob.Outcome.WORK_EXHAUSTED &&
+                job.getStepCount() == 6,
+            "candidate retry cannot increase the job-wide work cap");
+        check(attempts.size() == 2 && attempts.get(0).workUnits == 1 &&
+                attempts.get(1).workUnits == 5 && job.getCandidateStepCount() == 5,
+            "second candidate starts a fresh counter while retaining total work accounting");
+    }
+
+    private static void physicalRejectionPrecedesDiagnosticProof() {
+        Harness service = new Harness(new String[] { "z", "a" });
+        service.rejectPhysicalSource = 1;
+        GenerationJob job = new GenerationJob(service, 100000, 80, 5000);
+        runToTerminal(job);
+        java.util.List<GenerationJob.Attempt> attempts = job.getAttempts();
+        check(job.getOutcome() == GenerationJob.Outcome.PASS && service.physicalSources.size() == 2,
+            "physical duplicate rejection retries the next canonical candidate");
+        check(service.physicalSources.get(0).intValue() == 1 &&
+                service.proofSources.size() == 1 && service.proofSources.get(0).intValue() == 0,
+            "rejected physical novelty candidate enters no diagnostic proof work");
+        check(attempts.size() == 2 && attempts.get(0).stage == GenerationJob.Stage.PHYSICAL &&
+                attempts.get(0).proofUnits == 0 && attempts.get(1).proofUnits == 1,
+            "retry receipts retain the physical rejection boundary and proof counts");
     }
 
     private static void sameIdentityDespiteClocks() {
@@ -271,6 +314,31 @@ public final class A10GenerationContractTest {
         check(empty.aborts == 1, "empty healthy output aborts its owner once");
     }
 
+    private static void remainingProofBudgetPreflight() {
+        Harness exact = new Harness(new String[] { "exact-budget" });
+        exact.proofUnits = 2;
+        exact.preflightProofUnits = 2;
+        GenerationJob exactJob = new GenerationJob(exact, 100000, 7, 5000);
+        exact.job = exactJob;
+        runToTerminal(exactJob);
+        check(exactJob.getOutcome() == GenerationJob.Outcome.PASS &&
+                exactJob.getStepCount() == 7 && exact.proofCalls == 2,
+            "proof preflight admits the exact remaining proof and publication budget");
+
+        Harness shortBudget = new Harness(new String[] { "short-budget" });
+        shortBudget.proofUnits = 2;
+        shortBudget.preflightProofUnits = 2;
+        GenerationJob shortJob = new GenerationJob(shortBudget, 100000, 6, 5000);
+        shortBudget.job = shortJob;
+        runToTerminal(shortJob);
+        check(shortJob.getOutcome() == GenerationJob.Outcome.WORK_EXHAUSTED &&
+                shortJob.getStage() == GenerationJob.Stage.PHYSICAL &&
+                shortJob.getStepCount() == 3 && shortJob.getRemainingStepCount() == 3,
+            "insufficient remaining work is classified before entering diagnostic proof");
+        check(shortBudget.proofCalls == 0 && !shortBudget.published,
+            "proof and publication remain untouched when preflight cannot reserve them");
+    }
+
     private static void unitClockStartsAfterYield() {
         Harness service = new Harness(new String[] { "yield" });
         GenerationJob job = new GenerationJob(service, 1000, 40, 10);
@@ -281,6 +349,160 @@ public final class A10GenerationContractTest {
             "inactive yield time consumes only the total wall budget");
         check(job.getStage() == GenerationJob.Stage.PHYSICAL,
             "post-yield unit advances the literal stage sequence");
+    }
+
+    private static void stageTelemetrySpansYieldGapsAndResetsAtBoundaries() {
+        Harness proof = new Harness(new String[] { "proof-gap" });
+        proof.proofUnits = 3;
+        GenerationJob proofJob = new GenerationJob(proof, 1000, 40, 10);
+        proof.job = proofJob;
+        check(proofJob.advance() && proofJob.advance() && proofJob.advance() &&
+                proofJob.getStage() == GenerationJob.Stage.HYPOTHESES,
+            "proof-span fixture reaches hypotheses before its first unit");
+        proof.clock = 50;
+        check(proofJob.advance(), "first proof unit starts after the initial stage gap");
+        long firstObserved = proofJob.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES);
+        check(firstObserved == 0,
+            "time before the first work unit is not attributed to the hypotheses stage");
+        check(proofJob.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES) == firstObserved,
+            "reading running-stage telemetry does not mutate it");
+        proof.clock = 100;
+        check(proofJob.advance(), "second proof unit resumes after a deterministic yield gap");
+        long afterYield = proofJob.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES);
+        check(afterYield == 50,
+            "same-stage wall span includes the observed inter-unit yield gap");
+        check(proofJob.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES) == afterYield,
+            "repeated stage-span reads remain stable");
+        proof.clock = 107;
+        check(proofJob.advance() && proofJob.getStage() == GenerationJob.Stage.SYMPTOM &&
+                proofJob.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES) == 57,
+            "completed proof span includes each same-stage gap and stops at the stage boundary");
+
+        Harness retry = new Harness(new String[] { "first", "second" });
+        retry.rejectSource = 0;
+        retry.rejectedResolveWorkMillis = 7;
+        retry.resolveWorkMillis = 11;
+        GenerationJob retryJob = new GenerationJob(retry, 1000, 40, 20);
+        retry.job = retryJob;
+        retry.clock = 10;
+        check(retryJob.advance(), "typed rejection retries the next candidate");
+        check(retryJob.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 7,
+            "rejected candidate records only its own resolve visit");
+        retry.clock = 110;
+        check(retryJob.advance() && retryJob.getStage() == GenerationJob.Stage.HEALTHY &&
+                retryJob.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 18,
+            "new candidate resolve span excludes the gap after rejection");
+        retry.clock = 210;
+        check(retryJob.advance() && retryJob.getStage() == GenerationJob.Stage.PHYSICAL &&
+                retryJob.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 18 &&
+                retryJob.getStageElapsedMillis(GenerationJob.Stage.HEALTHY) == 0,
+            "inter-stage gap is not attributed to either adjacent stage");
+        runToTerminal(retryJob);
+    }
+
+    private static void rejectionTelemetrySamplesWorkWithoutCheckpoint() {
+        Harness rejected = new Harness(new String[] { "reject-without-checkpoint" });
+        rejected.rejectSource = 0;
+        rejected.rejectedResolveWorkMillis = 7;
+        rejected.skipRejectedResolveCheckpoint = true;
+        GenerationJob job = new GenerationJob(rejected, 1000, 40, 20);
+        rejected.job = job;
+        rejected.clock = 10;
+        check(!job.advance() && job.getOutcome() == GenerationJob.Outcome.EXPECTED_REJECTION,
+            "a completed typed rejection retains its expected-rejection classification");
+        check(job.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 7,
+            "rejected resolve telemetry includes work without an internal checkpoint");
+        check(job.getElapsedMillis() == 17,
+            "terminal job elapsed time includes uncheckpointed rejection work");
+        check(rejected.aborts == 1,
+            "uncheckpointed rejected candidate is still aborted exactly once");
+
+        Harness unitOverrun = new Harness(new String[] { "overrun", "zzz-eligible" });
+        unitOverrun.rejectSource = 0;
+        unitOverrun.rejectedResolveWorkMillis = 6;
+        unitOverrun.skipRejectedResolveCheckpoint = true;
+        GenerationJob unitBounded = new GenerationJob(unitOverrun, 100, 40, 5);
+        unitOverrun.job = unitBounded;
+        check(!unitBounded.advance() &&
+                unitBounded.getOutcome() == GenerationJob.Outcome.TIMEOUT,
+            "rejected work over the unit cap is a timeout, not a retriable rejection");
+        check(unitOverrun.begunSources.size() == 1 && !unitOverrun.published,
+            "unit-cap timeout does not start the next candidate or publish");
+        check(unitBounded.getFailure() instanceof GenerationJob.Failure &&
+                unitBounded.getFailure().getMessage().indexOf("work-unit") >= 0 &&
+                unitBounded.getFailure().getSuppressed().length == 1 &&
+                unitBounded.getFailure().getSuppressed()[0] instanceof GenerationJob.Rejected,
+            "unit-cap deadline remains primary and retains the typed rejection as suppressed");
+        check(unitBounded.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 6 &&
+                unitBounded.getElapsedMillis() == 6 && unitOverrun.aborts == 1,
+            "unit-cap rejection records sampled work and aborts once");
+
+        Harness overBudget = new Harness(new String[] { "reject-over-budget" });
+        overBudget.rejectSource = 0;
+        overBudget.rejectedResolveWorkMillis = 7;
+        overBudget.skipRejectedResolveCheckpoint = true;
+        GenerationJob bounded = new GenerationJob(overBudget, 15, 40, 20);
+        overBudget.job = bounded;
+        overBudget.clock = 10;
+        check(!bounded.advance() && bounded.getOutcome() == GenerationJob.Outcome.TIMEOUT,
+            "rejection handling still enforces the total wall deadline");
+        check(bounded.getStageElapsedMillis(GenerationJob.Stage.RESOLVE) == 7 &&
+                overBudget.aborts == 1,
+            "deadline during rejection retains sampled telemetry and one cleanup");
+    }
+
+    private static void staleAfterYieldCapturesStageAndJobTime() {
+        Harness service = new Harness(new String[] { "stale-after-yield" });
+        service.proofUnits = 2;
+        GenerationJob job = new GenerationJob(service, 1000, 40, 20);
+        service.job = job;
+        check(job.advance() && job.advance() && job.advance() &&
+                job.getStage() == GenerationJob.Stage.HYPOTHESES,
+            "stale-span fixture reaches the proof stage");
+        check(job.advance() && job.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES) == 0,
+            "first proof unit anchors its running-stage span");
+        service.clock = 50;
+        service.current = false;
+        check(!job.advance() && job.getOutcome() == GenerationJob.Outcome.STALE,
+            "next proof turn detects the stale owner after a yield");
+        check(job.getStageElapsedMillis(GenerationJob.Stage.HYPOTHESES) == 50,
+            "stale detection closes the proof-stage span at the sampled failure time");
+        check(job.getElapsedMillis() == 50,
+            "stale terminal elapsed time includes the same-stage yield");
+        check(service.proofCalls == 1 && service.aborts == 1,
+            "stale detection runs no successor proof and aborts exactly once");
+    }
+
+    private static void boundedFailureTelemetrySamplesWorkWithoutCheckpoint() {
+        Harness service = new Harness(new String[] { "typed-failure-without-checkpoint" });
+        service.typedFailurePhysicalWorkMillis = 9;
+        GenerationJob job = new GenerationJob(service, 1000, 40, 20);
+        service.job = job;
+        service.clock = 10;
+        check(job.advance() && job.advance(),
+            "typed-failure fixture reaches physical validation");
+        check(!job.advance() && job.getOutcome() == GenerationJob.Outcome.WORK_EXHAUSTED,
+            "uncheckpointed service work preserves its typed bounded-failure outcome");
+        check(job.getFailure() instanceof GenerationJob.Failure &&
+                "typed physical work exhaustion".equals(job.getFailure().getMessage()),
+            "failure-time sampling does not replace the primary typed failure");
+        check(job.getStageElapsedMillis(GenerationJob.Stage.PHYSICAL) == 9,
+            "failed physical span includes service work without an internal checkpoint");
+        check(job.getElapsedMillis() == 19 && service.aborts == 1,
+            "terminal job elapsed time includes typed failure work and aborts once");
+    }
+
+    private static void publishTelemetrySnapshotBoundary() {
+        Harness service = new Harness(new String[] { "publish-span" });
+        service.publishAdvanceMillis = 13;
+        GenerationJob job = new GenerationJob(service, 1000, 40, 10);
+        runToTerminal(job);
+        check(job.getOutcome() == GenerationJob.Outcome.PASS && job.getReceipt() != null,
+            "publish timing fixture completes normally");
+        check(job.getStageElapsedMillis(GenerationJob.Stage.PUBLISH) == 13,
+            "job telemetry includes the observed completed publish unit");
+        check(job.getReceipt().getStageElapsedMillis(GenerationJob.Stage.PUBLISH) == 0,
+            "immutable receipt preserves its prepublication timing snapshot");
     }
 
     private static void failedStageTelemetryAndBudgetIdentity() {
@@ -472,11 +694,24 @@ public final class A10GenerationContractTest {
         boolean published;
         GenerationReceipt publishedReceipt;
         int currentChecksAfterPublish;
+        GenerationJob job;
+        int preflightProofUnits = -1;
+        int proofUnits = 1;
+        int proofCalls;
         int aborts;
         int rejectSource = Integer.MIN_VALUE;
+        int rejectPhysicalSource = Integer.MIN_VALUE;
+        int currentSource = -1;
+        final java.util.ArrayList<Integer> physicalSources = new java.util.ArrayList<Integer>();
+        final java.util.ArrayList<Integer> proofSources = new java.util.ArrayList<Integer>();
         boolean rejectAll;
         String failureStage;
         long delayedFailureMillis;
+        long resolveWorkMillis;
+        long rejectedResolveWorkMillis;
+        boolean skipRejectedResolveCheckpoint;
+        long typedFailurePhysicalWorkMillis;
+        long publishAdvanceMillis;
         int healthyNullUnits;
         int healthyCalls;
         String healthyOutput;
@@ -495,6 +730,7 @@ public final class A10GenerationContractTest {
         public String manifest(int candidate) { return manifests[candidate]; }
 
         public void beginCandidate(int index) {
+            currentSource = index;
             begunSources.add(Integer.valueOf(index));
             trace.append("begin:").append(index).append(';');
         }
@@ -502,6 +738,14 @@ public final class A10GenerationContractTest {
         public String resolve() {
             trace.append("resolve;");
             int source = begunSources.get(begunSources.size() - 1).intValue();
+            long resolveAdvance = source == rejectSource ?
+                rejectedResolveWorkMillis : resolveWorkMillis;
+            if (resolveAdvance > 0) {
+                clock += resolveAdvance;
+                if (job != null && !(source == rejectSource &&
+                        skipRejectedResolveCheckpoint))
+                    job.checkpoint();
+            }
             if (rejectAll || rejectSource == source)
                 throw new GenerationJob.Rejected("typed candidate rejection");
             if (failureStage != null && failureStage.equals("delayed-resolve")) {
@@ -526,12 +770,24 @@ public final class A10GenerationContractTest {
 
         public String physical() {
             trace.append("physical;");
+            physicalSources.add(Integer.valueOf(currentSource));
+            if (typedFailurePhysicalWorkMillis > 0) {
+                clock += typedFailurePhysicalWorkMillis;
+                throw new GenerationJob.Failure(GenerationJob.Outcome.WORK_EXHAUSTED,
+                    "typed physical work exhaustion");
+            }
+            if (rejectPhysicalSource == currentSource)
+                throw new GenerationJob.Rejected("duplicate physical realization");
+            if (preflightProofUnits >= 0)
+                job.preflightProofWork(preflightProofUnits);
             return "physical=ok";
         }
 
         public boolean proveNext() {
             trace.append("prove;");
-            return false;
+            proofSources.add(Integer.valueOf(currentSource));
+            proofCalls++;
+            return proofCalls < proofUnits;
         }
 
         public String symptom() {
@@ -554,6 +810,7 @@ public final class A10GenerationContractTest {
             trace.append("publish;");
             published = true;
             publishedReceipt = receipt;
+            clock += publishAdvanceMillis;
             if (publishMakesStale) {
                 current = false;
                 publishMakesStale = false;

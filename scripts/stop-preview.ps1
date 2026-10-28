@@ -135,11 +135,11 @@ try {
         $proofProcessId = 0
         $proofStartTicks = 0L
         if ($null -eq $proof -or
-                [string]$proof.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-                -not (Test-VerifierCanonicalWindowsPathValue `
-                    ([string]$proof.repositoryRoot) $repositoryRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue `
-                    ([string]$proof.previewScript) $previewScript) -or
+                [string]$proof.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+                [string]$proof.repositoryIdentity -cne `
+                    (Get-VerifierOpaquePathIdentity 'repository' $repositoryRoot) -or
+                [string]$proof.previewScriptIdentity -cne `
+                    (Get-VerifierOpaquePathIdentity 'preview-script' $previewScript) -or
                 -not [int]::TryParse([string]$proof.previewPort,
                     [Globalization.NumberStyles]::Integer,
                     [Globalization.CultureInfo]::InvariantCulture, [ref]$proofPort) -or

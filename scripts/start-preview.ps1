@@ -2,6 +2,8 @@
 param(
     [ValidateSet('led', 'diode', 'parallel', 'rc', 'npn', 'nmos')]
     [string]$Challenge = 'led',
+    [ValidateSet('Player', 'Developer')]
+    [string]$Variant = 'Player',
     [long]$Seed = 3,
     [switch]$QuickPlay,
     [switch]$BuildIfMissing,
@@ -31,6 +33,8 @@ $pageUrl = if ($QuickPlay) {
 $bootstrapUrl = "$previewRootUrl/circuitjs1/circuitjs1.nocache.js"
 $bootstrapPath = Get-VerifierCanonicalWindowsPath (Join-Path $repositoryRoot 'war\circuitjs1\circuitjs1.nocache.js')
 $buildScript = Get-VerifierCanonicalWindowsPath ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'build.ps1')))
+$buildToolRoot = Get-VerifierCanonicalWindowsPath (Join-Path $repositoryRoot '.tools\gwt-2.7.0')
+$buildIdentityPath = Get-VerifierCanonicalWindowsPath (Join-Path $buildToolRoot 'production-build-identity.json')
 [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $repositoryRoot -AllowRoot)
 [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $previewScript)
 [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $stateDirectory -ValidateTree)
@@ -59,20 +63,84 @@ function findJdk8Home {
     return $null
 }
 
+function readProductionBuildReceipt {
+    if (-not (Test-Path -LiteralPath $buildIdentityPath -PathType Leaf)) { return $null }
+    Assert-VerifierNoReparseAncestors $buildToolRoot
+    if (-not (Test-VerifierPhysicalChildPath $buildToolRoot $buildIdentityPath)) {
+        Throw-VerifierInfrastructure 'Production build identity receipt was outside its physical tool namespace.'
+    }
+    try {
+        return Get-Content -LiteralPath $buildIdentityPath -Raw -ErrorAction Stop |
+            ConvertFrom-Json -ErrorAction Stop
+    } catch {
+        return $null
+    }
+}
+
+function testProductionBuildReceipt($receipt, $current) {
+    if ($null -eq $receipt -or $receipt -is [array] -or
+            $receipt -isnot [pscustomobject] -or $null -eq $current -or
+            $current.Protocol -cne 'troubleshootjs-production-build-identity-v1' -or
+            [string]$current.Variant -cne $Variant -or
+            [string]$current.Style -cne 'OBF' -or
+            [long]$current.InputFileCount -le 0 -or
+            [long]$current.OutputFileCount -le 0 -or
+            -not (Test-Path -LiteralPath $bootstrapPath -PathType Leaf)) { return $false }
+    $expectedProperties = @('Protocol', 'Variant', 'Style', 'InputDigest',
+        'InputFileCount', 'OutputDigest', 'OutputFileCount')
+    if (@($receipt.PSObject.Properties).Count -ne $expectedProperties.Count) { return $false }
+    foreach ($name in $expectedProperties) {
+        if ($null -eq $receipt.PSObject.Properties[$name]) { return $false }
+    }
+    foreach ($name in @('Protocol', 'Variant', 'Style', 'InputDigest', 'OutputDigest')) {
+        if (-not (Test-VerifierStrictStringValue $receipt.PSObject.Properties[$name].Value)) { return $false }
+    }
+    foreach ($name in @('InputFileCount', 'OutputFileCount')) {
+        if (-not (Test-VerifierStrictIntegralValue $receipt.PSObject.Properties[$name].Value 1 ([long]::MaxValue))) { return $false }
+    }
+    foreach ($name in @('InputDigest', 'OutputDigest')) {
+        if ([string]$receipt.$name -notmatch '^[0-9a-f]{64}$') { return $false }
+    }
+    $cacheFiles = @(Get-ChildItem -LiteralPath (Split-Path -Parent $bootstrapPath) `
+        -Filter '*.cache.js' -File -ErrorAction SilentlyContinue)
+    return ([string]$receipt.Protocol -ceq [string]$current.Protocol -and
+        [string]$receipt.Variant -ceq [string]$current.Variant -and
+        [string]$receipt.Style -ceq [string]$current.Style -and
+        [string]$receipt.InputDigest -ceq [string]$current.InputDigest -and
+        [long]$receipt.InputFileCount -eq [long]$current.InputFileCount -and
+        [string]$receipt.OutputDigest -ceq [string]$current.OutputDigest -and
+        [long]$receipt.OutputFileCount -eq [long]$current.OutputFileCount -and
+        $cacheFiles.Count -gt 0)
+}
+
+function getCurrentProductionBuildIdentity {
+    return Get-VerifierProductionBuildIdentity -RepositoryRoot $repositoryRoot `
+        -Style 'OBF' -Variant $Variant
+}
+
+function testProductionOutputCurrent {
+    $current = getCurrentProductionBuildIdentity
+    return (testProductionBuildReceipt (readProductionBuildReceipt) $current)
+}
+
 function ensureProductionOutput {
-    if (Test-Path -LiteralPath $bootstrapPath -PathType Leaf) { return }
+    if (testProductionOutputCurrent) { return }
     if (-not $BuildIfMissing) {
-        throw 'Production output is missing. Run scripts\build.ps1 with JDK 8 first.'
+        if (-not (Test-Path -LiteralPath $bootstrapPath -PathType Leaf)) {
+            throw "Production $Variant output is missing. Run scripts\build.ps1 -Variant $Variant with JDK 8 first."
+        }
+        throw "Production $Variant output is stale or has no matching content-provenance receipt. Run scripts\build.ps1 -Variant $Variant with JDK 8."
     }
     $jdkHome = findJdk8Home
     if (-not $jdkHome) {
         throw 'Production output is missing and no JDK 8 was found. Install or select a JDK 8 and run scripts\build.ps1; no JDK was installed automatically.'
     }
     $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
-    Write-Host "Production output is missing; building with JDK 8 at $jdkHome..."
+    Write-Host "Production $Variant output is missing or stale; building with JDK 8 at $jdkHome..."
     $buildResult = Invoke-VerifierBoundedProcess $powershell @(
         '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $buildScript,
-        '-JavaHome', $jdkHome, '-Target', 'Compile', '-Style', 'OBF'
+        '-JavaHome', $jdkHome, '-Target', 'Compile', '-Style', 'OBF',
+        '-Variant', $Variant
     ) 900000
     if (-not [String]::IsNullOrWhiteSpace([string]$buildResult.Stdout)) {
         Write-Host ([string]$buildResult.Stdout)
@@ -80,8 +148,8 @@ function ensureProductionOutput {
     if (-not [String]::IsNullOrWhiteSpace([string]$buildResult.Stderr)) {
         Write-Host ([string]$buildResult.Stderr)
     }
-    if ($buildResult.ExitCode -ne 0 -or
-            -not (Test-Path -LiteralPath $bootstrapPath -PathType Leaf)) {
+    if (-not $buildResult.TerminationProven -or $buildResult.ExitCode -ne 0 -or
+            -not (testProductionOutputCurrent)) {
         throw ('JDK 8 production build failed or did not produce the compiled bootstrap; exit ' +
             [string]$buildResult.ExitCode + '.')
     }
@@ -211,9 +279,9 @@ function getDetachedPreviewIdentityFromRecord($currentRecord,
     }
     if ($null -eq $identity -or
             -not $identity.PSObject.Properties['protocol'] -or
-            [string]$identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-            -not $identity.PSObject.Properties['repositoryRoot'] -or
-            -not $identity.PSObject.Properties['previewScript'] -or
+            [string]$identity.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+            -not $identity.PSObject.Properties['repositoryIdentity'] -or
+            -not $identity.PSObject.Properties['previewScriptIdentity'] -or
             -not $identity.PSObject.Properties['previewPort'] -or
             -not $identity.PSObject.Properties['processId'] -or
             -not $identity.PSObject.Properties['processStartTicks']) {
@@ -234,10 +302,10 @@ function getDetachedPreviewIdentityFromRecord($currentRecord,
             $identityPort -ne $expectedPort -or
             $identityProcessId -ne [int]$currentRecord.ProcessId -or
             $identityStartTicks -ne $expectedStartTicks -or
-            -not (Test-VerifierCanonicalWindowsPathValue `
-                ([string]$identity.repositoryRoot) $repositoryRoot) -or
-            -not (Test-VerifierCanonicalWindowsPathValue `
-                ([string]$identity.previewScript) $previewScript)) {
+            [string]$identity.repositoryIdentity -cne `
+                (Get-VerifierOpaquePathIdentity 'repository' $repositoryRoot) -or
+            [string]$identity.previewScriptIdentity -cne `
+                (Get-VerifierOpaquePathIdentity 'preview-script' $previewScript)) {
         return $null
     }
     # The identity route and the process record are independent observations.

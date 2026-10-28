@@ -101,6 +101,16 @@ public final class Rb56InCircuitReverseContractTest {
                 ",\"timeBefore\":" + number(beforeForward) + ",\"timeAfter\":" + number(sim.t) +
                 ",\"timeStep\":" + number(sim.timeStep) + ",\"cleanup\":" + forwardCleanup + "}");
 
+            phase = "SAME_POST_REFUSED_DURING_DISCHARGE";
+            ActiveMeasurementReadiness samePostPendingReadiness =
+                assertTransientMeasurementRefused(sim, fixture, lowLead2, lowLead2,
+                    "same-post follow-up after forward OHM");
+            check(samePostPendingReadiness == ActiveMeasurementReadiness.DISCHARGE ||
+                samePostPendingReadiness == ActiveMeasurementReadiness.WAITING,
+                "the charged same-post request observed the real transient readiness guard");
+            double samePostCooldown = waitForMeasurementReady(sim, fixture,
+                lowLead2, lowLead2, DISCHARGE_SECONDS, "same-post follow-up");
+
             phase = "SAME_POST_INTERMEDIATE";
             double beforeSamePost = sim.t;
             Vector<CircuitElm> beforeSamePostGraph = new Vector<CircuitElm>(sim.elmList);
@@ -121,6 +131,27 @@ public final class Rb56InCircuitReverseContractTest {
                 number(sim.t) + ",\"timeStep\":" + number(sim.timeStep) +
                 ",\"cleanup\":" + samePostCleanup + "}");
 
+            ActiveMeasurementReadiness reversePendingReadiness =
+                sim.getActiveMeasurementReadiness(lowLead2, lowLead1, OHM);
+            if (reversePendingReadiness == ActiveMeasurementReadiness.DISCHARGE ||
+                    reversePendingReadiness == ActiveMeasurementReadiness.WAITING) {
+                phase = "REVERSE_REFUSED_DURING_DISCHARGE";
+                ActiveMeasurementReadiness refusedReadiness =
+                    assertTransientMeasurementRefused(sim, fixture, lowLead2, lowLead1,
+                        "reversed follow-up after same-post OHM");
+                check(refusedReadiness == reversePendingReadiness,
+                    "reversed refusal confirms the previously observed live transient state");
+                waitForMeasurementReady(sim, fixture, lowLead2, lowLead1,
+                    DISCHARGE_SECONDS, "reversed follow-up");
+            } else {
+                check(reversePendingReadiness == ActiveMeasurementReadiness.READY &&
+                    sim.getBoardPowerController().isElectricallyUnpowered() &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.stopMessage == null,
+                    "the same-post 0-ohm short leaves the actual board ready for reversal without added energy");
+            }
+
             phase = "REVERSED_RESISTANCE";
             double beforeReverse = sim.t;
             Vector<CircuitElm> beforeReverseGraph = new Vector<CircuitElm>(sim.elmList);
@@ -134,17 +165,18 @@ public final class Rb56InCircuitReverseContractTest {
             } catch (Error error) {
                 reverseFailure = error;
             }
+            double afterReverseOperation = sim.t;
             boolean reverseCleanup = cleanupState(sim, fixture, beforeReverseGraph);
-            ActiveMeasurementReadiness reverseReadiness =
+            ActiveMeasurementReadiness reversePostReadiness =
                 sim.getActiveMeasurementReadiness(lowLead2, lowLead1, OHM);
             System.out.println("RB56_REVERSE_PROBE_STEP {\"seed\":\"" + Long.toString(SEED) +
                 "\",\"phase\":\"REVERSED_RESISTANCE\",\"pads\":\"RREF_L.2,RREF_L.1\"" +
-                ",\"readiness\":\"" + reverseReadiness.name() + "\",\"ohms\":" + number(reverseOhms) +
+                ",\"postReadiness\":\"" + reversePostReadiness.name() + "\",\"ohms\":" + number(reverseOhms) +
                 ",\"failureType\":\"" + quote(reverseFailure == null ? null :
                     reverseFailure.getClass().getName()) + "\",\"failureMessage\":\"" +
                     quote(reverseFailure == null ? null : reverseFailure.getMessage()) +
-                "\",\"timeBefore\":" + number(beforeReverse) + ",\"timeAfter\":" +
-                number(sim.t) + ",\"timeStep\":" + number(sim.timeStep) +
+                "\",\"timeBefore\":" + number(beforeReverse) + ",\"timeAfterOperation\":" +
+                number(afterReverseOperation) + ",\"timeStep\":" + number(sim.timeStep) +
                 ",\"subIteration\":" + sim.subIterations + ",\"cleanup\":" + reverseCleanup + ",\"boardOff\":" +
                 sim.getBoardPowerController().isElectricallyUnpowered() + "}");
             check(reverseFailure == null,
@@ -152,10 +184,39 @@ public final class Rb56InCircuitReverseContractTest {
                     describe(reverseFailure));
             check(PowerDomainContract.finite(reverseOhms) && reverseOhms > 0,
                 "the reversed RREF_L board measurement returns a finite positive reading");
-            check(sim.t > beforeReverse && reverseCleanup &&
-                sim.getBoardPowerController().isElectricallyUnpowered() &&
-                reverseReadiness == ActiveMeasurementReadiness.READY,
-                "reversed read restores solver/source state, keeps the board OFF and unlocks measurements");
+            check(afterReverseOperation > beforeReverse && reverseCleanup &&
+                sim.getBoardPowerController().isElectricallyUnpowered(),
+                "reversed read advances CircuitJS, restores its temporary solver/source state, and keeps the board OFF");
+            if (reversePostReadiness == ActiveMeasurementReadiness.DISCHARGE ||
+                    reversePostReadiness == ActiveMeasurementReadiness.WAITING) {
+                phase = "REVERSE_POSTREAD_REFUSED_DURING_DISCHARGE";
+                ActiveMeasurementReadiness refusedReadiness =
+                    assertTransientMeasurementRefused(sim, fixture, lowLead2, lowLead1,
+                        "next read after reversed OHM");
+                check(refusedReadiness == reversePostReadiness,
+                    "post-read refusal confirms the transient state observed after the completed reverse reading");
+                waitForMeasurementReady(sim, fixture, lowLead2, lowLead1,
+                    DISCHARGE_SECONDS, "post-reverse read");
+                ActiveMeasurementReadiness readyAfterCooldown =
+                    sim.getActiveMeasurementReadiness(lowLead2, lowLead1, OHM);
+                check(readyAfterCooldown == ActiveMeasurementReadiness.READY &&
+                    sim.getBoardPowerController().isElectricallyUnpowered() &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.stopMessage == null,
+                    "the completed reverse reading's real residual energy naturally settles before the next admission");
+                phase = "REVERSED_RESISTANCE_READY";
+            } else {
+                check(reversePostReadiness == ActiveMeasurementReadiness.READY &&
+                    sim.getBoardPowerController().isElectricallyUnpowered() &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.stopMessage == null,
+                    "the completed reverse reading leaves the board ready for its next measurement");
+            }
+            check(samePostCooldown > 0 &&
+                samePostCooldown <= DISCHARGE_SECONDS + MAX_TIME_STEP,
+                "the forward-meter transient naturally recovered within the bounded cooldown");
             GeneratedRuntimeInvariant.verify(fixture.owner,
                 sim.boardModificationController, sim.elmList);
         } catch (RuntimeException error) {
@@ -240,6 +301,66 @@ public final class Rb56InCircuitReverseContractTest {
         }
         check(slices <= 128 && Math.abs(sim.t - target) <= MAX_TIME_STEP + 1e-9,
             "bounded advance reaches its requested physical-time target");
+    }
+
+    /** A live post-measurement transient must refuse without mutating the successor graph. */
+    private static ActiveMeasurementReadiness assertTransientMeasurementRefused(
+            NativeCadenceCirSim sim, Rb56PhysicalOwnerConstruction.Result fixture,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            String label) {
+        ActiveMeasurementReadiness readiness =
+            sim.getActiveMeasurementReadiness(red, black, OHM);
+        check(readiness == ActiveMeasurementReadiness.DISCHARGE ||
+            readiness == ActiveMeasurementReadiness.WAITING,
+            label + " is refused only while the real board reports residual energy or settling; state=" + readiness);
+        double time = sim.t;
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        ActiveMeasurementStimulus stimulus = sim.lastActiveMeasurementStimulus;
+        Object observation = sim.solverExecutor.observation(fixture.owner);
+        int readerCalls = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        double refused = sim.measureResistance(red, black, OHM);
+        check(Double.isNaN(refused) && sim.t == time && sim.elmList.equals(graph) &&
+            sim.lastActiveMeasurementStimulus == stimulus &&
+            sim.getResistanceResultReaderCallsForDeveloperVerification() == readerCalls &&
+            !sim.activeMeasurementOverlay && sim.stopMessage == null &&
+            sim.solverExecutor.observation(fixture.owner) == observation &&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+            sim.getBoardPowerController().isElectricallyUnpowered(),
+            label + " refusal adds no meter source, advances no time, changes no graph or receipt, and leaves the board OFF");
+        return readiness;
+    }
+
+    /** Advance accepted CircuitJS time until the actual board contract returns READY. */
+    private static double waitForMeasurementReady(NativeCadenceCirSim sim,
+            Rb56PhysicalOwnerConstruction.Result fixture,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            double maximumSeconds, String label) {
+        check(sim.getBoardPowerController().isElectricallyUnpowered(),
+            label + " cooldown starts with the board OFF");
+        double start = sim.t;
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        ActiveMeasurementStimulus stimulus = sim.lastActiveMeasurementStimulus;
+        ActiveMeasurementReadiness readiness = sim.getActiveMeasurementReadiness(red, black, OHM);
+        int slices = 0;
+        while ((readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING) &&
+                sim.t - start + 1e-10 < maximumSeconds && slices < 1000) {
+            double elapsed = sim.t - start;
+            advanceFor(sim, fixture, Math.min(.05, maximumSeconds - elapsed));
+            slices++;
+            readiness = sim.getActiveMeasurementReadiness(red, black, OHM);
+        }
+        double elapsed = sim.t - start;
+        check(readiness == ActiveMeasurementReadiness.READY,
+            label + " naturally recovers to READY within " + maximumSeconds +
+                " solver seconds; state=" + readiness);
+        check(elapsed > 0 && elapsed <= maximumSeconds + MAX_TIME_STEP &&
+            sim.elmList.equals(graph) && sim.lastActiveMeasurementStimulus == stimulus &&
+            sim.getBoardPowerController().isElectricallyUnpowered(),
+            label + " cooldown advances only the live CircuitJS graph and does not inject or repower");
+        System.out.println("RB56_REVERSE_PROBE_COOLDOWN {\"phase\":\"" + quote(label) +
+            "\",\"solverSeconds\":" + number(elapsed) + "}");
+        return elapsed;
     }
 
     private static boolean cleanupState(NativeCadenceCirSim sim,

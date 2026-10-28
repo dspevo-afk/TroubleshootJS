@@ -378,8 +378,8 @@ function Assert-Task43PPreviewExecutionIdentity([string]$BaseUrl) {
                 $identity -isnot [pscustomobject]) {
             Throw-VerifierInfrastructure 'Task43P preview identity was not an exact JSON object.'
         }
-        $allowed = @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
-            'sourceRoot', 'scriptRoot', 'sourceDigest', 'scriptDigest', 'webDigest',
+        $allowed = @('protocol', 'repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+            'sourceRootIdentity', 'scriptRootIdentity', 'sourceDigest', 'scriptDigest', 'webDigest',
             'executionDigest', 'executionFileCount', 'previewPort', 'processId',
             'processStartTicks', 'verifierRunId', 'verifierNonce')
         foreach ($property in @($identity.PSObject.Properties)) {
@@ -387,8 +387,8 @@ function Assert-Task43PPreviewExecutionIdentity([string]$BaseUrl) {
                 Throw-VerifierInfrastructure "Task43P preview identity contained unknown field '$($property.Name)'."
             }
         }
-        foreach ($name in @('protocol', 'repositoryRoot', 'previewScript', 'webRoot',
-                'sourceRoot', 'scriptRoot', 'sourceDigest', 'scriptDigest', 'webDigest',
+        foreach ($name in @('protocol', 'repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+                'sourceRootIdentity', 'scriptRootIdentity', 'sourceDigest', 'scriptDigest', 'webDigest',
                 'executionDigest', 'verifierRunId', 'verifierNonce')) {
             if ($null -eq $identity.PSObject.Properties[$name] -or
                     -not (Test-VerifierStrictStringValue $identity.PSObject.Properties[$name].Value)) {
@@ -402,23 +402,20 @@ function Assert-Task43PPreviewExecutionIdentity([string]$BaseUrl) {
                 Throw-VerifierInfrastructure "Task43P preview identity omitted or malformed '$name'."
             }
         }
-        foreach ($name in @('sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
+        foreach ($name in @('repositoryIdentity', 'previewScriptIdentity', 'webRootIdentity',
+                'sourceRootIdentity', 'scriptRootIdentity', 'sourceDigest', 'scriptDigest',
+                'webDigest', 'executionDigest')) {
             if ([string]$identity.$name -notmatch '^[0-9a-f]{64}$') {
                 Throw-VerifierInfrastructure "Task43P preview identity carried a malformed '$name'."
             }
         }
         $provenance = $script:Task43PExecutionProvenance
-        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.repositoryRoot `
-                    $provenance.RepositoryRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.previewScript `
-                    $script:Task43PExecutionPreviewScript) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.webRoot `
-                    $provenance.WebRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.sourceRoot `
-                    $provenance.SourceRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.scriptRoot `
-                    $provenance.ScriptRoot) -or
+        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+                $identity.repositoryIdentity -cne (Get-VerifierOpaquePathIdentity 'repository' $provenance.RepositoryRoot) -or
+                $identity.previewScriptIdentity -cne (Get-VerifierOpaquePathIdentity 'preview-script' $script:Task43PExecutionPreviewScript) -or
+                $identity.webRootIdentity -cne (Get-VerifierOpaquePathIdentity 'web-root' $provenance.WebRoot) -or
+                $identity.sourceRootIdentity -cne (Get-VerifierOpaquePathIdentity 'source-root' $provenance.SourceRoot) -or
+                $identity.scriptRootIdentity -cne (Get-VerifierOpaquePathIdentity 'script-root' $provenance.ScriptRoot) -or
                 [int]$identity.previewPort -ne [int]$uri.Port -or
                 $identity.sourceDigest -cne $provenance.SourceDigest -or
                 $identity.scriptDigest -cne $provenance.ScriptDigest -or
@@ -2112,7 +2109,7 @@ function Get-Task43PSourceExperimentDefinition([string]$Id) {
             'task43p-solver-oracle-net-mismatch:R1.1'
         }
         'omitted-manifest-terminal' {
-            $path = 'Task43PPhysicalTruthDeveloperVerifier.java'
+            $path = 'GeneratedBoardPhysicalTruthDeveloperVerifier.java'
             'task43p-set-mismatch:manifest/raw board pads:expected=[J1.1, J1.2, LED1.A, R1.1, R1.2]:actual=[J1.1, J1.2, LED1.A, LED1.K, R1.1, R1.2]'
         }
         'snapshot-restore-resistance-current-omitted' {
@@ -4851,7 +4848,7 @@ function Invoke-GateBIntegratedKernelLedgerCanary([string]$RepositoryRoot,
             repositoryIdentity = $readerContext.RepositoryIdentity
             worktreeRoot = $readerContext.WorktreeRoot
             repositoryRoot = $RepositoryRoot; webRoot = $WebRoot
-            identityProtocol = 'troubleshootjs-preview-identity-v1'
+            identityProtocol = 'troubleshootjs-preview-identity-v2'
             identityVerified = $true; callerOwned = $false
             port = $readerPort; processId = $boundProcessId
             processStartTicks = $boundProcessStart
@@ -6565,8 +6562,8 @@ function Read-VerifierIntegratedChildLedger([string]$LedgerPath, [int]$ExpectedE
                     ([string](Get-VerifierLedgerProperty $manifestServer 'webRoot' '')) $expectedCallerWebRoot) -or
                 -not (Test-VerifierCanonicalWindowsPathValue $serverScript $expectedCallerScript) -or
                 -not (Test-VerifierCanonicalWindowsPathValue $manifestScript $expectedCallerScript) -or
-                [string](Get-VerifierLedgerProperty $server 'identityProtocol' '') -ne 'troubleshootjs-preview-identity-v1' -or
-                [string](Get-VerifierLedgerProperty $manifestServer 'identityProtocol' '') -ne 'troubleshootjs-preview-identity-v1') {
+                [string](Get-VerifierLedgerProperty $server 'identityProtocol' '') -ne 'troubleshootjs-preview-identity-v2' -or
+                [string](Get-VerifierLedgerProperty $manifestServer 'identityProtocol' '') -ne 'troubleshootjs-preview-identity-v2') {
             Throw-VerifierInfrastructure 'Integrated child caller-owned preview identity was not an exact verified loopback/root/script/web-root record.'
         }
         if ([int](Get-VerifierLedgerProperty $server 'processId' 0) -ne 0 -or
@@ -8144,7 +8141,7 @@ function Invoke-GateBListenerProofCanary() {
         ProcessParentProcessId = 65403; ProcessParentProcessStartTicks = 234503L
         ProcessCommandLine = $kernelCommandLine; Script = $previewScript
         RepositoryRoot = $repositoryRoot; WebRoot = $webRoot
-        IdentityProtocol = 'troubleshootjs-preview-identity-v1'
+        IdentityProtocol = 'troubleshootjs-preview-identity-v2'
         IdentityVerified = $true; CallerOwned = $false
         RunId = $runId; Nonce = $nonce; State = 'run-owned-verified'
         Lease = $kernelPreviewLease; Process = (Get-Process -Id $PID)
@@ -8214,7 +8211,7 @@ function Invoke-GateBListenerProofCanary() {
         owner = 'run'; baseUrl = 'http://127.0.0.1:' + [string]$kernelPort
         repositoryIdentity = $repositoryIdentity; worktreeRoot = $repositoryRoot
         repositoryRoot = $repositoryRoot; webRoot = $webRoot
-        identityProtocol = 'troubleshootjs-preview-identity-v1'
+        identityProtocol = 'troubleshootjs-preview-identity-v2'
         identityVerified = $true; callerOwned = $false
         port = $kernelPort; processId = 65402; processStartTicks = 234502L
         processParentProcessId = 65403; processParentProcessStartTicks = 234503L
@@ -9355,7 +9352,7 @@ if ($GateBContractProbe) {
                     repositoryIdentity=$callerCanaryContext.RepositoryIdentity
                     worktreeRoot=$callerCanaryContext.WorktreeRoot
                     repositoryRoot=$callerCanaryContext.WorktreeRoot; webRoot=$callerWebRoot
-                    identityProtocol='troubleshootjs-preview-identity-v1'; identityVerified=$true; callerOwned=$true
+                    identityProtocol='troubleshootjs-preview-identity-v2'; identityVerified=$true; callerOwned=$true
                     port=40126; processId=0; processStartTicks=0; processParentProcessId=0; processParentProcessStartTicks=0; processCommandLine=''
                     script=$callerScript; runId=''; nonce=''; leaseId=''; leaseKind=''; leaseClaimName=''
                     leaseClaimState=''; leaseReleaseState=''; leaseReleaseJournalState=''
@@ -9611,7 +9608,7 @@ if ($GateBContractProbe) {
                 port=40124; processId=54321; processStartTicks=12345L
                 processParentProcessId=54320; processParentProcessStartTicks=12344; processCommandLine=$retainedServerCommand; script=$retainedServerScript
                 runId=$retainedContext.RunId; nonce=$retainedContext.PreviewNonce
-                identityProtocol='troubleshootjs-preview-identity-v1'
+                identityProtocol='troubleshootjs-preview-identity-v2'
                 identityVerified=$true; callerOwned=$false
                 leaseId=$retainedServerLeaseId; leaseKind='preview'; leaseClaimName=$retainedServerClaimName
                 leaseClaimState='bound'; leaseReleaseState='active'; leaseOwnerPid=$PID; leaseOwnerStartTicks=1

@@ -45,6 +45,8 @@ public final class MediumBoardPhysicalPolicyContractTest {
             "Q30 plan canonical replay");
         check(firstPlan.board().getPlacementConstraints().getPhysicalPolicyIdentity().equals(
             MediumBoardPhysicalPolicy.identity()), "Q30 selects medium policy");
+        check(firstPlan.board().getPlacementConstraints().requiresTwoLayerRouting,
+            "normal Rb30 plan declares the route required by its admission owner");
 
         MediumBoardPhysicalPolicy.Result first = new SeededPcbLayoutGenerator()
             .generateWithPolicyResult(firstPlan.board(), firstPlan.layoutSeed,
@@ -63,6 +65,10 @@ public final class MediumBoardPhysicalPolicyContractTest {
         check(first.getStatistics().routeAttempts <=
             MediumBoardPhysicalPolicy.ROUTING_CANDIDATES * 2,
             "medium policy routes only its bounded subset");
+        check(first.getStatistics().oneFaceAttempts == 0 &&
+                first.getStatistics().oneFaceSuccesses == 0 &&
+                first.getStatistics().routeAttempts == first.getStatistics().twoLayerAttempts,
+            "normal Rb30 generation spends no work on inadmissible P05 candidates");
         check(first.getStatistics().placementScores.size() ==
             first.getStatistics().placementCandidates -
             first.getStatistics().placementRejections,
@@ -75,6 +81,11 @@ public final class MediumBoardPhysicalPolicyContractTest {
                 first.getStatistics().placementScores.get(
                     first.getStatistics().placementScores.size() - 1)),
             "medium rank has meaningful candidate score variation");
+        System.out.println("ROUTING_METRICS profile=MEDIUM seed=0 placements=" +
+            first.getStatistics().placementCandidates + " routes=" +
+            first.getStatistics().routeAttempts + " expansions=" +
+            first.getStatistics().routingExpansions + " routeMillis=" +
+            first.getLayout().getGenerationRoutingMillis());
         String receipt = first.toCanonical();
         check(receipt.indexOf("electrical=") >= 0,
             "medium receipt exposes electrical score component");

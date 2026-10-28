@@ -529,7 +529,10 @@ final class A10GenerationDeveloperVerifier {
         long coldProofMillis = proofCacheHit ? 0 : proofStageMillis;
         long staticPlanOverheadMillis = coldProofMillis - serialReferenceMillis;
         require(staticPlanOverheadMillis >= 0,
-            "D01 cold proof timing must include serial reference and static-plan overhead");
+            "D01 cold proof timing must include serial reference and static-plan overhead: " +
+            "coldProofMs=" + coldProofMillis + ";serialReferenceMs=" +
+            serialReferenceMillis + ";staticPlanOverheadMs=" + staticPlanOverheadMillis +
+            ";proofCacheHit=" + proofCacheHit);
         long warmReuseMillis = proofCacheHit ? proofStageMillis : 0;
         return "{\"hypotheses\":" + hypotheses + ",\"observations\":" + observations +
             ",\"serialObservations\":" + observations +

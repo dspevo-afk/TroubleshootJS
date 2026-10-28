@@ -61,7 +61,7 @@ def case(row):
         require(row['hypotheses']==3 and row['proofUnits']>=3,'Diagnostic population shrank')
         require(attempts[-1]['proofUnits']==row['proofUnits'],'Candidate proof accounting mismatch')
         require(row['board']['seed']==str(signed(int(seed)+STRIDE*(len(attempts)-1))),'Accepted seed not in ordinal order')
-        require(row['replay']=='tsj-alpha/6/EASY/RB15_CONTROL/'+row['board']['seed'],'Replay is not the exact accepted candidate')
+        require(row['replay']=='tsj-alpha/7/EASY/RB15_CONTROL/'+row['board']['seed'],'Replay is not the exact accepted candidate')
         board(row['board'])
     else:
         require(row['outcome'] in ['EXPECTED_REJECTION','TIMEOUT','WORK_EXHAUSTED','CANCELLED'],'Unexpected runtime failure')
@@ -132,7 +132,7 @@ def validate_controlled_canaries(canaries):
         replay1['requestedSeed']==successor and replay2['requestedSeed']==successor,
         'Two exact successor replay controls are missing or changed')
     require(replay1.get('replayGroup')==replay2.get('replayGroup')=='p09-controlled-successor-replay' and
-        replay1['replay']==replay2['replay']=='tsj-alpha/6/EASY/RB15_CONTROL/'+successor and
+        replay1['replay']==replay2['replay']=='tsj-alpha/7/EASY/RB15_CONTROL/'+successor and
         replay1['board']==replay2['board'] and
         replay1['board'].get('geometryFingerprint')==replay2['board'].get('geometryFingerprint'),
         'Two exact replays did not reproduce the same v6 replay and geometry')

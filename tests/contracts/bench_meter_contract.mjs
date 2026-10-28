@@ -27,7 +27,7 @@ w.tsjProduct = {action(...args) {
     meterCalls.push(args);
     // The production bridge publishes the owner-selected mode on the native
     // panel before the presentation adapter refreshes its ARIA state.
-    panel.setAttribute('data-mode', args[3]);
+    panel.setAttribute('data-mode', panel.getAttribute('data-mode') === args[3] ? 'NONE' : args[3]);
   }
   return '';
 }};
@@ -63,6 +63,17 @@ check(panel.dataset.mode==='SCOPE' && dial.getAttribute('aria-valuenow')==='6' &
   dial.getAttribute('aria-valuetext')==='Oscilloscope' && acButton.getAttribute('aria-pressed')==='false' &&
   scopeButton.getAttribute('aria-pressed')==='true',
   'SCOPE publication synchronizes the dial and button accessibility state');
+acButton.click();
+check(panel.dataset.mode==='AC_VOLTAGE' && acButton.getAttribute('aria-pressed')==='true' &&
+  scopeButton.getAttribute('aria-pressed')==='false', 'V~ selection follows the owner-published mode when switching from Hz');
+acButton.click();
+check(panel.dataset.mode==='NONE' && dial.getAttribute('aria-valuenow')==='0' &&
+  acButton.getAttribute('aria-pressed')==='false' && scopeButton.getAttribute('aria-pressed')==='false',
+  'clicking active V~ publishes Off and clears its active presentation state');
+scopeButton.click(); scopeButton.click();
+check(panel.dataset.mode==='NONE' && dial.getAttribute('aria-valuenow')==='0' &&
+  scopeButton.getAttribute('aria-pressed')==='false', 'clicking active Hz publishes Off and clears its active presentation state');
+scopeButton.click();
 const beforeUnsupported=meterCalls.length; unsupportedButton.click();
 check(meterCalls.length===beforeUnsupported,'disabled future functions cannot dispatch a meter action');
 function meterAvailability(state, expected, label) {
@@ -185,5 +196,6 @@ assert.deepEqual(position(),electricalPosition); checks++;
 const css=fs.readFileSync(new URL('../../war/tsj-bench-instruments.css',import.meta.url),'utf8');
 check(css.includes('position: absolute') && !css.includes('position: fixed'),'meter uses canvas-projected absolute layout, not fixed HUD');
 check(css.includes('cursor: grab') && css.includes('cursor: grabbing') && css.includes('touch-action: none'),'header drag affordance and touch ownership retained');
+check(css.includes(".tsj-meter-future button[aria-pressed='true']:not(:disabled)"), 'enabled active V~/Hz buttons receive visible selected-state styling');
 check(releases>=10,'capture cleanup exercised repeatedly');
 dom.window.close(); console.log('bench meter contracts '+checks+' PASS');

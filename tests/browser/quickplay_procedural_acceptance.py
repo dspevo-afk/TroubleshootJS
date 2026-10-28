@@ -147,7 +147,7 @@ try:
                         click('New board')
                         state, seconds, samples = prepare(family, row)
                         assert state['screen'] == 'TICKET', row
-                        assert state['replay'].startswith('tsj-alpha/6/' + family['profile'] + '/' + family['id'] + '/'), row
+                        assert state['replay'].startswith('tsj-alpha/7/' + family['profile'] + '/' + family['id'] + '/'), row
                         assert state['replay'] not in replays, row
                         replays.add(state['replay'])
                         saved[family['id']] = state['replay']
@@ -240,7 +240,7 @@ try:
             # Use the current epoch so this checks profile policy, not stale parsing.
             before_blocked = snapshot()
             page.get_by_label('Open current replay', exact=True).fill(
-                'tsj-alpha/6/HARD/RB56_CONTROL/13')
+                'tsj-alpha/7/HARD/RB56_CONTROL/13')
             click('Prepare replay')
             page.locator('[role="status"]').filter(
                 has_text='This difficulty profile is unavailable').first.wait_for(
@@ -251,7 +251,7 @@ try:
                 assert blocked.get(key) == before_blocked.get(key), (key, before_blocked, blocked)
             assert 'progress' not in blocked
             result['blockedFamilyReplay'] = {
-                'family': 'RB56_CONTROL', 'profile': 'HARD', 'replayEpoch': 'tsj-alpha/6',
+                'family': 'RB56_CONTROL', 'profile': 'HARD', 'replayEpoch': 'tsj-alpha/7',
                 'outcome': 'EXPECTED_BLOCKED', 'screen': blocked['screen'],
                 'message': 'This difficulty profile is unavailable',
                 'predecessorReplay': blocked['replay'],

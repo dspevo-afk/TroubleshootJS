@@ -147,9 +147,34 @@ public final class E04SensorControlContractTest {
             check(restored instanceof E04SensorControlModel.DecisionElement &&
                     after.equals(restored.dump()),
                     "E04 decision dump round-trips through the CircuitJS factory");
+            final String oldModelDump = withDecisionVersion(after, 1);
+            reject(new Runnable() { public void run() {
+                StringTokenizer old = new StringTokenizer(oldModelDump);
+                int oldType = Integer.parseInt(old.nextToken());
+                int oldX1 = Integer.parseInt(old.nextToken());
+                int oldY1 = Integer.parseInt(old.nextToken());
+                int oldX2 = Integer.parseInt(old.nextToken());
+                int oldY2 = Integer.parseInt(old.nextToken());
+                int oldFlags = Integer.parseInt(old.nextToken());
+                CirSim.createCe(oldType, oldX1, oldY1, oldX2, oldY2, oldFlags, old);
+            }}, "old ideal-output E04 decision payload is rejected");
         } finally {
             h.close();
         }
+    }
+
+    private static String withDecisionVersion(String dump, int version) {
+        StringTokenizer tokens = new StringTokenizer(dump);
+        StringBuilder result = new StringBuilder();
+        int index = 0;
+        while (tokens.hasMoreTokens()) {
+            if (result.length() > 0) result.append(' ');
+            String token = tokens.nextToken();
+            result.append(index == 6 ? Integer.toString(version) : token);
+            index++;
+        }
+        if (index < 7) throw new AssertionError("E04 dump lacks its model version");
+        return result.toString();
     }
 
     private static void verifyEndpointBindingsAndPassiveOwnership() {
@@ -580,6 +605,42 @@ public final class E04SensorControlContractTest {
                     E04SensorControlModel.ControlState.HIGH,
                     "selected E02 regulator drives a healthy E04 rail and control");
 
+            E04SensorControlModel.DecisionElement decision =
+                h.model.getDecisionElement();
+            double unloadedRail = h.model.getRailNodeVoltage();
+            double unloadedRailCurrent = selected.getOutputCurrent();
+            verifyDecisionPowerAccounting(decision,
+                contract.getVariantId() + " unloaded output");
+            // RFB remains in series with this 1 ohm load, so the branch reaches
+            // its declared 80 mA limit and must draw that current from the
+            // actual E02 rail. The independent E02 port current and solved
+            // rail droop expose an ideal, supply-free decision source.
+            h.model.setOutputLoadOhms(1.0);
+            h.analyzeAndSettle();
+            double shortLoadCurrent = h.model.getOutputCurrent();
+            double loadedRailCurrent = selected.getOutputCurrent();
+            double loadedRail = h.model.getRailNodeVoltage();
+            check(finite(shortLoadCurrent) && shortLoadCurrent > .06 &&
+                    shortLoadCurrent < .081,
+                    contract.getVariantId() +
+                    " solved output short is bounded by the declared 80 mA branch limit");
+            check(finite(loadedRailCurrent) &&
+                    loadedRailCurrent > unloadedRailCurrent + .06 &&
+                    loadedRailCurrent < contract.getMaximumOutputCurrentAmps(),
+                    contract.getVariantId() +
+                    " E02 output current includes the sensor output load");
+            check(loadedRail < unloadedRail - .005 &&
+                    h.model.getControlState() ==
+                        E04SensorControlModel.ControlState.HIGH,
+                    contract.getVariantId() +
+                    " shorted sensor output measurably loads the live rail without losing regulation");
+            verifyDecisionPowerAccounting(decision,
+                contract.getVariantId() + " shorted output");
+            h.model.setOutputLoadOhms(10000.0);
+            h.analyzeAndSettle();
+            check(h.model.isOutputHigh(), contract.getVariantId() +
+                " removing the short restores the high decision output");
+
             h.model.setRegulatorInputVoltage(
                     contract.getNominalOutputVolts() +
                     -contract.getDropoutVolts() * .75);
@@ -609,6 +670,18 @@ public final class E04SensorControlContractTest {
         } finally {
             h.close();
         }
+    }
+
+    private static void verifyDecisionPowerAccounting(
+            E04SensorControlModel.DecisionElement decision, String state) {
+        double returned = decision.getPostVoltage(4);
+        double absorbedAtTerminals = 0.0;
+        for (int post = 0; post < decision.getPostCount(); post++)
+            absorbedAtTerminals -= (decision.getPostVoltage(post) - returned) *
+                decision.getCurrentIntoNode(post);
+        check(finite(absorbedAtTerminals) && absorbedAtTerminals >= -1e-9 &&
+                Math.abs(decision.getPowerLossWatts() - absorbedAtTerminals) < 1e-8,
+            state + " model power equals independently summed solver terminal power");
     }
 
     private static void verifyTimestepStability() {

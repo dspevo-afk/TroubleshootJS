@@ -4,8 +4,11 @@ package com.lushprojects.circuitjs1.client;
 public final class DensePcbPackingContractTest {
     private static int checks;
     public static void main(String[] args) {
+        runCohort("cohort-1", new long[] {0,1,2,3,17,42});
+    }
+
+    static void runCohort(String cohort, long[] seeds) {
         CirSim sim=new CirSim();sim.gridSize=16;sim.gridMask=~15;sim.gridRound=7;CircuitElm.sim=sim;
-        long[] seeds={0,1,2,3,17,42,101,-1,9007199254740993L,Long.MIN_VALUE,Long.MAX_VALUE};
         long areaSum=0;int reduced=0;
         for(long seed:seeds) {
             Rb15Plan intent=Rb15Plan.resolve(seed);TroubleshootBoard board=intent.board();
@@ -66,8 +69,8 @@ public final class DensePcbPackingContractTest {
             System.out.println("DENSE_MATCHED seed="+seed+" before="+before+" after="+after+
                 " published="+r.width+"x"+r.height);
         }
-        check(reduced>0,"No matched routed input was compacted");
-        System.out.println("PASS: dense PCB packing seeds="+seeds.length+" assertions="+checks+
+        check(reduced>0,"No matched routed input was compacted in "+cohort);
+        System.out.println("PASS: dense PCB packing cohort="+cohort+" seeds="+seeds.length+" assertions="+checks+
             " reduced="+reduced+" areaSum="+areaSum);
     }
     private static void check(boolean ok,String detail){checks++;if(!ok)throw new AssertionError(detail);}

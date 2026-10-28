@@ -94,6 +94,7 @@ public final class Rb56InstrumentAdmissionContractTest {
             verifyInstalledBoardResistance(sim, f, referenceHigh, highRail, highShared);
             verifyInstalledBoardResistance(sim, f, referenceLow, lowShared, lowReturn);
             CircuitPostMeasurementEndpoint physicalRed = terminal(referenceLow, 0), physicalBlack = terminal(referenceLow, 1);
+            waitForMeasurementReady(sim, f, physicalRed, physicalBlack, RESISTANCE);
             check(sim.getActiveMeasurementReadiness(physicalRed, physicalBlack, RESISTANCE) == ActiveMeasurementReadiness.READY,
                 "connected physical part leads resolve their actual installed board references");
             Vector<CircuitElm> physicalGraph = new Vector<CircuitElm>(sim.elmList);
@@ -142,16 +143,48 @@ public final class Rb56InstrumentAdmissionContractTest {
             check(f.runtime.getMutationProvider("RPRIMARY").removeInstalledPart(), "remove actual discharged 4.7k resistor"); advance(sim, f, DT);
             for (int polarity = 0; polarity < 2; polarity++) {
                 CircuitPostMeasurementEndpoint red = terminal(resistor, polarity), black = terminal(resistor, 1 - polarity);
-                check(sim.getActiveMeasurementReadiness(red, black) == ActiveMeasurementReadiness.READY, "isolated loose resistor is supported");
+                waitForMeasurementReady(sim, f, red, black, RESISTANCE);
+                check(sim.getActiveMeasurementReadiness(red, black) == ActiveMeasurementReadiness.READY &&
+                    sim.getActiveMeasurementReadiness(red, black, RESISTANCE) == ActiveMeasurementReadiness.READY &&
+                    sim.getActiveMeasurementReadiness(red, black, CONTINUITY) == ActiveMeasurementReadiness.READY &&
+                    sim.getActiveMeasurementReadiness(red, black, DIODE) == ActiveMeasurementReadiness.READY,
+                    "isolated loose resistor supports every real solver-backed meter mode in either polarity");
                 Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList); double before = sim.t;
-                double ohms = sim.measureResistance(red, black);
+                double ohms = sim.measureResistance(red, black, RESISTANCE);
                 check(PowerDomainContract.finite(ohms) && Math.abs(ohms - 4700) < 1 &&
                     Math.abs(Math.abs(sim.getLastResistanceTestCurrentForDeveloperVerification()) - 1.0 / 5700) < 2e-8,
-                    "actual 4.7k and independent 1V/(1k+4.7k) current oracle in each polarity");
+                    "real OHM source returns 4.7k and the independent 1V/(1k+4.7k) current oracle in each polarity");
                 check(sim.t > before && sim.elmList.equals(graph) && !sim.activeMeasurementOverlay &&
                     sim.isActiveMeasurementSolverRestoredForDeveloperVerification() && sim.hasElectricallyNeutralResistanceReferenceForDeveloperVerification(),
-                    "real meter source/reference and solver indexes restore after accepted solve");
-                GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList); advance(sim, f, DT);
+                    "real OHM source/reference and solver indexes restore after accepted solve");
+                GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
+                advance(sim, f, DT);
+
+                waitForMeasurementReady(sim, f, red, black, CONTINUITY);
+                before = sim.t;
+                double continuity = sim.measureResistance(red, black, CONTINUITY);
+                check(PowerDomainContract.finite(continuity) && Math.abs(continuity - 4700) < 1 &&
+                    Math.abs(Math.abs(sim.getLastResistanceTestCurrentForDeveloperVerification()) - 1.0 / 5700) < 2e-8,
+                    "real CONTINUITY source uses the same independent 4.7k network oracle in each polarity");
+                check(sim.t > before && sim.elmList.equals(graph) && !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+                    "real CONTINUITY transaction restores the exact board solver graph");
+                GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
+                advance(sim, f, DT);
+
+                waitForMeasurementReady(sim, f, red, black, DIODE);
+                before = sim.t;
+                DiodeMeasurementResult diodeReading = sim.measureDiode(red, black, DIODE);
+                check(diodeReading != null && PowerDomainContract.finite(diodeReading.voltage) &&
+                    PowerDomainContract.finite(diodeReading.current) &&
+                    Math.abs(diodeReading.voltage - 3.0 * 4700 / 5700) < .005 &&
+                    Math.abs(diodeReading.current - 3.0 / 5700) < 2e-6,
+                    "real DIODE source returns independent 3V/(1k+4.7k) current and 4.7k divider voltage in each polarity");
+                check(sim.t > before && sim.elmList.equals(graph) && !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+                    "real DIODE transaction restores the exact board solver graph");
+                GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
+                advance(sim, f, DT);
             }
             check(activeOrientations == 42 && passiveOrientations == 20, "exact complete independent converter pin-pair census");
         } catch (RuntimeException error) { failure = error; throw error;
@@ -222,6 +255,7 @@ public final class Rb56InstrumentAdmissionContractTest {
     private static void verifyInstalledBoardResistance(NativeMeterCirSim sim,
             Rb56PhysicalOwnerConstruction.Result f, PhysicalResistorPart part,
             CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) throws Exception {
+        waitForMeasurementReady(sim, f, red, black, RESISTANCE);
         String firstPad = part.getId() + "." + part.getTerminal(0).getTerminalName();
         String secondPad = part.getId() + "." + part.getTerminal(1).getTerminalName();
         check(part.isInstalled() && !f.owner.getBoard().getPad(firstPad).getNetId().equals(
@@ -231,16 +265,14 @@ public final class Rb56InstrumentAdmissionContractTest {
             sim.getActiveMeasurementReadiness(red, black, RESISTANCE);
         check(beforeReadiness == ActiveMeasurementReadiness.READY,
             "settled electrically-off actual board admits explicit OHM for " + part.getId());
+        check(sim.getActiveMeasurementReadiness(red, black, CONTINUITY) == ActiveMeasurementReadiness.READY &&
+            sim.getActiveMeasurementReadiness(red, black, DIODE) == ActiveMeasurementReadiness.READY,
+            "settled electrically-off actual board admits solver-backed CONTINUITY and DIODE for " + part.getId());
 
         Quiet blocked = new Quiet(sim, f.owner);
         check(sim.getActiveMeasurementReadiness(red, black) == ActiveMeasurementReadiness.ISOLATE_COMPONENT &&
-            sim.getActiveMeasurementReadiness(red, black, CONTINUITY) == ActiveMeasurementReadiness.ISOLATE_COMPONENT &&
-            sim.getActiveMeasurementReadiness(red, black, DIODE) == ActiveMeasurementReadiness.ISOLATE_COMPONENT &&
-            Double.isNaN(sim.measureResistance(red, black)) &&
-            Double.isNaN(sim.measureResistance(red, black, CONTINUITY)) &&
-            Double.isNaN(sim.measureResistance(red, black, DIODE)) &&
-            sim.measureDiode(red, black) == null,
-            "only explicit RESISTANCE mode admits installed target " + part.getId());
+            Double.isNaN(sim.measureResistance(red, black)),
+            "unspecified OHM remains conservative for installed target " + part.getId());
         blocked.verify(sim, f.owner);
 
         Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
@@ -258,6 +290,32 @@ public final class Rb56InstrumentAdmissionContractTest {
             "actual installed-network OHM solve returns a finite positive reading/current " + part.getId());
         check(sim.t > timeBefore && sim.elmList.equals(graph) && cleanup,
             "accepted installed-network solve advances real solver time and restores its graph/source " + part.getId());
+        GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
+
+        advance(sim, f, DT);
+        waitForMeasurementReady(sim, f, red, black, CONTINUITY);
+        timeBefore = sim.t;
+        double continuity = sim.measureResistance(red, black, CONTINUITY);
+        check(PowerDomainContract.finite(continuity) && continuity > 0 &&
+            PowerDomainContract.finite(sim.getLastResistanceTestCurrentForDeveloperVerification()) &&
+            Math.abs(sim.getLastResistanceTestCurrentForDeveloperVerification()) >=
+                ResistanceMeasurementStimulus.MINIMUM_TEST_CURRENT,
+            "actual installed board network yields a finite solver-backed CONTINUITY sample " + part.getId());
+        check(sim.t > timeBefore && sim.elmList.equals(graph) && !sim.activeMeasurementOverlay &&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+            "installed CONTINUITY transaction restores the exact solver graph " + part.getId());
+        GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
+
+        advance(sim, f, DT);
+        waitForMeasurementReady(sim, f, red, black, DIODE);
+        timeBefore = sim.t;
+        DiodeMeasurementResult diode = sim.measureDiode(red, black, DIODE);
+        check(diode != null && PowerDomainContract.finite(diode.voltage) &&
+            PowerDomainContract.finite(diode.current) && diode.current > 0,
+            "actual installed board network yields a finite solver-backed DIODE sample " + part.getId());
+        check(sim.t > timeBefore && sim.elmList.equals(graph) && !sim.activeMeasurementOverlay &&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+            "installed DIODE transaction restores the exact solver graph " + part.getId());
         GeneratedRuntimeInvariant.verify(f.owner, sim.boardModificationController, sim.elmList);
         System.out.println("RB56_IN_CIRCUIT_RESISTANCE {\"component\":\"" + part.getId() +
             "\",\"boardPads\":\"" + firstPad + "," + secondPad + "\",\"nominalOhms\":" +
@@ -278,6 +336,7 @@ public final class Rb56InstrumentAdmissionContractTest {
             "selected probes belong to different physical parts on one declared net");
         CircuitPostMeasurementEndpoint red = boardPadEndpoint(f.owner, firstPart, firstTerminal);
         CircuitPostMeasurementEndpoint black = boardPadEndpoint(f.owner, secondPart, secondTerminal);
+        waitForMeasurementReady(sim, f, red, black, RESISTANCE);
         check(sim.getActiveMeasurementReadiness(red, black, RESISTANCE) == ActiveMeasurementReadiness.READY,
             "same-net board pads on different parts are eligible in explicit OHM mode");
         Quiet blocked = new Quiet(sim, f.owner);
@@ -314,6 +373,7 @@ public final class Rb56InstrumentAdmissionContractTest {
             for (CirSim.Task43PMeasurementFailureStage stage : new CirSim.Task43PMeasurementFailureStage[] {
                     CirSim.Task43PMeasurementFailureStage.READER,
                     CirSim.Task43PMeasurementFailureStage.AFTER_STIMULUS_REMOVE }) {
+                waitForMeasurementReady(sim, f, red, black, RESISTANCE);
                 check(sim.getActiveMeasurementReadiness(red, black, RESISTANCE) == ActiveMeasurementReadiness.READY,
                     "real installed target remains ready before injected cleanup canary " + stage);
                 Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
@@ -359,6 +419,30 @@ public final class Rb56InstrumentAdmissionContractTest {
     }
     private static String number(double value) {
         return PowerDomainContract.finite(value) ? Double.toString(value) : "null";
+    }
+    /** Let the real unpowered board discharge between independently injected meter transactions. */
+    private static double waitForMeasurementReady(NativeMeterCirSim sim,
+            Rb56PhysicalOwnerConstruction.Result f, CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
+        check(sim.getBoardPowerController().isElectricallyUnpowered(),
+            "natural meter cooldown keeps the board electrically off");
+        double start = sim.t;
+        ActiveMeasurementReadiness readiness = sim.getActiveMeasurementReadiness(red, black, mode);
+        int slices = 0;
+        while ((readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING) && slices < 1000) {
+            advance(sim, f, .01);
+            slices++;
+            readiness = sim.getActiveMeasurementReadiness(red, black, mode);
+        }
+        double elapsed = sim.t - start;
+        check(readiness == ActiveMeasurementReadiness.READY,
+            "live board naturally recovers to READY for " + mode + " within 10 solver seconds; state=" + readiness);
+        if (elapsed > DT) System.out.println("RB56_METER_TRANSACTION_COOLDOWN {\"mode\":\"" +
+            mode + "\",\"solverSeconds\":" + number(elapsed) + "}");
+        check(sim.getBoardPowerController().isElectricallyUnpowered(),
+            "natural meter cooldown does not repower the board");
+        return elapsed;
     }
     private static void advance(NativeMeterCirSim sim, Rb56PhysicalOwnerConstruction.Result f, double seconds) {
         if (sim.circuitMatrix == null || sim.analyzeFlag) { sim.solverExecutor.analyze(); sim.analyzeFlag = false; }

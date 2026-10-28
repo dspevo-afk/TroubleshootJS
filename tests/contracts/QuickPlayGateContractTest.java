@@ -44,7 +44,7 @@ public final class QuickPlayGateContractTest {
         check(stale, "A v4 Q30 replay silently adopted the v6 interpretation");
         for (long seed : new long[] {Long.MIN_VALUE, Long.MIN_VALUE + 1, -9007199254740993L,
                 -1, 0, 1, 9007199254740993L, Long.MAX_VALUE - 1, Long.MAX_VALUE}) {
-            String replay = "tsj-alpha/6/MEDIUM/RB30_CONTROL/" + Long.toString(seed);
+            String replay = "tsj-alpha/7/MEDIUM/RB30_CONTROL/" + Long.toString(seed);
             PlayerLaunchRequest decoded = PlayerLaunchRequest.parse(replay);
             check(decoded.seed == seed && decoded.profile == DifficultyProfile.MEDIUM &&
                     Rb30Plan.FAMILY_ID.equals(decoded.familyId) && replay.equals(decoded.replay()),

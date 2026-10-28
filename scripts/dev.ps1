@@ -5,4 +5,4 @@ param(
     [int]$Port = 8888
 )
 
-& (Join-Path $PSScriptRoot 'build.ps1') -JavaHome $JavaHome -Target Dev -Port $Port
+& (Join-Path $PSScriptRoot 'build.ps1') -JavaHome $JavaHome -Target Dev -Variant Developer -Port $Port

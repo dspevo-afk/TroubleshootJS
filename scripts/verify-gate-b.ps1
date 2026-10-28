@@ -588,8 +588,9 @@ function Invoke-GateBSourceChecks() {
     }
     foreach ($token in @(
         '/__tsj/verify-identity',
-        'repositoryRoot',
-        'previewScript',
+        'repositoryIdentity',
+        'previewScriptIdentity',
+        'webRootIdentity',
         'verifierNonce',
         'processStartTicks',
         'previewPort'
@@ -597,6 +598,11 @@ function Invoke-GateBSourceChecks() {
         Assert-GateB ($previewText.IndexOf($token, [StringComparison]::Ordinal) -ge 0) `
             "preview identity contract is missing $token"
     }
+    $identityRouteMatch = [regex]::Match($previewText,
+        '(?s)if \(\$AbsolutePath -eq \$identityPath\) \{(?<route>.*?)\n    \}')
+    Assert-GateB ($identityRouteMatch.Success -and
+        $identityRouteMatch.Groups['route'].Value -notmatch '(?m)^\s*(repositoryRoot|previewScript|webRoot|sourceRoot|scriptRoot)\s*=') `
+        'preview identity route exposes a raw repository or script path field'
     Assert-GateB ($previewText.IndexOf(
         'Assert-VerifierPhysicalOwnedPath $webRoot $webRoot -AllowRoot',
         [StringComparison]::Ordinal) -ge 0) `
@@ -933,7 +939,9 @@ function Invoke-GateBSourceChecks() {
         'listener inspection still invokes netstat through an unbounded direct call'
     Assert-GateB ([regex]::Matches($workflowText, 'actions/setup-java@v4').Count -eq 1) `
         'workflow JDK setup is not deterministic'
-    Assert-GateB ($workflowText -match '(?m)^\s{4}timeout-minutes:\s*15\s*$') `
+    # The complete native corpus now shares this job with GWT and Gate B.
+    # This aggregate CI backstop does not alter any player generation budget.
+    Assert-GateB ($workflowText -match '(?m)^\s{4}timeout-minutes:\s*90\s*$') `
         'workflow has no bounded job timeout backstop'
     Assert-GateB ($gateText.IndexOf('Invoke-GateBListenerInspectionFailureCheck',
         [StringComparison]::Ordinal) -ge 0 -and
@@ -1420,12 +1428,16 @@ function Invoke-GateBWorkflowChecks() {
         $text -match '\*\.cache\.js') `
         'workflow artifact assertions are missing'
     Assert-GateB ($text -notmatch "`t") 'workflow contains tab indentation'
+    Assert-GateB ($text -match '(?m)^\s+runs-on:\s+\[self-hosted, Windows, X64\]\s*$' -and
+        $text -match '(?m)^\s+run:\s+\.\\scripts\\verify-current-contracts\.ps1\s+-JavaHome') `
+        'workflow must run the complete maintained contracts on the self-hosted Windows runner'
     foreach ($step in @(
         'Check out repository',
         'Select JDK 8',
         'Verify selected java and javac are JDK 8',
         'Compile pinned GWT 2.7.0 mainline artifact',
         'Assert compiled GWT artifacts',
+        'Run every current native contract and independent oracle',
         'Verify renderer/provider boundary',
         'Run deterministic Gate B isolation and Task 43 contract checks'
     )) {
@@ -2651,7 +2663,7 @@ function Invoke-GateBKernelTransportCanary() {
         ProcessParentProcessId = 1; ProcessParentProcessStartTicks = 1L
         ProcessCommandLine = $commandLine; Script = $previewScript
         RepositoryRoot = $repositoryRootForCanary; WebRoot = $webRoot
-        IdentityProtocol = 'troubleshootjs-preview-identity-v1'
+        IdentityProtocol = 'troubleshootjs-preview-identity-v2'
         IdentityVerified = $true; CallerOwned = $false
         RunId = $runId; Nonce = $nonce; State = 'run-owned-verified'
         Lease = $lease; Process = $currentProcess
@@ -3756,8 +3768,14 @@ function Invoke-GateBCallerIdentityScalarCanary() {
     $webRoot = Get-VerifierFullPath (Join-Path $repoRoot 'war')
     $port = 40251
     $identity = [ordered]@{
-        protocol = 'troubleshootjs-preview-identity-v1'
-        repositoryRoot = $repoRoot; previewScript = $previewScript; webRoot = $webRoot
+        protocol = 'troubleshootjs-preview-identity-v2'
+        repositoryIdentity = Get-VerifierOpaquePathIdentity 'repository' $repoRoot
+        previewScriptIdentity = Get-VerifierOpaquePathIdentity 'preview-script' $previewScript
+        webRootIdentity = Get-VerifierOpaquePathIdentity 'web-root' $webRoot
+        sourceRootIdentity = Get-VerifierOpaquePathIdentity 'source-root' (Join-Path $repoRoot 'src')
+        scriptRootIdentity = Get-VerifierOpaquePathIdentity 'script-root' (Join-Path $repoRoot 'scripts')
+        sourceDigest = ('a' * 64); scriptDigest = ('b' * 64); webDigest = ('c' * 64)
+        executionDigest = ('d' * 64); executionFileCount = 1
         previewPort = $port; processId = 0; processStartTicks = 0
         verifierRunId = ''; verifierNonce = ''
     }
@@ -4057,7 +4075,7 @@ function Invoke-GateBListenerTrustBoundaryCanary() {
                 ProcessParentProcessId = 1; ProcessParentProcessStartTicks = 1L
                 ProcessCommandLine = 'powershell.exe -File ' + $previewScript
                 Script = $previewScript; RepositoryRoot = $root; WebRoot = $webRoot
-                IdentityProtocol = 'troubleshootjs-preview-identity-v1'
+                IdentityProtocol = 'troubleshootjs-preview-identity-v2'
                 IdentityVerified = $true; CallerOwned = $false; RunId = $runId
                 Nonce = 'gate-b-preview-trust-boundary-nonce'; State = 'run-owned-verified'
                 Lease = $lease; Process = $current
@@ -4480,7 +4498,7 @@ function Invoke-GateBListenerRecordConsumerCanary() {
             ProcessId = 0; ProcessStartTicks = 0; ProcessParentProcessId = 0
             ProcessParentProcessStartTicks = 0; ProcessCommandLine = ''
             RepositoryRoot = $repositoryRoot; WebRoot = (Join-Path $repositoryRoot 'war')
-            IdentityProtocol = 'troubleshootjs-preview-identity-v1'
+            IdentityProtocol = 'troubleshootjs-preview-identity-v2'
             IdentityVerified = $true; CallerOwned = $true
             Script = (Join-Path $repositoryRoot 'scripts\preview.ps1')
             RunId = ''; Nonce = ''; Lease = $null; Process = $null
@@ -9179,7 +9197,11 @@ function Invoke-GateBListenerAuthorizationRetryCanary() {
         ListenerOwnerEvidence = 'system-diagnostics-process-starttime'
         Source = 'Get-NetTCPConnection'; Error = ''
     }
-    $context = [pscustomobject]@{}
+    # The current listener authorization inspects Context.Server before it
+    # decides whether the preview-only same-root shortcut applies. This is a
+    # browser-owner canary, so retain the property while making that shortcut
+    # explicitly ineligible.
+    $context = [pscustomobject]@{ Server = $null }
     $probe = & $module[0] {
         param($ownerValue, $inspectionValue, $contextValue)
         $oldSchema = (Get-Command Test-VerifierListenerInspectionSchema `
@@ -10478,7 +10500,7 @@ function Invoke-GateBTcpListenerPreviewCanary() {
             [int]$identityResponse.StatusCode -eq 200 -and
             -not [String]::IsNullOrWhiteSpace([string]$page.Content)) `
             'TcpListener preview did not return the static page and identity route'
-        Assert-GateB ([string]$identity.protocol -ceq 'troubleshootjs-preview-identity-v1' -and
+        Assert-GateB ([string]$identity.protocol -ceq 'troubleshootjs-preview-identity-v2' -and
             [int]$identity.previewPort -eq [int]$context.Server.Port -and
             [int]$identity.processId -eq [int]$context.Server.ProcessId -and
             [string]$identity.verifierRunId -ceq [string]$context.RunId -and

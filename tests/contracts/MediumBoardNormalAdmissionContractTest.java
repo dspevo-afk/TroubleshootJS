@@ -17,6 +17,8 @@ public final class MediumBoardNormalAdmissionContractTest {
         Rb30Generator.Candidate candidate = new Rb30Generator().construct(plan);
         try {
             TroubleshootBoard board = candidate.board();
+            require(board.getPlacementConstraints().requiresTwoLayerRouting,
+                "normal Rb30 plan declares the P07 admission requirement to the layout selector");
             MediumBoardPhysicalPolicy.Result routed =
                 new SeededPcbLayoutGenerator().generateWithPolicyResult(
                     board, plan.layoutSeed, plan.routingSeed);
@@ -24,6 +26,12 @@ public final class MediumBoardNormalAdmissionContractTest {
             require(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
                 routed.getStatistics().selectedRoutePolicy),
                 "normal-medium canary selects the bounded P07 route");
+            require(routed.getStatistics().oneFaceAttempts == 0 &&
+                    routed.getStatistics().oneFaceSuccesses == 0,
+                "normal-medium routing skips P05 because its owner rejects that route");
+            require(routed.getStatistics().twoLayerAttempts > 0 &&
+                    routed.getStatistics().twoLayerSuccesses > 0,
+                "normal-medium admission uses an actually routed P07 result");
 
             GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRoute(
                 board, routed, plan.layoutSeed, plan.routingSeed);

@@ -13,8 +13,8 @@ public final class PcbNormalPackingIdentityContractTest {
         verifyProceduralDeclarationAndFaceConversion();
         verifyNormalAndPrivateProviders();
         verifyPublicReplayEpochAndSignedSeeds();
-        check(SeededPcbLayoutGenerator.CURRENT_VERSION == 19,
-            "current layout algorithm identity is not 19");
+        check(SeededPcbLayoutGenerator.CURRENT_VERSION == 20,
+            "current layout algorithm identity is not 20");
         System.out.println("PASS: PCB normal packing identity contracts assertions=" + assertions +
             " packing=" + PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION +
             " replay=" + PlayerLaunchRequest.EPOCH);
@@ -118,8 +118,8 @@ public final class PcbNormalPackingIdentityContractTest {
         check(normal.routingLayer == PcbCopperLayer.BOTTOM &&
             normal.getPlacementPackingVersion() ==
                 PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION &&
-            MediumBoardPhysicalPolicy.selected(normal),
-            "RB30 normal provider explicitly opts into connected-pocket packing");
+            MediumBoardPhysicalPolicy.selected(normal) && normal.requiresTwoLayerRouting,
+            "RB30 normal provider opts into connected-pocket packing and its admitted route");
         PcbPlacementConstraints privateLegacy = Rb56Plan.resolve(0L,
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT).board()
             .getPlacementConstraints();
@@ -140,10 +140,11 @@ public final class PcbNormalPackingIdentityContractTest {
         }
         for (final String stale : new String[] {
                 "tsj-alpha/5/EASY/LED_INDICATOR/0",
-                "tsj-alpha/7/EASY/LED_INDICATOR/0",
-                "tsj-alpha/6/EASY/LED_INDICATOR/+1",
-                "tsj-alpha/6/EASY/LED_INDICATOR/01",
-                "tsj-alpha/6/EASY/LED_INDICATOR/9223372036854775808" }) {
+                "tsj-alpha/6/EASY/LED_INDICATOR/0",
+                "tsj-alpha/8/EASY/LED_INDICATOR/0",
+                "tsj-alpha/7/EASY/LED_INDICATOR/+1",
+                "tsj-alpha/7/EASY/LED_INDICATOR/01",
+                "tsj-alpha/7/EASY/LED_INDICATOR/9223372036854775808" }) {
             reject(new Attempt() { public void run() {
                 PlayerLaunchRequest.parse(stale);
             } }, "stale, unknown or malformed public replay accepted: " + stale);

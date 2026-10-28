@@ -12,7 +12,7 @@ import java.util.Vector;
  * never asks the binding table to tell it what a solver net is: logical-board
  * and manifest observations are the independent electrical oracle.
  */
-final class Task43PPhysicalTruthDeveloperVerifier {
+final class GeneratedBoardPhysicalTruthDeveloperVerifier {
     private static final String KEY_SEPARATOR = "\u0000";
 
     private static final class TerminalExpectation {
@@ -453,7 +453,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         }
     }
 
-    private Task43PPhysicalTruthDeveloperVerifier() { }
+    private GeneratedBoardPhysicalTruthDeveloperVerifier() { }
 
     static String verify(CirSim sim) {
         if (sim == null)
@@ -541,7 +541,7 @@ final class Task43PPhysicalTruthDeveloperVerifier {
         String resistorSemantics = verifyControlledResistorSemantics(sim, instance);
         return "{\"protocol\":\"TSJ-TASK48-PHYSICAL-CORRESPONDENCE-1\"," +
             "\"status\":\"PASS\",\"api\":\"" +
-            "Task43PPhysicalTruthDeveloperVerifier.verifyControlledIndicatorComposition\" ," +
+            "GeneratedBoardPhysicalTruthDeveloperVerifier.verifyControlledIndicatorComposition\" ," +
             "\"family\":\"COMPOSED_CONTROLLED_INDICATOR\",\"manifest\":" +
             correspondence + ",\"connectedLiftedResistors\":" + resistorSemantics +
             "}";

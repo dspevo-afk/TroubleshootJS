@@ -5,6 +5,8 @@ param(
     [string]$Style = 'OBF',
     [ValidateSet('Compile', 'Dev')]
     [string]$Target = 'Compile',
+    [ValidateSet('Player', 'Developer')]
+    [string]$Variant = 'Player',
     [ValidateRange(1, 65535)]
     [int]$Port = 8888,
     [ValidateRange(1, 3600)]
@@ -15,6 +17,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+$buildGuard = $null
 try {
     if ($null -eq ('TroubleshootJS.BuildOutputCollector' -as [type])) {
         Add-Type -TypeDefinition @'
@@ -61,6 +64,163 @@ function Get-BuildErrorMessage($ErrorRecord) {
         return [string]$ErrorRecord.Exception.Message
     }
     return [string]$ErrorRecord
+}
+
+function Assert-BuildInputIdentityStable($Expected, $Actual, [string]$Phase) {
+    if ($null -eq $Expected -or $null -eq $Actual -or
+            [String]::IsNullOrWhiteSpace([string]$Expected.InputDigest) -or
+            [String]::IsNullOrWhiteSpace([string]$Actual.InputDigest) -or
+            [string]$Expected.InputDigest -cne [string]$Actual.InputDigest -or
+            [int]$Expected.InputFileCount -ne [int]$Actual.InputFileCount) {
+        Throw-BuildInfrastructure "Compiler inputs changed $Phase; output cannot be certified current."
+    }
+}
+
+function Publish-BuildModule {
+    param([string]$RepositoryRoot, [string]$CompileOutputRoot, [string]$StagedModule)
+    $installedModule = Join-Path $RepositoryRoot 'war\circuitjs1'
+    $previousModule = Join-Path $CompileOutputRoot 'previous-module'
+    $compileRoot = Assert-VerifierPhysicalOwnedPath $RepositoryRoot `
+        $CompileOutputRoot -ValidateTree
+    $stagedRoot = Assert-VerifierPhysicalOwnedPath $compileRoot `
+        $StagedModule -ValidateTree
+    [void](Assert-VerifierPhysicalOwnedPath $RepositoryRoot $installedModule)
+    $compileVolume = [IO.Path]::GetPathRoot($compileRoot)
+    $installedVolume = [IO.Path]::GetPathRoot(
+        (Get-VerifierCanonicalWindowsPath $installedModule))
+    if ([String]::IsNullOrWhiteSpace($compileVolume) -or
+            [String]::IsNullOrWhiteSpace($installedVolume) -or
+            -not $compileVolume.Equals($installedVolume,
+                [StringComparison]::OrdinalIgnoreCase)) {
+        throw 'The compiler output and installed module must be on the same volume.'
+    }
+    if (-not (Test-Path -LiteralPath (Join-Path $StagedModule 'circuitjs1.nocache.js') -PathType Leaf) -or
+            @(Get-ChildItem -LiteralPath $StagedModule -Filter '*.cache.js' -File).Count -eq 0 -or
+            -not (Test-VerifierPhysicalChildPath $compileRoot $stagedRoot)) {
+        throw 'The compiler did not produce a complete owned module.'
+    }
+    if (Test-Path -LiteralPath $previousModule) {
+        throw 'The unique compiler output namespace already contains a promotion backup.'
+    }
+    if (Test-Path -LiteralPath $installedModule) {
+        if (-not (Test-Path -LiteralPath $installedModule -PathType Container)) {
+            throw 'The installed generated module is not a directory.'
+        }
+        if (-not (Assert-VerifierPhysicalOwnedPath $RepositoryRoot $installedModule -ValidateTree)) {
+            throw 'The prior generated module changed physical ownership.'
+        }
+        [void](Assert-VerifierPhysicalOwnedPath $compileRoot $previousModule)
+        [IO.Directory]::Move($installedModule, $previousModule)
+    }
+    try {
+        [IO.Directory]::Move($stagedRoot, $installedModule)
+    } catch {
+        $promotionFailure = $_
+        if ((Test-Path -LiteralPath $previousModule -PathType Container) -and
+                -not (Test-Path -LiteralPath $installedModule)) {
+            try {
+                [IO.Directory]::Move($previousModule, $installedModule)
+            } catch {
+                Throw-BuildInfrastructure ('Module promotion failed and rollback could not restore the prior output; ' +
+                    "the recovery copy remains at '$previousModule'. Promotion failure: " +
+                    (Get-BuildErrorMessage $promotionFailure) + '; rollback failure: ' +
+                    (Get-BuildErrorMessage $_))
+            }
+        }
+        throw $promotionFailure
+    }
+}
+
+function Get-BuildOwnershipGuardPath([string]$RepositoryRoot, [string]$ToolRoot) {
+    [void](Assert-VerifierPhysicalOwnedPath $RepositoryRoot $ToolRoot)
+    return (Join-Path $ToolRoot 'build-ownership.lock')
+}
+
+function Enter-BuildOwnershipGuard([string]$RepositoryRoot, [string]$ToolRoot) {
+    # The guard lives in the worktree's ignored tool namespace. FileShare.None
+    # is enforced by the Windows kernel across PowerShell processes and is
+    # released automatically if the owner exits unexpectedly.
+    Assert-VerifierNoReparseAncestors $ToolRoot
+    [void](Assert-VerifierPhysicalOwnedPath $RepositoryRoot $ToolRoot)
+    New-Item -ItemType Directory -Force -Path $ToolRoot -ErrorAction Stop | Out-Null
+    [void](Assert-VerifierPhysicalOwnedPath $RepositoryRoot $ToolRoot -ValidateTree)
+    $guardPath = Get-BuildOwnershipGuardPath $RepositoryRoot $ToolRoot
+    Assert-VerifierNoReparseAncestors $guardPath
+    try {
+        $stream = [IO.File]::Open($guardPath, [IO.FileMode]::OpenOrCreate,
+            [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+    } catch [IO.IOException] {
+        $win32Error = [int]$_.Exception.HResult -band 0xffff
+        if ($win32Error -eq 32 -or $win32Error -eq 33) {
+            Throw-BuildInfrastructure 'Another build already owns this worktree compiler and cache namespace.'
+        }
+        Throw-BuildInfrastructure ('Could not open the per-worktree build ownership guard: ' +
+            (Get-BuildErrorMessage $_))
+    } catch {
+        Throw-BuildInfrastructure ('Could not open the per-worktree build ownership guard: ' +
+            (Get-BuildErrorMessage $_))
+    }
+
+    try {
+        [void](Assert-VerifierPhysicalOwnedPath $RepositoryRoot $guardPath)
+        $process = Get-Process -Id $PID -ErrorAction Stop
+        $processStartTicks = [long](Get-VerifierProcessStartTicks $process)
+        $executable = [string][Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
+        $processRecords = @(Get-CimInstance Win32_Process `
+            -Filter "ProcessId = $PID" -ErrorAction Stop)
+        if ($processRecords.Count -ne 1 -or
+                [int]$processRecords[0].ProcessId -ne [int]$PID -or
+                -not ([string]$processRecords[0].ExecutablePath).Equals($executable,
+                    [StringComparison]::OrdinalIgnoreCase) -or
+                [String]::IsNullOrWhiteSpace([string]$processRecords[0].CommandLine)) {
+            Throw-BuildInfrastructure 'Could not record the complete build guard process identity.'
+        }
+        if ($processStartTicks -le 0 -or [String]::IsNullOrWhiteSpace($executable)) {
+            Throw-BuildInfrastructure 'Could not record the build guard owner process identity.'
+        }
+        $metadata = [pscustomobject]@{
+            processId = [int]$PID
+            processStartTicks = $processStartTicks
+            executable = $executable
+            commandLine = [string]$processRecords[0].CommandLine
+            repositoryIdentity = Get-VerifierCanonicalWindowsPath $RepositoryRoot
+            acquiredUtc = [DateTime]::UtcNow.ToString('o',
+                [Globalization.CultureInfo]::InvariantCulture)
+        } | ConvertTo-Json -Compress
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes([string]$metadata)
+        $stream.SetLength(0)
+        $stream.Position = 0
+        $stream.Write($bytes, 0, $bytes.Length)
+        $stream.Flush($true)
+        return [pscustomobject]@{
+            Path = $guardPath
+            Stream = $stream
+            OwnerProcessId = [int]$PID
+            OwnerProcessStartTicks = $processStartTicks
+        }
+    } catch {
+        $stream.Dispose()
+        throw
+    }
+}
+
+function Exit-BuildOwnershipGuard($Guard) {
+    if ($null -eq $Guard) { return }
+    if ([int]$Guard.OwnerProcessId -ne [int]$PID) {
+        Throw-BuildInfrastructure 'Refusing to release another process build ownership guard.'
+    }
+    $process = Get-Process -Id $PID -ErrorAction SilentlyContinue
+    if ($null -eq $process -or
+            [long](Get-VerifierProcessStartTicks $process) -ne
+                [long]$Guard.OwnerProcessStartTicks) {
+        Throw-BuildInfrastructure 'Build guard owner process identity changed before release.'
+    }
+    try {
+        $Guard.Stream.Dispose()
+    } catch {
+        Throw-BuildInfrastructure ('Could not release the per-worktree build ownership guard: ' +
+            (Get-BuildErrorMessage $_))
+    }
 }
 
 function New-BuildInfrastructureException([string]$Message,
@@ -439,11 +599,14 @@ try {
     $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $gwtVersion = '2.7.0'
 $toolRoot = Join-Path $repositoryRoot ".tools\gwt-$gwtVersion"
+$buildGuard = Enter-BuildOwnershipGuard $repositoryRoot $toolRoot
 $workDirectoryName = if ($Target -eq 'Dev') { 'dev-work' } else { 'compile-work' }
 $cacheDirectoryName = if ($Target -eq 'Dev') { 'dev-cache' } else { 'compile-cache' }
 $workDirectory = Join-Path $toolRoot $workDirectoryName
 $persistentCacheRoot = Join-Path $toolRoot $cacheDirectoryName
-$moduleName = 'com.lushprojects.circuitjs1.circuitjs1'
+$moduleName = if ($Variant -eq 'Developer') {
+    'com.lushprojects.circuitjs1.developer'
+} else { 'com.lushprojects.circuitjs1.circuitjs1' }
 
 if ($JavaHome) {
     $java = Join-Path $JavaHome 'bin\java.exe'
@@ -504,6 +667,17 @@ $classpathEntries = @((Join-Path $repositoryRoot 'src'))
 $classpathEntries += $artifacts | ForEach-Object { Join-Path $toolRoot $_.File }
 $classpath = [string]::Join([IO.Path]::PathSeparator, $classpathEntries)
 
+$compileOutputRoot = ''
+$compilerWar = Join-Path $repositoryRoot 'war'
+if ($Target -eq 'Compile') {
+    $compileOutputRoot = Join-Path $toolRoot `
+        ('compile-output-' + [Guid]::NewGuid().ToString('N'))
+    Assert-VerifierNoReparseAncestors $compileOutputRoot
+    [void](Assert-VerifierPhysicalOwnedPath $repositoryRoot $compileOutputRoot)
+    $compilerWar = Join-Path $compileOutputRoot 'generated'
+    New-Item -ItemType Directory -Path $compilerWar -ErrorAction Stop | Out-Null
+}
+
 if ($Target -eq 'Dev') {
     $javaArguments = @(
         '-Xmx1g',
@@ -525,7 +699,7 @@ if ($Target -eq 'Dev') {
         "-Dgwt.persistentunitcachedir=$persistentCacheRoot",
         '-cp', $classpath,
         'com.google.gwt.dev.Compiler',
-        '-war', (Join-Path $repositoryRoot 'war'),
+        '-war', $compilerWar,
         '-workDir', $workDirectory,
         '-style', $Style,
         '-logLevel', 'INFO',
@@ -535,12 +709,34 @@ if ($Target -eq 'Dev') {
 
 Push-Location $repositoryRoot
 try {
+    $inputIdentity = if ($Target -eq 'Compile') {
+        Get-VerifierProductionBuildIdentity -RepositoryRoot $repositoryRoot -Style $Style -Variant $Variant
+    } else { $null }
     $buildResult = Invoke-BuildBoundedProcess $java $javaArguments `
         ([int]$ProcessTimeoutSeconds * 1000) ('gwt-' + $Target.ToLowerInvariant())
     if (-not $buildResult.TerminationProven -or [int]$buildResult.ExitCode -ne 0) {
         Throw-BuildInfrastructure "GWT $Target failed with exit code $($buildResult.ExitCode). Logs retained at '$($buildResult.ProcessRoot)'."
     }
     Remove-BuildOwnedProcessRoot $buildResult.ProcessRoot
+    if ($Target -eq 'Compile') {
+        $identity = Get-VerifierProductionBuildIdentity -RepositoryRoot $repositoryRoot `
+            -Style $Style -Variant $Variant
+        Assert-BuildInputIdentityStable $inputIdentity $identity `
+            'during compilation before module promotion'
+        # Promote only this compile's complete module. GWT otherwise leaves old
+        # permutations in place, including a preceding developer build's code.
+        $stagedModule = Join-Path $compilerWar 'circuitjs1'
+        Publish-BuildModule -RepositoryRoot $repositoryRoot -CompileOutputRoot $compileOutputRoot -StagedModule $stagedModule
+        $identity = Get-VerifierProductionBuildIdentity -RepositoryRoot $repositoryRoot `
+            -Style $Style -Variant $Variant
+        Assert-BuildInputIdentityStable $inputIdentity $identity `
+            'during module promotion before receipt writing'
+        $identity | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath `
+            (Join-Path $toolRoot 'production-build-identity.json') -Encoding UTF8
+        Write-Host ('BUILD_IDENTITY variant=' + $Variant + ' inputs=' + $identity.InputDigest +
+            ' outputs=' + $identity.OutputDigest)
+        Remove-VerifierOwnedTree $repositoryRoot $compileOutputRoot
+    }
 } finally {
     Pop-Location
 }
@@ -554,4 +750,13 @@ try {
     }
     Write-Host ('BUILD_INFRASTRUCTURE: ' + (Get-BuildErrorMessage $_))
     exit 2
+} finally {
+    if ($null -ne $buildGuard) {
+        try {
+            Exit-BuildOwnershipGuard $buildGuard
+        } catch {
+            Write-Host ('BUILD_INFRASTRUCTURE: ' + (Get-BuildErrorMessage $_))
+            exit 2
+        }
+    }
 }

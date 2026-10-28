@@ -10,6 +10,7 @@ class ResistanceMeasurementDeveloperVerifier {
     private static double healthyLedCurrent;
 
     static void verify(CirSim sim) {
+        ActiveMeasurementDisplayDeveloperVerifier.verify();
         MeasurementEndpointDeveloperVerifier.verify(sim);
         if (sim.getGeneratedChallengeController() != null) {
             MeterLifecycleDeveloperVerifier.verify(sim);
@@ -49,7 +50,7 @@ class ResistanceMeasurementDeveloperVerifier {
         measure(sim, r11Probe, r12Probe, 680, 2);
         measure(sim, r12Probe, r11Probe, 680, 2);
         measure(sim, j11Probe, r11Probe, 0, .001);
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, led1kProbe);
+        setResistanceProbesWhenReady(sim, r11Probe, led1kProbe);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Open resistance path did not display OL");
 
@@ -112,15 +113,19 @@ class ResistanceMeasurementDeveloperVerifier {
     require(modifications.getComponentState("R1") == ComponentPhysicalState.INSTALLED,
         "R1 did not begin installed");
     measure(sim, componentLead1, componentLead2, 680, 2);
+    awaitMeasurementReady(sim, "RESISTANCE", componentLead1, componentLead2,
+        "before initial component lead lift");
     require(modifications.liftLead("R1", "R1.1"), "Initial R1 lead lift was ignored");
     require(!modifications.liftLead("R1", "R1.1"), "Repeated R1 lead lift was not idempotent");
     require(modifications.getComponentState("R1") == ComponentPhysicalState.LEAD_LIFTED,
         "One lifted R1 lead was treated as removal");
     sim.updateCircuit();
-    sim.instrumentController.setResistanceProbesForDeveloperVerification(r11Probe, componentLead1);
+    setResistanceProbesWhenReady(sim, r11Probe, componentLead1);
     require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
         "Lifted R1 lead did not isolate the persistent board pad");
     measure(sim, componentLead1, componentLead2, 680, 2);
+    awaitMeasurementReady(sim, "RESISTANCE", componentLead1, componentLead2,
+        "before component lead reconnect");
     require(modifications.reconnectLead("R1", "R1.1"), "R1 lead reconnect was ignored");
     require(!modifications.reconnectLead("R1", "R1.1"),
         "Repeated R1 reconnect was not idempotent");
@@ -145,6 +150,8 @@ class ResistanceMeasurementDeveloperVerifier {
     sim.elmList.removeElementAt(sim.elmList.lastIndexOf(r11.getConnectionElement()));
     modifications.verifyStructuralState();
 
+    awaitMeasurementReady(sim, "RESISTANCE", r11Probe, r12Probe,
+        "before component removal fixture");
     modifications.liftLead("R1", "R1.1");
     modifications.removeComponent("R1");
     require(modifications.getComponentState("R1") == ComponentPhysicalState.REMOVED,
@@ -166,6 +173,8 @@ class ResistanceMeasurementDeveloperVerifier {
     sim.verifyGeneratedBoard();
     boolean poweredRejected = false;
     try {
+        awaitMeasurementReady(sim, "RESISTANCE", componentLead1, componentLead2,
+            "before component restoration fixture");
         modifications.restoreComponent("R1");
     } catch (BoardModificationRejectedException e) {
         poweredRejected = true;
@@ -353,7 +362,7 @@ class ResistanceMeasurementDeveloperVerifier {
             "PCB component panel exposed the original resistor value or omitted its markings");
         ProbeTarget r11 = hitPcbPad(sim, renderer, "R1.1");
         ProbeTarget r12 = hitPcbPad(sim, renderer, "R1.2");
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
+        setResistanceProbesWhenReady(sim, r11, r12);
         requireApproximately(680,
             sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
             "PCB R1 pad measurement was not approximately 680 Ohm");
@@ -366,6 +375,7 @@ class ResistanceMeasurementDeveloperVerifier {
             "Same physical PCB pad clicks remeasured");
 
         BoardModificationController modifications = sim.getBoardModificationController();
+        awaitMeasurementReady(sim, "RESISTANCE", r11, r12, "before PCB lead lift");
         modifications.liftLead("R1", "R1.1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
@@ -378,14 +388,14 @@ class ResistanceMeasurementDeveloperVerifier {
             instance.getConnectionBindings().get("R1", "R1.2");
         ProbeTarget componentLead2 = new ComponentLeadProbeTarget(sim, instance, "R1", "R1.2",
             renderer);
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, componentLead1);
+        setResistanceProbesWhenReady(sim, r11, componentLead1);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Lifted PCB lead did not open the board-to-component path");
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(r11, r12);
+        setContinuityProbesWhenReady(sim, r11, r12);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()) &&
                 !sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
             "Open PCB board path produced continuity");
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
+        setResistanceProbesWhenReady(sim, componentLead1,
             componentLead2);
         requireApproximately(680,
             sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
@@ -393,6 +403,8 @@ class ResistanceMeasurementDeveloperVerifier {
         require(r12Binding.getComponentEndpoint() == componentLead2.getMeasurementEndpoint(),
             "Component-side PCB target did not resolve through its declared binding");
 
+        awaitMeasurementReady(sim, "RESISTANCE", componentLead1, componentLead2,
+            "before PCB component removal");
         modifications.removeComponent("R1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
@@ -402,18 +414,20 @@ class ResistanceMeasurementDeveloperVerifier {
             "PCB pad targets did not survive component removal and reanalysis");
         componentLead1 = hitPcbLead(sim, renderer, "R1", "R1.1");
         componentLead2 = hitPcbLead(sim, renderer, "R1", "R1.2");
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(componentLead1,
+        setResistanceProbesWhenReady(sim, componentLead1,
             componentLead2);
         requireApproximately(680,
             sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
             "Removed tray resistor did not measure approximately 680 Ohm");
 
+        awaitMeasurementReady(sim, "RESISTANCE", componentLead1, componentLead2,
+            "before PCB component restoration");
         modifications.restoreComponent("R1");
         sim.updateCircuit();
         requireBands(new ResistorColorBand[] { ResistorColorBand.BLUE, ResistorColorBand.GRAY,
             ResistorColorBand.BROWN, ResistorColorBand.GOLD }, getDeveloperResistorBands(instance),
             instance.getSeed());
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(r11, r12);
+        setResistanceProbesWhenReady(sim, r11, r12);
         requireApproximately(680,
             sim.instrumentController.getLatestResistanceReadingForDeveloperVerification(), 2,
             "Restored PCB pad measurement was not approximately 680 Ohm");
@@ -455,7 +469,7 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void measure(CirSim sim, ProbeTarget red, ProbeTarget black, double expected,
             double tolerance) {
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        setResistanceProbesWhenReady(sim, red, black);
         String reading = sim.instrumentController.getReadingForDeveloperVerification();
         if ("OL".equals(reading) || "POWER OFF".equals(reading))
             throw new IllegalStateException("Expected " + expected + " Ohm, got " + reading);
@@ -464,6 +478,85 @@ class ResistanceMeasurementDeveloperVerifier {
             "Expected " + expected + " Ohm, got " + actual + " Ohm");
         require(sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
             "Resistance transaction did not restore the normal analyzed solver graph");
+    }
+
+    private static final double MEASUREMENT_COOLDOWN_LIMIT_SECONDS = 3.0;
+    private static final double MEASUREMENT_COOLDOWN_SLICE_SECONDS = .05;
+
+    private static void setResistanceProbesWhenReady(CirSim sim, ProbeTarget red,
+            ProbeTarget black) {
+        awaitMeasurementReady(sim, "RESISTANCE", red, black, "before resistance injection");
+        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+    }
+
+    private static void setContinuityProbesWhenReady(CirSim sim, ProbeTarget red,
+            ProbeTarget black) {
+        awaitMeasurementReady(sim, "CONTINUITY", red, black, "before continuity injection");
+        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+    }
+
+    private static void setDiodeProbesWhenReady(CirSim sim, ProbeTarget red,
+            ProbeTarget black) {
+        awaitMeasurementReady(sim, "DIODE", red, black, "before diode injection");
+        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+    }
+
+    /**
+     * A completed meter acquisition can leave real capacitor energy behind.
+     * Let CircuitJS discharge it on the same live graph before the next fixture
+     * action that could inject another test current.
+     */
+    private static void awaitMeasurementReady(CirSim sim, String modeId, ProbeTarget red,
+            ProbeTarget black, String label) {
+        require(sim.getGeneratedBoardInstance() != null &&
+            sim.getBoardPowerController().isElectricallyUnpowered(),
+            label + " requires the current generated board to remain powered off");
+        require(!sim.activeMeasurementOverlay,
+            label + " cannot overlap an active temporary measurement");
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        GeneratedBoardInstance owner = sim.getGeneratedBoardInstance();
+        ActiveMeasurementStimulus priorStimulus = sim.lastActiveMeasurementStimulus;
+        double start = sim.t;
+        ActiveMeasurementReadiness readiness =
+            sim.instrumentController.getActiveMeasurementReadinessForMode(modeId, red, black);
+        if (readiness == ActiveMeasurementReadiness.READY)
+            return;
+        require(readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING,
+            label + " was blocked by " + readiness + " instead of recoverable stored energy");
+        int slices = 0;
+        while (readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING) {
+            double elapsed = sim.t - start;
+            require(elapsed < MEASUREMENT_COOLDOWN_LIMIT_SECONDS,
+                label + " did not recover within " + MEASUREMENT_COOLDOWN_LIMIT_SECONDS +
+                    " solver seconds; state=" + readiness);
+            double priorTime = sim.t;
+            sim.solverExecutor.advanceFor(Math.min(MEASUREMENT_COOLDOWN_SLICE_SECONDS,
+                MEASUREMENT_COOLDOWN_LIMIT_SECONDS - elapsed));
+            owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);
+            require(sim.t > priorTime && sim.stopMessage == null,
+                label + " did not advance healthy accepted solver time");
+            require(sim.getGeneratedBoardInstance() == owner && sim.elmList.equals(graph) &&
+                    sim.lastActiveMeasurementStimulus == priorStimulus &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.getBoardPowerController().isElectricallyUnpowered(),
+                label + " cooldown changed the graph, meter transaction, owner, or power state");
+            slices++;
+            require(slices <= 1000, label + " exceeded the bounded cooldown slice count");
+            readiness = sim.instrumentController.getActiveMeasurementReadinessForMode(modeId,
+                red, black);
+            require(readiness == ActiveMeasurementReadiness.READY ||
+                    readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                    readiness == ActiveMeasurementReadiness.WAITING,
+                label + " became unexpectedly blocked by " + readiness);
+        }
+        require(readiness == ActiveMeasurementReadiness.READY &&
+                sim.t - start <= MEASUREMENT_COOLDOWN_LIMIT_SECONDS + .001,
+            label + " did not reach READY within the bounded natural cooldown");
+        if (priorStimulus != null)
+            require(sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
+                label + " retained a temporary meter stimulus in the solver");
     }
 
     private static void verifyNoRefreshFromDrawCycle(CirSim sim) {
@@ -476,8 +569,10 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyAutomaticRefreshAfterAnalysis(CirSim sim, ProbeTarget red,
             ProbeTarget black) {
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        setResistanceProbesWhenReady(sim, red, black);
         int measurementsBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
+        awaitMeasurementReady(sim, "RESISTANCE", red, black,
+            "before post-analysis resistance refresh");
         sim.needAnalyze();
         require("--- Ohm".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Topology invalidation did not clear the cached OHM reading");
@@ -497,6 +592,7 @@ class ResistanceMeasurementDeveloperVerifier {
         occupiedFormerMidpoint.drag(redPoint.x, redPoint.y + 96);
         occupiedFormerMidpoint.setBbox(redPoint.x, redPoint.y + 64,
             redPoint.x, redPoint.y + 96);
+        awaitMeasurementReady(sim, "RESISTANCE", red, black, "before occupied-midpoint refresh");
         sim.elmList.add(occupiedFormerMidpoint);
         sim.needAnalyze();
         sim.updateCircuit();
@@ -504,6 +600,7 @@ class ResistanceMeasurementDeveloperVerifier {
             "Occupied former midpoint altered the resistance reading");
         require(sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),
             "Collision test left temporary elements in the solver graph");
+        awaitMeasurementReady(sim, "RESISTANCE", red, black, "before midpoint cleanup refresh");
         sim.elmList.remove(occupiedFormerMidpoint);
         sim.needAnalyze();
         sim.updateCircuit();
@@ -543,7 +640,7 @@ class ResistanceMeasurementDeveloperVerifier {
         verifyContinuityResult(sim, j11Probe, r11Probe, 0, .001, true);
         verifyContinuityResult(sim, r11Probe, r12Probe, 680, 2, false);
         verifyContinuityResult(sim, r12Probe, r11Probe, 680, 2, false);
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(r11Probe, led1kProbe);
+        setContinuityProbesWhenReady(sim, r11Probe, led1kProbe);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Open continuity path did not display OL");
         requireContinuityInactive(sim, "Open continuity path left feedback active");
@@ -579,7 +676,7 @@ class ResistanceMeasurementDeveloperVerifier {
         CircuitPostProbeTarget canvasDifferentTarget = getCanvasTarget(sim, differentTarget);
         CircuitPostProbeTarget canvasDiodeRed = getCanvasTarget(sim, diodeRed);
         CircuitPostProbeTarget canvasDiodeBlack = getCanvasTarget(sim, diodeBlack);
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(canvasSameNetA,
+        setContinuityProbesWhenReady(sim, canvasSameNetA,
             canvasSameNetB);
         int continuityMeasurements =
             sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
@@ -591,6 +688,8 @@ class ResistanceMeasurementDeveloperVerifier {
             "Same CONT probe clicks ran a resistance transaction");
         require(prepares == sim.instrumentController.getContinuityFeedbackPrepareCountForDeveloperVerification(),
             "Same CONT probe clicks prepared audio");
+        awaitMeasurementReady(sim, "CONTINUITY", canvasDifferentTarget, canvasSameNetB,
+            "before changed continuity probe click");
         clickProbe(sim, NativeEvent.BUTTON_LEFT, canvasDifferentTarget);
         require(continuityMeasurements + 1 ==
             sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
@@ -602,7 +701,7 @@ class ResistanceMeasurementDeveloperVerifier {
         require(afterEmptyClick == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
             "Empty CONT canvas click ran a resistance transaction");
 
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(canvasDiodeRed, canvasDiodeBlack);
+        setDiodeProbesWhenReady(sim, canvasDiodeRed, canvasDiodeBlack);
         int diodeMeasurements = sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification();
         int diodePrepares = sim.instrumentController.getContinuityFeedbackPrepareCountForDeveloperVerification();
         clickProbe(sim, NativeEvent.BUTTON_LEFT, canvasDiodeRed);
@@ -611,6 +710,8 @@ class ResistanceMeasurementDeveloperVerifier {
             "Same DIODE probe clicks ran a diode transaction");
         require(diodePrepares == sim.instrumentController.getContinuityFeedbackPrepareCountForDeveloperVerification(),
             "DIODE probe click prepared continuity audio");
+        awaitMeasurementReady(sim, "DIODE", canvasDifferentTarget, canvasDiodeBlack,
+            "before changed diode probe click");
         clickProbe(sim, NativeEvent.BUTTON_LEFT, canvasDifferentTarget);
         require(diodeMeasurements + 1 == sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification(),
             "Different DIODE probe click did not run exactly one diode transaction");
@@ -632,7 +733,7 @@ class ResistanceMeasurementDeveloperVerifier {
     }
 
     private static void verifyDiodeForwardLed(CirSim sim, ProbeTarget red, ProbeTarget black) {
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        setDiodeProbesWhenReady(sim, red, black);
         double voltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
         double current = sim.instrumentController.getLatestDiodeCurrentForDeveloperVerification();
         require(!"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
@@ -648,7 +749,7 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyDiodeReverseAndShort(CirSim sim, ProbeTarget ledAnode,
             ProbeTarget ledCathode, ProbeTarget sameNetA, ProbeTarget sameNetB) {
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(ledCathode, ledAnode);
+        setDiodeProbesWhenReady(sim, ledCathode, ledAnode);
         require("OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Reverse LED diode test was not OL");
         double reverseVoltage = sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification();
@@ -657,7 +758,7 @@ class ResistanceMeasurementDeveloperVerifier {
             !Double.isInfinite(reverseCurrent) &&
             reverseCurrent < InstrumentController.DIODE_MINIMUM_CURRENT,
             "Reverse diode solve did not meet OL conditions");
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        setDiodeProbesWhenReady(sim, sameNetA, sameNetB);
         requireApproximately(0, sim.instrumentController.getLatestDiodeVoltageForDeveloperVerification(), .001,
             "Same-node diode test was not approximately 0 V");
         require(!"OL".equals(sim.instrumentController.getReadingForDeveloperVerification()),
@@ -681,8 +782,9 @@ class ResistanceMeasurementDeveloperVerifier {
     }
 
     private static void verifyDiodeTopologyAndRepaint(CirSim sim, ProbeTarget red, ProbeTarget black) {
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(red, black);
+        setDiodeProbesWhenReady(sim, red, black);
         int before = sim.instrumentController.getDiodeMeasurementCountForDeveloperVerification();
+        awaitMeasurementReady(sim, "DIODE", red, black, "before diode topology refresh");
         sim.needAnalyze();
         require("--- V".equals(sim.instrumentController.getReadingForDeveloperVerification()),
             "Diode topology invalidation did not clear cached reading");
@@ -714,23 +816,23 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyDiodeModeSwitching(CirSim sim, ProbeTarget sameNetA,
             ProbeTarget sameNetB, ProbeTarget ground) {
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(sameNetA, sameNetB);
+        setContinuityProbesWhenReady(sim, sameNetA, sameNetB);
         require(sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
             "CONT setup for diode switching did not activate BEEP");
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        setDiodeProbesWhenReady(sim, sameNetA, sameNetB);
         requireContinuityInactive(sim, "DIODE did not stop BEEP immediately");
         int continuityBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(sameNetA, sameNetB);
+        setContinuityProbesWhenReady(sim, sameNetA, sameNetB);
         require(continuityBefore + 1 == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
             "DIODE to CONT did not run one continuity measurement");
         int resistanceBefore = sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification();
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(sameNetA, sameNetB);
+        setResistanceProbesWhenReady(sim, sameNetA, sameNetB);
         require(resistanceBefore + 1 == sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification(),
             "DIODE to OHM did not run one resistance measurement");
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        setDiodeProbesWhenReady(sim, sameNetA, sameNetB);
         sim.instrumentController.setDcVoltageProbesForDeveloperVerification(sameNetA, ground);
         requireVoltageReadout(sim, "DIODE to DC V did not restore live DC display");
-        sim.instrumentController.setDiodeProbesForDeveloperVerification(sameNetA, sameNetB);
+        setDiodeProbesWhenReady(sim, sameNetA, sameNetB);
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         require(!sim.instrumentController.isHandlingPointerInput(),
             "Exiting diode mode did not restore normal pointer handling");
@@ -754,7 +856,7 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyContinuityResult(CirSim sim, ProbeTarget red, ProbeTarget black,
             double expected, double tolerance, boolean expectedContinuity) {
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        setContinuityProbesWhenReady(sim, red, black);
         double actual = sim.instrumentController.getLatestResistanceReadingForDeveloperVerification();
         requireApproximately(expected, actual, tolerance, "Unexpected continuity resistance");
         require(expectedContinuity == sim.instrumentController.isContinuityDetectedForDeveloperVerification(),
@@ -770,16 +872,26 @@ class ResistanceMeasurementDeveloperVerifier {
         ResistorElm resistor = (ResistorElm) instance.getComponentBindings().getSingleElement("R1");
         double originalResistance = resistor.getResistance();
         try {
-            sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+            setContinuityProbesWhenReady(sim, red, black);
+            awaitMeasurementReady(sim, "CONTINUITY", red, black,
+                "before continuity threshold refresh");
             resistor.setResistance(49);
             verifyContinuityTopologyRefresh(sim, 49, .2, true);
+            awaitMeasurementReady(sim, "CONTINUITY", red, black,
+                "before continuity threshold refresh");
             resistor.setResistance(50);
             verifyContinuityTopologyRefresh(sim, 50, .2, true);
+            awaitMeasurementReady(sim, "CONTINUITY", red, black,
+                "before continuity threshold refresh");
             resistor.setResistance(51);
             verifyContinuityTopologyRefresh(sim, 51, .2, false);
+            awaitMeasurementReady(sim, "CONTINUITY", red, black,
+                "before continuity threshold refresh");
             resistor.setResistance(50);
             verifyContinuityTopologyRefresh(sim, 50, .2, true);
         } finally {
+            awaitMeasurementReady(sim, "CONTINUITY", red, black,
+                "before restoring continuity threshold fixture");
             resistor.setResistance(originalResistance);
             sim.needAnalyze();
             sim.updateCircuit();
@@ -815,6 +927,8 @@ class ResistanceMeasurementDeveloperVerifier {
             "Powered continuity graph did not reconnect external isolation");
         sim.verifyGeneratedBoard();
         sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+        awaitMeasurementReady(sim, "CONTINUITY", r11Probe, r12Probe,
+            "after continuity power-off transition");
         sim.updateCircuit();
         verifyContinuityResult(sim, r11Probe, r12Probe, 680, 2, false);
     }
@@ -853,12 +967,12 @@ class ResistanceMeasurementDeveloperVerifier {
 
     private static void verifyContinuityModeSwitching(CirSim sim, ProbeTarget red, ProbeTarget black) {
         verifyContinuityResult(sim, red, black, 0, .001, true);
-        sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+        setResistanceProbesWhenReady(sim, red, black);
         requireContinuityInactive(sim, "Switching CONT to OHM did not stop feedback");
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        setContinuityProbesWhenReady(sim, red, black);
         sim.instrumentController.setDcVoltageProbesForDeveloperVerification(red, black);
         requireContinuityInactive(sim, "Switching CONT to DC V did not stop feedback");
-        sim.instrumentController.setContinuityProbesForDeveloperVerification(red, black);
+        setContinuityProbesWhenReady(sim, red, black);
         sim.instrumentController.exitInstrumentModeForDeveloperVerification();
         requireContinuityInactive(sim, "Exiting CONT did not stop feedback");
         require(!sim.instrumentController.isHandlingPointerInput(),

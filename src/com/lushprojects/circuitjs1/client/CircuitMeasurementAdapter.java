@@ -101,7 +101,7 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
     }
 
     public DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe) {
-        return measureDiode(redProbe, blackProbe, null);
+        return measureDiode(redProbe, blackProbe, new InstrumentMode("DIODE"));
     }
 
     public DiodeMeasurementResult measureDiode(ProbeTarget redProbe, ProbeTarget blackProbe,
@@ -115,7 +115,7 @@ class CircuitMeasurementAdapter implements CircuitMeasurementBoundary {
                     !(session.getBlackEndpoint() instanceof CircuitPostMeasurementEndpoint))
                 return null;
             return sim.measureDiode((CircuitPostMeasurementEndpoint) session.getRedEndpoint(),
-                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint());
+                (CircuitPostMeasurementEndpoint) session.getBlackEndpoint(), mode);
         } finally {
             session.close();
         }

@@ -5,6 +5,8 @@ import java.util.Vector;
 /** Native contract for the playable E04 leaf family. */
 public final class SensorControlFamilyContractTest {
     private static int assertions;
+    private static final InstrumentMode RESISTANCE = new InstrumentMode("RESISTANCE");
+    private static final InstrumentMode DIODE = new InstrumentMode("DIODE");
 
     private SensorControlFamilyContractTest() { }
 
@@ -17,6 +19,7 @@ public final class SensorControlFamilyContractTest {
         sim.minTimeStep = 1e-7;
         sim.adjustTimeStep = true;
         CircuitElm.sim = sim;
+        verifyE02InputReturnMeterPolarity();
         verifyVariantsAndPlayerOperations(sim);
         verifyFinalGhostRejection();
         verifyRegulatorReplacementRetainsPhysicalMapping();
@@ -26,6 +29,350 @@ public final class SensorControlFamilyContractTest {
         verifyPhysicalIntegrationAndScenarioSymptom(sim);
         System.out.println("PASS: SensorControl family contracts " + assertions +
             " assertions");
+    }
+
+    /** The actual E02 U1 INPUT/RETURN pair must tolerate a real reversed meter source. */
+    private static void verifyE02InputReturnMeterPolarity() {
+        CirSim prior = CircuitElm.sim, priorSingleton = CirSim.theSim;
+        NativeServiceContext context = null;
+        Throwable failure = null;
+        try {
+            context = new NativeServiceContext(0L);
+            NativeServiceCirSim sim = context.sim;
+            E04SensorControlModel model = context.state.getModel();
+            E04SensorControlModel.SensorControlBindings bindings =
+                model.getSensorControlBindings();
+            CircuitPostMeasurementEndpoint input = bindings.getRegulatorInputEndpoint();
+            CircuitPostMeasurementEndpoint returned = bindings.getRegulatorReturnEndpoint();
+            check(input.getElement() == model.getSelectedE02Regulator() &&
+                    input.getPostIndex() == AbstractRailRegulatorElm.INPUT_POST &&
+                    returned.getElement() == input.getElement() &&
+                    returned.getPostIndex() == AbstractRailRegulatorElm.RETURN_POST,
+                "live E02 meter pair is the selected regulator INPUT and RETURN post");
+
+            check(sim.getBoardPowerController().isElectricallyUnpowered(),
+                "E02 polarity test isolates all actual E04 external sources");
+            sim.needAnalyze();
+            sim.analyzeCircuit();
+            sim.analyzeFlag = false;
+            sim.dcAnalysisFlag = false;
+            sim.solverExecutor.advanceSteps(8);
+            context.runtime.observeSimulationTime(sim.t);
+            sim.generatedBoardVerificationPending = false;
+            sim.generatedBoardVerificationAnalyzed = false;
+            check(sim.getActiveMeasurementReadiness(input, returned, RESISTANCE) ==
+                    ActiveMeasurementReadiness.READY &&
+                    sim.getActiveMeasurementReadiness(input, returned, DIODE) ==
+                    ActiveMeasurementReadiness.READY,
+                "fresh unpowered E02 INPUT/RETURN network admits explicit OHM and DIODE");
+
+            Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+            for (int polarity = 0; polarity < 2; polarity++) {
+                CircuitPostMeasurementEndpoint red = polarity == 0 ? input : returned;
+                CircuitPostMeasurementEndpoint black = polarity == 0 ? returned : input;
+                double before = sim.t;
+                double ohms = sim.measureResistance(red, black, RESISTANCE);
+                double sourceCurrent = Math.abs(
+                    sim.getLastResistanceTestCurrentForDeveloperVerification());
+                check(PowerDomainContract.finite(ohms) && ohms >= .09 && ohms <= .11 &&
+                        Math.abs(sourceCurrent - 1.0 / (1000.1)) < 2e-7,
+                    "actual off-state E02 INPUT/RETURN OHM uses its finite 0.1-ohm raw source in polarity " + polarity);
+                check(sim.t > before && sim.elmList.equals(graph) &&
+                        !sim.activeMeasurementOverlay &&
+                        sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                        sim.getBoardPowerController().isElectricallyUnpowered(),
+                    "E02 OHM polarity " + polarity + " advances and restores the exact live graph while OFF");
+                verifyE02InputPostReadiness(context, red, black, RESISTANCE,
+                    "E02 INPUT/RETURN OHM polarity " + polarity);
+                GeneratedRuntimeInvariant.verify(context.instance, context.modifications,
+                    sim.elmList);
+
+                ensureE02InputReadyForNextMeasurement(context, red, black, DIODE,
+                    graph, "E02 INPUT/RETURN DIODE polarity " + polarity);
+                before = sim.t;
+                DiodeMeasurementResult diode = sim.measureDiode(red, black, DIODE);
+                check(diode != null && PowerDomainContract.finite(diode.voltage) &&
+                        PowerDomainContract.finite(diode.current) &&
+                        Math.abs(diode.voltage - 3.0 * .1 / 1000.1) < .00002 &&
+                        Math.abs(diode.current - 3.0 / 1000.1) < .0001,
+                    "actual off-state E02 INPUT/RETURN DIODE uses the independent finite-source divider in polarity " + polarity);
+                check(sim.t > before && sim.elmList.equals(graph) &&
+                        !sim.activeMeasurementOverlay &&
+                        sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                        sim.getBoardPowerController().isElectricallyUnpowered(),
+                    "E02 DIODE polarity " + polarity + " advances and restores the exact live graph while OFF");
+                verifyE02InputPostReadiness(context, red, black, DIODE,
+                    "E02 INPUT/RETURN DIODE polarity " + polarity);
+                GeneratedRuntimeInvariant.verify(context.instance, context.modifications,
+                    sim.elmList);
+                if (polarity == 0)
+                    ensureE02InputReadyForNextMeasurement(context, red, black, RESISTANCE,
+                        graph, "E02 INPUT/RETURN OHM polarity 1");
+            }
+            verifyE02OutputReturnMeterPolarity(context, model, bindings);
+        } catch (RuntimeException error) {
+            failure = error;
+            throw error;
+        } catch (Error error) {
+            failure = error;
+            throw error;
+        } finally {
+            Throwable cleanupFailure = null;
+            if (context != null) {
+                NativeServiceCirSim sim = context.sim;
+                try {
+                    CircuitElm.sim = sim;
+                    sim.generatedBoardInstance = null;
+                    sim.boardModificationController = null;
+                    sim.getBoardPowerController().detach();
+                    try {
+                        sim.solverExecutor.retire();
+                        sim.solverExecutor.invalidate();
+                    } catch (Throwable error) { cleanupFailure = error; }
+                    sim.circuitMatrix = null;
+                    context.state.getModel().dispose();
+                    sim.elmList = new Vector<CircuitElm>();
+                } catch (Throwable error) {
+                    if (cleanupFailure == null) cleanupFailure = error;
+                    else cleanupFailure.addSuppressed(error);
+                }
+            }
+            CircuitElm.sim = prior;
+            CirSim.theSim = priorSingleton;
+            if (failure != null && cleanupFailure != null)
+                failure.addSuppressed(cleanupFailure);
+            else if (cleanupFailure != null)
+                throw new AssertionError("E02 meter fixture cleanup failed", cleanupFailure);
+        }
+    }
+
+    /** U1 OUTPUT is a real passive board network when E04's external rail is off. */
+    private static void verifyE02OutputReturnMeterPolarity(
+            NativeServiceContext context, E04SensorControlModel model,
+            E04SensorControlModel.SensorControlBindings bindings) {
+        NativeServiceCirSim sim = context.sim;
+        CircuitPostMeasurementEndpoint output = bindings.getRegulatorOutputEndpoint();
+        CircuitPostMeasurementEndpoint returned = bindings.getRegulatorReturnEndpoint();
+        check(output.getElement() == model.getSelectedE02Regulator() &&
+                output.getPostIndex() == AbstractRailRegulatorElm.OUTPUT_POST &&
+                returned.getElement() == output.getElement() &&
+                returned.getPostIndex() == AbstractRailRegulatorElm.RETURN_POST,
+            "live E02 meter pair is the selected regulator OUTPUT and RETURN post");
+        check(sim.getBoardPowerController().isElectricallyUnpowered() &&
+                !model.isPowered() && context.modifications.isFullyRestored(),
+            "E02 output polarity test starts with its actual external source off and physical paths restored");
+
+        E04SensorControlModel.PassiveBinding railLoad =
+            bindings.getFaultablePassives().get("RAIL_LOAD");
+        E04SensorControlModel.PassiveBinding referenceHigh =
+            bindings.getFaultablePassives().get("REFERENCE_HIGH");
+        E04SensorControlModel.PassiveBinding referenceLow =
+            bindings.getFaultablePassives().get("REFERENCE_LOW");
+        check(railLoad != null && referenceHigh != null && referenceLow != null &&
+                sim.elmList.contains(railLoad.getElement()) &&
+                sim.elmList.contains(referenceHigh.getElement()) &&
+                sim.elmList.contains(referenceLow.getElement()) &&
+                context.runtime.getInstalledPart("RREF") != null &&
+                context.runtime.getInstalledPart("RREF_LOW") != null,
+            "the live U1 output path includes the actual rail load and installed reference-divider legs");
+        // The independent passive oracle is the 10k U2 rail load in parallel
+        // with RREF+RREF_LOW and U1's declared 1 Mohm disabled-output bleed.
+        // U2 terminal leak branches are 1 Gohm and perturb this value by under
+        // one ohm; the output-side measurement is expected to see this real
+        // board parallel network, not an isolated E02 nameplate.
+        double expectedResistance = 1.0 /
+            (1.0 / railLoad.getElement().resistance +
+                1.0 / (referenceHigh.getElement().resistance +
+                    referenceLow.getElement().resistance) + 1.0 / 1000000.0);
+        check(PowerDomainContract.finite(expectedResistance) &&
+                expectedResistance > 0.0 && expectedResistance < railLoad.getElement().resistance,
+            "independent output oracle follows the real parallel rail-load network");
+
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        for (int polarity = 0; polarity < 2; polarity++) {
+            CircuitPostMeasurementEndpoint red = polarity == 0 ? output : returned;
+            CircuitPostMeasurementEndpoint black = polarity == 0 ? returned : output;
+            ActiveMeasurementReadiness ohmReadiness =
+                waitForE04MeasurementReady(context, red, black, RESISTANCE);
+            verifyE02OutputOhms(context, red, black, graph, expectedResistance,
+                ohmReadiness, polarity);
+
+            ActiveMeasurementReadiness diodeReadiness =
+                waitForE04MeasurementReady(context, red, black, DIODE);
+            verifyE02OutputDiode(context, red, black, graph, expectedResistance,
+                diodeReadiness, polarity);
+        }
+    }
+
+    private static void verifyE02OutputOhms(NativeServiceContext context,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            Vector<CircuitElm> graph, double expectedResistance,
+            ActiveMeasurementReadiness readiness, int polarity) {
+        NativeServiceCirSim sim = context.sim;
+        double before = sim.t;
+        if (readiness == ActiveMeasurementReadiness.READY) {
+            double ohms = sim.measureResistance(red, black, RESISTANCE);
+            double current = Math.abs(
+                sim.getLastResistanceTestCurrentForDeveloperVerification());
+            check(PowerDomainContract.finite(ohms) &&
+                    Math.abs(ohms - expectedResistance) < 2.0 &&
+                    PowerDomainContract.finite(current) &&
+                    Math.abs(current - 1.0 / (1000.0 + expectedResistance)) < 2e-7,
+                "real off-state E02 OUTPUT/RETURN OHM follows the independent parallel-network oracle in polarity " + polarity);
+            check(sim.t > before && sim.elmList.equals(graph) &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.getBoardPowerController().isElectricallyUnpowered(),
+                "E02 OUTPUT OHM polarity " + polarity + " advances and restores the actual live graph while OFF");
+            GeneratedRuntimeInvariant.verify(context.instance, context.modifications,
+                sim.elmList);
+            return;
+        }
+        assertCleanOutputMeasurementRefusal(readiness, RESISTANCE, polarity);
+        check(Double.isNaN(sim.measureResistance(red, black, RESISTANCE)),
+            "unsupported E02 OUTPUT OHM returns unavailable without source injection");
+        assertOutputRefusalUnchanged(context, graph, before, "OHM", polarity);
+    }
+
+    private static void verifyE02OutputDiode(NativeServiceContext context,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            Vector<CircuitElm> graph, double expectedResistance,
+            ActiveMeasurementReadiness readiness, int polarity) {
+        NativeServiceCirSim sim = context.sim;
+        double before = sim.t;
+        if (readiness == ActiveMeasurementReadiness.READY) {
+            DiodeMeasurementResult result = sim.measureDiode(red, black, DIODE);
+            double expectedCurrent = 3.0 / (1000.0 + expectedResistance);
+            double expectedVoltage = 3.0 * expectedResistance /
+                (1000.0 + expectedResistance);
+            check(result != null && PowerDomainContract.finite(result.voltage) &&
+                    PowerDomainContract.finite(result.current) && result.current > 0.0 &&
+                    Math.abs(result.current - expectedCurrent) < 2e-6 &&
+                    Math.abs(result.voltage - expectedVoltage) < .02,
+                "real off-state E02 OUTPUT/RETURN DIODE follows the independent parallel-network oracle in polarity " + polarity);
+            check(sim.t > before && sim.elmList.equals(graph) &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.getBoardPowerController().isElectricallyUnpowered(),
+                "E02 OUTPUT DIODE polarity " + polarity + " advances and restores the actual live graph while OFF");
+            GeneratedRuntimeInvariant.verify(context.instance, context.modifications,
+                sim.elmList);
+            return;
+        }
+        assertCleanOutputMeasurementRefusal(readiness, DIODE, polarity);
+        check(sim.measureDiode(red, black, DIODE) == null,
+            "unsupported E02 OUTPUT DIODE returns unavailable without source injection");
+        assertOutputRefusalUnchanged(context, graph, before, "DIODE", polarity);
+    }
+
+    private static void assertCleanOutputMeasurementRefusal(
+            ActiveMeasurementReadiness readiness, InstrumentMode mode, int polarity) {
+        check(readiness == ActiveMeasurementReadiness.UNSUPPORTED ||
+                readiness == ActiveMeasurementReadiness.ISOLATE_COMPONENT,
+            "E02 OUTPUT " + mode + " refusal is explicitly supported by the instrument owner, state=" + readiness);
+        System.out.println("E04_U1_OUTPUT_METER_REFUSAL mode=" + mode +
+            " polarity=" + polarity + " readiness=" + readiness);
+    }
+
+    private static void assertOutputRefusalUnchanged(NativeServiceContext context,
+            Vector<CircuitElm> graph, double before, String mode, int polarity) {
+        NativeServiceCirSim sim = context.sim;
+        check(sim.t == before && sim.elmList.equals(graph) &&
+                !sim.activeMeasurementOverlay &&
+                sim.getBoardPowerController().isElectricallyUnpowered(),
+            "clean E02 OUTPUT " + mode + " refusal at polarity " + polarity +
+                " changes neither solver time, graph, overlay nor board power");
+    }
+
+    private static ActiveMeasurementReadiness waitForE04MeasurementReady(
+            NativeServiceContext context, CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
+        NativeServiceCirSim sim = context.sim;
+        double start = sim.t;
+        ActiveMeasurementReadiness readiness =
+            sim.getActiveMeasurementReadiness(red, black, mode);
+        int slices = 0;
+        while ((readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING) && slices < 1000) {
+            if (sim.circuitMatrix == null || sim.analyzeFlag) {
+                sim.analyzeCircuit();
+                sim.analyzeFlag = false;
+                sim.dcAnalysisFlag = false;
+            }
+            double before = sim.t;
+            sim.solverExecutor.advanceFor(.01);
+            context.runtime.observeSimulationTime(sim.t);
+            check(sim.t > before,
+                "natural E04 active-measurement cooldown advances accepted CircuitJS time");
+            slices++;
+            readiness = sim.getActiveMeasurementReadiness(red, black, mode);
+        }
+        double elapsed = sim.t - start;
+        check(readiness != ActiveMeasurementReadiness.DISCHARGE &&
+                readiness != ActiveMeasurementReadiness.WAITING,
+            "E04 live stored energy naturally settles within 10 solver seconds for " + mode);
+        if (elapsed > .01) System.out.println("E04_METER_NATURAL_COOLDOWN mode=" + mode +
+            " solverSeconds=" + elapsed);
+        return readiness;
+    }
+
+    private static ActiveMeasurementReadiness verifyE02InputPostReadiness(
+            NativeServiceContext context, CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, InstrumentMode mode, String label) {
+        NativeServiceCirSim sim = context.sim;
+        ActiveMeasurementReadiness readiness =
+            sim.getActiveMeasurementReadiness(red, black, mode);
+        check(readiness == ActiveMeasurementReadiness.READY ||
+                readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING,
+            label + " leaves an explicit usable or transient readiness state, got " + readiness);
+        check(sim.getBoardPowerController().isElectricallyUnpowered() &&
+                !sim.activeMeasurementOverlay &&
+                sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                sim.stopMessage == null,
+            label + " has completed its real transaction and restored the isolated solver");
+        System.out.println("E04_U1_INPUT_METER_POSTREAD mode=" + mode +
+            " label=" + label + " readiness=" + readiness);
+        return readiness;
+    }
+
+    /** Do not start the next active stimulus until the live E02 graph is READY. */
+    private static void ensureE02InputReadyForNextMeasurement(
+            NativeServiceContext context, CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black, InstrumentMode nextMode,
+            Vector<CircuitElm> expectedGraph, String label) {
+        NativeServiceCirSim sim = context.sim;
+        ActiveMeasurementReadiness readiness =
+            sim.getActiveMeasurementReadiness(red, black, nextMode);
+        if (readiness == ActiveMeasurementReadiness.DISCHARGE ||
+                readiness == ActiveMeasurementReadiness.WAITING) {
+            double time = sim.t;
+            Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+            ActiveMeasurementStimulus stimulus = sim.lastActiveMeasurementStimulus;
+            Object observation = sim.solverExecutor.observation(context.instance);
+            int readerCalls = sim.getResistanceResultReaderCallsForDeveloperVerification();
+            if (nextMode == RESISTANCE) {
+                check(Double.isNaN(sim.measureResistance(red, black, RESISTANCE)),
+                    label + " is refused by the live residual-energy guard");
+            } else {
+                check(sim.measureDiode(red, black, DIODE) == null,
+                    label + " is refused by the live residual-energy guard");
+            }
+            check(sim.t == time && sim.elmList.equals(graph) &&
+                    sim.lastActiveMeasurementStimulus == stimulus &&
+                    sim.getResistanceResultReaderCallsForDeveloperVerification() == readerCalls &&
+                    sim.solverExecutor.observation(context.instance) == observation &&
+                    !sim.activeMeasurementOverlay &&
+                    sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
+                    sim.getBoardPowerController().isElectricallyUnpowered() &&
+                    sim.stopMessage == null,
+                label + " refusal changes no time, graph, stimulus, observation, or source state");
+            readiness = waitForE04MeasurementReady(context, red, black, nextMode);
+        }
+        check(readiness == ActiveMeasurementReadiness.READY &&
+                sim.elmList.equals(expectedGraph) &&
+                sim.getBoardPowerController().isElectricallyUnpowered(),
+            label + " starts only after accepted CircuitJS time returns the actual board to READY");
     }
 
     private static void verifyFinalGhostRejection() {

@@ -15,11 +15,13 @@ import java.util.List;
  *
  * <p>The disabled output is modeled as a passive 1 Mohm leakage path to
  * RETURN in either polarity, bounded by the magnitude of maximumInputVolts.
- * This is a declared static model envelope, not a device reverse-voltage or
- * protection-diode specification. Active negative output remains unsupported.</p>
+ * A nonpositive INPUT likewise has only its passive 1 Mohm leakage path and
+ * cannot regulate or source reverse current. These are bounded static model
+ * approximations, not device reverse-voltage or protection-diode ratings.
+ * Active negative output remains unsupported.</p>
  */
 final class RailRegulationContract {
-    static final int VERSION = 2;
+    static final int VERSION = 3;
 
     /** Explicit standard profile for the six declared roles. */
     private static final double STANDARD_USABLE_REGULATED_CURRENT_FRACTION = .90;

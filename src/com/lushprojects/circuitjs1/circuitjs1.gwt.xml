@@ -5,4 +5,14 @@
     <inherits name="com.google.gwt.json.JSON" />
     <inherits name='com.google.gwt.user.theme.clean.Clean'/>
     <entry-point class="com.lushprojects.circuitjs1.client.circuitjs1" />
+    <define-property name="tsj.build" values="player,developer" />
+    <set-property name="tsj.build" value="player" />
+    <replace-with class="com.lushprojects.circuitjs1.client.PlayerBuildConfiguration">
+        <when-type-is class="com.lushprojects.circuitjs1.client.TroubleshootBuildConfiguration" />
+        <when-property-is name="tsj.build" value="player" />
+    </replace-with>
+    <replace-with class="com.lushprojects.circuitjs1.client.DeveloperBuildConfiguration">
+        <when-type-is class="com.lushprojects.circuitjs1.client.TroubleshootBuildConfiguration" />
+        <when-property-is name="tsj.build" value="developer" />
+    </replace-with>
  </module>

@@ -378,10 +378,10 @@ MouseOutHandler, MouseWheelHandler {
     Label generationStatus;
     Button generationCancelButton;
 	boolean troubleshootResistanceVerification;
-	private static final int VERIFIER_NOT_STARTED = 0;
-	private static final int VERIFIER_RUNNING = 1;
-	private static final int VERIFIER_PASSED = 2;
-	private static final int VERIFIER_FAILED = 3;
+	static final int VERIFIER_NOT_STARTED = 0;
+	static final int VERIFIER_RUNNING = 1;
+	static final int VERIFIER_PASSED = 2;
+	static final int VERIFIER_FAILED = 3;
 	int troubleshootResistanceVerifierState = VERIFIER_NOT_STARTED;
 	boolean troubleshootChallengeVerification;
 	boolean troubleshootReplacementVerification;
@@ -551,7 +551,7 @@ MouseOutHandler, MouseWheelHandler {
 	    startCircuit = qp.getValue("startCircuit");
 	    startLabel   = qp.getValue("startLabel");
 	    startCircuitLink = qp.getValue("startCircuitLink");
-	    troubleshootDebug = qp.getBooleanValue("tsjDebug", false);
+	    troubleshootDebug = TroubleshootBuild.isDeveloper() && qp.getBooleanValue("tsjDebug", false);
 	    troubleshootFixture = qp.getValue("tsjFixture");
 	    troubleshootChallenge = qp.getValue("tsjChallenge");
 	    troubleshootNpnFault = qp.getValue("tsjNpnFault");
@@ -1801,20 +1801,20 @@ MouseOutHandler, MouseWheelHandler {
 	    needsRepaint = true;
 	    final GeneratedBoardInstance repaintOwner = generatedBoardInstance;
 	    final Task43PRuntimeCallbackDeveloperVerifier.RepaintObservation task43PObservation =
-		Task43PRuntimeCallbackDeveloperVerifier.scheduled(this);
+		TroubleshootBuild.isDeveloper() ? Task43PRuntimeCallbackDeveloperVerifier.scheduled(this) : null;
 	    pendingGeneratedRepaint = new Scheduler.RepeatingCommand() {
 		public boolean execute() {
 		      // A one-shot request belongs to its scheduling owner. An older
 		      // callback must neither update a replacement nor clear its request.
 		      if (pendingGeneratedRepaint != this || repaintOwner != generatedBoardInstance) {
-			  Task43PRuntimeCallbackDeveloperVerifier.discarded(CirSim.this, task43PObservation);
+			  if (TroubleshootBuild.isDeveloper()) Task43PRuntimeCallbackDeveloperVerifier.discarded(CirSim.this, task43PObservation);
 			  return false;
 		      }
-		      Task43PRuntimeCallbackDeveloperVerifier.started(CirSim.this, task43PObservation);
+		      if (TroubleshootBuild.isDeveloper()) Task43PRuntimeCallbackDeveloperVerifier.started(CirSim.this, task43PObservation);
 		      try {
 			  updateCircuit();
 		      } catch (RuntimeException failure) {
-			  Task43PRuntimeCallbackDeveloperVerifier.failed(CirSim.this, failure);
+			  if (TroubleshootBuild.isDeveloper()) Task43PRuntimeCallbackDeveloperVerifier.failed(CirSim.this, failure);
 			  throw failure;
 		      } finally {
 			  // Coalesce refreshes during this update, but never clear a
@@ -1824,7 +1824,7 @@ MouseOutHandler, MouseWheelHandler {
 			      needsRepaint = false;
 			  }
 		      }
-		      Task43PRuntimeCallbackDeveloperVerifier.completed(CirSim.this, task43PObservation);
+		      if (TroubleshootBuild.isDeveloper()) Task43PRuntimeCallbackDeveloperVerifier.completed(CirSim.this, task43PObservation);
 		      return false;
 		  }
 	    };
@@ -1915,10 +1915,9 @@ MouseOutHandler, MouseWheelHandler {
 			// measurement directly from that callback.
 			instrumentController.completeDeferredMeasurementUpdateAfterSolverStep();
 	    } catch (Exception e) {
-		debugger();
 		console("exception in runCircuit " + e);
 		e.printStackTrace();
-		return;
+		throw reportCircuitFailure(e);
 	    }
 	    myruntime+=System.currentTimeMillis()-myrunstarttime;
 	}
@@ -2145,6 +2144,20 @@ MouseOutHandler, MouseWheelHandler {
 	refreshSettledGeneratedControls(updateOwner, wasGeneratedSettled);
     }
 
+    RuntimeException reportCircuitFailure(Exception failure) {
+        String detail = failure.getMessage();
+        if (detail == null || detail.length() == 0) detail = failure.getClass().getName();
+        if (generatedBoardInstance != null)
+            markGeneratedRuntimeFailure(generatedBoardInstance, failure);
+        // Generated verification failures can name the hidden fault. Preserve
+        // the original exception for diagnostics without publishing its answer
+        // in the normal player's canvas recovery message.
+        if (generatedBoardInstance == null || troubleshootDebug)
+            stop("CircuitJS solver failed: " + detail, null);
+        return failure instanceof RuntimeException ? (RuntimeException) failure :
+            new IllegalStateException("CircuitJS solver failed: " + detail, failure);
+    }
+
     private void refreshSettledGeneratedControls(GeneratedBoardInstance updateOwner,
 	    boolean wasGeneratedSettled) {
 	// A semantic command can queue ordinary analysis without a new challenge
@@ -2357,7 +2370,6 @@ MouseOutHandler, MouseWheelHandler {
 	    console.log(text);
 	}-*/;
 
-    public static native void debugger() /*-{ debugger; }-*/;
     
     class NodeMapEntry {
 	int node;
@@ -5082,6 +5094,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runU06SessionVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!troubleshootDebug || !troubleshootU06Verification || troubleshootU06VerificationComplete ||
                 developerVerifierRunning || generationCoordinator == null || generationCoordinator.isRunning() ||
                 !isGeneratedRuntimeSettled()) return;
@@ -5093,6 +5106,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runA10GenerationVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (developerVerifierRunning || !troubleshootA10Verification || troubleshootA10VerificationComplete ||
                 generationCoordinator == null || generationCoordinator.isRunning() ||
                 GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
@@ -5177,6 +5191,7 @@ MouseOutHandler, MouseWheelHandler {
 
     /** A late admission must not strand the P02 verifier behind a consumed callback. */
     private void runU01ViewportVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!developerVerifierRunning && troubleshootU01Verification && !troubleshootU01Complete &&
                 (generationCoordinator == null || !generationCoordinator.isRunning()) &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5193,6 +5208,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runP07TwoLayerVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!developerVerifierRunning && !troubleshootQ30Verification &&
                 troubleshootP07Verification && !troubleshootP07Complete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
@@ -5211,6 +5227,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runRb56QualificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!troubleshootDebug || !troubleshootRb56Verification || troubleshootRb56Complete ||
                 developerVerifierRunning || GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
                 generatedChallengeController == null || !generatedChallengeController.isReady() ||
@@ -5228,6 +5245,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runQ30DeveloperWorkbenchIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!developerVerifierRunning && troubleshootQ30Verification && !troubleshootQ30Complete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                 generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5256,6 +5274,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runP06FactoryLinkVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!developerVerifierRunning && troubleshootP06Verification && !troubleshootP06Complete &&
                 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
                 generatedChallengeController != null && generatedChallengeController.isReady() &&
@@ -5273,6 +5292,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runP02ConductorVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (troubleshootP02Verification && !troubleshootP02VerificationComplete)
             P02ConductorDeveloperVerifier.publishReadiness(
                 generatedChallengeController != null && generatedChallengeController.isReady(),
@@ -5326,7 +5346,7 @@ MouseOutHandler, MouseWheelHandler {
 	if (t <= generatedBoardVerificationStartTime)
 	    return;
 	try {
-	    Task43PDeveloperVerifier.verifySourceExperimentBeforeAdmission(this);
+	    if (TroubleshootBuild.isDeveloper()) Task43PDeveloperVerifier.verifySourceExperimentBeforeAdmission(this);
 	    boolean previousVerificationRunning = generatedVerificationRunning;
 	    generatedVerificationRunning = true;
 	    try {
@@ -5348,573 +5368,16 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     private void runDeveloperVerificationIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
         if (!troubleshootDebug || holdCompositionGateVerification || developerVerifierRunning ||
                 GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
                 generatedBoardInstance == null || !isGeneratedRuntimeSettled())
             return;
         try {
-	    if (!developerVerifierRunning &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null &&
-		generatedChallengeController.isReady()) {
-		developerVerifierRunning = true;
-		try {
-		    if (troubleshootA01Measurement &&
-			!troubleshootA01MeasurementComplete) {
-			troubleshootA01MeasurementComplete = true;
-			publishBrowserVerificationResult("RUNNING:a01");
-			try {
-			    publishA01Evidence(A01MeasurementVerifier.verify(this,
-				troubleshootA01Corpus, troubleshootA01Round,
-				troubleshootA01SourceFingerprint,
-				troubleshootA01BuildFingerprint,
-				troubleshootA01ForcedFailure));
-			    publishBrowserVerificationResult("PASS:a01");
-			} catch (Throwable failure) {
-			    publishBrowserVerificationResult("FAIL:a01:" + failure.getMessage());
-			    if (failure instanceof Error) throw (Error) failure;
-			    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-			    throw new IllegalStateException("A01 measurement failed", failure);
-			}
-		    }
-		    if (troubleshootResistanceVerification &&
-			troubleshootResistanceVerifierState == VERIFIER_NOT_STARTED) {
-			try {
-			    troubleshootResistanceVerifierState = VERIFIER_RUNNING;
-			    ResistanceMeasurementDeveloperVerifier.verify(this);
-			    troubleshootResistanceVerifierState = VERIFIER_PASSED;
-			    publishBrowserVerificationResult("PASS:resistance");
-			} catch (RuntimeException e) {
-			    troubleshootResistanceVerifierState = VERIFIER_FAILED;
-			    console("Resistance verification failed: " + e.getMessage());
-			    throw e;
-			}
-		    }
-		    if (troubleshootChallengeVerification && !troubleshootChallengeVerificationComplete) {
-			troubleshootChallengeVerificationComplete = true;
-			ChallengeDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:challenge");
-		    }
-		    if (troubleshootReplacementVerification && !troubleshootReplacementVerificationComplete) {
-			troubleshootReplacementVerificationComplete = true;
-			ReplacementDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:replacement");
-		    }
-		    if (troubleshootWrongRepairVerification && !troubleshootWrongRepairVerificationComplete) {
-			troubleshootWrongRepairVerificationComplete = true;
-			ReplacementDeveloperVerifier.verifyWrongRepair(this);
-			publishBrowserVerificationResult("PASS:wrong-repair");
-		    }
-		    if (troubleshootMeterVerification && !troubleshootMeterVerificationComplete) {
-			troubleshootMeterVerificationComplete = true;
-			MeterLifecycleDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:meter");
-		    }
-		    if (troubleshootDiodeVerification && !troubleshootDiodeVerificationComplete) {
-			troubleshootDiodeVerificationComplete = true;
-			DiodeFamilyDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:diode");
-		    }
-			if (troubleshootLedPhysicalVerification &&
-			    !troubleshootLedPhysicalVerificationComplete) {
-			troubleshootLedPhysicalVerificationComplete = true;
-			LedPhysicalDeveloperVerifier.verify(this);
-			    publishBrowserVerificationResult("PASS:led-parts");
-			}
-			if (troubleshootParallelVerification && !troubleshootParallelVerificationComplete) {
-			    troubleshootParallelVerificationComplete = true;
-			    ParallelDualIndicatorDeveloperVerifier.verify(this);
-			    publishBrowserVerificationResult("PASS:parallel");
-			}
-		    if (troubleshootStressVerification && !troubleshootStressVerificationComplete &&
-				(!troubleshootStressVerificationDeferred || troubleshootStressVerificationRequested)) {
-				troubleshootStressVerificationComplete = true;
-				ResistorStressDamageDeveloperVerifier.verify(this);
-				publishBrowserVerificationResult("PASS:stress");
-			}
-		    if (troubleshootLayoutVerification && !troubleshootGeometryVerificationComplete) {
-			troubleshootGeometryVerificationComplete = true;
-			PcbLayoutDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:layout");
-		    }
-		    if (troubleshootArchitectureVerification &&
-			!troubleshootArchitectureVerificationComplete) {
-			troubleshootArchitectureVerificationComplete = true;
-			ArchitectureDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:architecture");
-		    }
-		    if (troubleshootQuickPlayVerification &&
-			!troubleshootQuickPlayVerificationComplete) {
-			troubleshootQuickPlayVerificationComplete = true;
-			if (quickPlayActive)
-			    QuickPlayDeveloperVerifier.verify(this);
-			else
-			    QuickPlayDeveloperVerifier.verifyExplicitRoute(this);
-			publishBrowserVerificationResult(quickPlayActive ?
-			    "PASS:quick-play" : "PASS:quick-play-explicit");
-		    }
-		    // Temporal admission recursively updates while its outer verification
-		    // still owns generatedVerificationRunning. The physical meter proof
-		    // must start only after that outer operation has fully returned.
-		    if (troubleshootStoredEnergyVerification &&
-			    !troubleshootStoredEnergyVerificationComplete && isGeneratedRuntimeSettled()) {
-			troubleshootStoredEnergyVerificationComplete = true;
-			StoredEnergyDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:stored-energy");
-		    }
-		    if (troubleshootRcVerification && !troubleshootRcVerificationComplete) {
-			troubleshootRcVerificationComplete = true;
-			RcDelayDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:rc");
-		    }
-		    if (troubleshootNpnVerification && !troubleshootNpnVerificationComplete) {
-			troubleshootNpnVerificationComplete = true;
-			NpnLowSideSwitchDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:npn");
-		    }
-		    if (troubleshootNmosVerification && !troubleshootNmosVerificationComplete) {
-			troubleshootNmosVerificationComplete = true;
-			NmosLowSideSwitchDeveloperVerifier.verify(this);
-			publishBrowserVerificationResult("PASS:nmos");
-		    }
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		troubleshootTask39Verification &&
-		!troubleshootTask39VerificationComplete &&
-		(generatedChallengeController == null || generatedChallengeController.isReady())) {
-		developerVerifierRunning = true;
-		try {
-		    troubleshootTask39VerificationComplete = true;
-		    Task39DeveloperVerifier.verify(this);
-		    publishBrowserVerificationResult("PASS:task39");
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		troubleshootTask40Verification &&
-		!troubleshootTask40VerificationComplete &&
-		(generatedChallengeController == null || generatedChallengeController.isReady())) {
-		developerVerifierRunning = true;
-		try {
-		    troubleshootTask40VerificationComplete = true;
-		    Task40DeveloperVerifier.verify(this);
-		    publishBrowserVerificationResult("PASS:task40");
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask41Verification &&
-		!troubleshootTask41VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		(generatedChallengeController == null || generatedChallengeController.isReady())) {
-		developerVerifierRunning = true;
-		try {
-		    publishBrowserVerificationResult("RUNNING:task41");
-		    troubleshootTask41VerificationComplete = true;
-		    Task41DeveloperVerifier.verify(this);
-		    publishBrowserVerificationResult("PASS:task41");
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask48Verification &&
-		!troubleshootTask48VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootTask48VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:task48");
-		try {
-		    publishTask48Evidence(Task48DeveloperVerifier.verify(this,
-			troubleshootTask48Seed, troubleshootTask48ForcedFailure));
-		    publishBrowserVerificationResult("PASS:task48");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:task48:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("Task 48 verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask49Verification &&
-		!troubleshootTask49VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootTask49VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:task49");
-		try {
-		    publishTask49Evidence(Task49DeveloperVerifier.verify(this,
-			troubleshootTask49Seed, troubleshootTask49ForcedFailure));
-		    publishBrowserVerificationResult("PASS:task49");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:task49:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("Task 49 verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootA03Verification &&
-		!troubleshootA03VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootA03VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:a03");
-		try {
-		    publishA03Evidence(A03IdentityDeveloperVerifier.verify(this,
-			troubleshootA03ForcedFailure));
-		    publishBrowserVerificationResult("PASS:a03");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:a03:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("A03 verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-            if (!developerVerifierRunning && troubleshootP01Verification && !troubleshootP01VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true; troubleshootP01VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:p01");
-                try {
-                    P01PhysicalPoseDeveloperVerifier.verify(this, troubleshootP01ForcedFailure);
-                    publishBrowserVerificationResult("PASS:p01");
-                } catch (Throwable failure) {
-                    publishBrowserVerificationResult("FAIL:p01:" + failure.getMessage());
-                    if (failure instanceof Error) throw (Error)failure;
-                    if (failure instanceof RuntimeException) throw (RuntimeException)failure;
-                    throw new IllegalStateException("P01 verification failed", failure);
-                } finally { developerVerifierRunning = false; }
-            }
-            if (!developerVerifierRunning && troubleshootA08Verification && !troubleshootA08VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true; troubleshootA08VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:a08");
-                A08MutationDeveloperVerifier.start(this, troubleshootA08ForcedFailure);
-            }
-            if (!developerVerifierRunning && troubleshootE06Verification && !troubleshootE06VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true; troubleshootE06VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:e06");
-                E06ConverterDeveloperVerifier.start(this, troubleshootE06ForcedFailure);
-            }
-            if (!developerVerifierRunning && troubleshootE05Verification && !troubleshootE05VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true; troubleshootE05VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:e05");
-                E05ElectricalDeveloperVerifier.start(this, troubleshootE05ForcedFailure);
-            }
-            if (!developerVerifierRunning && troubleshootA07Verification && !troubleshootA07VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true; troubleshootA07VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:a07");
-                A07SolverDeveloperVerifier.start(this, troubleshootA07ForcedFailure);
-            }
-            if (!developerVerifierRunning && troubleshootU02U03Verification &&
-                    !troubleshootU02U03VerificationComplete &&
-                    !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                    generatedChallengeController != null && generatedChallengeController.isReady() &&
-                    isGeneratedRuntimeSettled()) {
-                developerVerifierRunning = true;
-                troubleshootU02U03VerificationComplete = true;
-                publishBrowserVerificationResult("RUNNING:u02-u03");
-                U02U03TemporalDeveloperVerifier.start(this, troubleshootTemporalFixture,
-                    troubleshootU02U03VisualHold,
-                    new U02U03TemporalDeveloperVerifier.Completion() {
-                        public void finished(String report, Throwable failure) {
-                            developerVerifierRunning = false;
-                            U02U03TemporalDeveloperVerifier.publish(report, failure);
-                            publishBrowserVerificationResult(failure == null ? "PASS:u02-u03" :
-                                "FAIL:u02-u03:" + failure.getMessage());
-                        }
-                    });
-            }
-	    if (!developerVerifierRunning && troubleshootE03Verification &&
-	        !troubleshootQ15Verification &&
-                !troubleshootE03VerificationComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                generatedChallengeController != null && generatedChallengeController.isReady() &&
-                isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true;
-            troubleshootE03VerificationComplete = true;
-            publishBrowserVerificationResult("RUNNING:e03");
-            E03RelayDeveloperVerifier.start(this,troubleshootE03ForcedFailure,new E03RelayDeveloperVerifier.Completion() {
-                public void finished(String report,Throwable failure) {
-                    developerVerifierRunning=false;
-                    if(failure==null) {publishE03Evidence(report);publishBrowserVerificationResult("PASS:e03");}
-                    else {publishBrowserVerificationResult("FAIL:e03:"+failure.getMessage());console("E03 failure: "+failure);}
-                }
-            });
+            TroubleshootDeveloperVerification.run(this);
+        } catch (RuntimeException e) {
+            throw generatedVerificationFailure(e);
         }
-        if (!developerVerifierRunning && troubleshootServiceVerification && !troubleshootServiceComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
-                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true; troubleshootServiceComplete = true;
-            publishBrowserVerificationResult("RUNNING:service");
-            FaultBlindManipulationVerifier.start(this, troubleshootServiceForced, new FaultBlindManipulationVerifier.Completion() {
-                public void finished(String report, Throwable failure) {
-                    developerVerifierRunning = false; FaultBlindManipulationVerifier.publish(report);
-                    publishBrowserVerificationResult(failure == null ? "PASS:service" : "FAIL:service:" + failure.getMessage());
-                }
-            });
-        }
-        if (!developerVerifierRunning && troubleshootRender0Verification && !troubleshootRender0Complete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
-                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true; troubleshootRender0Complete = true;
-            publishBrowserVerificationResult("RUNNING:render0");
-            Render0DeveloperVerifier.start(this, troubleshootRender0Forced, new Render0DeveloperVerifier.Completion() {
-                public void finished(String report, Throwable failure) {
-                    developerVerifierRunning = false; Render0DeveloperVerifier.publish(report);
-                    publishBrowserVerificationResult(failure == null ? "PASS:render0" : "FAIL:render0:" + failure.getMessage());
-                }
-            });
-        }
-        if (!developerVerifierRunning && troubleshootAlphaVerification && !troubleshootAlphaComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController != null &&
-                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true; troubleshootAlphaComplete = true;
-            publishBrowserVerificationResult("RUNNING:alpha");
-            AlphaDeveloperVerifier.start(this, troubleshootAlphaPilot, troubleshootAlphaForced, troubleshootAlphaCase, new AlphaDeveloperVerifier.Completion() {
-                public void finished(String report, Throwable failure) {
-                    developerVerifierRunning = false; AlphaDeveloperVerifier.publish(report);
-                    publishBrowserVerificationResult(failure == null ? "PASS:alpha" : "FAIL:alpha:" + failure.getMessage());
-                }
-            });
-        }
-        if (!developerVerifierRunning && troubleshootQuickPlayGateVerification && !troubleshootQuickPlayGateInstalled &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController!=null &&
-                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
-            troubleshootQuickPlayGateInstalled=true;
-            QuickPlayGateDeveloperVerifier.install(this);
-        }
-        if (!developerVerifierRunning && troubleshootQ15Verification && !troubleshootQ15VerificationComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() && generatedChallengeController!=null &&
-                generatedChallengeController.isReady() && isGeneratedRuntimeSettled()) {
-            developerVerifierRunning=true;troubleshootQ15VerificationComplete=true;
-            publishBrowserVerificationResult("RUNNING:q15");
-            Q15ControlBoardDeveloperVerifier.start(this,troubleshootQ15ForcedFailure,new Q15ControlBoardDeveloperVerifier.Completion() {
-                public void finished(String report,Throwable failure) {
-                    developerVerifierRunning=false;
-                    publishQ15Evidence(report);
-                    if(failure==null) {publishBrowserVerificationResult("PASS:q15");}
-                    else {publishBrowserVerificationResult("FAIL:q15:"+failure.getMessage());console("Q15 failure: "+failure);}
-                }
-            });
-        }
-        if (!developerVerifierRunning && troubleshootE01Verification &&
-                !troubleshootE01VerificationComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                generatedChallengeController != null && generatedChallengeController.isReady() &&
-                isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true;
-            troubleshootE01VerificationComplete = true;
-            publishBrowserVerificationResult("RUNNING:e01");
-            try {
-                publishE01Evidence(E01SourceDeveloperVerifier.verify(this,troubleshootE01ForcedFailure));
-                publishBrowserVerificationResult("PASS:e01");
-            } catch (Throwable failure) {
-                publishBrowserVerificationResult("FAIL:e01:" + failure.getMessage());
-                if (failure instanceof Error) throw (Error)failure;
-                if (failure instanceof RuntimeException) throw (RuntimeException)failure;
-                throw new IllegalStateException("E01 verification failed",failure);
-            } finally { developerVerifierRunning = false; }
-        }
-	 if (!developerVerifierRunning && troubleshootE02Verification &&
-		 !troubleshootE02VerificationComplete &&
-		 !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		 generatedChallengeController != null && generatedChallengeController.isReady() &&
-		 isGeneratedRuntimeSettled()) {
-	     developerVerifierRunning = true;
-	     troubleshootE02VerificationComplete = true;
-	     publishBrowserVerificationResult("RUNNING:e02");
-	     try {
-		 publishE02Evidence(E02RegulatorDeveloperVerifier.verify(this,
-		     troubleshootE02ForcedFailure));
-		 publishBrowserVerificationResult("PASS:e02");
-	     } catch (Throwable failure) {
-		 publishBrowserVerificationResult("FAIL:e02:" + failure.getMessage());
-		 // The explicit negative canary is terminal evidence, like A07's
-		 // forced failure. Unexpected solver or verifier errors still escape.
-		 if (!(troubleshootE02ForcedFailure && failure instanceof AssertionError &&
-		         "e02-explicit-failure-canary".equals(failure.getMessage()))) {
-		     if (failure instanceof Error) throw (Error)failure;
-		     if (failure instanceof RuntimeException) throw (RuntimeException)failure;
-		     throw new IllegalStateException("E02 verification failed", failure);
-		 }
-	     } finally { developerVerifierRunning = false; }
-	 }
-	    if (!developerVerifierRunning && troubleshootA06Verification &&
-                !troubleshootA06VerificationComplete &&
-                !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-                generatedChallengeController != null && generatedChallengeController.isReady() &&
-                isGeneratedRuntimeSettled()) {
-            developerVerifierRunning = true;
-            troubleshootA06VerificationComplete = true;
-            publishBrowserVerificationResult("RUNNING:a06");
-            try {
-                publishA06Evidence(A06PowerDeveloperVerifier.verify(this,troubleshootA06ForcedFailure));
-                publishBrowserVerificationResult("PASS:a06");
-            } catch (Throwable failure) {
-                publishBrowserVerificationResult("FAIL:a06:" + failure.getMessage());
-                if (failure instanceof Error) throw (Error)failure;
-                if (failure instanceof RuntimeException) throw (RuntimeException)failure;
-                throw new IllegalStateException("A06 verification failed",failure);
-            } finally { developerVerifierRunning = false; }
-        }
-	    if (!developerVerifierRunning && troubleshootA04Verification &&
-		!troubleshootA04VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootA04VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:a04");
-		try {
-		    publishA04Evidence(A04ConstructionDeveloperVerifier.verify(this,
-			troubleshootA04ForcedFailure));
-		    publishBrowserVerificationResult("PASS:a04");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:a04:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("A04 verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootA02Verification &&
-		!troubleshootA02VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady()) {
-		developerVerifierRunning = true;
-		troubleshootA02VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:a02");
-		try {
-		    publishA02Evidence(A02CorrectnessDeveloperVerifier.verify(this,
-			troubleshootA02ForcedFailure));
-		    publishBrowserVerificationResult("PASS:a02");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:a02:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("A02 verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask47Verification &&
-		!troubleshootTask47VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootTask47VerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:task47");
-		try {
-		    publishTask47Evidence(Task47AssemblyDeveloperVerifier.verify(this,
-			troubleshootTask47Seed, troubleshootTask47ForcedFailure));
-		    publishBrowserVerificationResult("PASS:task47");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:task47:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("Task 47 assembly verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootCompositionGateVerification &&
-		!troubleshootCompositionGateVerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady() &&
-		isGeneratedRuntimeSettled()) {
-		developerVerifierRunning = true;
-		troubleshootCompositionGateVerificationComplete = true;
-		publishBrowserVerificationResult("RUNNING:composition-gate");
-		try {
-		    String lifecycle = CompositionEntryGateDeveloperVerifier.verify(this);
-		    String mutation = CompositionMutationGateDeveloperVerifier.verify(this);
-		    publishCompositionGateEvidence(lifecycle + "\n" + mutation);
-		    publishBrowserVerificationResult("PASS:composition-gate");
-		} catch (Throwable failure) {
-		    publishBrowserVerificationResult("FAIL:composition-gate:" + failure.getMessage());
-		    if (failure instanceof Error) throw (Error) failure;
-		    if (failure instanceof RuntimeException) throw (RuntimeException) failure;
-		    throw new IllegalStateException("Composition gate verification failed", failure);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask46Verification &&
-		!troubleshootTask46VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		generatedChallengeController != null && generatedChallengeController.isReady()) {
-		developerVerifierRunning = true;
-		try {
-		    troubleshootTask46VerificationComplete = true;
-		    publishBrowserVerificationResult("RUNNING:task46");
-		    String parity = Task46ContractVectors.run();
-		    Task46ReplayDeveloperVerifier.Result replay = Task46ReplayDeveloperVerifier.verify(this);
-		    publishTask46Evidence(parity, replay);
-		    publishBrowserVerificationResult("PASS:task46");
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask43Verification &&
-		!troubleshootTask43VerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		(generatedChallengeController == null || generatedChallengeController.isReady())) {
-		developerVerifierRunning = true;
-		try {
-		    troubleshootTask43VerificationComplete = true;
-		    Task43DeveloperVerifier.verify(this);
-		    publishBrowserVerificationResult("PASS:task43");
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	    if (!developerVerifierRunning && troubleshootTask43PVerification &&
-		!troubleshootTask43PVerificationComplete &&
-		!GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
-		(generatedChallengeController == null || generatedChallengeController.isReady())) {
-		developerVerifierRunning = true;
-		try {
-		    publishBrowserVerificationResult("RUNNING:task43p");
-		    troubleshootTask43PVerificationComplete = true;
-		    Task43PDeveloperVerifier.verify(this);
-		} finally {
-		    developerVerifierRunning = false;
-		}
-	    }
-	} catch (RuntimeException e) {
-	    throw generatedVerificationFailure(e);
-	}
     }
 
     private IllegalStateException generatedVerificationFailure(RuntimeException e) {
@@ -5999,28 +5462,28 @@ MouseOutHandler, MouseWheelHandler {
 	return value == null ? "" : value;
 	}
 
-    private static native void publishBrowserVerificationResult(String result) /*-{
+    static native void publishBrowserVerificationResult(String result) /*-{
 	$doc.documentElement.setAttribute("data-tsj-verification", result);
     }-*/;
 
-    private void publishTask46Evidence(String parity, Task46ReplayDeveloperVerifier.Result replay) {
+    void publishTask46Evidence(String parity, Task46ReplayDeveloperVerifier.Result replay) {
 	if (troubleshootDebug && troubleshootTask46Verification)
 	    publishTask46EvidenceStrings(parity, replay.diagnostics, replay.snapshot, replay.summary);
     }
 
-    private static native void publishTask47Evidence(String evidence) /*-{
+    static native void publishTask47Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task47-report", evidence);
     }-*/;
 
-    private static native void publishTask48Evidence(String evidence) /*-{
+    static native void publishTask48Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task48-report", evidence);
     }-*/;
 
-    private static native void publishTask49Evidence(String evidence) /*-{
+    static native void publishTask49Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-task49-report", evidence);
     }-*/;
 
-    private static native void publishA03Evidence(String evidence) /*-{
+    static native void publishA03Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a03-report", evidence);
     }-*/;
 
@@ -6077,30 +5540,30 @@ MouseOutHandler, MouseWheelHandler {
         $doc.documentElement.setAttribute("data-tsj-a07-report", evidence);
     }-*/;
 
-    private static native void publishE03Evidence(String evidence) /*-{
+    static native void publishE03Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-e03-report", evidence);
     }-*/;
-    private static native void publishQ15Evidence(String evidence) /*-{
+    static native void publishQ15Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-q15-report", evidence);
     }-*/;
 
-    private static native void publishE01Evidence(String evidence) /*-{
+    static native void publishE01Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-e01-report", evidence);
     }-*/;
 
-    private static native void publishE02Evidence(String evidence) /*-{
+    static native void publishE02Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-e02-report", evidence);
     }-*/;
 
-    private static native void publishA06Evidence(String evidence) /*-{
+    static native void publishA06Evidence(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-a06-report", evidence);
     }-*/;
 
-    private static native void publishA04Evidence(String evidence) /*-{
+    static native void publishA04Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a04-report", evidence);
     }-*/;
 
-    private static native void publishA02Evidence(String evidence) /*-{
+    static native void publishA02Evidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-a02-report", evidence);
     }-*/;
 
@@ -6122,7 +5585,7 @@ MouseOutHandler, MouseWheelHandler {
 	$doc.documentElement.setAttribute("data-tsj-a01-cleanup", result);
     }-*/;
 
-    private static native void publishCompositionGateEvidence(String evidence) /*-{
+    static native void publishCompositionGateEvidence(String evidence) /*-{
 	$doc.documentElement.setAttribute("data-tsj-composition-gate-report", evidence);
     }-*/;
 
@@ -6424,6 +5887,18 @@ MouseOutHandler, MouseWheelHandler {
 	instrumentController.refreshActiveMeasurement();
     }
 
+    void restoreQueuedMeasurementPowerState(BoardPowerState requestedState,
+	    ActiveMeasurementStimulus stimulus) {
+	applyGeneratedBoardPowerState(requestedState);
+	analyzeCircuit();
+	TemporaryMeasurementSettlement.restore(this);
+	if (stopMessage != null || !TemporaryMeasurementTransaction.isStimulusAbsentFromSolver(this, stimulus))
+	    throw new IllegalStateException("Queued board power solver restoration failed: " + stopMessage);
+	analyzeFlag = false;
+	generatedBoardVerificationAnalyzed = true;
+	runGeneratedBoardVerificationIfReady(true);
+    }
+
     void changeBenchSource(GeneratedBoardInstance owner, String inputId,
             Boolean connected, Double limitAmps) {
         solverExecutor.requirePublicAccess();
@@ -6504,6 +5979,11 @@ MouseOutHandler, MouseWheelHandler {
 		"Board Power: ON" : "Board Power: OFF");
 	if (pcbWorkbenchController != null)
 	    pcbWorkbenchController.refresh();
+    }
+
+    void stopAfterTemporaryMeasurementCleanupFailure() {
+	stop("Measurement cleanup failed. Reload the board before continuing.", null);
+	updateBoardPowerButton();
     }
 
     private boolean isActiveMeasurementCleanupBlocked() {
@@ -6716,8 +6196,13 @@ MouseOutHandler, MouseWheelHandler {
 
     DiodeMeasurementResult measureDiode(CircuitPostMeasurementEndpoint red,
 	    CircuitPostMeasurementEndpoint black) {
+	return measureDiode(red, black, new InstrumentMode("DIODE"));
+    }
+
+    DiodeMeasurementResult measureDiode(CircuitPostMeasurementEndpoint red,
+	    CircuitPostMeasurementEndpoint black, InstrumentMode mode) {
 	if (!boardPowerController.isElectricallyUnpowered() ||
-		!getActiveMeasurementReadiness(red, black).isReady() ||
+		!getActiveMeasurementReadiness(red, black, mode).isReady() ||
 		!containsElement(red.getElement()) || !containsElement(black.getElement()))
 	    return null;
 	final DiodeTestStimulus stimulus = new DiodeTestStimulus(this, red, black);
@@ -6785,128 +6270,7 @@ MouseOutHandler, MouseWheelHandler {
 
     private double runTemporaryMeasurement(ActiveMeasurementStimulus stimulus,
 	    ActiveMeasurementResultReader reader, boolean activeStimulus) {
-	if (activeMeasurementOverlay)
-	    throw new IllegalStateException("A temporary measurement is already active or awaiting cleanup");
-	if (!isGeneratedRuntimeSettled())
-	    throw new IllegalStateException("A temporary measurement requires a settled runtime");
-	lastActiveMeasurementStimulus = stimulus;
-	final GeneratedBoardInstance measurementOwner = generatedBoardInstance;
-	activeMeasurementSolverRestored = false;
-	activeMeasurementOverlay = true;
-	double result = Double.NaN;
-	Throwable failure = null;
-	try {
-	    stimulus.install(this);
-	    if (requestPowerOnDuringActiveMeasurementForDeveloperVerification) {
-		requestPowerOnDuringActiveMeasurementForDeveloperVerification = false;
-		setBoardPowerState(BoardPowerState.POWERED);
-	    }
-	    analyzeCircuit();
-	    runCircuit(true);
-	    runCircuit(true);
-	    if (activeStimulus && measurementOwner != null)
-	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, true);
-	    injectTask43PMeasurementFailureForDeveloperVerification(
-		Task43PMeasurementFailureStage.READER);
-	    result = reader.readResult();
-	} catch (Throwable measurementFailure) {
-	    failure = measurementFailure;
-	}
-	try {
-	    stimulus.remove(this);
-	    injectTask43PMeasurementFailureForDeveloperVerification(
-		Task43PMeasurementFailureStage.AFTER_STIMULUS_REMOVE);
-	} catch (Throwable removalFailure) {
-	    failure = retainActiveMeasurementFailure(failure, removalFailure);
-	}
-	/* Removal and solver reconstruction are separate cleanup stages. An
-	 * exception after removal must not strand the old solver indexes. Never
-	 * analyze or energize a graph that still contains a meter element. */
-	boolean restored = false;
-	try {
-	    if (!isStimulusAbsentFromElementList(stimulus))
-		throw new IllegalStateException("Temporary measurement elements remain in the board graph");
-	    analyzeCircuit();
-	    runCircuit(true);
-	    if (activeStimulus && measurementOwner != null)
-	        measurementOwner.getPhysicalBoardRuntime().settleActiveMeasurement(this, measurementOwner, false);
-	    restored = stopMessage == null && isStimulusAbsentFromSolver(stimulus);
-	    if (!restored)
-		throw new IllegalStateException("Temporary measurement solver restoration failed: " + stopMessage);
-	} catch (Throwable restorationFailure) {
-	    failure = retainActiveMeasurementFailure(failure, restorationFailure);
-	}
-	activeMeasurementSolverRestored = restored;
-	if (restored) {
-	    activeMeasurementOverlay = false;
-	    if (pendingBoardPowerState != null) {
-		BoardPowerState requestedState = pendingBoardPowerState;
-		pendingBoardPowerState = null;
-		try {
-		    // This request was accepted while this synchronous measurement
-		    // owned the overlay. Cleanup has proven all temporary elements
-		    // absent; pending analysis must not silently drop the request.
-		    applyGeneratedBoardPowerState(requestedState);
-		    analyzeCircuit();
-		    runCircuit(true);
-		    if (stopMessage != null || !isStimulusAbsentFromSolver(stimulus))
-			throw new IllegalStateException("Queued board power solver restoration failed: " + stopMessage);
-		    analyzeFlag = false;
-		    generatedBoardVerificationAnalyzed = true;
-		    runGeneratedBoardVerificationIfReady(true);
-		} catch (Throwable powerFailure) {
-		    restored = false;
-		    if (pendingBoardPowerState == null)
-			pendingBoardPowerState = requestedState;
-		    failure = retainActiveMeasurementFailure(failure, powerFailure);
-		}
-	    }
-	    /* With no persistent power/board change, leave any existing validation
-	     * pending. An ordinary measurement must not manufacture a retest. */
-	}
-	if (!restored) {
-	    activeMeasurementSolverRestored = false;
-	    activeMeasurementOverlay = true;
-	    /* Bypass the queuing UI seam only to disconnect the actual external
-	     * inputs. Keep the latest request pending, lock out further measurement,
-	     * and stop the solver until the board is reloaded. */
-	    try {
-		if (generatedBoardInstance != null) {
-		    boardPowerController.setState(BoardPowerState.UNPOWERED);
-		    generatedBoardInstance.getPhysicalBoardRuntime()
-			.onBoardPowerStateChanged(BoardPowerState.UNPOWERED);
-		}
-	    } catch (Throwable isolationFailure) {
-		failure = retainActiveMeasurementFailure(failure, isolationFailure);
-	    }
-	    try {
-		stop("Measurement cleanup failed. Reload the board before continuing.", null);
-		updateBoardPowerButton();
-	    } catch (Throwable stopFailure) {
-		failure = retainActiveMeasurementFailure(failure, stopFailure);
-	    }
-	}
-	try {
-	    if (generatedBoardInstance != null)
-		generatedBoardInstance.getPhysicalBoardRuntime().synchronizeSimulationTime(t);
-	} catch (Throwable synchronizationFailure) {
-	    failure = retainActiveMeasurementFailure(failure, synchronizationFailure);
-	}
-	if (failure instanceof RuntimeException)
-	    throw (RuntimeException) failure;
-	if (failure instanceof Error)
-	    throw (Error) failure;
-	if (failure != null)
-	    throw new IllegalStateException("Temporary measurement failed", failure);
-	return result;
-    }
-
-    private static Throwable retainActiveMeasurementFailure(Throwable original, Throwable next) {
-	if (original == null)
-	    return next;
-	if (original != next)
-	    original.addSuppressed(next);
-	return original;
+	return TemporaryMeasurementTransaction.run(this, stimulus, reader, activeStimulus);
     }
 
     double runTemporaryActiveMeasurementForDeveloperVerification(ActiveMeasurementStimulus stimulus,
@@ -6920,7 +6284,7 @@ MouseOutHandler, MouseWheelHandler {
 
     boolean isActiveMeasurementSolverRestoredForDeveloperVerification() {
 	return activeMeasurementSolverRestored && lastActiveMeasurementStimulus != null &&
-	    isStimulusAbsentFromSolver(lastActiveMeasurementStimulus);
+	    TemporaryMeasurementTransaction.isStimulusAbsentFromSolver(this, lastActiveMeasurementStimulus);
     }
 
     /**
@@ -6952,17 +6316,6 @@ MouseOutHandler, MouseWheelHandler {
 	task43PMeasurementFailureInjectionCount = 0;
     }
 
-    private void injectTask43PMeasurementFailureForDeveloperVerification(
-	    Task43PMeasurementFailureStage stage) {
-	if (!troubleshootTask43PVerification || !developerVerifierRunning ||
-		task43PMeasurementFailureStage != stage)
-	    return;
-	task43PMeasurementFailureStage = Task43PMeasurementFailureStage.NONE;
-	task43PMeasurementFailureLastInjectedStage = stage;
-	task43PMeasurementFailureInjectionCount++;
-	throw new Task43PInjectedMeasurementFailure(stage);
-    }
-
     int getAnalysisCountForDeveloperVerification() {
 	return analysisCountForDeveloperVerification;
     }
@@ -6973,35 +6326,6 @@ MouseOutHandler, MouseWheelHandler {
 
     boolean isObservationalValidationActiveForDeveloperVerification() {
 	return observationalValidationDepth != 0;
-    }
-
-    private boolean isStimulusAbsentFromElementList(ActiveMeasurementStimulus stimulus) {
-	CircuitElm elements[] = stimulus.getTemporaryElements();
-	if (elements == null || elmList == null)
-	    return false;
-	for (CircuitElm element : elements)
-	    if (element == null || elmList.contains(element))
-		return false;
-	return true;
-    }
-
-    private boolean isStimulusAbsentFromSolver(ActiveMeasurementStimulus stimulus) {
-	if (!isStimulusAbsentFromElementList(stimulus) || voltageSources == null || nodeList == null)
-	    return false;
-	CircuitElm elements[] = stimulus.getTemporaryElements();
-	for (CircuitElm voltageSource : voltageSources) {
-	    for (CircuitElm element : elements)
-		if (voltageSource == element)
-		    return false;
-	}
-	for (CircuitNode node : nodeList) {
-	    for (CircuitNodeLink link : node.links) {
-		for (CircuitElm element : elements)
-		    if (link.elm == element)
-			return false;
-	    }
-	}
-	return circuitMatrix != null;
     }
 
 	void requestPowerOnDuringActiveMeasurementForDeveloperVerification() {
@@ -7478,7 +6802,7 @@ MouseOutHandler, MouseWheelHandler {
 	try {
 	    dragElm = constructElement(mouseModeStr, x0, y0);
 	} catch (Exception ex) {
-	    debugger();
+	    throw reportCircuitFailure(ex);
 	}
     }
 

@@ -16,6 +16,12 @@ public final class InCircuitResistanceContractTest {
         Throwable failure = null;
         CircuitElm.sim = sim;
         try {
+            IllegalStateException forced = new IllegalStateException("forced solver stamp failure");
+            check(sim.reportCircuitFailure(forced) == forced &&
+                    "CircuitJS solver failed: forced solver stamp failure".equals(sim.stopMessage) &&
+                    !sim.simRunning,
+                "solver failure retains its actual cause and stops simulation");
+            sim.stopMessage = null;
             owner = new LedIndicatorGenerator().generate(3);
             sim.generatedBoardInstance = owner;
             sim.elmList = new Vector<CircuitElm>(owner.getSimulationElements());
@@ -25,6 +31,8 @@ public final class InCircuitResistanceContractTest {
             sim.getBoardPowerController().setState(BoardPowerState.UNPOWERED);
             owner.getPhysicalBoardRuntime().onBoardPowerStateChanged(BoardPowerState.UNPOWERED);
             sim.a01MeasurementRunning = true;
+
+            verifyMemorylessStaticDcAcquisition(sim, owner, fixture);
 
             // These literal islands are test-only solver fixtures. They do not claim
             // RB56 target eligibility, package population or a physical player board.
@@ -93,6 +101,7 @@ public final class InCircuitResistanceContractTest {
             verifyTransactionIdentity(sim, owner, a, b);
             verifyMeterChargedCapacitor(sim, owner, fixture);
             check(sim.getBoardPowerController().isElectricallyUnpowered(), "measurement and error cleanup never repower the board");
+            verifyGeneratedFailurePrivacy(sim, owner);
         } catch (RuntimeException error) { failure = error; throw error;
         } catch (Error error) { failure = error; throw error;
         } finally {
@@ -151,6 +160,153 @@ public final class InCircuitResistanceContractTest {
         settle(sim, owner);
     }
 
+    /** Static nonlinear DC networks use eight real steps and match a full-window oracle. */
+    private static void verifyMemorylessStaticDcAcquisition(MeterSim sim,
+            GeneratedBoardInstance owner, Vector<CircuitElm> fixture) {
+        Vector<CircuitElm> created = new Vector<CircuitElm>();
+        Vector<CircuitElm> originalGraph = new Vector<CircuitElm>(sim.elmList);
+        double originalTimeStep = sim.timeStep;
+        double originalMaximumTimeStep = sim.maxTimeStep;
+        double originalMinimumTimeStep = sim.minTimeStep;
+        boolean originalAdjustTimeStep = sim.adjustTimeStep;
+        int originalUiSliceSteps = sim.uiSliceSteps;
+
+        LEDElm led = new LEDElm(103000, 100000);
+        led.setPosition(103000, 100000, 103080, 100000);
+        led.modelName = "default-led";
+        led.setup();
+        add(sim, fixture, led); created.add(led);
+        check("default-led".equals(led.modelName) && led.model.saturationCurrent == 93.2e-12 &&
+                led.model.seriesResistance == .042 && led.model.emissionCoefficient == 3.73 &&
+                led.model.breakdownVoltage == 0,
+            "static nonlinear fixture pins the independent default LED model parameters");
+        CircuitPostMeasurementEndpoint red = endpoint(led, 0), black = endpoint(led, 1);
+        double expected = defaultLedResistance();
+        try {
+            for (double step : new double[] { .000005, .0001 }) {
+                sim.timeStep = sim.maxTimeStep = sim.minTimeStep = step;
+                sim.adjustTimeStep = false;
+                settle(sim, owner);
+                for (int speed : new int[] {1, 100}) {
+                    sim.uiSliceSteps = speed;
+                    Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+                    int uiCalls = sim.uiCalls;
+                    int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+                    double started = sim.t;
+                    double actual = sim.measureResistance(red, black, OHM);
+                    double elapsed = sim.t - started;
+                    check(PowerDomainContract.finite(actual) && Math.abs(actual - expected) < expected * .01,
+                        "real default LED resistance matches the independent Shockley/load-line oracle");
+                    check(sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+                        "static nonlinear acquisition reads only the actual solver result once");
+                    check(Math.abs(elapsed - 9 * step) < Math.max(1e-12, step * 1e-8),
+                        "verified static DC acquisition takes eight accepted steps plus one cleanup step");
+                    check(sim.uiCalls == uiCalls,
+                        "static DC acquisition is independent of the UI solver slice size");
+                    restored(sim, graph);
+                    System.out.println("IN_CIRCUIT_STATIC_LED step=" + step + " uiSteps=" + speed +
+                        " ohms=" + actual + " simulatedSeconds=" + elapsed);
+                }
+            }
+
+            // An electrically negligible but unreviewed subclass must keep the
+            // full 10ms window; its Java type could hide time or stored state.
+            OpaqueResistorElm unknown = new OpaqueResistorElm(led.getPost(0).x,
+                led.getPost(0).y, led.getPost(1).x, led.getPost(1).y, 1e15);
+            add(sim, fixture, unknown); created.add(unknown);
+            sim.timeStep = sim.maxTimeStep = sim.minTimeStep = .00005;
+            settle(sim, owner);
+            Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+            double started = sim.t;
+            double fullWindow = sim.measureResistance(red, black, OHM);
+            double elapsed = sim.t - started;
+            check(PowerDomainContract.finite(fullWindow) && Math.abs(fullWindow - expected) < expected * .01,
+                "unknown-subclass fallback still returns the actual nonlinear network reading");
+            check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+                "an unreviewed element subclass selects the unchanged full acquisition window");
+            restored(sim, graph);
+            System.out.println("IN_CIRCUIT_STATIC_UNKNOWN ohms=" + fullWindow + " simulatedSeconds=" + elapsed);
+
+            sim.elmList.remove(unknown); fixture.remove(unknown); unknown.delete();
+            created.remove(unknown);
+            sim.solverExecutor.invalidate();
+
+            // Exact DCVoltageElm is allowed only in its constant, zero-bias form.
+            DCVoltageElm varyingSource = new DCVoltageElm(104000, 100000);
+            varyingSource.setPosition(104000, 100000, 104080, 100000);
+            varyingSource.maxVoltage = 1;
+            varyingSource.waveform = VoltageElm.WF_SQUARE;
+            varyingSource.bias = 0;
+            varyingSource.reset();
+            ResistorElm varyingLoad = resistor(104000, 100000, 104080, 100000, 1000);
+            GroundElm varyingGround = new GroundElm(104000, 100000);
+            varyingGround.setPosition(104000, 100000, 104000, 100032);
+            add(sim, fixture, varyingSource); created.add(varyingSource);
+            add(sim, fixture, varyingLoad); created.add(varyingLoad);
+            add(sim, fixture, varyingGround); created.add(varyingGround);
+            settle(sim, owner);
+            graph = new Vector<CircuitElm>(sim.elmList);
+            started = sim.t;
+            double waveformFallback = sim.measureResistance(red, black, OHM);
+            elapsed = sim.t - started;
+            check(PowerDomainContract.finite(waveformFallback) &&
+                    Math.abs(waveformFallback - expected) < expected * .01,
+                "time-varying disconnected source does not change the literal LED result");
+            check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+                "a non-DC source waveform forces the full acquisition window");
+            restored(sim, graph);
+
+            varyingSource.waveform = VoltageElm.WF_DC;
+            varyingSource.bias = .25;
+            varyingSource.reset();
+            settle(sim, owner);
+            graph = new Vector<CircuitElm>(sim.elmList);
+            started = sim.t;
+            double biasedFallback = sim.measureResistance(red, black, OHM);
+            elapsed = sim.t - started;
+            check(PowerDomainContract.finite(biasedFallback) &&
+                    Math.abs(biasedFallback - expected) < expected * .01,
+                "biased disconnected source does not change the literal LED result");
+            check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+                "a DC source with nonzero bias forces the full acquisition window");
+            restored(sim, graph);
+        } finally {
+            for (CircuitElm element : created) {
+                sim.elmList.remove(element);
+                fixture.remove(element);
+                element.delete();
+            }
+            sim.timeStep = originalTimeStep;
+            sim.maxTimeStep = originalMaximumTimeStep;
+            sim.minTimeStep = originalMinimumTimeStep;
+            sim.adjustTimeStep = originalAdjustTimeStep;
+            sim.uiSliceSteps = originalUiSliceSteps;
+            check(sim.elmList.equals(originalGraph), "static acquisition fixtures restore the original graph");
+        }
+    }
+
+    /** Independent Shockley law and meter burden for the pinned default LED model. */
+    private static double defaultLedResistance() {
+        final double saturationCurrent = 93.2e-12;
+        final double seriesResistance = .042;
+        final double emissionCoefficient = 3.73;
+        final double thermalVoltage = .025865;
+        final double internalResistance = ResistanceMeasurementStimulus.INTERNAL_RESISTANCE;
+        double low = 0, high = .001;
+        for (int iteration = 0; iteration < 100; iteration++) {
+            double current = (low + high) / 2;
+            double junctionVoltage = current * seriesResistance +
+                emissionCoefficient * thermalVoltage * Math.log(1 + current / saturationCurrent);
+            if (junctionVoltage + current * internalResistance >
+                    ResistanceMeasurementStimulus.TEST_VOLTAGE)
+                high = current;
+            else
+                low = current;
+        }
+        double current = (low + high) / 2;
+        return 1 / current - internalResistance;
+    }
+
     /** Real RC energy, not a forced readiness return or a replacement solver. */
     private static void verifyMeterChargedCapacitor(MeterSim sim, GeneratedBoardInstance owner,
             Vector<CircuitElm> fixture) {
@@ -163,6 +319,15 @@ public final class InCircuitResistanceContractTest {
         add(sim, fixture, load); add(sim, fixture, capacitor);
         LiteralEnergyReadiness energy = new LiteralEnergyReadiness(capacitor);
         owner.getPhysicalBoardRuntime().registerCapability(energy);
+
+        // The capacitor itself must retain the finite window. Remove the
+        // unrelated generic DiodeElm from the earlier fixture so it cannot be
+        // the reason this active transaction falls back.
+        Vector<CircuitElm> excludedDiodes = new Vector<CircuitElm>();
+        for (CircuitElm element : fixture) {
+            if (element.getClass() == DiodeElm.class && sim.elmList.remove(element))
+                excludedDiodes.add(element);
+        }
         settle(sim, owner);
         LiteralProbe red = new LiteralProbe(sim, endpoint(load, 0));
         LiteralProbe black = new LiteralProbe(sim, endpoint(load, 1));
@@ -171,11 +336,23 @@ public final class InCircuitResistanceContractTest {
             "discharged literal RC graph admits the first real injection");
         Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
         int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        double started = sim.t;
         double reading = adapter.measureResistance(red, black, OHM);
+        double elapsed = sim.t - started;
         check(PowerDomainContract.finite(reading) && reading >= 0 &&
                 sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
             "completed real RC sample survives its own post-transaction residual energy");
+        check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+            "a real capacitor alone keeps active acquisition on the unchanged 10ms window");
         restored(sim, graph);
+        for (CircuitElm element : excludedDiodes) sim.elmList.add(element);
+        if (!excludedDiodes.isEmpty()) {
+            sim.solverExecutor.invalidate(); sim.analyzeCircuit(); sim.analyzeFlag = false;
+        }
+        // The first transaction above proves the capacitor-only fallback and
+        // restores that exact graph. Subsequent transactions own the graph
+        // after the unrelated diode has deliberately been put back.
+        graph = new Vector<CircuitElm>(sim.elmList);
         check(Math.abs(capacitor.getVoltageDiff()) > .25 &&
                 adapter.getActiveMeasurementReadiness(red, black, OHM) == ActiveMeasurementReadiness.DISCHARGE,
             "the actual meter source charges the capacitor beyond the unchanged residual threshold");
@@ -193,6 +370,214 @@ public final class InCircuitResistanceContractTest {
             "a new real injection succeeds after natural recovery");
         restored(sim, graph);
         System.out.println("IN_CIRCUIT_RC heldOhms=" + reading + " residualVolts=" + capacitor.getVoltageDiff());
+
+        double expected = Double.NaN;
+        for (int speed : new int[] {1, 100}) {
+            sim.uiSliceSteps = speed;
+            for (int repeat = 0; repeat < 2; repeat++) {
+                capacitor.reset();
+                settle(sim, owner);
+                int priorUiCalls = sim.uiCalls;
+                double repeatStarted = sim.t;
+                double actual = adapter.measureResistance(red, black, OHM);
+                double repeatElapsed = sim.t - repeatStarted;
+                check(PowerDomainContract.finite(actual) && Math.abs(actual - 1000) < .01,
+                    "RC reading matches its literal DC load after the finite acquisition window");
+                if (Double.isNaN(expected)) expected = actual;
+                check(Double.doubleToLongBits(actual) == Double.doubleToLongBits(expected),
+                    "the same discharged RC graph repeats exactly at both UI solver speeds");
+                check(sim.uiCalls == priorUiCalls &&
+                        Math.abs(repeatElapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+                    "acquisition and cleanup use declared solver time rather than the UI slice");
+                restored(sim, graph);
+                System.out.println("IN_CIRCUIT_RC_REPEAT uiSteps=" + speed + " repeat=" + repeat +
+                    " ohms=" + actual + " simulatedSeconds=" + repeatElapsed);
+            }
+        }
+
+        verifyCompletedModeWhileDischarging(sim, owner, adapter, red, black, capacitor, load,
+            "CONTINUITY");
+        verifyCompletedModeWhileDischarging(sim, owner, adapter, red, black, capacitor, load,
+            "DIODE");
+        capacitor.reset();
+        settle(sim, owner);
+        verifyDiodeOlWhileDischarging(sim, owner, fixture);
+    }
+
+    /** A completed CONT/DIODE sample remains displayable, while each refresh still preflights. */
+    private static void verifyCompletedModeWhileDischarging(MeterSim sim, GeneratedBoardInstance owner,
+            CircuitMeasurementAdapter adapter, LiteralProbe red, LiteralProbe black,
+            CapacitorElm capacitor, ResistorElm load, String modeId) {
+        InstrumentMode mode = new InstrumentMode(modeId);
+        capacitor.reset();
+        settle(sim, owner);
+        check(adapter.getActiveMeasurementReadiness(red, black, mode) == ActiveMeasurementReadiness.READY,
+            modeId + " real RC fixture starts with injection admitted");
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        double started = sim.t;
+        int readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        boolean completed;
+        if ("CONTINUITY".equals(modeId)) {
+            double ohms = adapter.measureResistance(red, black, mode);
+            completed = PowerDomainContract.finite(ohms) && ohms >= 0;
+            check(completed && sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+                "CONTINUITY completed a real finite RC resistance sample");
+        } else {
+            DiodeMeasurementResult result = adapter.measureDiode(red, black, mode);
+            completed = result != null && PowerDomainContract.finite(result.voltage) &&
+                PowerDomainContract.finite(result.current) && result.current >= .00001 && result.voltage < 2.95;
+            check(completed, "DIODE completed a real finite RC injection sample");
+        }
+        double elapsed = sim.t - started;
+        ActiveMeasurementReadiness afterSample = adapter.getActiveMeasurementReadiness(red, black, mode);
+        check(completed && Math.abs(capacitor.getVoltageDiff()) > .25 &&
+                afterSample == ActiveMeasurementReadiness.DISCHARGE &&
+                InstrumentController.canRetainCompletedMeasurementAtReadiness(modeId, completed, afterSample),
+            modeId + " captured sample remains retainable after its injection leaves residual RC energy");
+        check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+            modeId + " sample uses the bounded acquisition and cleanup solver window");
+        restored(sim, graph);
+
+        double blockedAt = sim.t;
+        double diodeVoltageBeforeBlocked = sim.getLastDiodeMeasurementVoltageForDeveloperVerification();
+        double diodeCurrentBeforeBlocked = sim.getLastDiodeMeasurementCurrentForDeveloperVerification();
+        if ("CONTINUITY".equals(modeId)) {
+            check(Double.isNaN(adapter.measureResistance(red, black, mode)) &&
+                    sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+                "CONTINUITY refresh is refused before the reader while the RC remains charged");
+        } else {
+            check(adapter.measureDiode(red, black, mode) == null &&
+                    Double.doubleToLongBits(sim.getLastDiodeMeasurementVoltageForDeveloperVerification()) ==
+                        Double.doubleToLongBits(diodeVoltageBeforeBlocked) &&
+                    Double.doubleToLongBits(sim.getLastDiodeMeasurementCurrentForDeveloperVerification()) ==
+                        Double.doubleToLongBits(diodeCurrentBeforeBlocked),
+                "DIODE refresh is refused while the RC remains charged");
+        }
+        check(sim.t == blockedAt && adapter.getActiveMeasurementReadiness(red, black, mode) ==
+                ActiveMeasurementReadiness.DISCHARGE &&
+                !InstrumentController.canRetainCompletedMeasurementAtReadiness("DC_VOLTAGE", true,
+                    ActiveMeasurementReadiness.DISCHARGE) &&
+                !InstrumentController.canRetainCompletedMeasurementAtReadiness(modeId, false,
+                    ActiveMeasurementReadiness.DISCHARGE) &&
+                !InstrumentController.canRetainCompletedMeasurementAtReadiness(modeId, true,
+                    ActiveMeasurementReadiness.POWER_OFF) &&
+                !InstrumentController.canRetainCompletedMeasurementAtReadiness(modeId, true,
+                    ActiveMeasurementReadiness.WAITING),
+            modeId + " blocked refresh consumes no solver time and retention excludes wrong-mode, incomplete, powered, or unsettled results");
+
+        sim.solverExecutor.advanceFor(.01);
+        owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);
+        check(Math.abs(capacitor.getVoltageDiff()) < .001 &&
+                adapter.getActiveMeasurementReadiness(red, black, mode) == ActiveMeasurementReadiness.READY,
+            modeId + " natural RC cooldown restores refresh admission");
+        started = sim.t;
+        readers = sim.getResistanceResultReaderCallsForDeveloperVerification();
+        if ("CONTINUITY".equals(modeId)) {
+            double refreshed = adapter.measureResistance(red, black, mode);
+            check(PowerDomainContract.finite(refreshed) && refreshed >= 0 &&
+                    sim.getResistanceResultReaderCallsForDeveloperVerification() == readers + 1,
+                "CONTINUITY refresh is accepted after natural RC cooldown");
+        } else {
+            DiodeMeasurementResult refreshed = adapter.measureDiode(red, black, mode);
+            check(refreshed != null && PowerDomainContract.finite(refreshed.voltage) &&
+                    PowerDomainContract.finite(refreshed.current) && refreshed.current >= .00001 &&
+                    refreshed.voltage < 2.95,
+                "DIODE refresh is accepted after natural RC cooldown");
+        }
+        check(sim.t > started, modeId + " cooldown refresh performs a fresh solver-time injection");
+        restored(sim, graph);
+        System.out.println("IN_CIRCUIT_RC_HELD mode=" + modeId + " postSample=" + afterSample +
+            " simulatedSeconds=" + elapsed);
+    }
+
+    /** A finite over-compliance diode sample remains OL while its real RC load discharges. */
+    private static void verifyDiodeOlWhileDischarging(MeterSim sim, GeneratedBoardInstance owner,
+            Vector<CircuitElm> fixture) {
+        ResistorElm load = resistor(102000, 100960, 102080, 100960, 100000);
+        CapacitorElm capacitor = new CapacitorElm(102000, 101040);
+        capacitor.setPosition(102000, 100960, 102080, 100960);
+        capacitor.capacitance = 1e-6;
+        capacitor.initialVoltage = 0;
+        capacitor.reset();
+        add(sim, fixture, load);
+        add(sim, fixture, capacitor);
+        owner.getPhysicalBoardRuntime().registerCapability(new LiteralEnergyReadiness(capacitor,
+            "LITERAL_RC_OPEN_DIODE_ENERGY_CONTRACT"));
+        settle(sim, owner);
+
+        LiteralProbe red = new LiteralProbe(sim, endpoint(load, 0));
+        LiteralProbe black = new LiteralProbe(sim, endpoint(load, 1));
+        InstrumentMode diode = new InstrumentMode("DIODE");
+        CircuitMeasurementAdapter adapter = new CircuitMeasurementAdapter(sim);
+        check(adapter.getActiveMeasurementReadiness(red, black, diode) == ActiveMeasurementReadiness.READY,
+            "high-resistance diode RC fixture starts admitted");
+        Vector<CircuitElm> graph = new Vector<CircuitElm>(sim.elmList);
+        double started = sim.t;
+        DiodeMeasurementResult result = adapter.measureDiode(red, black, diode);
+        double elapsed = sim.t - started;
+        double expectedCurrent = 3.0 / (1000.0 + 100000.0);
+        double expectedVoltage = expectedCurrent * 100000.0;
+        check(result != null && PowerDomainContract.finite(result.voltage) &&
+                PowerDomainContract.finite(result.current) &&
+                Math.abs(result.voltage - expectedVoltage) < .01 &&
+                Math.abs(result.current - expectedCurrent) < expectedCurrent * .01,
+            "real 100k RC load matches the independent 3V/1k load-line oracle");
+        check(DiodeTestInstrumentMode.isCompletedFiniteResult(result) &&
+                !DiodeTestInstrumentMode.isUsableResult(result) &&
+                Double.isNaN(DiodeTestInstrumentMode.primaryValueForResult(result)) &&
+                result.voltage >= 2.95 && result.current >= .00001,
+            "finite over-compliance sample stays OL without a finite diode-voltage primary");
+        check(Math.abs(capacitor.getVoltageDiff()) > .25 &&
+                adapter.getActiveMeasurementReadiness(red, black, diode) == ActiveMeasurementReadiness.DISCHARGE &&
+                InstrumentController.canRetainCompletedMeasurementAtReadiness("DIODE", true,
+                    ActiveMeasurementReadiness.DISCHARGE),
+            "completed nonconducting diode sample remains retainable after its own injection leaves charge");
+        check(Math.abs(elapsed - (TemporaryMeasurementSettlement.ACTIVE_SECONDS + sim.timeStep)) < 1e-10,
+            "nonconducting diode acquisition stays inside the declared solver-time window");
+        restored(sim, graph);
+
+        double blockedAt = sim.t;
+        double lastVoltage = sim.getLastDiodeMeasurementVoltageForDeveloperVerification();
+        double lastCurrent = sim.getLastDiodeMeasurementCurrentForDeveloperVerification();
+        check(adapter.measureDiode(red, black, diode) == null && sim.t == blockedAt &&
+                Double.doubleToLongBits(sim.getLastDiodeMeasurementVoltageForDeveloperVerification()) ==
+                    Double.doubleToLongBits(lastVoltage) &&
+                Double.doubleToLongBits(sim.getLastDiodeMeasurementCurrentForDeveloperVerification()) ==
+                    Double.doubleToLongBits(lastCurrent),
+            "charged OL sample blocks a repeated diode injection without time or result-reader change");
+
+        sim.solverExecutor.advanceFor(.5);
+        owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);
+        check(Math.abs(capacitor.getVoltageDiff()) < .25 &&
+                adapter.getActiveMeasurementReadiness(red, black, diode) == ActiveMeasurementReadiness.READY,
+            "bounded natural 100k-by-1uF cooldown restores diode admission");
+        started = sim.t;
+        DiodeMeasurementResult refreshed = adapter.measureDiode(red, black, diode);
+        check(refreshed != null && DiodeTestInstrumentMode.isCompletedFiniteResult(refreshed) &&
+                !DiodeTestInstrumentMode.isUsableResult(refreshed) &&
+                Double.isNaN(DiodeTestInstrumentMode.primaryValueForResult(refreshed)) && sim.t > started,
+            "fresh nonconducting diode sample is accepted after cooldown and remains OL-classified");
+        restored(sim, graph);
+        System.out.println("IN_CIRCUIT_RC_DIODE_OL voltage=" + result.voltage + " current=" +
+            result.current + " residualVolts=" + capacitor.getVoltageDiff());
+    }
+
+    private static void verifyGeneratedFailurePrivacy(MeterSim sim, GeneratedBoardInstance owner) {
+        IllegalStateException hidden = new IllegalStateException("Source fault did not lower device output");
+        check(sim.reportCircuitFailure(hidden) == hidden &&
+                "Runtime recovery failed: reload board".equals(sim.stopMessage) &&
+                !sim.stopMessage.contains("Source fault") && !sim.simRunning &&
+                sim.failedGeneratedRuntimeOwner == owner &&
+                sim.getBoardPowerController().isElectricallyUnpowered(),
+            "generated-board solver failure retains its cause while player recovery hides fault detail and isolates power");
+
+        sim.troubleshootDebug = true;
+        IllegalStateException visible = new IllegalStateException("Source fault did not lower device output");
+        check(sim.reportCircuitFailure(visible) == visible &&
+                "CircuitJS solver failed: Source fault did not lower device output".equals(sim.stopMessage) &&
+                !sim.simRunning && sim.failedGeneratedRuntimeOwner == owner &&
+                sim.getBoardPowerController().isElectricallyUnpowered(),
+            "explicit developer debug retains actual generated-board failure detail and cause");
     }
 
     private static final class LiteralProbe implements ProbeTarget {
@@ -210,8 +595,15 @@ public final class InCircuitResistanceContractTest {
 
     private static final class LiteralEnergyReadiness implements ActiveMeasurementReadinessCapability {
         private final CapacitorElm capacitor;
-        LiteralEnergyReadiness(CapacitorElm capacitor) { this.capacitor = capacitor; }
-        public String getCapabilityId() { return "LITERAL_RC_ENERGY_CONTRACT"; }
+        private final String capabilityId;
+        LiteralEnergyReadiness(CapacitorElm capacitor) {
+            this(capacitor, "LITERAL_RC_ENERGY_CONTRACT");
+        }
+        LiteralEnergyReadiness(CapacitorElm capacitor, String capabilityId) {
+            this.capacitor = capacitor;
+            this.capabilityId = capabilityId;
+        }
+        public String getCapabilityId() { return capabilityId; }
         public ActiveMeasurementReadiness getActiveMeasurementReadiness(CircuitPostMeasurementEndpoint red,
                 CircuitPostMeasurementEndpoint black, BoardPowerState power, boolean allOff) {
             if (power != BoardPowerState.UNPOWERED || !allOff) return ActiveMeasurementReadiness.POWER_OFF;
@@ -262,13 +654,21 @@ public final class InCircuitResistanceContractTest {
             sim.isActiveMeasurementSolverRestoredForDeveloperVerification(), "actual source/reference elements and solver indexes restored");
     }
     private static void check(boolean result, String reason) { assertions++; if (!result) throw new AssertionError(reason); }
+    private static final class OpaqueResistorElm extends ResistorElm {
+        OpaqueResistorElm(int x, int y, int x2, int y2, double resistance) {
+            super(x, y);
+            setPosition(x, y, x2, y2);
+            setResistance(resistance);
+        }
+    }
     private static final class MeterSim extends CirSim {
+        int uiSliceSteps = 8, uiCalls;
         MeterSim() {
             gridSize = 16; gridMask = ~15; gridRound = 7; elmList = new Vector<CircuitElm>();
             adjustables = new Vector<Adjustable>(); undoStack = new Vector<String>(); redoStack = new Vector<String>();
             maxTimeStep = minTimeStep = timeStep = .00005; adjustTimeStep = false;
         }
-        @Override void runCircuit(boolean didAnalyze) { solverExecutor.advanceSteps(8); }
+        @Override void runCircuit(boolean didAnalyze) { uiCalls++; solverExecutor.advanceSteps(uiSliceSteps); }
         @Override void needAnalyze() { if (elmList != null && CircuitElm.sim == this) solverExecutor.invalidate(); analyzeFlag = true; }
         @Override void stop(String message, CircuitElm element) { stopMessage = message; circuitMatrix = null; stopElm = element; setSimRunning(false); analyzeFlag = false; }
         @Override public void setSimRunning(boolean running) { simRunning = running; }

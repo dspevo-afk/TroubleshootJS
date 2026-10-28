@@ -8,7 +8,7 @@ import java.util.Vector;
 public final class Task43PhysicalEndpointContractTest {
     public static void main(String[] args) throws Exception {
         CirSim sim=new CirSim(); sim.gridSize=16; sim.gridMask=~15; sim.gridRound=7; CircuitElm.sim=sim;
-        Method factory=Task43PPhysicalTruthDeveloperVerifier.class.getDeclaredMethod("manifestFor",String.class);
+        Method factory=GeneratedBoardPhysicalTruthDeveloperVerifier.class.getDeclaredMethod("manifestFor",String.class);
         factory.setAccessible(true); int checks=0;
         for(String family:new String[]{"LED_INDICATOR","DIODE_PROTECTED_INDICATOR","PARALLEL_DUAL_INDICATOR",
                 "RC_DELAY","NPN_LOW_SIDE_SWITCH","NMOS_LOW_SIDE_SWITCH"}) {
@@ -28,7 +28,7 @@ public final class Task43PhysicalEndpointContractTest {
                 }
             }
         }
-        Method composed=Task43PPhysicalTruthDeveloperVerifier.class.getDeclaredMethod("controlledIndicatorManifest",BoundedAssemblyPlan.class);
+        Method composed=GeneratedBoardPhysicalTruthDeveloperVerifier.class.getDeclaredMethod("controlledIndicatorManifest",BoundedAssemblyPlan.class);
         composed.setAccessible(true); StringBuilder failures=new StringBuilder();
         for(long seed:new long[]{-1,0,1,Long.MIN_VALUE}) {
             String family="COMPOSED_CONTROLLED_INDICATOR"; GeneratedBoardInstance instance=new PlayerLaunchRequest(family,Long.toString(seed),PlayerFamilyCatalog.candidateProfile(family).name()).generation().resolve(new GenerationRequest.PlanCache()).construct().instance;

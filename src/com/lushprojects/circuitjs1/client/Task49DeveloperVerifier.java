@@ -191,7 +191,7 @@ final class Task49DeveloperVerifier {
         behavior.verifyHealthy(board, BoardPowerState.POWERED);
         verifyIndependentChannels(sim, board);
         phase = "seed " + seed + " physical correspondence";
-        String physical = Task43PPhysicalTruthDeveloperVerifier
+        String physical = GeneratedBoardPhysicalTruthDeveloperVerifier
             .verifyControlledIndicatorComposition(sim);
         phase = "seed " + seed + " per-owner mutation and restore";
         Task48MutationDeveloperVerifier.Receipt mutation =

@@ -85,10 +85,10 @@ public final class D01DiagnosticContractTest {
             require(baselineKey.equals(baseline.diagnosticKey()),
                 "real dependency capture and diagnostic key share the complete canonical value");
             String canonical = baseline.canonical();
-            String expectedEpoch = "tsj-generation-dependencies-v18";
+            String expectedEpoch = "tsj-generation-dependencies-v19";
             require(canonical.startsWith("V" + expectedEpoch.length() + ":" +
                     expectedEpoch + ";") &&
-                    canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v6") >= 0,
+                    canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v7") >= 0,
                 "reserved-reference metadata has a new proof epoch while CircuitJS model interpretation stays exact");
             require(canonical.indexOf(".reference-characters") >= 0,
                 "actual diagnostic capture binds the reserved physical reference width");

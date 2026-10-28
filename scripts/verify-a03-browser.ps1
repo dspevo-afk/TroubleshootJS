@@ -98,8 +98,8 @@ function Get-PreviewIdentity([string]$BaseUrl, $Context, [string]$Root,
         Throw-VerifierInfrastructure ('Owned preview identity read failed: ' +
             (Get-VerifierErrorMessage $_))
     }
-    foreach ($name in @('protocol','repositoryRoot','previewScript','webRoot',
-            'sourceRoot','scriptRoot','sourceDigest','scriptDigest','webDigest',
+    foreach ($name in @('protocol','repositoryIdentity','previewScriptIdentity','webRootIdentity',
+            'sourceRootIdentity','scriptRootIdentity','sourceDigest','scriptDigest','webDigest',
             'executionDigest','verifierRunId','verifierNonce')) {
         if ($null -eq $identity.PSObject.Properties[$name] -or
                 $identity.$name -isnot [string] -or
@@ -107,7 +107,8 @@ function Get-PreviewIdentity([string]$BaseUrl, $Context, [string]$Root,
             Throw-VerifierInfrastructure "Owned preview identity omitted exact string '$name'."
         }
     }
-    foreach ($digest in @('sourceDigest','scriptDigest','webDigest','executionDigest')) {
+    foreach ($digest in @('repositoryIdentity','previewScriptIdentity','webRootIdentity',
+            'sourceRootIdentity','scriptRootIdentity','sourceDigest','scriptDigest','webDigest','executionDigest')) {
         if ([string]$identity.$digest -notmatch '^[0-9a-f]{64}$') {
             Throw-VerifierInfrastructure "Owned preview identity carried malformed '$digest'."
         }
@@ -122,12 +123,12 @@ function Get-PreviewIdentity([string]$BaseUrl, $Context, [string]$Root,
     $expectedWeb = Get-VerifierFullPath (Join-Path $Root 'war')
     $expectedSource = Get-VerifierFullPath (Join-Path $Root 'src')
     $expectedScripts = Get-VerifierFullPath (Join-Path $Root 'scripts')
-    if ([string]$identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-            -not (Test-VerifierCanonicalWindowsPathValue $identity.repositoryRoot $Context.WorktreeRoot) -or
-            -not (Test-VerifierCanonicalWindowsPathValue $identity.previewScript $expectedScript) -or
-            -not (Test-VerifierCanonicalWindowsPathValue $identity.webRoot $expectedWeb) -or
-            -not (Test-VerifierCanonicalWindowsPathValue $identity.sourceRoot $expectedSource) -or
-            -not (Test-VerifierCanonicalWindowsPathValue $identity.scriptRoot $expectedScripts) -or
+    if ([string]$identity.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+            [string]$identity.repositoryIdentity -cne (Get-VerifierOpaquePathIdentity 'repository' $Context.WorktreeRoot) -or
+            [string]$identity.previewScriptIdentity -cne (Get-VerifierOpaquePathIdentity 'preview-script' $expectedScript) -or
+            [string]$identity.webRootIdentity -cne (Get-VerifierOpaquePathIdentity 'web-root' $expectedWeb) -or
+            [string]$identity.sourceRootIdentity -cne (Get-VerifierOpaquePathIdentity 'source-root' $expectedSource) -or
+            [string]$identity.scriptRootIdentity -cne (Get-VerifierOpaquePathIdentity 'script-root' $expectedScripts) -or
             [string]$identity.verifierRunId -cne [string]$Context.RunId -or
             [string]$identity.verifierNonce -cne [string]$Context.PreviewNonce -or
             [int]$identity.previewPort -ne [int]$Context.Server.Port -or

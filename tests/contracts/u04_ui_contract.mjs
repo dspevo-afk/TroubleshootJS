@@ -46,7 +46,7 @@ async function fixture({ storage, deny = false, noBridge = false, trackFocusList
     action(token, lease, name, ...args) {
       const accepted = token === state.token && (name !== 'acquire' || lease === view);
       calls.push({ token, lease, name, args, accepted });
-      return accepted ? (name === 'acquire' ? 'Part added to Parts Tray.' : '') : 'This control belongs to an earlier session or closed view.';
+      return accepted ? (name === 'acquire' ? 'Added to the real Parts Tray. Select the loose part on the workbench to install it.' : '') : 'This control belongs to an earlier session or closed view.';
     }
   };
   if (!noBridge) w.tsjProduct = api;
@@ -85,6 +85,34 @@ function focusin(f, target, focusVisible) {
   target.matches = selector => selector === ':focus-visible' ? focusVisible : matches(selector);
   target.dispatchEvent(new f.w.FocusEvent('focusin', { bubbles: true }));
 }
+
+function beforeUnload(f) {
+  const event = new f.w.Event('beforeunload', { cancelable: true });
+  f.w.dispatchEvent(event);
+  return event;
+}
+const lifecycle = await fixture();
+check(!beforeUnload(lifecycle).defaultPrevented, 'a menu with no active board job does not prompt before leaving');
+await lifecycle.update({ screen: 'PREPARING', token: 2 });
+check(beforeUnload(lifecycle).defaultPrevented, 'active board preparation prompts before leaving');
+await lifecycle.update({ screen: 'RETEST', token: 3 });
+check(beforeUnload(lifecycle).defaultPrevented, 'active customer retest prompts before leaving');
+await lifecycle.update({ screen: 'TICKET', token: 4, hasBoard: true, completed: false });
+check(beforeUnload(lifecycle).defaultPrevented, 'an accepted unfinished ticket prompts before leaving');
+await lifecycle.update({ screen: 'WORKBENCH', token: 5, hasBoard: true, completed: false });
+check(beforeUnload(lifecycle).defaultPrevented, 'an unfinished repair retained on the workbench prompts before leaving');
+await lifecycle.update({ screen: 'MENU', token: 6, hasBoard: true, completed: false });
+check(beforeUnload(lifecycle).defaultPrevented, 'an unfinished board retained behind the menu prompts before leaving');
+await lifecycle.update({ screen: 'ERROR', token: 7, hasBoard: true, completed: false });
+check(beforeUnload(lifecycle).defaultPrevented, 'an unfinished retained board remains protected on the recoverable error screen');
+await lifecycle.update({ screen: 'RESULTS', token: 8, hasBoard: true, completed: true });
+check(!beforeUnload(lifecycle).defaultPrevented, 'successful RESULTS does not prompt as unfinished work');
+await lifecycle.update({ screen: 'MENU', token: 9, hasBoard: false });
+check(!beforeUnload(lifecycle).defaultPrevented, 'an empty menu does not prompt after a completed board is released');
+await lifecycle.update({ screen: 'PREPARING', token: 10 });
+check(lifecycle.w.tsjProductTeardown(lifecycle.api) === true && !beforeUnload(lifecycle).defaultPrevented,
+  'teardown removes the prompt listener and resets its lifecycle');
+lifecycle.close();
 
 const f = await fixture();
 check(f.w.tsjWorkbenchOverlayOpen, 'initial menu blocks board');
@@ -158,7 +186,8 @@ click(f, 'Accept ticket and start'); check(f.calls.at(-1).name === 'resume', 'ti
 const resistorCategory = 'RESISTOR';
 // Exercise the largest current resistor catalog: 73 recipes in each of two fits.
 const resistorEntries = ['Medium', 'Wide'].flatMap((fit, fitIndex) => Array.from({ length: 73 }, (_, index) => ({
-  id: 'spec-' + (fitIndex * 73 + index), label: (index === 0 ? '330' : String(index + 100)) + ' Ohm +/-5% · ' + fit + ' lead spacing'
+  id: 'spec-' + (fitIndex * 73 + index),
+  label: (['330 Ohm +/-5%', '1000 Ohm +/-5%', '10000 Ohm +/-5%', '1000000 Ohm +/-5%'][index] || String(index + 100) + ' Ohm +/-5%') + ' · ' + fit + ' lead spacing'
 })));
 const catalogs = [{ id: resistorCategory, title: 'Resistors', entries: resistorEntries, looseCount: 0 },
   ...[['CAPACITOR', 'Capacitors', '10 uF, 25 V'], ['DIODE', 'Diodes', '1N4148'], ['LED', 'LEDs', 'Red LED'],
@@ -183,6 +212,8 @@ const shopStatus = () => f.d.querySelector('[role=dialog] > [role=status]');
 check(shopStatus().textContent === '' && !f.d.querySelector('[role=dialog]').textContent.includes('Customer retest did not pass') && !f.d.querySelector('[role=dialog]').textContent.includes('Previous ticket notice'), 'opening Shop leaves status empty instead of presenting stale retest or ticket feedback');
 check(f.d.querySelector('.tsj-store-address').textContent === 'store.copperline.example/components' && f.d.querySelector('.tsj-store-supplier h3').textContent === 'Copperline Supply Co.', 'local website address and original supplier identity restored');
 check(f.d.querySelector('[role=dialog]').classList.contains('tsj-store-dialog'), 'storefront uses its own spacious dialog presentation');
+check(f.d.querySelector('.tsj-store-intro').textContent.includes('select the loose part there, then click a compatible Install as button') && f.d.querySelector('.tsj-store-intro').textContent.includes('drag it onto an empty compatible footprint'),
+  'on-screen Shop hint names the actual Parts Tray selection, compatible Install as button and physical drag paths');
 check(visibleCards().length === 152 && byText(f.d, 'All parts').getAttribute('aria-pressed') === 'true', 'All parts initially displays every entry, including all 146 resistor recipe/fit choices');
 check(cards().map(card => card.querySelector('h4').textContent).join('|') === catalogs.flatMap(catalog => catalog.entries.map(entry => entry.label)).join('|'), 'all card specifications retain exact public labels and canonical catalog order');
 check(cards().every(card => { const art = card.querySelector('svg'); return art && art.getAttribute('aria-hidden') === 'true' && art.getAttribute('focusable') === 'false' && !art.querySelector('text, image, use, a'); }), 'all supported types have decorative local component art without nameplates, external assets or extra focus stops');
@@ -196,6 +227,12 @@ for (const catalog of catalogs) {
 }
 click(f, 'All parts'); const search = searchFor('330'); search.focus();
 check(visibleCards().length === 2 && visibleCards().some(card => card.textContent.includes('Medium lead spacing')) && visibleCards().some(card => card.textContent.includes('Wide lead spacing')), 'search finds both physical fits without hiding an available recipe');
+for (const [query, label] of [['1k', '1000 Ohm'], ['10k', '10000 Ohm'], ['1M', '1000000 Ohm']]) {
+  searchFor(query);
+  check(visibleCards().length === 2 && visibleCards().every(card => card.querySelector('h4').textContent.includes(label)),
+    'SI shorthand ' + query + ' resolves against both live catalog fits from their public ' + label + ' labels');
+}
+searchFor('330');
 const mediumAcquire = visibleCards()[0].querySelector('button'), oldAcquire = visibleCards()[1].querySelector('button');
 const content = f.d.querySelector('.tsj-product-content'); content.scrollTop = 210;
 await f.update({ catalogs: f.state().catalogs.map((catalog, index) => ({ ...catalog, looseCount: index === 0 ? 2 : index === 1 ? 3 : 0 })) });
@@ -204,9 +241,9 @@ check(visibleCards().length === 2 && visibleCards()[1].querySelector('button') =
 check(f.d.querySelector('.tsj-store-tray').textContent === 'Parts Tray · 5 loose parts', 'tray total is derived from all actual inventory categories');
 oldAcquire.click(); check(f.calls.at(-1).name === 'acquire' && f.calls.at(-1).args.join('|') === 'RESISTOR|spec-73|' && f.calls.at(-1).accepted, 'wide fit card sends exact current type/spec and lease with no destination');
 mediumAcquire.click(); check(f.calls.at(-1).args.join('|') === 'RESISTOR|spec-0|' && f.calls.at(-1).accepted, 'same nominal value in a different physical fit sends its distinct specification');
-check(shopStatus().textContent === 'Part added to Parts Tray.' && shopStatus().getAttribute('aria-live') === 'polite', 'purchase success is announced immediately from the acquisition action response');
+check(shopStatus().textContent === 'Added to Parts Tray. Select the loose part there, then click a compatible Install as button, or drag it onto an empty compatible footprint.' && shopStatus().getAttribute('aria-live') === 'polite', 'purchase success explains the actual Parts Tray click-install and drag paths from the acquisition action response');
 await f.update({ notice: 'Earlier unrelated board notice.' });
-check(shopStatus().textContent === 'Part added to Parts Tray.' && f.d.querySelector('.tsj-store-tray').textContent === 'Parts Tray · 5 loose parts', 'snapshot refresh retains relevant action feedback and never invents inventory increments');
+check(shopStatus().textContent === 'Added to Parts Tray. Select the loose part there, then click a compatible Install as button, or drag it onto an empty compatible footprint.' && f.d.querySelector('.tsj-store-tray').textContent === 'Parts Tray · 5 loose parts', 'snapshot refresh retains relevant action feedback and never invents inventory increments');
 searchFor('WIDE 330'); check(visibleCards().length === 1 && visibleCards()[0].textContent.includes('Wide lead spacing'), 'case-insensitive search combines type/specification terms');
 searchFor('not-a-component'); check(visibleCards().length === 0 && !f.d.querySelector('.tsj-store-empty').hidden, 'empty search has a visible recovery instruction');
 click(f, 'Clear search'); check(visibleCards().length === 152 && f.d.activeElement === search, 'clear search restores all cards and returns focus to search');
@@ -267,8 +304,8 @@ f.close();
 // Public problem-report composition stays inside Share pristine challenge.
 // These fixtures cover only the DOM adapter; they do not exercise the real browser.
 const reportFixture = await fixture();
-const minReplay = 'tsj-alpha/6/EASY/NPN_LOW_SIDE_SWITCH/-9223372036854775808';
-const publicEpoch = 'tsj-alpha/6', publicBuild = 'alpha6-public-build-test';
+const minReplay = 'tsj-alpha/7/EASY/NPN_LOW_SIDE_SWITCH/-9223372036854775808';
+const publicEpoch = 'tsj-alpha/7', publicBuild = 'alpha7-public-build-test';
 await reportFixture.update({ screen: 'TICKET', token: 2, hasBoard: true, ready: true,
   replay: minReplay, epoch: publicEpoch, build: publicBuild,
   complaint: '<img src=x onerror=alert(1)> public complaint', retestInstruction: 'Check the output under load',

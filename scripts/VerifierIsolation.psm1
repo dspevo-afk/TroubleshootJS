@@ -1420,6 +1420,154 @@ function Get-VerifierFileSha256($Path) {
     }
 }
 
+function Get-VerifierOpaquePathIdentity([string]$Purpose, [string]$Path) {
+    if ([String]::IsNullOrWhiteSpace($Purpose) -or
+            $Purpose -notmatch '^[a-z][a-z0-9-]{0,31}$' -or
+            [String]::IsNullOrWhiteSpace($Path)) {
+        Throw-VerifierInfrastructure 'Opaque preview identity requires a bounded purpose and exact non-empty path.'
+    }
+    $canonical = Get-VerifierFullPath $Path
+    $normalized = $canonical.TrimEnd([char[]]@([char]92, [char]47)).ToUpperInvariant()
+    $material = 'troubleshootjs-preview-path-v2' + [char]0 + $Purpose + [char]0 + $normalized
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes($material)
+        return [BitConverter]::ToString($hasher.ComputeHash($bytes)).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $hasher.Dispose()
+    }
+}
+
+function Get-VerifierProductionBuildIdentity {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RepositoryRoot,
+        [ValidateSet('OBF', 'PRETTY', 'DETAILED')]
+        [string]$Style = 'OBF',
+        [ValidateSet('Player', 'Developer')]
+        [string]$Variant = 'Player'
+    )
+
+    if ([String]::IsNullOrWhiteSpace($RepositoryRoot)) {
+        Throw-VerifierInfrastructure 'Production build identity requires a repository root.'
+    }
+    $root = Get-VerifierFullPath $RepositoryRoot
+    $srcRoot = Get-VerifierFullPath (Join-Path $root 'src')
+    $buildScript = Get-VerifierFullPath (Join-Path $root 'scripts\build.ps1')
+    $toolRoot = Get-VerifierFullPath (Join-Path $root '.tools\gwt-2.7.0')
+    $outputRoot = Get-VerifierFullPath (Join-Path $root 'war\circuitjs1')
+    if (-not (Assert-VerifierPhysicalOwnedPath $root $srcRoot -ValidateTree) -or
+            -not (Assert-VerifierPhysicalOwnedPath $root $buildScript)) {
+        Throw-VerifierInfrastructure 'Production build inputs changed physical ownership.'
+    }
+    if (Test-Path -LiteralPath $toolRoot -PathType Container) {
+        if (-not (Assert-VerifierPhysicalOwnedPath $root $toolRoot -ValidateTree)) {
+            Throw-VerifierInfrastructure 'Production compiler tool tree changed physical ownership.'
+        }
+    }
+    if (-not (Assert-VerifierPhysicalOwnedPath $root (Join-Path $root 'war'))) {
+        Throw-VerifierInfrastructure 'Production output root changed physical ownership.'
+    }
+
+    $moduleName = if ($Variant -eq 'Player') {
+        'com.lushprojects.circuitjs1.circuitjs1'
+    } else {
+        'com.lushprojects.circuitjs1.developer'
+    }
+    $inputRecords = New-Object Collections.Generic.List[string]
+    foreach ($record in @(
+            'contract=troubleshootjs-production-build-identity-v1',
+            'gwtVersion=2.7.0',
+            'target=Compile',
+            ('style=' + $Style),
+            ('variant=' + $Variant),
+            ('module=' + $moduleName))) {
+        [void]$inputRecords.Add($record)
+    }
+
+    $inputDefinitions = @(
+        [pscustomobject]@{ Name = 'src'; Root = $srcRoot }
+        [pscustomobject]@{ Name = 'build'; Root = (Split-Path -Parent $buildScript); File = $buildScript }
+        [pscustomobject]@{ Name = 'classpath'; Root = $toolRoot; Filter = '*.jar' }
+    )
+    foreach ($definition in $inputDefinitions) {
+        $files = if ($definition.PSObject.Properties['File']) {
+            @([IO.FileInfo]$definition.File)
+        } elseif (Test-Path -LiteralPath ([string]$definition.Root) -PathType Container) {
+            $query = @{ LiteralPath = [string]$definition.Root; File = $true; ErrorAction = 'Stop' }
+            if ($definition.PSObject.Properties['Filter']) {
+                $query['Filter'] = [string]$definition.Filter
+            } else {
+                $query['Recurse'] = $true
+            }
+            @(Get-ChildItem @query | Where-Object {
+                $_.Extension -ine '.pyc' -and $_.FullName -notmatch '(\\|/)__pycache__(\\|/)'
+            })
+        } else {
+            @()
+        }
+        $filePaths = New-Object Collections.Generic.List[string]
+        foreach ($file in $files) { [void]$filePaths.Add([string]$file.FullName) }
+        $filePaths.Sort([StringComparer]::OrdinalIgnoreCase)
+        $previousPath = $null
+        foreach ($filePath in $filePaths) {
+            if ($null -ne $previousPath -and
+                    [StringComparer]::OrdinalIgnoreCase.Equals($previousPath, $filePath)) {
+                Throw-VerifierInfrastructure "Production build inputs contained a case-colliding path '$filePath'."
+            }
+            $previousPath = $filePath
+            $relativePath = $filePath.Substring(([string]$definition.Root).Length).TrimStart([char[]]@([char]92, [char]47))
+            [void]$inputRecords.Add($definition.Name + '/' + $relativePath.Replace([char]92, [char]47) + '=' +
+                (Get-VerifierFileSha256 $filePath))
+        }
+    }
+    if ($inputRecords.Count -le 8) {
+        Throw-VerifierInfrastructure 'Production build identity did not find source, build-script, and compiler-jar inputs.'
+    }
+
+    $outputRecords = New-Object Collections.Generic.List[string]
+    if (Test-Path -LiteralPath $outputRoot -PathType Container) {
+        if (-not (Assert-VerifierPhysicalOwnedPath $root $outputRoot -ValidateTree)) {
+            Throw-VerifierInfrastructure 'Production compiler output changed physical ownership.'
+        }
+        $outputPaths = New-Object Collections.Generic.List[string]
+        foreach ($file in @(Get-ChildItem -LiteralPath $outputRoot -Recurse -File -ErrorAction Stop)) {
+            [void]$outputPaths.Add([string]$file.FullName)
+        }
+        $outputPaths.Sort([StringComparer]::OrdinalIgnoreCase)
+        $previousOutput = $null
+        foreach ($filePath in $outputPaths) {
+            if ($null -ne $previousOutput -and
+                    [StringComparer]::OrdinalIgnoreCase.Equals($previousOutput, $filePath)) {
+                Throw-VerifierInfrastructure "Production compiler output contained a case-colliding path '$filePath'."
+            }
+            $previousOutput = $filePath
+            $relativePath = $filePath.Substring($outputRoot.Length).TrimStart([char[]]@([char]92, [char]47))
+            [void]$outputRecords.Add($relativePath.Replace([char]92, [char]47) + '=' +
+                (Get-VerifierFileSha256 $filePath))
+        }
+    }
+    $inputHasher = [Security.Cryptography.SHA256]::Create()
+    $outputHasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $inputBytes = [Text.UTF8Encoding]::new($false).GetBytes(($inputRecords -join "`n"))
+        $outputBytes = [Text.UTF8Encoding]::new($false).GetBytes(($outputRecords -join "`n"))
+        return [pscustomobject]@{
+            Protocol = 'troubleshootjs-production-build-identity-v1'
+            Variant = $Variant
+            Style = $Style
+            InputDigest = [BitConverter]::ToString($inputHasher.ComputeHash($inputBytes)).Replace('-', '').ToLowerInvariant()
+            InputFileCount = [long]($inputRecords.Count - 6)
+            OutputDigest = [BitConverter]::ToString($outputHasher.ComputeHash($outputBytes)).Replace('-', '').ToLowerInvariant()
+            OutputFileCount = [long]$outputRecords.Count
+        }
+    } finally {
+        $inputHasher.Dispose()
+        $outputHasher.Dispose()
+    }
+}
+
 function Get-VerifierExecutionTreeProvenance($RepositoryRoot) {
     # This digest is deliberately computed by the verifier-side module rather
     # than accepted from the preview.  It binds the source, verifier scripts,
@@ -2871,7 +3019,7 @@ function Assert-VerifierSerializedServerRecord($Server,
         Throw-VerifierInfrastructure "$Label ownerless server carried an identity protocol."
     }
     if ($Server.owner -cin @('caller', 'run') -and
-            $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v1') {
+            $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v2') {
         Throw-VerifierInfrastructure "$Label owned server carried a noncanonical identity protocol."
     }
     if ($Server.owner -eq 'run') {
@@ -3567,7 +3715,7 @@ function Test-VerifierSerializedLeaseTerminal($Lease, $ClaimPath,
                     $Server.leaseListenerOwnerKind -cne $Lease.listenerOwnerKind -or
                     $Server.leaseListenerOwnerProof -cne $Lease.listenerOwnerProof -or
                     $Server.leaseListenerOwnerEvidence -cne $Lease.listenerOwnerEvidence -or
-                    $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+                    $Server.identityProtocol -cne 'troubleshootjs-preview-identity-v2' -or
                     $Server.runId -cne $expectedRun -or
                     $Server.repositoryIdentity -cne $expectedRepository -or
                     -not (Test-VerifierCanonicalWindowsPathValue $Server.worktreeRoot $expectedWorktree) -or
@@ -3711,7 +3859,7 @@ function Assert-VerifierDurableServerLease($Context,
         $expectedCallerWebRoot = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'war')
         if (-not $callerOwned -or ($hasLeaseProperty -and $null -ne $lease) -or
                 $server.Port -lt 1 -or $server.BaseUrl -cne $expectedCallerBaseUrl -or
-                $server.IdentityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+                $server.IdentityProtocol -cne 'troubleshootjs-preview-identity-v2' -or
                 -not $server.IdentityVerified -or
                 -not (Test-VerifierCanonicalWindowsPathValue $server.Script $expectedCallerScript) -or
                 -not (Test-VerifierCanonicalWindowsPathValue $server.WebRoot $expectedCallerWebRoot) -or
@@ -4270,7 +4418,7 @@ function Test-VerifierRunOwnedPreviewHttpSysAuthorization($Context, $OwnerRecord
     }
     if ($OwnerRecord.Owner -cne 'run' -or
             $OwnerRecord.State -cne 'run-owned-verified' -or
-            $OwnerRecord.IdentityProtocol -cne 'troubleshootjs-preview-identity-v1' -or
+            $OwnerRecord.IdentityProtocol -cne 'troubleshootjs-preview-identity-v2' -or
             -not $OwnerRecord.IdentityVerified -or $OwnerRecord.CallerOwned -or
             -not $OwnerRecord.ProcessIdentityKnown -or $OwnerRecord.OwnershipUncertain -or
             [long]$OwnerRecord.Port -ne $Port -or [long]$OwnerRecord.ProcessId -le 0 -or
@@ -14658,8 +14806,8 @@ function Assert-VerifierPreviewIdentitySchema($Identity) {
             $Identity -isnot [pscustomobject]) {
         Throw-VerifierInfrastructure 'Preview identity response was not an exact JSON object.'
     }
-    $allowedProperties = @('protocol', 'repositoryRoot', 'previewScript',
-        'webRoot', 'verifierRunId', 'verifierNonce', 'sourceRoot', 'scriptRoot',
+    $allowedProperties = @('protocol', 'repositoryIdentity', 'previewScriptIdentity',
+        'webRootIdentity', 'verifierRunId', 'verifierNonce', 'sourceRootIdentity', 'scriptRootIdentity',
         'sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest',
         'executionFileCount', 'previewPort', 'processId', 'processStartTicks')
     foreach ($property in @($Identity.PSObject.Properties)) {
@@ -14667,8 +14815,8 @@ function Assert-VerifierPreviewIdentitySchema($Identity) {
             Throw-VerifierInfrastructure "Preview identity contained an unknown field '$($property.Name)'."
         }
     }
-    foreach ($propertyName in @('protocol', 'repositoryRoot', 'previewScript',
-            'webRoot', 'verifierRunId', 'verifierNonce', 'sourceRoot', 'scriptRoot',
+    foreach ($propertyName in @('protocol', 'repositoryIdentity', 'previewScriptIdentity',
+            'webRootIdentity', 'verifierRunId', 'verifierNonce', 'sourceRootIdentity', 'scriptRootIdentity',
             'sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
         if ($null -eq $Identity.PSObject.Properties[$propertyName] -or
                 -not (Test-VerifierStrictStringValue $Identity.PSObject.Properties[$propertyName].Value)) {
@@ -14687,8 +14835,9 @@ function Assert-VerifierPreviewIdentitySchema($Identity) {
     if (-not (Test-VerifierStrictIntegralValue $previewPort 1 65535)) {
         Throw-VerifierInfrastructure 'Preview identity carried an invalid exact preview port.'
     }
-    foreach ($digestProperty in @('sourceDigest', 'scriptDigest', 'webDigest',
-            'executionDigest')) {
+    foreach ($digestProperty in @('repositoryIdentity', 'previewScriptIdentity',
+            'webRootIdentity', 'sourceRootIdentity', 'scriptRootIdentity',
+            'sourceDigest', 'scriptDigest', 'webDigest', 'executionDigest')) {
         if ([string]$Identity.PSObject.Properties[$digestProperty].Value -notmatch '^[0-9a-f]{64}$') {
             Throw-VerifierInfrastructure "Preview identity carried a malformed '$digestProperty'."
         }
@@ -14728,10 +14877,10 @@ function Set-VerifierCallerOwnedPreview($Context, [string]$BaseUrl) {
          $expectedWebRoot = Get-VerifierFullPath (Join-Path $Context.WorktreeRoot 'war')
         [void](Assert-VerifierPhysicalOwnedPath $Context.WorktreeRoot $expectedScript)
         [void](Assert-VerifierPhysicalOwnedPath $Context.WorktreeRoot $expectedWebRoot -ValidateTree)
-        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v1' -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.repositoryRoot $Context.WorktreeRoot) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.previewScript $expectedScript) -or
-                -not (Test-VerifierCanonicalWindowsPathValue $identity.webRoot $expectedWebRoot) -or
+        if ($identity.protocol -cne 'troubleshootjs-preview-identity-v2' -or
+                $identity.repositoryIdentity -cne (Get-VerifierOpaquePathIdentity 'repository' $Context.WorktreeRoot) -or
+                $identity.previewScriptIdentity -cne (Get-VerifierOpaquePathIdentity 'preview-script' $expectedScript) -or
+                $identity.webRootIdentity -cne (Get-VerifierOpaquePathIdentity 'web-root' $expectedWebRoot) -or
                 $identity.previewPort -ne $uri.Port) {
             Throw-VerifierInfrastructure "Caller-owned preview identity does not match this worktree."
         }
@@ -15447,7 +15596,8 @@ Export-ModuleMember -Function @(
     'Get-VerifierPortMutexName',
     'Test-VerifierStrictStringValue', 'Test-VerifierStrictBooleanValue',
     'Test-VerifierStrictIntegralValue',
-    'Get-VerifierFileSha256', 'Get-VerifierExecutionTreeProvenance',
+    'Get-VerifierFileSha256', 'Get-VerifierOpaquePathIdentity',
+    'Get-VerifierProductionBuildIdentity', 'Get-VerifierExecutionTreeProvenance',
     'ConvertTo-VerifierStrictTimestampText', 'ConvertFrom-VerifierDurableJson',
     'Assert-VerifierTimeoutSeconds',
     'Test-VerifierSupportedPortLeaseKind',

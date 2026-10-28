@@ -48,6 +48,7 @@ public final class PcbNormalPackingCensusContractTest {
         int cases = 0;
         int accepted = 0;
         int rejected = 0;
+        int[] acceptedByFamily = new int[familyCount];
         try {
             verifyCatalog();
             for (int familyIndex = firstFamily;
@@ -64,7 +65,10 @@ public final class PcbNormalPackingCensusContractTest {
                     long root = rootSelector(rootIndex);
                     cases++;
                     CaseResult result = runCase(family, profile, root);
-                    if (result.accepted) accepted++; else rejected++;
+                    if (result.accepted) {
+                        accepted++;
+                        acceptedByFamily[familyIndex - firstFamily]++;
+                    } else rejected++;
                 }
             }
         } finally {
@@ -72,6 +76,10 @@ public final class PcbNormalPackingCensusContractTest {
         }
         int expectedCases = familyCount * rootCount;
         require(cases == expectedCases, "normal census emitted the exact requested case count");
+        for (int familyIndex = 0; familyIndex < familyCount; familyIndex++)
+            require(acceptedByFamily[familyIndex] > 0,
+                "each normal family has at least one accepted census case: " +
+                    FAMILIES[firstFamily + familyIndex]);
         System.out.println("PASS: PCB normal packing census " + suite + " cases=" + cases +
             " accepted=" + accepted + " rejected=" + rejected +
             " assertions=" + assertions + " suite=" + jsonQuote(suite));

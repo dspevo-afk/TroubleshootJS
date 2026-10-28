@@ -67,12 +67,12 @@ function Get-PreviewResponse([string]$AbsolutePath) {
     }
     if ($AbsolutePath -eq $identityPath) {
         $identity = [ordered]@{
-            protocol = 'troubleshootjs-preview-identity-v1'
-            repositoryRoot = $repositoryRoot
-            previewScript = $previewScript
-            webRoot = $webRoot
-            sourceRoot = $executionProvenance.SourceRoot
-            scriptRoot = $executionProvenance.ScriptRoot
+            protocol = 'troubleshootjs-preview-identity-v2'
+            repositoryIdentity = Get-VerifierOpaquePathIdentity 'repository' $repositoryRoot
+            previewScriptIdentity = Get-VerifierOpaquePathIdentity 'preview-script' $previewScript
+            webRootIdentity = Get-VerifierOpaquePathIdentity 'web-root' $webRoot
+            sourceRootIdentity = Get-VerifierOpaquePathIdentity 'source-root' $executionProvenance.SourceRoot
+            scriptRootIdentity = Get-VerifierOpaquePathIdentity 'script-root' $executionProvenance.ScriptRoot
             sourceDigest = $executionProvenance.SourceDigest
             scriptDigest = $executionProvenance.ScriptDigest
             webDigest = $executionProvenance.WebDigest
@@ -158,10 +158,49 @@ function Read-PreviewTcpRequestPath($Client) {
     }
     if ($headerEnd -lt 0) { throw 'Preview TCP request headers exceeded the bounded request limit.' }
     $headerText = [Text.Encoding]::ASCII.GetString($buffer, 0, $headerEnd)
-    $requestLine = @($headerText -split "`r`n")[0]
+    $headerLines = @($headerText -split "`r`n")
+    $requestLine = $headerLines[0]
     $match = [regex]::Match($requestLine, '^(?<method>[A-Z]+) (?<target>\S+) HTTP/(?<version>1\.[01])$')
     if (-not $match.Success -or $match.Groups['method'].Value -cne 'GET') {
         throw 'Preview TCP request was not a bounded GET request.'
+    }
+    $hostHeader = $null
+    for ($index = 1; $index -lt $headerLines.Count; $index++) {
+        $headerMatch = [regex]::Match($headerLines[$index],
+            '^(?<name>[!#$%&''*+.^_`|~0-9A-Za-z-]+):[ \t]*(?<value>[^\x00-\x1f\x7f]*)[ \t]*$')
+        if (-not $headerMatch.Success) {
+            throw 'Preview TCP request contained a malformed header.'
+        }
+        if ($headerMatch.Groups['name'].Value -ieq 'Host') {
+            if ($null -ne $hostHeader) {
+                throw 'Preview TCP request contained more than one Host header.'
+            }
+            $hostHeader = $headerMatch.Groups['value'].Value.Trim(' ', "`t")
+        }
+    }
+    if ([String]::IsNullOrWhiteSpace($hostHeader)) {
+        throw 'Preview TCP request omitted its Host header.'
+    }
+    if ($hostHeader -match '[/\\?#@]' -or $hostHeader -match '\s') {
+        throw 'Preview TCP request Host header contained non-authority characters.'
+    }
+    $hostUri = $null
+    try {
+        $hostUri = [Uri]::new(('http://' + $hostHeader + '/'), [UriKind]::Absolute)
+    } catch {
+        throw 'Preview TCP request Host header was not a valid authority.'
+    }
+    if ($hostUri.Scheme -cne 'http' -or $hostUri.UserInfo -or
+            $hostUri.AbsolutePath -cne '/' -or $hostUri.Query -or $hostUri.Fragment -or
+            [int]$hostUri.Port -ne $Port) {
+        throw 'Preview TCP request Host header was not scoped to this loopback port.'
+    }
+    $hostName = $hostUri.Host.Trim('[', ']')
+    $hostAddress = $null
+    if (-not [String]::Equals($hostName, 'localhost', [StringComparison]::OrdinalIgnoreCase) -and
+            (-not [Net.IPAddress]::TryParse($hostName, [ref]$hostAddress) -or
+                -not [Net.IPAddress]::IsLoopback($hostAddress))) {
+        throw 'Preview TCP request Host header was not a loopback host.'
     }
     $rawTarget = $match.Groups['target'].Value
     if (-not $rawTarget.StartsWith('/', [StringComparison]::Ordinal) -or

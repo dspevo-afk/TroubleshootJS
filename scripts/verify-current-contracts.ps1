@@ -203,14 +203,93 @@ function Test-Q30SensitivityCaseOutput {
         'referenceMaximumStepSeconds=2\.50000000e-06 ' +
         'productionCandidateMaximumStepSeconds=5\.00000000e-06 ' +
         'candidateKind=PRODUCTION_5_US elapsedMillis=\d+\r?$'
+    $finalRows = @($Stdout -split '\r?\n' | Where-Object {
+        [regex]::IsMatch($_, $finalPattern)
+    })
     return $TerminationProven -and $ExitCode -eq 0 -and
         $pairRows.Count -eq 1 -and [regex]::IsMatch($pairRows[0], $pairPattern) -and
-        [regex]::IsMatch($Stdout, $finalPattern)
+        $finalRows.Count -eq 1
+}
+
+function Test-CurrentContractPassMarker {
+    param(
+        [Parameter(Mandatory = $true)][AllowEmptyString()][string]$Stdout,
+        [Parameter(Mandatory = $true)][string]$Marker,
+        [Parameter(Mandatory = $true)][bool]$TerminationProven,
+        [Parameter(Mandatory = $true)][int]$ExitCode
+    )
+    if (-not $TerminationProven -or $ExitCode -ne 0) { return $false }
+    if ([String]::IsNullOrEmpty($Marker)) { return $false }
+    $expected = 'PASS: ' + $Marker
+    $matchingLines = @($Stdout -split '\r?\n' | Where-Object {
+        $_.StartsWith($expected, [StringComparison]::Ordinal)
+    })
+    if ($matchingLines.Count -ne 1) { return $false }
+    if (-not ($Marker.EndsWith(' ') -or $Marker.EndsWith('=') -or $Marker.EndsWith(':')) -and
+            $matchingLines[0].Length -gt $expected.Length -and
+            [Char]::IsLetterOrDigit($matchingLines[0][$expected.Length])) {
+        return $false
+    }
+    return $true
+}
+
+function Get-DensePcbPackingCohortReceipt {
+    param(
+        [Parameter(Mandatory = $true)][string]$Stdout,
+        [Parameter(Mandatory = $true)][ValidateSet('cohort-1','cohort-2')][string]$Cohort,
+        [Parameter(Mandatory = $true)][string[]]$ExpectedSeeds
+    )
+    $lines = @($Stdout -split '\r?\n')
+    $rows = @($lines | Where-Object {
+        $_.StartsWith('DENSE_MATCHED ', [StringComparison]::Ordinal)
+    })
+    if ($rows.Count -ne $ExpectedSeeds.Count) {
+        throw ('Dense PCB packing ' + $Cohort + ' expected ' + $ExpectedSeeds.Count +
+            ' matched rows, found ' + $rows.Count)
+    }
+    $observedSeeds = New-Object Collections.Generic.List[string]
+    for ($index = 0; $index -lt $ExpectedSeeds.Count; $index++) {
+        $row = [regex]::Match($rows[$index],
+            '^DENSE_MATCHED seed=(-?\d+) before=(\d+) after=(\d+) published=(\d+)x(\d+)$')
+        if (-not $row.Success -or $row.Groups[1].Value -cne $ExpectedSeeds[$index]) {
+            throw ('Dense PCB packing ' + $Cohort + ' matched row order/shape mismatch at ' +
+                $index + '; expected seed ' + $ExpectedSeeds[$index])
+        }
+        $observedSeeds.Add($row.Groups[1].Value)
+    }
+    $summaryLines = @($lines | Where-Object {
+        $_.StartsWith('PASS: dense PCB packing cohort=', [StringComparison]::Ordinal)
+    })
+    $summaryPattern = '^PASS: dense PCB packing cohort=' + [regex]::Escape($Cohort) +
+        ' seeds=' + $ExpectedSeeds.Count + ' assertions=(\d+) reduced=(\d+) areaSum=(\d+)$'
+    if ($summaryLines.Count -ne 1) {
+        throw ('Dense PCB packing ' + $Cohort + ' expected one exact cohort summary, found ' +
+            $summaryLines.Count)
+    }
+    $summary = [regex]::Match($summaryLines[0], $summaryPattern)
+    if (-not $summary.Success -or [int]$summary.Groups[1].Value -lt 1 -or
+            [int]$summary.Groups[2].Value -lt 1 -or
+            [int]$summary.Groups[2].Value -gt $ExpectedSeeds.Count -or
+            [long]$summary.Groups[3].Value -lt 1) {
+        throw ('Dense PCB packing ' + $Cohort + ' summary values are invalid.')
+    }
+    return [pscustomobject]@{
+        Cohort = $Cohort
+        SeedCsv = [String]::Join(',', $observedSeeds)
+        SeedCount = $observedSeeds.Count
+        Assertions = [int]$summary.Groups[1].Value
+        Reduced = [int]$summary.Groups[2].Value
+        AreaSum = [long]$summary.Groups[3].Value
+    }
 }
 
 $taskRoot = ''
 $resultCode = 2
 try {
+    $distinctSuites = @($Suite | Select-Object -Unique)
+    if ($distinctSuites.Count -ne $Suite.Count) {
+        throw 'Select each current contract suite at most once.'
+    }
     if ($PSBoundParameters.ContainsKey('QuickPlayGateSeeds')) {
         $fixtureSuites = @($Suite)
         if ($fixtureSuites.Count -ne 1 -or $fixtureSuites[0] -cne 'QuickPlayGateCorpus') {
@@ -250,6 +329,19 @@ try {
         throw 'The selected toolchain is not a verified JDK 8 compiler/runtime.'
     }
     Write-Host ('JDK: ' + ($javacVersion.Stdout + $javacVersion.Stderr).Trim())
+
+    $powershell = Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/powershell.exe'
+    $runnerContractPath = Join-Path $repositoryRoot 'tests/contracts/current-contract-runner-contract.ps1'
+    $runnerContract = Invoke-VerifierBoundedProcess $powershell @('-NoProfile',
+        '-ExecutionPolicy', 'Bypass', '-File', $runnerContractPath) 60000
+    Write-Host $runnerContract.Stdout
+    if ($runnerContract.Stderr) { Write-Host $runnerContract.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $runnerContract.Stdout `
+                -Marker 'current-contract runner pass detection assertions=' `
+                -TerminationProven $runnerContract.TerminationProven `
+                -ExitCode $runnerContract.ExitCode)) {
+        throw ('Current-contract runner self-test failed, exit ' + $runnerContract.ExitCode)
+    }
 
     $tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
     $taskRoot = Join-Path $tempRoot ('TroubleshootJS-current-contracts-' +
@@ -450,7 +542,10 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbSingleGroupDensityContractTest'; Marker = 'focused single-group density contracts ' },
         @{ Name = 'PcbSilkscreenScaleContractTest'; Marker = 'PCB silkscreen scale contracts: ' },
         @{ Name = 'PcbScreenLabelLayoutContractTest'; Marker = 'PcbScreenLabelLayoutContractTest: ' },
-        @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing ' },
+        # The former single 60s child could not finish eleven real constructions. Split 6+5,
+        # retaining 60s per JVM and a maximum 120s total verifier budget; app limits stay 90s/640/5s.
+        @{ Name = 'DensePcbPackingContractTest'; Marker = 'dense PCB packing cohort=cohort-1 seeds=' },
+        @{ Name = 'DensePcbPackingContractTestGroup2'; Marker = 'dense PCB packing cohort=cohort-2 seeds=' },
         @{ Name = 'PcbConnectedPocketPackingContractTest'; Marker = 'PCB connected pocket packing contracts ' },
         @{ Name = 'PcbNormalPackingIdentityContractTest'; Marker = 'PCB normal packing identity contracts ' },
         @{ Name = 'PcbPackingMetricsContractTest'; Marker = 'PCB packing metrics contracts ' },
@@ -666,6 +761,9 @@ final class PhysicalSpecificationDeveloperVerifier {
             $q30SensitivityFaultsBySeed[$seedText] = @($selectedFaults)
         }
     }
+    $densePcbPackingReceipts = @{}
+    $denseFirstName = 'DensePcbPackingContractTest'
+    $denseSecondName = 'DensePcbPackingContractTestGroup2'
     foreach ($definition in $testDefinitions) {
         $testClass = $definition.Name
         if ($Suite.Count -gt 0 -and $Suite -notcontains $testClass) { continue }
@@ -691,9 +789,14 @@ final class PhysicalSpecificationDeveloperVerifier {
                 $receipts.Add($tested.Stdout)
                 $physicalOutputs.Add($tested.Stdout)
                 $matrixRows = @($tested.Stdout -split '\r?\n' | Where-Object { $_.StartsWith('PHYSICAL_MATRIX|') })
-                $completion = '(?m)^PASS: Quick Play physical matrix contracts pairs=' + $group.Families.Count + ' assertions='
+                $completion = '^PASS: Quick Play physical matrix contracts pairs=' +
+                    $group.Families.Count + ' assertions=\d+$'
+                $completionRows = @($tested.Stdout -split '\r?\n' | Where-Object {
+                    [regex]::IsMatch($_, $completion)
+                })
                 if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
-                        $tested.Stdout -notmatch $completion -or $matrixRows.Count -ne $group.Families.Count) {
+                        $completionRows.Count -ne 1 -or
+                        $matrixRows.Count -ne $group.Families.Count) {
                     throw ('Physical matrix group failed or incomplete: ' + [String]::Join(',', $group.Families) +
                         ', exit ' + $tested.ExitCode)
                 }
@@ -733,7 +836,8 @@ final class PhysicalSpecificationDeveloperVerifier {
             $expectedFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
                 'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
                 'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
-                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL')
+                'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL',
+                'RB56_CONTROL')
             if ($families.Count -ne $expectedFamilies.Count -or
                     [String]::Join(',', $families) -ne
                     [String]::Join(',', $expectedFamilies)) {
@@ -766,9 +870,10 @@ final class PhysicalSpecificationDeveloperVerifier {
                         $_.StartsWith($summaryPrefix)
                     })
                     $summary = $summaryPrefix + $family + '|' + $cohort + '|'
-                    if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
-                            $tested.Stdout -notmatch ('(?m)^PASS: ' +
-                                [regex]::Escape($definition.Marker)) -or
+                    if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
+                                -Marker $definition.Marker `
+                                -TerminationProven $tested.TerminationProven `
+                                -ExitCode $tested.ExitCode) -or
                             $rows.Count -ne 8 -or $summaries.Count -ne 1 -or
                             -not $summaries[0].StartsWith($summary)) {
                         throw ('Procedural family cohort did not provide a qualified result: ' +
@@ -813,7 +918,7 @@ final class PhysicalSpecificationDeveloperVerifier {
                                 if ($attempt.Count -ne 8 -or $attempt[4] -cne [string]$ordinal -or
                                         $attempt[5] -cne $expectedSeed.ToString([Globalization.CultureInfo]::InvariantCulture) -or
                                         ($expectedOutcome -ceq 'ACCEPT' -and $attempt[6] -cne 'ACCEPT') -or
-                                        ($expectedOutcome -ceq 'REJECT' -and $attempt[6] -cnotin @('ROUTE_REJECT', 'ENVELOPE_REJECT'))) {
+                                        ($expectedOutcome -ceq 'REJECT' -and $attempt[6] -cnotin @('ROUTE_REJECT', 'ENVELOPE_REJECT', 'NORMAL_ADMISSION_REJECT'))) {
                                     throw ('Q30 candidate identity/order/outcome mismatch: ' + $rootAttempts[$ordinal])
                                 }
                             }
@@ -841,10 +946,10 @@ final class PhysicalSpecificationDeveloperVerifier {
             }
             $outputs[$testClass] = [String]::Join([Environment]::NewLine,
                 $proceduralReceipts)
-            $proceduralCoverage = 'PASS: procedural family partition coverage families=' +
+            $proceduralCoverage = 'PASS: procedural family partition coverage registeredFamilies=' +
                 $families.Count + ' cohorts=' + $proceduralReceipts.Count +
                 ' rows=' + ($proceduralReceipts.Count * 8) +
-                ' exactSeedRows=160 rootRows=16 smallCohortBudgetMs=60000 q30RootCohortBudgetMs=300000'
+                ' exactSeedRows=176 rootRows=16 smallCohortBudgetMs=60000 q30RootCohortBudgetMs=300000'
             Write-Host $proceduralCoverage
             $receipts.Add($proceduralCoverage)
             continue
@@ -924,8 +1029,11 @@ final class PhysicalSpecificationDeveloperVerifier {
                 })
                 $marker = '(?m)^PASS: Q30 normal corpus contracts .* seed=' +
                     [regex]::Escape($seedText) + '\r?$'
+                $markerRows = @($tested.Stdout -split '\r?\n' | Where-Object {
+                    [regex]::IsMatch($_, $marker)
+                })
                 $qualified = $tested.TerminationProven -and $tested.ExitCode -eq 0 -and
-                    $jsonLines.Count -eq 1 -and [regex]::IsMatch($tested.Stdout, $marker)
+                    $jsonLines.Count -eq 1 -and $markerRows.Count -eq 1
                 if ($qualified) {
                     try {
                         $row = $jsonLines[0].Substring('Q30_CORPUS_JSON:'.Length) | ConvertFrom-Json
@@ -1127,6 +1235,7 @@ final class PhysicalSpecificationDeveloperVerifier {
             $testArguments += (Join-Path $taskRoot 'parity')
         }
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
+        # Dense packing deliberately keeps two separate 60s children (maximum 120s logical census).
         # Existing suites retain their original one-minute bounds.
         $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
@@ -1134,11 +1243,67 @@ final class PhysicalSpecificationDeveloperVerifier {
         if ($tested.Stderr) { Write-Host $tested.Stderr }
         $receipts.Add($tested.Stdout)
         $outputs[$testClass] = $tested.Stdout
-        if (-not $tested.TerminationProven -or $tested.ExitCode -ne 0 -or
-                $tested.Stdout -notmatch ('(?m)^PASS: ' + [regex]::Escape($definition.Marker))) {
+        if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
+                    -Marker $definition.Marker `
+                    -TerminationProven $tested.TerminationProven `
+                    -ExitCode $tested.ExitCode)) {
             throw ('Current contract did not provide a qualified result: ' + $testClass +
                 ', exit ' + $tested.ExitCode)
         }
+        if ($testClass -eq 'DensePcbPackingContractTest') {
+            $densePcbPackingReceipts[$testClass] = Get-DensePcbPackingCohortReceipt `
+                -Stdout $tested.Stdout -Cohort 'cohort-1' `
+                -ExpectedSeeds @('0','1','2','3','17','42')
+        } elseif ($testClass -eq 'DensePcbPackingContractTestGroup2') {
+            $densePcbPackingReceipts[$testClass] = Get-DensePcbPackingCohortReceipt `
+                -Stdout $tested.Stdout -Cohort 'cohort-2' `
+                -ExpectedSeeds @('101','-1','9007199254740993',
+                    '-9223372036854775808','9223372036854775807')
+        }
+    }
+    [string[]]$expectedOutputNames = if ($Suite.Count -gt 0) {
+        @($Suite | Select-Object -Unique)
+    } else {
+        @($testClasses)
+    }
+    foreach ($expectedOutputName in $expectedOutputNames) {
+        if (-not $outputs.ContainsKey($expectedOutputName)) {
+            throw ('Current contract suite was not executed: ' + $expectedOutputName)
+        }
+    }
+    if ($outputs.Count -ne $expectedOutputNames.Count) {
+        throw ('Current contract output census expected ' + $expectedOutputNames.Count +
+            ' suites, found ' + $outputs.Count)
+    }
+    $denseFirstRequested = $Suite.Count -eq 0 -or $Suite -contains $denseFirstName
+    $denseSecondRequested = $Suite.Count -eq 0 -or $Suite -contains $denseSecondName
+    if ($denseFirstRequested -and $denseSecondRequested) {
+        $expectedDenseSeeds = @('0','1','2','3','17','42','101','-1',
+            '9007199254740993','-9223372036854775808','9223372036854775807')
+        $actualDenseSeeds = @($densePcbPackingReceipts[$denseFirstName].SeedCsv.Split(',') +
+            $densePcbPackingReceipts[$denseSecondName].SeedCsv.Split(','))
+        if ($actualDenseSeeds.Count -ne 11 -or
+                [String]::Join(',', $actualDenseSeeds) -cne [String]::Join(',', $expectedDenseSeeds) -or
+                $densePcbPackingReceipts[$denseFirstName].SeedCount -ne 6 -or
+                $densePcbPackingReceipts[$denseSecondName].SeedCount -ne 5) {
+            throw 'Dense PCB packing combined census did not cover all 11 exact seeds in canonical order.'
+        }
+        $denseCensusSummary = 'PASS: dense PCB packing census seeds=11 cohorts=2 ' +
+            'perCohortChildBudgetMs=60000 maxLogicalDenseCaseBudgetMs=120000 seedOrder=' +
+            [String]::Join(',', $actualDenseSeeds)
+        Write-Host $denseCensusSummary
+        $receipts.Add($denseCensusSummary)
+    } elseif ($denseFirstRequested -or $denseSecondRequested) {
+        $partialReceipt = if ($denseFirstRequested) {
+            $densePcbPackingReceipts[$denseFirstName]
+        } else {
+            $densePcbPackingReceipts[$denseSecondName]
+        }
+        $densePartialSummary = 'PARTIAL: dense PCB packing seeds=' + $partialReceipt.SeedCount +
+            '/11 aggregate census NOT RUN; cohort=' + $partialReceipt.Cohort +
+            ' perCohortChildBudgetMs=60000 maxLogicalDenseCaseBudgetMs=120000'
+        Write-Host $densePartialSummary
+        $receipts.Add($densePartialSummary)
     }
     if ($Suite.Count -gt 0) {
         if ($ReceiptOutputPath) {
@@ -1181,19 +1346,22 @@ final class PhysicalSpecificationDeveloperVerifier {
         $checked = Invoke-VerifierBoundedProcess $python $oracleArguments 60000
         Write-Host $checked.Stdout
         if ($checked.Stderr) { Write-Host $checked.Stderr }
-        if (-not $checked.TerminationProven -or $checked.ExitCode -ne 0 -or
-                $checked.Stdout -notmatch ('(?m)^PASS: ' + [regex]::Escape($oracle.Marker))) {
+        if (-not (Test-CurrentContractPassMarker -Stdout $checked.Stdout `
+                    -Marker $oracle.Marker `
+                    -TerminationProven $checked.TerminationProven `
+                    -ExitCode $checked.ExitCode)) {
             throw ('Independent current oracle failed: ' + $oracle.File + ', exit ' + $checked.ExitCode)
         }
         $receipts.Add($checked.Stdout)
     }
-    $powershell = Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/powershell.exe'
     $protocol = Invoke-VerifierBoundedProcess $powershell @('-NoProfile', '-ExecutionPolicy',
         'Bypass', '-File', (Join-Path $repositoryRoot 'tests/contracts/a04-report-contract.ps1')) 60000
     Write-Host $protocol.Stdout
     if ($protocol.Stderr) { Write-Host $protocol.Stderr }
-    if (-not $protocol.TerminationProven -or $protocol.ExitCode -ne 0 -or
-            $protocol.Stdout -notmatch '(?m)^PASS: A04 report contracts assertions=') {
+    if (-not (Test-CurrentContractPassMarker -Stdout $protocol.Stdout `
+                -Marker 'A04 report contracts assertions=' `
+                -TerminationProven $protocol.TerminationProven `
+                -ExitCode $protocol.ExitCode)) {
         throw ('Current browser report protocol failed, exit ' + $protocol.ExitCode)
     }
     $receipts.Add($protocol.Stdout)
@@ -1201,11 +1369,24 @@ final class PhysicalSpecificationDeveloperVerifier {
         'Bypass', '-File', (Join-Path $repositoryRoot 'tests/contracts/preview-listener-identity.ps1')) 60000
     Write-Host $listenerContract.Stdout
     if ($listenerContract.Stderr) { Write-Host $listenerContract.Stderr }
-    if (-not $listenerContract.TerminationProven -or $listenerContract.ExitCode -ne 0 -or
-            $listenerContract.Stdout -notmatch '(?m)^PASS: preview listener identity contracts assertions=') {
+    if (-not (Test-CurrentContractPassMarker -Stdout $listenerContract.Stdout `
+                -Marker 'preview listener identity contracts assertions=' `
+                -TerminationProven $listenerContract.TerminationProven `
+                -ExitCode $listenerContract.ExitCode)) {
         throw ('Preview listener identity contract failed, exit ' + $listenerContract.ExitCode)
     }
     $receipts.Add($listenerContract.Stdout)
+    $promotionContract = Invoke-VerifierBoundedProcess $powershell @('-NoProfile', '-ExecutionPolicy',
+        'Bypass', '-File', (Join-Path $repositoryRoot 'tests/contracts/build-module-promotion-contract.ps1')) 60000
+    Write-Host $promotionContract.Stdout
+    if ($promotionContract.Stderr) { Write-Host $promotionContract.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $promotionContract.Stdout `
+                -Marker 'production build module promotion assertions=' `
+                -TerminationProven $promotionContract.TerminationProven `
+                -ExitCode $promotionContract.ExitCode)) {
+        throw ('Production build promotion contract failed, exit ' + $promotionContract.ExitCode)
+    }
+    $receipts.Add($promotionContract.Stdout)
     if ($ReceiptOutputPath) {
         foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-alt')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')

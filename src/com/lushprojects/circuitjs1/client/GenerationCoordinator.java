@@ -446,6 +446,7 @@ final class GenerationCoordinator {
         private GenerationRequest.Prepared prepared;
         private String realizationManifest;
         private GeneratedBoardInstance candidate;
+        private String candidateNoveltyFingerprint;
         private GenerationRequest.ConstructionSession constructionSession;
         private FreshGeneratedRuntimeInstallation.Staged installation;
         private GeneratedDiagnosticProofService.Session proof;
@@ -490,6 +491,7 @@ final class GenerationCoordinator {
                 throw new IllegalStateException("Previous candidate still owns resources");
             request = selection.candidate(index);
             expectedProofUnits = 0; cleanupComplete = false; proofContextKey = null;
+            candidateNoveltyFingerprint = null;
             lastCompletedProofWorkUnits = 0;
             dependencyContext = null; rawTemporalDependencyCanonical = null; proofCacheHit = false;
             proofCachePublicationPending = false;
@@ -583,9 +585,17 @@ final class GenerationCoordinator {
                 throw new IllegalStateException(
                     "Generated board failed physical admission validation", failure);
             }
+            if (selection.isCandidateSearch()) {
+                candidateNoveltyFingerprint = PhysicalBoardFingerprint.novelty(candidate);
+                recentBoards.requireNovel(candidateNoveltyFingerprint);
+            }
             try {
-                return dependencies();
+                String dependency = dependencies();
+                job.preflightProofWork(expectedProofUnits);
+                return dependency;
             } catch (Throwable failure) {
+                if (failure instanceof GenerationJob.Failure)
+                    throw (GenerationJob.Failure) failure;
                 throw new IllegalStateException(
                     "Generated board failed dependency-context capture", failure);
             }
@@ -690,6 +700,10 @@ final class GenerationCoordinator {
             String physicalFingerprint = null;
             if (selection.isCandidateSearch()) {
                 physicalFingerprint = PhysicalBoardFingerprint.novelty(candidate);
+                if (candidateNoveltyFingerprint == null ||
+                        !candidateNoveltyFingerprint.equals(physicalFingerprint))
+                    throw new GenerationJob.Stale(
+                        "Physical candidate changed after novelty admission");
                 recentBoards.requireNovel(physicalFingerprint);
             }
             if (request.isQuickPlay()) {
@@ -780,6 +794,7 @@ final class GenerationCoordinator {
             proofCacheHit = false; proofCachePublicationPending = false;
             pendingProofCacheEntry = null;
             prepared = null; constructionSession = null;
+            candidateNoveltyFingerprint = null;
             controlledP09Negative = null;
             if (job.getOutcome() != GenerationJob.Outcome.PASS) candidate = null;
         }

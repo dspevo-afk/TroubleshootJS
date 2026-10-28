@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="circuitjs1">
+    <inherits name="com.lushprojects.circuitjs1.circuitjs1" />
+    <set-property name="tsj.build" value="developer" />
+</module>

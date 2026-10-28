@@ -180,12 +180,22 @@ final class E06AveragedConverterElm extends CircuitElm {
         receiptReady = false;
         double physicalDrive = driving ? Math.max(0,
             Math.min(E06ConverterContract.MAX_OUTPUT_CURRENT_AMPS, requestedDrop / resistance)) : 0;
+        double trialDrive = trialDriveCurrent();
+        boolean targetChanged = changed(lastTarget, target, VOLTAGE_TOLERANCE);
+        // The output-drop voltage only affects this Norton tangent in the
+        // unsaturated current region. In the off and current-clamped regions
+        // the stamped output current has zero drop derivative; requiring the
+        // otherwise irrelevant voltage to settle can prevent global Newton
+        // convergence while the physical current residual is already exact.
+        boolean dropChanged = conductance > 0 && changed(lastDrop, drop, VOLTAGE_TOLERANCE);
+        boolean inputChanged = changed(lastInput, inputAtEvaluation, 1e-9);
+        boolean boundedTrial = Math.abs(drop - requestedDrop) > VOLTAGE_TOLERANCE;
+        double driveResidual = Math.abs(trialDrive - physicalDrive);
         // At either limiter knee the accepted tangent must also represent the
         // bounded characteristic; a voltage-only test could accept a small
         // current overshoot on the neighboring regulation tangent.
-        if (changed(lastTarget, target, VOLTAGE_TOLERANCE) || changed(lastDrop, drop, VOLTAGE_TOLERANCE) ||
-                changed(lastInput, inputAtEvaluation, 1e-9) || Math.abs(drop - requestedDrop) > VOLTAGE_TOLERANCE ||
-                Math.abs(trialDriveCurrent() - physicalDrive) > 1e-9)
+        if (targetChanged || dropChanged || inputChanged || boundedTrial ||
+                driveResidual > 1e-9)
             sim.converged = false;
         lastTarget = target;
         lastDrop = drop;

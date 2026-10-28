@@ -447,11 +447,6 @@ public final class E04SensorControlModel {
      * resistor or materially loading the external divider.
      */
     private static final double DECISION_INPUT_LEAKAGE_OHMS = 1e9;
-    // Match the bounded E02 Norton update tolerance so the control source
-    // does not force needless extra nonlinear trials on every rail settling
-    // step while retaining sub-millivolt decision-output accuracy.
-    private static final double DECISION_OUTPUT_TOLERANCE = 5e-4;
-
     private final CirSim sim;
     private final RailContract rail;
     private final Variant variant;
@@ -1510,22 +1505,32 @@ public final class E04SensorControlModel {
 
     /**
      * Actual decision model: high-impedance sensor/reference/rail inputs and
-     * a bounded output voltage source.  Hysteresis is retained between solver
+     * a rail-fed, bounded output branch. Hysteresis is retained between solver
      * steps and is also backed by a physical output-to-sensor resistor in the
      * regenerative variant.
      */
     /**
      * Solver-backed bounded threshold decision.  Unlike a controller-owned
      * helper, this is a real CircuitJS element, so its declaration has an
-     * audited save/load representation.  The retained high/low latch and
-     * last solved output are intentionally runtime state, not dump input.
+     * audited save/load representation. The retained high/low latch and
+     * Newton tangent are intentionally runtime state, not dump input.
      */
     static final class DecisionElement extends CircuitElm {
         private static final int DUMP_TYPE = 457;
-        // An undervoltage decision with an ideal output source needs a
-        // distinct recovery point: removing the driven load raises its own
-        // rail.  One percent of nominal is a bounded 50 mV band on E02's
-        // 5 V rail; the falling limit remains the declared minimum.
+        private static final int DUMP_VERSION = 2;
+        private static final double MAX_MODEL_TERMINAL_VOLTS = 24.0;
+        private static final double OUTPUT_MAX_CURRENT_AMPS = .08;
+        private static final double OUTPUT_RESISTANCE_OHMS = 1.0;
+        private static final double OUTPUT_LIMIT_LEAKAGE_SIEMENS = 1e-9;
+        private static final double OUTPUT_BACKFEED_LEAK_OHMS = 1e9;
+        private static final double OUTPUT_PULLDOWN_OHMS = 10000.0;
+        private static final double MAX_NEWTON_DROP_STEP_VOLTS = .5;
+        private static final double TARGET_RESTART_STEP_VOLTS = .25;
+        private static final double MODEL_CHANGE_TOLERANCE = 1e-4;
+        // A brownout decision needs a distinct recovery point because removing
+        // its driven load raises its own rail. One percent of nominal is a
+        // bounded 50 mV band on E02's 5 V rail; the falling limit remains the
+        // declared minimum.
         private static final double BROWNOUT_RECOVERY_FRACTION = .01;
         private final Point[] posts = new Point[5];
         private final Variant variant;
@@ -1535,7 +1540,9 @@ public final class E04SensorControlModel {
         private final double risingThresholdOffsetVolts;
         private final double fallingThresholdOffsetVolts;
         private boolean high;
-        private double lastOutput = Double.NaN;
+        private double lastTarget = Double.NaN;
+        private double lastOutputDrop = Double.NaN;
+        private double lastDriveCurrent = Double.NaN;
         private ControlState controlState = ControlState.UNSETTLED;
 
         DecisionElement(int x, int y, RailContract rail, Variant variant,
@@ -1562,6 +1569,9 @@ public final class E04SensorControlModel {
         DecisionElement(int xa, int ya, int xb, int yb, int flags,
                 StringTokenizer st) {
             super(xa, ya, xb, yb, flags);
+            int dumpVersion = nextDecisionInt(st, "dump version");
+            if (dumpVersion != DUMP_VERSION)
+                throw new IllegalArgumentException("Unsupported E04 decision model version");
             variant = parseVariant(st);
             nominalRailVoltage = nextDecisionDouble(st, "nominal rail voltage");
             minimumOperatingVoltage = nextDecisionDouble(st, "minimum operating voltage");
@@ -1583,11 +1593,13 @@ public final class E04SensorControlModel {
             super.reset();
             high = false;
             controlState = ControlState.UNSETTLED;
-            lastOutput = Double.NaN;
+            lastTarget = Double.NaN;
+            lastOutputDrop = Double.NaN;
+            lastDriveCurrent = Double.NaN;
         }
 
         String dump() {
-            return super.dump() + " " + variant.ordinal() + " " +
+            return super.dump() + " " + DUMP_VERSION + " " + variant.ordinal() + " " +
                 nominalRailVoltage + " " + minimumOperatingVoltage + " " +
                 directThresholdOffsetVolts + " " + risingThresholdOffsetVolts +
                 " " + fallingThresholdOffsetVolts;
@@ -1618,12 +1630,32 @@ public final class E04SensorControlModel {
 
         /** Stable identity of the immutable declaration, excluding solver state and pose. */
         String declarationIdentity() {
-            return "E04_DECISION@1|variant=" + variant.name() +
+            return "E04_DECISION@2|variant=" + variant.name() +
                 "|nominal=" + Double.toString(nominalRailVoltage) +
                 "|minimum=" + Double.toString(minimumOperatingVoltage) +
                 "|direct=" + Double.toString(directThresholdOffsetVolts) +
                 "|rising=" + Double.toString(risingThresholdOffsetVolts) +
-                "|falling=" + Double.toString(fallingThresholdOffsetVolts);
+                "|falling=" + Double.toString(fallingThresholdOffsetVolts) +
+                "|headroom=" + Double.toString(OUTPUT_HEADROOM_VOLTS) +
+                "|outputResistance=" + Double.toString(OUTPUT_RESISTANCE_OHMS) +
+                "|outputLimit=" + Double.toString(OUTPUT_MAX_CURRENT_AMPS) +
+                "|limitLeakage=" + Double.toString(OUTPUT_LIMIT_LEAKAGE_SIEMENS) +
+                "|backfeedLeakage=" + Double.toString(OUTPUT_BACKFEED_LEAK_OHMS) +
+                "|lowPulldown=" + Double.toString(OUTPUT_PULLDOWN_OHMS) +
+                "|inputLeakage=" + Double.toString(DECISION_INPUT_LEAKAGE_OHMS) +
+                "|terminalEnvelope=" + Double.toString(MAX_MODEL_TERMINAL_VOLTS) +
+                "|newtonStep=" + Double.toString(MAX_NEWTON_DROP_STEP_VOLTS) +
+                "|targetRestart=" + Double.toString(TARGET_RESTART_STEP_VOLTS);
+        }
+
+        private static int nextDecisionInt(StringTokenizer st, String label) {
+            if (st == null || !st.hasMoreTokens())
+                throw new IllegalArgumentException("Missing E04 decision " + label);
+            try {
+                return Integer.parseInt(st.nextToken());
+            } catch (NumberFormatException failure) {
+                throw new IllegalArgumentException("Invalid E04 decision " + label);
+            }
         }
 
         private static Variant parseVariant(StringTokenizer st) {
@@ -1651,7 +1683,7 @@ public final class E04SensorControlModel {
         }
 
         int getPostCount() { return 5; }
-        int getVoltageSourceCount() { return 1; }
+        int getVoltageSourceCount() { return 0; }
         boolean nonLinear() { return true; }
 
         void setPoints() {
@@ -1669,13 +1701,14 @@ public final class E04SensorControlModel {
         Point getPost(int n) { return posts[n]; }
 
         void stamp() {
+            for (int node : nodes) sim.stampNonLinear(node);
             sim.stampResistor(nodes[0], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
             sim.stampResistor(nodes[1], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
             sim.stampResistor(nodes[2], nodes[4], DECISION_INPUT_LEAKAGE_OHMS);
-            // CircuitJS defines a source value as V(second)-V(first).  Keep
-            // the family output positive with respect to its declared
-            // return post.
-            sim.stampVoltageSource(nodes[4], nodes[3], voltSource);
+            sim.stampResistor(nodes[3], nodes[4], OUTPUT_BACKFEED_LEAK_OHMS);
+            // This passive reverse path is explicit and remains present when
+            // the decision output is disabled. It is not a powered rail path.
+            sim.stampResistor(nodes[2], nodes[3], OUTPUT_BACKFEED_LEAK_OHMS);
         }
 
         void doStep() {
@@ -1683,11 +1716,17 @@ public final class E04SensorControlModel {
             double sensorVoltage = volts[0] - returnVoltage;
             double referenceVoltage = volts[1] - returnVoltage;
             double railVoltage = volts[2] - returnVoltage;
+            double outputVoltage = volts[3] - returnVoltage;
             ControlState prior = controlState;
             boolean priorHigh = high;
 
             if (!finite(sensorVoltage) || !finite(referenceVoltage) ||
-                    !finite(railVoltage)) {
+                    !finite(railVoltage) || !finite(outputVoltage)) {
+                high = false;
+                controlState = ControlState.UNSUPPORTED;
+            } else if (Math.abs(railVoltage) > MAX_MODEL_TERMINAL_VOLTS ||
+                    Math.abs(outputVoltage) > MAX_MODEL_TERMINAL_VOLTS ||
+                    Math.abs(railVoltage - outputVoltage) > MAX_MODEL_TERMINAL_VOLTS) {
                 high = false;
                 controlState = ControlState.UNSUPPORTED;
             } else if (railVoltage < minimumOperatingVoltage +
@@ -1720,25 +1759,145 @@ public final class E04SensorControlModel {
                 controlState = high ? ControlState.HIGH : ControlState.LOW;
             }
 
-            double output = high ? Math.max(0.0,
+            double target = high ? Math.max(0.0,
                     railVoltage - OUTPUT_HEADROOM_VOLTS) : 0.0;
-            if (!finite(output)) {
-                output = 0.0;
+            if (!finite(target)) {
+                target = 0.0;
                 high = false;
                 controlState = ControlState.UNSUPPORTED;
             }
-            if (prior != controlState || priorHigh != high ||
-                    !finite(lastOutput) || Math.abs(lastOutput - output) >
-                    DECISION_OUTPUT_TOLERANCE)
+            double requestedDrop = target - outputVoltage;
+            boolean driving = high && target > 0.0;
+            double evaluationDrop = limitNewtonDrop(requestedDrop, target,
+                    driving);
+            double driveCurrent = outputCurrentForDrop(evaluationDrop, driving);
+            double driveConductance = outputConductanceForDrop(evaluationDrop,
+                    driving);
+            double evaluationOutput = target - evaluationDrop;
+
+            // The pass branch is oriented RAIL -> OUTPUT. Its Newton tangent
+            // is stamped into the actual live MNA graph. Target is rail minus
+            // a declared headroom, so the branch's conductance itself carries
+            // the rail derivative; no independent ideal output source exists.
+            sim.stampConductance(nodes[2], nodes[3], driveConductance);
+            sim.stampCurrentSource(nodes[2], nodes[3], driveCurrent -
+                    driveConductance * (railVoltage - evaluationOutput));
+            // A low logic decision is a finite sink to RETURN. In the high
+            // state the sink is disconnected, and delivered current is
+            // bounded by OUTPUT_MAX_CURRENT_AMPS.
+            sim.stampConductance(nodes[3], nodes[4], high ? 0.0 :
+                    1.0 / OUTPUT_PULLDOWN_OHMS);
+
+            boolean boundedTrial = Math.abs(evaluationDrop - requestedDrop) >
+                    MODEL_CHANGE_TOLERANCE;
+            boolean targetChanged = changed(lastTarget, target);
+            // The LOW/unsupported branch is a fixed linear pull-down. Its
+            // terminal voltage can still move while other nonlinear devices
+            // converge, but that does not mean this element's law changed.
+            // Only the active rail-fed branch needs its drop/current tangent
+            // convergence guarded here.
+            boolean dropChanged = driving &&
+                    changed(lastOutputDrop, evaluationDrop);
+            boolean currentChanged = driving &&
+                    changed(lastDriveCurrent, driveCurrent);
+            if (prior != controlState || priorHigh != high || boundedTrial ||
+                    targetChanged || dropChanged || currentChanged)
                 sim.converged = false;
-            lastOutput = output;
-            sim.updateVoltageSource(nodes[4], nodes[3], voltSource, output);
+            lastTarget = target;
+            lastOutputDrop = evaluationDrop;
+            lastDriveCurrent = driveCurrent;
+            current = getSupplyCurrent();
+        }
+
+        private double limitNewtonDrop(double requestedDrop, double target,
+                boolean driving) {
+            if (!driving) return requestedDrop;
+            if (!finite(requestedDrop)) return requestedDrop;
+            double knee = OUTPUT_MAX_CURRENT_AMPS * OUTPUT_RESISTANCE_OHMS;
+            if (!finite(lastOutputDrop) || !finite(lastTarget) ||
+                    Math.abs(lastTarget - target) > TARGET_RESTART_STEP_VOLTS)
+                return 0.0;
+            double drop = requestedDrop;
+            double previous = lastOutputDrop;
+            if (previous <= knee && drop > knee) {
+                drop = previous < knee ? knee : knee +
+                    Math.min(MAX_NEWTON_DROP_STEP_VOLTS, drop - knee);
+            } else if (previous > knee && drop <= knee) {
+                drop = knee;
+            }
+            if (Math.abs(drop - previous) > MAX_NEWTON_DROP_STEP_VOLTS)
+                drop = previous + (drop > previous ? MAX_NEWTON_DROP_STEP_VOLTS :
+                        -MAX_NEWTON_DROP_STEP_VOLTS);
+            return drop;
+        }
+
+        private static double outputCurrentForDrop(double drop,
+                boolean driving) {
+            if (!driving || drop <= 0.0) return 0.0;
+            double knee = OUTPUT_MAX_CURRENT_AMPS * OUTPUT_RESISTANCE_OHMS;
+            if (drop <= knee) return drop / OUTPUT_RESISTANCE_OHMS;
+            return OUTPUT_MAX_CURRENT_AMPS +
+                (drop - knee) * OUTPUT_LIMIT_LEAKAGE_SIEMENS;
+        }
+
+        private static double outputConductanceForDrop(double drop,
+                boolean driving) {
+            // At zero drop use the conducting-side tangent, as E02/E06 do.
+            // The current is still zero; a zero slope here can strand the
+            // restart at an open output and force artificial transistor gmin.
+            if (!driving || drop < 0.0) return 0.0;
+            double knee = OUTPUT_MAX_CURRENT_AMPS * OUTPUT_RESISTANCE_OHMS;
+            return drop <= knee ? 1.0 / OUTPUT_RESISTANCE_OHMS :
+                OUTPUT_LIMIT_LEAKAGE_SIEMENS;
+        }
+
+        private static boolean changed(double before, double after) {
+            return !finite(before) || Math.abs(before - after) >
+                    MODEL_CHANGE_TOLERANCE * Math.max(1.0,
+                        Math.max(Math.abs(before), Math.abs(after)));
         }
 
         double getVoltageDiff() { return volts[3] - volts[4]; }
 
-        // Sensor, reference and rail inputs retain their bounded internal U2
-        // leakage paths.  The output source also has a real return path.
+        double getSupplyCurrent() {
+            return Math.max(0.0, getOutputDriveCurrent()) +
+                (volts[2] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS +
+                (volts[2] - volts[3]) / OUTPUT_BACKFEED_LEAK_OHMS;
+        }
+
+        double getOutputDriveCurrent() {
+            if (!high) return 0.0;
+            double railVoltage = volts[2] - volts[4];
+            double outputVoltage = volts[3] - volts[4];
+            double target = Math.max(0.0,
+                    railVoltage - OUTPUT_HEADROOM_VOLTS);
+            return outputCurrentForDrop(target - outputVoltage,
+                    target > 0.0);
+        }
+
+        double getPowerLossWatts() {
+            double sensor = volts[0] - volts[4];
+            double reference = volts[1] - volts[4];
+            double railVoltage = volts[2] - volts[4];
+            double outputVoltage = volts[3] - volts[4];
+            double driveCurrent = getOutputDriveCurrent();
+            double driveLoss = driveCurrent * (railVoltage - outputVoltage);
+            double lowSinkLoss = high ? 0.0 :
+                outputVoltage * outputVoltage / OUTPUT_PULLDOWN_OHMS;
+            return sensor * sensor / DECISION_INPUT_LEAKAGE_OHMS +
+                reference * reference / DECISION_INPUT_LEAKAGE_OHMS +
+                railVoltage * railVoltage / DECISION_INPUT_LEAKAGE_OHMS +
+                (railVoltage - outputVoltage) * (railVoltage - outputVoltage) /
+                    OUTPUT_BACKFEED_LEAK_OHMS +
+                outputVoltage * outputVoltage / OUTPUT_BACKFEED_LEAK_OHMS +
+                driveLoss + lowSinkLoss;
+        }
+
+        double getCurrent() { return getSupplyCurrent(); }
+        double getPower() { return getPowerLossWatts(); }
+        void calculateCurrent() { current = getSupplyCurrent(); }
+
+        // Input and output leakage branches remain explicit internal connections.
         boolean getConnection(int n1, int n2) {
             return (n1 == 4 && n2 >= 0 && n2 <= 3) ||
                 (n2 == 4 && n1 >= 0 && n1 <= 3);
@@ -1749,14 +1908,24 @@ public final class E04SensorControlModel {
         // adds its normal finite island anchor during analysis.
         boolean hasGroundConnection(int n) { return false; }
         @Override double getCurrentIntoNode(int n) {
-            if (n >= 0 && n <= 2)
-                return -(volts[n] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS;
-            if (n == 3) return -current;
+            double sensorLeak = (volts[0] - volts[4]) /
+                DECISION_INPUT_LEAKAGE_OHMS;
+            double referenceLeak = (volts[1] - volts[4]) /
+                DECISION_INPUT_LEAKAGE_OHMS;
+            double railLeak = (volts[2] - volts[4]) /
+                DECISION_INPUT_LEAKAGE_OHMS;
+            double outputVoltage = volts[3] - volts[4];
+            double outputLeak = outputVoltage / OUTPUT_BACKFEED_LEAK_OHMS;
+            double backfeed = (volts[2] - volts[3]) /
+                OUTPUT_BACKFEED_LEAK_OHMS;
+            double drive = getOutputDriveCurrent();
+            double sink = high ? 0.0 : outputVoltage / OUTPUT_PULLDOWN_OHMS;
+            if (n == 0) return -sensorLeak;
+            if (n == 1) return -referenceLeak;
+            if (n == 2) return -railLeak - drive - backfeed;
+            if (n == 3) return drive + backfeed - outputLeak - sink;
             if (n == 4)
-                return current + (volts[0] - volts[4]) /
-                    DECISION_INPUT_LEAKAGE_OHMS +
-                    (volts[1] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS +
-                    (volts[2] - volts[4]) / DECISION_INPUT_LEAKAGE_OHMS;
+                return sensorLeak + referenceLeak + railLeak + outputLeak + sink;
             return 0.0;
         }
     }

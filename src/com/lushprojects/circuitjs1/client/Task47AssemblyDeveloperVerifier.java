@@ -136,7 +136,7 @@ final class Task47AssemblyDeveloperVerifier {
             "actual fault engine did not clear selected contribution");
         settle(sim);
         verifySolvedHealthy(sim, replay);
-        String physical = Task43PPhysicalTruthDeveloperVerifier.verifyResistiveComposition(sim);
+        String physical = GeneratedBoardPhysicalTruthDeveloperVerifier.verifyResistiveComposition(sim);
         if (seed == 0) verifyMeasurementCleanup(sim, replay);
         verifyInvariantNegatives(sim, board);
         require(challenge.getFaultController().apply(), "actual fault engine did not restore selected fault");

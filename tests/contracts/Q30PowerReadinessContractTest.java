@@ -7,6 +7,8 @@ import java.util.Vector;
 /** Real Q30 source isolation, residual exposure, and active meter transactions. */
 public final class Q30PowerReadinessContractTest {
     private static int assertions;
+    private static final double MAX_NATURAL_RECOVERY_SECONDS = 14.0;
+    private static final InstrumentMode DIODE = new InstrumentMode("DIODE");
     public static void main(String[] args) {
         for (long seed : new long[] {10387L,10226L,10014L}) verify(seed);
         System.out.println("PASS: Q30 power readiness contracts "+assertions+" assertions seeds=3 realOhm=3 realDiode=3");
@@ -22,6 +24,7 @@ public final class Q30PowerReadinessContractTest {
         sim.generatedBoardInstance=owner;
         BoardModificationController modifications=new BoardModificationController(sim,owner);
         sim.boardModificationController=modifications;
+        Rb30Behavior behavior=(Rb30Behavior)owner.getFamilyState();
         PhysicalBoardRuntime runtime=owner.getPhysicalBoardRuntime();
         runtime.installRegisteredCapabilities(sim,owner,modifications,0);
         sim.boardPowerController.attach(owner.getExternalPowerBindings());
@@ -37,23 +40,30 @@ public final class Q30PowerReadinessContractTest {
         check(power.assessPower().getReadiness()==PowerOperatingAssessment.Readiness.WAITING,"source change requires a fresh solver receipt");
         settle(sim,owner,modifications,.000040);
         check(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.READY,"fresh actually discharged graph admits active measurements");
+        double beforeOhm=sim.t;
         double ohms=sim.measureResistance(red,black);
         check(finite(ohms)&&Math.abs(ohms-180)<1,"actual JOA external 180-ohm load, not a simulated meter value");
-        check(!sim.activeMeasurementOverlay&&sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),"OHM restores its actual temporary solver source");
-        settle(sim,owner,modifications,.000040);
-        check(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.READY,"new real sample recovers after OHM cleanup");
-        DiodeMeasurementResult diode=sim.measureDiode(red,black);
+        check(sim.t>beforeOhm&&!sim.activeMeasurementOverlay&&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+            sim.boardPowerController.isElectricallyUnpowered(),
+            "OHM advances and restores its actual temporary solver source while sources stay isolated");
+        ensureQ30DiodeReadyAfterOhm(sim,owner,modifications,behavior,red,black,"initial OFF-board OHM");
+        double beforeDiode=sim.t;
+        DiodeMeasurementResult diode=sim.measureDiode(red,black,DIODE);
         check(diode!=null&&finite(diode.voltage)&&finite(diode.current),"real diode-mode transaction returns both electrical samples");
         // Finite-compliance DIODE stimulus is 3 V through 1 kOhm. The 180-ohm
         // external load gives an independent divider/current oracle.
         check(Math.abs(diode.voltage-3.0*180/1180)<.005&&Math.abs(diode.current-3.0/1180)<.00002,"actual DIODE stimulus across known resistive load");
-        check(!sim.activeMeasurementOverlay&&sim.isActiveMeasurementSolverRestoredForDeveloperVerification(),"DIODE restores its actual temporary solver source");
+        check(sim.t>beforeDiode&&!sim.activeMeasurementOverlay&&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+            sim.boardPowerController.isElectricallyUnpowered(),
+            "DIODE advances and restores its actual temporary solver source while sources stay isolated");
+        verifyQ30PostMeasurementReadiness(sim,red,black,DIODE,"initial OFF-board DIODE");
         settle(sim,owner,modifications,.000040);
         check(sim.boardPowerController.isElectricallyUnpowered(),"meter cleanup cannot repower isolated sources");
         sim.boardPowerController.setState(BoardPowerState.POWERED);
         runtime.onBoardPowerStateChanged(BoardPowerState.POWERED);
         owner.getFaultBinding().setApplied(false);
-        Rb30Behavior behavior=(Rb30Behavior)owner.getFamilyState();
         check(behavior.getLiveSolverAdvanceSeconds()==.0001,"connected sources retain the original powered cadence");
         String dependency=behavior.getDependency(owner).canonical();
         settle(sim,owner,modifications,.000040);
@@ -96,7 +106,7 @@ public final class Q30PowerReadinessContractTest {
         // 22 uF * (1 Mohm || (10 kohm + 1 Mohm)) is about 11.06 s. The observed
         // .761 V tail therefore crosses .25 V after another roughly 12.3 s.
         while(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.DISCHARGE &&
-                sim.t-started<14.0) {
+                sim.t-started<MAX_NATURAL_RECOVERY_SECONDS) {
             sim.solverExecutor.advanceFor(behavior.getLiveSolverAdvanceSeconds());
             owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);frames++;
         }
@@ -107,14 +117,106 @@ public final class Q30PowerReadinessContractTest {
         check(sim.getActiveMeasurementReadiness(red,black)==ActiveMeasurementReadiness.READY,"actual storage decay admits measurements after the unchanged guard");
         double residual=Math.abs(voltage(owner,"RAIL12","CTRL_RETURN"));
         check(residual>0&&residual<=.25,"solver-observed capacitor voltage naturally crosses the existing threshold");
+        double beforeOhm=sim.t;
         double ohms=sim.measureResistance(red,black);
         check(finite(ohms)&&Math.abs(ohms-180)<1,"charged-to-ready graph yields the real external load resistance");
-        settle(sim,owner,modifications,.000040);
-        DiodeMeasurementResult diode=sim.measureDiode(red,black);
+        check(sim.t>beforeOhm&&!sim.activeMeasurementOverlay&&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+            sim.boardPowerController.isElectricallyUnpowered(),
+            "recovered-graph OHM completes and restores its solver transaction while isolated");
+        ensureQ30DiodeReadyAfterOhm(sim,owner,modifications,behavior,red,black,"natural-recovery OHM");
+        double beforeDiode=sim.t;
+        DiodeMeasurementResult diode=sim.measureDiode(red,black,DIODE);
         check(diode!=null&&Math.abs(diode.voltage-3.0*180/1180)<.005&&Math.abs(diode.current-3.0/1180)<.00002,"charged-to-ready graph yields the real finite-compliance diode reading");
-        check(!sim.activeMeasurementOverlay&&sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&sim.boardPowerController.isElectricallyUnpowered(),"recovered measurements restore the graph without repowering");
+        check(sim.t>beforeDiode&&!sim.activeMeasurementOverlay&&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+            sim.boardPowerController.isElectricallyUnpowered(),
+            "recovered-graph DIODE completes and restores its solver transaction while isolated");
+        verifyQ30PostMeasurementReadiness(sim,red,black,DIODE,"natural-recovery DIODE");
         System.out.println("Q30_NATURAL_RECOVERY seed=10387 additionalSolverSeconds="+(sim.t-started)+" liveFrames="+frames+" residualVolts="+residual+" realOhm="+ohms+" realDiode="+diode.voltage);
     }
+
+    /** A completed OHM read may leave real capacitor energy; admit DIODE only after READY. */
+    private static void ensureQ30DiodeReadyAfterOhm(NativeMeterCirSim sim,
+            GeneratedBoardInstance owner,BoardModificationController modifications,
+            Rb30Behavior behavior,CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black,String label) {
+        ActiveMeasurementReadiness readiness=sim.getActiveMeasurementReadiness(red,black,DIODE);
+        check(readiness==ActiveMeasurementReadiness.READY||
+            readiness==ActiveMeasurementReadiness.DISCHARGE||
+            readiness==ActiveMeasurementReadiness.WAITING,
+            label+" leaves a known post-read state for the next active instrument: "+readiness);
+        Vector<CircuitElm> graph=new Vector<CircuitElm>(sim.elmList);
+        Vector<CircuitElm> graphReference=sim.elmList;
+        ActiveMeasurementStimulus priorStimulus=sim.lastActiveMeasurementStimulus;
+        if(readiness==ActiveMeasurementReadiness.DISCHARGE||
+                readiness==ActiveMeasurementReadiness.WAITING) {
+            double time=sim.t;
+            Object observation=sim.solverExecutor.observation(owner);
+            check(sim.measureDiode(red,black,DIODE)==null,
+                label+" residual-energy follow-up DIODE is refused without injection");
+            check(sim.t==time&&sim.elmList.equals(graph)&&
+                sim.lastActiveMeasurementStimulus==priorStimulus&&
+                sim.solverExecutor.observation(owner)==observation&&
+                !sim.activeMeasurementOverlay&&
+                sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+                sim.boardPowerController.isElectricallyUnpowered()&&sim.stopMessage==null,
+                label+" refusal changes no solver time, graph, stimulus, receipt, or source state");
+            double started=sim.t;
+            int frames=0;
+            while((readiness==ActiveMeasurementReadiness.DISCHARGE||
+                    readiness==ActiveMeasurementReadiness.WAITING)&&
+                    sim.t-started<MAX_NATURAL_RECOVERY_SECONDS&&frames<2801) {
+                double step=behavior.getLiveSolverAdvanceSeconds();
+                check(step>0&&finite(step),
+                    label+" uses the declared positive off-state CircuitJS cadence");
+                double before=sim.t;
+                sim.solverExecutor.advanceFor(step);
+                owner.getPhysicalBoardRuntime().observeSimulationTime(sim.t);
+                check(sim.t>before&&sim.stopMessage==null&&
+                    sim.solverExecutor.isCurrent(sim.solverExecutor.observation(owner),owner),
+                    label+" cooldown advances accepted CircuitJS time on the current graph");
+                frames++;
+                readiness=sim.getActiveMeasurementReadiness(red,black,DIODE);
+            }
+            double elapsed=sim.t-started;
+            check(readiness==ActiveMeasurementReadiness.READY,
+                label+" natural capacitor discharge returns DIODE admission to READY within "+
+                    MAX_NATURAL_RECOVERY_SECONDS+" solver seconds; state="+readiness);
+            check(elapsed>0&&elapsed<=MAX_NATURAL_RECOVERY_SECONDS+
+                    behavior.getLiveSolverAdvanceSeconds()+1e-9&&
+                sim.elmList==graphReference&&sim.elmList.equals(graph)&&
+                sim.lastActiveMeasurementStimulus==priorStimulus&&
+                !sim.activeMeasurementOverlay&&
+                sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+                sim.boardPowerController.isElectricallyUnpowered(),
+                label+" cooldown preserves the same discharged live board without reinjection or repowering");
+            GeneratedRuntimeInvariant.verify(owner,modifications,sim.elmList);
+            GeneratedBoardVerifier.verify(owner,BoardPowerState.UNPOWERED,
+                modifications,sim.elmList,false);
+            System.out.println("Q30_METER_NATURAL_COOLDOWN label="+label+
+                " solverSeconds="+elapsed+" frames="+frames);
+        }
+        check(readiness==ActiveMeasurementReadiness.READY&&
+            sim.boardPowerController.isElectricallyUnpowered(),
+            label+" starts the next active transaction only when the real board is READY and isolated");
+    }
+
+    private static ActiveMeasurementReadiness verifyQ30PostMeasurementReadiness(
+            NativeMeterCirSim sim,CircuitPostMeasurementEndpoint red,
+            CircuitPostMeasurementEndpoint black,InstrumentMode mode,String label) {
+        ActiveMeasurementReadiness readiness=sim.getActiveMeasurementReadiness(red,black,mode);
+        check(readiness==ActiveMeasurementReadiness.READY||
+            readiness==ActiveMeasurementReadiness.DISCHARGE||
+            readiness==ActiveMeasurementReadiness.WAITING,
+            label+" leaves an explicit usable or transient instrument state: "+readiness);
+        check(!sim.activeMeasurementOverlay&&
+            sim.isActiveMeasurementSolverRestoredForDeveloperVerification()&&
+            sim.boardPowerController.isElectricallyUnpowered()&&sim.stopMessage==null,
+            label+" transaction cleanup remains complete while isolated");
+        return readiness;
+    }
+
     private static void verifyConservativePolicy(PowerDomainContract contract) {
         Map<String,PowerOperatingAssessment.SourceState> sources=new TreeMap<String,PowerOperatingAssessment.SourceState>();
         for (String id:contract.getSources().keySet()) sources.put(id,PowerOperatingAssessment.SourceState.isolated());

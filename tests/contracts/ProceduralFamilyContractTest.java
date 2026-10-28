@@ -38,8 +38,14 @@ public final class ProceduralFamilyContractTest {
         // this test never authorizes player publication.
         for (String family:PlayerFamilyCatalog.registeredFamilies()) {
             if (selectedFamily != null && !selectedFamily.equals(family)) continue;
+            boolean normalEnabled = PlayerFamilyCatalog.isNormalPlayerEnabled(family);
+            DifficultyProfile candidateProfile = PlayerFamilyCatalog.candidateProfile(family);
+            if (Rb56Plan.FAMILY_ID.equals(family)) {
+                check(candidateProfile == DifficultyProfile.MEDIUM && !normalEnabled,
+                    "RB56 remains a held family with its current MEDIUM declaration");
+            }
             for (DifficultyProfile profile:DifficultyProfile.values()) {
-                boolean selectable = profile == PlayerFamilyCatalog.candidateProfile(family);
+                boolean selectable = normalEnabled && profile == candidateProfile;
                 check(QuickPlayAdmission.supports(family,profile)==selectable,
                     "Procedural admission must match actual player content");
                 if (!selectable) continue;
@@ -82,6 +88,13 @@ public final class ProceduralFamilyContractTest {
                 GeneratedBoardInstance owner=construct(family,seed);
                 owner.requireNormalPhysicalAdmission();
                 owner.getPcbLayout().validateGeometry(owner.getBoard());
+                if (Rb56Plan.FAMILY_ID.equals(family)) {
+                    int packages = owner.getBoard().getComponentIds().size();
+                    int declaredPackages = Rb56Plan.resolve(seed).physicalPackageCount();
+                    check(packages == declaredPackages && packages >= 40 && packages <= 60 &&
+                        owner.getPcbLayout().getComponents().size() == packages,
+                        "held RB56 structural cohort retains its exact MEDIUM 40..60 package population: " + seed);
+                }
                 String fine=fingerprint(owner),macro=macro(owner);
                 if (cohort==0 && seed==17 && family.equals("COMPOSED_CONTROLLED_INDICATOR")) {
                     GenerationRequest.Prepared prepared=new PlayerLaunchRequest(family,"17","MEDIUM")
@@ -200,6 +213,9 @@ public final class ProceduralFamilyContractTest {
                         } catch (SupportedEnvelope.Rejected rejection) {
                             replayPassed=false;
                             replayDetail=logDetail(rejection.getMessage());
+                        } catch (GenerationJob.Rejected rejection) {
+                            replayPassed=false;
+                            replayDetail=logDetail(rejection.getMessage());
                         }
                     } else {
                         replayDetail="accepted-replay-was-not-one-exact-candidate";
@@ -222,6 +238,10 @@ public final class ProceduralFamilyContractTest {
                 } catch (SupportedEnvelope.Rejected rejection) {
                     System.out.println("PROCEDURAL_ROOT_ATTEMPT|"+cohort+"|"+family+"|"+root+
                         "|"+ordinal+"|"+candidateSeed+"|ENVELOPE_REJECT|"+
+                        logDetail(rejection.getMessage()));
+                } catch (GenerationJob.Rejected rejection) {
+                    System.out.println("PROCEDURAL_ROOT_ATTEMPT|"+cohort+"|"+family+"|"+root+
+                        "|"+ordinal+"|"+candidateSeed+"|NORMAL_ADMISSION_REJECT|"+
                         logDetail(rejection.getMessage()));
                 }
             }
@@ -258,6 +278,16 @@ public final class ProceduralFamilyContractTest {
     }
 
     private static GeneratedBoardInstance construct(String family,long seed) {
+        if (Rb56Plan.FAMILY_ID.equals(family)) {
+            GenerationRequest request = GenerationRequest.forFamilyQualification(family, seed);
+            GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
+            GenerationRequest.ConstructionSession session = prepared.beginConstruction();
+            int steps = 0;
+            while (!session.advance())
+                if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
+                    throw new AssertionError("Held RB56 structural route exceeded the unchanged shared step bound");
+            return session.result().instance;
+        }
         GenerationRequest request = new PlayerLaunchRequest(family,Long.toString(seed),
             PlayerFamilyCatalog.candidateProfile(family).name()).generation();
         GenerationRequest.Prepared prepared=request.resolve(new GenerationRequest.PlanCache());

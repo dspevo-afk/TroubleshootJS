@@ -143,6 +143,8 @@
     var owner = bridge;
     var message = owner.action(token, view || 0, name, a || '', b || '', c || '');
     if (!ownsBridge(owner)) return; // End may synchronously tear this UI down.
+    if (name === 'acquire' && message && message.indexOf('Added to the real Parts Tray.') === 0)
+      message = 'Added to Parts Tray. Select the loose part there, then click a compatible Install as button, or drag it onto an empty compatible footprint.';
     status(message); schedule();
   }
   function actionButton(parent, text, name, a, b, c) {
@@ -613,13 +615,13 @@
     controls.shopTrayCount = append(supplier, 'p', undefined, 'tsj-store-tray');
     var intro = append(storefront, 'section', undefined, 'tsj-store-intro');
     append(intro, 'h3', 'The right part starts with the specification.');
-    append(intro, 'p', 'Browse the full catalog. Match the rating and lead spacing, add to your Parts Tray, then install on the board.');
+    append(intro, 'p', 'Browse by rating and lead spacing. Add a part to your Parts Tray, select the loose part there, then click a compatible Install as button or drag it onto an empty compatible footprint.');
     var browse = append(storefront, 'div', undefined, 'tsj-store-browse');
     controls.shopNav = append(browse, 'nav', undefined, 'tsj-store-categories');
     controls.shopNav.setAttribute('aria-label', 'Component categories');
     var searchRow = append(browse, 'div', undefined, 'tsj-store-search');
     controls.shopSearch = field(searchRow, 'Search components');
-    controls.shopSearch.type = 'search'; controls.shopSearch.placeholder = 'Type or specification, e.g. 330';
+    controls.shopSearch.type = 'search'; controls.shopSearch.placeholder = 'Value or specification, e.g. 330, 1k, 10k or 1M';
     controls.shopSearch.autocomplete = 'off';
     listen(controls.shopSearch, 'input', filterShop);
     button(searchRow, 'Clear search', function () {
@@ -632,13 +634,34 @@
     controls.shopEmpty = append(storefront, 'p', 'No components match. Try another search or choose All parts.', 'tsj-store-empty');
     shopSignature = ''; shopRows = []; shopCategories = []; shopCategory = ''; updateShop();
   }
+  function compactShopText(value) { return value.toLowerCase().replace(/\s+/g, ''); }
+  function metricShopValue(value) {
+    var match = /^(\d+(?:\.\d+)?)([kKmM])$/.exec(value);
+    if (!match) return null;
+    var multiplier = match[2] === 'k' || match[2] === 'K' ? 1000 : match[2] === 'M' ? 1000000 : 0.001;
+    var expanded = Number(match[1]) * multiplier;
+    return isFinite(expanded) ? String(expanded) : null;
+  }
+  function containsWholeShopNumber(text, number) {
+    var index = text.indexOf(number);
+    while (index >= 0) {
+      var before = index === 0 ? '' : text.charAt(index - 1);
+      var after = text.charAt(index + number.length);
+      if (!/[0-9.]/.test(before) && !/[0-9.]/.test(after)) return true;
+      index = text.indexOf(number, index + 1);
+    }
+    return false;
+  }
   function filterShop() {
     // Filtering only changes presentation; every recipe comes from the live catalog.
-    var words = controls.shopSearch.value.toLowerCase().trim().split(/\s+/);
+    var terms = controls.shopSearch.value.trim().split(/\s+/);
+    var words = terms.map(function (term) { return term.toLowerCase(); });
     var shown = 0;
     shopRows.forEach(function (row) {
-      row.card.hidden = !!((shopCategory && row.type !== shopCategory) || words.some(function (word) {
-        return row.search.indexOf(word) < 0;
+      row.card.hidden = !!((shopCategory && row.type !== shopCategory) || words.some(function (word, index) {
+        if (row.search.indexOf(word) >= 0 || row.compactSearch.indexOf(compactShopText(word)) >= 0) return false;
+        var expanded = metricShopValue(terms[index]);
+        return !expanded || !containsWholeShopNumber(row.search, expanded);
       }));
       if (!row.card.hidden) shown++;
     });
@@ -701,7 +724,9 @@
             invoke(token, view, 'acquire', catalog.id, entry.id);
           }, 'tsj-product-button tsj-store-add');
           acquire.setAttribute('aria-label', 'Add to Parts Tray: ' + catalog.title + ', ' + entry.label);
-          shopRows.push({ type: catalog.id, card: card, acquire: acquire, search: (catalog.title + ' ' + entry.label).toLowerCase() });
+          var searchText = (catalog.title + ' ' + entry.label).toLowerCase();
+          shopRows.push({ type: catalog.id, card: card, acquire: acquire, search: searchText,
+            compactSearch: compactShopText(searchText) });
         });
       });
       if (!shopRows.length) append(controls.shopList, 'p', 'This board has no available components.');
@@ -726,7 +751,7 @@
       ['Scope and frequency (Hz)', 'The scope uses a red/black differential reference and solver-time samples, not screen-frame timing. An insufficient or aliased display is not a measurement. Treat clipped, unavailable or unsupported views as inconclusive and follow the instrument message.'],
       ['Ohms and continuity', 'Disconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.'],
       ['Diode mode', 'Use an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.'],
-      ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select it and install it into the empty slot. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']
+      ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select the loose part in the Parts Tray, then click a compatible Install as button or drag it onto an empty compatible footprint. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']
     ];
     append(parent, 'p', 'Measurement, navigation and repair references for the workbench.', 'tsj-product-hint');
     var guides = append(parent, 'div', undefined, 'tsj-product-guides');
@@ -1158,7 +1183,28 @@
       closeNativeTools();
     });
     listen(window, 'resize', closeNativeTools);
+    listen(window, 'beforeunload', warnBeforeUnload);
     listen(window, 'pagehide', cancelSessionTransport);
+  }
+  function warnBeforeUnload(event) {
+    if (!ownsBridge(bridge)) return;
+    var current;
+    try { current = bridge.snapshot(false); }
+    catch (ignore) { return; }
+    if (!current) return;
+    var activeJob = current.screen === 'PREPARING' || current.screen === 'RETEST';
+    // A ticket remains valuable work while it is on the bench or parked in
+    // the menu after Resume/Back. RESULTS is deliberately terminal: success
+    // must not be described as unfinished work.
+    var retainedUnfinishedBoard = current.hasBoard === true && current.completed !== true &&
+      current.screen !== 'RESULTS' && current.screen !== 'PREPARING' && current.screen !== 'RETEST';
+    if (!activeJob && !retainedUnfinishedBoard) return;
+    var message = activeJob
+      ? 'A board preparation or customer retest is still running. Leaving may interrupt it.'
+      : 'This board still has unfinished work. Leaving may lose your progress.';
+    event.preventDefault();
+    event.returnValue = message;
+    return message;
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

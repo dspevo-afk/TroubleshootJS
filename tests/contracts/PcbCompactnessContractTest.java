@@ -28,8 +28,8 @@ public final class PcbCompactnessContractTest {
     /** Accepted-source physical oracle: only reference x/y and the epoch are masked. */
     static String physicalGeometrySha256(PcbBoardLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
-        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 19)
-            throw new AssertionError("Physical geometry oracle requires layout version 19");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 20)
+            throw new AssertionError("Physical geometry oracle requires layout version 20");
         String before = layout.geometryFingerprint();
         Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
         TreeSet<String> expectedReferences = new TreeSet<String>();
@@ -53,9 +53,9 @@ public final class PcbCompactnessContractTest {
     }
 
     static String normalizeReferencePositions(String fingerprint, Vector<PcbSilkscreenLabel> labels) {
-        String prefix = "layout=19|";
+        String prefix = "layout=20|";
         if (fingerprint == null || !fingerprint.startsWith(prefix))
-            throw new AssertionError("Expected actual layout=19 geometry fingerprint");
+            throw new AssertionError("Expected actual layout=20 geometry fingerprint");
         String normalized = "layout=<LAYOUT_EPOCH>|" + fingerprint.substring(prefix.length());
         TreeSet<String> ids = new TreeSet<String>();
         for (PcbSilkscreenLabel label : labels) {
@@ -115,7 +115,7 @@ public final class PcbCompactnessContractTest {
                 fixtureLabels(changed,reference))), "nonreference positions and text remain exact");
         expectNormalizationFailure(raw.replace(labelRecord(reference),""), labels);
         expectNormalizationFailure(raw + labelRecord(reference), labels);
-        expectNormalizationFailure(raw.replace("layout=19|","layout=18|"), labels);
+        expectNormalizationFailure(raw.replace("layout=20|","layout=19|"), labels);
         Vector<PcbSilkscreenLabel> duplicate = fixtureLabels(title,reference); duplicate.add(reference);
         expectNormalizationFailure(raw, duplicate);
     }
@@ -127,7 +127,7 @@ public final class PcbCompactnessContractTest {
     }
 
     private static String normalizationFixture(PcbSilkscreenLabel title, PcbSilkscreenLabel reference) {
-        return "layout=19|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
+        return "layout=20|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
             labelRecord(reference) + "T:net-a@1,2,3,4;";
     }
 

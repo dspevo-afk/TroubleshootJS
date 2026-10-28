@@ -42,7 +42,7 @@ public final class RelBSessionIdentityContractTest {
             "existing public session wire bytes remain exact");
         PlayerLaunchRequest request = new PlayerLaunchRequest(
             "LED_INDICATOR", "9007199254740993", "EASY");
-        check("tsj-alpha/6/EASY/LED_INDICATOR/9007199254740993".equals(request.replay()),
+        check("tsj-alpha/7/EASY/LED_INDICATOR/9007199254740993".equals(request.replay()),
             "normal replay identity uses the current epoch");
         check(request.replay().equals(PlayerSessionReplay.parse(request.replay()).canonical()) &&
             !PlayerSessionReplay.parse(request.replay()).isPrivateQualification(),
@@ -95,7 +95,7 @@ public final class RelBSessionIdentityContractTest {
         }
         final String heldReplay = PlayerLaunchRequest.EPOCH + "/MEDIUM/RB56_CONTROL/0";
         final String heldWire = U06SessionSaveContractTest.crossEnvironmentFixture().replace(
-            "47:tsj-alpha/6/EASY/LED_INDICATOR/9007199254740993\n",
+            "47:tsj-alpha/7/EASY/LED_INDICATOR/9007199254740993\n",
             heldReplay.length() + ":" + heldReplay + "\n");
         check(heldWire.contains(heldReplay.length() + ":" + heldReplay + "\n"),
             "held public wire has the current epoch and correct independent field length");

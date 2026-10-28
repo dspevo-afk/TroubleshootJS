@@ -20,7 +20,7 @@ final class Task43PDeveloperVerifier {
         // The real graph has already been analyzed and advanced. Run the
         // independent physical checker before another admission check can
         // mask the deliberately mutated producer. No admission is skipped.
-        Task43PPhysicalTruthDeveloperVerifier.verify(sim);
+        GeneratedBoardPhysicalTruthDeveloperVerifier.verify(sim);
     }
 
     static void verify(CirSim sim) {
@@ -40,7 +40,7 @@ final class Task43PDeveloperVerifier {
         if (earlyFinish || !beforeState.equals(afterEarlyFinishState))
             throw new IllegalStateException("task43p-early-finish-latched-or-mutated-state");
 
-        String physicalEvidence = Task43PPhysicalTruthDeveloperVerifier.verify(sim);
+        String physicalEvidence = GeneratedBoardPhysicalTruthDeveloperVerifier.verify(sim);
         String afterState = verifierDesignState(sim, instance, challenge);
         if (!beforeState.equals(afterState))
             throw new IllegalStateException("task43p-read-only-evidence-mutated-owner-state");

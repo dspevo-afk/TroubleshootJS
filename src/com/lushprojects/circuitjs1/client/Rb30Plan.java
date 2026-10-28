@@ -594,11 +594,13 @@ final class Rb30Plan {
                 "low-voltage-board", anchor, 20));
         }
         // RB30 is the shared normal provider, including its qualification
-        // construction path.  Select connected-pocket packing explicitly;
-        // private RB56 placement owns its legacy interpretation separately.
+        // construction path. Normal admission accepts only P07, so record
+        // that physical requirement here and skip the known-inadmissible P05
+        // stage. Select connected-pocket packing explicitly; private RB56
+        // placement owns its legacy interpretation separately.
         return new PcbPlacementConstraints(parts,
             new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM,
-            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION)
+            MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, 1, true)
             .withConnectedPocketPacking();
     }
 
