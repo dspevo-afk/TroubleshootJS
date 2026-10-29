@@ -69,9 +69,9 @@ public final class QuickPlayGateContractTest {
                 QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID, DifficultyProfile.MEDIUM),
             "Local reenablement restores support without changing the live catalog");
         check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
-                !QuickPlayAdmission.supports(Rb56Plan.FAMILY_ID) &&
+                QuickPlayAdmission.supports(Rb56Plan.FAMILY_ID) &&
                 QuickPlayAdmission.supports(Rb30Plan.FAMILY_ID),
-            "Family-only public support must distinguish installed private and enabled families");
+            "Family-only public support includes both admitted staged families");
         // Exact requests are assessed using their actual proof, not the broad-seed declaration.
         PlayerLaunchRequest exact = new PlayerLaunchRequest(Rb30Plan.FAMILY_ID, "0", "EASY");
         check(exact.profile == DifficultyProfile.EASY && !exact.candidateSearch &&
@@ -157,7 +157,8 @@ public final class QuickPlayGateContractTest {
         Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
         expected.add(Rb30Plan.FAMILY_ID);
-        check(catalog.size() == 11 && catalog.equals(expected),
+        expected.add(Rb56Plan.FAMILY_ID);
+        check(catalog.size() == 12 && catalog.equals(expected),
             "Current menu includes accepted Q30 after the existing qualified families");
         check(PlayerFamilyCatalog.registeredFamilies().contains(Rb30Plan.FAMILY_ID),
             "Enabled Q30 retains its registered construction capability");
@@ -185,7 +186,8 @@ public final class QuickPlayGateContractTest {
                     "Staged catalog family crossed the synchronous generator boundary");
             }
             check(staged.getExecutionPolicy() == (Rb30Plan.FAMILY_ID.equals(family) ?
-                    GenerationExecutionPolicy.NORMAL_MEDIUM : GenerationExecutionPolicy.SMALL_BOARD),
+                    GenerationExecutionPolicy.NORMAL_MEDIUM : Rb56Plan.FAMILY_ID.equals(family) ?
+                    GenerationExecutionPolicy.RB56 : GenerationExecutionPolicy.SMALL_BOARD),
                 "Catalog family received a different execution contract");
         }
         GenerationRequest registered = GenerationRequest.stagedQuickPlay(
@@ -297,6 +299,12 @@ public final class QuickPlayGateContractTest {
         check(job.getOutcome()==GenerationJob.Outcome.PASS && s.begins==4 && s.aborts==3 && s.published==1,"Ordered retries failed");
         check(job.getCandidateIndex()==3 && job.getAttempts().size()==4,"Candidate ledger incomplete");
         check(job.getStageWorkCount(GenerationJob.Stage.HYPOTHESES)==4 && job.getCandidateStageWorkCount(GenerationJob.Stage.HYPOTHESES)==2,"Retry lost aggregate or candidate proof count");
+        Rb56QualificationVerifier.requireProofWork(job, 2, 2);
+        check(true, "normal qualification retains rejected proof work separately from its complete accepted proof");
+        boolean mixedProofRejected = false;
+        try { Rb56QualificationVerifier.requireProofWork(job, 4, 4); }
+        catch (IllegalStateException expected) { mixedProofRejected = true; }
+        check(mixedProofRejected, "aggregate proof work cannot stand in for the accepted candidate's proof");
         check(job.getAttempts().get(2).stage==GenerationJob.Stage.HYPOTHESES && job.getAttempts().get(2).outcome==GenerationJob.Outcome.EXPECTED_REJECTION,"Wrong rejection stage");
         check(job.getReceipt().getManifest().equals("candidate=03"),"Receipt belongs to a rejected candidate");
         boolean immutable=false;try{job.getAttempts().clear();}catch(UnsupportedOperationException expected){immutable=true;}

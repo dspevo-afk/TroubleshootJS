@@ -1,0 +1,287 @@
+{
+  "schema": "tsj-rb56-known-781-current-v1",
+  "scope": "FOCUSED_KNOWN_ROOT_CANARY_NOT_FORMAL_COHORT",
+  "status": "PASS",
+  "qualificationDisposition": "NOT_ACCEPTED",
+  "rootSeed": "7817806517725629686",
+  "driveMode": "normal manual default; production coordinator opt-in query parameter absent",
+  "capture": {
+    "id": "known-781-current-v1",
+    "hostSessionId": 90190,
+    "hostExitCode": 0,
+    "resultOutcome": "PASS",
+    "caseOutcome": "PASS",
+    "terminalState": "PASS:rb56",
+    "timedOut": false
+  },
+  "sourceArtifact": {
+    "build": "Developer20",
+    "buildExit": 0,
+    "buildSeconds": 149.0755024,
+    "inputDigest": "f95cc90f1f950e923a70b3a8dfcb18f01b374e7ff6ba76d6445897f30b4a2e38",
+    "outputDigest": "0c8fc632226abb30ca309d8d09ee03e67a0193403aa9c02894b85df6513a5535",
+    "outputFileCount": 357,
+    "identityReceiptSha256": "aa9ff8c42b3c6aae82d17014202e22511c346d6b85d9ba598803a518d8453180",
+    "inventoryReceiptSha256": "af513dde9714764235679d578e1fa47cd417e26056866fd38acb540b4080c89f",
+    "buildExitReceiptSha256": "b26a1ffe5c289f093c1e0fb29dff1a9d6e24b0c9630d9b8fd9b47e22a265c695",
+    "currentSourceReverification": {
+      "date": "2026-10-29",
+      "status": "PASS",
+      "script": "audit-current-developer20-v1.ps1",
+      "scriptSha256": "573ec9e36361c8d4f7c11653dc8431e64b2a2b519b565b0af88ec7c11d179b49",
+      "resultSource": "task-owner-reported invocation"
+    },
+    "servedCache": {
+      "urlExactForPage": true,
+      "resourceType": "script",
+      "fileId": "D967F819D0DCF2EA4FA0F0512631D4BC.cache.js",
+      "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+      "bytes": 3514335,
+      "matchedDeveloper20Inventory": true
+    }
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeAfterAggregateEqual": true,
+    "fileListsEqual": true,
+    "manifestSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+    "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+    "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+    "fileCount": 1569,
+    "sourceFileCount": 1183,
+    "webFileCount": 386,
+    "runnerPath": "compiled_attribute_acceptance.py",
+    "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "auditSeconds": 0.506283399881795
+  },
+  "limits": {
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "browserTimeoutSeconds": 115,
+    "limitsUnchanged": true
+  },
+  "run": {
+    "operationSeconds": 88.68105860007927,
+    "generationMillis": 87314,
+    "jobMillis": 87515,
+    "jobStage": "PUBLISH",
+    "jobOutcome": "PASS",
+    "jobWork": 488,
+    "generationWork": 488,
+    "cleanupSeconds": 0.9472024000715464,
+    "phase": "RESTORED",
+    "acceptedOrdinal": 0,
+    "candidateAttemptCount": 1,
+    "legacyManualMaxUnitMillis": 1798,
+    "productionDriveQueryFlagPresent": false,
+    "generationDriverFieldPresent": false,
+    "rawReportSha256": "da482799345c5838dc51483e070dbb782010d11bec2e8cdf10ea69cb8cbd2b5e",
+    "caseReceiptMatchedReport": true
+  },
+  "proof": {
+    "hypothesisCount": 5,
+    "proofRows": 5,
+    "allProofRowsPass": true,
+    "repairReachableStateIsolatedAndRetested": true,
+    "observationBundles": 5,
+    "samplesPerHypothesis": [
+      13,
+      13,
+      13,
+      13,
+      13
+    ],
+    "solverSamples": 65,
+    "temporalWaitRows": 5,
+    "waitsPerHypothesis": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "proofWorkUnits": 375,
+    "requiredProofWorkUnits": 520,
+    "proofCachePolicy": "BYPASS",
+    "proofWarmReuse": false,
+    "coldProof": true,
+    "generationStages": 6,
+    "generationWork": 488,
+    "jobWork": 488,
+    "jobStageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 109,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 375,
+      "SYMPTOM": 1,
+      "PUBLISH": 1
+    },
+    "normalPhysicalAdmission": true,
+    "physicalAdmission": "RB56_BOARD_NORMAL@1",
+    "fullProductionD01": true,
+    "normalProfileValidated": "MEDIUM",
+    "normalProfileAssessmentVersion": 3,
+    "normalPublicationGranted": true,
+    "qualifiedPublicationReported": true,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "cleanupPending": false,
+    "playerSessionReleased": true,
+    "playerBridgeReleased": true,
+    "ordinaryCustomerRetestPassedReported": false,
+    "canonicalEvidenceDigestsSha256": {
+      "proofRows": "41e673ed253f9e3e674bbcc42587e8a47eb203a4edc7d542c0a4ad1d9b699c79",
+      "calibrationObservations": "7b716c35d0f4a8f9bdbc6f3380fb01f7838f4c1fd1ddaf6cce4d7acd99bdf508",
+      "calibrationTemporalWaits": "32aee7796ae20b2dce500e962bb30070ced78af0e5a7ed37c35c62a69605614a",
+      "candidateAttempts": "edae5f505b3bee34a535c1ed1d5f9de5b51a9760cb15b98f459d35eb542b7bd1",
+      "difficultyFeatures": "e3751c966fa39d78e45a22db153c26e18306e89a85d4f4123f53378da2f31ed7",
+      "normalProfileAssessment": "e748347f37d88ca0d9c4f3930b76ad32bb278c9fc9a3cfc9cc9a1068619da4cf",
+      "jobStageWork": "5b340f63610a36ec5733722bd6b2ad8d090f4b81fe1f89852d6ba24b3ddeaafe"
+    },
+    "generationReceiptDigest": "7f171673d81035211e19bea462fb7ede1494d0f3e6b575a0383c085c2b010eea",
+    "diagnosticContextDigest": "ad8ba74c1e31907236b8e93c6cd25927bf5f8ad2a69aeb263cde3b5d284d07a1",
+    "diagnosticProgramDigest": "e022d7728d90051bf64fc33876f0937342de6f071bf58719e957d90d19da5cc1"
+  },
+  "pinnedLegacyComparison": {
+    "equalNonWallProjectionAgainstBoth": true,
+    "projectionSha256": "8d5de941e4e3f895efeadaf1ebb0d5ab3300dc44866fbc7407f848b7312cfc26",
+    "wallFieldsExcluded": [
+      "cleanupMillis",
+      "diagnosticWorkTimings",
+      "difficultyFeatureExtractionMillis",
+      "generationMillis",
+      "jobMillis",
+      "jobStageMillis",
+      "manualUnitMaxMillis",
+      "maxManualUnitMillis",
+      "operationMillis",
+      "proofMillis",
+      "routingMillis",
+      "wallMillis"
+    ],
+    "allOtherReportFieldsRetained": true,
+    "references": [
+      {
+        "label": "routing-index-pilot-v1-root781",
+        "rawReportSha256": "c165f49051451e109822d864be666b0850225980d0fb5ec22e2745b610228539",
+        "nonwallProjectionSha256": "8d5de941e4e3f895efeadaf1ebb0d5ab3300dc44866fbc7407f848b7312cfc26",
+        "outcome": "PASS"
+      },
+      {
+        "label": "profile-blind-failure-v1-root781",
+        "rawReportSha256": "700b4d9d3cc0d832ef475c1f7a57bc7efdb02396e1900050c7a12c681943c4f3",
+        "nonwallProjectionSha256": "8d5de941e4e3f895efeadaf1ebb0d5ab3300dc44866fbc7407f848b7312cfc26",
+        "outcome": "PASS"
+      }
+    ]
+  },
+  "previousPilotTimeoutsPreserved": [
+    {
+      "record": "overhead-compiled-pilot-v1.json",
+      "recordSha256": "f97332b8199abb4c62115097c2ea9b79df685201f29a0e4c02e1c5ea1bde48d6",
+      "rootSeed": "-6794211680707017382",
+      "outcome": "FAIL",
+      "phase": "COLD_GENERATION",
+      "jobStage": "HYPOTHESES",
+      "jobWork": 446,
+      "jobMillis": 90017,
+      "rawReportSha256": "cf393a8b6cb7d4e4490c919cb3b946f60e88def2c1a450136ed5864da6619959"
+    },
+    {
+      "record": "overhead-compiled-pilot-v1.json",
+      "recordSha256": "f97332b8199abb4c62115097c2ea9b79df685201f29a0e4c02e1c5ea1bde48d6",
+      "rootSeed": "7817806517725629686",
+      "outcome": "FAIL",
+      "phase": "COLD_GENERATION",
+      "jobStage": "HYPOTHESES",
+      "jobWork": 433,
+      "jobMillis": 90076,
+      "rawReportSha256": "572c38f49ddeadd2da48c2c0f6ade791a6da0eb03569637affe5a6d9f8351bc4"
+    },
+    {
+      "record": "overhead-compiled-pilot-v2.json",
+      "recordSha256": "5b1505603058ff72a2101da50553dc26387a4469cd95dd74a9485743cff70cfc",
+      "rootSeed": "-6794211680707017382",
+      "outcome": "FAIL",
+      "phase": "COLD_GENERATION",
+      "jobStage": "HYPOTHESES",
+      "jobWork": 460,
+      "jobMillis": 90000,
+      "rawReportSha256": "89861a71e1d7f8b601f7a79ede0f07aa406330ab8d3647d8e47a93e0ffd79b5d"
+    },
+    {
+      "record": "overhead-compiled-pilot-v2.json",
+      "recordSha256": "5b1505603058ff72a2101da50553dc26387a4469cd95dd74a9485743cff70cfc",
+      "rootSeed": "7817806517725629686",
+      "outcome": "FAIL",
+      "phase": "COLD_GENERATION",
+      "jobStage": "HYPOTHESES",
+      "jobWork": 452,
+      "jobMillis": 90331,
+      "rawReportSha256": "28642174cf72cc5aef07a39a61b1b81950cc29d5d91d1f892e232c2d7712e9ce"
+    }
+  ],
+  "nativeGateReceipts": {
+    "native5": {
+      "exit": 0,
+      "seconds": 61.2593244,
+      "suites": 5,
+      "cleanupPass": true,
+      "exitReceiptSha256": "246081077b95cb14931457f7e5b32a35d94eb7e3d6f1d1fba4d2933100b7adaa",
+      "outerLogSha256": "1a542e03e5197bde8a77301d94a1dc4f1c7609feef4d9bbf808e156648d41b37",
+      "receiptSha256": "96c5eb389fa0cef5b6019ff098465b4e589a87528088684e3fa7b63266a25750"
+    },
+    "distinctHistoricalNative42SuiteRun": {
+      "exit": 0,
+      "seconds": 727.1512612,
+      "suites": 42,
+      "exitReceiptSha256": "f2d69813d1f59e14235eebcfaf29856feeabf364a103fa657243733a5b95e460",
+      "note": "Separate older 42-suite run; retained unchanged and not the Native5 receipt above."
+    }
+  },
+  "processCleanup": {
+    "edgeProcessesBefore": 7,
+    "edgeProcessesBeforeClose": 10,
+    "pidCreationTimeExecutableIdentityCaptured": true,
+    "baselineIdentityRetainedInBeforeClose": true,
+    "cleanupStatus": "PASS",
+    "serverStopped": true,
+    "ownedSurvivors": 0,
+    "errors": 0
+  },
+  "rawSha256": {
+    "result.json": "9583165fac5ee66b253a8207e454d675d384741d8f2ca74effbd758474b05fcf",
+    "case-wrapper.json": "c5a098543556bcb4bb76eee3e387af2f8295b1e1298043f16f73f80fdde139f8",
+    "normal-report.json": "da482799345c5838dc51483e070dbb782010d11bec2e8cdf10ea69cb8cbd2b5e",
+    "case-spec.json": "94257bc92a66dc6641b917a1252049d956021b11c26803a9c6ba4151dd44d35a",
+    "runtime-identity.json": "07b4179cfc7368071c820cfd49feaf24e6c50442dfc627f3c0cce144cb05a0ed",
+    "input-manifest-before.json": "2aab09d12a19cebeabdc5e82184f8a096d9fb88d1df3330c12dd28baae8f4352",
+    "input-manifest-after.json": "cc2a516c11b90b0fe3c903a4d978881ed3729262053da12cc0ec19bae85648fb",
+    "runner-before.json": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+    "runner-after.json": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+    "owned-processes-before.json": "52b7a54eb6900919d494f3a828e94e2804d2ced50b450a3d76e06219df21ea85",
+    "owned-processes-before-close.json": "55b6026d37368074c9bb80da0a822be3d2187087d9c52247893eecc7080c6582",
+    "completion.log": "06ef37ea9f28c604e2e4a544e02d0180c6dd6709ebd5bd4140d1f5a692c79dcc",
+    "gwt-developer-v20-identity.json": "aa9ff8c42b3c6aae82d17014202e22511c346d6b85d9ba598803a518d8453180",
+    "gwt-developer-v20-inventory.json": "af513dde9714764235679d578e1fa47cd417e26056866fd38acb540b4080c89f",
+    "gwt-developer-v20-exit.json": "b26a1ffe5c289f093c1e0fb29dff1a9d6e24b0c9630d9b8fd9b47e22a265c695",
+    "current-source-reverification-script.ps1": "573ec9e36361c8d4f7c11653dc8431e64b2a2b519b565b0af88ec7c11d179b49",
+    "native5-exit.json": "246081077b95cb14931457f7e5b32a35d94eb7e3d6f1d1fba4d2933100b7adaa",
+    "native5-outer.log": "1a542e03e5197bde8a77301d94a1dc4f1c7609feef4d9bbf808e156648d41b37",
+    "native5-receipt.txt": "96c5eb389fa0cef5b6019ff098465b4e589a87528088684e3fa7b63266a25750",
+    "historical-native42-exit.json": "f2d69813d1f59e14235eebcfaf29856feeabf364a103fa657243733a5b95e460",
+    "overhead-compiled-pilot-v1.json": "f97332b8199abb4c62115097c2ea9b79df685201f29a0e4c02e1c5ea1bde48d6",
+    "overhead-compiled-pilot-v2.json": "5b1505603058ff72a2101da50553dc26387a4469cd95dd74a9485743cff70cfc"
+  },
+  "preservedLimitations": [
+    "This is one current known-root canary, not formal RB56 MEDIUM qualification or population evidence.",
+    "It uses the normal manual default; it does not exercise the production-coordinator opt-in path.",
+    "The two pinned historical passing reports establish only non-wall report equality; the v1/v2 timeout captures remain FAIL and are listed above.",
+    "The new blind cohort remains untouched.",
+    "The report marks ordinaryCustomerRetestPassed false while all five proof-row customer retests pass; both report fields are retained without reinterpretation."
+  ]
+}

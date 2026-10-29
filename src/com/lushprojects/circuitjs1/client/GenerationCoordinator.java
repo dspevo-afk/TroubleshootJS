@@ -101,6 +101,19 @@ final class GenerationCoordinator {
     }
     long getCancellationLatencyMillis() { return cancellationLatency; }
     long getMaxAdvanceMillis() { return maxAdvanceMillis; }
+    int getSessionRestoreCompletedWorkUnitsForDeveloperVerification() {
+        return services == null || services.restorePublication == null ? 0 :
+            services.restorePublication.completedUnits;
+    }
+    int getSessionRestoreRequiredWorkUnitsForDeveloperVerification() {
+        return services == null || services.restoredSession == null ? 0 :
+            PlayerSessionState.restoreWorkUnits(services.restoredSession);
+    }
+    boolean isSessionRestorePublicationReadyForDeveloperVerification() {
+        int required = getSessionRestoreRequiredWorkUnitsForDeveloperVerification();
+        return isRunning() && job.getStage() == GenerationJob.Stage.PUBLISH && required > 0 &&
+            getSessionRestoreCompletedWorkUnitsForDeveloperVerification() == required;
+    }
     long getLastRoutingElapsedMillisForDeveloperVerification() { return lastRoutingElapsedMillis; }
     long getLastProofElapsedMillisForDeveloperVerification() { return lastProofElapsedMillis; }
     int getLastCompletedProofWorkUnitsForDeveloperVerification() { return lastCompletedProofWorkUnits; }
@@ -133,6 +146,33 @@ final class GenerationCoordinator {
         if (watchdog != null) { watchdog.cancel(); watchdog = null; }
         if (continuation != null) { continuation.cancel(); continuation = null; }
     }
+    /**
+     * Validate an opt-in normal-request diagnostic before the shared start path
+     * can cancel an existing job or mutate simulator state.
+     */
+    long validateAsynchronousDeveloperVerificationRequest(GenerationRequest request) {
+        if (!sim.troubleshootDebug || !sim.developerVerifierRunning)
+            throw new IllegalStateException(
+                "Owner-driven normal diagnostics require an active developer-verification scope");
+        if (pageHidden())
+            throw new IllegalStateException(
+                "Owner-driven normal diagnostics require a visible page");
+        if (request == null || request.isPrivateDiagnosticQualification())
+            throw new IllegalArgumentException(
+                "Owner-driven diagnostics require a normal player request");
+        return normalMaximumJobMillis(request);
+    }
+    /**
+     * Starts a cold normal-player job on the production coordinator's browser
+     * continuation and watchdog. This is diagnostic-only and keeps the ordinary
+     * normal request authority, cache bypass, foreground clock and all limits.
+     */
+    void startAsynchronousForDeveloperVerification(GenerationRequest request) {
+        long maximumJobMillis = validateAsynchronousDeveloperVerificationRequest(request);
+        start(request, null, true, false, maximumJobMillis, false, null);
+    }
+    boolean usesForegroundBudgetForDeveloperVerification() { return foregroundBudget; }
+    boolean isPageVisibleForDeveloperVerification() { return !pageHidden(); }
     /** One-shot controlled P09 negative available only inside the developer verifier. */
     void startForDeveloperVerification(GenerationRequest request,
             ControlledP09NegativeForDeveloperVerification controlledP09Negative) {
@@ -326,6 +366,8 @@ final class GenerationCoordinator {
                 long turnStarted = System.currentTimeMillis();
                 for (int unit = 0; unit < MAX_UNITS_PER_TURN && scheduledJob.isRunning(); unit++) {
                     advance();
+                    if (scheduledJob.isRunning() && scheduledJob.getStage() == GenerationJob.Stage.PUBLISH &&
+                            services != null && services.restoredSession != null) break;
                     if (System.currentTimeMillis() - turnStarted >= TURN_TARGET_MILLIS) break;
                 }
                 if (scheduledJob.isRunning()) { yields++; GenerationCoordinator.this.schedule(); }
@@ -432,7 +474,7 @@ final class GenerationCoordinator {
         timing[2] = Math.max(timing[2], Math.max(0, elapsedMillis));
     }
 
-    private final class Services implements GenerationJob.Services {
+    private final class Services implements GenerationJob.Services, GenerationJob.PublicationPreparation {
         private final GenerationRequest selection;
         private GenerationRequest request;
         private final Completion completion;
@@ -460,6 +502,88 @@ final class GenerationCoordinator {
         private DifficultyAssessment difficulty;
         private ControlledP09NegativeForDeveloperVerification controlledP09Negative;
         private boolean notified, cleanupComplete;
+        private RestorePublicationPermit restorePublication;
+
+        /** Pristine proof authorizes only this exact private reconstruction. */
+        private final class RestorePublicationPermit {
+            private final GenerationJob ownedJob = job;
+            private final GenerationRequest ownedRequest = request;
+            private final String manifest = request.canonical();
+            private final GeneratedBoardInstance owner = candidate;
+            private final GeneratedChallengeController controller = sim.getGeneratedChallengeController();
+            private final Object graph = sim.elmList;
+            private final FreshGeneratedRuntimeInstallation.Staged staged = installation;
+            private final PlayerSessionSave saved = restoredSession;
+            private final GeneratedDiagnosticProofReceipt baselineProof = proofReceipt;
+            private final GeneratedDiagnosticContextKey baselineKey = proofContextKey;
+            private final String context = dependencyContext, temporal = rawTemporalDependencyCanonical;
+            private final int expectedUnits = PlayerSessionState.restoreWorkUnits(restoredSession);
+            private final String configuration = GenerationDependencyContext.captureRestoreConfiguration(sim);
+            private String yieldContext = captureRestoreContext();
+            private String yieldSemantic = PlayerSessionState.semanticSignature(sim);
+            private String yieldContinuity = captureRestoreContinuity();
+            private int completedUnits;
+            private boolean consumed;
+
+            void require(String expected) {
+                if (consumed || services != Services.this || job != ownedJob ||
+                        ownedJob.getOutcome() != GenerationJob.Outcome.RUNNING ||
+                        ownedJob.getStage() != GenerationJob.Stage.PUBLISH ||
+                        request != ownedRequest || !manifest.equals(request.canonical()) ||
+                        candidate != owner || installation != staged || restoredSession != saved ||
+                        sim.getGeneratedBoardInstance() != owner || sim.getGeneratedChallengeController() != controller ||
+                        sim.elmList != graph || !staged.ownsCandidate() ||
+                        proofReceipt != baselineProof || proofContextKey != baselineKey ||
+                        !context.equals(expected) || !context.equals(dependencyContext) ||
+                        !temporal.equals(rawTemporalDependencyCanonical) ||
+                        completedUnits != expectedUnits ||
+                        staged.getCompletedSessionRestoreUnits() != expectedUnits ||
+                        !staged.hasCompletedSessionRestore(saved) ||
+                        job.getCandidateStageWorkCount(GenerationJob.Stage.PUBLISH) != expectedUnits + 1)
+                    throw new GenerationJob.Stale("Restored publication permit is incomplete, foreign or consumed");
+                requireYieldBoundary();
+                staged.requireRestoredSession(saved);
+            }
+            void requireYieldBoundary() {
+                if (consumed || services != Services.this || job != ownedJob || request != ownedRequest ||
+                        ownedJob.getOutcome() != GenerationJob.Outcome.RUNNING ||
+                        ownedJob.getStage() != GenerationJob.Stage.PUBLISH ||
+                        candidate != owner || installation != staged || restoredSession != saved ||
+                        sim.getGeneratedBoardInstance() != owner || sim.getGeneratedChallengeController() != controller ||
+                        sim.elmList != graph || !staged.ownsCandidate())
+                    throw new GenerationJob.Stale("Session reconstruction lost its exact owner between units");
+                if (controller.getDiagnosticProofReceipt() != baselineProof)
+                    throw new GenerationJob.Stale("Session reconstruction changed its pristine diagnostic proof receipt");
+                staged.enterStep();
+                requireFixedDependencies();
+                if (!yieldContext.equals(captureRestoreContext()) ||
+                        !yieldSemantic.equals(PlayerSessionState.semanticSignature(sim)) ||
+                        !yieldContinuity.equals(captureRestoreContinuity()))
+                    throw new GenerationJob.Stale("Session reconstruction state changed between owned units");
+            }
+            private void requireFixedDependencies() {
+                if (!temporal.equals(captureRawTemporalDependency()) ||
+                        !configuration.equals(GenerationDependencyContext.captureRestoreConfiguration(sim)))
+                    throw new GenerationJob.Stale("Session reconstruction changed retained proof configuration");
+            }
+            void completedUnit() {
+                requireFixedDependencies();
+                yieldContext = captureRestoreContext();
+                yieldSemantic = PlayerSessionState.semanticSignature(sim);
+                yieldContinuity = captureRestoreContinuity();
+                completedUnits++;
+            }
+            void consume(String expected) { require(expected); consumed = true; }
+            void revoke() { consumed = true; }
+        }
+
+        private String captureRestoreContext() {
+            return GenerationDependencyContext.capture(sim, candidate, request.canonical(), realizationManifest).canonical();
+        }
+        private String captureRestoreContinuity() {
+            return Long.toHexString(Double.doubleToLongBits(sim.t)) + "/" + sim.timeStepCount + "/" +
+                Long.toHexString(Double.doubleToLongBits(sim.timeStepAccum));
+        }
 
         Services(GenerationRequest request, Completion completion, boolean allowDiagnosticProofReuse,
                 GeneratedDiagnosticProofCache proofCache, boolean measurementOnly,
@@ -541,12 +665,15 @@ final class GenerationCoordinator {
                 int proofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(candidate,
                     request.requiresExplicitCompletion());
                 expectedProofUnits = proofUnits;
-                int otherUnits = candidate.getTemporalBehavior() == null ? 5 :
+                int minimumProofUnits = GeneratedDiagnosticProofService.minimumWorkUnits(candidate,
+                    request.requiresExplicitCompletion());
+                long otherUnits = candidate.getTemporalBehavior() == null ? 5 :
                     4 + GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
                         candidate.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.HEALTHY) +
                     GeneratedRuntimeDeveloperSettlement.requiredProfileWorkUnits(
                         candidate.getTemporalBehavior(), GeneratedTemporalBehavior.Profile.FAULTED);
-                if (proofUnits > MAX_JOB_STEPS - otherUnits)
+                if (restoredSession != null) otherUnits += PlayerSessionState.restoreWorkUnits(restoredSession);
+                if (minimumProofUnits > MAX_JOB_STEPS - otherUnits)
                     throw new GenerationJob.Failure(GenerationJob.Outcome.WORK_EXHAUSTED,
                         "Diagnostic program exceeds the current generation work budget");
                 if (request.isComposition()) candidate.getPhysicalBoardRuntime().validateSupportedCompositionProviders();
@@ -591,7 +718,9 @@ final class GenerationCoordinator {
             }
             try {
                 String dependency = dependencies();
-                job.preflightProofWork(expectedProofUnits);
+                job.preflightProofWork(GeneratedDiagnosticProofService.minimumWorkUnits(candidate,
+                    request.requiresExplicitCompletion()), expectedProofUnits, restoredSession == null ? 0 :
+                    PlayerSessionState.restoreWorkUnits(restoredSession));
                 return dependency;
             } catch (Throwable failure) {
                 if (failure instanceof GenerationJob.Failure)
@@ -667,6 +796,8 @@ final class GenerationCoordinator {
                 ";scenario-compatible;answer-private";
         }
         public String dependencies() {
+            if (restorePublication != null)
+                throw new GenerationJob.Stale("Pristine dependency capture cannot follow session reconstruction");
             installation.enterStep();
             GenerationDependencyContext context = GenerationDependencyContext.capture(sim, candidate,
                 request.canonical(), realizationManifest);
@@ -682,13 +813,44 @@ final class GenerationCoordinator {
             rawTemporalDependencyCanonical = currentRawTemporalDependency;
             return dependencyContext;
         }
-        public void publish(GenerationReceipt receipt) {
-            if (receipt == null) throw new IllegalStateException("Missing generation proof receipt");
+
+        public boolean preparePublication() {
+            if (restoredSession == null) return false;
+            installation.enterStep();
+            if (restorePublication == null) {
+                if (selection.isCandidateSearch())
+                    throw new GenerationJob.Stale("Session restoration requires its exact candidate");
+                requireCurrentProofContext("session reconstruction authorization");
+                requirePublicationAdmission();
+                prepareQuickPlaySession();
+                restorePublication = new RestorePublicationPermit();
+            }
+            if (installation.hasCompletedSessionRestore(restoredSession)) return false;
+            if (restorePublication.consumed)
+                throw new GenerationJob.Stale("Session reconstruction permit was revoked");
+            restorePublication.requireYieldBoundary();
+            installation.advanceSessionRestore(restoredSession);
+            restorePublication.completedUnit();
+            // Even the last reconstruction unit yields before the atomic commit.
+            return true;
+        }
+
+        public void requirePublicationDependencies(String expected) {
+            if (restoredSession == null) {
+                if (!expected.equals(dependencies()))
+                    throw new GenerationJob.Stale("Generation dependency context changed");
+            } else {
+                if (restorePublication == null)
+                    throw new GenerationJob.Stale("Missing restored publication permit");
+                restorePublication.require(expected);
+            }
+        }
+
+        private void requirePublicationAdmission() {
             if (measurementOnly && (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
                     !request.isPrivateDiagnosticQualification()))
                 throw new GenerationJob.Stale(
                     "Private diagnostic measurement scope changed before publication");
-            requireCurrentProofContext("generation publication");
             if (!measurementOnly) {
                 PlayerFamilyCatalog.requireNormalPlayerEnabled(request.getFamilyId());
                 request.getExecutionPolicy().requireOwner(candidate);
@@ -697,6 +859,19 @@ final class GenerationCoordinator {
                 if (difficulty == null) throw new IllegalStateException("Missing difficulty admission evidence");
                 difficulty.require(request.getDifficulty());
             }
+        }
+
+        private void prepareQuickPlaySession() {
+            if (request.isQuickPlay()) {
+                QuickPlaySelection selected = new QuickPlaySelection(request.getDescriptor().getDeviceIntent().getId(),
+                    request.getDescriptor().getRootSeed());
+                sim.quickPlaySession = QuickPlaySession.forCandidate(selected, candidate);
+            }
+        }
+        public void publish(GenerationReceipt receipt) {
+            if (receipt == null) throw new IllegalStateException("Missing generation proof receipt");
+            if (restoredSession == null) requireCurrentProofContext("generation publication");
+            requirePublicationAdmission();
             String physicalFingerprint = null;
             if (selection.isCandidateSearch()) {
                 physicalFingerprint = PhysicalBoardFingerprint.novelty(candidate);
@@ -706,10 +881,11 @@ final class GenerationCoordinator {
                         "Physical candidate changed after novelty admission");
                 recentBoards.requireNovel(physicalFingerprint);
             }
-            if (request.isQuickPlay()) {
-                QuickPlaySelection selection = new QuickPlaySelection(request.getDescriptor().getDeviceIntent().getId(),
-                    request.getDescriptor().getRootSeed());
-                sim.quickPlaySession = QuickPlaySession.forCandidate(selection, candidate);
+            if (restoredSession == null) prepareQuickPlaySession();
+            else {
+                if (restorePublication == null)
+                    throw new GenerationJob.Stale("Missing restored publication permit");
+                restorePublication.consume(receipt.getDependencies());
             }
             installation.publish(restoredSession);
             if (physicalFingerprint != null) recentBoards.published(physicalFingerprint);
@@ -727,6 +903,7 @@ final class GenerationCoordinator {
         public void abort() {
             Throwable failure = null;
             cleanupComplete = false;
+            if (restorePublication != null) restorePublication.revoke();
             if (proof != null) {
                 try { proof.cancel(); }
                 catch (Throwable cleanup) { failure = cleanup; }
@@ -764,6 +941,7 @@ final class GenerationCoordinator {
             // Restore succeeded before making the next exact candidate eligible.
             // The protected original stays owned until the entire launch terminates.
             installation = null; proof = null; candidate = null; constructionSession = null;
+            restorePublication = null;
             proofReceipt = null; proofContextKey = null; dependencyContext = null;
             rawTemporalDependencyCanonical = null;
             proofCacheHit = false; proofCachePublicationPending = false;
@@ -783,13 +961,14 @@ final class GenerationCoordinator {
             return foregroundBudget ? foregroundClock.nowMillis(wall) : wall;
         }
         void pause() {
-            if (proof != null) proof.pause();
+            if (proof != null && job.getStage() == GenerationJob.Stage.HYPOTHESES) proof.pause();
             else if (installation != null) installation.pause();
         }
         void releaseSavedOwners() {
             if (proof != null) lastCleanupAudit = proof.getCleanupAudit();
             original = null; originalController = null; originalGraph = null;
             installation = null; proof = null; proofReceipt = null; proofContextKey = null;
+            restorePublication = null;
             dependencyContext = null; rawTemporalDependencyCanonical = null;
             proofCacheHit = false; proofCachePublicationPending = false;
             pendingProofCacheEntry = null;

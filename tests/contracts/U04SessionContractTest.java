@@ -56,12 +56,12 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 11 &&
+        check(PlayerFamilyCatalog.families().size() == 12 &&
             PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID),
             "accepted Q30 is present in the normal-player menu");
         check(PlayerFamilyCatalog.registeredFamilies().size() == 12 &&
             PlayerFamilyCatalog.registeredFamilies().contains(Rb56Plan.FAMILY_ID),
-            "held RB56 retains its registration without entering the eleven-family player menu");
+            "RB56 retains its registration and enters the twelve-family player menu");
         verifyGenericShop();
         verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);
@@ -300,6 +300,9 @@ public final class U04SessionContractTest {
     }
 
     private static void verifyHeldRb56Admission() {
+        check(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "normal MEDIUM RB56 is enabled before the native hold fixture");
+        try (HeldFamilyCatalogFixture held = new HeldFamilyCatalogFixture(Rb56Plan.FAMILY_ID)) {
         check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
             !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
             !PlayerFamilyCatalog.families().contains(Rb56Plan.FAMILY_ID),
@@ -308,6 +311,10 @@ public final class U04SessionContractTest {
         reject(new Attempt() { public void run() { new PlayerLaunchRequest(Rb56Plan.FAMILY_ID, "-1022", "HARD"); }});
         reject(new Attempt() { public void run() { new PlayerLaunchRequest(Rb56Plan.FAMILY_ID, "-1022", "MEDIUM").generation(); }});
         reject(new Attempt() { public void run() { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "-1022", "MEDIUM"); }});
+        }
+        PlayerLaunchRequest normal = PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "-1022", "MEDIUM");
+        check(normal.generation().candidateCount() == 4 && PlayerFamilyCatalog.families().contains(Rb56Plan.FAMILY_ID),
+            "scoped hold restores the actual normal MEDIUM candidate path");
     }
 
     /** Snapshot only session fields; no electrical graph, admission or controller calls. */
@@ -467,7 +474,9 @@ public final class U04SessionContractTest {
         GenerationRequest request = new PlayerLaunchRequest(family, Long.toString(seed),
             PlayerFamilyCatalog.candidateProfile(family).name()).generation();
         GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
-        if (!Rb30Plan.FAMILY_ID.equals(family)) return prepared.construct().instance;
+        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                request.getExecutionPolicy() != GenerationExecutionPolicy.RB56)
+            return prepared.construct().instance;
         GenerationRequest.ConstructionSession session = prepared.beginConstruction();
         int steps = 0;
         while (!session.advance()) {

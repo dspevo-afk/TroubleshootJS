@@ -39,6 +39,7 @@ public final class Rb56TemporalWorkContractTest {
             owner.requireNormalPhysicalAdmission();
             check(!owner.isDeveloperOnlyFaultRoute() && owner.getFaultCandidates().size() == 5,
                 "temporal fixture retains normal physical admission and all five unapplied faults");
+            verifyProofWorkAdmission(owner);
             phase(sim, "INSTALL");
             install(sim, owner);
             Rb30Behavior behavior = (Rb30Behavior)owner.getFamilyState();
@@ -75,6 +76,7 @@ public final class Rb56TemporalWorkContractTest {
             currentBackingNegatives(sim, owner, behavior);
             cancellationAndFailure(sim, owner, behavior);
             missingHarnessNegative(sim, owner, behavior);
+            endpointIndexHintCanaries(sim, owner);
             check(subscriptions(sim).isEmpty() && !sim.activeMeasurementOverlay && sim.stopMessage == null,
                 "pilot ends without observation handles, stimulus overlay, or unexpected solver stop");
         } catch (Throwable problem) {
@@ -115,6 +117,31 @@ public final class Rb56TemporalWorkContractTest {
         phase(sim, "COMPLETE");
         System.out.println("PASS: RB56 temporal work contracts " + assertions +
             " assertions seed=77 packages=55 fault=RELAY_B_COIL_OPEN units=13 faultedUnits=9 scope=FIXED_TEMPORAL_PILOT_ONLY");
+    }
+
+    /** Independent literal admission expectations, read from the existing owner before mutation. */
+    private static void verifyProofWorkAdmission(GeneratedBoardInstance owner) {
+        GeneratedDiagnosticProvider provider = owner.getDiagnosticProvider();
+        GeneratedDiagnosticProgram program = provider.getObservationProgram();
+        check(program != null && program.getSteps().size() == 20,
+            "actual two-channel seed-77 observation program has twenty steps");
+        int admitted = 0;
+        for (GeneratedFaultCandidate hypothesis : owner.getFaultCandidates())
+            if (hypothesis.isAdmitted()) admitted++;
+        check(owner.getFaultCandidates().size() == 5 && admitted == 5,
+            "actual seed-77 owner retains five admitted diagnostic hypotheses");
+        check(provider instanceof GeneratedDiagnosticServicePreparation.Provider,
+            "actual seed-77 diagnostic provider declares service preparation");
+        GeneratedDiagnosticServicePreparation.Policy servicePolicy =
+            ((GeneratedDiagnosticServicePreparation.Provider)provider).getServicePreparationPolicy();
+        check(servicePolicy != null && servicePolicy.getWorkUnits() == 30,
+            "actual seed-77 service preparation declares thirty units");
+        check(GeneratedDiagnosticProofService.minimumWorkUnits(owner, true) == 375 &&
+            GeneratedDiagnosticProofService.requiredWorkUnits(owner, true) == 520,
+            "explicit-completion admission uses 375 minimum and 520 maximum units");
+        check(GeneratedDiagnosticProofService.minimumWorkUnits(owner, false) == 435 &&
+            GeneratedDiagnosticProofService.requiredWorkUnits(owner, false) == 580,
+            "profile-completion admission uses 435 minimum and 580 maximum units");
     }
 
 
@@ -538,6 +565,280 @@ public final class Rb56TemporalWorkContractTest {
             harnesses.put("JOB", new CircuitPostMeasurementEndpoint[] {null, null});
             check(!behavior.healthy(owner, 3) && sim.t == time, "malformed null cable terminals cannot become a good reading");
         } finally { harnesses.put("JOB", saved); work.cancel(); }
+    }
+
+    /**
+     * Controlled graph-membership canaries for the observation service. These
+     * synthetic receipts never advance CircuitJS and are not physics proof.
+     */
+    private static void endpointIndexHintCanaries(TemporalSim sim,
+            GeneratedBoardInstance owner) throws Exception {
+        check(subscriptions(sim).isEmpty(),
+            "endpoint membership canaries start without live observation handles");
+        check(!sim.activeMeasurementOverlay,
+            "controlled endpoint membership canaries require the settled solver graph");
+        final Vector<CircuitElm> originalGraph = sim.elmList;
+        CircuitPostMeasurementEndpoint[] endpoints = selectObservationEndpoints(owner, originalGraph);
+        final CircuitPostMeasurementEndpoint red = endpoints[0];
+        final CircuitPostMeasurementEndpoint black = endpoints[1];
+        final CountingVector graph = copyGraph(originalGraph);
+        SolverTimeObservationService.Subscription subscription = null;
+        int initialLookups = -1;
+        int stableLookups = -1;
+        int sameElementLookups = -1;
+        boolean replacementVectorAccepted = false;
+        boolean clearedAndRebound = false;
+        boolean removalRejected = false;
+        boolean unsubscribedNoSample = false;
+        boolean sharedElementAccepted = false;
+        try {
+            sim.elmList = graph;
+            subscription = sim.solverTimeObservations.subscribe(red, black, 32, false);
+            double nextTime = sim.t;
+            initialLookups = membershipSample(sim, owner, graph, subscription, red,
+                black, nextTime, "initial");
+            check(initialLookups > 0,
+                "initial controlled membership uses endpoint fallback lookup");
+            nextTime += .0001;
+            stableLookups = membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                "unchanged");
+            check(stableLookups == 0,
+                "stable graph endpoint hints avoid repeated linear lookup");
+            nextTime += .0001;
+
+            int oldRedIndex = graph.indexOf(red.getElement());
+            graph.removeElementAt(oldRedIndex);
+            int movedRedIndex = oldRedIndex == 0 ? graph.size() : 0;
+            graph.insertElementAt(red.getElement(), movedRedIndex);
+            check(membershipSample(sim, owner, graph, subscription, red, black,
+                    nextTime, "moved") > 0,
+                "moving an endpoint invalidates and refreshes its position hint");
+            nextTime += .0001;
+
+            reverse(graph);
+            check(membershipSample(sim, owner, graph, subscription, red, black,
+                    nextTime, "reordered") > 0,
+                "reordering the current vector relocates endpoint hints");
+            nextTime += .0001;
+
+            int redBeforeInsert = graph.indexOf(red.getElement());
+            CircuitElm insertedBefore = anotherElement(graph, red, black);
+            graph.insertElementAt(insertedBefore, redBeforeInsert);
+            check(membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                    "insert-before") > 0,
+                "insertion before an endpoint relocates its hint");
+            nextTime += .0001;
+
+            graph.removeElementAt(redBeforeInsert);
+            check(membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                    "remove-before") > 0,
+                "removal before an endpoint relocates its hint");
+            nextTime += .0001;
+
+            int substitutionIndex = graph.indexOf(red.getElement());
+            CircuitElm replacement = anotherElement(graph, red, black);
+            graph.setElementAt(replacement, substitutionIndex);
+            check(!referenceEndpointMembership(graph, red, black),
+                "same-size endpoint substitution is absent under the old contains oracle");
+            check(membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                    "same-size-substitution") > 0,
+                "same-size endpoint substitution triggers fallback and is rejected without a sample");
+            nextTime += .0001;
+            graph.setElementAt(red.getElement(), substitutionIndex);
+            check(membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                    "substitution-restored") > 0,
+                "restored endpoint is found after same-size substitution");
+            nextTime += .0001;
+
+            int removedIndex = graph.indexOf(red.getElement());
+            graph.removeElementAt(removedIndex);
+            check(!referenceEndpointMembership(graph, red, black),
+                "removed endpoint is absent under the old contains oracle");
+            removalRejected = membershipSample(sim, owner, graph, subscription, red,
+                black, nextTime, "removed") > 0;
+            check(removalRejected,
+                "removed endpoint is rejected without a sample");
+            nextTime += .0001;
+            int reinsertIndex = removedIndex == 0 ? graph.size() : 0;
+            graph.insertElementAt(red.getElement(), reinsertIndex);
+            check(membershipSample(sim, owner, graph, subscription, red, black, nextTime,
+                    "reinserted") > 0,
+                "removed then reinserted endpoint is located at its new position");
+            nextTime += .0001;
+
+            int priorRedIndex = graph.indexOf(red.getElement());
+            int priorBlackIndex = graph.indexOf(black.getElement());
+            CountingVector replacementGraph = copyGraph(graph);
+            reverse(replacementGraph);
+            check(replacementGraph.indexOf(red.getElement()) != priorRedIndex ||
+                replacementGraph.indexOf(black.getElement()) != priorBlackIndex,
+                "replacement vector changes at least one cached endpoint position");
+            sim.elmList = replacementGraph;
+            replacementVectorAccepted = membershipSample(sim, owner, replacementGraph,
+                subscription, red, black, nextTime, "replacement-vector") > 0;
+            check(replacementVectorAccepted,
+                "replacement vector with the same live endpoints is accepted");
+            graph.copyFrom(replacementGraph);
+            sim.elmList = graph;
+            nextTime += .0001;
+
+            sim.solverTimeObservations.invalidate();
+            check(subscription.getSampleCount() == 0,
+                "service clear retires samples before the next controlled operation");
+            check(membershipSample(sim, owner, graph, subscription, red, black,
+                    nextTime, "after-clear") > 0,
+                "cleared subscription rebinds current endpoint positions");
+            clearedAndRebound = true;
+            nextTime += .0001;
+
+            sim.solverTimeObservations.unsubscribe(subscription);
+            check(subscription.isClosed() && subscriptions(sim).isEmpty(),
+                "unsubscribe closes and removes the controlled observation handle");
+            int samplesAfterUnsubscribe = subscription.getSampleCount();
+            membershipSample(sim, owner, graph, subscription, red, black,
+                nextTime, "after-unsubscribe");
+            unsubscribedNoSample = subscription.getSampleCount() == samplesAfterUnsubscribe;
+            check(unsubscribedNoSample,
+                "unsubscribed endpoint handle cannot retain a later accepted sample");
+
+            SolverTimeObservationService.Subscription shared =
+                sim.solverTimeObservations.subscribe(red, red, 8, false);
+            try {
+                nextTime += .0001;
+                sharedElementAccepted = membershipSample(sim, owner, graph, shared,
+                    red, red, nextTime, "shared-element") > 0;
+                check(sharedElementAccepted,
+                    "red and black endpoints sharing one element remain eligible");
+                nextTime += .0001;
+                sameElementLookups = membershipSample(sim, owner, graph, shared, red, red,
+                    nextTime, "shared-element-stable");
+                check(sameElementLookups == 0,
+                    "shared-element endpoint hints remain independently stable");
+            } finally {
+                sim.solverTimeObservations.unsubscribe(shared);
+            }
+        } finally {
+            sim.elmList = originalGraph;
+            sim.solverTimeObservations.invalidate();
+            sim.solverTimeObservations.unsubscribe(subscription);
+        }
+        check(subscriptions(sim).isEmpty() && sim.elmList == originalGraph,
+            "controlled graph membership canaries restore graph and observation ownership");
+        System.out.println("RB56_ENDPOINT_INDEX_HINTS {\"controlledMembershipOnly\":true," +
+            "\"initialPositive\":true,\"unchanged\":true,\"moved\":true,\"reordered\":true," +
+            "\"insertBefore\":true,\"removeBefore\":true," +
+            "\"sameSizeSubstitutionRejected\":true,\"removalRejected\":" +
+            removalRejected + ",\"removeReinsert\":true," +
+            "\"replacementVector\":" + replacementVectorAccepted +
+            ",\"clearAndRebind\":" + clearedAndRebound +
+            ",\"unsubscribe\":" + unsubscribedNoSample +
+            ",\"sharedElementAccepted\":" + sharedElementAccepted +
+            ",\"sharedElementStable\":" + (sameElementLookups == 0) +
+            ",\"initialFallbackIndexOfCalls\":" + initialLookups +
+            ",\"stableGraphIndexOfCalls\":" + stableLookups +
+            ",\"sharedElementIndexOfCalls\":" + sameElementLookups + "}");
+    }
+
+    private static int membershipSample(TemporalSim sim, GeneratedBoardInstance owner,
+            CountingVector graph, SolverTimeObservationService.Subscription subscription,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+            double lastTime, String label) {
+        check(graph == sim.elmList,
+            label + " controlled membership uses the simulation's current vector");
+        boolean expected = referenceEndpointMembership(graph, red, black);
+        int afterOracleLookups = graph.indexOfCalls;
+        int samplesBefore = subscription.getSampleCount();
+        double acceptedTime = lastTime + .0001;
+        SolverExecutionBoundary boundary = new SolverExecutionBoundary();
+        boundary.bind(owner, sim.elmList);
+        SolverExecutionBoundary.Operation operation = boundary.begin(1, 1, 0, 20,
+            lastTime);
+        boundary.beginTrial(operation, 1);
+        boundary.accepted(operation, acceptedTime, 2);
+        sim.solverTimeObservations.accepted(operation);
+        SolverExecutionBoundary.Outcome outcome = boundary.finish(operation,
+            SolverExecutionBoundary.Outcome.COMPLETE);
+        sim.solverTimeObservations.finished(operation, outcome);
+        check(outcome == SolverExecutionBoundary.Outcome.COMPLETE,
+            label + " synthetic receipt completed without solver advancement");
+        int expectedNewSamples = expected && !subscription.isClosed() ? 1 : 0;
+        check(subscription.getSampleCount() == samplesBefore + expectedNewSamples,
+            label + " service result matches independent pre-hint contains expectation");
+        return graph.indexOfCalls - afterOracleLookups;
+    }
+
+    private static boolean referenceEndpointMembership(Vector<CircuitElm> graph,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+        return graph != null && graph.contains(red.getElement()) &&
+            graph.contains(black.getElement()) && validEndpointPost(red) &&
+            validEndpointPost(black);
+    }
+
+    private static boolean validEndpointPost(CircuitPostMeasurementEndpoint endpoint) {
+        return endpoint.getElement() != null && endpoint.getPostIndex() >= 0 &&
+            endpoint.getPostIndex() < endpoint.getElement().getPostCount();
+    }
+
+    private static CircuitPostMeasurementEndpoint[] selectObservationEndpoints(
+            GeneratedBoardInstance owner, Vector<CircuitElm> graph) {
+        CircuitPostMeasurementEndpoint red = null;
+        CircuitPostMeasurementEndpoint black = null;
+        Vector<String> padIds = owner.getBoard().getPadIds();
+        for (int i = 0; i < padIds.size(); i++) {
+            CircuitMeasurementEndpoint candidate = owner.getSimulationBindings()
+                .getEndpoint(padIds.elementAt(i));
+            if (!(candidate instanceof CircuitPostMeasurementEndpoint)) continue;
+            CircuitPostMeasurementEndpoint endpoint =
+                (CircuitPostMeasurementEndpoint)candidate;
+            if (!validEndpointPost(endpoint) || !graph.contains(endpoint.getElement()))
+                continue;
+            if (red == null) red = endpoint;
+            else if (endpoint.getElement() != red.getElement()) {
+                black = endpoint;
+                break;
+            }
+        }
+        if (red == null || black == null)
+            throw new AssertionError("RB56 canaries need two live, distinct board endpoints");
+        return new CircuitPostMeasurementEndpoint[] {red, black};
+    }
+
+    private static CircuitElm anotherElement(Vector<CircuitElm> graph,
+            CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+        for (int i = 0; i < graph.size(); i++) {
+            CircuitElm element = graph.elementAt(i);
+            if (element != red.getElement() && element != black.getElement())
+                return element;
+        }
+        throw new AssertionError("RB56 canaries need a third graph element");
+    }
+
+    private static CountingVector copyGraph(Vector<CircuitElm> graph) {
+        CountingVector copy = new CountingVector();
+        for (int i = 0; i < graph.size(); i++) copy.addElement(graph.elementAt(i));
+        return copy;
+    }
+
+    private static void reverse(Vector<CircuitElm> graph) {
+        for (int left = 0, right = graph.size() - 1; left < right; left++, right--) {
+            CircuitElm element = graph.elementAt(left);
+            graph.setElementAt(graph.elementAt(right), left);
+            graph.setElementAt(element, right);
+        }
+    }
+
+    private static final class CountingVector extends Vector<CircuitElm> {
+        private static final long serialVersionUID = 1L;
+        int indexOfCalls;
+        public synchronized int indexOf(Object value) {
+            indexOfCalls++;
+            return super.indexOf(value);
+        }
+        void copyFrom(Vector<CircuitElm> source) {
+            removeAllElements();
+            for (int i = 0; i < source.size(); i++) addElement(source.elementAt(i));
+            indexOfCalls = 0;
+        }
     }
 
     private static void settle(TemporalSim sim, GeneratedBoardInstance owner) {

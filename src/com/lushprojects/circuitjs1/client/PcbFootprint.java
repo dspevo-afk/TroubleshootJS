@@ -7,6 +7,7 @@ import java.util.Random;
 final class PcbFootprint {
     private final PcbComponentPlacement placement;
     private final Vector<PcbPadPlacement> pads;
+    private final Rectangle placementEnvelope;
 
     PcbFootprint(PcbComponentPlacement placement, Vector<PcbPadPlacement> pads) {
         if (placement == null || pads == null || pads.size() == 0)
@@ -34,6 +35,7 @@ final class PcbFootprint {
         }
         this.placement = placement;
         this.pads = new Vector<PcbPadPlacement>(pads);
+        this.placementEnvelope = placementEnvelope(placement, this.pads);
     }
 
     static PcbFootprint fromPhysicalPackage(BoardComponent component, int x, int y) {
@@ -87,6 +89,25 @@ final class PcbFootprint {
 
     PcbComponentPlacement getPlacement() { return placement; }
     Vector<PcbPadPlacement> getPads() { return new Vector<PcbPadPlacement>(pads); }
+    Rectangle getPlacementEnvelope() { return new Rectangle(placementEnvelope); }
+
+    /** Fixed geometry only; the planner still owns access and label margins. */
+    private static Rectangle placementEnvelope(PcbComponentPlacement placement,
+            Vector<PcbPadPlacement> pads) {
+        Rectangle result = union(placement.getSelectionEnvelope(), placement.getRoutingCourtyard());
+        for (PcbPadPlacement pad : pads) {
+            int x = pad.getX() + pad.getEscapeDx() * pad.getEscapeLength();
+            int y = pad.getY() + pad.getEscapeDy() * pad.getEscapeLength();
+            result = union(result, new Rectangle(x - 10, y - 10, 20, 20));
+        }
+        return result;
+    }
+
+    private static Rectangle union(Rectangle first, Rectangle second) {
+        int x = Math.min(first.x, second.x), y = Math.min(first.y, second.y);
+        return new Rectangle(x, y, Math.max(first.x + first.width, second.x + second.width) - x,
+            Math.max(first.y + first.height, second.y + second.height) - y);
+    }
 
     PcbPadPlacement getPad(String padId) {
         for (PcbPadPlacement pad : pads)

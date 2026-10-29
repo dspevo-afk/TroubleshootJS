@@ -19,7 +19,8 @@ public final class PcbNormalPackingCensusContractTest {
         QuickPlayFamilyRegistry.SENSOR_CONTROL,
         Rb15Plan.FAMILY_ID,
         ControlledIndicatorBlockContributions.FAMILY_ID,
-        Rb30Plan.FAMILY_ID
+        Rb30Plan.FAMILY_ID,
+        Rb56Plan.FAMILY_ID
     };
     static final long[] ROOTS = {0L, 17L, 13L, Long.MIN_VALUE};
     private static int assertions;
@@ -95,14 +96,14 @@ public final class PcbNormalPackingCensusContractTest {
         Vector<String> active = PlayerFamilyCatalog.families();
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         require(active.size() == FAMILIES.length,
-            "normal catalog exposes exactly eleven active families");
+            "normal catalog exposes exactly twelve active families");
         for (int i = 0; i < FAMILIES.length; i++)
             require(FAMILIES[i].equals(active.get(i)),
                 "normal active family catalog order is stable at index " + i);
         require(registered.size() == 12 && registered.contains(Rb56Plan.FAMILY_ID),
-            "registered catalog retains the held RB56 provider alongside eleven active families");
-        require(!PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
-            "RB56 remains held outside normal-player admission");
+            "registered catalog retains RB56 alongside all twelve active families");
+        require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "RB56 is enabled through normal-player admission");
     }
 
     private static CaseResult runCase(String family, DifficultyProfile profile, long root) {
@@ -119,7 +120,8 @@ public final class PcbNormalPackingCensusContractTest {
             require(candidate.getDescriptor().getRootSeed() == root,
                 "candidate zero retains the exact signed root: " + family + "/" + seedText);
             GenerationRequest.Prepared prepared = candidate.resolve(new GenerationRequest.PlanCache());
-            if (candidate.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM) {
+            if (candidate.getExecutionPolicy() == GenerationExecutionPolicy.NORMAL_MEDIUM ||
+                    candidate.getExecutionPolicy() == GenerationExecutionPolicy.RB56) {
                 GenerationRequest.ConstructionSession session = prepared.beginConstruction();
                 int steps = 0;
                 while (true) {
@@ -185,8 +187,25 @@ public final class PcbNormalPackingCensusContractTest {
         for (PcbBoardHole hole : layout.getHoles())
             if (hole.kind == PcbBoardHole.Kind.VIA) vias++;
         PcbPackingProbeReceipt probe = layout.getPackingProbeReceipt();
-        require(probe != null, "every normal board records its packing probe disposition");
-        probe.requireGeometry(layout);
+        PcbPlacementConstraints constraints = board.getPlacementConstraints();
+        boolean declaredRb56Layout = Rb56Plan.FAMILY_ID.equals(family) &&
+            profile == DifficultyProfile.MEDIUM && policy == GenerationExecutionPolicy.RB56 &&
+            owner.getPhysicalAdmission() != null &&
+            MediumBoardNormalAdmission.RB56_IDENTITY.equals(owner.getPhysicalAdmission().identity()) &&
+            constraints.placementPackingVersion == 1 && constraints.requiresTwoLayerRouting &&
+            constraints.placementDensityVersion == Rb56Placement.densityVersion(Rb56Placement.CURRENT_VERSION) &&
+            constraints.getTraceWidthProfile() == Rb56Placement.widthProfile(Rb56Placement.CURRENT_VERSION);
+        String packingDisposition;
+        if (declaredRb56Layout) {
+            // RB56 preserves its independently admitted current layout. The
+            // packing4 probe never runs for this declared packing1 contract.
+            require(probe == null, "declared RB56 layout has no fabricated packing4 probe receipt");
+            packingDisposition = "NOT_APPLICABLE_DECLARED_LAYOUT";
+        } else {
+            require(probe != null, "every packing4 normal board records its packing probe disposition");
+            probe.requireGeometry(layout);
+            packingDisposition = probe.disposition;
+        }
         PcbPackingMetrics measured = PcbPackingMetrics.measure(board, layout);
         require(measured.area == (long) outline.width * outline.height &&
                 measured.copper == copper && measured.vias == vias &&
@@ -207,6 +226,7 @@ public final class PcbNormalPackingCensusContractTest {
             .append(",\"status\":\"ACCEPTED\",\"phase\":\"FINALIZED\"")
             .append(",\"executionPolicy\":").append(jsonQuote(policy.identity()))
             .append(",\"physicalAdmission\":").append(jsonQuote(admission))
+            .append(",\"packingProbeDisposition\":").append(jsonQuote(packingDisposition))
             .append(",\"elapsedMillis\":").append(elapsedMillis)
             .append(",\"maxAdvanceMillis\":").append(optionalMillis(maxAdvanceNanos))
             .append(",\"graphBefore\":").append(jsonQuote(graphBefore))

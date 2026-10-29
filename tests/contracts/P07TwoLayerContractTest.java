@@ -10,6 +10,7 @@ public final class P07TwoLayerContractTest {
         holeSnapshotsPreserveOwnerAndOrder();
         closedCopperEdgesMatchLongOracle();
         typedQueueMatchesPriorityQueue();
+        primitiveStateIndexMatchesHashMapOracle();
         nearestBranchesFollowSpatialTree();
         for(boolean linked:new boolean[]{false,true}) {
             P06FactoryLinkFixtures.Fixture fixture=new P06FactoryLinkFixtures.Fixture(true,0,0,!linked);
@@ -359,6 +360,229 @@ public final class P07TwoLayerContractTest {
         } catch(Exception failure) {
             throw new AssertionError("typed route queue must match PriorityQueue identity order",failure);
         }
+    }
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private static void primitiveStateIndexMatchesHashMapOracle() {
+        try {
+            Class<?> nodeType=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$Node");
+            java.lang.reflect.Constructor<?> nodeConstructor=nodeType.getDeclaredConstructor(
+                int.class,int.class,int.class,int.class,int.class,int.class,int.class,int.class,nodeType);
+            nodeConstructor.setAccessible(true);
+            Class<?> indexType=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$NodeIndex");
+            java.lang.reflect.Constructor<?> indexConstructor=indexType.getDeclaredConstructor();
+            indexConstructor.setAccessible(true);
+            java.lang.reflect.Method get=indexType.getDeclaredMethod("get",int.class);
+            java.lang.reflect.Method put=indexType.getDeclaredMethod("put",int.class,nodeType);
+            get.setAccessible(true); put.setAccessible(true);
+
+            Object index=indexConstructor.newInstance();
+            java.util.HashMap<Integer,Object> oracle=new java.util.HashMap<Integer,Object>();
+            int maximumKey=12_499_999;
+            int[] boundaryKeys={0,127,128,maximumKey};
+            for(int serial=0;serial<boundaryKeys.length;serial++) {
+                int key=boundaryKeys[serial];
+                Object node=stateIndexNode(nodeConstructor,key,serial,40,0);
+                put.invoke(index,key,node); oracle.put(Integer.valueOf(key),node);
+                require(get.invoke(index,key)==oracle.get(Integer.valueOf(key)),
+                    "primitive index returns the exact Node reference for key="+key);
+            }
+            require(indexSize(indexType,index)==4 && indexCapacity(indexType,index)==128,
+                "boundary keys fit the small initial primitive table");
+            require(get.invoke(index,126)==null && get.invoke(index,maximumKey-1)==null,
+                "primitive index misses match HashMap misses");
+
+            Object same=oracle.get(Integer.valueOf(0));
+            put.invoke(index,0,same); oracle.put(Integer.valueOf(0),same);
+            require(get.invoke(index,0)==same && indexSize(indexType,index)==4 &&
+                indexCapacity(indexType,index)==128,
+                "putting the same reference replaces no entry and does not grow");
+            Object replacement=stateIndexNode(nodeConstructor,127,10,12,0);
+            put.invoke(index,127,replacement); oracle.put(Integer.valueOf(127),replacement);
+            require(get.invoke(index,127)==replacement && indexSize(indexType,index)==4,
+                "same-key replacement publishes the exact new Node without changing size");
+
+            for(int key=1;key<=60;key++) {
+                Object node=stateIndexNode(nodeConstructor,key,key,100-key,0);
+                put.invoke(index,key,node); oracle.put(Integer.valueOf(key),node);
+            }
+            require(indexSize(indexType,index)==64 && indexCapacity(indexType,index)==128,
+                "primitive index remains at initial capacity through the half-load threshold");
+            Object thresholdReplacement=stateIndexNode(nodeConstructor,0,11,11,0);
+            put.invoke(index,0,thresholdReplacement); oracle.put(Integer.valueOf(0),thresholdReplacement);
+            require(indexSize(indexType,index)==64 && indexCapacity(indexType,index)==128 &&
+                get.invoke(index,0)==thresholdReplacement,
+                "replacement at half load changes no size or capacity");
+            Object growNode=stateIndexNode(nodeConstructor,61,61,39,0);
+            put.invoke(index,61,growNode); oracle.put(Integer.valueOf(61),growNode);
+            require(indexSize(indexType,index)==65 && indexCapacity(indexType,index)==256,
+                "primitive index doubles only when a new key crosses half load");
+            for(java.util.Map.Entry<Integer,Object> entry:oracle.entrySet())
+                require(get.invoke(index,entry.getKey().intValue())==entry.getValue(),
+                    "rehash preserves exact Node reference for key="+entry.getKey());
+            require(get.invoke(index,62)==null,
+                "post-growth miss still matches the independent HashMap oracle");
+
+            Object growthIndex=indexConstructor.newInstance();
+            java.util.HashMap<Integer,Object> growthOracle=
+                new java.util.HashMap<Integer,Object>();
+            for(int key=0;key<1024;key++) {
+                Object node=stateIndexNode(nodeConstructor,key,500+key,100+(key%31),0);
+                put.invoke(growthIndex,key,node); growthOracle.put(Integer.valueOf(key),node);
+                if(key==63 || key==127 || key==255 || key==511)
+                    require(indexCapacity(indexType,growthIndex)==128<<
+                        (key==63?0:key==127?1:key==255?2:3),
+                        "multi-growth index matches capacity before threshold key="+key);
+                if(key==64 || key==128 || key==256 || key==512 || key==1023)
+                    require(indexCapacity(indexType,growthIndex)==256<<
+                        (key==64?0:key==128?1:key==256?2:3),
+                        "multi-growth index doubles at expected threshold key="+key);
+                if(key%97==0) {
+                    int oldSize=indexSize(indexType,growthIndex);
+                    int oldCapacity=indexCapacity(indexType,growthIndex);
+                    Object replacementNode=stateIndexNode(nodeConstructor,key,2000+key,5,0);
+                    put.invoke(growthIndex,key,replacementNode);
+                    growthOracle.put(Integer.valueOf(key),replacementNode);
+                    require(indexSize(indexType,growthIndex)==oldSize &&
+                        indexCapacity(indexType,growthIndex)==oldCapacity &&
+                        get.invoke(growthIndex,key)==replacementNode,
+                        "replacement across repeated growths allocates no table entry");
+                }
+            }
+            require(indexSize(indexType,growthIndex)==1024 &&
+                indexCapacity(indexType,growthIndex)==2048,
+                "1024 entries survive several primitive-table resizes");
+            for(java.util.Map.Entry<Integer,Object> entry:growthOracle.entrySet())
+                require(get.invoke(growthIndex,entry.getKey().intValue())==entry.getValue(),
+                    "multi-growth rehash matches HashMap for key="+entry.getKey());
+            require(get.invoke(growthIndex,1024)==null,
+                "multi-growth index preserves a missing-key result");
+
+            int[] collision=findInitialCollision(indexConstructor,nodeConstructor,put,indexType);
+            Object collisionIndex=indexConstructor.newInstance();
+            java.util.HashMap<Integer,Object> collisionOracle=
+                new java.util.HashMap<Integer,Object>();
+            Object first=stateIndexNode(nodeConstructor,collision[0],200,20,0);
+            Object second=stateIndexNode(nodeConstructor,collision[1],201,19,0);
+            put.invoke(collisionIndex,collision[0],first);
+            collisionOracle.put(Integer.valueOf(collision[0]),first);
+            put.invoke(collisionIndex,collision[1],second);
+            collisionOracle.put(Integer.valueOf(collision[1]),second);
+            int firstSlot=indexSlot(indexType,collisionIndex,collision[0]);
+            int secondSlot=indexSlot(indexType,collisionIndex,collision[1]);
+            require(secondSlot==((firstSlot+1)&127),
+                "two keys with one initial bucket resolve by linear probing");
+            require(get.invoke(collisionIndex,collision[0])==collisionOracle.get(
+                Integer.valueOf(collision[0])) && get.invoke(collisionIndex,collision[1])==
+                collisionOracle.get(Integer.valueOf(collision[1])),
+                "colliding keys remain independently addressable");
+
+            Class<?> queueType=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$NodeQueue");
+            java.lang.reflect.Constructor<?> queueConstructor=queueType.getDeclaredConstructor();
+            queueConstructor.setAccessible(true);
+            java.lang.reflect.Method add=queueType.getDeclaredMethod("add",nodeType);
+            java.lang.reflect.Method poll=queueType.getDeclaredMethod("poll");
+            add.setAccessible(true); poll.setAccessible(true);
+            Object routeIndex=indexConstructor.newInstance(),queue=queueConstructor.newInstance();
+            java.util.HashMap<Integer,Object> bestOracle=new java.util.HashMap<Integer,Object>();
+            java.util.PriorityQueue queueOracle=new java.util.PriorityQueue();
+            P06FactoryLinkFixtures.Fixture searchFixture=
+                new P06FactoryLinkFixtures.Fixture(true,0,0);
+            PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
+                searchFixture.board,searchFixture.layout,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,P06FactoryLinkFixtures.OBSERVER);
+            boolean sessionComplete=session.advanceSlice(1);
+            java.lang.reflect.Field searchField=PcbLayerRoutingPrototype.Session.class.getDeclaredField("search");
+            searchField.setAccessible(true);
+            Object actualSearch=searchField.get(session);
+            require(!sessionComplete && actualSearch!=null,
+                "one P07 slice initializes a real private Search");
+            java.lang.reflect.Method offer=actualSearch.getClass().getDeclaredMethod("offer",
+                queueType,indexType,nodeType);
+            offer.setAccessible(true);
+            Object stale=stateIndexNode(nodeConstructor,128,300,50,0);
+            Object equalCost=stateIndexNode(nodeConstructor,128,301,50,0);
+            Object current=stateIndexNode(nodeConstructor,128,302,20,0);
+            offer.invoke(actualSearch,queue,routeIndex,stale);
+            bestOracle.put(Integer.valueOf(128),stale); queueOracle.add(stale);
+            require(get.invoke(routeIndex,128)==stale && queueSize(queueType,queue)==1 &&
+                bestOracle.get(Integer.valueOf(128))==stale && queueOracle.size()==1,
+                "literal cost-50 state is admitted by Search.offer");
+            offer.invoke(actualSearch,queue,routeIndex,equalCost);
+            require(get.invoke(routeIndex,128)==stale && queueSize(queueType,queue)==1 &&
+                bestOracle.get(Integer.valueOf(128))==stale && queueOracle.size()==1 &&
+                !queueOracle.contains(equalCost),
+                "literal equal-cost-50 state is rejected without replacing the reference");
+            offer.invoke(actualSearch,queue,routeIndex,current);
+            bestOracle.put(Integer.valueOf(128),current); queueOracle.add(current);
+            require(get.invoke(routeIndex,128)==current && queueSize(queueType,queue)==2 &&
+                bestOracle.get(Integer.valueOf(128))==current && queueOracle.size()==2,
+                "literal lower-cost-20 state replaces key 128");
+            int stalePops=0,currentPops=0;
+            while(!queueOracle.isEmpty()) {
+                Object actual=poll.invoke(queue),expected=queueOracle.poll();
+                require(actual==expected,"primitive-index search queue pop matches PriorityQueue identity");
+                int key=objectIntField(actual,"key");
+                Object actualBest=get.invoke(routeIndex,key);
+                Object expectedBest=bestOracle.get(Integer.valueOf(key));
+                require(actualBest==expectedBest,"best-state reference matches HashMap oracle after pop");
+                if(actual==actualBest) currentPops++; else stalePops++;
+            }
+            require(currentPops==1 && stalePops==1,
+                "replaced queue entry is recognized as stale by reference identity");
+
+            Object serialQueue=queueConstructor.newInstance();
+            java.util.PriorityQueue serialOracle=new java.util.PriorityQueue();
+            Object serialFirst=stateIndexNode(nodeConstructor,77,401,9,3);
+            Object serialSecond=stateIndexNode(nodeConstructor,77,402,9,3);
+            add.invoke(serialQueue,serialFirst); serialOracle.add(serialFirst);
+            add.invoke(serialQueue,serialSecond); serialOracle.add(serialSecond);
+            while(!serialOracle.isEmpty()) require(poll.invoke(serialQueue)==serialOracle.poll(),
+                "serial tie-break order matches PriorityQueue");
+        } catch(Exception failure) {
+            throw new AssertionError("primitive branch-state index must match HashMap semantics",failure);
+        }
+    }
+    private static Object stateIndexNode(java.lang.reflect.Constructor<?> constructor,int key,
+            int serial,int cost,int heuristic) throws Exception {
+        return constructor.newInstance(key,0,0,0,cost,heuristic,serial,1,null);
+    }
+    private static int[] findInitialCollision(java.lang.reflect.Constructor<?> indexConstructor,
+            java.lang.reflect.Constructor<?> nodeConstructor,java.lang.reflect.Method put,
+            Class<?> indexType) throws Exception {
+        int[] firstBySlot=new int[128]; java.util.Arrays.fill(firstBySlot,-1);
+        for(int key=0;key<129;key++) {
+            Object probe=indexConstructor.newInstance();
+            put.invoke(probe,key,stateIndexNode(nodeConstructor,key,key,1,0));
+            int slot=indexSlot(indexType,probe,key);
+            if(firstBySlot[slot]>=0) return new int[] {firstBySlot[slot],key};
+            firstBySlot[slot]=key;
+        }
+        throw new AssertionError("pigeonhole collision was not found in initial table");
+    }
+    private static int indexSlot(Class<?> indexType,Object index,int key) throws Exception {
+        java.lang.reflect.Field keys=indexType.getDeclaredField("keys");
+        java.lang.reflect.Field values=indexType.getDeclaredField("values");
+        keys.setAccessible(true); values.setAccessible(true);
+        int[] storedKeys=(int[])keys.get(index); Object[] storedValues=(Object[])values.get(index);
+        for(int slot=0;slot<storedValues.length;slot++)
+            if(storedValues[slot]!=null && storedKeys[slot]==key) return slot;
+        throw new AssertionError("primitive index is missing key="+key);
+    }
+    private static int indexSize(Class<?> indexType,Object index) throws Exception {
+        java.lang.reflect.Field size=indexType.getDeclaredField("size");
+        size.setAccessible(true); return size.getInt(index);
+    }
+    private static int indexCapacity(Class<?> indexType,Object index) throws Exception {
+        java.lang.reflect.Field values=indexType.getDeclaredField("values");
+        values.setAccessible(true); return ((Object[])values.get(index)).length;
+    }
+    private static int objectIntField(Object target,String name) throws Exception {
+        java.lang.reflect.Field field=target.getClass().getDeclaredField(name);
+        field.setAccessible(true); return field.getInt(target);
+    }
+    private static int queueSize(Class<?> queueType,Object queue) throws Exception {
+        java.lang.reflect.Field size=queueType.getDeclaredField("size");
+        size.setAccessible(true); return size.getInt(queue);
     }
     private static void reject(Runnable action,String why) {
         boolean rejected=false;

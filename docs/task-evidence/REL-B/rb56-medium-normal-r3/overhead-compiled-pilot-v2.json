@@ -1,0 +1,596 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "scope": "Fresh compiled Developer19 DC endpoint-membership and two normal RB56 MEDIUM root canaries; diagnostic only, no player-input or population-qualification claim.",
+  "hostRun": {
+    "outcome": "FAIL",
+    "caseCount": 3,
+    "resultSha256": "320122e25bac2f79a638600a77a7425110844dd2b6477f6ef8067eeca6b1eae7",
+    "startedUtc": "2026-10-29T01:49:09.804362+00:00",
+    "finishedUtc": "2026-10-29T01:52:15.876116+00:00"
+  },
+  "specSha256": "37f33cca58d653158807b3d389cd992da1e2cee90ce980134faaedc98027e092",
+  "developerV19": {
+    "identitySha256": "2ead1f4626801a67696a48257cf65c517633db11093d4df352f30d8d0f79aa96",
+    "inventorySha256": "8e102fb7da9fe19e2d59dc62ac67ba9d7e2aa3fec92054d2658de1a5f758897b",
+    "inputDigest": "c5d4b9882854c8ce655a7d44bd6cf588858b8dc8e0f738d2c48bf9e4c23bc86b",
+    "outputDigest": "0fada232fa53d53fd9690159f58dc970bba56f4a499c362b877de0a0703a7f02",
+    "inputFileCount": 1193,
+    "outputFileCount": 357,
+    "inventoryEntries": 357,
+    "inventoryCacheIds": [
+      "06F3AF78566CB9BB0F31EECA46B11B07",
+      "242559FF82CB13FE3881D1B6367C72BD",
+      "9C6021A464F342C51B70EA46D54A9A85",
+      "A0AD214A26F2880E56AFF243E50A3D06",
+      "DDA6A515B0B71586EFBE6E7106632379"
+    ]
+  },
+  "policies": {
+    "limits": {
+      "jobMillis": 90000,
+      "jobWork": 640,
+      "unitMillis": 5000
+    },
+    "maximumCandidates": 4,
+    "placementTarget": 5,
+    "candidateAttemptsObserved": {
+      "normal--6794211680707017382": 1,
+      "normal-7817806517725629686": 1
+    },
+    "allObservedCachesInV19Inventory": true,
+    "placementEvidence": {
+      "sourceConstant": {
+        "value": 5,
+        "sourceSha256": "bee1b75d32d0433420be7f7b0085fcb8a246d67b8271f7c4121c1ff1cdd4795f"
+      },
+      "requestManifestEpoch15Observed": false,
+      "compiledReportExportsTargetCount": false,
+      "limitation": "The compiled player report does not expose the internal viable-placement target count; direct five-target proof belongs to the native contract gate."
+    }
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "seconds": 0.48828039993532,
+    "sourceSha256Before": "f385c7822047ffec35452ebdd93a63e06bc1bc5df122c120b504610fb22505c3",
+    "sourceSha256After": "f385c7822047ffec35452ebdd93a63e06bc1bc5df122c120b504610fb22505c3",
+    "webSha256Before": "c41020031048566ae4198ca410b52a51be3807bec7f0fb84115a8122e2dca56c",
+    "webSha256After": "c41020031048566ae4198ca410b52a51be3807bec7f0fb84115a8122e2dca56c",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "beforeSha256": "adfe62dacc8287b9cc8de50b4bdda59b01c22002bce1ecdb092936f1a0bdfe47",
+    "afterSha256": "adfe62dacc8287b9cc8de50b4bdda59b01c22002bce1ecdb092936f1a0bdfe47",
+    "fileCountBefore": 1569,
+    "fileCountAfter": 1569,
+    "identicalBeforeAfter": true
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 0.9774165998678654,
+    "serverStopped": true,
+    "ownedSurvivorCount": 0,
+    "errorCount": 0,
+    "errors": []
+  },
+  "historicalComparison": {
+    "root781": [
+      {
+        "label": "routing-index-pilot-v1-root781",
+        "sha256": "c165f49051451e109822d864be666b0850225980d0fb5ec22e2745b610228539",
+        "classification": "completed historical normal-MEDIUM PASS; not a population qualification"
+      },
+      {
+        "label": "profile-blind-failure-v1-root781",
+        "sha256": "700b4d9d3cc0d832ef475c1f7a57bc7efdb02396e1900050c7a12c681943c4f3",
+        "classification": "completed historical normal-MEDIUM PASS; not a population qualification"
+      }
+    ],
+    "root679": [
+      {
+        "label": "profile-overhead-failure-v1-root679",
+        "sha256": "75fb3c9f7251aabd25013e4a0b72eef78a56a7401db0862ce7a2f86295ddd0ae",
+        "classification": "completed diagnostic PASS only; not a population qualification"
+      }
+    ],
+    "root679BaselineInterpretation": "Completed diagnostic PASS used only for exact deterministic non-wall regression comparison; it does not qualify a population.",
+    "compares": "Every non-wall top-level report field, including identity/context/program, all proof rows, observations, waits, features, and actual stage work; maximum unit milliseconds are retained and checked below.",
+    "wallFieldsExcluded": [
+      "cleanupMillis",
+      "diagnosticWorkTimings",
+      "difficultyFeatureExtractionMillis",
+      "generationMillis",
+      "jobMillis",
+      "jobStageMillis",
+      "manualUnitMaxMillis",
+      "maxManualUnitMillis",
+      "operationMillis",
+      "proofMillis",
+      "routingMillis",
+      "wallMillis"
+    ]
+  },
+  "caseCount": 3,
+  "passingCaseCount": 1,
+  "failedCaseCount": 2,
+  "cases": [
+    {
+      "index": 1,
+      "name": "live-endpoint-membership-dc",
+      "kind": "dc",
+      "outcome": "PASS",
+      "observedState": "PASS:u02-u03",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 1.1521896000485867,
+      "rawReportSha256": "34942c669773b45948fcdf8e9ad7b4c3c31994d4be676d9e8574623b6c2df3d8",
+      "computedReportSha256": "34942c669773b45948fcdf8e9ad7b4c3c31994d4be676d9e8574623b6c2df3d8",
+      "selectedCache": "A0AD214A26F2880E56AFF243E50A3D06",
+      "selectedCacheSha256": "c8f4a53c267aa37adeafd0516000a1bf3f5d21c78c698b9e90d0f110a5bb6872",
+      "selectedCacheBytes": 3512636,
+      "transport": "PASSIVE_CDP_DOM",
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "details": {
+        "canaryCount": 9,
+        "controlledOnly": true,
+        "endpointIndexHintsVerified": true,
+        "canaries": {
+          "endpointMembershipInitialPositive": true,
+          "endpointMembershipStable": true,
+          "endpointMembershipSubstitutionRejected": true,
+          "endpointMembershipSubstitutionRestored": true,
+          "endpointMembershipRemovalRejected": true,
+          "endpointMembershipReinserted": true,
+          "endpointMembershipReplacementVector": true,
+          "endpointMembershipClearAndRebind": true,
+          "endpointMembershipUnsubscribe": true
+        },
+        "existingFixtureChecks": {
+          "fixtureSourceOutsideLogicalBoard": true,
+          "fixtureStateRestored": true,
+          "cancelledPublicationRetired": true,
+          "renderReadOnly": true,
+          "temporaryMeterClean": true
+        },
+        "scopeSamples": 8192,
+        "boundedCapacity": 8192,
+        "mode": "dc"
+      },
+      "failureDetails": [],
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "index": 2,
+      "name": "normal--6794211680707017382",
+      "kind": "normal",
+      "outcome": "FAIL",
+      "observedState": "FAIL:rb56:Generation wall budget exhausted",
+      "terminalReached": true,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 90.7410489001777,
+      "rawReportSha256": "89861a71e1d7f8b601f7a79ede0f07aa406330ab8d3647d8e47a93e0ffd79b5d",
+      "computedReportSha256": "89861a71e1d7f8b601f7a79ede0f07aa406330ab8d3647d8e47a93e0ffd79b5d",
+      "selectedCache": "A0AD214A26F2880E56AFF243E50A3D06",
+      "selectedCacheSha256": "c8f4a53c267aa37adeafd0516000a1bf3f5d21c78c698b9e90d0f110a5bb6872",
+      "selectedCacheBytes": 3512636,
+      "transport": "PASSIVE_CDP_DOM",
+      "reportOperationMillis": 90010,
+      "reportCleanupMillis": 3,
+      "details": {
+        "rootSeed": "-6794211680707017382",
+        "scope": "NORMAL_MEDIUM_COLD_POPULATION",
+        "failurePhase": "COLD_GENERATION",
+        "failure": "Deadline: Generation wall budget exhausted",
+        "hypotheses": null,
+        "proofRows": 0,
+        "proofWorkUnits": null,
+        "requiredProofWorkUnits": null,
+        "solverSamples": null,
+        "observationCount": 0,
+        "observationSamples": 0,
+        "observations": [],
+        "candidateAttempts": 1,
+        "candidateAttemptDetails": [
+          {
+            "ordinal": 0,
+            "seed": "-6794211680707017382",
+            "stage": "HYPOTHESES",
+            "outcome": "TIMEOUT",
+            "workUnits": 460,
+            "proofUnits": 375,
+            "manifestSha256": "6c10ff51b3ebfafaff45cb0401ea67472d712cdcc76a21977a100e1f5ebc6c74"
+          }
+        ],
+        "acceptedOrdinal": null,
+        "generationWork": null,
+        "jobWork": 460,
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 375,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "generationMillis": null,
+        "jobMillis": 90000,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 21589,
+          "PHYSICAL": 162,
+          "HYPOTHESES": 68218,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "routingMillis": 0,
+        "proofMillis": 0,
+        "maxManualUnitMillis": null,
+        "manualUnitMaxMillis": 1767,
+        "diagnosticWorkTimings": {},
+        "declaredCaps": {
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000
+        },
+        "coldProof": null,
+        "proofWarmReuse": null,
+        "proofCachePolicy": null,
+        "proofCacheHitsDelta": null,
+        "planCacheHitsDelta": null,
+        "placementInterpretation15": false,
+        "nonwallComparison": {
+          "status": "FAIL",
+          "historicalCaptureSha256": [
+            "75fb3c9f7251aabd25013e4a0b72eef78a56a7401db0862ce7a2f86295ddd0ae"
+          ],
+          "nonwallProjectionSha256": "784bf60851c7b1245c9f10f024d02dad6f9370ee9667ad50a04bca3347f524de",
+          "fieldsCompared": [
+            "candidateAttempts",
+            "candidateDisposed",
+            "cleanupPending",
+            "coordinatorReleased",
+            "debugRestored",
+            "failure",
+            "failurePhase",
+            "family",
+            "forcedAfterPublish",
+            "jobOutcome",
+            "jobStage",
+            "jobStageWork",
+            "jobWork",
+            "layoutVersion",
+            "maxJobSteps",
+            "modelEpoch",
+            "normalCatalogEnabled",
+            "normalRequest",
+            "ordinaryCustomerRetestPassed",
+            "ownerRestored",
+            "phase",
+            "planVersion",
+            "playerBridgeReleased",
+            "playerSessionReleased",
+            "protocol",
+            "qualifiedPublication",
+            "replayEpoch",
+            "requestManifest",
+            "rootSeed",
+            "scope",
+            "seed",
+            "sourceEpoch",
+            "status",
+            "temporaryMeterClean"
+          ],
+          "wallFieldsExcluded": [
+            "cleanupMillis",
+            "diagnosticWorkTimings",
+            "difficultyFeatureExtractionMillis",
+            "generationMillis",
+            "jobMillis",
+            "jobStageMillis",
+            "manualUnitMaxMillis",
+            "maxManualUnitMillis",
+            "operationMillis",
+            "proofMillis",
+            "routingMillis",
+            "wallMillis"
+          ],
+          "actualMaximumUnitMilliseconds": {
+            "observed": {
+              "maxManualUnitMillis": null,
+              "manualUnitMaxMillis": 1767
+            },
+            "historicalReferences": [
+              {
+                "label": "profile-overhead-failure-v1-root679",
+                "maxManualUnitMillis": 1476,
+                "manualUnitMaxMillis": 1476
+              }
+            ],
+            "underDeclaredUnitCap": true,
+            "note": "Maximum unit milliseconds are retained and checked against the unchanged 5,000 ms cap; historical captures can differ in elapsed unit time."
+          }
+        }
+      },
+      "failureDetails": [
+        "Deadline: Generation wall budget exhausted"
+      ],
+      "status": "FAIL",
+      "issues": [
+        "case wrapper outcome is FAIL",
+        "actual case terminal PASS state was not reached/matched",
+        "normal terminal state does not have the expected PASS:rb56 prefix",
+        "raw report state is not PASS",
+        "normal report is not a completed normal-MEDIUM PASS",
+        "normal report observed time exceeds/omits cap: generationMillis",
+        "normal report observed time exceeds/omits cap: jobMillis",
+        "normal generation did not publish successfully",
+        "normal report work exceeds 640 or is absent: generationWork",
+        "accepted candidate ordinal is outside candidate budget 4",
+        "accepted manifest is absent or does not retain placement interpretation 15",
+        "normal report does not retain all five hypotheses / 375 proof units",
+        "normal report declared proof work differs from the preserved 520 bound",
+        "normal report does not retain all 65 solver samples",
+        "normal report generation stage count differs",
+        "normal proof was not cold with warm reuse bypassed",
+        "normal generation recorded a proof/plan cache hit",
+        "normal physical/production admission evidence differs",
+        "normal MEDIUM qualification/publication flags differ",
+        "normal report proof row count is not five",
+        "normal report does not contain five calibration observations",
+        "total calibration observations are not exactly 65 readings",
+        "normal report does not retain five per-hypothesis temporal wait schedules",
+        "normal root -6794211680707017382 nonwall identity/context/proof/sample/work differs from historical profile-overhead-failure-v1-root679"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "normal-7817806517725629686",
+      "kind": "normal",
+      "outcome": "FAIL",
+      "observedState": "FAIL:rb56:Generation wall budget exhausted",
+      "terminalReached": true,
+      "stateMatch": false,
+      "timedOut": false,
+      "operationSeconds": 91.40448130015284,
+      "rawReportSha256": "28642174cf72cc5aef07a39a61b1b81950cc29d5d91d1f892e232c2d7712e9ce",
+      "computedReportSha256": "28642174cf72cc5aef07a39a61b1b81950cc29d5d91d1f892e232c2d7712e9ce",
+      "selectedCache": "A0AD214A26F2880E56AFF243E50A3D06",
+      "selectedCacheSha256": "c8f4a53c267aa37adeafd0516000a1bf3f5d21c78c698b9e90d0f110a5bb6872",
+      "selectedCacheBytes": 3512636,
+      "transport": "PASSIVE_CDP_DOM",
+      "reportOperationMillis": 90402,
+      "reportCleanupMillis": 3,
+      "details": {
+        "rootSeed": "7817806517725629686",
+        "scope": "NORMAL_MEDIUM_COLD_POPULATION",
+        "failurePhase": "COLD_GENERATION",
+        "failure": "Deadline: Generation wall budget exhausted",
+        "hypotheses": null,
+        "proofRows": 0,
+        "proofWorkUnits": null,
+        "requiredProofWorkUnits": null,
+        "solverSamples": null,
+        "observationCount": 0,
+        "observationSamples": 0,
+        "observations": [],
+        "candidateAttempts": 1,
+        "candidateAttemptDetails": [
+          {
+            "ordinal": 0,
+            "seed": "7817806517725629686",
+            "stage": "HYPOTHESES",
+            "outcome": "TIMEOUT",
+            "workUnits": 452,
+            "proofUnits": 341,
+            "manifestSha256": "22ac73b2bc18d9ec5cd19b1023e5bf6aaa8d6645b1062edfb04fcf01cc0c1cc9"
+          }
+        ],
+        "acceptedOrdinal": null,
+        "generationWork": null,
+        "jobWork": 452,
+        "jobStageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 109,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 341,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "jobOutcome": "TIMEOUT",
+        "jobStage": "HYPOTHESES",
+        "generationMillis": null,
+        "jobMillis": 90331,
+        "jobStageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 28106,
+          "PHYSICAL": 212,
+          "HYPOTHESES": 61976,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "routingMillis": 0,
+        "proofMillis": 0,
+        "maxManualUnitMillis": null,
+        "manualUnitMaxMillis": 2080,
+        "diagnosticWorkTimings": {},
+        "declaredCaps": {
+          "maxJobMillis": 90000,
+          "maxJobSteps": 640,
+          "maxUnitMillis": 5000
+        },
+        "coldProof": null,
+        "proofWarmReuse": null,
+        "proofCachePolicy": null,
+        "proofCacheHitsDelta": null,
+        "planCacheHitsDelta": null,
+        "placementInterpretation15": false,
+        "nonwallComparison": {
+          "status": "FAIL",
+          "historicalCaptureSha256": [
+            "c165f49051451e109822d864be666b0850225980d0fb5ec22e2745b610228539",
+            "700b4d9d3cc0d832ef475c1f7a57bc7efdb02396e1900050c7a12c681943c4f3"
+          ],
+          "nonwallProjectionSha256": "25f9141ef2c1043da57b95fcf77ec575028b5ef6d9658b80740ad55bd19e4844",
+          "fieldsCompared": [
+            "candidateAttempts",
+            "candidateDisposed",
+            "cleanupPending",
+            "coordinatorReleased",
+            "debugRestored",
+            "failure",
+            "failurePhase",
+            "family",
+            "forcedAfterPublish",
+            "jobOutcome",
+            "jobStage",
+            "jobStageWork",
+            "jobWork",
+            "layoutVersion",
+            "maxJobSteps",
+            "modelEpoch",
+            "normalCatalogEnabled",
+            "normalRequest",
+            "ordinaryCustomerRetestPassed",
+            "ownerRestored",
+            "phase",
+            "planVersion",
+            "playerBridgeReleased",
+            "playerSessionReleased",
+            "protocol",
+            "qualifiedPublication",
+            "replayEpoch",
+            "requestManifest",
+            "rootSeed",
+            "scope",
+            "seed",
+            "sourceEpoch",
+            "status",
+            "temporaryMeterClean"
+          ],
+          "wallFieldsExcluded": [
+            "cleanupMillis",
+            "diagnosticWorkTimings",
+            "difficultyFeatureExtractionMillis",
+            "generationMillis",
+            "jobMillis",
+            "jobStageMillis",
+            "manualUnitMaxMillis",
+            "maxManualUnitMillis",
+            "operationMillis",
+            "proofMillis",
+            "routingMillis",
+            "wallMillis"
+          ],
+          "actualMaximumUnitMilliseconds": {
+            "observed": {
+              "maxManualUnitMillis": null,
+              "manualUnitMaxMillis": 2080
+            },
+            "historicalReferences": [
+              {
+                "label": "routing-index-pilot-v1-root781",
+                "maxManualUnitMillis": 1740,
+                "manualUnitMaxMillis": 1740
+              },
+              {
+                "label": "profile-blind-failure-v1-root781",
+                "maxManualUnitMillis": 1627,
+                "manualUnitMaxMillis": 1627
+              }
+            ],
+            "underDeclaredUnitCap": true,
+            "note": "Maximum unit milliseconds are retained and checked against the unchanged 5,000 ms cap; historical captures can differ in elapsed unit time."
+          }
+        }
+      },
+      "failureDetails": [
+        "Deadline: Generation wall budget exhausted"
+      ],
+      "status": "FAIL",
+      "issues": [
+        "case wrapper outcome is FAIL",
+        "actual case terminal PASS state was not reached/matched",
+        "normal terminal state does not have the expected PASS:rb56 prefix",
+        "raw report state is not PASS",
+        "normal report is not a completed normal-MEDIUM PASS",
+        "normal report observed time exceeds/omits cap: generationMillis",
+        "normal report observed time exceeds/omits cap: jobMillis",
+        "normal generation did not publish successfully",
+        "normal report work exceeds 640 or is absent: generationWork",
+        "accepted candidate ordinal is outside candidate budget 4",
+        "accepted manifest is absent or does not retain placement interpretation 15",
+        "normal report does not retain all five hypotheses / 375 proof units",
+        "normal report declared proof work differs from the preserved 520 bound",
+        "normal report does not retain all 65 solver samples",
+        "normal report generation stage count differs",
+        "normal proof was not cold with warm reuse bypassed",
+        "normal generation recorded a proof/plan cache hit",
+        "normal physical/production admission evidence differs",
+        "normal MEDIUM qualification/publication flags differ",
+        "normal report proof row count is not five",
+        "normal report does not contain five calibration observations",
+        "total calibration observations are not exactly 65 readings",
+        "normal report does not retain five per-hypothesis temporal wait schedules",
+        "normal root 7817806517725629686 nonwall identity/context/proof/sample/work differs from historical routing-index-pilot-v1-root781",
+        "normal root 7817806517725629686 nonwall identity/context/proof/sample/work differs from historical profile-blind-failure-v1-root781"
+      ]
+    }
+  ],
+  "issues": [
+    "compiled host aggregate result did not PASS",
+    "normal--6794211680707017382: case wrapper outcome is FAIL",
+    "normal--6794211680707017382: actual case terminal PASS state was not reached/matched",
+    "normal--6794211680707017382: normal terminal state does not have the expected PASS:rb56 prefix",
+    "normal--6794211680707017382: raw report state is not PASS",
+    "normal--6794211680707017382: normal report is not a completed normal-MEDIUM PASS",
+    "normal--6794211680707017382: normal report observed time exceeds/omits cap: generationMillis",
+    "normal--6794211680707017382: normal report observed time exceeds/omits cap: jobMillis",
+    "normal--6794211680707017382: normal generation did not publish successfully",
+    "normal--6794211680707017382: normal report work exceeds 640 or is absent: generationWork",
+    "normal--6794211680707017382: accepted candidate ordinal is outside candidate budget 4",
+    "normal--6794211680707017382: accepted manifest is absent or does not retain placement interpretation 15",
+    "normal--6794211680707017382: normal report does not retain all five hypotheses / 375 proof units",
+    "normal--6794211680707017382: normal report declared proof work differs from the preserved 520 bound",
+    "normal--6794211680707017382: normal report does not retain all 65 solver samples",
+    "normal--6794211680707017382: normal report generation stage count differs",
+    "normal--6794211680707017382: normal proof was not cold with warm reuse bypassed",
+    "normal--6794211680707017382: normal generation recorded a proof/plan cache hit",
+    "normal--6794211680707017382: normal physical/production admission evidence differs",
+    "normal--6794211680707017382: normal MEDIUM qualification/publication flags differ",
+    "normal--6794211680707017382: normal report proof row count is not five",
+    "normal--6794211680707017382: normal report does not contain five calibration observations",
+    "normal--6794211680707017382: total calibration observations are not exactly 65 readings",
+    "normal--6794211680707017382: normal report does not retain five per-hypothesis temporal wait schedules",
+    "normal--6794211680707017382: normal root -6794211680707017382 nonwall identity/context/proof/sample/work differs from historical profile-overhead-failure-v1-root679",
+    "normal-7817806517725629686: case wrapper outcome is FAIL",
+    "normal-7817806517725629686: actual case terminal PASS state was not reached/matched",
+    "normal-7817806517725629686: normal terminal state does not have the expected PASS:rb56 prefix",
+    "normal-7817806517725629686: raw report state is not PASS",
+    "normal-7817806517725629686: normal report is not a completed normal-MEDIUM PASS",
+    "normal-7817806517725629686: normal report observed time exceeds/omits cap: generationMillis",
+    "normal-7817806517725629686: normal report observed time exceeds/omits cap: jobMillis",
+    "normal-7817806517725629686: normal generation did not publish successfully",
+    "normal-7817806517725629686: normal report work exceeds 640 or is absent: generationWork",
+    "normal-7817806517725629686: accepted candidate ordinal is outside candidate budget 4",
+    "normal-7817806517725629686: accepted manifest is absent or does not retain placement interpretation 15",
+    "normal-7817806517725629686: normal report does not retain all five hypotheses / 375 proof units",
+    "normal-7817806517725629686: normal report declared proof work differs from the preserved 520 bound",
+    "normal-7817806517725629686: normal report does not retain all 65 solver samples",
+    "normal-7817806517725629686: normal report generation stage count differs",
+    "normal-7817806517725629686: normal proof was not cold with warm reuse bypassed",
+    "normal-7817806517725629686: normal generation recorded a proof/plan cache hit",
+    "normal-7817806517725629686: normal physical/production admission evidence differs",
+    "normal-7817806517725629686: normal MEDIUM qualification/publication flags differ",
+    "normal-7817806517725629686: normal report proof row count is not five",
+    "normal-7817806517725629686: normal report does not contain five calibration observations",
+    "normal-7817806517725629686: total calibration observations are not exactly 65 readings",
+    "normal-7817806517725629686: normal report does not retain five per-hypothesis temporal wait schedules",
+    "normal-7817806517725629686: normal root 7817806517725629686 nonwall identity/context/proof/sample/work differs from historical routing-index-pilot-v1-root781",
+    "normal-7817806517725629686: normal root 7817806517725629686 nonwall identity/context/proof/sample/work differs from historical profile-blind-failure-v1-root781"
+  ]
+}

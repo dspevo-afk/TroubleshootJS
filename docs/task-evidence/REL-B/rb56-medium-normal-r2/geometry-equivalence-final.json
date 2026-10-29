@@ -1,0 +1,302 @@
+{
+  "schema": "tsj-r12-geometry-equivalence/1",
+  "status": "PASS",
+  "caseCount": 48,
+  "ignoredWallTelemetry": [
+    "elapsedMillis",
+    "maxAdvanceMillis",
+    "generationRoutingMillis"
+  ],
+  "beforeReceiptSha256": "b6912468a222ebe71a3f5fb1886dadb3d3c3a979f5cca2aa054cc87084d0b0ba",
+  "afterReceiptSha256": "80b2537a44c863c0ce843652f01b3fd362abed5e236ae58f51ebd7b579922b6a",
+  "cases": [
+    {
+      "family": "LED_INDICATOR",
+      "root": "0",
+      "geometrySha256": "24d0c5b42f7adf0b478e9b9a14c85e9484a5e0e0d98c726298791becc75d03c2",
+      "nonWallFieldsSha256": "8fa25c1d499879acbf09a1e77bce6ec6dbe8db8b096e845f054e11c6346a0273"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "root": "17",
+      "geometrySha256": "9c45ab749bc669d8d31f79a649dca1e1d2cb0390a83392011085ec415138497e",
+      "nonWallFieldsSha256": "3016434dfd7a6cc53532c3280b9799ed9641d7101463b3c6694d8a6ac6c13d90"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "root": "13",
+      "geometrySha256": "978404368c8463aa9403616d84082bc678ee7b93c7d74553c581247992e1da9c",
+      "nonWallFieldsSha256": "b586ee5f1b455d08374b4a5a43318b6862110a829d5d8a12fa1f69653a70abc9"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "root": "-9223372036854775808",
+      "geometrySha256": "f319c5eb9ebb4a4ca72c8b9251c7ae77b031252d90a7b2dbf1ac72d2d65f98bc",
+      "nonWallFieldsSha256": "17a18d86832f481272844642210b29c1cb1af5ab34126aa540b7982a7e2d1e1d"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "0",
+      "geometrySha256": "9a33dd949806fabde05d23f76bcbfcdcfa8f7136eec7168193f02c15e2ef93dd",
+      "nonWallFieldsSha256": "38b74ccf397eacef19fe68b3e7bf687c63781232cd0aa6a2612655a8a4836a0f"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "17",
+      "geometrySha256": "83e7ea6e8168d9ecfb9078843d7038632225edf64c6d3af8fe24132af85fc084",
+      "nonWallFieldsSha256": "0b3280209a7a0abc3f79cfaff56a5adc6da79f7b8c3689a47a862cc5df7896a7"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "13",
+      "geometrySha256": "ff6af977f2c13ed6c385833bfae5be6a113cdeae4859592d2efa0c054f22dc7a",
+      "nonWallFieldsSha256": "30916d9bfce505f358d17b6458df90e1103524b791e1c1d0ff2e2a51a6b5d621"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "root": "-9223372036854775808",
+      "geometrySha256": "42e38ce17c4f61261349992e68a59f4f23f9d5e958869fadfd2d7aa6b1d139a1",
+      "nonWallFieldsSha256": "f6db1ee045e22af537254399fea685747f342e55bbd893bd6d87dc6ac6379875"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "0",
+      "geometrySha256": "14084547cd79e17c834b92164ad438e29acc3431cf2f96229f4bfb5586a55530",
+      "nonWallFieldsSha256": "f6c9b0e676ec446d242628d7e0621b077a6f4ece4a8d330b03a211bda569e682"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "17",
+      "geometrySha256": "2ea2bfb3a443facf2aa26dfe3df02a5968aa38c6799bb3a3da7d2d3aa1373629",
+      "nonWallFieldsSha256": "77c3d9f37395cda145a5f68f846dabd4d9bf78f30b5dfcb1349db1357c970939"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "13",
+      "geometrySha256": "209a61b18bcf4ada12e6b534be2d8728f9f3687499c51327e54d061e98d5c51a",
+      "nonWallFieldsSha256": "0090afb2c68fd5ea332e50b259dd39ab95a09dd6b5a5259c95946dd6b896c25b"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "root": "-9223372036854775808",
+      "geometrySha256": "bfe12d912e9e3863963663c7da8eef92a6bfaec2f5be7d25a38a3b9e7f0de9ec",
+      "nonWallFieldsSha256": "0234dccd65d0fa6670eff408ebde8d1319d0acfdeb388a9ba4a10e5eeab82ca4"
+    },
+    {
+      "family": "RC_DELAY",
+      "root": "0",
+      "geometrySha256": "073fcc08775f34a3711eeccb45c74589631d128a32d72f3eaa9c0e002656c1a5",
+      "nonWallFieldsSha256": "d6fc829f378a6dab4a7dc400a71bb507bf9fc29dd50b05a0aff868b717337cec"
+    },
+    {
+      "family": "RC_DELAY",
+      "root": "17",
+      "geometrySha256": "fcf57cdeb52299dda29f9eb4c791e796929eb1a5608ec45fc04da1badd06f20d",
+      "nonWallFieldsSha256": "18a4d03b9e197657ebdbf889afd186ab28fdc19aacb4b07540dcdd53d82cd8a2"
+    },
+    {
+      "family": "RC_DELAY",
+      "root": "13",
+      "geometrySha256": "ec668fececa6ffdadb7aaa22ce17f220a678229a2acbd3324673438ce979c83b",
+      "nonWallFieldsSha256": "7adab94805d398c0ed1ac011053d0a0c7d78568dd53aa34654b772d43b4ad907"
+    },
+    {
+      "family": "RC_DELAY",
+      "root": "-9223372036854775808",
+      "geometrySha256": "56566a6cd6688f6a29e4f9cf85ac4c6b9f9215519e235219c912431479a18289",
+      "nonWallFieldsSha256": "09603edb44eb905d5da5282775f8a33ed40a2bc9036a0387d0bca9fdf24301f2"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "0",
+      "geometrySha256": "9f5343fec511b3f9836bd2f26f19621062858f0ebc0af1ae16c0cbd1c1f6a139",
+      "nonWallFieldsSha256": "f011249ccfdb73b0ed9fefd797c597eceecd1a861b3dc82aa48598d7aed594c6"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "17",
+      "geometrySha256": "65046cad6213c7c1ae6f086755bc65d4572330077a3256f83937928215c7f801",
+      "nonWallFieldsSha256": "16194366722582378293a5bdd71b479813ce74f82be127beafc6fe3c40068143"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "13",
+      "geometrySha256": "e4283baeee77bf961d33a2ba9a6b259bdbfb4542abc9070447b34fa50f8b6da7",
+      "nonWallFieldsSha256": "f401ce50497a210cc1ca8d3284561619c7ab140ff9eb10648a5844cb93da1952"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808",
+      "geometrySha256": "a854930329e1fe5bc62a8fb89eb9642039fb4a2404cee0b5701d6edf4fe67d5a",
+      "nonWallFieldsSha256": "5fe95eab4beffdc185f3dd02665e7096246d2cc76da60386f817d46727e023b5"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "0",
+      "geometrySha256": "81c0c42174801df68b8bc0818dc0b3a777c5322c886c5754d9f690267b58e61b",
+      "nonWallFieldsSha256": "89dd13e0dd57599b4ba479fa3c8dba613ca9abbe63570f5e5e691c607535176b"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "17",
+      "geometrySha256": "812466aa518e123bf4a4ec9b1af4074b418deafebe039542a15621d1028a5107",
+      "nonWallFieldsSha256": "678a31ef97da56ebe2f53f77b159d0ed1ce6c7bb1485f90be8726094a7a3afb5"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "13",
+      "geometrySha256": "0747bb226c7ca757e48e9c600b1f4832696587871c246d00047bd82bbff6fd7c",
+      "nonWallFieldsSha256": "b54261c1149edf7f899b640754c569c1d2da0ed49efcba1a659c821d9b559458"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "root": "-9223372036854775808",
+      "geometrySha256": "8dbb910bc7a63b029498564f4f0ab1c5c47afd62241301d7b848dae831e09c29",
+      "nonWallFieldsSha256": "089b688884c1a5196c73db482223465e3fea1ff59ae7cbed6c916ab9cff29e73"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "root": "0",
+      "geometrySha256": "57fff5e4f188a077c8f2b46ed55f2470367cf589038cfa28c63319be7891ef91",
+      "nonWallFieldsSha256": "e56c65e269657ec0e2a7f5b620afe7e04ea1acdb759ab7c699329bec7551f013"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "root": "17",
+      "geometrySha256": "fc940f2e641dfe9fd96a43d04c38fd381049acdd991e7efcb77f9a0f19fba401",
+      "nonWallFieldsSha256": "907e6bbaa28ecee40b05ad8ffaed114032b5395900e38aef16b3d1160467100e"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "root": "13",
+      "geometrySha256": "512a9049e2e09da3eeb83a986e1db6ffeebc75e6654923776f84ccbeef69f75d",
+      "nonWallFieldsSha256": "7e529ef4d161de75bb2a7a0c34a2d9bf804307c76d711c992fb5f34ffc3d0adc"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "root": "-9223372036854775808",
+      "geometrySha256": "faffd15a8e229df0abdb82b895b0169805981b4794a6ad4a5b61252864cc3464",
+      "nonWallFieldsSha256": "a03cfd6504101d995e38510d39d0fa9430d8efc73846061309fc650b2158be6a"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "root": "0",
+      "geometrySha256": "d1670a7626a4c87e8308e740eb4632ab3b3a571bbcb3631d092774f9bb70cde4",
+      "nonWallFieldsSha256": "4a3ba8d7a9cb1deffb5bc8dd9037b674606e1578ac3fe086e197c202c186c68f"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "root": "17",
+      "geometrySha256": "02d2c73a13303e9ceeae910d6449b92e04a598cc0857a8dd9c38c7b76febc314",
+      "nonWallFieldsSha256": "c9ae92b7ea6fced7d29083d5697ac8e48fa499ce55d74451aaddec71313f082c"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "root": "13",
+      "geometrySha256": "6e11f5fbbf7c170a9e4b357c47b0c6a3c6109f0da368fd6d71917a17333c2354",
+      "nonWallFieldsSha256": "a181486aac8142be225a2e047a8ef8237d7f31908c95bdba2d3a69e915164889"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "root": "-9223372036854775808",
+      "geometrySha256": "11b307b38d221dca2d7b63748de8e2e9d51a785579a2d062a55126a174df42f4",
+      "nonWallFieldsSha256": "e588ec9a58a92a2ad12ec1ab1c1dc294a1a0f1c1469e47f8477af910e8357d03"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "root": "0",
+      "geometrySha256": "7db98baf5e47b96ec1145b179534a4d81073e4e5df8417be03bc9701dda50fb3",
+      "nonWallFieldsSha256": "b5d5dcc44bcf224d988a44bb507a5b8c8ca4bcd91cd316a56ae8b46e19e37f86"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "root": "17",
+      "geometrySha256": "d696aba6f24f80546db7b38ea8551f49989697335f2c8ebb02b12a50225add1c",
+      "nonWallFieldsSha256": "a632a4490f69d3a08ad69f45056471f002a25a9982eaedfe7411752b7949f2e6"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "root": "13",
+      "geometrySha256": "2f07a768d3b15310503cb88707cacadd494a56a6a3a4f72141b0200255f22b13",
+      "nonWallFieldsSha256": "672c805caf88868b20bba511709f291f74b6f8cf1264d71ed70c056092748c03"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "root": "-9223372036854775808",
+      "geometrySha256": "1dcb95e54f0bfd39f2007e31e775cc14c80a2e877c4275b2bc2ea558ce9bd549",
+      "nonWallFieldsSha256": "98d08424cebba9cf0764b687d173cd7826a8301408892db6e1e9e46ab7a8e945"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "0",
+      "geometrySha256": "b6fe9d4d16edaf7340d9518194dceb41d2c2ed85f9f5d9e08db14733506069fa",
+      "nonWallFieldsSha256": "6640f0a8ece354af4b054c4113a0ad7bff34cf5a3e71c1bb6b015f6c9b63cab1"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "17",
+      "geometrySha256": "5a6eec36e6360a2114612c31b24c70d1047e4e08a65ca717ec7a0513d145db97",
+      "nonWallFieldsSha256": "51290bc92cdd5ffbb78e9d8c3449aafca98948a2efe3cfce96fdd9f573224596"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "13",
+      "geometrySha256": "225fc225b028ba213d33d992a904dec86d310eb4986209a0ef7ca73bc2742823",
+      "nonWallFieldsSha256": "371b789bfd50cffbd0436d9b550455b1aaec33c6b55aa76b504ee960a0932121"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "root": "-9223372036854775808",
+      "geometrySha256": "7907571d667436046d7aa0479d1af6f97c3a52820902a91608e0255a140383b3",
+      "nonWallFieldsSha256": "172bba348bbb54b32862441c0f68e607b6b7f567c86884b2c503e016b17b0f16"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "root": "0",
+      "geometrySha256": "6be7db367d8701745839ef4779579313a21fca240e1ee8eac7e8e794f28b58d7",
+      "nonWallFieldsSha256": "3bf3819780f689ae9143d61bb8d7120f0e5a13a66ff653ab4930264daedf7063"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "root": "17",
+      "geometrySha256": "770bb040de72b4d3482d502ee3084dcde38e25fc7faac7ed024158e11dc56d79",
+      "nonWallFieldsSha256": "c5472a4a36b8d6059d69a9e3c3a4c2e5bf2c1b1e8c08a8688b868ecb22a188f9"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "root": "13",
+      "geometrySha256": "e503e1b00c0c5f916822da803354f227259e7ffd64b56187c5a70bd90ca82e67",
+      "nonWallFieldsSha256": "d45926db3e876472858cae0594a2088d6273a77cb3956e892500cfee9ed48c5e"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "root": "-9223372036854775808",
+      "geometrySha256": "e180929e562a37fb3a92a7c00d2998bde532a7c011d39da8d8a6eed186d5c51c",
+      "nonWallFieldsSha256": "1b8be1d5b05004a5f5f0abf56be4bc339b96550ade19301d92e8a6881be040bf"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "root": "0",
+      "geometrySha256": "bbd06bad83e1d9833a3abdf529235ef41d87b207785f3dea514e7518e842f811",
+      "nonWallFieldsSha256": "2bad3f776b72c81088acfecfbc29c83b5c15bccfc69ccb2cadd4e9b401d07e5d"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "root": "17",
+      "geometrySha256": "7e7b70480055cb97cf5269718a0acc8061a11c472d2c8803f7d3c89ef9f6c6d1",
+      "nonWallFieldsSha256": "146794701d0c366279150145683fb01888b7baea6f9879fc086fa815045a7d59"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "root": "13",
+      "geometrySha256": "da6d39b53de475d607ba7412ee972311fbc49fa6e7a5242e0ee6fdd731937bd0",
+      "nonWallFieldsSha256": "d151bed39027c96ca18985f4854b784c26446ce3514317c2c452d3a206a44788"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "root": "-9223372036854775808",
+      "geometrySha256": "9303487ea6c31712f98c74f45fe4cbbfd0b808aae883f685ba02dfe945f9fa84",
+      "nonWallFieldsSha256": "eefd9af1b1badb7b4551c24d6929ef13d9adc288aa150e4a71d98f2606ab5f47"
+    }
+  ]
+}

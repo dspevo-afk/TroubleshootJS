@@ -1,0 +1,404 @@
+{
+  "schema": "tsj-r12-player-gate/2",
+  "status": "PASS",
+  "scope": "Finite actual Player controls on the reference host; not human diagnosis, all seeds, capacity/endurance, visual/FPS qualification or public beta",
+  "planSha256": "a52dea11848cf735e6049c29835c403d4e64e87008002cec91bbb150e0c89daf",
+  "sourceBinding": "4b08feab4bbccafcf594462dec4b5f5c1444df86b7886ded9bdc8cc8cdb3872c",
+  "selectedCache": "9783B5EEE122977EECB483460E257214",
+  "formerFailedRoot": {
+    "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-8331504746761817642",
+    "build": "9783B5EEE122977EECB483460E257214",
+    "realization": "4007698fb57164000e30ebeca22e61b4055beeb307e5d7af86cc409679046eeb",
+    "fileSha256": "bf4838833cbb8137b9c3e7473ae37491311ddc46e59dacb331b9f8dee8b9d044"
+  },
+  "unseededCampaign": {
+    "status": "PASS_FINITE_THREE_UI_ATTEMPTS",
+    "attempts": 3,
+    "retries": 0,
+    "accepted": [
+      {
+        "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-1925854946472947280",
+        "build": "9783B5EEE122977EECB483460E257214",
+        "realization": "f6dc4eaa3e73bbdec0261f8fa84a863ef8dd17d6bd70749f594bc28f22d21acf",
+        "fileSha256": "e180ba2052165cfca5e020981e851de2569c9c9fe2788e76b378f2b0b1c6b46d"
+      },
+      {
+        "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/5864089112115227920",
+        "build": "9783B5EEE122977EECB483460E257214",
+        "realization": "9c6868364138dc36743cd42a0d5108fc58d10b0cb00b876c9d327f23ac515392",
+        "fileSha256": "52a386b0e53ffb29d998852559273b42ee5440f267ed46c6d99f06bd9da851f7"
+      },
+      {
+        "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-86849403912881126",
+        "build": "9783B5EEE122977EECB483460E257214",
+        "realization": "781fd62191c34991ee367b5ff3b6526fc470f2332a1f39d01b6350796d583c42",
+        "fileSha256": "cdfaf4e201b506ac42f557eb24fd8ac83d726811115082e8f3b90b6858be6d7e"
+      }
+    ]
+  },
+  "exactReplayAndNegativeCases": {
+    "status": "PASS",
+    "thirdExactReplay": {
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-86849403912881126",
+      "build": "9783B5EEE122977EECB483460E257214",
+      "realization": "781fd62191c34991ee367b5ff3b6526fc470f2332a1f39d01b6350796d583c42",
+      "fileSha256": "3e81f00774647bc7513f60e0c514b0c616bd19b259b07ac9ef1d0975eb2481af"
+    },
+    "nineRetainedBoardComparisons": [
+      {
+        "case": "replay-0",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "0924b504608e55a6a673c748ad5da75c8e82784e2a7b0a44bb71c0e57c67c403"
+      },
+      {
+        "case": "replay-1",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "19c9688875d0a5082a50c85c39a3301ea98fa3ecca9be11802fd7cc8fc44ec68"
+      },
+      {
+        "case": "replay-2",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "3d8e5563ae6bea25ed39e4479671468b89f6f11002b95ee87ce4f05d04ee5452"
+      },
+      {
+        "case": "replay-3",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "ad82a8b24639c29c7096d938205d7e3c8e85fcd12e3fd933986adea0d987f9f0"
+      },
+      {
+        "case": "file-0",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "fd81bd24cb95bc24c1245c4458236c23491cd5e73bfcd9929f4c92c7cbae5eb1"
+      },
+      {
+        "case": "file-1",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "dc6f593c87090fdc2a6e619945e92576f408b557e95565509939f4d613938e1e"
+      },
+      {
+        "case": "file-2",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "f182b061d87b4785a157698c4e8bbd1ad56229c7523208baec5f402d534582d2"
+      },
+      {
+        "case": "file-3",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "929cf3b2ed7a507d3b5948a616f8afbd1caae23f3ee2ab9eedc013d639501bbd"
+      },
+      {
+        "case": "file-4",
+        "result": "PASS",
+        "comparedFields": {
+          "replay": true,
+          "build": true,
+          "realization": true,
+          "history": true,
+          "sources": true
+        },
+        "fileSha256": "a1190d728be18474f7677de85e986f30f04e92b1b60eea70a418c0b96d2b0dcd"
+      }
+    ],
+    "scope": "Persistent identity/history/source fields; time-dependent stress is not claimed equal",
+    "observerWarning": {
+      "case": "private file",
+      "result": "Expected generic-message wait timed out; actual specific replay-identity rejection captured without re-upload"
+    }
+  },
+  "freshOriginalFile": {
+    "result": "PASS",
+    "uploadAttempts": 1,
+    "originalSha256": "5fe674cd0199cb71244b9922db6be3c1f98e586a7cfbb5d4cb8f5bf0bfe029ec",
+    "historyEntries": 19,
+    "sources": [
+      [
+        "LOAD12",
+        "CONNECTED",
+        "3fe0000000000000"
+      ],
+      [
+        "MAINAC",
+        "CONNECTED",
+        "NONE"
+      ],
+      [
+        "SENSOR_A",
+        "DISCONNECTED",
+        "3fd0000000000000"
+      ],
+      [
+        "SENSOR_B",
+        "CONNECTED",
+        "3fd0000000000000"
+      ]
+    ],
+    "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+    "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+    "reexportedHistoryAndSourcesExact": true,
+    "partsOperations": [
+      [
+        "REMOVE",
+        "RENAC",
+        "RENAC",
+        ""
+      ],
+      [
+        "ACQUIRE",
+        "RDA",
+        "R_CATALOG_10000",
+        "RDA_CATALOG_PART_0"
+      ],
+      [
+        "INSTALL",
+        "RENAC",
+        "RDA_CATALOG_PART_0",
+        ""
+      ]
+    ],
+    "visibleLooseParts": 1,
+    "sourceActionBeforeRetest": "Reconnect SENSOR_A through Supply 3 control",
+    "physicalMutationsBeforeFirstRetest": 0,
+    "firstNewRetest": "PASS",
+    "newRetestFileSha256": "f2719732c83e6d809ecd4ed971f78cffb875a6374575eb94c4d9f249cc5d36a6"
+  },
+  "physicalRepairRegression": {
+    "pristineReplay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+    "unrepairedRetest": "FAIL",
+    "isolation": "Real Board Power OFF; modification disabled while powered, enabled after settlement",
+    "partsOperations": [
+      [
+        "REMOVE",
+        "RENAC",
+        "RENAC",
+        ""
+      ],
+      [
+        "ACQUIRE",
+        "RDA",
+        "R_CATALOG_10000",
+        "RDA_CATALOG_PART_0"
+      ],
+      [
+        "INSTALL",
+        "RENAC",
+        "RDA_CATALOG_PART_0",
+        ""
+      ]
+    ],
+    "originalRdaRemoved": false,
+    "originalRenacRetainedInTray": true,
+    "repairedRetest": "PASS",
+    "finalFileSha256": "3996f0231a0b40df75b9ffa5b56804c2e1975aea8e7656c9aada11362257cbad",
+    "finalHistoryEntries": 11,
+    "finalSources": [
+      [
+        "LOAD12",
+        "CONNECTED",
+        "3fd0000000000000"
+      ],
+      [
+        "MAINAC",
+        "CONNECTED",
+        "NONE"
+      ],
+      [
+        "SENSOR_A",
+        "CONNECTED",
+        "3fd0000000000000"
+      ],
+      [
+        "SENSOR_B",
+        "CONNECTED",
+        "3fd0000000000000"
+      ]
+    ]
+  },
+  "privacy": {
+    "data-tsj-u06-state": null,
+    "data-tsj-u06-report": null,
+    "data-tsj-rb56-report": null,
+    "data-tsj-verification": null
+  },
+  "browserWarningsAndErrors": [],
+  "httpArtifactVerification": {
+    "status": "PASS",
+    "planSha256": "a52dea11848cf735e6049c29835c403d4e64e87008002cec91bbb150e0c89daf",
+    "caches": [
+      {
+        "cache": "145070719CC25BB0E4256CD0D3B890F7",
+        "status": 200,
+        "sha256": "f5ff5ef9b44a75f5cad5309d2d89b7d4c7b81c795d0a498e226a07679738179b"
+      },
+      {
+        "cache": "9783B5EEE122977EECB483460E257214",
+        "status": 200,
+        "sha256": "b880863f6887a98afa8731eeed145d4765c5439c3772d86dc4d14ec6b92eed05"
+      },
+      {
+        "cache": "9CA21BC98B1D502731674A95ADD24F93",
+        "status": 200,
+        "sha256": "4b45c73974a863e93f5b19bf0cb5ed8262747604c8e3cd54e53b765ac5e9a562"
+      },
+      {
+        "cache": "B043F7733192E86AB276952031727D5B",
+        "status": 200,
+        "sha256": "afbca71d34ea62655b1c196ce8629f50b73afb19a662c57aa20a837dd5bad21c"
+      },
+      {
+        "cache": "B3CA4FD56BAF30D786E388B344068CA0",
+        "status": 200,
+        "sha256": "d2dcb5e46e15a0191251a4f322f952f4ffac83815c19502c76f3f69878ffdcd1"
+      },
+      {
+        "cache": "157E84CFA60125C8ADADC878E0394843",
+        "status": 404
+      },
+      {
+        "cache": "4EDFD778F72A8437D47D4B4B6062A15B",
+        "status": 404
+      },
+      {
+        "cache": "866D31EC0704EB6D582A2F70529850B5",
+        "status": 404
+      },
+      {
+        "cache": "AC9AB7DEBE14350336E67CCD9B6C729C",
+        "status": 404
+      },
+      {
+        "cache": "DA2066AA7CE39BB21F1A072E19BC7636",
+        "status": 404
+      }
+    ]
+  },
+  "deploymentVerification": {
+    "status": "PASS",
+    "planSha256": "a52dea11848cf735e6049c29835c403d4e64e87008002cec91bbb150e0c89daf",
+    "sourceBinding": "4b08feab4bbccafcf594462dec4b5f5c1444df86b7886ded9bdc8cc8cdb3872c",
+    "deployedFiles": 357,
+    "selectedVariant": "Player",
+    "cacheIds": [
+      "145070719CC25BB0E4256CD0D3B890F7",
+      "9783B5EEE122977EECB483460E257214",
+      "9CA21BC98B1D502731674A95ADD24F93",
+      "B043F7733192E86AB276952031727D5B",
+      "B3CA4FD56BAF30D786E388B344068CA0"
+    ],
+    "allFileHashesAndSizesExact": true,
+    "DeveloperMarkersAbsent": [
+      "tsjU06RestoreGuard",
+      "data-tsj-u06-report",
+      "tsjRb56Normal",
+      "data-tsj-rb56-report"
+    ],
+    "initialComparison": {
+      "status": "FAIL",
+      "scope": "Outside one-off inventory comparison",
+      "reason": "Raw directory enumeration compared to frozen canonical path order",
+      "completePathHashSizeMapsEqual": true,
+      "artifactDifference": false,
+      "readerOrPlanChanged": false
+    }
+  },
+  "screenshots": [
+    {
+      "path": "screenshots-v2/01-third-ticket.png",
+      "sha256": "ede6e26cfe66b98f4f5464bb1fbae9e54c0a8ee49af123bc5551110f6de9cf2d",
+      "visuallyInspected": true,
+      "shows": "Third new unseeded board customer ticket"
+    },
+    {
+      "path": "screenshots-v2/02-restored-mixed-sources.png",
+      "sha256": "2f100f307ed717f9902b07f6eac21f6af51a3b9bf0667dd442388bd1e3ea6e20",
+      "visuallyInspected": true,
+      "shows": "Restored LOAD12 500mA and disconnected sensor A source"
+    },
+    {
+      "path": "screenshots-v2/04-unrepaired-isolated-renac.png",
+      "sha256": "fdb9239d4ef4cc4d2a0181c6e731c1f6912d4dfb3a53a42b160fa61b6fa4e53f",
+      "visuallyInspected": true,
+      "shows": "Original RENAC installed, board isolated and service controls available; failure itself is recorded by the preceding retest event"
+    },
+    {
+      "path": "screenshots-v2/05-customer-retest-passed.png",
+      "sha256": "40df748af4ca8c54aff34acc5a72faf0ff9af280fda6e6779cafd6e8459cc957",
+      "visuallyInspected": true,
+      "shows": "Generic customer-pass outcome, captured after the physical repair; identical to the separately captured fresh-file retest outcome"
+    }
+  ],
+  "observerLimitations": [
+    "One private-file generic-notice wait failed; actual specific identity rejection observed without a second upload.",
+    "One navigation returned ERR_ABORTED; unchanged tab inspected, then separate fresh tab opened and prior saved test tab closed.",
+    "A download helper retained closed tab6 and reset the automation kernel before export; active tab7 recovered and helper changed to take the tab explicitly. The repaired-file upload was not repeated.",
+    "The outside summary first assumed one history row per source action; corrected to the unchanged full four-source-vector contract with literal expected rows. Initial failure and script retained outside Git.",
+    "The early unrepaired transition screenshot is retained outside Git; the published capture shows the settled isolated component before removal. Narrow default viewport remains; no expanded visual/FPS claim."
+  ],
+  "rawUiEventSha256": "f3e686026951f861fc87391882844382327d8de7d1d14f3bd1afab0e0f3657f4",
+  "blindCohortObserved": false,
+  "inspectedCaptureCount": 5,
+  "capturePresentation": {
+    "publishedUniqueImages": 4,
+    "distinctVisualProofOfTwoPasses": false,
+    "twoIndependentRetestEventsAndExportsRecorded": true,
+    "freshFilePassDuplicatePreserved": "player-r3-restored-pass-duplicate.png",
+    "duplicateSha256": "40df748af4ca8c54aff34acc5a72faf0ff9af280fda6e6779cafd6e8459cc957",
+    "oldFourthLabel": "04-unrepaired-retest-fail.png",
+    "newFourthLabel": "04-unrepaired-isolated-renac.png",
+    "reason": "Relabel actual isolation view and consolidate identical generic success screens; no image pixels edited"
+  }
+}

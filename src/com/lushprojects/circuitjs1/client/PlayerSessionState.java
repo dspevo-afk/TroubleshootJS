@@ -7,6 +7,7 @@ import java.util.Vector;
 
 /** Current-owner capture and private fresh-owner reconstruction, never publication. */
 final class PlayerSessionState {
+    static final int HISTORY_OPERATIONS_PER_WORK_UNIT = 4;
     private static CirSim restoringOwner;
 
     private PlayerSessionState() { }
@@ -65,65 +66,183 @@ final class PlayerSessionState {
             PlayerSessionFingerprint.of(PhysicalBoardFingerprint.of(owner)),
             signature(sim, owner, sources, stress, fuses), history, sources, stress, fuses);
     }
-    /** Caller owns Staged.abort on failure and attaches the workbench only after success. */
-    static void restore(CirSim sim, GeneratedBoardInstance candidate, PlayerSessionSave save) {
-        if (sim == null || save == null || candidate == null || restoringOwner != null ||
-                !FreshGeneratedRuntimeInstallation.isInProgress(sim) ||
-                !sim.developerVerifierRunning || requireCurrent(sim) != candidate)
-            throw invalid("Session reconstruction requires its private fresh owner");
-        PlayerSessionReplay identity = PlayerSessionReplay.parse(save.replay);
-        if ((identity.isPrivateQualification()
-                ? (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
-                    !identity.matches(candidate))
-                : (identity.playerRequest().seed != candidate.getSeed() ||
-                    !identity.playerRequest().familyId.equals(candidate.getCircuitFamilyId()))) ||
-                !save.realization.equals(PlayerSessionFingerprint.of(PhysicalBoardFingerprint.of(candidate))))
-            throw invalid("Session physical realization does not match its replay");
-        requirePristineCopper(candidate);
-        validateSources(candidate, save.getSources());
-        // A failed or incomplete replay must never append to a previously used inventory.
-        for (PhysicalPart<?> part : candidate.getPhysicalBoardRuntime().getPhysicalParts())
-            if (!part.isOriginal()) throw invalid("Session reconstruction requires fresh inventory");
-        if (!sim.getBoardModificationController().isFullyRestored())
-            throw invalid("Session reconstruction requires fresh physical connections");
-        Vector<PlayerSessionSave.Operation> history = save.getHistory();
-        validateInventoryPopulation(candidate.getPhysicalBoardRuntime().getPhysicalParts().size(), history);
-        restoringOwner = sim;
-        try {
-            sim.setBoardPowerState(BoardPowerState.UNPOWERED);
-            settle(sim, candidate, "isolate");
-            if (!sim.getBoardPowerController().isElectricallyUnpowered())
-                throw invalid("Session reconstruction failed to isolate its sources");
-            restart(sim, candidate);
-            int index = 0;
-            for (PlayerSessionSave.Operation operation : history) {
-                requirePrivateOwner(sim, candidate);
-                checkpoint(sim);
-                replay(sim, candidate, operation);
-                settle(sim, candidate, "operation " + index++);
-                checkpoint(sim);
-            }
-            // Historical input actions may have stepped storage. The advertised mode restarts it.
-            restart(sim, candidate);
-            restoreStress(sim, candidate, save.getStress());
-            restoreFuses(candidate, save.getFuses());
-            sim.requestGeneratedBoardVerification();
-            settle(sim, candidate, "permanent damage");
-            for (PlayerSessionSave.Source source : save.getSources()) {
-                sim.changeBenchSource(candidate, source.id, Boolean.valueOf(source.connected),
-                    Double.isNaN(source.limitAmps) ? null : Double.valueOf(source.limitAmps));
-                settle(sim, candidate, "source");
-            }
-            candidate.getPhysicalBoardRuntime().synchronizeSimulationTime(sim.t);
-            sim.getGeneratedChallengeController().invalidateCustomerRetest();
-            GeneratedRuntimeInvariant.verify(sim, candidate, sim.getBoardModificationController(), sim.elmList);
+    /** Exact finite restore budget for preflight admission before the candidate is mutated. */
+    static int restoreWorkUnits(PlayerSessionSave save) {
+        if (save == null) throw invalid("Missing session reconstruction state");
+        int historyCount = save.getHistory().size();
+        int historyWorkUnits = (historyCount + HISTORY_OPERATIONS_PER_WORK_UNIT - 1) /
+            HISTORY_OPERATIONS_PER_WORK_UNIT;
+        return 5 + historyWorkUnits + save.getSources().size();
+    }
+
+    /** Caller owns Staged.abort on failure and publishes only after this cursor finishes. */
+    static GeneratedWork<Void> beginRestore(CirSim sim, GeneratedBoardInstance candidate,
+            PlayerSessionSave save) {
+        return new RestoreWork(sim, candidate, save);
+    }
+
+    /** One bounded owner-held unit per step; cancellation leaves candidate cleanup to Staged. */
+    private static final class RestoreWork extends GeneratedWork<Void> {
+        private static final int ISOLATE = 0;
+        private static final int INITIAL_RESTART = 1;
+        private static final int REPLAY_HISTORY = 2;
+        private static final int FINAL_RESTART = 3;
+        private static final int RESTORE_DAMAGE = 4;
+        private static final int RESTORE_SOURCES = 5;
+        private static final int FINAL_VALIDATE = 6;
+        private static final int COMPLETE = 7;
+
+        private final CirSim sim;
+        private final GeneratedBoardInstance candidate;
+        private final PlayerSessionSave save;
+        private final Vector<PlayerSessionSave.Operation> history;
+        private final Vector<PlayerSessionSave.Source> sources;
+        private final Vector<PlayerSessionSave.Stress> stress;
+        private final Vector<PlayerSessionSave.Fuse> fuses;
+        private final int workUnits;
+        private int stage = ISOLATE;
+        private int historyIndex;
+        private int sourceIndex;
+        private boolean complete;
+        private boolean cancelled;
+        private boolean failed;
+
+        RestoreWork(CirSim sim, GeneratedBoardInstance candidate, PlayerSessionSave save) {
+            if (sim == null || save == null || candidate == null || restoringOwner != null ||
+                    !FreshGeneratedRuntimeInstallation.isInProgress(sim) ||
+                    !sim.developerVerifierRunning || requireCurrent(sim) != candidate)
+                throw invalid("Session reconstruction requires its private fresh owner");
+            PlayerSessionReplay identity = PlayerSessionReplay.parse(save.replay);
+            if ((identity.isPrivateQualification()
+                    ? (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                        !identity.matches(candidate))
+                    : (identity.playerRequest().seed != candidate.getSeed() ||
+                        !identity.playerRequest().familyId.equals(candidate.getCircuitFamilyId()))) ||
+                    !save.realization.equals(PlayerSessionFingerprint.of(PhysicalBoardFingerprint.of(candidate))))
+                throw invalid("Session physical realization does not match its replay");
             requirePristineCopper(candidate);
-            String actual = signature(sim, candidate, sources(candidate), stress(candidate), fuses(candidate));
-            if (!save.stateSignature.equals(actual))
-                throw invalid("Session reconstruction does not match the saved semantic state");
-            checkpoint(sim);
-        } finally {
-            restoringOwner = null;
+            history = save.getHistory();
+            sources = save.getSources();
+            stress = save.getStress();
+            fuses = save.getFuses();
+            validateSources(candidate, sources);
+            // A failed or incomplete replay must never append to a previously used inventory.
+            for (PhysicalPart<?> part : candidate.getPhysicalBoardRuntime().getPhysicalParts())
+                if (!part.isOriginal()) throw invalid("Session reconstruction requires fresh inventory");
+            if (!sim.getBoardModificationController().isFullyRestored())
+                throw invalid("Session reconstruction requires fresh physical connections");
+            validateInventoryPopulation(candidate.getPhysicalBoardRuntime().getPhysicalParts().size(), history);
+            this.sim = sim;
+            this.candidate = candidate;
+            this.save = save;
+            workUnits = restoreWorkUnits(save);
+        }
+
+        boolean step() {
+            if (cancelled) throw new IllegalStateException("Session reconstruction was cancelled");
+            if (failed) throw new IllegalStateException("Session reconstruction has failed");
+            if (complete) return false;
+
+            boolean ownsRestoreFlag = false;
+            try {
+                if (restoringOwner != null)
+                    throw invalid("Another session reconstruction is active");
+                requireRestoreContext();
+                restoringOwner = sim;
+                ownsRestoreFlag = true;
+                requirePrivateOwner(sim, candidate);
+                switch (stage) {
+                case ISOLATE:
+                    sim.setBoardPowerState(BoardPowerState.UNPOWERED);
+                    settle(sim, candidate, "isolate");
+                    if (!sim.getBoardPowerController().isElectricallyUnpowered())
+                        throw invalid("Session reconstruction failed to isolate its sources");
+                    stage = INITIAL_RESTART;
+                    break;
+                case INITIAL_RESTART:
+                    restart(sim, candidate);
+                    stage = history.isEmpty() ? FINAL_RESTART : REPLAY_HISTORY;
+                    break;
+                case REPLAY_HISTORY: {
+                    int batchCount = 0;
+                    while (historyIndex < history.size() &&
+                            batchCount < HISTORY_OPERATIONS_PER_WORK_UNIT) {
+                        requirePrivateOwner(sim, candidate);
+                        checkpoint(sim);
+                        replay(sim, candidate, history.get(historyIndex));
+                        settle(sim, candidate, "operation " + historyIndex);
+                        checkpoint(sim);
+                        historyIndex++;
+                        batchCount++;
+                    }
+                    if (historyIndex == history.size()) stage = FINAL_RESTART;
+                    break;
+                }
+                case FINAL_RESTART:
+                    // Historical input actions may have stepped storage. The advertised mode restarts it.
+                    restart(sim, candidate);
+                    stage = RESTORE_DAMAGE;
+                    break;
+                case RESTORE_DAMAGE:
+                    restoreStress(sim, candidate, stress);
+                    restoreFuses(candidate, fuses);
+                    sim.requestGeneratedBoardVerification();
+                    settle(sim, candidate, "permanent damage");
+                    stage = sources.isEmpty() ? FINAL_VALIDATE : RESTORE_SOURCES;
+                    break;
+                case RESTORE_SOURCES:
+                    PlayerSessionSave.Source source = sources.get(sourceIndex);
+                    sim.changeBenchSource(candidate, source.id, Boolean.valueOf(source.connected),
+                        Double.isNaN(source.limitAmps) ? null : Double.valueOf(source.limitAmps));
+                    settle(sim, candidate, "source");
+                    sourceIndex++;
+                    if (sourceIndex == sources.size()) stage = FINAL_VALIDATE;
+                    break;
+                case FINAL_VALIDATE:
+                    candidate.getPhysicalBoardRuntime().synchronizeSimulationTime(sim.t);
+                    sim.getGeneratedChallengeController().invalidateCustomerRetest();
+                    GeneratedRuntimeInvariant.verify(sim, candidate, sim.getBoardModificationController(), sim.elmList);
+                    requirePristineCopper(candidate);
+                    String actual = signature(sim, candidate, sources(candidate), stress(candidate), fuses(candidate));
+                    if (!save.stateSignature.equals(actual))
+                        throw invalid("Session reconstruction does not match the saved semantic state");
+                    checkpoint(sim);
+                    stage = COMPLETE;
+                    complete = true;
+                    break;
+                default:
+                    throw new IllegalStateException("Invalid session reconstruction phase");
+                }
+                if (cancelled) throw new IllegalStateException("Session reconstruction was cancelled");
+                requirePrivateOwner(sim, candidate);
+                return !complete;
+            } catch (RuntimeException failure) {
+                failed = true;
+                throw failure;
+            } catch (Error failure) {
+                failed = true;
+                throw failure;
+            } finally {
+                if (ownsRestoreFlag && restoringOwner == sim) restoringOwner = null;
+            }
+        }
+
+        Void finish() {
+            if (cancelled || failed || !complete || stage != COMPLETE)
+                throw new IllegalStateException("Session reconstruction is incomplete");
+            return null;
+        }
+
+        void cancel() {
+            cancelled = true;
+        }
+
+        int getWorkUnits() { return workUnits; }
+
+        private void requireRestoreContext() {
+            if (!FreshGeneratedRuntimeInstallation.isInProgress(sim) ||
+                    !sim.developerVerifierRunning || requireCurrent(sim) != candidate)
+                throw invalid("Session reconstruction lost its private fresh owner");
         }
     }
 

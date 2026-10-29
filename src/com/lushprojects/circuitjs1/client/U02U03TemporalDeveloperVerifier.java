@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.util.Vector;
+
 import com.google.gwt.user.client.Timer;
 
 /**
@@ -47,6 +49,17 @@ final class U02U03TemporalDeveloperVerifier {
         private double scopeFrequency = Double.NaN;
         private int finalScopeSamples;
         private boolean cancelledPublicationRetired;
+        private boolean endpointIndexHintsVerified;
+        private boolean endpointMembershipInitialPositive;
+        private boolean endpointMembershipStable;
+        private boolean endpointMembershipSubstitutionRejected;
+        private boolean endpointMembershipSubstitutionRestored;
+        private boolean endpointMembershipRemovalRejected;
+        private boolean endpointMembershipReinserted;
+        private boolean endpointMembershipReplacementVector;
+        private boolean endpointMembershipClearAndRebind;
+        private boolean endpointMembershipUnsubscribe;
+        private int endpointMembershipCanaries;
         private boolean renderReadOnly;
         private boolean fixtureStateRestored;
         private boolean finished;
@@ -152,6 +165,7 @@ final class U02U03TemporalDeveloperVerifier {
 
         private void prepareAndVerifyScope() {
             sim.instrumentController.clearTargets();
+            verifyEndpointIndexHints();
             sim.instrumentController.activateScopeModeForDeveloperVerification();
             place(vin, ground);
             SolverTimeObservationService.Subscription first =
@@ -196,6 +210,177 @@ final class U02U03TemporalDeveloperVerifier {
             require(finalScopeSamples > 0 &&
                 finalScopeSamples <= SolverTimeObservationService.MAX_CAPACITY,
                 "successor scope history was not bounded or accepted");
+        }
+
+        /**
+         * Exercise current-vector membership using the actual VIN/GND
+         * CircuitJS endpoints. These controlled receipts do not advance the
+         * solver and are not player-flow or physics evidence.
+         */
+        private void verifyEndpointIndexHints() {
+            require(!sim.activeMeasurementOverlay,
+                "controlled endpoint membership canaries require the restored solver graph");
+            final Vector<CircuitElm> originalGraph = sim.elmList;
+            final CircuitPostMeasurementEndpoint positive = endpoint("J1.1");
+            final CircuitPostMeasurementEndpoint negative = endpoint("J1.2");
+            final Vector<CircuitElm> controlledGraph = copyGraph(originalGraph);
+            SolverTimeObservationService.Subscription subscription = null;
+            try {
+                sim.elmList = controlledGraph;
+                subscription = sim.solverTimeObservations.subscribe(positive, negative,
+                    16, false);
+                double nextTime = sim.t;
+                int beforeInitial = subscription.getSampleCount();
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, true, "initial-positive");
+                endpointMembershipInitialPositive = subscription.getSampleCount() ==
+                    beforeInitial + 1;
+                require(endpointMembershipInitialPositive,
+                    "live endpoints did not publish the initial synthetic sample");
+                int beforeStable = subscription.getSampleCount();
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, true, "unchanged-positive");
+                endpointMembershipStable = subscription.getSampleCount() == beforeStable + 1;
+                require(endpointMembershipStable,
+                    "unchanged endpoint membership did not accept a second synthetic sample");
+
+                int positiveIndex = controlledGraph.indexOf(positive.getElement());
+                CircuitElm replacement = source != positive.getElement() &&
+                    source != negative.getElement() ? source :
+                    anotherElement(controlledGraph, positive, negative);
+                controlledGraph.setElementAt(replacement, positiveIndex);
+                int beforeSubstitution = subscription.getSampleCount();
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, false, "same-size-substitution-negative");
+                endpointMembershipSubstitutionRejected =
+                    subscription.getSampleCount() == beforeSubstitution;
+                require(endpointMembershipSubstitutionRejected,
+                    "same-size endpoint substitution published an observation");
+                controlledGraph.setElementAt(positive.getElement(), positiveIndex);
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, true, "substitution-restored-positive");
+                endpointMembershipSubstitutionRestored =
+                    subscription.getSampleCount() == beforeSubstitution + 1;
+                require(endpointMembershipSubstitutionRestored,
+                    "restored endpoint did not resume controlled sampling");
+
+                int negativeIndex = controlledGraph.indexOf(negative.getElement());
+                controlledGraph.removeElementAt(negativeIndex);
+                int beforeRemoval = subscription.getSampleCount();
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, false, "removed-negative");
+                endpointMembershipRemovalRejected =
+                    subscription.getSampleCount() == beforeRemoval;
+                require(endpointMembershipRemovalRejected,
+                    "removed endpoint published an observation");
+                int reinsertIndex = negativeIndex == 0 ? controlledGraph.size() : 0;
+                controlledGraph.insertElementAt(negative.getElement(), reinsertIndex);
+                nextTime = controlledMembershipSample(controlledGraph, subscription,
+                    positive, negative, nextTime, true, "reinserted-positive");
+                endpointMembershipReinserted = subscription.getSampleCount() ==
+                    beforeRemoval + 1;
+                require(endpointMembershipReinserted,
+                    "reinserted endpoint did not restore controlled membership");
+
+                Vector<CircuitElm> replacementGraph = copyGraph(controlledGraph);
+                reverse(replacementGraph);
+                sim.elmList = replacementGraph;
+                nextTime = controlledMembershipSample(replacementGraph, subscription,
+                    positive, negative, nextTime, true, "replacement-vector-positive");
+                endpointMembershipReplacementVector = subscription.getSampleCount() ==
+                    beforeRemoval + 2;
+                require(endpointMembershipReplacementVector,
+                    "replacement vector with live endpoints did not accept a sample");
+
+                sim.solverTimeObservations.invalidate();
+                require(subscription.getSampleCount() == 0,
+                    "observation clear retained controlled membership samples");
+                controlledMembershipSample(replacementGraph, subscription, positive,
+                    negative, nextTime, true, "clear-rebind-positive");
+                endpointMembershipClearAndRebind = subscription.getSampleCount() == 1;
+                require(endpointMembershipClearAndRebind,
+                    "cleared observation did not rebind live endpoints");
+
+                sim.solverTimeObservations.unsubscribe(subscription);
+                int beforeUnsubscribe = subscription.getSampleCount();
+                controlledMembershipSample(replacementGraph, subscription, positive,
+                    negative, nextTime + .0001, true, "unsubscribed-no-sample");
+                endpointMembershipUnsubscribe = subscription.isClosed() &&
+                    subscription.getSampleCount() == beforeUnsubscribe;
+                require(endpointMembershipUnsubscribe,
+                    "unsubscribed observation retained a later synthetic sample");
+                endpointIndexHintsVerified = true;
+            } finally {
+                sim.elmList = originalGraph;
+                sim.solverTimeObservations.invalidate();
+                sim.solverTimeObservations.unsubscribe(subscription);
+            }
+        }
+
+        private double controlledMembershipSample(Vector<CircuitElm> graph,
+                SolverTimeObservationService.Subscription subscription,
+                CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black,
+                double lastTime, boolean expected, String label) {
+            require(graph == sim.elmList,
+                label + " uses the simulation's current controlled vector");
+            boolean reference = referenceEndpointMembership(graph, red, black);
+            require(reference == expected,
+                label + " differs from the pre-hint vector-contains reference");
+            int before = subscription.getSampleCount();
+            double acceptedTime = lastTime + .0001;
+            SolverExecutionBoundary boundary = new SolverExecutionBoundary();
+            boundary.bind(owner, sim.elmList);
+            SolverExecutionBoundary.Operation operation = boundary.begin(1, 1, 0, 20,
+                lastTime);
+            boundary.beginTrial(operation, 1);
+            boundary.accepted(operation, acceptedTime, 2);
+            sim.solverTimeObservations.accepted(operation);
+            SolverExecutionBoundary.Outcome outcome = boundary.finish(operation,
+                SolverExecutionBoundary.Outcome.COMPLETE);
+            sim.solverTimeObservations.finished(operation, outcome);
+            require(outcome == SolverExecutionBoundary.Outcome.COMPLETE,
+                label + " synthetic solver receipt did not complete");
+            int expectedNewSamples = expected && !subscription.isClosed() ? 1 : 0;
+            require(subscription.getSampleCount() == before + expectedNewSamples,
+                label + " service result differs from independent contains expectation");
+            endpointMembershipCanaries++;
+            return acceptedTime;
+        }
+
+        private Vector<CircuitElm> copyGraph(Vector<CircuitElm> graph) {
+            Vector<CircuitElm> copy = new Vector<CircuitElm>();
+            for (int i = 0; i < graph.size(); i++) copy.addElement(graph.elementAt(i));
+            return copy;
+        }
+
+        private void reverse(Vector<CircuitElm> graph) {
+            for (int left = 0, right = graph.size() - 1; left < right; left++, right--) {
+                CircuitElm element = graph.elementAt(left);
+                graph.setElementAt(graph.elementAt(right), left);
+                graph.setElementAt(element, right);
+            }
+        }
+
+        private CircuitElm anotherElement(Vector<CircuitElm> graph,
+                CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+            for (int i = 0; i < graph.size(); i++) {
+                CircuitElm element = graph.elementAt(i);
+                if (element != red.getElement() && element != black.getElement())
+                    return element;
+            }
+            throw new IllegalStateException("U02/U03 membership canary needs a third graph element");
+        }
+
+        private boolean referenceEndpointMembership(Vector<CircuitElm> graph,
+                CircuitPostMeasurementEndpoint red, CircuitPostMeasurementEndpoint black) {
+            return graph != null && graph.contains(red.getElement()) &&
+                graph.contains(black.getElement()) && validEndpointPost(red) &&
+                validEndpointPost(black);
+        }
+
+        private boolean validEndpointPost(CircuitPostMeasurementEndpoint endpoint) {
+            return endpoint.getElement() != null && endpoint.getPostIndex() >= 0 &&
+                endpoint.getPostIndex() < endpoint.getElement().getPostCount();
         }
 
         /** Display/canvas projection consumes the committed ring only; it must
@@ -343,7 +528,25 @@ final class U02U03TemporalDeveloperVerifier {
                 ",\"boundedCapacity\":" + SolverTimeObservationService.MAX_CAPACITY +
                 ",\"fixtureSourceOutsideLogicalBoard\":true,\"fixtureStateRestored\":" +
                 fixtureStateRestored + ",\"cancelledPublicationRetired\":" +
-                cancelledPublicationRetired + ",\"renderReadOnly\":" + renderReadOnly +
+                cancelledPublicationRetired + ",\"endpointIndexHintsVerified\":" +
+                endpointIndexHintsVerified + ",\"endpointMembershipCanariesControlledOnly\":true," +
+                "\"endpointMembershipCanaries\":" + endpointMembershipCanaries +
+                ",\"endpointMembershipInitialPositive\":" +
+                endpointMembershipInitialPositive +
+                ",\"endpointMembershipStable\":" + endpointMembershipStable +
+                ",\"endpointMembershipSubstitutionRejected\":" +
+                endpointMembershipSubstitutionRejected +
+                ",\"endpointMembershipSubstitutionRestored\":" +
+                endpointMembershipSubstitutionRestored +
+                ",\"endpointMembershipRemovalRejected\":" +
+                endpointMembershipRemovalRejected +
+                ",\"endpointMembershipReinserted\":" + endpointMembershipReinserted +
+                ",\"endpointMembershipReplacementVector\":" +
+                endpointMembershipReplacementVector +
+                ",\"endpointMembershipClearAndRebind\":" +
+                endpointMembershipClearAndRebind +
+                ",\"endpointMembershipUnsubscribe\":" + endpointMembershipUnsubscribe +
+                ",\"renderReadOnly\":" + renderReadOnly +
                 ",\"temporaryMeterClean\":true}" : null;
             completion.finished(report, finalFailure);
         }

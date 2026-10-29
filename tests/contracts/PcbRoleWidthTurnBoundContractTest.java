@@ -1,5 +1,6 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Vector;
@@ -22,6 +23,8 @@ public final class PcbRoleWidthTurnBoundContractTest {
     public static void main(String[] args) {
         literalExpectations();
         independentDijkstraChecks();
+        workspaceReuseChecks();
+        cancelledWorkspaceReinitializes();
         negativeOriginTranslation();
         System.out.println("PASS: PCB role width turn bound contracts assertions=" + assertions);
     }
@@ -81,6 +84,73 @@ public final class PcbRoleWidthTurnBoundContractTest {
         }
     }
 
+    private static void workspaceReuseChecks() {
+        PcbLayerRoutingPrototype.TurnBoundWorkspace workspace=
+            new PcbLayerRoutingPrototype.TurnBoundWorkspace(5,5);
+        Fixture first=fixture(5,5,0,0,new Goal[] { new Goal(0,4,2) },60,false,workspace);
+        verifyAgainstDijkstra(first,"reused workspace first goal map");
+
+        Fixture second=fixture(5,5,0,0,
+            new Goal[] { new Goal(0,0,4), new Goal(1,4,0) },160,false,workspace);
+        requireSameRayArrays(first.bound,second.bound,
+            "sequential bounds reuse only this workspace's ray arrays");
+        verifyAgainstDijkstra(second,"reused workspace opposite-corner goals");
+
+        Fixture third=fixture(5,5,0,0,new Goal[] { new Goal(1,2,2) },60,false,workspace);
+        requireSameRayArrays(second.bound,third.bound,
+            "a third goal map reuses the fully overwritten workspace");
+        verifyAgainstDijkstra(third,"reused workspace same-cell opposite-face goal");
+
+        boolean mismatchedGridRejected=false;
+        try {
+            new PcbLayerRoutingPrototype.TurnLowerBound(1,25,third.goals,third.distance,
+                NO_OP_OBSERVER,0,workspace);
+        } catch(IllegalArgumentException expected) {
+            mismatchedGridRejected=true;
+        }
+        check(mismatchedGridRejected,
+            "workspace rejects a same-cell-count grid with a different shape before filling");
+        verifyAgainstDijkstra(third,"shape rejection leaves the active bound unchanged");
+
+        PcbLayerRoutingPrototype.TurnBoundWorkspace separate=
+            new PcbLayerRoutingPrototype.TurnBoundWorkspace(5,5);
+        Fixture independent=fixture(5,5,0,0,new Goal[] { new Goal(0,4,2) },60,false,separate);
+        for(String name:new String[] {"north","east","south","west","axisMin"})
+            check(fieldValue(third.bound,name)!=fieldValue(independent.bound,name),
+                "independent workspace owns a separate "+name+" array");
+        check(fieldValue(workspace,"rowMin")!=fieldValue(separate,"rowMin"),
+            "independent workspace owns a separate row-minimum array");
+        verifyAgainstDijkstra(independent,"independent workspace has no cross-owner alias");
+    }
+
+    private static void cancelledWorkspaceReinitializes() {
+        final int width=4097,height=1,cells=width*height;
+        final PcbLayerRoutingPrototype.TurnBoundWorkspace workspace=
+            new PcbLayerRoutingPrototype.TurnBoundWorkspace(width,height);
+        boolean[] incompleteGoals=new boolean[cells*2];
+        int[] incompleteDistance=new int[cells];
+        Arrays.fill(incompleteDistance,INFINITY);
+        final RuntimeException cancelled=new RuntimeException("partial turn-bound workspace fill");
+        final int[] checks={0};
+        boolean propagated=false;
+        try {
+            new PcbLayerRoutingPrototype.TurnLowerBound(width,height,incompleteGoals,
+                incompleteDistance,new SeededPcbLayoutGenerator.AttemptObserver() {
+                    public void check(int attempt) {
+                        if(++checks[0]==2) throw cancelled;
+                    }
+                },0,workspace);
+        } catch(RuntimeException failure) {
+            propagated=failure==cancelled;
+        }
+        check(propagated && checks[0]==2,
+            "cancellation during a ray sweep propagates before publishing a partial bound");
+
+        Fixture reinitialized=fixture(width,height,0,0,
+            new Goal[] { new Goal(0,width-1,0) },60,false,workspace);
+        verifyAgainstDijkstra(reinitialized,"partial workspace is fully overwritten after cancellation");
+    }
+
     private static void negativeOriginTranslation() {
         Fixture zeroOrigin = fixture(5, 4, 0, 0,
             new Goal[] { new Goal(0, 4, 2) }, 60, false);
@@ -133,6 +203,12 @@ public final class PcbRoleWidthTurnBoundContractTest {
 
     private static Fixture fixture(int width, int height, int originX, int originY,
             Goal[] goalSpecs, int viaCost, boolean wallOnFirstFace) {
+        return fixture(width,height,originX,originY,goalSpecs,viaCost,wallOnFirstFace,null);
+    }
+
+    private static Fixture fixture(int width,int height,int originX,int originY,
+            Goal[] goalSpecs,int viaCost,boolean wallOnFirstFace,
+            PcbLayerRoutingPrototype.TurnBoundWorkspace workspace) {
         int cells = width * height;
         boolean[] goals = new boolean[cells * 2];
         for (Goal goal : goalSpecs) {
@@ -140,12 +216,29 @@ public final class PcbRoleWidthTurnBoundContractTest {
             goals[goal.layer * cells + cell] = true;
         }
         int[] distance = bruteForceManhattan(width, height, originX, originY, goalSpecs);
-        PcbLayerRoutingPrototype.TurnLowerBound bound =
-            new PcbLayerRoutingPrototype.TurnLowerBound(width, height, goals, distance,
-                NO_OP_OBSERVER, 0);
+        PcbLayerRoutingPrototype.TurnLowerBound bound=workspace==null?
+            new PcbLayerRoutingPrototype.TurnLowerBound(width,height,goals,distance,NO_OP_OBSERVER,0):
+            new PcbLayerRoutingPrototype.TurnLowerBound(width,height,goals,distance,
+                NO_OP_OBSERVER,0,workspace);
         OracleGraph graph = new OracleGraph(width, height, goals, viaCost,
             new int[] { 0, 7 }, wallOnFirstFace);
         return new Fixture(width, height, originX, originY, cells, goals, distance, bound, graph);
+    }
+
+    private static void requireSameRayArrays(PcbLayerRoutingPrototype.TurnLowerBound first,
+            PcbLayerRoutingPrototype.TurnLowerBound second,String label) {
+        for(String name:new String[] {"north","east","south","west","axisMin"})
+            check(fieldValue(first,name)==fieldValue(second,name),label+": "+name);
+    }
+
+    private static Object fieldValue(Object target,String name) {
+        try {
+            Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.get(target);
+        } catch(Exception failure) {
+            throw new AssertionError("Cannot inspect "+name+" workspace array: "+failure);
+        }
     }
 
     /** Independent brute-force coordinate oracle; it does not call production lowerBound(). */

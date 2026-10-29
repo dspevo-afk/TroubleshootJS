@@ -14,6 +14,67 @@ older evidence packets describe their own historical candidates.
 
 ## Audit corrections and current execution boundaries
 
+RB56's registered staged capability supplies normal MEDIUM requests as well as
+private exact qualification requests. The two authorities are independent of the
+catalog enablement flag. Private session adoption checks the exact private
+request, current issued publication receipt, physical owner and cold diagnostic
+proof before attaching a session. Public replay parsing still rejects private
+identities. The Developer qualifier can exercise normal cold candidate search
+with its shared budget and export complete candidate/proof lineage; it grants
+no additional player authority. Current qualification status lives in the roadmap.
+An opt-in normal Developer diagnostic can observe the same coordinator's browser
+continuation while bypassing cached proof. It does not manually advance the job
+and reports actual yields and advance timing under the unchanged full wall limit.
+
+`TopologyPlacementGraph` owns canonical, immutable pad-link lists built before
+placement. The planner reads those views directly. `PcbFootprint` snapshots its
+fixed selection/courtyard/escape envelope with its immutable geometry and returns
+defensive rectangles; the planner adds access and label margins. These derived
+values preserve geometry and search order while avoiding repeated copies and
+envelope calculations inside placement evaluation.
+
+Each `PcbNetRouter.Router` owns a fixed, ordered column index over its courtyard
+snapshot. Point and adjacent-step queries use that conservative subset before
+the existing exact collision, escape and underpass predicates. Unsafe integer
+projections and broader traversals retain full candidates. Copper occupancy,
+reservations, search order and work accounting remain separate and unchanged.
+
+Each layered routing search branch owns a primitive-key best-state index. Its
+values are the same Node references consumed by offer and stale-pop checks;
+replacements, serials, heap order and expansion accounting retain their owners.
+It does not supply iteration order or retain state across branches.
+The routing Session lazily owns six scratch arrays for role-width turn bounds.
+Each sequential branch fully refills them after the preceding search and path
+publisher stop reading its bound; Manhattan distances remain branch-owned.
+Sessions do not share this storage and release it on accepted/rejected completion.
+Pad collision scans reject different immutable coordinates before comparing
+endpoint IDs, preserving coincident-pad and value-equality decisions.
+
+`SolverTimeObservationService` may retain each endpoint's last vector position
+on its subscription. Every lookup checks that slot in the current live graph
+for the current element; movement, removal or replacement falls back to the
+existing membership search. These positions confer no graph authority. Clear
+and unsubscribe retire them with the observation windows; owner, graph, epoch,
+post, overlay and operation checks still govern every accepted sample.
+
+Durable session reconstruction is a `PlayerSessionState` work cursor held by the
+fresh installation. History units contain at most four ordered actions, each
+with its original settlement and checkpoints; other phases remain separate.
+The generation job reserves the PUBLISH budget before proof and charges each
+unit during reconstruction. A private
+single-use permit retains the pristine proof lineage and checks full current
+dependencies, semantic state, temporal references, solver configuration and
+continuity across yields. The final turn validates and attaches once. The
+installation remains the sole candidate-abort and predecessor-restoration owner.
+Normal generation still validates live pristine dependencies at publication.
+
+Proof admission distinguishes mandatory work from optional first-ready service
+waits. The provider's maximum, observations and complete hypothesis population
+remain unchanged. The job admits the minimum plus the symptom/restore/publication
+tail, then charges every actual proof unit against the hard cap and declared
+maximum. Proof cannot consume the reserved tail; unfinished work fails and rolls
+back without publication. Readiness still comes from the active solver graph.
+
 The default `scripts/build.ps1 -Variant Player` binds `TroubleshootBuild` to a
 constant player configuration. Developer menus, query flags and verifier dispatch
 are reachable only in the explicit `-Variant Developer` target. GWT removes the
@@ -25,6 +86,8 @@ compiler/cache work through receipt writing. Inputs are checked before and after
 promotion. A receipt binds compiler inputs, variant and complete
 deployed output. The launcher checks that receipt before adopting an existing
 preview, so an old bootstrap file alone cannot establish freshness.
+Pinned compiler-artifact checks use the shared direct-file SHA256 helper, which
+does not depend on the launching shell's utility-module discovery.
 `TroubleshootDeveloperVerification` owns the developer dispatch; `CirSim` keeps
 only its guarded entry and failure adapter, with the existing live state owner.
 

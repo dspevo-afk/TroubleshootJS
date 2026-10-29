@@ -647,7 +647,7 @@ New-Item -ItemType Directory -Force -Path $toolRoot, $workDirectory, $persistent
 foreach ($artifact in $artifacts) {
     $destination = Join-Path $toolRoot $artifact.File
     if ((Test-Path $destination -PathType Leaf) -and
-        (Get-FileHash -Algorithm SHA256 -Path $destination).Hash -ne $artifact.Sha256) {
+        (Get-VerifierFileSha256 $destination) -ne $artifact.Sha256) {
         Write-Host "Refreshing $($artifact.File) after a checksum mismatch..."
         Remove-Item -Force -Path $destination
     }
@@ -657,7 +657,7 @@ foreach ($artifact in $artifacts) {
         Invoke-WebRequest -UseBasicParsing -Uri $artifact.Url -OutFile $temporaryDestination
         Move-Item -Force -Path $temporaryDestination -Destination $destination
     }
-    if ((Get-FileHash -Algorithm SHA256 -Path $destination).Hash -ne $artifact.Sha256) {
+    if ((Get-VerifierFileSha256 $destination) -ne $artifact.Sha256) {
         Remove-Item -Force -Path $destination
         throw "Checksum verification failed for $($artifact.File)."
     }

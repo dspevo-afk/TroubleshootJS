@@ -488,7 +488,8 @@ class HtmlAttributeObserver:
             else:
                 self.script_attachment = {"generation": self.version,
                     "documentBackend": self.document_backend, "htmlBackend": self.html_backend,
-                    "exactPageUrl": self.page.url == self.url, "resourceType": route.request.resource_type}
+                    "exactPageUrl": self.page.url == self.url, "resourceType": route.request.resource_type,
+                    "compiledScriptUrl": route.request.url}
                 if self.html_backend is None or self.document_backend is None or self.page.url != self.url:
                     raise ValueError("Compiled script lacks its exact attached HTML document")
                 await asyncio.wait_for(route.continue_(), self.timeout())

@@ -25,6 +25,11 @@ final class SolverTimeObservationService {
         private Object owner;
         private Object graph;
         private Operation stagedOperation;
+        /* Position hints only: every use is checked against the live element
+         * vector, with Vector.indexOf retaining the existing membership
+         * semantics whenever the hinted slot no longer names this endpoint. */
+        private int redElementIndex = -1;
+        private int blackElementIndex = -1;
         /* Changes whenever the service retires an observation epoch.  A
          * consumer with dynamically resolved BoardPad endpoints must rebind
          * rather than keep an old element/post cursor after mutation. */
@@ -70,6 +75,8 @@ final class SolverTimeObservationService {
             stagedOperation = null;
             owner = null;
             graph = null;
+            redElementIndex = -1;
+            blackElementIndex = -1;
         }
 
         void clear(long currentGeneration) {
@@ -203,10 +210,25 @@ final class SolverTimeObservationService {
     }
 
     private boolean currentEndpoints(Subscription subscription) {
-        return sim.elmList != null &&
-            sim.elmList.contains(subscription.red.getElement()) &&
-            sim.elmList.contains(subscription.black.getElement()) &&
+        Vector<CircuitElm> graph = sim.elmList;
+        return graph != null &&
+            containsEndpoint(subscription, subscription.red, graph, true) &&
+            containsEndpoint(subscription, subscription.black, graph, false) &&
             validPost(subscription.red) && validPost(subscription.black);
+    }
+
+    private static boolean containsEndpoint(Subscription subscription,
+            CircuitPostMeasurementEndpoint endpoint, Vector<CircuitElm> graph,
+            boolean red) {
+        int index = red ? subscription.redElementIndex : subscription.blackElementIndex;
+        CircuitElm element = endpoint.getElement();
+        if (index < 0 || index >= graph.size() || graph.elementAt(index) != element)
+            index = graph.indexOf(element);
+        if (red)
+            subscription.redElementIndex = index;
+        else
+            subscription.blackElementIndex = index;
+        return index >= 0;
     }
 
     private static boolean validPost(CircuitPostMeasurementEndpoint endpoint) {

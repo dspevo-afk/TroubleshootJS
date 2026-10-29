@@ -180,6 +180,37 @@ try {
     New-Item -ItemType Directory -Path $fixture, $otherFixture, $toolRoot, `
         $scratch, $installed, $stage -Force | Out-Null
 
+    $artifactHashes = @($ast.FindAll({ param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+            $node.GetCommandName() -ceq 'Get-VerifierFileSha256'
+    }, $true))
+    $ambientHashes = @($ast.FindAll({ param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+            $node.GetCommandName() -ceq 'Get-FileHash'
+    }, $true))
+    Require-Promotion ($artifactHashes.Count -eq 2 -and $ambientHashes.Count -eq 0) `
+        'Both production artifact checks must use the shared cryptographic hash owner.'
+    $hashProbe = Join-Path $taskRoot 'hash-probe.bin'
+    [IO.File]::WriteAllBytes($hashProbe, [byte[]]@(97, 98, 99))
+    $abcHash = 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'
+    Require-Promotion ((Get-VerifierFileSha256 $hashProbe) -ceq $abcHash) `
+        'The selected Windows PowerShell hash implementation must match the literal abc SHA256.'
+    [IO.File]::WriteAllBytes($hashProbe, [byte[]]@())
+    $emptyHash = Get-VerifierFileSha256 $hashProbe
+    Require-Promotion ($emptyHash -ceq `
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855') `
+        'The selected implementation must read changed file bytes and match the literal empty SHA256.'
+    Require-Promotion ($emptyHash -ne $abcHash.ToUpperInvariant()) `
+        'The production checksum comparison must reject mismatched bytes with an uppercase pin.'
+    $exclusiveProbe = [IO.File]::Open($hashProbe, [IO.FileMode]::Open,
+        [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+    try {
+        Require-Promotion ($exclusiveProbe.Length -eq 0) `
+            'Hashing must release the file handle before an exclusive successor opens it.'
+    } finally {
+        $exclusiveProbe.Dispose()
+    }
+
     $childFunctions = [string]::Join([Environment]::NewLine,
         @($definitions | ForEach-Object { $_.Extent.Text }))
     $childSource = @'

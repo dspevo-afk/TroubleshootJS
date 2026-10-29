@@ -1,0 +1,1118 @@
+{
+  "schema": "tsj-r12-player-gate/3",
+  "candidateStatus": "ROOT_ACCEPTED",
+  "scope": "Finite actual production Player controls on the reference host; no human diagnosis, all-seed, capacity/endurance, visual/FPS, modest-host or beta qualification.",
+  "pins": {
+    "acceptedPlanSha256": "4816a8b6c3df06109eb54f5ede5366b8febdde00ce94094baa46b5403709e9ac",
+    "sourceBinding": "8c6591a9cbbde7a7c90fdc349795e0e8ef9e3408e17296a2a066b5ff5122d333",
+    "sourceInputCount": 1255,
+    "selectedPlayerBuildIdentity": "085E91A3E143C16660E9B8900BE12AAA",
+    "player12OutputRows": 357
+  },
+  "individualEvidenceStatus": {
+    "playerBuildAndServedProvenance": "PASS",
+    "visibleUnseededTicketAttempts": "PASS",
+    "thirdExactReplayAndNineRetentions": "PASS",
+    "originalRestoreAndSourceOnlyRetest": "PASS",
+    "unrepairedFailAndPhysicalRepairPass": "PASS",
+    "privacyCanary": "PASS",
+    "postUiAudit": "PASS",
+    "ownedResourceCleanup": "PASS",
+    "rootAcceptance": "PASS"
+  },
+  "playerArtifact": {
+    "deploymentAudit": "PASS",
+    "localHtmlBytes": 9188,
+    "servedHtmlBytes": 9691,
+    "htmlTransformation": "exact maintained six-attribute provenance injection",
+    "nocacheStatus": 200,
+    "selectedCache": {
+      "build": "085E91A3E143C16660E9B8900BE12AAA",
+      "status": 200,
+      "bytes": 2209018,
+      "sha256": "0042f0a34530a424ab636f56efe39d2969b9c525e34676320d72830670324b0b"
+    },
+    "allFivePlayerCachesHaveNoDeveloperMarkers": true,
+    "postUiAudit": "PASS"
+  },
+  "unseededAttempts": {
+    "count": 3,
+    "generationRetries": 0,
+    "fourthRequest": false,
+    "bootstrapNote": "Ordinary LED bootstrap had challenge=led&seed=3; all RB56 New board requests used normal controls without exact-seed or replay input.",
+    "tickets": [
+      {
+        "ordinal": 1,
+        "selection": {
+          "journalEventIndex": 3,
+          "action": "select-rb56-medium"
+        },
+        "newBoard": {
+          "journalEventIndex": 4,
+          "action": "unseeded-new-board-1"
+        },
+        "ticket": {
+          "journalEventIndex": 7,
+          "action": "unseeded-board-1-ticket-main-menu"
+        },
+        "exactSeedEntered": false,
+        "replayEntered": false,
+        "generationRetries": 0,
+        "ticketReached": true,
+        "identity": {
+          "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-8895185727464166710",
+          "build": "085E91A3E143C16660E9B8900BE12AAA",
+          "realization": "db17b0fa39820f1553364af66eeba5edb7d4b25a551b3aa18eafc3390d0e9dd2"
+        },
+        "export": {
+          "basename": "player-gate-r3-v2-initial-1.tsjsave",
+          "bytes": 1228,
+          "sha256": "ac4d3f77746d665034064343a8d71e8629169c9b0f3e290e787d7799e926a4c1"
+        }
+      },
+      {
+        "ordinal": 2,
+        "selection": {
+          "journalEventIndex": 10,
+          "action": "select-rb56-for-attempt-2"
+        },
+        "newBoard": {
+          "journalEventIndex": 11,
+          "action": "unseeded-new-board-2"
+        },
+        "ticket": {
+          "journalEventIndex": 14,
+          "action": "board-2-ticket-main-menu"
+        },
+        "exactSeedEntered": false,
+        "replayEntered": false,
+        "generationRetries": 0,
+        "ticketReached": true,
+        "identity": {
+          "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/2209467030111787654",
+          "build": "085E91A3E143C16660E9B8900BE12AAA",
+          "realization": "a5c3a8e22279a338f8458b21391e5ed52eca27a6098b75df397a41de15b409a1"
+        },
+        "export": {
+          "basename": "player-gate-r3-v2-initial-2.tsjsave",
+          "bytes": 1076,
+          "sha256": "fc92395bb0b15e5523b2cec3af230eb40497d3945d098c2eec723cdb7725756c"
+        }
+      },
+      {
+        "ordinal": 3,
+        "selection": {
+          "journalEventIndex": 17,
+          "action": "select-rb56-for-attempt-3"
+        },
+        "newBoard": {
+          "journalEventIndex": 18,
+          "action": "unseeded-new-board-3"
+        },
+        "ticket": {
+          "journalEventIndex": 21,
+          "action": "board-3-customer-ticket"
+        },
+        "exactSeedEntered": false,
+        "replayEntered": false,
+        "generationRetries": 0,
+        "ticketReached": true,
+        "identity": {
+          "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/532281179137453497",
+          "build": "085E91A3E143C16660E9B8900BE12AAA",
+          "realization": "8025d7817f04b9c5b3b0ab2d032f1e559e775428f9a12b4bc818c95b25fe7132"
+        },
+        "export": {
+          "basename": "player-gate-r3-v2-initial-3.tsjsave",
+          "bytes": 1582,
+          "sha256": "479ca500b628019babe2f733a3aec39525aa8100577f4ffc48fce9b7b30749e0"
+        }
+      }
+    ],
+    "preReplacement": {
+      "status": "PASS",
+      "threeDistinctReplayAndRealizationIdentities": true,
+      "thirdExactReplay": true
+    }
+  },
+  "rejectionsAndRetention": {
+    "invalidReplaySubmissions": 4,
+    "invalidFileUploads": 5,
+    "retainedExportCount": 9,
+    "retainedComparisons": [
+      {
+        "case": "replay-old-epoch",
+        "rejectionEvent": {
+          "journalEventIndex": 29,
+          "action": "reject-replay-old-epoch"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-old-epoch",
+        "export": {
+          "basename": "player-gate-r3-v2-after-replay-old-epoch.tsjsave",
+          "bytes": 1582,
+          "sha256": "b9edcb43cb4c4426148ce3210030498e86c49c81fb90625db09f5a3cf26c6605"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "replay-unavailable-hard",
+        "rejectionEvent": {
+          "journalEventIndex": 31,
+          "action": "reject-replay-unavailable-hard"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-hard",
+        "export": {
+          "basename": "player-gate-r3-v2-after-replay-unavailable-hard.tsjsave",
+          "bytes": 1566,
+          "sha256": "b112505d85b80753d10732ec2660919176de2219d093f671e43fbc054c16673d"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "replay-unknown-family",
+        "rejectionEvent": {
+          "journalEventIndex": 33,
+          "action": "reject-replay-unknown-family"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-unknown-family",
+        "export": {
+          "basename": "player-gate-r3-v2-after-replay-unknown-family.tsjsave",
+          "bytes": 1566,
+          "sha256": "e8f171d00717b41f5edcfd086e7aaf31317956c5f210d5421f0828d883686849"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "replay-private-public",
+        "rejectionEvent": {
+          "journalEventIndex": 35,
+          "action": "reject-private-replay-in-public-player"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-private-replay",
+        "export": {
+          "basename": "player-gate-r3-v2-after-replay-private-public.tsjsave",
+          "bytes": 1566,
+          "sha256": "36799f863d3b71081bbbd3d3dcf7a66870eb2a3e7257366019f16dc2d6d5821d"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "file-unknown-model",
+        "rejectionEvent": {
+          "journalEventIndex": 37,
+          "action": "reject-file-unknown-model"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-unknown-model",
+        "export": {
+          "basename": "player-gate-r3-v2-after-file-unknown-model.tsjsave",
+          "bytes": 1566,
+          "sha256": "a3b7e9e72e5c0bdd81eeb378042e0ca7c3f9a4ef2a3ebdcaf4fadbf48286a8f2"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "file-private-public",
+        "rejectionEvent": {
+          "journalEventIndex": 39,
+          "action": "reject-file-invalid-private-public.tsjsave"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-private-file",
+        "export": {
+          "basename": "player-gate-r3-v2-after-file-private-public.tsjsave",
+          "bytes": 1566,
+          "sha256": "19a7833c911d43cabe20df662a3eacbbc7278e9cf3cc3843dbf6c662861e0acd"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "file-unsupported-copper-cut",
+        "rejectionEvent": {
+          "journalEventIndex": 41,
+          "action": "reject-file-unsupported-copper-cut"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-copper-cut",
+        "export": {
+          "basename": "player-gate-r3-v2-after-file-unsupported-copper-cut.tsjsave",
+          "bytes": 1566,
+          "sha256": "81b9a2921dc32748c91722f2312e3a860678541c768e7a535880f3ff618c4c9e"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "file-unsupported-copper-jumper",
+        "rejectionEvent": {
+          "journalEventIndex": 43,
+          "action": "reject-file-unsupported-copper-jumper"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-copper-jumper",
+        "export": {
+          "basename": "player-gate-r3-v2-after-file-unsupported-copper-jumper.tsjsave",
+          "bytes": 1582,
+          "sha256": "af6e163dc8f348063e6a6b049ba793e9cf5053fd91ac6fa2f0a949f8066e9a53"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      },
+      {
+        "case": "file-truncated",
+        "rejectionEvent": {
+          "journalEventIndex": 45,
+          "action": "reject-file-truncated"
+        },
+        "singleSubmissionOrUpload": 1,
+        "retainedExportEvent": "export-retained-after-truncated",
+        "export": {
+          "basename": "player-gate-r3-v2-after-file-truncated.tsjsave",
+          "bytes": 1566,
+          "sha256": "6bcdf94e0a168e72b8cf5404a41233b5a27191e12e4635cd5d56e98ec6ebf350"
+        },
+        "comparedFields": [
+          "replay",
+          "build",
+          "realization",
+          "history",
+          "sources"
+        ],
+        "result": "PASS"
+      }
+    ],
+    "artifactComparisonCount": 17,
+    "artifactComparisonPassCount": 17,
+    "artifactComparisons": [
+      {
+        "name": "fresh-original-input-pin",
+        "result": "PASS"
+      },
+      {
+        "name": "third-attempt-export-identity",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-replay-old-epoch",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-replay-unavailable-hard",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-replay-unknown-family",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-replay-private-to-public",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-file-unknown-model",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-file-private-to-public",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-file-unsupported-copper-cut",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-file-unsupported-copper-jumper",
+        "result": "PASS"
+      },
+      {
+        "name": "retained-board-file-truncated",
+        "result": "PASS"
+      },
+      {
+        "name": "fresh-restore-before-source-semantic-preservation",
+        "result": "PASS"
+      },
+      {
+        "name": "fresh-restore-before-source-current-build",
+        "result": "PASS"
+      },
+      {
+        "name": "source-only-reconnect-and-first-retest-export",
+        "result": "PASS"
+      },
+      {
+        "name": "source-only-reconnect-current-build",
+        "result": "PASS"
+      },
+      {
+        "name": "final-physical-repair-export",
+        "result": "PASS"
+      },
+      {
+        "name": "final-physical-repair-current-build",
+        "result": "PASS"
+      }
+    ]
+  },
+  "originalRestore": {
+    "originalInput": {
+      "file": {
+        "basename": "player-repaired.tsjsave",
+        "bytes": 2289,
+        "sha256": "5fe674cd0199cb71244b9922db6be3c1f98e586a7cfbb5d4cb8f5bf0bfe029ec"
+      },
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "build": "8DE4BBFA0A873E55108C5BDE196351B2",
+      "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+      "historyEntries": 19,
+      "sourceEntries": 4,
+      "sources": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fe0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "DISCONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "physicalPartOperations": [
+        [
+          "REMOVE",
+          "RENAC",
+          "RENAC",
+          ""
+        ],
+        [
+          "ACQUIRE",
+          "RDA",
+          "R_CATALOG_10000",
+          "RDA_CATALOG_PART_0"
+        ],
+        [
+          "INSTALL",
+          "RENAC",
+          "RDA_CATALOG_PART_0",
+          ""
+        ]
+      ]
+    },
+    "restoredBeforeSource": {
+      "file": {
+        "basename": "player-gate-r3-v2-restored-before-source.tsjsave",
+        "bytes": 2289,
+        "sha256": "4ffa5539b8bd88e10d2aabd98566d58a1767fb9a3d709518f203ef154cde4a0b"
+      },
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "build": "085E91A3E143C16660E9B8900BE12AAA",
+      "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+      "historyEntries": 19,
+      "sourceEntries": 4,
+      "sources": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fe0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "DISCONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "physicalPartOperations": [
+        [
+          "REMOVE",
+          "RENAC",
+          "RENAC",
+          ""
+        ],
+        [
+          "ACQUIRE",
+          "RDA",
+          "R_CATALOG_10000",
+          "RDA_CATALOG_PART_0"
+        ],
+        [
+          "INSTALL",
+          "RENAC",
+          "RDA_CATALOG_PART_0",
+          ""
+        ]
+      ]
+    },
+    "originalSemanticFieldsPreserved": [
+      "replay",
+      "realization",
+      "history",
+      "sources"
+    ],
+    "buildReboundToCurrentPlayer": true,
+    "sourceOnly": {
+      "comparisonStatus": "PASS",
+      "historyBefore": 19,
+      "historyAfter": 23,
+      "exactSourceActions": [
+        [
+          "SOURCE",
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SOURCE",
+          "LOAD12",
+          "CONNECTED",
+          "0.5"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_A",
+          "CONNECTED",
+          "0.25"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_B",
+          "CONNECTED",
+          "0.25"
+        ]
+      ],
+      "sources": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fe0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "physicalActionsAdded": 0,
+      "visibleCustomerRetest": "PASS",
+      "physicalMutationsSinceLoad": 0,
+      "export": {
+        "file": {
+          "basename": "player-gate-r3-v2-restored-after-source.tsjsave",
+          "bytes": 2436,
+          "sha256": "3c1af62335e39036270889554837d8efca13f680a9ff52f98912f36a60ba28ad"
+        },
+        "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+        "build": "085E91A3E143C16660E9B8900BE12AAA",
+        "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+        "historyEntries": 23,
+        "sourceEntries": 4,
+        "sources": [
+          [
+            "LOAD12",
+            "CONNECTED",
+            "3fe0000000000000"
+          ],
+          [
+            "MAINAC",
+            "CONNECTED",
+            "NONE"
+          ],
+          [
+            "SENSOR_A",
+            "CONNECTED",
+            "3fd0000000000000"
+          ],
+          [
+            "SENSOR_B",
+            "CONNECTED",
+            "3fd0000000000000"
+          ]
+        ],
+        "physicalPartOperations": [
+          [
+            "REMOVE",
+            "RENAC",
+            "RENAC",
+            ""
+          ],
+          [
+            "ACQUIRE",
+            "RDA",
+            "R_CATALOG_10000",
+            "RDA_CATALOG_PART_0"
+          ],
+          [
+            "INSTALL",
+            "RENAC",
+            "RDA_CATALOG_PART_0",
+            ""
+          ]
+        ]
+      },
+      "eventIndices": {
+        "connectSensorA": 57,
+        "retest": 58,
+        "pass": 59
+      }
+    }
+  },
+  "pristineRepairBranch": {
+    "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+    "unseededAttemptsForPristineReplay": 0,
+    "unrepairedRetest": "FAIL",
+    "unrepairedPhysicalActions": 0,
+    "unrepairedExport": {
+      "file": {
+        "basename": "player-gate-r3-v2-unrepaired.tsjsave",
+        "bytes": 1467,
+        "sha256": "79f54cc6215349f656cbd0b55c8b9ae001714d612d6b09f2b1840df55f21e0fb"
+      },
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "build": "085E91A3E143C16660E9B8900BE12AAA",
+      "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+      "historyEntries": 0,
+      "sourceEntries": 4,
+      "sources": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "physicalPartOperations": []
+    },
+    "sequence": [
+      {
+        "action": "Board Power off; supplies disconnected",
+        "events": [
+          73,
+          74
+        ]
+      },
+      {
+        "action": "Remove RENAC; retain original Part 10",
+        "event": 76
+      },
+      {
+        "action": "Acquire compatible 10k +/-5% medium-spacing part from RDA_CATALOG_PART_0 as Part 56",
+        "event": 79
+      },
+      {
+        "action": "Install only as RENAC; RDA installed slot unchanged",
+        "event": 83
+      },
+      {
+        "action": "Repower, settle, run customer retest: PASS",
+        "event": 86
+      }
+    ],
+    "finalExport": {
+      "file": {
+        "basename": "player-gate-r3-v2-final-repaired.tsjsave",
+        "bytes": 1979,
+        "sha256": "3eaa1d031b48d9f69a991f0123434e77121cbd7914ea7a11dbcf68e0d57c4c1b"
+      },
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "build": "085E91A3E143C16660E9B8900BE12AAA",
+      "realization": "53d8ab12cd00922ca652bf2228cb1e1e65e535171854eaae31648b9b61798c1d",
+      "historyEntries": 11,
+      "sourceEntries": 4,
+      "sources": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "physicalPartOperations": [
+        [
+          "REMOVE",
+          "RENAC",
+          "RENAC",
+          ""
+        ],
+        [
+          "ACQUIRE",
+          "RDA",
+          "R_CATALOG_10000",
+          "RDA_CATALOG_PART_0"
+        ],
+        [
+          "INSTALL",
+          "RENAC",
+          "RDA_CATALOG_PART_0",
+          ""
+        ]
+      ]
+    },
+    "finalHistoryEntries": 11,
+    "finalSources": [
+      [
+        "LOAD12",
+        "CONNECTED",
+        "3fd0000000000000"
+      ],
+      [
+        "MAINAC",
+        "CONNECTED",
+        "NONE"
+      ],
+      [
+        "SENSOR_A",
+        "CONNECTED",
+        "3fd0000000000000"
+      ],
+      [
+        "SENSOR_B",
+        "CONNECTED",
+        "3fd0000000000000"
+      ]
+    ],
+    "providerStockCountDirectlyVisibleInUi": false,
+    "stockEvidenceLimit": "Records preserve the exact ACQUIRE and physical-history operations; no provider stock count is claimed from UI."
+  },
+  "privacyCanary": {
+    "eventIndex": 90,
+    "developerAttributesObserved": [],
+    "unseededRb56Requests": 0,
+    "allFivePlayerCachesHaveNoDeveloperMarkers": true
+  },
+  "screenshots": {
+    "parentReportedVisualReview": "REVIEWED",
+    "count": 4,
+    "files": [
+      {
+        "basename": "01-third-ticket.jpg",
+        "bytes": 68756,
+        "sha256": "8d2eeac4a51d8f6dcc0014cc58e2355a73fb923c8fdc2d4d1d0d9953f4824712"
+      },
+      {
+        "basename": "02-restored-mixed-sources.jpg",
+        "bytes": 110414,
+        "sha256": "466a9d1bc232dea2f71b37decfaf3123bb2e4762211550e12cd2edfafb5fe51d"
+      },
+      {
+        "basename": "03-unrepaired-isolated-renac.jpg",
+        "bytes": 100466,
+        "sha256": "e76de0b2263ddf6acd669549c629c68f4f1f66603e8b37402dea3c79622b70ae"
+      },
+      {
+        "basename": "04-repaired-customer-retest-pass.jpg",
+        "bytes": 72362,
+        "sha256": "2f1ed4ee05766f6bad789aee4155d044f0288167c7b605cac72508b38f6ef8a0"
+      }
+    ]
+  },
+  "timing": {
+    "uiGenerationElapsedSeconds": "NOT_COMPUTED",
+    "source": "No click-to-ticket duration inferred; raw timestamps remain only in journal evidence."
+  },
+  "previewOperation": {
+    "exitCode": 0,
+    "port": 8928,
+    "pid": 37596,
+    "startIdentityVerifiedBeforeStop": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "cleanupSeconds": 2.5148391,
+    "stateFileRemains": false,
+    "recordedPidRemains": false,
+    "closedTabs": [
+      8,
+      9,
+      10
+    ],
+    "browser2RemainingTabs": 0,
+    "otherTabsModified": false,
+    "heldLaunchSession": {
+      "sessionId": 7927,
+      "exitCode": 0,
+      "ownedResourcesCleaned": true
+    },
+    "tabAndLaunchSessionEvidence": "Parent handoff; preview process stop is independently pinned by the referenced served audit and stop record."
+  },
+  "adapterLimitations": [
+    {
+      "eventIndex": 4,
+      "case": "New board accessible-name locator",
+      "detail": "Uppercase AX rendering did not match the actual accessible New board control; no click was dispatched; zero generation retries."
+    },
+    {
+      "eventIndex": 48,
+      "case": "Closed-tab record read",
+      "detail": "Helper read failed on closed tab 8 before any input; helper was then given the explicit tab."
+    },
+    {
+      "source": "parent handoff",
+      "case": "Supplies locator",
+      "detail": "Supplies locator did not match; corrected using the visible Bench power control."
+    },
+    {
+      "eventIndex": 40,
+      "case": "Private session-file generic-message assertion",
+      "detail": "One upload showed Unsupported replay identity or epoch; the generic-message assertion stopped after that upload; no retry."
+    }
+  ],
+  "qualificationScope": {
+    "formalOriginal22": "NOT_RUN",
+    "replacementBlind8": "NOT_OBSERVED",
+    "humanDiagnosisClaim": false,
+    "allSeedsCapacityOrEnduranceClaim": false
+  },
+  "evidenceReferences": {
+    "journal": {
+      "basename": "player-gate-r3-v2-events.json",
+      "bytes": 248809,
+      "sha256": "dbb4da93def869722170b8a57675211b8948c4f3d4a81365af060628883ac3cd"
+    },
+    "exports": {
+      "basename": "player-gate-r3-v2-exports.json",
+      "bytes": 3702,
+      "sha256": "7cacaac7a3e421de7904a821322cc8105f565bd083f2f3ffaeb6b6d22e520eb2"
+    },
+    "input": {
+      "basename": "player-gate-r3-v2-artifact-input.json",
+      "bytes": 2973,
+      "sha256": "8f093edce46efca40186a05c90d66497cf5cc0c2e7b29770f9d0d36be9f9015f"
+    },
+    "artifact": {
+      "basename": "player-gate-r3-v2-artifact-comparisons.json",
+      "bytes": 15543,
+      "sha256": "7381cd6e242064b3b3a14fb2bcbfd841de1cfe9732da92dbf229a47bcb3b6f25"
+    },
+    "pre": {
+      "basename": "player-gate-r3-v2-pre-replacement-comparisons.json",
+      "bytes": 3834,
+      "sha256": "4170b9cbe839771a9a8458af7f61213e1332c94aaa506cd0f59cd1eac6f38915"
+    },
+    "source": {
+      "basename": "player-gate-r3-v2-source-only-comparison.json",
+      "bytes": 974,
+      "sha256": "a3568948a2b78d426666ba7661a14d0bf3861e4db466554511d9b2161c4f6d89"
+    },
+    "deploy": {
+      "basename": "player12-deployed-artifact-audit-v1.json",
+      "bytes": 1377,
+      "sha256": "3568f19ccfd0b4857c830f533caf1c91fa28a12a46866499c55f387a4b3e72f8"
+    },
+    "served": {
+      "basename": "served-player-r3-v2-http-audit-v1.json",
+      "bytes": 3054,
+      "sha256": "da8e96c7ec90724c7ab4a596ef901e68c620ab2953067846f94c129bae2a8089"
+    },
+    "post": {
+      "basename": "player12-post-ui-audit-v1.json",
+      "bytes": 5047,
+      "sha256": "7c0cc623de8379e3cabc6a86b3c9e62a593b443d4d05cf34e7bb5f30a5c0e75f"
+    },
+    "stop": {
+      "basename": "preview-player-r3-v2-stop.json",
+      "bytes": 113,
+      "sha256": "e97a754ab15de1db26ee25a4fc3524ec8984e1a38ce1e7cfa5a30954067fda3a"
+    },
+    "stopLog": {
+      "basename": "preview-player-r3-v2-stop.log",
+      "bytes": 77,
+      "sha256": "36e1893655cbb8018f16ccea61080e091d736315eae0f1437d8577ae8422417a"
+    },
+    "inspector": {
+      "basename": "inspect_session.py",
+      "bytes": 2741,
+      "sha256": "1bd94f6b7471be4e13a06d8be9a954696dbd2d22af810e387106a7d9a84abb99"
+    },
+    "exportsManifest": {
+      "basename": "player-gate-r3-v2-exports.json",
+      "bytes": 3702,
+      "sha256": "7cacaac7a3e421de7904a821322cc8105f565bd083f2f3ffaeb6b6d22e520eb2"
+    },
+    "artifactInputManifest": {
+      "basename": "player-gate-r3-v2-artifact-input.json",
+      "bytes": 2973,
+      "sha256": "8f093edce46efca40186a05c90d66497cf5cc0c2e7b29770f9d0d36be9f9015f"
+    },
+    "artifactComparisons": {
+      "basename": "player-gate-r3-v2-artifact-comparisons.json",
+      "bytes": 15543,
+      "sha256": "7381cd6e242064b3b3a14fb2bcbfd841de1cfe9732da92dbf229a47bcb3b6f25"
+    },
+    "preReplacementComparisons": {
+      "basename": "player-gate-r3-v2-pre-replacement-comparisons.json",
+      "bytes": 3834,
+      "sha256": "4170b9cbe839771a9a8458af7f61213e1332c94aaa506cd0f59cd1eac6f38915"
+    },
+    "sourceOnlyComparison": {
+      "basename": "player-gate-r3-v2-source-only-comparison.json",
+      "bytes": 974,
+      "sha256": "a3568948a2b78d426666ba7661a14d0bf3861e4db466554511d9b2161c4f6d89"
+    },
+    "screenshots": [
+      {
+        "basename": "01-third-ticket.jpg",
+        "bytes": 68756,
+        "sha256": "8d2eeac4a51d8f6dcc0014cc58e2355a73fb923c8fdc2d4d1d0d9953f4824712"
+      },
+      {
+        "basename": "02-restored-mixed-sources.jpg",
+        "bytes": 110414,
+        "sha256": "466a9d1bc232dea2f71b37decfaf3123bb2e4762211550e12cd2edfafb5fe51d"
+      },
+      {
+        "basename": "03-unrepaired-isolated-renac.jpg",
+        "bytes": 100466,
+        "sha256": "e76de0b2263ddf6acd669549c629c68f4f1f66603e8b37402dea3c79622b70ae"
+      },
+      {
+        "basename": "04-repaired-customer-retest-pass.jpg",
+        "bytes": 72362,
+        "sha256": "2f1ed4ee05766f6bad789aee4155d044f0288167c7b605cac72508b38f6ef8a0"
+      }
+    ]
+  },
+  "exportedArtifactReferences": [
+    {
+      "role": "original-session-input",
+      "basename": "player-repaired.tsjsave",
+      "bytes": 2289,
+      "sha256": "5fe674cd0199cb71244b9922db6be3c1f98e586a7cfbb5d4cb8f5bf0bfe029ec"
+    },
+    {
+      "role": "third-exact-replay",
+      "basename": "player-gate-r3-v2-third-replayed.tsjsave",
+      "bytes": 1582,
+      "sha256": "f84bb49e6cd254a54d7529d461dee5a75908eee7e250b49f8823ef8affaaf1be"
+    },
+    {
+      "role": "restored-before-source",
+      "basename": "player-gate-r3-v2-restored-before-source.tsjsave",
+      "bytes": 2289,
+      "sha256": "4ffa5539b8bd88e10d2aabd98566d58a1767fb9a3d709518f203ef154cde4a0b"
+    },
+    {
+      "role": "restored-after-source",
+      "basename": "player-gate-r3-v2-restored-after-source.tsjsave",
+      "bytes": 2436,
+      "sha256": "3c1af62335e39036270889554837d8efca13f680a9ff52f98912f36a60ba28ad"
+    },
+    {
+      "role": "unrepaired-pristine-replay",
+      "basename": "player-gate-r3-v2-unrepaired.tsjsave",
+      "bytes": 1467,
+      "sha256": "79f54cc6215349f656cbd0b55c8b9ae001714d612d6b09f2b1840df55f21e0fb"
+    },
+    {
+      "role": "final-repaired",
+      "basename": "player-gate-r3-v2-final-repaired.tsjsave",
+      "bytes": 1979,
+      "sha256": "3eaa1d031b48d9f69a991f0123434e77121cbd7914ea7a11dbcf68e0d57c4c1b"
+    },
+    {
+      "role": "unseeded-attempt-1",
+      "basename": "player-gate-r3-v2-initial-1.tsjsave",
+      "bytes": 1228,
+      "sha256": "ac4d3f77746d665034064343a8d71e8629169c9b0f3e290e787d7799e926a4c1"
+    },
+    {
+      "role": "unseeded-attempt-2",
+      "basename": "player-gate-r3-v2-initial-2.tsjsave",
+      "bytes": 1076,
+      "sha256": "fc92395bb0b15e5523b2cec3af230eb40497d3945d098c2eec723cdb7725756c"
+    },
+    {
+      "role": "unseeded-attempt-3",
+      "basename": "player-gate-r3-v2-initial-3.tsjsave",
+      "bytes": 1582,
+      "sha256": "479ca500b628019babe2f733a3aec39525aa8100577f4ffc48fce9b7b30749e0"
+    },
+    {
+      "role": "retained-after-replay-old-epoch",
+      "basename": "player-gate-r3-v2-after-replay-old-epoch.tsjsave",
+      "bytes": 1582,
+      "sha256": "b9edcb43cb4c4426148ce3210030498e86c49c81fb90625db09f5a3cf26c6605"
+    },
+    {
+      "role": "retained-after-replay-unavailable-hard",
+      "basename": "player-gate-r3-v2-after-replay-unavailable-hard.tsjsave",
+      "bytes": 1566,
+      "sha256": "b112505d85b80753d10732ec2660919176de2219d093f671e43fbc054c16673d"
+    },
+    {
+      "role": "retained-after-replay-unknown-family",
+      "basename": "player-gate-r3-v2-after-replay-unknown-family.tsjsave",
+      "bytes": 1566,
+      "sha256": "e8f171d00717b41f5edcfd086e7aaf31317956c5f210d5421f0828d883686849"
+    },
+    {
+      "role": "retained-after-replay-private-public",
+      "basename": "player-gate-r3-v2-after-replay-private-public.tsjsave",
+      "bytes": 1566,
+      "sha256": "36799f863d3b71081bbbd3d3dcf7a66870eb2a3e7257366019f16dc2d6d5821d"
+    },
+    {
+      "role": "retained-after-file-unknown-model",
+      "basename": "player-gate-r3-v2-after-file-unknown-model.tsjsave",
+      "bytes": 1566,
+      "sha256": "a3b7e9e72e5c0bdd81eeb378042e0ca7c3f9a4ef2a3ebdcaf4fadbf48286a8f2"
+    },
+    {
+      "role": "retained-after-file-private-public",
+      "basename": "player-gate-r3-v2-after-file-private-public.tsjsave",
+      "bytes": 1566,
+      "sha256": "19a7833c911d43cabe20df662a3eacbbc7278e9cf3cc3843dbf6c662861e0acd"
+    },
+    {
+      "role": "retained-after-file-unsupported-copper-cut",
+      "basename": "player-gate-r3-v2-after-file-unsupported-copper-cut.tsjsave",
+      "bytes": 1566,
+      "sha256": "81b9a2921dc32748c91722f2312e3a860678541c768e7a535880f3ff618c4c9e"
+    },
+    {
+      "role": "retained-after-file-unsupported-copper-jumper",
+      "basename": "player-gate-r3-v2-after-file-unsupported-copper-jumper.tsjsave",
+      "bytes": 1582,
+      "sha256": "af6e163dc8f348063e6a6b049ba793e9cf5053fd91ac6fa2f0a949f8066e9a53"
+    },
+    {
+      "role": "retained-after-file-truncated",
+      "basename": "player-gate-r3-v2-after-file-truncated.tsjsave",
+      "bytes": 1566,
+      "sha256": "6bcdf94e0a168e72b8cf5404a41233b5a27191e12e4635cd5d56e98ec6ebf350"
+    }
+  ],
+  "sourceJournalCompletionEventIndex": 89,
+  "closedPlayerTabsEventIndex": 91,
+  "separateNativeBoundaryEvidence": {
+    "basename": "native-boundaries-v2.json",
+    "bytes": 36931,
+    "sha256": "7dca10b88b965dc5d9e8e7e68bad5e01d1465b8541bb769388798e86c939b484"
+  },
+  "createdUtc": "2026-10-29T21:47:13.837206+00:00",
+  "status": "PASS",
+  "rootAcceptance": {
+    "acceptedUtc": "2026-10-29T21:49:01.311662+00:00",
+    "reviewedFourCurrentJpegScreenshots": true,
+    "observedRealCuaInputs": true,
+    "verified17ArtifactComparisons": true,
+    "verifiedPostUiSourceAndArtifactPins": true,
+    "verifiedOwnedTabAndPreviewCleanup": true,
+    "candidateSha256": "cc71c527510484111250ba7b845639fa438ff82b3856146106f30298ed784e0d"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "status": "FAIL",
+  "planSha256": "50461b60160aba80805405d1cd988dbe47327ebe82864d1fdf493eaa4c7ff4bc",
+  "sourceBinding": "57b8d9013bde15b4cb2e2f3cb33c5022f51338df6364fd8f6235ccd058ab5dd1",
+  "case": "rb56-failed-player-seed-diagnostic",
+  "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+  "failurePhase": "normal-generation before durable reconstruction",
+  "generation": {
+    "phase": "normal-generation",
+    "outcome": "TIMEOUT",
+    "stage": "HYPOTHESES",
+    "elapsedMillis": 90016,
+    "workUnits": 432,
+    "maxCoordinatorAdvanceMillis": 1783,
+    "stages": {
+      "RESOLVE": {
+        "elapsedMillis": 1,
+        "workUnits": 1
+      },
+      "HEALTHY": {
+        "elapsedMillis": 26427,
+        "workUnits": 83
+      },
+      "PHYSICAL": {
+        "elapsedMillis": 191,
+        "workUnits": 1
+      },
+      "HYPOTHESES": {
+        "elapsedMillis": 63364,
+        "workUnits": 347
+      },
+      "SYMPTOM": {
+        "elapsedMillis": 0,
+        "workUnits": 0
+      },
+      "PUBLISH": {
+        "elapsedMillis": 0,
+        "workUnits": 0
+      }
+    },
+    "failureChain": [
+      "com.lushprojects.circuitjs1.client.GenerationJob$Deadline: Generation wall budget exhausted"
+    ]
+  },
+  "rawReportSha256": "26dc48db08bd7f0fc978af04f4f161f27400342d9f17c12b8872a003361779dd",
+  "publication": "No completed generation publication; timeout at HYPOTHESES",
+  "applicationRollback": "NOT PROVEN by this failed U06 report",
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.1908825000282377,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "replacementBlind2": "NOT RUN; all eight untouched",
+  "next": "Controlled old/current diagnostic comparison; first deep-temp baseline compiled but failed safe path proof at a266-character symbol-map path. Short owned OS-temp rebuild is running. All four diagnostic cases remain unstarted at this checkpoint.",
+  "fixedBatch": {
+    "cases": 13,
+    "passed": 9,
+    "failed": 4,
+    "status": "FAIL",
+    "inputAudit": "PASS",
+    "independentReduction": "compiled-boundaries-v1.json"
+  },
+  "otherFailures": [
+    {
+      "case": "rb56-failed-player-seed-diagnostic",
+      "status": "FAIL"
+    },
+    {
+      "case": "rb56-exact-player-file-diagnostic",
+      "status": "FAIL"
+    },
+    {
+      "case": "rb56-normal-third-root-after-admission",
+      "status": "FAIL"
+    },
+    {
+      "case": "rb56-third-root-full-save-restore",
+      "status": "FAIL"
+    }
+  ]
+}

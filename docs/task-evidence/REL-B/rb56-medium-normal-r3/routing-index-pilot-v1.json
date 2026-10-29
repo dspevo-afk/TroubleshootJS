@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "classification": "Focused pilot only; not frozen r3 formal capture",
+  "sourceBinding": "3fe534d7333ca7bb84f17e69b583a871bbb6ef781a3c9038cddea80b79020259",
+  "DeveloperInputDigest": "7e4c3364b05d87c5b713ac7c0051e2309cd98589872254dc9f684beee039afb6",
+  "DeveloperOutputDigest": "302cf7afe7c36a3d1da25713c93b201d05db1d51ccc58c3cd47f8edf7410838c",
+  "build": "1A521713DA52219CE95F487FE3DF03FD",
+  "facts": {
+    "root": "7817806517725629686",
+    "seed": "7817806517725629686",
+    "packages": 58,
+    "readings": 2,
+    "repairClasses": 5,
+    "generationMillis": 89326,
+    "generationWork": 488,
+    "maxUnitMillis": 1740,
+    "operationMillis": 89953,
+    "cleanupMillis": 5,
+    "attempts": 1,
+    "naturalWaitSeconds": [
+      1.6,
+      1.7,
+      2.1,
+      1.7,
+      1.4
+    ]
+  },
+  "jobMillis": 89568,
+  "jobWork": 488,
+  "stageMillis": {
+    "RESOLVE": 0,
+    "HEALTHY": 27723,
+    "PHYSICAL": 175,
+    "HYPOTHESES": 61362,
+    "SYMPTOM": 21,
+    "PUBLISH": 242
+  },
+  "exactPriorDiagnosticComparison": {
+    "requestManifest": true,
+    "acceptedManifest": true,
+    "diagnosticContextDigest": true,
+    "diagnosticProgramDigest": true,
+    "proofRows": true,
+    "proofWorkUnits": true,
+    "requiredProofWorkUnits": true,
+    "jobStageWork": true,
+    "calibrationObservations": true,
+    "calibrationTemporalWaits": true,
+    "difficultyFeatures": true,
+    "normalProfileAssessment": true
+  },
+  "beforeDiagnosticRawSha256": "700b4d9d3cc0d832ef475c1f7a57bc7efdb02396e1900050c7a12c681943c4f3",
+  "rawReportSha256": "c165f49051451e109822d864be666b0850225980d0fb5ec22e2745b610228539",
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 0.9897795999422669,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+    "afterSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+    "sourceSha256Before": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+    "sourceSha256After": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+    "webSha256Before": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+    "webSha256After": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCountBefore": 1569,
+    "fileCountAfter": 1569,
+    "seconds": 0.40404809988103807
+  },
+  "secondsIncludingHostCleanup": 93.96370710013434
+}

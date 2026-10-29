@@ -1,19 +1,14 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-10-28 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-10-29 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
-R12 RB56 MEDIUM qualification Phase 1 is accepted for its recorded candidate. The owner chose MEDIUM qualification while
-keeping HARD unavailable and stopped before completing the repair; no human repair outcome is
-inferred and no repeat play is requested.
+R12 Phase 1 remains accepted for its recorded candidate. The owner reported stopping before repair and choosing MEDIUM qualification; no human repair outcome is inferred, and HARD remains unavailable.
 
-R12 Phase 2 remains unstarted. Normal RB56 catalog enablement, normal population, and public
-advanced saves remain held. Q100 is unstarted. The current audit-remediation task is a separate
-engineering and verification track; it does not advance these product milestones.
-Its model/replay changes do not refresh the historical human qualification evidence.
+R12 Phase 2 normal MEDIUM qualification is locally accepted for its documented finite RB56 envelope. The source-bound 30-root qualification passed across profile, development, holdout and two replacement-blind partitions, with the exact original22 comparison, Player save/replay/restore gate and finite physical repair/retest path. The acceptance record and limits are in the [R3 evidence packet](task-evidence/REL-B/rb56-medium-normal-r3/README.md) and [current task checkpoint](CODEX_TASK_REPORT.md). Earlier compiled metadata, runtime and population failures remain preserved; none were reclassified.
 
-See the [R12 qualification scope](task-evidence/REL-B/rb56-medium-qualification-r1/scope.md), [Phase 1 evidence and limits](task-evidence/REL-B/rb56-medium-qualification-r1/README.md), and the [current task checkpoint](CODEX_TASK_REPORT.md).
+Normal RB56 MEDIUM admission and the finite population/public-save envelope are qualified for this candidate. The normal publication workflow follows this acceptance checkpoint; the completion handoff records its commit, push and email outcome. Public beta remains held; HARD/PSYCHOTIC remain unavailable, protected HARD is unread/unrun, and Q100 is unstarted. The acceptance does not establish all-seed support, every save/history/damage/catalog state, human repair, modest-host operation, advanced maximum capacity/endurance or expanded visual/FPS coverage.
 
 ## Current direction
 
@@ -32,10 +27,7 @@ The [complete milestone catalog and execution order](archive/2026-10-27-roadmap.
 cards. The archive is the full roadmap snapshot, not a cancellation of work that remains
 planned. The [product direction](archive/2026-10-27-roadmap.md#1-product-direction-and-current-only-policy), [reference-board taxonomy](archive/2026-10-27-roadmap.md#4-functional-taxonomy-and-reference-boards), and [definition of done](archive/2026-10-27-roadmap.md#9-risk-register-non-goals-and-completion) retain their original section anchors.
 
-The current, separate audit-remediation findings and evidence are tracked in [docs/audit-remediation.md](audit-remediation.md). Final
-audit gates pass, including the full native matrix, final-source GWT/browser checks,
-deterministic Gate B and live preview boundaries. The audit does not change R12
-Phase 2 or start Q100.
+The current, separate audit-remediation findings and evidence are tracked in [docs/audit-remediation.md](audit-remediation.md). That separate track records its final gates, including the full native matrix, final-source GWT/browser checks, deterministic Gate B and live preview boundaries; this does not refresh the R12 Phase 2 native scope. R12 Phase 2 is locally accepted under its frozen plan; publication follows this acceptance checkpoint and Q100 is the next unstarted milestone.
 
 ## Archive note
 

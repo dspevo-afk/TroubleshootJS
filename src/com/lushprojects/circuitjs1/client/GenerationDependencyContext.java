@@ -336,6 +336,27 @@ final class GenerationDependencyContext {
         appendField(out, "sim.matrix-full-size", Integer.toString(sim.circuitMatrixFullSize));
         appendField(out, "sim.voltage-range", doubleBits(CircuitElm.voltageRange));
         appendField(out, "sim.show-resistance", Boolean.toString(sim.showResistanceInVoltageSources));
+        appendOptionSettings(out, sim);
+        appendField(out, "sim.board-power-state",
+            sim.boardPowerController == null || sim.boardPowerController.getState() == null ?
+                null : sim.boardPowerController.getState().name());
+        if (sim.boardPowerController != null)
+            appendSourceStates(out, "sim.board-power-sources", sim.boardPowerController.getSourceStates());
+    }
+
+    /** Configuration stays fixed while owned restore units may change analyzed/transient state. */
+    static String captureRestoreConfiguration(CirSim sim) {
+        if (sim == null) throw new IllegalArgumentException("Missing restore configuration owner");
+        StringBuilder out = new StringBuilder();
+        appendField(out, "sim.max-time-step", doubleBits(sim.maxTimeStep));
+        appendField(out, "sim.min-time-step", doubleBits(sim.minTimeStep));
+        appendField(out, "sim.adjust-time-step", Boolean.toString(sim.adjustTimeStep));
+        appendField(out, "sim.voltage-range", doubleBits(CircuitElm.voltageRange));
+        appendOptionSettings(out, sim);
+        return out.toString();
+    }
+
+    private static void appendOptionSettings(StringBuilder out, CirSim sim) {
         appendCheckbox(out, "sim.option.dots", sim.dotsCheckItem);
         appendCheckbox(out, "sim.option.volts", sim.voltsCheckItem);
         appendCheckbox(out, "sim.option.power", sim.powerCheckItem);
@@ -348,11 +369,6 @@ final class GenerationDependencyContext {
         appendCheckbox(out, "sim.option.printable", sim.printableCheckItem);
         appendCheckbox(out, "sim.option.convention", sim.conventionCheckItem);
         appendCheckbox(out, "sim.option.no-edit", sim.noEditCheckItem);
-        appendField(out, "sim.board-power-state",
-            sim.boardPowerController == null || sim.boardPowerController.getState() == null ?
-                null : sim.boardPowerController.getState().name());
-        if (sim.boardPowerController != null)
-            appendSourceStates(out, "sim.board-power-sources", sim.boardPowerController.getSourceStates());
     }
 
     private static void appendCheckbox(StringBuilder out, String key,

@@ -1,0 +1,604 @@
+{
+  "schema": "tsj-rb56-overhead-abba-diagnostic-evidence-v1",
+  "scope": "DIAGNOSTIC_ONLY_NOT_QUALIFICATION",
+  "qualificationStatus": "NOT_QUALIFICATION",
+  "diagnosticStatus": "COMPLETE_WITH_A_FAILURES_AND_B_PASSES",
+  "interpretation": "A1/A4 remain generation-timeout FAIL; B2/B3 are complete cold-proof PASS. This four-run, single-root, non-randomized diagnostic does not establish causation, a qualification population, or candidate acceptance.",
+  "declaration": {
+    "artifact": "EXACT_DEVELOPER18_UNACCEPTED_ENGINEERING_ARTIFACT",
+    "rootSeed": "-6794211680707017382",
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A"
+    ],
+    "caps": {
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    "currentWorktreeConsumed": false,
+    "rawSha256": "ce31f4a89d9d37b243675ca1b58fe36050eec25edfd2b3980ddf6b9140f482a8",
+    "auditFinalRawSha256": "d7e4e33a4436bded83d0a613a94bf3812b25f9ce16e22d18843298cc7a94e8da",
+    "driverResultRawSha256": "c9979eb5be97b7c253d49c8aa79afb8a1328bbdfdbf9185e896395f38b04c1cd",
+    "progressRawSha256": "24e818c0be652ad9f4d13aa53930ee0b9591eb8088f802d5a3a34ddcc0f2bdcc",
+    "declaredAuditReceiptSha256": "e45b632612af6d9ce86588067948bcf7dc5720fb4cf7bd87d7966ffbbea44b4a",
+    "declaredDeveloperInventorySha256": "cf86a12b08248101d051e8f4998e27da3b58a62b37e3296d5eaabc0dd381018a",
+    "declaredSpecSha256": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+    "declaredDriverSha256": "660c40c96498b2471ed0795eb781c87c3e906612c8fe98904bc0fa8bc7016a1a",
+    "maintainedRunnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "driverInfrastructureFailure": false,
+    "driverSnapshotStable": true,
+    "aggregateDriverExitCode": 1,
+    "aggregateExitReason": "A1 and A4 completed with generation-timeout failures; not infrastructure failure."
+  },
+  "frozenInputs": {
+    "audit": "PASS",
+    "verifiedFiles": 1568,
+    "sourceFiles": 1183,
+    "webFiles": 385,
+    "retainedBuildInputs": 1246,
+    "expectedBuildInputs": 1255,
+    "compilerJarsOmittedAsNotConsumed": 9,
+    "manifestSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+    "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+    "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+    "developerIdentity": {
+      "variant": "Developer",
+      "style": "OBF",
+      "inputDigest": "db12491d80131fc279226b245b9947716de2ea06ec67145d901e4d6a957880ed",
+      "inputFileCount": 1193,
+      "outputDigest": "843d04e492de419f052fe1788f7aa9a2fae9bfa388ac2e75a5cade2ffac059cf",
+      "outputFileCount": 357,
+      "identityJsonSha256": "31f76217acd52ffbf50dec3873ab78ca5212082b3e5c1c6df0e2ead1d43a16fb",
+      "receiptSha256": "e45b632612af6d9ce86588067948bcf7dc5720fb4cf7bd87d7966ffbbea44b4a",
+      "inventorySha256": "cf86a12b08248101d051e8f4998e27da3b58a62b37e3296d5eaabc0dd381018a"
+    },
+    "loadedCache": {
+      "id": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+      "inventoryEntrySha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+      "frozenArtifactSha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+      "allFourRunsBoundToCache": true
+    }
+  },
+  "summary": {
+    "runs": 4,
+    "order": "ABBA",
+    "rootSeed": "-6794211680707017382",
+    "A": {
+      "count": 2,
+      "outcome": "FAIL",
+      "failure": "Generation wall budget exhausted during HYPOTHESES before proof/publication"
+    },
+    "B": {
+      "count": 2,
+      "outcome": "PASS",
+      "proof": "5 hypotheses / 65 numeric samples / 5 temporal-wait rows; 375 actual proof units / 520 required; cold bypass"
+    },
+    "B2B3FullNonWallReportProjectionEqual": true,
+    "B2B3NonWallProjectionSha256": "f659e42234b7dbf808a4c0ccd1e9b2aa277ebe9977ef583a18f309f91bb6f523",
+    "newBlindRootsObserved": 0
+  },
+  "runs": [
+    {
+      "index": 1,
+      "mode": "A",
+      "outcome": "FAIL",
+      "driverExitCode": 1,
+      "rootSeed": "-6794211680707017382",
+      "hashes": {
+        "resultJson": "9326e6b855f2c6d64cd022dfdaf729fb43cc9ff6d99d4b6601ea47c3c7fe4658",
+        "wrapperJson": "b37f5d1dfb1fbf536718368828367549de8badfdb036636e719b7159027ee91a",
+        "reportJson": "7e0d714422b64ebdd00d1892ec4ba6aa7e00d4befc8589e34f18e3c6b6941ce9",
+        "reportDeclaredSha256": "7e0d714422b64ebdd00d1892ec4ba6aa7e00d4befc8589e34f18e3c6b6941ce9",
+        "specJson": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+        "auditBeforeJson": "8651e7439d9d7c0244d6f0b44b1aff9f2474e6043e86b0361d568e5b1728e650",
+        "auditAfterJson": "c6b0cc84e6eab9ff6be00670bbeb6a01c5b1e63b7b32a6a17e12d9f6816863d5",
+        "hostTelemetryJson": "85fc52d4c46cc34968959c779300ca23c5c03685117723cd6f2f632ccda220ed",
+        "browserVersionJson": "3680deb1ab7f5b7e731cee5145565119f535ef6c95c39c0bca4454cf8130c91a",
+        "runnerBeforeJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "runnerAfterJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "inputManifestBeforeJson": "3e158a2f6353cfb25c68336d94b8627804d9b4aaee378fc21f8fdecaaa8d6130",
+        "inputManifestAfterJson": "e0ce2eac7db4b1ffdc52899d894019c9a7005252dd74c87fba40ee4adee17dcd"
+      },
+      "timing": {
+        "driverTotalSeconds": 96.1970138,
+        "browserOperationSeconds": 91.0796185999643,
+        "reportGenerationJobMillis": 90080,
+        "reportOperationMillis": 90142,
+        "runnerAndFinalAuditCleanupSeconds": 95.1316606,
+        "ownedResourceCleanupSeconds": 1.0987750000786036,
+        "inputAuditSeconds": 0.4952756999991834
+      },
+      "generation": {
+        "phase": "RESTORED",
+        "failurePhase": "COLD_GENERATION",
+        "jobOutcome": "TIMEOUT",
+        "stage": "HYPOTHESES",
+        "jobWork": 447,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 362,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "stageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 23471,
+          "PHYSICAL": 162,
+          "HYPOTHESES": 66414,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "proofWorkUnits": null,
+        "requiredProofWorkUnits": null,
+        "hypotheses": null,
+        "solverSamples": null,
+        "maxManualUnitMillis": 1791,
+        "qualifiedPublication": false
+      },
+      "terminal": {
+        "text": "FAIL:rb56:Generation wall budget exhausted",
+        "matched": false,
+        "reportObservedAndMatched": true,
+        "browserErrorCount": 0
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "afterSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+        "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1568
+      },
+      "cleanup": {
+        "status": "PASS",
+        "serverStopped": true,
+        "ownedSurvivorCount": 0,
+        "errorCount": 0
+      },
+      "browser": {
+        "product": "Edg/156.0.4314.50",
+        "jsVersion": "15.6.12.7",
+        "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+        "compiledCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+        "stateEvents": [
+          {
+            "monotonicNs": 1190962036960000,
+            "value": "RUNNING:rb56"
+          },
+          {
+            "monotonicNs": 1191052176643600,
+            "value": "FAIL:rb56:Generation wall budget exhausted"
+          }
+        ]
+      },
+      "telemetry": {
+        "sampleCount": 91,
+        "uniquePidBirths": 10,
+        "edgeProcessObservations": 788,
+        "coveredEdgeCpuMilliseconds": 99062.5,
+        "highestPidCoveredCpuMilliseconds": 95453.125,
+        "priorityClassObservationCounts": {
+          "32": 606,
+          "32768": 91,
+          "64": 91
+        },
+        "ownerPriorityClass": 32,
+        "errorCount": 0,
+        "cpuProfile": null
+      }
+    },
+    {
+      "index": 2,
+      "mode": "B",
+      "outcome": "PASS",
+      "driverExitCode": 0,
+      "rootSeed": "-6794211680707017382",
+      "hashes": {
+        "resultJson": "f4596ae8cbcd8d7ef60530b70565a4d18d109ed7689698cc70690b8146089d89",
+        "wrapperJson": "5006ed0a70d3ea86149dedc845e2ef5fafc4fc7567a5925fcaf12fa3f8cb7c20",
+        "reportJson": "860210006fc422faa3bf9a2c4b0ffb3896b12f4b70b7377ae40276dbee538e34",
+        "reportDeclaredSha256": "860210006fc422faa3bf9a2c4b0ffb3896b12f4b70b7377ae40276dbee538e34",
+        "specJson": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+        "auditBeforeJson": "23afd17db2def471302df86b3a7bd5d8fe76986c1bddd18be27c8c57fe5a2f6e",
+        "auditAfterJson": "45e5366f6be23209ca28fb57b6548abf1657a6da6e9f6f981536297f7abecabd",
+        "hostTelemetryJson": "7a0f72a2ab239ee6b2d4d98804cee8132c662098aefc310b99028f55c9d6ec34",
+        "browserVersionJson": "e6ee194f990b79e36ea976ccbe60ee3fdf95c61d2684160b33db1e8f82dba87b",
+        "runnerBeforeJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "runnerAfterJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "inputManifestBeforeJson": "998fe0fafb0e2ee00d1b2186bacf3e240136dbc381a554f5cbfa04fe86723a32",
+        "inputManifestAfterJson": "b9f3462b266d7f1ed8d316688202f303c6c2891cb6689f85d1f75927d401d08a"
+      },
+      "timing": {
+        "driverTotalSeconds": 83.0556521,
+        "browserOperationSeconds": 77.06429499993101,
+        "reportGenerationJobMillis": 75921,
+        "reportOperationMillis": 76207,
+        "runnerAndFinalAuditCleanupSeconds": 81.9365764,
+        "ownedResourceCleanupSeconds": 1.196712200064212,
+        "inputAuditSeconds": 0.5551205999217927
+      },
+      "generation": {
+        "phase": "RESTORED",
+        "failurePhase": null,
+        "jobOutcome": "PASS",
+        "stage": "PUBLISH",
+        "jobWork": 462,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 375,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 19436,
+          "PHYSICAL": 141,
+          "HYPOTHESES": 56087,
+          "SYMPTOM": 20,
+          "PUBLISH": 191
+        },
+        "proofWorkUnits": 375,
+        "requiredProofWorkUnits": 520,
+        "hypotheses": 5,
+        "solverSamples": 65,
+        "maxManualUnitMillis": 1548,
+        "qualifiedPublication": true
+      },
+      "terminal": {
+        "text": "PASS:rb56",
+        "matched": true,
+        "reportObservedAndMatched": true,
+        "browserErrorCount": 0
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "afterSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+        "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1568
+      },
+      "cleanup": {
+        "status": "PASS",
+        "serverStopped": true,
+        "ownedSurvivorCount": 0,
+        "errorCount": 0
+      },
+      "browser": {
+        "product": "Edg/156.0.4314.50",
+        "jsVersion": "15.6.12.7",
+        "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+        "compiledCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+        "stateEvents": [
+          {
+            "monotonicNs": 1191058225509000,
+            "value": "RUNNING:rb56"
+          },
+          {
+            "monotonicNs": 1191134430370400,
+            "value": "PASS:rb56"
+          }
+        ]
+      },
+      "telemetry": {
+        "sampleCount": 77,
+        "uniquePidBirths": 10,
+        "edgeProcessObservations": 651,
+        "coveredEdgeCpuMilliseconds": 85296.875,
+        "highestPidCoveredCpuMilliseconds": 82062.5,
+        "priorityClassObservationCounts": {
+          "32": 497,
+          "32768": 77,
+          "64": 77
+        },
+        "ownerPriorityClass": 32,
+        "errorCount": 0,
+        "cpuProfile": {
+          "sha256": "3daf786764f9c5e06f6e60bbd6e9f31879b85fb767d94dc55432b2698e22ea49",
+          "bytes": 5382022,
+          "nodes": 15570,
+          "samples": 33906,
+          "intervalMs": 77107.814
+        }
+      },
+      "proof": {
+        "fullFiveHypothesisProof": true,
+        "hypotheses": 5,
+        "observations": 5,
+        "numericSamples": 65,
+        "temporalWaitRows": 5,
+        "allProofRowsPass": true,
+        "proofRowsSha256": "316d3842a2a943436c97eb9c68ee201079a58913d44dd453af11283afea6b7ad",
+        "observationsSha256": "220d54b48fd669a2615c404db7da01190a34114ad0e5608727dbecbfa7dccad0",
+        "temporalWaitsSha256": "0178b16a57bcf4f255a6121c09ce2a82d4a4cf009d35602eda91ab37400037da",
+        "proofCachePolicy": "BYPASS",
+        "proofWarmReuse": false
+      }
+    },
+    {
+      "index": 3,
+      "mode": "B",
+      "outcome": "PASS",
+      "driverExitCode": 0,
+      "rootSeed": "-6794211680707017382",
+      "hashes": {
+        "resultJson": "1cf1e20b7110241ed4c5fc30faacf956373fdcb5b77e0e657cd20e94ef5a6c75",
+        "wrapperJson": "226657970966098387be0f9022fb14c64ba7021544026104fea5847932930f55",
+        "reportJson": "ca5e98d779cabfad7e7e7080e1e50daa7794bec7ad116bc89623c057b559a5d0",
+        "reportDeclaredSha256": "ca5e98d779cabfad7e7e7080e1e50daa7794bec7ad116bc89623c057b559a5d0",
+        "specJson": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+        "auditBeforeJson": "76f6db3864e64afd2dfc348db53d6ce5aefb529fa9db585b1bdaeee4391cb420",
+        "auditAfterJson": "33b510346a5ca2431e57de219eee51febeb5361ecf387283e844db8f0991c44c",
+        "hostTelemetryJson": "dfd7e9a006f1abf2d826484c6d958f6f5e7e7b8337cdb528dcf1e5b9bd7ff589",
+        "browserVersionJson": "002008a136f426b9105974c5470d0d44669c7d5ebf655291e1abc01e6fee3c54",
+        "runnerBeforeJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "runnerAfterJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "inputManifestBeforeJson": "d4586264ea2f154c1f04d66116df3243d7157de485861e257c7e1b0ed0def9da",
+        "inputManifestAfterJson": "5408d43fec7b1bb35c6ec6e15d0dc655956e801e4fb74806b9c86f81916c774d"
+      },
+      "timing": {
+        "driverTotalSeconds": 83.8456947,
+        "browserOperationSeconds": 78.23439809982665,
+        "reportGenerationJobMillis": 77002,
+        "reportOperationMillis": 77308,
+        "runnerAndFinalAuditCleanupSeconds": 82.712169,
+        "ownedResourceCleanupSeconds": 1.1624044000636786,
+        "inputAuditSeconds": 0.5129545000381768
+      },
+      "generation": {
+        "phase": "RESTORED",
+        "failurePhase": null,
+        "jobOutcome": "PASS",
+        "stage": "PUBLISH",
+        "jobWork": 462,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 375,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        },
+        "stageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 20385,
+          "PHYSICAL": 140,
+          "HYPOTHESES": 56238,
+          "SYMPTOM": 12,
+          "PUBLISH": 182
+        },
+        "proofWorkUnits": 375,
+        "requiredProofWorkUnits": 520,
+        "hypotheses": 5,
+        "solverSamples": 65,
+        "maxManualUnitMillis": 1417,
+        "qualifiedPublication": true
+      },
+      "terminal": {
+        "text": "PASS:rb56",
+        "matched": true,
+        "reportObservedAndMatched": true,
+        "browserErrorCount": 0
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "afterSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+        "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1568
+      },
+      "cleanup": {
+        "status": "PASS",
+        "serverStopped": true,
+        "ownedSurvivorCount": 0,
+        "errorCount": 0
+      },
+      "browser": {
+        "product": "Edg/156.0.4314.50",
+        "jsVersion": "15.6.12.7",
+        "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+        "compiledCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+        "stateEvents": [
+          {
+            "monotonicNs": 1191141333067300,
+            "value": "RUNNING:rb56"
+          },
+          {
+            "monotonicNs": 1191218641810500,
+            "value": "PASS:rb56"
+          }
+        ]
+      },
+      "telemetry": {
+        "sampleCount": 78,
+        "uniquePidBirths": 10,
+        "edgeProcessObservations": 661,
+        "coveredEdgeCpuMilliseconds": 87078.125,
+        "highestPidCoveredCpuMilliseconds": 83750.0,
+        "priorityClassObservationCounts": {
+          "32": 505,
+          "32768": 78,
+          "64": 78
+        },
+        "ownerPriorityClass": 32,
+        "errorCount": 0,
+        "cpuProfile": {
+          "sha256": "e6c279ffa7b1d043eafdd7714b52c8b2ebeb9047cb18a021ed1c93598e842860",
+          "bytes": 5332523,
+          "nodes": 15302,
+          "samples": 34434,
+          "intervalMs": 78276.908
+        }
+      },
+      "proof": {
+        "fullFiveHypothesisProof": true,
+        "hypotheses": 5,
+        "observations": 5,
+        "numericSamples": 65,
+        "temporalWaitRows": 5,
+        "allProofRowsPass": true,
+        "proofRowsSha256": "316d3842a2a943436c97eb9c68ee201079a58913d44dd453af11283afea6b7ad",
+        "observationsSha256": "220d54b48fd669a2615c404db7da01190a34114ad0e5608727dbecbfa7dccad0",
+        "temporalWaitsSha256": "0178b16a57bcf4f255a6121c09ce2a82d4a4cf009d35602eda91ab37400037da",
+        "proofCachePolicy": "BYPASS",
+        "proofWarmReuse": false
+      }
+    },
+    {
+      "index": 4,
+      "mode": "A",
+      "outcome": "FAIL",
+      "driverExitCode": 1,
+      "rootSeed": "-6794211680707017382",
+      "hashes": {
+        "resultJson": "7ddc6ccc1059951c6b0dfcb056d6087ce267e30980703764a1cfcef970bc1262",
+        "wrapperJson": "0e11c7065c388baee5b27e1b70406321290800b518454c5b5e9aacab67194a6f",
+        "reportJson": "c311d49b3ef57952102391534d1a7f6a9ab5ef42beebcad1eefad613564022da",
+        "reportDeclaredSha256": "c311d49b3ef57952102391534d1a7f6a9ab5ef42beebcad1eefad613564022da",
+        "specJson": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+        "auditBeforeJson": "e705b60065f59ee4bef918afefd0258b7777262d8a8cfc42f5352cd5297e4e36",
+        "auditAfterJson": "19162681a17f92bba6e61635459710bc66b721ce30bc054c260fa3c4b812e713",
+        "hostTelemetryJson": "5f33462adb4d4f55bda81b8dc6695bbbe08e862232a9b453cc06e522b4e7effd",
+        "browserVersionJson": "c20cc49ca9490d5da5cd4e6d742e1e0f4544727fa8eb38b8287b141d077c453f",
+        "runnerBeforeJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "runnerAfterJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+        "inputManifestBeforeJson": "093ea835cb92cc726035256689f631638f617259f290b37b49dcfe0a39ab347f",
+        "inputManifestAfterJson": "985c4655a63ae36d6f6e059b9c4d29a1c9c78080f5212035587243165ecf1b48"
+      },
+      "timing": {
+        "driverTotalSeconds": 96.0451274,
+        "browserOperationSeconds": 90.90212680003606,
+        "reportGenerationJobMillis": 90062,
+        "reportOperationMillis": 90111,
+        "runnerAndFinalAuditCleanupSeconds": 95.0075069,
+        "ownedResourceCleanupSeconds": 1.2390012999530882,
+        "inputAuditSeconds": 0.5436017999891192
+      },
+      "generation": {
+        "phase": "RESTORED",
+        "failurePhase": "COLD_GENERATION",
+        "jobOutcome": "TIMEOUT",
+        "stage": "HYPOTHESES",
+        "jobWork": 450,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 365,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "stageMillis": {
+          "RESOLVE": 1,
+          "HEALTHY": 23234,
+          "PHYSICAL": 195,
+          "HYPOTHESES": 66599,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        },
+        "proofWorkUnits": null,
+        "requiredProofWorkUnits": null,
+        "hypotheses": null,
+        "solverSamples": null,
+        "maxManualUnitMillis": 1802,
+        "qualifiedPublication": false
+      },
+      "terminal": {
+        "text": "FAIL:rb56:Generation wall budget exhausted",
+        "matched": false,
+        "reportObservedAndMatched": true,
+        "browserErrorCount": 0
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "afterSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+        "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+        "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1568
+      },
+      "cleanup": {
+        "status": "PASS",
+        "serverStopped": true,
+        "ownedSurvivorCount": 0,
+        "errorCount": 0
+      },
+      "browser": {
+        "product": "Edg/156.0.4314.50",
+        "jsVersion": "15.6.12.7",
+        "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+        "compiledCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+        "stateEvents": [
+          {
+            "monotonicNs": 1191225234803900,
+            "value": "RUNNING:rb56"
+          },
+          {
+            "monotonicNs": 1191315341058300,
+            "value": "FAIL:rb56:Generation wall budget exhausted"
+          }
+        ]
+      },
+      "telemetry": {
+        "sampleCount": 91,
+        "uniquePidBirths": 10,
+        "edgeProcessObservations": 788,
+        "coveredEdgeCpuMilliseconds": 98109.375,
+        "highestPidCoveredCpuMilliseconds": 94890.625,
+        "priorityClassObservationCounts": {
+          "32": 606,
+          "32768": 91,
+          "64": 91
+        },
+        "ownerPriorityClass": 32,
+        "errorCount": 0,
+        "cpuProfile": null
+      }
+    }
+  ],
+  "comparisonLimits": {
+    "edgeCpuMeasurement": "Covered CPU increments for same PID+creation identities across adjacent 1 Hz samples during maintained navigation/execution/final reads; highest-process metric is maximum such covered increment, not exhaustive lifetime CPU. Per-process CPU may sum multiple cores; it is not elapsed wall time or main-thread CPU.",
+    "processLabels": "Edge PIDs remain unclassified descendants; no renderer/browser/GPU or main-thread attribution.",
+    "priority": "Priority-class observations only; no frequency, throttling, foreground, efficiency-mode, utilization, clock or causal inference.",
+    "profiling": "Only B runs carry CPU profiles; profile metadata is diagnostic instrumentation, not source/V8 attribution. Browser jsVersion is recorded without an exact patched-V8 source claim.",
+    "design": "ABBA is counterbalanced, not randomized; four runs of one root do not estimate a population or establish causation. No extra progress reads were added, so equal-work prefix CPU comparison is unavailable."
+  },
+  "browserIdentity": {
+    "product": "Edg/156.0.4314.50",
+    "jsVersion": "15.6.12.7",
+    "exactPatchedV8SourceClaim": false
+  },
+  "optionalSupplements": {
+    "readOnlyPowerState": {
+      "scope": "READ_ONLY_SUPPLEMENT_NOT_QUALIFICATION",
+      "sha256": "dddbcd8239255cc0b3210a90d9ce5285cf1a3773677ef28f170cbf45bb117528",
+      "rows": 10,
+      "A4Only": true,
+      "settingsChanged": false,
+      "causalInference": false
+    },
+    "hostProbeCanaries": {
+      "scope": "REAL_WIN32_PASSIVE_TELEMETRY_CANARIES_ONLY",
+      "sha256": "415ce0ca002176e8ebc6687bcfcdd5d9278306655bb091ff54e8e6097e3f9c8a",
+      "status": "PASS",
+      "currentProcessPositive": true,
+      "wrongCreationRejected": true,
+      "unqueryablePidRejected": true,
+      "seconds": 0.00962709984742105,
+      "mutation": "NONE"
+    }
+  },
+  "unstartedFollowUp": "New blind-eight cohort and qualification rescue were not run; A4-only process-policy observations are not a B measurement."
+}

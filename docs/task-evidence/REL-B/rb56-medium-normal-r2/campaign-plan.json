@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "partition": "replacement-blind-MEDIUM",
+  "frozenUtc": "2026-10-28T16:39:57.964667+00:00",
+  "selection": "eight unique OS-cryptographic random signed-long roots, frozen before execution",
+  "roots": [
+    "6717106128883189437",
+    "-7993534270425766476",
+    "665993870941717295",
+    "-1740268088938250233",
+    "-5491370319832732895",
+    "-7785299080753913940",
+    "7817806517725629686",
+    "-7945665765811446459"
+  ],
+  "previousPartition": "rb56-medium-normal-r1: retained as regression after runtime fix",
+  "maximumJobMillis": 90000,
+  "maximumWorkUnits": 640,
+  "maximumUnitMillis": 5000,
+  "canonicalCandidates": 4,
+  "protectedHard": "not read or run",
+  "statusAtFreeze": "NOT_RUN"
+}

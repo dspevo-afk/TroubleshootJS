@@ -1,6 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Vector;
+import java.util.List;
 
 /** Focused current geometry and placement contract. */
 public final class A02GeometryContractTest {
@@ -88,8 +89,27 @@ public final class A02GeometryContractTest {
         PcbFootprint resistor = PcbFootprint.fromPhysicalPackage(
                 board.getComponent("R1"), 310, 205);
 
-        Vector<TopologyPlacementGraph.PadLink> allLinks =
+        List<TopologyPlacementGraph.PadLink> allLinks =
                 topology.getLinksFor(candidateComponent.getId());
+        require(allLinks.size() == 2 && allLinks == topology.getLinksFor("LED1"),
+                "completed topology exposes one stable read-only link population");
+        TopologyPlacementGraph.PadLink first = allLinks.get(0), second = allLinks.get(1);
+        require("GND".equals(first.getNetId()) && "LED1.K".equals(first.getPadId()) &&
+                "J1.2".equals(first.getOtherPadId()) && first.getWeight() == 3.0 * .45 &&
+                "LED_NODE".equals(second.getNetId()) && "LED1.A".equals(second.getPadId()) &&
+                "R1.2".equals(second.getOtherPadId()) && second.getWeight() == 3.0,
+                "read-only links preserve independent net/pad order and connector weighting");
+        boolean mutationRejected = false;
+        try { allLinks.clear(); }
+        catch (UnsupportedOperationException expected) { mutationRejected = true; }
+        require(mutationRejected && topology.getLinksFor("LED1").size() == 2,
+                "caller cannot remove placement links from the completed topology");
+        mutationRejected = false;
+        try { allLinks.set(0, second); }
+        catch (UnsupportedOperationException expected) { mutationRejected = true; }
+        require(mutationRejected && allLinks.get(0) == first,
+                "caller cannot replace a canonical placement link");
+        require(topology.getLinksFor("ABSENT").isEmpty(), "absent component has no placement links");
         TopologyPlacementGraph.PadLink connectorLink = linkTo(allLinks, "J1");
         TopologyPlacementGraph.PadLink resistorLink = linkTo(allLinks, "R1");
         final Vector<PcbFootprint> onePlaced = new Vector<PcbFootprint>();
@@ -214,7 +234,7 @@ public final class A02GeometryContractTest {
     }
 
     private static TopologyPlacementGraph.PadLink linkTo(
-            Vector<TopologyPlacementGraph.PadLink> links, String componentId) {
+            List<TopologyPlacementGraph.PadLink> links, String componentId) {
         for (TopologyPlacementGraph.PadLink link : links)
             if (componentId.equals(link.getOtherComponentId())) return link;
         throw new AssertionError("missing topology link to " + componentId);

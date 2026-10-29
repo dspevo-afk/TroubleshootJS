@@ -2,7 +2,6 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Vector;
 
 /** Bounded two-face routing engine; adoption remains controlled by the physical-policy owner. */
@@ -81,6 +80,7 @@ final class PcbLayerRoutingPrototype {
         private String previousFailedNet;
         private PcbBoardLayout candidate;
         private Search search;
+        private TurnBoundWorkspace turnBoundWorkspace;
         private Result result;
         private boolean complete;
 
@@ -127,7 +127,7 @@ final class PcbLayerRoutingPrototype {
                     previousFailedNet=null;
                     candidate=template.copyForRouting();
                     try {
-                        search=new Search(board,candidate,policy,observer,budget,pass,promotedNet,maximumVias);
+                        search=new Search(this,board,candidate,policy,observer,budget,pass,promotedNet,maximumVias);
                     } catch(Exhausted failure) {
                         reason=failure.getMessage();
                         candidate=null;
@@ -150,6 +150,7 @@ final class PcbLayerRoutingPrototype {
                         observer.check(pass); // No partial routes or holes can escape a failed/cancelled attempt.
                         candidate.setRoutingStatistics(budget.expanded,search.segments,0);
                         result=new Result(candidate,"SUCCESS",budget.expanded,passes,links);
+                        turnBoundWorkspace=null;
                         complete=true;
                     }
                 } catch(Exhausted failure) {
@@ -172,8 +173,17 @@ final class PcbLayerRoutingPrototype {
             return result;
         }
         int expansions() { return budget.expanded; }
+        private TurnBoundWorkspace turnBoundWorkspace(int width,int height,int cells) {
+            if(!roleWidths) throw new IllegalStateException("Turn-bound workspace requires role widths");
+            if(turnBoundWorkspace==null) turnBoundWorkspace=new TurnBoundWorkspace(width,height);
+            else if(turnBoundWorkspace.width!=width || turnBoundWorkspace.height!=height ||
+                    turnBoundWorkspace.cells!=cells)
+                throw new IllegalStateException("Routing session changed turn-bound grid dimensions");
+            return turnBoundWorkspace;
+        }
         private void finishRejected() {
             result=new Result(null,reason,budget.expanded,passes,links);
+            turnBoundWorkspace=null;
             complete=true;
         }
     }
@@ -231,6 +241,66 @@ final class PcbLayerRoutingPrototype {
             return result;
         }
     }
+    /** Branch-local primitive index; null values mark empty slots and entries never delete. */
+    private static final class NodeIndex {
+        private static final int INITIAL_CAPACITY=128;
+        private int[] keys=new int[INITIAL_CAPACITY];
+        private Node[] values=new Node[INITIAL_CAPACITY];
+        private int size;
+        Node get(int key) {
+            int slot=findSlot(key);
+            return values[slot];
+        }
+        void put(int key,Node value) {
+            if(value==null) throw new IllegalArgumentException("Missing route state node");
+            int slot=findSlot(key);
+            if(values[slot]!=null) { values[slot]=value; return; }
+            if(size>=values.length/2) {
+                grow();
+                slot=findSlot(key);
+            }
+            keys[slot]=key;
+            values[slot]=value;
+            size++;
+        }
+        private int findSlot(int key) {
+            int mixed=key;
+            mixed^=mixed>>>16;
+            mixed^=mixed>>>8;
+            mixed^=mixed>>>4;
+            int mask=values.length-1,slot=mixed&mask;
+            while(values[slot]!=null && keys[slot]!=key) slot=(slot+1)&mask;
+            return slot;
+        }
+        private void grow() {
+            int[] previousKeys=keys;
+            Node[] previousValues=values;
+            keys=new int[previousKeys.length*2];
+            values=new Node[previousValues.length*2];
+            for(int index=0;index<previousValues.length;index++) if(previousValues[index]!=null) {
+                int slot=findSlot(previousKeys[index]);
+                keys[slot]=previousKeys[index];
+                values[slot]=previousValues[index];
+            }
+        }
+    }
+    /** Scratch rays reused only between sequential branches in one routing session. */
+    static final class TurnBoundWorkspace {
+        final int width,height,cells;
+        private final int[] north,east,south,west,axisMin,rowMin;
+        TurnBoundWorkspace(int width,int height) {
+            long cellCount=(long)width*height;
+            if(width<1 || height<1 || cellCount>MAX_CELLS)
+                throw new IllegalArgumentException("Invalid turn lower-bound workspace grid");
+            this.width=width; this.height=height; cells=(int)cellCount;
+            north=new int[cells]; east=new int[cells]; south=new int[cells];
+            west=new int[cells]; axisMin=new int[cells]; rowMin=new int[cells];
+        }
+        private void requireGrid(int requestedWidth,int requestedHeight,int requestedCells) {
+            if(width!=requestedWidth || height!=requestedHeight || cells!=requestedCells)
+                throw new IllegalArgumentException("Mismatched turn lower-bound workspace grid");
+        }
+    }
     /** Turn-aware admissible relaxed-plane lower bound for role-width route ordering. */
     static final class TurnLowerBound {
         private static final int INFINITY=Integer.MAX_VALUE/4;
@@ -238,16 +308,23 @@ final class PcbLayerRoutingPrototype {
         private final int[] manhattan,north,east,south,west,axisMin;
         TurnLowerBound(int width,int height,boolean[] goals,int[] distance,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int pass) {
+            this(width,height,goals,distance,observer,pass,null);
+        }
+        TurnLowerBound(int width,int height,boolean[] goals,int[] distance,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int pass,
+                TurnBoundWorkspace workspace) {
             long cellCount=(long)width*height;
             if(width<1 || height<1 || cellCount>MAX_CELLS || goals==null ||
                     goals.length!=cellCount*2L || distance==null ||
                     distance.length!=cellCount || observer==null)
                 throw new IllegalArgumentException("Invalid turn lower-bound grid");
             cells=(int)cellCount;
+            if(workspace==null) workspace=new TurnBoundWorkspace(width,height);
+            else workspace.requireGrid(width,height,cells);
             manhattan=distance;
-            north=new int[cells]; east=new int[cells];
-            south=new int[cells]; west=new int[cells];
-            axisMin=new int[cells];
+            north=workspace.north; east=workspace.east;
+            south=workspace.south; west=workspace.west;
+            axisMin=workspace.axisMin;
             int scanned=0;
             for(int x=0;x<width;x++) {
                 int nearest=-1;
@@ -276,7 +353,7 @@ final class PcbLayerRoutingPrototype {
                     if((scanned++&4095)==0) observer.check(pass);
                 }
             }
-            int[] rowMin=new int[cells];
+            int[] rowMin=workspace.rowMin;
             for(int y=0;y<height;y++) {
                 int nearest=-1;
                 for(int x=0;x<width;x++) {
@@ -362,6 +439,7 @@ final class PcbLayerRoutingPrototype {
     }
 
     private static final class Search {
+        final Session owner;
         final TroubleshootBoard board;
         final PcbBoardLayout layout;
         final Policy policy;
@@ -383,9 +461,10 @@ final class PcbLayerRoutingPrototype {
         private BranchSearch branch;
         private Publisher publisher;
         private boolean complete;
-        Search(TroubleshootBoard board,PcbBoardLayout layout,Policy policy,
+        Search(Session owner,TroubleshootBoard board,PcbBoardLayout layout,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,Budget budget,int pass,String promotedNet,
                 int maximumVias) {
+            this.owner=owner;
             this.board=board; this.layout=layout; this.policy=policy;
             this.observer=observer; this.budget=budget; this.pass=pass;
             this.promotedNet=promotedNet;
@@ -513,7 +592,7 @@ final class PcbLayerRoutingPrototype {
             final TurnLowerBound turnLowerBound;
             final PcbBoardHole[] holes;
             final Rectangle[] holeBounds;
-            final HashMap<Integer,Node> best=new HashMap<Integer,Node>();
+            final NodeIndex best=new NodeIndex();
             final NodeQueue queue=new NodeQueue();
             int expanded;
             Node found;
@@ -527,9 +606,10 @@ final class PcbLayerRoutingPrototype {
                 holeBounds=new Rectangle[holes.length];
                 for(int i=0;i<holes.length;i++) holeBounds[i]=holes[i].getBounds();
                 goal=goals(net,root); distance=lowerBound(goal);
-                turnLowerBound=board.getPlacementConstraints().getTraceWidthProfile()==
-                    PcbTraceWidthProfile.ROLE_WIDTHS?
-                    new TurnLowerBound(width,height,goal,distance,observer,pass):null;
+                if(board.getPlacementConstraints().getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS) {
+                    TurnBoundWorkspace workspace=owner.turnBoundWorkspace(width,height,cells);
+                    turnLowerBound=new TurnLowerBound(width,height,goal,distance,observer,pass,workspace);
+                } else turnLowerBound=null;
                 for(int layer=0;layer<2;layer++) if(layer==primary || policy==Policy.FULLER_TWO_LAYER)
                     offer(queue,best,new Node(cell(start),layer,4,0,layer==primary?0:policy.secondaryCost,
                         heuristic(cell(start),4),serial++,cells,null));
@@ -671,7 +751,7 @@ final class PcbLayerRoutingPrototype {
                 observer.check(pass);
             }
         }
-        void offer(NodeQueue queue,HashMap<Integer,Node> best,Node node) {
+        void offer(NodeQueue queue,NodeIndex best,Node node) {
             Node previous=best.get(node.key);
             if(previous!=null && previous.cost<=node.cost) return;
             best.put(node.key,node); queue.add(node);

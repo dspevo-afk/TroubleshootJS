@@ -1,0 +1,73 @@
+{
+  "schema": "tsj-r12-technical-gates/1",
+  "status": "PASS",
+  "scope": "Final-source technical gates after min/max admission correction; Player and formal population acceptance remain pending",
+  "native": {
+    "result": "PASS",
+    "command": {
+      "exit": 0,
+      "seconds": 653.6667562,
+      "suites": 37
+    },
+    "cleanup": "PASS",
+    "cleanupSeconds": null,
+    "fullMatrix": "NOT RUN",
+    "proceduralRows": 192,
+    "acceptedBoards": 240,
+    "exactReplays": 240,
+    "identityOnlyRows": 22,
+    "packingCases": 48,
+    "receiptSha256": "a95879288aa494106f3b25f3da07313811e1bc6aced58bca3143b42c13e799b3"
+  },
+  "geometryEquivalence": "geometry-equivalence-admission-final.json",
+  "compiledRestoreChecks": "final-restore-checks-v2.json",
+  "failedRootRegression": "admission-correction.json",
+  "builds": {
+    "developer": {
+      "result": "PASS",
+      "command": {
+        "exit": 0,
+        "seconds": 121.1489665
+      },
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "8e613b44c52457db877b938433582436b8aba164bf9889bfd1b7dd9e8ad4c9d5",
+        "InputFileCount": 1193,
+        "OutputDigest": "c687a6c9b9dadbad622e57956cb80935a9ec8fbc9f9c9754eb4bd8c911a0b3b9",
+        "OutputFileCount": 357
+      },
+      "cacheCount": 5,
+      "cacheBytes": 17437384,
+      "inventorySha256": "a0598943dbf5c042bf64e230e9a1f9df974cb69143aa61e70e7be1262e75a7c6"
+    },
+    "player": {
+      "result": "PASS",
+      "command": {
+        "exit": 0,
+        "seconds": 86.9246464
+      },
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "6577b78faa28bc784cf097fd9b4023f64c48c3367e8a8a53607eb9777c7537b4",
+        "InputFileCount": 1193,
+        "OutputDigest": "31287e720d029a365d51604deaafb5ca018f35a21cc6ead1f13cfbd576d1dfdf",
+        "OutputFileCount": 357
+      },
+      "cacheCount": 5,
+      "cacheBytes": 9415105,
+      "inventorySha256": "0f986cfdf29d8aabb4e9cf737009babbd633a7f3858039ab63681a72275e0664"
+    }
+  },
+  "reader": {
+    "result": "PASS",
+    "tests": 9,
+    "command": {
+      "exit": 0,
+      "seconds": 4.3798853
+    }
+  }
+}

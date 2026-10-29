@@ -1,0 +1,1627 @@
+{
+  "schema": "tsj-r12-medium-final-qualification/2",
+  "status": "PASS_FINITE_R12_QUALIFICATION_V2",
+  "rootAcceptancePending": false,
+  "acceptedPlan": {
+    "sha256": "4816a8b6c3df06109eb54f5ede5366b8febdde00ce94094baa46b5403709e9ac",
+    "sourceBinding": "8c6591a9cbbde7a7c90fdc349795e0e8ef9e3408e17296a2a066b5ff5122d333",
+    "partitionOrder": [
+      "profile",
+      "development",
+      "holdout",
+      "replacement-blind",
+      "replacement-blind-2"
+    ],
+    "partitionCounts": {
+      "profile": 3,
+      "development": 3,
+      "holdout": 8,
+      "replacement-blind": 8,
+      "replacement-blind-2": 8
+    },
+    "rootCount": 30
+  },
+  "prequalificationEvidence": {
+    "native49": {
+      "file": "r3/native-boundaries-v2.json",
+      "sha256": "7dca10b88b965dc5d9e8e7e68bad5e01d1465b8541bb769388798e86c939b484",
+      "status": "PASS",
+      "suiteCount": 49,
+      "geometryRows": 48,
+      "scope": "selected native union only; not the full native matrix"
+    },
+    "compiled14": {
+      "file": "docs/task-evidence/REL-B/rb56-medium-normal-r3/compiled-boundaries-v2-r2.json",
+      "sha256": "9256ce99b8902b90003e664ff0715e680a62c51064185808e43a5dba50e25e27",
+      "status": "PASS",
+      "caseCount": 14,
+      "scope": "compiled boundary evidence only; not the full 180 cases"
+    },
+    "playerRootGate": {
+      "file": "docs/task-evidence/REL-B/rb56-medium-normal-r3/player-gate-v2.json",
+      "sha256": "e8b259502187c7c317b40237a59f372da879f2b79fdf1bec09c8715a0b23b6fe",
+      "status": "PASS",
+      "candidateStatus": "ROOT_ACCEPTED"
+    },
+    "player12Audits": [
+      {
+        "file": "player12-deployed-artifact-audit-v1.json",
+        "sha256": "3568f19ccfd0b4857c830f533caf1c91fa28a12a46866499c55f387a4b3e72f8",
+        "status": "PASS",
+        "outputDigest": "ffbe7d2f8609f055a00dfea6ac1939c728e083351da816ed2272027b0f78e46a",
+        "rows": 357
+      },
+      {
+        "file": "player12-post-ui-audit-v1.json",
+        "sha256": "7c0cc623de8379e3cabc6a86b3c9e62a593b443d4d05cf34e7bb5f30a5c0e75f",
+        "status": "PASS",
+        "outputDigest": "ffbe7d2f8609f055a00dfea6ac1939c728e083351da816ed2272027b0f78e46a",
+        "rows": 357
+      }
+    ],
+    "developer22Audit": {
+      "file": "developer22-deployed-artifact-audit-v2.json",
+      "sha256": "cf92a686d0cbaf50965a400eeb438d78cc2d635f6a1fb3ce95231f97b135528c",
+      "status": "PASS",
+      "outputDigest": "0c8fc632226abb30ca309d8d09ee03e67a0193403aa9c02894b85df6513a5535",
+      "rows": 357
+    }
+  },
+  "original22Comparison": {
+    "file": "regression-equivalence-r3-v2.json",
+    "sha256": "a6d2af22ac4f41bc59ff622a7b4664622893069c6637c0e31dc3372a9a9e4f64",
+    "status": "PASS_EXACT_ORIGINAL_22",
+    "caseCount": 22,
+    "priorFormalPassContexts": 21,
+    "priorFormalFailureContexts": 1,
+    "historicalFormalFailurePreserved": true,
+    "replacementBlind2Included": false,
+    "preservedFormalFailures": [
+      {
+        "partition": "replacement-blind",
+        "ordinal": 6,
+        "root": "7817806517725629686",
+        "priorOutcome": "FAIL",
+        "priorFormalReportSha256": "1e7cbc11aebdef849113a16600d9382e48a3e494499b45d40d3199faf95d1f09",
+        "diagnosticBaselineClassification": "completed CPU diagnostic; prior formal FAIL retained"
+      }
+    ]
+  },
+  "preservedHistoricalEvidence": {
+    "priorFormalFailure": {
+      "file": "qualification-replacement-blind-r2-v2/result.json",
+      "sha256": "82f6d5a0d34564fece877cbf5ae561b0542f063420fe798a3d4c5ad773a9e827",
+      "partition": "replacement-blind",
+      "ordinal": 6,
+      "outcome": "FAIL",
+      "rawReportSha256": "1e7cbc11aebdef849113a16600d9382e48a3e494499b45d40d3199faf95d1f09"
+    },
+    "initialCompiled14Failure": {
+      "file": "docs/task-evidence/REL-B/rb56-medium-normal-r3/compiled-boundaries-v2.json",
+      "sha256": "ea1c077c02eed542669ba3eb52ca1eea909350b7791100f01953ccd2b89a5f3e",
+      "status": "FAIL",
+      "classification": "preserved separately from corrected v2-r2 PASS"
+    },
+    "scopeNote": "Earlier profiling/overhead failures and timeouts remain diagnostic-only in their original evidence; none are promoted or substituted.",
+    "focusedUnprofiledDiagnostic781": {
+      "file": "known-781-current-v1/result.json",
+      "sha256": "9583165fac5ee66b253a8207e454d675d384741d8f2ca74effbd758474b05fcf",
+      "rawReportSha256": "da482799345c5838dc51483e070dbb782010d11bec2e8cdf10ea69cb8cbd2b5e",
+      "outcome": "PASS",
+      "classification": "Earlier focused unprofiled diagnostic only; excluded from the current formal qualification and not the CPU diagnostic used by the comparator"
+    },
+    "comparisonCpuDiagnosticBaseline781": {
+      "file": "profile-blind-failure-v1/result.json",
+      "sha256": "036ca2f56a270ddcdfaab5c98b9f9a2767519244f85aba2f4bd64cef37fedd9c",
+      "classification": "Completed CPU diagnostic used only as the non-wall reference for the prior failed root; excluded from current formal qualification"
+    }
+  },
+  "currentQualification": {
+    "mode": "fresh standard compiled_attribute_acceptance.py runs; profiled diagnostic data are not substituted",
+    "totalRootCount": 30,
+    "partitionOrder": [
+      "profile",
+      "development",
+      "holdout",
+      "replacement-blind",
+      "replacement-blind-2"
+    ],
+    "partitions": [
+      {
+        "partition": "profile",
+        "rootCount": 3,
+        "roots": [
+          "-1017",
+          "-1067",
+          "-1022"
+        ],
+        "outcome": "PASS",
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+          "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+          "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+          "fileCount": 1569,
+          "seconds": 0.3770858000498265
+        },
+        "hostCleanup": {
+          "status": "PASS",
+          "seconds": 1.0363640000578016,
+          "serverStopped": true,
+          "ownedSurvivors": 0,
+          "errors": 0
+        },
+        "browserOperationSecondsTotal": 163.32027080003172,
+        "wrapper": {
+          "status": "PASS",
+          "firstBlind8Released": false,
+          "wrapperSeconds": 172.2359311999753,
+          "phases": [
+            {
+              "phase": "browser",
+              "exit": 0,
+              "seconds": 170.23491219989955
+            },
+            {
+              "phase": "wrap",
+              "exit": 0,
+              "seconds": 1.0101417999248952
+            },
+            {
+              "phase": "reader",
+              "exit": 0,
+              "seconds": 0.9386878998484462
+            }
+          ]
+        },
+        "rawResultSha256": "8771d3e63dec776bfb9f3bf58a3ba13ea77e6b639e9be52a7894ea86e4ac1b71",
+        "wrapperSha256": "dcc00e13ca3dc1b8020faafcbbc24fc7305b65b6181a979fcbd941557c18aebf",
+        "strictReaderSha256": "19150131a8ef0f520d45b37493c859c2405037c27e6fd5483ba8075f85a419d5",
+        "rawReportSha256s": [
+          "359c93bc00b889436c6bf54058e4912c38ef9f90e27699575bda74f8af136b7c",
+          "9aa5ef58097fa64c443078582ecb72caa59d7a02d8edb872801952c00f8694e8",
+          "1c50e3b16169000dcb7ef5660f46a88fce3bcec6031120d747066ed47ba23cc7"
+        ],
+        "cases": [
+          {
+            "root": "-1017",
+            "seed": "-1017",
+            "packages": 40,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 25686,
+            "generationWork": 384,
+            "maxUnitMillis": 757,
+            "operationMillis": 25948,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "065b216ddefd5282a2bf0d3c585c411992078d71cb7184db16a844c36bbe32e9",
+            "browserReportSha256": "359c93bc00b889436c6bf54058e4912c38ef9f90e27699575bda74f8af136b7c",
+            "browserOperationSeconds": 26.855032599996775
+          },
+          {
+            "root": "-1067",
+            "seed": "-1067",
+            "packages": 55,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 66599,
+            "generationWork": 492,
+            "maxUnitMillis": 1194,
+            "operationMillis": 66995,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "d121676bc1ec8faebcdf186948d0608ad7aea69c56891407806813ddb9f10b86",
+            "browserReportSha256": "9aa5ef58097fa64c443078582ecb72caa59d7a02d8edb872801952c00f8694e8",
+            "browserOperationSeconds": 67.79058289993554
+          },
+          {
+            "root": "-1022",
+            "seed": "-1022",
+            "packages": 60,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 67405,
+            "generationWork": 457,
+            "maxUnitMillis": 1372,
+            "operationMillis": 67813,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.6,
+              1.6,
+              2.1,
+              1.6,
+              1.4
+            ],
+            "captureSha256": "908a8c0fbea0432a1dd2b5069dc89bbe3fc2035abe58f8cd06ad9c5e3e84c842",
+            "browserReportSha256": "1c50e3b16169000dcb7ef5660f46a88fce3bcec6031120d747066ed47ba23cc7",
+            "browserOperationSeconds": 68.6746553000994
+          }
+        ]
+      },
+      {
+        "partition": "development",
+        "rootCount": 3,
+        "roots": [
+          "-2230691771308388107",
+          "6702341860553104274",
+          "-8360266000248569150"
+        ],
+        "outcome": "PASS",
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+          "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+          "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+          "fileCount": 1569,
+          "seconds": 0.36583299981430173
+        },
+        "hostCleanup": {
+          "status": "PASS",
+          "seconds": 1.1724066000897437,
+          "serverStopped": true,
+          "ownedSurvivors": 0,
+          "errors": 0
+        },
+        "browserOperationSecondsTotal": 157.67464630003087,
+        "wrapper": {
+          "status": "PASS",
+          "firstBlind8Released": false,
+          "wrapperSeconds": 162.621714200126,
+          "phases": [
+            {
+              "phase": "browser",
+              "exit": 0,
+              "seconds": 160.66892759990878
+            },
+            {
+              "phase": "wrap",
+              "exit": 0,
+              "seconds": 0.9792416000273079
+            },
+            {
+              "phase": "reader",
+              "exit": 0,
+              "seconds": 0.9220388000831008
+            }
+          ]
+        },
+        "rawResultSha256": "82320421a61c6c44d17ad1e0b2f65c362412ab839399d93a61b90c73f83bdca0",
+        "wrapperSha256": "4d1e8813e0cc56cf2ae6b58e1b1af537338294e74776cc1c58c814c4ef2c1f80",
+        "strictReaderSha256": "a68fdcf48825ab4baeb40e003ebe659cff1586c66bbd80524ca876e62485c1bb",
+        "rawReportSha256s": [
+          "a373d03851970cd6af3cc58a411dd3cca124d3d27dc5ea59979b1ebf51deaaab",
+          "e82ae353d9cc28a90a21dc674c83273794a7e6585bc5ee13234ead36eb349734",
+          "459d56faae951f2aaa93e0c74afe7e30939463b70237fe9065205b2d0e689434"
+        ],
+        "cases": [
+          {
+            "root": "-2230691771308388107",
+            "seed": "-2230691771308388107",
+            "packages": 58,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 65368,
+            "generationWork": 462,
+            "maxUnitMillis": 1280,
+            "operationMillis": 65799,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.6,
+              1.6,
+              2.1,
+              1.6,
+              1.4
+            ],
+            "captureSha256": "85f8690be777f5b2a2b342efe135e33d14edb271df9ee44c3a986d43ae970ae8",
+            "browserReportSha256": "a373d03851970cd6af3cc58a411dd3cca124d3d27dc5ea59979b1ebf51deaaab",
+            "browserOperationSeconds": 66.62893659994006
+          },
+          {
+            "root": "6702341860553104274",
+            "seed": "6702341860553104274",
+            "packages": 52,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 59085,
+            "generationWork": 460,
+            "maxUnitMillis": 1223,
+            "operationMillis": 59495,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "975c5ae538c6603f1816bc2be521eea1cf04d16835d8dfcf2a6b3695b7ca9544",
+            "browserReportSha256": "e82ae353d9cc28a90a21dc674c83273794a7e6585bc5ee13234ead36eb349734",
+            "browserOperationSeconds": 60.237863400019705
+          },
+          {
+            "root": "-8360266000248569150",
+            "seed": "-8360266000248569150",
+            "packages": 42,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 29727,
+            "generationWork": 390,
+            "maxUnitMillis": 753,
+            "operationMillis": 30041,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.8,
+              2.0,
+              1.8,
+              1.4
+            ],
+            "captureSha256": "b58e8f08ee8a61030ae61e81a4ceb0f05c7c361e6050ad525f627e90baffab03",
+            "browserReportSha256": "459d56faae951f2aaa93e0c74afe7e30939463b70237fe9065205b2d0e689434",
+            "browserOperationSeconds": 30.807846300071105
+          }
+        ]
+      },
+      {
+        "partition": "holdout",
+        "rootCount": 8,
+        "roots": [
+          "5954648469308924264",
+          "8746043109435501874",
+          "-5914932438307118819",
+          "-5623001022168249027",
+          "3437424778755667517",
+          "3219288467305141894",
+          "-3242722890621869748",
+          "3274142870939325193"
+        ],
+        "outcome": "PASS",
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+          "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+          "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+          "fileCount": 1569,
+          "seconds": 0.3732871999964118
+        },
+        "hostCleanup": {
+          "status": "PASS",
+          "seconds": 1.0002574999816716,
+          "serverStopped": true,
+          "ownedSurvivors": 0,
+          "errors": 0
+        },
+        "browserOperationSecondsTotal": 410.49551830021665,
+        "wrapper": {
+          "status": "PASS",
+          "firstBlind8Released": false,
+          "wrapperSeconds": 415.84502080013044,
+          "phases": [
+            {
+              "phase": "browser",
+              "exit": 0,
+              "seconds": 413.7972163001541
+            },
+            {
+              "phase": "wrap",
+              "exit": 0,
+              "seconds": 0.988080499926582
+            },
+            {
+              "phase": "reader",
+              "exit": 0,
+              "seconds": 1.0067609001416713
+            }
+          ]
+        },
+        "rawResultSha256": "f85ef8d6ecc8c5b3ea7e6b55b3d12c13bb8e0c98c72bbd4ed1fb82848abb4d02",
+        "wrapperSha256": "226e545ec48f2da18d716ecf26ae457f4f22eae526a4eb017330ae4121594c5e",
+        "strictReaderSha256": "05b6fb3b4a4e10d8ae6c11cefcb720efbdd86e02b784c6f07d029a8a0d617497",
+        "rawReportSha256s": [
+          "99c05deca0493a07573ff5762363b153db6e3cb7c8171692cfa5a5f8a9b77272",
+          "5a7feb90613c9f9341a143507ac3a5673fe0d1217d67d249b63e60e856f28ba1",
+          "ad0b1a75d3116cd3cd6c758b4481fa6787cb67add759b24ae14d767c0d487f4a",
+          "74e9c0fce391b087d570e51162aa783e669c635f902d78b412716e2753bd2e26",
+          "a2bd082966076a543aa615d4d4165f74fd85a709baa45f8cf7b899a96d475319",
+          "565e6504b7cd5ac89a4b1c466daad13525a2e036341a1d60c075938f1d09abe6",
+          "254a9022bcccf9b3613c37c276d0549c56723e754eae89905abdecff6e78e69c",
+          "bdb09311b65a5bb0339127cff2262bec1751027b8439c584c6357b59a1bd485c"
+        ],
+        "cases": [
+          {
+            "root": "5954648469308924264",
+            "seed": "5954648469308924264",
+            "packages": 42,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 30086,
+            "generationWork": 382,
+            "maxUnitMillis": 844,
+            "operationMillis": 30378,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "b9f18ead0a60588a1cbf06d7d0a0bc65b0de235d1bfefd120cf40be8ef7c7071",
+            "browserReportSha256": "99c05deca0493a07573ff5762363b153db6e3cb7c8171692cfa5a5f8a9b77272",
+            "browserOperationSeconds": 31.23888049996458
+          },
+          {
+            "root": "8746043109435501874",
+            "seed": "8746043109435501874",
+            "packages": 56,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 67562,
+            "generationWork": 482,
+            "maxUnitMillis": 1842,
+            "operationMillis": 67991,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.6,
+              1.7,
+              2.1,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "a5e70c09b56cba3409ee04486c7a0dee118f39cf6bd97ccb223fc7262903da2d",
+            "browserReportSha256": "5a7feb90613c9f9341a143507ac3a5673fe0d1217d67d249b63e60e856f28ba1",
+            "browserOperationSeconds": 68.80690530012362
+          },
+          {
+            "root": "-5914932438307118819",
+            "seed": "-5914932438307118819",
+            "packages": 53,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 57203,
+            "generationWork": 476,
+            "maxUnitMillis": 1133,
+            "operationMillis": 57595,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.1,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "3175732da3e5002904c1b106e371bcfb1e1f1ebaee2d0a5251c00dfd0fa73540",
+            "browserReportSha256": "ad0b1a75d3116cd3cd6c758b4481fa6787cb67add759b24ae14d767c0d487f4a",
+            "browserOperationSeconds": 58.35718990000896
+          },
+          {
+            "root": "-5623001022168249027",
+            "seed": "-5623001022168249027",
+            "packages": 43,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 31693,
+            "generationWork": 384,
+            "maxUnitMillis": 816,
+            "operationMillis": 32007,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "f1ac8f746ba20571317cb01ea5240796a6fe42002545c58faf3e290d03ea378f",
+            "browserReportSha256": "74e9c0fce391b087d570e51162aa783e669c635f902d78b412716e2753bd2e26",
+            "browserOperationSeconds": 32.85664700018242
+          },
+          {
+            "root": "3437424778755667517",
+            "seed": "3437424778755667517",
+            "packages": 51,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 59175,
+            "generationWork": 492,
+            "maxUnitMillis": 979,
+            "operationMillis": 59576,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.1,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "43b1a8b05f460eb3ee3fc804feffa6e99989523e12430c9e1780851720082efa",
+            "browserReportSha256": "a2bd082966076a543aa615d4d4165f74fd85a709baa45f8cf7b899a96d475319",
+            "browserOperationSeconds": 60.47819699998945
+          },
+          {
+            "root": "3219288467305141894",
+            "seed": "3219288467305141894",
+            "packages": 56,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 64265,
+            "generationWork": 468,
+            "maxUnitMillis": 1682,
+            "operationMillis": 64695,
+            "cleanupMillis": 5,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.8,
+              1.7,
+              2.1,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "1d1dd2ffeae053f26d55bf21f39887da12bc2bb5829c09b762884d6af61de478",
+            "browserReportSha256": "565e6504b7cd5ac89a4b1c466daad13525a2e036341a1d60c075938f1d09abe6",
+            "browserOperationSeconds": 65.55562030011788
+          },
+          {
+            "root": "-3242722890621869748",
+            "seed": "-3242722890621869748",
+            "packages": 55,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 61075,
+            "generationWork": 468,
+            "maxUnitMillis": 1180,
+            "operationMillis": 61490,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "865664e4d91dd93ade2eae9ea68d13232bf472caf2fe287f8b9572a50f680ec0",
+            "browserReportSha256": "254a9022bcccf9b3613c37c276d0549c56723e754eae89905abdecff6e78e69c",
+            "browserOperationSeconds": 62.292286299867555
+          },
+          {
+            "root": "3274142870939325193",
+            "seed": "3274142870939325193",
+            "packages": 42,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 29890,
+            "generationWork": 392,
+            "maxUnitMillis": 892,
+            "operationMillis": 30181,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "b640009bff6224b1c4eb169e17c2165eb0bc48d37327ba5ce40e0558c6017cbb",
+            "browserReportSha256": "bdb09311b65a5bb0339127cff2262bec1751027b8439c584c6357b59a1bd485c",
+            "browserOperationSeconds": 30.90979199996218
+          }
+        ]
+      },
+      {
+        "partition": "replacement-blind",
+        "rootCount": 8,
+        "roots": [
+          "6717106128883189437",
+          "-7993534270425766476",
+          "665993870941717295",
+          "-1740268088938250233",
+          "-5491370319832732895",
+          "-7785299080753913940",
+          "7817806517725629686",
+          "-7945665765811446459"
+        ],
+        "outcome": "PASS",
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+          "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+          "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+          "fileCount": 1569,
+          "seconds": 0.336016200017184
+        },
+        "hostCleanup": {
+          "status": "PASS",
+          "seconds": 1.542405700078234,
+          "serverStopped": true,
+          "ownedSurvivors": 0,
+          "errors": 0
+        },
+        "browserOperationSecondsTotal": 336.1083708999213,
+        "wrapper": {
+          "status": "PASS",
+          "firstBlind8Released": false,
+          "wrapperSeconds": 341.85980150010437,
+          "phases": [
+            {
+              "phase": "browser",
+              "exit": 0,
+              "seconds": 339.8478105000686
+            },
+            {
+              "phase": "wrap",
+              "exit": 0,
+              "seconds": 1.0014150999486446
+            },
+            {
+              "phase": "reader",
+              "exit": 0,
+              "seconds": 0.9607918998226523
+            }
+          ]
+        },
+        "rawResultSha256": "595845ce96fd659d9715fb38d73c11ad3ad94a07dc491917f8b07f98ebd764b3",
+        "wrapperSha256": "a79195d89eb04396a55a65551b6b22730e4af7265568cf1ca2fcc2f303e5cb34",
+        "strictReaderSha256": "d2ae66c9ab48d727ec2c07b35aa5b94045ba94afef02c42323fdf641245818e6",
+        "rawReportSha256s": [
+          "c061e66bbbcefd63ac4fb9d5f48c0ae0128087eaa46c573062ae46b2a79bd388",
+          "6c5c21851688c74e31e2d9a427ff0544949657fc88a3bfb8adaf337202f64fdd",
+          "1bb0191f8d66bf52be5e916631ce73b8b653a0a445f1290c4d5b6f8be7d3e3fb",
+          "d109e3e91c3bb4e2ba672062028f6c617dbf2ae299a2eeb49d043de7567ef7a6",
+          "7b7966b68e7f139e5c184612f803a1e021263e573df27e8e5ee4b94bc4144904",
+          "8ae7ef439dc36f0c9025bafefa1c635da6c9e41ca6a353461d4816b667ebe841",
+          "0b8972f0dfbae527f797c8d5e86753bf2beb7be929d281f362ddccfef49f2677",
+          "8b47cd92974e99e2e98c50a9c76a6e1fcce68055a79a1cabea15f3ed25e15116"
+        ],
+        "cases": [
+          {
+            "root": "6717106128883189437",
+            "seed": "6717106128883189437",
+            "packages": 56,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 57379,
+            "generationWork": 469,
+            "maxUnitMillis": 1083,
+            "operationMillis": 57791,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "a0dc8fc00ac7730f486d4f5fbcecab0f6e1d5cff8c35d67e2a7bda55b1b23ea0",
+            "browserReportSha256": "c061e66bbbcefd63ac4fb9d5f48c0ae0128087eaa46c573062ae46b2a79bd388",
+            "browserOperationSeconds": 58.64294569985941
+          },
+          {
+            "root": "-7993534270425766476",
+            "seed": "-7993534270425766476",
+            "packages": 41,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 28602,
+            "generationWork": 395,
+            "maxUnitMillis": 939,
+            "operationMillis": 28908,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "818ce73b780b6bcc66f7d67924b3731f1cd3ea83c2b0ae3cac16c984eff88442",
+            "browserReportSha256": "6c5c21851688c74e31e2d9a427ff0544949657fc88a3bfb8adaf337202f64fdd",
+            "browserOperationSeconds": 29.644048299873248
+          },
+          {
+            "root": "665993870941717295",
+            "seed": "665993870941717295",
+            "packages": 40,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 26286,
+            "generationWork": 384,
+            "maxUnitMillis": 734,
+            "operationMillis": 26578,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "1671c4e6f15bd44edb9c0d1f7894cfc443e3c747f4134baa0c18028542f2b0ea",
+            "browserReportSha256": "1bb0191f8d66bf52be5e916631ce73b8b653a0a445f1290c4d5b6f8be7d3e3fb",
+            "browserOperationSeconds": 27.409175100037828
+          },
+          {
+            "root": "-1740268088938250233",
+            "seed": "-1740268088938250233",
+            "packages": 45,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 32399,
+            "generationWork": 390,
+            "maxUnitMillis": 1037,
+            "operationMillis": 32731,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "dcb191751ec317e9d6f5d82e6e34716f984597a38a321ab1a4ba5bc9cfecbdbf",
+            "browserReportSha256": "d109e3e91c3bb4e2ba672062028f6c617dbf2ae299a2eeb49d043de7567ef7a6",
+            "browserOperationSeconds": 33.53346860012971
+          },
+          {
+            "root": "-5491370319832732895",
+            "seed": "-5491370319832732895",
+            "packages": 50,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 51940,
+            "generationWork": 502,
+            "maxUnitMillis": 742,
+            "operationMillis": 52325,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.8,
+              1.8,
+              2.0,
+              1.8,
+              1.4
+            ],
+            "captureSha256": "5cfccf77229045dc1fca6c2a0cd6f15aab6040ac10c85bb3793bc460a10704b7",
+            "browserReportSha256": "7b7966b68e7f139e5c184612f803a1e021263e573df27e8e5ee4b94bc4144904",
+            "browserOperationSeconds": 53.08615710004233
+          },
+          {
+            "root": "-7785299080753913940",
+            "seed": "-7785299080753913940",
+            "packages": 43,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 31229,
+            "generationWork": 394,
+            "maxUnitMillis": 891,
+            "operationMillis": 31551,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "85a1067179e0f62607d9134702205711835a6632b1875d422d9b8f86e71c44fc",
+            "browserReportSha256": "8ae7ef439dc36f0c9025bafefa1c635da6c9e41ca6a353461d4816b667ebe841",
+            "browserOperationSeconds": 32.3210257999599
+          },
+          {
+            "root": "7817806517725629686",
+            "seed": "7817806517725629686",
+            "packages": 58,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 63622,
+            "generationWork": 488,
+            "maxUnitMillis": 1241,
+            "operationMillis": 64086,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.6,
+              1.7,
+              2.1,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "f9e70d9ec6cd8a4e0928fa43b7de3686332ec09d54a2b3e51ffbf23af51c6027",
+            "browserReportSha256": "0b8972f0dfbae527f797c8d5e86753bf2beb7be929d281f362ddccfef49f2677",
+            "browserOperationSeconds": 64.87065219995566
+          },
+          {
+            "root": "-7945665765811446459",
+            "seed": "-7945665765811446459",
+            "packages": 46,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 35388,
+            "generationWork": 397,
+            "maxUnitMillis": 994,
+            "operationMillis": 35713,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "5608ee142f46367816e903b5d674aa99c6161d9f3825874a54876cf31c26c283",
+            "browserReportSha256": "8b47cd92974e99e2e98c50a9c76a6e1fcce68055a79a1cabea15f3ed25e15116",
+            "browserOperationSeconds": 36.600898100063205
+          }
+        ]
+      },
+      {
+        "partition": "replacement-blind-2",
+        "rootCount": 8,
+        "roots": [
+          "-2157433570835955452",
+          "1325853684799777255",
+          "-3798151323707447735",
+          "1178227627326218914",
+          "1467570129396149887",
+          "-1964920481438493458",
+          "-1089711617266387266",
+          "-4261205899415264525"
+        ],
+        "outcome": "PASS",
+        "inputAudit": {
+          "status": "PASS",
+          "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+          "sourceSha256": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+          "webSha256": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+          "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+          "fileCount": 1569,
+          "seconds": 0.34823270002380013
+        },
+        "hostCleanup": {
+          "status": "PASS",
+          "seconds": 0.9535680999979377,
+          "serverStopped": true,
+          "ownedSurvivors": 0,
+          "errors": 0
+        },
+        "browserOperationSecondsTotal": 397.4579798998311,
+        "wrapper": {
+          "status": "PASS",
+          "firstBlind8Released": true,
+          "wrapperSeconds": 402.8330653999001,
+          "phases": [
+            {
+              "phase": "browser",
+              "exit": 0,
+              "seconds": 400.8304814998992
+            },
+            {
+              "phase": "wrap",
+              "exit": 0,
+              "seconds": 0.9990658999886364
+            },
+            {
+              "phase": "reader",
+              "exit": 0,
+              "seconds": 0.9546743999235332
+            }
+          ]
+        },
+        "rawResultSha256": "03835a9fc57faecc7936177a90ef86bf06c9b930da3b4f15535d571913bcf09e",
+        "wrapperSha256": "8061e11c5d6b7452f70a6c6f859e6f4284e706f01063f671785698951f8ff5b3",
+        "strictReaderSha256": "67cc050300e2c20e90597ac3fbe096c69fb44926a38e3308bab59384696e5f12",
+        "rawReportSha256s": [
+          "97999ce251dbf199025c3991259472eaceff49d273051c039d850b0d32551d4a",
+          "dc19c4c77f2d7f778a84d4bb34f9463ad9a64e91ac26b81a196146349406c5ba",
+          "3c91928c1830c8816c24fbec2870002a0cb979f4df003f1503c73d6cbaded029",
+          "82201a2ce7a040ca304c09a18f48174d385adefeb03f49fa65c2d4cf2fa3e211",
+          "c040258b28a564c02be09e6488de26677ac15c3a7910062b5032649634c22f89",
+          "3f274ba432fd6eb5d8c98ab08cf89aedf39199a39ec402da0604dd5e6a1a9acb",
+          "7dc95a79967102fea3ad6156884a477c49cdf09745cb93836037e14e369d4181",
+          "d4bf3b7460fce7d0853c5f851fddf98a3ac024096ae18cea0024b757d4153341"
+        ],
+        "cases": [
+          {
+            "root": "-2157433570835955452",
+            "seed": "-2157433570835955452",
+            "packages": 43,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 29469,
+            "generationWork": 382,
+            "maxUnitMillis": 1133,
+            "operationMillis": 29735,
+            "cleanupMillis": 3,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "a148906af23643af33342f80d6224b41ed2b65f64d717884a8413814429b6ce6",
+            "browserReportSha256": "97999ce251dbf199025c3991259472eaceff49d273051c039d850b0d32551d4a",
+            "browserOperationSeconds": 30.694198600016534
+          },
+          {
+            "root": "1325853684799777255",
+            "seed": "1325853684799777255",
+            "packages": 55,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 63320,
+            "generationWork": 472,
+            "maxUnitMillis": 1801,
+            "operationMillis": 63715,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.6,
+              1.6,
+              2.1,
+              1.6,
+              1.6
+            ],
+            "captureSha256": "eea011509d0a338d94347d5df0c5e18bc2e8247abaf1db72d5f59f3b1b3c16db",
+            "browserReportSha256": "dc19c4c77f2d7f778a84d4bb34f9463ad9a64e91ac26b81a196146349406c5ba",
+            "browserOperationSeconds": 64.39590879995376
+          },
+          {
+            "root": "-3798151323707447735",
+            "seed": "-3798151323707447735",
+            "packages": 54,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 63720,
+            "generationWork": 499,
+            "maxUnitMillis": 1525,
+            "operationMillis": 64118,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "0412780660a3d157bab85b89f4def3d9830f7b42166e8237237984aeec4d4e1b",
+            "browserReportSha256": "3c91928c1830c8816c24fbec2870002a0cb979f4df003f1503c73d6cbaded029",
+            "browserOperationSeconds": 64.74597250018269
+          },
+          {
+            "root": "1178227627326218914",
+            "seed": "1178227627326218914",
+            "packages": 41,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 25520,
+            "generationWork": 386,
+            "maxUnitMillis": 715,
+            "operationMillis": 25765,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "5eaa5ba0af37536a4fd33528bf96cdfa0d3bdd47c89d138bb488df7c877d314c",
+            "browserReportSha256": "82201a2ce7a040ca304c09a18f48174d385adefeb03f49fa65c2d4cf2fa3e211",
+            "browserOperationSeconds": 26.446556799812242
+          },
+          {
+            "root": "1467570129396149887",
+            "seed": "1467570129396149887",
+            "packages": 52,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 53284,
+            "generationWork": 482,
+            "maxUnitMillis": 1319,
+            "operationMillis": 53665,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.8,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "a36aaf6a69ca88d791bfc8ec02f091088a5f8f9d73d30d3b74a0281e90c7487f",
+            "browserReportSha256": "c040258b28a564c02be09e6488de26677ac15c3a7910062b5032649634c22f89",
+            "browserOperationSeconds": 54.36158789996989
+          },
+          {
+            "root": "-1964920481438493458",
+            "seed": "-1964920481438493458",
+            "packages": 42,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 28037,
+            "generationWork": 391,
+            "maxUnitMillis": 706,
+            "operationMillis": 28305,
+            "cleanupMillis": 3,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.0,
+              1.7,
+              1.6
+            ],
+            "captureSha256": "e4b6f6690efdcd072413eeb28f1987eda9ed4fdb469f86cdae237276c32a4c98",
+            "browserReportSha256": "3f274ba432fd6eb5d8c98ab08cf89aedf39199a39ec402da0604dd5e6a1a9acb",
+            "browserOperationSeconds": 28.973181399982423
+          },
+          {
+            "root": "-1089711617266387266",
+            "seed": "-1089711617266387266",
+            "packages": 56,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 68483,
+            "generationWork": 473,
+            "maxUnitMillis": 1385,
+            "operationMillis": 68885,
+            "cleanupMillis": 5,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.6,
+              2.1,
+              1.6,
+              1.4
+            ],
+            "captureSha256": "26de4557c9c682de6921a7558849412877d14b285d8561c49b4986e47d4ddea0",
+            "browserReportSha256": "7dc95a79967102fea3ad6156884a477c49cdf09745cb93836037e14e369d4181",
+            "browserOperationSeconds": 69.50869199982844
+          },
+          {
+            "root": "-4261205899415264525",
+            "seed": "-4261205899415264525",
+            "packages": 54,
+            "readings": 2,
+            "repairClasses": 5,
+            "generationMillis": 57276,
+            "generationWork": 496,
+            "maxUnitMillis": 939,
+            "operationMillis": 57695,
+            "cleanupMillis": 4,
+            "attempts": 1,
+            "naturalWaitSeconds": [
+              1.7,
+              1.7,
+              2.1,
+              1.7,
+              1.4
+            ],
+            "captureSha256": "3bd9dc841ab178930feee31c12deac6483eedf4176a21e3ad9d87d41e81a1597",
+            "browserReportSha256": "d4bf3b7460fce7d0853c5f851fddf98a3ac024096ae18cea0024b757d4153341",
+            "browserOperationSeconds": 58.331881900085136
+          }
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "partition": "profile",
+        "ordinal": 0,
+        "root": "-1017",
+        "seed": "-1017",
+        "generationMillis": 25686,
+        "generationWork": 384,
+        "maxUnitMillis": 757,
+        "attempts": 1,
+        "readerOperationMillis": 25948,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 26.855032599996775,
+        "captureSha256": "065b216ddefd5282a2bf0d3c585c411992078d71cb7184db16a844c36bbe32e9",
+        "rawReportSha256": "359c93bc00b889436c6bf54058e4912c38ef9f90e27699575bda74f8af136b7c"
+      },
+      {
+        "partition": "profile",
+        "ordinal": 1,
+        "root": "-1067",
+        "seed": "-1067",
+        "generationMillis": 66599,
+        "generationWork": 492,
+        "maxUnitMillis": 1194,
+        "attempts": 1,
+        "readerOperationMillis": 66995,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 67.79058289993554,
+        "captureSha256": "d121676bc1ec8faebcdf186948d0608ad7aea69c56891407806813ddb9f10b86",
+        "rawReportSha256": "9aa5ef58097fa64c443078582ecb72caa59d7a02d8edb872801952c00f8694e8"
+      },
+      {
+        "partition": "profile",
+        "ordinal": 2,
+        "root": "-1022",
+        "seed": "-1022",
+        "generationMillis": 67405,
+        "generationWork": 457,
+        "maxUnitMillis": 1372,
+        "attempts": 1,
+        "readerOperationMillis": 67813,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 68.6746553000994,
+        "captureSha256": "908a8c0fbea0432a1dd2b5069dc89bbe3fc2035abe58f8cd06ad9c5e3e84c842",
+        "rawReportSha256": "1c50e3b16169000dcb7ef5660f46a88fce3bcec6031120d747066ed47ba23cc7"
+      },
+      {
+        "partition": "development",
+        "ordinal": 0,
+        "root": "-2230691771308388107",
+        "seed": "-2230691771308388107",
+        "generationMillis": 65368,
+        "generationWork": 462,
+        "maxUnitMillis": 1280,
+        "attempts": 1,
+        "readerOperationMillis": 65799,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 66.62893659994006,
+        "captureSha256": "85f8690be777f5b2a2b342efe135e33d14edb271df9ee44c3a986d43ae970ae8",
+        "rawReportSha256": "a373d03851970cd6af3cc58a411dd3cca124d3d27dc5ea59979b1ebf51deaaab"
+      },
+      {
+        "partition": "development",
+        "ordinal": 1,
+        "root": "6702341860553104274",
+        "seed": "6702341860553104274",
+        "generationMillis": 59085,
+        "generationWork": 460,
+        "maxUnitMillis": 1223,
+        "attempts": 1,
+        "readerOperationMillis": 59495,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 60.237863400019705,
+        "captureSha256": "975c5ae538c6603f1816bc2be521eea1cf04d16835d8dfcf2a6b3695b7ca9544",
+        "rawReportSha256": "e82ae353d9cc28a90a21dc674c83273794a7e6585bc5ee13234ead36eb349734"
+      },
+      {
+        "partition": "development",
+        "ordinal": 2,
+        "root": "-8360266000248569150",
+        "seed": "-8360266000248569150",
+        "generationMillis": 29727,
+        "generationWork": 390,
+        "maxUnitMillis": 753,
+        "attempts": 1,
+        "readerOperationMillis": 30041,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 30.807846300071105,
+        "captureSha256": "b58e8f08ee8a61030ae61e81a4ceb0f05c7c361e6050ad525f627e90baffab03",
+        "rawReportSha256": "459d56faae951f2aaa93e0c74afe7e30939463b70237fe9065205b2d0e689434"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 0,
+        "root": "5954648469308924264",
+        "seed": "5954648469308924264",
+        "generationMillis": 30086,
+        "generationWork": 382,
+        "maxUnitMillis": 844,
+        "attempts": 1,
+        "readerOperationMillis": 30378,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 31.23888049996458,
+        "captureSha256": "b9f18ead0a60588a1cbf06d7d0a0bc65b0de235d1bfefd120cf40be8ef7c7071",
+        "rawReportSha256": "99c05deca0493a07573ff5762363b153db6e3cb7c8171692cfa5a5f8a9b77272"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 1,
+        "root": "8746043109435501874",
+        "seed": "8746043109435501874",
+        "generationMillis": 67562,
+        "generationWork": 482,
+        "maxUnitMillis": 1842,
+        "attempts": 1,
+        "readerOperationMillis": 67991,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 68.80690530012362,
+        "captureSha256": "a5e70c09b56cba3409ee04486c7a0dee118f39cf6bd97ccb223fc7262903da2d",
+        "rawReportSha256": "5a7feb90613c9f9341a143507ac3a5673fe0d1217d67d249b63e60e856f28ba1"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 2,
+        "root": "-5914932438307118819",
+        "seed": "-5914932438307118819",
+        "generationMillis": 57203,
+        "generationWork": 476,
+        "maxUnitMillis": 1133,
+        "attempts": 1,
+        "readerOperationMillis": 57595,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 58.35718990000896,
+        "captureSha256": "3175732da3e5002904c1b106e371bcfb1e1f1ebaee2d0a5251c00dfd0fa73540",
+        "rawReportSha256": "ad0b1a75d3116cd3cd6c758b4481fa6787cb67add759b24ae14d767c0d487f4a"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 3,
+        "root": "-5623001022168249027",
+        "seed": "-5623001022168249027",
+        "generationMillis": 31693,
+        "generationWork": 384,
+        "maxUnitMillis": 816,
+        "attempts": 1,
+        "readerOperationMillis": 32007,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 32.85664700018242,
+        "captureSha256": "f1ac8f746ba20571317cb01ea5240796a6fe42002545c58faf3e290d03ea378f",
+        "rawReportSha256": "74e9c0fce391b087d570e51162aa783e669c635f902d78b412716e2753bd2e26"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 4,
+        "root": "3437424778755667517",
+        "seed": "3437424778755667517",
+        "generationMillis": 59175,
+        "generationWork": 492,
+        "maxUnitMillis": 979,
+        "attempts": 1,
+        "readerOperationMillis": 59576,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 60.47819699998945,
+        "captureSha256": "43b1a8b05f460eb3ee3fc804feffa6e99989523e12430c9e1780851720082efa",
+        "rawReportSha256": "a2bd082966076a543aa615d4d4165f74fd85a709baa45f8cf7b899a96d475319"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 5,
+        "root": "3219288467305141894",
+        "seed": "3219288467305141894",
+        "generationMillis": 64265,
+        "generationWork": 468,
+        "maxUnitMillis": 1682,
+        "attempts": 1,
+        "readerOperationMillis": 64695,
+        "readerCleanupMillis": 5,
+        "browserOperationSeconds": 65.55562030011788,
+        "captureSha256": "1d1dd2ffeae053f26d55bf21f39887da12bc2bb5829c09b762884d6af61de478",
+        "rawReportSha256": "565e6504b7cd5ac89a4b1c466daad13525a2e036341a1d60c075938f1d09abe6"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 6,
+        "root": "-3242722890621869748",
+        "seed": "-3242722890621869748",
+        "generationMillis": 61075,
+        "generationWork": 468,
+        "maxUnitMillis": 1180,
+        "attempts": 1,
+        "readerOperationMillis": 61490,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 62.292286299867555,
+        "captureSha256": "865664e4d91dd93ade2eae9ea68d13232bf472caf2fe287f8b9572a50f680ec0",
+        "rawReportSha256": "254a9022bcccf9b3613c37c276d0549c56723e754eae89905abdecff6e78e69c"
+      },
+      {
+        "partition": "holdout",
+        "ordinal": 7,
+        "root": "3274142870939325193",
+        "seed": "3274142870939325193",
+        "generationMillis": 29890,
+        "generationWork": 392,
+        "maxUnitMillis": 892,
+        "attempts": 1,
+        "readerOperationMillis": 30181,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 30.90979199996218,
+        "captureSha256": "b640009bff6224b1c4eb169e17c2165eb0bc48d37327ba5ce40e0558c6017cbb",
+        "rawReportSha256": "bdb09311b65a5bb0339127cff2262bec1751027b8439c584c6357b59a1bd485c"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 0,
+        "root": "6717106128883189437",
+        "seed": "6717106128883189437",
+        "generationMillis": 57379,
+        "generationWork": 469,
+        "maxUnitMillis": 1083,
+        "attempts": 1,
+        "readerOperationMillis": 57791,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 58.64294569985941,
+        "captureSha256": "a0dc8fc00ac7730f486d4f5fbcecab0f6e1d5cff8c35d67e2a7bda55b1b23ea0",
+        "rawReportSha256": "c061e66bbbcefd63ac4fb9d5f48c0ae0128087eaa46c573062ae46b2a79bd388"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 1,
+        "root": "-7993534270425766476",
+        "seed": "-7993534270425766476",
+        "generationMillis": 28602,
+        "generationWork": 395,
+        "maxUnitMillis": 939,
+        "attempts": 1,
+        "readerOperationMillis": 28908,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 29.644048299873248,
+        "captureSha256": "818ce73b780b6bcc66f7d67924b3731f1cd3ea83c2b0ae3cac16c984eff88442",
+        "rawReportSha256": "6c5c21851688c74e31e2d9a427ff0544949657fc88a3bfb8adaf337202f64fdd"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 2,
+        "root": "665993870941717295",
+        "seed": "665993870941717295",
+        "generationMillis": 26286,
+        "generationWork": 384,
+        "maxUnitMillis": 734,
+        "attempts": 1,
+        "readerOperationMillis": 26578,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 27.409175100037828,
+        "captureSha256": "1671c4e6f15bd44edb9c0d1f7894cfc443e3c747f4134baa0c18028542f2b0ea",
+        "rawReportSha256": "1bb0191f8d66bf52be5e916631ce73b8b653a0a445f1290c4d5b6f8be7d3e3fb"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 3,
+        "root": "-1740268088938250233",
+        "seed": "-1740268088938250233",
+        "generationMillis": 32399,
+        "generationWork": 390,
+        "maxUnitMillis": 1037,
+        "attempts": 1,
+        "readerOperationMillis": 32731,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 33.53346860012971,
+        "captureSha256": "dcb191751ec317e9d6f5d82e6e34716f984597a38a321ab1a4ba5bc9cfecbdbf",
+        "rawReportSha256": "d109e3e91c3bb4e2ba672062028f6c617dbf2ae299a2eeb49d043de7567ef7a6"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 4,
+        "root": "-5491370319832732895",
+        "seed": "-5491370319832732895",
+        "generationMillis": 51940,
+        "generationWork": 502,
+        "maxUnitMillis": 742,
+        "attempts": 1,
+        "readerOperationMillis": 52325,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 53.08615710004233,
+        "captureSha256": "5cfccf77229045dc1fca6c2a0cd6f15aab6040ac10c85bb3793bc460a10704b7",
+        "rawReportSha256": "7b7966b68e7f139e5c184612f803a1e021263e573df27e8e5ee4b94bc4144904"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 5,
+        "root": "-7785299080753913940",
+        "seed": "-7785299080753913940",
+        "generationMillis": 31229,
+        "generationWork": 394,
+        "maxUnitMillis": 891,
+        "attempts": 1,
+        "readerOperationMillis": 31551,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 32.3210257999599,
+        "captureSha256": "85a1067179e0f62607d9134702205711835a6632b1875d422d9b8f86e71c44fc",
+        "rawReportSha256": "8ae7ef439dc36f0c9025bafefa1c635da6c9e41ca6a353461d4816b667ebe841"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 6,
+        "root": "7817806517725629686",
+        "seed": "7817806517725629686",
+        "generationMillis": 63622,
+        "generationWork": 488,
+        "maxUnitMillis": 1241,
+        "attempts": 1,
+        "readerOperationMillis": 64086,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 64.87065219995566,
+        "captureSha256": "f9e70d9ec6cd8a4e0928fa43b7de3686332ec09d54a2b3e51ffbf23af51c6027",
+        "rawReportSha256": "0b8972f0dfbae527f797c8d5e86753bf2beb7be929d281f362ddccfef49f2677"
+      },
+      {
+        "partition": "replacement-blind",
+        "ordinal": 7,
+        "root": "-7945665765811446459",
+        "seed": "-7945665765811446459",
+        "generationMillis": 35388,
+        "generationWork": 397,
+        "maxUnitMillis": 994,
+        "attempts": 1,
+        "readerOperationMillis": 35713,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 36.600898100063205,
+        "captureSha256": "5608ee142f46367816e903b5d674aa99c6161d9f3825874a54876cf31c26c283",
+        "rawReportSha256": "8b47cd92974e99e2e98c50a9c76a6e1fcce68055a79a1cabea15f3ed25e15116"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 0,
+        "root": "-2157433570835955452",
+        "seed": "-2157433570835955452",
+        "generationMillis": 29469,
+        "generationWork": 382,
+        "maxUnitMillis": 1133,
+        "attempts": 1,
+        "readerOperationMillis": 29735,
+        "readerCleanupMillis": 3,
+        "browserOperationSeconds": 30.694198600016534,
+        "captureSha256": "a148906af23643af33342f80d6224b41ed2b65f64d717884a8413814429b6ce6",
+        "rawReportSha256": "97999ce251dbf199025c3991259472eaceff49d273051c039d850b0d32551d4a"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 1,
+        "root": "1325853684799777255",
+        "seed": "1325853684799777255",
+        "generationMillis": 63320,
+        "generationWork": 472,
+        "maxUnitMillis": 1801,
+        "attempts": 1,
+        "readerOperationMillis": 63715,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 64.39590879995376,
+        "captureSha256": "eea011509d0a338d94347d5df0c5e18bc2e8247abaf1db72d5f59f3b1b3c16db",
+        "rawReportSha256": "dc19c4c77f2d7f778a84d4bb34f9463ad9a64e91ac26b81a196146349406c5ba"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 2,
+        "root": "-3798151323707447735",
+        "seed": "-3798151323707447735",
+        "generationMillis": 63720,
+        "generationWork": 499,
+        "maxUnitMillis": 1525,
+        "attempts": 1,
+        "readerOperationMillis": 64118,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 64.74597250018269,
+        "captureSha256": "0412780660a3d157bab85b89f4def3d9830f7b42166e8237237984aeec4d4e1b",
+        "rawReportSha256": "3c91928c1830c8816c24fbec2870002a0cb979f4df003f1503c73d6cbaded029"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 3,
+        "root": "1178227627326218914",
+        "seed": "1178227627326218914",
+        "generationMillis": 25520,
+        "generationWork": 386,
+        "maxUnitMillis": 715,
+        "attempts": 1,
+        "readerOperationMillis": 25765,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 26.446556799812242,
+        "captureSha256": "5eaa5ba0af37536a4fd33528bf96cdfa0d3bdd47c89d138bb488df7c877d314c",
+        "rawReportSha256": "82201a2ce7a040ca304c09a18f48174d385adefeb03f49fa65c2d4cf2fa3e211"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 4,
+        "root": "1467570129396149887",
+        "seed": "1467570129396149887",
+        "generationMillis": 53284,
+        "generationWork": 482,
+        "maxUnitMillis": 1319,
+        "attempts": 1,
+        "readerOperationMillis": 53665,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 54.36158789996989,
+        "captureSha256": "a36aaf6a69ca88d791bfc8ec02f091088a5f8f9d73d30d3b74a0281e90c7487f",
+        "rawReportSha256": "c040258b28a564c02be09e6488de26677ac15c3a7910062b5032649634c22f89"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 5,
+        "root": "-1964920481438493458",
+        "seed": "-1964920481438493458",
+        "generationMillis": 28037,
+        "generationWork": 391,
+        "maxUnitMillis": 706,
+        "attempts": 1,
+        "readerOperationMillis": 28305,
+        "readerCleanupMillis": 3,
+        "browserOperationSeconds": 28.973181399982423,
+        "captureSha256": "e4b6f6690efdcd072413eeb28f1987eda9ed4fdb469f86cdae237276c32a4c98",
+        "rawReportSha256": "3f274ba432fd6eb5d8c98ab08cf89aedf39199a39ec402da0604dd5e6a1a9acb"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 6,
+        "root": "-1089711617266387266",
+        "seed": "-1089711617266387266",
+        "generationMillis": 68483,
+        "generationWork": 473,
+        "maxUnitMillis": 1385,
+        "attempts": 1,
+        "readerOperationMillis": 68885,
+        "readerCleanupMillis": 5,
+        "browserOperationSeconds": 69.50869199982844,
+        "captureSha256": "26de4557c9c682de6921a7558849412877d14b285d8561c49b4986e47d4ddea0",
+        "rawReportSha256": "7dc95a79967102fea3ad6156884a477c49cdf09745cb93836037e14e369d4181"
+      },
+      {
+        "partition": "replacement-blind-2",
+        "ordinal": 7,
+        "root": "-4261205899415264525",
+        "seed": "-4261205899415264525",
+        "generationMillis": 57276,
+        "generationWork": 496,
+        "maxUnitMillis": 939,
+        "attempts": 1,
+        "readerOperationMillis": 57695,
+        "readerCleanupMillis": 4,
+        "browserOperationSeconds": 58.331881900085136,
+        "captureSha256": "3bd9dc841ab178930feee31c12deac6483eedf4176a21e3ad9d87d41e81a1597",
+        "rawReportSha256": "d4bf3b7460fce7d0853c5f851fddf98a3ac024096ae18cea0024b757d4153341"
+      }
+    ]
+  },
+  "limits": [
+    "Finite 30-root R12 medium evidence only; no all-seed qualification.",
+    "No human diagnosis, modest-host, capacity/endurance, beta, or CI qualification is claimed.",
+    "HARD remains protected and unread; Q100 is unstarted.",
+    "Native evidence is the selected 49-suite union, not the full native matrix.",
+    "Compiled boundary evidence covers 14 cases, not the full maintained compiled matrix.",
+    "The accepted Player gate is finite reference-host evidence, not a human-diagnosis claim.",
+    "The 781 profile diagnostic is nonwall reference only and does not substitute for current unprofiled formal results.",
+    "One prior formal failure in the original 22-root cohort remains FAIL; its diagnostic is only the comparison baseline.",
+    "The initial compiled14 FAIL artifact remains preserved separately from corrected v2-r2 PASS.",
+    "Earlier profiling/overhead failures and timeouts remain diagnostic-only and are not promoted or substituted."
+  ],
+  "rootAcceptance": {
+    "status": "PASS",
+    "acceptedUtc": "2026-10-29T22:18:01.753377+00:00",
+    "candidateSha256": "3f135c33525f0587b7491bf996822fed9ba87bc33d8cf3e4fb4086af91851eae",
+    "reviewedIntegratedSourceAndEvidence": true,
+    "playerVisibleGateReviewedByRoot": true,
+    "exactOriginal22ComparisonVerified": true,
+    "firstUseEightRanAfterExplicitRelease": true,
+    "priorFailuresPreserved": true,
+    "metadataCorrection": "Distinguish the earlier focused unprofiled 781 diagnostic from the CPU diagnostic actually used only as the comparator baseline; no current-case or oracle change."
+  }
+}

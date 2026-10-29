@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -36,8 +37,8 @@ class TopologyPlacementGraph {
         double getWeight() { return weight; }
     }
 
-    private final HashMap<String, Vector<PadLink>> linksByComponent =
-        new HashMap<String, Vector<PadLink>>();
+    private final HashMap<String, List<PadLink>> linksByComponent =
+        new HashMap<String, List<PadLink>>();
 
     TopologyPlacementGraph(TroubleshootBoard board) {
         String connectorId = findConnectorId(board);
@@ -76,15 +77,20 @@ class TopologyPlacementGraph {
                 }
             }
         }
+        // Placement repeatedly reads these links while evaluating candidates.
+        // Construction is the only writer; preserve its order in one read-only view.
+        for (String componentId : componentIds)
+            linksByComponent.put(componentId,
+                Collections.unmodifiableList(linksByComponent.get(componentId)));
     }
 
-    Vector<PadLink> getLinksFor(String componentId) {
-        Vector<PadLink> result = linksByComponent.get(componentId);
-        return result == null ? new Vector<PadLink>() : new Vector<PadLink>(result);
+    List<PadLink> getLinksFor(String componentId) {
+        List<PadLink> result = linksByComponent.get(componentId);
+        return result == null ? Collections.<PadLink>emptyList() : result;
     }
 
     private void addLink(String componentId, PadLink link) {
-        Vector<PadLink> links = linksByComponent.get(componentId);
+        List<PadLink> links = linksByComponent.get(componentId);
         if (links == null) {
             links = new Vector<PadLink>();
             linksByComponent.put(componentId, links);

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "sourceOrArtifactChange": false,
+  "strictReaderChange": false,
+  "rows": [
+    {
+      "variant": "Developer",
+      "oldMetadataSha256": "219c04305a0c84f2f399c9a8d5eaa7594382f0fcb082d4353e85f0d873cba123",
+      "correctedMetadataSha256": "8a22f58cc7391a20713e48d86617dea39004e5b3ad6a61161ee31c288bfdafd8",
+      "cacheCount": 5,
+      "cacheBytes": 17435419,
+      "change": "only aggregate cacheBytes JSON type; exact equality with all five recorded file lengths"
+    },
+    {
+      "variant": "Player",
+      "oldMetadataSha256": "57b9b70f60822868517ea041263dcc0727b99ae364e4b372ab96bd804db5089c",
+      "correctedMetadataSha256": "d1371fbc60d8da464e3c722b788e40636ae69a00944a8114b4e556eb53ed79d3",
+      "cacheCount": 5,
+      "cacheBytes": 9413729,
+      "change": "only aggregate cacheBytes JSON type; exact equality with all five recorded file lengths"
+    }
+  ]
+}

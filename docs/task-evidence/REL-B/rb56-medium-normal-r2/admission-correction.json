@@ -1,0 +1,191 @@
+{
+  "scope": "EXACT_OBSERVED_PLAYER_FAILURE_REGRESSION_ONLY",
+  "result": "PASS",
+  "root": "-8331504746761817642",
+  "requestAndCandidateManifestsUnchanged": true,
+  "coldProofs": 5,
+  "proofWork": 375,
+  "maximumProofWork": 520,
+  "generationWork": 497,
+  "generationMillis": 67646,
+  "maxUnitMillis": 1177,
+  "solverSamples": 65,
+  "independentFeatureAndWaitChecks": "PASS",
+  "jobStageWork": {
+    "RESOLVE": 1,
+    "HEALTHY": 118,
+    "PHYSICAL": 1,
+    "HYPOTHESES": 375,
+    "SYMPTOM": 1,
+    "PUBLISH": 1
+  },
+  "naturalWaitSeconds": [
+    1.7,
+    1.7,
+    2.1,
+    1.7,
+    1.4
+  ],
+  "appCleanupMillis": 4,
+  "blindCohortObserved": false,
+  "limits": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "durableSaveRegression": {
+    "result": "PASS",
+    "assertions": 3921,
+    "generations": [
+      {
+        "phase": "normal-generation",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 69262,
+        "workUnits": 497,
+        "maxCoordinatorAdvanceMillis": 1156,
+        "stages": {
+          "RESOLVE": {
+            "elapsedMillis": 1,
+            "workUnits": 1
+          },
+          "HEALTHY": {
+            "elapsedMillis": 24889,
+            "workUnits": 118
+          },
+          "PHYSICAL": {
+            "elapsedMillis": 135,
+            "workUnits": 1
+          },
+          "HYPOTHESES": {
+            "elapsedMillis": 44045,
+            "workUnits": 375
+          },
+          "SYMPTOM": {
+            "elapsedMillis": 11,
+            "workUnits": 1
+          },
+          "PUBLISH": {
+            "elapsedMillis": 143,
+            "workUnits": 1
+          }
+        },
+        "failureChain": []
+      },
+      {
+        "phase": "valid-session-restore",
+        "outcome": "PASS",
+        "stage": "PUBLISH",
+        "elapsedMillis": 81837,
+        "workUnits": 524,
+        "maxCoordinatorAdvanceMillis": 1206,
+        "restoreHistoryEntries": 69,
+        "restoreSourceCount": 4,
+        "restoreReservedWorkUnits": 27,
+        "stages": {
+          "RESOLVE": {
+            "elapsedMillis": 0,
+            "workUnits": 1
+          },
+          "HEALTHY": {
+            "elapsedMillis": 28376,
+            "workUnits": 118
+          },
+          "PHYSICAL": {
+            "elapsedMillis": 112,
+            "workUnits": 1
+          },
+          "HYPOTHESES": {
+            "elapsedMillis": 44588,
+            "workUnits": 375
+          },
+          "SYMPTOM": {
+            "elapsedMillis": 10,
+            "workUnits": 1
+          },
+          "PUBLISH": {
+            "elapsedMillis": 8522,
+            "workUnits": 28
+          }
+        },
+        "failureChain": []
+      },
+      {
+        "phase": "invalid-signature-restore",
+        "outcome": "PROGRAMMING_FAILURE",
+        "stage": "PUBLISH",
+        "elapsedMillis": 80684,
+        "workUnits": 525,
+        "maxCoordinatorAdvanceMillis": 1205,
+        "restoreHistoryEntries": 78,
+        "restoreSourceCount": 4,
+        "restoreReservedWorkUnits": 29,
+        "stages": {
+          "RESOLVE": {
+            "elapsedMillis": 0,
+            "workUnits": 1
+          },
+          "HEALTHY": {
+            "elapsedMillis": 27784,
+            "workUnits": 118
+          },
+          "PHYSICAL": {
+            "elapsedMillis": 99,
+            "workUnits": 1
+          },
+          "HYPOTHESES": {
+            "elapsedMillis": 44276,
+            "workUnits": 375
+          },
+          "SYMPTOM": {
+            "elapsedMillis": 11,
+            "workUnits": 1
+          },
+          "PUBLISH": {
+            "elapsedMillis": 8470,
+            "workUnits": 29
+          }
+        },
+        "failureChain": [
+          "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+        ]
+      }
+    ],
+    "playerInputEvidence": false,
+    "controlledDamageFixtures": true
+  },
+  "host": {
+    "result": "PASS",
+    "commandExit": 0,
+    "commandSeconds": 316.1791908,
+    "inputAudit": "PASS",
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.1007852000184357,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    }
+  },
+  "nativeFocused": {
+    "result": "PASS",
+    "commandExit": 0,
+    "suites": 4,
+    "seconds": 46.1077463,
+    "publicationAssertions": 150,
+    "cleanup": "PASS",
+    "cleanupSeconds": null
+  },
+  "developerBuild": {
+    "result": "PASS",
+    "seconds": 121.1489665,
+    "inputDigest": "8e613b44c52457db877b938433582436b8aba164bf9889bfd1b7dd9e8ad4c9d5",
+    "outputDigest": "c687a6c9b9dadbad622e57956cb80935a9ec8fbc9f9c9754eb4bd8c911a0b3b9",
+    "permutations": 5
+  },
+  "independentReview": {
+    "result": "PASS",
+    "scope": "Exact min/max admission, reserved tail, retry reset and cold/restore paths; static only",
+    "followUp": "Warm proof-cache lookup remains after cold-minimum preflight; no warm-fit guarantee is claimed."
+  }
+}

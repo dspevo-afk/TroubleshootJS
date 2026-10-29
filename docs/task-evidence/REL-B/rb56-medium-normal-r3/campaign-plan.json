@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "partition": "replacement-blind-2-MEDIUM",
+  "frozenUtc": "2026-10-28T23:21:48+00:00",
+  "selection": "eight unique OS-cryptographic random signed-long roots, frozen before execution without behavior queries",
+  "roots": [
+    "-2157433570835955452",
+    "1325853684799777255",
+    "-3798151323707447735",
+    "1178227627326218914",
+    "1467570129396149887",
+    "-1964920481438493458",
+    "-1089711617266387266",
+    "-4261205899415264525"
+  ],
+  "previousPartitions": "all twenty-two profile, development, holdout and replacement-blind roots remain regression after the runtime correction",
+  "maximumJobMillis": 90000,
+  "maximumWorkUnits": 640,
+  "maximumUnitMillis": 5000,
+  "canonicalCandidates": 4,
+  "protectedHard": "not read or run",
+  "statusAtFreeze": "NOT_RUN"
+}

@@ -1,0 +1,502 @@
+{
+  "schema": 1,
+  "evidenceKind": "compiled Developer18 overhead profile diagnostic; not a qualification acceptance",
+  "qualificationAcceptance": "NOT_ACCEPTED",
+  "evidenceIntegrity": "PASS",
+  "profiledRunStatus": "PASS",
+  "unprofiledRunStatus": "FAIL",
+  "interpretation": "One nonrandomized two-run diagnostic pair. The profiled run completed proof and publication; the unprofiled run hit the generation wall budget before diagnostic proof. This pair does not establish a causal performance effect.",
+  "buildIdentity": {
+    "identitySha256": "31f76217acd52ffbf50dec3873ab78ca5212082b3e5c1c6df0e2ead1d43a16fb",
+    "inventorySha256": "cf86a12b08248101d051e8f4998e27da3b58a62b37e3296d5eaabc0dd381018a",
+    "variant": "Developer",
+    "style": "OBF",
+    "inputDigest": "db12491d80131fc279226b245b9947716de2ea06ec67145d901e4d6a957880ed",
+    "inputFileCount": 1193,
+    "outputDigest": "843d04e492de419f052fe1788f7aa9a2fae9bfa388ac2e75a5cade2ffac059cf",
+    "outputFileCount": 357
+  },
+  "selectedArtifact": {
+    "cacheId": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+    "inventorySha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+    "actualFileSha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+    "bytes": 3511830,
+    "liveAttachmentVerifiedInBothRuns": true
+  },
+  "pairedInputIdentity": {
+    "canonicalDigest": "a78ecafb004efd79e484208dd56d3485396c117f7a9f881567e11f10c883f12f",
+    "sourceDigest": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+    "webDigest": "127a38cb6d7ad617fd90391d229bd1790cccd95fc4861c69f5dcf99cccd9146b",
+    "runnerDigest": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCount": 1569,
+    "sameCanonicalInputsAcrossRuns": true,
+    "sameFileEntriesBeforeAfterEachRun": true,
+    "sameRunnerSnapshotAcrossRuns": true
+  },
+  "caseIdentity": {
+    "specSha256": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+    "caseName": "normal--6794211680707017382",
+    "rootSeed": "-6794211680707017382",
+    "path": "circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyRb56=true&tsjRb56Seed=-6794211680707017382&tsjRb56Difficulty=true&tsjRb56Medium=true&running=true&tsjRb56Normal=true",
+    "sameExactSingleCaseSpecAcrossRuns": true
+  },
+  "normalGenerationIdentity": {
+    "projection": {
+      "protocol": "TSJ-RB56-NORMAL-QUALIFICATION-1",
+      "scope": "NORMAL_MEDIUM_COLD_POPULATION",
+      "family": "RB56_CONTROL",
+      "seed": "-6794211680707017382",
+      "rootSeed": "-6794211680707017382",
+      "normalRequest": true,
+      "layoutVersion": 20,
+      "replayEpoch": "tsj-alpha/7",
+      "sourceEpoch": "tsj-generation-dependencies-v19",
+      "modelEpoch": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
+      "planVersion": 1,
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000,
+      "normalCatalogEnabled": true
+    },
+    "projectionSha256": "1b056962bafbd082d7b8006c5fb08bfc8d6f6fc53e03ad45eedec50fd96e4683",
+    "requestManifestSha256": "5250063c042312684c46af2b42b911562887273ee0b73869d965e71e3ac854e6",
+    "candidateManifestSha256": "6c10ff51b3ebfafaff45cb0401ea67472d712cdcc76a21977a100e1f5ebc6c74",
+    "sameIdentityAcrossRuns": true,
+    "fieldsAbsentFromUnprofiledPreProofFailure": [
+      "physicalAdmission",
+      "normalPhysicalAdmission",
+      "fullProductionD01",
+      "normalProfileValidated"
+    ]
+  },
+  "runs": [
+    {
+      "capture": "profile-overhead-failure-v1",
+      "hostOutcome": "PASS",
+      "wrapperOutcome": "PASS",
+      "observedTerminalState": "PASS:rb56",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOutByHarness": false,
+      "hostElapsedSeconds": 81.258141,
+      "wrapperOperationSeconds": 77.76829000003636,
+      "reportFile": "cases/001-normal--6794211680707017382.report.json",
+      "reportSha256": "75fb3c9f7251aabd25013e4a0b72eef78a56a7401db0862ce7a2f86295ddd0ae",
+      "reportStatus": "PASS",
+      "failurePhase": null,
+      "generationOutcome": "PASS",
+      "generationStage": "PUBLISH",
+      "work": {
+        "jobWork": 462,
+        "generationWork": 462,
+        "proofWorkUnits": 375,
+        "hypotheses": 5,
+        "solverSamples": 65,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 375,
+          "SYMPTOM": 1,
+          "PUBLISH": 1
+        }
+      },
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 19820,
+        "PHYSICAL": 136,
+        "HYPOTHESES": 56347,
+        "SYMPTOM": 23,
+        "PUBLISH": 194
+      },
+      "reportTimingFieldsMillis": {
+        "jobMillis": 76567,
+        "generationMillis": 76373,
+        "proofMillis": 56261,
+        "routingMillis": 12523,
+        "cleanupMillis": 4,
+        "operationMillis": 76886,
+        "wallMillis": 76890,
+        "maxManualUnitMillis": 1476,
+        "manualUnitMaxMillis": 1476,
+        "difficultyFeatureExtractionMillis": 36
+      },
+      "caps": {
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000
+      },
+      "maxManualUnitMillis": 1476,
+      "coldProof": true,
+      "proofCachePolicy": "BYPASS",
+      "proofWarmReuse": false,
+      "proofEvidencePresent": true,
+      "proofRowCount": 5,
+      "observationCount": 5,
+      "inputAudit": {
+        "status": "PASS",
+        "canonicalDigest": "a78ecafb004efd79e484208dd56d3485396c117f7a9f881567e11f10c883f12f",
+        "sourceDigest": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webDigest": "127a38cb6d7ad617fd90391d229bd1790cccd95fc4861c69f5dcf99cccd9146b",
+        "runnerDigest": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1569,
+        "auditSeconds": 0.4861087999306619
+      },
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.364487900165841,
+        "serverStopped": true,
+        "ownedSurvivors": 0,
+        "errors": 0
+      },
+      "selectedCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js"
+    },
+    {
+      "capture": "unprofiled-overhead-first-v1",
+      "hostOutcome": "FAIL",
+      "wrapperOutcome": "FAIL",
+      "observedTerminalState": "FAIL:rb56:Generation wall budget exhausted",
+      "terminalReached": true,
+      "stateMatch": false,
+      "timedOutByHarness": false,
+      "hostElapsedSeconds": 94.04039,
+      "wrapperOperationSeconds": 91.21256339992397,
+      "reportFile": "cases/001-normal--6794211680707017382.report.json",
+      "reportSha256": "714f0f95bed8188989403bc91a26323e9964a0347f73e2e363ff1773fd2790d0",
+      "reportStatus": "FAIL",
+      "failurePhase": "COLD_GENERATION",
+      "generationOutcome": "TIMEOUT",
+      "generationStage": "HYPOTHESES",
+      "work": {
+        "jobWork": 455,
+        "generationWork": null,
+        "proofWorkUnits": null,
+        "hypotheses": null,
+        "solverSamples": null,
+        "stageWork": {
+          "RESOLVE": 1,
+          "HEALTHY": 83,
+          "PHYSICAL": 1,
+          "HYPOTHESES": 370,
+          "SYMPTOM": 0,
+          "PUBLISH": 0
+        }
+      },
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 24042,
+        "PHYSICAL": 208,
+        "HYPOTHESES": 65752,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "reportTimingFieldsMillis": {
+        "jobMillis": 90035,
+        "proofMillis": 0,
+        "routingMillis": 0,
+        "cleanupMillis": 2,
+        "operationMillis": 90297,
+        "wallMillis": 90299,
+        "manualUnitMaxMillis": 1772
+      },
+      "caps": {
+        "maxJobMillis": 90000,
+        "maxJobSteps": 640,
+        "maxUnitMillis": 5000
+      },
+      "maxManualUnitMillis": 1772,
+      "coldProof": null,
+      "proofCachePolicy": null,
+      "proofWarmReuse": null,
+      "proofEvidencePresent": false,
+      "proofRowCount": 0,
+      "observationCount": 0,
+      "inputAudit": {
+        "status": "PASS",
+        "canonicalDigest": "a78ecafb004efd79e484208dd56d3485396c117f7a9f881567e11f10c883f12f",
+        "sourceDigest": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+        "webDigest": "127a38cb6d7ad617fd90391d229bd1790cccd95fc4861c69f5dcf99cccd9146b",
+        "runnerDigest": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCount": 1569,
+        "auditSeconds": 0.47640789998695254
+      },
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.0749172999057919,
+        "serverStopped": true,
+        "ownedSurvivors": 0,
+        "errors": 0
+      },
+      "selectedCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js"
+    }
+  ],
+  "profiledProofEvidence": {
+    "hypothesisCount": 5,
+    "proofRowCount": 5,
+    "observationCount": 5,
+    "sampleCount": 65,
+    "canonicalSampleIds": [
+      "RECTIFIED_INPUT",
+      "PRIMARY_BIAS",
+      "PRIMARY_ENABLE",
+      "ISOLATED_12V",
+      "REGULATOR_ENABLE",
+      "REGULATED_5V",
+      "SENSOR_A_CONDITIONED",
+      "DRIVER_A_COMMAND",
+      "DRIVER_A_INPUT",
+      "RELAY_COIL_RETURN",
+      "OUTPUT_A",
+      "OUTPUT_B",
+      "DRIVER_A_RESISTANCE"
+    ],
+    "allFiveProofRowsPassAllFourAssertions": true,
+    "all65SamplesNumeric": true,
+    "proofRowsCanonicalSha256": "316d3842a2a943436c97eb9c68ee201079a58913d44dd453af11283afea6b7ad",
+    "observationsCanonicalSha256": "220d54b48fd669a2615c404db7da01190a34114ad0e5608727dbecbfa7dccad0",
+    "samplerows": [
+      {
+        "ordinal": 0,
+        "repairClass": 0,
+        "hypothesisDigest": "fc8860f1b3c901d575d09892ae4bf360c6d99115548a593d2ceb230565037b95",
+        "repairSemanticsDigest": "f792083cf16054dfa9a5954404ae03d4763ce100792eb8a38b1e300830f097ea",
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "OUTPUT_B",
+          "DRIVER_A_RESISTANCE"
+        ],
+        "sampleCount": 13,
+        "allNumeric": true,
+        "sampleValuesAndTolerancesSha256": "d11c7beb768af2b8f3fa24f92090d376f74986ff085d6d7bf67bb41142fb9483"
+      },
+      {
+        "ordinal": 1,
+        "repairClass": 1,
+        "hypothesisDigest": "fe950ce40b1a04495d3453e9ce892d3e53e721bb5161d5bb6473544c8aee4a6c",
+        "repairSemanticsDigest": "679253ba93e48a19e86d5dbb56effe0c5a7329bf63b70643d9ac307adea8241f",
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "OUTPUT_B",
+          "DRIVER_A_RESISTANCE"
+        ],
+        "sampleCount": 13,
+        "allNumeric": true,
+        "sampleValuesAndTolerancesSha256": "e1f037d46f8a4194269dae03508b244c0130def2bb2ee7839220bdd9601f8c36"
+      },
+      {
+        "ordinal": 2,
+        "repairClass": 2,
+        "hypothesisDigest": "2d800b2bd4e455acbd4c46182b85a1d377c22a35dd62e3b82d3b10b62a714e8b",
+        "repairSemanticsDigest": "6fee279d305361cf60e4a2ec50db7f61a75e5ad725973dc030ecc64ab8534af6",
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "OUTPUT_B",
+          "DRIVER_A_RESISTANCE"
+        ],
+        "sampleCount": 13,
+        "allNumeric": true,
+        "sampleValuesAndTolerancesSha256": "84f819172a1c9eba8c45fec0c9e9add2faaf023fb72f78eb5dc1439cf0ec7bb8"
+      },
+      {
+        "ordinal": 3,
+        "repairClass": 3,
+        "hypothesisDigest": "d72ca12a71c00b1261849ffb698d88a4861058057eb785dd9f938e880a95da0e",
+        "repairSemanticsDigest": "32b70b6e538f80334aeaa1d7bc8b41629b97d53b40ae72cd3654599e8eba1fd1",
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "OUTPUT_B",
+          "DRIVER_A_RESISTANCE"
+        ],
+        "sampleCount": 13,
+        "allNumeric": true,
+        "sampleValuesAndTolerancesSha256": "1f7bd1c3ec81d403d3c295e3c0bb08951ca2b62d13cee369db27a10ef1db4eab"
+      },
+      {
+        "ordinal": 4,
+        "repairClass": 4,
+        "hypothesisDigest": "f4edf66116e240a431c2dd25684773c20531e5cf75a09346f8fe903551a9ca82",
+        "repairSemanticsDigest": "72966be69ce2f19bdc63e43c04887de0358937ba639dc4a892760659a0f38e65",
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "OUTPUT_B",
+          "DRIVER_A_RESISTANCE"
+        ],
+        "sampleCount": 13,
+        "allNumeric": true,
+        "sampleValuesAndTolerancesSha256": "8cd75afe6072e0b85163fb65474f6e69d577c3ad520a5e6a0c7c43078687e077"
+      }
+    ]
+  },
+  "cpuProfile": {
+    "sha256": "195c4bea402c2d23aa495bda7eaa3f5bbc3f6f2404453fdd8e7fb62ee5505bc2",
+    "bytes": 3187858,
+    "nodeCount": 15189,
+    "sampleCount": 34307,
+    "negativeTimeDeltaCount": 1,
+    "minimumTimeDeltaUs": -21,
+    "sampledTimeMsApprox": 77771.449,
+    "profileIntervalMs": 77771.69,
+    "topSampledSelfFunctions": [
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 1800,
+        "sampledSelfMsApprox": 4458.368
+      },
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 1652,
+        "sampledSelfMsApprox": 4087.329
+      },
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 1414,
+        "sampledSelfMsApprox": 3502.397
+      },
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 1195,
+        "sampledSelfMsApprox": 2972.234
+      },
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 1082,
+        "sampledSelfMsApprox": 2676.823
+      },
+      {
+        "function": "(idle)",
+        "script": "",
+        "sampleHits": 810,
+        "sampledSelfMsApprox": 1970.677
+      },
+      {
+        "function": "TJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 564,
+        "sampledSelfMsApprox": 1388.327
+      },
+      {
+        "function": "RJb",
+        "script": "circuitjs1-0.js",
+        "sampleHits": 541,
+        "sampledSelfMsApprox": 1336.718
+      }
+    ]
+  },
+  "priorThreeCasePilotFailuresPreserved": {
+    "pilotOutcome": "FAIL",
+    "rawResultSha256": "91bcfdd76e34f1a9e23456f86c0cd60a0a099a1db638b7af6dca053f293f555c",
+    "caseCount": 3,
+    "cleanupStatus": "PASS",
+    "cleanupSeconds": 1.3201308001298457,
+    "inputAuditStatus": "PASS",
+    "failures": [
+      {
+        "case": "normal--6794211680707017382",
+        "rootSeed": "-6794211680707017382",
+        "outcome": "FAIL",
+        "observedTerminalState": "FAIL:rb56:Generation wall budget exhausted",
+        "wrapperOperationSeconds": 90.75489300000481,
+        "reportSha256": "cf393a8b6cb7d4e4490c919cb3b946f60e88def2c1a450136ed5864da6619959",
+        "failurePhase": "COLD_GENERATION",
+        "generationStage": "HYPOTHESES",
+        "jobWork": 446,
+        "jobMillis": 90017,
+        "hypothesisStageWork": 361,
+        "proofEvidencePresent": false
+      },
+      {
+        "case": "normal-7817806517725629686",
+        "rootSeed": "7817806517725629686",
+        "outcome": "FAIL",
+        "observedTerminalState": "FAIL:rb56:Generation wall budget exhausted",
+        "wrapperOperationSeconds": 91.09787399997003,
+        "reportSha256": "572c38f49ddeadd2da48c2c0f6ade791a6da0eb03569637affe5a6d9f8351bc4",
+        "failurePhase": "COLD_GENERATION",
+        "generationStage": "HYPOTHESES",
+        "jobWork": 433,
+        "jobMillis": 90076,
+        "hypothesisStageWork": 322,
+        "proofEvidencePresent": false
+      }
+    ]
+  },
+  "descriptiveDeltaProfiledMinusUnprofiled": {
+    "wrapperOperationSeconds": -13.444273399887607,
+    "jobMillis": -13468,
+    "jobWork": 7,
+    "interpretation": "Descriptive only; single nonrandomized pair."
+  },
+  "rawEvidenceReferences": [
+    {
+      "capture": "profile-overhead-failure-v1",
+      "resultSha256": "89283d05aae377cbfb67f8eb363bfd36b1473185e693f8589eef7d8c1f831e03",
+      "wrapperSha256": "75fb3c9f7251aabd25013e4a0b72eef78a56a7401db0862ce7a2f86295ddd0ae",
+      "reportSha256": "75fb3c9f7251aabd25013e4a0b72eef78a56a7401db0862ce7a2f86295ddd0ae",
+      "profileSha256": "195c4bea402c2d23aa495bda7eaa3f5bbc3f6f2404453fdd8e7fb62ee5505bc2",
+      "specSha256": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd"
+    },
+    {
+      "capture": "unprofiled-overhead-first-v1",
+      "resultSha256": "a3c6418bb17b77cf3b4f83bcf13f2b417ad2699ba24c2b2b5a30a9c0e88889f1",
+      "wrapperSha256": "714f0f95bed8188989403bc91a26323e9964a0347f73e2e363ff1773fd2790d0",
+      "reportSha256": "714f0f95bed8188989403bc91a26323e9964a0347f73e2e363ff1773fd2790d0",
+      "specSha256": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd"
+    }
+  ],
+  "rawCapturesPreserved": true
+}

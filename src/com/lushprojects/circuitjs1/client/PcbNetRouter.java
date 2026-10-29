@@ -405,6 +405,8 @@ final class PcbNetRouter {
         private final Rectangle[] escapeReservations;
         private final PcbComponentPlacement[] components;
         private final Rectangle[] courtyards;
+        private final int[] allComponentIndexes;
+        private final int[][] componentCandidatesByColumn;
         private Rectangle[] collisionCourtyards;
         private int activeTraceWidth=-1;
         private String activeNetId;
@@ -484,6 +486,10 @@ final class PcbNetRouter {
                 courtyards[index] = components[index].getRoutingCourtyard();
                 if(components[index].getMountingSide()==layer.getFace()) emptyComponentFace=false;
             }
+            allComponentIndexes = new int[components.length];
+            for (int index = 0; index < components.length; index++)
+                allComponentIndexes[index] = index;
+            componentCandidatesByColumn = buildComponentCandidates(maximumWidth);
             // The private placement snapshot is fixed for this routing attempt.
             // Reuse its exact escape-step reservations on either component face.
             horizontalReservation=new String[gridWidth][gridHeight];verticalReservation=new String[gridWidth][gridHeight];
@@ -492,6 +498,48 @@ final class PcbNetRouter {
                 int px=gridX(pads[i].getX()),py=gridY(pads[i].getY());
                 if(emptyComponentFace && px>=0&&py>=0&&px<gridWidth&&py<gridHeight)padAt[px][py]=pads[i].getPadId();
             }
+        }
+        /** Conservative x-only broad phase; exact, width-specific geometry stays at each query. */
+        private int[][] buildComponentCandidates(int maximumWidth) {
+            int[][] result = new int[gridWidth][];
+            int[] scratch = new int[components.length];
+            int faceCount = 0;
+            boolean safeCourtyardExtents = true;
+            for (int index = 0; index < components.length; index++) {
+                if (components[index].getMountingSide() != layer.getFace()) continue;
+                scratch[faceCount++] = index;
+                long right = (long)courtyards[index].x + courtyards[index].width;
+                if (right < Integer.MIN_VALUE || right > Integer.MAX_VALUE)
+                    safeCourtyardExtents = false;
+            }
+            int[] faceIndexes = new int[faceCount];
+            System.arraycopy(scratch, 0, faceIndexes, 0, faceCount);
+            for (int column = 0; column < gridWidth; column++) {
+                if (observer != null && column != 0 && (column & 1023) == 0)
+                    observer.check(attempt);
+                long centerX = (long)minX + (long)column * GRID;
+                long left = centerX - GRID - maximumWidth;
+                long right = centerX + GRID + maximumWidth;
+                int legacyCenterX = minX + column * GRID;
+                if (!safeCourtyardExtents || centerX != legacyCenterX ||
+                        left < Integer.MIN_VALUE || right > Integer.MAX_VALUE) {
+                    result[column] = faceIndexes;
+                    continue;
+                }
+                int count = 0;
+                for (int faceIndex = 0; faceIndex < faceIndexes.length; faceIndex++) {
+                    int index = faceIndexes[faceIndex];
+                    Rectangle courtyard = courtyards[index];
+                    long courtyardLeft = courtyard.x;
+                    long courtyardRight = (long)courtyard.x + courtyard.width;
+                    if (courtyardRight >= left && courtyardLeft <= right)
+                        scratch[count++] = index;
+                }
+                int[] candidates = new int[count];
+                System.arraycopy(scratch, 0, candidates, 0, count);
+                result[column] = candidates;
+            }
+            return result;
         }
         /** Prepare exact role-width geometry once per routed net, outside its bounded search loop. */
         private void prepareNet(String netId) {
@@ -775,7 +823,9 @@ final class PcbNetRouter {
             if ((physicalX == startPad.getX() && physicalY == startPad.getY()) ||
                     (endPad!=null && physicalX == endPad.getX() && physicalY == endPad.getY()))
                 return true;
-            for (int index = 0; index < components.length; index++) {
+            int[] candidateIndexes = componentCandidatesByColumn[x];
+            for (int candidate = 0; candidate < candidateIndexes.length; candidate++) {
+                int index = candidateIndexes[candidate];
                 PcbComponentPlacement component = components[index];
                 if(component.getMountingSide()!=layer.getFace()) continue;
                 if (!containsInclusive(courtyards[index], physicalX, physicalY))
@@ -796,10 +846,13 @@ final class PcbNetRouter {
         private boolean canTraverse(int fromX, int fromY, int toX, int toY,
                 PcbPadPlacement startPad, PcbPadPlacement endPad,String net) {
             prepareNet(net);
+            Rectangle stroke = null;
             // The same corridor owner rejects both copper faces before route publication.
-            if (domainRules!=null && !domainRules.permits(net,traceStroke(
-                    minX+fromX*GRID,minY+fromY*GRID,minX+toX*GRID,minY+toY*GRID,
-                    activeTraceWidth))) return false;
+            if (domainRules!=null) {
+                stroke = traceStroke(minX+fromX*GRID,minY+fromY*GRID,
+                    minX+toX*GRID,minY+toY*GRID,activeTraceWidth);
+                if (!domainRules.permits(net,stroke)) return false;
+            }
             // Cache the exact existing rectangle/step intersection predicate on
             // the unpopulated face, avoiding a per-search-edge scan of every pad.
             boolean adjacentStep=Math.abs(fromX-toX)+Math.abs(fromY-toY)==1;
@@ -811,8 +864,9 @@ final class PcbNetRouter {
             int startPhysicalY = minY + fromY * GRID;
             int endPhysicalX = minX + toX * GRID;
             int endPhysicalY = minY + toY * GRID;
-            Rectangle stroke = traceStroke(startPhysicalX,startPhysicalY,endPhysicalX,endPhysicalY,
-                activeTraceWidth);
+            if (stroke == null)
+                stroke = traceStroke(startPhysicalX,startPhysicalY,endPhysicalX,endPhysicalY,
+                    activeTraceWidth);
             String startComponentId = board.getPad(startPad.getPadId()).getComponentId();
             String endComponentId = endPad==null?null:board.getPad(endPad.getPadId()).getComponentId();
             if(net!=null && adjacentStep) {
@@ -832,7 +886,10 @@ final class PcbNetRouter {
                         return false;
                 }
             }
-            for (int index = 0; index < components.length; index++) {
+            int[] candidateIndexes = adjacentStep ? componentCandidatesByColumn[fromX] :
+                allComponentIndexes;
+            for (int candidate = 0; candidate < candidateIndexes.length; candidate++) {
+                int index = candidateIndexes[candidate];
                 PcbComponentPlacement component = components[index];
                 if(component.getMountingSide()!=layer.getFace()) continue;
                 if (!courtyards[index].intersects(stroke))
@@ -983,10 +1040,11 @@ final class PcbNetRouter {
 
         private boolean isPadAtOtherNet(int x, int y, String startPadId, String endPadId) {
             for (PcbPadPlacement pad : pads) {
+                if (pad.getX() != x || pad.getY() != y)
+                    continue;
                 if (pad.getPadId().equals(startPadId) || pad.getPadId().equals(endPadId))
                     continue;
-                if (pad.getX() == x && pad.getY() == y)
-                    return true;
+                return true;
             }
             return false;
         }

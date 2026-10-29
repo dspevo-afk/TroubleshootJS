@@ -319,6 +319,7 @@ public final class PhysicalServiceabilityContractTest {
             : GenerationRequest.forFamilyQualification(family, seed);
         GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
         if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                request.getExecutionPolicy() != GenerationExecutionPolicy.RB56 &&
                 !request.isPrivateDiagnosticQualification())
             return prepared.construct().instance;
         GenerationRequest.ConstructionSession session = prepared.beginConstruction();

@@ -128,6 +128,7 @@ final class P01PhysicalPoseChecks {
                                     g, pose, "lead probe bounds");
                             }
                         }
+                        placementEnvelope(f);
                         String frozen = f.geometryFingerprint();
                         f.getPads().clear(); p.getAllowedRotations().clear(); p.getAllowedMountingSides().clear();
                         placed.getBodyBounds().x = -1; g.getBodyBounds().x = -1;
@@ -136,6 +137,26 @@ final class P01PhysicalPoseChecks {
                 }
             }
         }
+    }
+
+    private void placementEnvelope(PcbFootprint footprint) {
+        Rectangle selection = footprint.getPlacement().getSelectionEnvelope();
+        Rectangle courtyard = footprint.getPlacement().getRoutingCourtyard();
+        int left = Math.min(selection.x, courtyard.x), top = Math.min(selection.y, courtyard.y);
+        int right = Math.max(selection.x + selection.width, courtyard.x + courtyard.width);
+        int bottom = Math.max(selection.y + selection.height, courtyard.y + courtyard.height);
+        for (PcbPadPlacement pad : footprint.getPads()) {
+            int x = pad.getX() + pad.getEscapeDx() * pad.getEscapeLength();
+            int y = pad.getY() + pad.getEscapeDy() * pad.getEscapeLength();
+            left = Math.min(left, x - 10); top = Math.min(top, y - 10);
+            right = Math.max(right, x + 10); bottom = Math.max(bottom, y + 10);
+        }
+        Rectangle expected = new Rectangle(left, top, right - left, bottom - top);
+        require(expected.equals(footprint.getPlacementEnvelope()),
+            "footprint envelope encloses independently projected selection courtyard and escapes");
+        Rectangle detached = footprint.getPlacementEnvelope();
+        detached.x++; detached.width = 0;
+        require(expected.equals(footprint.getPlacementEnvelope()), "placement envelope is a defensive snapshot");
     }
 
     private void point(Point actual, Point local, PhysicalPackageGeometry g, PcbPackagePose pose,

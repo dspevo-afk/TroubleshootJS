@@ -54,11 +54,20 @@ public final class PcbPackingMetricsContractTest {
         Fixture fixture = singleLedFixture(300, 300);
         String before = fixture.layout.geometryFingerprint();
         PcbPackingMetrics metrics = PcbPackingMetrics.measure(fixture.board, fixture.layout);
-        Rectangle envelope = PcbPlacementPlanner.envelope(new PcbFootprint(
-            fixture.layout.getComponent("LED"), fixture.layout.getPads()), 20);
+        PcbFootprint footprint = new PcbFootprint(fixture.layout.getComponent("LED"), fixture.layout.getPads());
+        Rectangle base = footprint.getPlacementEnvelope();
+        check(base.x == 101 && base.y == 104 && base.width == 83 && base.height == 111,
+            "real LED has a literal unpadded placement envelope");
+        Rectangle envelope = PcbPlacementPlanner.envelope(footprint, 20);
         check(envelope.x == 81 && envelope.y == 64 && envelope.width == 123 &&
                 envelope.height == 171,
             "declared LED selection, courtyard, escapes and access give literal envelope");
+        PcbFootprint moved = footprint.translated(footprint.getPlacement().getX() + 37,
+            footprint.getPlacement().getY() - 29);
+        Rectangle movedEnvelope = moved.getPlacementEnvelope();
+        check(movedEnvelope.x == 138 && movedEnvelope.y == 75 && movedEnvelope.width == 83 &&
+                movedEnvelope.height == 111 && footprint.getPlacementEnvelope().equals(base),
+            "translation creates its own literal envelope and preserves the source footprint");
         int oracle = PcbFunctionalGroupingContractTest.reportWhitespace(
             fixture.board, fixture.layout, 123L, 1);
         check(metrics.area == 90000L && metrics.copper == 0L && metrics.vias == 0,

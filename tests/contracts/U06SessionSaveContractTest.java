@@ -15,6 +15,7 @@ public final class U06SessionSaveContractTest {
         verifyInvalidRecords();
         verifyFuses();
         verifyBounds();
+        verifyRestoreWorkUnits();
         verifyHistoryPages();
         verifyHistoryPageLeases();
         verifyQualificationResultsRecovery();
@@ -383,6 +384,43 @@ public final class U06SessionSaveContractTest {
         reject(new Attempt() { public void run() { new PlayerSessionSave.Operation("GRAPH_REMOVE", longId, "", ""); } }, "identifier size rejects");
         final Vector<PlayerSessionSave.Operation> missing = new Vector<PlayerSessionSave.Operation>(); missing.add(null);
         reject(new Attempt() { public void run() { create(missing, new Vector<PlayerSessionSave.Source>(), new Vector<PlayerSessionSave.Stress>()); } }, "null history entry rejects");
+    }
+
+    private static void verifyRestoreWorkUnits() {
+        // Literal expectations independently cover empty, partial, exact, and multi-batch histories.
+        int[][] cases = {
+            {0, 0, 5}, {0, 3, 8}, {1, 0, 6}, {3, 0, 6}, {4, 0, 6},
+            {5, 0, 7}, {7, 0, 7}, {8, 0, 7}, {9, 0, 8}, {19, 0, 10},
+            {19, 4, 14}, {63, 0, 21}, {63, 3, 24}, {73, 1, 25}, {73, 4, 28}, {8192, 0, 2053},
+            {8192, 96, 2149}
+        };
+        for (int[] row : cases) {
+            final int historyCount = row[0];
+            int sourceCount = row[1];
+            Vector<PlayerSessionSave.Operation> operations = new Vector<PlayerSessionSave.Operation>();
+            for (int i = 0; i < historyCount; i++)
+                operations.add(new PlayerSessionSave.Operation("RESET", "", "", ""));
+            Vector<PlayerSessionSave.Source> sources = new Vector<PlayerSessionSave.Source>();
+            for (int i = 0; i < sourceCount; i++)
+                sources.add(new PlayerSessionSave.Source("SOURCE_" + i, false, Double.NaN));
+            PlayerSessionSave save = create(operations, sources, new Vector<PlayerSessionSave.Stress>());
+            Vector<PlayerSessionSave.Operation> savedOperations = save.getHistory();
+            Vector<PlayerSessionSave.Source> savedSources = save.getSources();
+            String encoded = save.encode();
+
+            check(PlayerSessionState.restoreWorkUnits(save) == row[2],
+                "restore budget matches independent H/S expectation H=" + historyCount + " S=" + sourceCount);
+            boolean sameEntries = operations.size() == historyCount && sources.size() == sourceCount &&
+                savedOperations.size() == historyCount && savedSources.size() == sourceCount;
+            for (int i = 0; sameEntries && i < historyCount; i++)
+                sameEntries = operations.get(i) == savedOperations.get(i);
+            for (int i = 0; sameEntries && i < sourceCount; i++)
+                sameEntries = sources.get(i) == savedSources.get(i);
+            check(sameEntries && encoded.equals(save.encode()),
+                "restore budget leaves caller vectors and saved bytes unchanged H=" + historyCount + " S=" + sourceCount);
+        }
+        reject(new Attempt() { public void run() { PlayerSessionState.restoreWorkUnits(null); } },
+            "restore budget rejects missing save");
     }
 
     private static void verifyHistoryPages() {

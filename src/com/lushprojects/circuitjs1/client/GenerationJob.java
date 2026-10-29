@@ -29,6 +29,12 @@ final class GenerationJob {
         long nowMillis();
     }
 
+    /** Private preparation may span bounded units before the one atomic publication. */
+    interface PublicationPreparation {
+        boolean preparePublication();
+        void requirePublicationDependencies(String expected);
+    }
+
     enum Stage {
         RESOLVE,
         HEALTHY,
@@ -145,10 +151,13 @@ final class GenerationJob {
     private int stepCount;
     private int candidateStepCount;
     private int proofStepCount;
+    private int maximumProofWorkUnits;
+    private int reservedPostProofUnits;
     private boolean candidateActive;
     private boolean needsAbort;
     private boolean abortAttempted;
     private boolean unitActive;
+    private boolean publicationPreparationComplete;
     private long unitStartedMillis;
 
     private Stage stage = Stage.RESOLVE;
@@ -254,6 +263,14 @@ final class GenerationJob {
             if (stepCount >= maxSteps)
                 throw new Failure(Outcome.WORK_EXHAUSTED,
                     "Generation work budget exhausted at " + maxSteps + " steps");
+            if (attempted == Stage.HYPOTHESES && maximumProofWorkUnits > 0) {
+                if (proofStepCount >= maximumProofWorkUnits)
+                    throw new Failure(Outcome.WORK_EXHAUSTED,
+                        "Diagnostic proof exhausted its declared maximum work");
+                if (getRemainingStepCount() <= reservedPostProofUnits)
+                    throw new Failure(Outcome.WORK_EXHAUSTED,
+                        "Diagnostic proof cannot consume reserved publication work");
+            }
             stepCount++;
             if (candidateActive)
                 candidateStepCount++;
@@ -431,17 +448,36 @@ final class GenerationJob {
         return maxSteps - stepCount;
     }
 
-    /** Reserves proof plus mandatory post-proof work before diagnostic proof starts. */
+    /** Reserves fixed proof plus mandatory post-proof work before proof starts. */
     void preflightProofWork(int proofUnits) {
+        preflightProofWork(proofUnits, 0);
+    }
+
+    void preflightProofWork(int proofUnits, int additionalMandatoryUnits) {
+        preflightProofWork(proofUnits, proofUnits, additionalMandatoryUnits);
+    }
+
+    /**
+     * Admit mandatory proof work without charging optional first-ready waits
+     * before they occur. Actual proof units retain their declared maximum and
+     * may not consume the reserved symptom, restore or publication tail.
+     */
+    void preflightProofWork(int minimumProofUnits, int maximumProofUnits,
+            int additionalMandatoryUnits) {
         if (!unitActive || !candidateActive || stage != Stage.PHYSICAL)
             throw new IllegalStateException(
                 "Diagnostic work can only be preflighted after physical validation");
-        if (proofUnits < 1)
-            throw new IllegalArgumentException("Diagnostic proof must declare positive work");
-        long required = (long) proofUnits + POST_HYPOTHESIS_WORK_UNITS;
+        if (minimumProofUnits < 1 || maximumProofUnits < minimumProofUnits)
+            throw new IllegalArgumentException("Invalid diagnostic proof work bounds");
+        if (additionalMandatoryUnits < 0)
+            throw new IllegalArgumentException("Additional publication work cannot be negative");
+        long tail = (long) POST_HYPOTHESIS_WORK_UNITS + additionalMandatoryUnits;
+        long required = minimumProofUnits + tail;
         if (required > getRemainingStepCount())
             throw new Failure(Outcome.WORK_EXHAUSTED,
                 "Remaining generation work budget cannot complete diagnostic proof and publication");
+        maximumProofWorkUnits = maximumProofUnits;
+        reservedPostProofUnits = (int) tail;
     }
 
     int getCandidateIndex() {
@@ -499,10 +535,16 @@ final class GenerationJob {
                     !stageReceipts[i].equals(candidateReceipt.getStageReceiptInternal(i)))
                 throw new Stale("Generation receipt lineage changed");
         }
-        String currentDependencies = services.dependencies();
-        requireText(currentDependencies, "generation dependencies");
-        if (!candidateReceipt.getDependencies().equals(currentDependencies))
-            throw new Stale("Generation dependency context changed");
+        if (services instanceof PublicationPreparation) {
+            if (!publicationPreparationComplete)
+                throw new Stale("Generation publication preparation is incomplete");
+            ((PublicationPreparation) services).requirePublicationDependencies(physicalDependencies);
+        } else {
+            String currentDependencies = services.dependencies();
+            requireText(currentDependencies, "generation dependencies");
+            if (!candidateReceipt.getDependencies().equals(currentDependencies))
+                throw new Stale("Generation dependency context changed");
+        }
     }
 
     private boolean runStage(Stage attempted) {
@@ -523,8 +565,7 @@ final class GenerationJob {
             runSymptom();
             return true;
         case PUBLISH:
-            runPublish();
-            return false;
+            return runPublish();
         default:
             throw new IllegalStateException("Unknown generation stage");
         }
@@ -587,12 +628,20 @@ final class GenerationJob {
         stage = Stage.PUBLISH;
     }
 
-    private void runPublish() {
+    private boolean runPublish() {
         if (physicalDependencies == null)
             throw new IllegalStateException("Publish has no physical dependency context");
         for (int i = Stage.RESOLVE.ordinal(); i <= Stage.SYMPTOM.ordinal(); i++) {
             if (stageReceipts[i] == null)
                 throw new IllegalStateException("Publish has an incomplete stage lineage");
+        }
+        if (!publicationPreparationComplete) {
+            if (services instanceof PublicationPreparation &&
+                    ((PublicationPreparation) services).preparePublication()) {
+                checkpoint();
+                return true;
+            }
+            publicationPreparationComplete = true;
         }
         stageReceipts[Stage.PUBLISH.ordinal()] = "complete=true;atomic=true";
         GenerationReceipt candidateReceipt = GenerationReceipt.issue(issuerToken,
@@ -615,6 +664,7 @@ final class GenerationJob {
         failure = null;
         outcome = Outcome.PASS;
         recordAttempt(Outcome.PASS);
+        return false;
     }
 
     private boolean handleRejection(Rejected rejected) {
@@ -713,7 +763,10 @@ final class GenerationJob {
             candidateStageWorkCounts[i] = 0;
         }
         proofStepCount = 0;
+        maximumProofWorkUnits = 0;
+        reservedPostProofUnits = 0;
         physicalDependencies = null;
+        publicationPreparationComplete = false;
     }
 
     /**

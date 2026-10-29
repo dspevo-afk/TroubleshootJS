@@ -60,16 +60,16 @@ final class PlayerSessionController {
         refresh();
     }
 
-    /** The caller has completed the existing held-family publication/D01 admission. */
-    void openQualifiedBoard(GeneratedBoardInstance owner) { openQualifiedBoard(owner, false); }
-
-    void openQualifiedBoard(GeneratedBoardInstance owner, boolean persistence) {
+    /** A private request keeps its own authority when its family also becomes public. */
+    void openQualifiedBoard(GenerationRequest qualificationRequest,
+            GeneratedBoardInstance owner, boolean persistence) {
+        GenerationJob job = sim.generationCoordinator == null ? null : sim.generationCoordinator.getJob();
+        requireQualificationPublication(qualificationRequest, owner, job);
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         if (released || sim.playerSessionController != this || owner == null ||
                 sim.getGeneratedBoardInstance() != owner || challenge == null || !challenge.isReady() ||
-                owner.isDeveloperOnlyFaultRoute() || sim.generationCoordinator.isRunning() ||
-                PlayerFamilyCatalog.isNormalPlayerEnabled(owner.getCircuitFamilyId()) || !bridgeIsEmpty())
-            throw new IllegalStateException("Qualified session requires its admitted held-family owner");
+                owner.isDeveloperOnlyFaultRoute() || sim.generationCoordinator.isRunning() || !bridgeIsEmpty())
+            throw new IllegalStateException("Qualified session requires its admitted private owner");
         GeneratedDiagnosticProofReceipt proof = challenge.getDiagnosticProofReceipt();
         if (proof == null || proof.isWarmReuseForDeveloperVerification() || proof.getContextKey() == null ||
                 !proof.getContextKey().isTrustedCapture())
@@ -82,6 +82,18 @@ final class PlayerSessionController {
             "This qualification board cannot be saved, shared or replaced.";
         bridge = installBridge(); bridgeReady = true;
         refresh();
+    }
+
+    static void requireQualificationPublication(GenerationRequest qualificationRequest,
+            GeneratedBoardInstance owner, GenerationJob job) {
+        if (qualificationRequest == null || !qualificationRequest.isPrivateDiagnosticQualification() ||
+                qualificationRequest.isCandidateSearch() ||
+                !PlayerSessionReplay.forQualification(qualificationRequest).matches(owner))
+            throw new IllegalStateException("Qualified session requires its exact private request");
+        GenerationReceipt receipt = job == null ? null : job.getReceipt();
+        if (receipt == null || !qualificationRequest.canonical().equals(receipt.getManifest()))
+            throw new IllegalStateException("Qualified session requires its current private publication receipt");
+        job.validateReceipt(receipt);
     }
 
     boolean isBridgeAvailable() {

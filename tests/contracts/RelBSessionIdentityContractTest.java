@@ -74,6 +74,9 @@ public final class RelBSessionIdentityContractTest {
 
     /** An available profile must not turn a registered private family into a public request. */
     private static void verifyHeldPublicAdmission() {
+        check(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "normal RB56 is enabled before the isolated held-family canary");
+        try (HeldFamilyCatalogFixture held = new HeldFamilyCatalogFixture(Rb56Plan.FAMILY_ID)) {
         check(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
                 !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
                 DifficultyProfile.MEDIUM.isAvailable(),
@@ -102,6 +105,9 @@ public final class RelBSessionIdentityContractTest {
         reject(new Attempt() { public void run() {
             PlayerSessionSave.parse(heldWire);
         } }, "well-framed public save refuses held family before reconstruction");
+        }
+        check(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "held-family canary restores normal RB56 admission exactly");
     }
 
     private static void verifyPrivateIdentity() {

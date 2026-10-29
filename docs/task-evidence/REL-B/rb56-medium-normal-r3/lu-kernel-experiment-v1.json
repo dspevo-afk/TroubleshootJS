@@ -1,0 +1,591 @@
+{
+  "schema": "tsj-lu-kernel-experiment-evidence-v1",
+  "scope": "DIAGNOSTIC_ONLY_NOT_QUALIFICATION",
+  "decision": "NO_GO_AS_PRODUCTION_CANDIDATE",
+  "qualificationAcceptance": "NOT_ACCEPTED",
+  "conclusion": "The four-column experiment is slower in this fixed pure-JavaScript-array fixture (64.45 ms mean versus 55.125 ms baseline) despite exact scalar parity and matching checksum. Keep the variant scratch-only; this is not a GWT/full-application performance claim.",
+  "experiment": {
+    "order": "A/B/B/A for each variant",
+    "baselineSource": {
+      "function": "RJb",
+      "bodyChars": 736,
+      "bodySha256": "68ca4928ac3563fa62190db8ecf7c52d0160f3926c092c362cdf172713674f80",
+      "emittedScriptSha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+      "emittedScriptBytes": 3511830
+    },
+    "candidateSource": {
+      "function": "lu_applyBoundedTrailingUpdates4",
+      "sha256": "7bfd162ae2db5812fc082686eff6b79dbb618558b88c0832655f66ad56aae878",
+      "location": "outside repository scratch only",
+      "productionCandidate": false
+    },
+    "fixture": {
+      "rows": 32,
+      "sentinelRows": 1,
+      "columns": 108,
+      "pivotStart": 32,
+      "nonzeroPivotColumns": 67,
+      "zeroPivotColumns": 8,
+      "nonzeroTailAfterEightLaneGroups": 3,
+      "iterations": 20000,
+      "callsPerIteration": 3,
+      "calls": 60000,
+      "cellUpdates": 128640000,
+      "exactOperationsPerCell": "row[col] = row[col] - row[k] * pivot[col]",
+      "factor": 0.001,
+      "pivotValue": 0.005
+    },
+    "checksumFNV1a64": "de3a840c8163c27c",
+    "baselineTimesMs": [
+      53,
+      57,
+      55.30000019073486,
+      55.19999980926514
+    ],
+    "baselineMeanMs": 55.125,
+    "fourLaneTimesMs": [
+      63,
+      66.70000004768372,
+      65.5,
+      62.60000014305115
+    ],
+    "fourLaneMeanMs": 64.45000004768372,
+    "fourLaneSlowerPercent": 16.916099859743696,
+    "allEightFullScalarBinary64Parity": true,
+    "allEightChecksumsMatch": true
+  },
+  "evidence": {
+    "baselineRunJsonSha256": "a2650dc9378f77dc955e170b48dc704f673e69179764029263b03e90c90b49e4",
+    "fourLaneRunJsonSha256": "944358dfe72c44fc6e8606abd774b5e172d0844ef622a5702dc6f9a3146900cc",
+    "runStatus": "DIAGNOSTIC_COMPLETE",
+    "maintainedRunner": {
+      "path": "tests/browser/compiled_attribute_acceptance.py",
+      "sha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a"
+    },
+    "driver": {
+      "filename": "run_abba.py",
+      "sha256": "f45ca60de69204d58facb101523961f0211eb54ca18c0b9836ff2b43a71bcb38"
+    },
+    "harness": {
+      "filename": "benchmark-harness.js",
+      "sha256": "c7b309f5f4caa86fe89f27d8f35d919a04f171b02481fbba7e5cf59433783e0c"
+    },
+    "baselineKernelFileSha256": "68ca4928ac3563fa62190db8ecf7c52d0160f3926c092c362cdf172713674f80",
+    "fourLaneKernelFileSha256": "7bfd162ae2db5812fc082686eff6b79dbb618558b88c0832655f66ad56aae878",
+    "originalScriptSha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+    "launch": {
+      "browser": "Microsoft Edge channel msedge",
+      "headless": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "args": [
+        "--disable-background-timer-throttling",
+        "--disable-renderer-backgrounding"
+      ],
+      "freshPersistentContextPerArm": true
+    },
+    "arms": [
+      {
+        "arm": 1,
+        "label": "A",
+        "elapsedMs": 53,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": false,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": false,
+          "profileNodeCount": null,
+          "profileSampleCount": null,
+          "detach": "NOT_APPLICABLE"
+        },
+        "timing": {
+          "kernelElapsedMs": 53,
+          "browserOperationSecondsBeforeCleanup": 1.206,
+          "preCloseOwnershipCaptureSeconds": 0.35,
+          "cleanupSeconds": 0.84,
+          "totalArmSeconds": 2.046,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "731d240cc196fbbd0de3d9b19617e0b56f1e69720b7b32e2942a07e6b131e3d2",
+          "ownershipBeforeCloseReceipt": "9fc4db3c03e83e3a406069274af2da0b877004873eadb839d0f1365c71d97ee6"
+        }
+      },
+      {
+        "arm": 2,
+        "label": "B",
+        "elapsedMs": 57,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": true,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": true,
+          "profileNodeCount": 3,
+          "profileSampleCount": 3,
+          "detach": "PASS"
+        },
+        "timing": {
+          "kernelElapsedMs": 57,
+          "browserOperationSecondsBeforeCleanup": 1.136,
+          "preCloseOwnershipCaptureSeconds": 0.319,
+          "cleanupSeconds": 0.856,
+          "totalArmSeconds": 1.992,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "8e58f40e1fd38bc9183311910feea786484f8411199130f0b426fa882a653a36",
+          "ownershipBeforeCloseReceipt": "5f53dd5866f684a608d0ae917993281b74f503537228178ecd343365ffb473b7"
+        }
+      },
+      {
+        "arm": 3,
+        "label": "B",
+        "elapsedMs": 55.30000019073486,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": true,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": true,
+          "profileNodeCount": 2,
+          "profileSampleCount": 2,
+          "detach": "PASS"
+        },
+        "timing": {
+          "kernelElapsedMs": 55.30000019073486,
+          "browserOperationSecondsBeforeCleanup": 1.127,
+          "preCloseOwnershipCaptureSeconds": 0.318,
+          "cleanupSeconds": 0.815,
+          "totalArmSeconds": 1.942,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "e0f97ae2b93f008652ae13b81004da34cfc85924c7ef3af54671c058e92eff67",
+          "ownershipBeforeCloseReceipt": "fb2f5b3643b348ac6ba1dc3892ea35b71a9e0805fefc4dbb45e1fdc935fd1703"
+        }
+      },
+      {
+        "arm": 4,
+        "label": "A",
+        "elapsedMs": 55.19999980926514,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": false,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": false,
+          "profileNodeCount": null,
+          "profileSampleCount": null,
+          "detach": "NOT_APPLICABLE"
+        },
+        "timing": {
+          "kernelElapsedMs": 55.19999980926514,
+          "browserOperationSecondsBeforeCleanup": 1.123,
+          "preCloseOwnershipCaptureSeconds": 0.328,
+          "cleanupSeconds": 0.878,
+          "totalArmSeconds": 2.001,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "ce73be431192a0ef8eb051b0950eff409c697703e026c7a63e764450583ed2ed",
+          "ownershipBeforeCloseReceipt": "6751efb79f815c29b36093006abae6d9203275d3a693f089ed687d477e21eef4"
+        }
+      },
+      {
+        "arm": 1,
+        "label": "A",
+        "elapsedMs": 63,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": false,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": false,
+          "profileNodeCount": null,
+          "profileSampleCount": null,
+          "detach": "NOT_APPLICABLE"
+        },
+        "timing": {
+          "kernelElapsedMs": 63,
+          "browserOperationSecondsBeforeCleanup": 1.161,
+          "preCloseOwnershipCaptureSeconds": 0.332,
+          "cleanupSeconds": 0.862,
+          "totalArmSeconds": 2.023,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "1ff4326fe2324c4917c8a14ad039c002ae023427f9f96b67ac2e916d1cde8cb4",
+          "ownershipBeforeCloseReceipt": "ce82fdddfa2bfc5c71d011797295aec083c369c885b0c0e25b146fa0a3c31c94"
+        }
+      },
+      {
+        "arm": 2,
+        "label": "B",
+        "elapsedMs": 66.70000004768372,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": true,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": true,
+          "profileNodeCount": 2,
+          "profileSampleCount": 2,
+          "detach": "PASS"
+        },
+        "timing": {
+          "kernelElapsedMs": 66.70000004768372,
+          "browserOperationSecondsBeforeCleanup": 1.128,
+          "preCloseOwnershipCaptureSeconds": 0.319,
+          "cleanupSeconds": 0.801,
+          "totalArmSeconds": 1.929,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "e9f92f6b4d24d24a2f4e2ec9a2f68855109c793090c53990e2877e8ba7d10c87",
+          "ownershipBeforeCloseReceipt": "8949eb32f0b6c6e9473511badb6b5e311ea61a1232d1c26b5b510c12f2f8fa2e"
+        }
+      },
+      {
+        "arm": 3,
+        "label": "B",
+        "elapsedMs": 65.5,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": true,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": true,
+          "profileNodeCount": 3,
+          "profileSampleCount": 3,
+          "detach": "PASS"
+        },
+        "timing": {
+          "kernelElapsedMs": 65.5,
+          "browserOperationSecondsBeforeCleanup": 1.187,
+          "preCloseOwnershipCaptureSeconds": 0.332,
+          "cleanupSeconds": 0.825,
+          "totalArmSeconds": 2.012,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "bea6f8a3cdb2a7368b33d88c3a97454fbf9cce2aafef0d3bbdfee45a8591536f",
+          "ownershipBeforeCloseReceipt": "c571778d712f2a25a9873817a764979cb254ca9960131063bf356c151a767580"
+        }
+      },
+      {
+        "arm": 4,
+        "label": "A",
+        "elapsedMs": 62.60000014305115,
+        "checksumFNV1a64": "de3a840c8163c27c",
+        "binary64ScalarPreflight": {
+          "singleCallScalarBinary64Parity": true,
+          "fullRunScalarBinary64Parity": true,
+          "noAliasCanaries": true,
+          "rowBoundsCanaries": true,
+          "boundedWriteCanaries": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allCanariesExecutedBeforeTiming": true
+        },
+        "harnessCanaries": {
+          "noAlias": true,
+          "rowBounds": true,
+          "boundedWrites": true,
+          "pivotUnchanged": true,
+          "finiteValues": true,
+          "allBeforeTiming": true,
+          "candidateRejectGuardsExercised": false
+        },
+        "profiler": {
+          "enabledStartedStoppedBeforeKernelInjection": false,
+          "samplingDuringTimedKernel": false,
+          "CDPAttachedDuringTimedKernel": false,
+          "profileNodeCount": null,
+          "profileSampleCount": null,
+          "detach": "NOT_APPLICABLE"
+        },
+        "timing": {
+          "kernelElapsedMs": 62.60000014305115,
+          "browserOperationSecondsBeforeCleanup": 1.144,
+          "preCloseOwnershipCaptureSeconds": 0.329,
+          "cleanupSeconds": 0.828,
+          "totalArmSeconds": 1.972,
+          "preCloseCaptureIsIncludedInCleanup": true
+        },
+        "processOwnership": {
+          "snapshots": 3,
+          "rowsPerSnapshot": [
+            7,
+            7,
+            7
+          ],
+          "distinctPidCreationIdentities": 7,
+          "preCloseUnionPersisted": true,
+          "postCloseRemainingIdentities": 0,
+          "captureErrors": 0,
+          "cleanupStatus": "PASS"
+        },
+        "rawSha256": {
+          "armReceipt": "6d2960bf9300ec2e3e1b23cb3154e1c3580be5aa8d4be4e115721426aa4fc63f",
+          "ownershipBeforeCloseReceipt": "c64166b565fa6708d5e0b126ad30c55daf4a37dc8c6fd83c647750920500cf05"
+        }
+      }
+    ],
+    "postCloseProcessPolling": {
+      "identityKey": "(PID, process creation timestamp)",
+      "pollSource": "Win32 process_rows snapshots",
+      "intervalMillis": 250,
+      "timeoutSeconds": 15,
+      "allEightRemainingIdentityListsEmpty": true,
+      "cleanupOnlyOwnCapturedIdentities": true
+    }
+  },
+  "harnessInterpretation": {
+    "fixtureArrays": "ordinary JavaScript arrays; not GWT runtime arrays/metadata",
+    "numericReference": "independent scalar loop; compares every binary64 cell by exact bit pattern including signed zero",
+    "negativeCanaries": "duplicate-row, short-row, and out-of-bounds mutation are rejected by harness assertion helpers before timing; these are not production-kernel input-rejection guards",
+    "electricalProof": false,
+    "playerFlowEvidence": false,
+    "productionGuardEvidence": false
+  },
+  "profilerInterpretation": {
+    "BSetup": "Profiler enable/start/stop completes before kernel injection; sampling is inactive during timed kernel loop while CDP session remains attached until cleanup detach.",
+    "observedBenefit": "No benefit shown in this pure-kernel comparison; do not generalize to GWT or whole-application profiling."
+  },
+  "priorFailedAttempt": {
+    "directory": "lu-kernel-baseline-abba-v1",
+    "status": "FAIL_BEFORE_EDGE_LAUNCH",
+    "cause": "NameError on arm_started_utc during main report timestamp setup, as reported for the pre-fix driver snapshot.",
+    "preFixDriverSnapshotSha256": "a627b3e868d1c837a7002bb0b009d6ae002175de7bcbd15e2af2344e22e245c8",
+    "resultArtifactsPresent": false,
+    "manufacturedResult": false,
+    "fixedDriverSha256": "f45ca60de69204d58facb101523961f0211eb54ca18c0b9836ff2b43a71bcb38"
+  },
+  "limitations": [
+    "The timings cover one deterministic pure kernel and ordinary JavaScript arrays, not CirSim, GWT array metadata, generation, or player behavior.",
+    "Exact scalar parity and harness canaries do not prove production guards or electrical correctness.",
+    "This microbenchmark included no process CPU sampler and does not establish a profiler cause or an application-level benefit.",
+    "NO-GO is specific to this four-arm fixture comparison; no production change, qualification population, or new blind-eight cohort is represented."
+  ]
+}

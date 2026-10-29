@@ -1,0 +1,76 @@
+{
+  "status": "FAIL_FINITE_THREE_UI_ATTEMPTS",
+  "accepted": [
+    {
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/6102064290786999118",
+      "build": "54D925B8099AE712EB3700E5F284CC3F",
+      "realization": "7da64e377a5ed24dd82c4ba2b15fa3b6abfe691ab614dfe4ce1c4e13a7ee03e1",
+      "fileSha256": "b890f4b77c963ab4163c69dffd01c63bb3ab703f61421a60f49df977383a450e"
+    },
+    {
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-2906335230529121448",
+      "build": "54D925B8099AE712EB3700E5F284CC3F",
+      "realization": "404cb144bb671221ad16cbd312c2a68ee871f443af12b95fcff3f09721feb8f9",
+      "fileSha256": "0ea1e3e1ef68e97ebee474300ad591616242f95927057e6cf11f5981693c48c9"
+    }
+  ],
+  "failedAttempt": {
+    "ordinal": 2,
+    "launchSeed": "-8331504746761817642",
+    "message": "No unique valid board passed within launch limits"
+  },
+  "retainedPreviousBoard": {
+    "replay": true,
+    "build": true,
+    "realization": true,
+    "history": true,
+    "sources": true
+  },
+  "afterFailureSha256": "b6bef2972fadb5a47bad82a5e4dad8bcf41df0eccb9318cf6fe7ab21ce5ce262",
+  "blindCohortObserved": false,
+  "artifactPlanSha256": "ae2258f2334de294c8f715dc1ae37d2947cb6cef88242d15b66976a2616195ec",
+  "compiledDiagnostic": {
+    "jobOutcome": "WORK_EXHAUSTED",
+    "jobStage": "PHYSICAL",
+    "jobWork": 120,
+    "jobMillis": 23545,
+    "jobStageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 118,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 0,
+      "SYMPTOM": 0,
+      "PUBLISH": 0
+    },
+    "manualUnitMaxMillis": 638,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "cleanupPending": false,
+    "cleanupMillis": 2,
+    "failure": "Failure: Remaining generation work budget cannot complete diagnostic proof and publication",
+    "candidateAttempts": [
+      {
+        "ordinal": 0,
+        "seed": "-8331504746761817642",
+        "stage": "PHYSICAL",
+        "outcome": "WORK_EXHAUSTED",
+        "workUnits": 120,
+        "proofUnits": 0
+      }
+    ],
+    "commandExit": 1,
+    "commandSeconds": 27.2865112,
+    "hostCleanup": "PASS",
+    "hostCleanupSeconds": 0.9792817
+  },
+  "sourceDerivedAdmission": {
+    "maximumProof": 520,
+    "minimumProof": 375,
+    "postProof": 2,
+    "remaining": 520,
+    "actualProofObserved": false
+  }
+}

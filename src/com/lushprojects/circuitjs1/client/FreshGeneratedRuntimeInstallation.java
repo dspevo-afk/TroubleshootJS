@@ -63,6 +63,10 @@ final class FreshGeneratedRuntimeInstallation {
         private final Vector<CircuitElm> disposedElements = new Vector<CircuitElm>();
         private GeneratedChallengeController candidateController;
         private boolean begun, preparing, finished, preparationComplete, restoring;
+        private GeneratedWork<Void> sessionRestore;
+        private PlayerSessionSave sessionRestoreSave;
+        private int sessionRestoreUnits;
+        private boolean sessionRestoreComplete;
 
         static void setPreparationFailureForDeveloperVerification(PreparationPoint point) {
             injectedPreparationFailure = point;
@@ -171,23 +175,68 @@ final class FreshGeneratedRuntimeInstallation {
             PcbConductorProjection.audit(candidate, sim.elmList);
             GeneratedDiagnosticSolvabilityAdmission.validate(sim, candidate);
         }
-        void publish() { publish(null); }
-        void publish(PlayerSessionSave saved) {
+        /** Advances exactly one private reconstruction unit, never publication. */
+        void advanceSessionRestore(PlayerSessionSave saved) {
             enterStep();
+            if (saved == null || sessionRestoreComplete ||
+                    (sessionRestoreSave != null && sessionRestoreSave != saved))
+                throw new IllegalStateException("Session reconstruction identity changed");
+            if (sessionRestore == null) {
+                requireQualification();
+                validatePhysical();
+                sessionRestoreSave = saved;
+                sessionRestore = PlayerSessionState.beginRestore(sim, candidate, saved);
+                if (sessionRestore.getWorkUnits() != PlayerSessionState.restoreWorkUnits(saved))
+                    throw new IllegalStateException("Session reconstruction work declaration changed");
+            }
+            boolean more = sessionRestore.step();
+            sessionRestoreUnits++;
+            if (!more) {
+                sessionRestore.finish();
+                sessionRestoreComplete = true;
+                requireRestoredSession(saved);
+            }
+        }
+        boolean hasCompletedSessionRestore(PlayerSessionSave saved) {
+            return saved != null && sessionRestoreSave == saved && sessionRestoreComplete &&
+                sessionRestoreUnits == PlayerSessionState.restoreWorkUnits(saved);
+        }
+        int getCompletedSessionRestoreUnits() { return sessionRestoreUnits; }
+
+        /** Revalidate the final state after the last yield, not against pristine parts. */
+        void requireRestoredSession(PlayerSessionSave saved) {
+            enterStep();
+            if (!hasCompletedSessionRestore(saved) || sessionRestore == null)
+                throw new GenerationJob.Stale("Session reconstruction is incomplete or foreign");
+            sessionRestore.finish();
+            requireQualification();
+            candidate.getBoard().validate();
+            candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
+                sim.getBoardModificationController(), sim.elmList);
+            candidate.getPcbLayout().validateGeometry(candidate.getBoard());
+            PcbConductorProjection.audit(candidate, sim.elmList);
+            GeneratedRuntimeInvariant.verify(sim, candidate, sim.getBoardModificationController(), sim.elmList);
+            if (!saved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)))
+                throw new GenerationJob.Stale("Restored session changed before publication");
+        }
+
+        private void requireQualification() {
             if (sim.getGeneratedChallengeController().getDiagnosticProofReceipt() == null ||
                     sim.getGeneratedChallengeController().getScenario() == null ||
                     !sim.isGeneratedRuntimeSettled())
                 throw new IllegalStateException("Generation publication has incomplete qualification");
-            validatePhysical();
-            if (saved != null) {
+        }
+        void publish() { publish(null); }
+        void publish(PlayerSessionSave saved) {
+            enterStep();
+            if (saved == null && sessionRestoreSave != null)
+                throw new GenerationJob.Stale("Session reconstruction requires its restored publication boundary");
+            requireQualification();
+            if (saved == null) validatePhysical();
+            else {
                 // Fresh pristine admission remains historical evidence. Import
                 // never supplies a proof or customer-completion authorization.
-                PlayerSessionState.restore(sim, candidate, saved);
-                candidate.getBoard().validate();
-                candidate.getPhysicalBoardRuntime().validateCommittedState(candidate,
-                    sim.getBoardModificationController(), sim.elmList);
-                candidate.getPcbLayout().validateGeometry(candidate.getBoard());
-                PcbConductorProjection.audit(candidate, sim.elmList);
+                requireRestoredSession(saved);
                 candidateController.invalidateCustomerRetest();
                 candidate.getPhysicalBoardRuntime().getSessionHistory().restore(saved.getHistory());
             }
@@ -207,6 +256,7 @@ final class FreshGeneratedRuntimeInstallation {
                     throw new IllegalStateException("Retired generation owner retained external power");
             }
             finished = true; active = null;
+            sessionRestore = null; sessionRestoreSave = null;
         }
         void abort() {
             if (finished) return;
@@ -221,6 +271,11 @@ final class FreshGeneratedRuntimeInstallation {
             if (active != sim || (!ownsCandidate() && !originalPreparation && !originalRestoration))
                 throw new IllegalStateException("Refusing to restore generation over a successor owner");
             Throwable failure = null;
+            if (sessionRestore != null) {
+                try { sessionRestore.cancel(); }
+                catch (Throwable cleanup) { failure = retain(failure, cleanup); }
+                if (failure == null) { sessionRestore = null; sessionRestoreSave = null; }
+            }
             try { sim.invalidateGeneratedOwnerWork(); }
             catch (Throwable cleanup) { failure = retain(failure, cleanup); }
             try { sim.setSimRunning(false); }

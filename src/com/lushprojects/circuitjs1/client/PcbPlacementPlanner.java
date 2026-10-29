@@ -2,6 +2,7 @@ package com.lushprojects.circuitjs1.client;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -768,7 +769,7 @@ final class PcbPlacementPlanner {
         }
         for(Item item:byId.values()) {
             String first=regionKey(item.demand);
-            Vector<TopologyPlacementGraph.PadLink> links=topology.getLinksFor(
+            List<TopologyPlacementGraph.PadLink> links=topology.getLinksFor(
                 item.demand.componentId);
             for(TopologyPlacementGraph.PadLink link:links) {
                 Item other=byId.get(link.getOtherComponentId());
@@ -1262,12 +1263,7 @@ final class PcbPlacementPlanner {
     }
 
     static Rectangle envelope(PcbFootprint footprint,int margin) {
-        Rectangle r=footprint.getPlacement().getSelectionEnvelope();
-        Rectangle c=footprint.getPlacement().getRoutingCourtyard(); r=union(r,c);
-        for (PcbPadPlacement pad : footprint.getPads()) {
-            int ex=pad.getX()+pad.getEscapeDx()*pad.getEscapeLength(),ey=pad.getY()+pad.getEscapeDy()*pad.getEscapeLength();
-            r=union(r,new Rectangle(ex-10,ey-10,20,20));
-        }
+        Rectangle r=footprint.getPlacementEnvelope();
         return new Rectangle(r.x-margin,r.y-margin-20,r.width+margin*2,r.height+margin*2+20);
     }
     private static Rectangle union(Rectangle a,Rectangle b) {
@@ -1386,13 +1382,13 @@ final class PcbPlacementPlanner {
      * or running the candidate-offset search.</p>
      */
     static Point weightedConnectedTarget(PcbFootprint prototype,
-            Vector<PcbFootprint> placed, Vector<TopologyPlacementGraph.PadLink> links,
+            Vector<PcbFootprint> placed, List<TopologyPlacementGraph.PadLink> links,
             int fallbackX, int fallbackY) {
         return weightedConnectedTarget(prototype,placed,links,fallbackX,fallbackY,null);
     }
 
     private static Point weightedConnectedTarget(PcbFootprint prototype,
-            Vector<PcbFootprint> placed, Vector<TopologyPlacementGraph.PadLink> links,
+            Vector<PcbFootprint> placed, List<TopologyPlacementGraph.PadLink> links,
             int fallbackX, int fallbackY, TroubleshootBoard mediumBoard) {
         if (prototype == null || placed == null || links == null)
             throw new IllegalArgumentException("Missing PCB placement target inputs");

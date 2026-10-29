@@ -1,0 +1,446 @@
+{
+  "status": "PASS",
+  "cases": 48,
+  "beforeReceiptSha256": "b6912468a222ebe71a3f5fb1886dadb3d3c3a979f5cca2aa054cc87084d0b0ba",
+  "afterReceiptSha256": "869cd156caad4156cd97aac90a614dfae87a45884ba7780d09a407cfa74abb22",
+  "ignoredWallTelemetry": [
+    "elapsedMillis",
+    "generationRoutingMillis",
+    "maxAdvanceMillis"
+  ],
+  "differences": [],
+  "geometry": [
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "24d0c5b42f7adf0b478e9b9a14c85e9484a5e0e0d98c726298791becc75d03c2",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "9c45ab749bc669d8d31f79a649dca1e1d2cb0390a83392011085ec415138497e",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "978404368c8463aa9403616d84082bc678ee7b93c7d74553c581247992e1da9c",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "LED_INDICATOR",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "f319c5eb9ebb4a4ca72c8b9251c7ae77b031252d90a7b2dbf1ac72d2d65f98bc",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "9a33dd949806fabde05d23f76bcbfcdcfa8f7136eec7168193f02c15e2ef93dd",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "83e7ea6e8168d9ecfb9078843d7038632225edf64c6d3af8fe24132af85fc084",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "ff6af977f2c13ed6c385833bfae5be6a113cdeae4859592d2efa0c054f22dc7a",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "DIODE_PROTECTED_INDICATOR",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "42e38ce17c4f61261349992e68a59f4f23f9d5e958869fadfd2d7aa6b1d139a1",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "14084547cd79e17c834b92164ad438e29acc3431cf2f96229f4bfb5586a55530",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "2ea2bfb3a443facf2aa26dfe3df02a5968aa38c6799bb3a3da7d2d3aa1373629",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "209a61b18bcf4ada12e6b534be2d8728f9f3687499c51327e54d061e98d5c51a",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "PARALLEL_DUAL_INDICATOR",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "bfe12d912e9e3863963663c7da8eef92a6bfaec2f5be7d25a38a3b9e7f0de9ec",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "073fcc08775f34a3711eeccb45c74589631d128a32d72f3eaa9c0e002656c1a5",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "fcf57cdeb52299dda29f9eb4c791e796929eb1a5608ec45fc04da1badd06f20d",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "ec668fececa6ffdadb7aaa22ce17f220a678229a2acbd3324673438ce979c83b",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RC_DELAY",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "56566a6cd6688f6a29e4f9cf85ac4c6b9f9215519e235219c912431479a18289",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "9f5343fec511b3f9836bd2f26f19621062858f0ebc0af1ae16c0cbd1c1f6a139",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "65046cad6213c7c1ae6f086755bc65d4572330077a3256f83937928215c7f801",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "e4283baeee77bf961d33a2ba9a6b259bdbfb4542abc9070447b34fa50f8b6da7",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "NPN_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "a854930329e1fe5bc62a8fb89eb9642039fb4a2404cee0b5701d6edf4fe67d5a",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "81c0c42174801df68b8bc0818dc0b3a777c5322c886c5754d9f690267b58e61b",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "812466aa518e123bf4a4ec9b1af4074b418deafebe039542a15621d1028a5107",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "0747bb226c7ca757e48e9c600b1f4832696587871c246d00047bd82bbff6fd7c",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "NMOS_LOW_SIDE_SWITCH",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "8dbb910bc7a63b029498564f4f0ab1c5c47afd62241301d7b848dae831e09c29",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "57fff5e4f188a077c8f2b46ed55f2470367cf589038cfa28c63319be7891ef91",
+      "packingProbeDisposition": "NO_CHANGE"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "fc940f2e641dfe9fd96a43d04c38fd381049acdd991e7efcb77f9a0f19fba401",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "512a9049e2e09da3eeb83a986e1db6ffeebc75e6654923776f84ccbeef69f75d",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RELAY_OUTPUT",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "faffd15a8e229df0abdb82b895b0169805981b4794a6ad4a5b61252864cc3464",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "d1670a7626a4c87e8308e740eb4632ab3b3a571bbcb3631d092774f9bb70cde4",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "02d2c73a13303e9ceeae910d6449b92e04a598cc0857a8dd9c38c7b76febc314",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "6e11f5fbbf7c170a9e4b357c47b0c6a3c6109f0da368fd6d71917a17333c2354",
+      "packingProbeDisposition": "ROUTE_REJECTED"
+    },
+    {
+      "family": "SENSOR_CONTROL",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "11b307b38d221dca2d7b63748de8e2e9d51a785579a2d062a55126a174df42f4",
+      "packingProbeDisposition": "ROUTE_REJECTED"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "7db98baf5e47b96ec1145b179534a4d81073e4e5df8417be03bc9701dda50fb3",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "d696aba6f24f80546db7b38ea8551f49989697335f2c8ebb02b12a50225add1c",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "2f07a768d3b15310503cb88707cacadd494a56a6a3a4f72141b0200255f22b13",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RB15_CONTROL",
+      "profile": "EASY",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "1dcb95e54f0bfd39f2007e31e775cc14c80a2e877c4275b2bc2ea558ce9bd549",
+      "packingProbeDisposition": "ROUTE_REJECTED"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "b6fe9d4d16edaf7340d9518194dceb41d2c2ed85f9f5d9e08db14733506069fa",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "5a6eec36e6360a2114612c31b24c70d1047e4e08a65ca717ec7a0513d145db97",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "225fc225b028ba213d33d992a904dec86d310eb4986209a0ef7ca73bc2742823",
+      "packingProbeDisposition": "ROUTE_REJECTED"
+    },
+    {
+      "family": "COMPOSED_CONTROLLED_INDICATOR",
+      "profile": "MEDIUM",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "7907571d667436046d7aa0479d1af6f97c3a52820902a91608e0255a140383b3",
+      "packingProbeDisposition": "KEPT"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "6be7db367d8701745839ef4779579313a21fca240e1ee8eac7e8e794f28b58d7",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "770bb040de72b4d3482d502ee3084dcde38e25fc7faac7ed024158e11dc56d79",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "e503e1b00c0c5f916822da803354f227259e7ffd64b56187c5a70bd90ca82e67",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RB30_CONTROL",
+      "profile": "MEDIUM",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "e180929e562a37fb3a92a7c00d2998bde532a7c011d39da8d8a6eed186d5c51c",
+      "packingProbeDisposition": "SELECTED"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "profile": "MEDIUM",
+      "root": "0",
+      "seed": "0",
+      "status": "ACCEPTED",
+      "geometrySha256": "bbd06bad83e1d9833a3abdf529235ef41d87b207785f3dea514e7518e842f811",
+      "packingProbeDisposition": "NOT_APPLICABLE_DECLARED_LAYOUT"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "profile": "MEDIUM",
+      "root": "17",
+      "seed": "17",
+      "status": "ACCEPTED",
+      "geometrySha256": "7e7b70480055cb97cf5269718a0acc8061a11c472d2c8803f7d3c89ef9f6c6d1",
+      "packingProbeDisposition": "NOT_APPLICABLE_DECLARED_LAYOUT"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "profile": "MEDIUM",
+      "root": "13",
+      "seed": "13",
+      "status": "ACCEPTED",
+      "geometrySha256": "da6d39b53de475d607ba7412ee972311fbc49fa6e7a5242e0ee6fdd731937bd0",
+      "packingProbeDisposition": "NOT_APPLICABLE_DECLARED_LAYOUT"
+    },
+    {
+      "family": "RB56_CONTROL",
+      "profile": "MEDIUM",
+      "root": "-9223372036854775808",
+      "seed": "-9223372036854775808",
+      "status": "ACCEPTED",
+      "geometrySha256": "9303487ea6c31712f98c74f45fe4cbbfd0b808aae883f685ba02dfe945f9fa84",
+      "packingProbeDisposition": "NOT_APPLICABLE_DECLARED_LAYOUT"
+    }
+  ]
+}

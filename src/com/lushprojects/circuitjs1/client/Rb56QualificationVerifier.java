@@ -13,8 +13,9 @@ import com.google.gwt.user.client.ui.Button;
 import java.util.Vector;
 
 /**
- * One cold, private RB56 request through the actual staged coordinator/D01.
- * Catalog enablement, public PlayerSession and save admission stay unchanged.
+ * Cold RB56 qualification through the actual staged coordinator/D01.
+ * The explicit normal mode uses public requests and normal admission; private
+ * requests retain their own exact authority independently of catalog enablement.
  * The optional view uses the shared workbench; qualified private PlayerSession adoption is explicit.
  */
 final class Rb56QualificationVerifier {
@@ -39,7 +40,7 @@ final class Rb56QualificationVerifier {
         require(GenerationCoordinator.MAX_JOB_MILLIS == 90000L &&
             GenerationCoordinator.MAX_JOB_STEPS == 640 && GenerationCoordinator.MAX_STEP_MILLIS == 5000L,
             "RB56 qualification requires unchanged 90s/640/5s generation limits");
-        requireHeldCatalog();
+        requireQualificationFamily();
         String canonicalSeed = seedText == null ? "0" : seedText;
         final long seed;
         try { seed = Long.parseLong(canonicalSeed); }
@@ -101,16 +102,34 @@ final class Rb56QualificationVerifier {
         return true;
     }
 
-    private static void requireHeldCatalog() {
+    private static void requireQualificationFamily() {
         require(PlayerFamilyCatalog.isRegistered(Rb56Plan.FAMILY_ID) &&
-            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
-            PlayerFamilyCatalog.stagedCapability(Rb56Plan.FAMILY_ID) instanceof Rb56PlayerFamilyCapability,
-            "RB56 must remain registered and disabled in the normal catalog");
+            PlayerFamilyCatalog.stagedCapability(Rb56Plan.FAMILY_ID) instanceof Rb56PlayerFamilyCapability &&
+            PlayerFamilyCatalog.stagedCapability(Rb56Plan.FAMILY_ID).supportsPrivateQualification(),
+            "RB56 qualification requires its registered private-capable provider");
+    }
+
+    /** Rejected proof work remains in the shared receipt, separate from the accepted proof. */
+    static void requireProofWork(GenerationJob job, int completedUnits, int requiredUnits) {
+        GenerationReceipt receipt = job == null ? null : job.getReceipt();
+        java.util.List<GenerationJob.Attempt> attempts = job == null ? null : job.getAttempts();
+        require(receipt != null && attempts != null && !attempts.isEmpty() && completedUnits > 0 &&
+            completedUnits <= requiredUnits, "Complete accepted proof work is missing");
+        job.validateReceipt(receipt);
+        int totalProofUnits = 0;
+        for (GenerationJob.Attempt attempt : attempts) totalProofUnits += attempt.proofUnits;
+        GenerationJob.Attempt accepted = attempts.get(attempts.size() - 1);
+        require(accepted.outcome == GenerationJob.Outcome.PASS && accepted.proofUnits == completedUnits &&
+            receipt.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) == totalProofUnits,
+            "Accepted and rejected proof work do not match the shared generation receipt");
     }
 
     private static final class Runner {
         final CirSim sim;
         final long seed;
+        final boolean normalPopulation, normalCatalogAtStart, productionDriven;
+        final PlayerLaunchRequest normalLaunch;
+        long acceptedSeed;
         final Task41SimulationSnapshot snapshot;
         final GenerationCoordinator coordinator;
         GenerationRequest request;
@@ -132,8 +151,10 @@ final class Rb56QualificationVerifier {
         PlayerSessionController retainedSession;
         boolean sessionReleased;
         int proofHitsBefore, proofMissesBefore, planHitsBefore, planMissesBefore, retirementCursor;
-        long maxManualUnitMillis, startedAt;
+        long maxManualUnitMillis, startedAt, cleanupStartedAt;
+        int manualAdvanceCount;
         boolean admitted, retained, finished, cleanupPending, restored, disposed, snapshotAttempted;
+        boolean driverStarted;
         boolean powerDisconnected, customerRetestPassed, restoringSession;
         int restoreToken, supersededCursor;
         GeneratedBoardInstance superseded;
@@ -147,6 +168,13 @@ final class Rb56QualificationVerifier {
             modernBench = keepBench && "true".equals(Window.Location.getParameter("tsjRb56PlayerSession"));
             collectDifficulty = "true".equals(Window.Location.getParameter("tsjRb56Difficulty"));
             collectMediumProfile = "true".equals(Window.Location.getParameter("tsjRb56Medium"));
+            normalPopulation = "true".equals(Window.Location.getParameter("tsjRb56Normal"));
+            productionDriven = "true".equals(Window.Location.getParameter("tsjRb56ProductionDrive"));
+            require(!productionDriven || normalPopulation,
+                "Owner-driven coordinator diagnostics require normal-population mode");
+            normalCatalogAtStart = PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID);
+            require(!normalPopulation || (!keepBench && collectDifficulty && collectMediumProfile),
+                "Normal population qualification requires cold profile export without a retained private bench");
             require(!collectMediumProfile || collectDifficulty,
                 "MEDIUM qualification requires the complete private observation export");
             persistence = modernBench && "true".equals(Window.Location.getParameter("tsjRb56Persistence"));
@@ -160,36 +188,64 @@ final class Rb56QualificationVerifier {
             predecessorGraph = sim.elmList;
             originalDebug = sim.troubleshootDebug;
             originalVerifierRunning = sim.developerVerifierRunning;
-            request = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, seed);
+            normalLaunch = normalPopulation ? PlayerLaunchRequest.random(
+                Rb56Plan.FAMILY_ID, Long.toString(seed), "MEDIUM") : null;
+            request = normalPopulation ? GenerationRequest.player(normalLaunch) :
+                GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, seed);
+            acceptedSeed = seed;
         }
 
         void begin() {
             sim.developerVerifierRunning = true;
             startedAt = System.currentTimeMillis();
-            put(report, "protocol", "TSJ-RB56-QUALIFICATION-1");
-            put(report, "scope", modernBench ? "PRIVATE_PLAYER_SESSION" : "PRIVATE_SHARED_WORKBENCH");
+            put(report, "protocol", normalPopulation ? "TSJ-RB56-NORMAL-QUALIFICATION-1" : "TSJ-RB56-QUALIFICATION-1");
+            put(report, "scope", normalPopulation ? "NORMAL_MEDIUM_COLD_POPULATION" :
+                modernBench ? "PRIVATE_PLAYER_SESSION" : "PRIVATE_SHARED_WORKBENCH");
             put(report, "family", Rb56Plan.FAMILY_ID);
             put(report, "seed", Long.toString(seed));
+            put(report, "rootSeed", Long.toString(seed));
+            put(report, "normalRequest", normalPopulation);
+            put(report, "requestManifest", request.canonical());
+            put(report, "layoutVersion", SeededPcbLayoutGenerator.CURRENT_VERSION);
+            put(report, "replayEpoch", PlayerLaunchRequest.EPOCH);
             put(report, "sourceEpoch", GenerationDependencyContext.INTERPRETATION_EPOCH);
+            put(report, "modelEpoch", GenerationDependencyContext.CIRCUIT_DUMP_EPOCH);
             put(report, "planVersion", Rb56Plan.PLAN_VERSION);
+            if (productionDriven)
+                put(report, "generationDriver", "NORMAL_COORDINATOR_ASYNC");
             put(report, "maxJobMillis", 90000L); put(report, "maxJobSteps", 640); put(report, "maxUnitMillis", 5000L);
             put(report, "forcedAfterPublish", forced);
             put(report, "normalCatalogEnabled", PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID));
             publish("RUNNING", "RUNNING:rb56");
             try {
                 phase = "COLD_GENERATION";
-                coordinator.clearDiagnosticMeasurementProofCacheForDeveloperVerification();
-                require(coordinator.getDiagnosticMeasurementProofCacheSize() == 0, "Private D01 cache was not cleared");
-                proofHitsBefore = coordinator.getDiagnosticMeasurementProofCacheHits();
-                proofMissesBefore = coordinator.getDiagnosticMeasurementProofCacheMisses();
+                if (normalPopulation) coordinator.clearDiagnosticProofCacheForDeveloperVerification();
+                else coordinator.clearDiagnosticMeasurementProofCacheForDeveloperVerification();
+                require((normalPopulation ? coordinator.getDiagnosticProofCacheSize() :
+                    coordinator.getDiagnosticMeasurementProofCacheSize()) == 0, "Selected D01 cache was not cleared");
+                proofHitsBefore = proofCacheHits();
+                proofMissesBefore = proofCacheMisses();
                 planHitsBefore = coordinator.getPlanCacheHits();
                 planMissesBefore = coordinator.getPlanCacheMisses();
-                coordinator.startForDiagnosticCacheVerification(request, 90000L);
+                if (productionDriven) coordinator.startAsynchronousForDeveloperVerification(request);
+                else if (normalPopulation) coordinator.startForDeveloperVerification(request);
+                else coordinator.startForDiagnosticCacheVerification(request, 90000L);
                 job = coordinator.getJob();
                 require(job != null && job != previousJob, "Coordinator did not start a fresh job");
-                advanceTimer.schedule(1);
+                driverStarted = true;
+                if (productionDriven) {
+                    require(!coordinator.usesForegroundBudgetForDeveloperVerification() &&
+                        !coordinator.isProgressPaused() &&
+                        coordinator.isPageVisibleForDeveloperVerification(),
+                        "Owner-driven diagnostic cannot exclude foreground-paused time from its 90-second limit");
+                    captureOwnerDrivenMetadata();
+                }
+                advanceTimer.schedule(productionDriven ? 25 : 1);
             } catch (Throwable problem) {
-                if (coordinator.getJob() != previousJob) job = coordinator.getJob();
+                if (coordinator.getJob() != previousJob) {
+                    job = coordinator.getJob();
+                    driverStarted = true;
+                }
                 recordFailure(problem); finish();
             }
         }
@@ -199,14 +255,31 @@ final class Rb56QualificationVerifier {
             try {
                 require(sim.troubleshootDebug && sim.developerVerifierRunning && coordinator.getJob() == job,
                     "RB56 private generation lost its scope or job");
-                requireHeldCatalog();
-                long unitStart = System.currentTimeMillis();
-                coordinator.advanceForDeveloperVerification();
-                maxManualUnitMillis = Math.max(maxManualUnitMillis, System.currentTimeMillis() - unitStart);
-                if (job.isRunning()) { advanceTimer.schedule(1); return; }
+                requireQualificationFamily();
+                if (productionDriven) {
+                    require(!coordinator.usesForegroundBudgetForDeveloperVerification() &&
+                        !coordinator.isProgressPaused() &&
+                        coordinator.isPageVisibleForDeveloperVerification(),
+                        "Owner-driven diagnostic cannot exclude foreground-paused time from its 90-second limit");
+                    captureOwnerDrivenMetadata();
+                    if (job.isRunning()) { advanceTimer.schedule(25); return; }
+                } else {
+                    long unitStart = System.currentTimeMillis();
+                    manualAdvanceCount++;
+                    coordinator.advanceForDeveloperVerification();
+                    maxManualUnitMillis = Math.max(maxManualUnitMillis,
+                        System.currentTimeMillis() - unitStart);
+                    if (job.isRunning()) { advanceTimer.schedule(1); return; }
+                }
                 if (job.getOutcome() != GenerationJob.Outcome.PASS) {
                     if (job.getFailure() != null) throw job.getFailure();
                     throw new IllegalStateException("RB56 coordinator outcome=" + job.getOutcome().name());
+                }
+                if (productionDriven) {
+                    require(manualAdvanceCount == 0 && maxManualUnitMillis == 0,
+                        "Owner-driven diagnostic unexpectedly used manual coordinator advances");
+                    require(coordinator.getYieldCount() > 0,
+                        "Owner-driven diagnostic completed without a production coordinator yield");
                 }
                 // Capture the actual published owner BEFORE checking it, so failure can retire it.
                 published = sim.getGeneratedBoardInstance();
@@ -221,9 +294,22 @@ final class Rb56QualificationVerifier {
         }
 
         void validatePublished() {
+            int acceptedOrdinal = 0;
+            if (normalPopulation) {
+                require(published != null, "Normal candidate did not publish an owner");
+                PlayerLaunchRequest exact = normalLaunch.accepted(published.getSeed());
+                acceptedSeed = exact.seed;
+                while (acceptedOrdinal < request.candidateCount() &&
+                        request.candidate(acceptedOrdinal).getDescriptor().getRootSeed() != acceptedSeed)
+                    acceptedOrdinal++;
+                require(acceptedOrdinal < request.candidateCount(), "Normal publication is outside its canonical candidates");
+                put(report, "seed", Long.toString(acceptedSeed));
+                put(report, "acceptedOrdinal", acceptedOrdinal);
+                put(report, "publicReplay", exact.replay());
+            }
             require(published != null && published != predecessor && publishedController != null &&
                 publishedController != predecessorController && publishedGraph != predecessorGraph &&
-                published.getSeed() == seed && Rb56Plan.FAMILY_ID.equals(published.getCircuitFamilyId()) &&
+                published.getSeed() == acceptedSeed && Rb56Plan.FAMILY_ID.equals(published.getCircuitFamilyId()) &&
                 !published.isDeveloperOnlyFaultRoute() && publishedController.isReady() &&
                 !publishedController.isDeveloperVerificationScopeActive(), "Published RB56 owner is invalid");
             require(published.getPhysicalAdmission() != null &&
@@ -238,6 +324,10 @@ final class Rb56QualificationVerifier {
             GenerationReceipt receipt = job.getReceipt();
             require(receipt != null, "Actual generation receipt is missing");
             job.validateReceipt(receipt);
+            require(receipt.getManifest().equals(normalPopulation ?
+                    request.candidateManifest(acceptedOrdinal) : request.canonical()),
+                "Publication receipt differs from its exact admitted request");
+            put(report, "acceptedManifest", receipt.getManifest());
             require(receipt.isCompleteInternal() && receipt.getStageCount() == 6 &&
                 receipt.getMaxJobMillisInternal() == 90000L && receipt.getMaxStepsInternal() == 640 &&
                 receipt.getMaxStepMillisInternal() == 5000L && receipt.getWorkCount() <= 640 &&
@@ -269,8 +359,9 @@ final class Rb56QualificationVerifier {
                 }
             }
             int samples = 0;
+            JSONArray proofRows = new JSONArray();
             for (GeneratedDiagnosticSolvabilityEvidence row : proof.getEvidence()) {
-                require(Rb56Plan.FAMILY_ID.equals(row.getFamilyId()) && row.getSeed() == seed &&
+                require(Rb56Plan.FAMILY_ID.equals(row.getFamilyId()) && row.getSeed() == acceptedSeed &&
                     row.getAdmittedCandidateCount() == published.getDiagnosticSolvabilityContract().getAdmittedCandidateCount() &&
                     row.getAdmittedPhysicalOwnerCount() == published.getDiagnosticSolvabilityContract().getAdmittedPhysicalOwnerCount() &&
                     row.isRepairReachable() && row.isCustomerRetestPassed() && row.isStateIsolated() &&
@@ -287,19 +378,44 @@ final class Rb56QualificationVerifier {
                 }
                 require(!expectedSamples.isEmpty() && expectedSamples.equals(actualSamples),
                     "D01 hypothesis observations do not match the complete production program");
+                JSONObject exported = new JSONObject();
+                put(exported, "ordinal", proofRows.size());
+                put(exported, "hypothesisDigest", PlayerSessionFingerprint.of(row.getHypothesisKey()));
+                put(exported, "repairSemanticsDigest", PlayerSessionFingerprint.of(row.getRepairSemantics().stableDescription()));
+                put(exported, "family", row.getFamilyId()); put(exported, "seed", Long.toString(row.getSeed()));
+                put(exported, "repairReachable", row.isRepairReachable());
+                put(exported, "customerRetestPassed", row.isCustomerRetestPassed());
+                put(exported, "stateIsolated", row.isStateIsolated());
+                put(exported, "unaffectedFunctionRetested", row.hasUnaffectedFunctionRetestObservation());
+                put(exported, "result", row.getDeterministicResult());
+                put(exported, "rejection", row.getDeterministicRejectionReason());
+                JSONArray actionIds = new JSONArray(), sampleIds = new JSONArray();
+                for (String action : row.getExecutedRepairActionIds()) actionIds.set(actionIds.size(), new JSONString(action));
+                for (String sample : actualSamples) sampleIds.set(sampleIds.size(), new JSONString(sample));
+                exported.put("repairActions", actionIds); exported.put("sampleIds", sampleIds);
+                proofRows.set(proofRows.size(), exported);
             }
+            report.put("proofRows", proofRows);
             GeneratedFaultServiceabilityAdmission.validateHypothesisPopulation(published.getFaultCandidates(), keys);
             int completedProofUnits = coordinator.getLastCompletedProofWorkUnitsForDeveloperVerification();
-            require(keys.size() == 5 && completedProofUnits > 0 &&
-                completedProofUnits <= GeneratedDiagnosticProofService.requiredWorkUnits(published,
-                    request.requiresExplicitCompletion()) &&
-                receipt.getStageWorkCount(GenerationJob.Stage.HYPOTHESES) == completedProofUnits,
-                "RB56 full five-hypothesis/work census failed");
-            require(coordinator.getDiagnosticMeasurementProofCacheHits() == proofHitsBefore &&
-                coordinator.getDiagnosticMeasurementProofCacheMisses() == proofMissesBefore + 1,
+            int requiredProofUnits = GeneratedDiagnosticProofService.requiredWorkUnits(published,
+                request.requiresExplicitCompletion());
+            require(keys.size() == 5, "RB56 full five-hypothesis census failed");
+            requireProofWork(job, completedProofUnits, requiredProofUnits);
+            put(report, "proofWorkUnits", completedProofUnits);
+            put(report, "requiredProofWorkUnits", requiredProofUnits);
+            require(proofCacheHits() == proofHitsBefore &&
+                proofCacheMisses() == proofMissesBefore + (normalPopulation ? 0 : 1),
                 "RB56 cold D01 attempt reused proof or missed unexpectedly");
-            require(coordinator.getPlanCacheHits() == planHitsBefore && coordinator.getPlanCacheMisses() == planMissesBefore + 1,
+            require(coordinator.getPlanCacheHits() == planHitsBefore &&
+                coordinator.getPlanCacheMisses() == planMissesBefore + acceptedOrdinal + 1,
                 "RB56 cold generation did not resolve its actual plan on a miss");
+            put(report, "proofWarmReuse", proof.isWarmReuseForDeveloperVerification());
+            put(report, "proofCachePolicy", normalPopulation ? "BYPASS" : "CLEARED_MISS");
+            put(report, "proofCacheHitsDelta", proofCacheHits() - proofHitsBefore);
+            put(report, "proofCacheMissesDelta", proofCacheMisses() - proofMissesBefore);
+            put(report, "planCacheHitsDelta", coordinator.getPlanCacheHits() - planHitsBefore);
+            put(report, "planCacheMissesDelta", coordinator.getPlanCacheMisses() - planMissesBefore);
             require(!coordinator.retainsSavedOwnersForDeveloperVerification() &&
                 !coordinator.retainsObservationForDeveloperVerification(), "Coordinator retained private owners/observation");
             GeneratedDiagnosticProofService.CleanupAudit audit = coordinator.getCleanupAuditForDeveloperVerification();
@@ -315,7 +431,7 @@ final class Rb56QualificationVerifier {
             put(report, "generationReceiptDigest", PlayerSessionFingerprint.ofGenerationReceipt(receipt));
             put(report, "diagnosticContextDigest", PlayerSessionFingerprint.ofDiagnosticContext(proof.getContextKey()));
             put(report, "diagnosticProgramDigest", PlayerSessionFingerprint.of(proof.getProgramIdentity()));
-            requireHeldCatalog();
+            requireQualificationFamily();
             // Opt-in only, after the full current cold-owner/population/cleanup checks.
             // This reads immutable proof facts and adds no solver work or admission label.
             if (collectDifficulty) {
@@ -335,7 +451,7 @@ final class Rb56QualificationVerifier {
                     put(report, "normalProfileAssessment", assessment.canonical());
                     put(report, "normalProfileAssessmentVersion", DifficultyAssessment.VERSION);
                     put(report, "normalProfileValidated", "MEDIUM");
-                    put(report, "normalPublicationGranted", false);
+                    put(report, "normalPublicationGranted", normalPopulation);
                 }
                 // Private, opt-in qualification data only. Export observable
                 // outcomes and opaque class ordinals for an independent
@@ -370,6 +486,8 @@ final class Rb56QualificationVerifier {
                 repairClasses[index] = repairClass;
                 JSONObject result = new JSONObject();
                 put(result, "ordinal", index); put(result, "repairClass", repairClass);
+                put(result, "hypothesisDigest", PlayerSessionFingerprint.of(row.getHypothesisKey()));
+                put(result, "repairSemanticsDigest", PlayerSessionFingerprint.of(row.getRepairSemantics().stableDescription()));
                 JSONArray samples = new JSONArray();
                 for (GeneratedDiagnosticSample sample : row.getSolverSamples()) {
                     JSONObject observed = new JSONObject();
@@ -394,7 +512,7 @@ final class Rb56QualificationVerifier {
             if (modernBench) {
                 retainedSession = new PlayerSessionController(sim);
                 sim.playerSessionController = retainedSession;
-                retainedSession.openQualifiedBoard(published, persistence);
+                retainedSession.openQualifiedBoard(request, published, persistence);
             }
             workbench.attachToSidebar(sim.verticalPanel);
             if (modernBench) workbench.getRenderer().enableTrayDrawer();
@@ -463,6 +581,7 @@ final class Rb56QualificationVerifier {
             try {
                 require(ownsPersistenceLease(sim, retainedSession), "Private file restore lost its lease");
                 sim.troubleshootDebug = true; sim.developerVerifierRunning = true;
+                manualAdvanceCount++;
                 coordinator.advanceForDeveloperVerification();
             } catch (Throwable failure) { problem = failure; }
             finally { sim.troubleshootDebug = debug; sim.developerVerifierRunning = verifier; }
@@ -550,6 +669,7 @@ final class Rb56QualificationVerifier {
 
         /** Existing neutral counters only; no new solver work, private answers or timing policy. */
         void captureJobCosts() {
+            captureOwnerDrivenMetadata();
             if (job == null) return;
             put(report, "jobOutcome", job.getOutcome().name());
             put(report, "jobStage", job.getStage().name());
@@ -574,12 +694,53 @@ final class Rb56QualificationVerifier {
             report.put("diagnosticWorkTimings", diagnostic);
         }
 
+        void captureOwnerDrivenMetadata() {
+            if (!productionDriven) return;
+            put(report, "generationDriver", "NORMAL_COORDINATOR_ASYNC");
+            put(report, "manualAdvanceCount", manualAdvanceCount);
+            if (!driverStarted) return;
+            put(report, "coordinatorMaxAdvanceMillis", coordinator.getMaxAdvanceMillis());
+            put(report, "coordinatorYieldCount", coordinator.getYieldCount());
+            boolean foregroundBudget = coordinator.usesForegroundBudgetForDeveloperVerification();
+            put(report, "foregroundBudgetApplied", foregroundBudget);
+            put(report, "foregroundBudgetPaused", coordinator.isProgressPaused());
+            put(report, "pageVisible", coordinator.isPageVisibleForDeveloperVerification());
+            if (!foregroundBudget) put(report, "foregroundPausedMillis", 0L);
+        }
+
+        private int proofCacheHits() {
+            return normalPopulation ? coordinator.getDiagnosticProofCacheHits() :
+                coordinator.getDiagnosticMeasurementProofCacheHits();
+        }
+
+        private int proofCacheMisses() {
+            return normalPopulation ? coordinator.getDiagnosticProofCacheMisses() :
+                coordinator.getDiagnosticMeasurementProofCacheMisses();
+        }
+
         void recordFailure(Throwable problem) {
             if (failure == null) { failure = problem; put(report, "failurePhase", phase); captureJobCosts(); }
             else if (failure != problem) failure.addSuppressed(problem);
         }
 
+        void captureCandidateAttempts() {
+            JSONArray attempts = new JSONArray();
+            if (job != null) for (GenerationJob.Attempt attempt : job.getAttempts()) {
+                require(attempt.ordinal == attempts.size() && attempt.ordinal < request.candidateCount() &&
+                    attempt.manifest.equals(request.candidateManifest(attempt.ordinal)),
+                    "Qualification candidate attempts differ from canonical request order");
+                JSONObject row = new JSONObject();
+                put(row, "ordinal", attempt.ordinal);
+                put(row, "seed", Long.toString(request.candidate(attempt.ordinal).getDescriptor().getRootSeed()));
+                put(row, "manifest", attempt.manifest); put(row, "stage", attempt.stage.name());
+                put(row, "outcome", attempt.outcome.name()); put(row, "workUnits", attempt.workUnits);
+                put(row, "proofUnits", attempt.proofUnits); attempts.set(attempts.size(), row);
+            }
+            report.put("candidateAttempts", attempts);
+        }
+
         void finish() {
+            if (cleanupStartedAt == 0) cleanupStartedAt = System.currentTimeMillis();
             advanceTimer.cancel(); holdTimer.cancel();
             pendingRestoreRequest = null;
             try {
@@ -641,7 +802,11 @@ final class Rb56QualificationVerifier {
                     for (CircuitElm element : retirementElements) disposed &= !sim.elmList.contains(element);
                 }
                 require(disposed && !sim.activeMeasurementOverlay, "RB56 candidate or temporary meter was retained");
-                requireHeldCatalog();
+                requireQualificationFamily();
+                require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) == normalCatalogAtStart,
+                    "Qualification changed normal catalog availability");
+                captureCandidateAttempts();
+                captureJobCosts();
                 cleanupPending = false; finished = true; active = null; phase = "RESTORED";
             } catch (Throwable cleanupFailure) {
                 recordFailure(cleanupFailure); cleanupPending = true; phase = "CLEANUP_PENDING";
@@ -660,6 +825,8 @@ final class Rb56QualificationVerifier {
                 (sessionReleased && retainedSession.isQualificationReleased()));
             put(report, "normalCatalogEnabled", PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID));
             put(report, "wallMillis", System.currentTimeMillis() - startedAt);
+            put(report, "operationMillis", cleanupStartedAt - startedAt);
+            put(report, "cleanupMillis", System.currentTimeMillis() - cleanupStartedAt);
             if (failure != null) put(report, "failure", failure.getClass().getSimpleName() + ": " + failure.getMessage());
             String status = failure == null && admitted && restored && disposed && !cleanupPending ? "PASS" : "FAIL";
             publish(status, status + ":rb56" + (failure == null ? "" : ":" + failure.getMessage()));

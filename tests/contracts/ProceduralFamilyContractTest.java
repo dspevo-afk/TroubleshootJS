@@ -41,8 +41,8 @@ public final class ProceduralFamilyContractTest {
             boolean normalEnabled = PlayerFamilyCatalog.isNormalPlayerEnabled(family);
             DifficultyProfile candidateProfile = PlayerFamilyCatalog.candidateProfile(family);
             if (Rb56Plan.FAMILY_ID.equals(family)) {
-                check(candidateProfile == DifficultyProfile.MEDIUM && !normalEnabled,
-                    "RB56 remains a held family with its current MEDIUM declaration");
+                check(candidateProfile == DifficultyProfile.MEDIUM && normalEnabled,
+                    "RB56 normal admission retains its current MEDIUM declaration");
             }
             for (DifficultyProfile profile:DifficultyProfile.values()) {
                 boolean selectable = normalEnabled && profile == candidateProfile;
@@ -93,7 +93,7 @@ public final class ProceduralFamilyContractTest {
                     int declaredPackages = Rb56Plan.resolve(seed).physicalPackageCount();
                     check(packages == declaredPackages && packages >= 40 && packages <= 60 &&
                         owner.getPcbLayout().getComponents().size() == packages,
-                        "held RB56 structural cohort retains its exact MEDIUM 40..60 package population: " + seed);
+                        "RB56 structural cohort retains its exact MEDIUM 40..60 package population: " + seed);
                 }
                 String fine=fingerprint(owner),macro=macro(owner);
                 if (cohort==0 && seed==17 && family.equals("COMPOSED_CONTROLLED_INDICATOR")) {
@@ -262,7 +262,8 @@ public final class ProceduralFamilyContractTest {
         if (request.isCandidateSearch())
             throw new IllegalArgumentException("Construct one exact Q30 candidate at a time");
         GenerationRequest.Prepared prepared=request.resolve(new GenerationRequest.PlanCache());
-        if (request.getExecutionPolicy()!=GenerationExecutionPolicy.NORMAL_MEDIUM)
+        if (request.getExecutionPolicy()!=GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                request.getExecutionPolicy()!=GenerationExecutionPolicy.RB56)
             return prepared.construct().instance;
         GenerationRequest.ConstructionSession session=prepared.beginConstruction();
         int steps=0;
@@ -278,20 +279,11 @@ public final class ProceduralFamilyContractTest {
     }
 
     private static GeneratedBoardInstance construct(String family,long seed) {
-        if (Rb56Plan.FAMILY_ID.equals(family)) {
-            GenerationRequest request = GenerationRequest.forFamilyQualification(family, seed);
-            GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
-            GenerationRequest.ConstructionSession session = prepared.beginConstruction();
-            int steps = 0;
-            while (!session.advance())
-                if (++steps > GenerationCoordinator.MAX_JOB_STEPS)
-                    throw new AssertionError("Held RB56 structural route exceeded the unchanged shared step bound");
-            return session.result().instance;
-        }
         GenerationRequest request = new PlayerLaunchRequest(family,Long.toString(seed),
             PlayerFamilyCatalog.candidateProfile(family).name()).generation();
         GenerationRequest.Prepared prepared=request.resolve(new GenerationRequest.PlanCache());
-        if (request.getExecutionPolicy()!=GenerationExecutionPolicy.NORMAL_MEDIUM)
+        if (request.getExecutionPolicy()!=GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                request.getExecutionPolicy()!=GenerationExecutionPolicy.RB56)
             return prepared.construct().instance;
         GenerationRequest.ConstructionSession session=prepared.beginConstruction();
         int steps=0;

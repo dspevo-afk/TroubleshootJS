@@ -404,6 +404,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'InCircuitResistanceContractTest' -or
         $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
+        $Suite -contains 'Rb56NormalPackingCensusContractTest' -or
+        $Suite -contains 'QuickPlayPhysicalMatrixContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
@@ -421,7 +423,9 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56DependencyCaptureContractTest' -or
         $Suite -contains 'Rb56InstrumentAdmissionContractTest' -or
         $Suite -contains 'Rb56InCircuitReverseContractTest' -or
-        $Suite -contains 'Rb56PhysicalOwnerContractTest'
+        $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
+        $Suite -contains 'Rb56NormalPackingCensusContractTest' -or
+        $Suite -contains 'QuickPlayPhysicalMatrixContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
@@ -526,6 +530,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbSupportPairPlacementContractTest'; Marker = 'PCB support pair contracts ' },
         @{ Name = 'PcbPinLocalPackingContractTest'; Marker = 'pin-local packing contracts ' },
         @{ Name = 'PcbTraceWidthGeometryContractTest'; Marker = 'PCB trace width geometry contracts ' },
+        @{ Name = 'PcbRoutingCourtyardIndexContractTest'; Marker = 'PCB routing courtyard index contracts ' },
         @{ Name = 'PcbTraceWidthProfileContractTest'; Marker = 'PCB trace width profile contracts ' },
         @{ Name = 'PcbRoleWidthRoutingContractTest'; Marker = 'PCB role width routing contracts ' },
         @{ Name = 'PcbRoleWidthReplayDiagnosticTest'; Marker = 'PCB role width replay diagnostic complete' },
@@ -558,6 +563,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'PcbNormalPackingCensusContractTestGroup6'; Marker = 'PCB normal packing census rb30-root-17 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup7'; Marker = 'PCB normal packing census rb30-root-13 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup8'; Marker = 'PCB normal packing census rb30-root-Long.MIN_VALUE ' },
+        @{ Name = 'Rb56NormalPackingCensusContractTest'; Marker = 'PCB normal packing census rb56-all-roots ' },
+        @{ Name = 'Rb56ManifestContractTest'; Marker = 'RB56 manifest identities rows=30 ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
         @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
@@ -632,6 +639,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A09DiagnosticContractTest'; Marker = 'A09 diagnostic contracts ' },
         @{ Name = 'D01DiagnosticContractTest'; Marker = 'D01 diagnostic contracts ' },
         @{ Name = 'A10GenerationContractTest'; Marker = 'A10 generation contracts ' },
+        @{ Name = 'GenerationPublicationPreparationContractTest'; Marker = 'Generation publication preparation contracts assertions=' },
         @{ Name = 'A10RoutingContractTest'; Marker = 'A10 routing rejection contracts ' },
         @{ Name = 'A10DependencyContractTest'; Marker = 'A10 dependency contracts ' },
         @{ Name = 'A11ProviderConformanceTest'; Marker = 'A11 provider conformance' },
@@ -680,6 +688,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P03StructuralFixtures.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08ReferenceConductorBuilder.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08StructuralFixtures.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/HeldFamilyCatalogFixture.java')
     [IO.File]::WriteAllLines($argumentsFile, @($sourcePaths | ForEach-Object {
         '"' + $_.Replace('\', '/') + '"'
     }), (New-Object Text.UTF8Encoding($false)))
@@ -777,7 +786,8 @@ final class PhysicalSpecificationDeveloperVerifier {
                 'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR')
             $physicalGroups = @(
                 @{ Args = @('--small-catalog'); Families = $smallFamilies; Budget = 180000 },
-                @{ Args = @('--family', 'RB30_CONTROL'); Families = @('RB30_CONTROL'); Budget = 600000 }
+                @{ Args = @('--family', 'RB30_CONTROL'); Families = @('RB30_CONTROL'); Budget = 600000 },
+                @{ Args = @('--family', 'RB56_CONTROL'); Families = @('RB56_CONTROL'); Budget = 600000 }
             )
             $physicalOutputs = New-Object Collections.Generic.List[string]
             foreach ($group in $physicalGroups) {
@@ -803,7 +813,7 @@ final class PhysicalSpecificationDeveloperVerifier {
                 for ($rowIndex = 0; $rowIndex -lt $matrixRows.Count; $rowIndex++) {
                     $fields = $matrixRows[$rowIndex] -split '\|'
                     $family = $group.Families[$rowIndex]
-                    $profile = if ($family -in @('COMPOSED_CONTROLLED_INDICATOR','RB30_CONTROL')) { 'MEDIUM' } else { 'EASY' }
+                    $profile = if ($family -in @('COMPOSED_CONTROLLED_INDICATOR','RB30_CONTROL','RB56_CONTROL')) { 'MEDIUM' } else { 'EASY' }
                     if ($fields.Count -ne 13 -or $fields[1] -ne $family -or $fields[2] -ne $profile -or
                             $fields[3] -ne '20' -or $fields[4] -ne '20' -or
                             [int]$fields[11] -gt 48 -or [int]$fields[11] -lt 20) {
@@ -812,7 +822,7 @@ final class PhysicalSpecificationDeveloperVerifier {
                 }
             }
             $outputs[$testClass] = [String]::Join([Environment]::NewLine, $physicalOutputs)
-            $coverage = 'PASS: physical matrix partition coverage families=11 accepted=220 exactReplays=220 smallChildBudgetMs=180000 mediumChildBudgetMs=600000'
+            $coverage = 'PASS: physical matrix partition coverage families=12 accepted=240 exactReplays=240 smallChildBudgetMs=180000 mediumChildBudgetMs=600000'
             Write-Host $coverage
             $receipts.Add($coverage)
             continue

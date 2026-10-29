@@ -1,0 +1,223 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "classification": "DIAGNOSTIC ONLY; all roots already observed, new blind8 untouched",
+  "predeclaredPlanSha256": "37f722df758e88bec489841feacfd90faff9c4f122a9bb6f211ce4c2d4d13216",
+  "currentPlanSha256": "50461b60160aba80805405d1cd988dbe47327ebe82864d1fdf493eaa4c7ff4bc",
+  "oldDeveloperInputDigest": "8e613b44c52457db877b938433582436b8aba164bf9889bfd1b7dd9e8ad4c9d5",
+  "oldDeveloperOutputDigest": "c687a6c9b9dadbad622e57956cb80935a9ec8fbc9f9c9754eb4bd8c911a0b3b9",
+  "oldCompleteArtifactFiles": 357,
+  "oldBuildSeconds": 167.67907650000416,
+  "caps": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000,
+    "maximumCandidates": 4
+  },
+  "cases": [
+    {
+      "ordinal": 0,
+      "version": "old",
+      "root": "-6794211680707017382",
+      "exit": 1,
+      "outcome": "FAIL",
+      "jobOutcome": "TIMEOUT",
+      "jobMillis": 90125,
+      "jobWork": 433,
+      "maxUnitMillis": 1901,
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 26867,
+        "PHYSICAL": 185,
+        "HYPOTHESES": 63036,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 83,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 348,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "rawReportSha256": "3c176cd61faf8f4abb9b60111cb8d82f2d3cc63a1ef207d6db0152f2a237191e",
+      "operationSeconds": 91.13449080009013,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.0643089998047799,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "2b427967cb61590492fb23bad875a5b3a05dd9a7426857ee7cfcf6a45aa1f8cd",
+        "afterSha256": "2b427967cb61590492fb23bad875a5b3a05dd9a7426857ee7cfcf6a45aa1f8cd",
+        "sourceSha256Before": "4bbf9311f2ec48f6cf9bacb5bd98d72aa81661605156545ea4546dfdcd7e8a13",
+        "sourceSha256After": "4bbf9311f2ec48f6cf9bacb5bd98d72aa81661605156545ea4546dfdcd7e8a13",
+        "webSha256Before": "6477083663198f3030b205eceba44d88548efc604d6202deac2337686fbecdde",
+        "webSha256After": "6477083663198f3030b205eceba44d88548efc604d6202deac2337686fbecdde",
+        "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCountBefore": 1568,
+        "fileCountAfter": 1568,
+        "seconds": 0.5000096000730991
+      },
+      "selectedCompiledScript": "DA2066AA7CE39BB21F1A072E19BC7636.cache.js"
+    },
+    {
+      "ordinal": 1,
+      "version": "current",
+      "root": "-6794211680707017382",
+      "exit": 1,
+      "outcome": "FAIL",
+      "jobOutcome": "TIMEOUT",
+      "jobMillis": 90087,
+      "jobWork": 444,
+      "maxUnitMillis": 1869,
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 24756,
+        "PHYSICAL": 164,
+        "HYPOTHESES": 65135,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 83,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 359,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "rawReportSha256": "3508bccb16f7210221dcc84e0f53d9a2ac039b62985dbb5b06aebe9de2a73b64",
+      "operationSeconds": 90.99151419987902,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.0998662998899817,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+        "afterSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+        "sourceSha256Before": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+        "sourceSha256After": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+        "webSha256Before": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+        "webSha256After": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+        "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCountBefore": 1569,
+        "fileCountAfter": 1569,
+        "seconds": 0.5145493000745773
+      },
+      "selectedCompiledScript": "1A521713DA52219CE95F487FE3DF03FD.cache.js"
+    },
+    {
+      "ordinal": 2,
+      "version": "old",
+      "root": "7817806517725629686",
+      "exit": 1,
+      "outcome": "FAIL",
+      "jobOutcome": "TIMEOUT",
+      "jobMillis": 90052,
+      "jobWork": 408,
+      "maxUnitMillis": 1874,
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 34945,
+        "PHYSICAL": 202,
+        "HYPOTHESES": 54871,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 109,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 297,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "rawReportSha256": "e7fd9132d2e28470c358c01ed9f3d96a29221ac9fc0f29d6b95e91d5e0470e04",
+      "operationSeconds": 90.91071369987912,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.3594201998785138,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "2b427967cb61590492fb23bad875a5b3a05dd9a7426857ee7cfcf6a45aa1f8cd",
+        "afterSha256": "2b427967cb61590492fb23bad875a5b3a05dd9a7426857ee7cfcf6a45aa1f8cd",
+        "sourceSha256Before": "4bbf9311f2ec48f6cf9bacb5bd98d72aa81661605156545ea4546dfdcd7e8a13",
+        "sourceSha256After": "4bbf9311f2ec48f6cf9bacb5bd98d72aa81661605156545ea4546dfdcd7e8a13",
+        "webSha256Before": "6477083663198f3030b205eceba44d88548efc604d6202deac2337686fbecdde",
+        "webSha256After": "6477083663198f3030b205eceba44d88548efc604d6202deac2337686fbecdde",
+        "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCountBefore": 1568,
+        "fileCountAfter": 1568,
+        "seconds": 0.4490734999999404
+      },
+      "selectedCompiledScript": "DA2066AA7CE39BB21F1A072E19BC7636.cache.js"
+    },
+    {
+      "ordinal": 3,
+      "version": "current",
+      "root": "7817806517725629686",
+      "exit": 1,
+      "outcome": "FAIL",
+      "jobOutcome": "TIMEOUT",
+      "jobMillis": 90016,
+      "jobWork": 449,
+      "maxUnitMillis": 1767,
+      "stageMillis": {
+        "RESOLVE": 1,
+        "HEALTHY": 31210,
+        "PHYSICAL": 207,
+        "HYPOTHESES": 58562,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "stageWork": {
+        "RESOLVE": 1,
+        "HEALTHY": 109,
+        "PHYSICAL": 1,
+        "HYPOTHESES": 338,
+        "SYMPTOM": 0,
+        "PUBLISH": 0
+      },
+      "rawReportSha256": "aa90fc81ee255f56a981cdee94dccc938932ac45fe89bbd8f7d90a1e5bd8c319",
+      "operationSeconds": 90.85906299995258,
+      "hostCleanup": {
+        "status": "PASS",
+        "seconds": 1.2916485001333058,
+        "serverStopped": true,
+        "ownedSurvivors": [],
+        "errors": []
+      },
+      "inputAudit": {
+        "status": "PASS",
+        "beforeSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+        "afterSha256": "c5066f347236b22aa8161cfde45323331f4fc90c9a79fb569450d8f0857f3d04",
+        "sourceSha256Before": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+        "sourceSha256After": "78f0527014b591c4305e42e9633f857cfeb8a025c1430a14e4cff705f1a4e9d0",
+        "webSha256Before": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+        "webSha256After": "27a5272d766db132553b8e97e8e1b1012cf5a5b6ef50d356e07072eeb6fee976",
+        "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+        "fileCountBefore": 1569,
+        "fileCountAfter": 1569,
+        "seconds": 0.49024899979121983
+      },
+      "selectedCompiledScript": "1A521713DA52219CE95F487FE3DF03FD.cache.js"
+    }
+  ],
+  "limits": "Old/current comparisons are controlled diagnostics, not a campaign rerun or qualification substitute. All failures remain retained. No source, oracle, global runtime setting or cap changed during these runs."
+}

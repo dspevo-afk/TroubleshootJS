@@ -21,7 +21,8 @@ public final class QuickPlayPhysicalMatrixContractTest {
         QuickPlayFamilyRegistry.SENSOR_CONTROL,
         Rb15Plan.FAMILY_ID,
         ControlledIndicatorBlockContributions.FAMILY_ID,
-        Rb30Plan.FAMILY_ID
+        Rb30Plan.FAMILY_ID,
+        Rb56Plan.FAMILY_ID
     };
 
     public static void main(String[] args) {
@@ -107,9 +108,9 @@ public final class QuickPlayPhysicalMatrixContractTest {
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         Vector<String> catalog = PlayerFamilyCatalog.families();
         check(registered.size() == 12 && registered.contains(Rb56Plan.FAMILY_ID) &&
-            !catalog.contains(Rb56Plan.FAMILY_ID) &&
-            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
-            "Held RB56 remains registered but outside the normal-player catalog");
+            catalog.contains(Rb56Plan.FAMILY_ID) &&
+            PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
+            "RB56 is registered and present in the normal-player catalog");
         check(catalog.size() == CATALOG_FAMILIES.length,
             "Normal-player family catalog size changed: expected " + CATALOG_FAMILIES.length +
             " but found " + catalog.size());
@@ -160,7 +161,8 @@ public final class QuickPlayPhysicalMatrixContractTest {
 
     private static GeneratedBoardInstance construct(GenerationRequest request) {
         GenerationRequest.Prepared prepared = request.resolve(new GenerationRequest.PlanCache());
-        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM)
+        if (request.getExecutionPolicy() != GenerationExecutionPolicy.NORMAL_MEDIUM &&
+                request.getExecutionPolicy() != GenerationExecutionPolicy.RB56)
             return prepared.construct().instance;
         GenerationRequest.ConstructionSession session = prepared.beginConstruction();
         int steps = 0;

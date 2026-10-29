@@ -1,0 +1,1299 @@
+{
+  "schema": 1,
+  "status": "FAIL",
+  "scope": "Fresh compiled 14-case final-source restore/admission/DC boundaries; manual defaults remain active, production-drive is not enabled; not player-input evidence, not the full 180-case run, and adds no blind-cohort observation or qualification.",
+  "blindCohortObserved": false,
+  "newBlindCohortQualification": false,
+  "hostRun": {
+    "outcome": "PASS",
+    "caseCount": 14,
+    "errors": [],
+    "rawResultSha256": "1e9f0a2e14a03047d82fdd4e047f47dabd1c87c56f92496b9ad15af611b4db87",
+    "operationStartedUtc": "2026-10-29T20:42:23.088550+00:00",
+    "finishedUtc": "2026-10-29T21:03:04.330592+00:00",
+    "operationSeconds": null,
+    "sequencePhase": null
+  },
+  "acceptedPlan": {
+    "schema": "tsj-r12-medium-plan/5",
+    "sha256": "4816a8b6c3df06109eb54f5ede5366b8febdde00ce94094baa46b5403709e9ac",
+    "sidecarPinned": true,
+    "sourceBinding": "8c6591a9cbbde7a7c90fdc349795e0e8ef9e3408e17296a2a066b5ff5122d333",
+    "readerSha256": "624c4f66cab3a46d86040daa9112df8f1f29c523e9ec8535405ea9b148599285",
+    "replacementBlind2CampaignSha256": "473ea73c8937f55c7a321ee71aff9cbc1f8c778c49668c8a33391fe42ba38c9d",
+    "manifestOracleOutputSha256": "a8c4c23138d0b19230877dc0934b8fcca6110724b17f40c6e537e4a498cfe4b6",
+    "partitionCounts": {
+      "profile": 3,
+      "development": 3,
+      "holdout": 8,
+      "replacement-blind": 8,
+      "replacement-blind-2": 8
+    },
+    "rootIdentityCount": 30,
+    "selectedPlanCacheIds": [
+      "085E91A3E143C16660E9B8900BE12AAA",
+      "145070719CC25BB0E4256CD0D3B890F7",
+      "1DB44731651899475BA8FA9E21B68307",
+      "3843DD701200C68A0B583E94F1F85FB8",
+      "40CC59CF59F3E1E9E58EC2BBEAC2CB1A",
+      "789360066F38959CBABAA1BC89968128",
+      "AFD3773D476DD26E45127CA0CE620795",
+      "D7E8481790649C43FE46E30DBE0BB986",
+      "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "FD36F8B44E1C53281825D0D972EFA862"
+    ],
+    "observedSelectedCacheIds": [
+      "D967F819D0DCF2EA4FA0F0512631D4BC"
+    ],
+    "allObservedCachesInPlan": true,
+    "developer21": {
+      "variant": "Developer",
+      "inputDigest": "f95cc90f1f950e923a70b3a8dfcb18f01b374e7ff6ba76d6445897f30b4a2e38",
+      "outputDigest": "0c8fc632226abb30ca309d8d09ee03e67a0193403aa9c02894b85df6513a5535",
+      "inventorySha256": "752264534d622443390b6af6084818a01683387d9700e7d9ead47104d82d46ec",
+      "sizeSha256": "d62a63a77415e7221c86a649f527f92ba7bd83e512166208694d929edb0e7035",
+      "selectedCacheIds": [
+        "3843DD701200C68A0B583E94F1F85FB8",
+        "789360066F38959CBABAA1BC89968128",
+        "D7E8481790649C43FE46E30DBE0BB986",
+        "D967F819D0DCF2EA4FA0F0512631D4BC",
+        "FD36F8B44E1C53281825D0D972EFA862"
+      ],
+      "cacheCount": 5,
+      "cacheBytes": 17476746
+    },
+    "player11": {
+      "variant": "Player",
+      "inputDigest": "b3bd05d7ca5d9cc6ba4c2291ce9af1d459214faa445ecb8715426bfc74b0788b",
+      "outputDigest": "ffbe7d2f8609f055a00dfea6ac1939c728e083351da816ed2272027b0f78e46a",
+      "inventorySha256": "e553d63d683d3302826751d205bd8422c86275c0df080d00089a461fe2cf60b8",
+      "sizeSha256": "7d4f947c96ca1213a4de1558f661228e55f465dc6542f0a4448edd8b23385ba4",
+      "selectedCacheIds": [
+        "085E91A3E143C16660E9B8900BE12AAA",
+        "145070719CC25BB0E4256CD0D3B890F7",
+        "1DB44731651899475BA8FA9E21B68307",
+        "40CC59CF59F3E1E9E58EC2BBEAC2CB1A",
+        "AFD3773D476DD26E45127CA0CE620795"
+      ],
+      "cacheCount": 5,
+      "cacheBytes": 9425422
+    },
+    "repositoryInputs": {
+      "declaredCount": 1255,
+      "checkedCount": 1255,
+      "mismatchCount": 0,
+      "mismatches": []
+    }
+  },
+  "limits": {
+    "jobMillis": 90000,
+    "jobWork": 640,
+    "unitMillis": 5000
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "seconds": 0.36087689991109073,
+    "beforeSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+    "afterSha256": "061adeec2d83fb4cdf9d477eaab282601fd9d1a4057a0be46fc67b0dcb96e8dc",
+    "sourceSha256Before": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+    "sourceSha256After": "cba513e9e63df4d95f0a8e46140b61912a9db269227e449e10b2eada33515e48",
+    "webSha256Before": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+    "webSha256After": "78db3231a3880af695623225d070dbdd44de4b07542428cd33bff274a565df56",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCountBefore": 1569,
+    "fileCountAfter": 1569,
+    "identicalBeforeAfter": true
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 1.0710424000862986,
+    "serverStopped": true,
+    "ownedSurvivorCount": 0,
+    "errorCount": 0,
+    "errors": []
+  },
+  "expectationReuse": {
+    "independentAdmissionSha256": "8e1584e1854f03e0b6590272f473570b360e6932a7ac7033445cb43cb83cff6b",
+    "priorRawAdmissionHostSha256": "7cb5abb5b1fda4b0392bc4cf1896a07495b3c6bd164612d0493f7324d438f751",
+    "priorRawNormalReportSha256": "8eaa59b2ba346bb4cd26c73bace95a37119f8bcc49a44ab41838e6693b4a2e2c",
+    "priorRawFullSaveReportSha256": "45163bbee1f050d365ba35eb5b51ebae0be385b9222a9545868307d3a184e6f0",
+    "meaning": "Prior files supply pinned semantic expectations only; current compiled cases, reports, caches, input audit, and host cleanup are independently required."
+  },
+  "caseCount": 14,
+  "expectedCaseCount": 14,
+  "passingCaseCount": 14,
+  "failedCaseCount": 0,
+  "restoreGenerationRowsChecked": 29,
+  "cases": [
+    {
+      "index": 1,
+      "name": "restore-guard-proof",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 49.417332199867815,
+      "rawReportSha256": "9b378500d162c72173b68ee32c0afd62fd721fb003ab2a74ff850d528086910c",
+      "computedReportSha256": "9b378500d162c72173b68ee32c0afd62fd721fb003ab2a74ff850d528086910c",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 300,
+      "reportActionMillis": 5,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 24366,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 917,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "STALE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 24069,
+          "workUnits": 88,
+          "maxCoordinatorAdvanceMillis": 911,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 7,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed its pristine diagnostic proof receipt"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "proof",
+        "expectedOutcome": "STALE",
+        "observedOutcome": "STALE",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 6,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true,
+        "replacement proof is rejected by the exact receipt identity guard": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed its pristine diagnostic proof receipt"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 2,
+      "name": "rb56-failed-player-seed-diagnostic",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 217.58043819991872,
+      "rawReportSha256": "60f478a1c1dc714e71fda909bff97efecdc2872a5c93d5ab177d823c71b77bef",
+      "computedReportSha256": "60f478a1c1dc714e71fda909bff97efecdc2872a5c93d5ab177d823c71b77bef",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 4100,
+      "reportActionMillis": 7280,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 56952,
+          "workUnits": 462,
+          "maxCoordinatorAdvanceMillis": 1081,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 72236,
+          "workUnits": 490,
+          "maxCoordinatorAdvanceMillis": 1092,
+          "restoreHistoryEntries": 73,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 28,
+          "publishWorkUnits": 29,
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 80193,
+          "workUnits": 491,
+          "maxCoordinatorAdvanceMillis": 1327,
+          "restoreHistoryEntries": 82,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 30,
+          "publishWorkUnits": 30,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {
+        "captured wire roundtrip canonical": true,
+        "capture matches independent live signature": true,
+        "valid-session-restore published normally": true,
+        "restored semantic signature exact": true,
+        "invalid final signature is parser accepted": true,
+        "private reconstruction rejects final signature at publication": true,
+        "failed restore preserves exact prior history owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 3,
+      "name": "restore-guard-temporal",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 55.931764899985865,
+      "rawReportSha256": "884893eb158f4b728deaf3d1553349a8b89f01de8de353dd80790a4a9b12f05f",
+      "computedReportSha256": "884893eb158f4b728deaf3d1553349a8b89f01de8de353dd80790a4a9b12f05f",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 184,
+      "reportActionMillis": 7,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 28469,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1343,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "STALE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 26739,
+          "workUnits": 88,
+          "maxCoordinatorAdvanceMillis": 1249,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 7,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed retained proof configuration"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "temporal",
+        "expectedOutcome": "STALE",
+        "observedOutcome": "STALE",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 6,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed retained proof configuration"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 4,
+      "name": "restore-guard-model",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 74.45282270014286,
+      "rawReportSha256": "dce81bf0ed3a7bdc50c592f18c8ed6c9bcb67f3f46df0a8262d4e0a16854cde6",
+      "computedReportSha256": "dce81bf0ed3a7bdc50c592f18c8ed6c9bcb67f3f46df0a8262d4e0a16854cde6",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 183,
+      "reportActionMillis": 8,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 36012,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1422,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "STALE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 37528,
+          "workUnits": 88,
+          "maxCoordinatorAdvanceMillis": 1533,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 7,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction state changed between owned units"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "model",
+        "expectedOutcome": "STALE",
+        "observedOutcome": "STALE",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 6,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction state changed between owned units"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 5,
+      "name": "restore-guard-settings",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 73.7429270001594,
+      "rawReportSha256": "5b6911a3d773938e6da820ff29d4e80e147dd7f64fbcd3fe8c6b3b8822cc09a2",
+      "computedReportSha256": "5b6911a3d773938e6da820ff29d4e80e147dd7f64fbcd3fe8c6b3b8822cc09a2",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 183,
+      "reportActionMillis": 8,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 36709,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1434,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "STALE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 36136,
+          "workUnits": 88,
+          "maxCoordinatorAdvanceMillis": 1429,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 7,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed retained proof configuration"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "settings",
+        "expectedOutcome": "STALE",
+        "observedOutcome": "STALE",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 6,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Stale: Session reconstruction changed retained proof configuration"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 6,
+      "name": "restore-guard-cancel-mid",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 74.76772440015338,
+      "rawReportSha256": "ae570a240f09e63217e23fda4f2e5eb1c0eea8d60e032901928d0e1d6ae8c228",
+      "computedReportSha256": "ae570a240f09e63217e23fda4f2e5eb1c0eea8d60e032901928d0e1d6ae8c228",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 181,
+      "reportActionMillis": 7,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 37233,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1355,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "CANCELLED",
+          "stage": "PUBLISH",
+          "elapsedMillis": 36549,
+          "workUnits": 84,
+          "maxCoordinatorAdvanceMillis": 1382,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 3,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Cancelled: Generation cancelled"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "cancel-mid",
+        "expectedOutcome": "CANCELLED",
+        "observedOutcome": "CANCELLED",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 3,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Cancelled: Generation cancelled"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 7,
+      "name": "restore-guard-cancel-final",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 59.87528820009902,
+      "rawReportSha256": "24878d2c87547f4e6f7303b1bf7d046679a3c046c428becfa0665cb38c86d6ec",
+      "computedReportSha256": "24878d2c87547f4e6f7303b1bf7d046679a3c046c428becfa0665cb38c86d6ec",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 181,
+      "reportActionMillis": 10,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 33957,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1401,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "guard-session-restore",
+          "outcome": "CANCELLED",
+          "stage": "PUBLISH",
+          "elapsedMillis": 25099,
+          "workUnits": 87,
+          "maxCoordinatorAdvanceMillis": 957,
+          "restoreHistoryEntries": 0,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 6,
+          "publishWorkUnits": 6,
+          "failureChain": [
+            "com.lushprojects.circuitjs1.client.GenerationJob$Cancelled: Generation cancelled"
+          ]
+        }
+      ],
+      "guard": {
+        "kind": "cancel-final",
+        "expectedOutcome": "CANCELLED",
+        "observedOutcome": "CANCELLED",
+        "boundaryStage": "PUBLISH",
+        "completedWorkUnits": 6,
+        "requiredWorkUnits": 6,
+        "receiptIssued": false,
+        "exactCandidateBound": true,
+        "pristineProofBound": true
+      },
+      "requiredAssertions": {
+        "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt": true,
+        "restore guard rollback restores exact prior owner graph controller runtime and history": true,
+        "restore guard cleanup is scoped complete and releases candidate owners": true,
+        "restore guard candidate remains unpublished and externally isolated": true,
+        "restore guard candidate graph is disposed from the live owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "com.lushprojects.circuitjs1.client.GenerationJob$Cancelled: Generation cancelled"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 8,
+      "name": "restore-guard-positive-rc",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 75.9131969998125,
+      "rawReportSha256": "d4e85bacdc186eb5da1a3206cc29ddfd17ee8754ebe26f9bd468ffb2cee69fe4",
+      "computedReportSha256": "d4e85bacdc186eb5da1a3206cc29ddfd17ee8754ebe26f9bd468ffb2cee69fe4",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 479,
+      "reportActionMillis": 226,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 24271,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 953,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 25309,
+          "workUnits": 91,
+          "maxCoordinatorAdvanceMillis": 979,
+          "restoreHistoryEntries": 10,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 9,
+          "publishWorkUnits": 10,
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 25293,
+          "workUnits": 91,
+          "maxCoordinatorAdvanceMillis": 1021,
+          "restoreHistoryEntries": 13,
+          "restoreSourceCount": 1,
+          "restoreReservedWorkUnits": 10,
+          "publishWorkUnits": 10,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {},
+      "special": null,
+      "failureDetails": [
+        "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 9,
+      "name": "rb56-exact-player-file-diagnostic",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 64.77176659996621,
+      "rawReportSha256": "0d1723071d6f871c54e1bd288e28f64df07d66e46e16d37e71bbb74ae1054011",
+      "computedReportSha256": "0d1723071d6f871c54e1bd288e28f64df07d66e46e16d37e71bbb74ae1054011",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 13,
+      "reportActionMillis": 26,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "exact-file-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 63767,
+          "workUnits": 476,
+          "maxCoordinatorAdvanceMillis": 1134,
+          "restoreHistoryEntries": 19,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 14,
+          "publishWorkUnits": 15,
+          "failureChain": []
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {
+        "exact file preserves canonical inventory history source and damage state": true,
+        "exact file publishes a fresh owner without imported customer completion": true
+      },
+      "special": null,
+      "failureDetails": [],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 10,
+      "name": "rb56-private-restore",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 119.98524169996381,
+      "rawReportSha256": "713666c3dbfd3d37e72d0d541373bee35a88e6600bd6a7a203b3271b1fa9f159",
+      "computedReportSha256": "713666c3dbfd3d37e72d0d541373bee35a88e6600bd6a7a203b3271b1fa9f159",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 4287,
+      "reportActionMillis": 4667,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 25686,
+          "workUnits": 384,
+          "maxCoordinatorAdvanceMillis": 724,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 31508,
+          "workUnits": 408,
+          "maxCoordinatorAdvanceMillis": 742,
+          "restoreHistoryEntries": 63,
+          "restoreSourceCount": 3,
+          "restoreReservedWorkUnits": 24,
+          "publishWorkUnits": 25,
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 30891,
+          "workUnits": 409,
+          "maxCoordinatorAdvanceMillis": 763,
+          "restoreHistoryEntries": 70,
+          "restoreSourceCount": 3,
+          "restoreReservedWorkUnits": 26,
+          "publishWorkUnits": 26,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        },
+        {
+          "phase": "invalid-realization-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 26203,
+          "workUnits": 384,
+          "maxCoordinatorAdvanceMillis": 816,
+          "restoreHistoryEntries": 70,
+          "restoreSourceCount": 3,
+          "restoreReservedWorkUnits": 26,
+          "publishWorkUnits": 1,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session physical realization does not match its replay"
+          ]
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {
+        "captured wire roundtrip canonical": true,
+        "capture matches independent live signature": true,
+        "valid-session-restore published normally": true,
+        "restored semantic signature exact": true,
+        "invalid final signature is parser accepted": true,
+        "private reconstruction rejects final signature at publication": true,
+        "failed restore preserves exact prior history owner": true,
+        "failed physical realization restore preserves exact previous owners history and cleanup": true,
+        "both failed restores preserve full protected semantic signature": true
+      },
+      "special": null,
+      "failureDetails": [
+        "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state",
+        "java.lang.IllegalArgumentException: Session physical realization does not match its replay"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 11,
+      "name": "rb56-normal-restore",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 94.37078859983012,
+      "rawReportSha256": "771f5d5467fc3422b760206bb2b395cf49fec0cfbddaf3d02419b41ab2863542",
+      "computedReportSha256": "771f5d5467fc3422b760206bb2b395cf49fec0cfbddaf3d02419b41ab2863542",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 3224,
+      "reportActionMillis": 4659,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 26215,
+          "workUnits": 384,
+          "maxCoordinatorAdvanceMillis": 742,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 31360,
+          "workUnits": 408,
+          "maxCoordinatorAdvanceMillis": 763,
+          "restoreHistoryEntries": 63,
+          "restoreSourceCount": 3,
+          "restoreReservedWorkUnits": 24,
+          "publishWorkUnits": 25,
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 31122,
+          "workUnits": 409,
+          "maxCoordinatorAdvanceMillis": 744,
+          "restoreHistoryEntries": 70,
+          "restoreSourceCount": 3,
+          "restoreReservedWorkUnits": 26,
+          "publishWorkUnits": 26,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {
+        "captured wire roundtrip canonical": true,
+        "capture matches independent live signature": true,
+        "valid-session-restore published normally": true,
+        "restored semantic signature exact": true,
+        "invalid final signature is parser accepted": true,
+        "private reconstruction rejects final signature at publication": true,
+        "failed restore preserves exact prior history owner": true
+      },
+      "special": null,
+      "failureDetails": [
+        "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 12,
+      "name": "rb56-normal-third-root-after-admission",
+      "outcome": "PASS",
+      "observedState": "PASS:rb56",
+      "lastObservedState": "PASS:rb56",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 62.56706229993142,
+      "rawReportSha256": "ce0dcec910f29e38f8203238f986395990fa0787c0377b10a5f4bf50dff0c785",
+      "computedReportSha256": "ce0dcec910f29e38f8203238f986395990fa0787c0377b10a5f4bf50dff0c785",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": null,
+      "reportActionMillis": null,
+      "reportOperationMillis": 61689,
+      "reportCleanupMillis": 4,
+      "generations": [],
+      "guard": null,
+      "requiredAssertions": {},
+      "special": {
+        "normalAdmission": {
+          "rootSeed": "-8331504746761817642",
+          "coldProofs": 5,
+          "proofWork": 375,
+          "declaredProofWork": 520,
+          "solverSamples": 65,
+          "generationWork": 497,
+          "generationMillis": 61299,
+          "maxUnitMillis": 1136,
+          "jobStageWork": {
+            "RESOLVE": 1,
+            "HEALTHY": 118,
+            "PHYSICAL": 1,
+            "HYPOTHESES": 375,
+            "SYMPTOM": 1,
+            "PUBLISH": 1
+          },
+          "requestManifestSha256": "ebc247e6756e37b7263f445da1ff471b020a8df43bc009125c2bc7684aa42c9d",
+          "acceptedManifestSha256": "3afab5e2a2ba98d6ae5dbfe96e70c108fdd0b03fb3d296101f16365097dd98b6",
+          "candidateAttemptCount": 1,
+          "rawReferenceComparisons": {
+            "rootSeed": true,
+            "requestManifest": true,
+            "acceptedManifest": true,
+            "acceptedOrdinal": true,
+            "proofWorkUnits": true,
+            "requiredProofWorkUnits": true,
+            "proofWarmReuse": true,
+            "proofCachePolicy": true,
+            "proofRows": true,
+            "hypotheses": true,
+            "solverSamples": true,
+            "generationStages": true,
+            "generationWork": true,
+            "jobStageWork": true,
+            "physicalAdmission": true,
+            "normalPhysicalAdmission": true,
+            "fullProductionD01": true,
+            "coldProof": true,
+            "difficultyFeatures": true,
+            "difficultyFeatureStatus": true,
+            "difficultyFeatureVersion": true,
+            "normalProfileAssessment": true,
+            "normalProfileAssessmentVersion": true,
+            "normalProfileValidated": true,
+            "normalPublicationGranted": true,
+            "calibrationObservations": true,
+            "calibrationTemporalWaits": true
+          },
+          "limits": {
+            "jobMillis": 90000,
+            "jobWork": 640,
+            "unitMillis": 5000
+          },
+          "blindCohortObserved": false
+        }
+      },
+      "failureDetails": [],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": null
+    },
+    {
+      "index": 13,
+      "name": "rb56-third-root-full-save-restore",
+      "outcome": "PASS",
+      "observedState": "PASS",
+      "lastObservedState": "PASS",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 215.32735299994238,
+      "rawReportSha256": "3c49aa439ee9b3eccbef8c6127e34a165ece98c2839be5539a693a072165dfb7",
+      "computedReportSha256": "3c49aa439ee9b3eccbef8c6127e34a165ece98c2839be5539a693a072165dfb7",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": 3921,
+      "reportActionMillis": 6816,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 61683,
+          "workUnits": 497,
+          "maxCoordinatorAdvanceMillis": 1128,
+          "restoreHistoryEntries": null,
+          "restoreSourceCount": null,
+          "restoreReservedWorkUnits": null,
+          "publishWorkUnits": 1,
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 73819,
+          "workUnits": 524,
+          "maxCoordinatorAdvanceMillis": 1176,
+          "restoreHistoryEntries": 69,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 27,
+          "publishWorkUnits": 28,
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 72086,
+          "workUnits": 525,
+          "maxCoordinatorAdvanceMillis": 1160,
+          "restoreHistoryEntries": 78,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 29,
+          "publishWorkUnits": 29,
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        }
+      ],
+      "guard": null,
+      "requiredAssertions": {
+        "captured wire roundtrip canonical": true,
+        "capture matches independent live signature": true,
+        "valid-session-restore published normally": true,
+        "restored semantic signature exact": true,
+        "invalid final signature is parser accepted": true,
+        "private reconstruction rejects final signature at publication": true,
+        "failed restore preserves exact prior history owner": true
+      },
+      "special": {
+        "saveIdentity": {
+          "exactReplayWireMatchesReference": true,
+          "replayWireSha256": "740416c07142d8acb4848293da69c0ac0ba49dccd946e50ad8b9149432fd3a75",
+          "referenceRawReportSha256": "45163bbee1f050d365ba35eb5b51ebae0be385b9222a9545868307d3a184e6f0"
+        }
+      },
+      "failureDetails": [
+        "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+      ],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": false
+    },
+    {
+      "index": 14,
+      "name": "live-endpoint-membership-dc",
+      "outcome": "PASS",
+      "observedState": "PASS:u02-u03",
+      "lastObservedState": "PASS:u02-u03",
+      "terminalReached": true,
+      "stateMatch": true,
+      "timedOut": false,
+      "operationSeconds": 1.0737190002109855,
+      "rawReportSha256": "34942c669773b45948fcdf8e9ad7b4c3c31994d4be676d9e8574623b6c2df3d8",
+      "computedReportSha256": "34942c669773b45948fcdf8e9ad7b4c3c31994d4be676d9e8574623b6c2df3d8",
+      "selectedCache": "D967F819D0DCF2EA4FA0F0512631D4BC",
+      "selectedCacheRoles": [
+        "developer"
+      ],
+      "selectedCacheInventoryFiles": [
+        {
+          "sha256": "1eab93a988327eceacf3820c0ba49cdc6ad5115da21b987ce66e9b7ae1b0a2c3",
+          "bytes": 3514335
+        }
+      ],
+      "transport": "PASSIVE_CDP_DOM",
+      "assertions": null,
+      "reportActionMillis": null,
+      "reportOperationMillis": null,
+      "reportCleanupMillis": null,
+      "generations": [],
+      "guard": null,
+      "requiredAssertions": {},
+      "special": {
+        "endpointMembership": {
+          "mode": "dc",
+          "canaryCount": 9,
+          "controlledOnly": true,
+          "canaries": {
+            "endpointMembershipInitialPositive": true,
+            "endpointMembershipStable": true,
+            "endpointMembershipSubstitutionRejected": true,
+            "endpointMembershipSubstitutionRestored": true,
+            "endpointMembershipRemovalRejected": true,
+            "endpointMembershipReinserted": true,
+            "endpointMembershipReplacementVector": true,
+            "endpointMembershipClearAndRebind": true,
+            "endpointMembershipUnsubscribe": true
+          },
+          "fixtureSourceOutsideLogicalBoard": true,
+          "fixtureStateRestored": true,
+          "cancelledPublicationRetired": true,
+          "endpointIndexHintsVerified": true,
+          "renderReadOnly": true,
+          "temporaryMeterClean": true,
+          "scopeSamples": 8192,
+          "boundedCapacity": 8192
+        }
+      },
+      "failureDetails": [],
+      "status": "PASS",
+      "issues": [],
+      "playerInputEvidence": null
+    }
+  ],
+  "issues": [
+    "accepted v2 plan did not bind a new second replacement-blind campaign",
+    "new second blind partition is not eight fresh identities",
+    "developer plan file list differs from inventory",
+    "player plan file list differs from inventory",
+    "technical sequence lacks the completed compiled R3 phase record"
+  ]
+}

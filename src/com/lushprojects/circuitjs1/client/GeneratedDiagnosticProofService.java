@@ -189,6 +189,21 @@ final class GeneratedDiagnosticProofService {
      * and publish) are outside this proof population.
      */
     static int requiredWorkUnits(GeneratedBoardInstance owner, boolean explicitCompletion) {
+        return workUnits(owner, explicitCompletion, true);
+    }
+
+    /**
+     * Mandatory proof work before any optional additional readiness waits.
+     * This is an admission lower bound, never evidence of a completed proof.
+     * Every hypothesis still executes its real first-ready cursor and all
+     * observations, profiles, repairs and retests within the job's hard caps.
+     */
+    static int minimumWorkUnits(GeneratedBoardInstance owner, boolean explicitCompletion) {
+        return workUnits(owner, explicitCompletion, false);
+    }
+
+    private static int workUnits(GeneratedBoardInstance owner, boolean explicitCompletion,
+            boolean maximumServicePreparation) {
         if (owner == null) throw new IllegalArgumentException("Missing diagnostic owner");
         GeneratedDiagnosticProvider provider = owner.getDiagnosticProvider();
         if (provider == null) throw new IllegalArgumentException("Missing diagnostic provider");
@@ -201,7 +216,7 @@ final class GeneratedDiagnosticProofService {
             GeneratedDiagnosticServicePreparation.Policy servicePreparation =
                 ((GeneratedDiagnosticServicePreparation.Provider) provider)
                     .getServicePreparationPolicy();
-            if (servicePreparation != null)
+            if (servicePreparation != null && maximumServicePreparation)
                 perHypothesis += servicePreparation.getWorkUnits() - 1;
         }
         if (owner.getTemporalBehavior() != null) {

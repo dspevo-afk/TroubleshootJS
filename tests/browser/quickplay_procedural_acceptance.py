@@ -23,6 +23,7 @@ EXPECTED_CATALOG = (
     ('RB15_CONTROL', 'EASY'),
     ('COMPOSED_CONTROLLED_INDICATOR', 'MEDIUM'),
     ('RB30_CONTROL', 'MEDIUM'),
+    ('RB56_CONTROL', 'MEDIUM'),
 )
 NORMAL_JOB_MILLIS = 90000
 OBSERVATION_MARGIN_SECONDS = 25
@@ -180,10 +181,10 @@ try:
                         save('progress.json', result)
                         raise
 
-            assert len(result['cases']) == 33 and all(row['outcome'] == 'PASS' for row in result['cases'])
+            assert len(result['cases']) == 36 and all(row['outcome'] == 'PASS' for row in result['cases'])
             result['replays'] = []
             family_by_id = {row['id']: row for row in families}
-            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL'):
+            for family_id in ('RELAY_OUTPUT', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL', 'RB56_CONTROL'):
                 replay = saved[family_id]
                 family = family_by_id[family_id]
                 row = {'family': family_id, 'profile': family['profile'],
@@ -212,7 +213,7 @@ try:
                     row['failure'] = repr(failure)
                     save('progress.json', result)
                     raise
-            assert len(result['replays']) == 3 and all(
+            assert len(result['replays']) == 4 and all(
                 row['outcome'] == 'PASS' for row in result['replays'])
             # Prior v5 codes are rejected at parse time before session/board mutation.
             before_stale = snapshot()

@@ -146,20 +146,20 @@ final class QuickPlayDeveloperVerifier {
         Vector<String> expected = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
         expected.add(Rb30Plan.FAMILY_ID);
-        require(catalog.size() == 11 && catalog.equals(expected),
+        expected.add(Rb56Plan.FAMILY_ID);
+        require(catalog.size() == 12 && catalog.equals(expected),
             "Quick Play enabled catalog order or normal family census changed");
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         Vector<String> expectedRegistered = new Vector<String>(expected);
-        expectedRegistered.add(Rb56Plan.FAMILY_ID);
         require(registered.size() == 12 && registered.equals(expectedRegistered) &&
             PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
-            !PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
+            PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
             PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.MEDIUM,
-            "Enabled11 and held RB56 retain exact separate registered identities");
+            "Enabled12 retain exact registered identities and MEDIUM RB56 profile");
         boolean heldRejected = false;
-        try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "MEDIUM"); }
+        try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "HARD"); }
         catch (IllegalArgumentException unavailableProfile) { heldRejected = true; }
-        require(heldRejected, "Held MEDIUM RB56 entered an ordinary player request");
+        require(heldRejected, "Unavailable HARD RB56 entered an ordinary player request");
 
         long[] roots = { Long.MIN_VALUE, 9007199254740993L, Long.MAX_VALUE };
         for (int familyIndex = 0; familyIndex < catalog.size(); familyIndex++) {
@@ -183,15 +183,17 @@ final class QuickPlayDeveloperVerifier {
                     Long.toString(root), profile.name());
                 GenerationRequest normal = player.generation();
                 boolean normalMedium = Rb30Plan.FAMILY_ID.equals(family);
+                boolean advanced = Rb56Plan.FAMILY_ID.equals(family);
                 require(player.seed == root && player.candidateSearch &&
                     normal.getDifficulty() == profile && !normal.isQuickPlay() &&
                     normal.candidateCount() == QuickPlayAdmission.MAX_CANDIDATES &&
                     normal.getDescriptor().getRootSeed() == root &&
                     normal.getExecutionPolicy() == (normalMedium ?
-                        GenerationExecutionPolicy.NORMAL_MEDIUM :
-                        GenerationExecutionPolicy.SMALL_BOARD) &&
+                        GenerationExecutionPolicy.NORMAL_MEDIUM : advanced ?
+                        GenerationExecutionPolicy.RB56 : GenerationExecutionPolicy.SMALL_BOARD) &&
                     normal.getRequiredPhysicalAdmissionIdentity().equals(normalMedium ?
-                        MediumBoardNormalAdmission.IDENTITY : SupportedEnvelope.current().identity()),
+                        MediumBoardNormalAdmission.IDENTITY : advanced ?
+                        MediumBoardNormalAdmission.RB56_IDENTITY : SupportedEnvelope.current().identity()),
                     "Normal player request lost profile, seed, or physical capability: " + family);
 
                 if (familyIndex < QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().size()) {

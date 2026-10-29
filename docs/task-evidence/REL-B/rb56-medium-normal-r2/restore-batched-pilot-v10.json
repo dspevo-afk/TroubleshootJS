@@ -1,0 +1,216 @@
+{
+  "schema": "tsj-r12-staged-restore-summary/1",
+  "candidate": "Developer v10; bounded batches plus exact proof guard; test-only paused signature getter subsequently corrected",
+  "status": "FAIL",
+  "rawResultSha256": "5d6c20bdd2d87d60dd11c530c38df4cc672c84b7e1590e420301e8a0390adf49",
+  "build": {
+    "Protocol": "troubleshootjs-production-build-identity-v1",
+    "Variant": "Developer",
+    "Style": "OBF",
+    "InputDigest": "55b5f12a943f906c50d38912baeb0cc11b7d4e1c8aaa805ae2404deee5aebf40",
+    "InputFileCount": 1193,
+    "OutputDigest": "4daa61212391e1349eddd452c349b8a078351d0e34965f1f479e715aa5c05982",
+    "OutputFileCount": 357
+  },
+  "wrapper": {
+    "seconds": 287.070547,
+    "exit": 1
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "f6296f83808afa1280df197421ead1dd9e9fdabeee7775b7bfc90b64d5c5b08b",
+    "afterSha256": "f6296f83808afa1280df197421ead1dd9e9fdabeee7775b7bfc90b64d5c5b08b",
+    "sourceSha256Before": "5fe91973e7ed8286dca2c35b0effbcc32bb6f67746d13a16ed0a5df43c09e34a",
+    "sourceSha256After": "5fe91973e7ed8286dca2c35b0effbcc32bb6f67746d13a16ed0a5df43c09e34a",
+    "webSha256Before": "e775fb8c0f1ce47215c9232d46cc592b313c39cb1d3e6eac3ac17082e6b54111",
+    "webSha256After": "e775fb8c0f1ce47215c9232d46cc592b313c39cb1d3e6eac3ac17082e6b54111",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCountBefore": 1569,
+    "fileCountAfter": 1569,
+    "seconds": 0.3524223000276834
+  },
+  "hostCleanup": {
+    "status": "PASS",
+    "seconds": 0.9189001000486314,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "cases": [
+    {
+      "case": "restore-guard-proof",
+      "outcome": "FAIL",
+      "operationSeconds": 51.76266620005481,
+      "rawReportSha256": "1842e6c0e903d0886eb2a113f073175d04fa2d426055647e3e45b7ad4bc82ecc",
+      "assertions": 20,
+      "errors": [
+        "guard-session-restore: java.lang.IllegalArgumentException: Session state requires a settled normal board"
+      ],
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 25532,
+          "workUnits": 82,
+          "maxCoordinatorAdvanceMillis": 1133,
+          "stages": {
+            "RESOLVE": {
+              "elapsedMillis": 0,
+              "workUnits": 1
+            },
+            "HEALTHY": {
+              "elapsedMillis": 4337,
+              "workUnits": 8
+            },
+            "PHYSICAL": {
+              "elapsedMillis": 9,
+              "workUnits": 1
+            },
+            "HYPOTHESES": {
+              "elapsedMillis": 21141,
+              "workUnits": 70
+            },
+            "SYMPTOM": {
+              "elapsedMillis": 2,
+              "workUnits": 1
+            },
+            "PUBLISH": {
+              "elapsedMillis": 10,
+              "workUnits": 1
+            }
+          },
+          "failureChain": []
+        }
+      ],
+      "appRollbackVerified": false,
+      "playerInputEvidence": false
+    },
+    {
+      "case": "rb56-failed-player-seed-diagnostic",
+      "outcome": "PASS",
+      "operationSeconds": 232.3613424000796,
+      "rawReportSha256": "fc55f692de9c2805d3fa8eaa3dd2f3b5cfb98d8ae3388450fb4a96e78cf0f119",
+      "assertions": 4100,
+      "errors": [],
+      "generations": [
+        {
+          "phase": "normal-generation",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 66045,
+          "workUnits": 462,
+          "maxCoordinatorAdvanceMillis": 1166,
+          "stages": {
+            "RESOLVE": {
+              "elapsedMillis": 1,
+              "workUnits": 1
+            },
+            "HEALTHY": {
+              "elapsedMillis": 18982,
+              "workUnits": 83
+            },
+            "PHYSICAL": {
+              "elapsedMillis": 126,
+              "workUnits": 1
+            },
+            "HYPOTHESES": {
+              "elapsedMillis": 46738,
+              "workUnits": 375
+            },
+            "SYMPTOM": {
+              "elapsedMillis": 11,
+              "workUnits": 1
+            },
+            "PUBLISH": {
+              "elapsedMillis": 146,
+              "workUnits": 1
+            }
+          },
+          "failureChain": []
+        },
+        {
+          "phase": "valid-session-restore",
+          "outcome": "PASS",
+          "stage": "PUBLISH",
+          "elapsedMillis": 79405,
+          "workUnits": 490,
+          "maxCoordinatorAdvanceMillis": 1230,
+          "restoreHistoryEntries": 73,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 28,
+          "stages": {
+            "RESOLVE": {
+              "elapsedMillis": 1,
+              "workUnits": 1
+            },
+            "HEALTHY": {
+              "elapsedMillis": 21951,
+              "workUnits": 83
+            },
+            "PHYSICAL": {
+              "elapsedMillis": 168,
+              "workUnits": 1
+            },
+            "HYPOTHESES": {
+              "elapsedMillis": 47400,
+              "workUnits": 375
+            },
+            "SYMPTOM": {
+              "elapsedMillis": 11,
+              "workUnits": 1
+            },
+            "PUBLISH": {
+              "elapsedMillis": 9709,
+              "workUnits": 29
+            }
+          },
+          "failureChain": []
+        },
+        {
+          "phase": "invalid-signature-restore",
+          "outcome": "PROGRAMMING_FAILURE",
+          "stage": "PUBLISH",
+          "elapsedMillis": 77563,
+          "workUnits": 491,
+          "maxCoordinatorAdvanceMillis": 1133,
+          "restoreHistoryEntries": 82,
+          "restoreSourceCount": 4,
+          "restoreReservedWorkUnits": 30,
+          "stages": {
+            "RESOLVE": {
+              "elapsedMillis": 0,
+              "workUnits": 1
+            },
+            "HEALTHY": {
+              "elapsedMillis": 21165,
+              "workUnits": 83
+            },
+            "PHYSICAL": {
+              "elapsedMillis": 101,
+              "workUnits": 1
+            },
+            "HYPOTHESES": {
+              "elapsedMillis": 47143,
+              "workUnits": 375
+            },
+            "SYMPTOM": {
+              "elapsedMillis": 11,
+              "workUnits": 1
+            },
+            "PUBLISH": {
+              "elapsedMillis": 9098,
+              "workUnits": 30
+            }
+          },
+          "failureChain": [
+            "java.lang.IllegalArgumentException: Session reconstruction does not match the saved semantic state"
+          ]
+        }
+      ],
+      "appRollbackVerified": true,
+      "playerInputEvidence": false
+    }
+  ]
+}

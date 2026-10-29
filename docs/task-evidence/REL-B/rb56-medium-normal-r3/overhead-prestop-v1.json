@@ -1,0 +1,180 @@
+{
+  "schema": "tsj-rb56-prestop-diagnostic-evidence-v1",
+  "scope": "DIAGNOSTIC_ONLY_NOT_QUALIFICATION",
+  "qualificationAcceptance": "NOT_ACCEPTED",
+  "interpretation": "One exploratory C capture passed the normal cold-proof run. Profiling stopped and detached in the final document while the exact compiled script was held, before its single original-route continuation. This narrows active sampling as a required cause for the observed run; it identifies no cause and is not qualification.",
+  "declaration": {
+    "arm": "C_START_STOP_BEFORE_FINAL_COMPILED_SCRIPT",
+    "rootSeed": "-6794211680707017382",
+    "caps": {
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    "noApplicationInjection": true,
+    "wrapperSha256": "6e914eeefa96694a36c3b0288c17d95477188372d0694d4b2f0f5db367d82ffb",
+    "declarationRawSha256": "cca964265e80800fd9b818f6397cb336e0fa8eb75f9f34c073e9f3eb6fd51c68",
+    "exitRawSha256": "2405e7ce1534aa778421fd90d187c99fc0b4f85cb6d0b49659f1819294945b58",
+    "prestopRawSha256": "b2426820de4a5df16846026e98e13bdaddb03df418fccb4b7a5ce79a9cbb2916",
+    "preExecutionProfileRawSha256": "b26c8f493e8aef0f9393722d2a3cef83ab145f4f79709b64defd3820b2a05461",
+    "hostTelemetryRawSha256": "f0ffd939c2e8397f521cf2e06a8172dd567224781316eca77e88c27a19157448",
+    "auditReceiptSha256": "e45b632612af6d9ce86588067948bcf7dc5720fb4cf7bd87d7966ffbbea44b4a",
+    "developerInventorySha256": "cf86a12b08248101d051e8f4998e27da3b58a62b37e3296d5eaabc0dd381018a",
+    "specSha256": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd",
+    "driverSha256": "660c40c96498b2471ed0795eb781c87c3e906612c8fe98904bc0fa8bc7016a1a",
+    "frozenSnapshotStable": true,
+    "exitCode": 0,
+    "secondsIncludingAuditCleanup": 87.8861963
+  },
+  "preExecutionProfile": {
+    "prestopCount": 1,
+    "profileNodeCount": 2,
+    "profileSampleCount": 2,
+    "requestedSamplingIntervalMicros": 2000,
+    "profileIntervalMillis": 7.303,
+    "profilerLifecycleMillis": 14.451,
+    "attachment": {
+      "exactFinalPageUrl": true,
+      "documentBackend": 3,
+      "htmlBackend": 5,
+      "resourceType": "script",
+      "compiledCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+      "compiledScriptHeldDuringProfile": true
+    },
+    "profilerStoppedAndDetachedBeforeContinuation": true,
+    "originalRouteContinuationCallsInWrapper": 1,
+    "browserProduct": "Edg/156.0.4314.50",
+    "jsVersion": "15.6.12.7",
+    "exactPatchedV8SourceClaim": false
+  },
+  "run": {
+    "status": "PASS",
+    "terminal": "PASS:rb56",
+    "operationSeconds": 83.8738804999739,
+    "reportJobMillis": 82629,
+    "reportOperationMillis": 82903,
+    "cleanupSeconds": 1.2031501999590546,
+    "inputAuditSeconds": 0.4963302998803556,
+    "caps": {
+      "maxJobMillis": 90000,
+      "maxJobSteps": 640,
+      "maxUnitMillis": 5000
+    },
+    "jobWork": 462,
+    "stageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 83,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 375,
+      "SYMPTOM": 1,
+      "PUBLISH": 1
+    },
+    "stageMillis": {
+      "RESOLVE": 0,
+      "HEALTHY": 21429,
+      "PHYSICAL": 146,
+      "HYPOTHESES": 60844,
+      "SYMPTOM": 13,
+      "PUBLISH": 156
+    },
+    "proofWorkUnits": 375,
+    "requiredProofWorkUnits": 520,
+    "hypotheses": 5,
+    "numericObservations": 65,
+    "temporalWaitRows": 5,
+    "fullColdProof": true,
+    "normalPhysicalAdmission": true,
+    "fullProductionD01": true,
+    "proofCachePolicy": "BYPASS",
+    "proofWarmReuse": false,
+    "reportSha256": "6fe05dd9fc6a4b8e51234eda937bd1e542d045f08c1001e4d3b832280182c172",
+    "reportDeclaredSha256": "6fe05dd9fc6a4b8e51234eda937bd1e542d045f08c1001e4d3b832280182c172",
+    "rawHashes": {
+      "resultJson": "15884aeb99682b01a05ddbdcdd11b0a94f73d82de94e184756cf5a99617ba25f",
+      "wrapperJson": "8796e8004b2fb9db4dbbf15e68ff8bb09454407b16c09581400f993d013aa88d",
+      "reportJson": "6fe05dd9fc6a4b8e51234eda937bd1e542d045f08c1001e4d3b832280182c172",
+      "inputManifestBeforeJson": "62a416f6d44c0a702c92c1754a0abdab7903309a452065c760e566933479a78d",
+      "inputManifestAfterJson": "a7059debb6a03c3509f03964aa0cf4c553d64ed42163379f7304907e0b427420",
+      "runnerBeforeJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+      "runnerAfterJson": "4d30e94e2d99412773bb492e35d1e520a3b96046058de380cac44b3df01d0f60",
+      "specJson": "1746d07f6335bf8ad7714c71178594df077b08c9af2a6fada86b68141ad55fcd"
+    },
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+      "afterSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+      "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+      "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+      "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+      "fileCount": 1568,
+      "auditSeconds": 0.4963302998803556
+    },
+    "cleanup": {
+      "status": "PASS",
+      "serverStopped": true,
+      "ownedSurvivorCount": 0,
+      "errorCount": 0,
+      "cleanupSeconds": 1.2031501999590546
+    },
+    "maxManualUnitMillis": 1727
+  },
+  "frozenInputs": {
+    "status": "PASS",
+    "srcWarFileCount": 1568,
+    "srcFiles": 1183,
+    "warFiles": 385,
+    "manifestSha256": "3a0ce8f422c8feb37794fc5f8e7e6f479b12ad1769f01d8145b16308913cf98c",
+    "sourceSha256": "481cce1c1d52b6472798861d994310cd78ca845382b407bd67c8293d6c470f7c",
+    "webSha256": "08ab9d069ae000321e28cb57628acafa31e594a666d4be4cfbabf41add78d5e2",
+    "runnerSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "retainedBuildInputs": 1246,
+    "expectedBuildInputs": 1255,
+    "developerFiles": 357,
+    "developerReceiptSha256": "e45b632612af6d9ce86588067948bcf7dc5720fb4cf7bd87d7966ffbbea44b4a",
+    "developerIdentityJsonSha256": "31f76217acd52ffbf50dec3873ab78ca5212082b3e5c1c6df0e2ead1d43a16fb",
+    "developerInventorySha256": "cf86a12b08248101d051e8f4998e27da3b58a62b37e3296d5eaabc0dd381018a",
+    "loadedCache": "4F6E69734C2591E58FB2C9A8AFC450B0.cache.js",
+    "loadedCacheInventorySha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+    "loadedCacheArtifactSha256": "cea4eccefb0767d1c17df260962e295e94e573d8de3802e7d1da8103c6d765f3",
+    "cacheMatchesABBA": true
+  },
+  "sampler": {
+    "scope": "DIAGNOSTIC_ONLY_NOT_QUALIFICATION",
+    "method": "Win32 read-only 1Hz Toolhelp/GetProcessTimes/GetPriorityClass/GetSystemTimes",
+    "sameAsABBA": true,
+    "sampleCount": 84,
+    "coveredEdgeCpuSeconds": 91.28125,
+    "errors": 0,
+    "window": "Maintained case navigation, execution and final attribute reads; not isolated job CPU",
+    "classification": "passive host sampling across the maintained case window; not isolated generation CPU"
+  },
+  "ABBAComparison": {
+    "controlledEvidence": "docs/task-evidence/REL-B/rb56-medium-normal-r3/overhead-abba-v1.json",
+    "controlledEvidenceSha256": "cb392d93fbbb4fc652baff0c9c114640ee5981b6ec7cf78f007560e7e3bf0ce5",
+    "CFullNonWallReportProjectionMatchesB2AndB3": true,
+    "projectionSha256": "f659e42234b7dbf808a4c0ccd1e9b2aa277ebe9977ef583a18f309f91bb6f523",
+    "A1": {
+      "outcome": "FAIL",
+      "failurePhase": "COLD_GENERATION",
+      "jobWork": 447,
+      "hypothesesStageWork": 362,
+      "reportSha256": "7e0d714422b64ebdd00d1892ec4ba6aa7e00d4befc8589e34f18e3c6b6941ce9"
+    },
+    "A4": {
+      "outcome": "FAIL",
+      "failurePhase": "COLD_GENERATION",
+      "jobWork": 450,
+      "hypothesesStageWork": 365,
+      "reportSha256": "c311d49b3ef57952102391534d1a7f6a9ab5ef42beebcad1eefad613564022da"
+    },
+    "priorAFailuresPreserved": true,
+    "qualificationRescue": false
+  },
+  "limitations": [
+    "Single exploratory C run; not randomized or population evidence.",
+    "The prestop capture does not identify why A1/A4 timed out; it only shows a normal PASS with profiling stopped before compiled-script continuation.",
+    "Host CPU samples span maintained navigation/execution/final reads and may miss short-lived processes or later CPU; they are not isolated job CPU.",
+    "Edge process roles are unclassified; no exact patched Edge V8 source attribution.",
+    "No new blind roots or qualification cohort were run."
+  ]
+}

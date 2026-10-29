@@ -67,8 +67,8 @@ final class PlayerSessionReplay {
     /** Private exact RB56 restart identity; it deliberately assigns no profile. */
     static PlayerSessionReplay forQualification(GenerationRequest request) {
         if (request == null || !request.isPrivateDiagnosticQualification() ||
-                request.isCandidateSearch() || !isHeldQualificationFamily(request.getFamilyId()))
-            throw invalid("Private session identity requires the held exact qualification request");
+                request.isCandidateSearch() || !isPrivateQualificationFamily(request.getFamilyId()))
+            throw invalid("Private session identity requires the exact qualification request");
         int placementVersion = request.getRb56PlacementInterpretationVersion();
         String identity;
         if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY) {
@@ -157,7 +157,7 @@ final class PlayerSessionReplay {
         if (fields.length == 5 && "tsj-private-session".equals(fields[0]) &&
                 "1".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
-                isHeldQualificationFamily(fields[3])) {
+                isPrivateQualificationFamily(fields[3])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY;
             familyId = fields[3];
             seedText = fields[4];
@@ -165,7 +165,7 @@ final class PlayerSessionReplay {
                 "2".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 COMPACT_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT;
             familyId = fields[4];
             seedText = fields[5];
@@ -173,7 +173,7 @@ final class PlayerSessionReplay {
                 "3".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 REALISM_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM;
             familyId = fields[4];
             seedText = fields[5];
@@ -181,7 +181,7 @@ final class PlayerSessionReplay {
                 "4".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 DENSE_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_DENSE;
             familyId = fields[4];
             seedText = fields[5];
@@ -189,28 +189,28 @@ final class PlayerSessionReplay {
                 "5".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 LARGE_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LARGE;
             familyId = fields[4]; seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "6".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 SINGLE_GROUP_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_SINGLE_GROUP;
             familyId = fields[4]; seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "7".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 GUARDED_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED;
             familyId = fields[4]; seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "8".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 NARROW_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NARROW;
             familyId = fields[4];
             seedText = fields[5];
@@ -218,28 +218,28 @@ final class PlayerSessionReplay {
                 "9".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 CONNECTED_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CONNECTED;
             familyId = fields[4];seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "10".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 PIN_LOCAL_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL;
             familyId = fields[4];seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "11".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 VACANCY_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_VACANCY;
             familyId = fields[4];seedText = fields[5];
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "12".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 ROLE_WIDTHS_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS;
             familyId = fields[4];
             seedText = fields[5];
@@ -247,7 +247,7 @@ final class PlayerSessionReplay {
                 "13".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 NEAREST_VACANCY_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY;
             familyId = fields[4];
             seedText = fields[5];
@@ -255,7 +255,7 @@ final class PlayerSessionReplay {
                 "14".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 CANVAS_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS;
             familyId = fields[4];
             seedText = fields[5];
@@ -263,7 +263,7 @@ final class PlayerSessionReplay {
                 "15".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 CURRENT_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isHeldQualificationFamily(fields[4])) {
+                isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT;
             familyId = fields[4];
             seedText = fields[5];
@@ -336,9 +336,8 @@ final class PlayerSessionReplay {
         return value;
     }
 
-    private static boolean isHeldQualificationFamily(String familyId) {
-        if (!Rb56Plan.FAMILY_ID.equals(familyId) || !PlayerFamilyCatalog.isRegistered(familyId) ||
-                PlayerFamilyCatalog.isNormalPlayerEnabled(familyId))
+    private static boolean isPrivateQualificationFamily(String familyId) {
+        if (!Rb56Plan.FAMILY_ID.equals(familyId) || !PlayerFamilyCatalog.isRegistered(familyId))
             return false;
         StagedFamilyCapability capability = PlayerFamilyCatalog.stagedCapability(familyId);
         return capability != null && capability.supportsPrivateQualification();

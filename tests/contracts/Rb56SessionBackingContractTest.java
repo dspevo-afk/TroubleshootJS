@@ -16,7 +16,9 @@ public final class Rb56SessionBackingContractTest {
         try {
             CirSim sim = new CirSim(); sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
             CircuitElm.sim = sim; CirSim.theSim = sim;
+            verifyAsynchronousDriverScopeGuards();
             fixture = Rb56PhysicalOwnerConstruction.build(Rb56Plan.reference(77), new UnqualifiedBehavior());
+            verifyPrivatePublicationIdentity(fixture.owner);
             PlayerSessionReplay legacyReplay = PlayerSessionReplay.parse("tsj-private-session/1/" +
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/77");
             PlayerSessionReplay compactReplay = PlayerSessionReplay.parse("tsj-private-session/2/" +
@@ -78,6 +80,142 @@ public final class Rb56SessionBackingContractTest {
                 else throw new AssertionError("Session backing fixture cleanup failed", cleanup);
             }
         }
+    }
+
+    /** The owner-driven opt-in validates public normal authority before touching a live job. */
+    private static void verifyAsynchronousDriverScopeGuards() throws Exception {
+        CirSim prior = CircuitElm.sim, priorSingleton = CirSim.theSim;
+        CirSim sim = new CirSim(); sim.elmList = new Vector<CircuitElm>();
+        sim.gridSize = 16; sim.gridMask = ~15; sim.gridRound = 7;
+        CircuitElm.sim = sim; CirSim.theSim = sim;
+        GenerationCoordinator coordinator = new GenerationCoordinator(sim);
+        sim.generationCoordinator = coordinator;
+        PublicationServices services = new PublicationServices("asynchronous-normal-driver-guard");
+        GenerationJob sentinel = new GenerationJob(services,
+            GenerationCoordinator.MAX_JOB_MILLIS, GenerationCoordinator.MAX_JOB_STEPS,
+            GenerationCoordinator.MAX_STEP_MILLIS);
+        Field jobField = GenerationCoordinator.class.getDeclaredField("job");
+        jobField.setAccessible(true); jobField.set(coordinator, sentinel);
+        try {
+            GenerationRequest normal = new PlayerLaunchRequest("LED_INDICATOR", "3", "EASY").generation();
+            sim.troubleshootDebug = true; sim.developerVerifierRunning = true;
+            check(coordinator.validateAsynchronousDeveloperVerificationRequest(normal) == 90000L,
+                "valid public normal request retains its exact ordinary job allowance");
+            check(coordinator.getJob() == sentinel && sentinel.isRunning() &&
+                sim.getGeneratedBoardInstance() == null && sim.elmList.isEmpty(),
+                "valid driver authorization check is read-only before asynchronous start");
+
+            sim.developerVerifierRunning = false;
+            expectAsynchronousDriverRejection(coordinator, normal, sentinel,
+                "missing developer scope is rejected before job mutation");
+            sim.developerVerifierRunning = true;
+            sim.troubleshootDebug = false;
+            expectAsynchronousDriverRejection(coordinator, normal, sentinel,
+                "missing debug scope is rejected before job mutation");
+            sim.troubleshootDebug = true;
+            GenerationRequest privateRequest = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 77);
+            expectAsynchronousDriverRejection(coordinator, privateRequest, sentinel,
+                "private measurement authority cannot enter the normal asynchronous driver");
+            check(coordinator.getDiagnosticProofCacheSize() == 0 &&
+                coordinator.getDiagnosticMeasurementProofCacheSize() == 0 && services.live,
+                "driver guard failures preserve both proof caches and the active predecessor job");
+        } finally {
+            if (sentinel.isRunning()) sentinel.cancel();
+            jobField.set(coordinator, null);
+            CircuitElm.sim = prior; CirSim.theSim = priorSingleton;
+        }
+    }
+
+    private static void expectAsynchronousDriverRejection(GenerationCoordinator coordinator,
+            GenerationRequest request, GenerationJob sentinel, String message) {
+        boolean rejected = false;
+        try { coordinator.startAsynchronousForDeveloperVerification(request); }
+        catch (IllegalArgumentException expected) { rejected = true; }
+        catch (IllegalStateException expected) { rejected = true; }
+        check(rejected && coordinator.getJob() == sentinel && sentinel.isRunning(), message);
+    }
+
+    /** Identity-only receipt falsifiers; this fixture does not supply a cold electrical proof. */
+    private static void verifyPrivatePublicationIdentity(final GeneratedBoardInstance owner) {
+        final GenerationRequest exact = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 77)
+            .withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+        final GenerationJob issued = completedIdentityJob(exact);
+        PlayerSessionController.requireQualificationPublication(exact, owner, issued);
+        check(true, "exact private owner and issuer-bound publication identity are accepted");
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(null, owner, issued);
+        } });
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(
+                new PlayerLaunchRequest(Rb56Plan.FAMILY_ID, "77", "MEDIUM").generation(), owner, issued);
+        } });
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(exact, owner, null);
+        } });
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(exact, null, issued);
+        } });
+        final GenerationRequest foreignSeed = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 78)
+            .withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY);
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(foreignSeed, owner, issued);
+        } });
+        final GenerationRequest foreignPlacement = GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 77);
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(foreignPlacement, owner, issued);
+        } });
+        final GenerationJob foreignJob = completedIdentityJob(foreignSeed);
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(exact, owner, foreignJob);
+        } });
+        final GenerationJob sameTextForeignIssuer = completedIdentityJob(exact);
+        rejectPublication(new Runnable() { public void run() {
+            issued.validateReceipt(sameTextForeignIssuer.getReceipt());
+        } });
+        PublicationServices staleServices = new PublicationServices(exact.canonical());
+        final GenerationJob stale = new GenerationJob(staleServices, 90000, 640, 5000);
+        staleServices.live = false; stale.advance();
+        check(stale.getOutcome() == GenerationJob.Outcome.STALE, "stale identity job cannot publish");
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(exact, owner, stale);
+        } });
+        final GenerationJob incomplete = new GenerationJob(new PublicationServices(exact.canonical()), 90000, 640, 5000);
+        rejectPublication(new Runnable() { public void run() {
+            PlayerSessionController.requireQualificationPublication(exact, owner, incomplete);
+        } });
+    }
+
+    private static GenerationJob completedIdentityJob(GenerationRequest request) {
+        GenerationJob job = new GenerationJob(new PublicationServices(request.canonical()), 90000, 640, 5000);
+        for (int i = 0; i < 10 && job.isRunning(); i++) job.advance();
+        check(job.getOutcome() == GenerationJob.Outcome.PASS && job.getReceipt() != null,
+            "identity fixture issues a complete real GenerationJob receipt");
+        return job;
+    }
+
+    private static void rejectPublication(Runnable attempt) {
+        boolean rejected = false;
+        try { attempt.run(); } catch (RuntimeException expected) { rejected = true; }
+        check(rejected, "private publication rejects missing, stale, foreign or public authority");
+    }
+
+    private static final class PublicationServices implements GenerationJob.Services {
+        final String manifest;
+        boolean live = true;
+        PublicationServices(String manifest) { this.manifest = manifest; }
+        public int candidateCount() { return 1; }
+        public String manifest(int ordinal) { return manifest; }
+        public void beginCandidate(int ordinal) { }
+        public String resolve() { return "identity-resolved"; }
+        public String healthy() { return "identity-healthy"; }
+        public String physical() { return "identity-physical"; }
+        public boolean proveNext() { return false; }
+        public String symptom() { return "identity-symptom"; }
+        public String dependencies() { return "identity-dependencies"; }
+        public void publish(GenerationReceipt receipt) { }
+        public void abort() { }
+        public boolean isCurrent() { return live; }
+        public long nowMillis() { return 0; }
     }
 
     private static void capacitor(PhysicalCapacitorPart part) {

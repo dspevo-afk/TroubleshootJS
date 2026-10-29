@@ -14,7 +14,31 @@ import java.util.Vector;
 
 /** Compiled, developer-only session reconstruction checks; never player-input evidence. */
 final class U06SessionDeveloperVerifier {
+    private enum RestoreGuard {
+        NONE, TEMPORAL, MODEL, SETTINGS, PROOF, CANCEL_MID, CANCEL_FINAL;
+
+        static RestoreGuard parse(String value) {
+            if ("temporal".equals(value)) return TEMPORAL;
+            if ("model".equals(value)) return MODEL;
+            if ("settings".equals(value)) return SETTINGS;
+            if ("proof".equals(value)) return PROOF;
+            if ("cancel-mid".equals(value)) return CANCEL_MID;
+            if ("cancel-final".equals(value)) return CANCEL_FINAL;
+            throw new IllegalArgumentException("Unknown U06 restore guard canary");
+        }
+
+        boolean expectsCancellation() {
+            return this == CANCEL_MID || this == CANCEL_FINAL;
+        }
+
+        GenerationJob.Outcome expectedOutcome() {
+            return expectsCancellation() ? GenerationJob.Outcome.CANCELLED :
+                GenerationJob.Outcome.STALE;
+        }
+    }
+
     private final CirSim sim;
+    private final boolean normalRb56EnabledAtStart;
     private final JSONObject report = new JSONObject();
     private final JSONArray checks = new JSONArray(), generations = new JSONArray(), errors = new JSONArray();
     private PlayerLaunchRequest request;
@@ -30,6 +54,23 @@ final class U06SessionDeveloperVerifier {
     private boolean finished;
     private int inputCount, fuseFixtureCount, typedPowerFixtureCount;
     private boolean u07;
+    private RestoreGuard restoreGuard = RestoreGuard.NONE;
+    private GenerationJob restoreGuardJob;
+    private GeneratedBoardInstance restoreGuardCandidateToken;
+    private GeneratedChallengeController restoreGuardCandidateController;
+    private GeneratedDiagnosticProofReceipt restoreGuardPristineProof;
+    private int restoreGuardCandidateIndex = -1;
+    private int restoreGuardCompletedUnitsAtBoundary = -1;
+    private int restoreGuardRequiredUnitsAtBoundary = -1;
+    private int restoreGuardJobWorkAtBoundary = -1;
+    private int restoreGuardStageWorkAtBoundary = -1;
+    private String restoreGuardStageAtBoundary;
+    private boolean restoreGuardTriggered;
+    private String restoreGuardSemanticBaseline;
+    private String restoreGuardTemporalBaseline;
+    private String restoreGuardConfigurationBaseline;
+    private String restoreGuardTimeContinuityBaseline;
+    private String restoreGuardSavedWire;
     private int u07Restores;
     private final JSONArray u07Inventories = new JSONArray();
     private PcbWorkbenchController u07Workbench;
@@ -37,7 +78,10 @@ final class U06SessionDeveloperVerifier {
     private SolverExecutionBoundary.Observation u07Observation;
     private ProbeTarget u07Probe;
 
-    private U06SessionDeveloperVerifier(CirSim sim) { this.sim = sim; }
+    private U06SessionDeveloperVerifier(CirSim sim) {
+        this.sim = sim;
+        normalRb56EnabledAtStart = PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID);
+    }
 
     static void verify(CirSim sim, String family, String seed) {
         U06SessionDeveloperVerifier verifier = new U06SessionDeveloperVerifier(sim);
@@ -48,8 +92,10 @@ final class U06SessionDeveloperVerifier {
             boolean qualification = new QueryParameters().getBooleanValue("tsjRb56Restore", false);
             if (qualification) {
                 verifier.check(Rb56Plan.FAMILY_ID.equals(family) &&
-                    !PlayerFamilyCatalog.isNormalPlayerEnabled(family) && !DifficultyProfile.HARD.isAvailable(),
-                    "private RB56 restore keeps normal family and HARD unavailable");
+                    PlayerFamilyCatalog.isRegistered(family) &&
+                    PlayerFamilyCatalog.stagedCapability(family).supportsPrivateQualification() &&
+                    !DifficultyProfile.HARD.isAvailable(),
+                    "private RB56 restore requires its private-capable provider and keeps HARD unavailable");
                 long exactSeed = Long.parseLong(seed);
                 verifier.check(Long.toString(exactSeed).equals(seed), "private restore requires canonical exact seed");
                 verifier.qualificationRequest = GenerationRequest.forFamilyQualification(family, exactSeed);
@@ -68,6 +114,8 @@ final class U06SessionDeveloperVerifier {
                 PlayerSessionReplay.forQualification(verifier.qualificationRequest).canonical() : verifier.request.replay()));
             verifier.report.put("playerInputEvidence", JSONBoolean.getInstance(false));
             verifier.report.put("damageFixtures", new JSONString("controlled state injection"));
+            String guardValue = new QueryParameters().getValue("tsjU06RestoreGuard");
+            if (guardValue != null) verifier.restoreGuard = RestoreGuard.parse(guardValue);
             verifier.u07 = new QueryParameters().getBooleanValue("tsjU07", false);
             if (verifier.u07) {
                 verifier.check("LED_INDICATOR".equals(family) && "0".equals(seed),
@@ -81,7 +129,36 @@ final class U06SessionDeveloperVerifier {
             verifier.codec();
             sim.setSimRunning(false);
             if (sim.generationCoordinator == null) sim.generationCoordinator = new GenerationCoordinator(sim);
-            verifier.generate(null, "normal-generation");
+            String exactFile = new QueryParameters().getValue("tsjU06Saved");
+            if (verifier.restoreGuard != RestoreGuard.NONE) {
+                verifier.check(!qualification && !verifier.u07 && exactFile == null,
+                    "restore guard is limited to public U06 without RB56 U07 or saved-file scope");
+                verifier.check("RC_DELAY".equals(verifier.request.familyId) &&
+                    "0".equals(seed) && verifier.request.seed == 0L,
+                    "restore guard requires canonical RC_DELAY seed zero");
+                verifier.report.put("restoreGuard", new JSONString(guardValue));
+                verifier.report.put("restoreGuardExpectedOutcome",
+                    new JSONString(verifier.restoreGuard.expectedOutcome().name()));
+                verifier.report.put("restoreGuardTriggered", JSONBoolean.getInstance(false));
+                verifier.report.put("restoreGuardPlayerInputEvidence", JSONBoolean.getInstance(false));
+                verifier.report.put("restoreGuardControlledStateInjection",
+                    JSONBoolean.getInstance(!verifier.restoreGuard.expectsCancellation()));
+                verifier.report.put("damageFixtures", new JSONString(
+                    verifier.restoreGuard.expectsCancellation() ? "none; restore cancellation boundary" :
+                    "none; bounded candidate-only restore guard mutation"));
+            }
+            if (exactFile != null) {
+                verifier.check(!qualification && !verifier.u07, "exact file fixture requires public U06 scope");
+                verifier.saved = PlayerSessionSave.parse(exactFile);
+                verifier.check(verifier.request.replay().equals(verifier.saved.replay),
+                    "exact file fixture matches the requested public board");
+                verifier.report.put("exactFileFixture", JSONBoolean.getInstance(true));
+                verifier.report.put("damageFixtures", new JSONString("saved wire; no injected damage"));
+                verifier.beforeOwner = sim.getGeneratedBoardInstance();
+                verifier.before = new Snapshot(sim);
+                sim.generationCoordinator.clearDiagnosticProofCacheForDeveloperVerification();
+                verifier.generate(verifier.saved, "exact-file-session-restore");
+            } else verifier.generate(null, "normal-generation");
         } catch (Throwable failure) { verifier.fail(failure); }
     }
 
@@ -97,6 +174,25 @@ final class U06SessionDeveloperVerifier {
                 result.put("stage", new JSONString(job.getStage().name()));
                 result.put("elapsedMillis", new JSONNumber(job.getElapsedMillis()));
                 result.put("workUnits", new JSONNumber(job.getStepCount()));
+                result.put("maxCoordinatorAdvanceMillis", new JSONNumber(sim.generationCoordinator.getMaxAdvanceMillis()));
+                if (value != null) {
+                    result.put("restoreHistoryEntries", new JSONNumber(value.getHistory().size()));
+                    result.put("restoreSourceCount", new JSONNumber(value.getSources().size()));
+                    result.put("restoreReservedWorkUnits", new JSONNumber(PlayerSessionState.restoreWorkUnits(value)));
+                }
+                JSONObject stages = new JSONObject();
+                for (GenerationJob.Stage stage : GenerationJob.Stage.values()) {
+                    JSONObject timing = new JSONObject();
+                    timing.put("elapsedMillis", new JSONNumber(job.getStageElapsedMillis(stage)));
+                    timing.put("workUnits", new JSONNumber(job.getStageWorkCount(stage)));
+                    stages.put(stage.name(), timing);
+                }
+                result.put("stages", stages);
+                JSONArray failures = new JSONArray();
+                Throwable failure = job.getFailure();
+                for (int depth = 0; failure != null && depth < 8; depth++, failure = failure.getCause())
+                    failures.set(depth, new JSONString(failure.getClass().getName() + ": " + failure.getMessage()));
+                result.put("failureChain", failures);
                 if (qualificationRequest != null) {
                     result.put("maxJobMillis", new JSONNumber(GenerationCoordinator.MAX_JOB_MILLIS));
                     result.put("maxJobSteps", new JSONNumber(GenerationCoordinator.MAX_JOB_STEPS));
@@ -116,7 +212,14 @@ final class U06SessionDeveloperVerifier {
                             rejected(job, published);
                         } else if ("cancel-session-restore".equals(label)) {
                             cancelled(job, published);
+                        } else if ("guard-session-restore".equals(label)) {
+                            restoreGuardTerminal(job, published);
                         } else {
+                            if ("exact-file-session-restore".equals(label) && job.getOutcome() != GenerationJob.Outcome.PASS) {
+                                check(sim.getGeneratedBoardInstance() == beforeOwner && sim.isGeneratedRuntimeSettled(),
+                                    "failed exact file restore retains its settled predecessor");
+                                before.compare(new Snapshot(sim), U06SessionDeveloperVerifier.this);
+                            }
                             check(job.getOutcome() == GenerationJob.Outcome.PASS && published != null,
                                 label + " published normally");
                             check(sim.getGeneratedBoardInstance() == published &&
@@ -132,7 +235,20 @@ final class U06SessionDeveloperVerifier {
                                     job.getElapsedMillis() <= 90000L && job.getStepCount() <= 640,
                                     "private candidate retains complete original generation caps");
                             }
-                            if (u07) {
+                            if ("exact-file-session-restore".equals(label)) {
+                                PlayerSessionSave actual = captureCurrent();
+                                PlayerSessionSave comparable = new PlayerSessionSave(actual.replay, saved.build,
+                                    actual.realization, actual.stateSignature, actual.getHistory(), actual.getSources(),
+                                    actual.getStress(), actual.getFuses());
+                                check(saved.encode().equals(comparable.encode()),
+                                    "exact file preserves canonical inventory history source and damage state");
+                                check(published != beforeOwner && !sim.getGeneratedChallengeController().isCompleted(),
+                                    "exact file publishes a fresh owner without imported customer completion");
+                                finished = true;
+                            } else if ("normal-generation".equals(label) &&
+                                    restoreGuard != RestoreGuard.NONE) {
+                                prepareRestoreGuard();
+                            } else if (u07) {
                                 if (value == null) u07Prepare(); else u07Restored(published);
                             } else if (value == null) prepare(); else restored(published);
                         }
@@ -151,6 +267,253 @@ final class U06SessionDeveloperVerifier {
         } else if (value == null) sim.generationCoordinator.start(request.generation(), completion, true);
         else sim.generationCoordinator.startSessionRestore(request.generation(), value, completion);
         if ("cancel-session-restore".equals(label)) awaitPrivateCancellation();
+        else if ("guard-session-restore".equals(label)) awaitRestoreGuardBoundary();
+    }
+
+    private void prepareRestoreGuard() {
+        phase = "restore-guard-capture";
+        beforeOwner = sim.getGeneratedBoardInstance();
+        check(beforeOwner != null && "RC_DELAY".equals(beforeOwner.getCircuitFamilyId()) &&
+            beforeOwner.getSeed() == 0L && beforeOwner.getTemporalBehavior() instanceof RcDelayTemporalBehavior,
+            "guard baseline is the exact generated RC_DELAY seed-zero owner");
+        PhysicalBoardRuntime runtime = beforeOwner.getPhysicalBoardRuntime();
+        runtime.getSessionHistory().start();
+        before = new Snapshot(sim);
+        restoreGuardSemanticBaseline = PlayerSessionState.semanticSignature(sim);
+        restoreGuardTemporalBaseline = rawTemporalDependency(beforeOwner);
+        restoreGuardConfigurationBaseline = GenerationDependencyContext.captureRestoreConfiguration(sim);
+        restoreGuardTimeContinuityBaseline = timeContinuity(sim);
+        saved = captureCurrent();
+        rollbackSaved = saved;
+        restoreGuardSavedWire = saved.encode();
+        check(saved.getHistory().isEmpty(), "guard saves the real zero-entry session history");
+        check(saved.getSources().size() == 1 && beforeOwner.getBoard().getPowerInputIds().size() == 1,
+            "RC_DELAY guard save has exactly one source");
+        check(PlayerSessionState.restoreWorkUnits(saved) == 6,
+            "guard save declares exactly six restore work units");
+        check(saved.stateSignature.equals(restoreGuardSemanticBaseline),
+            "guard save and independent pre-restore semantic baseline agree");
+        report.put("restoreGuardRequiredWorkUnits", new JSONNumber(
+            PlayerSessionState.restoreWorkUnits(saved)));
+        report.put("restoreGuardHistoryEntries", new JSONNumber(saved.getHistory().size()));
+        report.put("restoreGuardSources", new JSONNumber(saved.getSources().size()));
+        sim.developerVerifierRunning = true;
+        generate(saved, "guard-session-restore");
+    }
+
+    private void awaitRestoreGuardBoundary() {
+        restoreGuardJob = sim.generationCoordinator.getJob();
+        if (restoreGuardJob == null)
+            throw new IllegalStateException("Restore guard has no exact generation job");
+        new Timer() { public void run() {
+            if (finished) return;
+            try {
+                GenerationCoordinator coordinator = sim.generationCoordinator;
+                if (!sim.troubleshootDebug || !sim.developerVerifierRunning ||
+                        coordinator.getJob() != restoreGuardJob)
+                    throw new IllegalStateException("Restore guard lost its exact developer job");
+                if (!restoreGuardJob.isRunning())
+                    throw new IllegalStateException("Restore guard missed its required publication boundary");
+                if (restoreGuardJob.getStage() == GenerationJob.Stage.PUBLISH) {
+                    GeneratedBoardInstance current = sim.getGeneratedBoardInstance();
+                    if (current == null || current == beforeOwner ||
+                            !FreshGeneratedRuntimeInstallation.isInProgress(sim) ||
+                            !coordinator.isBetweenSteps() || restoreGuardJob.getCandidateIndex() < 0)
+                        throw new IllegalStateException("Restore guard did not observe a private candidate between units");
+                    if (restoreGuardCandidateToken == null) {
+                        restoreGuardCandidateToken = current;
+                        restoreGuardCandidateController = sim.getGeneratedChallengeController();
+                        restoreGuardCandidateIndex = restoreGuardJob.getCandidateIndex();
+                        restoreGuardPristineProof = restoreGuardCandidateController == null ? null :
+                            restoreGuardCandidateController.getDiagnosticProofReceipt();
+                        check(restoreGuardCandidateIndex == 0,
+                            "restore guard binds the exact first private candidate");
+                        check(restoreGuardCandidateController != null && restoreGuardPristineProof != null,
+                            "restore guard retains the candidate's separate pristine proof identity");
+                    } else if (restoreGuardCandidateToken != current ||
+                            restoreGuardCandidateIndex != restoreGuardJob.getCandidateIndex()) {
+                        throw new IllegalStateException("Restore guard candidate identity changed");
+                    }
+                    int completed = coordinator.getSessionRestoreCompletedWorkUnitsForDeveloperVerification();
+                    int required = coordinator.getSessionRestoreRequiredWorkUnitsForDeveloperVerification();
+                    if (required != PlayerSessionState.restoreWorkUnits(saved) || completed < 0 ||
+                            completed > required)
+                        throw new IllegalStateException("Restore guard observed an invalid work cursor");
+                    boolean boundary = restoreGuard == RestoreGuard.CANCEL_MID ?
+                        completed >= 3 && completed < required :
+                        coordinator.isSessionRestorePublicationReadyForDeveloperVerification();
+                    if (boundary) {
+                        check(restoreGuardJob.getStage() == GenerationJob.Stage.PUBLISH &&
+                            coordinator.isBetweenSteps() && restoreGuardJob.getReceipt() == null,
+                            "guard action runs between actual PUBLISH units before receipt issuance");
+                        check(restoreGuard == RestoreGuard.CANCEL_MID ?
+                            completed >= 3 && completed < required : completed == required,
+                            "guard action matches its exact intermediate or final restore boundary");
+                        restoreGuardCompletedUnitsAtBoundary = completed;
+                        restoreGuardRequiredUnitsAtBoundary = required;
+                        restoreGuardJobWorkAtBoundary = restoreGuardJob.getStepCount();
+                        restoreGuardStageWorkAtBoundary = restoreGuardJob.getCandidateStageWorkCount(
+                            GenerationJob.Stage.PUBLISH);
+                        restoreGuardStageAtBoundary = restoreGuardJob.getStage().name();
+                        restoreGuardTriggered = true;
+                        report.put("restoreGuardTriggered", JSONBoolean.getInstance(true));
+                        report.put("restoreGuardBoundaryStage", new JSONString(restoreGuardStageAtBoundary));
+                        report.put("restoreGuardCompletedWorkUnitsAtBoundary",
+                            new JSONNumber(restoreGuardCompletedUnitsAtBoundary));
+                        report.put("restoreGuardRequiredWorkUnitsAtBoundary",
+                            new JSONNumber(restoreGuardRequiredUnitsAtBoundary));
+                        report.put("restoreGuardJobWorkUnitsAtBoundary",
+                            new JSONNumber(restoreGuardJobWorkAtBoundary));
+                        report.put("restoreGuardStageWorkUnitsAtBoundary",
+                            new JSONNumber(restoreGuardStageWorkAtBoundary));
+                        report.put("restoreGuardCandidateIndex", new JSONNumber(restoreGuardCandidateIndex));
+                        report.put("restoreGuardCandidateIdentityBound", JSONBoolean.getInstance(true));
+                        report.put("restoreGuardPristineProofBound", JSONBoolean.getInstance(true));
+                        if (restoreGuard.expectsCancellation()) coordinator.cancel();
+                        else {
+                            injectRestoreGuardMutation(current);
+                            check(sim.getGeneratedChallengeController() == restoreGuardCandidateController &&
+                                (restoreGuard == RestoreGuard.PROOF ?
+                                    restoreGuardCandidateController.getDiagnosticProofReceipt() != restoreGuardPristineProof :
+                                    restoreGuardCandidateController.getDiagnosticProofReceipt() == restoreGuardPristineProof),
+                                "candidate-only mutation preserves its controller and changes only its intended proof identity");
+                        }
+                        return;
+                    }
+                }
+                schedule(1);
+            } catch (Throwable failure) { fail(failure); }
+        } }.schedule(1);
+    }
+
+    private void injectRestoreGuardMutation(GeneratedBoardInstance candidate) {
+        if (candidate == null || candidate == beforeOwner ||
+                candidate != sim.getGeneratedBoardInstance() ||
+                !FreshGeneratedRuntimeInstallation.isInProgress(sim))
+            throw new IllegalStateException("Restore guard mutation is outside its exact private candidate");
+        if (restoreGuard == RestoreGuard.TEMPORAL) {
+            GeneratedTemporalBehavior behavior = candidate.getTemporalBehavior();
+            check(behavior instanceof RcDelayTemporalBehavior,
+                "temporal canary targets the current production RC_DELAY behavior");
+            RcDelayTemporalBehavior temporal = (RcDelayTemporalBehavior) behavior;
+            String beforeMutation = rawTemporalDependency(candidate);
+            temporal.perturbHealthyReferenceForDeveloperVerification();
+            check(!beforeMutation.equals(rawTemporalDependency(candidate)),
+                "temporal canary changed the candidate raw reference dependency");
+        } else if (restoreGuard == RestoreGuard.MODEL) {
+            ResistorElm resistor = currentOwnedPrimaryResistor(candidate);
+            double originalResistance = resistor.getResistance();
+            double changed = originalResistance * 1.125;
+            if (!(originalResistance > 0) || Double.isNaN(changed) ||
+                    Double.isInfinite(changed) || changed == originalResistance)
+                throw new IllegalStateException("Model canary found no finite resistor perturbation");
+            resistor.setResistance(changed);
+            check(resistor.getResistance() == changed && resistor.getClass() == ResistorElm.class,
+                "model canary changed a real live physical primary resistor");
+        } else if (restoreGuard == RestoreGuard.PROOF) {
+            Snapshot liveBefore = new Snapshot(sim);
+            String temporal = rawTemporalDependency(candidate);
+            String configuration = GenerationDependencyContext.captureRestoreConfiguration(sim);
+            String continuity = timeContinuity(sim);
+            Object attempt = restoreGuardCandidateController.beginDiagnosticAdmission();
+            GeneratedDiagnosticProofReceipt replacement = new GeneratedDiagnosticProofReceipt(
+                candidate, restoreGuardCandidateController, attempt,
+                candidate.getDiagnosticProvider().getObservationProgram(),
+                restoreGuardPristineProof.getEvidence(), restoreGuardPristineProof.getElapsedMillis(),
+                restoreGuardPristineProof.getPartitionPlan(), restoreGuardPristineProof.getContextKey(), false);
+            restoreGuardCandidateController.completeDiagnosticAdmission(replacement, attempt);
+            replacement.requireAssessmentOwner(candidate);
+            replacement.requireContextKey(restoreGuardPristineProof.getContextKey());
+            check(replacement != restoreGuardPristineProof &&
+                restoreGuardCandidateController.getDiagnosticProofReceipt() == replacement,
+                "proof canary replaces the exact controller receipt using its normal admission boundary");
+            liveBefore.compare(new Snapshot(sim), this);
+            check(temporal.equals(rawTemporalDependency(candidate)) &&
+                configuration.equals(GenerationDependencyContext.captureRestoreConfiguration(sim)) &&
+                continuity.equals(timeContinuity(sim)),
+                "proof identity replacement preserves raw temporal configuration and time state");
+        } else if (restoreGuard == RestoreGuard.SETTINGS) {
+            double originalMaximumTimeStep = sim.maxTimeStep;
+            double changed = originalMaximumTimeStep * 2.0;
+            if (!(originalMaximumTimeStep > 0) || Double.isNaN(changed) ||
+                    Double.isInfinite(changed) || changed == originalMaximumTimeStep)
+                throw new IllegalStateException("Settings canary found no finite timestep perturbation");
+            sim.maxTimeStep = changed;
+            check(sim.maxTimeStep == changed, "settings canary doubled the live solver maximum timestep");
+        } else {
+            throw new IllegalStateException("Restore guard has no state mutation for this mode");
+        }
+    }
+
+    private ResistorElm currentOwnedPrimaryResistor(GeneratedBoardInstance candidate) {
+        for (PhysicalPart<?> part : candidate.getPhysicalBoardRuntime().getPhysicalParts()) {
+            if (!(part instanceof PhysicalResistorPart)) continue;
+            PhysicalResistorPart resistor = (PhysicalResistorPart) part;
+            ResistorElm element = resistor.getElement();
+            if (resistor.isInstalled() && element != null && element.getClass() == ResistorElm.class &&
+                    candidate.ownsRuntimeSimulationElement(element) && sim.elmList.contains(element) &&
+                    part.getElectricalBacking().getCircuitElements().contains(element))
+                return element;
+        }
+        throw new IllegalStateException("Model canary found no live physical primary resistor");
+    }
+
+    private void restoreGuardTerminal(GenerationJob job, GeneratedBoardInstance published) {
+        phase = "restore-guard-terminal";
+        check(restoreGuardTriggered && restoreGuardJob == job &&
+            restoreGuardCandidateToken != null && job.getCandidateIndex() == restoreGuardCandidateIndex,
+            "restore guard terminal belongs to its triggered exact job and candidate");
+        check(job.getOutcome() == restoreGuard.expectedOutcome() &&
+            job.getStage() == GenerationJob.Stage.PUBLISH && published == null && job.getReceipt() == null,
+            "restore guard reaches only its expected STALE or CANCELLED terminal without a receipt");
+        if (restoreGuard == RestoreGuard.PROOF)
+            check(job.getFailure() instanceof GenerationJob.Stale &&
+                job.getFailure().getMessage().indexOf("pristine diagnostic proof receipt") >= 0,
+                "replacement proof is rejected by the exact receipt identity guard");
+        check(sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == before.graph &&
+            sim.getGeneratedChallengeController() == before.challenge &&
+            beforeOwner.getPhysicalBoardRuntime() == before.runtime &&
+            beforeOwner.getPhysicalBoardRuntime().getSessionHistory() == before.history,
+            "restore guard rollback restores exact prior owner graph controller runtime and history");
+        check(sim.isGeneratedRuntimeSettled() && !PlayerSessionState.isRestoring(sim) &&
+            !FreshGeneratedRuntimeInstallation.isInProgress(sim) &&
+            !sim.generationCoordinator.retainsSavedOwnersForDeveloperVerification(),
+            "restore guard cleanup is scoped complete and releases candidate owners");
+        check(restoreGuardCandidateToken != beforeOwner &&
+            restoreGuardCandidateToken.getExternalPowerBindings().areAllDisconnected(),
+            "restore guard candidate remains unpublished and externally isolated");
+        for (CircuitElm element : restoreGuardCandidateToken.getSimulationElements())
+            check(!sim.elmList.contains(element), "restore guard candidate graph is disposed from the live owner");
+        before.compare(new Snapshot(sim), this);
+        check(restoreGuardSemanticBaseline.equals(PlayerSessionState.semanticSignature(sim)) &&
+            saved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)),
+            "restore guard rollback preserves the exact independent semantic baseline");
+        check(restoreGuardSavedWire.equals(saved.encode()),
+            "restore guard leaves the captured value-only session artifact unchanged");
+        check(restoreGuardTemporalBaseline.equals(rawTemporalDependency(beforeOwner)),
+            "restore guard rollback preserves the exact prior raw temporal reference");
+        check(restoreGuardConfigurationBaseline.equals(
+                GenerationDependencyContext.captureRestoreConfiguration(sim)) &&
+            restoreGuardTimeContinuityBaseline.equals(timeContinuity(sim)),
+            "restore guard rollback restores solver configuration and time continuity");
+        report.put("restoreGuardObservedOutcome", new JSONString(job.getOutcome().name()));
+        report.put("restoreGuardReceiptIssued", JSONBoolean.getInstance(job.getReceipt() != null));
+        report.put("restoreGuardPlayerInputEvidence", JSONBoolean.getInstance(false));
+        finished = true;
+    }
+
+    private static String rawTemporalDependency(GeneratedBoardInstance owner) {
+        if (owner == null) throw new IllegalArgumentException("Missing raw temporal dependency owner");
+        GeneratedTemporalBehavior temporal = owner.getTemporalBehavior();
+        if (temporal == null) return "NONE";
+        GeneratedTemporalDependency dependency = temporal.getDependency(owner);
+        if (dependency == null) throw new IllegalStateException("Missing raw temporal dependency value");
+        return dependency.canonical();
+    }
+
+    private static String timeContinuity(CirSim sim) {
+        return Long.toHexString(Double.doubleToLongBits(sim.t)) + "/" + sim.timeStepCount + "/" +
+            Long.toHexString(Double.doubleToLongBits(sim.timeStepAccum));
     }
 
     private void advanceQualification(final GenerationCoordinator.Completion completion) {
@@ -638,8 +1001,9 @@ final class U06SessionDeveloperVerifier {
         before.compare(new Snapshot(sim), this);
         check(rollbackSaved.stateSignature.equals(PlayerSessionState.semanticSignature(sim)),
             "both failed restores preserve full protected semantic signature");
-        check(!PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
-            !DifficultyProfile.HARD.isAvailable(), "private round trip grants no public admission");
+        check(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) == normalRb56EnabledAtStart &&
+            qualificationRequest.isPrivateDiagnosticQualification() && !DifficultyProfile.HARD.isAvailable(),
+            "private round trip preserves catalog enablement and grants no public identity");
         finished = true;
     }
 
