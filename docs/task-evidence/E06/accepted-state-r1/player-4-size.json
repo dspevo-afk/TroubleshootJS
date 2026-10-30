@@ -1,0 +1,33 @@
+{
+  "variant": "Player",
+  "elapsedSeconds": 86.40020179999999,
+  "cacheCount": 5,
+  "cacheBytes": 9442211,
+  "files": [
+    {
+      "name": "0E2B53EF4EA96FD00D8E31FA35472631.cache.js",
+      "bytes": 2211960,
+      "sha256": "600132c3a57a97a7a179418e312264e49f1638ab255ce61f48f48cc237febd1a"
+    },
+    {
+      "name": "5C68BD96127DBC570E8226D692936949.cache.js",
+      "bytes": 2212414,
+      "sha256": "2b5d083665328a5cbb73745496f14b95ef215f7dafec6119b389c12d1e8393bc"
+    },
+    {
+      "name": "6454A461829098FDBDDED27545B06349.cache.js",
+      "bytes": 2213689,
+      "sha256": "92d577ab3d4bbdf9667c8250b4a7b6cbe3dbb41062b33a65943bbdccc72a3d4b"
+    },
+    {
+      "name": "7BE03955B1C97B93EAE394DF1D5F6242.cache.js",
+      "bytes": 2213110,
+      "sha256": "cbf70062ac0e0cb4c1cecd2d263663650f9716dcf3b8d2433c8f9625ea577342"
+    },
+    {
+      "name": "93A9C849EE6E487AA6B80FA420BB7C34.cache.js",
+      "bytes": 591038,
+      "sha256": "d0d25c382c5a9afed51259aecf14150ac7c4c536b343f71f42a40bb018ab7755"
+    }
+  ]
+}

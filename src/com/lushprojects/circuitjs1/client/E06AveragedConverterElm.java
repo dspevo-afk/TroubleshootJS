@@ -47,6 +47,19 @@ final class E06AveragedConverterElm extends CircuitElm {
     private double predictorTarget, predictorDrop, predictorInput;
     private double predictorTime, predictorTimeStep;
     private boolean predictorReady;
+    // Completed model callbacks remain provisional until the executor commits global acceptance.
+    private boolean pendingAcceptedReady;
+    private double pendingInputVolts, pendingOutputVolts, pendingEnableVolts, pendingFeedbackVolts;
+    private double pendingInputCurrent, pendingOutputCurrent, pendingEnableCurrent, pendingFeedbackCurrent, pendingDriveCurrent;
+    private boolean pendingAcceptedActive;
+    private double pendingAcceptedActiveSeconds, pendingAcceptedDuty, pendingAcceptedIntegral;
+    private long pendingAcceptedCycleIndex;
+    private boolean pendingActive;
+    private double pendingActiveSeconds, pendingDuty, pendingIntegral;
+    private long pendingCycleIndex;
+    private double pendingPredictorTarget, pendingPredictorDrop, pendingPredictorInput;
+    private double pendingPredictorTime, pendingPredictorTimeStep;
+    private boolean pendingPredictorReady;
 
     E06AveragedConverterElm(int x, int y, E06ConverterContract contract) {
         super(x, y);
@@ -108,6 +121,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
 
     void startIteration() {
+        clearPendingAcceptedState();
         requireStep();
         inputStampSubIteration = -1;
         stepActive = active;
@@ -197,7 +211,8 @@ final class E06AveragedConverterElm extends CircuitElm {
         inputStampSubIteration = sim.subIterations;
         inputStampTime = sim.t;
         inputStampTimeStep = sim.timeStep;
-        receiptReady = false;
+        // Keep receiptReady bound to the last globally accepted receipt. Trial
+        // currents are computed by the private trial helpers until acceptance.
         double physicalDrive = driving ? Math.max(0,
             Math.min(E06ConverterContract.MAX_OUTPUT_CURRENT_AMPS, requestedDrop / resistance)) : 0;
         double trialDrive = trialDriveCurrent();
@@ -240,40 +255,194 @@ final class E06AveragedConverterElm extends CircuitElm {
     }
 
     void stepFinished() {
-        predictorReady = false;
-        // Snapshot the realized stamped branches before latching future control.
-        acceptedInputVolts = getInputVoltage();
-        acceptedOutputVolts = getOutputVoltage();
-        acceptedEnableVolts = getEnableVoltage();
-        acceptedFeedbackVolts = getFeedbackVoltage();
-        acceptedDriveCurrent = trialDriveCurrent();
-        acceptedInputCurrent = trialInputCurrent();
-        acceptedOutputCurrent = acceptedDriveCurrent - acceptedOutputVolts / E06ConverterContract.OUTPUT_LEAK_OHMS;
-        acceptedEnableCurrent = acceptedEnableVolts / E06ConverterContract.CONTROL_LEAK_OHMS;
-        acceptedFeedbackCurrent = acceptedFeedbackVolts / E06ConverterContract.CONTROL_LEAK_OHMS;
-        acceptedActive = stepActive;
-        acceptedDuty = stepDuty;
-        acceptedIntegral = stepIntegral;
-        acceptedActiveSeconds = stepActiveSeconds;
-        acceptedCycleIndex = stepCycleIndex;
+        clearPendingAcceptedState();
+        // Prepare the electrical receipt locally. The executor may still reject this
+        // globally converged step in a later model callback, accepted event or boundary.
+        double inputVolts = getInputVoltage();
+        double outputVolts = getOutputVoltage();
+        double enableVolts = getEnableVoltage();
+        double feedbackVolts = getFeedbackVoltage();
+        double driveCurrent = trialDriveCurrent();
+        double inputCurrent = trialInputCurrent();
+        double outputCurrent = driveCurrent - outputVolts / E06ConverterContract.OUTPUT_LEAK_OHMS;
+        double enableCurrent = enableVolts / E06ConverterContract.CONTROL_LEAK_OHMS;
+        double feedbackCurrent = feedbackVolts / E06ConverterContract.CONTROL_LEAK_OHMS;
+        requireAcceptedEnvelope(inputVolts, outputVolts, enableVolts, feedbackVolts,
+            driveCurrent, inputCurrent, outputCurrent, enableCurrent, feedbackCurrent);
+
+        // Preserve the successful control calculation order; only its publication is deferred.
+        boolean nextActive = E06ConverterContract.nextActive(active, inputVolts, enableVolts);
+        double nextActiveSeconds = nextActive ? (active ? activeSeconds : 0) + sim.timeStep : 0;
+        double nextIntegral = E06ConverterContract.nextIntegral(integral, inputVolts, feedbackVolts,
+            nextActiveSeconds, sim.timeStep, nextActive);
+        long nextCycleIndex = E06ConverterContract.cycleIndex(sim.t);
+        double nextDuty = duty;
+        if (!nextActive) nextDuty = 0;
+        else if (nextCycleIndex != cycleIndex) nextDuty = E06ConverterContract.dutyFor(
+            inputVolts, feedbackVolts, nextActiveSeconds, nextIntegral);
+
+        pendingInputVolts = inputVolts;
+        pendingOutputVolts = outputVolts;
+        pendingEnableVolts = enableVolts;
+        pendingFeedbackVolts = feedbackVolts;
+        pendingInputCurrent = inputCurrent;
+        pendingOutputCurrent = outputCurrent;
+        pendingEnableCurrent = enableCurrent;
+        pendingFeedbackCurrent = feedbackCurrent;
+        pendingDriveCurrent = driveCurrent;
+        pendingAcceptedActive = stepActive;
+        pendingAcceptedDuty = stepDuty;
+        pendingAcceptedIntegral = stepIntegral;
+        pendingAcceptedActiveSeconds = stepActiveSeconds;
+        pendingAcceptedCycleIndex = stepCycleIndex;
+        pendingActive = nextActive;
+        pendingActiveSeconds = nextActiveSeconds;
+        pendingIntegral = nextIntegral;
+        pendingDuty = nextDuty;
+        pendingCycleIndex = nextCycleIndex;
+        pendingPredictorTarget = lastTarget;
+        pendingPredictorDrop = lastDrop;
+        pendingPredictorInput = lastInput;
+        pendingPredictorTime = sim.t;
+        pendingPredictorTimeStep = sim.timeStep;
+        pendingPredictorReady = true;
+        pendingAcceptedReady = true;
+    }
+
+    /** Called only after solver events and the global acceptance boundary succeed. */
+    void solverStepAccepted() {
+        if (!pendingAcceptedReady) return;
+        acceptedInputVolts = pendingInputVolts;
+        acceptedOutputVolts = pendingOutputVolts;
+        acceptedEnableVolts = pendingEnableVolts;
+        acceptedFeedbackVolts = pendingFeedbackVolts;
+        acceptedInputCurrent = pendingInputCurrent;
+        acceptedOutputCurrent = pendingOutputCurrent;
+        acceptedEnableCurrent = pendingEnableCurrent;
+        acceptedFeedbackCurrent = pendingFeedbackCurrent;
+        acceptedDriveCurrent = pendingDriveCurrent;
+        acceptedActive = pendingAcceptedActive;
+        acceptedDuty = pendingAcceptedDuty;
+        acceptedIntegral = pendingAcceptedIntegral;
+        acceptedActiveSeconds = pendingAcceptedActiveSeconds;
+        acceptedCycleIndex = pendingAcceptedCycleIndex;
         receiptReady = true;
-        requireAcceptedEnvelope();
-        boolean nextActive = E06ConverterContract.nextActive(active, acceptedInputVolts, acceptedEnableVolts);
-        activeSeconds = nextActive ? (active ? activeSeconds : 0) + sim.timeStep : 0;
-        integral = E06ConverterContract.nextIntegral(integral, acceptedInputVolts, acceptedFeedbackVolts,
-            activeSeconds, sim.timeStep, nextActive);
-        active = nextActive;
-        long nextCycle = E06ConverterContract.cycleIndex(sim.t);
-        if (!active) duty = 0;
-        else if (nextCycle != cycleIndex) duty = E06ConverterContract.dutyFor(
-            acceptedInputVolts, acceptedFeedbackVolts, activeSeconds, integral);
-        cycleIndex = nextCycle;
-        predictorTarget = lastTarget;
-        predictorDrop = lastDrop;
-        predictorInput = lastInput;
-        predictorTime = sim.t;
-        predictorTimeStep = sim.timeStep;
-        predictorReady = true;
+        active = pendingActive;
+        activeSeconds = pendingActiveSeconds;
+        integral = pendingIntegral;
+        duty = pendingDuty;
+        cycleIndex = pendingCycleIndex;
+        predictorTarget = pendingPredictorTarget;
+        predictorDrop = pendingPredictorDrop;
+        predictorInput = pendingPredictorInput;
+        predictorTime = pendingPredictorTime;
+        predictorTimeStep = pendingPredictorTimeStep;
+        predictorReady = pendingPredictorReady;
+        clearPendingAcceptedState();
+    }
+
+    /** Immutable view of committed E06 memory for a Developer owner-boundary canary. */
+    static final class AcceptedStateSnapshot {
+        private final E06AveragedConverterElm owner;
+        private final boolean receiptReady, acceptedActive, active, predictorReady;
+        private final double acceptedInputCurrent, acceptedOutputCurrent;
+        private final double acceptedEnableCurrent, acceptedFeedbackCurrent, acceptedDriveCurrent;
+        private final double acceptedInputVolts, acceptedOutputVolts;
+        private final double acceptedEnableVolts, acceptedFeedbackVolts;
+        private final double acceptedActiveSeconds, acceptedDuty, acceptedIntegral;
+        private final long acceptedCycleIndex;
+        private final double activeSeconds, duty, integral;
+        private final long cycleIndex;
+        private final double predictorTarget, predictorDrop, predictorInput;
+        private final double predictorTime, predictorTimeStep;
+
+        private AcceptedStateSnapshot(E06AveragedConverterElm owner) {
+            this.owner = owner;
+            receiptReady = owner.receiptReady;
+            acceptedInputCurrent = owner.acceptedInputCurrent;
+            acceptedOutputCurrent = owner.acceptedOutputCurrent;
+            acceptedEnableCurrent = owner.acceptedEnableCurrent;
+            acceptedFeedbackCurrent = owner.acceptedFeedbackCurrent;
+            acceptedDriveCurrent = owner.acceptedDriveCurrent;
+            acceptedInputVolts = owner.acceptedInputVolts;
+            acceptedOutputVolts = owner.acceptedOutputVolts;
+            acceptedEnableVolts = owner.acceptedEnableVolts;
+            acceptedFeedbackVolts = owner.acceptedFeedbackVolts;
+            acceptedActive = owner.acceptedActive;
+            acceptedActiveSeconds = owner.acceptedActiveSeconds;
+            acceptedDuty = owner.acceptedDuty;
+            acceptedIntegral = owner.acceptedIntegral;
+            acceptedCycleIndex = owner.acceptedCycleIndex;
+            active = owner.active;
+            activeSeconds = owner.activeSeconds;
+            duty = owner.duty;
+            integral = owner.integral;
+            cycleIndex = owner.cycleIndex;
+            predictorReady = owner.predictorReady;
+            predictorTarget = owner.predictorTarget;
+            predictorDrop = owner.predictorDrop;
+            predictorInput = owner.predictorInput;
+            predictorTime = owner.predictorTime;
+            predictorTimeStep = owner.predictorTimeStep;
+        }
+    }
+
+    AcceptedStateSnapshot captureAcceptedStateForDeveloperVerification() {
+        return new AcceptedStateSnapshot(this);
+    }
+
+    boolean matchesAcceptedStateForDeveloperVerification(AcceptedStateSnapshot snapshot) {
+        return snapshot != null && snapshot.owner == this &&
+            receiptReady == snapshot.receiptReady &&
+            sameExact(acceptedInputCurrent, snapshot.acceptedInputCurrent) &&
+            sameExact(acceptedOutputCurrent, snapshot.acceptedOutputCurrent) &&
+            sameExact(acceptedEnableCurrent, snapshot.acceptedEnableCurrent) &&
+            sameExact(acceptedFeedbackCurrent, snapshot.acceptedFeedbackCurrent) &&
+            sameExact(acceptedDriveCurrent, snapshot.acceptedDriveCurrent) &&
+            sameExact(acceptedInputVolts, snapshot.acceptedInputVolts) &&
+            sameExact(acceptedOutputVolts, snapshot.acceptedOutputVolts) &&
+            sameExact(acceptedEnableVolts, snapshot.acceptedEnableVolts) &&
+            sameExact(acceptedFeedbackVolts, snapshot.acceptedFeedbackVolts) &&
+            acceptedActive == snapshot.acceptedActive &&
+            sameExact(acceptedActiveSeconds, snapshot.acceptedActiveSeconds) &&
+            sameExact(acceptedDuty, snapshot.acceptedDuty) &&
+            sameExact(acceptedIntegral, snapshot.acceptedIntegral) &&
+            acceptedCycleIndex == snapshot.acceptedCycleIndex &&
+            active == snapshot.active &&
+            sameExact(activeSeconds, snapshot.activeSeconds) &&
+            sameExact(duty, snapshot.duty) &&
+            sameExact(integral, snapshot.integral) &&
+            cycleIndex == snapshot.cycleIndex &&
+            predictorReady == snapshot.predictorReady &&
+            sameExact(predictorTarget, snapshot.predictorTarget) &&
+            sameExact(predictorDrop, snapshot.predictorDrop) &&
+            sameExact(predictorInput, snapshot.predictorInput) &&
+            sameExact(predictorTime, snapshot.predictorTime) &&
+            sameExact(predictorTimeStep, snapshot.predictorTimeStep);
+    }
+
+    boolean hasPendingAcceptedStateForDeveloperVerification() {
+        return pendingAcceptedReady || pendingPredictorReady;
+    }
+
+    /** Reports stored historical predictor data; the live executor reuse permit is checked separately. */
+    boolean hasAcceptedPredictorForDeveloperVerification() {
+        return receiptReady && predictorReady &&
+            E06ConverterContract.finite(predictorTarget) &&
+            E06ConverterContract.finite(predictorDrop) &&
+            E06ConverterContract.finite(predictorInput) &&
+            E06ConverterContract.finite(predictorTime) &&
+            E06ConverterContract.finite(predictorTimeStep) &&
+            predictorTimeStep > 0 && predictorTimeStep <= MAX_STEP_SECONDS;
+    }
+
+    private static boolean sameExact(double first, double second) {
+        return Double.doubleToLongBits(first) == Double.doubleToLongBits(second);
+    }
+
+    private void clearPendingAcceptedState() {
+        pendingAcceptedReady = false;
+        pendingPredictorReady = false;
     }
 
     double getDuty() { return acceptedDuty; }
@@ -303,12 +472,22 @@ final class E06AveragedConverterElm extends CircuitElm {
             acceptedFeedbackVolts * acceptedFeedbackCurrent - getOutputPowerWatts();
     }
     double getVoltageDiff() { return getOutputVoltage(); }
-    double getCurrent() { return getInputCurrent(); }
+    // CircuitJS calls these physical-current accessors before the executor's
+    // acceptance hook. When a validated step is staged, report that solved
+    // vector so scopes and wire-current processing do not lag one accepted step.
+    // After a rejected step, this raw-solver view can remain provisional until
+    // the next startIteration/reset; semantic receipt getters stay committed.
+    double getCurrent() {
+        return pendingAcceptedReady ? pendingInputCurrent : getInputCurrent();
+    }
     double getPower() { return getPowerLossWatts(); }
     double getCurrentIntoNode(int n) {
-        double input = getInputCurrent(), output = getOutputCurrent();
-        double enable = receiptReady ? acceptedEnableCurrent : getEnableVoltage() / E06ConverterContract.CONTROL_LEAK_OHMS;
-        double feedback = receiptReady ? acceptedFeedbackCurrent : getFeedbackVoltage() / E06ConverterContract.CONTROL_LEAK_OHMS;
+        double input = pendingAcceptedReady ? pendingInputCurrent : getInputCurrent();
+        double output = pendingAcceptedReady ? pendingOutputCurrent : getOutputCurrent();
+        double enable = pendingAcceptedReady ? pendingEnableCurrent : receiptReady ? acceptedEnableCurrent :
+            getEnableVoltage() / E06ConverterContract.CONTROL_LEAK_OHMS;
+        double feedback = pendingAcceptedReady ? pendingFeedbackCurrent : receiptReady ? acceptedFeedbackCurrent :
+            getFeedbackVoltage() / E06ConverterContract.CONTROL_LEAK_OHMS;
         if (n == 0) return -input;
         if (n == 1) return input + enable + feedback;
         if (n == 2) return output;
@@ -320,6 +499,7 @@ final class E06AveragedConverterElm extends CircuitElm {
 
     void reset() {
         super.reset();
+        clearPendingAcceptedState();
         active = stepActive = acceptedActive = false;
         activeSeconds = duty = stepActiveSeconds = stepDuty = acceptedActiveSeconds = acceptedDuty = 0;
         integral = stepIntegral = acceptedIntegral = 0;
@@ -358,16 +538,23 @@ final class E06AveragedConverterElm extends CircuitElm {
         if (!E06ConverterContract.finite(sim.timeStep) || sim.timeStep <= 0 || sim.timeStep > MAX_STEP_SECONDS)
             throw new IllegalArgumentException("E06 averaged pilot requires an accepted timestep in (0, 400 us]");
     }
-    private void requireAcceptedEnvelope() {
-        if (!E06ConverterContract.finite(acceptedInputVolts) || !E06ConverterContract.finite(acceptedOutputVolts) ||
-                !E06ConverterContract.finite(acceptedEnableVolts) || !E06ConverterContract.finite(acceptedFeedbackVolts) ||
-                !E06ConverterContract.finite(acceptedInputCurrent) || !E06ConverterContract.finite(acceptedOutputCurrent))
+    private void requireAcceptedEnvelope(double inputVolts, double outputVolts,
+            double enableVolts, double feedbackVolts, double driveCurrent,
+            double inputCurrent, double outputCurrent, double enableCurrent,
+            double feedbackCurrent) {
+        if (!E06ConverterContract.finite(inputVolts) || !E06ConverterContract.finite(outputVolts) ||
+                !E06ConverterContract.finite(enableVolts) || !E06ConverterContract.finite(feedbackVolts) ||
+                !E06ConverterContract.finite(inputCurrent) || !E06ConverterContract.finite(outputCurrent))
             throw new IllegalArgumentException("Nonfinite accepted E06 averaged port");
-        if (acceptedInputVolts < -VOLTAGE_TOLERANCE || acceptedOutputVolts < MIN_COMMUTATION_VOLTS)
+        if (inputVolts < -VOLTAGE_TOLERANCE || outputVolts < MIN_COMMUTATION_VOLTS)
             throw new IllegalArgumentException("E06 averaged reverse input or fast reverse commutation is unsupported");
-        if (acceptedDriveCurrent < -CURRENT_TOLERANCE_AMPS ||
-                acceptedDriveCurrent > E06ConverterContract.MAX_OUTPUT_CURRENT_AMPS + CURRENT_TOLERANCE_AMPS ||
-                acceptedInputCurrent < -CURRENT_TOLERANCE_AMPS || getPowerLossWatts() < -1e-7)
+        double powerLoss = inputVolts * inputCurrent + enableVolts * enableCurrent +
+            feedbackVolts * feedbackCurrent - outputVolts * outputCurrent;
+        if (!E06ConverterContract.finite(powerLoss))
+            throw new IllegalArgumentException("Nonfinite accepted E06 power flow");
+        if (driveCurrent < -CURRENT_TOLERANCE_AMPS ||
+                driveCurrent > E06ConverterContract.MAX_OUTPUT_CURRENT_AMPS + CURRENT_TOLERANCE_AMPS ||
+                inputCurrent < -CURRENT_TOLERANCE_AMPS || powerLoss < -1e-7)
             throw new IllegalArgumentException("E06 averaged accepted flow exceeds forward-only passive-loss contract");
     }
     private static boolean changed(double before, double after, double tolerance) {

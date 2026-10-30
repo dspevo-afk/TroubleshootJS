@@ -48,9 +48,10 @@ do not qualify the current protocol.
 These owners grant no normal catalog, physical admission, production D01 proof,
 session capacity or playable-family authority. The roadmap records their evidence.
 
-Dependency interpretation v20 invalidates earlier proof keys after the shared
-E02/E04/E06 solver-policy corrections. The context binds declared inputs rather
-than source bytes, so this explicit epoch carries the changed interpretation.
+Dependency interpretation v21 invalidates earlier proof keys after the E06
+accepted-memory boundary change. The published Q100-1 candidate used v20 for
+the earlier E02/E04/E06 solver-policy corrections. The context binds declared
+inputs rather than source bytes, so explicit epochs carry changed interpretation.
 The declared model dump remains v7. Public saved sessions carry no proof grant
 or solver memory; restore disables proof reuse and regenerates/reproves before
 adopting current state. Private replay identities bind the dependency epoch.
@@ -185,14 +186,28 @@ The executor commits the final trial mode
 through a pure element callback after boundary acceptance and before observations;
 failed trials, retries and earlier model/event callbacks cannot commit it. Reset
 requires the declared brownout recovery threshold before the first accepted HIGH.
-This accepted-memory correction is scoped to E04. E06's existing stepFinished
-receipt/controller update still precedes executor event/boundary acceptance;
-its exception-boundary migration needs separate staged-state canaries and remains
-an explicit follow-up. Broad E06 nominal fidelity is still unqualified.
+E06 stages its solved receipt, next controller state and predictor in the same
+element after checking the raw port envelope and finite derived power. Its pure
+accepted callback commits that candidate only after executor event/boundary
+acceptance. A new attempt and reset retire pending readiness. Semantic receipt
+getters remain last accepted; CircuitJS physical current accessors can read the
+validated provisional currents for pre-acceptance wire/scope sampling. Those raw
+currents and scopes are provisional through a failed attempt until retry/reset;
+time, scopes and earlier element callbacks are not rolled back here.
+
+The model owns an immutable Developer observation snapshot of committed memory.
+Stored predictor readiness is historical data, not a current reuse permit. The
+numerical reuse guard still requires compatible controls and current executor
+acceptance. Private solver restoration keeps boundary/observation invalidation.
+Separate Developer canaries use a settled, exact RB56 QuickPlay predecessor and
+an actual private E06 fixture to check callback/event rejection and predecessor
+memory restoration. Their selection-only entry does not run the broad QuickPlay
+mutation verifier or grant Player/catalog authority. Current qualification lives
+in the roadmap/checkpoint; broad E06 nominal fidelity remains unqualified.
 RB56 instrument admission v2 shares the same supported passive
 differential path across resistance, continuity and diode modes. Power, reference,
 isolation and residual-energy checks remain authoritative. Layout interpretation
-20, public replay epoch `tsj-alpha/7` and dependency/model epochs v19/v7
+20, public replay epoch `tsj-alpha/7` and dependency/model epochs v21/v7
 invalidate earlier physical and electrical proof artifacts. Earlier public replay
 epochs reject before session mutation rather than silently selecting new routes.
 

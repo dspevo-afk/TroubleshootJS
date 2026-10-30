@@ -1,0 +1,18 @@
+{
+  "protocol": "e06-accepted-native-failure-v1",
+  "status": "FAIL_COMPILATION",
+  "phase": "production-and-contract-class-compilation",
+  "helperExitCode": 2,
+  "javacExitCode": 1,
+  "elapsedSeconds": 22.285615099999998,
+  "electricalCasesRun": 0,
+  "failure": "New test referenced Snapshot.receiptReady; actual independent oracle field is Snapshot.receipt",
+  "fix": "Correct field name; retain readiness assertion",
+  "cleanup": "PASS: current JVM contract classes and task-owned scratch removed",
+  "sourcePins": "accepted-native-1-source-pins.json",
+  "rawLogSha256": "2c96233dc118eeebfe0044da478673595131860f1eaf985e9a61b8e31cac4643",
+  "limits": [
+    "No native electrical outcome inferred",
+    "Failed sources/log preserved in task-owned OS-temp freeze"
+  ]
+}

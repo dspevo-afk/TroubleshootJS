@@ -1,0 +1,52 @@
+{
+  "protocol": "e06-final-source-builds-v1",
+  "status": "PASS",
+  "jdk": "Temurin JDK8u502-b07",
+  "command": "scripts/build.ps1 -Variant Player|Developer -Style OBF",
+  "builds": [
+    {
+      "variant": "Player",
+      "attempt": 3,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 89.4407196,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "70152678ac940f8ef231b8eaef1fc0f92b48ae7eaf6f5e8c93f8bc4fc72018de",
+        "InputFileCount": 1198,
+        "OutputDigest": "eb327464ef36b7a52377e5c9a3009929c92d01fe597612fea67a5a6b3e5529b0",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 9442211,
+      "receipt": "player-3-identity.json",
+      "size": "player-3-size.json",
+      "inventory": "player-3-inventory.json",
+      "rawLogSha256": "cfa1a06fddce8253977a6a74f2f30ca9cdde8bbc30bf1016cd27cbe376e3457f"
+    },
+    {
+      "variant": "Developer",
+      "attempt": 2,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 121.3302652,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "bc1ede8a250468603505040d5d1c57e933b1eef226e6ea547563e1db8857e987",
+        "InputFileCount": 1198,
+        "OutputDigest": "b9ab7d8e2782b416bce0c57b902414f17cd8df12d7c2159a1d13e93e30c0d686",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 17851392,
+      "receipt": "developer-2-identity.json",
+      "size": "developer-2-size.json",
+      "inventory": "developer-2-inventory.json",
+      "rawLogSha256": "b70bca6ca105269afb78adaf3242a973fc30c9059da50508b563d6a3ab31b9e4"
+    }
+  ],
+  "qualification": "Actual final Java sources include selected async E06 bootstrap and strict cleanup ownership guard. Native8 is a fresh later isolated run; no native6 reuse needed.",
+  "earlierBuilds": "pre-async-source-builds.json"
+}

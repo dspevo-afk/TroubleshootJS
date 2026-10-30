@@ -1,0 +1,24 @@
+{
+  "protocol": "e06-native8-final-reuse-v1",
+  "status": "AUDITED_SCOPED_REUSE",
+  "original": "final-native8-pass.json",
+  "changedPinnedInputs": [
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "nativeSha256": "b61756110d8eaceb0f7d0a4eee9163fd1090103d9e6f260526c15d8b6b11f06d",
+      "currentSha256": "d5b29c18654a56019ce092242a53533e5f2d4b2ef7d071537c30b35446ee643d"
+    },
+    {
+      "path": "scripts/verify-a03-browser.ps1",
+      "nativeSha256": "46b8f2eaca372a8a68745e955b7e9dbcc71b39563345eb0c86c33cbe24c271b2",
+      "currentSha256": "ffed81687f8f3d97c615cea13b561e9294087d7b391aeae8c57f4b017bd80bc1"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+      "nativeSha256": "13c24713d744ee700eedfea03e37496bb3a8e1670495a48fd701aef0c325a42d",
+      "currentSha256": "fde22a4af7bf6a54e3f2fba4cf47d357b8602eea670c26b7f050f0198a037011"
+    }
+  ],
+  "boundary": "Only Developer report JSON serialization, E06 browser failure diagnostics and documentation changed after isolated native8. Numerical models, executor, E06 fixture, all eight native contracts and native bridge/runner/module unchanged. These native suites do not enter Q100 Developer report production or browser failure reporting. Actual final GWT builds/compiled gates must cover changed producer; no reuse of old compiled canary acceptance.",
+  "fullNativeMatrix": "NOT RUN"
+}

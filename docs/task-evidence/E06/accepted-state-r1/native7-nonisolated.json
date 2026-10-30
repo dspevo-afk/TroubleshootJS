@@ -1,0 +1,22 @@
+{
+  "protocol": "e06-native-nonisolated-v1",
+  "status": "PASS_CONTRACTS_NOT_FINAL_ACCEPTANCE",
+  "result": {
+    "exitCode": 0,
+    "elapsedSeconds": 55.4270213,
+    "suites": [
+      "E06AcceptedStateContractTest",
+      "E06ConverterPilotContractTest",
+      "E04DecisionMemoryContractTest",
+      "D01DiagnosticContractTest",
+      "Rb56ModelIdentityContractTest",
+      "RelBSessionIdentityContractTest",
+      "U06SessionSaveContractTest",
+      "Rb56ManifestContractTest"
+    ]
+  },
+  "cleanup": "PASS",
+  "rawReceiptSha256": "ba92e3d06e15b406781c4945253be708011f45636600207ec0a94747ef5220f0",
+  "rawLogSha256": "db5a5417229b087e468dfc769fefd6c114190709fa448b737d09cd4e250b37fc",
+  "limitation": "Root launched Developer2 after native PASS output but before native helper cleanup exit. Preserve this result; require fresh isolated final native8."
+}

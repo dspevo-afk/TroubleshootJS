@@ -299,6 +299,7 @@ public final class RelBSessionIdentityContractTest {
                 "tsj-private-session/15/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-14/RB56_CONTROL/1",
                 "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/tsj-generation-dependencies-v19/rb56-placement-15/RB56_CONTROL/1",
+                "tsj-private-session/15/tsj-generation-dependencies-v20/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/1/extra",
                 "tsj-private-session/16/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-16/RB56_CONTROL/1",
                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",

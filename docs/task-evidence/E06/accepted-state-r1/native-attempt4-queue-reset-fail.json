@@ -1,0 +1,21 @@
+{
+  "protocol": "e06-accepted-native-failure-v1",
+  "status": "FAIL_CONTRACT",
+  "phase": "accepted-event-throw-and-recovery",
+  "helperExitCode": 2,
+  "elapsedSeconds": 25.0877502,
+  "passed": [
+    "valid-acceptance",
+    "envelope-reject-and-recovery(includingderivedpoweroverflow)",
+    "later-step-finished-throw-and-recovery"
+  ],
+  "failure": "Owned injected-event queue correctly remains failed until explicit reset; fixture retry omitted that reset",
+  "fix": "Assert queue refuses dispatch while failed, explicitly reset only test-owned queue at advanced time, then actual solver retry; productionqueue unchanged",
+  "cleanup": "PASS JVM classes/task-only scratch removed",
+  "sourcePins": "accepted-native-4-source-pins.json",
+  "rawLogSha256": "26d9cb021a7c120ae8b8c49d6d56568a31e0346dce5937fe6a152e5be0c84b60",
+  "limits": [
+    "Partialcases not aggregatePASS",
+    "No time/scope rollback or full E06fidelity claim"
+  ]
+}

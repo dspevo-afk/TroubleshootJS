@@ -1,0 +1,23 @@
+{
+  "protocol": "e06-accepted-native-failure-v1",
+  "status": "FAIL_CONTRACT",
+  "phase": "E06AcceptedStateContractTest:envelope-reject-and-recovery",
+  "helperExitCode": 2,
+  "elapsedSeconds": 50.468041899999996,
+  "passed": [
+    "E04 accepted-memory71 assertions/3cases",
+    "E06 nominal pilot mechanics303827405 assertions/24cases,nominal fidelity NOT QUALIFIED",
+    "New E06 valid-acceptance case"
+  ],
+  "failure": "Expected actual reverse-input envelope rejection type/message assertion failed; actual caught exception needs diagnosis",
+  "notRun": [
+    "Remaining new accepted-state cases after envelope assertion"
+  ],
+  "cleanup": "PASS: current JVM contract classes and task-owned scratch removed",
+  "sourcePins": "accepted-native-2-source-pins.json",
+  "rawLogSha256": "ff95f9f9e3469e8f3dcfd1620899b5bfd792fdb23b4b67be59a51ad79fdcadbe",
+  "limits": [
+    "Partial passes do not qualify the new accepted-state contract",
+    "Failed source/log retained; no blocker published as success"
+  ]
+}

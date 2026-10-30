@@ -85,11 +85,11 @@ public final class D01DiagnosticContractTest {
             require(baselineKey.equals(baseline.diagnosticKey()),
                 "real dependency capture and diagnostic key share the complete canonical value");
             String canonical = baseline.canonical();
-            String expectedEpoch = "tsj-generation-dependencies-v20";
+            String expectedEpoch = "tsj-generation-dependencies-v21";
             require(canonical.startsWith("V" + expectedEpoch.length() + ":" +
                     expectedEpoch + ";") &&
                     canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v7") >= 0,
-                "shared solver interpretation advances the proof epoch while declared CircuitJS model inputs stay exact");
+                "E06 failed-state continuation advances the proof epoch while declared CircuitJS model inputs stay exact");
             require(canonical.indexOf(".reference-characters") >= 0,
                 "actual diagnostic capture binds the reserved physical reference width");
             require(canonical.indexOf("diagnostic.hypothesis-population") >= 0 &&
@@ -594,14 +594,14 @@ public final class D01DiagnosticContractTest {
             final GeneratedDiagnosticContextKey key = capturedContext.diagnosticKey();
             final String currentEpoch = GenerationDependencyContext.INTERPRETATION_EPOCH;
             final String currentFrame = "V" + currentEpoch.length() + ":" + currentEpoch + ";";
-            final String priorEpoch = "tsj-generation-dependencies-v19";
+            final String priorEpoch = "tsj-generation-dependencies-v20";
             final String priorFrame = "V" + priorEpoch.length() + ":" + priorEpoch + ";";
             require(capturedContext.canonical().startsWith(currentFrame),
                 "cache key derives from the captured current dependency context");
             final GeneratedDiagnosticContextKey priorKey = new GeneratedDiagnosticContextKey(
                 priorFrame + capturedContext.canonical().substring(currentFrame.length()));
             require(!priorKey.equals(key),
-                "prior v19 proof identity differs from the actual captured v20 key");
+                "prior v20 proof identity differs from the actual captured v21 key");
             final GeneratedDiagnosticProofCache cache = new GeneratedDiagnosticProofCache();
             final int rawKeyMisses = cache.getMisses();
             reject("service rejects raw context key", new Case() { public void run() {
@@ -625,9 +625,9 @@ public final class D01DiagnosticContractTest {
                 priorCache.prepare(priorKey, board, priorSource);
             priorCache.storePrepared(priorEntry);
             require(priorCache.lookup(priorKey) == priorEntry,
-                "legacy proof fixture is keyed by its captured v19 identity");
+                "prior proof fixture is keyed by its captured v20 identity");
             require(priorCache.lookup(key) == null,
-                "captured v20 context misses a cache entry keyed by prior v19 identity");
+                "captured v21 context misses a cache entry keyed by prior v20 identity");
             reject("prior proof evidence cannot be reused under the current context",
                 new Case() { public void run() {
                     priorEntry.validateForReuse(key, board);

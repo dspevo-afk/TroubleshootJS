@@ -1,0 +1,148 @@
+{
+  "protocol": "e06-final-normal-medium-finite3-v1",
+  "status": "PASS_FINITE_DEVELOPMENT_REGRESSION",
+  "runtime": {
+    "browser": "Microsoft Edge headless",
+    "playwright": "1.57.0",
+    "python": "3.13.14",
+    "existingInstalledRuntime": true
+  },
+  "wrapper": {
+    "schema": "tsj-r12-r3-v2-partition-run/1",
+    "partition": "development",
+    "planSha256": "315aa59358eb9f80494b22763d51bd235a55c09852379ee73f6facc9039db0d0",
+    "sourceBinding": "06a533e8fe85653f93f045f3c58ffb82a15141371f8bbf70ec91380b5671124c",
+    "firstBlind8Released": false,
+    "status": "PASS",
+    "phases": [
+      {
+        "phase": "browser",
+        "exit": 0,
+        "seconds": 163.4227395998314
+      },
+      {
+        "phase": "wrap",
+        "exit": 0,
+        "seconds": 0.94353669998236
+      },
+      {
+        "phase": "reader",
+        "exit": 0,
+        "seconds": 0.9197992000263184
+      }
+    ],
+    "wrapperSeconds": 165.33673020009883
+  },
+  "outer": {
+    "exitCode": 0,
+    "elapsedSeconds": 167.0877485,
+    "planSha256": "315aa59358eb9f80494b22763d51bd235a55c09852379ee73f6facc9039db0d0",
+    "partition": "development",
+    "firstBlind8Released": false
+  },
+  "reduced": {
+    "status": "PASS_FINITE_R12_PARTITION",
+    "partition": "development",
+    "planSha256": "315aa59358eb9f80494b22763d51bd235a55c09852379ee73f6facc9039db0d0",
+    "sourceBinding": "06a533e8fe85653f93f045f3c58ffb82a15141371f8bbf70ec91380b5671124c",
+    "cases": [
+      {
+        "root": "-2230691771308388107",
+        "seed": "-2230691771308388107",
+        "packages": 58,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 67875,
+        "generationWork": 462,
+        "maxUnitMillis": 1635,
+        "operationMillis": 68293,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.8,
+          1.7,
+          2.1,
+          1.7,
+          1.4
+        ],
+        "captureSha256": "71e1b4eccbc95ef59007cb7a5f8040d7e0fdde68d674adf523002313c5a7e748"
+      },
+      {
+        "root": "6702341860553104274",
+        "seed": "6702341860553104274",
+        "packages": 52,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 59202,
+        "generationWork": 460,
+        "maxUnitMillis": 1222,
+        "operationMillis": 59625,
+        "cleanupMillis": 5,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.7,
+          1.7,
+          2.0,
+          1.7,
+          1.4
+        ],
+        "captureSha256": "18c2fed764cb50b4a3499efefc24559b41ae8e7143773d54a6896df8bd967492"
+      },
+      {
+        "root": "-8360266000248569150",
+        "seed": "-8360266000248569150",
+        "packages": 42,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 29715,
+        "generationWork": 390,
+        "maxUnitMillis": 792,
+        "operationMillis": 30028,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.8,
+          1.8,
+          2.0,
+          1.8,
+          1.4
+        ],
+        "captureSha256": "a8c2838221d381ac5101195b188f11c3dd9bcbc2452e2f3cf9be5dcfac26e8b8"
+      }
+    ],
+    "normalReleaseAcceptance": false
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "f950f3e2d0af14011678cc73e35a80cf8b1a7591a2e10549b034a0a311528919",
+    "afterSha256": "f950f3e2d0af14011678cc73e35a80cf8b1a7591a2e10549b034a0a311528919",
+    "sourceSha256Before": "c3c48aa53e9b218f22a2b421654ec7c79d857d0fbc400730d01c2dc335068287",
+    "sourceSha256After": "c3c48aa53e9b218f22a2b421654ec7c79d857d0fbc400730d01c2dc335068287",
+    "webSha256Before": "b452c4b91a5d46761b08f7f7062449d497d57836fc73dde70312a726ac5f0992",
+    "webSha256After": "b452c4b91a5d46761b08f7f7062449d497d57836fc73dde70312a726ac5f0992",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCountBefore": 1574,
+    "fileCountAfter": 1574,
+    "seconds": 0.36460550012998283
+  },
+  "cleanup": {
+    "status": "PASS",
+    "seconds": 1.1497160999570042,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "browserCaseCount": 3,
+  "errors": [],
+  "rawReportSha256": "d95132a76ffd6e6a4d02792bb9a89b71b78e0affef87df66d42a3cb2ec19b704",
+  "browserLogSha256": "6574996c7a5fbd717af5352ab82385a0bf0de04b04d5b30ee4ef0baf047b10f8",
+  "planFileSha256": "315aa59358eb9f80494b22763d51bd235a55c09852379ee73f6facc9039db0d0",
+  "actualDeveloperBuild": "Developer3 / final-source-builds.json",
+  "limits": [
+    "Only three predeclared development roots; no30-root renewal or release qualification",
+    "Developer passive capture, no visible Player repair claim",
+    "Frozen plan baseCommit is historical R12 plan lineage; current sourceBinding and both compiled identities identify this candidate",
+    "Protected HARD data not opened or run; first blind release remainsfalse"
+  ]
+}

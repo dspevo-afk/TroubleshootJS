@@ -1,6 +1,9 @@
 # Q100-1 private electrical pilot
 
-Status: **Q100-1 LOCALLY ACCEPTED; publication pending.** The final compiled
+Status: **Q100-1 ACCEPTED AND PUBLISHED.** Commit
+`9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf` was normally pushed to
+`origin/codex/q100-constrained-pilot` and the exact remote SHA verified.
+Completion Gmail `1a18d49856ea7daf` was sent once. The final compiled
 matrix passes all62 electrical cases and aggregate cleanup98.455 s under120 s.
 Final-source builds, native contracts, fresh Current/lifecycle checks, audited
 Player artifact/privacy evidence, real Player repair and the finite normal

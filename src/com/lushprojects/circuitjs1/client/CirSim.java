@@ -1222,13 +1222,17 @@ MouseOutHandler, MouseWheelHandler {
 	else if ("parallel".equals(troubleshootChallenge))
             startGeneration(GenerationRequest.leaf(QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR, troubleshootFixtureSeed, false));
 	else if (troubleshootQuickPlay) {
-            QuickPlaySelector selector = troubleshootQuickPlayVerification ?
+            QuickPlaySelector selector = troubleshootQuickPlayVerification ||
+                    isE06AcceptanceBoundaryCanaryRequested() ?
                 new QuickPlaySelector(new QuickPlayFixedRandomSource(new long[] {
                     troubleshootQuickPlayVerificationFamilyIndex, troubleshootQuickPlayVerificationSeed })) :
                 new QuickPlaySelector();
             QuickPlaySelection selection = selector.select();
             publishQuickPlaySelectionForDeveloperVerification(selection);
-            startGeneration(GenerationRequest.stagedQuickPlay(selection));
+            GenerationRequest request = GenerationRequest.stagedQuickPlay(selection);
+            if (isE06AcceptanceBoundaryCanaryRequested())
+                startGeneration(request, true);
+            else startGeneration(request);
 	}
 	if (troubleshootStressVerification)
 	    installStressDeveloperBridge();
@@ -5253,6 +5257,13 @@ MouseOutHandler, MouseWheelHandler {
         }
     }
 
+    private boolean isE06AcceptanceBoundaryCanaryRequested() {
+        return TroubleshootBuild.isDeveloper() && troubleshootDebug &&
+            troubleshootQ100Verification &&
+            ("e06-late-callback".equals(troubleshootQ100Canary) ||
+             "e06-event-failure".equals(troubleshootQ100Canary));
+    }
+
     private void runQ100ElectricalPilotIfReady() {
         if (!TroubleshootBuild.isDeveloper()) return;
         if (!troubleshootDebug || !troubleshootQ100Verification || troubleshootQ100Complete ||
@@ -5260,6 +5271,11 @@ MouseOutHandler, MouseWheelHandler {
                 generatedChallengeController == null || !generatedChallengeController.isReady() ||
                 !isGeneratedRuntimeSettled()) return;
         troubleshootQ100Complete = true;
+        if (isE06AcceptanceBoundaryCanaryRequested()) {
+            Q100ElectricalPilotDeveloperVerifier.startE06AcceptanceBoundaryCanary(
+                this, troubleshootQ100Canary);
+            return;
+        }
         Q100ElectricalPilotDeveloperVerifier.start(this, troubleshootQ100Variant, troubleshootQ100Fault,
             troubleshootQ100Dt, troubleshootQ100Canary);
     }

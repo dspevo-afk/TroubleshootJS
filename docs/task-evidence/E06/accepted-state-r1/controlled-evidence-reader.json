@@ -1,0 +1,11 @@
+﻿{
+    "protocol":  "e06-controlled-evidence-reader-v1",
+    "status":  "PASS",
+    "host":  "Windows PowerShell 5.1",
+    "actualTenRouteMatrixAccepted":  true,
+    "actualNumericBooleanFailureRejected":  true,
+    "assertions":  "Existing120 E06 plus Q100/A04 fixtures and reread of all ten actual curated reports",
+    "readerSha256":  "ffed81687f8f3d97c615cea13b561e9294087d7b391aeae8c57f4b017bd80bc1",
+    "actualGateSha256":  "9b70d30c178b189bf503f8135a1ac443ce26674d602f0bde587f5c2289cc98b5",
+    "failedPayloadSha256":  "014d77353f286bad98e8b9438c71b914e67cd660bde500b123a1a3b7a4a4b3b6"
+}

@@ -1,0 +1,9 @@
+{
+  "Protocol": "troubleshootjs-production-build-identity-v1",
+  "Variant": "Developer",
+  "Style": "OBF",
+  "InputDigest": "bc1ede8a250468603505040d5d1c57e933b1eef226e6ea547563e1db8857e987",
+  "InputFileCount": 1198,
+  "OutputDigest": "b9ab7d8e2782b416bce0c57b902414f17cd8df12d7c2159a1d13e93e30c0d686",
+  "OutputFileCount": 357
+}

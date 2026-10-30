@@ -1,0 +1,255 @@
+﻿{
+    "protocol":  "e06-final-player-privacy-reuse-v1",
+    "status":  "PASS_SCOPED_REUSE",
+    "original":  "compiled-player-privacy-final.json",
+    "sourceBuild":  "Player3",
+    "finalBuild":  "Player4",
+    "fullOutputFilesIdentical":  357,
+    "fullInventoryCompared":  true,
+    "unchangedReaderFunctionCount":  58,
+    "functionPins":  [
+                         {
+                             "name":  "ConvertFrom-Q100ReportText",
+                             "sha256":  "0425afe281beabd441eca7ae83f16f81ebc78ab317a4facfa8ab39523ee6a67f"
+                         },
+                         {
+                             "name":  "Evaluate-Cdp",
+                             "sha256":  "3e9863497678e97448723f47da1c8c65d651909f2ab026358e046c8a0ce635ab"
+                         },
+                         {
+                             "name":  "Get-DiagnosticText",
+                             "sha256":  "12afa6658f6b6e1b0d28603958b4fbe3a5e593130b6d4b965b4b7048c39a51c1"
+                         },
+                         {
+                             "name":  "Get-E06AcceptanceRouteDefinitions",
+                             "sha256":  "533430d2195384693d510038d3b98b6854806aa739f7a2b40918ee3f66ade208"
+                         },
+                         {
+                             "name":  "Get-EarlyErrorText",
+                             "sha256":  "5c20cba6c01ce34181c2715280a1d8f832216a9d794afdab4225a5bd706ce56d"
+                         },
+                         {
+                             "name":  "Get-ExactReportText",
+                             "sha256":  "f006502fd6473694628d99773cb200d25d8e3790791ef7349379038fb6d746e7"
+                         },
+                         {
+                             "name":  "Get-OrdinaryTicketEntryTarget",
+                             "sha256":  "724e40161e37a2b4d9ac533db735839a5b2d0656ae9e2833ed196919cf1b6c62"
+                         },
+                         {
+                             "name":  "Get-PreviewIdentity",
+                             "sha256":  "e79f8257be2254a1103aee72791953ba93e045982f6dcbd7b6a359509ca72bf6"
+                         },
+                         {
+                             "name":  "Get-Q100FaultIds",
+                             "sha256":  "b519068258dddb4a98e0e284117e52cb7b22990ef9b62675699838a5760816d5"
+                         },
+                         {
+                             "name":  "Get-Q100FaultOracle",
+                             "sha256":  "68717cc03f6c35161f905ca1d30100828b06083f1b79e2fef01ab131ce311740"
+                         },
+                         {
+                             "name":  "Get-Q100PlayerArtifactProof",
+                             "sha256":  "ccf726fcb6431e25f7cd1f4b3887f40d4cf5e3bf9e5ce10ecb92d21e9337342b"
+                         },
+                         {
+                             "name":  "Get-Q100PlayerRouteDefinition",
+                             "sha256":  "569d6bfe63cc1b4697660b316c06c2bd17364461383f1fe120a78a12c3743d01"
+                         },
+                         {
+                             "name":  "Get-Q100RecordField",
+                             "sha256":  "2cd5bdec4bfd1ce23a0d1df663bb03c81a4d16ae9064e0b03600480835215985"
+                         },
+                         {
+                             "name":  "Get-Q100RouteDefinitions",
+                             "sha256":  "2a59b06dc88f0fa53e5f762b74823b8d1c5d8297768a804b0189d4a2151b55f7"
+                         },
+                         {
+                             "name":  "Get-RouteDefinitions",
+                             "sha256":  "10a9ca6e86ddb0365e490e74d60aa22c5782ad5802d2b05231f8968451ce60af"
+                         },
+                         {
+                             "name":  "Get-RouteReports",
+                             "sha256":  "a74e51030f17a57a11874e070785876b6593f89952125ab5ae7851b9206442a3"
+                         },
+                         {
+                             "name":  "Get-SafeDigest",
+                             "sha256":  "5fed181fee63a02e15b9bda6bfabfe7064dec84d3f29cf5151237e20c8abdec4"
+                         },
+                         {
+                             "name":  "Get-SafeText",
+                             "sha256":  "24903803935902693d5acddc7e92c7b7bc97ab5130214a829dd6ebe790bd2137"
+                         },
+                         {
+                             "name":  "Invoke-Cdp",
+                             "sha256":  "8dc2853c1c814d77f7199897e63fb28559213408bd1c92e74d0054a82a07b5c3"
+                         },
+                         {
+                             "name":  "Invoke-OrdinaryTicketEntry",
+                             "sha256":  "c53dc7c524a2a127d3f402b8c35cb7780de2dc5b99e0a6f1fb54bb6a3e22d896"
+                         },
+                         {
+                             "name":  "Invoke-Q100PlayerPrivacyNegativeCanary",
+                             "sha256":  "ed6a11414fe55b542a9793fabae6f7ed8016821f67c482c8576434dd58e53296"
+                         },
+                         {
+                             "name":  "Navigate-Cdp",
+                             "sha256":  "cf74b9c892e7d393f3eb268ffc32685a2688b7c1d0d97371d9b7e0fc9901a138"
+                         },
+                         {
+                             "name":  "New-FailureDiagnostic",
+                             "sha256":  "989acd0e84630c51207f0d6b510e0f9891fe865cd7478d40264aed4ef26735a2"
+                         },
+                         {
+                             "name":  "Receive-Cdp",
+                             "sha256":  "321c4f4c116e3314c3f0762d500b70bd062d896ace45748c8ac01ad4f188538f"
+                         },
+                         {
+                             "name":  "Send-Cdp",
+                             "sha256":  "0bd9c306504202a00ee0b78c33c1331b848006ea9eaab78659bd7ca7f4b3a54a"
+                         },
+                         {
+                             "name":  "Set-Operation",
+                             "sha256":  "7b093af3ff68e9654fe2069bf1a1c71765c8a0d220da0b937c5ca4e9fd9bb1bf"
+                         },
+                         {
+                             "name":  "Test-A04Report",
+                             "sha256":  "84baa27f6fffaa9c0dbcfedc9d4921e82cd0ef3b1bd136c1f6af382ec0284331"
+                         },
+                         {
+                             "name":  "Test-A06Report",
+                             "sha256":  "2e07684d74f058b6a5f65c1ee44678fe05eeb241838c41a7efda56e664cf0043"
+                         },
+                         {
+                             "name":  "Test-A07FiniteNumber",
+                             "sha256":  "ae42917b8609ee64762fc6c614d4f40abb95ef2580913eee87dab8d05fa124c7"
+                         },
+                         {
+                             "name":  "Test-A07Report",
+                             "sha256":  "5f0bf6d94909d264671fad43edbbb26b3cb8e44c09970c27f897fdffea10b4c1"
+                         },
+                         {
+                             "name":  "Test-A08Report",
+                             "sha256":  "447922172f2d2c1297cdc341d917112e0eedae81a47ec318c8e9ddd63d63b96c"
+                         },
+                         {
+                             "name":  "Test-ControlledReport",
+                             "sha256":  "c17c36d88049e73d89472b1007f1f5a47a52213b4a00a50e31741b714e8da8b9"
+                         },
+                         {
+                             "name":  "Test-E06AcceptanceCanaryReport",
+                             "sha256":  "e6cc2c72499cd17d007aac1496b9866502b8deca96aeba9876084ad908aaf981"
+                         },
+                         {
+                             "name":  "Test-E06AcceptanceMatrix",
+                             "sha256":  "60e35cd7355a33653ac7de631b71b1898d11ab3ce4f9df4eb5790d07ed6ccf1e"
+                         },
+                         {
+                             "name":  "Test-JsonReport",
+                             "sha256":  "5cc96d5cd2a2198c64c6db6a6b9370578aa2ff79c8f911421a0604f5359156c4"
+                         },
+                         {
+                             "name":  "Test-NormalWorkbenchReady",
+                             "sha256":  "8dea4349f3f8a9b68a6ddb367a245160af32fa6ad5844df2721d664940069819"
+                         },
+                         {
+                             "name":  "Test-Q100FaultMatrix",
+                             "sha256":  "da162f323ecc7ef1283601a2a2062129c614c572424b23b4d4cd571240cd31df"
+                         },
+                         {
+                             "name":  "Test-Q100FiniteNumber",
+                             "sha256":  "2f4739a76a50735cee6b038ee6eb575abbff71f09a3c7f341e06ad191f2e33d8"
+                         },
+                         {
+                             "name":  "Test-Q100HealthyMatrix",
+                             "sha256":  "2c18e75cd3c8b2439b1574e35708042491617a2f82129d19e6a10a4477c3c947"
+                         },
+                         {
+                             "name":  "Test-Q100HealthyObservation",
+                             "sha256":  "934dd9b1168352da656deaf980b3a50ebe4980494d4b9f82e62c169f3e756b4b"
+                         },
+                         {
+                             "name":  "Test-Q100InjectedFailureReport",
+                             "sha256":  "f56a1699e07137389af9c10eb4b0cefc89d88f726055b856f48e8c4f5be046b8"
+                         },
+                         {
+                             "name":  "Test-Q100InteractionLockReport",
+                             "sha256":  "801442da5af95892288dddcec771d09887951c2ee2e41ecccabb77fb4c760d49"
+                         },
+                         {
+                             "name":  "Test-Q100Number",
+                             "sha256":  "99e35d0acb9039c35a3f5a80f4a1fe486e21da82cf2e9eee053de171c71d35b6"
+                         },
+                         {
+                             "name":  "Test-Q100PlayerArtifactMarkers",
+                             "sha256":  "3377a4b40b7bcb718318219aea35207eb44d1d7d3e11162b940c702e8dac5031"
+                         },
+                         {
+                             "name":  "Test-Q100PlayerDeveloperLeak",
+                             "sha256":  "776ce6965d56f8f06c325a76fb2c7e9bf5c2653f5aa339eff14ecc2807facb22"
+                         },
+                         {
+                             "name":  "Test-Q100PlayerPrivacy",
+                             "sha256":  "a2b07b548398aa7dd95cf08b9123317c073a1db1511dc717c4ad79606068e838"
+                         },
+                         {
+                             "name":  "Test-Q100PlayerPrivacyCanaryEvidence",
+                             "sha256":  "89f2f728b4be4c38244db89ca2d97deb1cd8341820dc8cae9aaecf1246963409"
+                         },
+                         {
+                             "name":  "Test-Q100PreflightReport",
+                             "sha256":  "53c03d5142f56cf644bef85e390699cc7f9eacfdac956b0a28f229a46fc4f140"
+                         },
+                         {
+                             "name":  "Test-Q100Report",
+                             "sha256":  "c8842704a60295e8e318390de2fd869ec6287dad917fb361f12d0f8caa787cbd"
+                         },
+                         {
+                             "name":  "Test-Q100SeparatedLoadShortFaultRails",
+                             "sha256":  "81fc0afc0455eacc6742c6ecb42d80bedb2b5969838a34e65e41c71a5eac0602"
+                         },
+                         {
+                             "name":  "Test-Q100TemporalBatchMetadata",
+                             "sha256":  "4989cd98fcf1a410d5d4d3e2aefb0c171dfbf131d918340434688bf6fd075b4a"
+                         },
+                         {
+                             "name":  "Test-RouteReady",
+                             "sha256":  "8148354827cd2d2456d08619bf70d22b8fe86f4b95df5d8d2592412f98510840"
+                         },
+                         {
+                             "name":  "Test-RouteRequiresTicketEntry",
+                             "sha256":  "424d90adb945d8e79ca167d47788e7bb94039f837dbd08f6122367f6af912164"
+                         },
+                         {
+                             "name":  "Test-Task41Report",
+                             "sha256":  "14d3a5e27385a00a379d47e547ecf16c0418769d09cb5f2c2baf4b493de95110"
+                         },
+                         {
+                             "name":  "Throw-AppFailure",
+                             "sha256":  "984a2990b3d39c9d51eaf3144e1cfe658881d1d34ae22f4ce6a1691762e8e7ea"
+                         },
+                         {
+                             "name":  "Wait-Cdp",
+                             "sha256":  "654cb9f64f124df6b3904cefe3776c63b91b6a3f0e4276be8f9ba9affc461a08"
+                         },
+                         {
+                             "name":  "Write-ReportFile",
+                             "sha256":  "3f63862387249f09a73372055a5e0ec86462286e936d4621d6a9b717ff8e1db8"
+                         },
+                         {
+                             "name":  "Write-RunArtifact",
+                             "sha256":  "d47e24ed5c7f3dd020a5d87d0bfbda6ad8f569f1ff20a0366604745dd99073f0"
+                         }
+                     ],
+    "verifierIsolationSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+    "finalPlayerReceipt":  {
+                               "Protocol":  "troubleshootjs-production-build-identity-v1",
+                               "Variant":  "Player",
+                               "Style":  "OBF",
+                               "InputDigest":  "6a108565558a7bc1b65b78fd73c2c72dcecac2ce5107270726d418918e8ae877",
+                               "InputFileCount":  1198,
+                               "OutputDigest":  "eb327464ef36b7a52377e5c9a3009929c92d01fe597612fea67a5a6b3e5529b0",
+                               "OutputFileCount":  357
+                           },
+    "boundary":  "All357 Player output files byte-identical after Developer-only boolean serialization fix. All reader functions identical (LF-normalized AST source); only E06-failure main diagnostic event cap changed outside functions. Actual Player privacy2/artifact scan and DOM input proof applies to unchanged Player bytes and selected reader paths. Original cleanup remains its recorded run, not a new host cleanup sample."
+}

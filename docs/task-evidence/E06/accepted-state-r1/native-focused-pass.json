@@ -1,0 +1,16 @@
+{
+  "protocol": "e06-accepted-native-focused-v1",
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 25.1281042,
+  "scope": "E06AcceptedStateContractTest actualCircuitJS solver/callback/event/ScopePlot/wire/observer boundaries",
+  "sourcePins": "accepted-native-5-source-pins.json",
+  "receiptSha256": "fb182d77183b67ac9f1dfa915072f1ad3e004e189aa89def2e1bcf6942df391e",
+  "rawLogSha256": "4fb7714a644b835119b8f6edb506897eab6a281439897baefd93357e94ffe415",
+  "cleanup": "PASS",
+  "limits": [
+    "Focused oneJava suite only; no full native matrix/oracles or compiledbrowser claim",
+    "Generic physical post currents are provisional; semantic receipts remain committed",
+    "No time/scope/earliercallback rollback or broad nominalfidelity"
+  ]
+}

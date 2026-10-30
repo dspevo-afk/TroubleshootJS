@@ -23,7 +23,7 @@ REPLACEMENT_BLIND_2 = ["-2157433570835955452", "1325853684799777255", "-37981513
 PARTITIONS = {"profile": PROFILE, "development": DEVELOPMENT, "holdout": HOLDOUT,
               "replacement-blind": REPLACEMENT_BLIND,
               "replacement-blind-2": REPLACEMENT_BLIND_2}
-EPOCHS = {"replay": "tsj-alpha/7", "dependency": "tsj-generation-dependencies-v20",
+EPOCHS = {"replay": "tsj-alpha/7", "dependency": "tsj-generation-dependencies-v21",
           "model": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
           "layout": 20, "placement": 15, "plan": 1, "assessment": 3, "program": 2}
 LIMITS = {"jobMillis": 90000, "jobWork": 640, "unitMillis": 5000, "maximumCandidates": 4}

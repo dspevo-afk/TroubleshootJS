@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A08', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'Q100', 'Q100Faults', 'Q100Player')]
+    [ValidateSet('Current', 'A08', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'Q100', 'Q100Faults', 'Q100Player', 'E06State')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -24,6 +24,8 @@ $context = $null
 $session = $null
 $cleanupResult = $null
 $previewIdentity = $null
+$reports = $null
+$definition = $null
 $requestedExitCode = 2
 $routeResults = New-Object Collections.Generic.List[object]
 $script:Phase = 'setup'
@@ -34,7 +36,7 @@ $script:FailureDiagnostic = $null
 $script:CleanupDiagnostic = $null
 $script:NextCdpId = 1
 $script:CdpEvents = New-Object Collections.Generic.List[string]
-$script:IsQ100Gate = ($Gate -ieq 'Q100' -or $Gate -ieq 'Q100Faults' -or $Gate -ieq 'Q100Player') -and -not $Smoke
+$script:IsQ100Gate = ($Gate -ieq 'Q100' -or $Gate -ieq 'Q100Faults' -or $Gate -ieq 'Q100Player' -or $Gate -ieq 'E06State') -and -not $Smoke
 $script:Q100MatrixStartedUtc = if ($script:IsQ100Gate) { [DateTime]::UtcNow } else { [DateTime]::MinValue }
 $script:Q100MatrixDeadlineUtc = if ($script:IsQ100Gate) { $script:Q100MatrixStartedUtc.AddSeconds(6000) } else { [DateTime]::MinValue }
 $script:Q100MatrixOperationElapsedMs = $null
@@ -337,6 +339,8 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
   task47:get('data-tsj-task47-report'),task48:get('data-tsj-task48-report'),
   task49:get('data-tsj-task49-report'),a02:get('data-tsj-a02-report'),
   q100:get('data-tsj-q100-report'),q100Present:d.hasAttribute('data-tsj-q100-report'),
+  e06Acceptance:get('data-tsj-e06-acceptance-canary'),
+  e06AcceptancePresent:d.hasAttribute('data-tsj-e06-acceptance-canary'),
   verificationPresent:d.hasAttribute('data-tsj-verification'),
   developerAttributes,
   normalReady:(()=>{
@@ -1428,7 +1432,9 @@ function Test-Q100PlayerArtifactMarkers([object]$Text) {
         'q100-electrical-reference-v2','q100-electrical-reference-v3',
         'RB100_CONTROL_PILOT','Rb100ElectricalPilot','Rb100PilotReference',
         'Rb100PilotFaults','Rb100Plan','tsjQ100Fault','tsjVerifyQ100','tsjQ100Variant',
-        'tsjQ100Canary','tsjQ100Dt','Q100ElectricalPilotDeveloperVerifier')
+        'tsjQ100Canary','tsjQ100Dt','Q100ElectricalPilotDeveloperVerifier',
+        'data-tsj-e06-acceptance-canary','tsj-e06-acceptance-boundary-canary-v1',
+        'e06-explicit-late-step-finished','e06-explicit-accepted-event')
     foreach ($marker in $markers) {
         if ($Text.IndexOf($marker, [StringComparison]::Ordinal) -ge 0) { return $false }
     }
@@ -1636,6 +1642,11 @@ function Test-RouteReady($Kind, $Reports, $Definition = $null) {
         }
         'q100-debugfalse' { return (Test-Q100PlayerPrivacy $Reports) }
         'q100-player' { return (Test-Q100PlayerPrivacy $Reports) }
+        { $_ -in @('e06-late-callback','e06-event-failure') } {
+            return $Reports.e06AcceptancePresent -is [bool] -and $Reports.e06AcceptancePresent -and
+                $verification -ceq 'PASS:e06-acceptance-canary' -and
+                (Test-E06AcceptanceCanaryReport $Reports.e06Acceptance $Kind)
+        }
         default { return $false }
     }
 }
@@ -1714,6 +1725,154 @@ function Get-Q100RouteDefinitions([bool]$FaultMatrix) {
     return $routes.ToArray()
 }
 
+function Test-E06AcceptanceCanaryReport([object]$Text, [string]$Canary) {
+    try {
+        if ($Canary -cnotin @('e06-late-callback','e06-event-failure')) { return $false }
+        $report = ConvertFrom-Q100ReportText $Text
+        if ($null -eq $report -or $report -is [array] -or
+                $report.protocol -cne 'tsj-e06-acceptance-boundary-canary-v1' -or
+                $report.status -cne 'PASS_E06_ACCEPTANCE_BOUNDARY_CANARY' -or
+                $report.epoch -cne 'tsj-generation-dependencies-v21' -or
+                $report.canary -cne $Canary -or $report.family -cne 'RB56_CONTROL' -or
+                $report.seed -isnot [string] -or $report.seed -cne '-8360266000248569150' -or
+                $report.cleanup -cne 'PASS' -or $null -ne $report.cleanupError -or
+                $null -ne $report.error) { return $false }
+        foreach ($field in @('quickPlaySelectionVerified','fixedStepVerified',
+                'exactCountVerified','expectedFailureObserved')) {
+            if ($report.$field -isnot [bool] -or -not $report.$field) { return $false }
+        }
+        if (-not (Test-Q100Number $report.operationMs 0 90000) -or
+                -not (Test-Q100Number $report.cleanupMs 0 120000) -or
+                -not (Test-Q100Number $report.maxUnitMs 0 5000) -or
+                -not (Test-Q100Number $report.operationLimitMs 90000 90000) -or
+                -not (Test-Q100Number $report.cleanupLimitMs 120000 120000) -or
+                -not (Test-Q100Number $report.maxUnitLimitMs 5000 5000) -or
+                -not (Test-Q100Number $report.interTrialLimitMs 500 500) -or
+                -not (Test-Q100Number $report.maxBatchLimitSteps 64 64) -or
+                -not (Test-Q100Number $report.maxBatchSteps 64 64) -or
+                -not (Test-Q100Number $report.maxStepTimeError 0 0.00000001) -or
+                -not (Test-VerifierStrictIntegralValue $report.work 1L 640L) -or
+                -not (Test-VerifierStrictIntegralValue $report.acceptedSteps 1200L 8000L) -or
+                [long]$report.acceptedSteps % 64L -ne 0L -or
+                [long]$report.work -ne (3L + [long]$report.acceptedSteps / 64L)) { return $false }
+        foreach ($field in @('timeStepAtRejection','minTimeStepAtRejection','maxTimeStepAtRejection')) {
+            if (-not (Test-Q100Number $report.$field 0.000025 0.000025)) { return $false }
+        }
+        if ($report.adjustTimeStepAtRejection -isnot [bool] -or
+                $report.adjustTimeStepAtRejection) { return $false }
+        $late = $Canary -ceq 'e06-late-callback'
+        $message = if ($late) { 'e06-explicit-late-step-finished' } else { 'e06-explicit-accepted-event' }
+        $phase = if ($late) { 'STEP_FINISHED_AFTER_E06_STAGE' } else { 'ACCEPTED_EVENT_AFTER_E06_STAGE' }
+        if ($report.expectedFailureType -cne 'java.lang.IllegalStateException' -or
+                $report.observedFailureType -cne 'java.lang.IllegalStateException' -or
+                $report.expectedFailureMessage -cne $message -or
+                $report.observedFailureMessage -cne $message -or
+                $report.failurePhase -cne $phase) { return $false }
+        $predecessor = $report.predecessor
+        $candidate = $report.candidate
+        if ($null -eq $predecessor -or $predecessor -is [array] -or
+                $null -eq $candidate -or $candidate -is [array] -or
+                -not (Test-VerifierStrictIntegralValue $predecessor.e06CountBefore 1L 1L) -or
+                -not (Test-VerifierStrictIntegralValue $predecessor.e06CountAfter 1L 1L) -or
+                -not (Test-VerifierStrictIntegralValue $candidate.e06Count 1L 1L)) { return $false }
+        foreach ($field in @('graphIdentityStable','ownerIdentityStable','exactDumpRestored',
+                'quickPlaySessionIdentityStable','quickPlaySelectionIdentityStable',
+                'modelIdentityStable','acceptedSnapshotUnchangedBefore','acceptedSnapshotUnchangedAfter',
+                'acceptedPredictorAvailableBefore','acceptedPredictorAvailableAfter')) {
+            if ($predecessor.$field -isnot [bool] -or -not $predecessor.$field) { return $false }
+        }
+        foreach ($field in @('acceptedPredictorAvailableBefore','privateCandidatePendingObserved',
+                'privateCandidatePendingAfterRejection','committedSnapshotUnchanged',
+                'simulatedSecondsAdvanced','candidateOutOfLiveGraph','privateAuthorityClosed')) {
+            if ($candidate.$field -isnot [bool] -or -not $candidate.$field) { return $false }
+        }
+        if ($candidate.acceptedStepAtRejectedTime -isnot [bool] -or
+                $candidate.acceptedStepAtRejectedTime -or
+                $candidate.postStepCallbackObserved -isnot [bool] -or
+                $candidate.postStepCallbackObserved -ne $late -or
+                $candidate.eventCallbackObserved -isnot [bool] -or
+                $candidate.eventCallbackObserved -eq $late -or
+                $candidate.eventCandidateObserved -isnot [bool] -or
+                $candidate.eventCandidateObserved -eq $late -or
+                -not (Test-VerifierStrictIntegralValue $candidate.rejectedAttemptSteps 1L 1L) -or
+                -not (Test-VerifierStrictIntegralValue $candidate.rejectedAttemptTimeStepCount 1L 1L) -or
+                -not (Test-Q100Number $candidate.simulatedSecondsBefore 0.03 0.2) -or
+                -not (Test-Q100Number $candidate.simulatedSecondsAfter 0.030025 0.200025)) { return $false }
+        return [Math]::Abs([double]$candidate.simulatedSecondsBefore -
+                [long]$report.acceptedSteps * 0.000025) -le 0.00000001 -and
+            [Math]::Abs(([double]$candidate.simulatedSecondsAfter -
+                [double]$candidate.simulatedSecondsBefore) - 0.000025) -le 0.00000001
+    } catch { return $false }
+}
+
+function Get-E06AcceptanceRouteDefinitions() {
+    $routes = New-Object Collections.Generic.List[object]
+    foreach ($canary in @('e06-late-callback','e06-event-failure')) {
+        [void]$routes.Add([pscustomobject]@{
+            name=$canary; kind=$canary
+            query='tsjQuickPlay=true&tsjQuickPlayTestFamily=11&tsjQuickPlayTestSeed=-8360266000248569150&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Canary=' + $canary + '&running=true'
+            reportNames=@('e06Acceptance')
+        })
+    }
+    foreach ($route in @(Get-Q100RouteDefinitions $false | Where-Object kind -CEQ 'q100-healthy')) {
+        [void]$routes.Add($route)
+    }
+    foreach ($route in @(Get-Q100RouteDefinitions $true | Where-Object {
+            $_.fault -cin @('RENAC_RESISTANCE','CIN33_SHUNT') })) {
+        [void]$routes.Add($route)
+    }
+    return $routes.ToArray()
+}
+
+function Test-E06AcceptanceMatrix([object[]]$Routes) {
+    if ($null -eq $Routes -or $Routes.Count -ne 10 -or
+            -not (Test-Q100HealthyMatrix $Routes)) { return $false }
+    $canaries = @('e06-late-callback','e06-event-failure')
+    for ($index = 0; $index -lt 2; $index++) {
+        $route = $Routes[$index]
+        $reports = Get-Q100RecordField $route 'reports'
+        $canaryText = Get-Q100RecordField $reports 'e06Acceptance'
+        $validCanary = Test-E06AcceptanceCanaryReport $canaryText $canaries[$index]
+        if ((Get-Q100RecordField $route 'name') -cne $canaries[$index] -or
+                (Get-Q100RecordField $route 'kind') -cne $canaries[$index] -or
+                (Get-Q100RecordField $route 'status') -cne 'PASS' -or
+                (Get-Q100RecordField $route 'verification') -cne 'PASS:e06-acceptance-canary' -or
+                (Get-Q100RecordField $route 'e06AcceptanceReportAttributePresent') -isnot [bool] -or
+                -not (Get-Q100RecordField $route 'e06AcceptanceReportAttributePresent') -or
+                -not $validCanary) { return $false }
+    }
+    # Independent, predeclared finite population. This is not the 2-by-31 gate.
+    $expected = @(
+        @('SHARED_HYSTERETIC_LINEAR','HEALTHY',0.0001,'100us'),
+        @('SHARED_HYSTERETIC_LINEAR','HEALTHY',0.00005,'50us'),
+        @('SEPARATE_DIRECT_SWITCHING','HEALTHY',0.0001,'100us'),
+        @('SEPARATE_DIRECT_SWITCHING','HEALTHY',0.00005,'50us'),
+        @('SHARED_HYSTERETIC_LINEAR','RENAC_RESISTANCE',0.00005,''),
+        @('SHARED_HYSTERETIC_LINEAR','CIN33_SHUNT',0.00005,''),
+        @('SEPARATE_DIRECT_SWITCHING','RENAC_RESISTANCE',0.00005,''),
+        @('SEPARATE_DIRECT_SWITCHING','CIN33_SHUNT',0.00005,'')
+    )
+    for ($index = 0; $index -lt $expected.Count; $index++) {
+        $item = $expected[$index]
+        $route = $Routes[$index + 2]
+        $reports = Get-Q100RecordField $route 'reports'
+        $kind = if ($item[1] -ceq 'HEALTHY') { 'q100-healthy' } else { 'q100-fault' }
+        $name = if ($item[1] -ceq 'HEALTHY') {
+            'q100-healthy-' + $item[0] + '-' + $item[3]
+        } else { 'q100-fault-' + $item[0] + '-' + $item[1] }
+        $referenceText = Get-Q100RecordField $reports 'q100'
+        $validReference = Test-Q100Report $referenceText $item[0] $item[1] ([double]$item[2])
+        if ((Get-Q100RecordField $route 'name') -cne $name -or
+                (Get-Q100RecordField $route 'kind') -cne $kind -or
+                (Get-Q100RecordField $route 'status') -cne 'PASS' -or
+                (Get-Q100RecordField $route 'verification') -cne 'PASS:q100' -or
+                (Get-Q100RecordField $route 'q100ReportAttributePresent') -isnot [bool] -or
+                -not (Get-Q100RecordField $route 'q100ReportAttributePresent') -or
+                -not $validReference) { return $false }
+    }
+    return $true
+}
+
 function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
     if ($SmokeOnly) {
         return @([pscustomobject]@{ name = 'transport-smoke'; kind = 'smoke';
@@ -1722,6 +1881,7 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
     if ($SelectedGate -ieq 'Q100Player') { return @(Get-Q100PlayerRouteDefinition) }
     if ($SelectedGate -ieq 'Q100') { return @(Get-Q100RouteDefinitions $false) }
     if ($SelectedGate -ieq 'Q100Faults') { return @(Get-Q100RouteDefinitions $true) }
+    if ($SelectedGate -ieq 'E06State') { return @(Get-E06AcceptanceRouteDefinitions) }
     $all = @(
         [pscustomobject]@{ name = 'a03'; kind = 'a03';
             query = 'tsjChallenge=led&seed=3&tsjVerifyA03=true&tsjDebug=true&running=true';
@@ -1872,6 +2032,9 @@ try {
     if ($Gate -ieq 'Q100Player' -and $Smoke) {
         Throw-VerifierInfrastructure 'Q100Player requires the production Player artifact/privacy route and cannot use transport-only smoke.'
     }
+    if ($Gate -ieq 'E06State' -and $Smoke) {
+        Throw-VerifierInfrastructure 'E06State requires its actual acceptance-boundary and reference routes; transport-only smoke cannot qualify it.'
+    }
     if ($script:IsQ100Gate) {
         if ($TimeoutSeconds -le 0) { Throw-VerifierInfrastructure 'Q100 route timeout must be positive.' }
         if ([DateTime]::UtcNow -ge $script:Q100MatrixDeadlineUtc) {
@@ -1904,6 +2067,7 @@ try {
             'Q100' { 11 }
             'Q100Faults' { 62 }
             'Q100Player' { 1 }
+            'E06State' { 10 }
             default { 1 }
         }
     }
@@ -2016,6 +2180,9 @@ try {
         }
         if ($script:IsQ100Gate) {
             $record.q100ReportAttributePresent = [bool]$reports.q100Present
+            if ($Gate -ieq 'E06State') {
+                $record.e06AcceptanceReportAttributePresent = [bool]$reports.e06AcceptancePresent
+            }
         }
         if ($definition.kind -in @('q100-player','q100-debugfalse')) {
             $record.developerAttributes = $reports.developerAttributes
@@ -2039,6 +2206,10 @@ try {
     if ($Gate -ieq 'Q100Faults' -and -not $Smoke -and
             -not (Test-Q100FaultMatrix $routeResults.ToArray())) {
         Throw-VerifierInfrastructure 'Q100 fault matrix did not contain the exact independent 2x31 coverage.'
+    }
+    if ($Gate -ieq 'E06State' -and -not $Smoke -and
+            -not (Test-E06AcceptanceMatrix $routeResults.ToArray())) {
+        Throw-VerifierInfrastructure 'E06 acceptance canaries and finite eight-case regression did not satisfy the independent reader.'
     }
     if ($script:IsQ100Gate -and [DateTime]::UtcNow -gt $script:Q100MatrixDeadlineUtc) {
         Throw-VerifierInfrastructure 'Q100 matrix operation exceeded its 6000-second budget.'
@@ -2153,6 +2324,14 @@ try {
             $report.q100Matrix = [ordered]@{
                 operationElapsedMs = $script:Q100MatrixOperationElapsedMs
                 operationLimitMs = 6000000L
+            }
+        }
+        if ($Gate -ieq 'E06State' -and $requestedExitCode -ne 0 -and
+                $null -ne $reports -and $null -ne $definition) {
+            $report.failedRoute = [ordered]@{
+                name = [string]$definition.name; kind = [string]$definition.kind
+                lastReports = $reports; eventCount = $script:CdpEvents.Count
+                events = @($script:CdpEvents | Select-Object -Last 20)
             }
         }
         if ($Gate -ieq 'Q100Player' -and $script:Q100PlayerArtifactProof) {

@@ -418,7 +418,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E02BoundedTangentContractTest' -or
         $Suite -contains 'E04SensorControlContractTest' -or
         $Suite -contains 'E04DecisionMemoryContractTest' -or
-        $Suite -contains 'E06ConverterPilotContractTest' -or
+        $Suite -contains 'E06ConverterPilotContractTest' -or $Suite -contains 'E06AcceptedStateContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or
         $Suite -contains 'Rb56ModelIdentityContractTest' -or
         $Suite -contains 'ConverterPhysicalPartContractTest' -or
@@ -439,7 +439,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
-    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or
+    $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or $Suite -contains 'E06AcceptedStateContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
@@ -766,6 +766,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'InductorAcceptedStateContractTest'; Marker = 'native inductor accepted-state contracts ' },
         @{ Name = 'ControlledSourceDerivativeContractTest'; Marker = 'controlled source derivative contracts ' },
         @{ Name = 'E06ConverterPilotContractTest'; Marker = 'E06 nominal pilot mechanics ' },
+        @{ Name = 'E06AcceptedStateContractTest'; Marker = 'E06 accepted-state contracts ' },
         @{ Name = 'Rb56PowerStageContractTest'; Marker = 'RB56 power-stage contracts ' },
         @{ Name = 'Rb100PlanContractTest'; Marker = 'RB100 plan contracts ' },
         @{ Name = 'Rb100ElectricalPilotContractTest'; Marker = 'RB100 electrical pilot contracts ' },

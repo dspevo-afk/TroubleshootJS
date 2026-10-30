@@ -1,0 +1,165 @@
+{
+  "protocol": "troubleshootjs-a03-browser-report-v1",
+  "gate": "E06State",
+  "smoke": false,
+  "headed": false,
+  "runId": "dba6bd72723c4ee29c47a1c3cb965c0a",
+  "repositoryIdentity": "034e65a3fcd0699303e4",
+  "sourceDigests": {
+    "verifierIsolation": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "c7eb8f182dc47a5b5650ad7fbf1eeb90810ad47eff7acf644e47740fadd9b45e",
+    "scriptDigest": "5e7f298f93a1f5277adf99b1d28270a04b3370ea38baeded2bc3b5465bc4af95",
+    "webDigest": "45b829766f499db8f916889bc8977fb5110e11e09b16c842511698992d955bf8",
+    "executionDigest": "ca9cab741fbe470e3ecfde22d7593d02a654b6d1322579640586611a1dc79acc",
+    "executionFileCount": 1596
+  },
+  "previewIdentity": {
+    "protocol": "troubleshootjs-preview-identity-v2",
+    "verifierRunId": "dba6bd72723c4ee29c47a1c3cb965c0a",
+    "previewPort": 55798,
+    "processId": 26168,
+    "processStartTicks": 639289734769758510,
+    "sourceDigest": "c7eb8f182dc47a5b5650ad7fbf1eeb90810ad47eff7acf644e47740fadd9b45e",
+    "scriptDigest": "5e7f298f93a1f5277adf99b1d28270a04b3370ea38baeded2bc3b5465bc4af95",
+    "webDigest": "45b829766f499db8f916889bc8977fb5110e11e09b16c842511698992d955bf8",
+    "executionDigest": "ca9cab741fbe470e3ecfde22d7593d02a654b6d1322579640586611a1dc79acc",
+    "executionFileCount": 1596
+  },
+  "status": "INFRASTRUCTURE_FAILURE",
+  "routes": [],
+  "failure": {
+    "kind": "infrastructure",
+    "phase": "browser",
+    "operation": "route-e06-late-callback",
+    "elapsedMs": 90050,
+    "remainingDeadlineMs": 0,
+    "error": "VERIFIER_INFRASTRUCTURE: e06-late-callback did not provide its required compiled report before the bounded deadline."
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 66,
+      "PhysicalNamespaceMs": 279,
+      "BrowserSessionMs": 35685,
+      "PreviewMs": 6111,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 1360,
+      "BrowserShutdown": [
+        {
+          "RouteId": "873826a9e8bd494bab49adf8a2e84cc2",
+          "Lane": "boundReceipt",
+          "TotalMs": 7063,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 412,
+            "endpointAndSocketConnect": 14,
+            "postConnectRootAndListenerProof": 386,
+            "protectedHelperCensus": 1664,
+            "precloseJournalAndAuthorization": 1622,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 1604,
+            "lateDescendantAbsenceProof": 371,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 880,
+            "finalListenerAbsenceProof": 74,
+            "resourceDisposal": 5
+          },
+          "Counts": {
+            "protectedDescendantCount": 7,
+            "rootAndDescendantRecordCount": 8,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 16,
+            "currentAbsenceProofCount": 12,
+            "currentAbsenceObservationCount": 24,
+            "lateDescendantParentQueryCount": 8,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    },
+    "resourceSuccess": true,
+    "elapsedMs": 43540,
+    "limitMs": 120000,
+    "status": "PASS"
+  },
+  "q100Matrix": {
+    "operationElapsedMs": 106951,
+    "operationLimitMs": 6000000
+  },
+  "failedRoute": {
+    "name": "e06-late-callback",
+    "kind": "e06-late-callback",
+    "lastReports": {
+      "url": "http://127.0.0.1:55798/circuitjs.html?tsjQuickPlay=true&tsjQuickPlayTestFamily=11&tsjQuickPlayTestSeed=-8360266000248569150&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Canary=e06-late-callback&running=true&tsjVerifierNavigation=d0ad5d4d6cda47939ca3032f24746867&tsjVerifierRun=dba6bd72723c4ee29c47a1c3cb965c0a&tsjVerifierRoute=873826a9e8bd494bab49adf8a2e84cc2",
+      "ready": "complete",
+      "verification": "PASS:e06-acceptance-canary",
+      "a08": "",
+      "a07": "",
+      "a06": "",
+      "a04": "",
+      "a03": "",
+      "task41": "",
+      "task46Parity": "",
+      "task46Descriptor": "",
+      "task46Snapshot": "",
+      "task46Replay": "",
+      "task47": "",
+      "task48": "",
+      "task49": "",
+      "a02": "",
+      "q100": "",
+      "q100Present": false,
+      "e06Acceptance": "{\"protocol\":\"tsj-e06-acceptance-boundary-canary-v1\",\"epoch\":\"tsj-generation-dependencies-v21\",\"status\":\"PASS_E06_ACCEPTANCE_BOUNDARY_CANARY\",\"canary\":\"e06-late-callback\",\"family\":\"RB56_CONTROL\",\"seed\":\"-8360266000248569150\",\"quickPlaySelectionVerified\":true,\"operationMs\":187,\"cleanupMs\":11,\"operationLimitMs\":90000,\"cleanupLimitMs\":120000,\"maxUnitLimitMs\":5000,\"maxBatchLimitSteps\":64,\"work\":22,\"maxUnitMs\":8,\"acceptedSteps\":1216,\"maxBatchSteps\":64,\"fixedStepVerified\":1,\"exactCountVerified\":1,\"maxStepTimeError\":4.575333167888829e-17,\"timeStepAtRejection\":0.000025,\"minTimeStepAtRejection\":0.000025,\"maxTimeStepAtRejection\":0.000025,\"adjustTimeStepAtRejection\":false,\"interTrialLimitMs\":500,\"cleanup\":\"PASS\",\"cleanupError\":null,\"error\":null,\"expectedFailureType\":\"java.lang.IllegalStateException\",\"expectedFailureMessage\":\"e06-explicit-late-step-finished\",\"observedFailureType\":\"java.lang.IllegalStateException\",\"observedFailureMessage\":\"e06-explicit-late-step-finished\",\"expectedFailureObserved\":true,\"failurePhase\":\"STEP_FINISHED_AFTER_E06_STAGE\",\"predecessor\":{\"graphIdentityStable\":true,\"ownerIdentityStable\":true,\"exactDumpRestored\":true,\"quickPlaySessionIdentityStable\":true,\"quickPlaySelectionIdentityStable\":true,\"e06CountBefore\":1,\"e06CountAfter\":1,\"modelIdentityStable\":true,\"acceptedSnapshotUnchangedBefore\":true,\"acceptedSnapshotUnchangedAfter\":true,\"acceptedPredictorAvailableBefore\":true,\"acceptedPredictorAvailableAfter\":true},\"candidate\":{\"e06Count\":1,\"acceptedPredictorAvailableBefore\":true,\"privateCandidatePendingObserved\":true,\"privateCandidatePendingAfterRejection\":true,\"committedSnapshotUnchanged\":true,\"simulatedSecondsBefore\":0.030400000000000614,\"simulatedSecondsAfter\":0.030425000000000615,\"simulatedSecondsAdvanced\":true,\"rejectedAttemptSteps\":1,\"rejectedAttemptTimeStepCount\":1,\"acceptedStepAtRejectedTime\":false,\"postStepCallbackObserved\":true,\"eventCallbackObserved\":false,\"eventCandidateObserved\":false,\"candidateOutOfLiveGraph\":true,\"privateAuthorityClosed\":true}}",
+      "e06AcceptancePresent": true,
+      "verificationPresent": true,
+      "developerAttributes": {
+        "data-tsj-e06-acceptance-canary": true,
+        "data-tsj-verification": true
+      },
+      "normalReady": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      }
+    },
+    "events": [
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 9 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 8 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 7 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 9 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 8 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 7 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 9 iterations, timeStep = 0.0004",
+      "console: converged after 6 iterations, timeStep = 0.0004",
+      "console: converged after 8 iterations, timeStep = 0.0004"
+    ],
+    "eventCount": 5487
+  },
+  "curation": {
+    "rawReportSha256": "9f67b0baa8a33830683fca3e8256d83747ef0cf6bbf321555f72f6c193278e61",
+    "status": "FAIL_NOT_ACCEPTANCE",
+    "events": "Only final20 retained here; complete original remains in task-owned OS temp.",
+    "reason": "Actual terminal PASS and owner-memory witnesses were emitted, but fixedStepVerified/exactCountVerified serialized as numeric1, rejected by unchanged strict typed reader.",
+    "helper": {
+      "exitCode": 2,
+      "elapsedSeconds": 150.7539773,
+      "gate": "E06State"
+    }
+  }
+}

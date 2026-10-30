@@ -1,0 +1,223 @@
+{
+    "protocol":  "troubleshootjs-a03-browser-report-v1",
+    "gate":  "Q100Player",
+    "smoke":  false,
+    "headed":  false,
+    "runId":  "8810185ed856497097bab35bdf47906d",
+    "repositoryIdentity":  "034e65a3fcd0699303e4",
+    "sourceDigests":  {
+                          "verifierIsolation":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                          "previewScript":  "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+                          "sourceDigest":  "13dd2f6243e55c63f0fde226dcfc3c54e2f39ecc8df97492afcb53d6190084ff",
+                          "scriptDigest":  "b09ba46274afbd75dcd9079e6b96d6c93740b128beef927e30388dbd18ec3016",
+                          "webDigest":  "95de3a848a074873f67e1ed9d880f7289d90d7e052d563ae9536587e2a7af590",
+                          "executionDigest":  "4c9fb711195ab7926c64aa28075936befd102a76371fa53b105feda1c5a82037",
+                          "executionFileCount":  1596
+                      },
+    "previewIdentity":  {
+                            "protocol":  "troubleshootjs-preview-identity-v2",
+                            "verifierRunId":  "8810185ed856497097bab35bdf47906d",
+                            "previewPort":  49853,
+                            "processId":  20032,
+                            "processStartTicks":  639289725420247267,
+                            "sourceDigest":  "13dd2f6243e55c63f0fde226dcfc3c54e2f39ecc8df97492afcb53d6190084ff",
+                            "scriptDigest":  "b09ba46274afbd75dcd9079e6b96d6c93740b128beef927e30388dbd18ec3016",
+                            "webDigest":  "95de3a848a074873f67e1ed9d880f7289d90d7e052d563ae9536587e2a7af590",
+                            "executionDigest":  "4c9fb711195ab7926c64aa28075936befd102a76371fa53b105feda1c5a82037",
+                            "executionFileCount":  1596
+                        },
+    "status":  "PASS",
+    "routes":  [
+                   {
+                       "name":  "q100-player-debug-query",
+                       "kind":  "q100-player",
+                       "status":  "PASS",
+                       "navigationUrl":  "http://127.0.0.1:49853/circuitjs.html?tsjChallenge=led\u0026seed=3\u0026tsjDebug=true\u0026tsjVerifyQ100=true\u0026tsjQ100Variant=SHARED_HYSTERETIC_LINEAR\u0026tsjQ100Fault=RSA_RESISTANCE\u0026tsjQ100Dt=0.0001\u0026tsjQ100Canary=after-step\u0026running=true\u0026tsjVerifierNavigation=5f874b5f9e6442899b20e947ee5fa513\u0026tsjVerifierRun=8810185ed856497097bab35bdf47906d\u0026tsjVerifierRoute=a869a305a6f54dd2868dba4d89b0e926",
+                       "verification":  "",
+                       "readiness":  {
+                                         "workbenchNavigationReady":  true,
+                                         "programReady":  true,
+                                         "retestCustomerReady":  true,
+                                         "boardPowerReady":  true,
+                                         "boardPowerLabel":  "Board Power: ON"
+                                     },
+                       "reports":  {
+
+                                   },
+                       "events":  [
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 21 iterations, timeStep = 0.000005",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: node 11 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: node 11 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: node 11 unconnected",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 16 iterations, timeStep = 0.000005",
+                                      "console: node 4 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: node 6 unconnected",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 7 iterations, timeStep = 0.000005",
+                                      "console: converged after 21 iterations, timeStep = 0.000005",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 4 unconnected",
+                                      "console: node 8 unconnected",
+                                      "console: node 9 unconnected",
+                                      "console: node 8 unconnected",
+                                      "console: node 9 unconnected",
+                                      "console: node 8 unconnected",
+                                      "console: node 9 unconnected",
+                                      "console: converged after 7 iterations, timeStep = 0.000005"
+                                  ],
+                       "ordinaryTicketEntry":  {
+                                                   "protocol":  "tsj-ordinary-ticket-entry-v1",
+                                                   "status":  "PASS",
+                                                   "buttonLabel":  "Accept ticket and start",
+                                                   "labelledCount":  1,
+                                                   "visibleEnabledCount":  1,
+                                                   "expectedComplaintVisible":  true,
+                                                   "clickPoint":  {
+                                                                      "x":  408.7109375,
+                                                                      "y":  618.15625
+                                                                  },
+                                                   "inputEvents":  [
+                                                                       "mouseMoved",
+                                                                       "mousePressed:left",
+                                                                       "mouseReleased:left"
+                                                                   ]
+                                               },
+                       "privacyNegativeCanary":  {
+                                                     "protocol":  "tsj-q100-player-dom-privacy-canary-v1",
+                                                     "status":  "PASS",
+                                                     "sentinels":  [
+                                                                       "data-tsj-q100-fault",
+                                                                       "data-tsj-future-answer"
+                                                                   ],
+                                                     "cases":  [
+                                                                   {
+                                                                       "attribute":  "data-tsj-q100-fault",
+                                                                       "sentinelValue":  "CANARY_ONLY",
+                                                                       "reportContainsAttribute":  true,
+                                                                       "developerLeakDetected":  true,
+                                                                       "playerPrivacyRejected":  true
+                                                                   },
+                                                                   {
+                                                                       "attribute":  "data-tsj-future-answer",
+                                                                       "sentinelValue":  "CANARY_ONLY",
+                                                                       "reportContainsAttribute":  true,
+                                                                       "developerLeakDetected":  true,
+                                                                       "playerPrivacyRejected":  true
+                                                                   }
+                                                               ],
+                                                     "finalPlayerPrivacy":  "PASS"
+                                                 },
+                       "sentinelsCleanup":  {
+                                                "status":  "PASS",
+                                                "removed":  [
+                                                                "data-tsj-q100-fault",
+                                                                "data-tsj-future-answer"
+                                                            ],
+                                                "cases":  [
+                                                              {
+                                                                  "attribute":  "data-tsj-q100-fault",
+                                                                  "removed":  true
+                                                              },
+                                                              {
+                                                                  "attribute":  "data-tsj-future-answer",
+                                                                  "removed":  true
+                                                              }
+                                                          ]
+                                            },
+                       "q100ReportAttributePresent":  false,
+                       "developerAttributes":  {
+
+                                               },
+                       "artifactSha256":  "0ffaca1f39fc34f9e64a5c086b1c8c27fd19a2eb526a9808935b14e80031bce8"
+                   }
+               ],
+    "failure":  {
+
+                },
+    "cleanup":  {
+                    "success":  true,
+                    "errors":  {
+
+                               },
+                    "diagnostic":  {
+
+                                   },
+                    "phaseTimings":  {
+                                         "PreflightMs":  69,
+                                         "PhysicalNamespaceMs":  293,
+                                         "BrowserSessionMs":  40422,
+                                         "PreviewMs":  7038,
+                                         "LeaseReleaseMs":  27,
+                                         "FinalProofMs":  1465,
+                                         "BrowserShutdown":  [
+                                                                 {
+                                                                     "RouteId":  "a869a305a6f54dd2868dba4d89b0e926",
+                                                                     "Lane":  "boundReceipt",
+                                                                     "TotalMs":  12923,
+                                                                     "FailurePhase":  "",
+                                                                     "PhasesMs":  {
+                                                                                      "rootContainmentProof":  430,
+                                                                                      "endpointAndSocketConnect":  16,
+                                                                                      "postConnectRootAndListenerProof":  396,
+                                                                                      "protectedHelperCensus":  3663,
+                                                                                      "precloseJournalAndAuthorization":  1677,
+                                                                                      "closeSendAndAcknowledgement":  19,
+                                                                                      "retainedProcessNaturalExitProof":  4586,
+                                                                                      "lateDescendantAbsenceProof":  1010,
+                                                                                      "containmentJobEmptyProof":  1,
+                                                                                      "profileQuiescence":  1026,
+                                                                                      "finalListenerAbsenceProof":  76,
+                                                                                      "resourceDisposal":  7
+                                                                                  },
+                                                                     "Counts":  {
+                                                                                    "protectedDescendantCount":  16,
+                                                                                    "rootAndDescendantRecordCount":  17,
+                                                                                    "waitLoopPassCount":  2,
+                                                                                    "naturalExitProofCallCount":  34,
+                                                                                    "currentAbsenceProofCount":  32,
+                                                                                    "currentAbsenceObservationCount":  64,
+                                                                                    "lateDescendantParentQueryCount":  17,
+                                                                                    "containmentJobPollCount":  1
+                                                                                }
+                                                                 }
+                                                             ]
+                                     },
+                    "resourceSuccess":  true,
+                    "elapsedMs":  49325,
+                    "limitMs":  120000,
+                    "status":  "PASS"
+                },
+    "q100Matrix":  {
+                       "operationElapsedMs":  26766,
+                       "operationLimitMs":  6000000
+                   },
+    "q100PlayerArtifact":  {
+                               "protocol":  "troubleshootjs-q100-player-artifact-proof-v1",
+                               "buildIdentityProtocol":  "troubleshootjs-production-build-identity-v1",
+                               "variant":  "Player",
+                               "style":  "OBF",
+                               "inputDigest":  "39e76083407be5c6baee78bbfef415221bf685f4a9f666d155870a197324d7c5",
+                               "inputFileCount":  1198,
+                               "outputDigest":  "8cc37163686f065b6dd99c7e74ca00c829e6b9ff54f1a4c71549c53a179639b8",
+                               "outputFileCount":  357,
+                               "compiledJavaScriptFileCount":  7,
+                               "developerMarkerScan":  "PASS"
+                           }
+}

@@ -1,0 +1,21 @@
+{
+  "protocol": "e06-accepted-native-failure-v1",
+  "status": "FAIL_CONTRACT",
+  "phase": "E06AcceptedStateContractTest:overflow fixture precondition",
+  "helperExitCode": 2,
+  "elapsedSeconds": 49.4977108,
+  "passed": [
+    "E04/71 assertions and3cases",
+    "E06 mechanics303827405 assertions/24cases,nominalfidelityNOTQUALIFIED",
+    "Newvalidacceptancecase"
+  ],
+  "partial": "Revised differential reverse-input rejection/recovery checks completed before overflow precondition failure; combinedcase is notPASS",
+  "failure": "Overflow fixture did not establish !stepActive and retained output>.1 aftertwo disabledsteps",
+  "cleanup": "PASS JVM classes and task-only scratch removed",
+  "sourcePins": "accepted-native-3-source-pins.json",
+  "rawLogSha256": "637d5f70da69e7e9a7fe868de3457ee084a40cf593be87dad58ca2283edf967b",
+  "limits": [
+    "No newaccepted-state qualification",
+    "Failedsources/logpreserved"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "protocol": "e06-final-source-builds-v2",
+  "status": "PASS",
+  "jdk": "Temurin JDK8u502-b07",
+  "command": "scripts/build.ps1 -Variant Player|Developer -Style OBF",
+  "builds": [
+    {
+      "variant": "Player",
+      "attempt": 4,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 86.40020179999999,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "6a108565558a7bc1b65b78fd73c2c72dcecac2ce5107270726d418918e8ae877",
+        "InputFileCount": 1198,
+        "OutputDigest": "eb327464ef36b7a52377e5c9a3009929c92d01fe597612fea67a5a6b3e5529b0",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 9442211,
+      "receipt": "player-4-identity.json",
+      "size": "player-4-size.json",
+      "inventory": "player-4-inventory.json",
+      "rawLogSha256": "83c1781e3d3ff2ad3e97ccbf50c595a8bea9bba9994537dbb5d988b76cf0408f"
+    },
+    {
+      "variant": "Developer",
+      "attempt": 3,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 121.35680289999999,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "f65f24f55e77f82f59b6ade0c5b6f0b4926cd775895105d9f8e0c85d2101eb61",
+        "InputFileCount": 1198,
+        "OutputDigest": "10688a4a620bbff75068ca1c521de4a8a6e078b54360283d56a6889e9cfd4467",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 17851492,
+      "receipt": "developer-3-identity.json",
+      "size": "developer-3-size.json",
+      "inventory": "developer-3-inventory.json",
+      "rawLogSha256": "88a52c7257af472f80aacfaa8863319ee56ccd1953a5b4c973ff496d13a336a6"
+    }
+  ],
+  "qualification": "Actual final Java includes explicit accumulated-flag JSON boolean serialization, selected async E06 bootstrap and strict cleanup ownership guard. Compiled gate3 passes all ten routes; these builds alone are not milestone acceptance.",
+  "nativeAcceptance": "final-native8-pass.json",
+  "nativeInputAudit": "native8-final-reuse-boundary.json",
+  "playerPrivacyAudit": "player-privacy-final-reuse.json",
+  "earlierBuilds": [
+    "pre-async-source-builds.json",
+    "pre-typed-json-source-builds.json"
+  ]
+}

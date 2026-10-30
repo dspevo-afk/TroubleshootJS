@@ -1,0 +1,43 @@
+{
+  "protocol": "e06-final-native-contracts-v1",
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 55.2139964,
+  "suites": [
+    "E06AcceptedStateContractTest",
+    "E06ConverterPilotContractTest",
+    "E04DecisionMemoryContractTest",
+    "D01DiagnosticContractTest",
+    "Rb56ModelIdentityContractTest",
+    "RelBSessionIdentityContractTest",
+    "U06SessionSaveContractTest",
+    "Rb56ManifestContractTest"
+  ],
+  "assertions": {
+    "E06Mechanics": 303827405,
+    "Rb56ModelIdentity": 123,
+    "E04AcceptedMemory": 71,
+    "Rb56Manifests": "30 identity-only rows",
+    "E06AcceptedState": 463,
+    "RelBSessionIdentity": 205,
+    "U06SessionSave": 35024,
+    "D01Diagnostic": 174
+  },
+  "sourcePins": "final-native-6-source-pins.json",
+  "receiptSha256": "0d82292c773a97a920f5e7eaffbe4d32a57ecb5180007670e58273cd0a0d2040",
+  "rawLogSha256": "9cf752a3ff76e3e50547e54571b9f6dd455ac46a9f85c8cca330ef90577131db",
+  "cleanup": "PASS",
+  "coverage": [
+    "Actual accepted hook; raw differential reverse-input and finite-power-overflow rejection",
+    "Latercallback and accepted-event failures; explicit owned-queue reset then real retry",
+    "Actual ScopePlot/wire current signed six-post KCL sampling; semantic snapshot remainscommitted",
+    "Reset/stale-hook rejection; stored memory survives executor/observer invalidation withoutreuseauthority",
+    "v21 key capturedfromcurrentcontext rejects derivedv20cache/privateReplay; modeldumpv7 andpublicsave schemasretainowners"
+  ],
+  "limits": [
+    "Eight focused native suites; full native matrix/oracles NOT RUN",
+    "E06 nominal fidelity remains NOT QUALIFIED despite mechanicschecks",
+    "Detached native checks do not establish compiledprivate-context predecessor restoration",
+    "No 30-root renewal or playableRB100 qualification"
+  ]
+}

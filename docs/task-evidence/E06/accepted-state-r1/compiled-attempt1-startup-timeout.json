@@ -1,0 +1,98 @@
+{
+    "protocol":  "troubleshootjs-a03-browser-report-v1",
+    "gate":  "E06State",
+    "smoke":  false,
+    "headed":  false,
+    "runId":  "8d79ae4643a245e9bf5e8a2e141d5a40",
+    "repositoryIdentity":  "034e65a3fcd0699303e4",
+    "sourceDigests":  {
+                          "verifierIsolation":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                          "previewScript":  "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+                          "sourceDigest":  "13dd2f6243e55c63f0fde226dcfc3c54e2f39ecc8df97492afcb53d6190084ff",
+                          "scriptDigest":  "b09ba46274afbd75dcd9079e6b96d6c93740b128beef927e30388dbd18ec3016",
+                          "webDigest":  "cb758870d454aa865105e1a131571c5dd3ba9bd3d72a76b5f38fba69c6124cde",
+                          "executionDigest":  "bc1115ac98e6bce1ab5539c2f34ab8ee27539831a1924fb03061172b7f708b60",
+                          "executionFileCount":  1596
+                      },
+    "previewIdentity":  {
+                            "protocol":  "troubleshootjs-preview-identity-v2",
+                            "verifierRunId":  "8d79ae4643a245e9bf5e8a2e141d5a40",
+                            "previewPort":  54221,
+                            "processId":  26384,
+                            "processStartTicks":  639289727553990364,
+                            "sourceDigest":  "13dd2f6243e55c63f0fde226dcfc3c54e2f39ecc8df97492afcb53d6190084ff",
+                            "scriptDigest":  "b09ba46274afbd75dcd9079e6b96d6c93740b128beef927e30388dbd18ec3016",
+                            "webDigest":  "cb758870d454aa865105e1a131571c5dd3ba9bd3d72a76b5f38fba69c6124cde",
+                            "executionDigest":  "bc1115ac98e6bce1ab5539c2f34ab8ee27539831a1924fb03061172b7f708b60",
+                            "executionFileCount":  1596
+                        },
+    "status":  "INFRASTRUCTURE_FAILURE",
+    "routes":  [
+
+               ],
+    "failure":  {
+                    "kind":  "infrastructure",
+                    "phase":  "browser",
+                    "operation":  "route-e06-late-callback",
+                    "elapsedMs":  90150,
+                    "remainingDeadlineMs":  0,
+                    "error":  "VERIFIER_INFRASTRUCTURE: e06-late-callback did not provide its required compiled report before the bounded deadline."
+                },
+    "cleanup":  {
+                    "success":  true,
+                    "errors":  {
+
+                               },
+                    "diagnostic":  {
+
+                                   },
+                    "phaseTimings":  {
+                                         "PreflightMs":  58,
+                                         "PhysicalNamespaceMs":  319,
+                                         "BrowserSessionMs":  39358,
+                                         "PreviewMs":  6505,
+                                         "LeaseReleaseMs":  19,
+                                         "FinalProofMs":  1522,
+                                         "BrowserShutdown":  [
+                                                                 {
+                                                                     "RouteId":  "cdaf7c70c81c4766932eee2ddf1222c0",
+                                                                     "Lane":  "boundReceipt",
+                                                                     "TotalMs":  8008,
+                                                                     "FailurePhase":  "",
+                                                                     "PhasesMs":  {
+                                                                                      "rootContainmentProof":  537,
+                                                                                      "endpointAndSocketConnect":  12,
+                                                                                      "postConnectRootAndListenerProof":  411,
+                                                                                      "protectedHelperCensus":  1464,
+                                                                                      "precloseJournalAndAuthorization":  1678,
+                                                                                      "closeSendAndAcknowledgement":  21,
+                                                                                      "retainedProcessNaturalExitProof":  2552,
+                                                                                      "lateDescendantAbsenceProof":  352,
+                                                                                      "containmentJobEmptyProof":  1,
+                                                                                      "profileQuiescence":  887,
+                                                                                      "finalListenerAbsenceProof":  73,
+                                                                                      "resourceDisposal":  5
+                                                                                  },
+                                                                     "Counts":  {
+                                                                                    "protectedDescendantCount":  7,
+                                                                                    "rootAndDescendantRecordCount":  8,
+                                                                                    "waitLoopPassCount":  2,
+                                                                                    "naturalExitProofCallCount":  16,
+                                                                                    "currentAbsenceProofCount":  15,
+                                                                                    "currentAbsenceObservationCount":  30,
+                                                                                    "lateDescendantParentQueryCount":  8,
+                                                                                    "containmentJobPollCount":  1
+                                                                                }
+                                                                 }
+                                                             ]
+                                     },
+                    "resourceSuccess":  true,
+                    "elapsedMs":  47793,
+                    "limitMs":  120000,
+                    "status":  "PASS"
+                },
+    "q100Matrix":  {
+                       "operationElapsedMs":  107931,
+                       "operationLimitMs":  6000000
+                   }
+}

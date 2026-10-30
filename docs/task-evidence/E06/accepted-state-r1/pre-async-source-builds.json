@@ -1,0 +1,76 @@
+{
+  "protocol": "e06-final-source-builds-v1",
+  "status": "PASS",
+  "jdk": "Temurin JDK8u502-b07",
+  "command": "scripts/build.ps1 -Variant Player|Developer -Style OBF",
+  "builds": [
+    {
+      "variant": "Player",
+      "attempt": 2,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 85.8643082,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "39e76083407be5c6baee78bbfef415221bf685f4a9f666d155870a197324d7c5",
+        "InputFileCount": 1198,
+        "OutputDigest": "8cc37163686f065b6dd99c7e74ca00c829e6b9ff54f1a4c71549c53a179639b8",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 9442139,
+      "receipt": "player-2-identity.json",
+      "size": "player-2-size.json",
+      "inventory": "player-2-inventory.json",
+      "rawLogSha256": "651b0f9cff44db040b69411e94a75dfd0354d53ff3d35e4d071151fade65ee62"
+    },
+    {
+      "variant": "Developer",
+      "attempt": 1,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 126.9588149,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "2cb22ea55741b9e8060aad2b75f162c757159f6ae8df408b41cc91ffb1b6da24",
+        "InputFileCount": 1198,
+        "OutputDigest": "e36e5ae6762c57f9cbcf085faf695eef67016ac97bfd1e7d2048ed46a332bd53",
+        "OutputFileCount": 357
+      },
+      "cacheBytes": 17851032,
+      "receipt": "developer-1-identity.json",
+      "size": "developer-1-size.json",
+      "inventory": "developer-1-inventory.json",
+      "rawLogSha256": "f1326cf547cf1198f392c06516e15b6b4c41e904bb48c6db60cd580d82b30f90"
+    }
+  ],
+  "native6ReuseBoundary": {
+    "status": "AUDITED",
+    "changedPinnedInputs": [
+      {
+        "path": "docs/CODEX_TASK_REPORT.md",
+        "nativeSha256": "4b10aeb3deaf0b46424c210a2cc62d965f7674828931e7812cf6062af9889c5d",
+        "currentSha256": "423fe7a1da3a4043fe926247512846f0462c7e1657450433aafbb65d71bc98d4"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+        "nativeSha256": "23bbccd67f0aa3cecf01b6fc7347a5de97ad5cb4ae1ea2ee362e5b9b0efb615e",
+        "currentSha256": "13c24713d744ee700eedfea03e37496bb3a8e1670495a48fd701aef0c325a42d"
+      }
+    ],
+    "scope": "Native6 E06/solver/current sampling and identity/cache/save test paths unchanged. Later Q100 Developer canary cleanup guard is not entered by these native suites; both final GWT builds include it. Documentation checkpoint changes have no native execution role.",
+    "fullNativeMatrix": "NOT RUN"
+  },
+  "earlierBuilds": [
+    {
+      "variant": "Player",
+      "attempt": 1,
+      "status": "PASS_PRE_FINAL_GUARD",
+      "elapsedSeconds": 89.4193143,
+      "qualification": "Not final-source acceptance; stricter Developer-only cleanup guard followed."
+    }
+  ]
+}

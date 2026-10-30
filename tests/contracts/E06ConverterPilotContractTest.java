@@ -966,6 +966,10 @@ public final class E06ConverterPilotContractTest {
                 sim.solverExecutor.advanceSteps(1);
             check(prime <= 8000 && converter.canUseAcceptedNewtonPredictor(),
                 "actual powered compatible globally accepted predictor is exercised");
+            final E06AveragedConverterElm.AcceptedStateSnapshot committedBefore =
+                converter.captureAcceptedStateForDeveloperVerification();
+            check(converter.hasAcceptedPredictorForDeveloperVerification(),
+                "prior predictor is globally accepted and reusable before the next trial");
             final double beforeTime = sim.t;
             final int[] callback = {0};
             final RuntimeException marker = new IllegalStateException("e06-predictor-before-global-acceptance");
@@ -974,18 +978,17 @@ public final class E06ConverterPilotContractTest {
                     public void fire(double scheduled, double candidateTime) {
                         callback[0]++;
                         // This real event runs after model.stepFinished(), before boundary.accepted().
-                        check(predictorBoolean(converter, "predictorReady") && predictorBoolean(converter, "receiptReady"),
-                            "model has produced a fresh provisional electrical predictor");
-                        check(predictorDouble(converter, "predictorTime") == candidateTime &&
-                            predictorDouble(converter, "predictorTimeStep") == dt &&
-                            predictorBoolean(converter, "active") && converter.isActive() &&
-                            predictorDouble(converter, "duty") == converter.getDuty(),
-                            "provisional predictor otherwise has compatible time and committed control");
-                        check(converter.getInputVoltage() == predictorDouble(converter, "acceptedInputVolts") &&
-                            converter.getOutputVoltage() == predictorDouble(converter, "acceptedOutputVolts") &&
-                            converter.getEnableVoltage() == predictorDouble(converter, "acceptedEnableVolts") &&
-                            converter.getFeedbackVoltage() == predictorDouble(converter, "acceptedFeedbackVolts"),
-                            "provisional predictor otherwise has the actual accepted model ports");
+                        check(converter.hasPendingAcceptedStateForDeveloperVerification(),
+                            "model has staged a provisional receipt, controller update and predictor");
+                        check(converter.matchesAcceptedStateForDeveloperVerification(committedBefore),
+                            "receipt, controller and predictor remain at their prior committed values before acceptance");
+                        check(predictorDouble(converter, "pendingPredictorTime") == candidateTime &&
+                            predictorDouble(converter, "pendingPredictorTimeStep") == dt &&
+                            predictorDouble(converter, "pendingInputVolts") == converter.getInputVoltage() &&
+                            predictorDouble(converter, "pendingOutputVolts") == converter.getOutputVoltage() &&
+                            predictorDouble(converter, "pendingEnableVolts") == converter.getEnableVoltage() &&
+                            predictorDouble(converter, "pendingFeedbackVolts") == converter.getFeedbackVoltage(),
+                            "private candidate carries the current solved ports and candidate time");
                         SolverExecutionBoundary.Operation operation = predictorOperation(sim);
                         check(operation.acceptedSteps == 0 && operation.trialInProgress &&
                             operation.lastAcceptedTime == beforeTime, "global acceptance has not committed this model step");
@@ -1008,6 +1011,9 @@ public final class E06ConverterPilotContractTest {
                     "failed global commit has no accepted step despite provisional model completion");
                 check(!converter.canUseAcceptedNewtonPredictor() && predictorBoundary(sim).observation() == null,
                     "failed operation cannot expose a predictor or public observation");
+                check(converter.matchesAcceptedStateForDeveloperVerification(committedBefore) &&
+                    converter.hasPendingAcceptedStateForDeveloperVerification(),
+                    "event rejection retains committed E06 memory and leaves only its staged candidate");
                 // CirSim already advanced t and model state before dispatch. Do not assert rollback.
             } else {
                 if (observed != null) throw observed;
@@ -1015,6 +1021,10 @@ public final class E06ConverterPilotContractTest {
                     operation.outcome == SolverExecutionBoundary.Outcome.COMPLETE && operation.lastAcceptedTime == sim.t,
                     "actual completed operation commits exactly one global acceptance");
                 check(converter.canUseAcceptedNewtonPredictor(), "global acceptance enables the compatible next predictor");
+                check(!converter.matchesAcceptedStateForDeveloperVerification(committedBefore) &&
+                    !converter.hasPendingAcceptedStateForDeveloperVerification() &&
+                    converter.hasAcceptedPredictorForDeveloperVerification(),
+                    "global acceptance replaces prior committed E06 memory and consumes the stage");
                 if (scenario == 0) check(callback[0] == 1, "successful pending-boundary callback fired once");
                 else check(veto.wideTrials == 100 && veto.fineTrials > 0 && sim.timeStep == dt / 2 &&
                     Math.abs(sim.t - (beforeTime + dt / 2)) < 1e-12,

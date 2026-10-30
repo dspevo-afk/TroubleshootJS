@@ -1,0 +1,15 @@
+{
+  "protocol": "e06-strict-reader-fixtures-v1",
+  "status": "PASS",
+  "scriptExitCode": 0,
+  "host": "Windows PowerShell 5.1",
+  "assertions": {
+    "E06": 120,
+    "A04": 14,
+    "Q100": "existing independent contracts PASS"
+  },
+  "readerSha256": "46b8f2eaca372a8a68745e955b7e9dbcc71b39563345eb0c86c33cbe24c271b2",
+  "fixtureSha256": "8be78a6537e0c5c00cd03218b6636dd754f4ab38200e966458bd822b58120067",
+  "rawConsoleSha256": "3562db71439a6bd73ff6f2c2d1633259b03b1c86aedf4d1167ee890d1e4a7cd9",
+  "qualification": "Synthetic positive/negative fixtures only; no CircuitJS or host cleanup proof. Outer read-only shell ended1 because it also attempted to read a not-yet-created build result after the passing script; explicit script exit was0."
+}

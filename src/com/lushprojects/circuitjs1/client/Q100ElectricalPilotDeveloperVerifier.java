@@ -10,6 +10,496 @@ import java.util.Vector;
 /** Explicit Developer-only raw electrical reference; grants no family admission. */
 final class Q100ElectricalPilotDeveloperVerifier {
     private Q100ElectricalPilotDeveloperVerifier() { }
+
+    private static final String E06_ACCEPTANCE_CANARY_PROTOCOL =
+        "tsj-e06-acceptance-boundary-canary-v1";
+    private static final String E06_ACCEPTANCE_CANARY_FAMILY = Rb56Plan.FAMILY_ID;
+    private static final long E06_ACCEPTANCE_CANARY_SEED = -8360266000248569150L;
+    private static final double E06_ACCEPTANCE_CANARY_DT = .000025;
+    private static final int E06_ACCEPTANCE_CANARY_BATCH = 64;
+    private static final int E06_ACCEPTANCE_CANARY_MAX_PRIME_STEPS = 8000;
+    private static final int E06_ACCEPTANCE_CANARY_MAX_WORK = 640;
+    private static final double E06_ACCEPTANCE_CANARY_MAX_UNIT_MS = 5000;
+    private static final int E06_ACCEPTANCE_CANARY_MAX_INTERTRIAL_MS = 500;
+    private static final double E06_ACCEPTANCE_CANARY_OPERATION_LIMIT_MS = 90000;
+    private static final double E06_ACCEPTANCE_CANARY_CLEANUP_LIMIT_MS = 120000;
+
+    /**
+     * Developer-only accepted-state boundary probe.  The selected RB56 owner is
+     * retained as the real predecessor while a detached, actual CircuitJS E06
+     * graph is stepped through one of the two failure points.
+     */
+    static void startE06AcceptanceBoundaryCanary(final CirSim sim, final String canaryText) {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            public void execute() {
+                try {
+                    Rb100PilotReference.require(TroubleshootBuild.isDeveloper() &&
+                        sim.troubleshootDebug && sim.troubleshootQ100Verification,
+                        "explicit Developer Q100 canary route required");
+                    Rb100PilotReference.require(!sim.developerVerifierRunning &&
+                        sim.playerSessionController == null && !sim.activeMeasurementOverlay &&
+                        sim.isGeneratedRuntimeSettled() &&
+                        CircuitElm.sim == sim && !sim.solverExecutor.isUnavailable() &&
+                        !GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() &&
+                        (sim.generationCoordinator == null || !sim.generationCoordinator.isRunning()),
+                        "idle settled QuickPlay predecessor required");
+                    Rb100PilotReference.require("e06-late-callback".equals(canaryText) ||
+                        "e06-event-failure".equals(canaryText), "unsupported E06 acceptance canary");
+                    Rb100PilotReference.require(CircuitSolverExecutor.WALL_LIMIT_MS ==
+                        E06_ACCEPTANCE_CANARY_MAX_INTERTRIAL_MS &&
+                        CircuitSolverExecutor.TEMPORAL_WALL_LIMIT_MS == E06_ACCEPTANCE_CANARY_MAX_UNIT_MS,
+                        "accepted-state canary solver time budgets changed");
+                    GeneratedBoardInstance owner = sim.generatedBoardInstance;
+                    QuickPlaySelection selection = sim.getQuickPlaySelectionForDeveloperVerification();
+                    Rb100PilotReference.require(owner != null &&
+                        E06_ACCEPTANCE_CANARY_FAMILY.equals(owner.getCircuitFamilyId()) &&
+                        owner.getSeed() == E06_ACCEPTANCE_CANARY_SEED && sim.quickPlaySession != null &&
+                        sim.quickPlaySession.getInstance() == owner && selection != null &&
+                        E06_ACCEPTANCE_CANARY_FAMILY.equals(selection.getFamilyId()) &&
+                        selection.getSeed() == E06_ACCEPTANCE_CANARY_SEED,
+                        "exact RB56 QuickPlay predecessor required");
+                    Vector<E06AveragedConverterElm> models = findE06Models(sim.elmList);
+                    Rb100PilotReference.require(models.size() == 1 &&
+                        models.firstElement().hasAcceptedPredictorForDeveloperVerification(),
+                        "settled predecessor requires one accepted E06 predictor");
+                    new E06BoundaryCanaryRunner(sim, canaryText, owner,
+                        models.firstElement()).begin();
+                } catch (Throwable failure) {
+                    publishE06AcceptanceCanary("{\"protocol\":" + quote(E06_ACCEPTANCE_CANARY_PROTOCOL) +
+                        ",\"epoch\":" + quote(GenerationDependencyContext.INTERPRETATION_EPOCH) +
+                        ",\"status\":\"REJECTED_BEFORE_PRIVATE_GRAPH\",\"canary\":" +
+                        quote(canaryText) + ",\"family\":" + quote(E06_ACCEPTANCE_CANARY_FAMILY) +
+                        ",\"seed\":" + quote(Long.toString(E06_ACCEPTANCE_CANARY_SEED)) +
+                        ",\"cleanup\":\"NOT_APPLICABLE\",\"cleanupError\":null,\"error\":" +
+                        quote(failure.getMessage()) + "}");
+                    CirSim.publishBrowserVerificationResult("FAIL:e06-acceptance-canary");
+                }
+            }
+        });
+    }
+
+    private static Vector<E06AveragedConverterElm> findE06Models(Vector<CircuitElm> elements) {
+        Vector<E06AveragedConverterElm> result = new Vector<E06AveragedConverterElm>();
+        if (elements != null) for (CircuitElm element : elements)
+            if (element instanceof E06AveragedConverterElm)
+                result.add((E06AveragedConverterElm)element);
+        return result;
+    }
+
+    private static final class E06BoundaryCanaryRunner {
+        final CirSim sim;
+        final String canary;
+        final GeneratedBoardInstance predecessorOwner;
+        final E06AveragedConverterElm predecessorModel;
+        final E06AveragedConverterElm.AcceptedStateSnapshot predecessorSnapshot;
+        final Vector<CircuitElm> predecessorGraph;
+        final QuickPlaySession predecessorQuickPlaySession;
+        final QuickPlaySelection predecessorQuickPlaySelection;
+        final String predecessorDump;
+        final boolean predecessorRunning;
+        final String diode, zener, transistor, led;
+        final double started = CircuitSolverExecutor.wallTimeMillis();
+        PrivateSolverContext proof;
+        E06ConverterFixtures.Fixture fixture;
+        E06AveragedConverterElm converter;
+        E06AveragedConverterElm.AcceptedStateSnapshot candidateSnapshot;
+        E06BoundaryFailureElm lateFailure;
+        boolean installed, finished;
+        boolean acceptedPredictorBefore, predecessorSnapshotBefore, predecessorPredictorBefore;
+        boolean predecessorModelIdentityStable;
+        boolean pendingObserved, pendingAfterFailure, advancedTime, expectedFailureObserved;
+        boolean committedSnapshotUnchanged, acceptedAtRejectedTime;
+        boolean postStepCallbackObserved, eventCallbackObserved, eventCandidateObserved;
+        boolean quickPlaySessionIdentityStable, quickPlaySelectionIdentityStable;
+        double simulatedSecondsBefore = Double.NaN, simulatedSecondsAfter = Double.NaN;
+        double privateTimeStepAtRejection = Double.NaN;
+        double privateMinTimeStepAtRejection = Double.NaN;
+        double privateMaxTimeStepAtRejection = Double.NaN;
+        boolean privateAdjustTimeStepAtRejection;
+        Throwable injectedFailure;
+        String expectedFailureMessage;
+        int primeSteps, candidateE06Count, predecessorE06CountAfter;
+        int work, acceptedSteps, maxBatchSteps, rejectedAttemptSteps, rejectedAttemptTimeStepCount;
+        double maxUnitMs, maxStepTimeError;
+        boolean fixedStepVerified = true, unitLimitViolated;
+        boolean exactCountVerified = true;
+
+        E06BoundaryCanaryRunner(CirSim sim, String canary,
+                GeneratedBoardInstance predecessorOwner, E06AveragedConverterElm predecessorModel) {
+            this.sim = sim; this.canary = canary; this.predecessorOwner = predecessorOwner;
+            this.predecessorModel = predecessorModel;
+            predecessorSnapshot = predecessorModel.captureAcceptedStateForDeveloperVerification();
+            predecessorSnapshotBefore = predecessorModel.matchesAcceptedStateForDeveloperVerification(
+                predecessorSnapshot);
+            predecessorPredictorBefore = predecessorModel.hasAcceptedPredictorForDeveloperVerification();
+            predecessorGraph = sim.elmList; predecessorDump = sim.dumpCircuit();
+            predecessorQuickPlaySession = sim.quickPlaySession;
+            predecessorQuickPlaySelection = sim.getQuickPlaySelectionForDeveloperVerification();
+            predecessorRunning = sim.simIsRunning();
+            diode = DiodeElm.lastModelName; zener = ZenerElm.lastZenerModelName;
+            transistor = TransistorElm.lastModelName; led = LEDElm.lastLEDModelName;
+        }
+
+        void begin() {
+            try {
+                Rb100PilotReference.require(predecessorSnapshotBefore && predecessorPredictorBefore,
+                    "predecessor E06 accepted predictor changed during canary setup");
+                double constructionStarted = beginUnit();
+                try {
+                    proof = PrivateSolverContext.open(sim);
+                    sim.developerVerifierRunning = true;
+                    sim.timeStep = sim.maxTimeStep = sim.minTimeStep = E06_ACCEPTANCE_CANARY_DT;
+                    sim.adjustTimeStep = false;
+                    fixture = E06ConverterFixtures.averaged();
+                    converter = fixture.averaged;
+                    candidateE06Count = findE06Models(fixture.elements).size();
+                    Rb100PilotReference.require(converter != null && candidateE06Count == 1,
+                        "private E06 fixture omitted its averaged converter");
+                    lateFailure = new E06BoundaryFailureElm(this);
+                    fixture.elements.add(lateFailure);
+                    fixture.enable.setVoltage(5);
+                    proof.install(fixture.elements);
+                    installed = true;
+                } finally { endUnit(constructionStarted); }
+                requireUnitBudgets();
+                double analysisStarted = beginUnit();
+                try { proof.analyze(); }
+                finally { endUnit(analysisStarted); }
+                fixedStepVerified &= fixedStepCurrent();
+                requireUnitBudgets();
+                publishE06AcceptanceCanary("{\"protocol\":" + quote(E06_ACCEPTANCE_CANARY_PROTOCOL) +
+                    ",\"epoch\":" + quote(GenerationDependencyContext.INTERPRETATION_EPOCH) +
+                    ",\"status\":\"RUNNING\",\"canary\":" + quote(canary) +
+                    ",\"family\":" + quote(E06_ACCEPTANCE_CANARY_FAMILY) +
+                    ",\"seed\":" + quote(Long.toString(E06_ACCEPTANCE_CANARY_SEED)) +
+                    ",\"quickPlaySelectionVerified\":true}");
+                deferPrime();
+            } catch (Throwable failure) { finish(failure); }
+        }
+
+        void deferPrime() {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                public void execute() {
+                    if (finished) return;
+                    try {
+                        checkOperationBudget();
+                        if (primeReady()) { runFailureCanary(); return; }
+                        if (primeSteps >= E06_ACCEPTANCE_CANARY_MAX_PRIME_STEPS)
+                            throw new IllegalStateException("E06 predecessor fixture did not reach a compatible predictor");
+                        int count = Math.min(E06_ACCEPTANCE_CANARY_BATCH,
+                            E06_ACCEPTANCE_CANARY_MAX_PRIME_STEPS - primeSteps);
+                        fixedStepVerified &= fixedStepCurrent();
+                        double batchBefore = sim.t;
+                        int batchCountBefore = sim.timeStepCount;
+                        double batchStarted = beginUnit();
+                        try { proof.advanceFor(count * E06_ACCEPTANCE_CANARY_DT); }
+                        finally { endUnit(batchStarted); }
+                        fixedStepVerified &= fixedStepCurrent();
+                        int batchAccepted = sim.timeStepCount - batchCountBefore;
+                        double stepTimeError = Math.abs((sim.t - batchBefore) -
+                            batchAccepted * E06_ACCEPTANCE_CANARY_DT);
+                        if (batchAccepted != count || batchAccepted < 1 ||
+                                batchAccepted > E06_ACCEPTANCE_CANARY_BATCH ||
+                                !finite(stepTimeError) || stepTimeError > 1e-8 ||
+                                !sim.solverExecutor.hasAcceptedStepAt(sim.t))
+                            throw new IllegalStateException("E06 private prime did not advance the bounded accepted steps");
+                        maxStepTimeError = Math.max(maxStepTimeError, stepTimeError);
+                        exactCountVerified &= batchAccepted == count && stepTimeError <= 1e-8;
+                        primeSteps += batchAccepted;
+                        acceptedSteps += batchAccepted;
+                        maxBatchSteps = Math.max(maxBatchSteps, batchAccepted);
+                        requireUnitBudgets();
+                        deferPrime();
+                    } catch (Throwable failure) { finish(failure); }
+                }
+            });
+        }
+
+        double simulatedPrimeStart = 0;
+
+        boolean primeReady() {
+            return sim.t >= .030 && converter.getOutputVoltage() > .1 &&
+                converter.hasAcceptedPredictorForDeveloperVerification() &&
+                E06ConverterContract.cycleIndex(sim.t + E06_ACCEPTANCE_CANARY_DT) ==
+                    E06ConverterContract.cycleIndex(sim.t);
+        }
+
+        void runFailureCanary() {
+            Rb100PilotReference.require(primeReady(), "E06 private fixture lacks a current accepted predictor");
+            acceptedPredictorBefore = converter.hasAcceptedPredictorForDeveloperVerification();
+            candidateSnapshot = converter.captureAcceptedStateForDeveloperVerification();
+            simulatedSecondsBefore = sim.t;
+            int rejectedTimeStepCountBefore = sim.timeStepCount;
+            expectedFailureMessage = "e06-late-callback".equals(canary) ?
+                "e06-explicit-late-step-finished" : "e06-explicit-accepted-event";
+            if ("e06-late-callback".equals(canary)) {
+                lateFailure.arm();
+            } else {
+                proof.events().schedule(sim.t + E06_ACCEPTANCE_CANARY_DT / 2.0,
+                    new SolverEventQueue.Action() {
+                        public void fire(double scheduledTime, double acceptedTime) {
+                            eventCallbackObserved = true;
+                            eventCandidateObserved = converter.hasPendingAcceptedStateForDeveloperVerification() &&
+                                converter.matchesAcceptedStateForDeveloperVerification(candidateSnapshot) &&
+                                sim.t > simulatedSecondsBefore && acceptedTime == sim.t &&
+                                scheduledTime > simulatedSecondsBefore &&
+                                !sim.solverExecutor.hasAcceptedStepAt(sim.t);
+                            if (!eventCandidateObserved)
+                                throw new IllegalStateException("e06-event-failure-candidate-not-staged");
+                            throw new IllegalStateException(expectedFailureMessage);
+                        }
+                    });
+            }
+            fixedStepVerified &= fixedStepCurrent();
+            double injectionStarted = beginUnit();
+            try { proof.advanceSteps(1); }
+            catch (Throwable failure) { injectedFailure = failure; }
+            finally { endUnit(injectionStarted); }
+            privateTimeStepAtRejection = sim.timeStep;
+            privateMinTimeStepAtRejection = sim.minTimeStep;
+            privateMaxTimeStepAtRejection = sim.maxTimeStep;
+            privateAdjustTimeStepAtRejection = sim.adjustTimeStep;
+            simulatedSecondsAfter = sim.t;
+            advancedTime = simulatedSecondsAfter > simulatedSecondsBefore;
+            rejectedAttemptSteps = (int)Math.round((simulatedSecondsAfter - simulatedSecondsBefore) /
+                E06_ACCEPTANCE_CANARY_DT);
+            rejectedAttemptTimeStepCount = sim.timeStepCount - rejectedTimeStepCountBefore;
+            double rejectedStepTimeError = Math.abs((simulatedSecondsAfter - simulatedSecondsBefore) -
+                rejectedAttemptTimeStepCount * E06_ACCEPTANCE_CANARY_DT);
+            maxStepTimeError = Math.max(maxStepTimeError, rejectedStepTimeError);
+            exactCountVerified &= rejectedAttemptTimeStepCount == 1 && rejectedAttemptSteps == 1 &&
+                finite(rejectedStepTimeError) && rejectedStepTimeError <= 1e-8;
+            fixedStepVerified &= fixedStepCurrent();
+            pendingAfterFailure = converter.hasPendingAcceptedStateForDeveloperVerification();
+            committedSnapshotUnchanged = converter.matchesAcceptedStateForDeveloperVerification(candidateSnapshot);
+            acceptedAtRejectedTime = sim.solverExecutor.hasAcceptedStepAt(sim.t);
+            boolean expectedFailure = injectedFailure != null &&
+                injectedFailure.getClass() == IllegalStateException.class &&
+                expectedFailureMessage.equals(injectedFailure.getMessage());
+            expectedFailureObserved = expectedFailure;
+            if ("e06-late-callback".equals(canary)) {
+                pendingObserved = lateFailure.pendingObserved;
+                postStepCallbackObserved = lateFailure.callbackObserved;
+            } else pendingObserved = eventCandidateObserved;
+            boolean success = expectedFailure && pendingObserved && pendingAfterFailure &&
+                committedSnapshotUnchanged && acceptedPredictorBefore &&
+                advancedTime && !acceptedAtRejectedTime &&
+                ("e06-late-callback".equals(canary) ? postStepCallbackObserved : eventCallbackObserved);
+            if (!success) throw new IllegalStateException("E06 acceptance boundary canary did not observe the exact rejected candidate",
+                injectedFailure);
+            requireUnitBudgets();
+            finish(null);
+        }
+
+        void checkOperationBudget() {
+            double elapsed = CircuitSolverExecutor.wallTimeMillis() - started;
+            if (!finite(elapsed) || elapsed > E06_ACCEPTANCE_CANARY_OPERATION_LIMIT_MS)
+                throw new IllegalStateException("E06 acceptance canary exceeded its 90 second operation budget");
+        }
+
+        double beginUnit() {
+            work++;
+            return CircuitSolverExecutor.wallTimeMillis();
+        }
+
+        void endUnit(double unitStarted) {
+            double elapsed = CircuitSolverExecutor.wallTimeMillis() - unitStarted;
+            if (!finite(elapsed) || elapsed < 0 || elapsed > E06_ACCEPTANCE_CANARY_MAX_UNIT_MS)
+                unitLimitViolated = true;
+            if (finite(elapsed) && elapsed >= 0) maxUnitMs = Math.max(maxUnitMs, elapsed);
+        }
+
+        void requireUnitBudgets() {
+            if (work < 1 || work > E06_ACCEPTANCE_CANARY_MAX_WORK)
+                throw new IllegalStateException("E06 acceptance canary exceeded its 640 work-unit budget");
+            if (unitLimitViolated || maxUnitMs > E06_ACCEPTANCE_CANARY_MAX_UNIT_MS)
+                throw new IllegalStateException("E06 acceptance canary exceeded its 5 second unit budget");
+        }
+
+        boolean fixedStepCurrent() {
+            return sim.timeStep == E06_ACCEPTANCE_CANARY_DT &&
+                sim.maxTimeStep == E06_ACCEPTANCE_CANARY_DT &&
+                sim.minTimeStep == E06_ACCEPTANCE_CANARY_DT && !sim.adjustTimeStep;
+        }
+
+        void finish(Throwable failure) {
+            if (finished) return;
+            finished = true;
+            double operationMs = CircuitSolverExecutor.wallTimeMillis() - started;
+            double cleanupStarted = CircuitSolverExecutor.wallTimeMillis();
+            Throwable cleanupFailure = null;
+            try { if (proof != null) proof.close(); }
+            catch (Throwable problem) { cleanupFailure = problem; }
+            if (!installed && fixture != null) {
+                for (CircuitElm element : fixture.elements) {
+                    try { element.delete(); }
+                    catch (Throwable problem) { cleanupFailure = retain(cleanupFailure, problem); }
+                }
+                fixture.elements.clear();
+            }
+            boolean graphStable = false, ownerStable = false, dumpStable = false;
+            boolean predecessorStateUnchanged = false, predecessorPredictorAvailable = false;
+            boolean candidateOutOfLiveGraph = false, privateAuthorityClosed = false;
+            try {
+                graphStable = sim.elmList == predecessorGraph;
+                ownerStable = sim.generatedBoardInstance == predecessorOwner && CircuitElm.sim == sim &&
+                    !sim.solverExecutor.isUnavailable() && sim.simIsRunning() == predecessorRunning &&
+                    !sim.developerVerifierRunning;
+                quickPlaySessionIdentityStable = sim.quickPlaySession == predecessorQuickPlaySession &&
+                    predecessorQuickPlaySession != null && predecessorQuickPlaySession.getInstance() == predecessorOwner;
+                quickPlaySelectionIdentityStable = sim.getQuickPlaySelectionForDeveloperVerification() ==
+                    predecessorQuickPlaySelection && predecessorQuickPlaySelection != null &&
+                    E06_ACCEPTANCE_CANARY_FAMILY.equals(predecessorQuickPlaySelection.getFamilyId()) &&
+                    predecessorQuickPlaySelection.getSeed() == E06_ACCEPTANCE_CANARY_SEED;
+                privateAuthorityClosed = !sim.solverExecutor.isUnavailable();
+                candidateOutOfLiveGraph = fixture == null || graphStable &&
+                    !containsAny(sim.elmList, fixture.elements);
+                Vector<E06AveragedConverterElm> restoredModels = findE06Models(sim.elmList);
+                predecessorE06CountAfter = restoredModels.size();
+                predecessorModelIdentityStable = restoredModels.size() == 1 &&
+                    restoredModels.firstElement() == predecessorModel;
+                boolean safePredecessor = cleanupFailure == null && graphStable && ownerStable &&
+                    quickPlaySessionIdentityStable && quickPlaySelectionIdentityStable &&
+                    predecessorModelIdentityStable && privateAuthorityClosed;
+                if (safePredecessor) {
+                    DiodeElm.lastModelName = diode; ZenerElm.lastZenerModelName = zener;
+                    TransistorElm.lastModelName = transistor; LEDElm.lastLEDModelName = led;
+                }
+                dumpStable = safePredecessor && predecessorDump.equals(sim.dumpCircuit());
+                predecessorStateUnchanged = predecessorModel.matchesAcceptedStateForDeveloperVerification(
+                    predecessorSnapshot);
+                predecessorPredictorAvailable = predecessorModel.hasAcceptedPredictorForDeveloperVerification();
+                Rb100PilotReference.require(cleanupFailure == null && graphStable && ownerStable && dumpStable &&
+                    predecessorStateUnchanged && predecessorPredictorAvailable &&
+                    predecessorModelIdentityStable && candidateOutOfLiveGraph &&
+                    privateAuthorityClosed && quickPlaySessionIdentityStable &&
+                    quickPlaySelectionIdentityStable,
+                    "E06 canary predecessor was not exactly restored");
+            } catch (Throwable problem) { cleanupFailure = retain(cleanupFailure, problem); }
+            double cleanupMs = CircuitSolverExecutor.wallTimeMillis() - cleanupStarted;
+            if ((!finite(operationMs) || operationMs > E06_ACCEPTANCE_CANARY_OPERATION_LIMIT_MS) && failure == null)
+                failure = new IllegalStateException("E06 acceptance canary exceeded its 90 second operation budget");
+            if ((!finite(cleanupMs) || cleanupMs > E06_ACCEPTANCE_CANARY_CLEANUP_LIMIT_MS) && cleanupFailure == null)
+                cleanupFailure = new IllegalStateException("E06 acceptance canary cleanup exceeded 120 seconds");
+            boolean success = failure == null && cleanupFailure == null && injectedFailure != null &&
+                expectedFailureObserved && pendingObserved && pendingAfterFailure && committedSnapshotUnchanged &&
+                acceptedPredictorBefore && advancedTime && !acceptedAtRejectedTime && graphStable && ownerStable &&
+                dumpStable && predecessorSnapshotBefore && predecessorPredictorBefore &&
+                predecessorStateUnchanged && predecessorPredictorAvailable &&
+                predecessorModelIdentityStable && candidateE06Count == 1 && candidateOutOfLiveGraph &&
+                privateAuthorityClosed && quickPlaySessionIdentityStable && quickPlaySelectionIdentityStable &&
+                work >= 1 && work <= E06_ACCEPTANCE_CANARY_MAX_WORK &&
+                !unitLimitViolated && maxUnitMs <= E06_ACCEPTANCE_CANARY_MAX_UNIT_MS &&
+                maxBatchSteps >= 1 && maxBatchSteps <= E06_ACCEPTANCE_CANARY_BATCH && fixedStepVerified &&
+                exactCountVerified && maxStepTimeError <= 1e-8 && rejectedAttemptSteps == 1 &&
+                rejectedAttemptTimeStepCount == 1 &&
+                ("e06-late-callback".equals(canary) ?
+                    postStepCallbackObserved && !eventCallbackObserved && !eventCandidateObserved :
+                    !postStepCallbackObserved && eventCallbackObserved && eventCandidateObserved);
+            String status = cleanupFailure != null ? "FAIL_CLEANUP" :
+                success ? "PASS_E06_ACCEPTANCE_BOUNDARY_CANARY" : "FAIL_E06_ACCEPTANCE_BOUNDARY_CANARY";
+            publishE06AcceptanceCanary("{\"protocol\":" + quote(E06_ACCEPTANCE_CANARY_PROTOCOL) +
+                ",\"epoch\":" + quote(GenerationDependencyContext.INTERPRETATION_EPOCH) +
+                ",\"status\":" + quote(status) + ",\"canary\":" + quote(canary) +
+                ",\"family\":" + quote(E06_ACCEPTANCE_CANARY_FAMILY) +
+                ",\"seed\":" + quote(Long.toString(E06_ACCEPTANCE_CANARY_SEED)) +
+                ",\"quickPlaySelectionVerified\":true" +
+                ",\"operationMs\":" + number(operationMs) + ",\"cleanupMs\":" + number(cleanupMs) +
+                ",\"operationLimitMs\":" + E06_ACCEPTANCE_CANARY_OPERATION_LIMIT_MS +
+                ",\"cleanupLimitMs\":" + E06_ACCEPTANCE_CANARY_CLEANUP_LIMIT_MS +
+                ",\"maxUnitLimitMs\":" + E06_ACCEPTANCE_CANARY_MAX_UNIT_MS +
+                ",\"maxBatchLimitSteps\":" + E06_ACCEPTANCE_CANARY_BATCH +
+                ",\"work\":" + work + ",\"maxUnitMs\":" + number(maxUnitMs) +
+                ",\"acceptedSteps\":" + acceptedSteps + ",\"maxBatchSteps\":" + maxBatchSteps +
+                // GWT's boolean &= accumulation can use numeric JS storage.
+                // Emit literal JSON booleans rather than concatenating that storage.
+                ",\"fixedStepVerified\":" + (fixedStepVerified ? "true" : "false") +
+                ",\"exactCountVerified\":" + (exactCountVerified ? "true" : "false") +
+                ",\"maxStepTimeError\":" + number(maxStepTimeError) +
+                ",\"timeStepAtRejection\":" + number(privateTimeStepAtRejection) +
+                ",\"minTimeStepAtRejection\":" + number(privateMinTimeStepAtRejection) +
+                ",\"maxTimeStepAtRejection\":" + number(privateMaxTimeStepAtRejection) +
+                ",\"adjustTimeStepAtRejection\":" + privateAdjustTimeStepAtRejection +
+                ",\"interTrialLimitMs\":" + CircuitSolverExecutor.WALL_LIMIT_MS +
+                ",\"cleanup\":" + quote(cleanupFailure == null ? "PASS" : "FAIL") +
+                ",\"cleanupError\":" + quote(cleanupFailure == null ? null : cleanupFailure.getMessage()) +
+                ",\"error\":" + quote(failure == null ? null : failure.getMessage()) +
+                ",\"expectedFailureType\":\"java.lang.IllegalStateException\",\"expectedFailureMessage\":" +
+                quote(expectedFailureMessage) + ",\"observedFailureType\":" +
+                quote(injectedFailure == null ? null : injectedFailure.getClass().getName()) +
+                ",\"observedFailureMessage\":" +
+                quote(injectedFailure == null ? null : injectedFailure.getMessage()) +
+                ",\"expectedFailureObserved\":" + expectedFailureObserved +
+                ",\"failurePhase\":" + quote("e06-late-callback".equals(canary) ?
+                    "STEP_FINISHED_AFTER_E06_STAGE" : "ACCEPTED_EVENT_AFTER_E06_STAGE") +
+                ",\"predecessor\":{\"graphIdentityStable\":" + graphStable +
+                ",\"ownerIdentityStable\":" + ownerStable + ",\"exactDumpRestored\":" + dumpStable +
+                ",\"quickPlaySessionIdentityStable\":" + quickPlaySessionIdentityStable +
+                ",\"quickPlaySelectionIdentityStable\":" + quickPlaySelectionIdentityStable +
+                ",\"e06CountBefore\":1,\"e06CountAfter\":" + predecessorE06CountAfter +
+                ",\"modelIdentityStable\":" + predecessorModelIdentityStable +
+                ",\"acceptedSnapshotUnchangedBefore\":" + predecessorSnapshotBefore +
+                ",\"acceptedSnapshotUnchangedAfter\":" + predecessorStateUnchanged +
+                ",\"acceptedPredictorAvailableBefore\":" + predecessorPredictorBefore +
+                ",\"acceptedPredictorAvailableAfter\":" + predecessorPredictorAvailable +
+                "},\"candidate\":{\"e06Count\":" + candidateE06Count +
+                ",\"acceptedPredictorAvailableBefore\":" + acceptedPredictorBefore +
+                ",\"privateCandidatePendingObserved\":" + pendingObserved +
+                ",\"privateCandidatePendingAfterRejection\":" + pendingAfterFailure +
+                ",\"committedSnapshotUnchanged\":" + committedSnapshotUnchanged +
+                ",\"simulatedSecondsBefore\":" + number(simulatedSecondsBefore) +
+                ",\"simulatedSecondsAfter\":" + number(simulatedSecondsAfter) +
+                ",\"simulatedSecondsAdvanced\":" + advancedTime +
+                ",\"rejectedAttemptSteps\":" + rejectedAttemptSteps +
+                ",\"rejectedAttemptTimeStepCount\":" + rejectedAttemptTimeStepCount +
+                ",\"acceptedStepAtRejectedTime\":" + acceptedAtRejectedTime +
+                ",\"postStepCallbackObserved\":" + postStepCallbackObserved +
+                ",\"eventCallbackObserved\":" + eventCallbackObserved +
+                ",\"eventCandidateObserved\":" + eventCandidateObserved +
+                ",\"candidateOutOfLiveGraph\":" + candidateOutOfLiveGraph +
+                ",\"privateAuthorityClosed\":" + privateAuthorityClosed + "}}" );
+            CirSim.publishBrowserVerificationResult(success ? "PASS:e06-acceptance-canary" :
+                "FAIL:e06-acceptance-canary");
+        }
+
+        private boolean finite(double value) { return !Double.isNaN(value) && !Double.isInfinite(value); }
+        private boolean containsAny(Vector<CircuitElm> graph, Vector<CircuitElm> candidateElements) {
+            for (CircuitElm element : candidateElements) if (graph.contains(element)) return true;
+            return false;
+        }
+        private String number(double value) { return finite(value) ? Double.toString(value) : "null"; }
+        private Throwable retain(Throwable original, Throwable next) {
+            if (original == null) return next;
+            if (original != next) original.addSuppressed(next);
+            return original;
+        }
+    }
+
+    private static final class E06BoundaryFailureElm extends CircuitElm {
+        final E06BoundaryCanaryRunner runner;
+        boolean armed, callbackObserved, pendingObserved;
+        E06BoundaryFailureElm(E06BoundaryCanaryRunner runner) { super(0, 0); this.runner = runner; }
+        int getDumpType() { return 'x'; }
+        int getPostCount() { return 0; }
+        void setPoints() {
+            point1 = new Point(x, y); point2 = point1;
+            boundingBox = new Rectangle(x, y, 1, 1);
+        }
+        void arm() { armed = true; callbackObserved = false; pendingObserved = false; }
+        void stepFinished() {
+            if (!armed) return;
+            armed = false; callbackObserved = true;
+            pendingObserved = runner.converter.hasPendingAcceptedStateForDeveloperVerification() &&
+                runner.converter.matchesAcceptedStateForDeveloperVerification(runner.candidateSnapshot) &&
+                runner.sim.t > runner.simulatedSecondsBefore &&
+                !runner.sim.solverExecutor.hasAcceptedStepAt(runner.sim.t);
+            if (!pendingObserved)
+                throw new IllegalStateException("e06-late-callback-candidate-not-staged");
+            runner.pendingObserved = true;
+            throw new IllegalStateException(runner.expectedFailureMessage);
+        }
+    }
+
     static void start(final CirSim sim, final String variantText, final String faultText,
             final String dtText, final String canaryText) {
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
@@ -304,6 +794,9 @@ final class Q100ElectricalPilotDeveloperVerifier {
     }
     private static native void publish(String evidence) /*-{
         $doc.documentElement.setAttribute("data-tsj-q100-report", evidence);
+    }-*/;
+    private static native void publishE06AcceptanceCanary(String evidence) /*-{
+        $doc.documentElement.setAttribute("data-tsj-e06-acceptance-canary", evidence);
     }-*/;
     private static native NativeEvent createWheelNativeEvent() /*-{
         var event = $doc.createEvent("MouseEvents");

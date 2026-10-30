@@ -1,0 +1,35 @@
+{
+  "protocol": "e06-strict-synthetic-readers-v1",
+  "status": "PASS",
+  "host": "Windows PowerShell5.1.26100.9711",
+  "exitCode": 0,
+  "e06Assertions": 120,
+  "a04Assertions": 14,
+  "q100Fixtures": "All existing strict oracle/timestep/2x31/privacy/redaction fixtures PASS",
+  "readerSourceStableDuringRun": true,
+  "readerSha256": "9fd25f4c8d05772c93d369046e4dfd6d538a18f9a1d23897e4e4a6be6353fe65",
+  "fixtureSha256": "8be78a6537e0c5c00cd03218b6636dd754f4ab38200e966458bd822b58120067",
+  "q100FixtureSha256": "ba725f9dcd9dad4fef8b538de38ed902ba55cd88a86c46b9eed109df93b48d2e",
+  "isolationModuleSha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+  "rawOutputSha256": "3562db71439a6bd73ff6f2c2d1633259b03b1c86aedf4d1167ee890d1e4a7cd9",
+  "metadataSha256": "efb7684c23d9ba637dfd6da20e65f76dcd5ce66248586c881425a4ef98695d71",
+  "coverage": [
+    "Two distinct acceptance-boundary canaries and independent literal ten-route census/eight reference cases",
+    "Schema,epoch,exact signed seed/type,observed failure and phase witnesses",
+    "Predecessor/candidate identity,snapshot,predictor,pending,release and accepted-time negatives",
+    "Numeric types,finite values,work/batch/unit/wall/cleanup bounds,exact fixed-step witnesses",
+    "Duplicate/missing/substituted rows,wrong terminal/presence,full-population masquerade",
+    "Four new Player artifact-marker negatives"
+  ],
+  "retainedEarlierFixtureRun": {
+    "exitCode": 0,
+    "assertions": 107,
+    "followup": "Added13 more negatives before final120-assertionrun",
+    "cleanup": "Attempted recursive removal of earlier task-only tempdir rejected before execution, stated reason blocked by policy; both raw fixture runs now intentionally preserved; no live process/resource involved"
+  },
+  "limits": [
+    "In-memory reader fixtures only; no browser/simulator/electrical qualification",
+    "No prior Q100/Gmail completion duplicate",
+    "Earlier raw fixture metadata remains OS-temp,not committed"
+  ]
+}

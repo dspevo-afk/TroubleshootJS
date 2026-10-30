@@ -1,0 +1,106 @@
+﻿[
+    {
+        "path":  "docs/CODEX_TASK_REPORT.md",
+        "sha256":  "4b10aeb3deaf0b46424c210a2cc62d965f7674828931e7812cf6062af9889c5d"
+    },
+    {
+        "path":  "docs/ROADMAP.md",
+        "sha256":  "ca9e3fe53caa1e700a5c59a2680cd9c215d0af15b094a5608c00e12e60dc619e"
+    },
+    {
+        "path":  "docs/task-evidence/E06/accepted-state-r1/PLAN.md",
+        "sha256":  "cda00b45ab1a206d765eaf483d4e9b09d421a46756d2b76ca766649455ce9ebe"
+    },
+    {
+        "path":  "scripts/VerifierIsolation.psm1",
+        "sha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5"
+    },
+    {
+        "path":  "scripts/verify-a03-browser.ps1",
+        "sha256":  "9fd25f4c8d05772c93d369046e4dfd6d538a18f9a1d23897e4e4a6be6353fe65"
+    },
+    {
+        "path":  "scripts/verify-current-contracts.ps1",
+        "sha256":  "24c822a6fe72facdd121f5c497d48597cfc684986031e552c3d8116bdc32608d"
+    },
+    {
+        "path":  "scripts/verify-e06-accepted-evidence.ps1",
+        "sha256":  "8be78a6537e0c5c00cd03218b6636dd754f4ab38200e966458bd822b58120067"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+        "sha256":  "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        "sha256":  "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/CirSim.java",
+        "sha256":  "f01c2e58631ec75b34872f4cce7a1906735f0e7d491470446d7e34ca6eaff046"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+        "sha256":  "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+        "sha256":  "f58192a5730b612a33589a3261c6fdfaa7bbcba5c38060de3a29efa08242b3fc"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "sha256":  "60a83ea8f564edf9d95d69678454ad2eb3b6554fc346057dbe253b546ad4ecf8"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java",
+        "sha256":  "baffe05592371ebc6298a87f50b30d8e53577b746e697287ad76d68d48997645"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "sha256":  "1ee4922fe1975f09e56817bf9b8f9b99d6d689d59d3f3eab6b5fb254dfee6cc1"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+        "sha256":  "18ffe705ae80a014de929ed08b315178336cfdb8fc924a04a44009caa5192580"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+        "sha256":  "23bbccd67f0aa3cecf01b6fc7347a5de97ad5cb4ae1ea2ee362e5b9b0efb615e"
+    },
+    {
+        "path":  "tests/contracts/D01DiagnosticContractTest.java",
+        "sha256":  "2d1360eca6c7789fdc4d498b16193594ee3ae6e611282ed9fafcb83072b9c6b2"
+    },
+    {
+        "path":  "tests/contracts/E04DecisionMemoryContractTest.java",
+        "sha256":  "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+    },
+    {
+        "path":  "tests/contracts/E06AcceptedStateContractTest.java",
+        "sha256":  "e62bcf82c95c73158bb5462003be36a9db1cc7c86233a659d47d50ce4dcb8ff9"
+    },
+    {
+        "path":  "tests/contracts/E06ConverterPilotContractTest.java",
+        "sha256":  "b30eb5c97d8269f65a4e54b48ce3e45ccedd4b89b177d3eed774b98ecf4e33de"
+    },
+    {
+        "path":  "tests/contracts/Rb56ManifestContractTest.java",
+        "sha256":  "ce6fa6c4cc23ea4b8ad5c8902430937fbabf4ec5b63c43789e6f1ff3d2821ce9"
+    },
+    {
+        "path":  "tests/contracts/Rb56ModelIdentityContractTest.java",
+        "sha256":  "50d610b8bf97cea71b40604389c6cc210aaf1e9dc1904e0d6715e93282249f9e"
+    },
+    {
+        "path":  "tests/contracts/RelBSessionIdentityContractTest.java",
+        "sha256":  "46fcf60bba5e8e4ed39da167380ec0f5e52542cb3625f34334ec213aac1864ae"
+    },
+    {
+        "path":  "tests/contracts/U06SessionSaveContractTest.java",
+        "sha256":  "213c1da6597ade5ccc3d32ae37df5accd50bd874bb51afdac9a74fa1295bd333"
+    },
+    {
+        "path":  "tests/qualification/rb56-medium/read_qualification.py",
+        "sha256":  "3414549f7966d960d0b741440d52c9faff9db15384d6452b1c9df22714e5ac3a"
+    }
+]

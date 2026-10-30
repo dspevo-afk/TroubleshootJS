@@ -1,6 +1,74 @@
-# Current checkpoint: Q100-1 accepted, publication pending
+# Current checkpoint: E06 boundary accepted
 
-**Status:** private Q100-1 pilot LOCALLY ACCEPTED; no commit/push/email yet.
+**Status:** ACCEPTED for the declared E06 boundary and finite regressions.
+**Date:** 2026-10-30. **Base/HEAD at acceptance:**9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf.
+**Branch:**codex/e06-accepted-state in the audit checkout. Commit/push and one
+completion Gmail are the final publication operations; confirm actual Git state.
+Continue the roadmap until stopped. Prior Q100-1 Gmail1a18d49856ea7daf and R12
+Gmail1a189c559927a428 were sent once; do not duplicate them.
+
+[Evidence and limits](task-evidence/E06/accepted-state-r1/README.md),
+[frozen plan](task-evidence/E06/accepted-state-r1/PLAN.md). E06 stages validated
+receipt, next controller and predictor until executor acceptance. Rejection
+preserves committed memory; physical post-current sampling remains provisional.
+Retry/reset retires pending state. Stored memory grants no live solver authority.
+No time/scope/earlier-callback rollback. Dependency/proof/private replay v21;
+modeldumpv7 and public save schema unchanged. Existing numerical laws, envelopes,
+90s/640work/5s/500ms and120s aggregate private cleanup limits remain.
+
+- Isolated native8 PASS55.850s/cleanup: E06 accepted463 assertions/five cases,
+  legacy E06 mechanics303827405/24 (nominal fidelity NOT QUALIFIED), E04 71/3,
+  D01 174, model identity123, replay205/admission only, public-save35024,
+  30 identity-only manifests. Later Developer-only serialization and browser
+  failure-diagnostic changes have an audited unchanged native-input boundary.
+  Full native matrix/oracles NOT RUN.
+- Final actual JDK8/GWT Player4 PASS86.400s, five caches9,442,211bytes/full357;
+  input6a108565558a7bc1b65b78fd73c2c72dcecac2ce5107270726d418918e8ae877,
+  outputeb327464ef36b7a52377e5c9a3009929c92d01fe597612fea67a5a6b3e5529b0.
+  Developer3 PASS121.357s, five caches17,851,492bytes/full357;
+  inputf65f24f55e77f82f59b6ade0c5b6f0b4926cd775895105d9f8e0c85d2101eb61,
+  output10688a4a620bbff75068ca1c521de4a8a6e078b54360283d56a6889e9cfd4467.
+- Compiled E06State3 PASS all10 routes/exit0: two exact RB56 predecessor/private
+  E06 callback/event canaries plus eight authored references (both variants
+  healthy100/50us, RENAC_RESISTANCE and CIN33_SHUNT50us). Helper404.548s,
+  operation346.765s, cleanup57.482s under120s. No full2-by-31 renewal.
+- Fresh Current1 PASS all9/cleanup/exit0, helper242.113s; aggregate cleanup
+  duration is not emitted by this gate. Actual A04 gen6, forced failure and
+  debug-off privacy included.
+- Fresh normal MEDIUM development3 PASS/exit0, helper167.088s, input audit and
+  resource cleanup PASS. Exact roots-2230691771308388107,6702341860553104274,
+  -8360266000248569150; sourceBinding06a533e8fe85653f93f045f3c58ffb82a15141371f8bbf70ec91380b5671124c.
+  Frozen plan315aa59358eb9f80494b22763d51bd235a55c09852379ee73f6facc9039db0d0
+  binds both actual builds. No30-root renewal, blind release or release grant.
+- Actual Player privacy2 PASS75.741s/cleanup49.001s; scoped final Player4 reuse
+  audits all357 identical output files and58 unchanged reader functions. It does
+  not renew host cleanup. No visible flow/layout change; earlier repair evidence
+  stays attached to its original candidate.
+- Strict WinPS5 reader3 PASS120 E06 plus existing Q100/A04 fixtures. Controlled
+  evidence reread accepts all ten actual reports and rejects actual numeric1
+  booleans from failed attempt2. Independent source/reader reviews found no
+  material blockers in their recorded scope; no tests/builds were run by reviewers.
+
+Failures remain failures: native1-4 fixture/compile setup, compiled1 timeout with
+no retained DOM (exact cause unproven; synchronous bootstrap was a source finding),
+compiled2 numeric JSON flags rejected despite terminal PASS. The selected canary
+bootstrap now yields, and accumulated flags serialize explicit booleans. Native7
+passed but overlapped the next build launch after root relied on a PASS marker;
+isolated native8 supersedes it. Raw originals/frozen inputs retained; controlled
+event lists are bounded with original counts/hashes, full report payloads intact.
+
+All new gate processes/listeners closed; no active owned preview/browser/compiler.
+OS-temp leaf tsj-e06-accepted-8f4ab0c1ca2746bcb33d959d0f1934d3 retains raw evidence.
+Two old inactive failed profiles/CDP claims remain unrecovered under the original
+safety contract. Desktop checkout's original branch/HEAD, seven tracked edits and
+untracked evidence remain untouched. HARD/PSYCHOTIC unavailable; protected HARD
+unread/unrun. CI NOT RUN; self-hosted Windows runner registration prerequisite.
+Next unstarted substep: authored RB100 physical feasibility under current physical
+policy, exact existing inventory/variants and independently checked copper/access;
+freeze budgets before measurement. No playable RB100, capacity increase or public beta.
+# Historical checkpoint: Q100-1 accepted and published
+
+**Status:** Q100-1 published as9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf to origin/codex/q100-constrained-pilot, remote SHA verified; completion Gmail1a18d49856ea7daf sent.
 **Date:** 2026-10-30. **Base/HEAD:** a1352b5caeb78e069606f84a569e14670f28d807.
 **Branch/worktree:** codex/q100-constrained-pilot in the audit checkout.
 
