@@ -1,0 +1,52 @@
+{
+  "protocol": "q100-native-diagnostic-guard-canaries-v1",
+  "status": "PASS",
+  "host": "Actual Windows PowerShell5.1",
+  "source": {
+    "path": "scripts/verify-current-contracts.ps1",
+    "sha256": "6ceee84a072b103a0c3e73726acb05441abfe6ee64d96187898dcd7c843ee306"
+  },
+  "cases": [
+    {
+      "case": "trace-without-selected-diagnostic",
+      "status": "PASS_EXPECTED_REJECTION",
+      "underlyingExit": 1,
+      "expectedMessage": "convergence trace requires a selected diagnostic fault",
+      "beforeJdkWork": true,
+      "rawLogSha256": "f7b48efecda5a7e60aecc290115779817d983f2181d461ab6b492224c32c9e4c"
+    },
+    {
+      "case": "trace-full-matrix-with-selected-diagnostic",
+      "status": "PASS_EXPECTED_REJECTION",
+      "underlyingExit": 1,
+      "expectedMessage": "selected RB100 diagnostic fault excludes the complete qualification matrix",
+      "beforeJdkWork": true,
+      "rawLogSha256": "ca163ca5a32c158eb8fa43b421463bd7dae653a830a0cdddd28bb973e5a4fc13"
+    },
+    {
+      "case": "retired-adaptive-study",
+      "status": "PASS_EXPECTED_REJECTION",
+      "underlyingExit": 1,
+      "expectedMessage": "Historical adaptive v0 study is retired",
+      "beforeJdkWork": true,
+      "rawLogSha256": "e9549cb52fbe96ea0fac19cf4d73aa7e2c40c567763ec398b86c49ee4b3d8585"
+    }
+  ],
+  "limits": [
+    "Three actual PS5 early negative guards and selected real two-variant trace branch",
+    "The selected diagnostic itself is unqualified, not full population or timing evidence",
+    "Driver correctly rejects missing aggregate qualification marker despite selected electrical completion"
+  ],
+  "selectedTrace": {
+    "status": "PASS_DIAGNOSTIC_NOT_QUALIFICATION",
+    "cases": 2,
+    "footer": "DIAGNOSTIC COMPLETE: RB100 selected-fault assertions=16152 cases=2 expectedCases=2 failures=0 elapsedMs=7799 scope=NATIVE_GRAPH_ONLY",
+    "qualifiedSummaryPresent": false,
+    "expectedDriverExitCode": 2,
+    "actualDriverExitCode": 2,
+    "helperElapsedSeconds": 51.3716532,
+    "nativeCleanup": "PASS",
+    "sourcePins": "trace-diagnostic-1-source-pins.json",
+    "rawLogSha256": "799998aefa4e7d831b44baf3f866ea175a6a4d5b3d964ecd99914f74f325212d"
+  }
+}

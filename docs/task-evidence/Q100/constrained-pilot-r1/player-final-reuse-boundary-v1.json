@@ -1,0 +1,85 @@
+{
+  "protocol": "q100-player-functional-evidence-reuse-v1",
+  "status": "PASS_SCOPED_ARTIFACT_PRIVACY_REUSE",
+  "evidence": "compiled-player-final.json, Player5/gate7",
+  "builds": "final-source-builds-v4.json",
+  "oldReaderSha256": "b619750da5b00283bb79263ba556b5e5f043d201ed4c87b1402f70551afb889e",
+  "currentReaderSha256": "a9883611d54dba868306efee342065044066f9795708f97bdc032d738ecae089",
+  "currentIsolationModuleSha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+  "functionHashes": [
+    {
+      "function": "Get-RouteReports",
+      "normalizedAstSha256": "f038cb6f399598864c71168affa73cf21d2c873020299ef3dc77c03abaf1742e",
+      "unchanged": true
+    },
+    {
+      "function": "Test-Q100PlayerPrivacy",
+      "normalizedAstSha256": "a2b07b548398aa7dd95cf08b9123317c073a1db1511dc717c4ad79606068e838",
+      "unchanged": true
+    },
+    {
+      "function": "Test-Q100PlayerDeveloperLeak",
+      "normalizedAstSha256": "776ce6965d56f8f06c325a76fb2c7e9bf5c2653f5aa339eff14ecc2807facb22",
+      "unchanged": true
+    },
+    {
+      "function": "Test-NormalWorkbenchReady",
+      "normalizedAstSha256": "8dea4349f3f8a9b68a6ddb367a245160af32fa6ad5844df2721d664940069819",
+      "unchanged": true
+    },
+    {
+      "function": "Test-Q100PlayerPrivacyCanaryEvidence",
+      "normalizedAstSha256": "89f2f728b4be4c38244db89ca2d97deb1cd8341820dc8cae9aaecf1246963409",
+      "unchanged": true
+    },
+    {
+      "function": "Invoke-Q100PlayerPrivacyNegativeCanary",
+      "normalizedAstSha256": "ed6a11414fe55b542a9793fabae6f7ed8016821f67c482c8576434dd58e53296",
+      "unchanged": true
+    },
+    {
+      "function": "Test-Q100PlayerArtifactMarkers",
+      "normalizedAstSha256": "9a3473d1f6bc3a2609416643158f18ed1841957315babc03be5f42f506175779",
+      "unchanged": true
+    },
+    {
+      "function": "Get-Q100PlayerArtifactProof",
+      "normalizedAstSha256": "ccf726fcb6431e25f7cd1f4b3887f40d4cf5e3bf9e5ce10ecb92d21e9337342b",
+      "unchanged": true
+    },
+    {
+      "function": "Get-Q100PlayerRouteDefinition",
+      "normalizedAstSha256": "569d6bfe63cc1b4697660b316c06c2bd17364461383f1fe120a78a12c3743d01",
+      "unchanged": true
+    },
+    {
+      "function": "Get-Q100RouteDefinitions",
+      "normalizedAstSha256": "2a59b06dc88f0fa53e5f762b74823b8d1c5d8297768a804b0189d4a2151b55f7",
+      "unchanged": true
+    },
+    {
+      "function": "Get-RouteDefinitions",
+      "normalizedAstSha256": "4d44f5f524a7ed36b8ae40b7133cb3c271595e337883034738f029c0630b0a50",
+      "unchanged": true
+    },
+    {
+      "function": "Test-RouteRequiresTicketEntry",
+      "normalizedAstSha256": "424d90adb945d8e79ca167d47788e7bb94039f837dbd08f6122367f6af912164",
+      "unchanged": true
+    }
+  ],
+  "routeReady": {
+    "review": "Only debugfalse arm changed; selected Player arm is byte unchanged",
+    "currentAstSha256": "9c3e10bab03dfb6d32d8e9928b2f28963a4018df5d61993d0f60e3a7f9deb7b1",
+    "frozenAstSha256": "09af4e7a61bb3d2b802e8e622e32163827492605c306d6b67bec743e1dc996d6"
+  },
+  "runnerReview": "Original Player leak guard, canary call, schema, cleanup/readiness predicate and failure message preserved. Added guard applies only to debugfalse; shared canary/attribute-record guards select Player exactly as before.",
+  "compilerClosure": "Maintained current Developer input/output recomputation equals final Developer16(9ed2c178a09809ff8e3e50e32f1828175a09d0a2572c61a008da6e80e71b05f1/6649d5be336a546c7b93a110b8d3930b156a1fbde8bf780690ae45bcc0a4e1b4,1198/357 files). Compiler inputs are src,build.ps1 and compiler jars; reader/module changes are outside them. Frozen Player5 receipt/full inventory bind its earlier actual binary.",
+  "review": "Independent read-only function/selected-branch audit plus root artifact generation; no new Player gate",
+  "hostCleanup": "NOT REUSED as current host acceptance. Fresh corrected-module62-artifactcanary/Current8/Q1005 PASS; full62attempt3 active.",
+  "limits": [
+    "Player5 is not currently deployed; shared metadata now correctly describes Developer16",
+    "No new Player build/privacy run or current Player-hostcleanup claim",
+    "No 30-root,playableRB100 or fullQ100 claim"
+  ]
+}

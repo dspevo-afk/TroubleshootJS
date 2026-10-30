@@ -43,19 +43,31 @@ final class Task47AssemblyDeveloperVerifier {
         StringBuilder cases = new StringBuilder();
         HashSet<String> repaired = new HashSet<String>();
         Throwable primary = null;
+        String phase = "seed-corpus";
         try {
             for (long seed : SEEDS) {
+                String seedLabel = Long.toString(seed);
+                phase = "seed-" + seedLabel + "/restore-before";
                 restore(sim, original, originalOwner, quickPlay, quickPlaySession);
                 if (cases.length() != 0) cases.append(',');
+                phase = "seed-" + seedLabel + "/verifySeed";
                 cases.append(verifySeed(sim, seed, repaired));
             }
+            phase = "corpus-repair-owner-assertion";
             require(repaired.size() == 2, "finite seeds did not execute both repair owners");
+            phase = "restore-before-construction";
             restore(sim, original, originalOwner, quickPlay, quickPlaySession);
+            phase = "construction-failure-canaries";
             String construction = verifyConstructionFailures(sim, requestedSeed);
+            phase = "installation-failure-canaries";
             String installation = verifyInstallationFailures(sim, requestedSeed, original);
+            phase = "restore-before-succession";
             restore(sim, original, originalOwner, quickPlay, quickPlaySession);
+            phase = "succession-canary";
             String succession = verifySuccession(sim, requestedSeed);
+            phase = "restore-after-succession";
             restore(sim, original, originalOwner, quickPlay, quickPlaySession);
+            phase = "final-restoration-and-owner-assertions";
             original.assertRestored(sim);
             require(sim.getGeneratedBoardInstance() == originalOwner &&
                 sim.getGeneratedChallengeController() == originalChallenge,
@@ -69,21 +81,29 @@ final class Task47AssemblyDeveloperVerifier {
                 ",\"candidateCleanup\":\"PASS\",\"originalOwnerRestored\":true," +
                 "\"playerAdmission\":\"REJECTED\"}";
         } catch (Throwable failure) {
-            primary = failure;
-            rethrow(failure);
+            primary = failure instanceof Task47StageFailure ? failure : stageFailure(phase, failure);
+            rethrow(primary);
             return null;
         } finally {
-            FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(null);
+            String cleanupStage = "clear-failure-hook";
             try {
+                FreshGeneratedRuntimeInstallation.setFailureForDeveloperVerification(null);
+                cleanupStage = "restore-original";
                 restore(sim, original, originalOwner, quickPlay, quickPlaySession);
+                cleanupStage = "dispose-detached-candidates";
                 for (GeneratedBoardInstance candidate : candidates)
                     disposeDetached(sim, candidate, originalOwner);
+                cleanupStage = "assert-original-restored";
                 original.assertRestored(sim);
             } catch (Throwable cleanup) {
-                if (primary != null)
-                    throw new IllegalStateException("Task47 original failure: " + primary.getMessage() +
-                        "; cleanup failure: " + cleanup.getMessage(), primary);
-                rethrow(cleanup);
+                if (primary != null) {
+                    IllegalStateException combined = new IllegalStateException(
+                        "Task47 original failure: " + failureDescription(primary) +
+                        "; cleanup stage=" + cleanupStage + " failure=" + failureDescription(cleanup), primary);
+                    combined.addSuppressed(cleanup);
+                    throw combined;
+                }
+                rethrow(stageFailure("cleanup/" + cleanupStage, cleanup));
             } finally {
                 candidates.clear();
                 disposed.clear();
@@ -92,12 +112,17 @@ final class Task47AssemblyDeveloperVerifier {
     }
 
     private static String verifySeed(CirSim sim, long seed, HashSet<String> repaired) {
+        String stage = "owner-snapshot";
+        try {
         GeneratedBoardInstance before = sim.getGeneratedBoardInstance();
         String beforeCircuit = sim.dumpCircuit();
+        stage = "request-and-descriptor";
         BoundedAssemblyRequest request = request(seed);
         ChallengeDescriptor descriptor = ChallengeDescriptor.parse(request.getDescriptor().toCanonical());
         require(descriptor.getRootSeed() == seed, "canonical replay lost signed 64-bit seed");
+        stage = "assembly-direct";
         BoundedGeneratedBoardAssembler.Result direct = assemble(request);
+        stage = "assembly-replay";
         BoundedGeneratedBoardAssembler.Result replay = assemble(BoundedAssemblyRequest.forCanary(descriptor));
         List<ElectricalBlockContract> reversedBlocks =
             new ArrayList<ElectricalBlockContract>(request.getBlocks());
@@ -105,45 +130,67 @@ final class Task47AssemblyDeveloperVerifier {
             new ArrayList<ElectricalConnection>(request.getConnections());
         Collections.reverse(reversedBlocks);
         Collections.reverse(reversedConnections);
+        stage = "assembly-reversed-input-order";
         BoundedGeneratedBoardAssembler.Result reversed = assemble(new BoundedAssemblyRequest(
             descriptor, reversedBlocks, reversedConnections));
+        stage = "live-graph-isolation";
         require(before == sim.getGeneratedBoardInstance() && beforeCircuit.equals(sim.dumpCircuit()),
             "private construction touched the live graph");
+        stage = "fresh-owner-direct-replay";
         assertFresh(direct.getInstance(), replay.getInstance());
+        stage = "fresh-owner-direct-reversed";
         assertFresh(direct.getInstance(), reversed.getInstance());
+        stage = "generation-snapshot";
         String semantic = generationSnapshot(direct);
         require(semantic.equals(generationSnapshot(replay)) &&
             semantic.equals(generationSnapshot(reversed)), "input order or replay changed assembly");
+        stage = "mapping-oracle";
         verifyMappings(direct);
+        stage = "admission-negative-canaries";
         verifyAdmissionBoundary(direct.getInstance(), before.getDiagnosticSolvabilityContract());
+        stage = "install-direct-composition";
         FreshGeneratedRuntimeInstallation.installComposition(sim, direct.getInstance(), false);
+        stage = "direct-runtime-invariant-and-lifecycle";
         invariant(sim);
         verifyLifecycle(sim);
+        stage = "direct-fault-output";
         double firstFaultVoltage = outputVoltage(direct.getInstance());
         String faultKey = direct.getPlan().getFaultDecisionKey();
+        stage = "install-replay-composition";
         FreshGeneratedRuntimeInstallation.installComposition(sim, replay.getInstance(), false);
         invariant(sim);
+        stage = "replay-output-equivalence";
         require(close(firstFaultVoltage, outputVoltage(replay.getInstance()), .00001),
             "fresh replay changed real solved fault behavior");
         GeneratedBoardInstance board = replay.getInstance();
         GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
+        stage = "unrepaired-fault-and-retest";
         challenge.beginDeveloperVerificationScope();
         verifySolvedFault(sim, replay);
         GeneratedCustomerRetestResult unrepaired = sim.performCustomerRetest();
         require(unrepaired != null && !unrepaired.isPassed(), "unrepaired composed retest passed");
         settle(sim);
+        stage = "clear-fault-and-verify-healthy";
         require(challenge.getFaultController().clearForDeveloperVerification(),
             "actual fault engine did not clear selected contribution");
         settle(sim);
         verifySolvedHealthy(sim, replay);
+        stage = "physical-correspondence";
         String physical = GeneratedBoardPhysicalTruthDeveloperVerifier.verifyResistiveComposition(sim);
-        if (seed == 0) verifyMeasurementCleanup(sim, replay);
+        if (seed == 0) {
+            stage = "measurement-cleanup";
+            verifyMeasurementCleanup(sim, replay);
+        }
+        stage = "invariant-negative-canaries";
         verifyInvariantNegatives(sim, board);
+        stage = "restore-fault-and-solve";
         require(challenge.getFaultController().apply(), "actual fault engine did not restore selected fault");
         settle(sim);
         verifySolvedFault(sim, replay);
         boolean repairedHere = repaired.add(replay.getPlan().getFaultBlockKey());
+        stage = "physical-repair";
         if (repairedHere) verifyPhysicalRepair(sim, replay);
+        stage = "case-report";
         return "{\"seed\":" + q(Long.toString(seed)) +
             ",\"sourceOhms\":" + replay.getPlan().getBlocks().get("source").getResistanceOhms() +
             ",\"loadOhms\":" + replay.getPlan().getBlocks().get("load").getResistanceOhms() +
@@ -152,6 +199,9 @@ final class Task47AssemblyDeveloperVerifier {
             ",\"physicalCorrespondence\":" + physical +
             ",\"freshOwners\":true,\"inputOrderIndependent\":true," +
             "\"mapsAndSolver\":\"PASS\",\"physicalRepairExecuted\":" + repairedHere + "}";
+        } catch (Throwable failure) {
+            throw stageFailure("seed=" + Long.toString(seed) + "/" + stage, failure);
+        }
     }
 
     private static void verifyMappings(BoundedGeneratedBoardAssembler.Result result) {
@@ -294,20 +344,25 @@ final class Task47AssemblyDeveloperVerifier {
                 board.getTopologyVariantId(), board.getSeed(), board.getFaultCandidates());
         reject(new Runnable() { public void run() { foreign.validateDeveloperFixture(board); }},
             "owned", "foreign fixture contract attachment");
-        reject(new Runnable() { public void run() {
-            rejectSuppliedContract(false, contract);
-        }}, "Supplied diagnostic contract", "fixture without developer-only constructor flag");
-        reject(new Runnable() { public void run() {
-            rejectSuppliedContract(true, normalContract);
-        }}, "Supplied diagnostic contract", "normal contract in explicit fixture constructor");
+        rejectSuppliedContract(false, contract);
+        rejectSuppliedContract(true, normalContract);
     }
 
     private static void rejectSuppliedContract(boolean developerOnly,
             GeneratedDiagnosticSolvabilityContract contract) {
-        // The admission guard must reject before reading or changing any owner.
-        new GeneratedBoardInstance(null, null, 0L, "fixture", "fixture", "",
-            null, null, null, null, null, null, null, null, null, null, null,
-            null, developerOnly, null, contract);
+        // Supply the required state owner so this tests the intended admission
+        // guard before it reads or changes any physical owner.
+        boolean rejected = false;
+        try {
+            new GeneratedBoardInstance(null, null, 0L, "fixture", "fixture", "",
+                null, null, null, null, null, null, null,
+                new GeneratedComponentOperationalStates(), null, null, null,
+                null, developerOnly, null, contract);
+        } catch (IllegalArgumentException expected) {
+            rejected = "Supplied diagnostic contract must be an explicit developer fixture"
+                .equals(expected.getMessage());
+        }
+        require(rejected, "supplied diagnostic constructor guard did not reject for the exact reason");
     }
 
     private static void verifyLifecycle(CirSim sim) {
@@ -461,20 +516,41 @@ final class Task47AssemblyDeveloperVerifier {
     private static void verifyMeasurementCleanup(CirSim sim,
             BoundedGeneratedBoardAssembler.Result result) {
         GeneratedBoardInstance board = result.getInstance();
+        InstrumentController.DeveloperState savedInstrument =
+            sim.instrumentController.captureForDeveloperVerification();
+        try {
         power(sim, BoardPowerState.UNPOWERED);
         for (String block : new String[] { "source", "load" }) {
             PcbWorkbenchRenderer renderer = sim.pcbWorkbenchController.getRenderer();
             ProbeTarget red = new BoardPadProbeTarget(sim, board, pad(board, block, 1), renderer);
             ProbeTarget black = new BoardPadProbeTarget(sim, board, pad(board, block, 2), renderer);
             Vector<CircuitElm> before = new Vector<CircuitElm>(sim.elmList);
-            double reading = sim.instrumentController.measureResistanceForStrategy(red, black);
+            int measurementCount = sim.instrumentController
+                .getResistanceMeasurementCountForDeveloperVerification();
+            // The strategy owns its selected mode and exact probe objects.
+            // Consume its completed sample; a direct call with unregistered
+            // local targets correctly discards the sample as stale.
+            sim.instrumentController.setResistanceProbesForDeveloperVerification(red, black);
+            double reading = sim.instrumentController
+                .getLatestResistanceReadingForDeveloperVerification();
+            require(sim.instrumentController.getRedProbeForStrategy() == red &&
+                sim.instrumentController.getBlackProbeForStrategy() == black &&
+                !sim.instrumentController.isResistanceRefreshPendingForDeveloperVerification() &&
+                sim.instrumentController.getResistanceMeasurementCountForDeveloperVerification() ==
+                    measurementCount + 1,
+                "composed resistance strategy did not complete exactly one owned sample: " + block);
             require(close(reading, result.getPlan().getBlocks().get(block).getResistanceOhms(), 1.0),
-                "actual active resistance adapter lost qualified block target: " + block);
+                "actual active resistance adapter lost qualified block target: " + block +
+                    " expected=" + result.getPlan().getBlocks().get(block).getResistanceOhms() +
+                    " actual=" + reading);
             require(before.equals(sim.elmList) && !sim.activeMeasurementOverlay &&
                 sim.isActiveMeasurementSolverRestoredForDeveloperVerification() &&
                 board.getExternalPowerBindings().areAllDisconnected(),
                 "composed resistance measurement left an overlay or reconnected power");
             measurementCases++;
+            // The following transaction tests reader failure directly; retire
+            // the selected targets so cleanup cannot refresh a second sample.
+            sim.instrumentController.clearTargets();
             final RuntimeException primary = new IllegalStateException("task47-reader-" + block);
             ResistanceMeasurementStimulus stimulus = new ResistanceMeasurementStimulus(sim,
                 endpoint(board, pad(board, block, 1)), endpoint(board, pad(board, block, 2)));
@@ -496,6 +572,9 @@ final class Task47AssemblyDeveloperVerifier {
         }
         power(sim, BoardPowerState.POWERED);
         verifySolvedHealthy(sim, result);
+        } finally {
+            sim.instrumentController.restoreForDeveloperVerification(savedInstrument);
+        }
     }
 
     private static void verifyRenderedTerminals(CirSim sim, GeneratedBoardInstance board) {
@@ -816,6 +895,18 @@ final class Task47AssemblyDeveloperVerifier {
     private static void require(boolean value, String message) {
         assertions++;
         if (!value) throw new IllegalStateException("Task47: " + message);
+    }
+    private static Task47StageFailure stageFailure(String stage, Throwable failure) {
+        return new Task47StageFailure(stage, failure);
+    }
+    private static String failureDescription(Throwable failure) {
+        String message = failure.getMessage();
+        return failure.getClass().getName() + " message=" + (message == null ? "<null>" : message);
+    }
+    private static final class Task47StageFailure extends IllegalStateException {
+        Task47StageFailure(String stage, Throwable cause) {
+            super("Task47 stage=" + stage + " failed: " + failureDescription(cause), cause);
+        }
     }
     private static void rethrow(Throwable failure) {
         if (failure instanceof Error) throw (Error) failure;

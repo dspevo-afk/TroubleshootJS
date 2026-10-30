@@ -1,0 +1,129 @@
+{
+  "protocol": "q100-62-artifact-cleanup-baseline-v1",
+  "status": "FAIL",
+  "stage": "owner-proof",
+  "errorMessage": "complete-run-budget",
+  "checks": 248,
+  "cleanupAttempted": true,
+  "cleanupResourceSuccess": true,
+  "cleanupMs": 144404,
+  "cleanupBudgetMs": 120000,
+  "extraPhaseTimings": {
+    "PreflightMs": 54,
+    "PhysicalNamespaceMs": 1531,
+    "BrowserSessionMs": 93836,
+    "PreviewMs": 41747,
+    "LeaseReleaseMs": 19,
+    "FinalProofMs": 7208,
+    "BrowserShutdown": [
+      {
+        "RouteId": "b3d0a08fce5e40799d73c6bf371b27da",
+        "Lane": "boundReceipt",
+        "TotalMs": 10288,
+        "FailurePhase": "",
+        "PhasesMs": {
+          "rootContainmentProof": 331,
+          "endpointAndSocketConnect": 12,
+          "postConnectRootAndListenerProof": 302,
+          "protectedHelperCensus": 1141,
+          "precloseJournalAndAuthorization": 5424,
+          "closeSendAndAcknowledgement": 33,
+          "retainedProcessNaturalExitProof": 1773,
+          "lateDescendantAbsenceProof": 347,
+          "containmentJobEmptyProof": 1,
+          "profileQuiescence": 836,
+          "finalListenerAbsenceProof": 70,
+          "resourceDisposal": 5
+        },
+        "Counts": {
+          "protectedDescendantCount": 7,
+          "rootAndDescendantRecordCount": 8,
+          "waitLoopPassCount": 2,
+          "naturalExitProofCallCount": 16,
+          "currentAbsenceProofCount": 14,
+          "currentAbsenceObservationCount": 28,
+          "lateDescendantParentQueryCount": 8,
+          "containmentJobPollCount": 1
+        }
+      }
+    ]
+  },
+  "profileFilesExercised": 2048,
+  "evidenceArtifacts": {
+    "status": "PASS",
+    "requestedCount": 62,
+    "count": 62,
+    "bytes": 6934,
+    "registeredCount": 62
+  },
+  "evidenceContainmentCanary": {
+    "status": "PASS",
+    "rejectedLexicallyOwnedReparsePath": true,
+    "artifactLedgerUnchanged": true,
+    "sentinelPreserved": true,
+    "junctionRemovedNonrecursively": true,
+    "elapsedMs": 108
+  },
+  "browserAttachmentProof": {
+    "processId": 8140,
+    "processStartTicks": 639289645996758905,
+    "executable": "msedge.exe",
+    "processIdentityVerified": true,
+    "profileIdentity": "12d10f0ce172441e3eeb33066b0bc7c454dc46bd05e1b04a7404d0e7b239d496",
+    "profileCommandLineVerified": true,
+    "cdpPort": 54474,
+    "portBoundToLease": true,
+    "targetAttached": true,
+    "requestedUrl": "about:blank",
+    "recoveryReceiptProtocol": "troubleshootjs-verifier-browser-recovery-v1",
+    "recoveryReceiptState": "bound",
+    "recoveryReceiptBoundToSession": true,
+    "socketOpen": true,
+    "socketBoundToRecord": true
+  },
+  "processLaunches": [
+    {
+      "role": "owned-preview",
+      "pid": 33908,
+      "processStartTicks": 639289645822638056,
+      "executable": "powershell.exe",
+      "profileRole": "none",
+      "port": 49719,
+      "hidden": true
+    },
+    {
+      "role": "task-profile-helper",
+      "pid": 23500,
+      "processStartTicks": 639289645939694355,
+      "executable": "cscript.exe",
+      "profileRole": "auxiliary-profile",
+      "port": 0,
+      "hidden": true
+    },
+    {
+      "role": "owned-browser",
+      "pid": 8140,
+      "processStartTicks": 639289645996758905,
+      "executable": "msedge.exe",
+      "profileRole": "browser-session-profile",
+      "port": 54474,
+      "hidden": true
+    }
+  ],
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 349.71672889999996,
+    "profileFileCount": 2048,
+    "evidenceArtifactCount": 62,
+    "forceTcpListener": false
+  },
+  "sourcePins": "cleanup-evidence-canary-1-source-pins.json",
+  "rawReportSha256": "4dacf544e2fa7ea2aa493bd0d26c13c3cf3872d98998f95d7355bad232158136",
+  "rawLogSha256": "14311fc2c2dbc792bb1d1d4efff8061a2ca2df9fa715bfea62d83bc68fdc1fe4",
+  "limits": [
+    "Real WinPS5/Edge/HTTP.sys host path,62 registered files/2048 profile fixtures; no application behavior",
+    "Aggregate FAIL even though resource cleanup succeeded",
+    "Reproduces cleanup budget failure without repeating electrical matrix",
+    "No profile ownership or reparse/listener/job proof weakened"
+  ]
+}

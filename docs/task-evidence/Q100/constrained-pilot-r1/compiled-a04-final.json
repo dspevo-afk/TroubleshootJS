@@ -1,0 +1,137 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "A04",
+  "status": "PASS",
+  "sourcePins": "final-compiled-a04-3-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "31173e2e2513a6933e8caf04cad13304b58600b763be8ce9d50262a18a39b8ec",
+    "scriptDigest": "50e93859d24e0d9da27937d8da31171fb31f61113430c165775eee49f70f2fc2",
+    "webDigest": "9a1dbf7b11674bf13bad7fc0824e7dcf20cb6a19879d53d1b9cef7cd585ae9d2",
+    "executionDigest": "66c6da02c8f1b828a819354127b3986754681188b3105cc1402b4a801461c8ec",
+    "executionFileCount": 1595
+  },
+  "routes": [
+    {
+      "name": "a04",
+      "kind": "a04",
+      "status": "PASS",
+      "verification": "PASS:a04",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "a04": "{\"protocol\":\"TSJ-A04-CONSTRUCTION-1\",\"status\":\"PASS\",\"contractAssertions\":3150,\"runtimeAssertions\":839,\"coordinateIsolation\":true,\"explicitJoins\":true,\"terminalCorrespondence\":true,\"failureIsolation\":true,\"recipeIdentity\":true,\"multiUnitPackage\":true,\"originalOwnerRestored\":true,\"candidateCleanup\":\"PASS\",\"cases\":[{\"route\":\"resistive\",\"seed\":\"1\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":249,\"assemblyMs\":55},{\"route\":\"controlled\",\"seed\":\"1\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":4145,\"assemblyMs\":1315},{\"route\":\"resistive\",\"seed\":\"2\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":145,\"assemblyMs\":40},{\"route\":\"controlled\",\"seed\":\"2\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":6934,\"assemblyMs\":2138},{\"route\":\"resistive\",\"seed\":\"3\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":183,\"assemblyMs\":54},{\"route\":\"controlled\",\"seed\":\"3\",\"generatorVersion\":6,\"replayVerified\":true,\"ownerRestored\":true,\"elapsedMs\":2379,\"assemblyMs\":742}],\"elapsedMs\":14116}"
+      }
+    },
+    {
+      "name": "a04-forcedfailure",
+      "kind": "a04-forced",
+      "status": "PASS",
+      "verification": "FAIL:a04:a04-explicit-failure-canary",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "a04": ""
+      }
+    },
+    {
+      "name": "a04-debugoff",
+      "kind": "a04-debugoff",
+      "status": "PASS",
+      "verification": "",
+      "readiness": {
+        "workbenchNavigationReady": true,
+        "programReady": true,
+        "retestCustomerReady": true,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "a04": ""
+      },
+      "ordinaryTicketEntry": {
+        "protocol": "tsj-ordinary-ticket-entry-v1",
+        "status": "PASS",
+        "buttonLabel": "Accept ticket and start",
+        "labelledCount": 1,
+        "visibleEnabledCount": 1,
+        "expectedComplaintVisible": true,
+        "clickPoint": {
+          "x": 408.7109375,
+          "y": 618.15625
+        },
+        "inputEvents": [
+          "mouseMoved",
+          "mousePressed:left",
+          "mouseReleased:left"
+        ]
+      }
+    }
+  ],
+  "failure": {},
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 64,
+      "PhysicalNamespaceMs": 331,
+      "BrowserSessionMs": 36234,
+      "PreviewMs": 9599,
+      "LeaseReleaseMs": 27,
+      "FinalProofMs": 1922,
+      "BrowserShutdown": [
+        {
+          "RouteId": "af379b4fb45441c394283dcd54c8ff36",
+          "Lane": "boundReceipt",
+          "TotalMs": 8325,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 400,
+            "endpointAndSocketConnect": 14,
+            "postConnectRootAndListenerProof": 345,
+            "protectedHelperCensus": 1698,
+            "precloseJournalAndAuthorization": 1842,
+            "closeSendAndAcknowledgement": 23,
+            "retainedProcessNaturalExitProof": 2580,
+            "lateDescendantAbsenceProof": 477,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 854,
+            "finalListenerAbsenceProof": 74,
+            "resourceDisposal": 5
+          },
+          "Counts": {
+            "protectedDescendantCount": 10,
+            "rootAndDescendantRecordCount": 11,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 22,
+            "currentAbsenceProofCount": 20,
+            "currentAbsenceObservationCount": 40,
+            "lateDescendantParentQueryCount": 11,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 89.4428529,
+  "rawReportSha256": "868f805ca48a969a8d9633b717b6c0b4e8cc306fea78bff9dab38a01a818abcd",
+  "rawLogSha256": "30eef97618b9827f2c299f86e2f2b1b952bf422c3096d94368a3e39ee3fce636",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "protocol": "q100-e04-memory-boundary-v1",
+  "status": "PASS_SCOPED_NATIVE_BOUNDARIES",
+  "base": "a1352b5caeb78e069606f84a569e14670f28d807",
+  "sourcePins": "e04-memory-6-source-pins.json",
+  "commandExit": 0,
+  "elapsedSeconds": 47.0549161,
+  "suites": {
+    "E04SensorControlContractTest": 365,
+    "E04DecisionMemoryContractTest": 71,
+    "A07ExecutionContractTest": 306531
+  },
+  "cases": [
+    {
+      "case": "rejected-trial-retry-and-reset",
+      "status": "PASS",
+      "operationMs": 45,
+      "cleanupMs": 0,
+      "cleanup": "PASS",
+      "detail": "high->rejected-brownout->3.83V-high; brownout->rejected-high->3.83V-brownout; 3.88V-recovery; 3.83V-hold; reset-at-3.83V-off",
+      "error": null
+    },
+    {
+      "case": "late-stepFinished-failure",
+      "status": "PASS",
+      "operationMs": 2,
+      "cleanupMs": 0,
+      "cleanup": "PASS",
+      "detail": "solved-brownout-trial; accepted-high-retained; no-receipt-or-sample; fresh-3.83V-high",
+      "error": null
+    },
+    {
+      "case": "accepted-event-dispatch-failure",
+      "status": "PASS",
+      "operationMs": 2,
+      "cleanupMs": 0,
+      "cleanup": "PASS",
+      "detail": "solved-high-trial; accepted-brownout-retained; no-receipt-or-sample",
+      "error": null
+    }
+  ],
+  "rawLogSha256": "c84c8208cd398bcb056bdbedaac83e5d71da492fd3f59044da266e6a1ecd84b6",
+  "limits": [
+    "Three scoped native suites only",
+    "No GWT or compiled proof",
+    "Hysteresis is attempt-local; persistent memory commits after boundary acceptance",
+    "Passive regenerative feedback can energize the output while rail-fed drive is off",
+    "No full Q100 or fault-reference acceptance"
+  ]
+}

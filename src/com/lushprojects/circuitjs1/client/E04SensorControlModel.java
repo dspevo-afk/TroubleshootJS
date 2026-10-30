@@ -1249,8 +1249,8 @@ public final class E04SensorControlModel {
         return SensorCondition.SENSOR_MID;
     }
 
-    public ControlState getControlState() { return activeDecision.controlState; }
-    public boolean isOutputHigh() { return activeDecision.controlState == ControlState.HIGH; }
+    public ControlState getControlState() { return activeDecision.acceptedControlState; }
+    public boolean isOutputHigh() { return getControlState() == ControlState.HIGH; }
     public boolean isPowered() { return powered; }
     public boolean isReferenceAvailable() { return referenceAvailable; }
     public double getSensorNodeVoltage() {
@@ -1539,11 +1539,18 @@ public final class E04SensorControlModel {
         private final double directThresholdOffsetVolts;
         private final double risingThresholdOffsetVolts;
         private final double fallingThresholdOffsetVolts;
+        // Trial state retains hysteresis within one nonlinear solve. Each new
+        // solve/retry restores it from confirmed memory before selecting any
+        // branch, so a failed attempt cannot change the retained latch.
         private boolean high;
         private double lastTarget = Double.NaN;
         private double lastOutputDrop = Double.NaN;
         private double lastDriveCurrent = Double.NaN;
         private ControlState controlState = ControlState.UNSETTLED;
+        private boolean acceptedHigh;
+        // Before the first accepted state, UNSETTLED has the same effective
+        // brownout memory as BROWNOUT and requires the recovery threshold.
+        private ControlState acceptedControlState = ControlState.UNSETTLED;
 
         DecisionElement(int x, int y, RailContract rail, Variant variant,
                 Configuration configuration) {
@@ -1593,6 +1600,8 @@ public final class E04SensorControlModel {
             super.reset();
             high = false;
             controlState = ControlState.UNSETTLED;
+            acceptedHigh = false;
+            acceptedControlState = ControlState.UNSETTLED;
             lastTarget = Double.NaN;
             lastOutputDrop = Double.NaN;
             lastDriveCurrent = Double.NaN;
@@ -1711,6 +1720,11 @@ public final class E04SensorControlModel {
             sim.stampResistor(nodes[2], nodes[3], OUTPUT_BACKFEED_LEAK_OHMS);
         }
 
+        void startIteration() {
+            high = acceptedHigh;
+            controlState = acceptedControlState;
+        }
+
         void doStep() {
             double returnVoltage = volts[4];
             double sensorVoltage = volts[0] - returnVoltage;
@@ -1724,13 +1738,19 @@ public final class E04SensorControlModel {
                     !finite(railVoltage) || !finite(outputVoltage)) {
                 high = false;
                 controlState = ControlState.UNSUPPORTED;
+            } else if (sim.subIterations == 0) {
+                // These finite nodes are only the initial Newton guess and
+                // may belong to a failed attempt. Keep the restored mode for
+                // its first electrical stamp; transition hysteresis only on
+                // nodes actually solved in this attempt (subiteration > 0).
             } else if (Math.abs(railVoltage) > MAX_MODEL_TERMINAL_VOLTS ||
                     Math.abs(outputVoltage) > MAX_MODEL_TERMINAL_VOLTS ||
                     Math.abs(railVoltage - outputVoltage) > MAX_MODEL_TERMINAL_VOLTS) {
                 high = false;
                 controlState = ControlState.UNSUPPORTED;
             } else if (railVoltage < minimumOperatingVoltage +
-                    (controlState == ControlState.BROWNOUT ?
+                    (controlState == ControlState.BROWNOUT ||
+                        controlState == ControlState.UNSETTLED ?
                         Math.min(nominalRailVoltage * BROWNOUT_RECOVERY_FRACTION,
                             nominalRailVoltage - minimumOperatingVoltage) :
                         0.0)) {
@@ -1807,6 +1827,14 @@ public final class E04SensorControlModel {
             lastOutputDrop = evaluationDrop;
             lastDriveCurrent = driveCurrent;
             current = getSupplyCurrent();
+        }
+
+        // CircuitJS invokes this only after the executor confirms global
+        // acceptance. Keep the final trial branch intact for current/power
+        // accessors; the public semantic getter exposes this confirmed state.
+        void solverStepAccepted() {
+            acceptedHigh = high;
+            acceptedControlState = controlState;
         }
 
         private double limitNewtonDrop(double requestedDrop, double target,

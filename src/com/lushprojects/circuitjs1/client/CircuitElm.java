@@ -979,7 +979,11 @@ public abstract class CircuitElm implements Editable {
     }
     
     void updateModels() {}
+    /** Model-domain validation after global convergence, before accepting this step. */
+    void validateConvergedState() {}
     void stepFinished() {}
+    /** Pure state commit after the executor confirms global acceptance. */
+    void solverStepAccepted() {}
     
     double getCurrentIntoNode(int n) {
 	// if we take out the getPostCount() == 2 it gives the wrong value for rails

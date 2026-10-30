@@ -1,0 +1,16 @@
+{
+  "protocol": "q100-rb56-manifest-regression-v1",
+  "status": "PASS_IDENTITY_ONLY",
+  "rows": 30,
+  "helperResult": {
+    "exitCode": 0,
+    "elapsedSeconds": 44.2260702
+  },
+  "manifestTestSha256": "ce6fa6c4cc23ea4b8ad5c8902430937fbabf4ec5b63c43789e6f1ff3d2821ce9",
+  "rawReceiptSha256": "912f2982d7a4da3fdf6d862e5042551bb690f8b02d891753c39a211e317a61d6",
+  "manifestJsonSha256": "a8c4c23138d0b19230877dc0934b8fcca6110724b17f40c6e537e4a498cfe4b6",
+  "limits": [
+    "Identity-only current-source JVM oracle. No circuit construction or electrical qualification.",
+    "Only the three development roots will be rerun electrically for this pilot regression; no new 30-root qualification claim."
+  ]
+}

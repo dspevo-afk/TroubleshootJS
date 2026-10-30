@@ -1,0 +1,23 @@
+{
+  "protocol": "q100-a03-operational-state-prefailure-v1",
+  "status": "FAIL_PRE_FIX_REPRODUCED",
+  "suite": "A03OperationalStateRuntimeContractTest",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 46.8247413
+  },
+  "javaExitCode": 1,
+  "phase": "actual resistive construction, seed 1, after VALIDATION",
+  "exception": "BoundedGeneratedBoardAssembler.AssemblyFailure caused by java.lang.NullPointerException",
+  "causeLocation": "GeneratedBoardInstance constructor:173",
+  "producerLocation": "BoundedGeneratedBoardAssembler.Context.buildInstance:667",
+  "cleanup": "PASS",
+  "sourcePins": "a03-operational-prefail-1-source-pins.json",
+  "rawReceipt": "NOT EMITTED by failed driver; full failure preserved in raw transcript",
+  "rawLogSha256": "6b1ca4a39a72ffd47992d55395597d1c0552ac7adc8679b3163f9a9e0e742aed",
+  "limits": [
+    "Failed actual JVM construction reproduces missing operational-state owner; not a qualified gate PASS.",
+    "GWT receiver-check/code-generation explanation remains inference from the later scene failure.",
+    "No renderer null fallback, solver replacement or oracle relaxation."
+  ]
+}

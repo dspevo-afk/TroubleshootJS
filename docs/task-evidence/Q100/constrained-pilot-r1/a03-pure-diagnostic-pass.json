@@ -1,0 +1,28 @@
+{
+  "protocol": "q100-a03-pure-diagnostic-v1",
+  "status": "PASS_SCOPED_IDENTITY_ONLY",
+  "suite": "A03IdentityContractTest",
+  "assertions": 32,
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 55.3147161
+  },
+  "cleanup": "PASS",
+  "sourcePins": "a03-pure-diagnostic-1-source-pins.json",
+  "rawReceiptSha256": "9f0f76608130938b962be7b3d12173fb5577f15f73bf9944112e10e8901c4d66",
+  "rawLogSha256": "f854ebb17b71291c5611a917ed4d990e88aa7869bd8d9a4fa0938576214c8082",
+  "covered": [
+    "same identity vectors twice",
+    "seed 1/2/-1 plan/capture/parse/resolve"
+  ],
+  "notCovered": [
+    "direct/replay assembler generation",
+    "board/layout validation",
+    "CircuitJS runtime install/settle",
+    "poison/analyze canary"
+  ],
+  "limits": [
+    "Does not clear the compiled Current/A03 failure.",
+    "Large deterministic vector output remains in task-owned OS temp, not committed."
+  ]
+}

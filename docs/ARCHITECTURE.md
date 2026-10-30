@@ -26,6 +26,56 @@ An opt-in normal Developer diagnostic can observe the same coordinator's browser
 continuation while bypassing cached proof. It does not manually advance the job
 and reports actual yields and advance timing under the unchanged full wall limit.
 
+The Q100 authored pilot has separate, private owners. `Rb100Plan` declares exactly
+100 packages, two structural realizations and family-scoped source/load/model
+bounds. `Rb100ElectricalPilot` builds that inventory on one actual CircuitJS
+graph through the existing assembly and low-level power-stage adapter, including
+the E/F external RL harness endpoints. Model 4 supplies all contact/DC loads from
+the bounded external LOAD12 bus with an explicit CTRL_RETURN common; converted
+RAIL12 supplies the control rails and relay coils. Only the three named imported
+load-return pads override the RB56 tail; its 20 power declarations remain exact.
+External loads and converter internals do
+not add physical packages. `Rb100PilotFaults` owns the complete electrical-reference
+population; `Rb100PilotReference` runs the bounded six-context fault/repair/retest
+sequence on that graph. `Q100ElectricalPilotDeveloperVerifier` borrows exclusive
+solver authority through `PrivateSolverContext` and restores the exact predecessor.
+Reference v3 uses the existing owned temporal advance operation with fixed
+100/50 us healthy and 50 us fault timesteps, exact accepted-step/time witnesses
+and at most 64 steps per unit. Its operation deadline is 5 s; the executor's
+500 ms inter-trial deadline remains separate. Independent report readers require
+the mode, limits and complete context/count census. Historical reference reports
+do not qualify the current protocol.
+These owners grant no normal catalog, physical admission, production D01 proof,
+session capacity or playable-family authority. The roadmap records their evidence.
+
+Dependency interpretation v20 invalidates earlier proof keys after the shared
+E02/E04/E06 solver-policy corrections. The context binds declared inputs rather
+than source bytes, so this explicit epoch carries the changed interpretation.
+The declared model dump remains v7. Public saved sessions carry no proof grant
+or solver memory; restore disables proof reuse and regenerates/reproves before
+adopting current state. Private replay identities bind the dependency epoch.
+
+Every generated board requires an operational-state owner before physical
+materialization. Passive resistive compositions supply an empty owner; LED
+bindings still observe their actual CircuitJS elements. The physical scene
+adapter consumes that owner for every mounted part without a missing-state
+fallback. A missing operational-state owner is rejected before physical materialization.
+
+The existing Developer physical correspondence verifier snapshots raw route
+source identities and layers for its single-face profiles. Its independent
+centerline connectivity check joins captured geometry and pad coordinates,
+then compares the resulting partition with logical nets. A padless tree-branch
+endpoint requires actual same-net copper contact. Mixed-face/plated-hole layouts
+are outside that verifier's scope and fail closed; two-layer conductor/routing
+contracts retain their separate owners and gates.
+
+The bounded assembly result retains its existing finished electrical
+construction receipt for Developer inventory checks. A04 checks declarations
+against the receipt, then compares the final graph by identity with that receipt
+plus the elements owned by component bindings, connections, pad anchors and
+scoped docking slots. Service completion expands the graph without changing
+the pre-service declaration census or introducing another graph registry.
+
 `TopologyPlacementGraph` owns canonical, immutable pad-link lists built before
 placement. The planner reads those views directly. `PcbFootprint` snapshots its
 fixed selection/courtyard/escape envelope with its immutable geometry and returns
@@ -118,9 +168,28 @@ the regulator may use a bounded secant Jacobian; its physical current law stays
 unchanged. Chord history is cleared on every timestep attempt, retry and reset.
 Acceptance compares exact solved-node currents with the preceding stamped affine
 model, including activation transitions, before CircuitJS may accept that matrix.
+For a clipped evaluation strictly inside regulation, a chord may join that
+current evaluation point to a raw point on a flat reverse/current-limit branch;
+exact knee anchors retain their local derivative. `CirSim` validates converged
+model domains before advancing time or invoking model callbacks. E06 likewise
+checks its preceding input Norton stamp against the actual constitutive input
+current; its clipping exception is restricted to the identical zero-drive branch.
+These are solver convergence mechanics, not new physical laws or broader fidelity.
 The E04 v2 decision output is a finite, current-limited branch from its supply to its output,
 with declared headroom, leakage and sink behavior. Its delivered current loads the
-real supply graph. RB56 instrument admission v2 shares the same supported passive
+real supply graph. Each solve/retry restores trial hysteresis from globally
+accepted memory; Newton subiterations retain branch history within that attempt.
+Finite subiteration-zero voltage guesses cannot trigger a new logic transition;
+classification resumes on nodes solved by the current attempt.
+The executor commits the final trial mode
+through a pure element callback after boundary acceptance and before observations;
+failed trials, retries and earlier model/event callbacks cannot commit it. Reset
+requires the declared brownout recovery threshold before the first accepted HIGH.
+This accepted-memory correction is scoped to E04. E06's existing stepFinished
+receipt/controller update still precedes executor event/boundary acceptance;
+its exception-boundary migration needs separate staged-state canaries and remains
+an explicit follow-up. Broad E06 nominal fidelity is still unqualified.
+RB56 instrument admission v2 shares the same supported passive
 differential path across resistance, continuity and diode modes. Power, reference,
 isolation and residual-energy checks remain authoritative. Layout interpretation
 20, public replay epoch `tsj-alpha/7` and dependency/model epochs v19/v7

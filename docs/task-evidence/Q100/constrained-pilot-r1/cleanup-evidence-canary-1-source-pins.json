@@ -1,0 +1,14 @@
+﻿[
+    {
+        "path":  "scripts/VerifierIsolation.psm1",
+        "sha256":  "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111"
+    },
+    {
+        "path":  "tests/contracts/browser-cleanup-budget.ps1",
+        "sha256":  "25844607cb8afb9c17b678ad6a650886e89fd05c2fa49d8fba759fc9d63630fd"
+    },
+    {
+        "path":  "scripts/preview.ps1",
+        "sha256":  "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34"
+    }
+]

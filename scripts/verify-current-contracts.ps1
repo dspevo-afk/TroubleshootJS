@@ -12,7 +12,12 @@ param(
         56,13,4,11,2,3,19,9,7,42,24,21,75,22,105,27,53,50,16,25,60,100,59,84,
         70,41,45,23,5,38,40,26,[long]::MinValue,[long]::MaxValue,9007199254740993L),
     [long[]]$QuickPlayGateSeeds = @(),
-    [long[]]$Q30PlanSeeds = @()
+    [long[]]$Q30PlanSeeds = @(),
+    [switch]$Rb100FaultMatrix,
+    [switch]$Rb100ConvergenceTrace,
+    [switch]$Rb100AdaptiveStudy,
+    [string]$Rb100DiagnosticFault = '',
+    [ValidateSet('0.0001','0.00005')][string]$Rb100DiagnosticDt = '0.0001'
 )
 
 # Maintained current seed, identity, geometry, recipe and construction contracts.
@@ -21,6 +26,27 @@ param(
 # the declared full-grid drawing preference without browser UI. Actual GWT gates remain separate.
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+if ($Rb100AdaptiveStudy) {
+    throw 'Historical adaptive v0 study is retired; v3 requires fixed-step temporal batches.'
+}
+if ($Rb100ConvergenceTrace -and -not $Rb100DiagnosticFault) {
+    throw 'The RB100 convergence trace requires a selected diagnostic fault and cannot run a healthy or full fault-matrix qualification.'
+}
+if ($Rb100FaultMatrix -and $Suite -notcontains 'Rb100ElectricalPilotContractTest') {
+    throw 'The RB100 reference fault matrix requires an explicit Rb100ElectricalPilotContractTest selection.'
+}
+if ($Rb100ConvergenceTrace -and $Suite -notcontains 'Rb100ElectricalPilotContractTest') {
+    throw 'The RB100 convergence diagnostic requires an explicit Rb100ElectricalPilotContractTest selection.'
+}
+if ($Rb100DiagnosticFault -and $Suite -notcontains 'Rb100ElectricalPilotContractTest') {
+    throw 'An RB100 diagnostic requires an explicit Rb100ElectricalPilotContractTest selection.'
+}
+if ($Rb100DiagnosticFault -and $Rb100FaultMatrix) {
+    throw 'A selected RB100 diagnostic fault excludes the complete qualification matrix.'
+}
+if ($Rb100DiagnosticDt -ne '0.0001' -and -not $Rb100DiagnosticFault) {
+    throw 'An alternate RB100 diagnostic timestep requires an explicit selected diagnostic fault.'
+}
 
 function Write-Q30CasePlanMetadataFailure {
     param(
@@ -377,6 +403,7 @@ final class PhysicalSpecificationDeveloperVerifier {
 }
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
+        $Suite -contains 'Rb100ElectricalPilotContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'InductorAcceptedStateContractTest' -or
@@ -387,7 +414,10 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Q30CatalogTransferContractTest' -or
         $Suite -contains 'Q30SolverStepSensitivityContractTest' -or
         $Suite -contains 'E02RegulatorContractTest' -or
+        $Suite -contains 'E02RegulatorKneeContractTest' -or
+        $Suite -contains 'E02BoundedTangentContractTest' -or
         $Suite -contains 'E04SensorControlContractTest' -or
+        $Suite -contains 'E04DecisionMemoryContractTest' -or
         $Suite -contains 'E06ConverterPilotContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or
         $Suite -contains 'Rb56ModelIdentityContractTest' -or
@@ -410,6 +440,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'E05InstalledFixtureContractTest' -or
         $Suite -contains 'SensorControlFamilyContractTest'
     $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or
+        $Suite -contains 'Rb100ElectricalPilotContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
@@ -459,6 +490,51 @@ final class PhysicalSpecificationDeveloperVerifier {
                 $factoryEntry + ' n = (n == null ? null : n.intern());')
             Write-Host 'NATIVE BRIDGE: E06 scratch-only factory-name interning preserves GWT string-value dispatch; actual compiled factory gate remains required.'
         }
+        if ($Rb100ConvergenceTrace) {
+            # Diagnostic-only observation of the exact existing iteration order.
+            # Never change convergence flags, model values or stamps. This copy
+            # cannot qualify performance; it nominates a model for investigation.
+            $traceNeedle = 'iterationElements[i].doStep();'
+            if ($loggerShimText.Split(@($traceNeedle), [StringSplitOptions]::None).Count -ne 2) {
+                throw 'Expected one exact nonlinear element-step site for the RB100 trace.'
+            }
+            $traceReplacement = @'
+{
+    boolean tsjBeforeConverged = converged;
+    CircuitElm tsjElement = iterationElements[i];
+    tsjElement.doStep();
+    if ((subiter >= subiterCount - 10 || subiter >= 1000 && subiter % 1000 < 10) &&
+            (tsjBeforeConverged && !converged ||
+             tsjElement instanceof E04SensorControlModel.DecisionElement ||
+             tsjElement instanceof MosfetElm || tsjElement instanceof TransistorElm)) {
+        int tsjVectorIndex = -1;
+        for (int tsjIndex = 0; tsjIndex < elmList.size(); tsjIndex++)
+            if (elmList.get(tsjIndex) == tsjElement) { tsjVectorIndex = tsjIndex; break; }
+        String tsjRail = "";
+        if (tsjElement instanceof AbstractRailRegulatorElm) {
+            AbstractRailRegulatorElm tsjRegulator = (AbstractRailRegulatorElm)tsjElement;
+            tsjRail = " railIn=" + tsjRegulator.getInputVoltage() +
+                " railOut=" + tsjRegulator.getOutputVoltage() +
+                " railEnable=" + tsjRegulator.getEnableVoltage() +
+                " railTarget=" + tsjRegulator.getTargetVoltage() +
+                " inputCurrent=" + tsjRegulator.getInputCurrent() +
+                " outputCurrent=" + tsjRegulator.getOutputCurrent();
+        }
+        console("RB100_NEWTON_TRACE state=UNACCEPTED_NEWTON firstSetter=" +
+            (tsjBeforeConverged && !converged) +
+            " t=" + t + " dt=" + timeStep + " subiter=" + subiter +
+            " solverIndex=" + i + " elmIndex=" + tsjVectorIndex +
+            " type=" + tsjElement.getClass().getName() +
+            " origin=" + tsjElement.x + "," + tsjElement.y +
+            " nodes=" + java.util.Arrays.toString(tsjElement.nodes) +
+            " volts=" + java.util.Arrays.toString(tsjElement.volts) +
+            " current=" + tsjElement.current + tsjRail);
+    }
+}
+'@
+            $loggerShimText = $loggerShimText.Replace($traceNeedle, $traceReplacement)
+            Write-Host 'DIAGNOSTIC: RB100 last-ten first-convergence-setter trace; timing is not qualification evidence.'
+        }
         [IO.File]::WriteAllText($nativeLoggerShim, $loggerShimText,
             (New-Object Text.UTF8Encoding($false)))
         Write-Host 'NATIVE BRIDGE: scratch-only exact CirSim.console -> System.err.println; CircuitJS solver/models unchanged.'
@@ -480,14 +556,118 @@ final class PhysicalSpecificationDeveloperVerifier {
             (New-Object Text.UTF8Encoding($false)))
         Write-Host 'NATIVE BRIDGE: E06 scratch-only ChipElm full-grid drawing preference (smallGrid=false); actual compiled constructor gate remains required.'
     }
+    $nativeE06TraceShim = ''
+    if ($Rb100ConvergenceTrace) {
+        $e06TraceText = [IO.File]::ReadAllText((Join-Path $clientSource 'E06AveragedConverterElm.java'))
+        $entryNeedle = 'double vin = getInputVoltage(), output = getOutputVoltage();'
+        $gateNeedle = 'double driveResidual = Math.abs(trialDrive - physicalDrive);'
+        foreach ($needle in @($entryNeedle, $gateNeedle)) {
+            if ($e06TraceText.Split(@($needle), [StringSplitOptions]::None).Count -ne 2) {
+                throw 'Expected one exact E06 trial entry and convergence gate for diagnostic observation.'
+            }
+        }
+        $entryTrace = @'
+double vin = getInputVoltage(), output = getOutputVoltage();
+        boolean tsjPriorTangentReady = tangentReady;
+        double tsjPriorInput = evaluationInput, tsjPriorOutput = evaluationOutput;
+        double tsjPriorCurrent = inputAtEvaluation;
+        double tsjPriorInputGain = inputInputGain, tsjPriorOutputGain = inputOutputGain;
+'@
+        $gateTrace = @'
+double driveResidual = Math.abs(trialDrive - physicalDrive);
+        if (sim.subIterations >= 4990 || sim.subIterations >= 1000 && sim.subIterations % 1000 < 10) {
+            double tsjPhysicalInput = E06ConverterContract.quiescentFor(vin);
+            if (vin > 0 && driving)
+                tsjPhysicalInput += (Math.max(0, output * physicalDrive) / E06ConverterContract.EFFICIENCY +
+                    resistance * physicalDrive * physicalDrive) / vin;
+            double tsjPriorPrediction = tsjPriorCurrent +
+                tsjPriorInputGain * (vin - tsjPriorInput) +
+                tsjPriorOutputGain * (output - tsjPriorOutput);
+            System.err.println("RB100_E06_TRIAL_GUARD state=UNACCEPTED_NEWTON t=" + sim.t +
+                " dt=" + sim.timeStep + " subiter=" + sim.subIterations +
+                " targetChanged=" + targetChanged + " dropChanged=" + dropChanged +
+                " inputDeltaChanged=" + changed(lastInput, inputAtEvaluation, 1e-9) +
+                " inputResidualBad=" + inputResidualBad + " boundedTrial=" + boundedTrial +
+                " driveResidualBad=" + (driveResidual > 1e-9) +
+                " targetDelta=" + (target - lastTarget) + " dropDelta=" + (drop - lastDrop) +
+                " inputDelta=" + (inputAtEvaluation - lastInput) +
+                " boundedDelta=" + (drop - requestedDrop) + " driveResidual=" + driveResidual +
+                " active=" + stepActive + " duty=" + stepDuty +
+                " vin=" + vin + " output=" + output + " gain=" + gain + " target=" + target +
+                " requestedDrop=" + requestedDrop + " drop=" + drop +
+                " evaluationOutput=" + evaluationOutput + " conductance=" + conductance +
+                " portPower=" + portPower + " conversionPower=" + conversionPower +
+                " driveAtEvaluation=" + driveAtEvaluation + " physicalDrive=" + physicalDrive +
+                " trialDrive=" + trialDrive + " inputAtEvaluation=" + inputAtEvaluation +
+                " inputInputGain=" + inputInputGain + " inputOutputGain=" + inputOutputGain +
+                " quiescent=" + quiescent + " priorReady=" + tsjPriorTangentReady +
+                " stampAdjacent=" + previousInputStampReady +
+                " priorPrediction=" + tsjPriorPrediction + " physicalInput=" + tsjPhysicalInput +
+                " priorInputResidual=" + Math.abs(tsjPriorPrediction - tsjPhysicalInput));
+        }
+'@
+        $e06TraceText = $e06TraceText.Replace($entryNeedle, $entryTrace).Replace($gateNeedle, $gateTrace)
+        $nativeE06TraceShim = Join-Path $taskRoot 'E06AveragedConverterElm.java'
+        [IO.File]::WriteAllText($nativeE06TraceShim, $e06TraceText, (New-Object Text.UTF8Encoding($false)))
+    }
+    $nativeE02TraceShim = ''
+    if ($Rb100ConvergenceTrace) {
+        $e02TraceText = [IO.File]::ReadAllText((Join-Path $clientSource 'AbstractRailRegulatorElm.java'))
+        $e02GateNeedle = 'boolean outputChanged = changed(lastOutputDrop, evaluationDrop);'
+        if ($e02TraceText.Split(@($e02GateNeedle), [StringSplitOptions]::None).Count -ne 2) {
+            throw 'Expected one exact E02 convergence gate for diagnostic observation.'
+        }
+        $e02GateTrace = @'
+boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
+        if (sim.subIterations >= 4990 || sim.subIterations >= 1000 && sim.subIterations % 1000 < 10) {
+            double tsjPredictedOutput = priorNewtonOutputCurrent +
+                priorNewtonOutputConductance * (priorNewtonEvaluationOutput - outputVoltage) -
+                priorNewtonOutputInputGain * (inputVoltage - priorNewtonInputVoltage) -
+                priorNewtonOutputEnableGain * (enableVoltage - priorNewtonEnableVoltage);
+            double tsjActualOutput = outputCurrentForDrop(target - outputVoltage, outputActive);
+            double tsjPredictedInput = priorNewtonInputCurrent +
+                priorNewtonInputGain * (inputVoltage - priorNewtonInputVoltage) +
+                priorNewtonInputOutputGain * (outputVoltage - priorNewtonEvaluationOutput) +
+                priorNewtonInputEnableGain * (enableVoltage - priorNewtonEnableVoltage);
+            double tsjActualInput = getInputCurrent() - getInputLeakCurrent();
+            System.err.println("RB100_E02_TRIAL_GUARD state=UNACCEPTED_NEWTON variant=" +
+                contract.getVariantId() + " origin=" + x + "," + y +
+                " t=" + sim.t + " dt=" + sim.timeStep + " subiter=" + sim.subIterations +
+                " targetChanged=" + targetChanged + " inputChanged=" + inputChanged +
+                " enableChanged=" + enableChanged + " outputChanged=" + outputChanged +
+                " boundedTrial=" + boundedTrial + " physicalResidualBad=" + physicalCurrentResidual +
+                " targetDelta=" + (target - lastTarget) +
+                " inputDelta=" + (input.current - lastInputCurrent) +
+                " enableDelta=" + (enableFraction - lastEnableFraction) +
+                " outputDropDelta=" + (evaluationDrop - lastOutputDrop) +
+                " vin=" + inputVoltage + " output=" + outputVoltage + " enable=" + enableVoltage +
+                " target=" + target + " requestedDrop=" + requestedDrop +
+                " evaluationDrop=" + evaluationDrop + " evaluationOutput=" + evaluationOutput +
+                " outputCurrent=" + outputCurrent + " inputCurrent=" + input.current +
+                " priorStampValid=" + priorNewtonStampValid +
+                " priorSubiter=" + priorNewtonSubIteration + " adjacent=" + adjacentSolvedPoint +
+                " predictedOutput=" + tsjPredictedOutput + " actualOutput=" + tsjActualOutput +
+                " outputResidual=" + Math.abs(tsjPredictedOutput - tsjActualOutput) +
+                " predictedInput=" + tsjPredictedInput + " actualInput=" + tsjActualInput +
+                " inputResidual=" + Math.abs(tsjPredictedInput - tsjActualInput));
+        }
+'@
+        $e02TraceText = $e02TraceText.Replace($e02GateNeedle, $e02GateTrace)
+        $nativeE02TraceShim = Join-Path $taskRoot 'AbstractRailRegulatorElm.java'
+        [IO.File]::WriteAllText($nativeE02TraceShim, $e02TraceText, (New-Object Text.UTF8Encoding($false)))
+    }
     $sourcePaths = @(Get-ChildItem -LiteralPath $clientSource -Filter '*.java' |
         Where-Object { $_.Name -ne 'PhysicalSpecificationDeveloperVerifier.java' -and
             (-not $needsQ30NativeLoggerBridge -or $_.Name -ne 'CirSim.java') -and
-            (-not $needsE06NativeBridge -or $_.Name -ne 'ChipElm.java') } |
+            (-not $needsE06NativeBridge -or $_.Name -ne 'ChipElm.java') -and
+            (-not $Rb100ConvergenceTrace -or $_.Name -ne 'E06AveragedConverterElm.java') -and
+            (-not $Rb100ConvergenceTrace -or $_.Name -ne 'AbstractRailRegulatorElm.java') } |
         Sort-Object Name | ForEach-Object { $_.FullName })
     $sourcePaths += $stub
     if ($needsQ30NativeLoggerBridge) { $sourcePaths += $nativeLoggerShim }
     if ($needsE06NativeBridge) { $sourcePaths += $nativeChipShim }
+    if ($Rb100ConvergenceTrace) { $sourcePaths += $nativeE06TraceShim }
+    if ($Rb100ConvergenceTrace) { $sourcePaths += $nativeE02TraceShim }
     $testDefinitions = @(
         @{ Name = 'StagedFamilyRegistrationContractTest'; Marker = 'staged family registration contracts ' },
         @{ Name = 'GeneratedExternalPowerBindingsControlObservationContractTest'; Marker = 'generated power control observation contracts assertions=' },
@@ -567,6 +747,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'Rb56ManifestContractTest'; Marker = 'RB56 manifest identities rows=30 ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },
+        @{ Name = 'PhysicalCopperObservationContractTest'; Marker = 'physical copper observation contracts assertions=' },
         @{ Name = 'ArchitectureFootprintContractTest'; Marker = 'architecture footprint contracts ' },
         @{ Name = 'PhysicalServiceabilityContractTest'; Marker = 'physical serviceability contracts ' },
         @{ Name = 'PcbRoleWidthOwnerIdentityContractTest'; Marker = 'PCB role width owner identity contracts assertions=' },
@@ -578,11 +759,16 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'U05DifficultyContractTest'; Marker = 'U05 difficulty contracts ' },
         @{ Name = 'E03RelayContractTest'; Marker = 'E03 relay contracts ' },
         @{ Name = 'E02RegulatorContractTest'; Marker = 'E02 regulator contracts ' },
+        @{ Name = 'E02RegulatorKneeContractTest'; Marker = 'E02 regulator knee contracts ' },
+        @{ Name = 'E02BoundedTangentContractTest'; Marker = 'E02 bounded tangent contracts ' },
         @{ Name = 'E04SensorControlContractTest'; Marker = 'E04 sensor-control contracts ' },
+        @{ Name = 'E04DecisionMemoryContractTest'; Marker = 'E04 accepted decision memory contracts ' },
         @{ Name = 'InductorAcceptedStateContractTest'; Marker = 'native inductor accepted-state contracts ' },
         @{ Name = 'ControlledSourceDerivativeContractTest'; Marker = 'controlled source derivative contracts ' },
         @{ Name = 'E06ConverterPilotContractTest'; Marker = 'E06 nominal pilot mechanics ' },
         @{ Name = 'Rb56PowerStageContractTest'; Marker = 'RB56 power-stage contracts ' },
+        @{ Name = 'Rb100PlanContractTest'; Marker = 'RB100 plan contracts ' },
+        @{ Name = 'Rb100ElectricalPilotContractTest'; Marker = 'RB100 electrical pilot contracts ' },
         @{ Name = 'Rb56ModelIdentityContractTest'; Marker = 'RB56 model-identity contracts ' },
         @{ Name = 'PowerResistorCatalogContractTest'; Marker = 'power resistor catalog contracts ' },
         @{ Name = 'ConverterPhysicalPartContractTest'; Marker = 'converter physical-part contracts ' },
@@ -644,6 +830,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A10DependencyContractTest'; Marker = 'A10 dependency contracts ' },
         @{ Name = 'A11ProviderConformanceTest'; Marker = 'A11 provider conformance' },
         @{ Name = 'A03IdentityContractTest'; Marker = 'A03IdentityContractTest ' },
+        @{ Name = 'A03OperationalStateRuntimeContractTest'; Marker = 'A03 operational-state runtime contracts assertions=' },
         @{ Name = 'A02CandidateContractTest'; Marker = 'A02CandidateContractTest' },
         @{ Name = 'A02GeometryContractTest'; Marker = 'A02GeometryContractTest ' },
         @{ Name = 'P01PhysicalPoseContractTest'; Marker = 'P01 physical pose contracts ' },
@@ -672,6 +859,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         @{ Name = 'A02ReplayContractTest'; Marker = 'A02ReplayContractTest ' },
         @{ Name = 'ElectricalUnitPackageMapContractTest'; Marker = 'ElectricalUnitPackageMapContractTest ' },
         @{ Name = 'A04ConstructionContractTest'; Marker = 'A04ConstructionContractTest ' },
+        @{ Name = 'A04ElementInventoryRuntimeContractTest'; Marker = 'A04 element inventory runtime contracts assertions=' },
         @{ Name = 'A04PhysicalDeclarationContractTest'; Marker = 'A04PhysicalDeclarationContractTest ' })
     $testClasses = @($testDefinitions | ForEach-Object { $_.Name })
     foreach ($selectedSuite in $Suite) {
@@ -1244,10 +1432,19 @@ final class PhysicalSpecificationDeveloperVerifier {
         if ($testClass -eq 'A03IdentityContractTest') {
             $testArguments += (Join-Path $taskRoot 'parity')
         }
+        if ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) {
+            $testArguments += '--faults'
+        }
+        if ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) {
+            $testArguments += @('--diagnostic-fault', $Rb100DiagnosticFault, $Rb100DiagnosticDt)
+        }
+        if ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100ConvergenceTrace) {
+            $testArguments = @('-Dtsj.q100.newtonTrace=true') + $testArguments
+        }
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Dense packing deliberately keeps two separate 60s children (maximum 120s logical census).
         # Existing suites retain their original one-minute bounds.
-        $testBudget = if ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
+        $testBudget = if ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

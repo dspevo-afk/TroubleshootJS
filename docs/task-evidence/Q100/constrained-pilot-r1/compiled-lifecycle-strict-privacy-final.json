@@ -1,0 +1,327 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "Q100",
+  "status": "PASS",
+  "sourcePins": "final-compiled-q100-5-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "31173e2e2513a6933e8caf04cad13304b58600b763be8ce9d50262a18a39b8ec",
+    "scriptDigest": "6ec22b02bbbc7ce67755f50e7e29c3acfd5100366f2b054ba44d154c5bf08883",
+    "webDigest": "9a1dbf7b11674bf13bad7fc0824e7dcf20cb6a19879d53d1b9cef7cd585ae9d2",
+    "executionDigest": "01b1eb190610d7d6f720c22d7f4db0b8baad8bd1c2eae1c16b920cb85ded0772",
+    "executionFileCount": 1595
+  },
+  "routes": [
+    {
+      "name": "q100-healthy-SHARED_HYSTERETIC_LINEAR-100us",
+      "kind": "q100-healthy",
+      "status": "PASS",
+      "verification": "PASS:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"operationMs\":11130,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":null,\"cleanupError\":null,\"canary\":null,\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"seed\":\"9007199254740993\",\"variant\":\"SHARED_HYSTERETIC_LINEAR\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.0001,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":6000,\"stepBatches\":98,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.5999999999999502,\"matrixFull\":104,\"matrixReduced\":102,\"work\":105,\"wallMs\":11130,\"maxUnitMs\":194,\"maxStepTimeError\":7.051650929845721e-16,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[{\"phase\":\"HEALTHY\",\"context\":\"LOW\",\"time\":0.39999999999997227,\"values\":[11.208814586786158,4.999974951335275,3.2999834994216775,0.000002159999597850515,0.0000021599996014032286,0.0000021599996031795854,0.0000021600003314858895,0.00005245742152559796,0.00005245742151904764,5.836853134155717e-7,5.836795278213458e-7,0.16499901822202112,0.00003305017339449989,4.999974849334836]},{\"phase\":\"HEALTHY\",\"context\":\"HIGH\",\"time\":0.43999999999996786,\"values\":[11.33074083878259,4.983299087099149,3.2999834994216792,11.96686275492409,11.96686275492409,11.96686275492409,11.96686275492409,11.779589333573211,11.779589333573211,0.13097744791191346,0.13097613815042486,0.16499901822210816,0.000033050006194912385,4.98329898543223]},{\"phase\":\"HEALTHY\",\"context\":\"AC_ONLY\",\"time\":0.47999999999996346,\"values\":[11.038970339232792,4.991620954013024,3.29998349942169,11.976745904633303,0.0000021582092255556518,11.976745904633303,0.00000215821050808529,11.85421047079712,0.000052320894495694326,0.06590370501281839,0.06590304598230112,0.16499901822199803,0.00003305008956822064,4.991620852179658]},{\"phase\":\"HEALTHY\",\"context\":\"OVERLOAD\",\"time\":0.519999999999959,\"values\":[11.147610765228189,4.991197493652458,3.2999579547089626,11.968427343908418,11.968427343908418,0.000002156710213085944,0.0000021567106252007306,11.625275551697845,11.625275551697849,0.23259677707263826,0.23259445112821986,0.16499774098760156,3.1497025031547583,0.03597103049726691]},{\"phase\":\"HEALTHY\",\"context\":\"RECOVERED\",\"time\":0.5599999999999546,\"values\":[11.29643520529922,4.983299087098976,3.2999834994216855,11.966862754924088,11.966862754924088,11.96686275492409,11.966862754924088,11.779589333573167,11.779589333573172,0.13097744791195431,0.13097613815044618,0.1649990182220069,0.000033050007857582386,4.983298985432062]},{\"phase\":\"HEALTHY\",\"context\":\"LOW_AGAIN\",\"time\":0.5999999999999502,\"values\":[11.109943734127123,4.9999749513352745,3.299983499421681,0.0000021599996014032286,0.0000021599996014032286,0.0000021599996014032286,0.0000021600002551025455,0.00005245742152049093,0.00005245742151493982,5.836853134155717e-7,5.836794905178522e-7,0.1649990182220158,0.00003305017339805261,4.999974849334829]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-healthy-SHARED_HYSTERETIC_LINEAR-50us",
+      "kind": "q100-healthy",
+      "status": "PASS",
+      "verification": "PASS:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"operationMs\":16211,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":null,\"cleanupError\":null,\"canary\":null,\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"seed\":\"9007199254740993\",\"variant\":\"SHARED_HYSTERETIC_LINEAR\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.00005,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":12000,\"stepBatches\":190,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.5999999999999421,\"matrixFull\":104,\"matrixReduced\":102,\"work\":197,\"wallMs\":16211,\"maxUnitMs\":126,\"maxStepTimeError\":3.5258254649228604e-16,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[{\"phase\":\"HEALTHY\",\"context\":\"LOW\",\"time\":0.3999999999999641,\"values\":[11.20852025067603,4.999974951335281,3.299983499421682,0.0000021599995996268717,0.0000021599995996268717,0.0000021599996031795854,0.0000021599996049559422,0.000052457421555685,0.00005245742152659716,5.836853240737128e-7,5.836794887414953e-7,0.16499901822202112,0.00003305017339627625,4.99997484933483]},{\"phase\":\"HEALTHY\",\"context\":\"HIGH\",\"time\":0.4399999999999597,\"values\":[11.348931675366236,4.983299087098997,3.2999834994216837,11.96686275492409,11.96686275492409,11.96686275492409,11.96686275492409,11.779589333573197,11.779589333573192,0.1309774479119259,0.13097613815060427,0.16499901822198204,0.000033050008029889,4.98329898543207]},{\"phase\":\"HEALTHY\",\"context\":\"AC_ONLY\",\"time\":0.4799999999999553,\"values\":[11.044929764006303,4.991620954013028,3.2999834994216846,11.976745904633312,0.0000021582092308847223,11.976745904633312,0.0000021582092291083654,11.854210470797156,0.00005232089456097544,0.0659037050127953,0.06590304598231356,0.16499901822196428,0.00003305008967124934,4.9916208521796515]},{\"phase\":\"HEALTHY\",\"context\":\"OVERLOAD\",\"time\":0.519999999999951,\"values\":[11.152798486857305,4.991197493652404,3.29995795470896,11.968427343908424,11.968427343908424,0.0000021567102201913713,0.0000021567102148623007,11.625275551697785,11.625275551697795,0.232596777072704,0.2325944511282465,0.16499774098759978,3.1497025031547548,0.035971030497254475]},{\"phase\":\"HEALTHY\",\"context\":\"RECOVERED\",\"time\":0.5599999999999465,\"values\":[11.301543523863588,4.983299087098844,3.2999834994216855,11.966862754924097,11.966862754924097,11.966862754924097,11.966862754924097,11.779589333573181,11.779589333573178,0.13097744791194188,0.13097613815068598,0.16499901822198026,0.000033050005740165034,4.983298985431909]},{\"phase\":\"HEALTHY\",\"context\":\"LOW_AGAIN\",\"time\":0.5999999999999421,\"values\":[11.108496159759916,4.999974951335284,3.29998349942169,0.0000021599996031795854,0.0000021599996049559422,0.000002159999608508656,0.0000021599996049559422,0.00005245742155091104,0.0000524574215228224,5.836853222973559e-7,5.836794301217196e-7,0.16499901822201757,0.00003305017339449989,4.999974849334835]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-healthy-SEPARATE_DIRECT_SWITCHING-100us",
+      "kind": "q100-healthy",
+      "status": "PASS",
+      "verification": "PASS:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"operationMs\":9613,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":null,\"cleanupError\":null,\"canary\":null,\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"seed\":\"9007199254740993\",\"variant\":\"SEPARATE_DIRECT_SWITCHING\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.0001,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":6000,\"stepBatches\":98,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.5999999999999502,\"matrixFull\":105,\"matrixReduced\":103,\"work\":105,\"wallMs\":9613,\"maxUnitMs\":168,\"maxStepTimeError\":7.051650929845721e-16,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[{\"phase\":\"HEALTHY\",\"context\":\"LOW\",\"time\":0.39999999999997227,\"values\":[11.208772109514207,4.999949951710582,3.299983499421675,0.000002159999596074158,0.000002159999594297801,0.000002159999596074158,0.000002159999596074158,0.000052457421531260096,0.000052457421526486137,5.836853045337875e-7,5.836794656488564e-7,0.16499901822200513,0.00003305017314403358,4.999949849710637]},{\"phase\":\"HEALTHY\",\"context\":\"HIGH\",\"time\":0.43999999999996786,\"values\":[11.330769098421538,4.983274502026798,3.2999834994216846,11.966862754941289,11.966862754941289,11.966862754941289,11.966862754941289,11.779589302550715,11.779589302550713,0.1309774470802143,0.13097613731861912,0.16499901822206375,0.000033050006464918624,4.983274400360365]},{\"phase\":\"HEALTHY\",\"context\":\"AC_ONLY\",\"time\":0.47999999999996346,\"values\":[11.04652260405035,4.991596165711943,3.2999834994216783,11.976745904641756,0.0000021582092148975107,11.976745904641756,0.0000021582092148975107,11.854210440325259,0.000052320894468160795,0.06590370459809414,0.0659030455676568,0.16499901822201046,0.00003305008851306468,4.991596063879069]},{\"phase\":\"HEALTHY\",\"context\":\"OVERLOAD\",\"time\":0.519999999999959,\"values\":[11.139967587368636,4.991172836983888,3.2999579547083364,11.96842734396671,11.96842734396671,0.0000021567102290731555,0.0000021567102272967986,11.625275493308786,11.625275493308797,0.23259677541675217,0.23259444947229646,0.16499774098757136,3.1497025031478483,0.035970964434174135]},{\"phase\":\"HEALTHY\",\"context\":\"RECOVERED\",\"time\":0.5599999999999546,\"values\":[11.297040923337942,4.983274502026617,3.299983499421683,11.966862754941289,11.966862754941289,11.966862754941289,11.966862754941289,11.779589302550303,11.779589302550297,0.1309774470806282,0.13097613731931723,0.164999018222165,0.00003305000781139711,4.983274400360184]},{\"phase\":\"HEALTHY\",\"context\":\"LOW_AGAIN\",\"time\":0.5999999999999502,\"values\":[11.027572099719718,4.9999499517105885,3.299983499421683,0.0000021599996049559422,0.000002159999606732299,0.0000021599996120613696,0.0000021599996120613696,0.00005245742152470978,0.0000524574215188256,5.836853116392149e-7,5.83679481636068e-7,0.16499901822202823,0.00003305017315291536,4.999949849710645]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-healthy-SEPARATE_DIRECT_SWITCHING-50us",
+      "kind": "q100-healthy",
+      "status": "PASS",
+      "verification": "PASS:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"operationMs\":17581,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":null,\"cleanupError\":null,\"canary\":null,\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"PASS_ELECTRICAL_REFERENCE_ONLY\",\"seed\":\"9007199254740993\",\"variant\":\"SEPARATE_DIRECT_SWITCHING\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.00005,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":12000,\"stepBatches\":190,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.5999999999999421,\"matrixFull\":105,\"matrixReduced\":103,\"work\":197,\"wallMs\":17581,\"maxUnitMs\":339,\"maxStepTimeError\":3.5258254649228604e-16,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[{\"phase\":\"HEALTHY\",\"context\":\"LOW\",\"time\":0.3999999999999641,\"values\":[11.208418070504427,4.99994995171059,3.299983499421683,0.000002159999608508656,0.0000021599996031795854,0.000002159999608508656,0.000002159999606732299,0.00005245742154391664,0.000052457421531704185,5.836853169682854e-7,5.836794834124248e-7,0.16499901822201046,0.00003305017313870451,4.999949849710646]},{\"phase\":\"HEALTHY\",\"context\":\"HIGH\",\"time\":0.4399999999999597,\"values\":[11.341197289523778,4.983274502026613,3.2999834994216846,11.966862754941282,11.966862754941282,11.966862754941282,11.966862754941282,11.779589302550486,11.779589302550496,0.13097744708044345,0.13097613731916447,0.16499901822199448,0.00003305000785402967,4.983274400360169]},{\"phase\":\"HEALTHY\",\"context\":\"AC_ONLY\",\"time\":0.4799999999999553,\"values\":[11.0494799005664,4.991596165711949,3.2999834994216855,11.976745904641756,0.0000021582092184502244,11.976745904641756,0.0000021582092148975107,11.854210440325243,0.000052320894583846034,0.06590370459810835,0.06590304556766036,0.16499901822203,0.00003305009009757498,4.991596063879073]},{\"phase\":\"HEALTHY\",\"context\":\"OVERLOAD\",\"time\":0.519999999999951,\"values\":[11.143998404875123,4.991172836983843,3.2999579547083355,11.968427343966706,11.968427343966706,0.0000021567102184150144,0.0000021567102255204418,11.625275493308909,11.6252754933089,0.23259677541661894,0.23259444947228758,0.1649977409875607,3.149702503147841,0.035970964434159924]},{\"phase\":\"HEALTHY\",\"context\":\"RECOVERED\",\"time\":0.5599999999999465,\"values\":[11.301702570087013,4.983274502026487,3.2999834994216846,11.966862754941292,11.966862754941294,11.966862754941294,11.966862754941292,11.779589302550386,11.77958930255039,0.13097744708055004,0.1309761373191325,0.16499901822207796,0.000033050007104407086,4.983274400360035]},{\"phase\":\"HEALTHY\",\"context\":\"LOW_AGAIN\",\"time\":0.5999999999999421,\"values\":[11.02346214564676,4.999949951710589,3.299983499421681,0.000002159999608508656,0.0000021599996049559422,0.0000021599996049559422,0.000002159999606732299,0.00005245742153969779,0.00005245742152459876,5.836853080865012e-7,5.836795438085574e-7,0.16499901822202112,0.000033050173129822724,4.999949849710643]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-preflight-invalidvariant",
+      "kind": "q100-preflight-variant",
+      "status": "PASS",
+      "verification": "FAIL:q100:preflight:Unknown RB100 structural variant",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"REJECTED_BEFORE_PRIVATE_GRAPH\",\"error\":\"Unknown RB100 structural variant\",\"cleanup\":\"NOT_APPLICABLE\"}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-preflight-invalidfault",
+      "kind": "q100-preflight-fault",
+      "status": "PASS",
+      "verification": "FAIL:q100:preflight:Unknown RB100 electrical-reference fault",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"REJECTED_BEFORE_PRIVATE_GRAPH\",\"error\":\"Unknown RB100 electrical-reference fault\",\"cleanup\":\"NOT_APPLICABLE\"}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-preflight-invaliddt",
+      "kind": "q100-preflight-dt",
+      "status": "PASS",
+      "verification": "FAIL:q100:preflight:RB100 reference: unsupported reference timestep",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"REJECTED_BEFORE_PRIVATE_GRAPH\",\"error\":\"RB100 reference: unsupported reference timestep\",\"cleanup\":\"NOT_APPLICABLE\"}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-after-step",
+      "kind": "q100-after-step",
+      "status": "PASS",
+      "verification": "FAIL:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"FAIL_REFERENCE\",\"operationMs\":176,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":\"q100-explicit-after-step-after-accepted-step\",\"cleanupError\":null,\"canary\":\"after-step\",\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"INCOMPLETE_ELECTRICAL_REFERENCE\",\"seed\":\"9007199254740993\",\"variant\":\"SHARED_HYSTERETIC_LINEAR\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.0001,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":64,\"stepBatches\":1,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.006400000000000004,\"matrixFull\":104,\"matrixReduced\":102,\"work\":3,\"wallMs\":176,\"maxUnitMs\":116,\"maxStepTimeError\":3.469446951953614e-18,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[],\"componentDiagnosticState\":\"UNACCEPTED_TRIAL_OR_LAST_ACCEPTED\",\"componentDiagnostics\":[{\"id\":\"UAC\",\"postVoltages\":[136.07730914808624,-18.360448133872058,8.34846598671681e-7,-1.8982021948400194,-8.516162313738537,-13.991117481706638]},{\"id\":\"U1\",\"postVoltages\":[-1.5141176081322578,-1.8982021948426808,-1.8982021948400194,-1.5179204258224337]},{\"id\":\"U33\",\"postVoltages\":[-1.5141176081322578,-1.8982021948400285,-1.8982021948400194,-1.5141176081322578]},{\"id\":\"UMON\",\"postVoltages\":[-1.8982016132950932,-1.8982021948400178,-1.8982021948400285,-1.8982021948400158,-1.8982021948400194]},{\"id\":\"QINV\",\"postVoltages\":[-1.8982021948400158,-1.8982021948426824,-1.8982021948400194]},{\"id\":\"QAUX\",\"postVoltages\":[-1.8982021948426824,-1.8982021948400194,-1.898202194841797]},{\"id\":\"CIN33\",\"postVoltages\":[-1.5205845443701183,-1.8982021948400194]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-cancel",
+      "kind": "q100-cancel",
+      "status": "PASS",
+      "verification": "CANCELLED:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"CANCELLED_REFERENCE\",\"operationMs\":164,\"cleanupMs\":3,\"cleanup\":\"PASS\",\"error\":\"q100-explicit-cancel-after-accepted-step\",\"cleanupError\":null,\"canary\":\"cancel\",\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"INCOMPLETE_ELECTRICAL_REFERENCE\",\"seed\":\"9007199254740993\",\"variant\":\"SHARED_HYSTERETIC_LINEAR\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.0001,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":64,\"stepBatches\":1,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.006400000000000004,\"matrixFull\":104,\"matrixReduced\":102,\"work\":3,\"wallMs\":164,\"maxUnitMs\":107,\"maxStepTimeError\":3.469446951953614e-18,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[],\"componentDiagnosticState\":\"UNACCEPTED_TRIAL_OR_LAST_ACCEPTED\",\"componentDiagnostics\":[{\"id\":\"UAC\",\"postVoltages\":[136.07730914808624,-18.360448133872058,8.34846598671681e-7,-1.8982021948400194,-8.516162313738537,-13.991117481706638]},{\"id\":\"U1\",\"postVoltages\":[-1.5141176081322578,-1.8982021948426808,-1.8982021948400194,-1.5179204258224337]},{\"id\":\"U33\",\"postVoltages\":[-1.5141176081322578,-1.8982021948400285,-1.8982021948400194,-1.5141176081322578]},{\"id\":\"UMON\",\"postVoltages\":[-1.8982016132950932,-1.8982021948400178,-1.8982021948400285,-1.8982021948400158,-1.8982021948400194]},{\"id\":\"QINV\",\"postVoltages\":[-1.8982021948400158,-1.8982021948426824,-1.8982021948400194]},{\"id\":\"QAUX\",\"postVoltages\":[-1.8982021948426824,-1.8982021948400194,-1.898202194841797]},{\"id\":\"CIN33\",\"postVoltages\":[-1.5205845443701183,-1.8982021948400194]}]}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-interaction-lock",
+      "kind": "q100-interaction-lock",
+      "status": "PASS",
+      "verification": "CANCELLED:q100",
+      "readiness": {
+        "workbenchNavigationReady": false,
+        "programReady": false,
+        "retestCustomerReady": false,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": "{\"status\":\"CANCELLED_REFERENCE\",\"operationMs\":170,\"cleanupMs\":4,\"cleanup\":\"PASS\",\"error\":\"q100-explicit-interaction-lock-after-accepted-step\",\"cleanupError\":null,\"canary\":\"interaction-lock\",\"reference\":{\"protocol\":\"q100-electrical-reference-v3\",\"status\":\"INCOMPLETE_ELECTRICAL_REFERENCE\",\"seed\":\"9007199254740993\",\"variant\":\"SHARED_HYSTERETIC_LINEAR\",\"planVersion\":1,\"modelVersion\":4,\"faultPopulationVersion\":1,\"fault\":\"HEALTHY\",\"dt\":0.0001,\"advanceMode\":\"TEMPORAL_BATCH\",\"operationLimitMs\":5000,\"trialBoundaryLimitMs\":500,\"maxBatchSteps\":64,\"fixedStepVerified\":true,\"acceptedSteps\":64,\"stepBatches\":1,\"maxBatchAcceptedSteps\":64,\"packages\":100,\"solverElements\":571,\"simulatedSeconds\":0.006400000000000004,\"matrixFull\":104,\"matrixReduced\":102,\"work\":3,\"wallMs\":170,\"maxUnitMs\":108,\"maxStepTimeError\":3.469446951953614e-18,\"sampleNames\":[\"RAIL12\",\"RAIL5\",\"RAIL3V3\",\"OUT_A\",\"OUT_B\",\"OUT_C\",\"OUT_D\",\"OUT_E\",\"OUT_F\",\"MON_SENSE\",\"MON_FILTER\",\"MON_REF\",\"MON_CMD\",\"AUX_GATE\"],\"observations\":[],\"componentDiagnosticState\":\"UNACCEPTED_TRIAL_OR_LAST_ACCEPTED\",\"componentDiagnostics\":[{\"id\":\"UAC\",\"postVoltages\":[136.07730914808624,-18.360448133872058,8.34846598671681e-7,-1.8982021948400194,-8.516162313738537,-13.991117481706638]},{\"id\":\"U1\",\"postVoltages\":[-1.5141176081322578,-1.8982021948426808,-1.8982021948400194,-1.5179204258224337]},{\"id\":\"U33\",\"postVoltages\":[-1.5141176081322578,-1.8982021948400285,-1.8982021948400194,-1.5141176081322578]},{\"id\":\"UMON\",\"postVoltages\":[-1.8982016132950932,-1.8982021948400178,-1.8982021948400285,-1.8982021948400158,-1.8982021948400194]},{\"id\":\"QINV\",\"postVoltages\":[-1.8982021948400158,-1.8982021948426824,-1.8982021948400194]},{\"id\":\"QAUX\",\"postVoltages\":[-1.8982021948426824,-1.8982021948400194,-1.898202194841797]},{\"id\":\"CIN33\",\"postVoltages\":[-1.5205845443701183,-1.8982021948400194]}]},\"interactionLock\":{\"status\":\"PASS\",\"selectionAttemptBlocked\":true,\"deletionAttemptBlocked\":true,\"runToggleBlocked\":true,\"graphIdentityStable\":true,\"elementIdentityStable\":true,\"elementCountBefore\":571,\"elementCountAfter\":571,\"selectionStable\":true,\"undoDepthBefore\":0,\"undoDepthAfter\":0,\"simulationTimeBefore\":0,\"simulationTimeAfter\":0,\"acceptedStepCountBefore\":0,\"acceptedStepCountAfter\":0,\"runningBefore\":true,\"runningAfter\":true,\"privateOwnerStillUnavailable\":true,\"wheelAttemptBlocked\":true,\"nativeWheelPreviewBlocked\":true,\"nativeChangePreviewBlocked\":true,\"privateCircuitStable\":true,\"wheelRBefore\":1,\"wheelRAfter\":1,\"wheelDelta\":3,\"popupUnchanged\":true}}"
+      },
+      "q100ReportAttributePresent": true
+    },
+    {
+      "name": "q100-debugfalse",
+      "kind": "q100-debugfalse",
+      "status": "PASS",
+      "verification": "",
+      "readiness": {
+        "workbenchNavigationReady": true,
+        "programReady": true,
+        "retestCustomerReady": true,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {
+        "q100": ""
+      },
+      "q100ReportAttributePresent": false,
+      "developerAttributes": {},
+      "ordinaryTicketEntry": {
+        "protocol": "tsj-ordinary-ticket-entry-v1",
+        "status": "PASS",
+        "buttonLabel": "Accept ticket and start",
+        "labelledCount": 1,
+        "visibleEnabledCount": 1,
+        "expectedComplaintVisible": true,
+        "clickPoint": {
+          "x": 408.7109375,
+          "y": 618.15625
+        },
+        "inputEvents": [
+          "mouseMoved",
+          "mousePressed:left",
+          "mouseReleased:left"
+        ]
+      },
+      "privacyNegativeCanary": {
+        "protocol": "tsj-q100-player-dom-privacy-canary-v1",
+        "status": "PASS",
+        "sentinels": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          }
+        ],
+        "finalPlayerPrivacy": "PASS"
+      },
+      "sentinelsCleanup": {
+        "status": "PASS",
+        "removed": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "removed": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "removed": true
+          }
+        ]
+      }
+    }
+  ],
+  "failure": {},
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 53,
+      "PhysicalNamespaceMs": 504,
+      "BrowserSessionMs": 39915,
+      "PreviewMs": 10757,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 2175,
+      "BrowserShutdown": [
+        {
+          "RouteId": "fc6fa19ec3df42e7b42a414ec15a6097",
+          "Lane": "boundReceipt",
+          "TotalMs": 7948,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 431,
+            "endpointAndSocketConnect": 12,
+            "postConnectRootAndListenerProof": 349,
+            "protectedHelperCensus": 1585,
+            "precloseJournalAndAuthorization": 1907,
+            "closeSendAndAcknowledgement": 18,
+            "retainedProcessNaturalExitProof": 2178,
+            "lateDescendantAbsenceProof": 502,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 870,
+            "finalListenerAbsenceProof": 76,
+            "resourceDisposal": 5
+          },
+          "Counts": {
+            "protectedDescendantCount": 9,
+            "rootAndDescendantRecordCount": 10,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 20,
+            "currentAbsenceProofCount": 16,
+            "currentAbsenceObservationCount": 32,
+            "lateDescendantParentQueryCount": 10,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    },
+    "resourceSuccess": true,
+    "elapsedMs": 53421,
+    "limitMs": 120000,
+    "status": "PASS"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 151.4288575,
+  "rawReportSha256": "587a25a1b97f42814bd649618b4231e96dadd22479f4fee23e892ea64e78db64",
+  "rawLogSha256": "142eab73e94d7c823f36bf30bf401b5ce7ff9eea4e506cc779676ffdc6c18ef8",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ],
+  "q100Matrix": {
+    "operationElapsedMs": 97703,
+    "operationLimitMs": 6000000
+  }
+}

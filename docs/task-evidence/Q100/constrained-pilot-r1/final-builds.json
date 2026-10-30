@@ -1,0 +1,114 @@
+{
+  "protocol": "q100-final-gwt-builds-v1",
+  "jdkVersion": "1.8.0_502",
+  "gwtVersion": "2.7.0",
+  "builds": [
+    {
+      "variant": "Player",
+      "status": "PASS",
+      "command": "scripts/build.ps1 -Variant Player -JavaHome <existing JDK8>",
+      "exitCode": 0,
+      "elapsedSeconds": 102.3538468,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "a2a862b48181fd4365c915c198a272311b548318c0d6eb5cfe2fd920e0781d40",
+        "InputFileCount": 1198,
+        "OutputDigest": "11b2b3265faf72f3514a1489ea45fe77b46d7e7e85b1961bb8a95080da10ccf6",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Player",
+        "elapsedSeconds": 102.3538468,
+        "cacheCount": 5,
+        "cacheBytes": 9437459,
+        "files": [
+          {
+            "name": "25451EEFB25DDD3B1E7EA47579A2FE23.cache.js",
+            "bytes": 589778,
+            "sha256": "aca4644d5de88b6eeecfb3382296bf138de43042db6a6d5e935baf4990eea97e"
+          },
+          {
+            "name": "6EAB346BC5DC17A0B9E208976EC54F89.cache.js",
+            "bytes": 2211087,
+            "sha256": "b1790d3b93b380e4d0cbf96039859ae819703314af03033d185bb6fa0c472ec9"
+          },
+          {
+            "name": "9C90C2D74293CD29AFDD0B147B25EA86.cache.js",
+            "bytes": 2212237,
+            "sha256": "c440d8f86f6d7aa30597e8bb2c168bb6f0b9bb4ac7c648e6fa66cb51c4cb6c5a"
+          },
+          {
+            "name": "F3EA85D5711F2CB87151F9066EFE423E.cache.js",
+            "bytes": 2212816,
+            "sha256": "7c533c0dff54f0a7e0b92c3f5315f4aded8c2549ed8a17b9e8328a072fac325c"
+          },
+          {
+            "name": "F6A743A48570B228972177B5B3EC999A.cache.js",
+            "bytes": 2211541,
+            "sha256": "db7eab7e39ff3425b3df6f331fbe817cf5ef3a897fd39daa6c1d8369103130e4"
+          }
+        ]
+      },
+      "sourcePins": "build-player-2-source-pins.json",
+      "rawLogSha256": "8b77807ed4d893a64f6c0f3ab1015db00c5622c622fc1dc52e2848906437b643"
+    },
+    {
+      "variant": "Developer",
+      "status": "PASS",
+      "command": "scripts/build.ps1 -Variant Developer -JavaHome <existing JDK8>",
+      "exitCode": 0,
+      "elapsedSeconds": 145.2690712,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "0bc3ff3b0a55c525da4ffba1fb0fcfb979edf4916d44a0146c1e3f754b5aee40",
+        "InputFileCount": 1198,
+        "OutputDigest": "820e9ad0e2d68e51e66eff332b3fb742e4dae2df78b57dd8c0c7cfca3dacddee",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Developer",
+        "elapsedSeconds": 145.2690712,
+        "cacheCount": 5,
+        "cacheBytes": 17729408,
+        "files": [
+          {
+            "name": "039065509E8F89459A65551DA1D9011E.cache.js",
+            "bytes": 3564520,
+            "sha256": "79e271a19acbfa1e3cbcaf28e2717e0ebc472c87cea824db0afc4838dc2b87d7"
+          },
+          {
+            "name": "3E14E662E2ED2E01B4EE66C6A9CEB942.cache.js",
+            "bytes": 3564890,
+            "sha256": "0256e0875dbcd51cdbf8578f76229529a2c4773a46f252b5898537a94a7f637e"
+          },
+          {
+            "name": "8B6D8F6EA5895F952084A238A98D4A72.cache.js",
+            "bytes": 3566248,
+            "sha256": "bce8dff12f3bc4301802154d49420c00cbad1d9530245993590d6adda34826ae"
+          },
+          {
+            "name": "A1B877813A305DA1E57AD18154025415.cache.js",
+            "bytes": 3467958,
+            "sha256": "0f8e05e34f8864b575ccdbce91be76d9d5779436a0ca1e5379825b4a0405a056"
+          },
+          {
+            "name": "F00670CF5FF96F5D7BB5E0AEF27DEFF9.cache.js",
+            "bytes": 3565792,
+            "sha256": "c74678580cfbca7d2a48bff7e5272c1904608d68f2ce5427eaa6bbd5f6d0ab7b"
+          }
+        ]
+      },
+      "sourcePins": "build-developer-4-source-pins.json",
+      "rawLogSha256": "ac4c46e41d8584f5539a94f77050263947ac3161be10478a8c0985c7c03efa46"
+    }
+  ],
+  "limits": [
+    "Actual final-source JDK8/GWT builds; browser behavior separately qualified",
+    "Failed earlier Player artifact retained with full verified output inventory",
+    "Measurements apply to this host; no modest-host or overall Q100 capacity claim"
+  ]
+}

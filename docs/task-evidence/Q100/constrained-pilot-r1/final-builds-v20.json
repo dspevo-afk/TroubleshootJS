@@ -1,0 +1,115 @@
+{
+  "protocol": "q100-final-gwt-builds-v3",
+  "dependencyEpoch": "tsj-generation-dependencies-v20",
+  "jdkVersion": "1.8.0_502",
+  "gwtVersion": "2.7.0",
+  "builds": [
+    {
+      "variant": "Player",
+      "status": "PASS",
+      "attempt": 4,
+      "exitCode": 0,
+      "elapsedSeconds": 87.3473268,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "4f6a755008cf396dde849aa3074b1b418089276e60830ebb02846826a58cc925",
+        "InputFileCount": 1198,
+        "OutputDigest": "b826c2379d805768fa3de52a57af763fd867e2fb1905376d2e55f2d1a9fda986",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Player",
+        "elapsedSeconds": 87.3473268,
+        "cacheCount": 5,
+        "cacheBytes": 9437459,
+        "files": [
+          {
+            "name": "2182AA6D37A05DE931C5040CE1AA5A3C.cache.js",
+            "bytes": 2211541,
+            "sha256": "aa733eba034082acf474652c45d7c10347c3133be55a837c2bc50e4013d68eb7"
+          },
+          {
+            "name": "25451EEFB25DDD3B1E7EA47579A2FE23.cache.js",
+            "bytes": 589778,
+            "sha256": "aca4644d5de88b6eeecfb3382296bf138de43042db6a6d5e935baf4990eea97e"
+          },
+          {
+            "name": "2F7BC0057C5F3CF5713FF68FAFE5A40A.cache.js",
+            "bytes": 2211087,
+            "sha256": "636b4c881230a9516aeaba40f654bec6cbf8f562b9028bdb09a9b1777783ec61"
+          },
+          {
+            "name": "5A7EC301A59E3E54C5D5E1B7C2263C85.cache.js",
+            "bytes": 2212816,
+            "sha256": "46842c325c2f7afdbec06cd993632e54fb78ab30dde07c98f302913362ecd760"
+          },
+          {
+            "name": "800C63C76F343A35F6EAE825D9824D66.cache.js",
+            "bytes": 2212237,
+            "sha256": "da82f371019f0643d18ad58c8e32eefe901e30808da8b8c718c3ad3b622b1459"
+          }
+        ]
+      },
+      "sourcePins": "build-player-4-source-pins.json",
+      "rawLogSha256": "792210ba2713b6cb1c28ff9a16b75cc4af07fc7e90036e5737cb6486f9cc2fad"
+    },
+    {
+      "variant": "Developer",
+      "status": "PASS",
+      "attempt": 6,
+      "exitCode": 0,
+      "elapsedSeconds": 122.1371748,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "c19432d30f7dc6f88f3dd039f8d8375a0a9ef3c140514591a3ffe92383c33e24",
+        "InputFileCount": 1198,
+        "OutputDigest": "cf12de3e8d4a7d94932080d19c70f1fc5bbcb148bb2f7f9cfb01a34e31581fc9",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Developer",
+        "elapsedSeconds": 122.1371748,
+        "cacheCount": 5,
+        "cacheBytes": 17729408,
+        "files": [
+          {
+            "name": "7E8919E1C49B5C53C6544E20DE912132.cache.js",
+            "bytes": 3467958,
+            "sha256": "9357cd5b16d6fb875ca0c01643ea88d76be19155863a38cfb9b8484dbe3dd5e0"
+          },
+          {
+            "name": "8BEAFDB72221B8EE79AEEFB68E997206.cache.js",
+            "bytes": 3564890,
+            "sha256": "10602dd11f8f39f899a6de2fa6aa06d183a0c850c782315035fbfcbb14f86e2b"
+          },
+          {
+            "name": "A1FB58A4BD1867338A099F48F8AA4B8A.cache.js",
+            "bytes": 3565792,
+            "sha256": "84d5372968ccf30d15a9be42f5fe267691cdeb8abd5b1692fa26af752c613511"
+          },
+          {
+            "name": "D468BB9901160EC956DB9BEBAC516E3E.cache.js",
+            "bytes": 3564520,
+            "sha256": "49849f3131e26c24cf227793716a53930d4204237003de9b042cfb2f4fd9d083"
+          },
+          {
+            "name": "D8CD7B45ED8B19FBDD3A107EBC84D4AC.cache.js",
+            "bytes": 3566248,
+            "sha256": "f650c9a4f7e07905ab494563d5083161172c8b3593be2639947b57713368135e"
+          }
+        ]
+      },
+      "sourcePins": "build-developer-6-source-pins.json",
+      "rawLogSha256": "d3dac7fddd64e5ccf3a0baccaadb2fc104e0677b20eaa6fc3476c956d68e7211"
+    }
+  ],
+  "limits": [
+    "Actual maintained final-source builds after proof-epoch invalidation fix.",
+    "Earlier v19 receipts and failures remain separate.",
+    "Five permutations and complete 357-file output inventories per variant; no nominal hardware-fidelity claim."
+  ]
+}

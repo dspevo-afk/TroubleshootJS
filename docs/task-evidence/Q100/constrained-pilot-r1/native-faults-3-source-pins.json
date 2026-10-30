@@ -1,0 +1,74 @@
+[
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN.md",
+    "sha256": "3fc4a612d9a628b987e4de425fc2fd1fcb35bb700ab8ed2eb5d47e53b788004c"
+  },
+  {
+    "path": "scripts/verify-current-contracts.ps1",
+    "sha256": "a83669e179fd91f4e3e13387d48cd2b6978a3dd3604ca279d960c2bb10553633"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "sha256": "254c3f2583b8b42828a07e5247456444b00847d72ca36dba5a5dd7e25f2568d0"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+    "sha256": "360466bea9c120d34f763079be1a63aced740e8492b0617ee734522cf49e1dbf"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+    "sha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotFaults.java",
+    "sha256": "23b3e62e671bc087be2f8954014aa22327bebf49c678ae3a1265fe6dccef90d6"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotReference.java",
+    "sha256": "776998f41e1fdf6d5c435899267bd69e3da5167dccc9704fa2619fa45d3bd541"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+    "sha256": "5397711510c4d2e1bf7cdac7fdb5d4dfae0426cfb5ea08852c50920aec89b56c"
+  },
+  {
+    "path": "tests/contracts/Rb100PlanContractTest.java",
+    "sha256": "9ecc1c6ae3f99eba1f3a9d4f16e949ae4edfe22dc53bb7156df66b161b60af89"
+  },
+  {
+    "path": "tests/contracts/Rb100ElectricalPilotContractTest.java",
+    "sha256": "f3dc8de684852e0a7f2963869a9665b15f33536ade26768aa3e60328c24f9f2f"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java",
+    "sha256": "4926f72e7f0dc677e3e49a8683da56aedc38af060d2e5f552cc3ee0b335b5d0b"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+    "sha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+  },
+  {
+    "path": "tests/contracts/E02RegulatorKneeContractTest.java",
+    "sha256": "8c5a129b04aabbf9e416c4731712b5bdad5cf00a4e27efea807310f679258431"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+    "sha256": "b0d379828c21fde1cde3c2ca9fc137e443c6b6fab8fde2e2f6d31c828dfcc878"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+    "sha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+    "sha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+  },
+  {
+    "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+    "sha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+  },
+  {
+    "path": "tests/contracts/E02BoundedTangentContractTest.java",
+    "sha256": "f354eaa0a70e15d504e1074122efe417f96a7beac573f09294e3dbb64992064c"
+  }
+]

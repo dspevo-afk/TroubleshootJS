@@ -1,0 +1,21 @@
+{
+  "protocol": "q100-copper-observation-native-diagnostic-v1",
+  "status": "FAIL_FIXTURE_WRONG_REJECTION",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 49.4316941
+  },
+  "cleanup": "PASS",
+  "failure": "null-orphan fixture accidentally created a diagonal segment, rejected by Manhattan guard before its intended junction check",
+  "expected": "task43p-copper-junction-unwitnessed",
+  "actual": "task43p-raw-copper-non-manhattan-or-empty:tree/branch",
+  "correction": "Change branch y coordinates to extend away from trunk, keeping its declared start and Manhattan geometry; validator conditions unchanged",
+  "sourcePins": "copper-observation-contract-1-source-pins.json",
+  "rawLogSha256": "4ec1279ab2ab8ee72d4cf1abdd5505ac24cf03580e5ded28daec187d0a64160e",
+  "limits": [
+    "New positive literal tree passed, then malformed negative halted the new suite",
+    "Actual nine-profile raw-layout positives and later P02/P04 suites NOT RUN",
+    "Task43 existing endpoint suite PASS320 before this failure",
+    "No qualified receipt emitted by failed driver"
+  ]
+}

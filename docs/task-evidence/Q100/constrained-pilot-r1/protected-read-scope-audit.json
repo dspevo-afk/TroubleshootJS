@@ -1,0 +1,17 @@
+{
+  "protocol": "q100-protected-read-scope-audit-v1",
+  "status": "LIMITED_AUDIT_NO_PROTECTED_PAYLOAD_IDENTIFIED",
+  "reviewScope": "Independent reader review",
+  "command": "rg -n -C 3 \"convergence trace|Rb100ConvergenceTrace|Trace=false|trace\" docs/task-evidence 2>$null | Select-Object -First 80",
+  "flags": "Default ignore/hidden rules; no -u/--hidden/--no-ignore",
+  "displayedContent": "Q100 plan and A01 README excerpts only",
+  "limitation": "Reviewer cannot prove every file rg traversed before output truncation. No protected HARD fixture was intentionally opened, displayed or run. Do not claim an exhaustive filesystem-read exclusion.",
+  "metadataAudit": [
+    "Filename-only default rg enumeration of docs/task-evidence and tests identified no known protected HARD payload path under the search root",
+    "git tracked-path enumeration showed no rb56-hard/sealed payload under docs/task-evidence",
+    "The repository ignore rule docs/task-evidence/**/*.json applies to default rg traversal; no protected content was opened to investigate further"
+  ],
+  "hardExecution": "NOT RUN",
+  "hardAdmission": "HARD and PSYCHOTIC unavailable",
+  "scope": "This does not qualify protected HARD or any fresh blind cohort. No result depends on the broad search."
+}

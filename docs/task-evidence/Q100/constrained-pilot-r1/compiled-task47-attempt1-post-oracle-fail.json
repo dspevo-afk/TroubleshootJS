@@ -1,0 +1,78 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "Task47",
+  "status": "FAIL",
+  "sourcePins": "final-compiled-task47-1-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "e8bf8458132676b9131673b0b46de74ac90a87e0a3429f16da4d0954d1bd8253",
+    "scriptDigest": "4ba27eccc3a2554c3848e6401858e49229274fe25d86147402b3c8b8a61791cf",
+    "webDigest": "c1f020f55a746c2f3da243f9899f337ba83e616cc76664489049e27e82889b24",
+    "executionDigest": "a63228714b2ef2a4988db00828fea72e68cdc57da63e9da13ba8ada8ad8e32e2",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "application",
+    "phase": "browser",
+    "operation": "route-task47",
+    "elapsedMs": 1521,
+    "remainingDeadlineMs": 88478,
+    "error": "task47 reported FAIL:Task47 stage=seed=0/physical-correspondence-and-measurement-cleanup failed: java.lang.IllegalStateException message=task43p-solver-post-oracle-mismatch:J1.1"
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 47,
+      "PhysicalNamespaceMs": 216,
+      "BrowserSessionMs": 26774,
+      "PreviewMs": 8068,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 1623,
+      "BrowserShutdown": [
+        {
+          "RouteId": "58ddedcdd5574f7ba27fe469cb2466b9",
+          "Lane": "boundReceipt",
+          "TotalMs": 10116,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 389,
+            "endpointAndSocketConnect": 11,
+            "postConnectRootAndListenerProof": 310,
+            "protectedHelperCensus": 2182,
+            "precloseJournalAndAuthorization": 1484,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 4013,
+            "lateDescendantAbsenceProof": 748,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 866,
+            "finalListenerAbsenceProof": 74,
+            "resourceDisposal": 7
+          },
+          "Counts": {
+            "protectedDescendantCount": 16,
+            "rootAndDescendantRecordCount": 17,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 34,
+            "currentAbsenceProofCount": 33,
+            "currentAbsenceObservationCount": 66,
+            "lateDescendantParentQueryCount": 17,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 1,
+  "elapsedSeconds": 57.8611702,
+  "rawReportSha256": "c3c8db3c86b166ab2be5a804bbca7d4263bd5532689b0ccd2e5fed072a58f12e",
+  "rawLogSha256": "0e75f9a1eb363de6c700feba9cabb92f6b88e67c7338deb7c09da9c2fb6e9184",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

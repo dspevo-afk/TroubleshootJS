@@ -1,0 +1,72 @@
+{
+  "protocol": "q100-adaptive-study-summary-v1",
+  "status": "FAIL_DIAGNOSTIC_ONLY",
+  "referenceProtocol": "q100-adaptive-resolution-study-v0",
+  "seed": "9007199254740993",
+  "planVersion": 1,
+  "modelVersion": 3,
+  "maxDt": 0.0001,
+  "configuredMinDt": 1E-09,
+  "maxAcceptedStepsPerUnit": 64,
+  "caseMs": 90000,
+  "workLimit": 640,
+  "unitMs": 5000,
+  "synchronousExecutorMs": 500,
+  "cases": [
+    {
+      "attempt": 2,
+      "variant": "SHARED_HYSTERETIC_LINEAR",
+      "fault": "DE_SHUNT",
+      "status": "FAIL",
+      "failure": "com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: CircuitJS stopped: Convergence failed!",
+      "simulationTime": 0.40229160919186663,
+      "work": 67,
+      "operationMs": 1053,
+      "cleanupMs": 0,
+      "cleanup": "PASS"
+    },
+    {
+      "attempt": 2,
+      "variant": "SEPARATE_DIRECT_SWITCHING",
+      "fault": "DE_SHUNT",
+      "status": "FAIL",
+      "failure": "com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: CircuitJS stopped: Convergence failed!",
+      "simulationTime": 0.4023367004394251,
+      "work": 67,
+      "operationMs": 963,
+      "cleanupMs": 2,
+      "cleanup": "PASS"
+    },
+    {
+      "attempt": 3,
+      "variant": "SHARED_HYSTERETIC_LINEAR",
+      "fault": "DE_SHUNT",
+      "status": "FAIL",
+      "failure": "com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: Solver deadline reached or wall clock regressed; accepted=57; trials=10235",
+      "simulationTime": 0.40232615509033126,
+      "work": 96,
+      "operationMs": 4716,
+      "cleanupMs": 0,
+      "cleanup": "PASS"
+    },
+    {
+      "attempt": 3,
+      "variant": "SEPARATE_DIRECT_SWITCHING",
+      "fault": "DE_SHUNT",
+      "status": "FAIL",
+      "failure": "com.lushprojects.circuitjs1.client.SolverExecutionBoundary$Failure: Solver deadline reached or wall clock regressed; accepted=59; trials=10469",
+      "simulationTime": 0.40303796691874444,
+      "work": 191,
+      "operationMs": 4001,
+      "cleanupMs": 0,
+      "cleanup": "PASS"
+    }
+  ],
+  "limits": [
+    "Selected DE short only, two variants",
+    "Attempt2 uses per-trial accepted-memory initialization; attempt3 uses final attempt-reset/initial-guess guard",
+    "Attempt1 did not reach application due test-file Java7 compilation errors",
+    "No physics, capacitor, seed, fault or limit changed",
+    "No v1 qualification marker; complete matrix remains required"
+  ]
+}

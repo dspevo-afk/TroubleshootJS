@@ -339,22 +339,19 @@ final class BoundedGeneratedBoardAssembler {
         private final Map<String, RuntimeTarget> runtimeTargets;
         private final Map<String, EndpointManifest> endpointManifest;
         private final RealizationManifest realizationManifest;
-
-        Result(GeneratedBoardInstance instance, BoundedAssemblyPlan plan,
-                Map<String, RuntimeTarget> runtimeTargets,
-                Map<String, EndpointManifest> endpointManifest) {
-            this(instance, plan, runtimeTargets, endpointManifest, null);
-        }
+        private final ConstructionReceipt constructionReceipt;
 
         Result(GeneratedBoardInstance instance, BoundedAssemblyPlan plan,
                 Map<String, RuntimeTarget> runtimeTargets,
                 Map<String, EndpointManifest> endpointManifest,
+                ConstructionReceipt constructionReceipt,
                 RealizationManifest expectedManifest) {
             if (instance == null || plan == null || runtimeTargets == null ||
-                    endpointManifest == null)
+                    endpointManifest == null || constructionReceipt == null)
                 throw new IllegalArgumentException("Incomplete bounded assembly result");
             this.instance = instance;
             this.plan = plan;
+            this.constructionReceipt = constructionReceipt;
             this.runtimeTargets = Collections.unmodifiableMap(
                 new TreeMap<String, RuntimeTarget>(runtimeTargets));
             this.endpointManifest = Collections.unmodifiableMap(
@@ -369,6 +366,9 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         RealizationManifest getRealizationManifest() { return realizationManifest; }
+        ConstructionReceipt getConstructionReceiptForDeveloperVerification() {
+            return constructionReceipt;
+        }
         GeneratedBoardInstance getInstance() { return instance; }
         BoundedAssemblyPlan getPlan() { return plan; }
         Map<String, RuntimeTarget> getRuntimeTargets() { return runtimeTargets; }
@@ -664,7 +664,8 @@ final class BoundedGeneratedBoardAssembler {
                 "Generated resistive coupling canary, seed " +
                     plan.getRequest().getDescriptor().getRootSeed(),
                 componentBindings, powerBindings, connectionBindings, behavior, layout,
-                specifications, selectedCandidate.getBinding(), null, challenge, familyState,
+                specifications, selectedCandidate.getBinding(),
+                new GeneratedComponentOperationalStates(), challenge, familyState,
                 runtime, null, true, candidates, diagnostic);
             // Construction has already run the strict board/connection/runtime
             // checks.  Repeat the cheap detached checks before publication.
@@ -711,7 +712,8 @@ final class BoundedGeneratedBoardAssembler {
         }
 
         Result result(RealizationManifest expectedManifest) {
-            return new Result(instance, plan, runtimeTargets, endpointManifest, expectedManifest);
+            return new Result(instance, plan, runtimeTargets, endpointManifest,
+                constructionReceipt, expectedManifest);
         }
 
         void begin(Stage stage) {

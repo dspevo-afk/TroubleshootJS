@@ -1,0 +1,58 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "Q100Player",
+  "status": "INFRASTRUCTURE_FAILURE",
+  "sourcePins": "final-compiled-q100player-3-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "2e0eea21703049a780ffece9d053fb9dd13b749b5f07e3ff7e79a68704bfd849",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "93d3d6396b7626f1653600826cdd971a294a31c5fb3a496a39c1ccee489bf8ad",
+    "scriptDigest": "33e288b972b5164eb9fdce4543b9c4b482cc0c27961bebaadb6d10e3bfdb04f8",
+    "webDigest": "1b220e3963c3c1422d3f3cfe49a4c52fbae97975e5ac47f724118db8cedbf748",
+    "executionDigest": "210f7bbdc8cfe9d2286dc7038ea0c7b3aa0d07be45bef0b191dde6c4e7cef986",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "infrastructure",
+    "phase": "browser",
+    "operation": "route-q100-player-debug-query",
+    "elapsedMs": 90121,
+    "remainingDeadlineMs": 0,
+    "error": "VERIFIER_INFRASTRUCTURE: q100-player-debug-query did not provide its required compiled report before the bounded deadline."
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "resourceSuccess": true,
+    "elapsedMs": 63918,
+    "limitMs": 120000,
+    "status": "PASS"
+  },
+  "exitCode": 2,
+  "elapsedSeconds": 183.8298745,
+  "rawReportSha256": "06374609d722eead159fc770d9a19686d75f15e4a2a6837866a629ae43ade68b",
+  "rawLogSha256": "f720b2ebb9558430ea47541811704d48723ffe627279822150db08d9378ab0e4",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ],
+  "q100Matrix": {
+    "operationElapsedMs": 119616,
+    "operationLimitMs": 6000000
+  },
+  "q100PlayerArtifact": {
+    "protocol": "troubleshootjs-q100-player-artifact-proof-v1",
+    "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+    "variant": "Player",
+    "style": "OBF",
+    "inputDigest": "a2a862b48181fd4365c915c198a272311b548318c0d6eb5cfe2fd920e0781d40",
+    "inputFileCount": 1198,
+    "outputDigest": "11b2b3265faf72f3514a1489ea45fe77b46d7e7e85b1961bb8a95080da10ccf6",
+    "outputFileCount": 357,
+    "compiledJavaScriptFileCount": 7,
+    "developerMarkerScan": "PASS"
+  }
+}

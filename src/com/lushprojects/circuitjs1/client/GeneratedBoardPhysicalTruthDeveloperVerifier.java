@@ -155,6 +155,8 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
     }
 
     private static final class TraceObservation {
+        String sourceId;
+        PcbCopperLayer layer;
         String netId;
         String startPadId;
         String endPadId;
@@ -163,6 +165,8 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
 
         TraceObservation copy() {
             TraceObservation result = new TraceObservation();
+            result.sourceId = sourceId;
+            result.layer = layer;
             result.netId = netId;
             result.startPadId = startPadId;
             result.endPadId = endPadId;
@@ -207,6 +211,8 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
     }
 
     private static final class LayoutSnapshot {
+        PcbCopperLayer routingLayer;
+        int platedHoleCount;
         final Vector<LayoutPadObservation> pads = new Vector<LayoutPadObservation>();
         final Vector<LayoutComponentObservation> components =
             new Vector<LayoutComponentObservation>();
@@ -214,6 +220,8 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
 
         LayoutSnapshot copy() {
             LayoutSnapshot result = new LayoutSnapshot();
+            result.routingLayer = routingLayer;
+            result.platedHoleCount = platedHoleCount;
             for (LayoutPadObservation pad : pads)
                 result.pads.add(pad.copy());
             for (LayoutComponentObservation component : components)
@@ -490,7 +498,10 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
             "SPAN_220", "SPAN_240", "SPAN_260");
         addPackage(manifest, load, "AXIAL_RESISTOR", false,
             "SPAN_220", "SPAN_240", "SPAN_260");
-        addTerminal(manifest, "J1.1", "J1", "1", supply, "SwitchElm", 1);
+        // Service construction moves the contact harness off the board and
+        // retains SUPPLY_TRACE post0 at (220,160). The return pad is a ground
+        // endpoint, not the supply-source post moved by the return harness.
+        addTerminal(manifest, "J1.1", "J1", "1", supply, "WireElm", 0);
         addTerminal(manifest, "J1.2", "J1", "2", returned, "GroundElm", 0);
         addTerminal(manifest, plan.idFor("source", FunctionalBlockDescriptor.EntityKind.PAD,
             "R1.1"), source, "1", supply, "WireElm", 1);
@@ -776,6 +787,9 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
             result.logicalBoard.nets.add(observation);
         }
 
+        result.layout.routingLayer = board.getPlacementConstraints().routingLayer;
+        for (PcbBoardHole hole : layout.getHoles())
+            if (hole.kind != PcbBoardHole.Kind.NON_PLATED) result.layout.platedHoleCount++;
         for (PcbPadPlacement pad : layout.getPads()) {
             LayoutPadObservation observation = new LayoutPadObservation();
             observation.padId = pad.getPadId();
@@ -818,6 +832,8 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
         }
         for (PcbTraceGeometry trace : layout.getTraces()) {
             TraceObservation observation = new TraceObservation();
+            observation.sourceId = trace.getSourceId();
+            observation.layer = trace.getLayer();
             observation.netId = trace.getNetId();
             observation.startPadId = trace.getStartPadId();
             observation.endPadId = trace.getEndPadId();
@@ -1258,9 +1274,14 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
     }
 
     private static int validateAllTraces(LogicalBoardSnapshot logical, LayoutSnapshot layout) {
+        // This oracle covers the current single-face profiles. Layer/via
+        // routing has a separate contract; do not flatten it into this proof.
+        require(layout.routingLayer != null && layout.platedHoleCount == 0,
+            "task43p-copper-single-face-scope");
         HashSet<String> layoutPadIds = new HashSet<String>();
         HashMap<String, LayoutPadObservation> pads = new HashMap<String, LayoutPadObservation>();
         HashSet<String> netIds = new HashSet<String>();
+        HashSet<String> sources = new HashSet<String>();
         HashMap<String, BoardPadObservation> boardPads = boardPadsById(logical.pads);
         for (LayoutPadObservation pad : layout.pads) {
             layoutPadIds.add(pad.padId);
@@ -1270,39 +1291,137 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
             netIds.add(net.netId);
         HashSet<String> endpointPads = new HashSet<String>();
         for (TraceObservation trace : layout.traces) {
+            requireId(trace.sourceId, "raw copper source");
+            require(trace.sourceId.length() <= 4096, "task43p-invalid-copper-source-length");
+            for (int index = 0; index < trace.sourceId.length(); index++)
+                require(trace.sourceId.charAt(index) >= 32 && trace.sourceId.charAt(index) != 127,
+                    "task43p-invalid-copper-source-character");
+            require(sources.add(trace.sourceId), "task43p-duplicate-copper-source:" + trace.sourceId);
+            require(trace.layer == layout.routingLayer, "task43p-copper-single-face-layer");
             requireId(trace.netId, "raw copper net");
-            requireId(trace.startPadId, "raw copper start pad");
-            requireId(trace.endPadId, "raw copper end pad");
-            require(layoutPadIds.contains(trace.startPadId),
-                "task43p-trace-start-pad-invalid:" + trace.startPadId);
-            require(layoutPadIds.contains(trace.endPadId),
-                "task43p-trace-end-pad-invalid:" + trace.endPadId);
             require(netIds.contains(trace.netId),
                 "task43p-trace-net-invalid:" + trace.netId);
             require(trace.xPoints != null && trace.yPoints != null &&
                 trace.xPoints.length >= 2 && trace.xPoints.length == trace.yPoints.length,
                 "task43p-trace-points-invalid:" + trace.startPadId);
-            LayoutPadObservation start = pads.get(trace.startPadId);
-            LayoutPadObservation end = pads.get(trace.endPadId);
-            require(trace.xPoints[0] == start.x && trace.yPoints[0] == start.y,
-                "task43p-raw-copper-start-gap:" + trace.startPadId);
+            for (int index = 1; index < trace.xPoints.length; index++)
+                require((trace.xPoints[index] == trace.xPoints[index - 1]) !=
+                        (trace.yPoints[index] == trace.yPoints[index - 1]),
+                    "task43p-raw-copper-non-manhattan-or-empty:" + trace.sourceId);
             int last = trace.xPoints.length - 1;
-            require(trace.xPoints[last] == end.x && trace.yPoints[last] == end.y,
-                "task43p-raw-copper-end-gap:" + trace.endPadId);
-            BoardPadObservation startBoardPad = boardPads.get(trace.startPadId);
-            BoardPadObservation endBoardPad = boardPads.get(trace.endPadId);
-            require(startBoardPad != null && endBoardPad != null,
-                "task43p-trace-endpoint-board-pad-missing");
-            require(same(trace.netId, startBoardPad.netId) &&
-                same(trace.netId, endBoardPad.netId),
-                "task43p-trace-net-board-mismatch:" + trace.startPadId);
-            endpointPads.add(trace.startPadId);
-            endpointPads.add(trace.endPadId);
+            validateNamedTraceEndpoint(trace, trace.startPadId, trace.xPoints[0], trace.yPoints[0],
+                pads, boardPads, endpointPads, "start");
+            validateNamedTraceEndpoint(trace, trace.endPadId, trace.xPoints[last], trace.yPoints[last],
+                pads, boardPads, endpointPads, "end");
         }
         for (String padId : layoutPadIds)
             require(endpointPads.contains(padId),
                 "task43p-layout-pad-has-no-trace-endpoint:" + padId);
+        validateCopperConnectivity(layout, boardPads);
         return layout.traces.size();
+    }
+
+    private static void validateNamedTraceEndpoint(TraceObservation trace, String padId,
+            int x, int y, HashMap<String, LayoutPadObservation> pads,
+            HashMap<String, BoardPadObservation> boardPads, HashSet<String> endpointPads,
+            String end) {
+        if (padId == null) return; // A physical tree junction is checked below.
+        requireId(padId, "raw copper " + end + " pad");
+        LayoutPadObservation pad = pads.get(padId);
+        require(pad != null, "task43p-trace-" + end + "-pad-invalid:" + padId);
+        require(x == pad.x && y == pad.y, "task43p-raw-copper-" + end + "-gap:" + padId);
+        BoardPadObservation logical = boardPads.get(padId);
+        require(logical != null, "task43p-trace-endpoint-board-pad-missing:" + padId);
+        require(same(trace.netId, logical.netId), "task43p-trace-net-board-mismatch:" + padId);
+        endpointPads.add(padId);
+    }
+
+    /** Geometry-only connectivity, independent of router/builder net unions.
+     * Each polyline is connected; exact Manhattan centerline intersections
+     * join traces and pad centers. Net labels are checked only after joining. */
+    private static void validateCopperConnectivity(LayoutSnapshot layout,
+            HashMap<String, BoardPadObservation> boardPads) {
+        int traceCount = layout.traces.size();
+        int[] parents = new int[traceCount + layout.pads.size()];
+        for (int index = 0; index < parents.length; index++) parents[index] = index;
+        for (int first = 0; first < traceCount; first++) {
+            TraceObservation trace = layout.traces.get(first);
+            if (trace.startPadId == null) requireJunctionContact(layout, trace, 0);
+            if (trace.endPadId == null)
+                requireJunctionContact(layout, trace, trace.xPoints.length - 1);
+            for (int second = first + 1; second < traceCount; second++)
+                if (copperTracesTouch(trace, layout.traces.get(second)))
+                    joinCopper(parents, first, second);
+            for (int pad = 0; pad < layout.pads.size(); pad++) {
+                LayoutPadObservation observed = layout.pads.get(pad);
+                if (copperTraceContains(trace, observed.x, observed.y))
+                    joinCopper(parents, first, traceCount + pad);
+            }
+        }
+        HashMap<Integer, String> physicalNets = new HashMap<Integer, String>();
+        HashMap<String, Integer> logicalRoots = new HashMap<String, Integer>();
+        for (int index = 0; index < layout.pads.size(); index++) {
+            LayoutPadObservation pad = layout.pads.get(index);
+            BoardPadObservation logical = boardPads.get(pad.padId);
+            require(logical != null, "task43p-copper-board-pad-missing:" + pad.padId);
+            Integer root = Integer.valueOf(copperRoot(parents, traceCount + index));
+            String physicalNet = physicalNets.get(root);
+            require(physicalNet == null || same(physicalNet, logical.netId),
+                "task43p-copper-cross-net-short:" + pad.padId);
+            physicalNets.put(root, logical.netId);
+            Integer previous = logicalRoots.get(logical.netId);
+            require(previous == null || previous.equals(root),
+                "task43p-copper-disconnected-net:" + logical.netId);
+            logicalRoots.put(logical.netId, root);
+        }
+        for (int index = 0; index < traceCount; index++) {
+            TraceObservation trace = layout.traces.get(index);
+            String physicalNet = physicalNets.get(Integer.valueOf(copperRoot(parents, index)));
+            require(physicalNet != null && same(physicalNet, trace.netId),
+                "task43p-copper-unanchored-or-wrong-net:" + trace.sourceId);
+        }
+    }
+
+    private static void requireJunctionContact(LayoutSnapshot layout, TraceObservation trace, int point) {
+        for (TraceObservation other : layout.traces)
+            if (other != trace && same(trace.netId, other.netId) &&
+                    copperTraceContains(other, trace.xPoints[point], trace.yPoints[point])) return;
+        require(false, "task43p-copper-junction-unwitnessed:" + trace.sourceId);
+    }
+
+    private static boolean copperTraceContains(TraceObservation trace, int x, int y) {
+        for (int index = 1; index < trace.xPoints.length; index++)
+            if (x >= Math.min(trace.xPoints[index - 1], trace.xPoints[index]) &&
+                    x <= Math.max(trace.xPoints[index - 1], trace.xPoints[index]) &&
+                    y >= Math.min(trace.yPoints[index - 1], trace.yPoints[index]) &&
+                    y <= Math.max(trace.yPoints[index - 1], trace.yPoints[index])) return true;
+        return false;
+    }
+
+    private static boolean copperTracesTouch(TraceObservation first, TraceObservation second) {
+        for (int a = 1; a < first.xPoints.length; a++)
+            for (int b = 1; b < second.xPoints.length; b++)
+                if (Math.min(first.xPoints[a - 1], first.xPoints[a]) <=
+                        Math.max(second.xPoints[b - 1], second.xPoints[b]) &&
+                    Math.max(first.xPoints[a - 1], first.xPoints[a]) >=
+                        Math.min(second.xPoints[b - 1], second.xPoints[b]) &&
+                    Math.min(first.yPoints[a - 1], first.yPoints[a]) <=
+                        Math.max(second.yPoints[b - 1], second.yPoints[b]) &&
+                    Math.max(first.yPoints[a - 1], first.yPoints[a]) >=
+                        Math.min(second.yPoints[b - 1], second.yPoints[b])) return true;
+        return false;
+    }
+
+    private static int copperRoot(int[] parents, int index) {
+        while (parents[index] != index) {
+            parents[index] = parents[parents[index]];
+            index = parents[index];
+        }
+        return index;
+    }
+
+    private static void joinCopper(int[] parents, int first, int second) {
+        parents[copperRoot(parents, first)] = copperRoot(parents, second);
     }
 
     private static void validatePackageObservations(Manifest manifest,
@@ -1444,7 +1563,12 @@ final class GeneratedBoardPhysicalTruthDeveloperVerifier {
                 actualEndpoint.getElement()) &&
                 same(expected.solverClass, element.getClass().getSimpleName()) &&
                 expected.solverPost == postIndex,
-                "task43p-solver-post-oracle-mismatch:" + expected.padId);
+                "task43p-solver-post-oracle-mismatch:" + expected.padId +
+                    ":observation-owned=" + observation.ownedElement +
+                    ":canonical-owned=" + containsIdentity(instance.getSimulationElements(), element) +
+                    ":expected-class=" + expected.solverClass +
+                    ":actual-class=" + element.getClass().getSimpleName() +
+                    ":expected-post=" + expected.solverPost + ":actual-post=" + postIndex);
 
             Point actualBoardPoint = actualEndpoint.getElement().getPost(
                 actualEndpoint.getPostIndex());

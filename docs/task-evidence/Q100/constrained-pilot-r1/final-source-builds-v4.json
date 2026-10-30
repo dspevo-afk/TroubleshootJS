@@ -1,0 +1,175 @@
+{
+  "protocol": "q100-final-source-builds-v4",
+  "status": "PASS",
+  "dependencyEpoch": "tsj-generation-dependencies-v20",
+  "jdkVersion": "1.8.0_502",
+  "gwtVersion": "2.7.0",
+  "builds": [
+    {
+      "variant": "Player",
+      "attempt": 5,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 88.3113647,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Player",
+        "Style": "OBF",
+        "InputDigest": "2fad415c46d4cdec6865b6a72fd75f5b81a477969a00b00d0deaa27fce64903f",
+        "InputFileCount": 1198,
+        "OutputDigest": "c6a2360f04f60d43b91f991230699c0eb3102bc64d63ef3faacad87379eede51",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Player",
+        "elapsedSeconds": 88.3113647,
+        "cacheCount": 5,
+        "cacheBytes": 9437511,
+        "files": [
+          {
+            "name": "2020B3E23FF3F9C922B5555AFDC76231.cache.js",
+            "bytes": 2212829,
+            "sha256": "4a20bd3148ce586490f22944bf37dfc52925a8ed2f099128da71bc93e638210b"
+          },
+          {
+            "name": "25451EEFB25DDD3B1E7EA47579A2FE23.cache.js",
+            "bytes": 589778,
+            "sha256": "aca4644d5de88b6eeecfb3382296bf138de43042db6a6d5e935baf4990eea97e"
+          },
+          {
+            "name": "52A751F883EB6F251DCBFB950920D9A5.cache.js",
+            "bytes": 2211100,
+            "sha256": "68291f4b8a48ed215e6bf0a83c21195ca6107acf43b3654513fa389f65e0bb07"
+          },
+          {
+            "name": "88330DA7EA2308A16A727EA4B2C7ECBE.cache.js",
+            "bytes": 2212250,
+            "sha256": "7e5a4a2ff27e2815d73dbe6c8f9ccd948f60f9c53f13bcc17ccb6d58fb1c6977"
+          },
+          {
+            "name": "FAE0A60B9F4C78028E466A954E535CFD.cache.js",
+            "bytes": 2211554,
+            "sha256": "f96667024c9d3a8e511e695474cf9aefaac54abdb7bd5aa2562f3aaabaa0117f"
+          }
+        ]
+      },
+      "sourcePins": "build-player-5-source-pins.json",
+      "fullInventoryFileCount": 357,
+      "fullInventorySha256": "405535528b988b10bacd5be2901d384ea5dbfb131386789c5fbeb227cfe614bf",
+      "rawLogSha256": "eb4b2599ac71e1237fb7efcb53e7d1c3adbf2785efaf6cd0891620c3ba688ff7"
+    },
+    {
+      "variant": "Developer",
+      "attempt": 15,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 124.1465019,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "9ed2c178a09809ff8e3e50e32f1828175a09d0a2572c61a008da6e80e71b05f1",
+        "InputFileCount": 1198,
+        "OutputDigest": "6649d5be336a546c7b93a110b8d3930b156a1fbde8bf780690ae45bcc0a4e1b4",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Developer",
+        "elapsedSeconds": 124.1465019,
+        "cacheCount": 5,
+        "cacheBytes": 17782616,
+        "files": [
+          {
+            "name": "3EE67ABB9D747F2318BAAA906BB50C34.cache.js",
+            "bytes": 3575530,
+            "sha256": "425e8503477dc50ca2213bb7abb1ef6f9e54d1e9155f571eed6b75acfb0d95cc"
+          },
+          {
+            "name": "6471AF3CDBEDE31BB8A345E101650D65.cache.js",
+            "bytes": 3478603,
+            "sha256": "c843ba06608c972544a938129f1789f4db5ac5dde3ecf48addf0e99111938fa8"
+          },
+          {
+            "name": "84A7514C01821043BFD270AE62BAE9DF.cache.js",
+            "bytes": 3576432,
+            "sha256": "a4508729e93357c07a104bd92c08c4fb3ffc1646de150faad27f92f5164d3a76"
+          },
+          {
+            "name": "93E47EF3852005CB493AE885D7151993.cache.js",
+            "bytes": 3575160,
+            "sha256": "b73c05c8d854e9fbaeca5a688fa96270f61a66713f0ab6bfa587845767a3850b"
+          },
+          {
+            "name": "FAE55F338C29FE79700B79CF0641CF22.cache.js",
+            "bytes": 3576891,
+            "sha256": "25cbc176a6e13dae8123bd8b5fcb8ed8f079b838e8aa21bb3936e9b7b8355d01"
+          }
+        ]
+      },
+      "sourcePins": "build-developer-15-source-pins.json",
+      "fullInventoryFileCount": 357,
+      "fullInventorySha256": "28112244befeaecf2dc6743a58e740f05db1acd7b14f66f71a0c0b901d49ba32",
+      "rawLogSha256": "afad717a1d2004660d8c72e5dc135a377ec7579d29e24ac755c66a438138ae3a"
+    },
+    {
+      "variant": "Developer",
+      "attempt": 16,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedSeconds": 122.1253676,
+      "identity": {
+        "Protocol": "troubleshootjs-production-build-identity-v1",
+        "Variant": "Developer",
+        "Style": "OBF",
+        "InputDigest": "9ed2c178a09809ff8e3e50e32f1828175a09d0a2572c61a008da6e80e71b05f1",
+        "InputFileCount": 1198,
+        "OutputDigest": "6649d5be336a546c7b93a110b8d3930b156a1fbde8bf780690ae45bcc0a4e1b4",
+        "OutputFileCount": 357
+      },
+      "measurements": {
+        "variant": "Developer",
+        "elapsedSeconds": 122.1253676,
+        "cacheCount": 5,
+        "cacheBytes": 17782616,
+        "files": [
+          {
+            "name": "3EE67ABB9D747F2318BAAA906BB50C34.cache.js",
+            "bytes": 3575530,
+            "sha256": "425e8503477dc50ca2213bb7abb1ef6f9e54d1e9155f571eed6b75acfb0d95cc"
+          },
+          {
+            "name": "6471AF3CDBEDE31BB8A345E101650D65.cache.js",
+            "bytes": 3478603,
+            "sha256": "c843ba06608c972544a938129f1789f4db5ac5dde3ecf48addf0e99111938fa8"
+          },
+          {
+            "name": "84A7514C01821043BFD270AE62BAE9DF.cache.js",
+            "bytes": 3576432,
+            "sha256": "a4508729e93357c07a104bd92c08c4fb3ffc1646de150faad27f92f5164d3a76"
+          },
+          {
+            "name": "93E47EF3852005CB493AE885D7151993.cache.js",
+            "bytes": 3575160,
+            "sha256": "b73c05c8d854e9fbaeca5a688fa96270f61a66713f0ab6bfa587845767a3850b"
+          },
+          {
+            "name": "FAE55F338C29FE79700B79CF0641CF22.cache.js",
+            "bytes": 3576891,
+            "sha256": "25cbc176a6e13dae8123bd8b5fcb8ed8f079b838e8aa21bb3936e9b7b8355d01"
+          }
+        ]
+      },
+      "sourcePins": "build-developer-16-source-pins.json",
+      "fullInventoryFileCount": 357,
+      "fullInventorySha256": "28112244befeaecf2dc6743a58e740f05db1acd7b14f66f71a0c0b901d49ba32",
+      "rawLogSha256": "58e2c3394334c971ea566d6fb2d65829c9f2b56cb43e2482ff97342be1f2c240"
+    }
+  ],
+  "developer16ReproducesDeveloper15": "exact input/output identities and complete 357-file inventory bytes",
+  "limits": [
+    "Final-source maintained JDK8/GWT builds only",
+    "Five compiler permutations are not five independently tested browsers",
+    "Developer15 compiled Current and A04 reused only because Developer16 exactly reproduces its full artifacts",
+    "No public RB100 authority or broad E06 model fidelity qualification"
+  ]
+}

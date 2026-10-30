@@ -1,0 +1,20 @@
+{
+  "protocol": "q100-and-a04-strict-readers-v6",
+  "status": "PASS",
+  "host": "Windows PowerShell 5.1",
+  "exitCode": 0,
+  "elapsedSeconds": 3.2339294,
+  "a04Assertions": 14,
+  "debugFalsePrivacy": "Uses the exact strict ordinary-privacy predicate, rejects known/unknown/verification/missing/null/array/duplicate-shaped developer attributes",
+  "playerPrivacy": "New unknown future-answer direct rejection; previous artifact and two-sentinel canary fixtures preserved",
+  "readerScriptSha256": "a9883611d54dba868306efee342065044066f9795708f97bdc032d738ecae089",
+  "syntheticScriptSha256": "ba725f9dcd9dad4fef8b538de38ed902ba55cd88a86c46b9eed109df93b48d2e",
+  "isolationModuleSha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+  "rawLogSha256": "a6e7a8c8bb157634bbb6688f8062de8e39fc569102c40d0a9875ac6331723e8d",
+  "preservedScope": "All prior independent Q100 electrical oracle,2x31 census,timestep,lifecycle,inputlock,artifact and redaction fixtures PASS",
+  "limits": [
+    "In-memory fixtures only; fresh Developer debugfalse DOM canary run is active",
+    "Current production Java,compiler inputs and deployed Developer output unchanged from final-source-builds-v4; maintained identity recomputation matched",
+    "Module one redundant pre-view census removed; real62-artifact/2048-file canary PASS independently; complete compiled62 still requires fresh aggregate PASS"
+  ]
+}

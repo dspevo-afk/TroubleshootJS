@@ -1,0 +1,29 @@
+{
+  "protocol": "q100-a04-terminal-upstream-native-v1",
+  "status": "PASS",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 69.5680052
+  },
+  "cleanup": "PASS",
+  "sourcePins": "a04-inventory-runtime-3-source-pins.json",
+  "suites": {
+    "BoundedAssemblyContractTest": 241,
+    "PhysicalCopperObservationContractTest": "26 assertions,literal tree16negatives,9actualprofiles",
+    "ControlledIndicatorAssemblyContractTest": 1177,
+    "A04PhysicalDeclarationContractTest": 5270,
+    "Task43PhysicalEndpointContractTest": "320 assertions,6legacy families and4controlledsignedseeds",
+    "A04ConstructionContractTest": 680,
+    "A04ElementInventoryRuntimeContractTest": "617 assertions,6 actual candidates; exact inventory,endpoints,declared direct/series upstream,immutableRPD and restored wrongprimarynegative",
+    "A03OperationalStateRuntimeContractTest": "401 assertions,4 exactsignedseeds,direct/replay/scene"
+  },
+  "sourceDerivedTopology": "Controlled RG/RB/RLOAD primary1->declared fault switch0; switch1->secondary0. Direct R1/RPD primary1->secondary0. No assertion joins across an OPEN generated fault switch.",
+  "rawLogSha256": "43a62bd1a17580eea393a6a0bc318adb3e1e68b10aa21dd46a553a550f8f05da",
+  "receiptSha256": "75f5a9fd16a5a72242b5b25d50b88184ddd9cd715ed9820f289ebca5d5b74edd",
+  "limits": [
+    "Native endpoint/projection checks use detached identities and geometry, not active solver nodes",
+    "Fresh compiled A04 checks adjacent actualCircuitJSnodejoins aftersettlement; acceptance pending",
+    "Full native matrix and all independent oracles NOT RUN",
+    "Prior failed direct-upstream native expectation retained unchanged"
+  ]
+}

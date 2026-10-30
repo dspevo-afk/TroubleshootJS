@@ -186,9 +186,9 @@ public final class Rb56ModelIdentityContractTest {
     }
 
     private static void existingCanonicalBytes() throws Exception {
-        require("tsj-generation-dependencies-v19".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
+        require("tsj-generation-dependencies-v20".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
             "circuitjs-source-load-model-inputs-no-transient-dump-v7".equals(GenerationDependencyContext.CIRCUIT_DUMP_EPOCH),
-            "corrected electrical and physical interpretations invalidate earlier model artifacts");
+            "shared solver interpretation invalidates prior proof identities while model dump inputs remain exact");
         ResistorElm resistor = own(new ResistorElm(16, 32)); resistor.x2 = 80; resistor.resistance = 100;
         CapacitorElm capacitor = own(new CapacitorElm(16, 64)); capacitor.x2 = 80;
         capacitor.capacitance = .001; capacitor.voltdiff = 8; capacitor.initialVoltage = .002;

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Current', 'A08', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02')]
+    [ValidateSet('Current', 'A08', 'A07', 'A06', 'A05', 'A03', 'A04', 'Task41', 'Task46', 'Task47', 'Task48', 'Task49', 'A02', 'Q100', 'Q100Faults', 'Q100Player')]
     [string]$Gate = 'Current',
     [switch]$Smoke,
     [switch]$ForceTcpListener,
@@ -34,6 +34,12 @@ $script:FailureDiagnostic = $null
 $script:CleanupDiagnostic = $null
 $script:NextCdpId = 1
 $script:CdpEvents = New-Object Collections.Generic.List[string]
+$script:IsQ100Gate = ($Gate -ieq 'Q100' -or $Gate -ieq 'Q100Faults' -or $Gate -ieq 'Q100Player') -and -not $Smoke
+$script:Q100MatrixStartedUtc = if ($script:IsQ100Gate) { [DateTime]::UtcNow } else { [DateTime]::MinValue }
+$script:Q100MatrixDeadlineUtc = if ($script:IsQ100Gate) { $script:Q100MatrixStartedUtc.AddSeconds(6000) } else { [DateTime]::MinValue }
+$script:Q100MatrixOperationElapsedMs = $null
+$script:Q100CleanupElapsedMs = $null
+$script:Q100PlayerArtifactProof = $null
 
 function Get-SafeText([object]$Value, [int]$Limit = 20000) {
     if ($null -eq $Value) { return '' }
@@ -60,7 +66,7 @@ function Get-DiagnosticText([object]$Value, [int]$Limit = 4000) {
     # Diagnostics may mention an owned temp root. Keep those paths out of the
     # report while leaving canonical compiled report payloads untouched.
     return [Text.RegularExpressions.Regex]::Replace($text,
-        '(?i)[A-Z]:[^;\r\n ]+', '<owned-path>')
+        '(?i)(?<![A-Z0-9])[A-Z]:[\\/][^;\r\n ]+', '<owned-path>')
 }
 
 function Get-SafeDigest([string]$Path) {
@@ -308,7 +314,19 @@ function Wait-Cdp($Socket, [string]$Expression, [DateTime]$Deadline,
 
 function Get-RouteReports($Socket, [DateTime]$Deadline) {
     $expression = @'
-(()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';return {
+(()=>{const d=document.documentElement;const get=n=>d.getAttribute(n)||'';const developerAttributes={};
+  const publicPreviewAttributes=new Set(['data-tsj-preview-identity-protocol','data-tsj-preview-source-digest',
+    'data-tsj-preview-script-digest','data-tsj-preview-web-digest','data-tsj-preview-execution-digest',
+    'data-tsj-preview-file-count']);
+  const visible=e=>{const r=e.getBoundingClientRect(),s=window.getComputedStyle(e);return r.width>0&&r.height>0&&e.getClientRects().length>0&&s.display!=='none'&&s.visibility!=='hidden'&&e.getAttribute('aria-hidden')!=='true';};
+  const enabled=e=>!e.disabled&&e.getAttribute('aria-disabled')!=='true';
+  const accessibleName=e=>(e.getAttribute('aria-label')||e.innerText||e.textContent||'').trim().replace(/\s+/g,' ');
+  for(let i=0;i<d.attributes.length;i++){
+    const n=d.attributes[i].name.toLowerCase();
+    if(n.startsWith('data-tsj-')&&!publicPreviewAttributes.has(n))
+      developerAttributes[n]=true;
+  }
+  return {
   url:location.href,ready:document.readyState,
   verification:get('data-tsj-verification'),
   a08:get('data-tsj-a08-report'),a07:get('data-tsj-a07-report'),a06:get('data-tsj-a06-report'),a04:get('data-tsj-a04-report'),a03:get('data-tsj-a03-report'),task41:get('data-tsj-task41-evidence'),
@@ -318,14 +336,80 @@ function Get-RouteReports($Socket, [DateTime]$Deadline) {
   task46Replay:get('data-tsj-task46-replay'),
   task47:get('data-tsj-task47-report'),task48:get('data-tsj-task48-report'),
   task49:get('data-tsj-task49-report'),a02:get('data-tsj-a02-report'),
-  normalReady:(()=>{const b=document.body?document.body.innerText:'';
-    const retest=[...document.querySelectorAll('button')].filter(x=>
-      x.innerText.trim()==='Retest Customer');
-    return {programReady:b.includes('Indicator does not light.'),
-      retestCustomerReady:retest.length===1&&!retest[0].disabled};})()
+  q100:get('data-tsj-q100-report'),q100Present:d.hasAttribute('data-tsj-q100-report'),
+  verificationPresent:d.hasAttribute('data-tsj-verification'),
+  developerAttributes,
+  normalReady:(()=>{
+    const nav=[...document.querySelectorAll('nav[aria-label="Workbench navigation"]')].filter(visible);
+    const retest=[...document.querySelectorAll('button[aria-label="Run customer retest"]')].filter(x=>visible(x)&&enabled(x));
+    const power=[...document.querySelectorAll('button.tsj-power-button')].filter(visible);
+    const powerLabel=power.length===1?accessibleName(power[0]):'';
+    const boardPowerReady=power.length===1&&/^Board Power: (?:ON|OFF)$/.test(powerLabel);
+    return {workbenchNavigationReady:nav.length===1,programReady:nav.length===1&&boardPowerReady,
+      retestCustomerReady:retest.length===1,boardPowerReady,boardPowerLabel:powerLabel};})()
 };})()
 '@
     return Evaluate-Cdp $Socket $expression $Deadline
+}
+
+function Test-RouteRequiresTicketEntry([string]$Kind) {
+    return $Kind -ceq 'q100-player' -or $Kind -ceq 'q100-debugfalse' -or
+        $Kind -match '-debugoff$'
+}
+
+function Get-OrdinaryTicketEntryTarget($Socket, [DateTime]$Deadline) {
+    $expression = @'
+(()=>{const name=e=>(e.getAttribute('aria-label')||e.innerText||e.textContent||'').trim().replace(/\s+/g,' ');
+  const visible=e=>{const r=e.getBoundingClientRect(),s=window.getComputedStyle(e);return r.width>0&&r.height>0&&e.getClientRects().length>0&&s.display!=='none'&&s.visibility!=='hidden'&&e.getAttribute('aria-hidden')!=='true';};
+  const enabled=e=>!e.disabled&&e.getAttribute('aria-disabled')!=='true';
+  const matches=[...document.querySelectorAll('button')].filter(e=>name(e)==='Accept ticket and start');
+  const ready=matches.filter(e=>visible(e)&&enabled(e));
+  const complaint=[...document.querySelectorAll('.tsj-product-complaint')].filter(e=>visible(e)&&e.textContent.trim()==='Indicator does not light.');
+  let point=null;
+  if(ready.length===1){const r=ready[0].getBoundingClientRect();point={x:r.left+(r.width/2),y:r.top+(r.height/2)};}
+  return {labelledCount:matches.length,visibleEnabledCount:ready.length,complaintVisible:complaint.length===1,point};})()
+'@
+    return Evaluate-Cdp $Socket $expression $Deadline
+}
+
+function Invoke-OrdinaryTicketEntry($Socket, [DateTime]$Deadline) {
+    $target = $null
+    do {
+        $target = Get-OrdinaryTicketEntryTarget $Socket $Deadline
+        if ($null -ne $target -and [int]$target.visibleEnabledCount -gt 1) {
+            Throw-AppFailure 'Ordinary service ticket exposed more than one visible enabled Accept ticket and start control.'
+        }
+        if ($null -ne $target -and [int]$target.visibleEnabledCount -eq 1 -and
+                $target.complaintVisible -is [bool] -and $target.complaintVisible -and
+                $null -ne $target.point -and
+                -not [double]::IsNaN([double]$target.point.x) -and
+                -not [double]::IsInfinity([double]$target.point.x) -and
+                -not [double]::IsNaN([double]$target.point.y) -and
+                -not [double]::IsInfinity([double]$target.point.y)) { break }
+        Start-Sleep -Milliseconds 200
+    } while ([DateTime]::UtcNow -lt $Deadline)
+    if ($null -eq $target -or [int]$target.visibleEnabledCount -ne 1 -or
+            $target.complaintVisible -isnot [bool] -or -not $target.complaintVisible -or
+            $null -eq $target.point) {
+        Throw-VerifierInfrastructure 'Timed out waiting for the expected visible LED complaint and one visible enabled Accept ticket and start control.'
+    }
+    $x = [double]$target.point.x
+    $y = [double]$target.point.y
+    [void](Invoke-Cdp $Socket 'Input.dispatchMouseEvent' @{ type='mouseMoved'; x=$x; y=$y } $Deadline)
+    [void](Invoke-Cdp $Socket 'Input.dispatchMouseEvent' @{ type='mousePressed'; x=$x; y=$y;
+        button='left'; clickCount=1 } $Deadline)
+    [void](Invoke-Cdp $Socket 'Input.dispatchMouseEvent' @{ type='mouseReleased'; x=$x; y=$y;
+        button='left'; clickCount=1 } $Deadline)
+    return [ordered]@{
+        protocol = 'tsj-ordinary-ticket-entry-v1'
+        status = 'PASS'
+        buttonLabel = 'Accept ticket and start'
+        labelledCount = [int]$target.labelledCount
+        visibleEnabledCount = [int]$target.visibleEnabledCount
+        expectedComplaintVisible = [bool]$target.complaintVisible
+        clickPoint = [ordered]@{ x = $x; y = $y }
+        inputEvents = @('mouseMoved','mousePressed:left','mouseReleased:left')
+    }
 }
 
 function Navigate-Cdp($Socket, [string]$Url, [string]$RunId,
@@ -594,7 +678,7 @@ function Test-A04Report([object]$Value) {
                 -not $case.PSObject.Properties['seed'] -or $case.seed -isnot [string] -or
                 $case.seed -notin @('1', '2', '3') -or
                 -not $case.PSObject.Properties['generatorVersion'] -or
-                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 5L 5L)) {
+                -not (Test-VerifierStrictIntegralValue $case.generatorVersion 6L 6L)) {
             return $false
         }
         foreach ($name in @('replayVerified', 'ownerRestored')) {
@@ -729,30 +813,737 @@ function Test-ControlledReport([object]$Value, [string]$Protocol) {
     } catch { return $false }
 }
 
-function Test-RouteReady($Kind, $Reports) {
+function Test-Q100FiniteNumber([object]$Value) {
+    return ($Value -is [int] -or $Value -is [long] -or $Value -is [double] -or $Value -is [decimal]) -and
+        -not [double]::IsNaN([double]$Value) -and -not [double]::IsInfinity([double]$Value)
+}
+
+function Test-Q100Number([object]$Value, [double]$Minimum, [double]$Maximum) {
+    return (Test-Q100FiniteNumber $Value) -and
+        [double]$Value -ge $Minimum -and [double]$Value -le $Maximum
+}
+
+function Test-Q100TemporalBatchMetadata([object]$Reference,
+        [long]$ExpectedAcceptedSteps, [long]$ExpectedBatches,
+        [long]$ExpectedMaxBatchAcceptedSteps) {
+    try {
+        $fixedStepVerified = if ($null -ne $Reference) {
+            $Reference.PSObject.Properties['fixedStepVerified']
+        } else { $null }
+        return $null -ne $Reference -and
+            $Reference.advanceMode -is [string] -and
+            $Reference.advanceMode -ceq 'TEMPORAL_BATCH' -and
+            (Test-VerifierStrictIntegralValue $Reference.operationLimitMs 5000L 5000L) -and
+            (Test-VerifierStrictIntegralValue $Reference.trialBoundaryLimitMs 500L 500L) -and
+            (Test-VerifierStrictIntegralValue $Reference.maxBatchSteps 64L 64L) -and
+            $null -ne $fixedStepVerified -and
+            $fixedStepVerified.Value -is [bool] -and $fixedStepVerified.Value -and
+            (Test-VerifierStrictIntegralValue $Reference.acceptedSteps `
+                $ExpectedAcceptedSteps $ExpectedAcceptedSteps) -and
+            (Test-VerifierStrictIntegralValue $Reference.stepBatches `
+                $ExpectedBatches $ExpectedBatches) -and
+            (Test-VerifierStrictIntegralValue $Reference.maxBatchAcceptedSteps `
+                $ExpectedMaxBatchAcceptedSteps $ExpectedMaxBatchAcceptedSteps)
+    } catch { return $false }
+}
+
+function Get-Q100FaultOracle() {
+    # Independent frozen symptom oracle copied from the Q100 pilot plan, not
+    # read from the producer's fault table or candidate report.
+    return @(
+        [pscustomobject]@{ id='RENAC_RESISTANCE'; context='HIGH'; witness='RAIL12'; above=$false; threshold=1.0 },
+        [pscustomobject]@{ id='REN_RESISTANCE'; context='HIGH'; witness='RAIL5'; above=$false; threshold=1.0 },
+        [pscustomobject]@{ id='RSA_RESISTANCE'; context='HIGH'; witness='OUT_A'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RDA_RESISTANCE'; context='HIGH'; witness='OUT_A'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='KB_COIL_OPEN'; context='HIGH'; witness='OUT_B'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RSC_RESISTANCE'; context='HIGH'; witness='OUT_C'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RSD_RESISTANCE'; context='HIGH'; witness='OUT_D'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RDC_RESISTANCE'; context='HIGH'; witness='OUT_C'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RDD_RESISTANCE'; context='HIGH'; witness='OUT_D'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='KC_COIL_OPEN'; context='HIGH'; witness='OUT_C'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='KD_COIL_OPEN'; context='HIGH'; witness='OUT_D'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RDE_RESISTANCE'; context='HIGH'; witness='OUT_E'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RDF_RESISTANCE'; context='HIGH'; witness='OUT_F'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RSH_E_RESISTANCE'; context='HIGH'; witness='OUT_E'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RSH_F_RESISTANCE'; context='HIGH'; witness='OUT_F'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='DE_SHUNT'; context='HIGH'; witness='OUT_E'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='DF_SHUNT'; context='HIGH'; witness='OUT_F'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='CSTORE_E_SHUNT'; context='HIGH'; witness='OUT_E'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='CSTORE_F_SHUNT'; context='HIGH'; witness='OUT_F'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='C33_SHUNT'; context='HIGH'; witness='RAIL3V3'; above=$false; threshold=1.0 },
+        [pscustomobject]@{ id='CIN33_SHUNT'; context='HIGH'; witness='RAIL5'; above=$false; threshold=1.0 },
+        [pscustomobject]@{ id='RMON_RESISTANCE'; context='HIGH'; witness='OUT_C'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RMON_H_RESISTANCE'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 },
+        [pscustomobject]@{ id='RMON_L_RESISTANCE'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 },
+        [pscustomobject]@{ id='CMON_SHUNT'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 },
+        [pscustomobject]@{ id='RBAUX_RESISTANCE'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 },
+        [pscustomobject]@{ id='RPUAUX_RESISTANCE'; context='OVERLOAD'; witness='AUX_GATE'; above=$true; threshold=1.0 },
+        [pscustomobject]@{ id='QAUX_SHUNT'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 },
+        [pscustomobject]@{ id='CFLT_C_SHUNT'; context='HIGH'; witness='OUT_C'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='CFLT_D_SHUNT'; context='HIGH'; witness='OUT_D'; above=$false; threshold=0.5 },
+        [pscustomobject]@{ id='RMON_IN_RESISTANCE'; context='OVERLOAD'; witness='OUT_C'; above=$true; threshold=9.0 }
+    )
+}
+
+function Get-Q100FaultIds() {
+    return @((Get-Q100FaultOracle) | ForEach-Object { [string]$_.id })
+}
+
+function ConvertFrom-Q100ReportText([object]$Value) {
+    $text = Get-ExactReportText $Value
+    if ([String]::IsNullOrWhiteSpace($text)) { return $null }
+    try { return ($text | ConvertFrom-Json -ErrorAction Stop) }
+    catch { return $null }
+}
+
+function Test-Q100HealthyObservation([object]$Observation) {
+    if ($null -eq $Observation -or $Observation.values -isnot [array] -or
+            $Observation.values.Count -ne 14) { return $false }
+    foreach ($value in $Observation.values) {
+        if (-not (Test-Q100FiniteNumber $value)) { return $false }
+    }
+    $values = $Observation.values
+    if (-not (Test-Q100Number $values[0] 10.0 12.5) -or
+            -not (Test-Q100Number $values[1] 4.65 5.25) -or
+            -not (Test-Q100Number $values[2] 3.05 3.5) -or
+            -not (Test-Q100Number $values[11] 0.14 0.19) -or
+            [Math]::Abs([double]$values[10] - [double]$values[9]) -ge 0.01) { return $false }
+    $enabled = switch ([string]$Observation.context) {
+        'LOW' { @() }
+        'HIGH' { @(0, 1, 2, 3, 4, 5) }
+        'AC_ONLY' { @(0, 2, 4) }
+        'OVERLOAD' { @(0, 1, 4, 5) }
+        'RECOVERED' { @(0, 1, 2, 3, 4, 5) }
+        'LOW_AGAIN' { @() }
+        default { return $false }
+    }
+    for ($output = 0; $output -lt 6; $output++) {
+        if ($output -in $enabled) {
+            if ([double]$values[3 + $output] -le 9.0) { return $false }
+        } elseif ([Math]::Abs([double]$values[3 + $output]) -ge 0.5) { return $false }
+    }
+    if ([string]$Observation.context -ceq 'OVERLOAD') {
+        return [double]$values[12] -gt 2.0 -and [Math]::Abs([double]$values[13]) -lt 0.5
+    }
+    return [Math]::Abs([double]$values[12]) -lt 0.5 -and [double]$values[13] -gt 3.5
+}
+
+function Test-Q100SeparatedLoadShortFaultRails([object]$Observation) {
+    if ($null -eq $Observation -or $Observation.values -isnot [array] -or
+            $Observation.values.Count -ne 14) { return $false }
+    $values = $Observation.values
+    return (Test-Q100Number $values[0] 10.0 12.5) -and
+        (Test-Q100Number $values[1] 4.65 5.25) -and
+        (Test-Q100Number $values[2] 3.05 3.5)
+}
+
+function Test-Q100Report([object]$Value, [string]$ExpectedVariant,
+        [string]$ExpectedFault, [double]$ExpectedDt) {
+    try {
+        $outer = ConvertFrom-Q100ReportText $Value
+        if ($null -eq $outer -or $outer.status -cne 'PASS_ELECTRICAL_REFERENCE_ONLY' -or
+                $outer.cleanup -cne 'PASS' -or $outer.canary -ne $null -or
+                $outer.error -ne $null -or $outer.cleanupError -ne $null -or
+                -not (Test-VerifierStrictIntegralValue $outer.operationMs 0L 90000L) -or
+                -not (Test-VerifierStrictIntegralValue $outer.cleanupMs 0L 120000L) -or
+                $null -eq $outer.PSObject.Properties['reference']) { return $false }
+        $reference = $outer.reference
+        $referenceDt = if ($ExpectedFault -ceq 'HEALTHY') { $ExpectedDt } else { 0.00005 }
+        $isHealthy = $ExpectedFault -ceq 'HEALTHY'
+        $expectedSimulatedSeconds = if ($isHealthy) { 0.6 } else { 1.2 }
+        $phaseCount = if ($isHealthy) { 1L } else { 2L }
+        $expectedAcceptedSteps = [long][Math]::Round($expectedSimulatedSeconds / $referenceDt)
+        $longBatchCount = [long][Math]::Ceiling((0.4 / $referenceDt) / 64.0)
+        $shortBatchCount = [long][Math]::Ceiling((0.04 / $referenceDt) / 64.0)
+        $expectedStepBatches = $phaseCount * ($longBatchCount + (5L * $shortBatchCount))
+        $expectedWork = [long]($expectedStepBatches + (6L * $phaseCount) + 1L)
+        if ($null -eq $reference -or $reference.protocol -cne 'q100-electrical-reference-v3' -or
+                $reference.status -cne 'PASS_ELECTRICAL_REFERENCE_ONLY' -or
+                $reference.seed -isnot [string] -or $reference.seed -cne '9007199254740993' -or
+                $reference.variant -isnot [string] -or $reference.variant -cne $ExpectedVariant -or
+                -not (Test-VerifierStrictIntegralValue $reference.modelVersion 4L 4L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.planVersion 1L 1L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.faultPopulationVersion 1L 1L) -or
+                $reference.fault -isnot [string] -or $reference.fault -cne $ExpectedFault -or
+                -not (Test-Q100Number $reference.dt $referenceDt $referenceDt) -or
+                -not (Test-VerifierStrictIntegralValue $reference.packages 100L 100L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.solverElements 1L ([long]::MaxValue)) -or
+                -not (Test-Q100Number $reference.simulatedSeconds 0.0 90000.0) -or
+                -not (Test-VerifierStrictIntegralValue $reference.matrixFull 1L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $reference.matrixReduced 0L $reference.matrixFull) -or
+                -not (Test-VerifierStrictIntegralValue $reference.work 1L 640L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.work $expectedWork $expectedWork) -or
+                -not (Test-VerifierStrictIntegralValue $reference.wallMs 0L 90000L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.maxUnitMs 0L 5000L) -or
+                -not (Test-Q100TemporalBatchMetadata $reference $expectedAcceptedSteps `
+                    $expectedStepBatches 64L) -or
+                -not (Test-Q100Number $reference.maxStepTimeError 0.0 0.00000001) -or
+                [double]$reference.maxStepTimeError -ge 0.00000001 -or
+                $reference.sampleNames -isnot [array] -or $reference.sampleNames.Count -ne 14) { return $false }
+        $expectedNames = @('RAIL12','RAIL5','RAIL3V3','OUT_A','OUT_B','OUT_C','OUT_D','OUT_E','OUT_F',
+            'MON_SENSE','MON_FILTER','MON_REF','MON_CMD','AUX_GATE')
+        for ($i = 0; $i -lt $expectedNames.Count; $i++) {
+            if ($reference.sampleNames[$i] -isnot [string] -or
+                    $reference.sampleNames[$i] -cne $expectedNames[$i]) { return $false }
+        }
+        $contexts = @('LOW','HIGH','AC_ONLY','OVERLOAD','RECOVERED','LOW_AGAIN')
+        $checkSeparatedLoadShortFaultRails = -not $isHealthy -and $ExpectedFault -cin @(
+            'DE_SHUNT', 'DF_SHUNT', 'CSTORE_E_SHUNT', 'CSTORE_F_SHUNT')
+        if ([Math]::Abs([double]$reference.simulatedSeconds - $expectedSimulatedSeconds) -gt 0.00001) {
+            return $false
+        }
+        $expectedObservationCount = if ($isHealthy) { 6 } else { 12 }
+        if ($reference.observations -isnot [array] -or
+                $reference.observations.Count -ne $expectedObservationCount) { return $false }
+        $lastTime = [double]::NegativeInfinity
+        for ($i = 0; $i -lt $expectedObservationCount; $i++) {
+            $observation = $reference.observations[$i]
+            $contextIndex = $i % 6
+            $expectedPhase = if ($isHealthy) { 'HEALTHY' } elseif ($i -lt 6) { 'FAULT' } else { 'REPAIRED' }
+            $expectedSampleTime = if (-not $isHealthy -and $i -ge 6) {
+                1.0 + ($contextIndex * 0.04)
+            } else { 0.4 + ($contextIndex * 0.04) }
+            if ($null -eq $observation -or $observation.context -isnot [string] -or
+                    $observation.context -cne $contexts[$contextIndex] -or
+                    $observation.phase -isnot [string] -or $observation.phase -cne $expectedPhase -or
+                    -not (Test-Q100FiniteNumber $observation.time) -or
+                    [double]$observation.time -le $lastTime -or
+                    [Math]::Abs([double]$observation.time - $expectedSampleTime) -gt 0.000001 -or
+                    $observation.values -isnot [array] -or $observation.values.Count -ne 14) { return $false }
+            $lastTime = [double]$observation.time
+            foreach ($sample in $observation.values) {
+                if (-not (Test-Q100FiniteNumber $sample)) { return $false }
+            }
+            if ($checkSeparatedLoadShortFaultRails -and $i -lt 6 -and
+                    -not (Test-Q100SeparatedLoadShortFaultRails $observation)) { return $false }
+            if ($isHealthy -or $i -ge 6) {
+                if (-not (Test-Q100HealthyObservation $observation)) { return $false }
+            }
+        }
+        if (-not $isHealthy) {
+            $oracle = @(Get-Q100FaultOracle | Where-Object { $_.id -ceq $ExpectedFault })
+            if ($oracle.Count -ne 1) { return $false }
+            $faultContextIndex = if ($oracle[0].context -ceq 'OVERLOAD') { 3 } else { 1 }
+            $faultObservation = $reference.observations[$faultContextIndex]
+            if ($faultObservation.context -cne $oracle[0].context) { return $false }
+            $witnessIndex = -1
+            for ($sampleIndex = 0; $sampleIndex -lt $expectedNames.Count; $sampleIndex++) {
+                if ($expectedNames[$sampleIndex] -ceq $oracle[0].witness) { $witnessIndex = $sampleIndex; break }
+            }
+            if ($witnessIndex -lt 0) { return $false }
+            $witnessValue = [double]$faultObservation.values[$witnessIndex]
+            if ($oracle[0].above) {
+                if ($witnessValue -le [double]$oracle[0].threshold) { return $false }
+            } elseif ($witnessValue -ge [double]$oracle[0].threshold) { return $false }
+        }
+        return $true
+    } catch { return $false }
+}
+
+function Test-Q100PreflightReport([object]$Value, [string]$ExpectedError) {
+    try {
+        $report = ConvertFrom-Q100ReportText $Value
+        $propertyNames = if ($null -ne $report) {
+            @($report.PSObject.Properties | ForEach-Object { [string]$_.Name } | Sort-Object -CaseSensitive)
+        } else { @() }
+        return $null -ne $report -and
+            $propertyNames.Count -eq 3 -and ($propertyNames -join ',') -ceq 'cleanup,error,status' -and
+            $report.status -ceq 'REJECTED_BEFORE_PRIVATE_GRAPH' -and
+            $report.error -is [string] -and $report.error -ceq $ExpectedError -and
+            $report.cleanup -ceq 'NOT_APPLICABLE' -and
+            $null -eq $report.PSObject.Properties['reference'] -and
+            $null -eq $report.PSObject.Properties['operationMs'] -and
+            $null -eq $report.PSObject.Properties['cleanupMs']
+    } catch { return $false }
+}
+
+function Test-Q100InjectedFailureReport([object]$Value, [string]$Canary) {
+    try {
+        if ($Canary -cnotin @('after-step','cancel')) { return $false }
+        $report = ConvertFrom-Q100ReportText $Value
+        $expectedStatus = if ($Canary -ceq 'cancel') { 'CANCELLED_REFERENCE' } else { 'FAIL_REFERENCE' }
+        $expectedError = 'q100-explicit-' + $Canary + '-after-accepted-step'
+        return $null -ne $report -and $report.status -ceq $expectedStatus -and
+            $report.cleanup -ceq 'PASS' -and
+            (Test-VerifierStrictIntegralValue $report.operationMs 0L 90000L) -and
+            (Test-VerifierStrictIntegralValue $report.cleanupMs 0L 120000L) -and
+            $report.error -is [string] -and $report.error -ceq $expectedError -and
+            $report.cleanupError -eq $null -and $report.canary -ceq $Canary -and
+            $null -ne $report.PSObject.Properties['reference'] -and
+            $null -ne $report.reference -and
+            $report.reference.protocol -ceq 'q100-electrical-reference-v3' -and
+            $report.reference.status -ceq 'INCOMPLETE_ELECTRICAL_REFERENCE' -and
+            $report.reference.seed -is [string] -and $report.reference.seed -ceq '9007199254740993' -and
+            $report.reference.variant -ceq 'SHARED_HYSTERETIC_LINEAR' -and
+            (Test-VerifierStrictIntegralValue $report.reference.modelVersion 4L 4L) -and
+            $report.reference.fault -ceq 'HEALTHY' -and
+            (Test-VerifierStrictIntegralValue $report.reference.planVersion 1L 1L) -and
+            (Test-VerifierStrictIntegralValue $report.reference.faultPopulationVersion 1L 1L) -and
+            (Test-Q100Number $report.reference.dt 0.0001 0.0001) -and
+            (Test-VerifierStrictIntegralValue $report.reference.packages 100L 100L) -and
+            (Test-Q100Number $report.reference.simulatedSeconds 0.0063 0.0065) -and
+            (Test-VerifierStrictIntegralValue $report.reference.work 3L 3L) -and
+            (Test-VerifierStrictIntegralValue $report.reference.wallMs 0L 90000L) -and
+            (Test-VerifierStrictIntegralValue $report.reference.maxUnitMs 0L 5000L) -and
+            (Test-Q100TemporalBatchMetadata $report.reference 64L 1L 64L) -and
+            $report.reference.observations -is [array] -and $report.reference.observations.Count -eq 0
+    } catch { return $false }
+}
+
+function Test-Q100InteractionLockReport([object]$Value) {
+    try {
+        $report = ConvertFrom-Q100ReportText $Value
+        $expectedReportProperties = @('status','operationMs','cleanupMs','cleanup','error',
+            'cleanupError','canary','reference','interactionLock')
+        $reportPropertyNames = if ($null -ne $report) {
+            @($report.PSObject.Properties | ForEach-Object { [string]$_.Name } | Sort-Object -CaseSensitive)
+        } else { @() }
+        $expectedSortedReportProperties = @($expectedReportProperties | Sort-Object -CaseSensitive)
+        if ($null -eq $report -or $report -is [array] -or $report -isnot [pscustomobject] -or
+                ($reportPropertyNames -join ',') -cne ($expectedSortedReportProperties -join ',') -or
+                $report.status -cne 'CANCELLED_REFERENCE' -or $report.cleanup -cne 'PASS' -or
+                -not (Test-VerifierStrictIntegralValue $report.operationMs 0L 90000L) -or
+                -not (Test-VerifierStrictIntegralValue $report.cleanupMs 0L 120000L) -or
+                $report.error -isnot [string] -or
+                $report.error -cne 'q100-explicit-interaction-lock-after-accepted-step' -or
+                $report.cleanupError -ne $null -or $report.canary -cne 'interaction-lock') { return $false }
+
+        # These wrapper and native-preview event checks are lifecycle evidence,
+        # not evidence of human-operated canvas input.
+        $lock = $report.interactionLock
+        $expectedLockProperties = @('status','selectionAttemptBlocked','deletionAttemptBlocked',
+            'runToggleBlocked','graphIdentityStable','elementIdentityStable','elementCountBefore',
+            'elementCountAfter','selectionStable','undoDepthBefore','undoDepthAfter',
+            'simulationTimeBefore','simulationTimeAfter','acceptedStepCountBefore',
+            'acceptedStepCountAfter','runningBefore','runningAfter','privateOwnerStillUnavailable',
+            'wheelAttemptBlocked','nativeWheelPreviewBlocked','nativeChangePreviewBlocked',
+            'privateCircuitStable','wheelRBefore','wheelRAfter','wheelDelta','popupUnchanged')
+        $lockPropertyNames = if ($null -ne $lock) {
+            @($lock.PSObject.Properties | ForEach-Object { [string]$_.Name } | Sort-Object -CaseSensitive)
+        } else { @() }
+        $expectedSortedLockProperties = @($expectedLockProperties | Sort-Object -CaseSensitive)
+        if ($null -eq $lock -or $lock -is [array] -or $lock -isnot [pscustomobject] -or
+                ($lockPropertyNames -join ',') -cne ($expectedSortedLockProperties -join ',') -or
+                $lock.status -cne 'PASS') { return $false }
+        foreach ($name in @('selectionAttemptBlocked','deletionAttemptBlocked','runToggleBlocked',
+                'graphIdentityStable','elementIdentityStable','selectionStable',
+                'privateOwnerStillUnavailable','wheelAttemptBlocked','nativeWheelPreviewBlocked',
+                'nativeChangePreviewBlocked','privateCircuitStable','popupUnchanged')) {
+            if ($lock.PSObject.Properties[$name].Value -isnot [bool] -or
+                    -not $lock.PSObject.Properties[$name].Value) { return $false }
+        }
+        if (-not (Test-VerifierStrictIntegralValue $lock.elementCountBefore 1L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $lock.elementCountAfter 1L ([long]::MaxValue)) -or
+                [long]$lock.elementCountBefore -ne [long]$lock.elementCountAfter -or
+                -not (Test-VerifierStrictIntegralValue $lock.undoDepthBefore 0L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $lock.undoDepthAfter 0L ([long]::MaxValue)) -or
+                [long]$lock.undoDepthBefore -ne [long]$lock.undoDepthAfter -or
+                -not (Test-VerifierStrictIntegralValue $lock.acceptedStepCountBefore 0L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $lock.acceptedStepCountAfter 0L ([long]::MaxValue)) -or
+                [long]$lock.acceptedStepCountBefore -ne [long]$lock.acceptedStepCountAfter -or
+                -not (Test-Q100Number $lock.simulationTimeBefore 0.0 0.0) -or
+                -not (Test-Q100Number $lock.simulationTimeAfter 0.0 0.0) -or
+                [double]$lock.simulationTimeBefore -ne [double]$lock.simulationTimeAfter -or
+                -not (Test-Q100FiniteNumber $lock.wheelRBefore) -or
+                -not (Test-Q100FiniteNumber $lock.wheelRAfter) -or
+                [double]$lock.wheelRBefore -ne [double]$lock.wheelRAfter -or
+                -not (Test-Q100FiniteNumber $lock.wheelDelta) -or
+                [double]$lock.wheelDelta -eq 0.0 -or
+                $lock.runningBefore -isnot [bool] -or $lock.runningAfter -isnot [bool] -or
+                $lock.runningBefore -ne $lock.runningAfter) { return $false }
+
+        $reference = $report.reference
+        $expectedSampleNames = @('RAIL12','RAIL5','RAIL3V3','OUT_A','OUT_B','OUT_C','OUT_D','OUT_E','OUT_F',
+            'MON_SENSE','MON_FILTER','MON_REF','MON_CMD','AUX_GATE')
+        if ($null -eq $reference -or $reference.protocol -cne 'q100-electrical-reference-v3' -or
+                $reference.status -cne 'INCOMPLETE_ELECTRICAL_REFERENCE' -or
+                $reference.seed -isnot [string] -or $reference.seed -cne '9007199254740993' -or
+                $reference.variant -cne 'SHARED_HYSTERETIC_LINEAR' -or
+                -not (Test-VerifierStrictIntegralValue $reference.modelVersion 4L 4L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.planVersion 1L 1L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.faultPopulationVersion 1L 1L) -or
+                $reference.fault -cne 'HEALTHY' -or
+                -not (Test-Q100Number $reference.dt 0.0001 0.0001) -or
+                -not (Test-VerifierStrictIntegralValue $reference.packages 100L 100L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.solverElements 1L ([long]::MaxValue)) -or
+                -not (Test-Q100Number $reference.simulatedSeconds 0.00639999 0.00640001) -or
+                -not (Test-VerifierStrictIntegralValue $reference.matrixFull 1L ([long]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $reference.matrixReduced 0L $reference.matrixFull) -or
+                -not (Test-VerifierStrictIntegralValue $reference.work 3L 3L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.wallMs 0L 90000L) -or
+                -not (Test-VerifierStrictIntegralValue $reference.maxUnitMs 0L 5000L) -or
+                -not (Test-Q100TemporalBatchMetadata $reference 64L 1L 64L) -or
+                -not (Test-Q100Number $reference.maxStepTimeError 0.0 0.00000001) -or
+                [double]$reference.maxStepTimeError -ge 0.00000001 -or
+                $reference.sampleNames -isnot [array] -or
+                $reference.sampleNames.Count -ne $expectedSampleNames.Count -or
+                $reference.observations -isnot [array] -or $reference.observations.Count -ne 0) { return $false }
+        for ($index = 0; $index -lt $expectedSampleNames.Count; $index++) {
+            if ($reference.sampleNames[$index] -isnot [string] -or
+                    $reference.sampleNames[$index] -cne $expectedSampleNames[$index]) { return $false }
+        }
+        return $true
+    } catch { return $false }
+}
+
+function Get-Q100RecordField([object]$Record, [string]$Name) {
+    if ($null -eq $Record) { return $null }
+    if ($Record -is [Collections.IDictionary]) {
+        if ($Record.Contains($Name)) { return $Record[$Name] }
+        return $null
+    }
+    $property = $Record.PSObject.Properties[$Name]
+    if ($null -eq $property) { return $null }
+    return $property.Value
+}
+
+function Test-Q100HealthyMatrix([object[]]$Routes) {
+    $healthy = @($Routes | Where-Object { (Get-Q100RecordField $_ 'kind') -ceq 'q100-healthy' })
+    $variants = @('SHARED_HYSTERETIC_LINEAR','SEPARATE_DIRECT_SWITCHING')
+    $dts = @(
+        [pscustomobject]@{ value=0.0001; token='100us'; key='0.0001' },
+        [pscustomobject]@{ value=0.00005; token='50us'; key='0.00005' }
+    )
+    $expectedNames = @()
+    foreach ($variant in $variants) {
+        foreach ($dt in $dts) { $expectedNames += ('q100-healthy-' + $variant + '-' + $dt.token) }
+    }
+    if ($healthy.Count -ne 4) { return $false }
+    $references = @{}
+    for ($i = 0; $i -lt 4; $i++) {
+        $route = $healthy[$i]
+        $variantIndex = [int][Math]::Floor($i / 2.0)
+        $routeReports = Get-Q100RecordField $route 'reports'
+        $q100Text = Get-Q100RecordField $routeReports 'q100'
+        if ((Get-Q100RecordField $route 'name') -cne $expectedNames[$i] -or
+                -not (Get-Q100RecordField $route 'q100ReportAttributePresent') -or
+                -not (Test-Q100Report $q100Text $variants[$variantIndex] 'HEALTHY' $dts[$i % 2].value)) {
+            return $false
+        }
+        $parsed = ConvertFrom-Q100ReportText $q100Text
+        $references[$variants[$variantIndex] + '|' + $dts[$i % 2].key] = $parsed.reference
+    }
+    foreach ($variant in $variants) {
+        $fine = $references[$variant + '|0.0001']
+        $coarse = $references[$variant + '|0.00005']
+        if ($null -eq $fine -or $null -eq $coarse) { return $false }
+        for ($context = 0; $context -lt 6; $context++) {
+            for ($sample = 0; $sample -lt 9; $sample++) {
+                if ([Math]::Abs([double]$fine.observations[$context].values[$sample] -
+                        [double]$coarse.observations[$context].values[$sample]) -gt 0.15) { return $false }
+            }
+        }
+    }
+    return $true
+}
+
+function Test-Q100FaultMatrix([object[]]$Routes) {
+    $faults = @($Routes | Where-Object { (Get-Q100RecordField $_ 'kind') -ceq 'q100-fault' })
+    $variants = @('SHARED_HYSTERETIC_LINEAR','SEPARATE_DIRECT_SWITCHING')
+    $faultIds = @(Get-Q100FaultIds)
+    $expectedNames = @()
+    $expectedKeys = @()
+    foreach ($variant in $variants) {
+        foreach ($faultId in $faultIds) {
+            $expectedNames += ('q100-fault-' + $variant + '-' + $faultId)
+            $expectedKeys += ($variant + '|' + $faultId)
+        }
+    }
+    if ($Routes.Count -ne 62 -or $faults.Count -ne 62) { return $false }
+    $actualKeys = @()
+    for ($i = 0; $i -lt 62; $i++) {
+        $route = $faults[$i]
+        $variantIndex = [int][Math]::Floor($i / 31.0)
+        $variant = $variants[$variantIndex]
+        $faultId = $faultIds[($i % 31)]
+        $routeReports = Get-Q100RecordField $route 'reports'
+        $q100Text = Get-Q100RecordField $routeReports 'q100'
+        if ((Get-Q100RecordField $route 'name') -cne $expectedNames[$i] -or
+                -not (Get-Q100RecordField $route 'q100ReportAttributePresent') -or
+                -not (Test-Q100Report $q100Text $variant $faultId 0.00005)) { return $false }
+        $actualKeys += ($variant + '|' + $faultId)
+    }
+    return ($actualKeys -join "`n") -ceq ($expectedKeys -join "`n") -and
+        (@($actualKeys | Sort-Object -Unique)).Count -eq 62
+}
+
+function Test-Q100PlayerDeveloperLeak([object]$Reports) {
+    if ($null -eq $Reports) { return $false }
+    if ($Reports.verificationPresent -is [bool] -and $Reports.verificationPresent) { return $true }
+    if ($Reports.q100Present -is [bool] -and $Reports.q100Present) { return $true }
+    if (-not [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.verification)) -or
+            -not [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.q100))) { return $true }
+    $attributes = $Reports.developerAttributes
+    if ($null -eq $attributes) { return $false }
+    $attributeProperties = @($attributes.PSObject.Properties)
+    return $attributes -is [array] -or $attributeProperties.Count -gt 0
+}
+
+function Test-NormalWorkbenchReady([object]$NormalReady) {
+    try {
+        if ($null -eq $NormalReady -or
+                $NormalReady.workbenchNavigationReady -isnot [bool] -or
+                -not $NormalReady.workbenchNavigationReady -or
+                $NormalReady.programReady -isnot [bool] -or
+                -not $NormalReady.programReady -or
+                $NormalReady.retestCustomerReady -isnot [bool] -or
+                -not $NormalReady.retestCustomerReady -or
+                $NormalReady.boardPowerReady -isnot [bool] -or
+                -not $NormalReady.boardPowerReady -or
+                $NormalReady.boardPowerLabel -isnot [string] -or
+                [string]$NormalReady.boardPowerLabel -cnotin @('Board Power: ON','Board Power: OFF')) {
+            return $false
+        }
+        return $NormalReady.programReady -eq
+            ($NormalReady.workbenchNavigationReady -and $NormalReady.boardPowerReady)
+    } catch { return $false }
+}
+
+function Test-Q100PlayerPrivacy([object]$Reports) {
+    try {
+        if ($null -eq $Reports -or
+                $Reports.ready -cne 'complete' -or
+                $Reports.verificationPresent -isnot [bool] -or $Reports.verificationPresent -or
+                $Reports.q100Present -isnot [bool] -or $Reports.q100Present -or
+                -not [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.verification)) -or
+                -not [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.q100)) -or
+                -not (Test-NormalWorkbenchReady $Reports.normalReady)) { return $false }
+        $attributes = $Reports.developerAttributes
+        if ($null -eq $attributes -or $attributes -is [array]) { return $false }
+        $attributeProperties = @($attributes.PSObject.Properties)
+        return $attributeProperties.Count -eq 0
+    } catch { return $false }
+}
+
+function Test-Q100PlayerPrivacyCanaryEvidence([object]$Canary, [object]$SentinelsCleanup) {
+    try {
+        $expectedSentinels = @('data-tsj-q100-fault','data-tsj-future-answer')
+        if ($null -eq $Canary -or
+                $Canary.protocol -isnot [string] -or
+                $Canary.protocol -cne 'tsj-q100-player-dom-privacy-canary-v1' -or
+                $Canary.status -isnot [string] -or $Canary.status -cne 'PASS' -or
+                $Canary.sentinels -isnot [array] -or $Canary.sentinels.Count -ne 2 -or
+                $Canary.cases -isnot [array] -or $Canary.cases.Count -ne 2 -or
+                $Canary.finalPlayerPrivacy -isnot [string] -or $Canary.finalPlayerPrivacy -cne 'PASS' -or
+                $null -eq $SentinelsCleanup -or
+                $SentinelsCleanup.status -isnot [string] -or $SentinelsCleanup.status -cne 'PASS' -or
+                $SentinelsCleanup.removed -isnot [array] -or $SentinelsCleanup.removed.Count -ne 2 -or
+                $SentinelsCleanup.cases -isnot [array] -or $SentinelsCleanup.cases.Count -ne 2) { return $false }
+        for ($i = 0; $i -lt $expectedSentinels.Count; $i++) {
+            $sentinel = $expectedSentinels[$i]
+            if ($Canary.sentinels[$i] -isnot [string] -or
+                    $Canary.sentinels[$i] -cne $sentinel -or
+                    $SentinelsCleanup.removed[$i] -isnot [string] -or
+                    $SentinelsCleanup.removed[$i] -cne $sentinel) { return $false }
+            $case = $Canary.cases[$i]
+            if ($null -eq $case -or $case.attribute -isnot [string] -or
+                    $case.attribute -cne $sentinel -or
+                    $case.sentinelValue -isnot [string] -or $case.sentinelValue -cne 'CANARY_ONLY' -or
+                    $case.reportContainsAttribute -isnot [bool] -or -not $case.reportContainsAttribute -or
+                    $case.developerLeakDetected -isnot [bool] -or -not $case.developerLeakDetected -or
+                    $case.playerPrivacyRejected -isnot [bool] -or -not $case.playerPrivacyRejected) { return $false }
+            $cleanupCase = $SentinelsCleanup.cases[$i]
+            if ($null -eq $cleanupCase -or $cleanupCase.attribute -isnot [string] -or
+                    $cleanupCase.attribute -cne $sentinel -or
+                    $cleanupCase.removed -isnot [bool] -or -not $cleanupCase.removed) { return $false }
+        }
+        return $true
+    } catch { return $false }
+}
+
+function Invoke-Q100PlayerPrivacyNegativeCanary($Socket, [DateTime]$Deadline) {
+    $sentinels = @('data-tsj-q100-fault','data-tsj-future-answer')
+    $cases = New-Object Collections.Generic.List[object]
+    $cleanupCases = New-Object Collections.Generic.List[object]
+    foreach ($sentinel in $sentinels) {
+        $jsName = ConvertTo-Json -InputObject $sentinel -Compress
+        $absentExpression = "(()=>{const d=document.documentElement,n=$jsName;return !!d&&!d.hasAttribute(n);})()"
+        $wasAbsent = Evaluate-Cdp $Socket $absentExpression $Deadline
+        if ($wasAbsent -isnot [bool] -or -not $wasAbsent) {
+            Throw-AppFailure "Q100Player privacy canary sentinel '$sentinel' already exists before the test."
+        }
+        $setAttempted = $false
+        try {
+            $setAttempted = $true
+            $setExpression = "(()=>{const d=document.documentElement,n=$jsName;if(!d||d.hasAttribute(n))return false;d.setAttribute(n,'CANARY_ONLY');return d.getAttribute(n)==='CANARY_ONLY';})()"
+            $set = Evaluate-Cdp $Socket $setExpression $Deadline
+            if ($set -isnot [bool] -or -not $set) {
+                Throw-AppFailure "Q100Player privacy canary could not set sentinel '$sentinel'."
+            }
+            $canaryReports = Get-RouteReports $Socket $Deadline
+            $leakDetected = Test-Q100PlayerDeveloperLeak $canaryReports
+            $privacyRejected = -not (Test-Q100PlayerPrivacy $canaryReports)
+            $reportedSentinel = if ($null -ne $canaryReports.developerAttributes) {
+                $canaryReports.developerAttributes.PSObject.Properties[$sentinel]
+            } else { $null }
+            $reportContainsAttribute = ($null -ne $canaryReports.developerAttributes) -and
+                ($null -ne $reportedSentinel)
+            if (-not $reportContainsAttribute -or -not $leakDetected -or -not $privacyRejected) {
+                Throw-AppFailure "Q100Player privacy reader did not reject sentinel '$sentinel'."
+            }
+            [void]$cases.Add([ordered]@{
+                attribute = $sentinel
+                sentinelValue = 'CANARY_ONLY'
+                reportContainsAttribute = $reportContainsAttribute
+                developerLeakDetected = $leakDetected
+                playerPrivacyRejected = $privacyRejected
+            })
+        } finally {
+            if ($setAttempted) {
+                $removeExpression = "(()=>{const d=document.documentElement,n=$jsName;if(!d)return false;d.removeAttribute(n);return !d.hasAttribute(n);})()"
+                $removed = Evaluate-Cdp $Socket $removeExpression $Deadline
+                $removedOk = $removed -is [bool] -and $removed
+                [void]$cleanupCases.Add([ordered]@{ attribute=$sentinel; removed=$removedOk })
+                if (-not $removedOk) {
+                    Throw-VerifierInfrastructure "Q100Player privacy canary failed to remove sentinel '$sentinel'."
+                }
+            }
+        }
+    }
+    $finalReports = Get-RouteReports $Socket $Deadline
+    if (-not (Test-Q100PlayerPrivacy $finalReports)) {
+        Throw-AppFailure 'Q100Player privacy did not return to PASS after sentinel cleanup.'
+    }
+    $canary = [ordered]@{
+        protocol = 'tsj-q100-player-dom-privacy-canary-v1'
+        status = 'PASS'
+        sentinels = $sentinels
+        cases = $cases.ToArray()
+        finalPlayerPrivacy = 'PASS'
+    }
+    $cleanup = [ordered]@{
+        status = 'PASS'
+        removed = $sentinels
+        cases = $cleanupCases.ToArray()
+    }
+    if (-not (Test-Q100PlayerPrivacyCanaryEvidence $canary $cleanup)) {
+        Throw-VerifierInfrastructure 'Q100Player privacy canary returned malformed reader or cleanup evidence.'
+    }
+    return [pscustomobject]@{ privacyNegativeCanary=$canary; sentinelsCleanup=$cleanup; finalReports=$finalReports }
+}
+
+function Test-Q100PlayerArtifactMarkers([object]$Text) {
+    if ($Text -isnot [string] -or [String]::IsNullOrEmpty($Text)) { return $false }
+    $markers = @('data-tsj-q100-report','q100-electrical-reference-v1',
+        'q100-electrical-reference-v2','q100-electrical-reference-v3',
+        'RB100_CONTROL_PILOT','Rb100ElectricalPilot','Rb100PilotReference',
+        'Rb100PilotFaults','Rb100Plan','tsjQ100Fault','tsjVerifyQ100','tsjQ100Variant',
+        'tsjQ100Canary','tsjQ100Dt','Q100ElectricalPilotDeveloperVerifier')
+    foreach ($marker in $markers) {
+        if ($Text.IndexOf($marker, [StringComparison]::Ordinal) -ge 0) { return $false }
+    }
+    return $true
+}
+
+function Get-Q100PlayerArtifactProof([string]$Root) {
+    $receiptPath = Join-Path $Root '.tools\gwt-2.7.0\production-build-identity.json'
+    if (-not (Test-Path -LiteralPath $receiptPath -PathType Leaf)) {
+        Throw-VerifierInfrastructure 'Q100Player requires a current Player production-build identity receipt.'
+    }
+    $currentObf = Get-VerifierProductionBuildIdentity -RepositoryRoot $Root `
+        -Style 'OBF' -Variant 'Player'
+    try {
+        $receiptText = [IO.File]::ReadAllText($receiptPath)
+        $receipt = $receiptText | ConvertFrom-Json -ErrorAction Stop
+    } catch {
+        Throw-VerifierInfrastructure ('Q100Player production-build receipt could not be read: ' +
+            (Get-EarlyErrorText $_))
+    }
+    $expectedProperties = @('Protocol','Variant','Style','InputDigest','InputFileCount',
+        'OutputDigest','OutputFileCount')
+    $actualProperties = if ($null -ne $receipt -and $receipt -is [pscustomobject]) {
+        @($receipt.PSObject.Properties | ForEach-Object { [string]$_.Name } | Sort-Object -CaseSensitive)
+    } else { @() }
+    $sortedExpectedProperties = @($expectedProperties | Sort-Object -CaseSensitive)
+    if ($null -eq $receipt -or $receipt -is [array] -or $receipt -isnot [pscustomobject] -or
+            $actualProperties.Count -ne $expectedProperties.Count -or
+            ($actualProperties -join ',') -cne ($sortedExpectedProperties -join ',')) {
+        Throw-VerifierInfrastructure 'Q100Player production-build receipt has an unsupported shape.'
+    }
+    foreach ($name in $expectedProperties) {
+        if ($null -eq $receipt.PSObject.Properties[$name]) {
+            Throw-VerifierInfrastructure "Q100Player production-build receipt omitted '$name'."
+        }
+    }
+    if (-not (Test-VerifierStrictStringValue $receipt.Protocol) -or
+            -not (Test-VerifierStrictStringValue $receipt.Variant) -or
+            -not (Test-VerifierStrictStringValue $receipt.Style) -or
+            $receipt.Protocol -cne 'troubleshootjs-production-build-identity-v1' -or
+            $receipt.Variant -cne 'Player' -or
+            $receipt.Style -cnotin @('OBF','PRETTY','DETAILED') -or
+            -not (Test-VerifierStrictStringValue $receipt.InputDigest) -or
+            [string]$receipt.InputDigest -notmatch '^[0-9a-f]{64}$' -or
+            -not (Test-VerifierStrictStringValue $receipt.OutputDigest) -or
+            [string]$receipt.OutputDigest -notmatch '^[0-9a-f]{64}$' -or
+            -not (Test-VerifierStrictIntegralValue $receipt.InputFileCount 1L ([long]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $receipt.OutputFileCount 1L ([long]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Q100Player production-build receipt did not identify a complete Player build.'
+    }
+    $current = if ([string]$receipt.Style -ceq 'OBF') { $currentObf } else {
+        Get-VerifierProductionBuildIdentity -RepositoryRoot $Root `
+            -Style ([string]$receipt.Style) -Variant 'Player'
+    }
+    if ($current.Protocol -cne [string]$receipt.Protocol -or
+            $current.Variant -cne 'Player' -or $current.Style -cne [string]$receipt.Style -or
+            $current.InputDigest -cne [string]$receipt.InputDigest -or
+            $current.OutputDigest -cne [string]$receipt.OutputDigest -or
+            [long]$current.InputFileCount -ne [long]$receipt.InputFileCount -or
+            [long]$current.OutputFileCount -ne [long]$receipt.OutputFileCount) {
+        Throw-VerifierInfrastructure 'Q100Player build receipt does not match current production inputs and war output.'
+    }
+
+    $moduleRoot = Join-Path $Root 'war\circuitjs1'
+    if (-not (Test-Path -LiteralPath (Join-Path $moduleRoot 'circuitjs1.nocache.js') -PathType Leaf) -or
+            @(Get-ChildItem -LiteralPath $moduleRoot -Filter '*.cache.js' -File -ErrorAction Stop).Count -eq 0) {
+        Throw-VerifierInfrastructure 'Q100Player current war output is not a complete compiled GWT module.'
+    }
+    $javascriptFiles = @(Get-ChildItem -LiteralPath $moduleRoot -Recurse -File -Filter '*.js' -ErrorAction Stop)
+    if ($javascriptFiles.Count -eq 0) {
+        Throw-VerifierInfrastructure 'Q100Player current GWT module contains no JavaScript to scan.'
+    }
+    foreach ($file in $javascriptFiles) {
+        if ([long]$file.Length -le 0) {
+            Throw-VerifierInfrastructure 'Q100Player current GWT module contains an empty JavaScript file.'
+        }
+        $javascript = [IO.File]::ReadAllText($file.FullName)
+        if (-not (Test-Q100PlayerArtifactMarkers $javascript)) {
+            Throw-AppFailure 'Developer-only Q100 marker found in the compiled Player JavaScript module.'
+        }
+    }
+    return [ordered]@{
+        protocol = 'troubleshootjs-q100-player-artifact-proof-v1'
+        buildIdentityProtocol = [string]$current.Protocol
+        variant = [string]$current.Variant
+        style = [string]$current.Style
+        inputDigest = [string]$current.InputDigest
+        inputFileCount = [long]$current.InputFileCount
+        outputDigest = [string]$current.OutputDigest
+        outputFileCount = [long]$current.OutputFileCount
+        compiledJavaScriptFileCount = [long]$javascriptFiles.Count
+        developerMarkerScan = 'PASS'
+    }
+}
+
+function Test-RouteReady($Kind, $Reports, $Definition = $null) {
     $verification = Get-ExactReportText $Reports.verification
     switch ($Kind) {
         'a08' { return $verification -ceq 'PASS:a08' -and (Test-A08Report $Reports.a08) }
         'a08-forced' { return $verification -ceq 'FAIL:a08:a08-explicit-failure-canary' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a08)) }
-        'a08-debugoff' { return $Reports.normalReady.programReady -is [bool] -and
-            $Reports.normalReady.programReady -and $Reports.normalReady.retestCustomerReady -is [bool] -and
-            $Reports.normalReady.retestCustomerReady -and
+        'a08-debugoff' { return (Test-NormalWorkbenchReady $Reports.normalReady) -and
             $verification -notmatch '(?i)(?:^|:)a08(?:$|:)' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a08)) }
         'diode-lifecycle' { return $verification -ceq 'PASS:diode' }
         'a07' { return $verification -ceq 'PASS:a07' -and (Test-A07Report $Reports.a07) }
         'a07-forced' { return $verification -ceq 'FAIL:a07:a07-explicit-failure-canary' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a07)) }
-        'a07-debugoff' { return [bool]$Reports.normalReady.programReady -and
-            [bool]$Reports.normalReady.retestCustomerReady -and
+        'a07-debugoff' { return (Test-NormalWorkbenchReady $Reports.normalReady) -and
             $verification -notmatch '(?i)(?:^|:)a07(?:$|:)' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a07)) }
         'a06' { return $verification -ceq 'PASS:a06' -and (Test-A06Report $Reports.a06) }
         'a06-forced' { return $verification -ceq 'FAIL:a06:a06-explicit-failure-canary' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a06)) }
-        'a06-debugoff' { return [bool]$Reports.normalReady.programReady -and
-            [bool]$Reports.normalReady.retestCustomerReady -and
+        'a06-debugoff' { return (Test-NormalWorkbenchReady $Reports.normalReady) -and
             $verification -notmatch '(?i)(?:^|:)a06(?:$|:)' -and
             [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a06)) }
         'stored-energy' { return $verification -ceq 'PASS:stored-energy' }
@@ -770,8 +1561,7 @@ function Test-RouteReady($Kind, $Reports) {
                 [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a03))
         }
         'a03-debugoff' {
-            return [bool]$Reports.normalReady.programReady -and
-                [bool]$Reports.normalReady.retestCustomerReady -and
+            return (Test-NormalWorkbenchReady $Reports.normalReady) -and
                 $verification -notmatch '(?i)(?:^|:)a03(?:$|:)' -and
                 [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a03))
         }
@@ -785,8 +1575,7 @@ function Test-RouteReady($Kind, $Reports) {
                 [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a04))
         }
         'a04-debugoff' {
-            return [bool]$Reports.normalReady.programReady -and
-                [bool]$Reports.normalReady.retestCustomerReady -and
+            return (Test-NormalWorkbenchReady $Reports.normalReady) -and
                 $verification -notmatch '(?i)(?:^|:)a04(?:$|:)' -and
                 [String]::IsNullOrWhiteSpace((Get-ExactReportText $Reports.a04))
         }
@@ -817,8 +1606,112 @@ function Test-RouteReady($Kind, $Reports) {
             return $verification -ceq 'PASS:a02' -and
                 (Test-JsonReport $Reports.a02 'TSJ-A02-2')
         }
+        'q100-healthy' {
+            return $Reports.q100Present -is [bool] -and $Reports.q100Present -and
+                $verification -ceq 'PASS:q100' -and
+                (Test-Q100Report $Reports.q100 $Definition.variant 'HEALTHY' $Definition.dt)
+        }
+        'q100-fault' {
+            return $Reports.q100Present -is [bool] -and $Reports.q100Present -and
+                $verification -ceq 'PASS:q100' -and
+                (Test-Q100Report $Reports.q100 $Definition.variant $Definition.fault 0.00005)
+        }
+        { $_ -like 'q100-preflight-*' } {
+            return $Reports.q100Present -is [bool] -and $Reports.q100Present -and
+                $verification -ceq ('FAIL:q100:preflight:' + [string]$Definition.expectedError) -and
+                (Test-Q100PreflightReport $Reports.q100 $Definition.expectedError)
+        }
+        'q100-after-step' {
+            return $Reports.q100Present -is [bool] -and $Reports.q100Present -and
+                $verification -ceq 'FAIL:q100' -and
+                (Test-Q100InjectedFailureReport $Reports.q100 'after-step')
+        }
+        { $_ -in @('q100-cancel','q100-interaction-lock') } {
+            if ($Reports.q100Present -isnot [bool] -or -not $Reports.q100Present -or
+                    $verification -cne 'CANCELLED:q100') { return $false }
+            if ($Kind -ceq 'q100-interaction-lock') {
+                return (Test-Q100InteractionLockReport $Reports.q100)
+            }
+            return (Test-Q100InjectedFailureReport $Reports.q100 'cancel')
+        }
+        'q100-debugfalse' { return (Test-Q100PlayerPrivacy $Reports) }
+        'q100-player' { return (Test-Q100PlayerPrivacy $Reports) }
         default { return $false }
     }
+}
+
+function Get-Q100PlayerRouteDefinition() {
+    return [pscustomobject]@{
+        name='q100-player-debug-query'; kind='q100-player'
+        query='tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Fault=RSA_RESISTANCE&tsjQ100Dt=0.0001&tsjQ100Canary=after-step&running=true'
+        reportNames=@()
+    }
+}
+
+function Get-Q100RouteDefinitions([bool]$FaultMatrix) {
+    $variants = @('SHARED_HYSTERETIC_LINEAR','SEPARATE_DIRECT_SWITCHING')
+    $routes = New-Object Collections.Generic.List[object]
+    if ($FaultMatrix) {
+        foreach ($variant in $variants) {
+            foreach ($faultId in (Get-Q100FaultIds)) {
+                [void]$routes.Add([pscustomobject]@{
+                    name = 'q100-fault-' + $variant + '-' + $faultId
+                    kind = 'q100-fault'; variant = $variant; fault = $faultId; dt = 0.00005
+                    query = 'tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=' +
+                        $variant + '&tsjQ100Fault=' + $faultId + '&tsjQ100Dt=0.00005&running=true'
+                    reportNames = @('q100')
+                })
+            }
+        }
+        return $routes.ToArray()
+    }
+    foreach ($variant in $variants) {
+        foreach ($step in @(
+            [pscustomobject]@{ value=0.0001; token='100us'; query='0.0001' },
+            [pscustomobject]@{ value=0.00005; token='50us'; query='0.00005' }
+        )) {
+            [void]$routes.Add([pscustomobject]@{
+                name = 'q100-healthy-' + $variant + '-' + $step.token
+                kind = 'q100-healthy'; variant = $variant; fault = 'HEALTHY'; dt = $step.value
+                query = 'tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=' +
+                    $variant + '&tsjQ100Dt=' + $step.query + '&running=true'
+                reportNames = @('q100')
+            })
+        }
+    }
+    [void]$routes.Add([pscustomobject]@{
+        name='q100-preflight-invalidvariant'; kind='q100-preflight-variant'
+        expectedError='Unknown RB100 structural variant'
+        query='tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=INVALID&tsjQ100Dt=0.0001&running=true'
+        reportNames=@('q100')
+    })
+    [void]$routes.Add([pscustomobject]@{
+        name='q100-preflight-invalidfault'; kind='q100-preflight-fault'
+        expectedError='Unknown RB100 electrical-reference fault'
+        query='tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Fault=INVALID_FAULT&tsjQ100Dt=0.0001&running=true'
+        reportNames=@('q100')
+    })
+    [void]$routes.Add([pscustomobject]@{
+        name='q100-preflight-invaliddt'; kind='q100-preflight-dt'
+        expectedError='RB100 reference: unsupported reference timestep'
+        query='tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Dt=0.0002&running=true'
+        reportNames=@('q100')
+    })
+    # These routes exercise explicit producer canaries, not external user
+    # cancellation or player-input evidence.
+    foreach ($canary in @('after-step','cancel','interaction-lock')) {
+        [void]$routes.Add([pscustomobject]@{
+            name='q100-' + $canary; kind='q100-' + $canary
+            query='tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Dt=0.0001&tsjQ100Canary=' + $canary + '&running=true'
+            reportNames=@('q100')
+        })
+    }
+    [void]$routes.Add([pscustomobject]@{
+        name='q100-debugfalse'; kind='q100-debugfalse'
+        query='tsjChallenge=led&seed=3&tsjDebug=false&tsjVerifyQ100=true&running=true'
+        reportNames=@('q100')
+    })
+    return $routes.ToArray()
 }
 
 function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
@@ -826,6 +1719,9 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
         return @([pscustomobject]@{ name = 'transport-smoke'; kind = 'smoke';
             query = 'tsjDebug=false'; reportNames = @() })
     }
+    if ($SelectedGate -ieq 'Q100Player') { return @(Get-Q100PlayerRouteDefinition) }
+    if ($SelectedGate -ieq 'Q100') { return @(Get-Q100RouteDefinitions $false) }
+    if ($SelectedGate -ieq 'Q100Faults') { return @(Get-Q100RouteDefinitions $true) }
     $all = @(
         [pscustomobject]@{ name = 'a03'; kind = 'a03';
             query = 'tsjChallenge=led&seed=3&tsjVerifyA03=true&tsjDebug=true&running=true';
@@ -958,6 +1854,10 @@ function Write-ReportFile([string]$Path, $Report) {
 
 try {
     Set-Operation 'setup' 'resolve-worktree'
+    $effectiveTimeoutSeconds = $TimeoutSeconds
+    if ($script:IsQ100Gate) {
+        $effectiveTimeoutSeconds = [int][Math]::Min(90, $TimeoutSeconds)
+    }
     $root = if ([String]::IsNullOrWhiteSpace($WorktreeRoot)) {
         [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
     } else { [IO.Path]::GetFullPath($WorktreeRoot) }
@@ -969,12 +1869,25 @@ try {
     $modulePath = Join-Path $PSScriptRoot 'VerifierIsolation.psm1'
     $previewPath = Join-Path $root 'scripts\preview.ps1'
     Import-Module $modulePath -Force -ErrorAction Stop
+    if ($Gate -ieq 'Q100Player' -and $Smoke) {
+        Throw-VerifierInfrastructure 'Q100Player requires the production Player artifact/privacy route and cannot use transport-only smoke.'
+    }
+    if ($script:IsQ100Gate) {
+        if ($TimeoutSeconds -le 0) { Throw-VerifierInfrastructure 'Q100 route timeout must be positive.' }
+        if ([DateTime]::UtcNow -ge $script:Q100MatrixDeadlineUtc) {
+            Throw-VerifierInfrastructure 'Q100 matrix operation deadline expired before setup.'
+        }
+    }
+    if ($Gate -ieq 'Q100Player' -and -not $Smoke) {
+        Set-Operation 'setup' 'verify-current-player-build-artifact'
+        $script:Q100PlayerArtifactProof = Get-Q100PlayerArtifactProof $root
+    }
     Set-Operation 'setup' 'New-VerifierRunContext'
     $context = New-VerifierRunContext $root ''
     Set-Operation 'setup' 'Resolve-VerifierBrowserPath'
     $resolvedBrowser = Resolve-VerifierBrowserPath $BrowserPath
     Set-Operation 'preview' 'Start-VerifierOwnedPreview'
-    $baseUrl = [string](Start-VerifierOwnedPreview $context $previewPath $TimeoutSeconds ([bool]$ForceTcpListener))
+    $baseUrl = [string](Start-VerifierOwnedPreview $context $previewPath $effectiveTimeoutSeconds ([bool]$ForceTcpListener))
     Set-Operation 'preview' 'read-preview-identity'
     $previewIdentity = Get-PreviewIdentity $baseUrl $context $root $previewPath
     Set-Operation 'setup' 'define-routes'
@@ -988,6 +1901,9 @@ try {
             'A07' { 9 }
             'A03' { 3 }
             'A04' { 3 }
+            'Q100' { 11 }
+            'Q100Faults' { 62 }
+            'Q100Player' { 1 }
             default { 1 }
         }
     }
@@ -998,13 +1914,20 @@ try {
     $firstUrl = $baseUrl + '/circuitjs.html?' + [string]$definitions[0].query
     Set-Operation 'browser' 'New-VerifierBrowserSession'
     $session = New-VerifierBrowserSession $context 'a03-browser-report' $firstUrl `
-        $resolvedBrowser $TimeoutSeconds ([bool]$Headed)
+        $resolvedBrowser $effectiveTimeoutSeconds ([bool]$Headed)
     Set-Operation 'browser' 'enable-cdp-domains' $session.Deadline
     [void](Invoke-Cdp $session.Socket 'Page.enable' @{} $session.Deadline)
     [void](Invoke-Cdp $session.Socket 'Runtime.enable' @{} $session.Deadline)
 
     foreach ($definition in $definitions) {
-        $routeDeadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+        if ($script:IsQ100Gate -and [DateTime]::UtcNow -ge $script:Q100MatrixDeadlineUtc) {
+            Throw-VerifierInfrastructure 'Q100 matrix operation exceeded its 6000-second budget before the next route.'
+        }
+        $routeTimeoutSeconds = $effectiveTimeoutSeconds
+        $routeDeadline = [DateTime]::UtcNow.AddSeconds($routeTimeoutSeconds)
+        if ($script:IsQ100Gate -and $script:Q100MatrixDeadlineUtc -lt $routeDeadline) {
+            $routeDeadline = $script:Q100MatrixDeadlineUtc
+        }
         Set-Operation 'browser' ('route-' + [string]$definition.name) $routeDeadline
         $routeUrl = $baseUrl + '/circuitjs.html?' + [string]$definition.query
         $navigationUrl = Navigate-Cdp $session.Socket $routeUrl $context.RunId `
@@ -1023,26 +1946,80 @@ try {
             [void]$routeResults.Add($result)
             continue
         }
+        $ticketEntryAudit = $null
+        if (Test-RouteRequiresTicketEntry ([string]$definition.kind)) {
+            $ticketEntryAudit = Invoke-OrdinaryTicketEntry $session.Socket $routeDeadline
+        }
         $reports = $null
         do {
             $reports = Get-RouteReports $session.Socket $routeDeadline
-            if (Test-RouteReady $definition.kind $reports) { break }
-            if ((Get-ExactReportText $reports.verification) -like 'FAIL:*' -and
-                    $definition.kind -notin @('a03-forced', 'a04-forced', 'a06-forced', 'a07-forced', 'a08-forced')) {
+            if (Test-RouteReady $definition.kind $reports $definition) { break }
+            if ($definition.kind -ceq 'q100-player' -and (Test-Q100PlayerDeveloperLeak $reports)) {
+                Throw-AppFailure 'Compiled Player page exposed a developer verification or report attribute.'
+            }
+            if ($definition.kind -ceq 'q100-debugfalse' -and (Test-Q100PlayerDeveloperLeak $reports)) {
+                Throw-AppFailure 'Compiled debug-false page exposed a developer verification or report attribute.'
+            }
+            $currentVerification = Get-ExactReportText $reports.verification
+            $q100ExpectedTerminal = $definition.kind -like 'q100-preflight-*' -or
+                $definition.kind -in @('q100-after-step','q100-cancel','q100-interaction-lock')
+            $q100ExpectedVerification = switch ([string]$definition.kind) {
+                { $_ -like 'q100-preflight-*' } {
+                    'FAIL:q100:preflight:' + [string]$definition.expectedError
+                }
+                'q100-after-step' { 'FAIL:q100' }
+                { $_ -in @('q100-cancel','q100-interaction-lock') } { 'CANCELLED:q100' }
+                default { '' }
+            }
+            if ($script:IsQ100Gate -and
+                    ($currentVerification -like 'FAIL:*' -or $currentVerification -like 'CANCELLED:*') -and
+                    $currentVerification -cne $q100ExpectedVerification) {
+                Throw-AppFailure ("$($definition.name) reported an unexpected Q100 terminal result: " +
+                    $currentVerification)
+            }
+            if ($currentVerification -like 'FAIL:*' -and
+                    $definition.kind -notin @('a03-forced', 'a04-forced', 'a06-forced', 'a07-forced', 'a08-forced') -and
+                    -not $q100ExpectedTerminal) {
                 Throw-AppFailure ("$($definition.name) reported " +
-                    (Get-ExactReportText $reports.verification))
+                    $currentVerification)
             }
             Start-Sleep -Milliseconds 250
         } while ([DateTime]::UtcNow -lt $routeDeadline)
-        if (-not (Test-RouteReady $definition.kind $reports)) {
+        if (-not (Test-RouteReady $definition.kind $reports $definition)) {
             Throw-VerifierInfrastructure ("$($definition.name) did not provide its required compiled report before the bounded deadline.")
+        }
+        $privacyNegativeCanaryEvidence = $null
+        if ($definition.kind -in @('q100-player','q100-debugfalse')) {
+            $privacyNegativeCanaryEvidence = Invoke-Q100PlayerPrivacyNegativeCanary `
+                $session.Socket $routeDeadline
+            $reports = $privacyNegativeCanaryEvidence.finalReports
+            if (-not (Test-RouteReady $definition.kind $reports $definition)) {
+                if ($definition.kind -ceq 'q100-player') {
+                    Throw-AppFailure 'Q100Player ordinary privacy/readiness changed after the negative DOM canary cleanup.'
+                }
+                Throw-AppFailure 'Q100 debug-false ordinary privacy/readiness changed after the negative DOM canary cleanup.'
+            }
         }
         $record = [ordered]@{ name = $definition.name; kind = $definition.kind;
             status = 'PASS'; navigationUrl = (Get-SafeText $navigationUrl 2000);
             verification = (Get-ExactReportText $reports.verification);
-            readiness = [ordered]@{ programReady = [bool]$reports.normalReady.programReady;
-                retestCustomerReady = [bool]$reports.normalReady.retestCustomerReady };
+            readiness = [ordered]@{ workbenchNavigationReady = [bool]$reports.normalReady.workbenchNavigationReady;
+                programReady = [bool]$reports.normalReady.programReady;
+                retestCustomerReady = [bool]$reports.normalReady.retestCustomerReady;
+                boardPowerReady = [bool]$reports.normalReady.boardPowerReady;
+                boardPowerLabel = [string]$reports.normalReady.boardPowerLabel };
             reports = [ordered]@{}; events = @($script:CdpEvents | Select-Object -Last 40) }
+        if ($null -ne $ticketEntryAudit) { $record.ordinaryTicketEntry = $ticketEntryAudit }
+        if ($null -ne $privacyNegativeCanaryEvidence) {
+            $record.privacyNegativeCanary = $privacyNegativeCanaryEvidence.privacyNegativeCanary
+            $record.sentinelsCleanup = $privacyNegativeCanaryEvidence.sentinelsCleanup
+        }
+        if ($script:IsQ100Gate) {
+            $record.q100ReportAttributePresent = [bool]$reports.q100Present
+        }
+        if ($definition.kind -in @('q100-player','q100-debugfalse')) {
+            $record.developerAttributes = $reports.developerAttributes
+        }
         foreach ($reportName in @($definition.reportNames)) {
             $property = $reports.PSObject.Properties[$reportName]
             if ($null -eq $property) {
@@ -1054,6 +2031,17 @@ try {
         $artifact = Write-RunArtifact $context $artifactName $record
         $record.artifactSha256 = $artifact.sha256
         [void]$routeResults.Add($record)
+    }
+    if ($Gate -ieq 'Q100' -and -not $Smoke -and
+            -not (Test-Q100HealthyMatrix $routeResults.ToArray())) {
+        Throw-VerifierInfrastructure 'Q100 healthy variant/timestep matrix did not satisfy the independent reader.'
+    }
+    if ($Gate -ieq 'Q100Faults' -and -not $Smoke -and
+            -not (Test-Q100FaultMatrix $routeResults.ToArray())) {
+        Throw-VerifierInfrastructure 'Q100 fault matrix did not contain the exact independent 2x31 coverage.'
+    }
+    if ($script:IsQ100Gate -and [DateTime]::UtcNow -gt $script:Q100MatrixDeadlineUtc) {
+        Throw-VerifierInfrastructure 'Q100 matrix operation exceeded its 6000-second budget.'
     }
     $requestedExitCode = 0
 } catch {
@@ -1070,12 +2058,40 @@ try {
         ' remainingDeadlineMs=' + [string]$script:FailureDiagnostic.remainingDeadlineMs)
 } finally {
     if ($null -ne $context) {
-        Set-Operation 'cleanup' 'Complete-VerifierRun'
+        if ($script:IsQ100Gate) {
+            $script:Q100MatrixOperationElapsedMs = [long][Math]::Max(0,
+                [Math]::Floor(([DateTime]::UtcNow - $script:Q100MatrixStartedUtc).TotalMilliseconds))
+            if ($script:Q100MatrixOperationElapsedMs -gt 6000000L) {
+                $requestedExitCode = 2
+                if ($null -eq $script:FailureDiagnostic) {
+                    Set-Operation 'browser' 'q100-matrix-operation-budget' $script:Q100MatrixDeadlineUtc
+                    $script:FailureDiagnostic = New-FailureDiagnostic `
+                        'Q100 matrix operation exceeded its 6000-second budget.' 'infrastructure'
+                }
+            }
+        }
+        $cleanupStartedUtc = [DateTime]::UtcNow
+        $cleanupDeadline = if ($script:IsQ100Gate) { $cleanupStartedUtc.AddSeconds(120) } else { [DateTime]::MinValue }
+        # Complete-VerifierRun owns teardown and has no safe cancellation API.
+        # Finish its ownership proof, then fail closed if Q100 cleanup exceeded
+        # its separately measured acceptance bound.
+        Set-Operation 'cleanup' 'Complete-VerifierRun' $cleanupDeadline
         try { $cleanupResult = Complete-VerifierRun $context }
         catch {
             $cleanupResult = [pscustomobject]@{ Success = $false; Errors = @((Get-EarlyErrorText $_)) }
             $requestedExitCode = 2
             $script:CleanupDiagnostic = New-FailureDiagnostic (Get-EarlyErrorText $_) 'infrastructure'
+        }
+        if ($script:IsQ100Gate) {
+            $script:Q100CleanupElapsedMs = [long][Math]::Max(0,
+                [Math]::Floor(([DateTime]::UtcNow - $cleanupStartedUtc).TotalMilliseconds))
+            if ($script:Q100CleanupElapsedMs -gt 120000L) {
+                $requestedExitCode = 2
+                if ($null -eq $script:CleanupDiagnostic) {
+                    $script:CleanupDiagnostic = New-FailureDiagnostic `
+                        'Q100 verifier cleanup exceeded its 120-second acceptance budget.' 'infrastructure'
+                }
+            }
         }
         if ($null -eq $cleanupResult -or -not [bool]$cleanupResult.Success) {
             $requestedExitCode = 2
@@ -1090,6 +2106,9 @@ try {
         $cleanupErrors = if ($cleanupResult -and $cleanupResult.Errors) {
             @($cleanupResult.Errors | ForEach-Object { Get-DiagnosticText $_ 4000 })
         } else { @() }
+        if ($script:IsQ100Gate -and $script:Q100CleanupElapsedMs -gt 120000L) {
+            $cleanupErrors += 'Q100 verifier cleanup exceeded its 120-second acceptance budget.'
+        }
         $reportPath = if ([String]::IsNullOrWhiteSpace($OutputPath)) {
             Join-Path $context.EvidenceDirectory 'verify-a03-browser.json'
         } else { [IO.Path]::GetFullPath($OutputPath) }
@@ -1102,6 +2121,23 @@ try {
             executionDigest = if ($previewIdentity) { [string]$previewIdentity.executionDigest } else { '' }
             executionFileCount = if ($previewIdentity) { [long]$previewIdentity.executionFileCount } else { 0L }
         }
+        $cleanupSuccess = if ($cleanupResult) {
+            [bool]$cleanupResult.Success -and
+                (-not $script:IsQ100Gate -or $script:Q100CleanupElapsedMs -le 120000L)
+        } else { $false }
+        $cleanupReport = [ordered]@{
+            success = $cleanupSuccess; errors = $cleanupErrors
+            diagnostic = if ($script:CleanupDiagnostic) { $script:CleanupDiagnostic } else { [ordered]@{} }
+        }
+        if ($null -ne $cleanupResult -and $cleanupResult.PSObject.Properties['ExtraPhaseTimings']) {
+            $cleanupReport.phaseTimings = $cleanupResult.ExtraPhaseTimings
+        }
+        if ($script:IsQ100Gate) {
+            $cleanupReport.resourceSuccess = if ($cleanupResult) { [bool]$cleanupResult.Success } else { $false }
+            $cleanupReport.elapsedMs = $script:Q100CleanupElapsedMs
+            $cleanupReport.limitMs = 120000L
+            $cleanupReport.status = if ($cleanupSuccess) { 'PASS' } else { 'FAIL' }
+        }
         $report = [ordered]@{
             protocol = 'troubleshootjs-a03-browser-report-v1'
             gate = $Gate; smoke = [bool]$Smoke; headed = [bool]$Headed; runId = $context.RunId
@@ -1111,7 +2147,16 @@ try {
             status = if ($requestedExitCode -eq 0) { 'PASS' } elseif ($requestedExitCode -eq 1) { 'FAIL' } else { 'INFRASTRUCTURE_FAILURE' }
             routes = $routeResults.ToArray()
             failure = if ($script:FailureDiagnostic) { $script:FailureDiagnostic } else { [ordered]@{} }
-            cleanup = [ordered]@{ success = if ($cleanupResult) { [bool]$cleanupResult.Success } else { $false }; errors = $cleanupErrors; diagnostic = if ($script:CleanupDiagnostic) { $script:CleanupDiagnostic } else { [ordered]@{} } }
+            cleanup = $cleanupReport
+        }
+        if ($script:IsQ100Gate) {
+            $report.q100Matrix = [ordered]@{
+                operationElapsedMs = $script:Q100MatrixOperationElapsedMs
+                operationLimitMs = 6000000L
+            }
+        }
+        if ($Gate -ieq 'Q100Player' -and $script:Q100PlayerArtifactProof) {
+            $report.q100PlayerArtifact = $script:Q100PlayerArtifactProof
         }
         try { Write-ReportFile $reportPath $report }
         catch {

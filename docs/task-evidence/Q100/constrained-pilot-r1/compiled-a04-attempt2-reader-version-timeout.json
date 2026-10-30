@@ -1,0 +1,78 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "A04",
+  "status": "INFRASTRUCTURE_FAILURE",
+  "sourcePins": "final-compiled-a04-2-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "31173e2e2513a6933e8caf04cad13304b58600b763be8ce9d50262a18a39b8ec",
+    "scriptDigest": "f604390b6bd1a52968dedc8cbeac01d5d5cb7b78a7ec5b58e3e350dd81ace824",
+    "webDigest": "9a1dbf7b11674bf13bad7fc0824e7dcf20cb6a19879d53d1b9cef7cd585ae9d2",
+    "executionDigest": "434c91a60f66ebb9d4016c5fd084846a01a777171048e4fd10df13db8533c492",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "infrastructure",
+    "phase": "browser",
+    "operation": "route-a04",
+    "elapsedMs": 90144,
+    "remainingDeadlineMs": 0,
+    "error": "VERIFIER_INFRASTRUCTURE: a04 did not provide its required compiled report before the bounded deadline."
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 49,
+      "PhysicalNamespaceMs": 270,
+      "BrowserSessionMs": 38077,
+      "PreviewMs": 7946,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 1600,
+      "BrowserShutdown": [
+        {
+          "RouteId": "0d79baf4822c40a98cabd9cb213e263e",
+          "Lane": "boundReceipt",
+          "TotalMs": 7646,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 455,
+            "endpointAndSocketConnect": 12,
+            "postConnectRootAndListenerProof": 342,
+            "protectedHelperCensus": 1475,
+            "precloseJournalAndAuthorization": 1666,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 2290,
+            "lateDescendantAbsenceProof": 415,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 881,
+            "finalListenerAbsenceProof": 70,
+            "resourceDisposal": 6
+          },
+          "Counts": {
+            "protectedDescendantCount": 8,
+            "rootAndDescendantRecordCount": 9,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 18,
+            "currentAbsenceProofCount": 17,
+            "currentAbsenceObservationCount": 34,
+            "lateDescendantParentQueryCount": 9,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 2,
+  "elapsedSeconds": 158.3190699,
+  "rawReportSha256": "47c7f1571795adf67092e7380b1e9d81908a372af297f8895cea4cc85df607ec",
+  "rawLogSha256": "7c050d539c60c3fdb4e9060091c841cb9c0eb174af3779c3cf846f18a66463f6",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "protocol": "q100-a03-literal-endpoint-diagnostics-v1",
+  "status": "FAIL_DIAGNOSTIC_NOT_QUALIFICATION",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "FAIL_LITERAL_CLASS_MISMATCH",
+      "helper": {
+        "exitCode": 2,
+        "elapsedSeconds": 45.6790437
+      },
+      "seedReached": "0",
+      "phase": "direct actual assembly before scene/controller construction",
+      "expectedClass": "SwitchElm",
+      "expectedPost": 1,
+      "actual": null,
+      "cleanup": "PASS",
+      "sourcePins": "a03-connector-oracle-1-source-pins.json",
+      "rawLogSha256": "7e826f707c8d71a910344a5de1946dc85f8cee7883a97081a82b113dbc358f0e",
+      "rawReceipt": "NOT EMITTED by failed driver"
+    },
+    {
+      "attempt": 2,
+      "status": "FAIL_LITERAL_CLASS_MISMATCH",
+      "helper": {
+        "exitCode": 2,
+        "elapsedSeconds": 44.7893353
+      },
+      "seedReached": "0",
+      "phase": "direct actual assembly before scene/controller construction",
+      "expectedClass": "SwitchElm",
+      "expectedPost": 1,
+      "actual": {
+        "class": "WireElm",
+        "post": 0,
+        "canonicalOwned": true
+      },
+      "cleanup": "PASS",
+      "sourcePins": "a03-connector-oracle-2-source-pins.json",
+      "rawLogSha256": "f26cff0887f75337f422bef4a12beb9e62d6ab67702ed737f5b08e25ea8dd5f6",
+      "rawReceipt": "NOT EMITTED by failed driver"
+    }
+  ],
+  "limits": [
+    "Four exact seeds were declared; the first seed0 failed before later seeds or after-scene checks ran.",
+    "Observed class/post values do not justify blessing an oracle; independent current projection derivation is required.",
+    "Invariant conditions and production literal expectations remain unchanged at these diagnostic captures.",
+    "No solver step or active resistance probe was run by these native diagnostics."
+  ]
+}

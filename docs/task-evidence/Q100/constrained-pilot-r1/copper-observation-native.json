@@ -1,0 +1,35 @@
+{
+  "protocol": "q100-single-face-copper-observation-native-v1",
+  "status": "PASS",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 50.2595807
+  },
+  "cleanup": "PASS",
+  "sourcePins": "copper-observation-contract-2-source-pins.json",
+  "suites": {
+    "Task43PhysicalEndpointContractTest": "320 assertions,6 legacy families and4 controlled signed seeds",
+    "P04RoutingContractTest": "6408 assertions,6 branches",
+    "PhysicalCopperObservationContractTest": "26 assertions: literal tree,16 negatives,6 legacy seed0,1 resistive seed0,2 controlled seeds0/-1",
+    "P02ConductorContractTest": "3209 assertions,40 independent lattice cases,48 shared-copper permutations,16 SMD poses"
+  },
+  "independentReview": {
+    "scope": "Read-only current-caller face/holes scope and new copied-observation validator",
+    "findings": [
+      "Current profiles include TOP and BOTTOM; no hard-coded face",
+      "Mixedface/platedholes fail closed",
+      "Labels never create geometry unions",
+      "Width-sensitive stroke clearance and copper-face pad access remain separate existing layout validation; copied oracle does not independently qualify them"
+    ],
+    "agent": "q100_cleanup_code",
+    "result": "No current-fixture blocker within single-declared-face centerline scope"
+  },
+  "rawLogSha256": "fb8e287d4b59c141e6aa50aefd7ec52572aff10d7a48396c1e91d8368142e8ee",
+  "receiptSha256": "66c7ff90af24f8cf42a15baafc47fd7a39634a26691087cef49a0e23ffcd6217",
+  "limits": [
+    "Compiled final-source capture/Task48/current gates pending",
+    "No two-layer/via profile or RB100 physical qualification",
+    "Full native matrix and all independent oracles NOT RUN",
+    "Failed first negative fixture retained, with validator unchanged after its geometry correction"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "status": "PASS_CONSUMED_INPUT_AUDIT",
+  "scope": "Reuse selected-model native attempt5 only; unrelated Q100 reference protocol changed; final GWT/compiled tests required",
+  "unchangedConsumedEdits": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "sha256": "254c3f2583b8b42828a07e5247456444b00847d72ca36dba5a5dd7e25f2568d0",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java",
+      "sha256": "4926f72e7f0dc677e3e49a8683da56aedc38af060d2e5f552cc3ee0b335b5d0b",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+      "sha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E02RegulatorKneeContractTest.java",
+      "sha256": "8c5a129b04aabbf9e416c4731712b5bdad5cf00a4e27efea807310f679258431",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+      "sha256": "b0d379828c21fde1cde3c2ca9fc137e443c6b6fab8fde2e2f6d31c828dfcc878",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+      "sha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "sha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+      "sha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E02BoundedTangentContractTest.java",
+      "sha256": "f354eaa0a70e15d504e1074122efe417f96a7beac573f09294e3dbb64992064c",
+      "unchanged": true
+    }
+  ],
+  "helperResult": {
+    "exitCode": 0,
+    "elapsedSeconds": 80.2485451
+  },
+  "rawLogSha256": "9f0e2903a8d6af67f84993988bc0c7374ebffd27d47a4af78a07591b46e07512",
+  "limits": [
+    "Full native matrix and independent oracles NOT RUN",
+    "This audit does not qualify reference v3; its healthy/fault gates are fresh",
+    "Unmodified base implementations and eight existing test suites remain at a1352b5; added test hashes listed"
+  ]
+}

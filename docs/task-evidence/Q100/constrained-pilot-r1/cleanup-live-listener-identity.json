@@ -1,0 +1,96 @@
+{
+  "protocol": "troubleshootjs-preview-listener-identity-v2",
+  "status": "PASS",
+  "checks": 63,
+  "live": true,
+  "proofs": [
+    {
+      "stage": "preview-root-listener-scoped-identity",
+      "elapsedMs": 231
+    },
+    {
+      "stage": "preview-root-listener-scoped-identity",
+      "elapsedMs": 219
+    },
+    {
+      "stage": "preview-root-listener-scoped-identity",
+      "elapsedMs": 226
+    }
+  ],
+  "hostCases": [
+    {
+      "case": "127.0.0.1:61554",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "localhost:61554",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "[::1]:61554",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "non-loopback DNS name",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "DNS suffix impersonation",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "wrong port",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "global IPv6 address",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "userinfo authority",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "path in authority",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "query in authority",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "duplicate Host fields",
+      "expected": 400,
+      "actual": 400
+    },
+    {
+      "case": "missing Host field",
+      "expected": 400,
+      "actual": 400
+    }
+  ],
+  "processLaunch": {
+    "task": "preview-listener-identity",
+    "pid": 32088,
+    "processStartTicks": 639289456375910081,
+    "executable": "powershell.exe",
+    "hidden": true,
+    "port": 61554
+  },
+  "ownershipBudgetMs": 500,
+  "cleanup": true,
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 28.1910727
+  }
+}

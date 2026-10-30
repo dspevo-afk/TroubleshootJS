@@ -1,0 +1,45 @@
+{
+  "protocol": "troubleshootjs-q100-cleanup-failure-audit-v1",
+  "status": "FAIL",
+  "attempt": "cleanup-canary-1",
+  "selectedHost": "Windows PowerShell 5.1",
+  "scope": "focused resource cleanup; old custom CDP readiness",
+  "helperExitCode": 2,
+  "helperElapsedSeconds": 56.5471843,
+  "failureStage": "simple-owned-page",
+  "failureCode": "simple-owned-page-loaded",
+  "checksBeforeFailure": 26,
+  "finallyCleanup": {
+    "status": "INFRASTRUCTURE_FAILURE",
+    "reason": "Natural browser shutdown exceeded its complete monotonic cleanup deadline.",
+    "naturalShutdownBudgetMs": 15000,
+    "receiptState": "bound",
+    "closeAttempted": true,
+    "previewCleanup": "complete",
+    "browserCleanup": "failed",
+    "profileRetained": true,
+    "cdpClaimRetained": true
+  },
+  "freshReadOnlyInspection": {
+    "browserRootPid": 30092,
+    "browserRootPresent": false,
+    "listenerInspectionSuccess": true,
+    "listenerInspectionKnown": true,
+    "listenerPresent": false,
+    "listenerInspectionSource": "netstat",
+    "profileQuiescence": "PASS",
+    "manualReleaseAttempted": false,
+    "retainedRecoveryAttempted": false,
+    "recoveryEligible": false,
+    "ineligibility": [
+      "server owner run and two leases",
+      "closeAttempted true",
+      "recorded browser root absent"
+    ]
+  },
+  "limits": [
+    "Failure report was written before finally; final manifest was separately inspected.",
+    "Root absence and profile quiescence do not authorize releasing the retained claim/profile.",
+    "The revised about:blank canary is not qualified by this failed run."
+  ]
+}

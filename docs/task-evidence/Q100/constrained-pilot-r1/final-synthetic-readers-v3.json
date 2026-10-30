@@ -1,0 +1,22 @@
+{
+  "protocol": "q100-strict-readers-and-diagnostic-redaction-v3",
+  "status": "PASS",
+  "host": "Windows PowerShell 5.1",
+  "exitCode": 0,
+  "readerScriptSha256": "b3d343cbd5930698d54740bc0bfc05bb6f4273ffe8ea65baf11bffb37ba303cb",
+  "syntheticScriptSha256": "64250bbe5c9de2bcbf4a16cfb5412ff415ec8675071862aff4f78a499daf063c",
+  "isolationModuleSha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+  "diagnosticCanaries": {
+    "windowsBackslashPathRedacted": true,
+    "windowsForwardSlashPathRedacted": true,
+    "failTask47MarkerPreserved": true,
+    "failA03MarkerPreserved": true,
+    "componentStatusPreserved": true,
+    "loopbackUrlPreserved": true
+  },
+  "electricalReaderScope": "existing strict independent oracle, protocol, timestep, complete 2x31 census and lifecycle/privacy negative fixtures unchanged",
+  "limits": [
+    "Synthetic in-memory reader/redaction fixtures only; no runtime electrical qualification.",
+    "Personal path protection preserved while colon-tagged diagnostic markers are no longer mistaken for drive paths."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "scope": "In-memory strict readers only; actual browser and source/build qualification separate",
+  "command": "Windows PowerShell5.1 -File scripts/verify-q100-evidence.ps1",
+  "sources": [
+    {
+      "path": "scripts/verify-a03-browser.ps1",
+      "sha256": "5b00bea30305f7b9a4b4e2140f6c5e788fde26132cdd70b68bc1d48ed2ac731f"
+    },
+    {
+      "path": "scripts/verify-q100-evidence.ps1",
+      "sha256": "25284541070ae8de9d6237bc6688663ee2cfeb22672ddad4d11ac0e95b8e82c3"
+    }
+  ],
+  "rawLogSha256": "704a59dc97576107fd08deca61ba68cd5e8d77513577afd46d4db35053587661"
+}

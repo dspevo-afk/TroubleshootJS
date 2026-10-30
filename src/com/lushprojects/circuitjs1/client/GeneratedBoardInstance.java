@@ -154,6 +154,8 @@ class GeneratedBoardInstance {
             GeneratedDiagnosticSolvabilityContract suppliedDiagnosticSolvabilityContract,
             GeneratedDiagnosticProvider diagnosticProvider,
             GeneratedPhysicalAdmission physicalAdmission) {
+        if (operationalStates == null)
+            throw new IllegalArgumentException("Missing generated component operational states");
         if (suppliedDiagnosticSolvabilityContract != null &&
                 (!developerOnlyFaultRoute ||
                  !suppliedDiagnosticSolvabilityContract.isDeveloperFixture()))

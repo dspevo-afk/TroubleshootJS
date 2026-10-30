@@ -1,0 +1,20 @@
+{
+  "protocol": "q100-and-a04-strict-readers-v5",
+  "status": "PASS",
+  "host": "Windows PowerShell 5.1",
+  "exitCode": 0,
+  "elapsedSeconds": 3.2425933,
+  "a04Assertions": 14,
+  "debugFalsePrivacy": "Uses the exact strict ordinary-privacy predicate, rejects known/unknown/verification/missing/null/array/duplicate-shaped developer attributes",
+  "playerPrivacy": "New unknown future-answer direct rejection; previous artifact and two-sentinel canary fixtures preserved",
+  "readerScriptSha256": "a9883611d54dba868306efee342065044066f9795708f97bdc032d738ecae089",
+  "syntheticScriptSha256": "ba725f9dcd9dad4fef8b538de38ed902ba55cd88a86c46b9eed109df93b48d2e",
+  "isolationModuleSha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+  "rawLogSha256": "a6e7a8c8bb157634bbb6688f8062de8e39fc569102c40d0a9875ac6331723e8d",
+  "preservedScope": "All prior independent Q100 electrical oracle,2x31 census,timestep,lifecycle,inputlock,artifact and redaction fixtures PASS",
+  "limits": [
+    "In-memory fixtures only; actual Developer debugfalse two-sentinel canary NOT RUN yet",
+    "Existing compiled Current,Player,lifecycle and full62 records keep their actual older reader source pins",
+    "Full62 attempt2 failed aggregatecleanup; no acceptance inferred"
+  ]
+}

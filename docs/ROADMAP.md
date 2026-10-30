@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-10-29 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-10-30 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -8,7 +8,11 @@ R12 Phase 1 remains accepted for its recorded candidate. The owner reported stop
 
 R12 Phase 2 normal MEDIUM qualification is locally accepted for its documented finite RB56 envelope. The source-bound 30-root qualification passed across profile, development, holdout and two replacement-blind partitions, with the exact original22 comparison, Player save/replay/restore gate and finite physical repair/retest path. The acceptance record and limits are in the [R3 evidence packet](task-evidence/REL-B/rb56-medium-normal-r3/README.md) and [current task checkpoint](CODEX_TASK_REPORT.md). Earlier compiled metadata, runtime and population failures remain preserved; none were reclassified.
 
-Normal RB56 MEDIUM admission and the finite population/public-save envelope are qualified for this candidate. The normal publication workflow follows this acceptance checkpoint; the completion handoff records its commit, push and email outcome. Public beta remains held; HARD/PSYCHOTIC remain unavailable, protected HARD is unread/unrun, and Q100 is unstarted. The acceptance does not establish all-seed support, every save/history/damage/catalog state, human repair, modest-host operation, advanced maximum capacity/endurance or expanded visual/FPS coverage.
+Normal RB56 MEDIUM admission and the finite population/public-save envelope are qualified for this candidate. Commit `a1352b5caeb78e069606f84a569e14670f28d807` was pushed to `origin/codex/r12-medium-phase2`, verified remotely, and its completion email was sent. Public beta remains held; HARD/PSYCHOTIC remain unavailable, protected HARD is unread/unrun, and Q100 proceeds under the pilot below. The acceptance does not establish all-seed support, every save/history/damage/catalog state, human repair, modest-host operation, advanced maximum capacity/endurance or expanded visual/FPS coverage.
+
+Q100 remains IN PROGRESS. Its first [private functional/electrical pilot](task-evidence/Q100/constrained-pilot-r1/README.md) is locally accepted for the exact authored seed and two 100-package CircuitJS variants: complete native and final compiled 2-by-31 fault/repair references, final compiled lifecycle/Current gates, scoped Player evidence and three normal MEDIUM regression roots. The final compiled matrix passes aggregate cleanup in 98.455 s under the unchanged 120 s limit; both earlier cleanup failures remain preserved. Dependency interpretation v20 has only the documented three-root normal regression here; the earlier 30-root acceptance remains attached to its recorded R12 candidate.
+
+The pilot grants no playable RB100 or public admission. The next separate substep is E06 accepted receipt/controller/predictor staging and failure-boundary verification before Q100 physical/admission work. Routing and access for 100 packages, procedural qualification, save capacity and long-session evidence remain pending. The owner authorized continued roadmap execution until told to stop.
 
 ## Current direction
 
@@ -27,7 +31,7 @@ The [complete milestone catalog and execution order](archive/2026-10-27-roadmap.
 cards. The archive is the full roadmap snapshot, not a cancellation of work that remains
 planned. The [product direction](archive/2026-10-27-roadmap.md#1-product-direction-and-current-only-policy), [reference-board taxonomy](archive/2026-10-27-roadmap.md#4-functional-taxonomy-and-reference-boards), and [definition of done](archive/2026-10-27-roadmap.md#9-risk-register-non-goals-and-completion) retain their original section anchors.
 
-The current, separate audit-remediation findings and evidence are tracked in [docs/audit-remediation.md](audit-remediation.md). That separate track records its final gates, including the full native matrix, final-source GWT/browser checks, deterministic Gate B and live preview boundaries; this does not refresh the R12 Phase 2 native scope. R12 Phase 2 is locally accepted under its frozen plan; publication follows this acceptance checkpoint and Q100 is the next unstarted milestone.
+The current, separate audit-remediation findings and evidence are tracked in [docs/audit-remediation.md](audit-remediation.md). That separate track records its final gates, including the full native matrix, final-source GWT/browser checks, deterministic Gate B and live preview boundaries; this does not refresh the R12 Phase 2 native scope. R12 Phase 2 is published under its frozen plan. Q100 remains in progress, with its private Q100-1 pilot locally accepted within the scope above.
 
 ## Archive note
 

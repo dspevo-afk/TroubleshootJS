@@ -1,0 +1,110 @@
+{
+  "status": "FAIL_PLAYER_ARTIFACT_PRIVACY_PRESERVED",
+  "build": "Player1",
+  "sourceInputDigest": "128cf41be88e246404cb491c4d1c8aef8d149ac5eee40d38f1de073f4b39d744",
+  "outputDigest": "e4efb6f2c124e93da02e53335433434b7cb3880f8e2f224a7e3dc82db03aeae8",
+  "verifiedFiles": 357,
+  "matchingMarkers": [
+    {
+      "cache": "15233D3AA7244DF98A6D8343DD0DC03A.cache.js",
+      "marker": "tsjQ100Fault"
+    },
+    {
+      "cache": "15233D3AA7244DF98A6D8343DD0DC03A.cache.js",
+      "marker": "tsjQ100Variant"
+    },
+    {
+      "cache": "15233D3AA7244DF98A6D8343DD0DC03A.cache.js",
+      "marker": "tsjQ100Canary"
+    },
+    {
+      "cache": "15233D3AA7244DF98A6D8343DD0DC03A.cache.js",
+      "marker": "tsjQ100Dt"
+    },
+    {
+      "cache": "1FE9A2649B023B5FD3527D3BD2036261.cache.js",
+      "marker": "tsjQ100Fault"
+    },
+    {
+      "cache": "1FE9A2649B023B5FD3527D3BD2036261.cache.js",
+      "marker": "tsjQ100Variant"
+    },
+    {
+      "cache": "1FE9A2649B023B5FD3527D3BD2036261.cache.js",
+      "marker": "tsjQ100Canary"
+    },
+    {
+      "cache": "1FE9A2649B023B5FD3527D3BD2036261.cache.js",
+      "marker": "tsjQ100Dt"
+    },
+    {
+      "cache": "6D0E2E95642E464033371BDF7D277B69.cache.js",
+      "marker": "tsjQ100Fault"
+    },
+    {
+      "cache": "6D0E2E95642E464033371BDF7D277B69.cache.js",
+      "marker": "tsjQ100Variant"
+    },
+    {
+      "cache": "6D0E2E95642E464033371BDF7D277B69.cache.js",
+      "marker": "tsjQ100Canary"
+    },
+    {
+      "cache": "6D0E2E95642E464033371BDF7D277B69.cache.js",
+      "marker": "tsjQ100Dt"
+    },
+    {
+      "cache": "9E7832D5E53C108E1E39BB50625CFC84.cache.js",
+      "marker": "tsjQ100Fault"
+    },
+    {
+      "cache": "9E7832D5E53C108E1E39BB50625CFC84.cache.js",
+      "marker": "tsjQ100Variant"
+    },
+    {
+      "cache": "9E7832D5E53C108E1E39BB50625CFC84.cache.js",
+      "marker": "tsjQ100Canary"
+    },
+    {
+      "cache": "9E7832D5E53C108E1E39BB50625CFC84.cache.js",
+      "marker": "tsjQ100Dt"
+    },
+    {
+      "cache": "F56A9F83B546E2F9B83366593E0C77A5.cache.js",
+      "marker": "tsjQ100Fault"
+    },
+    {
+      "cache": "F56A9F83B546E2F9B83366593E0C77A5.cache.js",
+      "marker": "tsjQ100Variant"
+    },
+    {
+      "cache": "F56A9F83B546E2F9B83366593E0C77A5.cache.js",
+      "marker": "tsjQ100Canary"
+    },
+    {
+      "cache": "F56A9F83B546E2F9B83366593E0C77A5.cache.js",
+      "marker": "tsjQ100Dt"
+    }
+  ],
+  "setupAttempts": [
+    {
+      "attempt": 1,
+      "status": "FAIL_INFRASTRUCTURE",
+      "routes": 0,
+      "cause": "PS5 StrictMode receipt property Count access",
+      "reportWritten": false
+    },
+    {
+      "attempt": 2,
+      "status": "FAIL_PRIVACY_ARTIFACT",
+      "routes": 0,
+      "cause": "Four Q100 query markers survive constant-false field assignment",
+      "reportWritten": false
+    }
+  ],
+  "limits": [
+    "No private reference implementation or answer-key leakage inferred from query markers alone",
+    "Actual strict artifact check failed; no Player privacy PASS at this candidate",
+    "Complete failed module copied outside Git and verified against its full inventory"
+  ]
+}

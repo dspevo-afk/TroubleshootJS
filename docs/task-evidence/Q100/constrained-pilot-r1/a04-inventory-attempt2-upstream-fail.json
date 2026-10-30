@@ -1,0 +1,31 @@
+{
+  "protocol": "q100-a04-upstream-native-diagnostic-v1",
+  "status": "FAIL_OVERSTRICT_UPSTREAM_EXPECTATION",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 60.9273245
+  },
+  "cleanup": "PASS",
+  "failure": "A04 runtime: secondary endpoint lost its primary upstream: channel-a-driver/RG",
+  "a04AssertionsReached": 174,
+  "sourceDerivedCorrection": "Controlled RG/RB/RLOAD primary post1 joins declared fault switch post0; its post1 joins secondary post0. Direct R1 and service-created RPD secondary originate from primary post1. An applied open fault switch must not be bridged.",
+  "passedBeforeFailure": [
+    "Task43 endpoints320",
+    "PhysicalCopper observations26",
+    "Bounded resistive241",
+    "Controlled assembly1177",
+    "A03 actual runtime401",
+    "A04 pure680"
+  ],
+  "notRun": [
+    "Completion of augmented A04 actual6corpus/retargetnegative",
+    "A04 physical declaration later suite"
+  ],
+  "sourcePins": "a04-inventory-runtime-2-source-pins.json",
+  "rawLogSha256": "8562af1bfea1130a5e15ab9b6e3ccf4f44857344707576e1c9996971bd23ca9e",
+  "limits": [
+    "Not a passing native aggregate",
+    "No qualified receipt emitted by failed driver",
+    "No active solver-node proof from these detached native identity/geometry canaries"
+  ]
+}

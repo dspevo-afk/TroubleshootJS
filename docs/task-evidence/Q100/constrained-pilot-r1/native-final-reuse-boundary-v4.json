@@ -1,0 +1,178 @@
+{
+  "protocol": "q100-native-consumed-input-audit-v4",
+  "status": "PASS_SCOPED_ELECTRICAL_REUSE",
+  "gates": [
+    "native-healthy-17",
+    "native-faults-4"
+  ],
+  "rows": [
+    {
+      "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN.md",
+      "frozenSha256": "e11c0133ed1984d9441e9a9f743588923c67fc6dcff73632c8f3ccccd6bcf012",
+      "currentSha256": "c405e329884e83aaf120790e3ae2705f64bd397d42d72ea397cbdd3eba4f39d0",
+      "unchanged": false
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "frozenSha256": "3e1412d07376098764000feb7d7f105119e3ae180f46f7d646d5692c22375d22",
+      "currentSha256": "ea9ed87f061bf9917140ba66a2754ddcaab27b7b58029e09747d020e93f0fd4c",
+      "unchanged": false
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "frozenSha256": "254c3f2583b8b42828a07e5247456444b00847d72ca36dba5a5dd7e25f2568d0",
+      "currentSha256": "b94a13b0e62e64528e3abd0a836cbfeffc96e89f8810ec90e608c27533afa987",
+      "unchanged": false
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+      "frozenSha256": "360466bea9c120d34f763079be1a63aced740e8492b0617ee734522cf49e1dbf",
+      "currentSha256": "360466bea9c120d34f763079be1a63aced740e8492b0617ee734522cf49e1dbf",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+      "frozenSha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f",
+      "currentSha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotFaults.java",
+      "frozenSha256": "23b3e62e671bc087be2f8954014aa22327bebf49c678ae3a1265fe6dccef90d6",
+      "currentSha256": "23b3e62e671bc087be2f8954014aa22327bebf49c678ae3a1265fe6dccef90d6",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotReference.java",
+      "frozenSha256": "d85d7a47d7dfad82298e69d3ef4b48a7d0a784ea18b1d79f66503653393c4485",
+      "currentSha256": "d85d7a47d7dfad82298e69d3ef4b48a7d0a784ea18b1d79f66503653393c4485",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+      "frozenSha256": "6a51b75ce907840ab60206739bff6ef5de8c658a5be67f5325410e9653b180f7",
+      "currentSha256": "6a51b75ce907840ab60206739bff6ef5de8c658a5be67f5325410e9653b180f7",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/Rb100PlanContractTest.java",
+      "frozenSha256": "9ecc1c6ae3f99eba1f3a9d4f16e949ae4edfe22dc53bb7156df66b161b60af89",
+      "currentSha256": "9ecc1c6ae3f99eba1f3a9d4f16e949ae4edfe22dc53bb7156df66b161b60af89",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/Rb100ElectricalPilotContractTest.java",
+      "frozenSha256": "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4",
+      "currentSha256": "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java",
+      "frozenSha256": "4926f72e7f0dc677e3e49a8683da56aedc38af060d2e5f552cc3ee0b335b5d0b",
+      "currentSha256": "4926f72e7f0dc677e3e49a8683da56aedc38af060d2e5f552cc3ee0b335b5d0b",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+      "frozenSha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2",
+      "currentSha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E02RegulatorKneeContractTest.java",
+      "frozenSha256": "8c5a129b04aabbf9e416c4731712b5bdad5cf00a4e27efea807310f679258431",
+      "currentSha256": "8c5a129b04aabbf9e416c4731712b5bdad5cf00a4e27efea807310f679258431",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+      "frozenSha256": "b0d379828c21fde1cde3c2ca9fc137e443c6b6fab8fde2e2f6d31c828dfcc878",
+      "currentSha256": "b0d379828c21fde1cde3c2ca9fc137e443c6b6fab8fde2e2f6d31c828dfcc878",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+      "frozenSha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83",
+      "currentSha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83",
+      "unchanged": true
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+      "frozenSha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773",
+      "currentSha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+      "frozenSha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a",
+      "currentSha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/contracts/E02BoundedTangentContractTest.java",
+      "frozenSha256": "f354eaa0a70e15d504e1074122efe417f96a7beac573f09294e3dbb64992064c",
+      "currentSha256": "f354eaa0a70e15d504e1074122efe417f96a7beac573f09294e3dbb64992064c",
+      "unchanged": true
+    }
+  ],
+  "laterClosurePins": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+      "sha256": "a80a65dd96c846c14628b75a6573c5337799e1c3ab257b3b8ae50f88b8bd1cca"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+      "sha256": "50b7beae5938beadfd3f22d32a1f130e809f60a0a9b11aacd2cf56f5cbb655c9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java",
+      "sha256": "34ec056b42de2cad6eda34ead8f309e986605c01db9baba2b9717cb57ef1ab19"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A03IdentityDeveloperVerifier.java",
+      "sha256": "16598a42a8956687484bf77751e848c40c0e5068b7a6a9c6360d1bea1384906b"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/A04ConstructionDeveloperVerifier.java",
+      "sha256": "5637fc140de39583276ec0b004e1f1bbb60d4b18c53b8a5ca131eaf03e708579"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Task47AssemblyDeveloperVerifier.java",
+      "sha256": "d606c546f64cfec79d736d3dc3bc065e94b1b0af219e48e917c2e969cfbb59e9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedBoardPhysicalTruthDeveloperVerifier.java",
+      "sha256": "39c6432e78b325319a97a8b9e920c713137d616c814755753b07e1805962ea5c"
+    },
+    {
+      "path": "scripts/verify-a03-browser.ps1",
+      "sha256": "b619750da5b00283bb79263ba556b5e5f043d201ed4c87b1402f70551afb889e"
+    },
+    {
+      "path": "scripts/verify-q100-evidence.ps1",
+      "sha256": "55d95c589a686dce452b9916e4908d83ae742096a692401c9e230a5e65e7421c"
+    },
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "sha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111"
+    }
+  ],
+  "scope": "Only unchanged actual native RB100 candidate,reference,faults,models,solverexecutor and independent assertions",
+  "changedFrozenInputs": {
+    "plan": "Appended identity/verifier boundary amendments only; RB100 plan1/model4/refv3,seed,values,thresholds,faultcensus,budgets unchanged",
+    "driver": "Only unselected test registrations and trace guards changed; these two gates selectRB100 suites with tracingfalse",
+    "cirSim": "Q100 parser moved underDeveloper init; native fixture constructs directly and nevercallsinit"
+  },
+  "unreachedChanges": {
+    "epoch": "Raw Rb100ElectricalPilot constructs a RelayOutputGenerator.Assembly,not generation-cache/private-replay identities",
+    "instanceAndBoundedResult": "Directpilot constructs no GeneratedBoardInstance or BoundedGeneratedBoardAssembler.Result; operational-state/receiptmetadata changes have separate fresh native8+Current9 evidence",
+    "privateVerifier": "A03/A04/Task47 and physical correspondence/reader changes are not executed by nativepilot test; their final source-bound checks are recorded separately"
+  },
+  "review": "Prior independent q100_cleanup_profile verified18pins/reachability; root extended closure over later unentered A04/physical/reader corrections",
+  "hostCleanup": "NOT REUSED as current acceptance. Old electricalresults keep their recorded cleanup metadata; isolation module was not inthosefreezes and haschanged. Current host canaries/native8/Current9 pass separately; fresh Q10011/full62 still required.",
+  "limits": [
+    "Fifteenof18frozenpinsunchanged; threechangedfiles explicitlyaudited",
+    "No current-hostcleanup,normal30root,playableRB100,physical100 or fullQ100qualification inferred",
+    "Do not relabel old compiled62 cleanupFAIL"
+  ]
+}

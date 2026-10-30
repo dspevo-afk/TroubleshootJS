@@ -1,0 +1,48 @@
+{
+  "protocol": "q100-dependency-v20-native-guards-v1",
+  "status": "PASS",
+  "dependencyEpoch": "tsj-generation-dependencies-v20",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 50.9036356
+  },
+  "suites": [
+    {
+      "name": "D01DiagnosticContractTest",
+      "assertions": 174
+    },
+    {
+      "name": "Rb56ModelIdentityContractTest",
+      "assertions": 123
+    },
+    {
+      "name": "RelBSessionIdentityContractTest",
+      "assertions": 204
+    },
+    {
+      "name": "U06SessionSaveContractTest",
+      "assertions": 35024
+    },
+    {
+      "name": "Rb56ManifestContractTest",
+      "rows": 30,
+      "scope": "IDENTITY_ONLY noCircuitConstruction=true"
+    }
+  ],
+  "passMarkers": [
+    "PASS: RB56 manifest identities rows=30 scope=IDENTITY_ONLY noCircuitConstruction=true",
+    "PASS: U06 session save contracts assertions=35024",
+    "PASS: REL-B session identity contracts assertions=204 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false",
+    "PASS: RB56 model-identity contracts assertions=123",
+    "PASS: D01 diagnostic contracts assertions=174"
+  ],
+  "cleanup": "PASS",
+  "sourcePins": "epoch-guards-1-source-pins.json",
+  "rawReceiptSha256": "3c593a4de02a90b2a7b450fe154a9075fdc67b1476d7387221dcf918f5301009",
+  "manifestOutputSha256": "a8c4c23138d0b19230877dc0934b8fcca6110724b17f40c6e537e4a498cfe4b6",
+  "limits": [
+    "Native cache fixture uses a captured complete current context and explicit prior epoch value; it does not grant old evidence to a live player.",
+    "Public session schema remains unchanged; restore must regenerate/reprove.",
+    "No new 30-root electrical or full native-matrix qualification."
+  ]
+}

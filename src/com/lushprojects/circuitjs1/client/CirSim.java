@@ -457,6 +457,8 @@ MouseOutHandler, MouseWheelHandler {
     boolean troubleshootE06Verification, troubleshootE06VerificationComplete, troubleshootE06ForcedFailure;
     boolean troubleshootRb56Verification, troubleshootRb56Complete, troubleshootRb56ForcedFailure, troubleshootRb56Bench;
     String troubleshootRb56Seed;
+    boolean troubleshootQ100Verification, troubleshootQ100Complete;
+    String troubleshootQ100Variant, troubleshootQ100Fault, troubleshootQ100Dt, troubleshootQ100Canary;
     boolean troubleshootE01Verification, troubleshootE01VerificationComplete, troubleshootE01ForcedFailure;
 	boolean troubleshootE02Verification, troubleshootE02VerificationComplete, troubleshootE02ForcedFailure;
 	boolean troubleshootA06Verification;
@@ -667,6 +669,13 @@ MouseOutHandler, MouseWheelHandler {
             troubleshootRb56ForcedFailure = troubleshootRb56Verification && qp.getBooleanValue("tsjRb56Fail", false);
             troubleshootRb56Bench = troubleshootRb56Verification && qp.getBooleanValue("tsjRb56Bench", false);
             troubleshootRb56Seed = troubleshootRb56Verification ? qp.getValue("tsjRb56Seed") : null;
+            if (TroubleshootBuild.isDeveloper()) {
+                troubleshootQ100Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyQ100", false);
+                troubleshootQ100Variant = troubleshootQ100Verification ? qp.getValue("tsjQ100Variant") : null;
+                troubleshootQ100Fault = troubleshootQ100Verification ? qp.getValue("tsjQ100Fault") : null;
+                troubleshootQ100Dt = troubleshootQ100Verification ? qp.getValue("tsjQ100Dt") : null;
+                troubleshootQ100Canary = troubleshootQ100Verification ? qp.getValue("tsjQ100Canary") : null;
+            }
             troubleshootU06Verification = troubleshootDebug && qp.getBooleanValue("tsjVerifyU06", false);
             troubleshootU06Family = qp.getValue("tsjU06Family");
             troubleshootU06Seed = qp.getValue("tsjU06Seed");
@@ -974,7 +983,7 @@ MouseOutHandler, MouseWheelHandler {
 	buttonPanel.add(runStopButton = new Button(LSHTML("<Strong>RUN</Strong>&nbsp;/&nbsp;Stop")));
 	runStopButton.addClickHandler(new ClickHandler() {
 	    public void onClick(ClickEvent event) {
-		setSimRunning(!simIsRunning());
+		toggleSimRunningFromUserInput();
 	    }
 	});
 	instrumentController = new InstrumentController(this, verticalPanel);
@@ -1766,7 +1775,16 @@ MouseOutHandler, MouseWheelHandler {
     int framerate = 0, steprate = 0;
     static CirSim theSim;
 
-    
+    private boolean isPrivateSolverInteractionLocked() {
+        return solverExecutor.isUnavailable();
+    }
+
+    /** The normal Run/Stop control is ignored while a private graph owns CircuitJS. */
+    void toggleSimRunningFromUserInput() {
+        if (isPrivateSolverInteractionLocked()) return;
+        setSimRunning(!simIsRunning());
+    }
+
     public void setSimRunning(boolean s) {
     	if (s) {
     	    	if (stopMessage != null)
@@ -1904,6 +1922,7 @@ MouseOutHandler, MouseWheelHandler {
             runP07TwoLayerVerificationIfReady();
             runQ30DeveloperWorkbenchIfReady();
             runRb56QualificationIfReady();
+            runQ100ElectricalPilotIfReady();
             runU01ViewportVerificationIfReady();
             runA10GenerationVerificationIfReady();
             runU06SessionVerificationIfReady();
@@ -3487,6 +3506,11 @@ MouseOutHandler, MouseWheelHandler {
 	    else
 		solverExecutor.goodIterations = 0;
             solverExecutor.check(operation);
+            // Domain limits apply to the globally converged node vector. A
+            // finite Newton trial may overshoot it; no model may publish an
+            // unsupported state through time, callbacks or an observation.
+            for (i = 0; i != iterationElementCount; i++)
+                iterationElements[i].validateConvergedState();
             if (!SolverExecutionBoundary.finite(timeStep) || timeStep <= 0 ||
                     !SolverExecutionBoundary.finite(t + timeStep) || t + timeStep <= t)
                 throw new SolverExecutionBoundary.Failure(SolverExecutionBoundary.Outcome.NUMERICAL_FAILURE,
@@ -3683,6 +3707,8 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     public void menuPerformed(String menu, String item) {
+	if (isPrivateSolverInteractionLocked())
+	    return;
 	if ((menu=="edit" || menu=="main" || menu=="scopes") && noEditCheckItem.getState()) {
 	    Window.alert(LS("Editing disabled.  Re-enable from the Options menu."));
 	    return;
@@ -4846,6 +4872,7 @@ MouseOutHandler, MouseWheelHandler {
 
     public void onMouseMove(MouseMoveEvent e) {
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
     	mouseCursorX=e.getX();
     	mouseCursorY=e.getY();
         if (isPcbWorkbenchVisible()) {
@@ -5224,6 +5251,17 @@ MouseOutHandler, MouseWheelHandler {
                 PhysicalMutationScope.rethrow(failure);
             } finally { developerVerifierRunning = false; }
         }
+    }
+
+    private void runQ100ElectricalPilotIfReady() {
+        if (!TroubleshootBuild.isDeveloper()) return;
+        if (!troubleshootDebug || !troubleshootQ100Verification || troubleshootQ100Complete ||
+                developerVerifierRunning || GeneratedDiagnosticSolvabilityAdmission.isInternalProofRunning() ||
+                generatedChallengeController == null || !generatedChallengeController.isReady() ||
+                !isGeneratedRuntimeSettled()) return;
+        troubleshootQ100Complete = true;
+        Q100ElectricalPilotDeveloperVerifier.start(this, troubleshootQ100Variant, troubleshootQ100Fault,
+            troubleshootQ100Dt, troubleshootQ100Canary);
     }
 
     private void runRb56QualificationIfReady() {
@@ -6533,6 +6571,7 @@ MouseOutHandler, MouseWheelHandler {
 
     public void onContextMenu(ContextMenuEvent e) {
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
 	if (isPcbWorkbenchVisible()) return;
 	if (instrumentController.isHandlingPointerInput())
 	    return;
@@ -6545,6 +6584,7 @@ MouseOutHandler, MouseWheelHandler {
     
     @SuppressWarnings("deprecation")
     void doPopupMenu() {
+	if (isPrivateSolverInteractionLocked()) return;
 	if (noEditCheckItem.getState() || dialogIsShowing())
 	    return;
     	menuElm = mouseElm;
@@ -6635,6 +6675,7 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     void longPress() {
+	if (isPrivateSolverInteractionLocked()) return;
 	if (!instrumentController.isHandlingPointerInput())
 	    doPopupMenu();
     }
@@ -6642,6 +6683,7 @@ MouseOutHandler, MouseWheelHandler {
 //    public void mouseClicked(MouseEvent e) {
     public void onClick(ClickEvent e) {
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
 	if (isPcbWorkbenchVisible())
 	    return;
 	if (instrumentController.isHandlingPointerInput())
@@ -6659,6 +6701,7 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onDoubleClick(DoubleClickEvent e){
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
 	if (isPcbWorkbenchVisible())
 	    return;
 	if (instrumentController.isHandlingPointerInput())
@@ -6688,6 +6731,7 @@ MouseOutHandler, MouseWheelHandler {
     public void onMouseDown(MouseDownEvent e) {
 //    public void mousePressed(MouseEvent e) {
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
 		if (isPcbWorkbenchVisible() && !isChallengeInteractionEnabled())
 		    return;
         if (isPcbWorkbenchVisible()) {
@@ -6830,6 +6874,7 @@ MouseOutHandler, MouseWheelHandler {
  
     public void onMouseUp(MouseUpEvent e) {
     	e.preventDefault();
+	if (isPrivateSolverInteractionLocked()) return;
     	mouseDragging=false;
         if (isPcbWorkbenchVisible()) { pcbWorkbenchController.releasePartDrag(e.getX(), e.getY()); pcbWorkbenchController.endPan(); return; }
 	if (instrumentController.isHandlingPointerInput())
@@ -6879,6 +6924,7 @@ MouseOutHandler, MouseWheelHandler {
     
     public void onMouseWheel(MouseWheelEvent e) {
     	e.preventDefault();
+        if (isPrivateSolverInteractionLocked()) return;
         if (isPcbWorkbenchVisible()) {
             pcbWorkbenchController.wheel(e.getDeltaY(), e.getX(), e.getY());
             pcbWorkbenchController.auditViewEvent(e.getNativeEvent()); return;
@@ -7082,6 +7128,7 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     void doDelete(boolean pushUndoFlag) {
+	if (isPrivateSolverInteractionLocked()) return;
     	int i;
     	if (pushUndoFlag)
     	    pushUndo();
@@ -7245,6 +7292,7 @@ MouseOutHandler, MouseWheelHandler {
     }
     
     void doSelectAll() {
+	if (isPrivateSolverInteractionLocked()) return;
     	int i;
     	for (i = 0; i != elmList.size(); i++) {
     		CircuitElm ce = getElm(i);
@@ -7292,6 +7340,15 @@ MouseOutHandler, MouseWheelHandler {
     }-*/;
 
     public void onPreviewNativeEvent(NativePreviewEvent e) {
+        int eventType = e.getTypeInt();
+        int privateInputEvents = Event.KEYEVENTS | Event.MOUSEEVENTS | Event.TOUCHEVENTS |
+            Event.ONMOUSEWHEEL | Event.ONCONTEXTMENU | Event.ONCHANGE;
+        if (isPrivateSolverInteractionLocked() &&
+                (eventType & privateInputEvents) != 0) {
+            e.getNativeEvent().preventDefault();
+            e.cancel();
+            return;
+        }
         if (isPcbWorkbenchVisible()) {
             if (dialogIsShowing()) {
                 pcbWorkbenchController.tabView(false);

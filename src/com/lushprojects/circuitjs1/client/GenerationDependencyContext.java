@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    // Corrected bipolar meters, supply-loaded sensor output and routing v20
-    // invalidate proof values and serialized models from the earlier epoch.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v19";
+    // E02/E04/E06 solver interpretation changed; invalidate proof identities.
+    // Declared electrical contracts and model dumps remain unchanged.
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v20";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v7";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";

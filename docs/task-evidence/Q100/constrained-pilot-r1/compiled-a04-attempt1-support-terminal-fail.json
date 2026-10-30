@@ -1,0 +1,78 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "A04",
+  "status": "FAIL",
+  "sourcePins": "final-compiled-a04-1-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "1db867afc8e5e095df47282727aa5c7f786e643930ad816940f7a7a1c756ac32",
+    "scriptDigest": "f604390b6bd1a52968dedc8cbeac01d5d5cb7b78a7ec5b58e3e350dd81ace824",
+    "webDigest": "d124d04186b238650cccd294dc28a9cb28d85a55d275bb9bf76880b32352b36c",
+    "executionDigest": "d895d16218e5d14ee6f23249f7064c8d884c64ad3487086100fb7666f94fd869",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "application",
+    "phase": "browser",
+    "operation": "route-a04",
+    "elapsedMs": 5983,
+    "remainingDeadlineMs": 84016,
+    "error": "a04 reported FAIL:A04 runtime: component endpoint bypassed its declared primary: channel-a-driver/RPD.2"
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 49,
+      "PhysicalNamespaceMs": 219,
+      "BrowserSessionMs": 38985,
+      "PreviewMs": 8533,
+      "LeaseReleaseMs": 21,
+      "FinalProofMs": 1691,
+      "BrowserShutdown": [
+        {
+          "RouteId": "acaabe556de6440c860e11d815e96f71",
+          "Lane": "boundReceipt",
+          "TotalMs": 10990,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 399,
+            "endpointAndSocketConnect": 12,
+            "postConnectRootAndListenerProof": 418,
+            "protectedHelperCensus": 2522,
+            "precloseJournalAndAuthorization": 1721,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 4176,
+            "lateDescendantAbsenceProof": 756,
+            "containmentJobEmptyProof": 2,
+            "profileQuiescence": 871,
+            "finalListenerAbsenceProof": 74,
+            "resourceDisposal": 7
+          },
+          "Counts": {
+            "protectedDescendantCount": 16,
+            "rootAndDescendantRecordCount": 17,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 34,
+            "currentAbsenceProofCount": 31,
+            "currentAbsenceObservationCount": 62,
+            "lateDescendantParentQueryCount": 17,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 1,
+  "elapsedSeconds": 75.7866384,
+  "rawReportSha256": "31eeb15a17904a86a3d942fd0a07120e847ebdf17ca8f6f3658d44fdb081bec6",
+  "rawLogSha256": "3730921c4de6ea68fcce7c3b8f37cb7c10c4baa98298aa2ea9b475c45175d4b7",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

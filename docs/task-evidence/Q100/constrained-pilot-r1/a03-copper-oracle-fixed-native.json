@@ -1,0 +1,38 @@
+{
+  "protocol": "q100-source-derived-copper-oracle-native-v1",
+  "status": "PASS",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 52.1158597
+  },
+  "cleanup": "PASS",
+  "sourcePins": "a03-copper-oracle-fixed-1-source-pins.json",
+  "base": "a1352b5caeb78e069606f84a569e14670f28d807",
+  "scope": [
+    "Actual resistive direct/replay assembly and scene capture across seeds 0,1,9007199254740993,-9223372036854775808: 401 assertions",
+    "Existing Task43 six legacy families and controlled signed-seed endpoint profiles: 320 assertions",
+    "Current pure resistive assembly: 241 assertions"
+  ],
+  "expected": {
+    "J1_2": "GroundElm/post0: not the movable supply-source return harness",
+    "J1_1": "WireElm/post0: persistent SUPPLY_TRACE"
+  },
+  "independentReview": {
+    "mode": "Read-only source derivation; actual native observations withheld",
+    "result": "Only obsolete J1.1 literal changes; J1.2 and all other literals remain strict",
+    "agent": "q100_cleanup_code",
+    "basis": [
+      "BoundedElectricalDeviceConstructionAdapter.constructResistive",
+      "PhysicalConstructionMaterializer external input harness declaration",
+      "ServiceableBoardConstruction completeBasic/preserveCopper/copperAnchor",
+      "GeneratedComponentConnectionBindings.sameEndpoint"
+    ]
+  },
+  "rawLogSha256": "2aa7eff9c5f054d192a9ccea7c7d9d39e39f3935e58ba9919dd81ae4dc914920",
+  "receiptSha256": "ae00841389f016d08e92f18ed8c344ab62c26e2ae09c032ae2d3fa16098e198c",
+  "limits": [
+    "Native assembly/identity/scene boundary only; no active DMM or solver-step electrical claim",
+    "Full native matrix and independent oracles NOT RUN",
+    "Compiled Task47/current gates pending; preceding failures preserved"
+  ]
+}

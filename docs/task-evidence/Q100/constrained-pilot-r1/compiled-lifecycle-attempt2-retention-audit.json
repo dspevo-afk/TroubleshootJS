@@ -1,0 +1,16 @@
+{
+  "runId": "b1bddfa9f6a040d0b3d5562349a824f6",
+  "rootPid": 17508,
+  "rootPresent": false,
+  "receiptState": "bound",
+  "closeAttempted": true,
+  "serverCleanup": "complete",
+  "leaseCount": 2,
+  "profilePresent": true,
+  "listenerSuccess": true,
+  "listenerKnown": true,
+  "listenerPresent": false,
+  "profileQuiescent": true,
+  "retainedRecoveryAttempted": false,
+  "manualReleaseAttempted": false
+}

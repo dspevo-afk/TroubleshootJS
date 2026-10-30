@@ -1,0 +1,64 @@
+{
+  "protocol": "q100-final-player-visible-input-v1",
+  "status": "PASS_VISIBLE_LED_REPAIR_FLOW",
+  "build": {
+    "variant": "Player",
+    "inputDigest": "2fad415c46d4cdec6865b6a72fd75f5b81a477969a00b00d0deaa27fce64903f",
+    "outputDigest": "c6a2360f04f60d43b91f991230699c0eb3102bc64d63ef3faacad87379eede51",
+    "attempt": 5
+  },
+  "candidate": {
+    "challenge": "led",
+    "seed": "3",
+    "debug": false
+  },
+  "browser": "Visible built-in Browser, owned tab13",
+  "interactions": [
+    "Accepted customer ticket and start",
+    "Run customer retest: Customer retest did not pass. Continue troubleshooting.",
+    "Board Power OFF; inspected R1 markings BROWN BLACK RED GOLD",
+    "Removed component using physical service action; empty R1 and traycount1 observed",
+    "Shop acquired 1000Ohm +/-5%; selected Part4 in tray",
+    "Installed as Circuit/R1; restored Board Power ON",
+    "Run customer retest: Customer retest passed. The reported behavior is resolved."
+  ],
+  "screenshots": [
+    {
+      "path": "player-visible-final/01-unrepaired-retest-failed.jpg",
+      "bytes": 37481,
+      "sha256": "29c541fe679025af903bee086d8765268eb0c0c750b067a6818c89ad67002bb7"
+    },
+    {
+      "path": "player-visible-final/02-isolated-resistor-removed.jpg",
+      "bytes": 37044,
+      "sha256": "384ec7127d8dcbbe0b72792164cc8f97171356442a7afa224895995ef16522a5"
+    },
+    {
+      "path": "player-visible-final/03-repaired-retest-passed.jpg",
+      "bytes": 40758,
+      "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+    }
+  ],
+  "consoleErrors": [],
+  "resources": {
+    "activeOwnerRecordSha256": "58a2a5e791382d11065a946641b8b280eba177b3c06fc334e21e14f75093b84d",
+    "previewStateRemoved": true,
+    "stopResult": "Stopped exact PID27244 and positively released port8944",
+    "tab13Closed": true,
+    "activeOwnerProof": "PID/start/cmdline matched independently before UI interactions",
+    "previewPid": 27244,
+    "processStartTicks": "639289592956115117",
+    "executable": "powershell.exe",
+    "stopScriptExitCode": 0,
+    "latePollCause": "Process already positively stopped before the delayed orchestration poll; precise stream-delay cause not diagnosed",
+    "launchShellCompletion": "Exit0 with nonterminating late post-stop Get-Process errors; NOT USED as acceptance or ownership proof",
+    "port": 8944
+  },
+  "limits": [
+    "Actual visible UI inputs only,no injected controller/solver mutations",
+    "Finite LED repair path,not blind human diagnosis or all-family/endurance qualification",
+    "Unrepaired failure text observed in accessibility state; narrow header clips it in screenshot1",
+    "Final cancellation flow not refreshed; earlier Player4 cancellation is separate recorded-candidate evidence",
+    "Three saved screenshots inspected; resource ownership independently recorded while active, cleanup verified by maintained stop script"
+  ]
+}

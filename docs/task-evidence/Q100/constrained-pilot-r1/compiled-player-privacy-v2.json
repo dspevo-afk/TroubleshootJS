@@ -1,0 +1,155 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "Q100Player",
+  "status": "PASS",
+  "sourcePins": "final-compiled-q100player-5-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "e368bdc2a0f07f83f99c169681a8fbe78794c194740d501f5da45494472c6361",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "93d3d6396b7626f1653600826cdd971a294a31c5fb3a496a39c1ccee489bf8ad",
+    "scriptDigest": "c79c32de1c5e445294a623d4c8b58240528174f3089a6e6e55f7577ace8fd06f",
+    "webDigest": "1b220e3963c3c1422d3f3cfe49a4c52fbae97975e5ac47f724118db8cedbf748",
+    "executionDigest": "fcbabd1c29d0ff15eb0b62d4d77f9404673834be8479e7d91c4ef36a1bf6fb05",
+    "executionFileCount": 1595
+  },
+  "routes": [
+    {
+      "name": "q100-player-debug-query",
+      "kind": "q100-player",
+      "status": "PASS",
+      "verification": "",
+      "readiness": {
+        "workbenchNavigationReady": true,
+        "programReady": true,
+        "retestCustomerReady": true,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {},
+      "q100ReportAttributePresent": false,
+      "developerAttributes": {},
+      "ordinaryTicketEntry": {
+        "protocol": "tsj-ordinary-ticket-entry-v1",
+        "status": "PASS",
+        "buttonLabel": "Accept ticket and start",
+        "labelledCount": 1,
+        "visibleEnabledCount": 1,
+        "expectedComplaintVisible": true,
+        "clickPoint": {
+          "x": 408.7109375,
+          "y": 618.15625
+        },
+        "inputEvents": [
+          "mouseMoved",
+          "mousePressed:left",
+          "mouseReleased:left"
+        ]
+      },
+      "privacyNegativeCanary": {
+        "protocol": "tsj-q100-player-dom-privacy-canary-v1",
+        "status": "PASS",
+        "sentinels": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          }
+        ],
+        "finalPlayerPrivacy": "PASS"
+      },
+      "sentinelsCleanup": {
+        "status": "PASS",
+        "removed": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "removed": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "removed": true
+          }
+        ]
+      }
+    }
+  ],
+  "failure": {},
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 55,
+      "PhysicalNamespaceMs": 263,
+      "BrowserSessionMs": 37999,
+      "PreviewMs": 8421,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 1731,
+      "BrowserShutdown": [
+        {
+          "RouteId": "284a188cc6c94e58a26464b2978881aa",
+          "Lane": "boundReceipt",
+          "TotalMs": 11334,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 394,
+            "endpointAndSocketConnect": 12,
+            "postConnectRootAndListenerProof": 381,
+            "protectedHelperCensus": 2673,
+            "precloseJournalAndAuthorization": 2142,
+            "closeSendAndAcknowledgement": 22,
+            "helperAndContainmentDrain": 4764,
+            "profileQuiescence": 853,
+            "finalListenerAbsenceProof": 73,
+            "resourceDisposal": 7
+          }
+        }
+      ]
+    },
+    "resourceSuccess": true,
+    "elapsedMs": 48499,
+    "limitMs": 120000,
+    "status": "PASS"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 77.1077542,
+  "rawReportSha256": "fec54291330d8f9615c32d0e228ebae74d69323a0fc20e75d276594528416512",
+  "rawLogSha256": "83de0bce93bed369ccec724991609c0160ae658ce1eeb1353188d2baf429b72d",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ],
+  "q100Matrix": {
+    "operationElapsedMs": 28326,
+    "operationLimitMs": 6000000
+  },
+  "q100PlayerArtifact": {
+    "protocol": "troubleshootjs-q100-player-artifact-proof-v1",
+    "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+    "variant": "Player",
+    "style": "OBF",
+    "inputDigest": "a2a862b48181fd4365c915c198a272311b548318c0d6eb5cfe2fd920e0781d40",
+    "inputFileCount": 1198,
+    "outputDigest": "11b2b3265faf72f3514a1489ea45fe77b46d7e7e85b1961bb8a95080da10ccf6",
+    "outputFileCount": 357,
+    "compiledJavaScriptFileCount": 7,
+    "developerMarkerScan": "PASS"
+  }
+}

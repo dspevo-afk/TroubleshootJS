@@ -1,0 +1,12 @@
+{
+  "status": "OBSERVED_INPUT_CHANGE_REJECTION_WITH_SMALL_CONSTITUTIVE_RESIDUAL",
+  "rows": 20,
+  "inputDeltaOnlyRows": 13,
+  "maxPriorPhysicalInputResidualA": 4.717060075876134E-14,
+  "unchangedToleranceA": 1E-09,
+  "state": "UNACCEPTED_NEWTON",
+  "performanceQualification": false,
+  "sourceBase": "a1352b5caeb78e069606f84a569e14670f28d807",
+  "inputChangeRejectionRows": 20,
+  "alsoDropChangedRows": 7
+}

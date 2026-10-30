@@ -37,6 +37,10 @@ final class E06AveragedConverterElm extends CircuitElm {
     private double acceptedEnableCurrent, acceptedFeedbackCurrent, acceptedDriveCurrent;
     private double acceptedInputVolts, acceptedOutputVolts, acceptedEnableVolts, acceptedFeedbackVolts;
     private boolean tangentReady, receiptReady;
+    // Only the immediately preceding Newton stamp in this solve can certify
+    // its input constitutive residual. Accepted predictors are separate.
+    private int inputStampSubIteration = -1;
+    private double inputStampTime = Double.NaN, inputStampTimeStep = Double.NaN;
 
     // The model prepares a predictor; the executor must confirm global acceptance.
     // Trial caches remain scratch; a rejected trial never becomes the next seed.
@@ -94,6 +98,7 @@ final class E06AveragedConverterElm extends CircuitElm {
     void stamp() {
         // Analysis, graph changes and adaptive restamps all start conservatively.
         predictorReady = false;
+        inputStampSubIteration = -1;
         for (int node : nodes) sim.stampNonLinear(node);
         sim.stampResistor(nodes[0], nodes[1], E06ConverterContract.INPUT_LEAK_OHMS);
         sim.stampResistor(nodes[4], nodes[1], E06ConverterContract.CONTROL_LEAK_OHMS);
@@ -104,6 +109,7 @@ final class E06AveragedConverterElm extends CircuitElm {
 
     void startIteration() {
         requireStep();
+        inputStampSubIteration = -1;
         stepActive = active;
         stepDuty = duty;
         stepIntegral = integral;
@@ -132,6 +138,17 @@ final class E06AveragedConverterElm extends CircuitElm {
         double vin = getInputVoltage(), output = getOutputVoltage();
         if (!E06ConverterContract.finite(vin) || !E06ConverterContract.finite(output))
             throw new IllegalArgumentException("Nonfinite E06 converter trial");
+        // Preserve the tangent that produced these solved nodes before this
+        // trial replaces it. A new timestep/control snapshot or graph restamp
+        // invalidates this history even when an accepted predictor is reusable.
+        boolean previousInputStampReady = tangentReady && sim.subIterations > 0 &&
+            inputStampSubIteration == sim.subIterations - 1 &&
+            inputStampTime == sim.t && inputStampTimeStep == sim.timeStep;
+        double previousEvaluationInput = evaluationInput;
+        double previousEvaluationOutput = evaluationOutput;
+        double previousInputAtEvaluation = inputAtEvaluation;
+        double previousInputInputGain = inputInputGain;
+        double previousInputOutputGain = inputOutputGain;
         double gain = stepActive && vin > 0 ? stepDuty * E06ConverterContract.SECONDARY_OVER_PRIMARY_TURNS : 0;
         double target = gain * vin;
         boolean driving = gain > 0;
@@ -177,6 +194,9 @@ final class E06AveragedConverterElm extends CircuitElm {
         sim.stampCurrentSource(nodes[0], nodes[1], inputAtEvaluation -
             inputInputGain * vin - inputOutputGain * evaluationOutput);
         tangentReady = true;
+        inputStampSubIteration = sim.subIterations;
+        inputStampTime = sim.t;
+        inputStampTimeStep = sim.timeStep;
         receiptReady = false;
         double physicalDrive = driving ? Math.max(0,
             Math.min(E06ConverterContract.MAX_OUTPUT_CURRENT_AMPS, requestedDrop / resistance)) : 0;
@@ -188,13 +208,30 @@ final class E06AveragedConverterElm extends CircuitElm {
         // otherwise irrelevant voltage to settle can prevent global Newton
         // convergence while the physical current residual is already exact.
         boolean dropChanged = conductance > 0 && changed(lastDrop, drop, VOLTAGE_TOLERANCE);
-        boolean inputChanged = changed(lastInput, inputAtEvaluation, 1e-9);
-        boolean boundedTrial = Math.abs(drop - requestedDrop) > VOLTAGE_TOLERANCE;
+        double previousInputPrediction = previousInputAtEvaluation +
+            previousInputInputGain * (vin - previousEvaluationInput) +
+            previousInputOutputGain * (output - previousEvaluationOutput);
+        double physicalInput = quiescent;
+        if (vin > 0 && driving)
+            physicalInput += (Math.max(0, output * physicalDrive) / E06ConverterContract.EFFICIENCY +
+                resistance * physicalDrive * physicalDrive) / vin;
+        // Current movement is not a KCL error. Compare the physical law at
+        // the raw solved nodes with the prior Norton stamp that produced them.
+        // The fixed input leak is separately stamped and exactly linear.
+        boolean inputResidualBad = !previousInputStampReady ||
+            !E06ConverterContract.finite(previousInputPrediction) ||
+            !E06ConverterContract.finite(physicalInput) ||
+            changed(previousInputPrediction, physicalInput, 1e-9);
+        // Clipping within the all-off branch changes neither port stamp:
+        // output drive is zero and input draw is quiescent only. Saturated
+        // current and conducting-side knees retain the original veto.
+        boolean boundedTrial = Math.abs(drop - requestedDrop) > VOLTAGE_TOLERANCE &&
+            (conductance > 0 || driveAtEvaluation != 0 || physicalDrive != 0);
         double driveResidual = Math.abs(trialDrive - physicalDrive);
         // At either limiter knee the accepted tangent must also represent the
         // bounded characteristic; a voltage-only test could accept a small
         // current overshoot on the neighboring regulation tangent.
-        if (targetChanged || dropChanged || inputChanged || boundedTrial ||
+        if (targetChanged || dropChanged || inputResidualBad || boundedTrial ||
                 driveResidual > 1e-9)
             sim.converged = false;
         lastTarget = target;
@@ -291,6 +328,8 @@ final class E06AveragedConverterElm extends CircuitElm {
         acceptedInputVolts = acceptedOutputVolts = acceptedEnableVolts = acceptedFeedbackVolts = 0;
         lastTarget = lastDrop = lastInput = Double.NaN;
         tangentReady = receiptReady = false;
+        inputStampSubIteration = -1;
+        inputStampTime = inputStampTimeStep = Double.NaN;
         predictorReady = false;
         predictorTarget = predictorDrop = predictorInput = Double.NaN;
         predictorTime = predictorTimeStep = Double.NaN;

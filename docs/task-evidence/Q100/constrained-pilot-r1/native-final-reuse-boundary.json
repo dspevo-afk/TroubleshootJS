@@ -1,0 +1,32 @@
+{
+  "protocol": "q100-native-consumed-input-audit-v1",
+  "status": "PASS_SCOPED_REUSE",
+  "gates": [
+    "native-models-5 selected eight suites",
+    "native-healthy-17 four cases",
+    "native-faults-4 complete62"
+  ],
+  "base": "a1352b5caeb78e069606f84a569e14670f28d807",
+  "changedSinceFaultGate": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+      "priorSha256": "254c3f2583b8b42828a07e5247456444b00847d72ca36dba5a5dd7e25f2568d0",
+      "currentSha256": "b94a13b0e62e64528e3abd0a836cbfeffc96e89f8810ec90e608c27533afa987",
+      "changedMethod": "init",
+      "change": "Place all Q100 query parsing inside direct Developer build branch",
+      "nativeConsumption": "Native TestCirSim fixtures call constructors and configure actual solver fields; none calls init(). CirSim constructor does not call init().",
+      "review": "Exact frozen-source comparison has only this query-parser block difference; every other source/test/native driver pin remains unchanged."
+    }
+  ],
+  "boundary": "Electrical models, graph/plan/fault population, reference protocol/counts, live executor and native case/test paths are unchanged. Source comparison and native callers were inspected.",
+  "requiredFreshCoverage": [
+    "Final-source Player and Developer JDK8/GWT builds",
+    "Actual Player artifact and URL privacy gate",
+    "Actual compiled Q100 and normal-regression gates"
+  ],
+  "limits": [
+    "This is scoped reuse of native electrical results, not a claim their compiler input hash equals final initializer source",
+    "No historical Player privacy failure is reused as PASS",
+    "Full native matrix and independent oracles remain NOT RUN"
+  ]
+}

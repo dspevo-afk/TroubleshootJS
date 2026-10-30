@@ -1,0 +1,18 @@
+[
+  {
+    "path": "scripts/verify-a03-browser.ps1",
+    "sha256": "d06ff84f2d015ec3bc7824b4b9b460bb293e2962dc143e13fe15b0ec7dae00dd"
+  },
+  {
+    "path": "scripts/verify-q100-evidence.ps1",
+    "sha256": "9b7920337712ccc69cb2c980163c7d94533f33194c8d887b56418be7a1bd47c7"
+  },
+  {
+    "path": "scripts/VerifierIsolation.psm1",
+    "sha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111"
+  },
+  {
+    "path": ".tools/gwt-2.7.0/production-build-identity.json",
+    "sha256": "dca29b589c29c512cb280c4f0910723d245a2ca93b8b3eaa4ede6c79d9cbdc46"
+  }
+]

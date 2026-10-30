@@ -1,0 +1,24 @@
+{
+  "protocol": "q100-and-a04-strict-readers-v4",
+  "status": "PASS",
+  "host": "Windows PowerShell 5.1",
+  "exitCode": 0,
+  "a04Assertions": 14,
+  "a04Version": "Exactly generatorVersion6; old5,mixed5,future7,fraction/string/missing versions rejected",
+  "a04OtherNegatives": [
+    "wrongprotocol",
+    "falsecase/topownership",
+    "duplicate/missingcase",
+    "negativeelapsed",
+    "stringassemblytime"
+  ],
+  "readerScriptSha256": "b619750da5b00283bb79263ba556b5e5f043d201ed4c87b1402f70551afb889e",
+  "syntheticScriptSha256": "55d95c589a686dce452b9916e4908d83ae742096a692401c9e230a5e65e7421c",
+  "isolationModuleSha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+  "rawLogSha256": "a6e7a8c8bb157634bbb6688f8062de8e39fc569102c40d0a9875ac6331723e8d",
+  "preservedScope": "Existing strict independent Q100 electrical oracle,full2x31census,timestep,lifecycle/interaction/privacy/artifact and6diagnostic redaction canaries allPASS",
+  "limits": [
+    "In-memory reader fixtures only,no runtime electrical qualification",
+    "Old A04timeout remains failed; requiresfresh compiledreport+cleanup"
+  ]
+}

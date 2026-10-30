@@ -1,0 +1,68 @@
+{
+  "protocol": "q100-a03-operational-state-native-fix-v1",
+  "status": "PASS",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 51.2152574
+  },
+  "sourcePins": "a03-operational-fixed-1-source-pins.json",
+  "runtimeContract": {
+    "suite": "A03OperationalStateRuntimeContractTest",
+    "assertions": 207,
+    "exactSeeds": [
+      "1",
+      "9007199254740993",
+      "-9223372036854775808"
+    ],
+    "actualAssemblyAndReplay": true,
+    "realCircuitJsPadOwnership": true,
+    "physicalSceneCapture": true,
+    "nonLedIlluminationFalse": true,
+    "missingStateRejectionBeforeMaterialization": true,
+    "rejectedOwnerSnapshotUnchanged": true
+  },
+  "additionalSuites": [
+    {
+      "name": "BoundedAssemblyContractTest",
+      "assertions": 241
+    },
+    {
+      "name": "D01DiagnosticContractTest",
+      "assertions": 174
+    },
+    {
+      "name": "Rb56ModelIdentityContractTest",
+      "assertions": 123
+    },
+    {
+      "name": "RelBSessionIdentityContractTest",
+      "assertions": 204
+    },
+    {
+      "name": "U06SessionSaveContractTest",
+      "assertions": 35024
+    },
+    {
+      "name": "Rb56ManifestContractTest",
+      "rows": 30,
+      "scope": "IDENTITY_ONLY"
+    }
+  ],
+  "passMarkers": [
+    "PASS: RB56 manifest identities rows=30 scope=IDENTITY_ONLY noCircuitConstruction=true",
+    "PASS: U06 session save contracts assertions=35024",
+    "PASS: REL-B session identity contracts assertions=204 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false",
+    "PASS: RB56 model-identity contracts assertions=123",
+    "PASS: current resistive assembly contracts 241 assertions",
+    "PASS: D01 diagnostic contracts assertions=174",
+    "PASS: A03 operational-state runtime contracts assertions=207 seeds=3 scope=ACTUAL_ASSEMBLY_REPLAY_AND_PHYSICAL_SCENE"
+  ],
+  "cleanup": "PASS",
+  "rawReceiptSha256": "a9354268a1c86eb634d906a4c493688d435b26ebc3e181c90a17d0e3ce344dff",
+  "rawLogSha256": "88a85ba2c88ef1635954c79fc485fe89feba687ba168d4375deebf6f03cacde2",
+  "limits": [
+    "Actual JVM assembly/scene contract; browser install and solver settlement remain separate final gates.",
+    "No solver steps, fake measurements, renderer null fallback or changed electrical oracle.",
+    "Full native matrix and independent oracles NOT RUN."
+  ]
+}

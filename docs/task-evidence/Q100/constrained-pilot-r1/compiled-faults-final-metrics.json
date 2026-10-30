@@ -1,0 +1,32 @@
+{
+  "protocol": "q100-compiled-fault-metrics-v1",
+  "status": "PASS",
+  "source": "compiled-faults-final.json",
+  "caseCount": 62,
+  "worst": {
+    "name": "q100-fault-SEPARATE_DIRECT_SWITCHING-CIN33_SHUNT",
+    "operationMs": 80842,
+    "maxUnitMs": 4468,
+    "work": 393,
+    "acceptedSteps": 24000,
+    "stepBatches": 380,
+    "sampleCount": 12
+  },
+  "maxUnitMs": 4468.0,
+  "workValues": [
+    393
+  ],
+  "acceptedStepValues": [
+    24000
+  ],
+  "stepBatchValues": [
+    380
+  ],
+  "sampleCountValues": [
+    12
+  ],
+  "limits": [
+    "Private reference only; no normal-generation population or playable qualification",
+    "Typed parsed report fields; operation and host cleanup remain separate"
+  ]
+}

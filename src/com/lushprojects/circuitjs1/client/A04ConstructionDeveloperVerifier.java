@@ -144,9 +144,8 @@ final class A04ConstructionDeveloperVerifier {
             "assembled result changed the canonical A03 manifest");
         contract(candidate != originalOwner && candidate.getBoard() != originalOwner.getBoard(),
             "candidate reused the original board owner");
-        contract(candidate.getSimulationElements().size() ==
-            plan.getElectricalRealizationSpec().getElementDeclarations().size(),
-            "candidate element count does not match declared electrical elements");
+        verifyElementInventory(candidate, result.getPlan(),
+            result.getConstructionReceiptForDeveloperVerification(), candidate.getSimulationElements());
         verifyDetachedPhysicalOwnership(candidate, plan);
 
         original.restore(sim);
@@ -160,7 +159,8 @@ final class A04ConstructionDeveloperVerifier {
         runtime(sim.getGeneratedChallengeController() != null &&
             sim.getGeneratedChallengeController().isReady() &&
             sim.isGeneratedRuntimeSettled(), "candidate did not settle through CircuitJS");
-        verifyRuntimeCorrespondence(sim, candidate, plan, route);
+        verifyRuntimeCorrespondence(sim, candidate, result.getPlan(), route,
+            result.getConstructionReceiptForDeveloperVerification());
 
         original.restore(sim);
         original.assertRestored(sim);
@@ -254,6 +254,77 @@ final class A04ConstructionDeveloperVerifier {
             "resolved plan seed changed");
     }
 
+    /** Exact pre-service declarations and post-service ownership; no count slack. */
+    static void verifyElementInventory(GeneratedBoardInstance instance, BoundedAssemblyPlan plan,
+            ConstructionReceipt receipt, Vector<CircuitElm> actual) {
+        ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
+        contract(receipt != null && receipt.belongsToFinishedContext(spec, instance.getBoard()),
+            "construction receipt is not the candidate's finished owner");
+        Vector<CircuitElm> declared = receipt.getElements();
+        contract(declared.size() == spec.getElementDeclarations().size() &&
+                receipt.getAllocatedElementCount() == declared.size(),
+            "declared construction receipt count mismatch");
+        Vector<CircuitElm> handles = new Vector<CircuitElm>();
+        for (ElectricalRealizationSpec.ElementDeclaration declaration :
+                spec.getElementDeclarations().values()) {
+            CircuitElm element = receipt.getElement(declaration.getOwnerKey(),
+                declaration.getElementId()).getElement();
+            contract(element != null && !containsInventoryIdentity(handles, element) &&
+                    containsInventoryIdentity(declared, element),
+                "declared construction handle is missing or aliased");
+            handles.add(element);
+        }
+        contract(handles.size() == declared.size(), "declared construction handle census mismatch");
+        Vector<CircuitElm> expected = new Vector<CircuitElm>();
+        for (CircuitElm element : declared) addInventoryOwner(expected, element);
+        GeneratedComponentBindings components = instance.getComponentBindings();
+        for (String componentId : instance.getBoard().getComponentIds())
+            if (components.hasComponentBinding(componentId)) {
+                for (CircuitElm element : components.getElements(componentId))
+                    addInventoryOwner(expected, element);
+                for (CircuitElm element : components.getAuxiliaryElements(componentId))
+                    addInventoryOwner(expected, element);
+            }
+        for (GeneratedComponentConnectionBinding connection : instance.getConnectionBindings().getAll())
+            addInventoryOwner(expected, connection.getConnectionElement());
+        for (String padId : instance.getBoard().getPadIds()) {
+            CircuitMeasurementEndpoint endpoint = instance.getSimulationBindings().getEndpoint(padId);
+            contract(endpoint instanceof CircuitPostMeasurementEndpoint,
+                "final element inventory pad has no CircuitJS post");
+            addInventoryOwner(expected, ((CircuitPostMeasurementEndpoint)endpoint).getElement());
+        }
+        for (PhysicalBoardRuntimeCapability capability : instance.getPhysicalBoardRuntime().getCapabilities())
+            if (capability instanceof PhysicalBoardInstallationProvider.Scoped) {
+                PhysicalMutationSlot slot = ((PhysicalBoardInstallationProvider.Scoped)capability)
+                    .getMutationSlot();
+                if (slot instanceof PhysicalMutationSlot.Docking)
+                    for (CircuitElm element : ((PhysicalMutationSlot.Docking)slot).getDockingAttachments())
+                        addInventoryOwner(expected, element);
+            }
+        Vector<CircuitElm> observed = new Vector<CircuitElm>();
+        contract(actual != null, "final element inventory is missing");
+        for (CircuitElm element : actual) {
+            contract(element != null && !containsInventoryIdentity(observed, element),
+                "final element inventory contains duplicate identity");
+            contract(containsInventoryIdentity(expected, element),
+                "final element inventory contains unowned element");
+            observed.add(element);
+        }
+        for (CircuitElm element : expected)
+            contract(containsInventoryIdentity(observed, element),
+                "final element inventory missing owned element");
+    }
+
+    private static boolean containsInventoryIdentity(Vector<CircuitElm> elements, CircuitElm target) {
+        for (CircuitElm element : elements) if (element == target) return true;
+        return false;
+    }
+
+    private static void addInventoryOwner(Vector<CircuitElm> elements, CircuitElm element) {
+        contract(element != null, "final element inventory owner has a null element");
+        if (!containsInventoryIdentity(elements, element)) elements.add(element);
+    }
+
     private static void verifyDetachedPhysicalOwnership(GeneratedBoardInstance instance,
             BoundedAssemblyPlan plan) {
         ElectricalRealizationSpec spec = plan.getElectricalRealizationSpec();
@@ -273,7 +344,8 @@ final class A04ConstructionDeveloperVerifier {
     }
 
     private static void verifyRuntimeCorrespondence(CirSim sim,
-            GeneratedBoardInstance instance, BoundedAssemblyPlan plan, String route) {
+            GeneratedBoardInstance instance, BoundedAssemblyPlan plan, String route,
+            ConstructionReceipt receipt) {
         runtime(sim.nodeList != null && sim.nodeList.size() > 0,
             "settled candidate has no CircuitJS node graph");
         TroubleshootBoard board = instance.getBoard();
@@ -298,6 +370,22 @@ final class A04ConstructionDeveloperVerifier {
             for (ControlledIndicatorChannel channel : plan.getChannels())
                 verifyControlledChannelRuntime(instance, board, plan, spec, channel);
         }
+        runtime(sim.getGeneratedBoardInstance() == instance && sim.isGeneratedRuntimeSettled(),
+            "resistor upstream nodes require the settled candidate owner");
+        for (Map.Entry<String, ComposedBlockContribution> block : plan.getBlocks().entrySet())
+            for (ComposedBlockContribution.ResistorRecipe recipe : block.getValue().getResistors().values()) {
+                String local = recipe.getComponentLocalId();
+                CircuitElm upstream = verifyResistorUpstreamProjection(instance, plan, receipt,
+                    block.getKey(), local);
+                String id = plan.idFor(block.getKey(), FunctionalBlockDescriptor.EntityKind.COMPONENT, local);
+                PhysicalResistorPart part = (PhysicalResistorPart)instance.getPhysicalBoardRuntime()
+                    .getInstalledPart(id);
+                runtime(part.getSecondaryOpenPath().getSimulationElement().getNode(0) == upstream.getNode(1),
+                    "resistor secondary upstream solver node mismatch: " + block.getKey() + "/" + local);
+                if (upstream != part.getElement())
+                    runtime(part.getElement().getNode(1) == upstream.getNode(0),
+                        "resistor fault-switch upstream solver node mismatch: " + block.getKey() + "/" + local);
+            }
         terminalCorrespondenceProof = true;
     }
 
@@ -329,12 +417,12 @@ final class A04ConstructionDeveloperVerifier {
             verifyComponentEndpoint(instance, plan, driverOwner,
                 recipe.getComponentLocalId(), "1", 0, false);
             verifyComponentEndpoint(instance, plan, driverOwner,
-                recipe.getComponentLocalId(), "2", 1, recipe.isMutable());
+                recipe.getComponentLocalId(), "2", 1, true);
         }
         ComposedBlockContribution.ResistorRecipe loadRecipe = load.getResistor("RLOAD");
         verifyComponentEndpoint(instance, plan, loadOwner, "RLOAD", "1", 0, false);
         verifyComponentEndpoint(instance, plan, loadOwner, "RLOAD", "2", 1,
-            loadRecipe.isMutable());
+            true);
 
         int control = node(board, plan.idFor(driverOwner,
             FunctionalBlockDescriptor.EntityKind.PAD,
@@ -437,11 +525,12 @@ final class A04ConstructionDeveloperVerifier {
 
     /**
      * Check the actual component-side CircuitJS post behind a board pad.  A
-     * public faultable resistor terminal intentionally terminates at its
-     * owned secondary open-path element; all other terminals must terminate
+     * physical resistor's second terminal terminates at its exact owned
+     * secondary open-path element, including immutable support resistors.
+     * All other terminals must terminate
      * at the declared primary element/post.
      */
-    private static void verifyComponentEndpoint(GeneratedBoardInstance instance,
+    static void verifyComponentEndpoint(GeneratedBoardInstance instance,
             BoundedAssemblyPlan plan, String owner, String local, String terminal,
             int expectedPost, boolean secondary) {
         String componentId = plan.idFor(owner,
@@ -458,14 +547,51 @@ final class A04ConstructionDeveloperVerifier {
         runtime(post.getPostIndex() == expectedPost,
             "component post index changed: " + owner + "/" + local + "." + terminal);
         if (secondary) {
-            runtime(post.getElement() != primary &&
+            PhysicalPart<?> installed = instance.getPhysicalBoardRuntime().getInstalledPart(componentId);
+            runtime(installed instanceof PhysicalResistorPart,
+                "secondary endpoint has no physical resistor owner: " + owner + "/" + local);
+            PhysicalResistorPart part = (PhysicalResistorPart)installed;
+            ResistorSecondaryOpenPath path = part.getSecondaryOpenPath();
+            runtime(path != null && part.getElement() == primary &&
+                GeneratedComponentConnectionBindings.sameEndpoint(post, part.getPublicTerminal(1)) &&
+                post.getElement() == path.getSimulationElement() &&
                 instance.getComponentBindings().isElementBoundToComponent(componentId,
                     post.getElement()),
-                "secondary endpoint escaped its component owner: " + owner + "/" + local);
+                "secondary endpoint does not match physical terminal: " + owner + "/" + local);
         } else {
             runtime(post.getElement() == primary,
                 "component endpoint bypassed its declared primary: " + owner + "/" + local + "." + terminal);
         }
+    }
+
+    /** Source-defined series projection; actual solver nodes are checked by
+     * the settled runtime caller, never inferred from these detached points. */
+    static CircuitElm verifyResistorUpstreamProjection(GeneratedBoardInstance instance,
+            BoundedAssemblyPlan plan, ConstructionReceipt receipt, String owner, String local) {
+        runtime(receipt != null && receipt.belongsToFinishedContext(
+                plan.getElectricalRealizationSpec(), instance.getBoard()),
+            "resistor upstream receipt owner mismatch");
+        String id = plan.idFor(owner, FunctionalBlockDescriptor.EntityKind.COMPONENT, local);
+        PhysicalPart<?> installed = instance.getPhysicalBoardRuntime().getInstalledPart(id);
+        runtime(installed instanceof PhysicalResistorPart,
+            "resistor upstream physical owner missing: " + owner + "/" + local);
+        PhysicalResistorPart part = (PhysicalResistorPart)installed;
+        CircuitElm primary = instance.getComponentBindings().getSingleElement(id);
+        runtime(primary == part.getElement() && part.getSecondaryOpenPath() != null,
+            "resistor upstream primary/path owner mismatch: " + owner + "/" + local);
+        CircuitElm upstream = primary;
+        String helper = local + "_FAULT_SWITCH";
+        if (plan.getElectricalRealizationSpec().getElementDeclarations().containsKey(
+                ElectricalRealizationSpec.elementKey(owner, helper))) {
+            ElectricalConstructionContext.ElementHandle handle = receipt.getElement(owner, helper);
+            upstream = handle.getElement();
+            runtime("SWITCH".equals(handle.getKind()) && upstream instanceof SwitchElm &&
+                    primary.getPost(1).equals(upstream.getPost(0)),
+                "resistor declared fault-switch projection mismatch: " + owner + "/" + local);
+        }
+        runtime(part.getSecondaryOpenPath().getSimulationElement().getPost(0).equals(upstream.getPost(1)),
+            "resistor secondary upstream projection mismatch: " + owner + "/" + local);
+        return upstream;
     }
 
     /** Separate independent clients prove allocation, real joins and revocation. */

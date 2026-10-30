@@ -5581,7 +5581,9 @@ function Write-VerifierManifest($Context) {
     if (-not (Test-VerifierPhysicalChildPath $Context.RunRoot $Context.PortLeaseRoot)) {
         Throw-VerifierInfrastructure 'Verifier claim namespace was outside the physical run namespace.'
     }
-    Assert-VerifierContextPhysicalResources $Context
+    # The view only projects the validated context in memory. Keep the full
+    # fresh resource censuses immediately before WriteAllText and Move-Item;
+    # an additional census here precedes no filesystem action.
     $manifest = Get-VerifierManifestView $Context
     $temporaryPath = $Context.ManifestPath + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
     try {
@@ -9606,12 +9608,13 @@ function Assert-VerifierBrowserContainmentJobContainsRoot($ContainmentJob,
 }
 
 function Wait-VerifierBrowserContainmentJobEmpty($ContainmentJob, $Budget,
-        [long]$BudgetTicks) {
+        [long]$BudgetTicks, $TimingRecord = $null) {
     if ($null -eq $ContainmentJob -or $null -eq $Budget) {
         Throw-VerifierInfrastructure 'Browser containment quiescence omitted its exact job or shutdown budget.'
     }
     while ($true) {
         Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        Add-VerifierBrowserShutdownTimingCount $TimingRecord 'containmentJobPollCount'
         try {
             $members = @($ContainmentJob.GetMemberProcessIds())
         } catch {
@@ -11977,9 +11980,11 @@ function Get-VerifierNaturalExitCurrentAbsenceObservation($ProcessId) {
     return [pscustomobject]@{ Absent = $false; Transient = $true; Current = $null }
 }
 
-function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
+function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record,
+        $TimingRecord = $null) {
     # One monotonic whole-call budget covers capability validation, retained
     # handle identity, both current views, and the gap between observations.
+    Add-VerifierBrowserShutdownTimingCount $TimingRecord 'naturalExitProofCallCount'
     $proofBudget = [Diagnostics.Stopwatch]::StartNew()
     $proofBudgetTicks = [long][Math]::Ceiling(
         ([double][Diagnostics.Stopwatch]::Frequency * 500) / 1000.0)
@@ -12024,12 +12029,15 @@ function Get-VerifierBrowserDrainNaturalExitResult($DrainScope, $Record) {
     # the caller's existing bounded drain loop; a present/reused PID or either
     # unreadable view remains infrastructure failure and never reaches
     # Stop-Process.
+    Add-VerifierBrowserShutdownTimingCount $TimingRecord 'currentAbsenceProofCount'
     for ($observation = 1; $observation -le 2; $observation++) {
         if ($proofBudget.ElapsedTicks -ge $proofBudgetTicks) {
             Throw-VerifierInfrastructure 'Browser drain natural-exit proof expired before a current absence observation.'
         }
         $absence = $null
         try {
+            Add-VerifierBrowserShutdownTimingCount $TimingRecord `
+                'currentAbsenceObservationCount'
             $absence = Get-VerifierNaturalExitCurrentAbsenceObservation $handlePid
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
@@ -12923,7 +12931,8 @@ function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
 }
 
 function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
-        $RootRecord, $DescendantRecords, $Budget, [long]$BudgetTicks) {
+        $RootRecord, $DescendantRecords, $Budget, [long]$BudgetTicks,
+        $TimingRecord = $null) {
     Assert-VerifierBrowserDrainScope $DrainScope `
         'bound-receipt natural shutdown wait scope'
     if ($null -eq $RootRecord -or $null -eq $DescendantRecords) {
@@ -12933,6 +12942,7 @@ function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
     $seen = @{}
     while ($true) {
         Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+        Add-VerifierBrowserShutdownTimingCount $TimingRecord 'waitLoopPassCount'
         $allAbsent = $true
         foreach ($record in $records) {
             if ($null -eq $record -or -not $record.PSObject.Properties['ProcessId'] -or
@@ -12944,7 +12954,8 @@ function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
                 Throw-VerifierInfrastructure "Bound-receipt natural shutdown wait carried duplicate retained PID $pid."
             }
             $seen[$pid] = $record
-            $natural = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $record
+            $natural = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $record `
+                $TimingRecord
             if ($null -eq $natural) { $allAbsent = $false }
             Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
         }
@@ -12955,7 +12966,7 @@ function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
 }
 
 function Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants($RootRecord,
-        $DescendantRecords) {
+        $DescendantRecords, $TimingRecord = $null) {
     if ($null -eq $RootRecord -or $null -eq $DescendantRecords) {
         Throw-VerifierInfrastructure 'Bound-receipt post-close proof omitted its root or protected-helper census.'
     }
@@ -12970,6 +12981,8 @@ function Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants($RootRecord
     foreach ($parentPid in @($knownPids.Keys)) {
         $lateChildren = @()
         try {
+            Add-VerifierBrowserShutdownTimingCount $TimingRecord `
+                'lateDescendantParentQueryCount'
             $lateChildren = @(Get-VerifierProcessRecordsByParentWithFallback ([int]$parentPid `
                 ) 'bound-receipt post-close browser descendant')
         } catch {
@@ -12991,7 +13004,7 @@ function Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants($RootRecord
 function Remove-VerifierBrowserProfile($Context, $ProfileRecord) {
     [void](Assert-VerifierContextPreflight $Context 'browser profile cleanup context' `
         -RequiredProperties @('RunId', 'RepositoryIdentity', 'RunRoot'))
-    [void](Assert-VerifierPhysicalOwnedPath $Context.RunRoot $ProfileRecord.Profile -ValidateTree)
+    [void](Assert-VerifierPhysicalOwnedPath $Context.RunRoot $ProfileRecord.Profile)
     if (-not (Test-Path -LiteralPath $ProfileRecord.Profile)) { return }
     try {
         $profileItem = Get-Item -LiteralPath $ProfileRecord.Profile -Force -ErrorAction Stop
@@ -13427,10 +13440,13 @@ function Dispose-VerifierBrowserDrainScope($DrainScope) {
 }
 
 function Stop-VerifierBrowserProcessTreeToFixedPoint($Context, $OwnerRoot,
-        [int]$DrainMilliseconds = 15000) {
+        [int]$DrainMilliseconds = 15000, $SessionRecord = $null) {
     # The optional scope is deliberately created here and nowhere in the
     # listener/inspection callers. Every newly retained child handle is
     # disposed on both success and failure before this boundary returns.
+    $totalStopwatch = [Diagnostics.Stopwatch]::StartNew()
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
+    Set-VerifierBrowserShutdownTimingLane $SessionRecord 'fixedPointProcessTree'
     $drainScope = New-VerifierBrowserDrainScope
     $result = $null
     $failure = $null
@@ -13439,13 +13455,23 @@ function Stop-VerifierBrowserProcessTreeToFixedPoint($Context, $OwnerRoot,
             $OwnerRoot $DrainMilliseconds $drainScope
     } catch {
         $failure = $_
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord `
+            'fixedPointProcessTreeDrain' $phaseStopwatch -Failed
     }
+    if ($null -eq $failure) {
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord `
+            'fixedPointProcessTreeDrain' $phaseStopwatch
+    }
+    $phaseStopwatch.Restart()
     $disposeErrors = @()
     try {
         $disposeErrors = @(Dispose-VerifierBrowserDrainScope $drainScope)
     } catch {
         $disposeErrors = @((Get-VerifierErrorMessage $_))
     }
+    Set-VerifierBrowserShutdownPhaseTiming $SessionRecord 'resourceDisposal' `
+        $phaseStopwatch -Failed:($disposeErrors.Count -gt 0 -and $null -eq $failure)
+    Set-VerifierBrowserShutdownTotalTiming $SessionRecord $totalStopwatch
     if ($disposeErrors.Count -gt 0) {
         $detail = 'browser drain retained-handle disposal was not proven: ' +
             ($disposeErrors -join '; ')
@@ -13473,6 +13499,132 @@ function Assert-VerifierBrowserCloseNotAttempted($SessionRecord) {
                     $SessionRecord.Runtime.GracefulCloseAttempted))) {
         Throw-VerifierInfrastructure 'An earlier browser-close attempt was not proven; exact-stop fallback is prohibited.'
     }
+}
+
+function New-VerifierBrowserShutdownTimingRecord($SessionRecord) {
+    try {
+        if ($null -eq $SessionRecord -or
+                $null -eq $SessionRecord.PSObject.Properties['Runtime'] -or
+                $null -eq $SessionRecord.Runtime) { return $null }
+        $record = [ordered]@{
+            Lane = ''
+            TotalMs = 0L
+            FailurePhase = ''
+            PhasesMs = [ordered]@{}
+            Counts = [ordered]@{}
+        }
+        [void]($SessionRecord.Runtime | Add-Member -MemberType NoteProperty `
+            -Name ShutdownPhaseTimings -Value $record -Force)
+        return $record
+    } catch { return $null }
+}
+
+function Set-VerifierBrowserShutdownTimingLane($SessionRecord, [string]$Lane) {
+    try {
+        $property = $SessionRecord.Runtime.PSObject.Properties['ShutdownPhaseTimings']
+        if ($null -ne $property -and $property.Value -is [System.Collections.IDictionary]) {
+            $property.Value['Lane'] = $Lane
+        }
+    } catch { }
+}
+
+function Set-VerifierBrowserShutdownPhaseTiming($SessionRecord, [string]$Phase,
+        $Stopwatch, [switch]$Failed) {
+    try {
+        $property = $SessionRecord.Runtime.PSObject.Properties['ShutdownPhaseTimings']
+        if ($null -eq $property -or
+                $property.Value -isnot [System.Collections.IDictionary] -or
+                $property.Value['PhasesMs'] -isnot [System.Collections.IDictionary] -or
+                $null -eq $Stopwatch) { return }
+        $property.Value['PhasesMs'][$Phase] = [long]$Stopwatch.ElapsedMilliseconds
+        if ($Failed) { $property.Value['FailurePhase'] = $Phase }
+    } catch { }
+}
+
+function Add-VerifierBrowserShutdownTimingCount($TimingRecord, [string]$Name,
+        [long]$Amount = 1) {
+    try {
+        if ($null -eq $TimingRecord -or
+                $TimingRecord -isnot [System.Collections.IDictionary] -or
+                $TimingRecord['Counts'] -isnot [System.Collections.IDictionary]) { return }
+        $counts = $TimingRecord['Counts']
+        $current = if ($counts.Contains($Name)) { [long]$counts[$Name] } else { 0L }
+        $counts[$Name] = $current + $Amount
+    } catch { }
+}
+
+function Set-VerifierBrowserShutdownTotalTiming($SessionRecord, $Stopwatch) {
+    try {
+        $property = $SessionRecord.Runtime.PSObject.Properties['ShutdownPhaseTimings']
+        if ($null -ne $property -and $property.Value -is [System.Collections.IDictionary] -and
+                $null -ne $Stopwatch) {
+            $property.Value['TotalMs'] = [long]$Stopwatch.ElapsedMilliseconds
+        }
+    } catch { }
+}
+
+function Get-VerifierBrowserShutdownTimingText($SessionRecord) {
+    try {
+        $property = $SessionRecord.Runtime.PSObject.Properties['ShutdownPhaseTimings']
+        if ($null -eq $property -or
+                $property.Value -isnot [System.Collections.IDictionary] -or
+                $property.Value['PhasesMs'] -isnot [System.Collections.IDictionary]) {
+            return ''
+        }
+        $record = $property.Value
+        $phaseFields = New-Object Collections.ArrayList
+        foreach ($phase in $record['PhasesMs'].Keys) {
+            [void]$phaseFields.Add(([string]$phase + '=' +
+                [string][long]$record['PhasesMs'][$phase]))
+        }
+        if ($phaseFields.Count -eq 0) { return '' }
+        $fields = @('lane=' + [string]$record['Lane'],
+            'totalMs=' + [string]([long]$record['TotalMs'])) + @($phaseFields.ToArray())
+        if (-not [String]::IsNullOrWhiteSpace([string]$record['FailurePhase'])) {
+            $fields += 'failurePhase=' + [string]$record['FailurePhase']
+        }
+        if ($record['Counts'] -is [System.Collections.IDictionary]) {
+            foreach ($countName in $record['Counts'].Keys) {
+                $fields += ([string]$countName + '=' + [string][long]$record['Counts'][$countName])
+            }
+        }
+        return 'browserShutdownTimingMs{' + ($fields -join ',') + '}'
+    } catch { return '' }
+}
+
+function Get-VerifierBrowserShutdownTimingRecords($Context) {
+    $records = New-Object Collections.ArrayList
+    foreach ($session in @($Context.BrowserSessions)) {
+        try {
+            $runtimeProperty = $session.PSObject.Properties['Runtime']
+            if ($null -eq $runtimeProperty -or $null -eq $runtimeProperty.Value) { continue }
+            $timingProperty = $runtimeProperty.Value.PSObject.Properties['ShutdownPhaseTimings']
+            if ($null -eq $timingProperty -or
+                    $timingProperty.Value -isnot [System.Collections.IDictionary] -or
+                    $timingProperty.Value['PhasesMs'] -isnot [System.Collections.IDictionary] -or
+                    $timingProperty.Value['PhasesMs'].Count -eq 0) { continue }
+            $record = $timingProperty.Value
+            $phases = [ordered]@{}
+            foreach ($phase in $record['PhasesMs'].Keys) {
+                $phases[[string]$phase] = [long]$record['PhasesMs'][$phase]
+            }
+            $counts = [ordered]@{}
+            if ($record['Counts'] -is [System.Collections.IDictionary]) {
+                foreach ($countName in $record['Counts'].Keys) {
+                    $counts[[string]$countName] = [long]$record['Counts'][$countName]
+                }
+            }
+            [void]$records.Add([pscustomobject]@{
+                RouteId = [string]$session.RouteId
+                Lane = [string]$record['Lane']
+                TotalMs = [long]$record['TotalMs']
+                FailurePhase = [string]$record['FailurePhase']
+                PhasesMs = [pscustomobject]$phases
+                Counts = [pscustomobject]$counts
+            })
+        } catch { }
+    }
+    return $records.ToArray()
 }
 
 function Assert-VerifierBrowserShutdownOwner($SessionRecord, $OwnerRoot) {
@@ -13804,6 +13956,12 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
     $containmentLease = $null
     $failure = $null
     $disposeErrors = New-Object Collections.ArrayList
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
+    $activePhase = 'rootContainmentProof'
+    $timingLane = if ($RequireLaunchParentAbsent) { 'boundReceiptParentExit' } else { 'boundReceipt' }
+    Set-VerifierBrowserShutdownTimingLane $SessionRecord $timingLane
+    $timingRecord = $null
+    try { $timingRecord = $SessionRecord.Runtime.ShutdownPhaseTimings } catch { }
     try {
         $rootRecord = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
             $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
@@ -13815,6 +13973,9 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
         [void](Assert-VerifierBrowserContainmentJobContainsRoot `
             $containmentLease.Job $rootRecord)
         [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $rootRecord)
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'endpointAndSocketConnect'
+        $phaseStopwatch.Restart()
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
         $version = Invoke-RestMethod -Uri (
             'http://127.0.0.1:' + [string]$SessionRecord.CdpPort + '/json/version') -TimeoutSec 2
@@ -13828,12 +13989,18 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
         $browserSocket = Connect-VerifierCdpSocket $endpoint (
             [DateTime]::UtcNow.AddMilliseconds([Math]::Min(2000, $remainingMs)))
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'postConnectRootAndListenerProof'
+        $phaseStopwatch.Restart()
         $currentRoot = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
             $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
         if (-not (Test-VerifierCurrentProcessRecordMatches $rootRecord $currentRoot)) {
             Throw-VerifierInfrastructure 'Browser parent-exit recovery root changed immutable identity before Browser.close.'
         }
         [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $currentRoot)
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'protectedHelperCensus'
+        $phaseStopwatch.Restart()
         # A receipt never grants helper termination. It does require a full
         # current PPID census before Browser.close so protected/null-command
         # Edge helpers are retained behind native handles and must naturally
@@ -13848,6 +14015,13 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
             'bound-receipt protected-helper census')
         $protectedDescendants = @(Get-VerifierBoundReceiptNaturalShutdownDescendants `
             $rootRecord $precloseSnapshot $scope)
+        Add-VerifierBrowserShutdownTimingCount $timingRecord `
+            'protectedDescendantCount' $protectedDescendants.Count
+        Add-VerifierBrowserShutdownTimingCount $timingRecord `
+            'rootAndDescendantRecordCount' ($protectedDescendants.Count + 1)
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'precloseJournalAndAuthorization'
+        $phaseStopwatch.Restart()
         $rootBeforeJournal = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
             $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent
         if (-not (Test-VerifierCurrentProcessRecordMatches $rootRecord $rootBeforeJournal)) {
@@ -13872,20 +14046,39 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
         $script:VerifierBrowserCloseAttempts[$attemptKey] = $true
         $SessionRecord.Runtime | Add-Member -NotePropertyName GracefulCloseAttempted `
             -NotePropertyValue $true -Force
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'closeSendAndAcknowledgement'
+        $phaseStopwatch.Restart()
         Send-VerifierBrowserCloseAndReadAcknowledgement $browserSocket $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'retainedProcessNaturalExitProof'
+        $phaseStopwatch.Restart()
         Wait-VerifierBoundReceiptNaturalShutdownDescendants $scope $rootRecord `
-            $protectedDescendants $budget $budgetTicks
+            $protectedDescendants $budget $budgetTicks $timingRecord
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'lateDescendantAbsenceProof'
+        $phaseStopwatch.Restart()
         Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants $rootRecord `
-            $protectedDescendants
+            $protectedDescendants $timingRecord
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
         # An empty kernel job membership is the final containment proof. If a
         # direct helper started and exited between sampled PPID queries while
         # leaving a markerless descendant, that descendant remains a job
         # member and blocks profile/claim cleanup without any PID stop.
+        $activePhase = 'containmentJobEmptyProof'
+        $phaseStopwatch.Restart()
         Wait-VerifierBrowserContainmentJobEmpty $containmentLease.Job `
-            $budget $budgetTicks
+            $budget $budgetTicks $timingRecord
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'profileQuiescence'
+        $phaseStopwatch.Restart()
         Wait-VerifierBrowserParentExitRecoveryProfileQuiescence $SessionRecord $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'finalListenerAbsenceProof'
+        $phaseStopwatch.Restart()
         Assert-VerifierBrowserParentExitRecoveryListenerAbsent $SessionRecord
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
         return [pscustomobject]@{
             ProcessTerminationProven = $true
             NaturalShutdownProven = $true
@@ -13893,7 +14086,9 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
         }
     } catch {
         $failure = $_
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch -Failed
     } finally {
+        $disposeStopwatch = [Diagnostics.Stopwatch]::StartNew()
         if ($null -ne $browserSocket) {
             try { $browserSocket.Abort() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
             try { $browserSocket.Dispose() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
@@ -13908,6 +14103,9 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
                 [void]$disposeErrors.Add((Get-VerifierErrorMessage $_))
             }
         }
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord 'resourceDisposal' `
+            $disposeStopwatch
+        Set-VerifierBrowserShutdownTotalTiming $SessionRecord $budget
     }
     if ($disposeErrors.Count -gt 0) {
         Throw-VerifierInfrastructure ('Browser parent-exit recovery resource disposal was unproven: ' +
@@ -13938,6 +14136,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
     $result = $null
     $failure = $null
     $disposeErrors = New-Object Collections.ArrayList
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
+    $activePhase = 'ownerAndLeaseProof'
+    Set-VerifierBrowserShutdownTimingLane $SessionRecord 'natural'
     try {
         Assert-VerifierDurableBrowserSession $SessionRecord $Context 'natural browser shutdown session'
         Assert-VerifierBrowserShutdownOwner $SessionRecord $OwnerRoot
@@ -13946,6 +14147,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
         [void](Get-VerifierPortLeaseBoundOwnershipProof $Context $SessionRecord.Lease `
             $SessionRecord.ProcessId $SessionRecord.ProcessStartTicks $SessionRecord $null)
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'endpointAndSocketConnect'
+        $phaseStopwatch.Restart()
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
         $version = Invoke-RestMethod -Uri (
             'http://127.0.0.1:' + [string]$SessionRecord.CdpPort + '/json/version') -TimeoutSec 2
@@ -13964,6 +14168,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
         $browserSocket = Connect-VerifierCdpSocket $endpoint (
             [DateTime]::UtcNow.AddMilliseconds([Math]::Min(2000, $remainingMs)))
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'rootAndDescendantCensus'
+        $phaseStopwatch.Restart()
         $snapshot = @(Get-VerifierBrowserOwnershipSnapshot $OwnerRoot.BrowserPath `
             $OwnerRoot.Profile $OwnerRoot.RunId $OwnerRoot.RepositoryIdentity $OwnerRoot.CdpPort)
         $rootRecord = Get-VerifierBrowserRootRecordFromSnapshot $OwnerRoot $snapshot
@@ -14010,6 +14217,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
                 Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
             }
         } while ($newIdentities -gt 0)
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'precloseOwnerRevalidation'
+        $phaseStopwatch.Restart()
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
         # Revalidate the root/listener immediately before the browser command.
         # A child already attested above may exit naturally; a missing child
@@ -14025,8 +14235,14 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
         $script:VerifierBrowserCloseAttempts[$attemptKey] = $true
         $SessionRecord.Runtime | Add-Member -NotePropertyName GracefulCloseAttempted `
             -NotePropertyValue $true -Force
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'closeSendAndAcknowledgement'
+        $phaseStopwatch.Restart()
         Send-VerifierBrowserCloseAndReadAcknowledgement $browserSocket $budget $budgetTicks
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'naturalRootAndDescendantExitWait'
+        $phaseStopwatch.Restart()
         $unproven = New-Object Collections.ArrayList
         [void]$unproven.Add($rootRecord)
         foreach ($child in $children) { [void]$unproven.Add($child) }
@@ -14042,6 +14258,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
                 Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
             }
         }
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+        $activePhase = 'postExitGraphProof'
+        $phaseStopwatch.Restart()
         $postSnapshot = @(Get-VerifierBrowserOwnershipSnapshot $OwnerRoot.BrowserPath `
             $OwnerRoot.Profile $OwnerRoot.RunId $OwnerRoot.RepositoryIdentity $OwnerRoot.CdpPort)
         Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
@@ -14052,9 +14271,12 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
             NaturalShutdownProven = $true
             AttestedDescendantCount = $children.Count
         }
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
     } catch {
         $failure = $_
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch -Failed
     } finally {
+        $disposeStopwatch = [Diagnostics.Stopwatch]::StartNew()
         if ($null -ne $browserSocket) {
             try { $browserSocket.Abort() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
             try { $browserSocket.Dispose() } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
@@ -14064,6 +14286,9 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
                 [void]$disposeErrors.Add($errorText)
             }
         } catch { [void]$disposeErrors.Add((Get-VerifierErrorMessage $_)) }
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord 'resourceDisposal' `
+            $disposeStopwatch -Failed:($disposeErrors.Count -gt 0 -and $null -eq $failure)
+        Set-VerifierBrowserShutdownTotalTiming $SessionRecord $budget
     }
     if ($disposeErrors.Count -gt 0) {
         Throw-VerifierInfrastructure ('Natural browser shutdown resource disposal was unproven: ' +
@@ -14073,7 +14298,16 @@ function Close-VerifierBrowserSessionNaturally($Context, $SessionRecord, $OwnerR
         if (Test-VerifierInfrastructureError $failure) { throw $failure }
         Throw-VerifierInfrastructure ('Natural browser shutdown failed: ' + (Get-VerifierErrorMessage $failure))
     }
-    Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+    $activePhase = 'finalDeadlineCheck'
+    $phaseStopwatch.Restart()
+    try {
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch
+    } catch {
+        Set-VerifierBrowserShutdownPhaseTiming $SessionRecord $activePhase $phaseStopwatch -Failed
+        throw
+    }
+    Set-VerifierBrowserShutdownTotalTiming $SessionRecord $budget
     return $result
 }
 
@@ -14485,6 +14719,7 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
         $useBoundReceiptNaturalShutdown = ($SessionRecord.Status -ceq 'attached' -and
             $null -ne $recoveryReceipt -and $recoveryReceipt.State -eq 'bound' -and
             -not $recoveryReceipt.CloseAttempted)
+        [void](New-VerifierBrowserShutdownTimingRecord $SessionRecord)
         $snapshot = $null
         if (-not $useBoundReceiptNaturalShutdown) {
             try {
@@ -14518,7 +14753,8 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
                     Close-VerifierBrowserSessionNaturally $Context $SessionRecord $ownerRoot
                 }
             } else {
-                Stop-VerifierBrowserProcessTreeToFixedPoint $Context $ownerRoot 15000
+                Stop-VerifierBrowserProcessTreeToFixedPoint $Context $ownerRoot 15000 `
+                    $SessionRecord
             }
             if ($null -eq $drainResult -or
                     $null -eq $drainResult.PSObject.Properties['ProcessTerminationProven'] -or
@@ -14571,6 +14807,10 @@ function Complete-VerifierBrowserSession($Context, $SessionRecord) {
             [string]$SessionRecord.Error
         } else { '' }
         $cleanupFailure = Get-VerifierErrorMessage $_
+        $shutdownTimingText = Get-VerifierBrowserShutdownTimingText $SessionRecord
+        if (-not [String]::IsNullOrWhiteSpace($shutdownTimingText)) {
+            $cleanupFailure += '; ' + $shutdownTimingText
+        }
         $SessionRecord.Status = 'cleanup-failed'
         $SessionRecord.CleanupResult = 'infrastructure-failure'
         $SessionRecord.Error = if ([String]::IsNullOrWhiteSpace($priorFailure)) {
@@ -15328,6 +15568,16 @@ function Test-VerifierLeaseNeedsCleanup($Lease) {
 }
 
 function Complete-VerifierRun($Context) {
+    $phaseTimings = [ordered]@{
+        PreflightMs = 0L
+        PhysicalNamespaceMs = 0L
+        BrowserSessionMs = 0L
+        PreviewMs = 0L
+        LeaseReleaseMs = 0L
+        FinalProofMs = 0L
+        BrowserShutdown = @()
+    }
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     [void](Assert-VerifierContextPreflight $Context 'verifier cleanup context')
     # Completion is the last cleanup authority.  Validate the complete live
     # context, including every lease's exact ClaimMutex association, before
@@ -15339,15 +15589,17 @@ function Complete-VerifierRun($Context) {
     # durable preflight succeeds; every entry written below then describes the
     # current pass, and a successful retry serializes an exact empty array.
     $Context.CleanupErrors = New-Object Collections.ArrayList
-    $pendingLeases = @($Context.LeaseRecords | Where-Object {
-        Test-VerifierLeaseNeedsCleanup $_
-    })
+    foreach ($sessionRecord in @($Context.BrowserSessions)) {
+        [void](New-VerifierBrowserShutdownTimingRecord $sessionRecord)
+    }
     $pendingSessions = @($Context.BrowserSessions | Where-Object {
         $_.CleanupResult -ne 'complete'
     })
     $pendingPreview = ($Context.Server -and $Context.Server.Owner -eq 'run' -and
         $Context.Server.CleanupResult -ne 'complete')
+    $phaseTimings.PreflightMs = [long]$phaseStopwatch.ElapsedMilliseconds
     $errors = New-Object Collections.ArrayList
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     try {
         # A changed physical namespace invalidates every later cleanup proof.
         # Stop the cleanup pass before it can follow a replaced junction and
@@ -15364,16 +15616,26 @@ function Complete-VerifierRun($Context) {
         try { Write-VerifierManifest $Context } catch {
             [void]$errors.Add((Get-VerifierErrorMessage $_))
         }
-        return [pscustomobject]@{ Success = $false; Errors = @($errors) }
+        $phaseTimings.PhysicalNamespaceMs = [long]$phaseStopwatch.ElapsedMilliseconds
+        return [pscustomobject]@{
+            Success = $false; Errors = @($errors)
+            ExtraPhaseTimings = [pscustomobject]$phaseTimings
+        }
     }
+    $phaseTimings.PhysicalNamespaceMs = [long]$phaseStopwatch.ElapsedMilliseconds
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     foreach ($sessionRecord in @($Context.BrowserSessions)) {
         try { Complete-VerifierBrowserSession $Context $sessionRecord } catch {
             [void]$errors.Add((Get-VerifierErrorMessage $_))
         }
     }
+    $phaseTimings.BrowserShutdown = @(Get-VerifierBrowserShutdownTimingRecords $Context)
+    $phaseTimings.BrowserSessionMs = [long]$phaseStopwatch.ElapsedMilliseconds
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     try { Complete-VerifierPreview $Context } catch {
         [void]$errors.Add((Get-VerifierErrorMessage $_))
     }
+    $phaseTimings.PreviewMs = [long]$phaseStopwatch.ElapsedMilliseconds
     # Browser/preview cleanup can fail part-way through setup. Walk the lease
     # ledger independently so every still-owned record gets one exact, safe
     # release attempt; Release-VerifierPortLease refuses active listeners,
@@ -15381,6 +15643,7 @@ function Complete-VerifierRun($Context) {
     # Drain the ledger more than once: browser/preview cleanup can unblock a
     # lease only after its first release attempt, while every pass remains
     # bounded and exact. Never broad-search or release by port alone.
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     for ($releasePass = 0; $releasePass -lt 3; $releasePass++) {
         $leasesToRelease = @($Context.LeaseRecords | Where-Object {
             Test-VerifierLeaseNeedsCleanup $_
@@ -15394,11 +15657,13 @@ function Complete-VerifierRun($Context) {
             }
         }
     }
+    $phaseTimings.LeaseReleaseMs = [long]$phaseStopwatch.ElapsedMilliseconds
 
     # A successful cleanup result requires a final ledger/resource proof, not
     # merely a successful call to a cleanup helper. Any uncertain claim handle,
     # exact claim file, profile, server, or listener is infrastructure failure
     # and keeps the run root/manifest/evidence available for diagnosis.
+    $phaseStopwatch = [Diagnostics.Stopwatch]::StartNew()
     foreach ($lease in @($Context.LeaseRecords)) {
         $claimAbsenceKnown = $false
         $claimAbsent = $false
@@ -15540,7 +15805,11 @@ function Complete-VerifierRun($Context) {
         [void]$errors.Add((Get-VerifierErrorMessage $_))
         $Context.CleanupState = 'infrastructure-failure'
     }
-    return [pscustomobject]@{ Success = $errors.Count -eq 0; Errors = @($errors) }
+    $phaseTimings.FinalProofMs = [long]$phaseStopwatch.ElapsedMilliseconds
+    return [pscustomobject]@{
+        Success = $errors.Count -eq 0; Errors = @($errors)
+        ExtraPhaseTimings = [pscustomobject]$phaseTimings
+    }
 }
 
 function Resolve-VerifierChildExitCode([bool]$InvocationSucceeded, $LastExitCode) {

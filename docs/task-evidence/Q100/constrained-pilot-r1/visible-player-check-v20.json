@@ -1,0 +1,95 @@
+{
+  "protocol": "q100-visible-player-check-v20-v2",
+  "status": "PASS_VISIBLE_FINITE_FLOW",
+  "variant": "Player",
+  "inputDigest": "4f6a755008cf396dde849aa3074b1b418089276e60830ebb02846826a58cc925",
+  "outputDigest": "b826c2379d805768fa3de52a57af763fd867e2fb1905376d2e55f2d1a9fda986",
+  "dependencyEpoch": "tsj-generation-dependencies-v20",
+  "surface": "Built-in Browser visible input, owned task tab and production preview",
+  "route": "LED seed 3",
+  "repair": "PASS: unrepaired customer retest failed; isolated supplies, removed R1, acquired 1000 Ohm +/-5 percent from Shop, installed via tray, restored power; actual customer retest passed modal.",
+  "cancellation": {
+    "requestedFamily": "Isolated AC control board",
+    "difficulty": "MEDIUM",
+    "seedEntered": "-2230691771308388107",
+    "observedStage": "Verify measurements and repairs",
+    "screenshotProgress": "55 percent, 39s, 248 work",
+    "lastAxBeforeClick": "56 percent, 41s, 274 work",
+    "visibleCancelInput": true,
+    "notice": "Board preparation cancelled.",
+    "priorThreePackageBoardVisible": true,
+    "priorLedLit": true,
+    "boardPower": "ON",
+    "retestDisabledAfterWaitAndResume": true,
+    "meterSelectorAndFunctionsDisabled": true,
+    "boardPowerButtonEnabled": true,
+    "consoleWarningsErrors": [],
+    "privateDomAttributes": [],
+    "cause": "EXPECTED_COMPLETED_PREDECESSOR_POLICY: completed challenges remain interaction-ready but terminal; retest and public JS meter selector/function controls require not completed.",
+    "nativeMeterModeButtonsRemainedEnabled": true
+  },
+  "screenshots": [
+    {
+      "path": "player-visible-v20/01-unrepaired-retest-failed.jpg",
+      "sha256": "29c541fe679025af903bee086d8765268eb0c0c750b067a6818c89ad67002bb7"
+    },
+    {
+      "path": "player-visible-v20/02-repaired-retest-passed.jpg",
+      "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+    },
+    {
+      "path": "player-visible-v20/03-normal-medium-proof.jpg",
+      "sha256": "bd85ce642bf0faadd4ff55f4e943f58bcd3c8c7d0a7669604ca629adac600b36"
+    },
+    {
+      "path": "player-visible-v20/04-cancelled-prior-board-restored.jpg",
+      "sha256": "ecd9919617e3c7d94d4250ac5c0b44207d2ef5d6ee839420b0ba357324edd702"
+    },
+    {
+      "path": "player-visible-v20/05-new-ticket-controls-ready.jpg",
+      "sha256": "2df14c4621db6890f2dd54a01aeb04baa8f13fbd649ed5c39fc0cf680469ce98"
+    }
+  ],
+  "resources": {
+    "previewProcessId": 31124,
+    "previewProcessStartTicks": 639289474381633965,
+    "port": 8943,
+    "tab": "12",
+    "cleanup": "PASS: task-created IAB tab closed; maintained stop-preview under Windows PowerShell 5.1 exited0 and positively released exact task PID31124 and port8943."
+  },
+  "limits": [
+    "Finite visible LED repair and normal MEDIUM cancellation only.",
+    "Existing completed-session policy preserved; a fresh current board enabled retest and meter controls.",
+    "Visual predecessor restoration observed; exact graph/owner identity belongs to separate private lifecycle gates.",
+    "No hidden controller calls or answer-key inspection used.",
+    "No playable RB100, human qualification, all-seed, modest-host or capacity qualification."
+  ],
+  "freshTicketControlCheck": {
+    "family": "Indicator board",
+    "difficulty": "EASY",
+    "seedEntered": "3",
+    "acceptedNewCustomerTicket": true,
+    "retestEnabled": true,
+    "meterSelectorOffAcFrequencyControlsEnabled": true,
+    "privateDomAttributes": [],
+    "status": "PASS"
+  },
+  "priorObservation": "visible-player-v20-attempt1-readiness.json preserves the earlier unresolved interpretation; no control or production code was changed to resolve it.",
+  "policySourceAudit": [
+    {
+      "path": "war/tsj-bench-instruments.js",
+      "sha256": "148665b2eb381ac0b7177d21aade888a3d334142f67c4f42910024cd96b2b7b2",
+      "boundary": "public selector/function readiness excludes completed sessions"
+    },
+    {
+      "path": "war/tsj-workbench-ui.js",
+      "sha256": "fbeb9a45ad2dc782b300afa271b0e6ce61967975fecf95083372114376acf6d8",
+      "boundary": "retest readiness excludes completed sessions"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GeneratedChallengeController.java",
+      "sha256": "28717f17226776c5cf7bc598cee5fe25b2def6427fc259283dacc8f6150e390e",
+      "boundary": "completed challenge remains interaction-ready and terminal"
+    }
+  ]
+}

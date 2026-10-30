@@ -1,0 +1,42 @@
+{
+  "protocol": "q100-normal-medium-runtime-prerequisite-v1",
+  "status": "FAIL_ENVIRONMENT_BEFORE_CASES",
+  "wrapper": {
+    "exitCode": 1,
+    "elapsedSeconds": 3.2434849,
+    "planSha256": "55e31c9354c40c9af056246541ea02049c629b59dd9c8382ff313d3fba95afcf"
+  },
+  "caseCountCompleted": 0,
+  "requestedCaseCount": 3,
+  "failure": "Bundled Python3.12 lacks Playwright; no case or Edge browser started",
+  "temporaryHttpCleanup": {
+    "status": "PASS",
+    "seconds": 0.6720000000204891,
+    "serverStopped": true,
+    "ownedSurvivors": [],
+    "errors": []
+  },
+  "inputAudit": {
+    "status": "PASS",
+    "beforeSha256": "ce705926cc3441bdcbf39ad3870bf8ee0e3e349a5e8d9ed78ee315ce53670fa9",
+    "afterSha256": "ce705926cc3441bdcbf39ad3870bf8ee0e3e349a5e8d9ed78ee315ce53670fa9",
+    "sourceSha256Before": "4328aed76037a9a7a49b2334af3679e12e248bae3229ba5d9d25b32e3943d284",
+    "sourceSha256After": "4328aed76037a9a7a49b2334af3679e12e248bae3229ba5d9d25b32e3943d284",
+    "webSha256Before": "05bdede30f5a7b6dccd112227861f1106ba5b2fdf655f8054d64928b834eb1b4",
+    "webSha256After": "05bdede30f5a7b6dccd112227861f1106ba5b2fdf655f8054d64928b834eb1b4",
+    "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+    "fileCountBefore": 1574,
+    "fileCountAfter": 1574,
+    "seconds": 0.7029999999795109
+  },
+  "rawReportSha256": "31b380d9bd7148bfd8dd1911df791743c61f9e3c3f6c3a759dcf63ea252cb746",
+  "browserLogSha256": "b6e93092a01660d31a57cf65ee4359b1d15d7ef413d26f5ada00f317bd5d0f2d",
+  "correctiveEnvironment": "Existing installed Python3.13.14 with Playwright1.57.0; importcanaryPASS; no package installation",
+  "retry": "New taskowned OS-temp directory; identical planSHA55e31c9354c40c9af056246541ea02049c629b59dd9c8382ff313d3fba95afcf",
+  "limits": [
+    "Old environment failure is not an electrical FAIL or PASS",
+    "No case result or qualification inferred; prior outputs preserved",
+    "Temporary HTTP server was started before dependency check and its shutdown passed"
+  ]
+}

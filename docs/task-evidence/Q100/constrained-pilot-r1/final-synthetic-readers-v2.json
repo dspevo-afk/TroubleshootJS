@@ -1,0 +1,13 @@
+{
+  "protocol": "q100-final-reader-canaries-v2",
+  "status": "PASS",
+  "exitCode": 0,
+  "host": "Windows PowerShell 5.1",
+  "readerScriptSha256": "d06ff84f2d015ec3bc7824b4b9b460bb293e2962dc143e13fe15b0ec7dae00dd",
+  "syntheticScriptSha256": "9b7920337712ccc69cb2c980163c7d94533f33194c8d887b56418be7a1bd47c7",
+  "isolationModuleSha256": "e368bdc2a0f07f83f99c169681a8fbe78794c194740d501f5da45494472c6361",
+  "limits": [
+    "In-memory protocol and independent-oracle fixtures; no runtime electrical proof.",
+    "Includes unfamiliar DOM attribute and sentinel-cleanup evidence rejection fixtures."
+  ]
+}

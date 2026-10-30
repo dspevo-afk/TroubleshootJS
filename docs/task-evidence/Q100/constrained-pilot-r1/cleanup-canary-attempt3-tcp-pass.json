@@ -1,0 +1,129 @@
+{
+    "protocol":  "troubleshootjs-browser-cleanup-budget-v1",
+    "status":  "PASS",
+    "scope":  "about-blank-browser-resource-cleanup",
+    "host":  {
+                 "powershell":  "5.1.26100.9711",
+                 "edition":  "Desktop"
+             },
+    "checks":  52,
+    "setupElapsedMs":  23360,
+    "cleanupElapsedMs":  61673,
+    "cleanupBudgetMs":  120000,
+    "extraPhaseTimings":  {
+                              "PreflightMs":  51,
+                              "PhysicalNamespaceMs":  238,
+                              "BrowserSessionMs":  51384,
+                              "PreviewMs":  8348,
+                              "LeaseReleaseMs":  20,
+                              "FinalProofMs":  1621,
+                              "BrowserShutdown":  [
+                                                      {
+                                                          "RouteId":  "c7dc3a0b1b6f4a20a422a473f8b2f01d",
+                                                          "Lane":  "boundReceipt",
+                                                          "TotalMs":  9977,
+                                                          "FailurePhase":  "",
+                                                          "PhasesMs":  {
+                                                                           "rootContainmentProof":  412,
+                                                                           "endpointAndSocketConnect":  15,
+                                                                           "postConnectRootAndListenerProof":  398,
+                                                                           "protectedHelperCensus":  2070,
+                                                                           "precloseJournalAndAuthorization":  1656,
+                                                                           "closeSendAndAcknowledgement":  33,
+                                                                           "helperAndContainmentDrain":  4481,
+                                                                           "profileQuiescence":  822,
+                                                                           "finalListenerAbsenceProof":  70,
+                                                                           "resourceDisposal":  7
+                                                                       }
+                                                      }
+                                                  ]
+                          },
+    "profileFilesExercised":  2048,
+    "previewTransport":  {
+                             "requestedForceTcpListener":  true,
+                             "observedListenerOwnerKind":  "user-process"
+                         },
+    "browserAttachmentProof":  {
+                                   "processId":  24868,
+                                   "processStartTicks":  639289456895507214,
+                                   "executable":  "msedge.exe",
+                                   "processIdentityVerified":  true,
+                                   "profileIdentity":  "5afd492a6a1f5189b59c58d6e53acdcfc5b36dfd2f553f14c035454622289bea",
+                                   "profileCommandLineVerified":  true,
+                                   "cdpPort":  57223,
+                                   "portBoundToLease":  true,
+                                   "targetAttached":  true,
+                                   "requestedUrl":  "about:blank",
+                                   "recoveryReceiptProtocol":  "troubleshootjs-verifier-browser-recovery-v1",
+                                   "recoveryReceiptState":  "bound",
+                                   "recoveryReceiptBoundToSession":  true,
+                                   "socketOpen":  true,
+                                   "socketBoundToRecord":  true
+                               },
+    "processLaunches":  [
+                            {
+                                "role":  "owned-preview",
+                                "pid":  18004,
+                                "processStartTicks":  639289456728665459,
+                                "executable":  "powershell.exe",
+                                "profileRole":  "none",
+                                "port":  52861,
+                                "hidden":  true
+                            },
+                            {
+                                "role":  "task-profile-helper",
+                                "pid":  23764,
+                                "processStartTicks":  639289456843262391,
+                                "executable":  "cscript.exe",
+                                "profileRole":  "auxiliary-profile",
+                                "port":  0,
+                                "hidden":  true
+                            },
+                            {
+                                "role":  "owned-browser",
+                                "pid":  24868,
+                                "processStartTicks":  639289456895507214,
+                                "executable":  "msedge.exe",
+                                "profileRole":  "browser-session-profile",
+                                "port":  57223,
+                                "hidden":  true
+                            }
+                        ],
+    "helperQuiescenceCanary":  {
+                                   "pid":  23764,
+                                   "processStartTicks":  639289456843262391,
+                                   "executable":  "cscript.exe",
+                                   "terminationProven":  true,
+                                   "absenceProven":  true,
+                                   "elapsedMs":  2192,
+                                   "scope":  "profile-quiescence-boundary-only",
+                                   "profileIdentity":  "45407d6c0847d9381b3b2b14fe501d3e66c114e91613cc0d9a9146b7da681706"
+                               },
+    "junctionDeletionCanary":  {
+                                   "status":  "PASS",
+                                   "scope":  "owned-profile-deletion-boundary",
+                                   "deleteRefused":  true,
+                                   "exactJunctionRemovedNonrecursively":  true,
+                                   "retryDeletionSucceeded":  true,
+                                   "sentinelPreserved":  true,
+                                   "elapsedMs":  164
+                               },
+    "limitations":  [
+                        "Scope is resource cleanup for a factory-attached about:blank browser session; no application or player behavior is exercised.",
+                        "The helper canary proves the real profile-quiescence boundary; it does not claim a full-run lease-release failure/retry.",
+                        "The listener-identity contract is exercised by its separate maintained contract."
+                    ],
+    "ownerProof":  {
+                       "previewProcessAbsent":  true,
+                       "browserProcessAbsent":  true,
+                       "previewClaimAbsent":  true,
+                       "browserClaimAbsent":  true,
+                       "previewListenerAbsent":  true,
+                       "browserListenerAbsent":  true,
+                       "browserProfileAbsent":  true,
+                       "browserProfileIdentity":  "5afd492a6a1f5189b59c58d6e53acdcfc5b36dfd2f553f14c035454622289bea",
+                       "previewClaimIdentity":  "c17f13ff9308e95cb132ae5740a610c2334b7110b12e19ee77d1aa3b1c51da2d",
+                       "browserClaimIdentity":  "a6d60ef08485899d19dac75a042ec16f0a2255f97f67cdb430e3cfbc74ce9bee"
+                   },
+    "reportWritten":  true
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "path": "docs/ARCHITECTURE.md",
+    "sha256": "1f2a71866751e4cd121963a7cbe91b2aa6a405c760d10c5c8b591b2e6fec3e87"
+  },
+  {
+    "path": "docs/CODEX_TASK_REPORT.md",
+    "sha256": "bbd08a3f68d14c09dc779f404bafc58235c0dcee4e908f3d8b78fe45d0bd227b"
+  },
+  {
+    "path": "docs/ROADMAP.md",
+    "sha256": "492ed6ae8f77386c29b5dc460b10bdfd759ab6bf0b48156e8f2cd4c597b91bab"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-accepted-decision-memory.md",
+    "sha256": "7e46c0de8329ca229a8b2b0424f35b198c03d5511d045a14414007b9ee375ead"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-attempt-memory-rollback.md",
+    "sha256": "7f8f27aeff9f1b91b730dc604020c9fbdc21c9ace011e5d3a49021c27741cb97"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-clipped-tangent-fix.md",
+    "sha256": "63de2bc519a98c065ebf1e7586cef1504c2727e726bfb047fdfe635fc15cff34"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-converter-input-residual.md",
+    "sha256": "d5f1f978c37a489347ba6c90c8fd588e64d8212e582aecf68d85bee717147ed6"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-flat-converter-clip.md",
+    "sha256": "3d3cafdad0bd23b759587a1f387d5aba869320ba6f01cfa5ef95b6ed1153b864"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-before-interior-bounded-chord.md",
+    "sha256": "c5c74cece06aeb6d19e8c54cbcf457c77e6034f522c8fb7aecf456c7f0bc4ae2"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-model-v1.md",
+    "sha256": "d0b93ccdd9fb373102aeb3d49dc247aacb576880443d6149e6e9aaf5145f27d5"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-model-v2.md",
+    "sha256": "628a459f5466151e53db8a8e1ca0454c13e91762b0ff9370f2c2aff34bb3ad89"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-model-v3-before-regulator-fix.md",
+    "sha256": "759a2225c532792569552a88b74bdcdea0068a33e5c479d124bd0e171b238453"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-model-v3-final.md",
+    "sha256": "35481d687309c16d4ef63a6e6727367ee518c8801d33499bf6799007c42f9320"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-model-v4-before-implementation.md",
+    "sha256": "b805f16ff952c3b20b334915e428a9cc59c88b69c84e20746688af48c35b253f"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN-reference-v1-final.md",
+    "sha256": "521cacd6e2c06ba3d89b00924c80c0ef8e96a341c160fc0892778e26cad31af9"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/PLAN.md",
+    "sha256": "c405e329884e83aaf120790e3ae2705f64bd397d42d72ea397cbdd3eba4f39d0"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible-v20/01-unrepaired-retest-failed.jpg",
+    "sha256": "29c541fe679025af903bee086d8765268eb0c0c750b067a6818c89ad67002bb7"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible-v20/02-repaired-retest-passed.jpg",
+    "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible-v20/03-normal-medium-proof.jpg",
+    "sha256": "bd85ce642bf0faadd4ff55f4e943f58bcd3c8c7d0a7669604ca629adac600b36"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible-v20/04-cancelled-prior-board-restored.jpg",
+    "sha256": "ecd9919617e3c7d94d4250ac5c0b44207d2ef5d6ee839420b0ba357324edd702"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible-v20/05-new-ticket-controls-ready.jpg",
+    "sha256": "2df14c4621db6890f2dd54a01aeb04baa8f13fbd649ed5c39fc0cf680469ce98"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible/01-repaired-retest-passed.jpg",
+    "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible/02-medium-measurement-proof.jpg",
+    "sha256": "ee27e46526abbd7323773a8f465ad614b7f691ca2ad34771462069196760a76a"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/player-visible/03-normal-proof-cancelled.jpg",
+    "sha256": "ecd9919617e3c7d94d4250ac5c0b44207d2ef5d6ee839420b0ba357324edd702"
+  },
+  {
+    "path": "docs/task-evidence/Q100/constrained-pilot-r1/README.md",
+    "sha256": "3bf518411f203f4bded8c8c07e177b2bb62c91726e338b8e40a41cbd3a0cddb0"
+  },
+  {
+    "path": "scripts/VerifierIsolation.psm1",
+    "sha256": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111"
+  },
+  {
+    "path": "scripts/verify-a03-browser.ps1",
+    "sha256": "b619750da5b00283bb79263ba556b5e5f043d201ed4c87b1402f70551afb889e"
+  },
+  {
+    "path": "scripts/verify-current-contracts.ps1",
+    "sha256": "ea9ed87f061bf9917140ba66a2754ddcaab27b7b58029e09747d020e93f0fd4c"
+  },
+  {
+    "path": "scripts/verify-q100-evidence.ps1",
+    "sha256": "55d95c589a686dce452b9916e4908d83ae742096a692401c9e230a5e65e7421c"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/A03IdentityDeveloperVerifier.java",
+    "sha256": "16598a42a8956687484bf77751e848c40c0e5068b7a6a9c6360d1bea1384906b"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/A04ConstructionDeveloperVerifier.java",
+    "sha256": "5637fc140de39583276ec0b004e1f1bbb60d4b18c53b8a5ca131eaf03e708579"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/AbstractRailRegulatorElm.java",
+    "sha256": "4926f72e7f0dc677e3e49a8683da56aedc38af060d2e5f552cc3ee0b335b5d0b"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/BoundedGeneratedBoardAssembler.java",
+    "sha256": "34ec056b42de2cad6eda34ead8f309e986605c01db9baba2b9717cb57ef1ab19"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+    "sha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+    "sha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/CirSim.java",
+    "sha256": "b94a13b0e62e64528e3abd0a836cbfeffc96e89f8810ec90e608c27533afa987"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+    "sha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/E06AveragedConverterElm.java",
+    "sha256": "b0d379828c21fde1cde3c2ca9fc137e443c6b6fab8fde2e2f6d31c828dfcc878"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/GeneratedBoardInstance.java",
+    "sha256": "50b7beae5938beadfd3f22d32a1f130e809f60a0a9b11aacd2cf56f5cbb655c9"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/GeneratedBoardPhysicalTruthDeveloperVerifier.java",
+    "sha256": "39c6432e78b325319a97a8b9e920c713137d616c814755753b07e1805962ea5c"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+    "sha256": "a80a65dd96c846c14628b75a6573c5337799e1c3ab257b3b8ae50f88b8bd1cca"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Q100ElectricalPilotDeveloperVerifier.java",
+    "sha256": "6a51b75ce907840ab60206739bff6ef5de8c658a5be67f5325410e9653b180f7"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+    "sha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotFaults.java",
+    "sha256": "23b3e62e671bc087be2f8954014aa22327bebf49c678ae3a1265fe6dccef90d6"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100PilotReference.java",
+    "sha256": "d85d7a47d7dfad82298e69d3ef4b48a7d0a784ea18b1d79f66503653393c4485"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+    "sha256": "360466bea9c120d34f763079be1a63aced740e8492b0617ee734522cf49e1dbf"
+  },
+  {
+    "path": "src/com/lushprojects/circuitjs1/client/Task47AssemblyDeveloperVerifier.java",
+    "sha256": "d606c546f64cfec79d736d3dc3bc065e94b1b0af219e48e917c2e969cfbb59e9"
+  },
+  {
+    "path": "tests/contracts/A03OperationalStateRuntimeContractTest.java",
+    "sha256": "e99a787580aa892e3ebd4565fbfd3282a1313fef5a063a612aa96df226783fa8"
+  },
+  {
+    "path": "tests/contracts/A04ElementInventoryRuntimeContractTest.java",
+    "sha256": "6cec6c40586b16f2b0114484c0714775a3f092b0e045592b148e145cb9bf3cab"
+  },
+  {
+    "path": "tests/contracts/browser-cleanup-budget.ps1",
+    "sha256": "9ef80852b0df2cbd55dff47841a66964d09a3156f2af28d6be1d31c4f26f848d"
+  },
+  {
+    "path": "tests/contracts/D01DiagnosticContractTest.java",
+    "sha256": "bc7144823e43b0c12ffb610af0f0d7a30c6d10f5cd1c46a49bbd55ce6f00995b"
+  },
+  {
+    "path": "tests/contracts/E02BoundedTangentContractTest.java",
+    "sha256": "f354eaa0a70e15d504e1074122efe417f96a7beac573f09294e3dbb64992064c"
+  },
+  {
+    "path": "tests/contracts/E02RegulatorKneeContractTest.java",
+    "sha256": "8c5a129b04aabbf9e416c4731712b5bdad5cf00a4e27efea807310f679258431"
+  },
+  {
+    "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+    "sha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+  },
+  {
+    "path": "tests/contracts/PhysicalCopperObservationContractTest.java",
+    "sha256": "11e15c644fffe02e4be82c35ba0f80b17800f04e3cdcfec41a11a80ec392f0d4"
+  },
+  {
+    "path": "tests/contracts/Rb100ElectricalPilotContractTest.java",
+    "sha256": "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4"
+  },
+  {
+    "path": "tests/contracts/Rb100PlanContractTest.java",
+    "sha256": "9ecc1c6ae3f99eba1f3a9d4f16e949ae4edfe22dc53bb7156df66b161b60af89"
+  },
+  {
+    "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+    "sha256": "6cebe0edf6d2f1d804cc4b84bbf8aa9b2004c5ac2c8068387fb91f0c8fff8792"
+  },
+  {
+    "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+    "sha256": "97cafbb52f58fb6f9c9fdde40f6e7d0db947032b744fc6e4cfa2d13fa5f377fe"
+  },
+  {
+    "path": "tests/qualification/rb56-medium/read_qualification.py",
+    "sha256": "a9279fd17790a38b276abc997c5b947e9e74ad75ae11ac9592f2835cc2918ca3"
+  }
+]

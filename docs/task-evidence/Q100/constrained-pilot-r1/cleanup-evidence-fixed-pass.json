@@ -1,0 +1,163 @@
+{
+  "protocol": "q100-62-artifact-cleanup-fixed-v1",
+  "status": "PASS",
+  "checks": 254,
+  "cleanupMs": 117936,
+  "cleanupBudgetMs": 120000,
+  "extraPhaseTimings": {
+    "PreflightMs": 59,
+    "PhysicalNamespaceMs": 1556,
+    "BrowserSessionMs": 82046,
+    "PreviewMs": 29212,
+    "LeaseReleaseMs": 27,
+    "FinalProofMs": 5026,
+    "BrowserShutdown": [
+      {
+        "RouteId": "620e37dc3c244585a25dd00c7cb4e405",
+        "Lane": "boundReceipt",
+        "TotalMs": 8538,
+        "FailurePhase": "",
+        "PhasesMs": {
+          "rootContainmentProof": 328,
+          "endpointAndSocketConnect": 14,
+          "postConnectRootAndListenerProof": 290,
+          "protectedHelperCensus": 1104,
+          "precloseJournalAndAuthorization": 3862,
+          "closeSendAndAcknowledgement": 29,
+          "retainedProcessNaturalExitProof": 1636,
+          "lateDescendantAbsenceProof": 354,
+          "containmentJobEmptyProof": 1,
+          "profileQuiescence": 831,
+          "finalListenerAbsenceProof": 70,
+          "resourceDisposal": 5
+        },
+        "Counts": {
+          "protectedDescendantCount": 7,
+          "rootAndDescendantRecordCount": 8,
+          "waitLoopPassCount": 2,
+          "naturalExitProofCallCount": 16,
+          "currentAbsenceProofCount": 13,
+          "currentAbsenceObservationCount": 26,
+          "lateDescendantParentQueryCount": 8,
+          "containmentJobPollCount": 1
+        }
+      }
+    ]
+  },
+  "profileFilesExercised": 2048,
+  "evidenceArtifacts": {
+    "status": "PASS",
+    "requestedCount": 62,
+    "count": 62,
+    "bytes": 6934,
+    "registeredCount": 62
+  },
+  "evidenceContainmentCanary": {
+    "status": "PASS",
+    "rejectedLexicallyOwnedReparsePath": true,
+    "artifactLedgerUnchanged": true,
+    "sentinelPreserved": true,
+    "junctionRemovedNonrecursively": true,
+    "elapsedMs": 107
+  },
+  "previewTransport": {
+    "requestedForceTcpListener": false,
+    "observedListenerOwnerKind": "kernel-transport"
+  },
+  "browserAttachmentProof": {
+    "processId": 21412,
+    "processStartTicks": 639289650090286681,
+    "executable": "msedge.exe",
+    "processIdentityVerified": true,
+    "profileIdentity": "ff89d8fbca51f5d58e8e7c8ac3bb7f718a5aaa7a16bedcb08abbd4c408e1f3ef",
+    "profileCommandLineVerified": true,
+    "cdpPort": 60415,
+    "portBoundToLease": true,
+    "targetAttached": true,
+    "requestedUrl": "about:blank",
+    "recoveryReceiptProtocol": "troubleshootjs-verifier-browser-recovery-v1",
+    "recoveryReceiptState": "bound",
+    "recoveryReceiptBoundToSession": true,
+    "socketOpen": true,
+    "socketBoundToRecord": true
+  },
+  "processLaunches": [
+    {
+      "role": "owned-preview",
+      "pid": 29376,
+      "processStartTicks": 639289649933804836,
+      "executable": "powershell.exe",
+      "profileRole": "none",
+      "port": 52115,
+      "hidden": true
+    },
+    {
+      "role": "task-profile-helper",
+      "pid": 37672,
+      "processStartTicks": 639289650044037549,
+      "executable": "cscript.exe",
+      "profileRole": "auxiliary-profile",
+      "port": 0,
+      "hidden": true
+    },
+    {
+      "role": "owned-browser",
+      "pid": 21412,
+      "processStartTicks": 639289650090286681,
+      "executable": "msedge.exe",
+      "profileRole": "browser-session-profile",
+      "port": 60415,
+      "hidden": true
+    }
+  ],
+  "helperQuiescenceCanary": {
+    "pid": 37672,
+    "processStartTicks": 639289650044037549,
+    "executable": "cscript.exe",
+    "terminationProven": true,
+    "absenceProven": true,
+    "elapsedMs": 2209,
+    "scope": "profile-quiescence-boundary-only",
+    "profileIdentity": "f1b0bd4c2fb0d4e6a46c08992d701b9f59ca0aed21793fb391da2d5a9a1dd2b3"
+  },
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 270.4786635,
+    "profileFileCount": 2048,
+    "evidenceArtifactCount": 62,
+    "forceTcpListener": false
+  },
+  "sourcePins": "cleanup-evidence-canary-2-source-pins.json",
+  "rawReportSha256": "eaf737efb66ebe67bc0ec36b9742c5ec14f73210d1a3cf5eb4ebe0385034cc10",
+  "rawLogSha256": "b29c76e175698eb58cdb9686a28a2f7b5f3b73b14cd00709b8dc24bbc603dfd1",
+  "delta": "Removed only the full resource census preceding the in-memory manifest view; complete fresh prewrite/precommit censuses and every profile/process/listener/job proof remain",
+  "review": "Root and two read-only independent source reviews found no blocker in this one-call removal; actual postfix canary proves selected host path",
+  "limits": [
+    "Real WinPS5/Edge/HTTP.sys host path,62 registered files/2048 profile fixtures; no application behavior",
+    "117936ms is finite host evidence with2064ms headroom,not a portability/variance guarantee",
+    "Baseline144404ms and both compiled62 cleanup failures remain FAIL",
+    "Fresh compiled full62 still required"
+  ],
+  "junctionDeletionCanary": {
+    "status": "PASS",
+    "scope": "owned-profile-deletion-boundary",
+    "deleteRefused": true,
+    "exactJunctionRemovedNonrecursively": true,
+    "retryDeletionSucceeded": true,
+    "sentinelPreserved": true,
+    "elapsedMs": 164
+  },
+  "ownerProof": {
+    "previewProcessAbsent": true,
+    "browserProcessAbsent": true,
+    "previewClaimAbsent": true,
+    "browserClaimAbsent": true,
+    "previewListenerAbsent": true,
+    "browserListenerAbsent": true,
+    "browserProfileAbsent": true,
+    "browserProfileIdentity": "ff89d8fbca51f5d58e8e7c8ac3bb7f718a5aaa7a16bedcb08abbd4c408e1f3ef",
+    "previewClaimIdentity": "6a9bffc3cbd76048be945f2197a19516140cfdca807fdf95256f78e9775fb2d0",
+    "browserClaimIdentity": "85dd6b054180af58c08a4a1e2f011e3ac12f6cdd9b0563677254da881f32ce62"
+  },
+  "curationNote": "Positive raw schema names cleanupElapsedMs; failure schema names cleanupMs. Root corrected the derived field mapping before publication; raw gate reports/results unchanged."
+}

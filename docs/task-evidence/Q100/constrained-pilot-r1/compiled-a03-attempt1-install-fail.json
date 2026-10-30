@@ -1,0 +1,78 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "A03",
+  "status": "FAIL",
+  "sourcePins": "final-compiled-a03-1-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "3273f4dbd8e6b294bf3317562ca5d98239a65d6ee2f0c00eb787a367f2d1693f",
+    "scriptDigest": "d99e8d0fdce8058df5bc65e919aad721b4bb4ecd5a0525506a385ffcaab33592",
+    "webDigest": "3bdbb12fa6f9407e74818f294ae9485b497be14c30a338ce5bb125b37a8c5d58",
+    "executionDigest": "f6569c73ed5226de392b3def6e8245dce9b505cebf4cf11d9ed6f9da223066c9",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "application",
+    "phase": "browser",
+    "operation": "route-a03",
+    "elapsedMs": 17368,
+    "remainingDeadlineMs": 72631,
+    "error": "a03 reported FAI<owned-path> stage [runtime-samples] failed (java.lang.IllegalStateException): A03 stage [runtime-samples/seed-1/install-composition] failed (com.google.gwt.core.client.JavaScriptException): (TypeError) : Cannot read properties of null (reading 'g')"
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 47,
+      "PhysicalNamespaceMs": 245,
+      "BrowserSessionMs": 35090,
+      "PreviewMs": 7894,
+      "LeaseReleaseMs": 20,
+      "FinalProofMs": 1617,
+      "BrowserShutdown": [
+        {
+          "RouteId": "4b8ae3b9dce4474e92776752af58fba0",
+          "Lane": "boundReceipt",
+          "TotalMs": 8201,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 389,
+            "endpointAndSocketConnect": 11,
+            "postConnectRootAndListenerProof": 330,
+            "protectedHelperCensus": 1459,
+            "precloseJournalAndAuthorization": 1415,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 2731,
+            "lateDescendantAbsenceProof": 671,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 1067,
+            "finalListenerAbsenceProof": 87,
+            "resourceDisposal": 7
+          },
+          "Counts": {
+            "protectedDescendantCount": 10,
+            "rootAndDescendantRecordCount": 11,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 22,
+            "currentAbsenceProofCount": 20,
+            "currentAbsenceObservationCount": 40,
+            "lateDescendantParentQueryCount": 11,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 1,
+  "elapsedSeconds": 81.7965381,
+  "rawReportSha256": "9992d44ac53bc71e52525a641ad3cc1dc6c30ca91afef29bef5eaf179018378b",
+  "rawLogSha256": "4655182092a49fe51320feb895dc57d7b24720bbe30b9ed5fa4ccb2923532763",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

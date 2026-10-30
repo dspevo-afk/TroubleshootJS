@@ -1,0 +1,61 @@
+{
+  "protocol": "q100-visible-player-v20-attempt1-v1",
+  "status": "PARTIAL_CANCELLATION_READINESS_UNRESOLVED",
+  "variant": "Player",
+  "inputDigest": "4f6a755008cf396dde849aa3074b1b418089276e60830ebb02846826a58cc925",
+  "outputDigest": "b826c2379d805768fa3de52a57af763fd867e2fb1905376d2e55f2d1a9fda986",
+  "dependencyEpoch": "tsj-generation-dependencies-v20",
+  "surface": "Built-in Browser visible input, owned task tab and production preview",
+  "route": "LED seed 3",
+  "repair": "PASS: unrepaired customer retest failed; isolated supplies, removed R1, acquired 1000 Ohm +/-5 percent from Shop, installed via tray, restored power; actual customer retest passed modal.",
+  "cancellation": {
+    "requestedFamily": "Isolated AC control board",
+    "difficulty": "MEDIUM",
+    "seedEntered": "-2230691771308388107",
+    "observedStage": "Verify measurements and repairs",
+    "screenshotProgress": "55 percent, 39s, 248 work",
+    "lastAxBeforeClick": "56 percent, 41s, 274 work",
+    "visibleCancelInput": true,
+    "notice": "Board preparation cancelled.",
+    "priorThreePackageBoardVisible": true,
+    "priorLedLit": true,
+    "boardPower": "ON",
+    "retestDisabledAfterWaitAndResume": true,
+    "meterSelectorAndFunctionsDisabled": true,
+    "boardPowerButtonEnabled": true,
+    "consoleWarningsErrors": [],
+    "privateDomAttributes": [],
+    "cause": "UNDER INVESTIGATION; not yet classified as expected completed-session policy or cancellation bug"
+  },
+  "screenshots": [
+    {
+      "path": "player-visible-v20/01-unrepaired-retest-failed.jpg",
+      "sha256": "29c541fe679025af903bee086d8765268eb0c0c750b067a6818c89ad67002bb7"
+    },
+    {
+      "path": "player-visible-v20/02-repaired-retest-passed.jpg",
+      "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+    },
+    {
+      "path": "player-visible-v20/03-normal-medium-proof.jpg",
+      "sha256": "bd85ce642bf0faadd4ff55f4e943f58bcd3c8c7d0a7669604ca629adac600b36"
+    },
+    {
+      "path": "player-visible-v20/04-cancelled-prior-board-restored.jpg",
+      "sha256": "ecd9919617e3c7d94d4250ac5c0b44207d2ef5d6ee839420b0ba357324edd702"
+    }
+  ],
+  "resources": {
+    "previewProcessId": 31124,
+    "previewProcessStartTicks": 639289474381633965,
+    "port": 8943,
+    "tab": "12",
+    "cleanup": "PENDING active diagnostic"
+  },
+  "limits": [
+    "No hidden controller calls or answer-key inspection used.",
+    "Repair PASS does not imply cancellation readiness PASS.",
+    "Visual predecessor restoration does not prove exact graph/owner identity.",
+    "No playable RB100 or full Q100 qualification."
+  ]
+}

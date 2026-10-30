@@ -203,6 +203,9 @@ final class CircuitSolverExecutor {
         requireFinite(sim.nodeVoltages); requireFinite(sim.circuitRightSide);
         events.dispatchAccepted(sim.t);
         boundary.accepted(operation, sim.t, wallTimeMillis());
+        // Model stepFinished callbacks precede confirmation and may fail.
+        // Hysteresis memory may advance only after this owner accepts time.
+        for (CircuitElm element : sim.elmList) element.solverStepAccepted();
         sim.solverTimeObservations.accepted(operation);
     }
     // A model callback precedes global acceptance. Only this owner can confirm it.

@@ -1,0 +1,78 @@
+{
+  "protocol": "q100-compiled-browser-capture-v1",
+  "gate": "Current",
+  "status": "FAIL",
+  "sourcePins": "final-compiled-current-1-source-pins.json",
+  "sourceDigests": {
+    "verifierIsolation": "b5a739a8301a8fd3503a839522210b684425f9394e1e9a8c54db8e17f49f5111",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "d202629fb6ef16dbec3aaa0436110c2f532b015fae45eb71dd585680b322c005",
+    "scriptDigest": "d99e8d0fdce8058df5bc65e919aad721b4bb4ecd5a0525506a385ffcaab33592",
+    "webDigest": "4585a051f09d6afe26a341ddf90635ab4c9ecafa8022b8b6095b4ae18e598d81",
+    "executionDigest": "9b047c97130a1bfa5b4ca8a454430e2baaf29216664adb23ccdad5461cf5b93b",
+    "executionFileCount": 1595
+  },
+  "routes": [],
+  "failure": {
+    "kind": "application",
+    "phase": "browser",
+    "operation": "route-a03",
+    "elapsedMs": 18144,
+    "remainingDeadlineMs": 71855,
+    "error": "a03 reported FAI<owned-path> : Cannot read properties of null (reading 'g')"
+  },
+  "cleanup": {
+    "success": true,
+    "errors": {},
+    "diagnostic": {},
+    "phaseTimings": {
+      "PreflightMs": 48,
+      "PhysicalNamespaceMs": 211,
+      "BrowserSessionMs": 33958,
+      "PreviewMs": 8021,
+      "LeaseReleaseMs": 24,
+      "FinalProofMs": 1650,
+      "BrowserShutdown": [
+        {
+          "RouteId": "70f17b06c0aa4aa7a5667e48f6748bc9",
+          "Lane": "boundReceipt",
+          "TotalMs": 7209,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 368,
+            "endpointAndSocketConnect": 11,
+            "postConnectRootAndListenerProof": 337,
+            "protectedHelperCensus": 1453,
+            "precloseJournalAndAuthorization": 1410,
+            "closeSendAndAcknowledgement": 18,
+            "retainedProcessNaturalExitProof": 2173,
+            "lateDescendantAbsenceProof": 478,
+            "containmentJobEmptyProof": 1,
+            "profileQuiescence": 868,
+            "finalListenerAbsenceProof": 74,
+            "resourceDisposal": 5
+          },
+          "Counts": {
+            "protectedDescendantCount": 10,
+            "rootAndDescendantRecordCount": 11,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 22,
+            "currentAbsenceProofCount": 16,
+            "currentAbsenceObservationCount": 32,
+            "lateDescendantParentQueryCount": 11,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "exitCode": 1,
+  "elapsedSeconds": 82.1363627,
+  "rawReportSha256": "2ae9943542d96a493c7d99ef1225260ef2051e6349b8a58c82b052ba0a84e01a",
+  "rawLogSha256": "5f7cb40fc233e857ecd5dfd9bd19b3d5c74d41d0b7ab9f051e8fc315d841806d",
+  "limits": [
+    "Finite source-bound browser software checks only",
+    "No playable RB100 or full Q100 qualification",
+    "Private seeded reports are Developer reference data, not normal-player UI"
+  ]
+}

@@ -14,28 +14,45 @@ final class A03IdentityDeveloperVerifier {
     private A03IdentityDeveloperVerifier() { }
 
     static String verify(CirSim sim, boolean forcedFailure) {
+        final String[] stage = new String[] { "entry-validation" };
         require(sim != null && sim.troubleshootDebug && sim.developerVerifierRunning,
             "explicit developer route required");
         if (forcedFailure)
             throw new AssertionError("a03-explicit-failure-canary");
 
         long overallStart = System.currentTimeMillis();
-        String vectors = A03IdentityContractVectors.run();
+        final String vectors;
+        final GeneratedBoardInstance originalOwner;
+        final GeneratedChallengeController originalChallenge;
+        final Task41SimulationSnapshot original;
+        try {
+        stage[0] = "vectors-first-run";
+        vectors = A03IdentityContractVectors.run();
+        stage[0] = "vectors-repeat-run";
         String repeatedVectors = A03IdentityContractVectors.run();
+        stage[0] = "assert-vector-determinism";
         require(vectors.equals(repeatedVectors), "A03 vector receipt was not deterministic");
+        stage[0] = "assert-vector-receipt-markers";
         require(vectors.startsWith("A03_IDENTITY_VECTORS_BEGIN\n") &&
             vectors.endsWith("A03_IDENTITY_VECTORS_END\n"),
             "A03 vector receipt markers are incomplete");
+        stage[0] = "assert-vector-count";
         require(A03IdentityContractVectors.getAssertionCount() > 0,
             "A03 vector corpus made no assertions");
 
-        final GeneratedBoardInstance originalOwner = sim.getGeneratedBoardInstance();
-        final GeneratedChallengeController originalChallenge =
-            sim.getGeneratedChallengeController();
+        stage[0] = "capture-original-owner";
+        originalOwner = sim.getGeneratedBoardInstance();
+        stage[0] = "capture-original-challenge";
+        originalChallenge = sim.getGeneratedChallengeController();
+        stage[0] = "assert-original-owner-ready";
         require(originalOwner != null && originalChallenge != null &&
             originalChallenge.isReady() && sim.isGeneratedRuntimeSettled(),
             "A03 requires a settled original owner");
-        final Task41SimulationSnapshot original = Task41SimulationSnapshot.capture(sim);
+        stage[0] = "capture-original-snapshot";
+        original = Task41SimulationSnapshot.capture(sim);
+        } catch (Throwable failure) {
+            throw stagedFailure(stage[0], failure);
+        }
         Vector<GeneratedBoardInstance> candidates = new Vector<GeneratedBoardInstance>();
         Vector<GeneratedBoardInstance> disposed = new Vector<GeneratedBoardInstance>();
         Vector<CorpusCase> corpus = new Vector<CorpusCase>();
@@ -43,42 +60,58 @@ final class A03IdentityDeveloperVerifier {
         String report = null;
         try {
             for (int index = 0; index < SEEDS.length; index++) {
+                stage[0] = "pure-sample-seed-" + Long.toString(SEEDS[index]);
                 CorpusCase sample = verifyPureSample(SEEDS[index], candidates);
                 corpus.add(sample);
             }
+            stage[0] = "runtime-samples";
             runRuntimeSamples(sim, original, originalOwner, corpus);
+            stage[0] = "restore-original-after-runtime-samples";
             original.restore(sim);
+            stage[0] = "assert-original-after-runtime-samples";
             original.assertRestored(sim);
+            stage[0] = "assert-original-owner-after-runtime-samples";
             require(sim.getGeneratedBoardInstance() == originalOwner &&
                 sim.getGeneratedChallengeController() == originalChallenge,
                 "A03 changed the original owner");
+            stage[0] = "serialize-success-report";
             report = report(vectors, corpus, overallStart);
         } catch (Throwable failure) {
-            primary = failure;
+            primary = stagedFailure(stage[0], failure);
         } finally {
             Throwable cleanupFailure = null;
             try {
+                stage[0] = "cleanup-restore-original-snapshot";
                 original.restore(sim);
             } catch (Throwable cleanup) {
-                cleanupFailure = cleanup;
+                cleanupFailure = stagedFailure(stage[0], cleanup);
             }
-            for (GeneratedBoardInstance candidate : candidates) {
+            for (int index = 0; index < candidates.size(); index++) {
+                GeneratedBoardInstance candidate = candidates.get(index);
                 try {
-                    dispose(sim, candidate, originalOwner, disposed);
+                    stage[0] = "cleanup-dispose-candidate-" + index;
+                    dispose(sim, candidate, originalOwner, disposed, stage);
                 } catch (Throwable cleanup) {
-                    cleanupFailure = retain(cleanupFailure, cleanup);
+                    cleanupFailure = retain(cleanupFailure,
+                        stagedFailure(stage[0], cleanup));
                 }
             }
             try {
+                stage[0] = "cleanup-assert-original-snapshot";
                 original.assertRestored(sim);
             } catch (Throwable cleanup) {
-                cleanupFailure = retain(cleanupFailure, cleanup);
+                cleanupFailure = retain(cleanupFailure,
+                    stagedFailure(stage[0], cleanup));
             }
             if (cleanupFailure != null && primary == null)
                 primary = cleanupFailure;
-            else if (cleanupFailure != null && primary != null)
-                primary = new IllegalStateException("A03 verification failed: " +
-                    message(primary) + "; cleanup failed: " + message(cleanupFailure), primary);
+            else if (cleanupFailure != null && primary != null) {
+                IllegalStateException combined = new IllegalStateException(
+                    "A03 verification failed: " + message(primary) +
+                    "; cleanup failed: " + message(cleanupFailure), primary);
+                retain(combined, cleanupFailure);
+                primary = combined;
+            }
         }
         if (primary != null)
             rethrow(primary);
@@ -87,24 +120,32 @@ final class A03IdentityDeveloperVerifier {
 
     private static CorpusCase verifyPureSample(long seed,
             Vector<GeneratedBoardInstance> candidates) {
+        String[] stage = new String[] { "request" };
+        try {
         BoundedAssemblyRequest request = requestFor(seed);
+        stage[0] = "plan-resolve";
         long planStart = System.currentTimeMillis();
         BoundedAssemblyPlan plan = BoundedAssemblyPlan.resolve(request);
         long planElapsed = elapsed(planStart);
 
+        stage[0] = "manifest-capture";
         long captureStart = System.currentTimeMillis();
         RealizationManifest pure = A03RealizationReplay.capture(plan);
+        stage[0] = "manifest-canonical-encode";
         String canonical = pure.toCanonical();
         long encodeElapsed = elapsed(captureStart);
         require(canonical.length() > 0, "A03 capture produced an empty manifest");
+        stage[0] = "manifest-parse";
         RealizationManifest parsed = RealizationManifest.parse(canonical);
         require(canonical.equals(parsed.toCanonical()),
             "A03 manifest canonical round-trip changed bytes");
         require(pure.identityCanonical().equals(parsed.identityCanonical()),
             "A03 manifest identity changed after parse");
 
+        stage[0] = "manifest-resolve";
         long resolveStart = System.currentTimeMillis();
         BoundedAssemblyPlan resolved = A03RealizationReplay.resolve(parsed);
+        stage[0] = "manifest-decode-and-resolve";
         BoundedAssemblyPlan decoded = A03RealizationReplay.decodeAndResolve(canonical);
         long resolveElapsed = elapsed(resolveStart);
         require(plan.getSemanticSignature().equals(resolved.getSemanticSignature()),
@@ -112,6 +153,7 @@ final class A03IdentityDeveloperVerifier {
         require(plan.getSemanticSignature().equals(decoded.getSemanticSignature()),
             "A03 decoded plan changed semantic signature");
 
+        stage[0] = "direct-assembly";
         long generationStart = System.currentTimeMillis();
         BoundedGeneratedBoardAssembler.Result direct =
             BoundedGeneratedBoardAssembler.assemble(request);
@@ -122,6 +164,7 @@ final class A03IdentityDeveloperVerifier {
         require(canonical.equals(direct.getRealizationManifest().toCanonical()),
             "runtime generation capture differs from pure plan manifest");
 
+        stage[0] = "replay-assembly";
         long replayStart = System.currentTimeMillis();
         BoundedGeneratedBoardAssembler.Result replay =
             A03RealizationReplay.generate(parsed);
@@ -133,39 +176,61 @@ final class A03IdentityDeveloperVerifier {
             "A03 replay result changed manifest bytes");
         assertFresh(direct.getInstance(), replay.getInstance());
 
+        stage[0] = "assembly-owner-parity";
         GeneratedBoardInstance instance = replay.getInstance();
         require(instance.getBoard() != null && instance.getPcbLayout() != null,
             "A03 replay has no board/layout owner");
+        stage[0] = "board-validation";
         instance.getBoard().validate();
+        stage[0] = "pcb-layout-validation";
         instance.getPcbLayout().validateGeometry(instance.getBoard());
         return new CorpusCase(seed, request, plan, pure, direct, replay,
             planElapsed, encodeElapsed, resolveElapsed, generationElapsed,
             replayElapsed, canonical.length());
+        } catch (Throwable failure) {
+            throw stagedFailure("pure-seed-" + Long.toString(seed) + "/" +
+                stage[0], failure);
+        }
     }
 
     private static void runRuntimeSamples(CirSim sim, Task41SimulationSnapshot original,
             GeneratedBoardInstance originalOwner, Vector<CorpusCase> corpus) {
+        String[] stage = new String[] { "entry" };
+        try {
         for (int index = 0; index < corpus.size(); index++) {
             CorpusCase sample = corpus.get(index);
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/restore-before-install";
             original.restore(sim);
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/assert-restored-before-install";
             original.assertRestored(sim);
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/install-composition";
             FreshGeneratedRuntimeInstallation.installComposition(sim,
                 sample.replay.getInstance(), false);
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/settle-through-circuitjs";
             GeneratedRuntimeDeveloperSettlement.settle(sim, sample.replay.getInstance(),
                 "a03-replayed-board-" + Long.toString(sample.seed));
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/assert-settled-owner";
             require(sim.getGeneratedBoardInstance() == sample.replay.getInstance() &&
                 sim.getGeneratedChallengeController() != null &&
                 sim.getGeneratedChallengeController().isReady() &&
                 sim.isGeneratedRuntimeSettled(),
                 "A03 replay owner did not settle through CircuitJS");
+            stage[0] = "seed-" + Long.toString(sample.seed) + "/assert-settled-manifest";
             require(sample.canonical.equals(sample.replay.getRealizationManifest().toCanonical()),
                 "settling the replay owner changed its durable manifest");
             sample.runtimeSettled = true;
-            if (index == 0)
+            if (index == 0) {
+                stage[0] = "seed-" + Long.toString(sample.seed) + "/solver-coordinate-poison-canary";
                 verifySolverAndCoordinatePoison(sim, sample);
+            }
         }
+        stage[0] = "restore-original-after-runtime-samples";
         original.restore(sim);
+        stage[0] = "assert-original-after-runtime-samples";
         original.assertRestored(sim);
+        } catch (Throwable failure) {
+            throw stagedFailure("runtime-samples/" + stage[0], failure);
+        }
     }
 
     /**
@@ -176,30 +241,58 @@ final class A03IdentityDeveloperVerifier {
      * from the manifest, so transient node numbers/points cannot poison it.
      */
     private static void verifySolverAndCoordinatePoison(CirSim sim, CorpusCase sample) {
-        Task41SimulationSnapshot poisoned = Task41SimulationSnapshot.capture(sim);
-        Vector<ElementState> states = saveElementStates(sim.elmList);
-        CircuitElm first = sim.elmList.isEmpty() ? null : sim.elmList.firstElement();
-        GeneratedBoardInstance activeOwner = sim.getGeneratedBoardInstance();
+        String[] stage = new String[] { "capture-poison-snapshot" };
+        final Task41SimulationSnapshot poisoned;
+        final Vector<ElementState> states;
+        final CircuitElm first;
+        final GeneratedBoardInstance activeOwner;
+        final String manifestBefore;
+        final String dumpBefore;
+        final int nodesBefore;
+        try {
+        poisoned = Task41SimulationSnapshot.capture(sim);
+        stage[0] = "capture-poison-element-states";
+        states = saveElementStates(sim.elmList);
+        stage[0] = "inspect-active-graph";
+        first = sim.elmList.isEmpty() ? null : sim.elmList.firstElement();
+        stage[0] = "inspect-active-owner";
+        activeOwner = sim.getGeneratedBoardInstance();
+        stage[0] = "assert-poison-graph-present";
         require(first != null, "A03 poison canary has no solver element");
+        stage[0] = "assert-poison-owner";
         require(activeOwner == sample.replay.getInstance(),
             "A03 poison canary is not running the replayed board owner");
-        String manifestBefore = sample.canonical;
-        String dumpBefore = first.dump();
-        int nodesBefore = sim.nodeList == null ? 0 : sim.nodeList.size();
+        stage[0] = "capture-pre-poison-manifest";
+        manifestBefore = sample.canonical;
+        stage[0] = "capture-pre-poison-element-dump";
+        dumpBefore = first.dump();
+        stage[0] = "inspect-node-count-before";
+        nodesBefore = sim.nodeList == null ? 0 : sim.nodeList.size();
+        } catch (Throwable failure) {
+            throw stagedFailure("poison-canary-setup/" + stage[0], failure);
+        }
         ResistorElm transientElement = null;
         Throwable primary = null;
         try {
+            stage[0] = "begin-private-proof";
             poisoned.beginProof(sim);
+            stage[0] = "stop-simulation-for-canary";
             sim.setSimRunning(false);
+            stage[0] = "poison-first-element-coordinates";
             int shift = 1;
             first.setPosition(first.x + shift, first.y + shift,
                 first.x2 + shift, first.y2 + shift);
             require(!dumpBefore.equals(first.dump()),
                 "A03 coordinate poison did not change a real CircuitElm");
+            stage[0] = "create-transient-element";
             transientElement = new ResistorElm(20000, 20000);
+            stage[0] = "position-transient-element";
             transientElement.setPosition(20000, 20000, 20032, 20000);
+            stage[0] = "add-transient-element";
             sim.elmList.addElement(transientElement);
+            stage[0] = "analyze-circuit-after-transient-add";
             sim.analyzeCircuit();
+            stage[0] = "check-transient-node-allocation";
             int nodesAfter = sim.nodeList == null ? 0 : sim.nodeList.size();
             require(nodesAfter > nodesBefore,
                 "A03 solver transient CircuitElm did not allocate a new solver node set");
@@ -207,10 +300,12 @@ final class A03IdentityDeveloperVerifier {
             // Re-capture directly from the live replay owner.  This proves that
             // node assignment, element coordinates, and layout coordinates do
             // not become durable identity through an accidental runtime path.
+            stage[0] = "capture-active-physical-choices";
             BoundedGeneratedBoardAssembler.PlanPhysicalChoices activeChoices =
                 new BoundedGeneratedBoardAssembler.PlanPhysicalChoices(
                     activeOwner.getPcbLayout(), activeOwner.getPhysicalSpecifications(),
                     activeOwner.getBoard());
+            stage[0] = "capture-live-replay-manifest";
             RealizationManifest activeManifest =
                 A03RealizationReplay.capture(sample.plan, activeChoices);
             requireManifestParity(sample.pure, activeManifest,
@@ -220,20 +315,24 @@ final class A03IdentityDeveloperVerifier {
             // coordinates while retaining each package's declared variant and
             // geometry realization.  PlanPhysicalChoices intentionally retains
             // only those durable package/value choices, never the coordinates.
+            stage[0] = "translate-pcb-layout";
             PcbBoardLayout translatedLayout = translatedPcbLayout(
                 activeOwner.getPcbLayout(), activeOwner.getBoard());
+            stage[0] = "capture-translated-physical-choices";
             BoundedGeneratedBoardAssembler.PlanPhysicalChoices translatedChoices =
                 new BoundedGeneratedBoardAssembler.PlanPhysicalChoices(
                     translatedLayout, activeOwner.getPhysicalSpecifications(),
                     activeOwner.getBoard());
             require(samePhysicalChoices(activeChoices, translatedChoices),
                 "A03 translated PCB coordinates changed physical choices");
+            stage[0] = "capture-translated-manifest";
             RealizationManifest translatedManifest =
                 A03RealizationReplay.capture(sample.plan, translatedChoices);
             requireManifestParity(sample.pure, translatedManifest,
                 "A03 translated PCB-layout recapture");
 
             // This overload must stay independent of any live solver singleton.
+            stage[0] = "pure-plan-recapture-after-poison";
             RealizationManifest pureRecapture = A03RealizationReplay.capture(sample.plan);
             requireManifestParity(sample.pure, pureRecapture,
                 "A03 pure-plan recapture after solver poison");
@@ -245,43 +344,56 @@ final class A03IdentityDeveloperVerifier {
             sample.nodesBefore = nodesBefore;
             sample.nodesAfter = nodesAfter;
         } catch (Throwable failure) {
-            primary = failure;
+            primary = stagedFailure(stage[0], failure);
         } finally {
             Throwable cleanupFailure = null;
             try {
+                stage[0] = "cleanup-delete-transient-element";
                 if (transientElement != null)
                     transientElement.delete();
             } catch (Throwable cleanup) {
-                cleanupFailure = cleanup;
+                cleanupFailure = stagedFailure(stage[0], cleanup);
             }
             try {
                 // Restore actual CircuitElm fields before the snapshot proof;
                 // snapshot restoration restores list/graph ownership around it.
+                stage[0] = "cleanup-restore-element-states";
                 restoreElementStates(states);
             } catch (Throwable cleanup) {
-                cleanupFailure = retain(cleanupFailure, cleanup);
+                cleanupFailure = retain(cleanupFailure,
+                    stagedFailure(stage[0], cleanup));
             }
             try {
+                stage[0] = "cleanup-restore-poison-snapshot";
                 poisoned.restore(sim);
             } catch (Throwable cleanup) {
-                cleanupFailure = retain(cleanupFailure, cleanup);
+                cleanupFailure = retain(cleanupFailure,
+                    stagedFailure(stage[0], cleanup));
             }
             try {
+                stage[0] = "cleanup-assert-poison-snapshot-restored";
                 poisoned.assertRestored(sim);
             } catch (Throwable cleanup) {
-                cleanupFailure = retain(cleanupFailure, cleanup);
+                cleanupFailure = retain(cleanupFailure,
+                    stagedFailure(stage[0], cleanup));
             }
             try {
+                stage[0] = "cleanup-assert-active-replay-owner";
                 require(sim.getGeneratedBoardInstance() == activeOwner,
                     "A03 poison cleanup lost the active replayed board owner");
             } catch (Throwable cleanup) {
-                cleanupFailure = retain(cleanupFailure, cleanup);
+                cleanupFailure = retain(cleanupFailure,
+                    stagedFailure(stage[0], cleanup));
             }
             if (cleanupFailure != null && primary == null)
                 primary = cleanupFailure;
-            else if (cleanupFailure != null && primary != null)
-                primary = new IllegalStateException("A03 poison failure: " +
-                    message(primary) + "; cleanup failure: " + message(cleanupFailure), primary);
+            else if (cleanupFailure != null && primary != null) {
+                IllegalStateException combined = new IllegalStateException(
+                    "A03 poison failure: " + message(primary) +
+                    "; cleanup failure: " + message(cleanupFailure), primary);
+                retain(combined, cleanupFailure);
+                primary = combined;
+            }
         }
         if (primary != null)
             rethrow(primary);
@@ -396,14 +508,28 @@ final class A03IdentityDeveloperVerifier {
     }
 
     private static void dispose(CirSim sim, GeneratedBoardInstance candidate,
-            GeneratedBoardInstance protectedOwner, Vector<GeneratedBoardInstance> disposed) {
+            GeneratedBoardInstance protectedOwner, Vector<GeneratedBoardInstance> disposed,
+            String[] stage) {
         if (candidate == null || disposed.contains(candidate)) return;
+        stage[0] = "cleanup-candidate-protection-check";
         require(candidate != protectedOwner && candidate != sim.getGeneratedBoardInstance(),
             "A03 refused to dispose an active/protected owner");
+        stage[0] = "cleanup-candidate-disconnect-power";
         candidate.getExternalPowerBindings().setConnected(false);
-        for (CircuitElm element : candidate.getSimulationElements())
+        int elementIndex = 0;
+        for (CircuitElm element : candidate.getSimulationElements()) {
+            stage[0] = "cleanup-candidate-delete-element-" + elementIndex;
             element.delete();
+            elementIndex++;
+        }
+        stage[0] = "cleanup-candidate-record-disposed";
         disposed.add(candidate);
+    }
+
+    private static RuntimeException stagedFailure(String stage, Throwable failure) {
+        String type = failure == null ? "null" : failure.getClass().getName();
+        return new IllegalStateException("A03 stage [" + stage + "] failed (" +
+            type + "): " + message(failure), failure);
     }
 
     private static BoundedAssemblyRequest requestFor(long seed) {

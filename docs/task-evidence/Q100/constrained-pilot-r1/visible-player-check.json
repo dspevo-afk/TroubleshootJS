@@ -1,0 +1,43 @@
+{
+  "protocol": "q100-visible-player-check-v1",
+  "status": "PASS_VISIBLE_FINITE_FLOW",
+  "variant": "Player",
+  "inputDigest": "a2a862b48181fd4365c915c198a272311b548318c0d6eb5cfe2fd920e0781d40",
+  "outputDigest": "11b2b3265faf72f3514a1489ea45fe77b46d7e7e85b1961bb8a95080da10ccf6",
+  "surface": "Built-in Browser; task-owned tab and production preview",
+  "initialRoute": "LED seed 3 with ignored Q100 Developer query flags",
+  "interactions": [
+    "Accept ticket and start through visible control",
+    "Run customer retest on unrepaired board: Customer retest did not pass. Continue troubleshooting.",
+    "Board Power OFF; wait for controls to settle; click R1 and Component popup; markings BROWN BLACK RED GOLD; Remove component",
+    "Shop: add 1000 Ohm +/-5%; close Shop; Parts Tray; select loose Part 4; Install as Circuit / R1",
+    "Restore Board Power; Run customer retest; wait for public result: Customer retest passed. The reported behavior is resolved.",
+    "Main menu; Difficulty MEDIUM; Isolated AC control board; enter exact signed-long seed; Prepare exact seed",
+    "At Verify measurements and repairs, visible progress 51%, 30s,124work: click Cancel preparation",
+    "Observe Board preparation cancelled. and previous three-package board, powered with lit LED"
+  ],
+  "cancellationSeed": "-2230691771308388107",
+  "privacyObservation": "DOM-backed inspection showed no verification/report/evidence attributes; only preview provenance attributes",
+  "screenshots": [
+    {
+      "path": "player-visible/01-repaired-retest-passed.jpg",
+      "sha256": "4120d085c20f105a40fdf5e15737e5df65e5088e057a5abf3cd221421c9d107f"
+    },
+    {
+      "path": "player-visible/02-medium-measurement-proof.jpg",
+      "sha256": "ee27e46526abbd7323773a8f465ad614b7f691ca2ad34771462069196760a76a"
+    },
+    {
+      "path": "player-visible/03-normal-proof-cancelled.jpg",
+      "sha256": "ecd9919617e3c7d94d4250ac5c0b44207d2ef5d6ee839420b0ba357324edd702"
+    }
+  ],
+  "cleanup": "Task-owned IAB tab closed; maintained stop-preview positively released task PID and port",
+  "limits": [
+    "Finite LED repair and normal MEDIUM cancellation visible-input checks only",
+    "No hidden controller calls or answer-key inspection used to act on the page",
+    "Visual return to predecessor observed; exact graph/owner restoration belongs to separate compiled lifecycle gates",
+    "No playable RB100, human qualification, all-seed, modest-host or advanced capacity claim",
+    "Legacy verify-browser -NormalPlayer scenario has obsolete catalog/tray/retest labels and was NOT RUN; current public flow checked directly"
+  ]
+}
